@@ -1,20 +1,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="test suite"  verbose="1">
 
-
-	<parameter name="browser" value="firefox" />
-	<parameter name="browserVersion" value="25.0.1" />
 	<parameter name="platform" value="windows" />
 	<parameter name="isRemote" value="false" />
-	
-	
-	<parameter name="isRemote" value="false" />
-	
+		
 	<parameter name="base.url" value="http://localhost:9999/admin/apps/app-launcher/index.html"/>
 
 	<test verbose="2" name="FirefoxTests">
-		<parameter name="platform" value="windows" />
 		<parameter name="browser" value="firefox" />
+		<parameter name="browserVersion" value="25.0.1" />
 		<classes>
 		
 			<class name="com.enonic.wem.selenium.ContentManagerTests" />
