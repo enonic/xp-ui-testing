@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentTestData>
+	<page>
+		<caseInfo>Try to add content with 'Page' type</caseInfo>
+		<displayName>page-displayname</displayName>
+		<name>page-content</name>
+		<contentType>Page</contentType>
+	</page>
+	<folder>
+		<caseInfo>Try to add content with 'Folder' type</caseInfo>
+		<displayName>folder-displayname</displayName>
+		<name>folder-content</name>
+		<contentType>Folder</contentType>
+	</folder>
+
+	<mixin>
+		<caseInfo>Try to add content with 'Mixin' type</caseInfo>
+		<name>mixin-name</name>
+		<displayName>mixin-displayName</displayName>
+		<contentType>Mixin</contentType>
+		<adressList>
+			<adress>
+				<postalCode>1234567</postalCode>
+				<postalPlace>place</postalPlace>
+				<street>Kirkegata</street>
+			</adress>
+
+		</adressList>
+	</mixin>
+
+	<space>
+		<caseInfo>Try to add content with 'Space' type</caseInfo>
+		<displayName>space-displayName</displayName>
+		<name>space-content</name>
+		<contentType>Space</contentType>
+	</space>
+	<unstructured>
+		<caseInfo>Try to add content with 'Unstructured' type</caseInfo>
+		<displayName>unstructured-displayName</displayName>
+		<name>unstructured-content</name>
+		<contentType>Unstructured</contentType>
+	</unstructured>
+	<structured>
+		<caseInfo>Try to add content with 'Structured' type</caseInfo>
+		<displayName>structured-displayName</displayName>
+		<name>structured-content</name>
+		<contentType>Structured</contentType>
+	</structured>
+	<media>
+		<caseInfo>Try to add content with 'Media' type</caseInfo>
+		<displayName>media-displayName</displayName>
+		<name>media-content</name>
+		<contentType>Media</contentType>
+	</media>
+	<shortcut>
+		<caseInfo>Try to add content with 'Shortcut' type</caseInfo>
+		<displayName>shortcut-displayName</displayName>
+		<name>shortcut-content</name>
+		<contentType>Shortcut</contentType>
+	</shortcut>
+</contentTestData>

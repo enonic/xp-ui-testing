@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="test suite" verbose="1">
+
+
+	<parameter name="browser" value="firefox" />
+	<parameter name="browserVersion" value="8" />
+	<parameter name="platform" value="windows" />
+	<parameter name="isRemote" value="false" />
+	<parameter name="base.url" value="http://localhost:8080/admin" />
+
+
+
+
+
+	<parameter name="isRemote" value="false" />
+
+	<test verbose="2" name="FirefoxTests">
+		<parameter name="platform" value="windows" />
+		<parameter name="browser" value="ie" />
+		<classes>
+			<class name="com.enonic.autotests.SpaceAdminTest" />
+		</classes>
+
+	</test>
+</suite>

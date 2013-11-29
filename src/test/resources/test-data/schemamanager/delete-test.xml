@@ -1,0 +1,25 @@
+<contentTypeTestData>
+	<contentTypes>
+		<contentType>
+			<displayName>ctFolderToDelete</displayName>
+			<name>ctFolderToDelete</name>
+			<kind>ContentType</kind>
+			<config>
+				<![CDATA[            	
+     				<type>
+  						<name>folder</name>
+  						<module>system</module>
+  						<display-name>FFolder</display-name>
+  						<content-display-name-script />
+  						<super-type />
+  						<is-abstract>false</is-abstract>
+  						<is-final>false</is-final>
+  						<allow-children>true</allow-children>
+  						<form />
+					</type>
+               ]]>
+			</config>
+		</contentType>
+		
+	</contentTypes>
+</contentTypeTestData>

@@ -1,117 +1,191 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>com.enonic.pom</groupId>
-    <artifactId>base</artifactId>
-    <version>7</version>
-  </parent>
+	<parent>
+		<groupId>com.enonic.pom</groupId>
+		<artifactId>base</artifactId>
+		<version>7</version>
+	</parent>
 
-  <groupId>com.enonic.wem.test</groupId>
-  <artifactId>wem-ui-testing</artifactId>
-  <packaging>jar</packaging>
-  <name>Enonic WEM UI Testing</name>
-  <version>5.0.0-SNAPSHOT</version>
+	<groupId>com.enonic.wem.test</groupId>
+	<artifactId>wem-ui-testing</artifactId>
+	<packaging>jar</packaging>
+	<name>Enonic WEM UI Testing</name>
+	<version>5.0.0-SNAPSHOT</version>
 
-  <properties>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <maven.compiler.source>1.7</maven.compiler.source>
-  </properties>
+	<properties>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
+	</properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>2.37.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.enonic.wem</groupId>
-      <artifactId>wem-webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-    </dependency>
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.37.1</version>
+		</dependency>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <id>copy-home-dir</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/cms-home</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/home</directory>
-                  <filtering>false</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.cargo</groupId>
-        <artifactId>cargo-maven2-plugin</artifactId>
-        <version>1.4.5</version>
-        <configuration>
-          <container>
-            <containerId>tomcat7x</containerId>
-            <systemProperties>
-              <cms.home>${project.build.directory}/cms-home</cms.home>
-            </systemProperties>
-          </container>
-          <configuration>
-            <properties>
-              <cargo.servlet.port>9999</cargo.servlet.port>
-            </properties>
-          </configuration>
-          <deployables>
-            <deployable>
-              <groupId>com.enonic.wem</groupId>
-              <artifactId>wem-webapp</artifactId>
-              <type>war</type>
-              <properties>
-                <context>/</context>
-              </properties>
-            </deployable>
-          </deployables>
-        </configuration>
-        <executions>
-          <execution>
-            <id>start-container</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>start</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>stop-container</id>
-            <phase>post-integration-test</phase>
-            <goals>
-              <goal>stop</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.8</version>
+			<scope>compile</scope>
+		</dependency>
 
-  <repositories>
-    <repository>
-      <id>enonic.repo</id>
-      <url>http://repo.enonic.com/maven</url>
-    </repository>
-  </repositories>
+		<dependency>
+			<groupId>com.enonic.wem</groupId>
+			<artifactId>wem-webapp</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${basedir}/tests.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+				<executions>
+					<!-- -->
+					<execution>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+
+						<configuration>
+
+							<suiteXmlFiles>
+								<suiteXmlFile>${basedir}/src/test/resources/local/${local.template.name}
+								</suiteXmlFile>
+							</suiteXmlFiles>
+
+							<skip>false</skip>
+							<includes>
+							
+								<include>com/enonic/wem/selenium/**</include>
+							</includes>
+							<excludes>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			
+			<!-- end of jetty and surefure configurations. -->
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-home-dir</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/cms-home</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/home</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.4.5</version>
+				<configuration>
+					<container>
+						<containerId>tomcat7x</containerId>
+						<systemProperties>
+							<cms.home>${project.build.directory}/cms-home</cms.home>
+						</systemProperties>
+					</container>
+					<configuration>
+						<properties>
+							<cargo.servlet.port>9999</cargo.servlet.port>
+						</properties>
+					</configuration>
+					<deployables>
+						<deployable>
+							<groupId>com.enonic.wem</groupId>
+							<artifactId>wem-webapp</artifactId>
+							<type>war</type>
+							<properties>
+								<context>/</context>
+							</properties>
+						</deployable>
+					</deployables>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>enonic.repo</id>
+			<url>http://repo.enonic.com/maven</url>
+		</repository>
+	</repositories>
 
 </project>
         

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentTestData>
+	<archive>
+		<caseInfo>Add content with 'Archive' type, open this content and verify state of buttons on the toolbar. Bug### the 'New' on the toolbar should be disabled, because media content type does not allow children</caseInfo>
+		<displayName>archive-open</displayName>
+		<name>archive-open</name>
+		<contentType>Archive</contentType>
+	</archive>
+	<folder>
+		<caseInfo>add content with 'Folder' type, open this content and  verify state of buttons on the  toolbar</caseInfo>
+		<displayName>folder-open</displayName>
+		<name>folder-open</name>
+		<contentType>Folder</contentType>
+	</folder>
+
+	<media>
+		<caseInfo>Add content with 'Media' type, open this content it and  verify state of buttons on the  toolbar. Bug### the 'New' on the toolbar should be disabled, because media content type does not allow children</caseInfo>
+		<displayName>media-open</displayName>
+		<name>media-open</name>
+		<contentType>Media</contentType>
+	</media>
+	
+</contentTestData>

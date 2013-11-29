@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentTestData>	
+	<archive>
+		<caseInfo>Filter by name: name contains only one symbol</caseInfo>
+		<displayName>X</displayName>
+		<name>X</name>
+		<contentType>Archive</contentType>
+	</archive>	
+	<unstructured>
+		<caseInfo>Filter by name: name contains more than 15 symbols</caseInfo>
+		<displayName>unstructured1234</displayName>
+		<name>morethan15</name>
+		<contentType>Unstructured</contentType>
+	</unstructured>
+	<structured>
+		<caseInfo>Filter by name: name contains special symbols</caseInfo>
+		<displayName>ee@@#$$</displayName>
+		<name>special-symbols</name>
+		<contentType>Structured</contentType>
+	</structured>
+	<media>
+		<caseInfo>Filter by name: name contains 15 symbols</caseInfo>
+		<displayName>displayName15sb</displayName>
+		<name>name15symbols</name>
+		<contentType>Media</contentType>
+	</media>
+</contentTestData>
