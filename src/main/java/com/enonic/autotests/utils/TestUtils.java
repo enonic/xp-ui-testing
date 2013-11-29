@@ -30,7 +30,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.exceptions.WebElementException;
 import com.enonic.autotests.logger.Logger;
 
 public class TestUtils
@@ -186,7 +185,7 @@ public class TestUtils
 	 * @param by
 	 * @throws WebElementException
 	 */
-	public void waitUntilElementEnabled(final TestSession testSession, final By by) throws WebElementException
+	public void waitUntilElementEnabled(final TestSession testSession, final By by) throws TestFrameworkException
 	{
 		try
 		{
@@ -194,7 +193,7 @@ public class TestUtils
 		} catch (TimeoutException ex)
 		{
 			logger.error("TimeoutException, element is disabled" + by.toString(), testSession);
-			throw new WebElementException("Element is disabled but should be enabled!!! " + ex.getMessage());
+			throw new TestFrameworkException("Element is disabled but should be enabled!!! " + ex.getMessage());
 		}
 	}
 

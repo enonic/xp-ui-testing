@@ -19,12 +19,6 @@ public abstract class BaseAbstractContent
 	
 	private String type;
 
-
-
-	// /Meta
-	// Page
-	// Security
-	// Summary
 	public String getName()
 	{
 		return name;

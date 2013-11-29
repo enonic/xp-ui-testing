@@ -16,6 +16,15 @@ import com.enonic.autotests.pages.cm.ContentInfoPage;
 public class ContentManagerService
 {
 
+	public boolean openContentManagerAppAndVerify(TestSession session)
+	{
+		// 1. open a 'content manager'
+		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		boolean result = true;
+		result &=cmPage.verifyTitle();
+		//result &=cmPage.verifyAllControls();
+		return result;
+	}
 	public boolean openAndVerifyAddContentWizardPage(TestSession session, String type, String ... parentNames)
 	{
 

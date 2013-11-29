@@ -23,7 +23,7 @@ import com.enonic.autotests.utils.TestUtils;
  */
 public class CMSpacesPage extends Page
 {
-	private static String titleXpath = "//span[contains(@class,'x-btn-inner') and contains(.,'Content Manager')]";
+	private static final String TITLE_XPATH = "//button[contains(@class,'home-button') and contains(.,'Content Manager')]";
 	
 	private final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
 	@FindBy(xpath = NEW_BUTTON_XPATH)
@@ -47,7 +47,8 @@ public class CMSpacesPage extends Page
 	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Move')]]")
 	private WebElement moveButton;
 
-	@FindBy(name = "query")
+	private final String SEARCH_INPUT_XPATH = "//input[@class='text-search-field']";
+	@FindBy(xpath = SEARCH_INPUT_XPATH)
 	private WebElement searchInput;
 
 	private String SPACE_NAME_AND_DISPLAYNAME_IN_TABLE = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
@@ -691,8 +692,8 @@ public class CMSpacesPage extends Page
 	 */
 	public static boolean isOpened(TestSession session)
 	{
-		List<WebElement> elems = session.getDriver().findElements(By.xpath(titleXpath));
-		List<WebElement> queryElement = session.getDriver().findElements(By.name("query"));
+		List<WebElement> elems = session.getDriver().findElements(By.xpath(TITLE_XPATH));
+		List<WebElement> queryElement = session.getDriver().findElements(By.name("text-search-field"));
 		if (elems.size() == 0 && queryElement.size() == 0 )
 		{
 			return false;
@@ -702,15 +703,19 @@ public class CMSpacesPage extends Page
 		}
 	}
 
-	public boolean verifyAllEmptyFields(TestSession session)
+	public boolean verifyTitle()
+	{
+		return TestUtils.getInstance().waitAndFind(By.xpath(TITLE_XPATH), getDriver());
+	}
+	public boolean verifyAllControls()
 	{
 		boolean result = true;
-		result &= verifyTollbar(session);
-		result &= verifySearchPannel(session);
+		result &= verifyTollbar();
+		result &= verifySearchPannel();
 		return result;
 	}
 
-	private boolean verifyTollbar(TestSession session)
+	private boolean verifyTollbar()
 	{
 		boolean result = true;
 		result &= newButton.isDisplayed() && !newButton.isEnabled();
@@ -722,7 +727,7 @@ public class CMSpacesPage extends Page
 		return result;
 	}
 
-	private boolean verifySearchPannel(TestSession session)
+	private boolean verifySearchPannel()
 	{
 		boolean result = true;
 		result &= searchInput.isDisplayed() && !searchInput.isEnabled();

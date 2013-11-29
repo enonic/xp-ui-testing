@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -76,7 +74,7 @@ public class HomePage extends Page
 	public void waitUntilAllFramesLoaded()
 	{
 		
-		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Space Admin']"));
+		//TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Space Admin']"));
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
 
@@ -98,11 +96,8 @@ public class HomePage extends Page
 		
 		SpaceAdminPage page = new SpaceAdminPage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
-		//String whandle = getSession().getDriver().getWindowHandle();
-		//getSession().setWindowHandle(whandle);
 		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_SPACE_ADMIN_FRAME_XPATH);
 		page.waituntilToolbarLoaded(2l);
-		
 		return  page;
 	}
 

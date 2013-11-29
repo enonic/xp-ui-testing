@@ -29,7 +29,7 @@ public class NavigatorHelper
 	public static SpaceAdminPage openSpaceAdmin(TestSession testSession)
 	{
 
-		HomePage home = openHomePage(testSession);
+		HomePage home = loginAndOpenHomePage(testSession);
 		return home.openSpaceAdminApplication();
 	}
 
@@ -46,10 +46,9 @@ public class NavigatorHelper
 //			return new CMSpacesPage(testSession);
 //		}else
 		//{
-			HomePage home = openHomePage(testSession);
+			HomePage home = loginAndOpenHomePage(testSession);
 			CMSpacesPage cmPage = home.openContentManagerApplication();
-			//waits. timeout == 4 sec.
-			cmPage.waituntilPageLoaded(10l);
+			cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
 			return cmPage;
 		//}
 		
@@ -62,9 +61,8 @@ public class NavigatorHelper
 			return new SchemasPage(testSession);
 		}else
 		{
-			HomePage home = openHomePage(testSession);
+			HomePage home = loginAndOpenHomePage(testSession);
 			SchemasPage schemasPage = home.openSchemaManagerApplication();
-			//waits. timeout == 4 sec.
 			schemasPage.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 			return schemasPage;
 		}
@@ -79,8 +77,7 @@ public class NavigatorHelper
 	 */
 	public static AccountsPage openAccounts(TestSession testSession)
 	{
-
-		HomePage home = openHomePage(testSession);
+		HomePage home = loginAndOpenHomePage(testSession);
 		return home.openAccountsApplication();
 	}
 
@@ -102,12 +99,12 @@ public class NavigatorHelper
 	}
 	
 	/**
-	 * Opens the 'Home' page that contains links to all applications.
+	 * 'Login' to cms and opens the 'Home' page that contains links to all applications.
 	 * 
 	 * @param testSession {@link TestSession} instance.
 	 * @return {@link HomePage} instance.
 	 */
-	public static HomePage openHomePage(TestSession testSession)
+	public static HomePage loginAndOpenHomePage(TestSession testSession)
 	{
 		User user = testSession.getCurrentUser();
 		HomePage home = new HomePage(testSession);
