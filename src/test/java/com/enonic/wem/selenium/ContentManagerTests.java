@@ -29,7 +29,7 @@ public class ContentManagerTests extends BaseTest
 	}
 
 	
-	@Test(description="add content to space, select a space in the table, click by link 'New' from the toolbar and add new child content")
+	@Test(description="add structured content to space, select a space in the table, click by link 'New' from the toolbar and add new child content")
 	public void testAddNewContent()
 	{
 		String name = "open-addnew" + Math.abs( new Random().nextInt() );
