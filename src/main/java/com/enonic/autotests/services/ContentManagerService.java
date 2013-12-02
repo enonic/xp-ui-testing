@@ -8,6 +8,7 @@ import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.cm.AddNewContentWizard;
 import com.enonic.autotests.pages.cm.CMSpacesPage;
 import com.enonic.autotests.pages.cm.ContentInfoPage;
+import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
 
 /**
  * Service for 'Content Manager' application.
@@ -25,7 +26,7 @@ public class ContentManagerService
 		//result &=cmPage.verifyAllControls();
 		return result;
 	}
-	public boolean openAndVerifyAddContentWizardPage(TestSession session, String type, String ... parentNames)
+	public boolean openAndVerifyAddContentWizardPage(TestSession session, ContentTypes type, String ... parentNames)
 	{
 
 		// 1. open a 'content manager'
@@ -33,19 +34,19 @@ public class ContentManagerService
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
 		AddNewContentWizard wizardPage = cmPage.openAddContentWizard(type, parentNames);
-		String expectedTytle = String.format(AddNewContentWizard.START_WIZARD_TITLE, type.toLowerCase());
-		wizardPage.waitUntilWizardOpened(expectedTytle, 1);
+		String expectedTitle = String.format(AddNewContentWizard.START_WIZARD_TITLE, type.getValue().toLowerCase());
+		wizardPage.waitUntilWizardOpened(expectedTitle, 1);
 		return wizardPage.verifyWizardPage(session);
 
 	}
 	
-	public void doSelectContentInTable(TestSession session, List<String> contents, String ... parentNames)
-	{
-		// 1. open a 'content manager'
-	    CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-	    cmPage.selectContentsInTable(contents, parentNames);
-				
-	}
+//	public void doSelectContentInTable(TestSession session, List<String> contents)
+//	{
+//		// 1. open a 'content manager'
+//	    CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+//	    cmPage.selectContentsInTable(contents);
+//				
+//	}
 
 
 	/**
@@ -73,11 +74,11 @@ public class ContentManagerService
 	 * @param parentNames
 	 * @return
 	 */
-	public Page addNewContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard,String ... parentNames)
+	public Page addNewContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard)
 	{
 		// 1. open a 'content manager'		
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-		cmPage.doAddContent(newcontent, isCloseWizard, parentNames);
+		cmPage.doAddContent(newcontent, isCloseWizard);
 		if (isCloseWizard)
 		{
 			return cmPage;
@@ -96,13 +97,13 @@ public class ContentManagerService
 	 * @param parentNames
 	 * @return
 	 */
-	public boolean doOpenContentVerifyPage(TestSession session, BaseAbstractContent content, String ... parentNames)
+	public boolean doOpenContentVerifyPage(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-		ContentInfoPage contentInfoPage = cmPage.doOpenContent(content,parentNames);
+		ContentInfoPage contentInfoPage = cmPage.doOpenContent(content);
 		
-		boolean result = contentInfoPage.verifyContentInfoPage(content, parentNames);
+		boolean result = contentInfoPage.verifyContentInfoPage(content);
 		result &= contentInfoPage.verifyToolbar(content);
 
 		return result;
@@ -121,7 +122,7 @@ public class ContentManagerService
 	{
 		// 1. open a 'content manager'
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-		ContentInfoPage contentInfoPage = cmPage.doOpenContent( contentToEdit, parentNames );
+		ContentInfoPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		return cmPage;
 	}
@@ -133,11 +134,11 @@ public class ContentManagerService
 	 * @param parentNames
 	 * @return
 	 */
-	public CMSpacesPage doOpenContentAndDelete(TestSession session, BaseAbstractContent contentToDelete, String ... parentNames)
+	public CMSpacesPage doOpenContentAndDelete(TestSession session, BaseAbstractContent contentToDelete)
 	{
 		// 1. open a 'content manager'
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-		ContentInfoPage contentInfoPage = cmPage.doOpenContent(contentToDelete, parentNames);
+		ContentInfoPage contentInfoPage = cmPage.doOpenContent(contentToDelete);
 		contentInfoPage.doDeleteContentAndClosePreviewPage(contentToDelete.getDisplayName());
 		return cmPage;
 	}
@@ -169,11 +170,11 @@ public class ContentManagerService
 	 * @param parentNames
 	 * @return
 	 */
-	public CMSpacesPage updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent,String ... parentNames)
+	public CMSpacesPage updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
 	{
 
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-		cmPage.doUpdateContent(contentToUpdate, newContent,parentNames);
+		cmPage.doUpdateContent(contentToUpdate, newContent);
 		return cmPage;
 	}
 }

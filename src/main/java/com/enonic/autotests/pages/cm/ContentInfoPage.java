@@ -111,7 +111,7 @@ public class ContentInfoPage extends Page
 		table.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 	}
 	
-	public boolean  verifyContentInfoPage(BaseAbstractContent content,String ... parentNames)
+	public boolean  verifyContentInfoPage(BaseAbstractContent content)
 	{
 		boolean result = true;
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(String.format(H1_NAME_XPATH, content.getDisplayName()))) ;
@@ -125,7 +125,7 @@ public class ContentInfoPage extends Page
 		
 		elems = getSession().getDriver().findElements(By.xpath(String.format(SPAN_FULL_NAME_XPATH, content.getDisplayName()))) ;
 		String fullNameActual = elems.get(0).getText();
-		String fullContentNameExpected =  TestUtils.getInstance().buildFullNameOfContent(content.getName(), parentNames);
+		String fullContentNameExpected =  TestUtils.getInstance().buildFullNameOfContent(content.getName(), content.getParentNames());
 		if(!fullNameActual.equals(fullContentNameExpected))
 		{
 			getLogger().info("wrong fullName, fullName should contains a name and name of parent space");

@@ -35,6 +35,7 @@ import com.enonic.autotests.testdata.cm.SpaceXml;
 import com.enonic.autotests.testdata.cm.StructuredXml;
 import com.enonic.autotests.testdata.cm.UnstructuredXml;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
+import com.enonic.autotests.utils.TestUtils;
 
 public class TestDataConvertor
 {
@@ -178,7 +179,8 @@ public class TestDataConvertor
 		}
 		content.setName(xmlContent.getName());
 		content.setDisplayName(xmlContent.getDisplayName());
-		content.setType(xmlContent.getContentType());
+		ContentTypes ctype = TestUtils.getInstance().getContentType(xmlContent.getContentType());
+		content.setType(ctype);
 		return content;
 	}
 }

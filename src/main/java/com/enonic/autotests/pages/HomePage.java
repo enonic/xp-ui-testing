@@ -74,7 +74,6 @@ public class HomePage extends Page
 	public void waitUntilAllFramesLoaded()
 	{
 		
-		//TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Space Admin']"));
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
 

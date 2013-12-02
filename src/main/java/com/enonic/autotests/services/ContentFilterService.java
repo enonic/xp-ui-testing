@@ -71,7 +71,7 @@ public class ContentFilterService
 	 * @param parentNames
 	 * @return
 	 */
-	public boolean verifyContentTypeFiltering(TestSession session, BaseAbstractContent contentToAdd, String... parentNames)
+	public boolean verifyContentTypeFiltering(TestSession session, BaseAbstractContent contentToAdd)
 	{
 		// 1. open CM application(if not opened yet)
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
@@ -81,7 +81,7 @@ public class ContentFilterService
 		// to find new added content in the table:
 		filterPanel.doFilterByContentType(contentToAdd.getType());
 		boolean isContentFiltered = true;
-		boolean result = cmPage.findContentInTable(contentToAdd.getName(), 1l, isContentFiltered, parentNames);
+		boolean result = cmPage.findContentInTable(contentToAdd, 1l, isContentFiltered);
 		if (!result)
 		{
 			throw new ContentFilterException("Filter by Content Type applyed, but content with type equals  " + contentToAdd.getType()

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,7 +15,9 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.model.Space;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
+import com.enonic.autotests.model.schemamanger.ContentType;
 import com.enonic.autotests.pages.Page;
+import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -24,12 +27,13 @@ import com.enonic.autotests.utils.TestUtils;
 public class CMSpacesPage extends Page
 {
 	private static final String TITLE_XPATH = "//button[contains(@class,'home-button') and contains(.,'Content Manager')]";
+	public static final String SPACES_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
 	
 	private final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
 	@FindBy(xpath = NEW_BUTTON_XPATH)
 	private WebElement newButton;
 	
-	public static final String SPACES_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
+	
 
 	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Edit')]]")
 	private WebElement editButton;
@@ -51,9 +55,9 @@ public class CMSpacesPage extends Page
 	@FindBy(xpath = SEARCH_INPUT_XPATH)
 	private WebElement searchInput;
 
-	private String SPACE_NAME_AND_DISPLAYNAME_IN_TABLE = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
+	private String TD_SPACE_DISPLAYNAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
 
-	private String CHECKBOX_ROW_CHECKER = SPACE_NAME_AND_DISPLAYNAME_IN_TABLE + "//ancestor::td/preceding-sibling::td";
+	private String CHECKBOX_ROW_CHECKER = TD_SPACE_DISPLAYNAME + "/../td[contains(@class,'x-grid-cell-row-checker')]";
 
 	private String DIV_CONTENT_NAME_IN_TABLE = "//div[contains(@class,'x-grid-cell-inner ')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
 
@@ -229,11 +233,13 @@ public class CMSpacesPage extends Page
 	 *            be present in the full name of content.
 	 * @return true if content was found, otherwise return false.
 	 */
-	public boolean findContentInTable(String contentName, long timeout, boolean filtered, String... parents)
+	public boolean findContentInTable(BaseAbstractContent content, long timeout, boolean filtered)
 	{
+		
+		 String[] parents = content.getParentNames();
 		if (!filtered)
 		{
-			for (String parentName : parents)
+			for (String parentName : parents )
 			{
 				if (!doExpand(parentName))
 				{
@@ -243,16 +249,16 @@ public class CMSpacesPage extends Page
 			}
 		}
 
-		String fullName = TestUtils.getInstance().buildFullNameOfContent(contentName, parents);
+		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), parents);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);
-		getLogger().info("Check is content present in the table: " + contentName);
+		getLogger().info("Check is content present in the table: " + content);
 		boolean result = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(contentDescriptionXpath), timeout);
 		if (result)
 		{
-			getLogger().info("The  Content  was found in the Table! name:" + contentName);
+			getLogger().info("The  Content  was found in the Table! name:" + content.getDisplayName());
 		} else
 		{
-			getLogger().info("Content  was not found in the Table! name: " + contentName);
+			getLogger().info("Content  was not found in the Table! name: " + content.getDisplayName());
 		}
 
 		return result;
@@ -264,9 +270,9 @@ public class CMSpacesPage extends Page
 	 * @param content
 	 * @return true if a content was found in the table, otherwise false.
 	 */
-	public boolean findContentInTable(String contentName, long timeout, String... parents)
+	public boolean findContentInTable(BaseAbstractContent content, long timeout)
 	{
-		return findContentInTable(contentName, timeout, false, parents);
+		return findContentInTable(content, timeout, false);
 	}
 
 	/**
@@ -278,16 +284,16 @@ public class CMSpacesPage extends Page
 	 */
 	public boolean doExpand(String parentName)
 	{
-		boolean isEmptySpace = isContentOrSpaceHasNoChild(parentName);
-		if (isEmptySpace)
+		boolean isExpanderPresent = isExpanderPresent(parentName);
+		if (!isExpanderPresent)
 		{
 			getLogger().info("The space: " + parentName + " has no contents");
 			return false;
 		}
-		if (!isContentOrSpaceExapnded(parentName))
+		if (!isRowExapnded(parentName))
 		{
 			expandSpace(parentName);
-			boolean isExpanded = isContentOrSpaceExapnded(parentName);
+			boolean isExpanded = isRowExapnded(parentName);
 			if (!isExpanded)
 			{
 				throw new TestFrameworkException("space " + parentName + " was not expanded");
@@ -298,17 +304,11 @@ public class CMSpacesPage extends Page
 		return true;
 	}
 
-	private String getTableRowElementXpath(String name)
-	{
-		String tdWithName = String.format(SPACE_NAME_AND_DISPLAYNAME_IN_TABLE, name);
-		String toParentRow = "/parent::div/parent::td/parent::tr";
-		String result = tdWithName + toParentRow;
-		return result;
-	}
+	
 
 	private String buildContentExpanderXpath(String name)
 	{
-		return String.format(SPACE_NAME_AND_DISPLAYNAME_IN_TABLE, name) + "//ancestor::td//img[contains(@class,'x-tree-expander')]";
+		return String.format(TD_SPACE_DISPLAYNAME, name) + "//ancestor::td//img[contains(@class,'x-tree-expander')]";
 
 	}
 
@@ -319,58 +319,43 @@ public class CMSpacesPage extends Page
 	 * @param parentSpace
 	 * @return true if space has no any children., otherwise true.
 	 */
-	private boolean isContentOrSpaceHasNoChild(String parentName)
+	private boolean isExpanderPresent(String parentName)
 	{
-		String trXpath = getTableRowElementXpath(parentName);
-		WebElement contentTableRow = null;
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(trXpath));
-		if (elems.size() == 0)
+		String expanderElement = String.format(TD_SPACE_DISPLAYNAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
+		boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(expanderElement), getDriver());
+		if (!isPresent)
 		{
-			throw new TestFrameworkException("invalid locator for space-expander or space dose not exists! " + trXpath);
+			return false;
 		}
 		
-		if (!elems.get(0).isDisplayed())
+		//check if dispalyed:
+		if (!findElement(By.xpath(expanderElement)).isDisplayed())
 		{ 
-			contentTableRow = TestUtils.getInstance().scrollTableAndFind(getSession(), trXpath, DIV_SCROLL_XPATH);
-			if(contentTableRow == null)
-			{
-				throw new TestFrameworkException("content scrolled, but the row was not found: "+trXpath+ "probably xpath is wrong!");
-			}
+			TestUtils.getInstance().scrollTableAndFind(getSession(), expanderElement, DIV_SCROLL_XPATH);
 			
-		} else
-		{
-
-			contentTableRow = elems.get(0);
 		}
-		String attributeName = "class";
-		String attributeValue = "x-grid-tree-node-leaf";
-		return TestUtils.getInstance().waitAndCheckAttrValue(getSession().getDriver(), contentTableRow, attributeName, attributeValue, 1l);
+		return true;
 	}
 
-	private boolean isContentOrSpaceExapnded(String name)
+	private boolean isRowExapnded(String name)
 	{
-		String trXpath = getTableRowElementXpath(name);
-		WebElement contentTableRow = null;
-		//WebElement contentTableRow = TestUtils.getInstance().getIfDisplayed(By.xpath(trXpath), getSession().getDriver());
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(trXpath));
-		if (elems.size() == 0)
+		String trXpath = String.format(TD_SPACE_DISPLAYNAME +"/parent::tr", name);
+		
+		//List<WebElement> elems = getSession().getDriver().findElements(By.xpath(trXpath));
+		boolean isRowPresent = TestUtils.getInstance().waitAndFind(By.xpath(trXpath), getDriver());
+		if (!isRowPresent)
 		{
-			throw new TestFrameworkException("invalid locator for space-expander or space dose not exists! " + trXpath);
+			throw new TestFrameworkException("invalid locator  or space with name: "+ name+ " dose not exists! xpath =  " + trXpath);
 		}
 		
-		if (!elems.get(0).isDisplayed())
+		if (!findElement(By.xpath(trXpath)).isDisplayed())
 		{
-			contentTableRow = TestUtils.getInstance().scrollTableAndFind(getSession(), trXpath, DIV_SCROLL_XPATH);
-			if(contentTableRow == null)
-			{
-				throw new TestFrameworkException("content scrolled, but the row was not found: "+trXpath+ "probably xpath is wrong!");
-			}
-		}else{
-			contentTableRow = elems.get(0);
+			 TestUtils.getInstance().scrollTableAndFind(getSession(), trXpath, DIV_SCROLL_XPATH);
+			
 		}
 		String attributeName = "class";
 		String attributeValue = "x-grid-tree-node-expanded";
-		return TestUtils.getInstance().waitAndCheckAttrValue(getSession().getDriver(), contentTableRow, attributeName, attributeValue, 1l);
+		return TestUtils.getInstance().waitAndCheckAttrValue(getDriver(), findElement(By.xpath(trXpath)), attributeName, attributeValue, 1l);
 	}
 
 	/**
@@ -463,7 +448,7 @@ public class CMSpacesPage extends Page
 		waitAndCheckContent(contents, parentNames);
 		for (BaseAbstractContent content : contents)
 		{
-			selectCheckboxInRow(content.getName(), parentNames);
+			selectCheckbox(content);
 		}
 
 	}
@@ -472,7 +457,7 @@ public class CMSpacesPage extends Page
 	{
 		for (BaseAbstractContent content : contents)
 		{
-			boolean isPresent = findContentInTable(content.getName(), 2l, parents);
+			boolean isPresent = findContentInTable(content, 2l);
 			if (!isPresent)
 			{
 				throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
@@ -487,18 +472,12 @@ public class CMSpacesPage extends Page
 	 * @param parentSpaceName
 	 * @param content
 	 */
-	private void selectCheckboxInRow(String contentName, String... parentNames)
+	private void selectCheckbox(BaseAbstractContent content)
 	{
-		try
-		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
-		String fullContentName = TestUtils.getInstance().buildFullNameOfContent(contentName, parentNames);
+		String contentName = content.getDisplayName();
+		String fullContentName = TestUtils.getInstance().buildFullNameOfContent(contentName, content.getParentNames());
 		String contentCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, fullContentName);
 		getLogger().info("tries to find the content in a table, fullName of content is :" + fullContentName);
 		List<WebElement> checkboxes = getSession().getDriver().findElements(By.xpath(contentCheckBoxXpath));
@@ -526,8 +505,10 @@ public class CMSpacesPage extends Page
 	 * @param content
 	 * @param isCloseWizard
 	 */
-	public void doAddContent(BaseAbstractContent content, boolean isCloseWizard, String... parents)
+	public void doAddContent(BaseAbstractContent content, boolean isCloseWizard)
 	{
+		String[] parents = content.getParentNames();
+		
 		AddNewContentWizard wizard = openAddContentWizard(content.getType(), parents);
 		if (isCloseWizard)
 		{
@@ -539,9 +520,9 @@ public class CMSpacesPage extends Page
 
 	}
 
-	public void doUpdateContent(BaseAbstractContent content, BaseAbstractContent newcontent, String... parentNames)
+	public void doUpdateContent(BaseAbstractContent content, BaseAbstractContent newcontent)
 	{
-		boolean isPresent = findContentInTable(content.getName(), 2l, parentNames);
+		boolean isPresent = findContentInTable(content, 2l);
 		if (!isPresent)
 		{
 			throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
@@ -549,7 +530,7 @@ public class CMSpacesPage extends Page
 
 		// 2. check for existence of content in a parent space and select a
 		// content to delete.
-		selectCheckboxInRow(content.getName(), parentNames);
+		selectCheckbox(content);
 
 		editButton.click();
 		AddNewContentWizard wizard = new AddNewContentWizard(getSession());
@@ -571,7 +552,7 @@ public class CMSpacesPage extends Page
 	 * @param ctype
 	 * @return
 	 */
-	public AddNewContentWizard openAddContentWizard(String ctype, String... parentNames)
+	public AddNewContentWizard openAddContentWizard(ContentTypes ctype, String... parentNames)
 	{
 		String parentName = parentNames[parentNames.length - 1];
 		// if parentNames.length == 0, so no need to expand space, new content will be added to the root folder
@@ -589,19 +570,17 @@ public class CMSpacesPage extends Page
 
 		// 1. select a checkbox and press the 'New' from toolbar.
 		String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentName);
-		boolean isPresentCheckbox = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(spaceCheckBoxXpath), 3l);
+		//boolean isPresentCheckbox = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(spaceCheckBoxXpath), 3l);
+		boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind( By.xpath(spaceCheckBoxXpath), getDriver());
 		if (!isPresentCheckbox)
 		{
 			throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentName + " was not found!");
 		}
-		List<WebElement> checkboxes = getSession().getDriver().findElements(By.xpath(spaceCheckBoxXpath));
-		if (checkboxes.size() > 1)
-		{
-			getLogger().warning("more than one checkbox were found, but should be only one");
-		}
-		checkboxes.get(0).click();
-		boolean isEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(NEW_BUTTON_XPATH), 2l);
-		if (!isEnabled)
+		WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
+		
+		checkboxElement.click();
+		boolean isNewEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(NEW_BUTTON_XPATH), 2l);
+		if (!isNewEnabled)
 		{
 			throw new SaveOrUpdateException("CM application, impossible to open SelectContentTypeDialog, because the 'New' button is disabled!");
 		}
@@ -618,9 +597,9 @@ public class CMSpacesPage extends Page
 		return wizard;
 	}
 
-	public ContentInfoPage doOpenContent(BaseAbstractContent content, String... parentNames)
+	public ContentInfoPage doOpenContent(BaseAbstractContent content)
 	{
-		boolean isPresent = findContentInTable(content.getName(), 2l, parentNames);
+		boolean isPresent = findContentInTable(content, 2l);
 		if (!isPresent)
 		{
 			throw new TestFrameworkException("The content with name " + content.getName() + " and displayName:" + content.getDisplayName()
@@ -629,9 +608,8 @@ public class CMSpacesPage extends Page
 		{
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
-		// 2. check for existence of content in a parent space and select a
-		// content to delete.
-		selectCheckboxInRow(content.getName(), parentNames);
+		// 2. check for existence of content in a parent space and select a content to delete.
+		selectCheckbox(content);
 		if (!openButton.isEnabled())
 		{
 			getLogger().info("'Open' link is disabled!");
@@ -648,32 +626,32 @@ public class CMSpacesPage extends Page
 	 * @param contentNames, list of names, contents with these names will be selected in the table.
 	 * @param parentNames
 	 */
-	public void selectContentsInTable(List<String> contentNames, String... parentNames)
-	{
-
-		if (parentNames.length != 0)
-		{
-			String parentName = parentNames[parentNames.length - 1];
-			// 1. expand all spaces
-			for (int i = 0; i < parentNames.length; i++)
-			{
-				if (!doExpand(parentNames[i]))
-				{
-					throw new TestFrameworkException("Impossible to delete content from  " + parentName + "wrong path to the parent, because "
-							+ parentNames[i] + " , has no child ! ");
-				}
-			}
-
-		}
-
-		// 2. check for existence and select a content to delete.
-		for (String name : contentNames)
-		{
-			selectCheckboxInRow(name, parentNames);
-
-		}
-
-	}
+//	public void selectContentsInTable(List<String> contentNames, String... parentNames)
+//	{
+//
+//		if (parentNames.length != 0)
+//		{
+//			String parentName = parentNames[parentNames.length - 1];
+//			// 1. expand all spaces
+//			for (int i = 0; i < parentNames.length; i++)
+//			{
+//				if (!doExpand(parentNames[i]))
+//				{
+//					throw new TestFrameworkException("Impossible to delete content from  " + parentName + "wrong path to the parent, because "
+//							+ parentNames[i] + " , has no child ! ");
+//				}
+//			}
+//
+//		}
+//
+//		// 2. check for existence and select a content to delete.
+//		for (String name : contentNames)
+//		{
+//			selectCheckbox(name, par);
+//
+//		}
+//
+//	}
 
 
 	/**

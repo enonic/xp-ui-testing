@@ -29,20 +29,7 @@ public class SelectContentTypeDialog
 	{
 		this.session = session;
 	}
-	private ContentTypes getContentType(String ctype)
-	{
-		ContentTypes result = null;
-		ContentTypes[] values = ContentTypes.values();
-		for(ContentTypes val: values )
-		{
-			if(val.getValue().equals(ctype))
-			{
-				result =  val;
-				
-			}
-		}
-		return result;
-	}
+	
 	/**
 	 * Checks that 'AddNewContentWizard' is opened.
 	 * 
@@ -54,13 +41,9 @@ public class SelectContentTypeDialog
 	/**
 	 * @param ctype
 	 */
-	public AddNewContentWizard selectContentType(String contentType)
+	public AddNewContentWizard selectContentType(ContentTypes type)
 	{
-		ContentTypes type = getContentType(contentType);
-		if (type == null)
-		{
-			throw new TestFrameworkException("content type:" + contentType + " was not found!");
-		}
+		
 		String ctypeXpath = String.format(ITEM_CONTENTTYPE, type.getValue());
 		TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(ctypeXpath), 3l);
 		WebElement ctypeElement = session.getDriver().findElement(By.xpath(ctypeXpath));
@@ -68,7 +51,7 @@ public class SelectContentTypeDialog
 		if (!isDisplayed)
 		{
 			WebElement searchinput = session.getDriver().findElement(By.xpath(INPUT_SEARCH));
-			searchinput.sendKeys(contentType);	
+			searchinput.sendKeys(type.getValue());	
 			ctypeElement = session.getDriver().findElement(By.xpath(ctypeXpath));
 		} 
 		ctypeElement.click();

@@ -85,11 +85,7 @@ public abstract class BaseWizardPage extends Page {
 	 * 
 	 */
 	protected String getNotificationMessage(TestSession session,String iframeXpath) {
-		//switch to window.
-		//getSession().getDriver().switchTo().window(getSession().getWindowHandle());
 		String message = TestUtils.getInstance().getNotificationMessage(By.xpath("//div[@class='admin-notification-content']/span"), session.getDriver(),2l);
-		//switch to iframe again.
-		//NavigatorHelper.switchToIframe(getSession(),iframeXpath);
 		return message;
 	}
 	/**

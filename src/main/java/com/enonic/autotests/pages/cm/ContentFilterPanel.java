@@ -11,6 +11,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Page;
+import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
 import com.enonic.autotests.utils.TestUtils;
 
 public class ContentFilterPanel extends Page
@@ -131,9 +132,9 @@ public class ContentFilterPanel extends Page
 	 * 
 	 * @param type
 	 */
-	public void doFilterByContentType(String type)
+	public void doFilterByContentType(ContentTypes type)
 	{
-		String itemXpath = String.format(CONTENT_TYPE_FILTER_ITEM, type);
+		String itemXpath = String.format(CONTENT_TYPE_FILTER_ITEM, type.getValue());
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(itemXpath));
 		if (elems.size() == 0)
 		{

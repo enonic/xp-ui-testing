@@ -1,6 +1,7 @@
 package com.enonic.autotests.model.cm;
 
-import com.enonic.autotests.pages.Page;
+import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
+
 
 /**
  * Base class for all types of content.
@@ -9,15 +10,20 @@ import com.enonic.autotests.pages.Page;
  */
 public abstract class BaseAbstractContent
 {
-
-	private Page mainTab;
-
-
-
 	private String name;
 	private String displayName;
-	
-	private String type;
+	private ContentTypes type;
+	private String[] parentNames;
+
+	public String[] getParentNames()
+	{
+		return parentNames;
+	}
+
+	public void setParentNames(String[] parentNames)
+	{
+		this.parentNames = parentNames;
+	}
 
 	public String getName()
 	{
@@ -39,23 +45,15 @@ public abstract class BaseAbstractContent
 		this.displayName = displayName;
 	}
 
-	public String getType()
+	public ContentTypes getType()
 	{
 		return type;
 	}
 
-	public void setType(String type)
+	public void setType(ContentTypes type)
 	{
 		this.type = type;
 	}
-
-	public Page getMainTab()
-	{
-		return mainTab;
-	}
-
-	public void setMainTab(Page mainTab)
-	{
-		this.mainTab = mainTab;
-	}
+	
+	
 }

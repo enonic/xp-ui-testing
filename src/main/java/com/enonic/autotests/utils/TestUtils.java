@@ -31,6 +31,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.logger.Logger;
+import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
 
 public class TestUtils
 {
@@ -62,12 +63,12 @@ public class TestUtils
 			builder.append(contentName).append(":/");
 			return builder.toString();
 		}
-		builder.append(parentNames[0]).append(":/");
+		builder.append(parentNames[0].toLowerCase()).append("/");
 		for (int i = 1; i < parentNames.length; i++)
 		{
-			builder.append(parentNames[i]).append("/");
+			builder.append(parentNames[i].toLowerCase()).append("/");
 		}
-		// String fullContentName = parentNames[0] + ":/" + content.getName();
+
 		String fullContentName = builder.append(contentName).toString();
 		return fullContentName;
 	}
@@ -80,6 +81,20 @@ public class TestUtils
 
 	}
 
+	public ContentTypes getContentType(String ctype)
+	{
+		ContentTypes result = null;
+		ContentTypes[] values = ContentTypes.values();
+		for(ContentTypes val: values )
+		{
+			if(val.getValue().equals(ctype))
+			{
+				result =  val;
+				
+			}
+		}
+		return result;
+	}
 	public boolean waitAndCheckAttrValue(WebDriver webDriver, final WebElement element, final String attributeName, final String attributeValue, long timeout)
 	{
 		WebDriverWait wait = new WebDriverWait(webDriver, timeout);
@@ -110,7 +125,7 @@ public class TestUtils
 
 	public WebElement scrollTableAndFind(TestSession session, String elementXpath, String scrollXpath)
 	{
-		WebElement elementSpace = null;
+		WebElement element = null;
 		List<WebElement> divScroll = session.getDriver().findElements(By.xpath(scrollXpath));
 		if (divScroll.size() == 0)
 		{
@@ -124,23 +139,44 @@ public class TestUtils
 		{
 			scrollTop += 40;
 			((JavascriptExecutor) session.getDriver()).executeScript("arguments[0].scrollTop=arguments[1]", divScroll.get(0), scrollTop);
-			elementSpace = session.getDriver().findElement(By.xpath(elementXpath));
-			if (elementSpace.isDisplayed())
+			element = session.getDriver().findElement(By.xpath(elementXpath));
+			if (element.isDisplayed())
 			{
-				return elementSpace;
+				return element;
 			}
 		}
 		return null;
 	}
 
+	/**
+	 * Types text in input field.
+	 * 
+	 * @param session
+	 * @param input input type=text
+	 * @param text text for input.
+	 */
 	public void clearAndType(TestSession session, WebElement input, String text)
 	{
-		String os = System.getProperty("os.name").toLowerCase();
-		logger.info("clearAndType: OS System is " + os);
-		logger.info("Windows or linux. type Text:: " + text);
-		input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
+		if(session.getIsRemote())
+		{
+			input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
+		} 
+		else{
+			
+			String os = System.getProperty("os.name").toLowerCase();
+			logger.info("clearAndType: OS System is " + os);
+			if (os.indexOf("mac") >= 0)
+			{
+				input.sendKeys(Keys.chord(Keys.COMMAND, "a"), text);
+			}else{
+				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
+			}
+			
+		}
+		
 
 	}
+
 
 	public void waitUntilVisible(final TestSession testSession, final By by)
 	{
@@ -342,21 +378,6 @@ public class TestUtils
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return element.getText();
-		// Wait<WebDriver> wait = new
-		// FluentWait<WebDriver>(driver).withTimeout(timeout,
-		// TimeUnit.SECONDS).pollingEvery(300, TimeUnit.MILLISECONDS);
-		// return wait.until(new ExpectedCondition<String>() {
-		// @Override
-		// public String apply(WebDriver webDriver) {
-		// try {
-		// WebElement elem = webDriver.findElement(locator);
-		// return elem.getText();
-		// } catch (StaleElementReferenceException e) {
-		//
-		// return null;
-		// }
-		// }
-		// });
 
 	}
 
