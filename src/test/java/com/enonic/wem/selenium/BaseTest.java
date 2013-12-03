@@ -76,10 +76,34 @@ public class BaseTest
 				}
 				logger.info("hubUrl   is:  "+ hubUrl );
 				testSession.put(TestSession.HUB_URL, hubUrl);
+			}else
+			{
+				platform = getPlatformName();
+				
+				System.out.println(platform);
+				logger.info("The platform is:   " +platform);
+				testSession.put(TestSession.PLATFORM, platform);
 			}
 		}
 		sessionRef.set(testSession);
 		logger.info("############### method readDesiredCapabilities finished    ###################");
+	}
+
+	public String getPlatformName()
+	{
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win")>=0)
+		{
+			return "windows";
+		}else if( os.indexOf("mac") >= 0)
+		{
+			return "mac";
+		}
+		else if (os.indexOf("nux") >= 0)
+		{
+			return "linux";
+		}
+		return null;
 	}
 
 	@BeforeMethod

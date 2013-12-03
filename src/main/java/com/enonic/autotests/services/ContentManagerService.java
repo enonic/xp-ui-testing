@@ -74,7 +74,7 @@ public class ContentManagerService
 	 * @param parentNames
 	 * @return
 	 */
-	public Page addNewContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard)
+	public Page addContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard)
 	{
 		// 1. open a 'content manager'		
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
@@ -118,7 +118,8 @@ public class ContentManagerService
 	 * @param parentNames
 	 * @return
 	 */
-	public CMSpacesPage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent, String ... parentNames)
+	//public CMSpacesPage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent, String ... parentNames)
+	public CMSpacesPage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
 	{
 		// 1. open a 'content manager'
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
@@ -152,12 +153,12 @@ public class ContentManagerService
 	 * @param parentNames array of content-names that are parent for new content. 
 	 * @return
 	 */
-	public CMSpacesPage deleteContentFromSpace(TestSession session,  List<BaseAbstractContent> contents, String ... parentNames)
+	public CMSpacesPage deleteContentFromSpace(TestSession session,  List<BaseAbstractContent> contents)
 	{
 		// 1. open a 'content manager'
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
 
-		cmPage.doDeleteContent(contents, parentNames);
+		cmPage.doDeleteContent(contents);
 		return cmPage;
 	}
 

@@ -38,17 +38,17 @@ public class CMSpacesPage extends Page
 	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Edit')]]")
 	private WebElement editButton;
 
-	private final String DELETE_BUTTON_XPATH = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Delete')]]";
+	private final String DELETE_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='Delete']";
 	@FindBy(xpath = DELETE_BUTTON_XPATH)
 	private WebElement deleteButton;
 
-	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Duplicate')]]")
+	@FindBy(xpath = "//div[@class='toolbar']/button[text()='Duplicate']")
 	private WebElement duplicateButton;
 
-	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Open')]]")
+	@FindBy(xpath = "///div[@class='toolbar']/button[text()='Open']")
 	private WebElement openButton;
 
-	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Move')]]")
+	@FindBy(xpath = "//div[@class='toolbar']/button[text()='Move']")
 	private WebElement moveButton;
 
 	private final String SEARCH_INPUT_XPATH = "//input[@class='text-search-field']";
@@ -56,8 +56,10 @@ public class CMSpacesPage extends Page
 	private WebElement searchInput;
 
 	private String TD_SPACE_DISPLAYNAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
+	private String TD_SPACE_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
 
 	private String CHECKBOX_ROW_CHECKER = TD_SPACE_DISPLAYNAME + "/../td[contains(@class,'x-grid-cell-row-checker')]";
+	//private String CHECKBOX_ROW_CHECKER = TD_SPACE_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]";
 
 	private String DIV_CONTENT_NAME_IN_TABLE = "//div[contains(@class,'x-grid-cell-inner ')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
 
@@ -364,21 +366,22 @@ public class CMSpacesPage extends Page
 	 * @param parentSpace
 	 * @param contents
 	 */
-	public void doDeleteContent(List<BaseAbstractContent> contents, String... parentsNames)
+	public void doDeleteContent(List<BaseAbstractContent> contents)
 	{
-		String parentName = parentsNames[parentsNames.length - 1];
+		String[] parents = contents.get(0).getParentNames();
+		//String parent = parents[parents.length - 1];
 		// 1. expand all spaces
-		for (int i = 0; i < parentsNames.length; i++)
+		for (int i = 0; i < parents.length; i++)
 		{
-			if (!doExpand(parentsNames[i]))
+			if (!doExpand(parents[i]))
 			{
-				throw new TestFrameworkException("Impossible to delete content from  " + parentName + "wrong path to the parent, because "
-						+ parentsNames[i] + " , has no child ! ");
+				throw new TestFrameworkException("Impossible to delete content from  wrong path to the parent, because "
+						+ parents[i] + " , has no child ! ");
 			}
 		}
 
 		// 2. check for existence and select a content to delete.
-		selectContentInTable(contents, parentsNames);
+		selectContentInTable(contents, parents);
 
 		List<String> displayNamesToDelete = new ArrayList<>();
 		for (BaseAbstractContent c : contents)
@@ -477,9 +480,9 @@ public class CMSpacesPage extends Page
 		
 
 		String contentName = content.getDisplayName();
-		String fullContentName = TestUtils.getInstance().buildFullNameOfContent(contentName, content.getParentNames());
-		String contentCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, fullContentName);
-		getLogger().info("tries to find the content in a table, fullName of content is :" + fullContentName);
+		//String fullContentName = TestUtils.getInstance().buildFullNameOfContent(contentName, content.getParentNames());
+		String contentCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, contentName);
+		getLogger().info("tries to find the content in a table, fullName of content is :" + contentName);
 		List<WebElement> checkboxes = getSession().getDriver().findElements(By.xpath(contentCheckBoxXpath));
 		getLogger().info("selectCheckboxInRow, checkboxes size: " + checkboxes.size());
 		getLogger().info("Xpath of checkbox for content is :" + contentCheckBoxXpath);
@@ -488,7 +491,7 @@ public class CMSpacesPage extends Page
 			getLogger().warning("more than one checkbox were found, but should be only one");
 		}
 
-		getLogger().info("tries to select the content in a table, fullName of content is :" + fullContentName);
+		getLogger().info("tries to select the content in a table, fullName of content is :" + contentName);
 		checkboxes.get(0).click();
 
 	}

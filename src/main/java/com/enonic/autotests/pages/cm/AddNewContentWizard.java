@@ -183,7 +183,7 @@ public class AddNewContentWizard extends BaseWizardPage
 		if (content instanceof MixinContent)
 		{
 			MixinWizardTab tab = new MixinWizardTab(session);
-			tab.populateAddresses((MixinContent) content);
+			//tab.populateAddresses((MixinContent) content);
 		}
 		if (content instanceof ArticleContent)
 		{

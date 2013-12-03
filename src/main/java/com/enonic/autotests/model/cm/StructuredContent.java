@@ -1,50 +1,29 @@
 package com.enonic.autotests.model.cm;
 
-import com.enonic.autotests.model.cm.ShortcutContent.Builder;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
-
 public class StructuredContent extends BaseAbstractContent
 {
-
-	public static Builder with()
+	
+	public StructuredContent( Builder<?> builder )
 	{
-		return new Builder();
+		super(builder);
+
 	}
-	public static class Builder
-	{
-		private String bName;
-		private String bDisplayName;
-		private ContentTypes bType;
-		private String[] bParentNames;
 
-		public Builder name(String name)
+	public static abstract class Builder<T extends StructuredContent> extends BaseAbstractContent.Builder<T>
+	{
+
+		public abstract T build();
+	}
+
+	public static Builder<?> builder()
+	{
+		return new Builder<StructuredContent>()
 		{
-			this.bName = name;
-			return this;
-		}
-		public Builder displayName(String dname)
-		{
-			this.bDisplayName = dname;
-			return this;
-		}
-		public Builder type(ContentTypes type)
-		{
-			this.bType = type;
-			return this;
-		}
-		public Builder parents(String[] parents)
-		{
-			this.bParentNames = parents;
-			return this;
-		}
-		   public StructuredContent build()
-		   {
-			   StructuredContent content = new StructuredContent();
-			   content.setName( this.bName);
-			   content.setDisplayName(this.bDisplayName);
-			   content.setType(this.bType);
-			   content.setParentNames(this.bParentNames);
-			   return content;
-		   }
+			@Override
+			public StructuredContent build()
+			{
+				return new StructuredContent(this);
+			}
+		};
 	}
 }

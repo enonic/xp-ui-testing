@@ -8,6 +8,32 @@ public class Space extends BaseAbstractContent
 {
 	
 
+	protected Space( Builder<?> builder )
+	{
+		super(builder);
+	
+	}
+	
+
+	public static abstract class Builder<T extends Space> extends BaseAbstractContent.Builder<T>
+	{
+
+		public abstract T build();
+	}
+
+	public static Builder<?> builder()
+	{
+		return new Builder<Space>()
+		{
+			@Override
+			public Space build()
+			{
+				return new Space(this);
+			}
+		};
+	}
+
+
 	private String template;
 
 	private List<BaseAbstractContent> content;

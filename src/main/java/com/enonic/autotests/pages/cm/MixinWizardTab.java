@@ -29,22 +29,22 @@ public class MixinWizardTab extends Page
 
 	}
 
-	public void populateAddresses(MixinContent content)
-	{
-		List<Address> adrList = content.getAddressList();
-
-		List<WebElement> adrBlocks = null;// adrBlocks.size()
-		// TODO implement more than one address
-		for (int i = 0; i < adrList.size(); i++)
-		{
-			adrBlocks = getSession().getDriver().findElements(By.xpath(adressBlock));
-			adrBlocks.get(i).findElement(By.xpath("//input[@name='street']")).sendKeys(adrList.get(i).getStreet());// adrBlocks.get(3).findElements(By.xpath("//input[@name='street']")).size()
-			adrBlocks.get(i).findElement(By.xpath("//input[@name='postalCode']")).sendKeys(adrList.get(i).getPostalCode());
-			adrBlocks.get(i).findElement(By.xpath("//input[@name='postalPlace']")).sendKeys(adrList.get(i).getPostalPlace());
-			break;
-
-		}
-
-	}
+//	public void populateAddresses(MixinContent content)
+//	{
+//		List<Address> adrList = content.getAddressList();
+//
+//		List<WebElement> adrBlocks = null;// adrBlocks.size()
+//		// TODO implement more than one address
+//		for (int i = 0; i < adrList.size(); i++)
+//		{
+//			adrBlocks = getSession().getDriver().findElements(By.xpath(adressBlock));
+//			adrBlocks.get(i).findElement(By.xpath("//input[@name='street']")).sendKeys(adrList.get(i).getStreet());// adrBlocks.get(3).findElements(By.xpath("//input[@name='street']")).size()
+//			adrBlocks.get(i).findElement(By.xpath("//input[@name='postalCode']")).sendKeys(adrList.get(i).getPostalCode());
+//			adrBlocks.get(i).findElement(By.xpath("//input[@name='postalPlace']")).sendKeys(adrList.get(i).getPostalPlace());
+//			break;
+//
+//		}
+//
+//	}
 
 }

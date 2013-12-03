@@ -1,19 +1,30 @@
 package com.enonic.autotests.model.cm;
 
-import java.util.List;
 
 public class MixinContent extends BaseAbstractContent
 {
-	private List<Address> addressList;
-
-	public List<Address> getAddressList()
+	protected MixinContent( Builder<?> builder )
 	{
-		return addressList;
+		super(builder);
+		
 	}
 
-	public void setAddressList(List<Address> addressList)
+	public static abstract class Builder<T extends MixinContent> extends BaseAbstractContent.Builder<T>
 	{
-		this.addressList = addressList;
+
+		public abstract T build();
+	}
+
+	public static Builder<?> builder()
+	{
+		return new Builder<MixinContent>()
+		{
+			@Override
+			public MixinContent build()
+			{
+				return new MixinContent(this);
+			}
+		};
 	}
 
 	

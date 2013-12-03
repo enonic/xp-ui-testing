@@ -99,8 +99,7 @@ public class Logger implements ILogger {
 	}
 
 	public class PerfFormatter extends java.util.logging.Formatter {
-		///private String lineSeparator = (String) java.security.AccessController.doPrivileged(new sun.security.action.GetPropertyAction(
-		//		"line.separator"));
+	
 
 		String lineSeparator = java.security.AccessController.doPrivileged(
 			    new java.security.PrivilegedAction<String>() {

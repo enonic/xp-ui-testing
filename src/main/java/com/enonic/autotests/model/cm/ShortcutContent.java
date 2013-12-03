@@ -1,30 +1,33 @@
 package com.enonic.autotests.model.cm;
 
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
+
 
 public class ShortcutContent extends BaseAbstractContent
 {
 
-	public static Builder with()
+	protected ShortcutContent( Builder<?> builder )
 	{
-		return new Builder();
+		super(builder);
+		
 	}
-	public static class Builder
-	{
-		private String bName;
-		private String bDisplayName;
-		private ContentTypes bType;
-		private String[] bParentNames;
 
-		   public ShortcutContent build()
-		   {
-			   ShortcutContent content = new ShortcutContent();
-			   content.setName( this.bName);
-			   content.setDisplayName(this.bDisplayName);
-			   content.setType(this.bType);
-			   content.setParentNames(this.bParentNames);
-			   return content;
-		   }
+	public static abstract class Builder<T extends ShortcutContent> extends BaseAbstractContent.Builder<T>
+	{
+
+		public abstract T build();
 	}
+
+	public static Builder<?> builder()
+	{
+		return new Builder<ShortcutContent>()
+		{
+			@Override
+			public ShortcutContent build()
+			{
+				return new ShortcutContent(this);
+			}
+		};
+	}
+
 
 }

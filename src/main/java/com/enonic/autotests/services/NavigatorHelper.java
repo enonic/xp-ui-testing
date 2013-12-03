@@ -41,16 +41,16 @@ public class NavigatorHelper
 	 */
 	public static CMSpacesPage openContentManager(TestSession testSession)
 	{
-//		if(CMSpacesPage.isOpened(testSession))
-//		{
-//			return new CMSpacesPage(testSession);
-//		}else
-		//{
+		if(CMSpacesPage.isOpened(testSession))
+		{
+			return new CMSpacesPage(testSession);
+		}else
+		{
 			HomePage home = loginAndOpenHomePage(testSession);
 			CMSpacesPage cmPage = home.openContentManagerApplication();
 			cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
 			return cmPage;
-		//}
+		}
 		
 	}
 	

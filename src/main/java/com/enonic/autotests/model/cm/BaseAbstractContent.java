@@ -2,7 +2,6 @@ package com.enonic.autotests.model.cm;
 
 import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
 
-
 /**
  * Base class for all types of content.
  * 
@@ -14,6 +13,14 @@ public abstract class BaseAbstractContent
 	private String displayName;
 	private ContentTypes type;
 	private String[] parentNames;
+
+	protected BaseAbstractContent( Builder<?> builder )
+	{
+		this.name = builder.name;
+		this.displayName = builder.displayName;
+		this.parentNames = builder.parentNames;
+		this.type = builder.type;
+	}
 
 	public String[] getParentNames()
 	{
@@ -54,6 +61,38 @@ public abstract class BaseAbstractContent
 	{
 		this.type = type;
 	}
-	
-	
+
+	public static abstract class Builder<T extends BaseAbstractContent>
+	{
+		private String name;
+		private String displayName;
+		private ContentTypes type;
+		private String[] parentNames;
+
+		public Builder<T> withName(String name)
+		{
+			this.name = name;
+			return this;
+		}
+
+		public Builder<T> withDisplayName(String displayName)
+		{
+			this.displayName = displayName;
+			return this;
+		}
+
+		public Builder<T> withType(ContentTypes type)
+		{
+			this.type = type;
+			return this;
+		}
+
+		public Builder<T> withparentNames(String[] parents)
+		{
+			this.parentNames = parents;
+			return this;
+		}
+
+		public abstract T build();
+	}
 }

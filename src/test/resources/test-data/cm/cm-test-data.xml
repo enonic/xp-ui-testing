@@ -13,6 +13,7 @@
 		<contentType>Folder</contentType>
 	</folder>
 
+<!-- 
 	<mixin>
 		<caseInfo>Try to add content with 'Mixin' type</caseInfo>
 		<name>mixin-name</name>
@@ -28,12 +29,14 @@
 		</adressList>
 	</mixin>
 
+ 
 	<space>
 		<caseInfo>Try to add content with 'Space' type</caseInfo>
 		<displayName>space-displayName</displayName>
 		<name>space-content</name>
 		<contentType>Space</contentType>
 	</space>
+	-->
 	<unstructured>
 		<caseInfo>Try to add content with 'Unstructured' type</caseInfo>
 		<displayName>unstructured-displayName</displayName>
@@ -58,4 +61,10 @@
 		<name>shortcut-content</name>
 		<contentType>Shortcut</contentType>
 	</shortcut>
+	<archive>
+		<caseInfo>Try to add content with 'Archive' type</caseInfo>
+		<displayName>archive-displayName</displayName>
+		<name>archive-content</name>
+		<contentType>Archive</contentType>
+	</archive>
 </contentTestData>

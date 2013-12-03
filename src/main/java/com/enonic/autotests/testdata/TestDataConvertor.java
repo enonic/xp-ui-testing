@@ -1,6 +1,7 @@
 package com.enonic.autotests.testdata;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.enonic.autotests.model.Space;
@@ -14,6 +15,7 @@ import com.enonic.autotests.model.cm.FolderContent;
 import com.enonic.autotests.model.cm.MediaContent;
 import com.enonic.autotests.model.cm.MixinContent;
 import com.enonic.autotests.model.cm.PageContent;
+import com.enonic.autotests.model.cm.BaseAbstractContent.Builder;
 import com.enonic.autotests.model.cm.ShortcutContent;
 import com.enonic.autotests.model.cm.StructuredContent;
 import com.enonic.autotests.model.cm.UnstructuredContent;
@@ -115,61 +117,61 @@ public class TestDataConvertor
 
 	public static BaseAbstractContent convertXmlDataToContent(AbstractContentXml xmlContent)
 	{
-		BaseAbstractContent content = null;
-
+		
+		Builder<?> builder = null;
 		if (xmlContent instanceof PageXml)
 		{
-			PageContent page = new PageContent();
-			content = page;
+			builder = PageContent.builder();
+			
 
 		} else if (xmlContent instanceof SpaceXml)
 		{
-			Space space = new Space();
-			content = space;
+			builder = Space.builder();
+		
 		} else if (xmlContent instanceof MixinXml)
 		{
-			MixinContent mixin = new MixinContent();
+			builder = MixinContent.builder();
 
 			
-			List<AdressXml> xmlAdrList = ((MixinXml) xmlContent).getAdressList();
-			List<Address> addressList = convertXmlDataToAddresList(xmlAdrList);
-			mixin.setAddressList(addressList);
-			content = mixin;
+//			List<AdressXml> xmlAdrList = ((MixinXml) xmlContent).getAdressList();
+//			List<Address> addressList = convertXmlDataToAddresList(xmlAdrList);
+//			mixin.setAddressList(addressList);
+//			content = mixin;
 
 		} else if (xmlContent instanceof UnstructuredXml)
 		{
-			UnstructuredContent unstr = new UnstructuredContent();
-			content = unstr;
+			builder =  UnstructuredContent.builder();
+			
 
 		} else if (xmlContent instanceof StructuredXml)
 		{
-			StructuredContent structured = new StructuredContent();
-			content = structured;
+			builder = StructuredContent.builder();
+			
 
 		} else if (xmlContent instanceof MediaXml)
 		{
-			MediaContent media = new MediaContent();
-			content = media;
+			builder = MediaContent.builder();
+			
 
 		} else if (xmlContent instanceof ShortcutXml)
 		{
-			ShortcutContent shortcut = new ShortcutContent();
-			content = shortcut;
+			builder = ShortcutContent.builder();
+			
 
 		} else if (xmlContent instanceof CitationXml)
 		{
-			CitationContent citation = new CitationContent();
-			content = citation;
+			builder = CitationContent.builder();
+			
 
 		} else if (xmlContent instanceof FolderXml)
 		{
-			FolderContent folder = new FolderContent();
-			content = folder;
+			builder= FolderContent.builder();
+			
 
 		}else if(xmlContent instanceof ArchiveXml)
 		{
-			ArchiveContent archive = new ArchiveContent();
-			content = archive;
+			builder = ArchiveContent.builder();
+			
 		}
 		
 		else
@@ -177,10 +179,14 @@ public class TestDataConvertor
 
 			throw new UnsupportedOperationException("this content type  not supported " + xmlContent.getDisplayName());
 		}
-		content.setName(xmlContent.getName());
-		content.setDisplayName(xmlContent.getDisplayName());
+		builder.withName(xmlContent.getName());
+		builder.withDisplayName(xmlContent.getDisplayName());
 		ContentTypes ctype = TestUtils.getInstance().getContentType(xmlContent.getContentType());
-		content.setType(ctype);
-		return content;
+		builder.withType(ctype);
+//		content.setName(xmlContent.getName());
+//		content.setDisplayName(xmlContent.getDisplayName());
+//		ContentTypes ctype = TestUtils.getInstance().getContentType(xmlContent.getContentType());
+//		content.setType(ctype);
+		return builder.build();
 	}
 }
