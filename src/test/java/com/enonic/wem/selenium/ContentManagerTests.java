@@ -4,10 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.enonic.autotests.services.ContentManagerService;
-import com.enonic.autotests.testdata.TestDataConvertor;
-import com.enonic.autotests.testdata.cm.AbstractContentXml;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.wem.selenium.provider.TestCMAppProvider;
 
 /**
  * 

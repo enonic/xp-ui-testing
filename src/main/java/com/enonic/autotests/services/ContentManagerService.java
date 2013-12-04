@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.cm.AddNewContentWizard;
 import com.enonic.autotests.pages.cm.CMSpacesPage;
 import com.enonic.autotests.pages.cm.ContentInfoPage;
 import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
+import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Service for 'Content Manager' application.
