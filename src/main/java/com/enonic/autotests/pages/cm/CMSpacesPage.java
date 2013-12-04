@@ -663,7 +663,7 @@ public class CMSpacesPage extends Page
 	 */
 	public void waituntilPageLoaded(long timeout)
 	{
-		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SPACES_TABLE_CELLS_XPATH)));
+		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TITLE_XPATH)));
 	}
 
 	/**
