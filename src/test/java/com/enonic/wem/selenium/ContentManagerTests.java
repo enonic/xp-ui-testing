@@ -4,6 +4,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.enonic.autotests.services.ContentManagerService;
+import com.enonic.autotests.testdata.TestDataConvertor;
+import com.enonic.autotests.testdata.cm.AbstractContentXml;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.wem.selenium.provider.TestCMAppProvider;
 
 /**
  * 
@@ -21,7 +25,8 @@ public class ContentManagerTests extends BaseTest
 	{
 		logger.info("STARTED ##### opens a Content Manager Application and verify it ");
 		boolean result = cManagerService.openContentManagerAppAndVerify(getTestSession());
-		Assert.assertTrue(result);
+		TestUtils.getInstance().saveScreenshot(getTestSession());
+		Assert.assertTrue(result, "Content Manager opened, but page has wrong details");		
 		logger.info("Test Finished $$$$  Content Manager Application opened and verified");
 	}
 
