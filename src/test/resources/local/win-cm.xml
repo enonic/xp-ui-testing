@@ -4,7 +4,8 @@
 	<parameter name="platform" value="windows" />
 	<parameter name="isRemote" value="false" />
 		
-	<parameter name="base.url" value="http://localhost:9999/admin/apps/app-launcher/index.html"/>
+	<parameter name="base.url" value="http://localhost:9999/admin#/home"/>
+	                                
 
 	<test verbose="2" name="FirefoxTests">
 		<parameter name="browser" value="firefox" />

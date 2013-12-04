@@ -21,6 +21,7 @@ public class ContentManagerService
 	{
 		// 1. open a 'content manager'
 		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = true;
 		result &=cmPage.verifyTitle();
 		//result &=cmPage.verifyAllControls();
