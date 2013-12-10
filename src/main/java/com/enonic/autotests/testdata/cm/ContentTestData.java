@@ -19,7 +19,8 @@ public class ContentTestData
 	               @XmlElement(name = "shortcut", type = ShortcutXml.class) , @XmlElement(name = "unstructured", type = UnstructuredXml.class),
 	               @XmlElement(name = "structured", type = StructuredXml.class) , @XmlElement(name = "media", type = MediaXml.class),
 	               @XmlElement(name = "citation", type = CitationXml.class),@XmlElement(name = "article", type = ArticleXml.class),
-	               @XmlElement(name = "archive", type = ArchiveXml.class)
+	               @XmlElement(name = "archive", type = ArchiveXml.class),@XmlElement(name = "text", type = TextXml.class),
+	               @XmlElement(name = "data", type = DataXml.class)
 	             })
 	public List<AbstractContentXml> getContentList()
 	{

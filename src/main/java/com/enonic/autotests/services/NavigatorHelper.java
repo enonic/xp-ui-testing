@@ -8,12 +8,12 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.model.User;
 import com.enonic.autotests.pages.HomePage;
+import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.accounts.AccountsPage;
-import com.enonic.autotests.pages.cm.CMSpacesPage;
-import com.enonic.autotests.pages.schemamanager.SchemasPage;
+import com.enonic.autotests.pages.cm.ContentTablePage;
+import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
 import com.enonic.autotests.pages.spaceadmin.SpaceAdminPage;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -23,7 +23,8 @@ public class NavigatorHelper
 	/**
 	 * Opens 'Space Admin' application.
 	 * 
-	 * @param testSession {@link TestSession} instance
+	 * @param testSession
+	 *            {@link TestSession} instance
 	 * @return {@link SpaceAdminPage} instance.
 	 */
 	public static SpaceAdminPage openSpaceAdmin(TestSession testSession)
@@ -36,43 +37,61 @@ public class NavigatorHelper
 	/**
 	 * Opens 'Content Manager' application.
 	 * 
-	 * @param testSession {@link TestSession} instance.
+	 * @param testSession
+	 *            {@link TestSession} instance.
 	 * @return {@link SpaceAdminPage} instance.
 	 */
-	public static CMSpacesPage openContentManager(TestSession testSession)
+	public static ContentTablePage openContentManager(TestSession testSession)
 	{
-		if(CMSpacesPage.isOpened(testSession))
+		if (testSession.isLoggedIn())
 		{
-			return new CMSpacesPage(testSession);
-		}else
+			if (ContentTablePage.isOpened(testSession))
+			{
+				return new ContentTablePage(testSession);
+			}
+			boolean isHomeButtonPresent = TestUtils.getInstance().waitAndFind(By.xpath(Page.HOME_BUTTON_XPATH), testSession.getDriver());
+			if (!isHomeButtonPresent)
+			{
+				throw new TestFrameworkException("'go to home' button was not found");
+			}
+			testSession.getDriver().findElement(By.xpath(Page.HOME_BUTTON_XPATH)).click();
+			HomePage homepage = new HomePage(testSession);
+			testSession.getDriver().switchTo().window(testSession.getWindowHandle());
+			homepage.openContentManagerApplication();
+			return new ContentTablePage(testSession);
+		}
+      // if user not logged in:
+		else
 		{
+
 			HomePage home = loginAndOpenHomePage(testSession);
-			CMSpacesPage cmPage = home.openContentManagerApplication();
+			ContentTablePage cmPage = home.openContentManagerApplication();
 			cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
 			return cmPage;
 		}
-		
+
 	}
-	
-	public static SchemasPage openSchemaManager(TestSession testSession)
+
+	public static SchemaTablePage openSchemaManager(TestSession testSession)
 	{
-		if(CMSpacesPage.isOpened(testSession))
+		if (ContentTablePage.isOpened(testSession))
 		{
-			return new SchemasPage(testSession);
-		}else
+			return new SchemaTablePage(testSession);
+		} else
 		{
 			HomePage home = loginAndOpenHomePage(testSession);
-			SchemasPage schemasPage = home.openSchemaManagerApplication();
+			SchemaTablePage schemasPage = home.openSchemaManagerApplication();
 			schemasPage.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 			return schemasPage;
 		}
-		
+
 	}
 
 	/**
 	 * Open 'Home' page, click by 'Accounts' link and open application's page.
 	 * 
-	 * @param testSession {@link TestSession} instance.
+	 * @param testSession
+	 *            {@link TestSession} instance.
 	 * @return {@link AccountsPage} instance.
 	 */
 	public static AccountsPage openAccounts(TestSession testSession)
@@ -82,7 +101,8 @@ public class NavigatorHelper
 	}
 
 	/**
-	 * @param testSession {@link TestSession} instance.
+	 * @param testSession
+	 *            {@link TestSession} instance.
 	 * @param iframeXpath
 	 *            frame's xpath.
 	 */
@@ -97,11 +117,13 @@ public class NavigatorHelper
 		}
 		testSession.getDriver().switchTo().frame(frames.get(0));
 	}
-	
+
 	/**
-	 * 'Login' to cms and opens the 'Home' page that contains links to all applications.
+	 * 'Login' to cms and opens the 'Home' page that contains links to all
+	 * applications.
 	 * 
-	 * @param testSession {@link TestSession} instance.
+	 * @param testSession
+	 *            {@link TestSession} instance.
 	 * @return {@link HomePage} instance.
 	 */
 	public static HomePage loginAndOpenHomePage(TestSession testSession)

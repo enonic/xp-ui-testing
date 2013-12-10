@@ -4,7 +4,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.model.schemamanger.ContentType;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.schemamanager.AddNewContentTypeWizard;
-import com.enonic.autotests.pages.schemamanager.SchemasPage;
+import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
 
 public class ContentTypeService
 {
@@ -15,11 +15,11 @@ public class ContentTypeService
 	 * @param testSession
 	 * @param contentType
 	 * @param isCloseWizard
-	 * @return {@link SchemasPage} instance if wizard was closed.
+	 * @return {@link SchemaTablePage} instance if wizard was closed.
 	 */
-	public Page createNewContentType(TestSession testSession, ContentType contentType, boolean isCloseWizard)
+	public Page createContentType(TestSession testSession, ContentType contentType, boolean isCloseWizard)
 	{
-		SchemasPage schemaManagerPage = NavigatorHelper.openSchemaManager(testSession);
+		SchemaTablePage schemaManagerPage = NavigatorHelper.openSchemaManager(testSession);
 		schemaManagerPage.doAddContentType(contentType,isCloseWizard);
 
 		if (isCloseWizard)
@@ -39,13 +39,13 @@ public class ContentTypeService
 	 * 
 	 * @param testSession
 	 * @param contentTypeToDelete
-	 * @return {@link SchemasPage} instance.
+	 * @return {@link SchemaTablePage} instance.
 	 */
-	public SchemasPage deleteContentType(TestSession testSession, ContentType contentTypeToDelete)
+	public SchemaTablePage deleteContentType(TestSession testSession, ContentType contentTypeToDelete)
 	{
-		SchemasPage spacesPage = NavigatorHelper.openSchemaManager(testSession);
+		SchemaTablePage spacesPage = NavigatorHelper.openSchemaManager(testSession);
 
 		spacesPage.doDeleteContentType(contentTypeToDelete);
-		return new SchemasPage(testSession);
+		return new SchemaTablePage(testSession);
 	}
 }

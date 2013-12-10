@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
@@ -19,10 +21,7 @@ public abstract class BaseWizardPage extends Page {
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
 	public static  String OBJECT_NAME_XPATH = "//span[@class='label' and contains(.,'%s')]";
-	
-	public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'appbar')]/button[@class='launcher-button']";
-
-	
+			
 	public static final String TOOLBAR_SAVE_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']";
 	public static final String TOOLBAR_CLOSEWIZARD_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Close']";
 	
@@ -31,8 +30,6 @@ public abstract class BaseWizardPage extends Page {
 	@FindBy(xpath = TOOLBAR_CLOSEWIZARD_BUTTON_XPATH )
 	protected WebElement closeButton;
 
-	@FindBy(xpath = HOME_BUTTON_XPATH)
-	protected WebElement gotoHomeButton;
 
 	@FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
 	protected WebElement toolbarSaveButton;
@@ -101,6 +98,11 @@ public abstract class BaseWizardPage extends Page {
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(circleXpath));
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
 
+	}
+	public void waitElementClickable(By by, long timeout)
+	{
+		
+		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 }

@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.FluentWait;
 
@@ -19,6 +20,10 @@ public abstract class Page
 
 	private TestSession session;
 
+	public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'appbar')]/button[@class='launcher-button']";
+	@FindBy(xpath = HOME_BUTTON_XPATH)
+	protected WebElement gotoHomeButton;
+
 	private Logger logger = Logger.getLogger();
 
 	public Page( TestSession session )
@@ -30,6 +35,14 @@ public abstract class Page
 	public TestSession getSession()
 	{
 		return session;
+	}
+
+	public HomePage openHomePage()
+	{
+		gotoHomeButton.click();
+		HomePage page = new HomePage(getSession());
+		page.waitUntilAllFramesLoaded();
+		return page;
 	}
 
 	public void setSession(TestSession session)

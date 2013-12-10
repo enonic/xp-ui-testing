@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.cm;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -10,6 +11,7 @@ import com.enonic.autotests.model.cm.ArticleContent;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
 import com.enonic.autotests.model.cm.MixinContent;
 import com.enonic.autotests.pages.BaseWizardPage;
+import com.enonic.autotests.pages.CloseWizardDialog;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -127,7 +129,9 @@ public class AddNewContentWizard extends BaseWizardPage
 	public void doTypeDataAndSave( BaseAbstractContent content)
 	{
 		// 1. type a data: 'name' and 'Display Name'.
+		waitElementClickable(By.name("displayName"), 2);
 		TestUtils.getInstance().clearAndType(getSession(), displayNameInput, content.getDisplayName());
+		waitElementClickable(By.name("name"), 2);
 		TestUtils.getInstance().clearAndType(getSession(), nameInput, content.getName());
 		
 		// 2. populate main tab
@@ -168,7 +172,14 @@ public class AddNewContentWizard extends BaseWizardPage
 	{
 		doTypeDataAndSave( content);
 		closeButton.click();
-		CMSpacesPage page = new CMSpacesPage(getSession());
+		
+		    //TODO this part should be removed, when BUG CMS-2562 will be fixed
+				CloseWizardDialog dialog = new CloseWizardDialog(getSession());
+				dialog.waituntilPageLoaded(1);
+				dialog.doCloseNoSave();
+			//========================================================================================
+				
+		ContentTablePage page = new ContentTablePage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
 	}

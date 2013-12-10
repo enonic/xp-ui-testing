@@ -31,7 +31,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.logger.Logger;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
+import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypeName;
 
 public class TestUtils
 {
@@ -55,6 +55,7 @@ public class TestUtils
 		return instance;
 	}
 
+	
 	public String buildFullNameOfContent(String contentName, String... parentNames)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -81,19 +82,63 @@ public class TestUtils
 
 	}
 
-	public ContentTypes getContentType(String ctype)
+	public ContentTypeName getContentType(String ctype)
 	{
-		ContentTypes result = null;
-		ContentTypes[] values = ContentTypes.values();
-		for(ContentTypes val: values )
+		ContentTypeName result = null;
+		ContentTypeName[] values = ContentTypeName.values();
+		for(ContentTypeName val: values )
 		{
-			if(val.getValue().equals(ctype))
+			if(val.getValue().equalsIgnoreCase(ctype))
 			{
 				result =  val;
 				
 			}
 		}
 		return result;
+	}
+	
+	
+	public Boolean waitElementExist(final WebDriver driver, final String xpath, long timeout)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, timeout);
+		return wait.until( new ExpectedCondition<Boolean>()
+	        {
+			     @Override
+	            public Boolean apply( WebDriver webDriver )
+	            {
+	                try
+	                {
+	                    driver.findElement(By.xpath(xpath )); 
+	                   
+	                }
+	                catch( StaleElementReferenceException e )
+	                {
+	                   
+	                    return false;
+	                }
+	                return true;
+	            }
+	        } );
+	}
+	public WebElement findDynamicElement(final WebDriver driver, final String xpath, long timeout)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, timeout);
+		return wait.until( new ExpectedCondition<WebElement>()
+	        {
+			     @Override
+	            public WebElement apply( WebDriver webDriver )
+	            {
+	                try
+	                {
+	                    return  driver.findElement(By.xpath(xpath )); 
+	                                      
+	                }
+	                catch( StaleElementReferenceException e )
+	                {
+	                    return null;
+	                }
+	            }
+	        } );
 	}
 	public boolean waitAndCheckAttrValue(WebDriver webDriver, final WebElement element, final String attributeName, final String attributeValue, long timeout)
 	{
@@ -367,10 +412,6 @@ public class TestUtils
 			}
 		});
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		// TODO add perfomance log
-		// logger.perfomance("clickByLocator:" + locator.toString(), startTime);
-		// staticlogger.info("Finished click after waiting for " + totalTime +
-		// " milliseconds.");
 	}
 
 	public String getNotificationMessage(final By locator, final WebDriver driver, long timeout)

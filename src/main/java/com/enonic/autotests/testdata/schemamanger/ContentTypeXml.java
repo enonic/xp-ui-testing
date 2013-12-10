@@ -8,10 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "contentTypes")
 public class ContentTypeXml
-{
-
-	private String displayName;
-	
+{	
 	private String name;
 	
 	private String kind;
@@ -31,15 +28,7 @@ public class ContentTypeXml
 		this.config = config;
 	}
 
-	public String getDisplayName()
-	{
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName)
-	{
-		this.displayName = displayName;
-	}
+	
 	public String getKind()
 	{
 		return kind;

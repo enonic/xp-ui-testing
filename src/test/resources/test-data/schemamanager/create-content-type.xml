@@ -1,18 +1,17 @@
 <contentTypeTestData>
 	<contentTypes>
 		<contentType>
-			<displayName>ctFolder</displayName>
-			<displayName>ctFolder</displayName>
-			<kind>ContentType</kind>
+			<name>random generated</name>
+			<kind>Content Type</kind>
 			<config>
 				<![CDATA[             	
              	<type>
-              		<name>ctFolder</name> 
                		<module>system</module>  
               		<display-name>ctFolder</display-name> 
               		<content-display-name-script />
-               		<super-type /> 
+               		<super-type>folder</super-type>
                		<is-abstract>false</is-abstract>
+               		<is-built-in>true</is-built-in>
                		<is-final>false</is-final>
                		<allow-children>true</allow-children>
                		<form />
@@ -20,46 +19,33 @@
                ]]>
 			</config>
 		</contentType>
+
 		<contentType>
-			<displayName>ctSpace</displayName>
-			<kind>ContentType</kind>
-			<config>
-				<![CDATA[	
-                   <type>
-                     <name>space1</name>
-                   	 <module>system</module>
-  				     <display-name>ctSpace</display-name>
-  				     <content-display-name-script />
-                     <super-type />
-                     <is-abstract>false</is-abstract>
-                     <is-final>true</is-final>
-                     <allow-children>true</allow-children>
-                    <form />
-                  </type>
- 				]]>
-			</config>
-		</contentType>
-<!--  
-		<contentType>
-			<displayName>ctStructured</displayName>
-			<kind>ContentType</kind>
+		    <name>random generated</name>
+			<kind>Content Type</kind>
 			<config>
 				<![CDATA[	
 					<type>
-  						<name>structured1</name>
-  						<module>system</module>
-  						<display-name>Structured1</display-name>
-  						<content-display-name-script />
-  						<super-type />
-  						<is-abstract>true</is-abstract>
-  						<is-final>false</is-final>
- 						 <allow-children>true</allow-children>
-  						<form />
+						<display-name>Text Line</display-name>
+					 	<content-display-name-script />
+					 	<super-type>structured</super-type>
+					 	<is-abstract>false</is-abstract>
+					 	<is-final>true</is-final>
+					 	<is-built-in>false</is-built-in>
+					 	<allow-child-content>true</allow-child-content>
+					 	<form>
+					   		<input type="TextLine" name="textline">
+					   			<label>Text Line</label>
+					   			<immutable>false</immutable>
+					    		<indexed>true</indexed>
+					     		<custom-text />
+					      		<help-text /> 
+					     		<occurrences minimum="0" maximum="1" />
+					      	 </input> 
+					     </form>
 					</type>
 				]]>
 			</config>
 		</contentType>
-		
-		-->
 	</contentTypes>
 </contentTypeTestData>

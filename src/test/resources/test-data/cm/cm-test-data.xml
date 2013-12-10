@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentTestData>
+	<!-- 
 	<page>
 		<caseInfo>Try to add content with 'Page' type</caseInfo>
 		<displayName>page-displayname</displayName>
 		<name>page-content</name>
 		<contentType>Page</contentType>
 	</page>
+-->
 	<folder>
 		<caseInfo>Try to add content with 'Folder' type</caseInfo>
 		<displayName>folder-displayname</displayName>
@@ -13,30 +15,18 @@
 		<contentType>Folder</contentType>
 	</folder>
 
-<!-- 
-	<mixin>
-		<caseInfo>Try to add content with 'Mixin' type</caseInfo>
-		<name>mixin-name</name>
-		<displayName>mixin-displayName</displayName>
-		<contentType>Mixin</contentType>
-		<adressList>
-			<adress>
-				<postalCode>1234567</postalCode>
-				<postalPlace>place</postalPlace>
-				<street>Kirkegata</street>
-			</adress>
-
-		</adressList>
-	</mixin>
-
- 
-	<space>
-		<caseInfo>Try to add content with 'Space' type</caseInfo>
-		<displayName>space-displayName</displayName>
-		<name>space-content</name>
-		<contentType>Space</contentType>
-	</space>
-	-->
+	 <data>
+	 <caseInfo>Try to add content with 'Data' type</caseInfo>
+		<displayName>data-displayName</displayName>
+		<name>data-content</name>
+		<contentType>Data</contentType>
+	 </data>
+	  <text>
+	 <caseInfo>Try to add content with 'Text' type</caseInfo>
+		<displayName>text-displayName</displayName>
+		<name>text-content</name>
+		<contentType>Text</contentType>
+	 </text>
 	<unstructured>
 		<caseInfo>Try to add content with 'Unstructured' type</caseInfo>
 		<displayName>unstructured-displayName</displayName>

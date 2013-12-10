@@ -13,6 +13,12 @@
 		<classes>
 		
 			<class name="com.enonic.wem.selenium.ContentManagerTests" />
+			<class name="com.enonic.wem.selenium.ContentTypeTest" />
+			
+			
+			<!-- removed due the CMS bug -->
+			<!-- <class name="com.enonic.wem.selenium.TestCMFiltering" />  -->
+			
 
 		</classes>
 

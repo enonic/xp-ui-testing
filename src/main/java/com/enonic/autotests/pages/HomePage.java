@@ -7,8 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.accounts.AccountsPage;
-import com.enonic.autotests.pages.cm.CMSpacesPage;
-import com.enonic.autotests.pages.schemamanager.SchemasPage;
+import com.enonic.autotests.pages.cm.ContentTablePage;
+import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
 import com.enonic.autotests.pages.spaceadmin.SpaceAdminPage;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -21,7 +21,8 @@ public class HomePage extends Page
 {
 	public static String TITLE = "Enonic CMS - Boot Page";
 
-	@FindBy(xpath = "//div[@class = 'name-container' and text()='Content Manager']")
+	//@FindBy(xpath = "//div[@class = 'name-container' and text()='Content Manager']")
+	@FindBy(xpath = "//a[contains(@href,'Content Manager')]")
 	private WebElement contentManager;
 	
 	
@@ -78,7 +79,7 @@ public class HomePage extends Page
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
 
 	}
-	public SchemasPage openSchemaManagerApplication()
+	public SchemaTablePage openSchemaManagerApplication()
 	{
 		schemaManager.click();
 		
@@ -86,7 +87,7 @@ public class HomePage extends Page
 		getSession().setWindowHandle(whandle);
 		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_SCHEMA_MANAGER_FRAME_XPATH);
 		
-		return new SchemasPage(getSession());
+		return new SchemaTablePage(getSession());
 	}
 
 	public SpaceAdminPage openSpaceAdminApplication()
@@ -102,15 +103,14 @@ public class HomePage extends Page
 
 	
 
-	public CMSpacesPage openContentManagerApplication()
+	public ContentTablePage openContentManagerApplication()
 	{
 		contentManager.click();
-		
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
 		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_CONTENT_MANAGER_FRAME_XPATH);
 		
-		return new CMSpacesPage(getSession());
+		return new ContentTablePage(getSession());
 	}
 
 	public AccountsPage openAccountsApplication()

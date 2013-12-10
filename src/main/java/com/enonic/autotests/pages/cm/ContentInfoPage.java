@@ -1,6 +1,5 @@
 package com.enonic.autotests.pages.cm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -8,32 +7,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.model.cm.ArchiveContent;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
-import com.enonic.autotests.model.cm.MediaContent;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.utils.TestUtils;
 
 public class ContentInfoPage extends Page
 {
 	
-	public static  String RED_CIRCLE_XPATH = "//span[@class='count' and contains(.,'%s')]";
+	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
-	public static  String OBJECT_NAME_XPATH = "//span[@class='title' and contains(.,'%s')]";
+	public static  String OBJECT_NAME_XPATH = "//span[@class='label' and contains(.,'%s')]";
 	
 	public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'x-btn start-button')]";
 
 	private static  String H1_NAME_XPATH = "//div[contains(@class,'x-panel-body-default-closable')]//div[contains(@class,'admin-detail-header')]/h1[contains(.,'%s')]";
 	private static  String SPAN_FULL_NAME_XPATH = "//div[contains(@class,'x-panel-body-default-closable')]//div[contains(@class,'admin-detail-header')]//span[contains(.,'%s')]";
 	
-	private static final String TOOLBAR_DUPLICATE_BUTTON_XPATH = "//div[contains(@class,'admin-preview-panel')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Duplicate')]]";
-	private static final String TOOLBAR_EDIT_BUTTON_XPATH = "//div[contains(@class,'admin-preview-panel')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Edit')]]";
-	private static final String TOOLBAR_NEW_BUTTON_XPATH = "//div[contains(@class,'admin-preview-panel')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'New')]]";
-	private static final String TOOLBAR_DELETE_BUTTON_XPATH = "//div[contains(@class,'admin-preview-panel')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Delete')]]";
+	private static final String TOOLBAR_EDIT_BUTTON_XPATH = "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Edit']";
 	
-	@FindBy(xpath = TOOLBAR_NEW_BUTTON_XPATH)
-	private WebElement newButtonToolbar;
+	private static final String TOOLBAR_DELETE_BUTTON_XPATH = "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Delete']";
+	
 	
 	@FindBy(xpath = TOOLBAR_EDIT_BUTTON_XPATH)
 	private WebElement editButtonToolbar;
@@ -41,17 +36,10 @@ public class ContentInfoPage extends Page
 	@FindBy(xpath = TOOLBAR_DELETE_BUTTON_XPATH)
 	private WebElement deleteButtonToolbar;
 	
-	@FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
-	private WebElement duplicateButtonToolbar;
 	
 	@FindBy(xpath = "//div[contains(@class,'admin-preview-panel')]//button[@class = 'x-btn-center']//span[@class='x-btn-inner' and contains(., 'Close')]")
 	protected WebElement closeButton;
 	
-	//@FindBy(xpath = TOOLBAR_EXPORT_BUTTON_XPATH)
-	//private WebElement exportButtonToolbar;
-	
-	//@FindBy(xpath = TOOLBAR_MOVE_BUTTON_XPATH)
-	//private WebElement moveButtonToolbar;
 	
 	/**
 	 * The constructor.
@@ -82,35 +70,40 @@ public class ContentInfoPage extends Page
 	{
 		editButtonToolbar.click();
 		AddNewContentWizard wizard = new AddNewContentWizard(getSession());
-		wizard.waitUntilWizardOpened(contentDisplayName, 1);
+		//when content opened and the 'Edit' button pressed, new wizard page appears and '2'  should be present in the red cirkle.
+		wizard.waitUntilWizardOpened(contentDisplayName, 2);
 		wizard.doTypeDataSaveAndClose(newContent);
 	}
-	public void doDeleteContentAndClosePreviewPage(String contentDisplayName)
+	/**
+	 * Clicks by 'Delete' button on toolbar and confirms deletion. 
+	 * @param contentDisplayName
+	 */
+	public void doDeleteContent(String contentDisplayName)
 	{
 		//1. click by delete and open a confirm dialog:
 		deleteButtonToolbar.click();
-		List<String> displayNamesToDelete =  new ArrayList<>();
-		displayNamesToDelete.add(contentDisplayName);
-		DeleteContentDialog dialog = new DeleteContentDialog(getSession(), displayNamesToDelete );
+		ConfirmationDialog dialog = new ConfirmationDialog(getSession());
 		boolean isOpened = dialog.verifyIsOpened();
 		if (!isOpened)
 		{
 			throw new TestFrameworkException("Confirm 'delete content' dialog was not opened!");
 		}
 		//2. confirm and close dialog
-		dialog.doDelete();
+		dialog.doConfirm();
 		boolean isClosed = dialog.verifyIsClosed();
 		if (!isClosed)
 		{
-			throw new TestFrameworkException("Confirm 'delete content' dialog was not closed!");
+			throw new DeleteCMSObjectException("Confirm 'delete content' dialog was not closed!");
 		}
 		
-		//3. close preview page.
-		closeButton.click();
-		CMSpacesPage table = new CMSpacesPage(getSession());
+		ContentTablePage table = new ContentTablePage(getSession());
 		table.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 	}
 	
+	/**
+	 * @param content
+	 * @return
+	 */
 	public boolean  verifyContentInfoPage(BaseAbstractContent content)
 	{
 		boolean result = true;
@@ -133,26 +126,15 @@ public class ContentInfoPage extends Page
 		return result;
 	}
 	
+	/**
+	 * @param content
+	 * @return
+	 */
 	public boolean verifyToolbar(BaseAbstractContent content)
 	{
 		boolean result = true;
 		boolean tmp;
-		if(content instanceof ArchiveContent  || content instanceof MediaContent)
-		{
-			tmp = newButtonToolbar.isDisplayed() && !newButtonToolbar.isEnabled();
-			if(!tmp)
-			{
-				getLogger().info(String.format("the new button has wrong state for %s content: isEnabled =",content.getClass().getName()) +newButtonToolbar.isEnabled());
-			}
-			result &= tmp;
-		}else{
-			tmp = newButtonToolbar.isDisplayed() && newButtonToolbar.isEnabled();
-			if(!tmp)
-			{
-				getLogger().info("the new button has wrong state");
-			}
-			result &= tmp;
-		}
+		
 		
 		tmp = deleteButtonToolbar.isDisplayed() && deleteButtonToolbar.isEnabled();
 		if(!tmp)
@@ -166,13 +148,6 @@ public class ContentInfoPage extends Page
 		if(!tmp)
 		{
 			getLogger().info("the edit button has wrong state");
-		}
-		result &= tmp;
-		
-		tmp = duplicateButtonToolbar.isDisplayed() && duplicateButtonToolbar.isEnabled();
-		if(!tmp)
-		{
-			getLogger().info("the duplicate button has wrong state");
 		}
 		result &= tmp;		
 		return result;

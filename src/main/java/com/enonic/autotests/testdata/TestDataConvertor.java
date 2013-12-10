@@ -1,7 +1,6 @@
 package com.enonic.autotests.testdata;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import com.enonic.autotests.model.Space;
@@ -10,17 +9,19 @@ import com.enonic.autotests.model.UserInfo;
 import com.enonic.autotests.model.cm.Address;
 import com.enonic.autotests.model.cm.ArchiveContent;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
+import com.enonic.autotests.model.cm.BaseAbstractContent.Builder;
 import com.enonic.autotests.model.cm.CitationContent;
+import com.enonic.autotests.model.cm.DataContent;
 import com.enonic.autotests.model.cm.FolderContent;
 import com.enonic.autotests.model.cm.MediaContent;
 import com.enonic.autotests.model.cm.MixinContent;
 import com.enonic.autotests.model.cm.PageContent;
-import com.enonic.autotests.model.cm.BaseAbstractContent.Builder;
 import com.enonic.autotests.model.cm.ShortcutContent;
 import com.enonic.autotests.model.cm.StructuredContent;
+import com.enonic.autotests.model.cm.TextContent;
 import com.enonic.autotests.model.cm.UnstructuredContent;
 import com.enonic.autotests.model.schemamanger.ContentType;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
+import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
 import com.enonic.autotests.testdata.accounts.SystemUserXml;
 import com.enonic.autotests.testdata.accounts.UserInfoXml;
@@ -28,6 +29,7 @@ import com.enonic.autotests.testdata.cm.AbstractContentXml;
 import com.enonic.autotests.testdata.cm.AdressXml;
 import com.enonic.autotests.testdata.cm.ArchiveXml;
 import com.enonic.autotests.testdata.cm.CitationXml;
+import com.enonic.autotests.testdata.cm.DataXml;
 import com.enonic.autotests.testdata.cm.FolderXml;
 import com.enonic.autotests.testdata.cm.MediaXml;
 import com.enonic.autotests.testdata.cm.MixinXml;
@@ -35,6 +37,7 @@ import com.enonic.autotests.testdata.cm.PageXml;
 import com.enonic.autotests.testdata.cm.ShortcutXml;
 import com.enonic.autotests.testdata.cm.SpaceXml;
 import com.enonic.autotests.testdata.cm.StructuredXml;
+import com.enonic.autotests.testdata.cm.TextXml;
 import com.enonic.autotests.testdata.cm.UnstructuredXml;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
 import com.enonic.autotests.utils.TestUtils;
@@ -88,7 +91,7 @@ public class TestDataConvertor
 	{
 		ContentType ct = new  ContentType();
 		ct.setConfigData(xmlData.getConfig());
-		ct.setDisplayName(xmlData.getDisplayName());
+		ct.setName(xmlData.getName());
 		KindOfContentTypes kind = getKind(xmlData.getKind());
 		if(kind == null)
 		{
@@ -115,6 +118,11 @@ public class TestDataConvertor
 		return result;
 	}
 
+	/**
+	 * Predefined names of content type used.
+	 * @param xmlContent
+	 * @return
+	 */
 	public static BaseAbstractContent convertXmlDataToContent(AbstractContentXml xmlContent)
 	{
 		
@@ -132,11 +140,7 @@ public class TestDataConvertor
 		{
 			builder = MixinContent.builder();
 
-			
-//			List<AdressXml> xmlAdrList = ((MixinXml) xmlContent).getAdressList();
-//			List<Address> addressList = convertXmlDataToAddresList(xmlAdrList);
-//			mixin.setAddressList(addressList);
-//			content = mixin;
+
 
 		} else if (xmlContent instanceof UnstructuredXml)
 		{
@@ -173,7 +177,16 @@ public class TestDataConvertor
 			builder = ArchiveContent.builder();
 			
 		}
-		
+		else if(xmlContent instanceof DataXml)
+		{
+			builder = DataContent.builder();
+			
+		}
+		else if(xmlContent instanceof TextXml)
+		{
+			builder = TextContent.builder();
+			
+		}
 		else
 		{
 
@@ -181,12 +194,9 @@ public class TestDataConvertor
 		}
 		builder.withName(xmlContent.getName());
 		builder.withDisplayName(xmlContent.getDisplayName());
-		ContentTypes ctype = TestUtils.getInstance().getContentType(xmlContent.getContentType());
-		builder.withType(ctype);
-//		content.setName(xmlContent.getName());
-//		content.setDisplayName(xmlContent.getDisplayName());
-//		ContentTypes ctype = TestUtils.getInstance().getContentType(xmlContent.getContentType());
-//		content.setType(ctype);
+		ContentTypeName ctype = TestUtils.getInstance().getContentType(xmlContent.getContentType().toLowerCase());
+		builder.withType(ctype.getValue());
+
 		return builder.build();
 	}
 }

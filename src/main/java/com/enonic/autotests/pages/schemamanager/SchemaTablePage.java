@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.model.schemamanger.ContentType;
+import com.enonic.autotests.pages.AbstractTablePage;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -19,7 +20,7 @@ import com.enonic.autotests.utils.TestUtils;
  * 'Schema Manager' application, the dashboard page.
  * 
  */
-public class SchemasPage extends Page
+public class SchemaTablePage extends AbstractTablePage
 {
 	private static String titleXpath = "//span[contains(@class,'x-btn-inner') and contains(.,'Schema Manager')]";
 
@@ -65,7 +66,7 @@ public class SchemasPage extends Page
 	 * 
 	 * @param session
 	 */
-	public SchemasPage( TestSession session )
+	public SchemaTablePage( TestSession session )
 	{
 		super(session);
 
@@ -74,11 +75,11 @@ public class SchemasPage extends Page
 	public void doDeleteContentType(ContentType contentTypeToDelete)
 	{
 		
-		String spaceXpath = String.format(CONTENTTYPE_TABLE_ROW, contentTypeToDelete.getDisplayName(), contentTypeToDelete.getName());
+		String spaceXpath = String.format(CONTENTTYPE_TABLE_ROW, contentTypeToDelete.getName(), contentTypeToDelete.getName());
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(spaceXpath));
 		if(elems.size() == 0)
 		{
-			throw new TestFrameworkException("Space to delete was not present in the table or wron xpath! name:" +contentTypeToDelete.getDisplayName());
+			throw new TestFrameworkException("Space to delete was not present in the table or wron xpath! name:" +contentTypeToDelete.getName());
 		}
 
 		if (!elems.get(0).isDisplayed())
@@ -93,7 +94,7 @@ public class SchemasPage extends Page
 		
 		deleteButton.click();
 		List<String> names = new ArrayList<>();
-		names.add(contentTypeToDelete.getDisplayName());
+		names.add(contentTypeToDelete.getName());
 		DeleteContentTypeDialog dialog = new DeleteContentTypeDialog(getSession(), names);
 		boolean result = dialog.verifyIsOpened();
 		if (!result)
@@ -162,20 +163,24 @@ public class SchemasPage extends Page
 		}
 	}
 	
-	public boolean verifyIsContentTypePresentInTable(String displayName,String name)
+	public boolean isContentTypePresentInTable(ContentType contentType)
 	{
-		String spaceDescriptionXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, displayName, name);
+		String superTypeName = contentType.getSuperTypeNameFromConfig();
+		//1. expand a supertype folder:
+		doExpandFolder(superTypeName);
+		
+		String spaceDescriptionXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName());
 		getLogger().info("Check is Space present in table: " + spaceDescriptionXpath);
 	
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(spaceDescriptionXpath));
 
 		if (elems.size() > 0)
 		{
-			getLogger().info("new Space  was found in the Table! name:" +   " displayName:" +displayName);
+			getLogger().info("Content type  was found in the Table! " +   "Name:" +contentType.getName());
 			return true;
 		} else
 		{
-			getLogger().info("new Space  was not found in the Table! name: " +   " displayName:" + displayName);
+			getLogger().info("Content type  was not found in the Table!  " +   "Name:" + contentType.getName());
 			return false;
 		}
 

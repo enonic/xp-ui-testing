@@ -10,7 +10,7 @@ public interface AppConstants {
 	
 	final String APP_CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";
 	
-	final String APP_SCHEMA_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'app=schema-manager')]";
+	final String APP_SCHEMA_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'schema-manager')]";
 	
 	final String APP_ACCOUNTS_FRAME_XPATH = "//iframe[contains(@src,'app-account.html')]";
 	

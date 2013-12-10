@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By.ByXPath;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,69 +15,44 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.model.Space;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
-import com.enonic.autotests.model.schemamanger.ContentType;
-import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
+import com.enonic.autotests.pages.AbstractTablePage;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
  * 'Content Manager' application, the dashboard page.
  * 
  */
-public class CMSpacesPage extends Page
+public class ContentTablePage extends AbstractTablePage
 {
 	private static final String TITLE_XPATH = "//button[contains(@class,'home-button') and contains(.,'Content Manager')]";
+	
 	public static final String SPACES_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
-	
-	private final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
-	@FindBy(xpath = NEW_BUTTON_XPATH)
-	private WebElement newButton;
-	
-	
-
-	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Edit')]]")
-	private WebElement editButton;
-
-	private final String DELETE_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='Delete']";
-	@FindBy(xpath = DELETE_BUTTON_XPATH)
-	private WebElement deleteButton;
 
 	@FindBy(xpath = "//div[@class='toolbar']/button[text()='Duplicate']")
 	private WebElement duplicateButton;
 
-	@FindBy(xpath = "///div[@class='toolbar']/button[text()='Open']")
+	@FindBy(xpath = "//div[@class='toolbar']/button[text()='Open']")
 	private WebElement openButton;
 
 	@FindBy(xpath = "//div[@class='toolbar']/button[text()='Move']")
 	private WebElement moveButton;
 
-	private final String SEARCH_INPUT_XPATH = "//input[@class='text-search-field']";
+	private static final String SEARCH_INPUT_XPATH = "//input[@class='text-search-field']";
 	@FindBy(xpath = SEARCH_INPUT_XPATH)
 	private WebElement searchInput;
 
-	private String TD_SPACE_DISPLAYNAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
-	private String TD_SPACE_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
+	
 
-	private String CHECKBOX_ROW_CHECKER = TD_SPACE_DISPLAYNAME + "/../td[contains(@class,'x-grid-cell-row-checker')]";
-	//private String CHECKBOX_ROW_CHECKER = TD_SPACE_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]";
+	private String CHECKBOX_ROW_CHECKER = TD_FOLDER_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]/div";
 
 	private String DIV_CONTENT_NAME_IN_TABLE = "//div[contains(@class,'x-grid-cell-inner ')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
-
-	private final String ALL_ROWS_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
-	private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
-
-	private final String SELECT_ALL_LINK_XPATH = "//a[contains(@class,'x-toolbar-item') and (contains(.,'Select All') or contains(.,'Select all'))]";
-	@FindBy(xpath = SELECT_ALL_LINK_XPATH)
-	private WebElement selectAllLink;
-
-	private final String CLEAR_SELECTION_LINK_XPATH = "//a[contains(@class,'admin-grid-toolbar-btn-clear-selection')]";
-	@FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
-	private WebElement clearSelectionLink;
-
-	private final String CONTENT_DETAILS_ALL_NAMES_XPATH = "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
-	private String CLOSE_CONTENT_DETAILS_ICON_XPATH = "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p[contains(.,'%s')]/../following::div/a";
 	
-	private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
+	private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
+	
+	private final String CONTENT_DETAILS_ALL_NAMES_XPATH = "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
+	
+	private String CLOSE_CONTENT_DETAILS_ICON_XPATH = "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p[contains(.,'%s')]/../following::div/a";
+
 
 	private ContentFilterPanel contentFilter;
 
@@ -86,7 +61,7 @@ public class CMSpacesPage extends Page
 	 * 
 	 * @param session
 	 */
-	public CMSpacesPage( TestSession session )
+	public ContentTablePage( TestSession session )
 	{
 		super(session);
 
@@ -133,59 +108,9 @@ public class CMSpacesPage extends Page
 		return contentNames;
 	}
 
-	/**
-	 * Clicks by 'Clear Selection' and removes row-selections.
-	 */
-	public void doClearSelection()
-	{
-		boolean isVisibleLink = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(CLEAR_SELECTION_LINK_XPATH), 2l);
-		if (!isVisibleLink)
-		{
-			throw new TestFrameworkException("The link 'Select All' was not found on the page, probably wrong xpath locator");
-		}
-		clearSelectionLink.click();
-	}
 
-	/**
-	 * Finds on page 'Clear selection' link and get text.
-	 * 
-	 * @return for example : 'Clear selection (2)'
-	 */
-	public String getClearSelectionText()
-	{
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(CLEAR_SELECTION_LINK_XPATH));
-		if (elems.size() == 0)
-		{
-			throw new TestFrameworkException("the 'Clear selection' Link was not found, probably wrong xpath locator!");
-		}
-		return clearSelectionLink.getText();
-	}
 
-	/**
-	 * Clicks by "Select All" and selects all items from the table.
-	 * 
-	 * @return the number of selected rows.
-	 */
-	public int doSelectAll()
-	{
-		boolean isVisibleLink = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(SELECT_ALL_LINK_XPATH), 2l);
-		if (!isVisibleLink)
-		{
-			throw new TestFrameworkException("The link 'Select All' was not found on the page, probably wrong xpath locator");
-		}
-		selectAllLink.click();
-		return getSelectedRowNumber();
-	}
 
-	/**
-	 * @return number of rows in the table of content. The row with header is
-	 *         excluded.
-	 */
-	public int getTableRowNumber()
-	{
-		List<WebElement> rows = getSession().getDriver().findElements(By.xpath(ALL_ROWS_IN_CONTENT_TABLE_XPATH));
-		return rows.size();
-	}
 
 	/**
 	 * Gets all content names, showed in the contents-table.
@@ -204,24 +129,7 @@ public class CMSpacesPage extends Page
 
 	}
 
-	/**
-	 * Gets a number of selected items in the table.
-	 * 
-	 * @return a number of selected rows.
-	 */
-	public int getSelectedRowNumber()
-	{
-		int number = 0;
-		List<WebElement> rows = getSession().getDriver().findElements(By.xpath(ALL_ROWS_IN_CONTENT_TABLE_XPATH));
-		for (WebElement row : rows)
-		{
-			if (TestUtils.getInstance().waitAndCheckAttrValue(getSession().getDriver(), row, "class", "x-grid-row-selected", 1l))
-			{
-				number++;
-			}
-		}
-		return number;
-	}
+
 
 	/**
 	 * Finds content by name. Filtering was applied and content filtered.
@@ -243,7 +151,7 @@ public class CMSpacesPage extends Page
 		{
 			for (String parentName : parents )
 			{
-				if (!doExpand(parentName))
+				if (!doExpandFolder(parentName))
 				{
 					// if parent was not expanded, therefore parent content has no child.
 					return false;
@@ -277,88 +185,36 @@ public class CMSpacesPage extends Page
 		return findContentInTable(content, timeout, false);
 	}
 
-	/**
-	 * clicks by 'expand' icon and expands a space.
-	 * 
-	 * @param parentName
-	 * @return true if space is not empty and was expanded, otherwise return
-	 *         false.
-	 */
-	public boolean doExpand(String parentName)
-	{
-		boolean isExpanderPresent = isExpanderPresent(parentName);
-		if (!isExpanderPresent)
-		{
-			getLogger().info("The space: " + parentName + " has no contents");
-			return false;
-		}
-		if (!isRowExapnded(parentName))
-		{
-			expandSpace(parentName);
-			boolean isExpanded = isRowExapnded(parentName);
-			if (!isExpanded)
-			{
-				throw new TestFrameworkException("space " + parentName + " was not expanded");
-			}
-			getLogger().info("parentContent:" + parentName + " expanded == " + isExpanded);
-		}
-
-		return true;
-	}
+//	/**
+//	 * clicks by 'expand' icon and expands a folder.
+//	 * 
+//	 * @param parentName
+//	 * @return true if space is not empty and was expanded, otherwise return
+//	 *         false.
+//	 */
+//	public boolean doExpandFolder(String parentName)
+//	{
+//		boolean isExpanderPresent = isExpanderPresent(parentName);
+//		if (!isExpanderPresent)
+//		{
+//			getLogger().info("The space: " + parentName + " has no contents");
+//			return false;
+//		}
+//		if (!isRowExapnded(parentName))
+//		{
+//			clickByExpanderIcon(parentName);
+//			boolean isExpanded = isRowExapnded(parentName);
+//			if (!isExpanded)
+//			{
+//				throw new TestFrameworkException("space " + parentName + " was not expanded");
+//			}
+//			getLogger().info("parentContent:" + parentName + " expanded == " + isExpanded);
+//		}
+//
+//		return true;
+//	}
 
 	
-
-	private String buildContentExpanderXpath(String name)
-	{
-		return String.format(TD_SPACE_DISPLAYNAME, name) + "//ancestor::td//img[contains(@class,'x-tree-expander')]";
-
-	}
-
-	/**
-	 * Check if space has child. if the attribute 'class' contains a string
-	 * "x-grid-tree-node-leaf", so space has no any child.
-	 * 
-	 * @param parentSpace
-	 * @return true if space has no any children., otherwise true.
-	 */
-	private boolean isExpanderPresent(String parentName)
-	{
-		String expanderElement = String.format(TD_SPACE_DISPLAYNAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
-		boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(expanderElement), getDriver());
-		if (!isPresent)
-		{
-			return false;
-		}
-		
-		//check if dispalyed:
-		if (!findElement(By.xpath(expanderElement)).isDisplayed())
-		{ 
-			TestUtils.getInstance().scrollTableAndFind(getSession(), expanderElement, DIV_SCROLL_XPATH);
-			
-		}
-		return true;
-	}
-
-	private boolean isRowExapnded(String name)
-	{
-		String trXpath = String.format(TD_SPACE_DISPLAYNAME +"/parent::tr", name);
-		
-		//List<WebElement> elems = getSession().getDriver().findElements(By.xpath(trXpath));
-		boolean isRowPresent = TestUtils.getInstance().waitAndFind(By.xpath(trXpath), getDriver());
-		if (!isRowPresent)
-		{
-			throw new TestFrameworkException("invalid locator  or space with name: "+ name+ " dose not exists! xpath =  " + trXpath);
-		}
-		
-		if (!findElement(By.xpath(trXpath)).isDisplayed())
-		{
-			 TestUtils.getInstance().scrollTableAndFind(getSession(), trXpath, DIV_SCROLL_XPATH);
-			
-		}
-		String attributeName = "class";
-		String attributeValue = "x-grid-tree-node-expanded";
-		return TestUtils.getInstance().waitAndCheckAttrValue(getDriver(), findElement(By.xpath(trXpath)), attributeName, attributeValue, 1l);
-	}
 
 	/**
 	 * Delete contents from a space.
@@ -369,13 +225,12 @@ public class CMSpacesPage extends Page
 	public void doDeleteContent(List<BaseAbstractContent> contents)
 	{
 		String[] parents = contents.get(0).getParentNames();
-		//String parent = parents[parents.length - 1];
 		// 1. expand all spaces
 		for (int i = 0; i < parents.length; i++)
 		{
-			if (!doExpand(parents[i]))
+			if (!doExpandFolder(parents[i]))
 			{
-				throw new TestFrameworkException("Impossible to delete content from  wrong path to the parent, because "
+				throw new TestFrameworkException("Impossible to delete content from folder! Wrong path to the parent folder, "
 						+ parents[i] + " , has no child ! ");
 			}
 		}
@@ -411,33 +266,10 @@ public class CMSpacesPage extends Page
 			throw new TestFrameworkException("Confirm 'delete content' dialog was not closed!");
 		}
 		// 6. Verify notification message:
-		// TODO to implement
+		// TODO this should be verified, When it will be finished in wem-web
 	}
 
-	/**
-	 * clicks by expand-icon and expands a space.
-	 * 
-	 * @param parentSpace
-	 */
-	private void expandSpace(String parentName)
-	{
-		String expanderImgXpath = buildContentExpanderXpath(parentName);
-	    List<WebElement> elems = getSession().getDriver().findElements(By.xpath(expanderImgXpath));
-		if (elems.size() == 0)
-		{
-			throw new TestFrameworkException("invalid locator for content-expander or space dose not exist! " + expanderImgXpath);
-		}
-				
-		if (!elems.get(0).isDisplayed())
-		{ 
-			WebElement scrolled = TestUtils.getInstance().scrollTableAndFind(getSession(),expanderImgXpath ,DIV_SCROLL_XPATH);
-			scrolled.click();
-		} else
-		{
-
-			elems.get(0).click();
-		}
-	}
+	
 
 	/**
 	 * Selects a content in a space or folder, throws exception if content was
@@ -477,28 +309,44 @@ public class CMSpacesPage extends Page
 	 */
 	private void selectCheckbox(BaseAbstractContent content)
 	{
-		
-
-		String contentName = content.getDisplayName();
 		//String fullContentName = TestUtils.getInstance().buildFullNameOfContent(contentName, content.getParentNames());
-		String contentCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, contentName);
-		getLogger().info("tries to find the content in a table, fullName of content is :" + contentName);
-		List<WebElement> checkboxes = getSession().getDriver().findElements(By.xpath(contentCheckBoxXpath));
-		getLogger().info("selectCheckboxInRow, checkboxes size: " + checkboxes.size());
+		String fullName = buildFullName(content);
+		String contentCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, fullName);
+		getLogger().info("tries to find the content in a table, fullName of content is :" + fullName);
+	
 		getLogger().info("Xpath of checkbox for content is :" + contentCheckBoxXpath);
-		if (checkboxes.size() > 1)
+		boolean isPresent = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(contentCheckBoxXpath), 3l);
+		if(!isPresent)
 		{
-			getLogger().warning("more than one checkbox were found, but should be only one");
+			throw new SaveOrUpdateException("checkbox for content with name : "+ content.getName() + "was not found");
 		}
+		try
+		{
+			Thread.sleep(1000);
+		} catch (InterruptedException e)
+		{
+			
+		}
+		findElement(By.xpath(contentCheckBoxXpath)).click();
 
-		getLogger().info("tries to select the content in a table, fullName of content is :" + contentName);
-		checkboxes.get(0).click();
 
 	}
-
-	private void selectContentInContextMenu()
+	
+	private String buildFullName(BaseAbstractContent content)
 	{
-		// TODO to implement.
+       StringBuilder sb = new StringBuilder();
+       String[] names = content.getParentNames();
+       for(String name:names)
+       {
+    	   if(!name.startsWith("/"))
+    	   {
+    		   sb.append("/");
+    	   }
+    	   sb.append(name);
+       }
+       sb.append("/").append(content.getName());
+       return sb.toString();
+       
 	}
 
 	/**
@@ -512,7 +360,8 @@ public class CMSpacesPage extends Page
 	{
 		String[] parents = content.getParentNames();
 		
-		AddNewContentWizard wizard = openAddContentWizard(content.getType(), parents);
+		AddNewContentWizard wizard = openAddContentWizard(content.getContentTypeName(), parents);
+		
 		if (isCloseWizard)
 		{
 			wizard.doTypeDataSaveAndClose(content);
@@ -531,8 +380,7 @@ public class CMSpacesPage extends Page
 			throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 		}
 
-		// 2. check for existence of content in a parent space and select a
-		// content to delete.
+		// 2. check for existence of content in a parent space and select a content fo edit.
 		selectCheckbox(content);
 
 		editButton.click();
@@ -555,7 +403,7 @@ public class CMSpacesPage extends Page
 	 * @param ctype
 	 * @return
 	 */
-	public AddNewContentWizard openAddContentWizard(ContentTypes ctype, String... parentNames)
+	public AddNewContentWizard openAddContentWizard(String contentTypeName, String... parentNames)
 	{
 		String parentName = parentNames[parentNames.length - 1];
 		// if parentNames.length == 0, so no need to expand space, new content will be added to the root folder
@@ -563,7 +411,7 @@ public class CMSpacesPage extends Page
 		{
 			for (int i = 0; i < parentNames.length - 1; i++)
 			{
-				if (!doExpand(parentNames[i]))
+				if (!doExpandFolder(parentNames[i]))
 				{
 					throw new TestFrameworkException("Impossible to add content to the  " + parentName + "wrong path to the parent, because "
 							+ parentNames[i] + " , has no child ! ");
@@ -589,20 +437,20 @@ public class CMSpacesPage extends Page
 		}
 		newButton.click();
 		SelectContentTypeDialog selectDialog = new SelectContentTypeDialog(getSession());
-		boolean isOpened = selectDialog.verifyIsOpened();
+		boolean isOpened = selectDialog.isOpened();
 		if (!isOpened)
 		{
 			getLogger().error("SelectContentTypeDialog was not opened!", getSession());
 			throw new TestFrameworkException(String.format("Error during add content to space %s, dialog was not opened!", parentName));
 		}
-		getLogger().info("SelectContentTypeDialog, content type should be selected:" + ctype);
-		AddNewContentWizard wizard = selectDialog.selectContentType(ctype);
+		getLogger().info("SelectContentTypeDialog, content type should be selected:" + contentTypeName);
+		AddNewContentWizard wizard = selectDialog.selectContentType(contentTypeName);
 		return wizard;
 	}
 
 	public ContentInfoPage doOpenContent(BaseAbstractContent content)
 	{
-		boolean isPresent = findContentInTable(content, 2l);
+		boolean isPresent = findContentInTable(content, 7l);
 		if (!isPresent)
 		{
 			throw new TestFrameworkException("The content with name " + content.getName() + " and displayName:" + content.getDisplayName()
@@ -611,50 +459,22 @@ public class CMSpacesPage extends Page
 		{
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
-		// 2. check for existence of content in a parent space and select a content to delete.
-		selectCheckbox(content);
+		// 2. check for existence of content in a parent space and select a content to open.
+		selectCheckbox(content);		
 		if (!openButton.isEnabled())
 		{
 			getLogger().info("'Open' link is disabled!");
+			new WebDriverWait(getSession().getDriver(), 2).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='toolbar']/button[text()='Open']")));
 		}
+		
 		openButton.click();
+		
 		ContentInfoPage cinfo = new ContentInfoPage(getSession());
-		cinfo.waitUntilOpened(getSession(), content.getDisplayName(), 1);
+		int expectedNumberOfPage = 1;
+		cinfo.waitUntilOpened(getSession(), content.getDisplayName(), expectedNumberOfPage);
 		return cinfo;
 	}
 
-	/**
-	 * Click by checkboxes and select contents in the table.
-	 * 
-	 * @param contentNames, list of names, contents with these names will be selected in the table.
-	 * @param parentNames
-	 */
-//	public void selectContentsInTable(List<String> contentNames, String... parentNames)
-//	{
-//
-//		if (parentNames.length != 0)
-//		{
-//			String parentName = parentNames[parentNames.length - 1];
-//			// 1. expand all spaces
-//			for (int i = 0; i < parentNames.length; i++)
-//			{
-//				if (!doExpand(parentNames[i]))
-//				{
-//					throw new TestFrameworkException("Impossible to delete content from  " + parentName + "wrong path to the parent, because "
-//							+ parentNames[i] + " , has no child ! ");
-//				}
-//			}
-//
-//		}
-//
-//		// 2. check for existence and select a content to delete.
-//		for (String name : contentNames)
-//		{
-//			selectCheckbox(name, par);
-//
-//		}
-//
-//	}
 
 
 	/**
@@ -663,7 +483,8 @@ public class CMSpacesPage extends Page
 	 */
 	public void waituntilPageLoaded(long timeout)
 	{
-		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TITLE_XPATH)));
+
+		new WebDriverWait(getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TITLE_XPATH)));
 	}
 
 	/**
@@ -673,14 +494,14 @@ public class CMSpacesPage extends Page
 	 */
 	public static boolean isOpened(TestSession session)
 	{
-		List<WebElement> elems = session.getDriver().findElements(By.xpath(TITLE_XPATH));
-		List<WebElement> queryElement = session.getDriver().findElements(By.name("text-search-field"));
-		if (elems.size() == 0 && queryElement.size() == 0 )
-		{
-			return false;
-		} else
+		List<WebElement> title = session.getDriver().findElements(By.xpath(TITLE_XPATH));
+		List<WebElement> searchInput = session.getDriver().findElements(By.xpath(SEARCH_INPUT_XPATH));
+		if (title.size() > 0 && (searchInput.size() > 0  && searchInput.get(0).isDisplayed()))
 		{
 			return true;
+		} else
+		{
+			return false;
 		}
 	}
 

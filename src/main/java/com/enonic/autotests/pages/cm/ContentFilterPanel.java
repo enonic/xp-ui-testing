@@ -11,17 +11,19 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
 import com.enonic.autotests.utils.TestUtils;
 
 public class ContentFilterPanel extends Page
 {
 	private final String CLEAR_FILTER_LINK = "Clear filter";
 	
-	private String CONTENT_TYPE_FILTER_ITEM = "//div[@class='admin-facet-group' and @name='contentType']//div[contains(@class,'admin-facet') and descendant::label[contains(.,'%s')]]";
+	//this xpath specifies a checkbox for Filtering by 'content type name'
+	private String CONTENT_TYPE_FILTER_ITEM = "//div[@class='facet-group-view' and child::h2[text()='Content Type']]//div[@class='facet-entry-view' and child::label[contains(.,'%s')]]/label";
 	
+	//this xpath specifies a checkbox for Filtering by 'Space'
 	private String SPACE_FILTER_ITEM = "//div[@class='admin-facet-group' and @name='space']//div[contains(@class,'admin-facet') and descendant::label[contains(.,'%s')]]";
 	
+	//this xpath specifies a checkbox for Filtering by 'Last Modified'
 	private String DATE_FILTER_ITEM = "//div[@class='admin-facet-group' and @name='ranges']//div[contains(@class,'admin-facet') and descendant::label[contains(.,'%s')]]";
 
 	@FindBy(name = "query")
@@ -132,14 +134,15 @@ public class ContentFilterPanel extends Page
 	 * 
 	 * @param type
 	 */
-	public void doFilterByContentType(ContentTypes type)
+	public void doFilterByContentType(String contentTypeName)
 	{
-		String itemXpath = String.format(CONTENT_TYPE_FILTER_ITEM, type.getValue());
+		//contentTypeName = "page";
+		String itemXpath = String.format(CONTENT_TYPE_FILTER_ITEM, contentTypeName);
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(itemXpath));
 		if (elems.size() == 0)
 		{
-			getLogger().error("content type was not found in the search panel:" + type, getSession());
-			throw new ContentFilterException("content type was not found in the search panel:" + type);
+			getLogger().error("content type was not found in the search panel:" + contentTypeName, getSession());
+			throw new ContentFilterException("content type was not found in the search panel:" + contentTypeName);
 		} else
 		{
 			elems.get(0).click();

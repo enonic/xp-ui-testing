@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -22,7 +21,7 @@ public abstract class BaseDeleteDialog
 	protected Logger logger = Logger.getLogger();
 	
 	private final String ITEMS_TO_DELETE = "//div[contains(@class,'admin-window')]//div[@class='delete-container']//div[@class='delete-item']//h4";
-
+	
 	public static final String DELETE_BUTTON_XPATH = "//div[@class='modal-dialog delete-dialog']//div[@class='button-row']//button[text()='Delete']";
 	@FindBy(xpath = DELETE_BUTTON_XPATH)
 	private WebElement deleteButton;
@@ -50,7 +49,7 @@ public abstract class BaseDeleteDialog
 	 */
 	public void doDelete()
 	{
-		// TODO this part is posponed
+		// TODO this part is postponed
 		
 //		List<WebElement> itemsTodelete = session.getDriver().findElements(By.xpath(ITEMS_TO_DELETE));
 //		List<String> actual = new ArrayList<>();

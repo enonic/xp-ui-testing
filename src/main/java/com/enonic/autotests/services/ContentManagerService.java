@@ -6,9 +6,8 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.cm.AddNewContentWizard;
-import com.enonic.autotests.pages.cm.CMSpacesPage;
+import com.enonic.autotests.pages.cm.ContentTablePage;
 import com.enonic.autotests.pages.cm.ContentInfoPage;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypes;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -21,34 +20,27 @@ public class ContentManagerService
 	public boolean openContentManagerAppAndVerify(TestSession session)
 	{
 		// 1. open a 'content manager'
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = true;
 		result &=cmPage.verifyTitle();
 		//result &=cmPage.verifyAllControls();
 		return result;
 	}
-	public boolean openAndVerifyAddContentWizardPage(TestSession session, ContentTypes type, String ... parentNames)
+	public boolean openAndVerifyAddContentWizardPage(TestSession session, String contentTypeName, String ... parentNames)
 	{
 
 		// 1. open a 'content manager'
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
-		AddNewContentWizard wizardPage = cmPage.openAddContentWizard(type, parentNames);
-		String expectedTitle = String.format(AddNewContentWizard.START_WIZARD_TITLE, type.getValue().toLowerCase());
+		AddNewContentWizard wizardPage = cmPage.openAddContentWizard(contentTypeName, parentNames);
+		String expectedTitle = String.format(AddNewContentWizard.START_WIZARD_TITLE, contentTypeName.toLowerCase());
 		wizardPage.waitUntilWizardOpened(expectedTitle, 1);
 		return wizardPage.verifyWizardPage(session);
 
 	}
 	
-//	public void doSelectContentInTable(TestSession session, List<String> contents)
-//	{
-//		// 1. open a 'content manager'
-//	    CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-//	    cmPage.selectContentsInTable(contents);
-//				
-//	}
 
 
 	/**
@@ -60,7 +52,7 @@ public class ContentManagerService
 	{
 		
 		// 1. open a 'content manager'
-	    CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+	    ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 	    // click by "Select All" link and get a number of selected rows:
 	    return cmPage.doSelectAll();
 			
@@ -73,13 +65,12 @@ public class ContentManagerService
 	 * @param session
 	 * @param newcontent
 	 * @param isCloseWizard
-	 * @param parentNames
 	 * @return
 	 */
 	public Page addContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard)
 	{
 		// 1. open a 'content manager'		
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		cmPage.doAddContent(newcontent, isCloseWizard);
 		if (isCloseWizard)
 		{
@@ -96,13 +87,12 @@ public class ContentManagerService
 	 * 
 	 * @param session
 	 * @param content
-	 * @param parentNames
 	 * @return
 	 */
 	public boolean doOpenContentVerifyPage(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		ContentInfoPage contentInfoPage = cmPage.doOpenContent(content);
 		
 		boolean result = contentInfoPage.verifyContentInfoPage(content);
@@ -117,14 +107,12 @@ public class ContentManagerService
 	 * @param session
 	 * @param contentToEdit
 	 * @param newcontent
-	 * @param parentNames
-	 * @return
+	 * @return {@link ContentTablePage} instance. Table of content.
 	 */
-	//public CMSpacesPage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent, String ... parentNames)
-	public CMSpacesPage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
+	public ContentTablePage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
 	{
 		// 1. open a 'content manager'
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		ContentInfoPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		return cmPage;
@@ -134,49 +122,46 @@ public class ContentManagerService
 	 * Finds a content, open preview for this content and click by "Delete" and confirm.
 	 * @param session
 	 * @param contentToDelete
-	 * @param parentNames
-	 * @return
+	 * @return {@link ContentTablePage} instance. Table of content.
 	 */
-	public CMSpacesPage doOpenContentAndDelete(TestSession session, BaseAbstractContent contentToDelete)
+	public ContentTablePage doOpenContentAndDelete(TestSession session, BaseAbstractContent contentToDelete)
 	{
 		// 1. open a 'content manager'
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		ContentInfoPage contentInfoPage = cmPage.doOpenContent(contentToDelete);
-		contentInfoPage.doDeleteContentAndClosePreviewPage(contentToDelete.getDisplayName());
+		contentInfoPage.doDeleteContent(contentToDelete.getDisplayName());
 		return cmPage;
 	}
 	
 
 	/**
-	 * Delete content from space.
+	 * Expand a space, selects a checkbox, press 'Delete' button from a toolbar and delete content from space.
 	 * 
 	 * @param session
-	 * @param contents
-	 * @param parentNames array of content-names that are parent for new content. 
-	 * @return
+	 * @param contents 
+	 * @return {@link ContentTablePage} instance. Table of content.
 	 */
-	public CMSpacesPage deleteContentFromSpace(TestSession session,  List<BaseAbstractContent> contents)
+	public ContentTablePage deleteContentFromSpace(TestSession session,  List<BaseAbstractContent> contents)
 	{
 		// 1. open a 'content manager'
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
-
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
+        // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
 		cmPage.doDeleteContent(contents);
 		return cmPage;
 	}
 
 	/**
-	 * Finds a content and update it. 
+	 * Finds a content in table, selects a checkbox, clicks by 'Edit' button,  update content and close a wizard. 
 	 * 
 	 * @param session
 	 * @param contentToUpdate
 	 * @param newContent
-	 * @param parentNames
-	 * @return
+	 * @return {@link ContentTablePage} instance. Table of content.
 	 */
-	public CMSpacesPage updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
+	public ContentTablePage updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
 	{
 
-		CMSpacesPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		cmPage.doUpdateContent(contentToUpdate, newContent);
 		return cmPage;
 	}
