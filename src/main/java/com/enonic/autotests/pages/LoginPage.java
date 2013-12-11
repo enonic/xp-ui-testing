@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.AuthenticationException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -21,9 +22,13 @@ public class LoginPage extends Page
 
 	private static Logger logger = Logger.getLogger();
 
-	private String title = "Enonic WEM Admin";
+	private String TITLE = "Enonic WEM Admin";
 
-	@FindBy(xpath = "//input[@placeholder = 'userid or e-mail']")
+	private long LOGIN_PAGE_TIMEOUT = 10;
+	
+	private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'userid or e-mail']";
+
+	@FindBy(xpath = EMAIL_INPUT_XPATH)
 	private WebElement usernameInput;
 
 	@FindBy(xpath = "//input[@placeholder = 'password']")

@@ -291,6 +291,25 @@ public class TestUtils
 		}
 	}
 
+	public boolean waitUntilTitleLoad(final TestSession testSession, final String title, long timeout)
+	{
+		try
+		{
+			new WebDriverWait(testSession.getDriver(),timeout).until(new ExpectedCondition<Boolean>()
+					{
+						public Boolean apply(WebDriver d)
+						{
+							return d.getTitle().trim().contains(title);
+						}
+					});
+			return true;
+		} catch (TimeoutException ex)
+		{
+			logger.info("TimeoutException, title not loaded. expected title:" +title + " timeout expired in sec: "+ timeout);
+			return false;
+		}
+	}
+
 	public boolean waitUntilVisibleNoException(final TestSession testSession, By by, long timeout)
 	{
 		WebDriverWait wait = new WebDriverWait(testSession.getDriver(), timeout);
