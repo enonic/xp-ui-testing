@@ -184,6 +184,12 @@
 		<repository>
 			<id>enonic.repo</id>
 			<url>http://repo.enonic.com/maven</url>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <releases>
+        <updatePolicy>always</updatePolicy>
+      </releases>
 		</repository>
 	</repositories>
 
