@@ -124,7 +124,7 @@ public class ContentManagerTests extends BaseTest
 		logger.info("STARTED ##### open content and click by 'Delete' button from toolbar");
 		String name = "open-delete"+Math.abs( new Random().nextInt() );
 
-		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("opendelete").withType(ContentTypeName.STUCTURED.getValue()).build();
+		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("open-delete").withType(ContentTypeName.STUCTURED.getValue()).build();
 		String[] parentNames = new String[]{REPONAME};
 		content.setParentNames(parentNames);		
 		
@@ -145,7 +145,7 @@ public class ContentManagerTests extends BaseTest
 	{		
 		logger.info("STARTED ##### open content and click by 'Edit' button from toolbar");
 		String name = "toedit"+ Math.abs( new Random().nextInt() );
-		StructuredContent contentToEdit =  StructuredContent.builder().withName(name).withDisplayName("openedittest").withType(ContentTypeName.STUCTURED.getValue()).build();
+		StructuredContent contentToEdit =  StructuredContent.builder().withName(name).withDisplayName("open-edittest").withType(ContentTypeName.STUCTURED.getValue()).build();
 		String[] parentNames = new String[]{REPONAME};
 		contentToEdit.setParentNames(parentNames);
 		
