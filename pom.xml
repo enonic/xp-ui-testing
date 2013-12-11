@@ -64,6 +64,7 @@
                 <exclude>org.apache</exclude>
                 <exclude>org.seleniumhq.selenium</exclude>
                 <exclude>org.testng</exclude>
+                <exclude>com.enonic.wem.test</exclude>
               </excludes>
             </configuration>
           </execution>
