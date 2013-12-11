@@ -17,7 +17,7 @@ public class TestCMFiltering extends BaseTest
 	private ContentManagerService contentManagerService = new ContentManagerService();
 
 
-	private String REPONAME = "/bluman trampoliner";
+	private String REPONAME = "/bluman-trampoliner";
 	private ContentFilterService filterService = new ContentFilterService();
 
 	

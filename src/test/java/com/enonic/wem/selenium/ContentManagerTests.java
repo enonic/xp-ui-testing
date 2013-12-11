@@ -27,7 +27,7 @@ public class ContentManagerTests extends BaseTest
 
 	private ContentManagerService cManagerService = new ContentManagerService();
 	
-	private String REPONAME = "/bluman trampoliner";
+	private String REPONAME = "/bluman-trampoliner";
 
 	@Test(description ="Opens 'Content  Manager' Application and verify title and controls elements")
 	public void testVerifyCMApp()
