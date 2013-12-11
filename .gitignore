@@ -5,3 +5,5 @@ target/
 *.iml
 *.ipr
 .idea
+performance*
+snapshots/
