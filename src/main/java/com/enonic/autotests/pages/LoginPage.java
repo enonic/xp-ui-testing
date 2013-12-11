@@ -23,7 +23,7 @@ public class LoginPage extends Page
 	private static Logger logger = Logger.getLogger();
 
 	private String TITLE = "Enonic WEM Admin";
-
+	
 	private long LOGIN_PAGE_TIMEOUT = 10;
 	
 	private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'userid or e-mail']";
@@ -56,14 +56,19 @@ public class LoginPage extends Page
 	 */
 	public void doLogin(String username, String password)
 	{
-		(new WebDriverWait(getSession().getDriver(), 20l)).until(new ExpectedCondition<Boolean>()
-				{
-					public Boolean apply(WebDriver d)
-					{
-						return d.getTitle().trim().contains(title);
-					}
-				});
+		boolean isLoginPageLoaded = TestUtils.getInstance().waitUntilTitleLoad(getSession(), TITLE, LOGIN_PAGE_TIMEOUT);
+		if(!isLoginPageLoaded)
+		{
+			throw new TestFrameworkException("Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT);
+		}
+		logger.info("Login page title: "+getDriver().getTitle());
 		logger.info("Login action started. Username: " + username + " Password:" + password);
+		
+		boolean isEmailInputPresent = TestUtils.getInstance().waitAndFind(By.xpath(EMAIL_INPUT_XPATH), getDriver());
+		if(!isEmailInputPresent)
+		{
+			throw new TestFrameworkException(" input 'userid or e-mail' was not wound on page!");
+		}
 		usernameInput.sendKeys(username);
 
 		passwordInput.sendKeys(password);
