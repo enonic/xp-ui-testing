@@ -118,7 +118,8 @@ public class AbstractTablePage extends Page
 		String trXpath = String.format(TD_FOLDER_NAME +"/parent::tr", name);
 		
 		//List<WebElement> elems = getSession().getDriver().findElements(By.xpath(trXpath));
-		boolean isRowPresent = TestUtils.getInstance().waitAndFind(By.xpath(trXpath), getDriver());
+		//boolean isRowPresent = TestUtils.getInstance().waitAndFind(By.xpath(trXpath), getDriver());
+		boolean isRowPresent = TestUtils.getInstance().findDinamicElement(getSession().getDriver(), By.xpath(trXpath), 5);
 		if (!isRowPresent)
 		{
 			throw new TestFrameworkException("invalid locator  or space with name: "+ name+ " dose not exists! xpath =  " + trXpath);
