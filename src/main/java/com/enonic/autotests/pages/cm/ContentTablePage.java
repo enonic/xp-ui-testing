@@ -51,9 +51,6 @@ public class ContentTablePage extends AbstractTablePage
 	
 	private final String CONTENT_DETAILS_ALL_NAMES_XPATH = "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
 	
-	private String CLOSE_CONTENT_DETAILS_ICON_XPATH = "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p[contains(.,'%s')]/../following::div/a";
-
-
 	private ContentFilterPanel contentFilter;
 
 	/**
@@ -74,22 +71,6 @@ public class ContentTablePage extends AbstractTablePage
 			contentFilter = new ContentFilterPanel(getSession());
 		}
 		return contentFilter;
-	}
-
-	/**
-	 * Click by close icon and remove selection from row.
-	 * 
-	 * @param contentName
-	 */
-	public void closeContentDetails(String contentName)
-	{
-		String closeIconXpath = String.format(CLOSE_CONTENT_DETAILS_ICON_XPATH, contentName);
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(closeIconXpath));
-		if (elems.size() == 0)
-		{
-			throw new TestFrameworkException("Impossible to close content details, content or close icon were not found!");
-		}
-		elems.get(0).click();
 	}
 
 	/**

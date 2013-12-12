@@ -66,6 +66,7 @@ public class AbstractTablePage extends Page
 		if (!isExpanderPresent)
 		{
 			getLogger().info("The folder: " + parentName + " has no contents");
+			TestUtils.getInstance().saveScreenshot(getSession());
 			return false;
 		}
 		if (!isRowExapnded(parentName))
@@ -93,7 +94,9 @@ public class AbstractTablePage extends Page
 	{
 		String expanderElement = String.format(TD_FOLDER_NAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
 		getLogger().info("check if present expander for folder:"+ parentName +" xpath: " + expanderElement);
-		boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(expanderElement), getDriver());
+		//boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(expanderElement), getDriver());
+		findElement(By.xpath(expanderElement));
+		boolean isPresent = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(expanderElement), 3l);
 		if (!isPresent)
 		{
 			getLogger().info("expander for folder:"+ parentName +" was not found! ");

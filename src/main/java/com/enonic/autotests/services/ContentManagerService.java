@@ -2,6 +2,7 @@ package com.enonic.autotests.services;
 
 import java.util.List;
 
+import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
 import com.enonic.autotests.pages.Page;
@@ -115,6 +116,8 @@ public class ContentManagerService
 		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
 		ContentInfoPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
+		contentInfoPage.doCloseContentInfoView();
+		cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
 		return cmPage;
 	}
 	

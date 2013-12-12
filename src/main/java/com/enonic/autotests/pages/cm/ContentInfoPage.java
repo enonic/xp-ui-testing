@@ -37,7 +37,7 @@ public class ContentInfoPage extends Page
 	private WebElement deleteButtonToolbar;
 	
 	
-	@FindBy(xpath = "//div[contains(@class,'admin-preview-panel')]//button[@class = 'x-btn-center']//span[@class='x-btn-inner' and contains(., 'Close')]")
+	@FindBy(xpath = "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Close']")
 	protected WebElement closeButton;
 	
 	
@@ -66,6 +66,11 @@ public class ContentInfoPage extends Page
 
 	}
 	
+	public void doCloseContentInfoView()
+	{
+		closeButton.click();
+	}
+
 	public void doEditContentAndCloseWizard(String contentDisplayName,BaseAbstractContent newContent)
 	{
 		editButtonToolbar.click();
