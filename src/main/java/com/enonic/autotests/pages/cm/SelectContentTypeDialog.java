@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.cm;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -59,7 +58,7 @@ public class SelectContentTypeDialog
 //			WebElement searchinput = session.getDriver().findElement(By.xpath(INPUT_SEARCH));
 //			searchinput.sendKeys(contentTypeName);	
 //		} 
-		session.getDriver().findElement(By.xpath(ctypeXpath)).click();
+		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), session.getDriver());
 		AddNewContentWizard wizard = new AddNewContentWizard(session);
 		
 		//String title = "New " + type.getValue().toLowerCase();

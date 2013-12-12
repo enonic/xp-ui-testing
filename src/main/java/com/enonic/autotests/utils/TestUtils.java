@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
@@ -28,6 +29,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.logger.Logger;
@@ -81,6 +83,36 @@ public class TestUtils
 	{
 
 	}
+
+	public boolean findDinamicElement(WebDriver driver, By locator, int tries ) {
+		logger.info( "Get element by locator: " + locator.toString() );
+		long startTime = System.currentTimeMillis();
+		driver.manage().timeouts().implicitlyWait( 9, TimeUnit.SECONDS );
+		WebElement we = null;
+		boolean isFound = false;
+		for (int i=0; i<= tries; i++ )
+		{
+	
+		logger.info("Locating remaining time: " + (180-(9*(tries-1) )) + " seconds." );
+		try {
+		we = driver.findElement( locator );
+		isFound = true;
+		} catch ( StaleElementReferenceException ser ) {	
+			logger.info( "ERROR: Stale element. " + locator.toString() );
+		
+		} catch ( NoSuchElementException nse ) {	
+			logger.info( "ERROR: No such element. " + locator.toString() );
+		
+		} catch ( Exception e ) {
+			logger.info( e.getMessage() );
+		}
+		}
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Finished click after waiting for " + totalTime + " milliseconds.");
+		driver.manage().timeouts().implicitlyWait( AppConstants.IMPLICITLY_WAIT, TimeUnit.SECONDS );
+		return isFound;
+		}
 
 	public ContentTypeName getContentType(String ctype)
 	{
@@ -214,8 +246,9 @@ public class TestUtils
 			{
 				input.sendKeys(Keys.chord(Keys.COMMAND, "a"), text);
 			}else{
-				logger.info("text was typed: "+ text);
+				logger.info("text will be typed: "+ text);
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
+				logger.info("input cleared ");
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
 			}
 			
@@ -409,7 +442,7 @@ public class TestUtils
 	 * @param locator
 	 * @param driver
 	 */
-	public void clickByLocator1(final By locator, final WebDriver driver)
+	public void clickByElement(final By locator, final WebDriver driver)
 	{
 		final long startTime = System.currentTimeMillis();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -426,12 +459,14 @@ public class TestUtils
 					return true;
 				} catch (StaleElementReferenceException e)
 				{
-					// staticlogger.info( e.getMessage() + "\n");
-					// staticlogger.info("Trying again...");
+					 logger.info( e.getMessage() + "\n");
+					 logger.info("Trying again...");
 					return false;
 				}
 			}
 		});
+		final long endTime = System.currentTimeMillis();
+		logger.info("clickByElement time is "+ (endTime -startTime));
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
