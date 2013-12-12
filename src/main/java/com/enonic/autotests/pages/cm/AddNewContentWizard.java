@@ -11,7 +11,6 @@ import com.enonic.autotests.model.cm.ArticleContent;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
 import com.enonic.autotests.model.cm.MixinContent;
 import com.enonic.autotests.pages.BaseWizardPage;
-import com.enonic.autotests.pages.CloseWizardDialog;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -172,12 +171,6 @@ public class AddNewContentWizard extends BaseWizardPage
 	{
 		doTypeDataAndSave( content);
 		closeButton.click();
-		
-		    //TODO this part should be removed, when BUG CMS-2562 will be fixed
-				CloseWizardDialog dialog = new CloseWizardDialog(getSession());
-				dialog.waituntilPageLoaded(1);
-				dialog.doCloseNoSave();
-			//========================================================================================
 				
 		ContentTablePage page = new ContentTablePage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
