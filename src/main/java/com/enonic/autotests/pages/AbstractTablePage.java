@@ -92,9 +92,11 @@ public class AbstractTablePage extends Page
 	private boolean isExpanderPresent(String parentName)
 	{
 		String expanderElement = String.format(TD_FOLDER_NAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
+		getLogger().info("check if present expander for folder:"+ parentName +" xpath: " + expanderElement);
 		boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(expanderElement), getDriver());
 		if (!isPresent)
 		{
+			getLogger().info("expander for folder:"+ parentName +" was not found! ");
 			return false;
 		}
 		

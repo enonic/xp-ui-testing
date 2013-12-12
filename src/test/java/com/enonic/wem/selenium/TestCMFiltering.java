@@ -22,6 +22,7 @@ public class TestCMFiltering extends BaseTest
 
 	
 
+	// TODO this test failed due the CMS-2616
 	@Test(description = "filtering by content-type: select a checkbox with label the same as name of content type, and verify that content present in the table")
 	public void testAddNewArchiveAndFilter()
 	{

@@ -49,7 +49,9 @@ public class ContentManagerTests extends BaseTest
 		String name = "add" + Math.abs( new Random().nextInt() );
 		content.setName(name);
 		//1. add a content to the space
+		logger.info("start to add content with name: " +content.getName()+ " to folder: " + REPONAME);
 		ContentTablePage page = (ContentTablePage) cManagerService.addContent(getTestSession(), content, true);
+		logger.info("method cManagerService.addContent finished, try to find content in the "+ REPONAME);
         //2. verify that content present in the table
 		boolean result = page.findContentInTable(content, 2l);
 		Assert.assertTrue(result, String.format("new added content with name == %s was not found in the table!",content.getName()));
@@ -118,7 +120,8 @@ public class ContentManagerTests extends BaseTest
 		Assert.assertTrue(result, "content with updated name was not found!");
 	}
 
-	//@Test(description = "add new content, select content in a table, open content and Delete it " )
+	////TODO  this test failed due the BUG CMS-2615 
+	@Test(description = "add new content, select content in a table, open content and Delete it " )
 	public void openContentAndDelete()
 	{		
 		logger.info("STARTED ##### open content and click by 'Delete' button from toolbar");
@@ -134,7 +137,7 @@ public class ContentManagerTests extends BaseTest
         //2. open just created content and delete it using a toolbar:		
 		ContentTablePage page = cManagerService.doOpenContentAndDelete(getTestSession(), content);
 		
-		//TODO  this test failed due the BUG :: grid not refreshed after content deletion
+		//TODO  this test failed due the BUG CMS-2615 :: grid not refreshed after content deletion
 		//3.verify, that content not present in the table:
 		boolean result = page.findContentInTable(content, 2l);
 		//Assert.assertFalse(result," content with new displayName: "+content.getDisplayName()+" was deleted, and should not be present in te table of contents");
@@ -152,7 +155,7 @@ public class ContentManagerTests extends BaseTest
 		String newName = "edited"+ Math.abs( new Random().nextInt() );
 		StructuredContent newcontent =  StructuredContent.builder().withName(newName).withDisplayName("edited").withType(ContentTypeName.STUCTURED.getValue()).build();
 		newcontent.setParentNames(parentNames);
-		logger.info("new contet was added, name: " + name);
+		logger.info("new contet will be  added, name: " + name);
 		//1. add a content to the space
 		ContentTablePage page = (ContentTablePage)cManagerService.addContent(getTestSession(), contentToEdit, true);
 		logger.info("new contet was added(contet to edit), name: " + name);
@@ -161,13 +164,12 @@ public class ContentManagerTests extends BaseTest
 		logger.info("contet was updated, new name is : " + newName);
 		
 		
-		// TODO this test failed due the BUG :: grid not refreshed after content deletion
 		//4.verify, that updated  content with new name is  present in the table:
 		boolean result = page.findContentInTable(newcontent, 2l);
-		//Assert.assertTrue(result," content with new displayName: "+newcontent.getDisplayName()+"  should be present in te table of contents");
+		Assert.assertTrue(result," content with new displayName: "+newcontent.getDisplayName()+"  should be present in te table of contents");
 		//4.verify, that content with old name not present in the table:
 		result = page.findContentInTable(contentToEdit, 2l);
-		//Assert.assertFalse(result," content with  displayName: "+contentToEdit.getDisplayName()+" was edited, and should not be present in te table of contents");
+		Assert.assertFalse(result," content with  displayName: "+contentToEdit.getDisplayName()+" was edited, and should not be present in te table of contents");
 		logger.info("FINISHED $$$$ open content and edit it");
 	}
 	

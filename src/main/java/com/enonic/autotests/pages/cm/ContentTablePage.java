@@ -160,8 +160,8 @@ public class ContentTablePage extends AbstractTablePage
 		}
 
 		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), parents);
+		getLogger().info("Full name of content: "+ fullName);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);
-		getLogger().info("Check is content present in the table: " + content);
 		boolean result = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(contentDescriptionXpath), timeout);
 		if (result)
 		{
@@ -184,37 +184,6 @@ public class ContentTablePage extends AbstractTablePage
 	{
 		return findContentInTable(content, timeout, false);
 	}
-
-//	/**
-//	 * clicks by 'expand' icon and expands a folder.
-//	 * 
-//	 * @param parentName
-//	 * @return true if space is not empty and was expanded, otherwise return
-//	 *         false.
-//	 */
-//	public boolean doExpandFolder(String parentName)
-//	{
-//		boolean isExpanderPresent = isExpanderPresent(parentName);
-//		if (!isExpanderPresent)
-//		{
-//			getLogger().info("The space: " + parentName + " has no contents");
-//			return false;
-//		}
-//		if (!isRowExapnded(parentName))
-//		{
-//			clickByExpanderIcon(parentName);
-//			boolean isExpanded = isRowExapnded(parentName);
-//			if (!isExpanded)
-//			{
-//				throw new TestFrameworkException("space " + parentName + " was not expanded");
-//			}
-//			getLogger().info("parentContent:" + parentName + " expanded == " + isExpanded);
-//		}
-//
-//		return true;
-//	}
-
-	
 
 	/**
 	 * Delete contents from a space.
