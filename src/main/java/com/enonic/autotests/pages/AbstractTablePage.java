@@ -125,11 +125,11 @@ public class AbstractTablePage extends Page
 			throw new TestFrameworkException("invalid locator  or space with name: "+ name+ " dose not exists! xpath =  " + trXpath);
 		}
 		
-		if (!findElement(By.xpath(trXpath)).isDisplayed())
-		{
-			 TestUtils.getInstance().scrollTableAndFind(getSession(), trXpath, DIV_SCROLL_XPATH);
-			
-		}
+//		if (!findElement(By.xpath(trXpath)).isDisplayed())
+//		{
+//			 TestUtils.getInstance().scrollTableAndFind(getSession(), trXpath, DIV_SCROLL_XPATH);
+//			
+//		}
 		String attributeName = "class";
 		String attributeValue = "x-grid-tree-node-expanded";
 		return TestUtils.getInstance().waitAndCheckAttrValue(getDriver(), findElement(By.xpath(trXpath)), attributeName, attributeValue, 1l);
