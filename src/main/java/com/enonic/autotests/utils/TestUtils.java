@@ -214,6 +214,7 @@ public class TestUtils
 			{
 				input.sendKeys(Keys.chord(Keys.COMMAND, "a"), text);
 			}else{
+				logger.info("text was typed: "+ text);
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
 			}
 			

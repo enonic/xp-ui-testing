@@ -130,7 +130,7 @@ public class ContentManagerTests extends BaseTest
 		logger.info("STARTED ##### open content and click by 'Delete' button from toolbar");
 		String name = "open-delete"+Math.abs( new Random().nextInt() );
 
-		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("open-delete").withType(ContentTypeName.STUCTURED.getValue()).build();
+		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("open-delete-test").withType(ContentTypeName.STUCTURED.getValue()).build();
 		String[] parentNames = new String[]{REPONAME};
 		content.setParentNames(parentNames);		
 		
@@ -150,7 +150,7 @@ public class ContentManagerTests extends BaseTest
 		//Assert.assertFalse(result," content with new displayName: "+content.getDisplayName()+" was deleted, and should not be present in te table of contents");
 		logger.info("FINISHED $$$$ open content and delete it");
 	}
-	@Test(description = "add new content, select content in a table, open content and Delete it ")
+	//@Test(description = "add new content, select content in a table, open content and Delete it ")
 	public void openContentAndEdit()
 	{		
 		logger.info("STARTED ##### open content and click by 'Edit' button from toolbar");
