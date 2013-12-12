@@ -105,11 +105,11 @@ public class AbstractTablePage extends Page
 		}
 		
 		//check if dispalyed:
-		if (!findElement(By.xpath(expanderElement)).isDisplayed())
-		{ 
-			TestUtils.getInstance().scrollTableAndFind(getSession(), expanderElement, DIV_SCROLL_XPATH);
-			
-		}
+//		if (!findElement(By.xpath(expanderElement)).isDisplayed())
+//		{ 
+//			TestUtils.getInstance().scrollTableAndFind(getSession(), expanderElement, DIV_SCROLL_XPATH);
+//			
+//		}
 		return true;
 	}
 
