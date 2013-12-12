@@ -39,7 +39,7 @@ public class ContentManagerTests extends BaseTest
 		logger.info("Test Finished $$$$  Content Manager Application opened and verified");
 	}
 
-	//@Test( description = "adding content to 'Bluman Trampoliner'. Use several types of content",dataProvider = "addNewContent", dataProviderClass = TestCMAppProvider.class)
+	@Test( description = "adding content to 'Bluman Trampoliner'. Use several types of content",dataProvider = "addNewContent", dataProviderClass = TestCMAppProvider.class)
 	public void testAddContents(AbstractContentXml contentXml)
 	{
 		logger.info("STARTED #####  "+contentXml.getCaseInfo());
