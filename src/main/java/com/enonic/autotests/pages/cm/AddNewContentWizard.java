@@ -129,18 +129,24 @@ public class AddNewContentWizard extends BaseWizardPage
 	{
 		// 1. type a data: 'name' and 'Display Name'.
 		waitElementClickable(By.name("displayName"), 2);
+		getLogger().info("types displayName: "+ content.getDisplayName());
 		TestUtils.getInstance().clearAndType(getSession(), displayNameInput, content.getDisplayName());
+		
 		waitElementClickable(By.name("name"), 2);
+		getLogger().info("types name: "+ content.getName());
 		TestUtils.getInstance().clearAndType(getSession(), nameInput, content.getName());
+		
 		
 		// 2. populate main tab
 		populateMainTab(getSession(), content);
 
 		// 3. check if enabled and press "Save".
+		getLogger().info("Clicks 'Save' button in toolbar");
 		doSaveFromToolbar();
 
 		// 4. check notification message.
 		String mess = getNotificationMessage(getSession(), AppConstants.APP_CONTENT_MANAGER_FRAME_XPATH);
+		getLogger().info("notification message has appeared:" + mess);
 		if (mess == null)
 		{
 			throw new SaveOrUpdateException("A notification, that the space with name" + content.getDisplayName() + " is saved - was not showed");

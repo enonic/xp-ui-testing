@@ -71,15 +71,18 @@ public class ContentManagerTests extends BaseTest
 		content1.setParentNames(parentNames);
 		
 		//1. add a content to the space
-		
+		logger.info("start to add content with name: " +content1.getName()+ " to folder: " + REPONAME);
 		cManagerService.addContent(getTestSession(), content1, true);
+		logger.info("method cManagerService.addContent finished, try to find content in the "+ REPONAME);
 		
 		String name2 = "to-delete"+Math.abs( new Random().nextInt() );
 		StructuredContent content2 = StructuredContent.builder().withName(name2).withDisplayName("content-to-delete2").withType(ContentTypeName.STUCTURED.getValue()).build();
 		content2.setParentNames(parentNames);
 		
 		//2. add one more content to the space
+		logger.info("start to add content with name: " +content2.getName()+ " to folder: " + REPONAME);
 		cManagerService.addContent(getTestSession(), content2, true);
+		logger.info("method cManagerService.addContent finished, try to find content in the "+ REPONAME);
 		
 		List<BaseAbstractContent> contents = new ArrayList<>();
 		contents.add(content2);
@@ -132,14 +135,18 @@ public class ContentManagerTests extends BaseTest
 		content.setParentNames(parentNames);		
 		
 		//1. add a content to the space
+		logger.info("start to add content with name: " +content.getName()+ " to folder: " + REPONAME);
 		cManagerService.addContent(getTestSession(), content, true);
+		logger.info("method cManagerService.addContent finished, try to find content in the "+ REPONAME);
 		
         //2. open just created content and delete it using a toolbar:		
 		ContentTablePage page = cManagerService.doOpenContentAndDelete(getTestSession(), content);
 		
 		//TODO  this test failed due the BUG CMS-2615 :: grid not refreshed after content deletion
 		//3.verify, that content not present in the table:
+		logger.info("try to find content with name: " +content.getName()+ " in folder: " + REPONAME);
 		boolean result = page.findContentInTable(content, 2l);
+		logger.info("content is present in a table: " +result);
 		//Assert.assertFalse(result," content with new displayName: "+content.getDisplayName()+" was deleted, and should not be present in te table of contents");
 		logger.info("FINISHED $$$$ open content and delete it");
 	}
