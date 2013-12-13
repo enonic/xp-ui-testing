@@ -57,7 +57,6 @@ public class TestUtils
 		return instance;
 	}
 
-	
 	public String buildFullNameOfContent(String contentName, String... parentNames)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -84,95 +83,134 @@ public class TestUtils
 
 	}
 
-	public boolean findDinamicElement(WebDriver driver, By locator, int tries ) {
-		logger.info( "Get element by locator: " + locator.toString() );
+	public boolean isDynamicElementPresent(WebDriver driver, By locator, int tries)
+	{
+		logger.info("Get element by locator: " + locator.toString());
 		long startTime = System.currentTimeMillis();
-		driver.manage().timeouts().implicitlyWait( 9, TimeUnit.SECONDS );
+		driver.manage().timeouts().implicitlyWait(9, TimeUnit.SECONDS);
 		WebElement we = null;
 		boolean isFound = false;
-		for (int i=0; i<= tries; i++ )
+		for (int i = 0; i <= tries; i++)
 		{
-	
-		logger.info("Locating remaining time: " + (180-(9*(tries-1) )) + " seconds." );
-		try {
-		we = driver.findElement( locator );
-		isFound = true;
-		} catch ( StaleElementReferenceException ser ) {	
-			logger.info( "ERROR: Stale element. " + locator.toString() );
-		
-		} catch ( NoSuchElementException nse ) {	
-			logger.info( "ERROR: No such element. " + locator.toString() );
-		
-		} catch ( Exception e ) {
-			logger.info( e.getMessage() );
-		}
+
+			logger.info("Locating remaining time: " + (180 - (9 * (tries - i))) + " seconds.");
+			try
+			{
+				we = driver.findElement(locator);
+				isFound = true;
+				break;
+			} catch (StaleElementReferenceException ser)
+			{
+				logger.info("ERROR: Stale element. " + locator.toString());
+
+			} catch (NoSuchElementException nse)
+			{
+				logger.info("ERROR: No such element. " + locator.toString());
+
+			} catch (Exception e)
+			{
+				logger.info(e.getMessage());
+			}
 		}
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		logger.info("Finished click after waiting for " + totalTime + " milliseconds.");
-		driver.manage().timeouts().implicitlyWait( AppConstants.IMPLICITLY_WAIT, TimeUnit.SECONDS );
+		driver.manage().timeouts().implicitlyWait(AppConstants.IMPLICITLY_WAIT, TimeUnit.SECONDS);
 		return isFound;
+	}
+	public WebElement getDynamicElement(WebDriver driver, By locator, int tries)
+	{
+		logger.info("Get element by locator: " + locator.toString());
+		long startTime = System.currentTimeMillis();
+		driver.manage().timeouts().implicitlyWait(9, TimeUnit.SECONDS);
+		WebElement we = null;
+		for (int i = 0; i <= tries; i++)
+		{
+
+			logger.info("Locating remaining time: " + ((tries* 9) - (9 * (tries - i))) + " seconds.");
+			try
+			{
+				we = driver.findElement(locator);
+				return we;
+			} catch (StaleElementReferenceException ser)
+			{
+				logger.info("ERROR: Stale element. " + locator.toString());
+
+			} catch (NoSuchElementException nse)
+			{
+				logger.info("ERROR: No such element. " + locator.toString());
+
+			} catch (Exception e)
+			{
+				logger.info(e.getMessage());
+			}
 		}
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Finished click after waiting for " + totalTime + " milliseconds.");
+		driver.manage().timeouts().implicitlyWait(AppConstants.IMPLICITLY_WAIT, TimeUnit.SECONDS);
+		return we;
+	}
 
 	public ContentTypeName getContentType(String ctype)
 	{
 		ContentTypeName result = null;
 		ContentTypeName[] values = ContentTypeName.values();
-		for(ContentTypeName val: values )
+		for (ContentTypeName val : values)
 		{
-			if(val.getValue().equalsIgnoreCase(ctype))
+			if (val.getValue().equalsIgnoreCase(ctype))
 			{
-				result =  val;
-				
+				result = val;
+
 			}
 		}
 		return result;
 	}
-	
-	
+
 	public Boolean waitElementExist(final WebDriver driver, final String xpath, long timeout)
 	{
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
-		return wait.until( new ExpectedCondition<Boolean>()
-	        {
-			     @Override
-	            public Boolean apply( WebDriver webDriver )
-	            {
-	                try
-	                {
-	                    driver.findElement(By.xpath(xpath )); 
-	                   
-	                }
-	                catch( StaleElementReferenceException e )
-	                {
-	                   
-	                    return false;
-	                }
-	                return true;
-	            }
-	        } );
+		return wait.until(new ExpectedCondition<Boolean>()
+		{
+			@Override
+			public Boolean apply(WebDriver webDriver)
+			{
+				try
+				{
+					driver.findElement(By.xpath(xpath));
+
+				} catch (StaleElementReferenceException e)
+				{
+
+					return false;
+				}
+				return true;
+			}
+		});
 	}
+
 	public WebElement findDynamicElement(final WebDriver driver, final String xpath, long timeout)
 	{
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
-		return wait.until( new ExpectedCondition<WebElement>()
-	        {
-			     @Override
-	            public WebElement apply( WebDriver webDriver )
-	            {
-	                try
-	                {
-	                    return  driver.findElement(By.xpath(xpath )); 
-	                                      
-	                }
-	                catch( StaleElementReferenceException e )
-	                {
-	                    return null;
-	                }
-	            }
-	        } );
+		return wait.until(new ExpectedCondition<WebElement>()
+		{
+			@Override
+			public WebElement apply(WebDriver webDriver)
+			{
+				try
+				{
+					return driver.findElement(By.xpath(xpath));
+
+				} catch (StaleElementReferenceException e)
+				{
+					return null;
+				}
+			}
+		});
 	}
-	public boolean waitAndCheckAttrValue(WebDriver webDriver, final WebElement element, final String attributeName, final String attributeValue, long timeout)
+
+	public boolean waitAndCheckAttrValue(WebDriver webDriver, final WebElement element, final String attributeName, final String attributeValue,
+			long timeout)
 	{
 		WebDriverWait wait = new WebDriverWait(webDriver, timeout);
 		try
@@ -229,34 +267,35 @@ public class TestUtils
 	 * Types text in input field.
 	 * 
 	 * @param session
-	 * @param input input type=text
-	 * @param text text for input.
+	 * @param input
+	 *            input type=text
+	 * @param text
+	 *            text for input.
 	 */
 	public void clearAndType(TestSession session, WebElement input, String text)
 	{
-		if(session.getIsRemote())
+		if (session.getIsRemote())
 		{
 			input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
-		} 
-		else{
-			
+		} else
+		{
+
 			String os = System.getProperty("os.name").toLowerCase();
 			logger.info("clearAndType: OS System is " + os);
 			if (os.indexOf("mac") >= 0)
 			{
 				input.sendKeys(Keys.chord(Keys.COMMAND, "a"), text);
-			}else{
-				logger.info("text will be typed: "+ text);
+			} else
+			{
+				logger.info("text will be typed: " + text);
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
 				logger.info("input cleared ");
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
 			}
-			
+
 		}
-		
 
 	}
-
 
 	public void waitUntilVisible(final TestSession testSession, final By by)
 	{
@@ -330,17 +369,17 @@ public class TestUtils
 	{
 		try
 		{
-			new WebDriverWait(testSession.getDriver(),timeout).until(new ExpectedCondition<Boolean>()
-					{
-						public Boolean apply(WebDriver d)
-						{
-							return d.getTitle().trim().contains(title);
-						}
-					});
+			new WebDriverWait(testSession.getDriver(), timeout).until(new ExpectedCondition<Boolean>()
+			{
+				public Boolean apply(WebDriver d)
+				{
+					return d.getTitle().trim().contains(title);
+				}
+			});
 			return true;
 		} catch (TimeoutException ex)
 		{
-			logger.info("TimeoutException, title not loaded. expected title:" +title + " timeout expired in sec: "+ timeout);
+			logger.info("TimeoutException, title not loaded. expected title:" + title + " timeout expired in sec: " + timeout);
 			return false;
 		}
 	}
@@ -459,14 +498,14 @@ public class TestUtils
 					return true;
 				} catch (StaleElementReferenceException e)
 				{
-					 logger.info( e.getMessage() + "\n");
-					 logger.info("Trying again...");
+					logger.info(e.getMessage() + "\n");
+					logger.info("Trying again...");
 					return false;
 				}
 			}
 		});
 		final long endTime = System.currentTimeMillis();
-		logger.info("clickByElement time is "+ (endTime -startTime));
+		logger.info("clickByElement time is " + (endTime - startTime));
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 

@@ -97,7 +97,7 @@ public class AbstractTablePage extends Page
 		//boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(expanderElement), getDriver());
 		//findElement(By.xpath(expanderElement));
 		//boolean isPresent = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(expanderElement), 3l);
-		boolean isPresent = TestUtils.getInstance().findDinamicElement(getSession().getDriver(),  By.xpath(expanderElement), 5);
+		boolean isPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(),  By.xpath(expanderElement), 5);
 		if (!isPresent)
 		{
 			getLogger().info("expander for folder:"+ parentName +" was not found! ");
@@ -119,8 +119,9 @@ public class AbstractTablePage extends Page
 		
 		//List<WebElement> elems = getSession().getDriver().findElements(By.xpath(trXpath));
 		//boolean isRowPresent = TestUtils.getInstance().waitAndFind(By.xpath(trXpath), getDriver());
-		boolean isRowPresent = TestUtils.getInstance().findDinamicElement(getSession().getDriver(), By.xpath(trXpath), 5);
-		if (!isRowPresent)
+		//boolean isRowPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(), By.xpath(trXpath), 5);
+		WebElement rowElement = TestUtils.getInstance().getDynamicElement(getSession().getDriver(), By.xpath(trXpath), 5);
+		if (rowElement == null)
 		{
 			throw new TestFrameworkException("invalid locator  or space with name: "+ name+ " dose not exists! xpath =  " + trXpath);
 		}
@@ -132,7 +133,7 @@ public class AbstractTablePage extends Page
 //		}
 		String attributeName = "class";
 		String attributeValue = "x-grid-tree-node-expanded";
-		return TestUtils.getInstance().waitAndCheckAttrValue(getDriver(), findElement(By.xpath(trXpath)), attributeName, attributeValue, 1l);
+		return TestUtils.getInstance().waitAndCheckAttrValue(getDriver(), rowElement, attributeName, attributeValue, 1l);
 	}
 
 	/**
