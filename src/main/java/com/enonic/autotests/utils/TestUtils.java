@@ -247,8 +247,6 @@ public class TestUtils
 			throw new TestFrameworkException("Div was not found xpath: " + scrollXpath);
 		}
 		long gridHeight = (Long) ((JavascriptExecutor) session.getDriver()).executeScript("return arguments[0].scrollHeight", divScroll.get(0));
-		// ((JavascriptExecutor)getSession().getDriver()).executeScript("arguments[0].scrollTop=arguments[1]",
-		// divScroll.get(0),170);
 
 		for (int scrollTop = 0; scrollTop <= gridHeight;)
 		{
