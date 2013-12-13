@@ -153,7 +153,11 @@ public class AbstractTablePage extends Page
 		if (!elems.get(0).isDisplayed())
 		{ 
 			WebElement scrolled = TestUtils.getInstance().scrollTableAndFind(getSession(),expanderImgXpath ,DIV_SCROLL_XPATH);
+			if(scrolled != null)
+			{
 			scrolled.click();
+			}
+			
 		} else
 		{
 
