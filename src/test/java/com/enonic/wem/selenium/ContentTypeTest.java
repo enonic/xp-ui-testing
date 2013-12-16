@@ -29,4 +29,27 @@ public class ContentTypeTest extends BaseTest
 	}
 
 	
+	@Test(description = "create new content-type and edit it", dataProvider= "editContentType",dataProviderClass = SchemaManagerProvider.class)
+	public void editContentType(ContentTypeXml xmlData)
+	{
+		ContentType ct = TestDataConvertor.convertXmlDataToContentType(xmlData);
+		
+		
+		String contentTypeName = "cttoedit" + Math.abs(new Random().nextInt());
+		ct.setName(contentTypeName);
+		SchemaTablePage schemasPage = (SchemaTablePage) contentTypeService.createContentType(getTestSession(), ct, true);
+		boolean isPresent = schemasPage.isContentTypePresentInTable(ct);
+		Assert.assertTrue(isPresent, String.format("contentType with name: %s  and displayName %s was not found in the table", ct.getName(), ct.getDisplayNameFromConfig()));
+		ContentType newContentType = ct.cloneContentType();
+		
+		newContentType.setDisplayNameInConfig("edited");
+		
+		schemasPage = contentTypeService.editContentType(getTestSession(), ct, newContentType);
+		isPresent = schemasPage.isContentTypePresentInTable(newContentType);
+		Assert.assertTrue(isPresent, String.format("contentType with name: %s  and new  displayName %s was not  found in the table", newContentType.getName(), newContentType.getDisplayNameFromConfig()));
+		isPresent = schemasPage.isContentTypePresentInTable(ct);
+		Assert.assertFalse(isPresent, String.format("Display name have changed, but contentType with name: %s  and displayName %s was found in the table", ct.getName(), ct.getDisplayNameFromConfig()));
+	}
+
+	
 }

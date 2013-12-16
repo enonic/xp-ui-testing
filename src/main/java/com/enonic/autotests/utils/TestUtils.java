@@ -131,6 +131,7 @@ public class TestUtils
 			try
 			{
 				we = driver.findElement(locator);
+				logger.info("TestUtils.getDynamicElement: dynamic webelement was found!");
 				return we;
 			} catch (StaleElementReferenceException ser)
 			{
@@ -149,6 +150,7 @@ public class TestUtils
 		long totalTime = endTime - startTime;
 		logger.info("Finished click after waiting for " + totalTime + " milliseconds.");
 		driver.manage().timeouts().implicitlyWait(AppConstants.IMPLICITLY_WAIT, TimeUnit.SECONDS);
+		logger.info("getDynamicElement is  null: ");
 		return we;
 	}
 

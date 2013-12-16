@@ -150,7 +150,7 @@ public class ContentManagerTests extends BaseTest
 		//Assert.assertFalse(result," content with new displayName: "+content.getDisplayName()+" was deleted, and should not be present in te table of contents");
 		logger.info("FINISHED $$$$ open content and delete it");
 	}
-	//@Test(description = "add new content, select content in a table, open content and Delete it ")
+	@Test(description = "add new content, select content in a table, open content and Delete it ")
 	public void openContentAndEdit()
 	{		
 		logger.info("STARTED ##### open content and click by 'Edit' button from toolbar");

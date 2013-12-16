@@ -1,0 +1,25 @@
+<contentTypeTestData>
+	<contentTypes>
+		<contentType>
+			<name>random generated</name>
+			<kind>Content Type</kind>
+			<config>
+				<![CDATA[             	
+             	<type>
+               		<module>system</module>  
+              		<display-name>folder-to-edit</display-name> 
+              		<content-display-name-script />
+               		<super-type>folder</super-type>
+               		<is-abstract>false</is-abstract>
+               		<is-built-in>true</is-built-in>
+               		<is-final>false</is-final>
+               		<allow-children>true</allow-children>
+               		<form />
+               	</type>
+               ]]>
+			</config>
+		</contentType>
+
+		
+	</contentTypes>
+</contentTypeTestData>

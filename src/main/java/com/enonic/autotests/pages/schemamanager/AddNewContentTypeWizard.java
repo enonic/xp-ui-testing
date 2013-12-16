@@ -65,6 +65,14 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 		}else return true;
 	}
 
+	private void clearConfig(WebElement configElement)
+	{
+		final Actions builder = new Actions( getSession().getDriver() );
+		builder.click( configElement ).sendKeys(Keys.chord(Keys.CONTROL, "a"), " " ).build().perform();
+		
+		getLogger().info("method fifnished :clearConfig ");
+		
+	}
 	/**
 	 * Types data and press the "Save" button from the toolbar.
 	 * 
@@ -79,6 +87,7 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath("//div[contains(@class,'CodeMirror')]//div[contains(@class,'CodeMirror-lines')]"));
 		if(!getSession().getIsRemote())
 		{
+			clearConfig(elems.get(0));
 			setConfigFromClipboard(contentType,  elems.get(0));
 			
 		}else{

@@ -22,7 +22,7 @@ import com.enonic.autotests.utils.TestUtils;
  */
 public class SchemaTablePage extends AbstractTablePage
 {
-	private static String titleXpath = "//span[contains(@class,'x-btn-inner') and contains(.,'Schema Manager')]";
+	private static String titleXpath = "//button[contains(@class,'home-button') and contains(.,'Schema Manager')]"; 
 
 	//private final String NEW_BUTTON_XPATH = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'New')]]";
 	private final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
@@ -31,10 +31,11 @@ public class SchemaTablePage extends AbstractTablePage
 
 	public static final String SCHEMAS_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
 
-	@FindBy(xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Edit')]]")
+	private final String EDIT_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='Edit']";
+	@FindBy(xpath = EDIT_BUTTON_XPATH)
 	private WebElement editButton;
 
-	private final String DELETE_BUTTON_XPATH = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Delete')]]";
+	private final String DELETE_BUTTON_XPATH ="//div[@class='toolbar']/button[text()='Delete']";
 	@FindBy(xpath = DELETE_BUTTON_XPATH)
 	private WebElement deleteButton;
 
@@ -70,6 +71,41 @@ public class SchemaTablePage extends AbstractTablePage
 	{
 		super(session);
 
+	}
+	
+	public void doEditContentType(ContentType contentTypeToEdit, ContentType newContentType)
+	{
+		String superTypeName = contentTypeToEdit.getSuperTypeNameFromConfig();
+		//1. expand a supertype folder:
+		doExpandFolder(superTypeName);
+		//2.  select a content type in a grid
+		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentTypeToEdit.getDisplayNameFromConfig(), contentTypeToEdit.getName());
+		getLogger().info("Check is Space present in table: " + contentTypeXpath);
+		
+		//3. click by 'Edit' button on toolbar
+		WebElement elem = TestUtils.getInstance().getDynamicElement(getDriver(), By.xpath(contentTypeXpath), 3);
+	    if(elem==null)
+	    {
+	    	throw new TestFrameworkException("element was not found:"+ contentTypeXpath);
+	    }
+			
+		try
+		{
+			Thread.sleep(500);
+		} catch (InterruptedException e)
+		{
+			
+			e.printStackTrace();
+		}
+		elem.click();
+		getLogger().info("content type with name:" +contentTypeToEdit.getName() +" was selected in the table!");
+		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
+		editButton.click();
+		AddNewContentTypeWizard wizard = new AddNewContentTypeWizard(getSession());
+		getLogger().info("## AddNewContentTypeWizard  should be opened, waits title: " + contentTypeToEdit.getName());
+		wizard.waitUntilWizardOpened(contentTypeToEdit.getName(), 1);
+		wizard.doTypeDataSaveAndClose(newContentType);
+		
 	}
 	
 	public void doDeleteContentType(ContentType contentTypeToDelete)
@@ -169,10 +205,10 @@ public class SchemaTablePage extends AbstractTablePage
 		//1. expand a supertype folder:
 		doExpandFolder(superTypeName);
 		
-		String spaceDescriptionXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName());
-		getLogger().info("Check is Space present in table: " + spaceDescriptionXpath);
+		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName());
+		getLogger().info("Check is Space present in table: " + contentTypeXpath);
 	
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(spaceDescriptionXpath));
+		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(contentTypeXpath));
 
 		if (elems.size() > 0)
 		{

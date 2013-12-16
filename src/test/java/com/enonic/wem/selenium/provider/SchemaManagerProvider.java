@@ -22,6 +22,7 @@ public class SchemaManagerProvider
 	private static final String MIXIN_TEST_DATA = "create-mixin.xml";
 	private static final String RELATIONSHIP_TEST_DATA = "create-relationship.xml";
 	private static final String DELETETEST_TEST_DATA = "delete-test.xml";
+	private static final String EDITTEST_TEST_DATA = "edit-test.xml";
 	
 	
 	
@@ -80,8 +81,28 @@ public class SchemaManagerProvider
 		return casesParameters.toArray(new Object[casesParameters.size()][]);
 	}
 	
-	@DataProvider(name = "deleteTest")
-	public static Object[][] deleteTest() throws JAXBException {
+	
+	
+	@DataProvider(name = "editContentType")
+	public static Object[][] editContentType() throws JAXBException {
+
+		List<Object[]> casesParameters = new ArrayList<Object[]>();
+		JAXBContext context = JAXBContext.newInstance(ContentTypeTestData.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		InputStream in = TestDataConvertor.class.getClassLoader().getResourceAsStream("test-data/schemamanager/" + EDITTEST_TEST_DATA);
+		if (in == null) {
+			throw new TestFrameworkException("test data was not found!");
+		}
+		ContentTypeTestData testdata = (ContentTypeTestData) unmarshaller.unmarshal(in);
+		List<ContentTypeXml> cases = testdata.getContentTypes();
+		for (ContentTypeXml ctype : cases) {
+			casesParameters.add(new Object[] { ctype });
+		}
+		return casesParameters.toArray(new Object[casesParameters.size()][]);
+	}
+	
+	@DataProvider(name = "deleteContentType")
+	public static Object[][] deleteContentType() throws JAXBException {
 
 		List<Object[]> casesParameters = new ArrayList<Object[]>();
 		JAXBContext context = JAXBContext.newInstance(ContentTypeTestData.class);

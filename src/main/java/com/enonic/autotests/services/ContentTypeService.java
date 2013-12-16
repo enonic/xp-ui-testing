@@ -46,6 +46,22 @@ public class ContentTypeService
 		SchemaTablePage spacesPage = NavigatorHelper.openSchemaManager(testSession);
 
 		spacesPage.doDeleteContentType(contentTypeToDelete);
-		return new SchemaTablePage(testSession);
+		return spacesPage;
+	}
+	
+
+	/**
+	 * Navigates to SchemaManager application select a content type in the table and delete it.
+	 * 
+	 * @param testSession
+	 * @param contentTypeToDelete
+	 * @return {@link SchemaTablePage} instance.
+	 */
+	public SchemaTablePage editContentType(TestSession testSession, ContentType contentTypeToEdit, ContentType newContentType)
+	{
+		SchemaTablePage spacesPage = NavigatorHelper.openSchemaManager(testSession);
+
+		spacesPage.doEditContentType(contentTypeToEdit, newContentType);
+		return spacesPage;
 	}
 }

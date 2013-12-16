@@ -73,4 +73,57 @@ public class ContentType
 	{
 		this.name = name;
 	}
+	
+	public ContentType cloneContentType()
+	{
+		ContentType clon = new ContentType();
+		clon.setName(this.getName());		
+		clon.setConfigData(this.getConfigData());
+		clon.setKind(this.getKind());
+		return clon;
+	}
+	
+	public static Builder with()
+	{
+		return new Builder();
+	}
+	public static class Builder
+	{
+		private String bName;
+		private KindOfContentTypes bKind;
+		private String bConfigData;
+		
+	   public Builder()
+	   {
+		   
+	   }
+	   public Builder name(String name)
+	   {
+		   this.bName = name;
+		   return this;
+	   }
+	 
+	 
+	   public Builder configuration(String conf)
+	   {
+		   this.bConfigData = conf;
+		   return this;
+	   }
+	   
+	   public Builder kind(KindOfContentTypes kind)
+	   {
+		   this.bKind = kind;
+		   return this;
+	   }
+	   public ContentType build()
+	   {
+		   ContentType ctype = new ContentType();
+	
+		   ctype.name = this.bName;
+		   ctype.configData = this.bConfigData;
+		   ctype.kind = this.bKind;
+		   return ctype;
+	   }
+	}
+
 }

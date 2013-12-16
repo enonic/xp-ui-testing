@@ -49,11 +49,11 @@ public class HomePage extends Page
 		String wh = getSession().getWindowHandle();
 		if(wh == null)
 		{
-			getSession().setWindowHandle(getSession().getDriver().getWindowHandle());
+			getSession().setWindowHandle(getDriver().getWindowHandle());
 		}
 		
 		// open page via the driver.get(BASE_URL)
-		getSession().getDriver().get(getSession().getBaseUrl());
+		getDriver().get(getSession().getBaseUrl());
 
 		if (!getSession().isLoggedIn())
 		{

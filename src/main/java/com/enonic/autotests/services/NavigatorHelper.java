@@ -74,7 +74,7 @@ public class NavigatorHelper
 
 	public static SchemaTablePage openSchemaManager(TestSession testSession)
 	{
-		if (ContentTablePage.isOpened(testSession))
+		if (SchemaTablePage.isOpened(testSession))
 		{
 			return new SchemaTablePage(testSession);
 		} else
