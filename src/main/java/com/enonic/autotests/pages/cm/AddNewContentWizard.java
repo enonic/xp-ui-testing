@@ -147,7 +147,7 @@ public class AddNewContentWizard extends BaseWizardPage
 		getLogger().info("types name: "+ content.getName());
 		TestUtils.getInstance().clearAndType(getSession(), nameInput, content.getName());
 		
-		
+		TestUtils.getInstance().saveScreenshot(getSession());
 		// 2. populate main tab
 		populateMainTab(getSession(), content);
 

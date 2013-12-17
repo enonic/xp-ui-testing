@@ -89,6 +89,7 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 		{
 			clearConfig(elems.get(0));
 			setConfigFromClipboard(contentType,  elems.get(0));
+			getLogger().info("$$$configuration$$$:   "+ contentType.getConfigData());
 			
 		}else{
 			
@@ -98,7 +99,7 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 			paste.perform();
 		}
 		
-				
+		TestUtils.getInstance().saveScreenshot(getSession());
 		// 3. check if enabled and press "Save".
 		doSaveFromToolbar();
 		
