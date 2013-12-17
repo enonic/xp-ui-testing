@@ -191,6 +191,7 @@ public class AddNewContentWizard extends BaseWizardPage
 		boolean isPresent = checkModalDialog();
 		if(isPresent)
 		{
+			TestUtils.getInstance().saveScreenshot(getSession());
 			throw new TestFrameworkException("buttons save and close were pressed, but modal dialog appeared!");
 		}
 		ContentTablePage page = new ContentTablePage(getSession());
