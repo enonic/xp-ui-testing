@@ -54,6 +54,7 @@ public class ContentManagerTests extends BaseTest
 		logger.info("method cManagerService.addContent finished, try to find content in the "+ REPONAME);
         //2. verify that content present in the table
 		boolean result = page.findContentInTable(content, 2l);
+		TestUtils.getInstance().saveScreenshot(getTestSession());
 		Assert.assertTrue(result, String.format("new added content with name == %s was not found in the table!",content.getName()));
 		logger.info(String.format("new added content with name == %s was found in the table!",content.getName()));
 		logger.info("FINISHED $$$$$$$$$$  "+contentXml.getCaseInfo());
@@ -100,17 +101,18 @@ public class ContentManagerTests extends BaseTest
 		logger.info("Finished $$$$$  select checkboxes, press a button 'Delete' from toolbar and delete content from space ");
 	}
 	
-	@Test(description = "add new content and edit it. Click by 'Edit', open wizard edit content and save")
+	@Test(description = "Add new content and edit it. select a content, click by 'Edit' button , open wizard edit content and save")
 	public void editContentTest()
 	{
-		logger.info("Bug## There is a Described bug ::the table of content does not refreshed when content updated and wizard closed");
-		StructuredContent contentToUpdate =  StructuredContent.builder().withName("scontent-to-edit").withDisplayName("content-to-edit").withType(ContentTypeName.STUCTURED.getValue()).build();
+		logger.info("Add new content and edit it. select a content, click by 'Edit' button , open wizard edit content and save");
+		String name = "content-to-edit"+Math.abs( new Random().nextInt() );
+		StructuredContent contentToUpdate =  StructuredContent.builder().withName(name).withDisplayName("content-to-edit").withType(ContentTypeName.STUCTURED.getValue()).build();
 		String[] parentNames = new String[]{REPONAME};
 		contentToUpdate.setParentNames(parentNames);
 		//1. add a content to the space
 		cManagerService.addContent(getTestSession(), contentToUpdate, true);
 
-		StructuredContent newcontent =  StructuredContent.builder().withName("content-updated").withDisplayName("content-updated").withType(ContentTypeName.STUCTURED.getValue()).build();
+		StructuredContent newcontent =  StructuredContent.builder().withName(name).withDisplayName("content-updated").withType(ContentTypeName.STUCTURED.getValue()).build();
 		newcontent.setParentNames(parentNames);
 
 		//2. click by "Edit" link and update just created content, and try to close wizard:	
@@ -121,10 +123,10 @@ public class ContentManagerTests extends BaseTest
 		Assert.assertTrue(result, "content with updated name was not found!");
 	}
 
-	@Test(description = "add new content, select content in a table, open content and Delete it " )
+	@Test(description = "add new content, select content in a table, click by 'open' button and Delete it " )
 	public void openContentAndDelete()
 	{		
-		logger.info("STARTED ##### open content and click by 'Delete' button from toolbar");
+		logger.info("STARTED ##### Add new content, select content in a table, click by 'open' button and Delete it ");
 		String name = "open-delete"+Math.abs( new Random().nextInt() );
 
 		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("open-delete-test").withType(ContentTypeName.STUCTURED.getValue()).build();
@@ -139,7 +141,6 @@ public class ContentManagerTests extends BaseTest
         //2. open just created content and delete it using a toolbar:		
 		ContentTablePage page = cManagerService.doOpenContentAndDelete(getTestSession(), content);
 		
-		//TODO  this test failed due the BUG CMS-2615 :: grid not refreshed after content deletion
 		//3.verify, that content not present in the table:
 		logger.info("try to find content with name: " +content.getName()+ " in folder: " + REPONAME);
 		boolean result = page.findContentInTable(content, 2l);
