@@ -75,7 +75,7 @@ public class ContentInfoPage extends Page
 	{
 		editButtonToolbar.click();
 		AddNewContentWizard wizard = new AddNewContentWizard(getSession());
-		//when content opened and the 'Edit' button pressed, new wizard page appears and '2'  should be present in the red cirkle.
+		//when content opened and the 'Edit' button pressed, new wizard page appears and '2'  should be present in the red circle.
 		wizard.waitUntilWizardOpened(contentDisplayName, 2);
 		wizard.doTypeDataSaveAndClose(newContent);
 	}

@@ -13,6 +13,7 @@ public class CloseWizardDialog extends BaseModalDialog
 	private final String YES_BUTTON_XPATH = "//div[@class='modal-dialog']//button[contains(.,'es')]";
 	private final String NO_BUTTON_XPATH = "//div[@class='modal-dialog']//button[contains(.,'o')]";
 	private final String CANCEL_BUTTON_XPATH = "//div[@class='modal-dialog']//button[contains(.,'Cancel')]";
+	public final String TITLE_XPATH = "//h2[text()='Close wizard']";
 
 
 	public CloseWizardDialog( TestSession session )
@@ -37,7 +38,13 @@ public class CloseWizardDialog extends BaseModalDialog
 	public void waituntilPageLoaded(long timeout)
 	{
 		
-		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[text()='Close wizard']")));
+		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TITLE_XPATH)));
 	}
+
+	public boolean isDialogPresent()
+	{
+		return TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(TITLE_XPATH), 1l);
+	}
+	
 
 }

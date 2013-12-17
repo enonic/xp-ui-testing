@@ -61,7 +61,7 @@ public class ContentManagerTests extends BaseTest
 	
 	
 	
-    @Test(description = "add 2 new contents to the space and delete these ")
+        @Test(description = "add 2 new contents to the space and delete these ")
 	public void testDeleteContentUsingToolbarButton()
 	{
 		logger.info("STARTED #####  select checkboxes, press a button 'Delete' from toolbar and delete content from space ");
@@ -100,9 +100,7 @@ public class ContentManagerTests extends BaseTest
 		logger.info("Finished $$$$$  select checkboxes, press a button 'Delete' from toolbar and delete content from space ");
 	}
 	
-	// TODO  this test failed due the bug  CMS-2562: impossible to close Edit wizard
-    //https://youtrack.enonic.net/issue/CMS-2562#
-	//@Test(description = "add new content and edit it. Click by 'Edit', open wizard edit content and save")
+	@Test(description = "add new content and edit it. Click by 'Edit', open wizard edit content and save")
 	public void editContentTest()
 	{
 		logger.info("Bug## There is a Described bug ::the table of content does not refreshed when content updated and wizard closed");
@@ -123,7 +121,6 @@ public class ContentManagerTests extends BaseTest
 		Assert.assertTrue(result, "content with updated name was not found!");
 	}
 
-	////TODO  this test failed due the BUG CMS-2615 
 	@Test(description = "add new content, select content in a table, open content and Delete it " )
 	public void openContentAndDelete()
 	{		

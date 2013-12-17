@@ -7,10 +7,12 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.model.cm.ArticleContent;
 import com.enonic.autotests.model.cm.BaseAbstractContent;
 import com.enonic.autotests.model.cm.MixinContent;
 import com.enonic.autotests.pages.BaseWizardPage;
+import com.enonic.autotests.pages.CloseWizardDialog;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -134,8 +136,7 @@ public class AddNewContentWizard extends BaseWizardPage
 			Thread.sleep(3000);
 		} catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			getLogger().info(e.getLocalizedMessage());
 		}
 		//--------------------------------------------------------------------------
 		waitElementClickable(By.name("displayName"), 2);
@@ -187,10 +188,20 @@ public class AddNewContentWizard extends BaseWizardPage
 	{
 		doTypeDataAndSave( content);
 		closeButton.click();
-				
+		boolean isPresent = checkModalDialog();
+		if(isPresent)
+		{
+			throw new TestFrameworkException("buttons save and close were pressed, but modal dialog appeared!");
+		}
 		ContentTablePage page = new ContentTablePage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
+	}
+	
+	private boolean checkModalDialog()
+	{
+		CloseWizardDialog modalDialog = new CloseWizardDialog(getSession());
+		return modalDialog.isDialogPresent();
 	}
 	/**
 	 * Populates a main tab in the wizard, Article, mixin...  tabs for example 
