@@ -46,8 +46,8 @@ public class ContentManagerTests extends BaseTest
 		BaseAbstractContent content = TestDataConvertor.convertXmlDataToContent(contentXml);
 		String[] parentNames = new String[]{REPONAME};
 		content.setParentNames(parentNames);
-		String name = "add" + Math.abs( new Random().nextInt() );
-		content.setName(name);
+		String displayName = contentXml.getContentType().toLowerCase() + Math.abs( new Random().nextInt() );
+		content.setDisplayName(displayName);
 		//1. add a content to the space
 		logger.info("start to add content with name: " +content.getName()+ " to folder: " + REPONAME);
 		ContentTablePage page = (ContentTablePage) cManagerService.addContent(getTestSession(), content, true);

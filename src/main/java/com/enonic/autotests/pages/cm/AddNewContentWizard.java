@@ -130,22 +130,17 @@ public class AddNewContentWizard extends BaseWizardPage
 	public void doTypeDataAndSave( BaseAbstractContent content)
 	{
 		// 1. type a data: 'name' and 'Display Name'.
-		//TODO workaround: this block will be removed when issue with draft name fixed. 
-		try
-		{
-			Thread.sleep(3000);
-		} catch (InterruptedException e)
-		{
-			getLogger().info(e.getLocalizedMessage());
-		}
-		//--------------------------------------------------------------------------
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
 		TestUtils.getInstance().clearAndType(getSession(), displayNameInput, content.getDisplayName());
 		
+		if(content.getName()!=null && !content.getName().isEmpty())
+		{
 		waitElementClickable(By.name("name"), 2);
 		getLogger().info("types name: "+ content.getName());
 		TestUtils.getInstance().clearAndType(getSession(), nameInput, content.getName());
+		
+		}
 		
 		TestUtils.getInstance().saveScreenshot(getSession());
 		// 2. populate main tab

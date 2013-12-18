@@ -10,51 +10,51 @@
 -->
 	<folder>
 		<caseInfo>Try to add content with 'Folder' type</caseInfo>
-		<displayName>folder-displayname</displayName>
-		<name>folder-content</name>
+		<displayName></displayName>
+		<name></name>
 		<contentType>Folder</contentType>
 	</folder>
 
 	 <data>
 	 <caseInfo>Try to add content with 'Data' type</caseInfo>
-		<displayName>data-displayName</displayName>
-		<name>data-content</name>
+		<displayName></displayName>
+		<name></name>
 		<contentType>Data</contentType>
 	 </data>
 	  <text>
 	 <caseInfo>Try to add content with 'Text' type</caseInfo>
 		<displayName>text-displayName</displayName>
-		<name>text-content</name>
+		<name></name>
 		<contentType>Text</contentType>
 	 </text>
 	<unstructured>
 		<caseInfo>Try to add content with 'Unstructured' type</caseInfo>
 		<displayName>unstructured-displayName</displayName>
-		<name>unstructured-content</name>
+		<name></name>
 		<contentType>Unstructured</contentType>
 	</unstructured>
 	<structured>
 		<caseInfo>Try to add content with 'Structured' type</caseInfo>
 		<displayName>structured-displayName</displayName>
-		<name>structured-content</name>
+		<name></name>
 		<contentType>Structured</contentType>
 	</structured>
 	<media>
 		<caseInfo>Try to add content with 'Media' type</caseInfo>
 		<displayName>media-displayName</displayName>
-		<name>media-content</name>
+		<name></name>
 		<contentType>Media</contentType>
 	</media>
 	<shortcut>
 		<caseInfo>Try to add content with 'Shortcut' type</caseInfo>
 		<displayName>shortcut-displayName</displayName>
-		<name>shortcut-content</name>
+		<name></name>
 		<contentType>Shortcut</contentType>
 	</shortcut>
 	<archive>
 		<caseInfo>Try to add content with 'Archive' type</caseInfo>
 		<displayName>archive-displayName</displayName>
-		<name>archive-content</name>
+		<name></name>
 		<contentType>Archive</contentType>
 	</archive>
 </contentTestData>
