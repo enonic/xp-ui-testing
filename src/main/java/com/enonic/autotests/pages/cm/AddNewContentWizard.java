@@ -133,6 +133,13 @@ public class AddNewContentWizard extends BaseWizardPage
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
 		TestUtils.getInstance().clearAndType(getSession(), displayNameInput, content.getDisplayName());
+		try
+		{
+			Thread.sleep(1000);
+		} catch (InterruptedException e)
+		{
+			
+		}
 		
 		if(content.getName()!=null && !content.getName().isEmpty())
 		{
