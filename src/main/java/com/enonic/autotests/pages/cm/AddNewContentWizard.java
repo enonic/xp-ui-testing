@@ -129,6 +129,13 @@ public class AddNewContentWizard extends BaseWizardPage
 	 */
 	public void doTypeDataAndSave( BaseAbstractContent content)
 	{
+		try
+		{
+			Thread.sleep(2000);
+		} catch (InterruptedException e)
+		{
+			
+		}
 		// 1. type a data: 'name' and 'Display Name'.
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());

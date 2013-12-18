@@ -289,8 +289,9 @@ public class TestUtils
 			{
 				logger.info("text will be typed: " + text);
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
-				logger.info("input cleared ");
+				//logger.info("input cleared ");
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
+                                 logger.info("text in input: " + text);
 			}
 
 		}
