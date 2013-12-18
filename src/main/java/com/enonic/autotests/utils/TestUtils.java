@@ -426,7 +426,7 @@ public class TestUtils
 	{
 		WebDriver driver = testSession.getDriver();
 		String fileName = timeNow() + ".png";
-		File folder  = new File("target/screenshots");
+		File folder  = new File("target/");
 		//File folder = new File(System.getProperty("user.dir") + File.separator + "snapshots");
 
 		if (!folder.exists())

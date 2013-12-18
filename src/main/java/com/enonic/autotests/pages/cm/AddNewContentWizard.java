@@ -133,6 +133,7 @@ public class AddNewContentWizard extends BaseWizardPage
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
 		TestUtils.getInstance().clearAndType(getSession(), displayNameInput, content.getDisplayName());
+		
 		try
 		{
 			Thread.sleep(1000);
@@ -140,7 +141,7 @@ public class AddNewContentWizard extends BaseWizardPage
 		{
 			
 		}
-		
+		TestUtils.getInstance().saveScreenshot(getSession());
 		if(content.getName()!=null && !content.getName().isEmpty())
 		{
 		waitElementClickable(By.name("name"), 2);
