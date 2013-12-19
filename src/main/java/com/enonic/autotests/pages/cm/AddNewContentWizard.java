@@ -198,12 +198,20 @@ public class AddNewContentWizard extends BaseWizardPage
 	{
 		doTypeDataAndSave( content);
 		closeButton.click();
-		boolean isPresent = checkModalDialog();
-		if(isPresent)
+		
+		CloseWizardDialog dialog = new CloseWizardDialog(getSession());
+		if(dialog.isDialogPresent())
 		{
-			TestUtils.getInstance().saveScreenshot(getSession());
-			throw new TestFrameworkException("buttons save and close were pressed, but modal dialog appeared!");
+			dialog.doCloseNoSave();
 		}
+		
+
+//		boolean isPresent = checkModalDialog();
+//		if(isPresent)
+//		{ 
+//			TestUtils.getInstance().saveScreenshot(getSession());
+//			throw new TestFrameworkException("buttons save and close were pressed, but modal dialog appeared!");
+//		}
 		ContentTablePage page = new ContentTablePage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
