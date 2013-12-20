@@ -13,7 +13,7 @@
 		<classes>
 		
 		    <class name="com.enonic.wem.selenium.contentmanager.DeleteContentDialogTest" />
-			<class name="com.enonic.wem.selenium.contentmanager.DeleteContentTests" />
+			<class name="com.enonic.wem.selenium.contentmanager.GridDeleteContentTests" />
 			<class name="com.enonic.wem.selenium.contentmanager.GridAddEditContenetTets" />
 			
 			
