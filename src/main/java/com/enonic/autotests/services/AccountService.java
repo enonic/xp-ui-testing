@@ -1,9 +1,9 @@
 package com.enonic.autotests.services;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.model.SystemUser;
 import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.accounts.AddNewUserWizard;
+import com.enonic.autotests.vo.SystemUser;
 
 /**
  * Service for 'Accounts' application.

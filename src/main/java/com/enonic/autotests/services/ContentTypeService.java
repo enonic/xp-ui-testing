@@ -1,10 +1,10 @@
 package com.enonic.autotests.services;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.model.schemamanger.ContentType;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.schemamanager.AddNewContentTypeWizard;
 import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 
 public class ContentTypeService
 {

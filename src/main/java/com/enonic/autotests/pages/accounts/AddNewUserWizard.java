@@ -12,11 +12,11 @@ import org.testng.Assert;
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.model.User;
 import com.enonic.autotests.pages.BaseWizardPage;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.User;
 
 public class AddNewUserWizard extends BaseWizardPage
 {

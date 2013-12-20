@@ -7,7 +7,7 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.CapabilityType;
 
-import com.enonic.autotests.model.User;
+import com.enonic.autotests.vo.User;
 
 public class TestSession {
 

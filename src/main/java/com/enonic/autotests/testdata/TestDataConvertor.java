@@ -1,27 +1,10 @@
 package com.enonic.autotests.testdata;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
-import com.enonic.autotests.model.Space;
-import com.enonic.autotests.model.SystemUser;
-import com.enonic.autotests.model.UserInfo;
-import com.enonic.autotests.model.cm.Address;
-import com.enonic.autotests.model.cm.ArchiveContent;
-import com.enonic.autotests.model.cm.BaseAbstractContent;
-import com.enonic.autotests.model.cm.BaseAbstractContent.Builder;
-import com.enonic.autotests.model.cm.CitationContent;
-import com.enonic.autotests.model.cm.DataContent;
-import com.enonic.autotests.model.cm.FolderContent;
-import com.enonic.autotests.model.cm.MediaContent;
-import com.enonic.autotests.model.cm.MixinContent;
-import com.enonic.autotests.model.cm.PageContent;
-import com.enonic.autotests.model.cm.ShortcutContent;
-import com.enonic.autotests.model.cm.StructuredContent;
-import com.enonic.autotests.model.cm.TextContent;
-import com.enonic.autotests.model.cm.UnstructuredContent;
-import com.enonic.autotests.model.schemamanger.ContentType;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypeName;
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
 import com.enonic.autotests.testdata.accounts.SystemUserXml;
 import com.enonic.autotests.testdata.accounts.UserInfoXml;
@@ -41,6 +24,25 @@ import com.enonic.autotests.testdata.cm.TextXml;
 import com.enonic.autotests.testdata.cm.UnstructuredXml;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.Space;
+import com.enonic.autotests.vo.SystemUser;
+import com.enonic.autotests.vo.UserInfo;
+import com.enonic.autotests.vo.contentmanager.Address;
+import com.enonic.autotests.vo.contentmanager.ArchiveContent;
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent.Builder;
+import com.enonic.autotests.vo.contentmanager.CitationContent;
+import com.enonic.autotests.vo.contentmanager.DataContent;
+import com.enonic.autotests.vo.contentmanager.FolderContent;
+import com.enonic.autotests.vo.contentmanager.MediaContent;
+import com.enonic.autotests.vo.contentmanager.MixinContent;
+import com.enonic.autotests.vo.contentmanager.PageContent;
+import com.enonic.autotests.vo.contentmanager.ShortcutContent;
+import com.enonic.autotests.vo.contentmanager.StructuredContent;
+import com.enonic.autotests.vo.contentmanager.TextContent;
+import com.enonic.autotests.vo.contentmanager.UnstructuredContent;
+import com.enonic.autotests.vo.schemamanger.ContentType;
+
 
 public class TestDataConvertor
 {

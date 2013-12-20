@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.accounts.AccountsPage;
-import com.enonic.autotests.pages.cm.ContentTablePage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
 import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
 import com.enonic.autotests.pages.spaceadmin.SpaceAdminPage;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -103,14 +103,14 @@ public class HomePage extends Page
 
 	
 
-	public ContentTablePage openContentManagerApplication()
+	public ContentGrid openContentManagerApplication()
 	{
 		contentManager.click();
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
 		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_CONTENT_MANAGER_FRAME_XPATH);
 		
-		return new ContentTablePage(getSession());
+		return new ContentGrid(getSession());
 	}
 
 	public AccountsPage openAccountsApplication()

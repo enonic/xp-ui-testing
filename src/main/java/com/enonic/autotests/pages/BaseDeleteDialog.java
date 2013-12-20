@@ -72,7 +72,7 @@ public abstract class BaseDeleteDialog
 	 * 
 	 * @return true if dialog opened, otherwise false.
 	 */
-	public boolean verifyIsOpened()
+	public boolean isOpened()
 	{
 		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(getTitleXpath()), 2);
 	}

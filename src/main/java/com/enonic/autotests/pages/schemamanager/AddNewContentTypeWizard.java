@@ -13,11 +13,10 @@ import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.CreateContentTypeException;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.model.schemamanger.ContentType;
 import com.enonic.autotests.pages.BaseWizardPage;
-import com.enonic.autotests.pages.CloseWizardDialog;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.TextTransfer;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
  * 'Schema Manager' application, Add new Content Type Wizard page.

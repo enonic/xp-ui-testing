@@ -13,9 +13,9 @@ import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.model.Space;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.Space;
 
 /**
  * 'Space Admin' application, main page.
@@ -196,7 +196,7 @@ public class SpaceAdminPage extends Page
 		List<String> names = new ArrayList<>();
 		names.add(spaceToDelete.getDisplayName());
 		DeleteSpaceDialogPage dialog = new DeleteSpaceDialogPage(getSession(), names);
-		boolean result = dialog.verifyIsOpened();
+		boolean result = dialog.isOpened();
 		if (!result)
 		{
 			throw new TestFrameworkException("Confirm delete space dialog was not opened!");

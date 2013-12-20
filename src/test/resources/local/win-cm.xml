@@ -9,11 +9,13 @@
 
 	<test verbose="2" name="FirefoxTests">
 		<parameter name="browser" value="firefox" />
-		<parameter name="browserVersion" value="25.0.1" />
+		<parameter name="browserVersion" value="26.0" />
 		<classes>
 		
-			<class name="com.enonic.wem.selenium.ContentManagerTests" />
-			<class name="com.enonic.wem.selenium.ContentTypeTest" />
+		    <class name="com.enonic.wem.selenium.contentmanager.DeleteContentDialogTest" />
+			<class name="com.enonic.wem.selenium.contentmanager.DeleteContentTests" />
+			<class name="com.enonic.wem.selenium.contentmanager.GridAddEditContenetTets" />
+			
 			
 			
 			<!-- removed due the CMS bug -->

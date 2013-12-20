@@ -11,10 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.model.schemamanger.ContentType;
 import com.enonic.autotests.pages.AbstractTablePage;
-import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
  * 'Schema Manager' application, the dashboard page.
@@ -132,7 +131,7 @@ public class SchemaTablePage extends AbstractTablePage
 		List<String> names = new ArrayList<>();
 		names.add(contentTypeToDelete.getName());
 		DeleteContentTypeDialog dialog = new DeleteContentTypeDialog(getSession(), names);
-		boolean result = dialog.verifyIsOpened();
+		boolean result = dialog.isOpened();
 		if (!result)
 		{
 			throw new TestFrameworkException("Confirm delete space dialog was not opened!");

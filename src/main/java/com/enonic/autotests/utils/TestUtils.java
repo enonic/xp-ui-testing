@@ -33,7 +33,7 @@ import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.logger.Logger;
-import com.enonic.autotests.pages.cm.SelectContentTypeDialog.ContentTypeName;
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 
 public class TestUtils
 {
@@ -115,7 +115,7 @@ public class TestUtils
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		logger.info("Finished click after waiting for " + totalTime + " milliseconds.");
-		driver.manage().timeouts().implicitlyWait(AppConstants.IMPLICITLY_WAIT, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(AppConstants.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS);
 		return isFound;
 	}
 	public WebElement getDynamicElement(WebDriver driver, By locator, int tries)
@@ -288,7 +288,7 @@ public class TestUtils
 			} else
 			{
 				logger.info("text will be typed: " + text);
-				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
+				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), " ");
 				//logger.info("input cleared ");
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
                                  logger.info("text in input: " + text);

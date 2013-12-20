@@ -13,9 +13,9 @@ import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.CreateUserException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.model.User;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.User;
 
 /**
  * 'Accounts' application, the dashboard page.

@@ -94,9 +94,6 @@ public class AbstractTablePage extends Page
 	{
 		String expanderElement = String.format(TD_FOLDER_NAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
 		getLogger().info("check if present expander for folder:"+ parentName +" xpath: " + expanderElement);
-		//boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(expanderElement), getDriver());
-		//findElement(By.xpath(expanderElement));
-		//boolean isPresent = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(expanderElement), 3l);
 		boolean isPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(),  By.xpath(expanderElement), 5);
 		if (!isPresent)
 		{
@@ -116,10 +113,7 @@ public class AbstractTablePage extends Page
 	private boolean isRowExapnded(String name)
 	{
 		String trXpath = String.format(TD_FOLDER_NAME +"/parent::tr", name);
-		
-		//List<WebElement> elems = getSession().getDriver().findElements(By.xpath(trXpath));
-		//boolean isRowPresent = TestUtils.getInstance().waitAndFind(By.xpath(trXpath), getDriver());
-		//boolean isRowPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(), By.xpath(trXpath), 5);
+	
 		WebElement rowElement = TestUtils.getInstance().getDynamicElement(getSession().getDriver(), By.xpath(trXpath), 5);
 		if (rowElement == null)
 		{
@@ -155,7 +149,7 @@ public class AbstractTablePage extends Page
 			WebElement scrolled = TestUtils.getInstance().scrollTableAndFind(getSession(),expanderImgXpath ,DIV_SCROLL_XPATH);
 			if(scrolled != null)
 			{
-			scrolled.click();
+				scrolled.click();
 			}
 			
 		} else

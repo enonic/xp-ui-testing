@@ -6,6 +6,8 @@ public interface AppConstants {
 	
 	final long IMPLICITLY_WAIT = 4l;
 	
+	final long DEFAULT_IMPLICITLY_WAIT = 2l;
+	
 	final String APP_SPACE_ADMIN_FRAME_XPATH = "//iframe[contains(@src,'space-manager')]";
 	
 	final String APP_CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";

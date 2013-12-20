@@ -1,9 +1,9 @@
 package com.enonic.autotests.services;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.model.Space;
 import com.enonic.autotests.pages.spaceadmin.AddNewSpaceWizard;
 import com.enonic.autotests.pages.spaceadmin.SpaceAdminPage;
+import com.enonic.autotests.vo.Space;
 
 /**
  * Service for 'Space Admin' application.

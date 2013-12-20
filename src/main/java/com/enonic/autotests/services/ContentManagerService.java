@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.model.cm.BaseAbstractContent;
 import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.pages.cm.AddNewContentWizard;
-import com.enonic.autotests.pages.cm.ContentTablePage;
-import com.enonic.autotests.pages.cm.ContentInfoPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
+import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
 /**
  * Service for 'Content Manager' application.
@@ -18,13 +19,18 @@ import com.enonic.autotests.utils.TestUtils;
 public class ContentManagerService
 {
 
+	public enum HowOpenContent
+	{
+		TOOLBAR,CONTEXT_MENU
+	}
 	public boolean openContentManagerAppAndVerify(TestSession session)
 	{
 		// 1. open a 'content manager'
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
 		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = true;
 		result &=cmPage.verifyTitle();
+		//TODO should specified: what need to check?
 		//result &=cmPage.verifyAllControls();
 		return result;
 	}
@@ -32,11 +38,11 @@ public class ContentManagerService
 	{
 
 		// 1. open a 'content manager'
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
-		AddNewContentWizard wizardPage = cmPage.openAddContentWizard(contentTypeName, parentNames);
-		String expectedTitle = String.format(AddNewContentWizard.START_WIZARD_TITLE, contentTypeName.toLowerCase());
+		AddContentWizardPage wizardPage = cmPage.openAddContentWizard(contentTypeName, parentNames);
+		String expectedTitle = String.format(AddContentWizardPage.START_WIZARD_TITLE, contentTypeName.toLowerCase());
 		wizardPage.waitUntilWizardOpened(expectedTitle, 1);
 		return wizardPage.verifyWizardPage(session);
 
@@ -53,7 +59,7 @@ public class ContentManagerService
 	{
 		
 		// 1. open a 'content manager'
-	    ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
+	    ContentGrid cmPage = NavigatorHelper.openContentManager(session);
 	    // click by "Select All" link and get a number of selected rows:
 	    return cmPage.doSelectAll();
 			
@@ -71,14 +77,14 @@ public class ContentManagerService
 	public Page addContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard)
 	{
 		// 1. open a 'content manager'		
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
 		cmPage.doAddContent(newcontent, isCloseWizard);
 		if (isCloseWizard)
 		{
 			return cmPage;
 		} else
 		{
-			return new AddNewContentWizard(session);
+			return new AddContentWizardPage(session);
 		}
 
 	}
@@ -93,8 +99,8 @@ public class ContentManagerService
 	public boolean doOpenContentVerifyPage(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
-		ContentInfoPage contentInfoPage = cmPage.doOpenContent(content);
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
+		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(content);
 		
 		boolean result = contentInfoPage.verifyContentInfoPage(content);
 		result &= contentInfoPage.verifyToolbar(content);
@@ -108,13 +114,13 @@ public class ContentManagerService
 	 * @param session
 	 * @param contentToEdit
 	 * @param newcontent
-	 * @return {@link ContentTablePage} instance. Table of content.
+	 * @return {@link ContentGrid} instance. Table of content.
 	 */
-	public ContentTablePage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
+	public ContentGrid doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
 	{
 		// 1. open a 'content manager'
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
-		ContentInfoPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
+		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		contentInfoPage.doCloseContentInfoView();
 		cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
@@ -125,32 +131,79 @@ public class ContentManagerService
 	 * Finds a content, open preview for this content and click by "Delete" and confirm.
 	 * @param session
 	 * @param contentToDelete
-	 * @return {@link ContentTablePage} instance. Table of content.
+	 * @return {@link ContentGrid} instance. Table of content.
 	 */
-	public ContentTablePage doOpenContentAndDelete(TestSession session, BaseAbstractContent contentToDelete)
+	public ContentGrid doOpenContentAndDelete(TestSession session, BaseAbstractContent contentToDelete, HowOpenContent how)
 	{
-		// 1. open a 'content manager'
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
-		ContentInfoPage contentInfoPage = cmPage.doOpenContent(contentToDelete);
+		ItemViewPanelPage contentInfoPage;
+		switch (how)
+		{
+		case TOOLBAR:
+		{
+			contentInfoPage = doOpenContentUseToolbar(session, contentToDelete);
+			break;
+		}
+		case CONTEXT_MENU:
+		{
+			contentInfoPage = doOpenContentUseContextMenu(session, contentToDelete);
+			break;
+		}
+		default:
+			contentInfoPage = doOpenContentUseToolbar(session, contentToDelete);
+			break;
+		}
+
 		contentInfoPage.doDeleteContent(contentToDelete.getDisplayName());
-		return cmPage;
+		return new ContentGrid(session);
 	}
 	
+	
+	/**
+	 * Opens a content-info page
+	 * @param session
+	 * @param contentToDelete
+	 * @return
+	 */
+	public ItemViewPanelPage doOpenContentUseToolbar(TestSession session, BaseAbstractContent content)
+	{
+		// 1. open a 'content manager'
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
+		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(content);
+		return contentInfoPage;
+	}
+	
+	public ItemViewPanelPage doOpenContentUseContextMenu(TestSession session, BaseAbstractContent contentToDelete)
+	{
+		// 1. open a 'content manager'
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
+		//TODO open from context menu
+		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(contentToDelete);
+		return contentInfoPage;
+	}
 
 	/**
 	 * Expand a space, selects a checkbox, press 'Delete' button from a toolbar and delete content from space.
 	 * 
 	 * @param session
 	 * @param contents 
-	 * @return {@link ContentTablePage} instance. Table of content.
+	 * @return {@link ContentGrid} instance. Table of content.
 	 */
-	public ContentTablePage deleteContentFromSpace(TestSession session,  List<BaseAbstractContent> contents)
+	public ContentGrid deleteContentUseToolbar(TestSession session,  List<BaseAbstractContent> contents)
 	{
 		// 1. open a 'content manager'
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
         // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
 		cmPage.doDeleteContent(contents);
 		return cmPage;
+	}
+	
+	public DeleteContentDialog selectContentClickDeleteInToolbar(TestSession session,  List<BaseAbstractContent> contents)
+	{
+		// 1. open a 'content manager'
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
+        // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
+		return cmPage.openDeleteContentDialog(contents);
+		
 	}
 
 	/**
@@ -159,12 +212,12 @@ public class ContentManagerService
 	 * @param session
 	 * @param contentToUpdate
 	 * @param newContent
-	 * @return {@link ContentTablePage} instance. Table of content.
+	 * @return {@link ContentGrid} instance. Table of content.
 	 */
-	public ContentTablePage updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
+	public ContentGrid updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
 	{
 
-		ContentTablePage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
 		cmPage.doUpdateContent(contentToUpdate, newContent);
 		return cmPage;
 	}
