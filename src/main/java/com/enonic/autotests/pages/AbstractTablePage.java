@@ -52,6 +52,10 @@ public class AbstractTablePage extends Page
 		super(session);
 	}
 	
+	public boolean isDeleteButtonEnabled()
+	{
+		return deleteButton.isEnabled();
+	}
 	
 	/**
 	 * clicks by 'expand' icon and expands a folder.
