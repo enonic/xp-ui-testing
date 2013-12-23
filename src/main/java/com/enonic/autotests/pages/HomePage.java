@@ -9,7 +9,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
 import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
-import com.enonic.autotests.pages.spaceadmin.SpaceAdminPage;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -90,19 +89,7 @@ public class HomePage extends Page
 		return new SchemaTablePage(getSession());
 	}
 
-	public SpaceAdminPage openSpaceAdminApplication()
-	{
-		spaceAdmin.click();
-		
-		SpaceAdminPage page = new SpaceAdminPage(getSession());
-		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
-		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_SPACE_ADMIN_FRAME_XPATH);
-		page.waituntilToolbarLoaded(2l);
-		return  page;
-	}
-
 	
-
 	public ContentGrid openContentManagerApplication()
 	{
 		contentManager.click();

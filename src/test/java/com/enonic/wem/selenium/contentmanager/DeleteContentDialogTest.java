@@ -35,18 +35,16 @@ public class DeleteContentDialogTest extends BaseContentManagerTest
     	BaseAbstractContent content = (BaseAbstractContent)getTestSession().get(DELETE_CONTENT_DIALOG_KEY);
 		contents.add(content );
 		DeleteContentDialog dialog = cManagerService.selectContentClickDeleteInToolbar(getTestSession(), contents );
-		boolean result = dialog.isOpened();
+		// 1. check a dialog title:
+		boolean result = dialog.isOpened();	
 		Assert.assertTrue(result,"Delete content Dialog was not opened");
+		List<String> names = dialog.getContentNameToDelete();
+		//2 .check that only one content present on modal dialog
+		Assert.assertTrue(names.size() == 1, "only one content-displayName should be present in the modal dialog!");
+		//3. check dispalyName on modal dialog
+		Assert.assertTrue(content.getDisplayName().equals(names.get(0)),"expected and actual displayNames are not equals!");
+		//delete test content
+		dialog.doDelete();
 	}
     
-    @Test(dependsOnMethods ="opened_with_one_selected_content_then_one_content_is_displayed")
-   	public void delete_test_data()
-   	{
-       	List<BaseAbstractContent> contents = new ArrayList<>();
-       	BaseAbstractContent content = (BaseAbstractContent)getTestSession().get(DELETE_CONTENT_DIALOG_KEY);
-   		contents.add(content);
-   		
-   		
-   		cManagerService.deleteContentUseToolbar(getTestSession(), contents);
-   	}
 }

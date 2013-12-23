@@ -130,7 +130,7 @@ public class SchemaTablePage extends AbstractTablePage
 		deleteButton.click();
 		List<String> names = new ArrayList<>();
 		names.add(contentTypeToDelete.getName());
-		DeleteContentTypeDialog dialog = new DeleteContentTypeDialog(getSession(), names);
+		DeleteContentTypeDialog dialog = new DeleteContentTypeDialog(getSession());
 		boolean result = dialog.isOpened();
 		if (!result)
 		{

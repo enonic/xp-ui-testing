@@ -189,11 +189,7 @@ public class ContentGrid extends AbstractTablePage
 		// 2. check for existence and select a content to delete.
 		selectContentInTable(contents, parents);
 
-		List<String> displayNamesToDelete = new ArrayList<>();
-		for (BaseAbstractContent c : contents)
-		{
-			displayNamesToDelete.add(c.getDisplayName());
-		}
+	
 		// 3. check if enabled 'Delete' link.
 		boolean isEnabledDeleteButton = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(DELETE_BUTTON_XPATH), 2l);
 		if (!isEnabledDeleteButton)
@@ -203,7 +199,7 @@ public class ContentGrid extends AbstractTablePage
 		// 4. click by 'Delete' link and open a confirm dialog.
 		deleteButton.click();
 
-		DeleteContentDialog dialog = new DeleteContentDialog(getSession(), displayNamesToDelete);
+		DeleteContentDialog dialog = new DeleteContentDialog(getSession());
 		boolean isOpened = dialog.isOpened();
 		if (!isOpened)
 		{
@@ -236,11 +232,7 @@ public class ContentGrid extends AbstractTablePage
 		// 2. check for existence and select a content to delete.
 		selectContentInTable(contents, parents);
 
-		List<String> displayNamesToDelete = new ArrayList<>();
-		for (BaseAbstractContent c : contents)
-		{
-			displayNamesToDelete.add(c.getDisplayName());
-		}
+		
 		// 3. check if enabled 'Delete' link.
 		boolean isEnabledDeleteButton = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(DELETE_BUTTON_XPATH), 2l);
 		if (!isEnabledDeleteButton)
@@ -250,7 +242,7 @@ public class ContentGrid extends AbstractTablePage
 		// 4. click by 'Delete' link and open a confirm dialog.
 		deleteButton.click();
 
-		DeleteContentDialog dialog = new DeleteContentDialog(getSession(), displayNamesToDelete);
+		DeleteContentDialog dialog = new DeleteContentDialog(getSession());
 		return dialog;
 	}
 	

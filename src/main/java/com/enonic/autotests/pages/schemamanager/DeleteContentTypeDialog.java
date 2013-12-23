@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages.schemamanager;
 
-import java.util.List;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.BaseDeleteDialog;
 
@@ -20,9 +18,9 @@ public class DeleteContentTypeDialog extends BaseDeleteDialog
 	 * @param session
 	 * @param spacesToDelete
 	 */
-	public DeleteContentTypeDialog( TestSession session, List<String> spacesToDelete )
+	public DeleteContentTypeDialog( TestSession session )
 	{
-		super(session, spacesToDelete);
+		super(session);
 	}
 
 

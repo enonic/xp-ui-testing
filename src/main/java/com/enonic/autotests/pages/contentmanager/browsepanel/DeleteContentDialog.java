@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
-import java.util.List;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.BaseDeleteDialog;
 
@@ -18,9 +16,9 @@ public class DeleteContentDialog extends BaseDeleteDialog
 	 * @param session
 	 * @param displayNamesToDelete
 	 */
-	public DeleteContentDialog( TestSession session, List<String> displayNamesToDelete )
+	public DeleteContentDialog( TestSession session)
 	{
-		super(session, displayNamesToDelete);
+		super(session);
 		
 	}
 

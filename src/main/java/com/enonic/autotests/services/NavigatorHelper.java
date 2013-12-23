@@ -13,26 +13,11 @@ import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
 import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
-import com.enonic.autotests.pages.spaceadmin.SpaceAdminPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.User;
 
 public class NavigatorHelper
 {
-
-	/**
-	 * Opens 'Space Admin' application.
-	 * 
-	 * @param testSession
-	 *            {@link TestSession} instance
-	 * @return {@link SpaceAdminPage} instance.
-	 */
-	public static SpaceAdminPage openSpaceAdmin(TestSession testSession)
-	{
-
-		HomePage home = loginAndOpenHomePage(testSession);
-		return home.openSpaceAdminApplication();
-	}
 
 	/**
 	 * Opens 'Content Manager' application.
