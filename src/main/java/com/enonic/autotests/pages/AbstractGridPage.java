@@ -11,7 +11,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
 
-public class AbstractTablePage extends Page
+public class AbstractGridPage extends Page
 {
 
 	protected  final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
@@ -47,7 +47,7 @@ public class AbstractTablePage extends Page
 	 * 
 	 * @param session
 	 */
-	public AbstractTablePage( TestSession session )
+	public AbstractGridPage( TestSession session )
 	{
 		super(session);
 	}

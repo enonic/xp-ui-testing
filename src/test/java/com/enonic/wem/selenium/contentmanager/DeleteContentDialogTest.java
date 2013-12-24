@@ -24,7 +24,7 @@ public class DeleteContentDialogTest extends BaseContentManagerTest
 		content.setParentNames( new String[]{REPONAME});
 		//1. add a content to the space
 		ContentGrid grid = (ContentGrid)cManagerService.addContent(getTestSession(), content, true);
-		Assert.assertTrue(grid.findContentInTable(content, 1), "test content was not created!");
+		Assert.assertTrue(grid.findContentInTable(content, TEST_TIMEOUT), "test content was not created!");
 		getTestSession().put(DELETE_CONTENT_DIALOG_KEY, content);
 	}
 	

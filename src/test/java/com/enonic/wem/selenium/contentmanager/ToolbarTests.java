@@ -22,22 +22,25 @@ public class ToolbarTests extends BaseContentManagerTest
 		content.setParentNames( new String[]{REPONAME});
 		//1. add a content to the space
 		ContentGrid grid = (ContentGrid)cManagerService.addContent(getTestSession(), content, true);
-		Assert.assertTrue(grid.findContentInTable(content, 1), "test content was not created!");
+		Assert.assertTrue(grid.findContentInTable(content, TEST_TIMEOUT), "test content was not created!");
 		getTestSession().put(TOOLBAR_DELETE_CONTENT_DIALOG_KEY, content);
 	}
 
 	//@Test(dependsOnMethods ="setup")
+	//TODO is this test redundant? Because there is a test:  DeleteContentDialogTest.opened_with_one_selected_content_then_one_content_is_displayed
 	public void one_selected_content_clicking_Delete_displays_ContentDeleteDialog()
 	{
 		
 	}
 	
-	@Test
+	@Test(description = "Toolbar button 'Delete' should be disabled if there are no selected content")
 	public void no_selected_content_then_Delete_is_disabled()
 	{
+		logger.info("STARTED ### :  Toolbar button 'Delete' should be disabled if there are no selected content");
 		ContentGrid cmPage = NavigatorHelper.openContentManager(getTestSession());
 		boolean result = cmPage.isDeleteButtonEnabled();
 		Assert.assertFalse(result,"Button 'Delete' should be disabled when no one content selected");
+		logger.info("Finished $$$ :  Toolbar button 'Delete' should be disabled if there are no selected content");
 		
 		
 	}

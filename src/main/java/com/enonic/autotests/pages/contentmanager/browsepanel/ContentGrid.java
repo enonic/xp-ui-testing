@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.AbstractTablePage;
+import com.enonic.autotests.pages.AbstractGridPage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
@@ -23,7 +25,7 @@ import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
  * 'Content Manager' application, the dashboard page.
  * 
  */
-public class ContentGrid extends AbstractTablePage
+public class ContentGrid extends AbstractGridPage
 {
 	private static final String TITLE_XPATH = "//button[contains(@class,'home-button') and contains(.,'Content Manager')]";
 	
@@ -305,7 +307,6 @@ public class ContentGrid extends AbstractTablePage
 		}
 		findElement(By.xpath(contentCheckBoxXpath)).click();
 
-
 	}
 	
 	private String buildFullName(BaseAbstractContent content)
@@ -444,6 +445,32 @@ public class ContentGrid extends AbstractTablePage
 		}
 		
 		openButton.click();
+		
+		ItemViewPanelPage cinfo = new ItemViewPanelPage(getSession());
+		int expectedNumberOfPage = 1;
+		cinfo.waitUntilOpened(getSession(), content.getDisplayName(), expectedNumberOfPage);
+		return cinfo;
+	}
+	
+	public ItemViewPanelPage doOpenContentFromContextMenu(BaseAbstractContent content)
+	{
+		boolean isPresent = findContentInTable(content, 7l);
+		if (!isPresent)
+		{
+			throw new TestFrameworkException("The content with name " + content.getName() + " and displayName:" + content.getDisplayName()
+					+ " was not found!");
+		} else
+		{
+			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
+		}
+		// 2. check for existence of content in a parent space and select a content to open.
+		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), content.getParentNames());
+		getLogger().info("Full name of content: "+ fullName);
+		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);	
+		WebElement element = findElement(By.xpath(contentDescriptionXpath));
+		Actions action = new Actions(getDriver());
+		//action.contextClick(element).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ENTER).build().perform();
+		action.contextClick(element).click().build().perform();
 		
 		ItemViewPanelPage cinfo = new ItemViewPanelPage(getSession());
 		int expectedNumberOfPage = 1;

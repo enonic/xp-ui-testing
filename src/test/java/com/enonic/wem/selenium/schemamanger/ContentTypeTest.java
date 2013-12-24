@@ -18,7 +18,7 @@ public class ContentTypeTest extends BaseTest
 	private ContentTypeService contentTypeService = new ContentTypeService();
 
 	@Test(description = "create new content-types of several types",dataProvider= "addContentType",dataProviderClass = SchemaManagerTestsProvider.class)
-	public void createNewContentType(ContentTypeXml xmlData)
+	public void test_create_contenttype(ContentTypeXml xmlData)
 	{
 		ContentType contentType = TestDataConvertor.convertXmlDataToContentType(xmlData);
 		String contentTypeName = "cttype" + Math.abs(new Random().nextInt());
@@ -31,7 +31,7 @@ public class ContentTypeTest extends BaseTest
 
 	
 	@Test(description = "create new content-type and edit it", dataProvider= "editContentType",dataProviderClass = SchemaManagerTestsProvider.class)
-	public void editContentType(ContentTypeXml xmlData)
+	public void test_change_dispalyname_in_config(ContentTypeXml xmlData)
 	{
 		ContentType ct = TestDataConvertor.convertXmlDataToContentType(xmlData);
 		

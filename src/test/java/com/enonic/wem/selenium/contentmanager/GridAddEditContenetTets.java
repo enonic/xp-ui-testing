@@ -43,7 +43,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		logger.info("method cManagerService.addContent finished, try to find content in the " + REPONAME);
 
 		// 2. verify that content present in the table
-		boolean result = page.findContentInTable(content, 2l);
+		boolean result = page.findContentInTable(content, TEST_TIMEOUT);
 		TestUtils.getInstance().saveScreenshot(getTestSession());
 		Assert.assertTrue(result, String.format("new added content with name == %s was not found in the table!", content.getName()));
 		logger.info(String.format("new added content with name == %s was found in the table!", content.getName()));
@@ -74,10 +74,10 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		logger.info("contet was updated, new name is : " + newName);
 
 		// 4.verify, that updated content with new name is present in the table:
-		boolean result = page.findContentInTable(newcontent, 2l);
+		boolean result = page.findContentInTable(newcontent, TEST_TIMEOUT);
 		Assert.assertTrue(result, " content with new displayName: " + newcontent.getDisplayName() + "  should be present in te table of contents");
 		// 4.verify, that content with old name not present in the table:
-		result = page.findContentInTable(contentToEdit, 2l);
+		result = page.findContentInTable(contentToEdit, TEST_TIMEOUT);
 		Assert.assertFalse(result, " content with  displayName: " + contentToEdit.getDisplayName()
 				+ " was edited, and should not be present in te table of contents");
 		logger.info("FINISHED $$$$ open content and edit it");
@@ -101,7 +101,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		ContentGrid page = cManagerService.updateContent(getTestSession(), contentToUpdate, newcontent);
 
 		//3. verify, that  content with new name present in the table:
-		boolean result = page.findContentInTable( newcontent, 2l);
+		boolean result = page.findContentInTable( newcontent, TEST_TIMEOUT);
 		Assert.assertTrue(result, "content with updated name was not found!");
 	}
 }

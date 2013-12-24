@@ -176,8 +176,7 @@ public class ContentManagerService
 	{
 		// 1. open a 'content manager'
 		ContentGrid cmPage = NavigatorHelper.openContentManager(session);
-		//TODO open from context menu
-		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(contentToDelete);
+		ItemViewPanelPage contentInfoPage = cmPage.doOpenContentFromContextMenu(contentToDelete);
 		return contentInfoPage;
 	}
 

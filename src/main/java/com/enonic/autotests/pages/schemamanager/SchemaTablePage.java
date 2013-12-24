@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.AbstractTablePage;
+import com.enonic.autotests.pages.AbstractGridPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
@@ -19,7 +19,7 @@ import com.enonic.autotests.vo.schemamanger.ContentType;
  * 'Schema Manager' application, the dashboard page.
  * 
  */
-public class SchemaTablePage extends AbstractTablePage
+public class SchemaTablePage extends AbstractGridPage
 {
 	private static String titleXpath = "//button[contains(@class,'home-button') and contains(.,'Schema Manager')]"; 
 

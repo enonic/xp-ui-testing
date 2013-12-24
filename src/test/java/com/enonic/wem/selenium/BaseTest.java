@@ -19,6 +19,7 @@ public class BaseTest
 
 	protected Logger logger = Logger.getLogger();
 
+	public static long TEST_TIMEOUT = 2l;
 	private ThreadLocal<TestSession> sessionRef = new ThreadLocal<TestSession>();
 
 	@BeforeClass(alwaysRun = true)
@@ -88,7 +89,7 @@ public class BaseTest
 		sessionRef.set(testSession);
 		logger.info("############### method readDesiredCapabilities finished    ###################");
 	}
-
+	
 	public String getPlatformName()
 	{
 		String os = System.getProperty("os.name").toLowerCase();

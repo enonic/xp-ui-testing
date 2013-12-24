@@ -148,7 +148,7 @@ public class AddContentWizardPage extends BaseWizardPage
 		{
 			
 		}
-		TestUtils.getInstance().saveScreenshot(getSession());
+		
 		if(content.getName()!=null && !content.getName().isEmpty())
 		{
 			waitElementClickable(By.name("name"), 2);

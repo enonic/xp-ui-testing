@@ -2,6 +2,10 @@ package com.enonic.wem.selenium.contentmanager;
 
 import org.testng.annotations.Test;
 
+/**
+ * 
+ *
+ */
 public class ActionMenuTests extends BaseContentManagerTest
 {
 

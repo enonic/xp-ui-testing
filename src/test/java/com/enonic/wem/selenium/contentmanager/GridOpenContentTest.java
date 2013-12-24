@@ -36,9 +36,12 @@ public class GridOpenContentTest extends BaseContentManagerTest
 		Assert.assertTrue(result, "expected content-info and actal are not equals!");
 		
 	}
-	//@Test(description = "open a context, use a context menu " )
+	//@Test(description = "open a context, use a context menu " ,dependsOnMethods ="setup")
 	public void test_open_content_use_context_menu()
 	{	
-		//TODO implement it
+		StructuredContent content = (StructuredContent)getTestSession().get(TEST_OPEN_CONTENT_KEY);
+		ItemViewPanelPage contentInfoPage = cManagerService.doOpenContentUseContextMenu(getTestSession(), content);
+		boolean result =contentInfoPage.verifyContentInfoPage(content);
+		Assert.assertTrue(result, "expected content-info and actal are not equals!");
 	}
 }

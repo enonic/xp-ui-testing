@@ -19,7 +19,27 @@ import com.enonic.autotests.vo.contentmanager.StructuredContent;
  */
 public class GridDeleteContentTests extends BaseContentManagerTest
 {
-	
+	@Test(description = "add 2 new contents to a space and delete all, use a button 'Delete' from toolbar ")
+	public void delete_content()
+	{
+		logger.info("STARTED #####  select checkboxes, press a button 'Delete' from toolbar and delete content from space ");
+		String name = "delete-content"+Math.abs( new Random().nextInt() );
+		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").withType(ContentTypeName.STRUCTURED.getValue()).build();
+		String[] parentNames = new String[]{REPONAME};
+		content.setParentNames(parentNames);
+		
+		//1. add a content to the space
+		logger.info("start to add content with name: " +content.getName()+ " to folder: " + REPONAME);
+		cManagerService.addContent(getTestSession(), content, true);
+		
+		List<BaseAbstractContent> contents = new ArrayList<>();
+		contents.add(content);
+        ContentGrid page = cManagerService.deleteContentUseToolbar(getTestSession(), contents);
+		
+        //4. verify that both contents not present in the table:
+		Assert.assertFalse(page.findContentInTable(content, TEST_TIMEOUT),
+				String.format("the content wit name %s was deleted and should not be present in the table! ", content.getDisplayName()));
+	}
 	
     @Test(description = "add 2 new contents to a space and delete all, use a button 'Delete' from toolbar ")
 	public void test_add_two_contents_and_delete_use_toolbar_button()
@@ -51,9 +71,9 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 		ContentGrid page = cManagerService.deleteContentUseToolbar(getTestSession(), contents);
 		
         //4. verify that both contents not present in the table:
-		Assert.assertFalse(page.findContentInTable(content2, 2l),
+		Assert.assertFalse(page.findContentInTable(content2, TEST_TIMEOUT),
 				String.format("the content wit name %s was deleted and should not be present in the table! ", content2.getDisplayName()));
-		Assert.assertFalse(page.findContentInTable(content1, 2l),
+		Assert.assertFalse(page.findContentInTable(content1, TEST_TIMEOUT),
 				String.format("the content wit name %s was deleted and should not be present in the table! ", content1.getDisplayName()));
 		
 		logger.info("Finished $$$$$  select checkboxes, press a button 'Delete' from toolbar and delete content from space ");
@@ -78,7 +98,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 		
 		//3.verify, that content not present in the table:
 		logger.info("try to find content with name: " +content.getName()+ " in folder: " + REPONAME);
-		boolean result = page.findContentInTable(content, 2l);
+		boolean result = page.findContentInTable(content, TEST_TIMEOUT);
 		logger.info("content is present in a table: " +result);
 		Assert.assertFalse(result," content with new displayName: "+content.getDisplayName()+" was deleted, and should not be present in the table of contents");
 		
