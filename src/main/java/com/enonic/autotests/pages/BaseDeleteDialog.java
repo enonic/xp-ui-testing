@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.utils.TestUtils;
@@ -87,12 +88,12 @@ public abstract class BaseDeleteDialog
 	 */
 	public boolean isOpened()
 	{
-		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(getTitleXpath()), 2);
+		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(getTitleXpath()), AppConstants.IMPLICITLY_WAIT);
 	}
 
 	public boolean verifyIsClosed()
 	{
-		return TestUtils.getInstance().waitsElementNotVisible(session, By.xpath(getTitleXpath()), 2);
+		return TestUtils.getInstance().waitsElementNotVisible(session, By.xpath(getTitleXpath()), AppConstants.IMPLICITLY_WAIT);
 	}
 	
 	public abstract String getTitleXpath();

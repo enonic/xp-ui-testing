@@ -9,7 +9,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.BaseWizardPage;
 import com.enonic.autotests.pages.CloseWizardDialog;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ArticleContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -212,7 +212,7 @@ public class AddContentWizardPage extends BaseWizardPage
 //			TestUtils.getInstance().saveScreenshot(getSession());
 //			throw new TestFrameworkException("buttons save and close were pressed, but modal dialog appeared!");
 //		}
-		ContentGrid page = new ContentGrid(getSession());
+		ContentGridPage page = new ContentGridPage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
 	}

@@ -9,7 +9,7 @@ import com.enonic.autotests.pages.BaseDeleteDialog;
  */
 public class DeleteContentTypeDialog extends BaseDeleteDialog
 {
-	private final String TITLE_XPATH = "//div[contains(@class,'admin-window')]//h2[contains(.,'Delete schema(s)')]";
+	private final String TITLE_XPATH = "//div[contains(@class,'modal-dialog delete-dialog')]//h2[contains(.,'Delete Schema')]";
 
 
 	/**

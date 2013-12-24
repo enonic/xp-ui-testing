@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -25,7 +24,7 @@ import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
  * 'Content Manager' application, the dashboard page.
  * 
  */
-public class ContentGrid extends AbstractGridPage
+public class ContentGridPage extends AbstractGridPage
 {
 	private static final String TITLE_XPATH = "//button[contains(@class,'home-button') and contains(.,'Content Manager')]";
 	
@@ -61,7 +60,7 @@ public class ContentGrid extends AbstractGridPage
 	 * 
 	 * @param session
 	 */
-	public ContentGrid( TestSession session )
+	public ContentGridPage( TestSession session )
 	{
 		super(session);
 

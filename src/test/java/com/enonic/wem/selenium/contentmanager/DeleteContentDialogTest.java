@@ -7,7 +7,7 @@ import java.util.Random;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -23,7 +23,7 @@ public class DeleteContentDialogTest extends BaseContentManagerTest
 		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("deletecontentdialog").withType(ContentTypeName.STRUCTURED.getValue()).build();
 		content.setParentNames( new String[]{REPONAME});
 		//1. add a content to the space
-		ContentGrid grid = (ContentGrid)cManagerService.addContent(getTestSession(), content, true);
+		ContentGridPage grid = (ContentGridPage)cManagerService.addContent(getTestSession(), content, true);
 		Assert.assertTrue(grid.findContentInTable(content, TEST_TIMEOUT), "test content was not created!");
 		getTestSession().put(DELETE_CONTENT_DIALOG_KEY, content);
 	}

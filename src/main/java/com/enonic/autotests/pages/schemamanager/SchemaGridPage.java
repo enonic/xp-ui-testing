@@ -19,11 +19,10 @@ import com.enonic.autotests.vo.schemamanger.ContentType;
  * 'Schema Manager' application, the dashboard page.
  * 
  */
-public class SchemaTablePage extends AbstractGridPage
+public class SchemaGridPage extends AbstractGridPage
 {
 	private static String titleXpath = "//button[contains(@class,'home-button') and contains(.,'Schema Manager')]"; 
 
-	//private final String NEW_BUTTON_XPATH = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'New')]]";
 	private final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
 	@FindBy(xpath = NEW_BUTTON_XPATH)
 	private WebElement newButtonMenu;
@@ -56,9 +55,9 @@ public class SchemaTablePage extends AbstractGridPage
 	
 	private String CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE = "//table[contains(@class,'x-grid-table')]//div[@class='admin-tree-description' and descendant::h6[contains(.,'%s')] and descendant::p[contains(.,'%s')]]";
 	
-	private String CONTENTTYPE_TABLE_ROW = "//tr[contains(@class,'x-grid-row') and descendant::h6[contains(.,'%s')] and descendant::p[text()='system:%s']]";
+	private String CONTENTTYPE_TABLE_ROW = "//tr[contains(@class,'x-grid-row') and descendant::h6[contains(.,'%s')] and descendant::p[text()='%s']]";
     
-	private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
+	//private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
 
 	/**
 	 * 
@@ -66,7 +65,7 @@ public class SchemaTablePage extends AbstractGridPage
 	 * 
 	 * @param session
 	 */
-	public SchemaTablePage( TestSession session )
+	public SchemaGridPage( TestSession session )
 	{
 		super(session);
 
@@ -109,24 +108,19 @@ public class SchemaTablePage extends AbstractGridPage
 	
 	public void doDeleteContentType(ContentType contentTypeToDelete)
 	{
+		//1.expand a super type folder:
+		String supertype = contentTypeToDelete.getSuperTypeNameFromConfig();
+		doExpandFolder(supertype);
+		String ctypeXpath = String.format(CONTENTTYPE_TABLE_ROW, contentTypeToDelete.getDisplayNameFromConfig(), contentTypeToDelete.getName());
+        boolean isContentTypePresent = TestUtils.getInstance().waitElementExist(getDriver(), ctypeXpath, 3);
 		
-		String spaceXpath = String.format(CONTENTTYPE_TABLE_ROW, contentTypeToDelete.getName(), contentTypeToDelete.getName());
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(spaceXpath));
-		if(elems.size() == 0)
+		if(!isContentTypePresent)
 		{
-			throw new TestFrameworkException("Space to delete was not present in the table or wron xpath! name:" +contentTypeToDelete.getName());
-		}
-
-		if (!elems.get(0).isDisplayed())
-		{ 
-			WebElement scrolled = TestUtils.getInstance().scrollTableAndFind(getSession(),spaceXpath, DIV_SCROLL_XPATH);
-			scrolled.click();
-		} else
-		{
-
-			elems.get(0).click();
+			throw new TestFrameworkException("content type with name "+isContentTypePresent +" was not found!");
 		}
 		
+		
+		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), getDriver());		
 		deleteButton.click();
 		List<String> names = new ArrayList<>();
 		names.add(contentTypeToDelete.getName());
@@ -137,7 +131,6 @@ public class SchemaTablePage extends AbstractGridPage
 			throw new TestFrameworkException("Confirm delete space dialog was not opened!");
 		}
 		dialog.doDelete();
-		dialog.verifyIsClosed();
 		getLogger().info("The Space  with name: " + contentTypeToDelete.getName() + " was deleted!");
 	}
 

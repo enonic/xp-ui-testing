@@ -11,8 +11,8 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.accounts.AccountsPage;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
-import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
+import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.User;
 
@@ -26,13 +26,13 @@ public class NavigatorHelper
 	 *            {@link TestSession} instance.
 	 * @return {@link SpaceAdminPage} instance.
 	 */
-	public static ContentGrid openContentManager(TestSession testSession)
+	public static ContentGridPage openContentManager(TestSession testSession)
 	{
 		if (testSession.isLoggedIn())
 		{
-			if (ContentGrid.isOpened(testSession))
+			if (ContentGridPage.isOpened(testSession))
 			{
-				return new ContentGrid(testSession);
+				return new ContentGridPage(testSession);
 			}
 			boolean isHomeButtonPresent = TestUtils.getInstance().waitAndFind(By.xpath(Page.HOME_BUTTON_XPATH), testSession.getDriver());
 			if (!isHomeButtonPresent)
@@ -43,29 +43,29 @@ public class NavigatorHelper
 			HomePage homepage = new HomePage(testSession);
 			testSession.getDriver().switchTo().window(testSession.getWindowHandle());
 			homepage.openContentManagerApplication();
-			return new ContentGrid(testSession);
+			return new ContentGridPage(testSession);
 		}
       // if user not logged in:
 		else
 		{
 
 			HomePage home = loginAndOpenHomePage(testSession);
-			ContentGrid cmPage = home.openContentManagerApplication();
+			ContentGridPage cmPage = home.openContentManagerApplication();
 			cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
 			return cmPage;
 		}
 
 	}
 
-	public static SchemaTablePage openSchemaManager(TestSession testSession)
+	public static SchemaGridPage openSchemaManager(TestSession testSession)
 	{
-		if (SchemaTablePage.isOpened(testSession))
+		if (SchemaGridPage.isOpened(testSession))
 		{
-			return new SchemaTablePage(testSession);
+			return new SchemaGridPage(testSession);
 		} else
 		{
 			HomePage home = loginAndOpenHomePage(testSession);
-			SchemaTablePage schemasPage = home.openSchemaManagerApplication();
+			SchemaGridPage schemasPage = home.openSchemaManagerApplication();
 			schemasPage.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 			return schemasPage;
 		}

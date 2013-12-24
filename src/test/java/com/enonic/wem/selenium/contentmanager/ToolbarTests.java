@@ -5,7 +5,7 @@ import java.util.Random;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.vo.contentmanager.StructuredContent;
@@ -21,7 +21,7 @@ public class ToolbarTests extends BaseContentManagerTest
 		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("deletecontentdialog").withType(ContentTypeName.STRUCTURED.getValue()).build();
 		content.setParentNames( new String[]{REPONAME});
 		//1. add a content to the space
-		ContentGrid grid = (ContentGrid)cManagerService.addContent(getTestSession(), content, true);
+		ContentGridPage grid = (ContentGridPage)cManagerService.addContent(getTestSession(), content, true);
 		Assert.assertTrue(grid.findContentInTable(content, TEST_TIMEOUT), "test content was not created!");
 		getTestSession().put(TOOLBAR_DELETE_CONTENT_DIALOG_KEY, content);
 	}
@@ -37,7 +37,7 @@ public class ToolbarTests extends BaseContentManagerTest
 	public void no_selected_content_then_Delete_is_disabled()
 	{
 		logger.info("STARTED ### :  Toolbar button 'Delete' should be disabled if there are no selected content");
-		ContentGrid cmPage = NavigatorHelper.openContentManager(getTestSession());
+		ContentGridPage cmPage = NavigatorHelper.openContentManager(getTestSession());
 		boolean result = cmPage.isDeleteButtonEnabled();
 		Assert.assertFalse(result,"Button 'Delete' should be disabled when no one content selected");
 		logger.info("Finished $$$ :  Toolbar button 'Delete' should be disabled if there are no selected content");

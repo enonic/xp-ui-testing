@@ -5,7 +5,7 @@ import java.util.Random;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.testdata.TestDataConvertor;
 import com.enonic.autotests.testdata.cm.AbstractContentXml;
@@ -39,7 +39,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 
 		// 1. add a content to the space
 		logger.info("start to add content with name: " + content.getName() + " to folder: " + REPONAME);
-		ContentGrid page = (ContentGrid) cManagerService.addContent(getTestSession(), content, true);
+		ContentGridPage page = (ContentGridPage) cManagerService.addContent(getTestSession(), content, true);
 		logger.info("method cManagerService.addContent finished, try to find content in the " + REPONAME);
 
 		// 2. verify that content present in the table
@@ -66,7 +66,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		newcontent.setParentNames(parentNames);
 		logger.info("new contet will be  added, name: " + name);
 		// 1. add a content to the space
-		ContentGrid page = (ContentGrid) cManagerService.addContent(getTestSession(), contentToEdit, true);
+		ContentGridPage page = (ContentGridPage) cManagerService.addContent(getTestSession(), contentToEdit, true);
 		logger.info("new contet was added(contet to edit), name: " + name);
 		// 2. open just created content and edit it. Click by 'Edit' from a
 		// toolbar:
@@ -98,7 +98,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		newcontent.setParentNames(parentNames);
 
 		//2. click by "Edit" link and update just created content, and try to close wizard:	
-		ContentGrid page = cManagerService.updateContent(getTestSession(), contentToUpdate, newcontent);
+		ContentGridPage page = cManagerService.updateContent(getTestSession(), contentToUpdate, newcontent);
 
 		//3. verify, that  content with new name present in the table:
 		boolean result = page.findContentInTable( newcontent, TEST_TIMEOUT);

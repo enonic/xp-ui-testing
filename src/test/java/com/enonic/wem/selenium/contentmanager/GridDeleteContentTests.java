@@ -7,7 +7,7 @@ import java.util.Random;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGrid;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.services.ContentManagerService.HowOpenContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -34,7 +34,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 		
 		List<BaseAbstractContent> contents = new ArrayList<>();
 		contents.add(content);
-        ContentGrid page = cManagerService.deleteContentUseToolbar(getTestSession(), contents);
+        ContentGridPage page = cManagerService.deleteContentUseToolbar(getTestSession(), contents);
 		
         //4. verify that both contents not present in the table:
 		Assert.assertFalse(page.findContentInTable(content, TEST_TIMEOUT),
@@ -69,7 +69,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 		
 		logger.info("start to delete contents with from: " + REPONAME);
         //3. select checkboxes and press 'Delete' button in toolbar. Delete both content from space
-		ContentGrid page = cManagerService.deleteContentUseToolbar(getTestSession(), contents);
+		ContentGridPage page = cManagerService.deleteContentUseToolbar(getTestSession(), contents);
 		
         //4. verify that both contents not present in the table:
 		Assert.assertFalse(page.findContentInTable(content2, TEST_TIMEOUT),
@@ -95,7 +95,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 		logger.info("method cManagerService.addContent finished, contentName is: "+ content.getName());
 		
         //2. open just created content and delete it using a toolbar:		
-		ContentGrid page = cManagerService.doOpenContentAndDelete(getTestSession(), content, HowOpenContent.TOOLBAR);
+		ContentGridPage page = cManagerService.doOpenContentAndDelete(getTestSession(), content, HowOpenContent.TOOLBAR);
 		
 		//3.verify, that content not present in the table:
 		logger.info("try to find content with name: " +content.getName()+ " in folder: " + REPONAME);

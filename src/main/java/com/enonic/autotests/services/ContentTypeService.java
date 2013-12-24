@@ -3,7 +3,7 @@ package com.enonic.autotests.services;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.schemamanager.AddNewContentTypeWizard;
-import com.enonic.autotests.pages.schemamanager.SchemaTablePage;
+import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
 public class ContentTypeService
@@ -15,11 +15,11 @@ public class ContentTypeService
 	 * @param testSession
 	 * @param contentType
 	 * @param isCloseWizard
-	 * @return {@link SchemaTablePage} instance if wizard was closed.
+	 * @return {@link SchemaGridPage} instance if wizard was closed.
 	 */
 	public Page createContentType(TestSession testSession, ContentType contentType, boolean isCloseWizard)
 	{
-		SchemaTablePage schemaManagerPage = NavigatorHelper.openSchemaManager(testSession);
+		SchemaGridPage schemaManagerPage = NavigatorHelper.openSchemaManager(testSession);
 		schemaManagerPage.doAddContentType(contentType,isCloseWizard);
 
 		if (isCloseWizard)
@@ -39,11 +39,11 @@ public class ContentTypeService
 	 * 
 	 * @param testSession
 	 * @param contentTypeToDelete
-	 * @return {@link SchemaTablePage} instance.
+	 * @return {@link SchemaGridPage} instance.
 	 */
-	public SchemaTablePage deleteContentType(TestSession testSession, ContentType contentTypeToDelete)
+	public SchemaGridPage deleteContentType(TestSession testSession, ContentType contentTypeToDelete)
 	{
-		SchemaTablePage spacesPage = NavigatorHelper.openSchemaManager(testSession);
+		SchemaGridPage spacesPage = NavigatorHelper.openSchemaManager(testSession);
 
 		spacesPage.doDeleteContentType(contentTypeToDelete);
 		return spacesPage;
@@ -55,11 +55,11 @@ public class ContentTypeService
 	 * 
 	 * @param testSession
 	 * @param contentTypeToDelete
-	 * @return {@link SchemaTablePage} instance.
+	 * @return {@link SchemaGridPage} instance.
 	 */
-	public SchemaTablePage editContentType(TestSession testSession, ContentType contentTypeToEdit, ContentType newContentType)
+	public SchemaGridPage editContentType(TestSession testSession, ContentType contentTypeToEdit, ContentType newContentType)
 	{
-		SchemaTablePage spacesPage = NavigatorHelper.openSchemaManager(testSession);
+		SchemaGridPage spacesPage = NavigatorHelper.openSchemaManager(testSession);
 
 		spacesPage.doEditContentType(contentTypeToEdit, newContentType);
 		return spacesPage;

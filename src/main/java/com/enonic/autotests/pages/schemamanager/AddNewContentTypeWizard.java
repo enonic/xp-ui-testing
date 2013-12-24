@@ -50,7 +50,7 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 		{
 			throw new CreateContentTypeException("New Content type was not created, Erorr dialog with error message appeared ");
 		}
-		SchemaTablePage page = new SchemaTablePage(getSession());
+		SchemaGridPage page = new SchemaGridPage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
 	}
