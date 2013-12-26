@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -350,6 +351,14 @@ public class ContentGridPage extends AbstractGridPage
 
 	public void doUpdateContent(BaseAbstractContent content, BaseAbstractContent newcontent)
 	{
+
+		AddContentWizardPage wizard = openEditWizardPage(content);
+		wizard.doTypeDataSaveAndClose(newcontent);
+
+	}
+	
+	public AddContentWizardPage openEditWizardPage(BaseAbstractContent content)
+	{
 		boolean isPresent = findContentInTable(content, 2l);
 		if (!isPresent)
 		{
@@ -362,15 +371,9 @@ public class ContentGridPage extends AbstractGridPage
 		editButton.click();
 		AddContentWizardPage wizard = new AddContentWizardPage(getSession());
 		wizard.waitUntilWizardOpened(content.getDisplayName(), 1);
-		wizard.doTypeDataSaveAndClose(newcontent);
-
-	}
-
-	public AddContentWizardPage openToEdit(Space space, String ctype)
-	{
-		AddContentWizardPage wizard = null;
 		return wizard;
 	}
+
 
 	/**
 	 * Select a content type and opens "Add new Content Wizard".
@@ -426,7 +429,7 @@ public class ContentGridPage extends AbstractGridPage
 
 	public ItemViewPanelPage doOpenContent(BaseAbstractContent content)
 	{
-		boolean isPresent = findContentInTable(content, 7l);
+		boolean isPresent = findContentInTable(content, AppConstants.IMPLICITLY_WAIT);
 		if (!isPresent)
 		{
 			throw new TestFrameworkException("The content with name " + content.getName() + " and displayName:" + content.getDisplayName()

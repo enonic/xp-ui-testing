@@ -34,15 +34,15 @@ public class ContentManagerService
 		//result &=cmPage.verifyAllControls();
 		return result;
 	}
-	public boolean openAndVerifyAddContentWizardPage(TestSession session, String contentTypeName, String ... parentNames)
+	public boolean openAndVerifyAddContentWizardPage(TestSession session, BaseAbstractContent content)
 	{
 
 		// 1. open a 'content manager'
 		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
-		AddContentWizardPage wizardPage = cmPage.openAddContentWizard(contentTypeName, parentNames);
-		String expectedTitle = String.format(AddContentWizardPage.START_WIZARD_TITLE, contentTypeName.toLowerCase());
+		AddContentWizardPage wizardPage = cmPage.openAddContentWizard(content.getName(), content.getParentNames());
+		String expectedTitle = String.format(AddContentWizardPage.START_WIZARD_TITLE, content.getName());
 		wizardPage.waitUntilWizardOpened(expectedTitle, 1);
 		return wizardPage.verifyWizardPage(session);
 

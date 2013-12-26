@@ -131,6 +131,11 @@ public class SchemaGridPage extends AbstractGridPage
 			throw new TestFrameworkException("Confirm delete space dialog was not opened!");
 		}
 		dialog.doDelete();
+		boolean isClosed =  dialog.verifyIsClosed();
+		if(!isClosed)
+		{
+			throw new TestFrameworkException("Confirm delete space dialog was not closed!");
+		}
 		getLogger().info("The Contentent Type  with name: " + contentTypeToDelete.getName() + " was deleted!");
 	}
 

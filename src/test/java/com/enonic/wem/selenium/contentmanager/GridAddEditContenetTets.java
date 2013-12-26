@@ -51,7 +51,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 	}
 
 	@Test(description = "add new content, select content in a table, open this content and Delete it ")
-	public void test_open_content_and_edit()
+	public void test_open_content_rename_content_name()
 	{
 		logger.info("STARTED ##### open content-info page and click by 'Edit' button from toolbar");
 		String name = "toedit" + Math.abs(new Random().nextInt());
@@ -68,8 +68,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		// 1. add a content to the space
 		ContentGridPage page = (ContentGridPage) cManagerService.addContent(getTestSession(), contentToEdit, true);
 		logger.info("new contet was added(contet to edit), name: " + name);
-		// 2. open just created content and edit it. Click by 'Edit' from a
-		// toolbar:
+		// 2. open just created content and edit it. Click by 'Edit' from a toolbar:
 		page = cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
 		logger.info("contet was updated, new name is : " + newName);
 
@@ -84,7 +83,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 	}
 
 	@Test(description = "Add new content and edit it. select a content, click by 'Edit' button , open wizard edit content and save")
-	public void test_click_toolbar_editbutton_and_update_content()
+	public void test_rename_content_display_name()
 	{
 		logger.info("Add new content and edit it. select a content, click by 'Edit' button , open wizard edit content and save");
 		String name = "content-to-edit"+Math.abs( new Random().nextInt() );
