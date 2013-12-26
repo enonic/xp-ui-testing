@@ -78,7 +78,7 @@ public class SchemaGridPage extends AbstractGridPage
 		doExpandFolder(superTypeName);
 		//2.  select a content type in a grid
 		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentTypeToEdit.getDisplayNameFromConfig(), contentTypeToEdit.getName());
-		getLogger().info("Check is Space present in table: " + contentTypeXpath);
+		getLogger().info("Check that a Content Type to edit is present in the table: " + contentTypeToEdit.getName());
 		
 		//3. click by 'Edit' button on toolbar
 		WebElement elem = TestUtils.getInstance().getDynamicElement(getDriver(), By.xpath(contentTypeXpath), 3);
@@ -131,7 +131,7 @@ public class SchemaGridPage extends AbstractGridPage
 			throw new TestFrameworkException("Confirm delete space dialog was not opened!");
 		}
 		dialog.doDelete();
-		getLogger().info("The Space  with name: " + contentTypeToDelete.getName() + " was deleted!");
+		getLogger().info("The Contentent Type  with name: " + contentTypeToDelete.getName() + " was deleted!");
 	}
 
 	public void doAddContentType(ContentType contentType, boolean isCloseWizard)

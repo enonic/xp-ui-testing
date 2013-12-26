@@ -59,6 +59,8 @@ public class ContentTypeTest extends BaseTest
 	{
 		ContentType ctype = (ContentType) getTestSession().get(TEST_CONTENTYPE_KEY);
 		SchemaGridPage schemasPage = contentTypeService.deleteContentType(getTestSession(), ctype);
+		logger.info("check that deleted and not present in the Grid:");
+		TestUtils.getInstance().saveScreenshot(getTestSession());
 		boolean isPresent = schemasPage.isContentTypePresentInTable(ctype);
 		TestUtils.getInstance().saveScreenshot(getTestSession());
 		Assert.assertFalse(isPresent, "content type with name :" + ctype.getName() + " should be delete, but actual is present in the grid-view");
