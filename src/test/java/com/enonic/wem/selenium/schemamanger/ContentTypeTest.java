@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
 import com.enonic.autotests.services.ContentTypeService;
 import com.enonic.autotests.testdata.TestDataConvertor;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 import com.enonic.wem.selenium.BaseTest;
 import com.enonic.wem.selenium.dataproviders.SchemaManagerTestsProvider;
@@ -59,6 +60,7 @@ public class ContentTypeTest extends BaseTest
 		ContentType ctype = (ContentType) getTestSession().get(TEST_CONTENTYPE_KEY);
 		SchemaGridPage schemasPage = contentTypeService.deleteContentType(getTestSession(), ctype);
 		boolean isPresent = schemasPage.isContentTypePresentInTable(ctype);
+		TestUtils.getInstance().saveScreenshot(getTestSession());
 		Assert.assertFalse(isPresent, "content type with name :" + ctype.getName() + " should be delete, but actual is present in the grid-view");
 		logger.info("FINISHED $$$  select a content type and delete it ");
 	}
