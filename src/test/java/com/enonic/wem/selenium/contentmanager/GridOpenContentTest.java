@@ -16,6 +16,7 @@ public class GridOpenContentTest extends BaseContentManagerTest
 	@Test
 	public void setup()
 	{
+		logger.info("Started ### setup method");
 		String name = "open-test"+Math.abs( new Random().nextInt() );
 		StructuredContent content =  StructuredContent.builder().withName(name).withDisplayName("open-test").withType(ContentTypeName.STRUCTURED.getValue()).build();
 		String[] parentNames = new String[]{REPONAME};
@@ -25,23 +26,28 @@ public class GridOpenContentTest extends BaseContentManagerTest
 		logger.info("start to add content with name: " +content.getName()+ " to folder: " + REPONAME);
 		cManagerService.addContent(getTestSession(), content, true);
 		getTestSession().put(TEST_OPEN_CONTENT_KEY, content);
+		logger.info("Finished $$$ setup method");
 		
 	}
 	@Test(description = "add new content, select content in a table, click by 'open' button and Delete it " )
 	public void test_open_content_use_toolbar()
 	{	
 		StructuredContent content = (StructuredContent)getTestSession().get(TEST_OPEN_CONTENT_KEY);
+		logger.info("Started ### test_open_content_use_toolbar content name is: "+ content.getName());
 		ItemViewPanelPage contentInfoPage = cManagerService.doOpenContentUseToolbar(getTestSession(), content);
 		boolean result =contentInfoPage.verifyContentInfoPage(content);
 		Assert.assertTrue(result, "expected content-info and actal are not equals!");
+		logger.info("Finished $$$ test_open_content_use_toolbar content name is: "+ content.getName());
 		
 	}
 	//@Test(description = "open a context, use a context menu " ,dependsOnMethods ="setup")
 	public void test_open_content_use_context_menu()
 	{	
 		StructuredContent content = (StructuredContent)getTestSession().get(TEST_OPEN_CONTENT_KEY);
+		logger.info("Started ### test_open_content_use_context_menu content name is: "+ content.getName());
 		ItemViewPanelPage contentInfoPage = cManagerService.doOpenContentUseContextMenu(getTestSession(), content);
 		boolean result =contentInfoPage.verifyContentInfoPage(content);
 		Assert.assertTrue(result, "expected content-info and actal are not equals!");
+		logger.info("Finished $$$ test_open_content_use_context_menu content name is: "+ content.getName());
 	}
 }

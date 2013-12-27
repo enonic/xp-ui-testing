@@ -23,6 +23,7 @@ public class SchemaManagerTestsProvider
 	private static final String RELATIONSHIP_TEST_DATA = "create-relationship.xml";
 	private static final String DELETETEST_TEST_DATA = "delete-test.xml";
 	private static final String EDITTEST_TEST_DATA = "edit-test.xml";
+	private static final String CHANGE_NAME_TEST_DATA = "change-ctname-test.xml";
 	
 	
 	
@@ -83,13 +84,31 @@ public class SchemaManagerTestsProvider
 	
 	
 	
-	@DataProvider(name = "editContentType")
-	public static Object[][] editContentType() throws JAXBException {
+	@DataProvider(name = "changeDisplayName")
+	public static Object[][] changeDisplayName() throws JAXBException {
 
 		List<Object[]> casesParameters = new ArrayList<Object[]>();
 		JAXBContext context = JAXBContext.newInstance(ContentTypeTestData.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		InputStream in = TestDataConvertor.class.getClassLoader().getResourceAsStream("test-data/schemamanager/" + EDITTEST_TEST_DATA);
+		if (in == null) {
+			throw new TestFrameworkException("test data was not found!");
+		}
+		ContentTypeTestData testdata = (ContentTypeTestData) unmarshaller.unmarshal(in);
+		List<ContentTypeXml> cases = testdata.getContentTypes();
+		for (ContentTypeXml ctype : cases) {
+			casesParameters.add(new Object[] { ctype });
+		}
+		return casesParameters.toArray(new Object[casesParameters.size()][]);
+	}
+	
+	@DataProvider(name = "changeName")
+	public static Object[][] changeName() throws JAXBException {
+
+		List<Object[]> casesParameters = new ArrayList<Object[]>();
+		JAXBContext context = JAXBContext.newInstance(ContentTypeTestData.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		InputStream in = TestDataConvertor.class.getClassLoader().getResourceAsStream("test-data/schemamanager/" + CHANGE_NAME_TEST_DATA);
 		if (in == null) {
 			throw new TestFrameworkException("test data was not found!");
 		}
