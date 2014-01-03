@@ -16,6 +16,8 @@
 			<class name="com.enonic.wem.selenium.contentmanager.GridDeleteContentTests" />
 			<class name="com.enonic.wem.selenium.contentmanager.GridAddEditContenetTets" />
 			<class name="com.enonic.wem.selenium.schemamanger.ContentTypeTest" />
+			<class name="com.enonic.wem.selenium.schemamanger.MixinTests" />
+			
 			
 			
 			
