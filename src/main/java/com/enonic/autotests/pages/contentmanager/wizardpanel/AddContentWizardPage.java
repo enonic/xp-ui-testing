@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,12 +26,10 @@ public class AddContentWizardPage extends BaseWizardPage
 	public static  String START_WIZARD_TITLE = "New %s";
 	private String NOTIF_MESSAGE = "\"%s\" saved successfully!";
  
-	public static final String TOOLBAR_PREVIEW_BUTTON_XPATH = "//div[contains(@class,'admin-toolbar')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Preview')]]";
-	private static final String TOOLBAR_PUBLISH_BUTTON_XPATH = "//div[contains(@class,'admin-toolbar')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Publish')]]";
-	private static final String TOOLBAR_DELETE_BUTTON_XPATH = "//div[contains(@class,'admin-toolbar')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Delete')]]";
-	public static final String TOOLBAR_MOVE_BUTTON_XPATH = "//div[contains(@class,'admin-toolbar')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Move')]]";
-	public static final String TOOLBAR_DUPLICTAE_BUTTON_XPATH = "//div[contains(@class,'admin-toolbar')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Duplicate')]]";
-	public static final String TOOLBAR_EXPORT_BUTTON_XPATH = "//div[contains(@class,'admin-toolbar')]//div[contains(@class, 'x-toolbar-item')]//button[@class='x-btn-center' and descendant::span[contains(.,'Export')]]";
+	private static final String TOOLBAR_PUBLISH_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Publish']";
+	private static final String TOOLBAR_DELETE_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Delete']";
+	public static final String TOOLBAR_DUPLICTAE_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Duplicate']";
+	
 	
 
 
@@ -38,15 +38,6 @@ public class AddContentWizardPage extends BaseWizardPage
 
 	@FindBy(xpath = TOOLBAR_DELETE_BUTTON_XPATH)
 	private WebElement toolbarDeleteButton;
-
-	@FindBy(xpath = TOOLBAR_PREVIEW_BUTTON_XPATH)
-	private WebElement toolbarPreviewButton;
-
-	@FindBy(xpath = TOOLBAR_MOVE_BUTTON_XPATH)
-	private WebElement toolbarMoveButton;
-	
-	@FindBy(xpath = TOOLBAR_MOVE_BUTTON_XPATH)
-	private WebElement toolbarExportButton;
 	
 	@FindBy(xpath = TOOLBAR_DUPLICTAE_BUTTON_XPATH)
 	private WebElement toolbarDuplicateButton;
@@ -114,12 +105,20 @@ public class AddContentWizardPage extends BaseWizardPage
 		{
 			getLogger().error("error during verifying the 'Publish' toolbar-button !", getSession());
 		}
-		result &= toolbarPreviewButton.isDisplayed() && !toolbarPreviewButton.isEnabled();
+
 		result &= toolbarDuplicateButton.isDisplayed() && !toolbarDuplicateButton.isEnabled();
-		result &= toolbarMoveButton.isDisplayed() && !toolbarMoveButton.isEnabled();
-		result &= toolbarExportButton.isDisplayed() && !toolbarExportButton.isEnabled();
-		
 		return result;
+	}
+	
+	public String getTitle()
+	{
+		List<WebElement> elems = getDriver().findElements(By.xpath("//div[child::span[@class='tabcount']]/span[@class='label']"));
+		if(elems.size()>0)
+		{
+			return elems.get(0).getText();
+		}else{
+			return null;
+		}
 	}
 
 	/**

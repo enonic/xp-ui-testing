@@ -76,12 +76,12 @@ public class AccountService
 	 *            This string should be present near the 'Red Circle'
 	 * @return true if all elements displayed on the wizard, otherwise false.
 	 */
-	public boolean openAndVerifySystemUserWizardPage(TestSession testSession, String wizardTitle)
+	public boolean openAndVerifySystemUserWizardPage(TestSession testSession)
 	{
 		AccountsPage accountspage = NavigatorHelper.openAccounts(testSession);
 
 		AddNewUserWizard wizard = accountspage.openNewSystemUserWizard();
-		wizard.waitUntilWizardOpened( wizardTitle, 1);
+		wizard.waitUntilWizardOpened(  1);
 		return wizard.verifyAllEmptyFields(testSession);
 	}
 

@@ -102,18 +102,14 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		Assert.assertTrue(result, "content with updated name was not found!");
 		logger.info("FINISHED $$$$ test_rename_content_display_name");
 	}
-	//@Test(description = "Open add(edit) content wizard and verify it")
+	@Test(description = "Open add(edit) content wizard and verify it")
 	public void test_open_edit_content_wizard()
 	{
 		logger.info("Open add(edit) content wizard and verify it");
 		
 		
 		String[] parentNames = new String[]{REPONAME};
-
-		//2. click by "Edit" link and update just created content, and try to close wizard:	
-		//boolean result = cManagerService.openAndVerifyAddContentWizardPage(getTestSession(), content);
-
-		
-		//Assert.assertTrue(result, "content with updated name was not found!");
+		boolean result = cManagerService.openAndVerifyAddContentWizardPage(getTestSession(),ContentTypeName.ARCHIVE.getValue(), parentNames);
+                Assert.assertTrue(result, "content with updated name was not found!");
 	}
 }

@@ -337,7 +337,7 @@ public class AddNewUserWizard extends BaseWizardPage
 		homepage.openAccountsApplication();
 
 		// 3. verify that the wizard is opened.
-		waitUntilWizardOpened( accountName, 1);
+		waitUntilWizardOpened( 1);
 
 	}
 }

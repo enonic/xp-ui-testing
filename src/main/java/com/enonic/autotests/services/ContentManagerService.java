@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
@@ -19,6 +21,8 @@ import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 public class ContentManagerService
 {
 
+	private Logger logger = Logger.getLogger();
+	
 	public enum HowOpenContent
 	{
 		TOOLBAR,CONTEXT_MENU
@@ -43,8 +47,14 @@ public class ContentManagerService
 		//2. select a space and open the 'add content wizard' (click by 'New') 
 		AddContentWizardPage wizardPage = cmPage.openAddContentWizard(contentTypeName,parentNames);
 		String expectedTitle = String.format(AddContentWizardPage.START_WIZARD_TITLE, contentTypeName);
-		wizardPage.waitUntilWizardOpened(expectedTitle, 1);
-		return wizardPage.verifyWizardPage(session);
+		boolean result = wizardPage.getTitle().equalsIgnoreCase(expectedTitle);
+		if(!result)
+		{
+			logger.info("VerifyAddContentWizardPage: expected title and actual are not equals!");
+		}
+		wizardPage.waitUntilWizardOpened(1);
+		result &= wizardPage.verifyWizardPage(session);
+		return result;
 
 	}
 	

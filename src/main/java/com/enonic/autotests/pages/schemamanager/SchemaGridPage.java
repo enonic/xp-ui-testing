@@ -74,8 +74,11 @@ public class SchemaGridPage extends AbstractGridPage
 	public void doEditContentType(ContentType contentTypeToEdit, ContentType newContentType)
 	{
 		String superTypeName = contentTypeToEdit.getSuperTypeNameFromConfig();
-		//1. expand a supertype folder:
-		doExpandFolder(superTypeName);
+		if(superTypeName != null)
+		{
+		 //1. expand a supertype folder:
+		 doExpandFolder(superTypeName);
+		}
 		//2.  select a content type in a grid
 		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentTypeToEdit.getDisplayNameFromConfig(), contentTypeToEdit.getName());
 		getLogger().info("Check that a Content Type to edit is present in the table: " + contentTypeToEdit.getName());
@@ -101,7 +104,7 @@ public class SchemaGridPage extends AbstractGridPage
 		editButton.click();
 		AddNewContentTypeWizard wizard = new AddNewContentTypeWizard(getSession());
 		getLogger().info("## AddNewContentTypeWizard  should be opened, waits title: " + contentTypeToEdit.getName());
-		wizard.waitUntilWizardOpened(contentTypeToEdit.getName(), 1);
+		wizard.waitUntilWizardOpened( 1);
 		wizard.doTypeDataSaveAndClose(newContentType);
 		
 	}
@@ -199,8 +202,11 @@ public class SchemaGridPage extends AbstractGridPage
 	public boolean isContentTypePresentInTable(ContentType contentType)
 	{
 		String superTypeName = contentType.getSuperTypeNameFromConfig();
-		//1. expand a supertype folder:
-		doExpandFolder(superTypeName);
+		if(superTypeName != null)
+		{
+		  //1. expand a supertype folder:
+		  doExpandFolder(superTypeName);
+		}
 		
 		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName());
 		getLogger().info("Check is Space present in table: " + contentTypeXpath);

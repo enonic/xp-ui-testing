@@ -92,13 +92,14 @@ public abstract class BaseWizardPage extends Page {
 	 * @param session
 	 *            {@link TestSession} instance
 	 */
-	public void waitUntilWizardOpened( String displayName, Integer numberPage) {
+	public void waitUntilWizardOpened( Integer numberPage) {
 		String circleXpath = String.format(RED_CIRCLE_XPATH, numberPage.toString());
-		String titleXpath = String.format(OBJECT_NAME_XPATH, displayName); 
+		//String titleXpath = String.format(OBJECT_NAME_XPATH, displayName); 
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(circleXpath));
-		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
+		//TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
 
 	}
+	
 	public void waitElementClickable(By by, long timeout)
 	{
 		

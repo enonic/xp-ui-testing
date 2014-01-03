@@ -85,7 +85,7 @@ public class AccountsPage extends Page
 
 		AddNewUserWizard wizardPage = openForEditSystemUser();
 
-		wizardPage.waitUntilWizardOpened(userToUpdate.getUserInfo().getDisplayName(), 1);
+		wizardPage.waitUntilWizardOpened(1);
 		getLogger().info("AddNewUserWizard  was successfully opened,  username  is : " + userToUpdate.getUserInfo().getName());
 		if (isCloseWizard)
 		{
@@ -105,7 +105,7 @@ public class AccountsPage extends Page
 	{
 		AddNewUserWizard wizardPage = openNewSystemUserWizard();
 
-		wizardPage.waitUntilWizardOpened(AddNewUserWizard.PAGE_TITLE, 1);
+		wizardPage.waitUntilWizardOpened(1);
 		getLogger().info("AddNewUserWizard  was successfully opened,  username  is : " + user.getUserInfo().getName());
 		if (isCloseWizard)
 		{

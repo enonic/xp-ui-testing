@@ -77,7 +77,7 @@ public class ItemViewPanelPage extends Page
 		editButtonToolbar.click();
 		AddContentWizardPage wizard = new AddContentWizardPage(getSession());
 		//when content opened and the 'Edit' button pressed, new wizard page appears and '2'  should be present in the red circle.
-		wizard.waitUntilWizardOpened(contentDisplayName, 2);
+		wizard.waitUntilWizardOpened( 2);
 		wizard.doTypeDataSaveAndClose(newContent);
 	}
 	/**

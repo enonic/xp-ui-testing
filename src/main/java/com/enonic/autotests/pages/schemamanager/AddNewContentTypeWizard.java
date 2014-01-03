@@ -132,7 +132,7 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 	
 	private void setConfigFromClipboard(ContentType ctype, WebElement configElement)
 	{
-		setClipboardContents(ctype.getConfigData());
+		setClipboardContents(ctype.getConfigData().trim());
 		final Actions act = new Actions( getSession().getDriver());
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.indexOf("mac") >= 0)

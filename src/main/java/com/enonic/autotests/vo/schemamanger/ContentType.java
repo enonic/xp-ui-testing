@@ -38,6 +38,8 @@ public class ContentType
 		String tagStart = "<super-type>";
 		String tagEnd = "</super-type>";
 		int start = configData.indexOf(tagStart);
+		if(start ==-1)
+			return null;
 		int end = configData.indexOf(tagEnd);
 		return configData.substring(start + tagStart.length() , end);
 		

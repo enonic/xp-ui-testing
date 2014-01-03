@@ -57,7 +57,7 @@ public class SelectKindDialog extends Page
 		{
 			displayName = "New Content Type";
 		}
-		wizard.waitUntilWizardOpened(displayName, 1);
+		wizard.waitUntilWizardOpened( 1);
 		return wizard;
 	}
 

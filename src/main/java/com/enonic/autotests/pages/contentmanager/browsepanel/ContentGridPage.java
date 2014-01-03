@@ -370,7 +370,7 @@ public class ContentGridPage extends AbstractGridPage
 
 		editButton.click();
 		AddContentWizardPage wizard = new AddContentWizardPage(getSession());
-		wizard.waitUntilWizardOpened(content.getDisplayName(), 1);
+		wizard.waitUntilWizardOpened( 1);
 		return wizard;
 	}
 
