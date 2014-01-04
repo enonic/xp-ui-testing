@@ -90,7 +90,7 @@ public class AddContentWizardPage extends BaseWizardPage
 	private boolean verifyTollbar(TestSession session)
 	{
 		boolean result = true;
-		result &= toolbarSaveButton.isDisplayed() && !toolbarSaveButton.isEnabled();
+		result &= toolbarSaveButton.isDisplayed() && toolbarSaveButton.isEnabled();
 		if (!result)
 		{
 			getLogger().error("error durin verifying the 'Save' toolbar-button !", getSession());
@@ -100,11 +100,8 @@ public class AddContentWizardPage extends BaseWizardPage
 		{
 			getLogger().error("error during verifying the 'Delete' toolbar-button !", getSession());
 		}
-		result &= !toolbarPublishButton.isDisplayed() && !toolbarPublishButton.isEnabled();
-		if (!(!toolbarPublishButton.isDisplayed() && !toolbarPublishButton.isEnabled()))
-		{
-			getLogger().error("error during verifying the 'Publish' toolbar-button !", getSession());
-		}
+		result &= toolbarPublishButton.isDisplayed() && toolbarPublishButton.isEnabled();
+		
 
 		result &= toolbarDuplicateButton.isDisplayed() && !toolbarDuplicateButton.isEnabled();
 		return result;
