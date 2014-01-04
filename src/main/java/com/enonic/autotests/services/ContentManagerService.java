@@ -47,7 +47,9 @@ public class ContentManagerService
 		//2. select a space and open the 'add content wizard' (click by 'New') 
 		AddContentWizardPage wizardPage = cmPage.openAddContentWizard(contentTypeName,parentNames);
 		String expectedTitle = String.format(AddContentWizardPage.START_WIZARD_TITLE, contentTypeName);
+		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = wizardPage.getTitle().equalsIgnoreCase(expectedTitle);
+		logger.info("expected title is "+ expectedTitle  +" actual title is: "+wizardPage.getTitle());
 		if(!result)
 		{
 			logger.info("VerifyAddContentWizardPage: expected title and actual are not equals!");

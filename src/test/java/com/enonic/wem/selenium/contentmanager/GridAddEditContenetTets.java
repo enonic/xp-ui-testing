@@ -110,6 +110,6 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		
 		String[] parentNames = new String[]{REPONAME};
 		boolean result = cManagerService.openAndVerifyAddContentWizardPage(getTestSession(),ContentTypeName.ARCHIVE.getValue(), parentNames);
-                Assert.assertTrue(result, "content with updated name was not found!");
+                Assert.assertTrue(result, "'add content wizard' has wrong elements!");
 	}
 }
