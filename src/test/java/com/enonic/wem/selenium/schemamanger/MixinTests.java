@@ -72,19 +72,19 @@ public class MixinTests extends BaseTest
 		logger.info("Finished $$$  rename a display-name of mixin");
 	}
 	
-	//@Test(description = "delete a mixin",  dataProvider = "deleteMixin", dataProviderClass = SchemaManagerTestsProvider.class)
+	@Test(description = "delete a mixin",  dataProvider = "deleteMixin", dataProviderClass = SchemaManagerTestsProvider.class)
 	public void  test_delete_mixin(ContentTypeXml xmlData)
 	{
 		ContentType mixinToDelete = TestDataConvertor.convertXmlDataToContentType(xmlData);
 		String mixinName = "mixindelete" + Math.abs(new Random().nextInt());
 		mixinToDelete.setName(mixinName);
-		//2. create new mixin
+		//1. create new mixin
 		SchemaGridPage schemasPage = (SchemaGridPage) contentTypeService.createContentType(getTestSession(), mixinToDelete, true);
-		
+		//delete mixin
 		contentTypeService.deleteContentType(getTestSession(), mixinToDelete);
-		//4.check that content type with new displayName present in the table
+		//3.check that mixin with  displayName not  present in the table
 		boolean isPresent = schemasPage.isContentTypePresentInTable(mixinToDelete);
-		Assert.assertFalse(isPresent, String.format("mixin with name: %s  and new  displayName %s was not  found in the table",mixinToDelete.getName(), mixinToDelete.getDisplayNameFromConfig()));
+		Assert.assertFalse(isPresent, String.format("mixin with name: %s  and new  displayName %s was found in the table, but it should be deleted!",mixinToDelete.getName(), mixinToDelete.getDisplayNameFromConfig()));
 		logger.info("Finished $$$  delete a mixin");
 	}
 }

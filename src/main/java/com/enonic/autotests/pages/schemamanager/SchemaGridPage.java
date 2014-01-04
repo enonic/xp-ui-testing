@@ -111,9 +111,12 @@ public class SchemaGridPage extends AbstractGridPage
 	
 	public void doDeleteContentType(ContentType contentTypeToDelete)
 	{
-		//1.expand a super type folder:
-		String supertype = contentTypeToDelete.getSuperTypeNameFromConfig();
-		doExpandFolder(supertype);
+		String supertype = contentTypeToDelete.getSuperTypeNameFromConfig();		
+		if(supertype != null)
+		{
+		  //1.expand a super type folder:
+		  doExpandFolder(supertype);
+		}
 		String ctypeXpath = String.format(CONTENTTYPE_TABLE_ROW, contentTypeToDelete.getDisplayNameFromConfig(), contentTypeToDelete.getName());
         boolean isContentTypePresent = TestUtils.getInstance().waitElementExist(getDriver(), ctypeXpath, 3);
 		
@@ -122,9 +125,13 @@ public class SchemaGridPage extends AbstractGridPage
 			throw new TestFrameworkException("content type with name "+isContentTypePresent +" was not found!");
 		}
 		
-		
+		//2. click by a contenttype
 		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), getDriver());		
+		//3. wait for deleteButton(in toolbar) is enabled
+		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(DELETE_BUTTON_XPATH));
+		//4. click by 'delete' button
 		deleteButton.click();
+		
 		List<String> names = new ArrayList<>();
 		names.add(contentTypeToDelete.getName());
 		DeleteContentTypeDialog dialog = new DeleteContentTypeDialog(getSession());
@@ -133,6 +140,7 @@ public class SchemaGridPage extends AbstractGridPage
 		{
 			throw new TestFrameworkException("Confirm delete space dialog was not opened!");
 		}
+		//5. confirm deleting
 		dialog.doDelete();
 		boolean isClosed =  dialog.verifyIsClosed();
 		if(!isClosed)
