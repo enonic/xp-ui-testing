@@ -12,8 +12,6 @@ import org.testng.annotations.DataProvider;
 
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.testdata.TestDataConvertor;
-import com.enonic.autotests.testdata.accounts.SystemUserXml;
-import com.enonic.autotests.testdata.accounts.SystemUsersTestData;
 import com.enonic.autotests.testdata.cm.AbstractContentXml;
 import com.enonic.autotests.testdata.cm.ContentTestData;
 

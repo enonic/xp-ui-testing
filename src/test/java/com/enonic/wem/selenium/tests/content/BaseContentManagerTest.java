@@ -1,7 +1,7 @@
-package com.enonic.wem.selenium.contentmanager;
+package com.enonic.wem.selenium.tests.content;
 
 import com.enonic.autotests.services.ContentManagerService;
-import com.enonic.wem.selenium.BaseTest;
+import com.enonic.wem.selenium.tests.BaseTest;
 
 public class BaseContentManagerTest extends BaseTest
 {

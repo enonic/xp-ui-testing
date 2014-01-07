@@ -1,4 +1,4 @@
-package com.enonic.wem.selenium.schemamanger;
+package com.enonic.wem.selenium.tests.schema;
 
 import java.util.Random;
 
@@ -11,7 +11,7 @@ import com.enonic.autotests.testdata.TestDataConvertor;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
-import com.enonic.wem.selenium.BaseTest;
+import com.enonic.wem.selenium.tests.BaseTest;
 import com.enonic.wem.selenium.dataproviders.SchemaManagerTestsProvider;
 
 public class ContentTypeTest extends BaseTest

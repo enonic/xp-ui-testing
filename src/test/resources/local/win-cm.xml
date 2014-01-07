@@ -12,11 +12,11 @@
 		<parameter name="browserVersion" value="26.0" />
 		<classes>
 		
-		    <class name="com.enonic.wem.selenium.contentmanager.DeleteContentDialogTest" />
-			<class name="com.enonic.wem.selenium.contentmanager.GridDeleteContentTests" />
-			<class name="com.enonic.wem.selenium.contentmanager.GridAddEditContenetTets" />
-			<class name="com.enonic.wem.selenium.schemamanger.ContentTypeTest" />
-			<class name="com.enonic.wem.selenium.schemamanger.MixinTests" />
+		    <class name="com.enonic.wem.selenium.tests.content.DeleteContentDialogTest" />
+			<class name="com.enonic.wem.selenium.tests.content.GridDeleteContentTests" />
+			<class name="com.enonic.wem.selenium.tests.content.GridAddEditContenetTets" />
+			<class name="com.enonic.wem.selenium.tests.schema.ContentTypeTest" />
+			<class name="com.enonic.wem.selenium.tests.schema.MixinTests" />
 			
 			
 			

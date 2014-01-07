@@ -1,4 +1,4 @@
-package com.enonic.wem.selenium;
+package com.enonic.wem.selenium.tests;
 
 import java.io.IOException;
 

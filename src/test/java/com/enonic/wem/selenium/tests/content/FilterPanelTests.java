@@ -1,4 +1,4 @@
-package com.enonic.wem.selenium.contentmanager;
+package com.enonic.wem.selenium.tests.content;
 
 import java.util.Random;
 
