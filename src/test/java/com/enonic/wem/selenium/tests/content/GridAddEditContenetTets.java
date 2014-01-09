@@ -12,7 +12,7 @@ import com.enonic.autotests.testdata.cm.AbstractContentXml;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 import com.enonic.autotests.vo.contentmanager.StructuredContent;
-import com.enonic.wem.selenium.dataproviders.ContentManagerTestsProvider;
+import com.enonic.wem.selenium.dataproviders.ContentTestsProvider;
 
 public class GridAddEditContenetTets extends BaseContentManagerTest
 {
@@ -28,7 +28,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		logger.info("Test Finished $$$$  Content Manager Application opened and verified");
 	}
 
-	@Test(description = "adding content to 'Bluman Trampoliner'. Use several types of content", dataProvider = "addNewContent", dataProviderClass = ContentManagerTestsProvider.class)
+	@Test(description = "adding content to 'Bluman Trampoliner'. Use several types of content", dataProvider = "addNewContent", dataProviderClass = ContentTestsProvider.class)
 	public void test_add_content_to_folder(AbstractContentXml contentXml)
 	{
 		logger.info("STARTED #####  " + contentXml.getCaseInfo());

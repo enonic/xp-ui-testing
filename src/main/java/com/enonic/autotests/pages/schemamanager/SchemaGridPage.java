@@ -109,6 +109,11 @@ public class SchemaGridPage extends AbstractGridPage
 		
 	}
 	
+	/**
+	 * Select a contentype or mixin or relationship and click by 'Delete' button in toolbar.
+	 * 
+	 * @param contentTypeToDelete
+	 */
 	public void doDeleteContentType(ContentType contentTypeToDelete)
 	{
 		String supertype = contentTypeToDelete.getSuperTypeNameFromConfig();		

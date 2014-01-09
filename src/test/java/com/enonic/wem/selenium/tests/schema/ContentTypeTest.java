@@ -12,14 +12,14 @@ import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 import com.enonic.wem.selenium.tests.BaseTest;
-import com.enonic.wem.selenium.dataproviders.SchemaManagerTestsProvider;
+import com.enonic.wem.selenium.dataproviders.SchemaTestsProvider;
 
 public class ContentTypeTest extends BaseTest
 {
 	private ContentTypeService contentTypeService = new ContentTypeService();
 	private final String TEST_CONTENTYPE_KEY = "delete_ctype_key";
 
-	@Test(description = "create new content-types of several types", dataProvider = "addContentType", dataProviderClass = SchemaManagerTestsProvider.class)
+	@Test(description = "create new content-types of several types", dataProvider = "addContentType", dataProviderClass = SchemaTestsProvider.class)
 	public void test_create_contenttype(ContentTypeXml xmlData)
 	{
 		logger.info("Started ### test_create_contenttype new ct will be created: "+ xmlData.getName());
@@ -38,7 +38,7 @@ public class ContentTypeTest extends BaseTest
 
 	}
 
-    @Test(description = "create new content-type and change displayName it", dataProvider= "changeDisplayName",dataProviderClass = SchemaManagerTestsProvider.class)
+    @Test(description = "create new content-type and change displayName it", dataProvider= "changeDisplayName",dataProviderClass = SchemaTestsProvider.class)
 	public void test_change_dispalyname_in_config(ContentTypeXml xmlData)
 	{
     	logger.info("Started ###  rename a display-name of content-type");
@@ -81,7 +81,7 @@ public class ContentTypeTest extends BaseTest
 		logger.info("FINISHED $$$  select a content type and delete it ");
 	}
 
-	@Test( dataProvider="changeName", dataProviderClass = SchemaManagerTestsProvider.class)
+	@Test( dataProvider="changeName", dataProviderClass = SchemaTestsProvider.class)
 	public void test_rename_content_type_name(ContentTypeXml xmlData) 
 	{
 		logger.info("STARTED ###  rename a name of content-type");

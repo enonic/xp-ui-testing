@@ -15,7 +15,7 @@ import com.enonic.autotests.testdata.TestDataConvertor;
 import com.enonic.autotests.testdata.cm.AbstractContentXml;
 import com.enonic.autotests.testdata.cm.ContentTestData;
 
-public class ContentManagerTestsProvider
+public class ContentTestsProvider
 {
 
 	private static final String CM_TEST_DATA = "cm-test-data.xml";

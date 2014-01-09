@@ -11,14 +11,14 @@ import com.enonic.autotests.testdata.TestDataConvertor;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 import com.enonic.wem.selenium.tests.BaseTest;
-import com.enonic.wem.selenium.dataproviders.SchemaManagerTestsProvider;
+import com.enonic.wem.selenium.dataproviders.SchemaTestsProvider;
 
 public class MixinTests extends BaseTest
 {
 	private ContentTypeService contentTypeService = new ContentTypeService();
 	private final String TEST_MIXIN_KEY  ="mixin_key";
 	
-	@Test(description = "create new mixin", dataProvider = "addMixin", dataProviderClass = SchemaManagerTestsProvider.class)
+	@Test(description = "create new mixin", dataProvider = "addMixin", dataProviderClass = SchemaTestsProvider.class)
 	public void test_create_mixin(ContentTypeXml xmlData)
 	{
 		logger.info("Started ### test_create_relationship, new relationship will be created: "+ xmlData.getName());
@@ -72,19 +72,4 @@ public class MixinTests extends BaseTest
 		logger.info("Finished $$$  rename a display-name of mixin");
 	}
 	
-	@Test(description = "delete a mixin",  dataProvider = "deleteMixin", dataProviderClass = SchemaManagerTestsProvider.class)
-	public void  test_delete_mixin(ContentTypeXml xmlData)
-	{
-		ContentType mixinToDelete = TestDataConvertor.convertXmlDataToContentType(xmlData);
-		String mixinName = "mixindelete" + Math.abs(new Random().nextInt());
-		mixinToDelete.setName(mixinName);
-		//1. create new mixin
-		SchemaGridPage schemasPage = (SchemaGridPage) contentTypeService.createContentType(getTestSession(), mixinToDelete, true);
-		//delete mixin
-		contentTypeService.deleteContentType(getTestSession(), mixinToDelete);
-		//3.check that mixin with  displayName not  present in the table
-		boolean isPresent = schemasPage.isContentTypePresentInTable(mixinToDelete);
-		Assert.assertFalse(isPresent, String.format("mixin with name: %s  and new  displayName %s was found in the table, but it should be deleted!",mixinToDelete.getName(), mixinToDelete.getDisplayNameFromConfig()));
-		logger.info("Finished $$$  delete a mixin");
-	}
 }

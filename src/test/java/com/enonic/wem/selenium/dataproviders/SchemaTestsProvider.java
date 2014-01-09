@@ -15,7 +15,7 @@ import com.enonic.autotests.testdata.TestDataConvertor;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeTestData;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
 
-public class SchemaManagerTestsProvider
+public class SchemaTestsProvider
 {
 
 	private static final String CONTENT_TYPE_TEST_DATA = "create-content-type.xml";
