@@ -43,7 +43,8 @@ public abstract class BaseWizardPage extends Page {
 	@FindBy(name = "name")
 	protected WebElement nameInput;
 
-	public BaseWizardPage(TestSession session) {
+	public BaseWizardPage(TestSession session)
+	{
 		super(session);
 
 	}

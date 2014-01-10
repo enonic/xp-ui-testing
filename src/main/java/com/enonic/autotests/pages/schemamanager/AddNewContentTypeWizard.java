@@ -30,10 +30,33 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 	@FindBy(xpath = "//div[@class='CodeMirror']//textarea")
 	protected WebElement configXMLTextArea;
 
+	/**
+	 * The constructor.
+	 * 
+	 * @param session
+	 */
 	public AddNewContentTypeWizard( TestSession session )
 	{
 		super(session);
 
+	}
+
+	/**
+	 * Tapes a name and calculate a width of input field.
+	 * @param longName
+	 * @return
+	 */
+	public int doTypeLongNameAndGetInputWidth(String longName)
+	{
+		TestUtils.getInstance().clearAndType(getSession(), nameInput, longName);
+		String width = findElement(By.xpath("//input[@name='name']")).getAttribute("style");
+
+		String aa = "width: 300px";
+		int start = aa.indexOf(":");
+		int end = aa.indexOf("px");
+		int value = Integer.valueOf(width.substring(start+1, end).trim());
+		
+		return value;
 	}
 
 	/**
@@ -87,8 +110,8 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 		if(!getSession().getIsRemote())
 		{
 			clearConfig(elems.get(0));
+			getLogger().info("set configuration from a Clipboard:");
 			setConfigFromClipboard(contentType,  elems.get(0));
-			getLogger().info("$$$configuration$$$:   "+ contentType.getConfigData());
 			
 		}else{
 			

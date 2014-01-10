@@ -18,6 +18,7 @@
 			<class name="com.enonic.wem.selenium.tests.schema.ContentTypeTest" />
 			<class name="com.enonic.wem.selenium.tests.schema.MixinTests" />
 			<class name="com.enonic.wem.selenium.tests.schema.BrowsePanel" />
+			<class name="com.enonic.wem.selenium.tests.schema.MixinWizard" />
 			
 			
 			

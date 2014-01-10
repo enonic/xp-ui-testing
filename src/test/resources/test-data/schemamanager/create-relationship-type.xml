@@ -3,19 +3,14 @@
 		<contentType>
 			<name>random generated</name>
 			<kind>Relationship Type</kind>
-			<config>
-				          
-				
+			<config>		
 				<![CDATA[<relationship-type>
-<name>testj</name>
 <display-name>link test</display-name>
-  					<from-semantic>links to</from-semantic>
-                    <to-semantic>linked by</to-semantic>
-  					<allowed-from-types />
-  					<allowed-to-types />
-				</relationship-type>]]>
-
-               
+<from-semantic>links to</from-semantic>
+<to-semantic>linked by</to-semantic>
+<allowed-from-types />
+<allowed-to-types />
+</relationship-type>]]>            
 			</config>
 		</contentType>
 	</contentTypes>

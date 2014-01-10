@@ -109,6 +109,43 @@ public class SchemaGridPage extends AbstractGridPage
 		
 	}
 	
+	public AddNewContentTypeWizard doOpenContentTypeForEdit(ContentType contentTypeToEdit)
+	{
+		String superTypeName = contentTypeToEdit.getSuperTypeNameFromConfig();
+		if(superTypeName != null)
+		{
+		  //1. expand a supertype folder:
+		  doExpandFolder(superTypeName);
+		}
+		//2.  select a content type in a grid
+		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentTypeToEdit.getDisplayNameFromConfig(), contentTypeToEdit.getName());
+		getLogger().info("Check that a Content Type to edit is present in the table: " + contentTypeToEdit.getName());
+		
+		//3. click by 'Edit' button on toolbar
+		WebElement elem = TestUtils.getInstance().getDynamicElement(getDriver(), By.xpath(contentTypeXpath), 3);
+	    if(elem==null)
+	    {
+	    	throw new TestFrameworkException("element was not found:"+ contentTypeXpath);
+	    }
+			
+		try
+		{
+			Thread.sleep(500);
+		} catch (InterruptedException e)
+		{
+			
+			e.printStackTrace();
+		}
+		elem.click();
+		getLogger().info("content type with name:" +contentTypeToEdit.getName() +" was selected in the table!");
+		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
+		editButton.click();
+		AddNewContentTypeWizard wizard = new AddNewContentTypeWizard(getSession());	
+		wizard.waitUntilWizardOpened( 1);
+		return wizard;
+	}
+	
+	
 	/**
 	 * Select a contentype or mixin or relationship and click by 'Delete' button in toolbar.
 	 * 
@@ -157,7 +194,7 @@ public class SchemaGridPage extends AbstractGridPage
 
 	public void doAddContentType(ContentType contentType, boolean isCloseWizard)
 	{
-		AddNewContentTypeWizard wizard = openAddNewTypeWizard(contentType.getKind().getValue());
+		AddNewContentTypeWizard wizard = doOpenAddNewTypeWizard(contentType.getKind().getValue());
 		if (isCloseWizard)
 		{
 			wizard.doTypeDataSaveAndClose(contentType);
@@ -167,7 +204,7 @@ public class SchemaGridPage extends AbstractGridPage
 		}
 	}
 
-	private AddNewContentTypeWizard openAddNewTypeWizard(String kind)
+	public AddNewContentTypeWizard doOpenAddNewTypeWizard(String kind)
 	{
 		newButtonMenu.click();
 		SelectKindDialog selectDialog = new SelectKindDialog(getSession());
@@ -224,7 +261,7 @@ public class SchemaGridPage extends AbstractGridPage
 		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName());
 		getLogger().info("Check is Space present in table: " + contentTypeXpath);
 	
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(contentTypeXpath));
+		List<WebElement> elems = findElements(By.xpath(contentTypeXpath));
 
 		if (elems.size() > 0)
 		{

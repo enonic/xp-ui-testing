@@ -240,6 +240,34 @@ public class TestUtils
 
 	}
 
+	public String waitAndGetAttribute(WebDriver webDriver, final WebElement element, final String atrName, long timeout)
+	{
+		WebDriverWait wait = new WebDriverWait(webDriver, timeout);
+		try
+		{
+			return wait.until(new ExpectedCondition<String>()
+			{
+				@Override
+				public String apply(WebDriver webDriver)
+				{
+					try
+					{
+						return element.getAttribute(atrName);
+
+					} catch (Exception e)
+					{
+
+						return null;
+					}
+				}
+			});
+		} catch (org.openqa.selenium.TimeoutException e)
+		{
+			return null;
+		}
+
+	}
+
 	public WebElement scrollTableAndFind(TestSession session, String elementXpath, String scrollXpath)
 	{
 		WebElement element = null;
@@ -486,7 +514,7 @@ public class TestUtils
 	public void clickByElement(final By locator, final WebDriver driver)
 	{
 		final long startTime = System.currentTimeMillis();
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(AppConstants.IMPLICITLY_WAIT, TimeUnit.SECONDS);
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(90000, TimeUnit.MILLISECONDS).pollingEvery(5500, TimeUnit.MILLISECONDS);
 		// .ignoring( StaleElementReferenceException.class );
 		wait.until(new ExpectedCondition<Boolean>()
@@ -508,7 +536,7 @@ public class TestUtils
 		});
 		final long endTime = System.currentTimeMillis();
 		logger.info("clickByElement time is " + (endTime - startTime));
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(AppConstants.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS);
 	}
 
 	public String getNotificationMessage(final By locator, final WebDriver driver, long timeout)
