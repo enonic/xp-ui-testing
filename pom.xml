@@ -32,7 +32,30 @@
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>6.8</version>
-      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+      <version>2.1.8</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.spockframework</groupId>
+      <artifactId>spock-core</artifactId>
+      <version>0.7-groovy-2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.gebish</groupId>
+      <artifactId>geb-spock</artifactId>
+      <version>0.9.2</version>
     </dependency>
 
     <dependency>
@@ -42,7 +65,6 @@
       <type>war</type>
     </dependency>
   </dependencies>
-
 
   <build>
     <plugins>
@@ -105,23 +127,17 @@
           <skip>true</skip>
         </configuration>
         <executions>
-          <!-- -->
           <execution>
             <phase>integration-test</phase>
             <goals>
               <goal>test</goal>
             </goals>
-
             <configuration>
-
               <suiteXmlFiles>
-                <suiteXmlFile>${basedir}/src/test/resources/local/${local.template.name}
-                </suiteXmlFile>
+                <suiteXmlFile>${basedir}/src/test/resources/local/${local.template.name}</suiteXmlFile>
               </suiteXmlFiles>
-
               <skip>false</skip>
               <includes>
-
                 <include>com/enonic/wem/selenium/**</include>
               </includes>
               <excludes>
@@ -163,11 +179,11 @@
         <configuration>
           <container>
             <containerId>tomcat7x</containerId>
-            
+
             <systemProperties>
               <cms.home>${project.build.directory}/cms-home</cms.home>
             </systemProperties>
-           
+
           </container>
           <configuration>
             <properties>
