@@ -49,6 +49,9 @@ public class TestSession {
 		return (String) session.get(TestSession.START_URL);
 	}
 
+	public void setBaseUrl(String url) {
+		session.put(TestSession.START_URL, url);
+	}
 	public String getBrowserName() {
 		return (String) session.get(TestSession.BROWSER_NAME);
 	}

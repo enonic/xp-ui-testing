@@ -120,6 +120,15 @@ public class ContentManagerService
 		return result;
 	}
 	
+	public void doOpenContent(TestSession session, BaseAbstractContent content)
+	{
+		// 1. open a 'content manager'
+		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		cmPage.doOpenContent(content);
+		
+		
+	}
+	
 	/**
 	 * Finds a content, open preview for this content and click by "Edit" and updates.
 	 * 

@@ -131,7 +131,7 @@ public class ContentGridPage extends AbstractGridPage
 	{
 		
 		String[] parents = content.getParentNames();
-		if (!filtered)
+		if (!filtered && parents!= null)
 		{
 			for (String parentName : parents )
 			{
@@ -313,6 +313,8 @@ public class ContentGridPage extends AbstractGridPage
 	{
        StringBuilder sb = new StringBuilder();
        String[] names = content.getParentNames();
+       if(names!=null)
+       {
        for(String name:names)
        {
     	   if(!name.startsWith("/"))
@@ -320,6 +322,7 @@ public class ContentGridPage extends AbstractGridPage
     		   sb.append("/");
     	   }
     	   sb.append(name);
+       }
        }
        sb.append("/").append(content.getName());
        return sb.toString();

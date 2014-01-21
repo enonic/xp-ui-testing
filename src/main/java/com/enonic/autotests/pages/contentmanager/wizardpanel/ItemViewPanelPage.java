@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.contentmanager.wizardpanel;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -19,7 +20,8 @@ public class ItemViewPanelPage extends Page
 	
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
-	public static  String OBJECT_NAME_XPATH = "//span[@class='label' and contains(.,'%s')]";
+	public static  String VERIFY_TITLE_SPAN_XPATH = "//span[@class='label' and @title='%s']";
+	public static String TITLE_SPAN_XPATH  = "//span[@class='label' and @title]";
 	
 	public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'x-btn start-button')]";
 
@@ -52,6 +54,12 @@ public class ItemViewPanelPage extends Page
 		
 	}
 
+	public ItemViewPanelPage( WebDriver driver )
+	{
+		super(driver);
+		
+	}
+
 	/**
 	 * Verify that red circle and "New Space" message presented on the top of
 	 * Page.
@@ -61,7 +69,7 @@ public class ItemViewPanelPage extends Page
 	 */
 	public void waitUntilOpened(TestSession session, String displayName, Integer numberPage) {
 		String circleXpath = String.format(RED_CIRCLE_XPATH, numberPage.toString());
-		String titleXpath = String.format(OBJECT_NAME_XPATH, displayName);
+		String titleXpath = String.format(VERIFY_TITLE_SPAN_XPATH, displayName);
 		TestUtils.getInstance().waitUntilVisible(session, By.xpath(circleXpath));
 		TestUtils.getInstance().waitUntilVisible(session, By.xpath(titleXpath));
 
@@ -154,5 +162,10 @@ public class ItemViewPanelPage extends Page
 		}
 		result &= tmp;		
 		return result;
+	}
+
+	public String getTitle()
+	{
+		return findElements(By.xpath(TITLE_SPAN_XPATH)).get(0).getText();
 	}
 }

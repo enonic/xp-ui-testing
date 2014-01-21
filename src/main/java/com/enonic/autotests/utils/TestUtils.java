@@ -60,9 +60,14 @@ public class TestUtils
 	public String buildFullNameOfContent(String contentName, String... parentNames)
 	{
 		StringBuilder builder = new StringBuilder();
+		if(parentNames == null)
+		{
+			builder.append("/").append(contentName);
+			return builder.toString();
+		}
 		if (parentNames.length == 0)
 		{
-			builder.append(contentName).append(":/");
+			builder.append(contentName).append("/");
 			return builder.toString();
 		}
 		builder.append(parentNames[0].toLowerCase()).append("/");
@@ -470,12 +475,12 @@ public class TestUtils
 		}
 		File screenshot = null;
 
-		if ((Boolean) testSession.get(TestSession.IS_REMOTE))
-		{
+		//if ((Boolean) testSession.get(TestSession.IS_REMOTE))
+		//{
 
-			WebDriver augmentedDriver = new Augmenter().augment(driver);
-			screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
-		} else
+		//	WebDriver augmentedDriver = new Augmenter().augment(driver);
+		//	screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+		//}// else
 		{
 			screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		}

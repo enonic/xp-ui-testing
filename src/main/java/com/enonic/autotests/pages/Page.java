@@ -32,6 +32,13 @@ public abstract class Page
 		PageFactory.initElements(session.getDriver(), this);
 	}
 
+	public Page( WebDriver driver )
+	{
+		this.session = new TestSession();
+		session.setDriver(driver);
+		PageFactory.initElements(driver, this);
+	}
+
 	public TestSession getSession()
 	{
 		return session;

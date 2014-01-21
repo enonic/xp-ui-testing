@@ -67,7 +67,7 @@ public class LoginPage extends Page
 		boolean isEmailInputPresent = TestUtils.getInstance().waitAndFind(By.xpath(EMAIL_INPUT_XPATH), getDriver());
 		if(!isEmailInputPresent)
 		{
-			throw new TestFrameworkException(" input 'userid or e-mail' was not wound on page!");
+			throw new TestFrameworkException(" input 'userid or e-mail' was not found on page!");
 		}
 		usernameInput.sendKeys(username);
 
