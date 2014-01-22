@@ -152,11 +152,15 @@
               <goal>test</goal>
             </goals>
             <configuration>
+             <reportsDirectory>${project.build.directory}/spock-reports</reportsDirectory>
               <testNGArtifactName>none:none</testNGArtifactName>
               <skip>false</skip>
               <includes>
                 <include>com/enonic/wem/uitest/**</include>
               </includes>
+              <excludes>   
+               	 <exclude>com/enonic/wem/uitest/BaseGebSpec*</exclude>
+              </excludes>
               <systemPropertyVariables>
                 <geb.build.baseUrl>http://localhost:9999/</geb.build.baseUrl>
               </systemPropertyVariables>
