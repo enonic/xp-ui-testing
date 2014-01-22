@@ -34,7 +34,7 @@ class BaseGebSpec extends GebSpec
 			println "creating new test session"
 			session =  new TestSession();
 			session.setDriver(browser.driver)
-			session.setBaseUrl(browser.baseUrl)
+			//session.setBaseUrl(browser.baseUrl)
 			println "testSession is" + session.getBaseUrl();
 		}
 	
