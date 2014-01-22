@@ -307,7 +307,7 @@ public class TestUtils
 	 */
 	public void clearAndType(TestSession session, WebElement input, String text)
 	{
-		if (session.getIsRemote())
+		if (session.getIsRemote() !=null && session.getIsRemote() )
 		{
 			input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
 		} else
@@ -322,7 +322,6 @@ public class TestUtils
 			{
 				logger.info("text will be typed: " + text);
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), " ");
-				//logger.info("input cleared ");
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
                                  logger.info("text in input: " + text);
 			}

@@ -52,7 +52,11 @@ public class HomePage extends Page
 		}
 		
 		// open page via the driver.get(BASE_URL)
-		getDriver().get(getSession().getBaseUrl());
+		if(getSession().getBaseUrl()!=null)
+		{
+			getDriver().get(getSession().getBaseUrl());
+		}
+		
 
 		if (!getSession().isLoggedIn())
 		{
