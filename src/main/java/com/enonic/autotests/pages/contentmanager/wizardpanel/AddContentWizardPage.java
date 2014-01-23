@@ -202,22 +202,11 @@ public class AddContentWizardPage extends BaseWizardPage
 		}
 		
 
-//		boolean isPresent = checkModalDialog();
-//		if(isPresent)
-//		{ 
-//			TestUtils.getInstance().saveScreenshot(getSession());
-//			throw new TestFrameworkException("buttons save and close were pressed, but modal dialog appeared!");
-//		}
 		ContentGridPage page = new ContentGridPage(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
 	}
 	
-	private boolean checkModalDialog()
-	{
-		CloseWizardDialog modalDialog = new CloseWizardDialog(getSession());
-		return modalDialog.isDialogPresent();
-	}
 	/**
 	 * Populates a main tab in the wizard, Article, mixin...  tabs for example 
 	 * 

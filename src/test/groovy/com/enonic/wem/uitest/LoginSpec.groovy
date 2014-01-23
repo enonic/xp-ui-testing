@@ -23,7 +23,7 @@ class LoginSpec
         when:
         $( 'input.form-item', 0 ) << 'user'
         $( 'input.form-item', 1 ) << 'password'
-
+		report "login page, username is 'user', password is 'password'"
         then:
         !$( 'button.login-button' ).classes().contains( 'disabled' )
     }

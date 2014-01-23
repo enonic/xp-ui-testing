@@ -24,7 +24,7 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-	
+			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
