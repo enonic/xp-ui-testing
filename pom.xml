@@ -152,7 +152,7 @@
               <goal>test</goal>
             </goals>
             <configuration>
-             <reportsDirectory>${project.build.directory}/spock-reports</reportsDirectory>
+             <reportsDirectory>${project.build.directory}/geb-reports</reportsDirectory>
               <testNGArtifactName>none:none</testNGArtifactName>
               <skip>false</skip>
               <includes>
