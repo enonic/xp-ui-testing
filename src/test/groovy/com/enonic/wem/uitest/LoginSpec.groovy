@@ -15,7 +15,7 @@ class LoginSpec
 	
 	String CHECK_TITLE_TEST_FOLDER_DISPLAYNAME = "BildeArkiv";
 	
-    def "Enable login button when form is filled out"()
+    def "Given login page When both username and password fields have value Then Login Button must be enabled"()
     {
         given:
         go "admin"

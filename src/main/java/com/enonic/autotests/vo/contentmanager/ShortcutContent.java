@@ -1,5 +1,7 @@
 package com.enonic.autotests.vo.contentmanager;
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
+
 
 
 public class ShortcutContent extends BaseAbstractContent
@@ -8,6 +10,7 @@ public class ShortcutContent extends BaseAbstractContent
 	protected ShortcutContent( Builder<?> builder )
 	{
 		super(builder);
+		setContentTypeName(ContentTypeName.SHORTCUT.getValue());
 		
 	}
 

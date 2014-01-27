@@ -68,6 +68,10 @@ public class TestSession {
 		return (Boolean) session.get(TestSession.IS_REMOTE);
 	}
 
+	public void setIsRemote(boolean isRemote) {
+		 session.put(TestSession.IS_REMOTE,isRemote);
+	}
+
 	public WebDriver getDriver() {
 		return (WebDriver) session.get(TestSession.WEBDRIVER);
 	}

@@ -1,5 +1,7 @@
 package com.enonic.autotests.vo.contentmanager;
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
+
 
 public class MediaContent extends BaseAbstractContent
 {
@@ -7,6 +9,7 @@ public class MediaContent extends BaseAbstractContent
 	protected MediaContent( Builder<?> builder )
 	{
 		super(builder);
+		setContentTypeName(ContentTypeName.MEDIA.getValue());
 		
 	}
 	

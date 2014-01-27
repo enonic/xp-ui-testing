@@ -1,5 +1,7 @@
 package com.enonic.autotests.vo.contentmanager;
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
+
 
 public class ArticleContent extends BaseAbstractContent
 {
@@ -7,6 +9,7 @@ public class ArticleContent extends BaseAbstractContent
 	protected ArticleContent( Builder<?> builder )
 	{
 		super(builder);
+		//setContentTypeName(ContentTypeName.ARCHIVE.getValue());
 		
 	}
 	private String title;

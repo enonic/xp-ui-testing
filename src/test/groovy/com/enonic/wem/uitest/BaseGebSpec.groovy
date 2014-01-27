@@ -5,6 +5,7 @@ import spock.lang.Shared;
 
 import com.enonic.autotests.TestSession;
 
+import geb.report.ReporterSupport;
 import geb.spock.GebSpec;
 
 class BaseGebSpec extends GebSpec
@@ -21,6 +22,16 @@ class BaseGebSpec extends GebSpec
 		browser.driver = cachedDriver
 	  }
 	   
+	  def cleanup(){
+		 if(session!=null)
+		 {
+			 session.setLoggedIn(false)
+		 }
+		
+		 resetBrowser();
+		 
+		}
+	   
 	  def cleanupSpec(){
 		// after running the spec, kill the driver
 		cachedDriver.quit()
@@ -32,8 +43,9 @@ class BaseGebSpec extends GebSpec
 		{
 			
 			println "creating new test session"
-			session =  new TestSession();
+			session =  new TestSession()
 			session.setDriver(browser.driver)
+			session.setIsRemote(false)
 			//session.setBaseUrl(browser.baseUrl)
 			println "testSession is" + session.getBaseUrl();
 		}

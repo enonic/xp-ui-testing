@@ -107,7 +107,7 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 		TestUtils.getInstance().clearAndType(getSession(), nameInput, contentType.getName());
 		//2. type the XMLconfig data:
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath("//div[contains(@class,'CodeMirror')]//div[contains(@class,'CodeMirror-lines')]"));
-		if(!getSession().getIsRemote())
+		if(getSession().getIsRemote()!=null && !getSession().getIsRemote())
 		{
 			clearConfig(elems.get(0));
 			getLogger().info("set configuration from a Clipboard:");

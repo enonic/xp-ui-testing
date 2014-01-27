@@ -50,7 +50,7 @@ public class GridAddEditContenetTets extends BaseContentManagerTest
 		logger.info("FINISHED $$$$$$  " + contentXml.getCaseInfo());
 	}
 
-	@Test(description = "add new content, select content in a table, open this content and Delete it ")
+	@Test(description = "select content in a table, open this content and rename it ")
 	public void test_open_content_rename_content_name()
 	{
 		logger.info("STARTED ##### test_open_content_rename_content_name: open content-info page and click by 'Edit' button from toolbar");

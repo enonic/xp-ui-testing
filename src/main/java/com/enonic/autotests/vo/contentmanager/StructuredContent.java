@@ -1,11 +1,15 @@
 package com.enonic.autotests.vo.contentmanager;
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
+
 public class StructuredContent extends BaseAbstractContent
 {
 	
 	public StructuredContent( Builder<?> builder )
 	{
 		super(builder);
+		setContentTypeName(ContentTypeName.STRUCTURED.getValue());
+		
 
 	}
 

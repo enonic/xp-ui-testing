@@ -1,5 +1,7 @@
 package com.enonic.autotests.vo.contentmanager;
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
+
 
 public class PageContent extends BaseAbstractContent
 {
@@ -7,7 +9,7 @@ public class PageContent extends BaseAbstractContent
 	public PageContent( Builder<?> builder )
 	{
 		super(builder);
-		
+		setContentTypeName(ContentTypeName.PAGE.getValue());
 	}
 
 	public static abstract class Builder<T extends PageContent> extends BaseAbstractContent.Builder<T>
