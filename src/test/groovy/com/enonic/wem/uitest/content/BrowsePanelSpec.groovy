@@ -31,12 +31,12 @@ class BrowsePanelSpec extends BaseGebSpec
 	   
 	   @Shared ContentManagerService cManagerService = new ContentManagerService();
 	   
-	  def "Given BrowsePanel and exist content  When content editet, dispaly name changed  Then the content whit new display-name should be listed in the table"()
+	  def "Given BrowsePanel and exist content  When content editet, name changed  Then the content whit new name should be listed in the table"()
 	   {
 		   given:
 		   go "admin"
 		   
-		   String name = "contenttoedit" 
+		   String name = "editname" 
 		   StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
 		   String[] parent = [REPONAME]
 		   contentToEdit.setParentNames(parent);
@@ -46,6 +46,32 @@ class BrowsePanelSpec extends BaseGebSpec
 		   
 		   String newName = "edited" + Math.abs(new Random().nextInt());
 		   StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName("edited").build();
+		   newcontent.setParentNames(parent);
+		   
+		   when:
+		   cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
+		   
+		   then:
+		   ContentGridPage grid = new ContentGridPage(getTestSession())
+		   grid.findContentInTable(newcontent, 2l)
+   
+	   }
+   
+	   def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
+	   {
+		   given:
+		   go "admin"
+		   
+		   String name = "editdisplayname"
+		   StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
+		   String[] parent = [REPONAME]
+		   contentToEdit.setParentNames(parent);
+		   
+		   cManagerService.addContent(getTestSession(), contentToEdit, true)
+		   
+		   
+		   String newDisplayName = "edited" + Math.abs(new Random().nextInt());
+		   StructuredContent newcontent = StructuredContent.builder().withName(name).withDisplayName(newDisplayName).build();
 		   newcontent.setParentNames(parent);
 		   
 		   when:

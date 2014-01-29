@@ -30,4 +30,20 @@ class BrowsePanelSpec extends BaseGebSpec
 
 	}
 	
+	def "Given BrowsePanel When adding TextLine ContentType Then the new contentype should be listed in the table"()
+	{
+		given:
+		go "admin"
+		String textLineCFG = TextLineCfg.CFG
+		ContentType ctype = ContentType.with().name("textlinectype").kind(KindOfContentTypes.CONTENT_TYPE).configuration(textLineCFG).build();
+		
+		when:
+		contentTypeService.createContentType(getTestSession(), ctype, true)
+		report "Content types GridPage opened, try to find a new contenttype with name: "+ ctype.getName()
+		then:
+		SchemaGridPage grid = new SchemaGridPage(getTestSession())
+		grid.isContentTypePresentInTable(ctype)
+
+	}
+	
 }
