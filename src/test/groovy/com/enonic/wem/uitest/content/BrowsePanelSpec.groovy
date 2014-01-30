@@ -43,11 +43,12 @@ class BrowsePanelSpec extends BaseGebSpec
 		   when:
 		   BaseAbstractContent content = FolderContent.builder().withName(REPONAME).withDisplayName(REPONAME).build();
 		   cManagerService.addContent(getTestSession(), content, true)
-		   report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+		 
 		   
 		   then:
 		   ContentGridPage grid = new ContentGridPage(getTestSession())
 		   grid.findContentInTable(content, 2l)
+		   report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
    
 	   }
 	   
@@ -64,11 +65,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+		    report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -83,11 +85,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -101,11 +104,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -119,11 +123,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -137,11 +142,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -155,11 +161,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+		
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -174,11 +181,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		def "Given BrowsePanel When adding Page content Then the content should be listed in the table"()
@@ -191,11 +199,12 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -209,60 +218,63 @@ class BrowsePanelSpec extends BaseGebSpec
 			
 			when:
 			cManagerService.addContent(getTestSession(), content, true)
-			report "ContentGridPage opened, try to find a new content with name: "+ content.getName()
+			
 			
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
+			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
-		def "Given BrowsePanel and exist content  When content editet, name changed  Then the content whit new name should be listed in the table"()
-		{
-			given:
-			go "admin"		
-			String name = "editname"
-			StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
-			String[] parent = [FULL_REPONAME]
-			contentToEdit.setParentNames(parent);		
-			cManagerService.addContent(getTestSession(), contentToEdit, true)			
-			
-			
-			when:
-			String newName = "edited" + Math.abs(new Random().nextInt());
-			StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName("edited").build();
-			newcontent.setParentNames(parent);
-			cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(newcontent, 2l)
-	
-		}
-		
-		def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
-		{
-			given:
-			go "admin"
-			
-			String name = "editdisplayname"
-			StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
-			String[] parent = [FULL_REPONAME]
-			contentToEdit.setParentNames(parent);
-			cManagerService.addContent(getTestSession(), contentToEdit, true)
-			String newDisplayName = "edited" + Math.abs(new Random().nextInt());
-			StructuredContent newcontent = StructuredContent.builder().withName(name).withDisplayName(newDisplayName).build();
-			newcontent.setParentNames(parent);
-			
-			when:
-			cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(newcontent, 2l)
-	
-		}
-	
+//		def "Given BrowsePanel and exist content  When content editet, name changed  Then the content whit new name should be listed in the table"()
+//		{
+//			given:
+//			go "admin"		
+//			String name = "editname"
+//			StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
+//			String[] parent = [FULL_REPONAME]
+//			contentToEdit.setParentNames(parent);		
+//			cManagerService.addContent(getTestSession(), contentToEdit, true)			
+//			
+//			
+//			when:
+//			String newName = "edited" + Math.abs(new Random().nextInt());
+//			StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName("edited").build();
+//			newcontent.setParentNames(parent);
+//			cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
+//			
+//			then:
+//			ContentGridPage grid = new ContentGridPage(getTestSession())
+//			grid.findContentInTable(newcontent, 2l)
+//			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+//	
+//		}
+//		
+//		def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
+//		{
+//			given:
+//			go "admin"
+//			
+//			String name = "editdisplayname"
+//			StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
+//			String[] parent = [FULL_REPONAME]
+//			contentToEdit.setParentNames(parent);
+//			cManagerService.addContent(getTestSession(), contentToEdit, true)
+//			String newDisplayName = "edited" + Math.abs(new Random().nextInt());
+//			StructuredContent newcontent = StructuredContent.builder().withName(name).withDisplayName(newDisplayName).build();
+//			newcontent.setParentNames(parent);
+//			
+//			when:
+//			cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
+//			
+//			then:
+//			ContentGridPage grid = new ContentGridPage(getTestSession())
+//			grid.findContentInTable(newcontent, 2l)
+//			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+//	
+//		}
+//	
 		
 		
 }
