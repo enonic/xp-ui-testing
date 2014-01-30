@@ -17,8 +17,6 @@ import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
 
 public class SchemaTestsProvider
 {
-
-	private static final String CONTENT_TYPE_TEST_DATA = "create-content-type.xml";
 	private static final String RELATIONSHIP_TYPE_TEST_DATA = "create-relationship-type.xml";
 	private static final String MIXIN_TEST_DATA = "mixin-test.xml";
 	private static final String DELETE_MIXIN_TEST_DATA = "delete-mixin-test.xml";
@@ -46,23 +44,7 @@ public class SchemaTestsProvider
 		return casesParameters.toArray(new Object[casesParameters.size()][]);
 	}
 	
-	@DataProvider(name = "addContentType")
-	public static Object[][] addContentType() throws JAXBException {
-
-		List<Object[]> casesParameters = new ArrayList<Object[]>();
-		JAXBContext context = JAXBContext.newInstance(ContentTypeTestData.class);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		InputStream in = TestDataConvertor.class.getClassLoader().getResourceAsStream("test-data/schemamanager/" + CONTENT_TYPE_TEST_DATA);
-		if (in == null) {
-			throw new TestFrameworkException("test data was not found!");
-		}
-		ContentTypeTestData testdata = (ContentTypeTestData) unmarshaller.unmarshal(in);
-		List<ContentTypeXml> cases = testdata.getContentTypes();
-		for (ContentTypeXml ctype : cases) {
-			casesParameters.add(new Object[] { ctype });
-		}
-		return casesParameters.toArray(new Object[casesParameters.size()][]);
-	}
+	
 	
 	
 	
@@ -103,7 +85,7 @@ public class SchemaTestsProvider
 	}
 	
 
-		
+	
 	@DataProvider(name = "changeDisplayName")
 	public static Object[][] changeDisplayName() throws JAXBException {
 

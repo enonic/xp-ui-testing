@@ -1,9 +1,6 @@
 package com.enonic.autotests.pages.schemamanager;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -66,7 +63,7 @@ public class SelectKindDialog extends Page
 	 */
 	public boolean verifyIsOpened()
 	{
-		String title ="//div[@class='modal-dialog new-schema-dialog']/h2[contains(.,'Select Kind')]";
+		String title ="//div[@class='modal-dialog new-schema-dialog']/div[contains(.,'Select Kind')]";
 		return TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(title), 2);
 	}
 

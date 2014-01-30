@@ -14,12 +14,10 @@
 
       <class name="com.enonic.wem.selenium.tests.content.DeleteContentDialogTest"/>
       <class name="com.enonic.wem.selenium.tests.content.GridDeleteContentTests"/>
-      <class name="com.enonic.wem.selenium.tests.content.GridAddEditContenetTets"/>
       <class name="com.enonic.wem.selenium.tests.schema.ContentTypeTest"/>
       <class name="com.enonic.wem.selenium.tests.schema.MixinTests"/>
       <class name="com.enonic.wem.selenium.tests.schema.BrowsePanel"/>
       <class name="com.enonic.wem.selenium.tests.schema.MixinWizard"/>
-
 
       <!-- removed due the CMS bug -->
       <!-- <class name="com.enonic.wem.selenium.TestCMFiltering" />  -->

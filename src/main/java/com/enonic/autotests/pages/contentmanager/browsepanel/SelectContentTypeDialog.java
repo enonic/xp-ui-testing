@@ -13,7 +13,7 @@ import com.enonic.autotests.utils.TestUtils;
  */
 public class SelectContentTypeDialog
 {
-	private final static String DIALOG_TITLE_XPATH = "//div/h2[text()='Select Content Type']";
+	private final static String DIALOG_TITLE_XPATH = "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
 	
 	public static  String CONTENTTYPE_NAME = "//li[contains(@class,'content-type-list-item')]//p[text()='%s']";
 	

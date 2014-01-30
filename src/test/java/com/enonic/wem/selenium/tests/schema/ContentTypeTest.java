@@ -18,26 +18,7 @@ public class ContentTypeTest extends BaseTest
 {
 	private ContentTypeService contentTypeService = new ContentTypeService();
 	private final String TEST_CONTENTYPE_KEY = "delete_ctype_key";
-
-	@Test(description = "create new content-types of several types", dataProvider = "addContentType", dataProviderClass = SchemaTestsProvider.class)
-	public void test_create_contenttype(ContentTypeXml xmlData)
-	{
-		logger.info("Started ### test_create_contenttype new ct will be created: "+ xmlData.getName());
-		//1.read xml data
-		ContentType contentType = TestDataConvertor.convertXmlDataToContentType(xmlData);
-		String contentTypeName = "cttype" + Math.abs(new Random().nextInt());
-		contentType.setName(contentTypeName);
-		//2. create new contenttype
-		SchemaGridPage schemasPage = (SchemaGridPage) contentTypeService.createContentType(getTestSession(), contentType, true);
-		logger.info("test_create_contenttype: new content type was created! name is" + contentType.getName());
-		//3. check if present:
-		boolean isPresent = schemasPage.isContentTypePresentInTable(contentType);
-		Assert.assertTrue(isPresent, String.format("contentType with name: %s was not found in the table", contentType.getName()));
-		getTestSession().put(TEST_CONTENTYPE_KEY, contentType);
-		logger.info("Finished $$$  test_create_contenttype, ct was created: "+ contentType.getName());
-
-	}
-
+	
     @Test(description = "create new content-type and change displayName it", dataProvider= "changeDisplayName",dataProviderClass = SchemaTestsProvider.class)
 	public void test_change_dispalyname_in_config(ContentTypeXml xmlData)
 	{

@@ -167,6 +167,14 @@ public class SchemaGridPage extends AbstractGridPage
 			throw new TestFrameworkException("content type with name "+isContentTypePresent +" was not found!");
 		}
 		
+		try
+		{
+			Thread.sleep(1000);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//2. click by a contenttype
 		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), getDriver());		
 		//3. wait for deleteButton(in toolbar) is enabled

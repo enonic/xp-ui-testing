@@ -1,6 +1,6 @@
-package com.enonic.wem.uitest.schema
+package com.enonic.wem.uitest.schema.cfg
 
-class XMLctFolderCfg {
+class FolderContentTypeCfg {
 	static def FOLDER_CFG = '''
 	<type>
 	  <module>system</module>

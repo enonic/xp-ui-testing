@@ -36,9 +36,9 @@ public class AbstractGridPage extends Page
 	
 	private final String ALL_ROWS_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
 	
-    protected String TD_FOLDER_DISPLAYNAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
+    protected String TD_CONTENT_DISPLAYNAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
 	
-	protected String TD_FOLDER_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
+	protected String TD_CONTENT_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
 	
 	private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
 
@@ -96,7 +96,7 @@ public class AbstractGridPage extends Page
 	 */
 	private boolean isExpanderPresent(String parentName)
 	{
-		String expanderElement = String.format(TD_FOLDER_NAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
+		String expanderElement = String.format(TD_CONTENT_NAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
 		getLogger().info("check if present expander for folder:"+ parentName +" xpath: " + expanderElement);
 		boolean isPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(),  By.xpath(expanderElement), 5);
 		if (!isPresent)
@@ -116,7 +116,7 @@ public class AbstractGridPage extends Page
 
 	private boolean isRowExapnded(String name)
 	{
-		String trXpath = String.format(TD_FOLDER_NAME +"/parent::tr", name);
+		String trXpath = String.format(TD_CONTENT_NAME +"/parent::tr", name);
 	
 		WebElement rowElement = TestUtils.getInstance().getDynamicElement(getSession().getDriver(), By.xpath(trXpath), 5);
 		if (rowElement == null)
@@ -165,7 +165,7 @@ public class AbstractGridPage extends Page
 
 	protected String buildFolderExpanderXpath(String name)
 	{
-		return String.format(TD_FOLDER_NAME, name) + "//ancestor::td//img[contains(@class,'x-tree-expander')]";
+		return String.format(TD_CONTENT_NAME, name) + "//ancestor::td//img[contains(@class,'x-tree-expander')]";
 
 	}
 	/**
@@ -242,9 +242,18 @@ public class AbstractGridPage extends Page
 		return clearSelectionLink.getText();
 	}
 	
-	public void selectRow(String displayName)
+	public void selectRowByContentDisplayName(String displayName)
 	{
-		String rowXpath = String.format(TD_FOLDER_DISPLAYNAME, displayName);
+		String rowXpath = String.format(TD_CONTENT_DISPLAYNAME, displayName);
+		TestUtils.getInstance().waitAndFind(By.xpath(rowXpath), getDriver());
+		//findElement(By.xpath(rowXpath)).click();
+		
+		Actions builder = new Actions(getDriver()); 
+		builder.click(findElement(By.xpath(rowXpath))).build().perform();
+	}
+	public void selectRowByContentFullName(String fullName)
+	{
+		String rowXpath = String.format(TD_CONTENT_NAME, fullName);
 		TestUtils.getInstance().waitAndFind(By.xpath(rowXpath), getDriver());
 		//findElement(By.xpath(rowXpath)).click();
 		

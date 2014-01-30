@@ -18,7 +18,6 @@ import com.enonic.autotests.pages.AbstractGridPage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.Space;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
 /**
@@ -46,7 +45,7 @@ public class ContentGridPage extends AbstractGridPage
 
 	
 
-	private String CHECKBOX_ROW_CHECKER = TD_FOLDER_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]/div";
+	private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]/div";
 
 	private String DIV_CONTENT_NAME_IN_TABLE = "//div[contains(@class,'x-grid-cell-inner ')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
 	
@@ -387,35 +386,41 @@ public class ContentGridPage extends AbstractGridPage
 	 */
 	public AddContentWizardPage openAddContentWizard(String contentTypeName, String... parentNames)
 	{
-		String parentName = parentNames[parentNames.length - 1];
-		// if parentNames.length == 0, so no need to expand space, new content will be added to the root folder
-		if (parentNames.length > 1)
+		if (parentNames != null)
 		{
-			for (int i = 0; i < parentNames.length - 1; i++)
+			String parentName = parentNames[parentNames.length - 1];
+			// if parentNames.length == 0, so no need to expand space, new
+			// content will be added to the root folder
+			if (parentNames.length > 1)
 			{
-				if (!doExpandFolder(parentNames[i]))
+				for (int i = 0; i < parentNames.length - 1; i++)
 				{
-					throw new TestFrameworkException("Impossible to add content to the  " + parentName + "wrong path to the parent, because "
-							+ parentNames[i] + " , has no child ! ");
+					if (!doExpandFolder(parentNames[i]))
+					{
+						throw new TestFrameworkException("Impossible to add content to the  " + parentName + "wrong path to the parent, because "
+								+ parentNames[i] + " , has no child ! ");
+					}
 				}
 			}
-		}
 
-		// 1. select a checkbox and press the 'New' from toolbar.
-		String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentName);
-		//boolean isPresentCheckbox = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(spaceCheckBoxXpath), 3l);
-		boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind( By.xpath(spaceCheckBoxXpath), getDriver());
-		if (!isPresentCheckbox)
-		{
-			throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentName + " was not found!");
-		}
-		WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
-		
-		checkboxElement.click();
-		boolean isNewEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(NEW_BUTTON_XPATH), 2l);
-		if (!isNewEnabled)
-		{
-			throw new SaveOrUpdateException("CM application, impossible to open SelectContentTypeDialog, because the 'New' button is disabled!");
+			// 1. select a checkbox and press the 'New' from toolbar.
+			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentName);
+			// boolean isPresentCheckbox =
+			// TestUtils.getInstance().waitUntilVisibleNoException(getSession(),
+			// By.xpath(spaceCheckBoxXpath), 3l);
+			boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
+			if (!isPresentCheckbox)
+			{
+				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentName + " was not found!");
+			}
+			WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
+
+			checkboxElement.click();
+			boolean isNewEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(NEW_BUTTON_XPATH), 2l);
+			if (!isNewEnabled)
+			{
+				throw new SaveOrUpdateException("CM application, impossible to open SelectContentTypeDialog, because the 'New' button is disabled!");
+			}
 		}
 		newButton.click();
 		SelectContentTypeDialog selectDialog = new SelectContentTypeDialog(getSession());
@@ -423,7 +428,13 @@ public class ContentGridPage extends AbstractGridPage
 		if (!isOpened)
 		{
 			getLogger().error("SelectContentTypeDialog was not opened!", getSession());
-			throw new TestFrameworkException(String.format("Error during add content to space %s, dialog was not opened!", parentName));
+			if(parentNames != null)
+			{
+				throw new TestFrameworkException(String.format("Error during add content to space %s, dialog was not opened!"));
+			}else
+			{
+				throw new TestFrameworkException("Error during add content to the root, dialog was not opened!");
+			}
 		}
 		getLogger().info("SelectContentTypeDialog, content type should be selected:" + contentTypeName);
 		AddContentWizardPage wizard = selectDialog.selectContentType(contentTypeName);
@@ -441,8 +452,10 @@ public class ContentGridPage extends AbstractGridPage
 		{
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
+		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), content.getParentNames());;
 		// 2. check for existence of content in a parent space and select a content to open.
-		selectCheckbox(content);		
+		//selectCheckbox(content);	
+		selectRowByContentFullName(fullName );
 		if (!openButton.isEnabled())
 		{
 			getLogger().info("'Open' link is disabled!");
