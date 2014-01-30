@@ -39,7 +39,7 @@ class BrowsePanelSpec extends BaseGebSpec
 	   {
 		   given:
 		   go "admin"
-		   		  	   
+
 		   when:
 		   BaseAbstractContent content = FolderContent.builder().withName(REPONAME).withDisplayName(REPONAME).build();
 		   cManagerService.addContent(getTestSession(), content, true)
@@ -48,7 +48,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		   then:
 		   ContentGridPage grid = new ContentGridPage(getTestSession())
 		   grid.findContentInTable(content, 2l)
-		   report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+		 
    
 	   }
 	   
@@ -70,7 +70,7 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-		    report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+		   
 	
 		}
 		
@@ -90,7 +90,6 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -109,7 +108,7 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+			
 	
 		}
 		
@@ -128,7 +127,7 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+			
 	
 		}
 		
@@ -147,7 +146,7 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+		
 	
 		}
 		
@@ -166,7 +165,7 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+			
 	
 		}
 		
@@ -186,7 +185,6 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		def "Given BrowsePanel When adding Page content Then the content should be listed in the table"()
@@ -204,7 +202,6 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -223,7 +220,6 @@ class BrowsePanelSpec extends BaseGebSpec
 			then:
 			ContentGridPage grid = new ContentGridPage(getTestSession())
 			grid.findContentInTable(content, 2l)
-			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
 	
 		}
 		
@@ -247,7 +243,7 @@ class BrowsePanelSpec extends BaseGebSpec
 //			then:
 //			ContentGridPage grid = new ContentGridPage(getTestSession())
 //			grid.findContentInTable(newcontent, 2l)
-//			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+//			
 //	
 //		}
 //		
@@ -271,10 +267,10 @@ class BrowsePanelSpec extends BaseGebSpec
 //			then:
 //			ContentGridPage grid = new ContentGridPage(getTestSession())
 //			grid.findContentInTable(newcontent, 2l)
-//			report "GridPage opened, the new content with name: "+ content.getName() +" was listed"
+//			
 //	
 //		}
-//	
+	
 		
 		
 }

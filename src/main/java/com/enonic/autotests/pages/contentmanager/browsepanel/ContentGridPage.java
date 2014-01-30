@@ -387,9 +387,10 @@ public class ContentGridPage extends AbstractGridPage
 	 */
 	public AddContentWizardPage openAddContentWizard(String contentTypeName, String... parentNames)
 	{
+		String parentName = null;
 		if (parentNames != null)
 		{
-			String parentName = parentNames[parentNames.length - 1];
+			parentName = parentNames[parentNames.length - 1];
 			// if parentNames.length == 0, so no need to expand space, new
 			// content will be added to the root folder
 			if (parentNames.length > 1)
@@ -406,9 +407,7 @@ public class ContentGridPage extends AbstractGridPage
 
 			// 1. select a checkbox and press the 'New' from toolbar.
 			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentName);
-			// boolean isPresentCheckbox =
-			// TestUtils.getInstance().waitUntilVisibleNoException(getSession(),
-			// By.xpath(spaceCheckBoxXpath), 3l);
+			
 			boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
 			if (!isPresentCheckbox)
 			{
@@ -417,6 +416,7 @@ public class ContentGridPage extends AbstractGridPage
 			WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
 
 			checkboxElement.click();
+			//selectRowByContentDisplayName(parentName);
 			boolean isNewEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(NEW_BUTTON_XPATH), 2l);
 			if (!isNewEnabled)
 			{
