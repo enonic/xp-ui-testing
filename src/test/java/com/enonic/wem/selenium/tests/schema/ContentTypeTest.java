@@ -17,7 +17,6 @@ import com.enonic.wem.selenium.dataproviders.SchemaTestsProvider;
 public class ContentTypeTest extends BaseTest
 {
 	private ContentTypeService contentTypeService = new ContentTypeService();
-	private final String TEST_CONTENTYPE_KEY = "delete_ctype_key";
 	
     @Test(description = "create new content-type and change displayName it", dataProvider= "changeDisplayName",dataProviderClass = SchemaTestsProvider.class)
 	public void test_change_dispalyname_in_config(ContentTypeXml xmlData)
@@ -46,21 +45,7 @@ public class ContentTypeTest extends BaseTest
 	
 	}
 
-	@Test(dependsOnMethods = "test_create_contenttype")
-	public void test_delete_contenttype()
-	{
-		//1. get content type, just created in previous test. 
-		ContentType ctype = (ContentType) getTestSession().get(TEST_CONTENTYPE_KEY);
-		//2. delete it
-		SchemaGridPage schemasPage = contentTypeService.deleteContentType(getTestSession(), ctype);
-		logger.info("check that deleted and not present in the Grid:");
-		TestUtils.getInstance().saveScreenshot(getTestSession());
-		// check that ct not present in the Grid
-		boolean isPresent = schemasPage.isContentTypePresentInTable(ctype);
-		TestUtils.getInstance().saveScreenshot(getTestSession());
-		Assert.assertFalse(isPresent, "content type with name :" + ctype.getName() + " should be delete, but actual is present in the grid-view");
-		logger.info("FINISHED $$$  select a content type and delete it ");
-	}
+
 
 	@Test( dataProvider="changeName", dataProviderClass = SchemaTestsProvider.class)
 	public void test_rename_content_type_name(ContentTypeXml xmlData) 
