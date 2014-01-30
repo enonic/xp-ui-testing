@@ -8,7 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.services.ContentManagerService.HowOpenContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 import com.enonic.autotests.vo.contentmanager.StructuredContent;
@@ -24,7 +23,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 	{
 		logger.info("STARTED #####  select a content, press a button 'Delete' from toolbar and delete content from space ");
 		String name = "delete-content"+Math.abs( new Random().nextInt() );
-		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").withType(ContentTypeName.STRUCTURED.getValue()).build();
+		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();
 		String[] parentNames = new String[]{REPONAME};
 		content.setParentNames(parentNames);
 		
@@ -47,7 +46,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 	{
 		logger.info("STARTED #####  select checkboxes, press a button 'Delete' from toolbar and delete contents from space ");
 		String name1 = "to-delete"+Math.abs( new Random().nextInt() );
-		StructuredContent content1 = StructuredContent.builder().withName(name1).withDisplayName("content-to-delete1").withType(ContentTypeName.STRUCTURED.getValue()).build();
+		StructuredContent content1 = StructuredContent.builder().withName(name1).withDisplayName("content-to-delete1").build();
 		String[] parentNames = new String[]{REPONAME};
 		content1.setParentNames(parentNames);
 		
@@ -56,7 +55,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 		cManagerService.addContent(getTestSession(), content1, true);
 		
 		String name2 = "to-delete"+Math.abs( new Random().nextInt() );
-		StructuredContent content2 = StructuredContent.builder().withName(name2).withDisplayName("content-to-delete2").withType(ContentTypeName.STRUCTURED.getValue()).build();
+		StructuredContent content2 = StructuredContent.builder().withName(name2).withDisplayName("content-to-delete2").build();
 		content2.setParentNames(parentNames);
 		
 		//2. add one more content to the space
@@ -87,7 +86,7 @@ public class GridDeleteContentTests extends BaseContentManagerTest
 		logger.info("STARTED ##### Add new content, select content in a table, click by 'open' button and Delete it ");
 		
 		String name = "open-delete"+Math.abs( new Random().nextInt() );
-		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").withType(ContentTypeName.STRUCTURED.getValue()).build();
+		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();
 		content.setParentNames(new String[]{REPONAME});
 		
 		//1. add a content to the space

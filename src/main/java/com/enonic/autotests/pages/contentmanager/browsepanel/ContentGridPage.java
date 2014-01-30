@@ -45,7 +45,8 @@ public class ContentGridPage extends AbstractGridPage
 
 	
 
-	private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]/div";
+	//private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]/div";
+	private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/..//div[@class='x-grid-row-checker']";
 
 	private String DIV_CONTENT_NAME_IN_TABLE = "//div[contains(@class,'x-grid-cell-inner ')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
 	
