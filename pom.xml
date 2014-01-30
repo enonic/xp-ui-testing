@@ -127,24 +127,7 @@
           <skip>true</skip>
         </configuration>
         <executions>
-          <execution>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <junitArtifactName>none:none</junitArtifactName>
-              <suiteXmlFiles>
-                <suiteXmlFile>${basedir}/src/test/resources/local/${local.template.name}</suiteXmlFile>
-              </suiteXmlFiles>
-              <skip>false</skip>
-              <includes>
-                <include>com/enonic/wem/selenium/**</include>
-              </includes>
-              <excludes>
-              </excludes>
-            </configuration>
-          </execution>
+         
           <execution>
             <id>junit</id>
             <phase>integration-test</phase>
