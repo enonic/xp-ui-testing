@@ -7,5 +7,5 @@ public class BaseContentManagerTest extends BaseTest
 {
 
 	protected ContentManagerService cManagerService = new ContentManagerService();
-	protected String REPONAME = "/bluman-trampoliner";
+	protected String REPONAME = "/bildearkiv";
 }

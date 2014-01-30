@@ -9,10 +9,9 @@ import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
 import com.enonic.autotests.services.ContentTypeService;
 import com.enonic.autotests.testdata.TestDataConvertor;
 import com.enonic.autotests.testdata.schemamanger.ContentTypeXml;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
-import com.enonic.wem.selenium.tests.BaseTest;
 import com.enonic.wem.selenium.dataproviders.SchemaTestsProvider;
+import com.enonic.wem.selenium.tests.BaseTest;
 
 public class ContentTypeTest extends BaseTest
 {
@@ -45,7 +44,7 @@ public class ContentTypeTest extends BaseTest
 	
 	}
 
-
+	
 
 	@Test( dataProvider="changeName", dataProviderClass = SchemaTestsProvider.class)
 	public void test_rename_content_type_name(ContentTypeXml xmlData) 
