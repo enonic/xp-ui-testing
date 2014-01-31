@@ -98,7 +98,7 @@ public class TestUtils
 		for (int i = 0; i <= tries; i++)
 		{
 
-			logger.info("Locating remaining time: " + (180 - (9 * (tries - i))) + " seconds.");
+			//logger.info("Locating remaining time: " + (180 - (9 * (tries - i))) + " seconds.");
 			try
 			{
 				we = driver.findElement(locator);

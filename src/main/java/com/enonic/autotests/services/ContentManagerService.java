@@ -8,7 +8,6 @@ import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
-import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
@@ -30,7 +29,7 @@ public class ContentManagerService
 	public boolean openContentManagerAppAndVerify(TestSession session)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = true;
 		result &=cmPage.verifyTitle();
@@ -42,7 +41,7 @@ public class ContentManagerService
 	{
 
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
 		AddContentWizardPage wizardPage = cmPage.openAddContentWizard(contentTypeName,parentNames);
@@ -71,7 +70,7 @@ public class ContentManagerService
 	{
 		
 		// 1. open a 'content manager'
-	    ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+	    ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 	    // click by "Select All" link and get a number of selected rows:
 	    return cmPage.doSelectAll();
 			
@@ -89,7 +88,7 @@ public class ContentManagerService
 	public Page addContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard)
 	{
 		// 1. open a 'content manager'		
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		cmPage.doAddContent(newcontent, isCloseWizard);
 		if (isCloseWizard)
 		{
@@ -111,7 +110,7 @@ public class ContentManagerService
 	public boolean doOpenContentVerifyPage(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(content);
 		
 		boolean result = contentInfoPage.verifyContentInfoPage(content);
@@ -123,7 +122,7 @@ public class ContentManagerService
 	public void doOpenContent(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		cmPage.doOpenContent(content);
 		
 		
@@ -140,7 +139,7 @@ public class ContentManagerService
 	public ContentGridPage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		contentInfoPage.doCloseContentInfoView();
@@ -188,7 +187,7 @@ public class ContentManagerService
 	public ItemViewPanelPage doOpenContentUseToolbar(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(content);
 		return contentInfoPage;
 	}
@@ -196,7 +195,7 @@ public class ContentManagerService
 	public ItemViewPanelPage doOpenContentUseContextMenu(TestSession session, BaseAbstractContent contentToDelete)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContentFromContextMenu(contentToDelete);
 		return contentInfoPage;
 	}
@@ -211,8 +210,9 @@ public class ContentManagerService
 	public ContentGridPage deleteContentUseToolbar(TestSession session,  List<BaseAbstractContent> contents)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
         // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
+		cmPage.doClearSelection();
 		cmPage.doDeleteContent(contents);
 		return cmPage;
 	}
@@ -220,7 +220,7 @@ public class ContentManagerService
 	public DeleteContentDialog selectContentClickDeleteInToolbar(TestSession session,  List<BaseAbstractContent> contents)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
         // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
 		return cmPage.openDeleteContentDialog(contents);
 		
@@ -237,7 +237,7 @@ public class ContentManagerService
 	public ContentGridPage updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
 	{
 
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		cmPage.doUpdateContent(contentToUpdate, newContent);
 		return cmPage;
 	}

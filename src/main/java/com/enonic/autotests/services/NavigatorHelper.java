@@ -26,7 +26,7 @@ public class NavigatorHelper
 	 *            {@link TestSession} instance.
 	 * @return {@link SpaceAdminPage} instance.
 	 */
-	public static ContentGridPage openContentManager(TestSession testSession)
+	public static ContentGridPage openContentApp(TestSession testSession)
 	{
 		if (testSession.isLoggedIn())
 		{

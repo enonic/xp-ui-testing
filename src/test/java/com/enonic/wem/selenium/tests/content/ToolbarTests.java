@@ -37,7 +37,7 @@ public class ToolbarTests extends BaseContentManagerTest
 	public void no_selected_content_then_Delete_is_disabled()
 	{
 		logger.info("STARTED ### :  Toolbar button 'Delete' should be disabled if there are no selected content");
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(getTestSession());
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(getTestSession());
 		boolean result = cmPage.isDeleteButtonEnabled();
 		Assert.assertFalse(result,"Button 'Delete' should be disabled when no one content selected");
 		logger.info("Finished $$$ :  Toolbar button 'Delete' should be disabled if there are no selected content");

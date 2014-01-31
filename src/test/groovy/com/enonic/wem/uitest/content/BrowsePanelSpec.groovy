@@ -28,251 +28,244 @@ import com.enonic.autotests.vo.contentmanager.UnstructuredContent;
 import com.enonic.wem.uitest.BaseGebSpec;
 
 @Stepwise
-class BrowsePanelSpec extends BaseGebSpec
+class BrowsePanelSpec extends BaseGebSpec 
 {
-	   @Shared String REPONAME = "test-folder";
-	   @Shared String FULL_REPONAME = "/"+REPONAME;
-	   
-	   @Shared ContentManagerService cManagerService = new ContentManagerService();
-	   
-	   def "Given BrowsePanel When adding Folder to root content Then the content should be listed in the table"()
-	   {
-		   given:
-		   go "admin"
+	@Shared String REPONAME = "test-folder";
+	@Shared String FULL_REPONAME = "/"+REPONAME;
 
-		   when:
-		   BaseAbstractContent content = FolderContent.builder().withName(REPONAME).withDisplayName(REPONAME).build();
-		   cManagerService.addContent(getTestSession(), content, true)
-		 
-		   
-		   then:
-		   ContentGridPage grid = new ContentGridPage(getTestSession())
-		   grid.findContentInTable(content, 2l)
-		 
-   
-	   }
-	   
-	 
-	  
-	   
-		def "Given BrowsePanel When adding Folder content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"			
-			BaseAbstractContent content = FolderContent.builder().withName("foldercontent").withDisplayName("folder").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-		   
-	
-		}
+	@Shared ContentManagerService contentService = new ContentManagerService();
+
+	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
+	{		
+		given:
+		go "admin"		
 		
-		def "Given BrowsePanel When adding Structured content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"
-			
-			BaseAbstractContent content = StructuredContent.builder().withName("structuredcontent").withDisplayName("sturcured").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-	
-		}
+		when:
+		BaseAbstractContent content = FolderContent.builder().withName(REPONAME).withDisplayName(REPONAME).build();
+		contentService.addContent(getTestSession(), content, true)
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	def "Given content BrowsePanel and existing content When content deleted Then the content should not be listed in the table"() 
+	{		
+		given:
+		go "admin"
+		String name = "delete-content"+Math.abs( new Random().nextInt() );
+		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent);
+		contentService.addContent(getTestSession(), content, true);
+
+		when:
+		List<BaseAbstractContent> contents = new ArrayList<>();
+		contents.add(content);
+		ContentGridPage grid = contentService.deleteContentUseToolbar(getTestSession(), contents);
+
+		then:
+		!grid.findContentInTable(content, 2l)
+	}
+
+
+	def "Given BrowsePanel When adding Folder content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = FolderContent.builder().withName("foldercontent").withDisplayName("folder").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
 		
-		def "Given BrowsePanel When adding Unstructured content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"		
-			BaseAbstractContent content = UnstructuredContent.builder().withName("unstructuredcontent").withDisplayName("unsturcured").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-			
-	
-		}
-		
-		def "Given BrowsePanel When adding Archive content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"			
-			BaseAbstractContent content = ArchiveContent.builder().withName("archivecontent").withDisplayName("archive").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-			
-	
-		}
-		
-		def "Given BrowsePanel When adding Media content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"			
-			BaseAbstractContent content = MediaContent.builder().withName("mediacontent").withDisplayName("media").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-		
-	
-		}
-		
-		def "Given BrowsePanel When adding Data content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"			
-			BaseAbstractContent content = DataContent.builder().withName("datacontent").withDisplayName("data").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-		
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-			
-	
-		}
-		
-		
-		def "Given BrowsePanel When adding Text content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"			
-			BaseAbstractContent content = TextContent.builder().withName("textcontent").withDisplayName("text").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-	
-		}
-		def "Given BrowsePanel When adding Page content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"			
-			BaseAbstractContent content = PageContent.builder().withName("pagecontent").withDisplayName("page").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-	
-		}
-		
-		def "Given BrowsePanel When adding Shortcut content Then the content should be listed in the table"()
-		{
-			given:
-			go "admin"		
-			BaseAbstractContent content = ShortcutContent.builder().withName("shortcutcontent").withDisplayName("shortcut").build();
-			String[] parent = [FULL_REPONAME]
-			content.setParentNames(parent)
-			
-			when:
-			cManagerService.addContent(getTestSession(), content, true)
-			
-			
-			then:
-			ContentGridPage grid = new ContentGridPage(getTestSession())
-			grid.findContentInTable(content, 2l)
-	
-		}
-		
-		//TODO ISSUE with 'Edit' button : this button does not work
-	
-//		def "Given BrowsePanel and exist content  When content editet, name changed  Then the content whit new name should be listed in the table"()
-//		{
-//			given:
-//			go "admin"		
-//			String name = "editname"
-//			StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
-//			String[] parent = [FULL_REPONAME]
-//			contentToEdit.setParentNames(parent);		
-//			cManagerService.addContent(getTestSession(), contentToEdit, true)			
-//			
-//			
-//			when:
-//			String newName = "edited" + Math.abs(new Random().nextInt());
-//			StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName("edited").build();
-//			newcontent.setParentNames(parent);
-//			cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
-//			
-//			then:
-//			ContentGridPage grid = new ContentGridPage(getTestSession())
-//			grid.findContentInTable(newcontent, 2l)
-//			
-//	
-//		}
-//		
-//		def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
-//		{
-//			given:
-//			go "admin"
-//			
-//			String name = "editdisplayname"
-//			StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
-//			String[] parent = [FULL_REPONAME]
-//			contentToEdit.setParentNames(parent);
-//			cManagerService.addContent(getTestSession(), contentToEdit, true)
-//			String newDisplayName = "edited" + Math.abs(new Random().nextInt());
-//			StructuredContent newcontent = StructuredContent.builder().withName(name).withDisplayName(newDisplayName).build();
-//			newcontent.setParentNames(parent);
-//			
-//			when:
-//			cManagerService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
-//			
-//			then:
-//			ContentGridPage grid = new ContentGridPage(getTestSession())
-//			grid.findContentInTable(newcontent, 2l)
-//			
-//	
-//		}
-//	
-		
-		
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	def "Given BrowsePanel When adding Structured content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+
+		BaseAbstractContent content = StructuredContent.builder().withName("structuredcontent").withDisplayName("sturcured").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	def "Given BrowsePanel When adding Unstructured content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = UnstructuredContent.builder().withName("unstructuredcontent").withDisplayName("unsturcured").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	def "Given BrowsePanel When adding Archive content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = ArchiveContent.builder().withName("archivecontent").withDisplayName("archive").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	def "Given BrowsePanel When adding Media content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = MediaContent.builder().withName("mediacontent").withDisplayName("media").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	def "Given BrowsePanel When adding Data content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = DataContent.builder().withName("datacontent").withDisplayName("data").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+
+	def "Given BrowsePanel When adding Text content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = TextContent.builder().withName("textcontent").withDisplayName("text").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+	def "Given BrowsePanel When adding Page content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = PageContent.builder().withName("pagecontent").withDisplayName("page").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	def "Given BrowsePanel When adding Shortcut content Then the content should be listed in the table"() 
+	{
+		given:
+		go "admin"
+		BaseAbstractContent content = ShortcutContent.builder().withName("shortcutcontent").withDisplayName("shortcut").build();
+		String[] parent = [FULL_REPONAME]
+		content.setParentNames(parent)
+
+		when:
+		contentService.addContent(getTestSession(), content, true)
+
+		then:
+		ContentGridPage grid = new ContentGridPage(getTestSession())
+		grid.findContentInTable(content, 2l)
+	}
+
+	//TODO ISSUE with 'Edit' button
+
+	//	def "Given BrowsePanel and exist content  When content editet, name changed  Then the content whit new name should be listed in the table"()
+	//	{
+	//		given:
+	//		go "admin"
+	//		String name = "editname"
+	//		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
+	//		String[] parent = [FULL_REPONAME]
+	//		contentToEdit.setParentNames(parent);
+	//		contentService.addContent(getTestSession(), contentToEdit, true)
+	//
+	//
+	//		when:
+	//		String newName = "edited" + Math.abs(new Random().nextInt());
+	//		StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName("edited").build();
+	//		newcontent.setParentNames(parent);
+	//		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
+	//
+	//		then:
+	//		ContentGridPage grid = new ContentGridPage(getTestSession())
+	//		grid.findContentInTable(newcontent, 2l)
+	//
+	//
+	//	}
+	//
+	//	def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
+	//	{
+	//		given:
+	//		go "admin"
+	//
+	//		String name = "editdisplayname"
+	//		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName("edittest").build();
+	//		String[] parent = [FULL_REPONAME]
+	//		contentToEdit.setParentNames(parent);
+	//		contentService.addContent(getTestSession(), contentToEdit, true)
+	//		String newDisplayName = "edited" + Math.abs(new Random().nextInt());
+	//		StructuredContent newcontent = StructuredContent.builder().withName(name).withDisplayName(newDisplayName).build();
+	//		newcontent.setParentNames(parent);
+	//
+	//		when:
+	//		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
+	//
+	//		then:
+	//		ContentGridPage grid = new ContentGridPage(getTestSession())
+	//		grid.findContentInTable(newcontent, 2l)
+	//
+	//
+	//	}
+	//
+
+
 }

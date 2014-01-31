@@ -21,7 +21,7 @@ public class ContentFilterService
 	public List<String> filterByQuery(TestSession session, String query)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		filterPanel.executeQuery(query);
 		List<String> names = cmPage.getShowedContentNames();
@@ -31,7 +31,7 @@ public class ContentFilterService
 	public List<String> filterByDate(TestSession session, FilterPanelLastModified dateRange)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		filterPanel.doFilterByDate(dateRange);
 		List<String> names = cmPage.getShowedContentNames();
@@ -50,7 +50,7 @@ public class ContentFilterService
 	public List<String> seletcSpaceAndCheckContent(TestSession session, Space space)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		// 2. select space in the search panel and filter by space-name:
 		filterPanel.doFilterBySpaceDisplayName(space.getDisplayName());
@@ -72,7 +72,7 @@ public class ContentFilterService
 	public ContentGridPage doFilterContentByContentTypeName(TestSession session, String contentTypeName)
 	{
 		// 1. open CM application(if not opened yet)
-		ContentGridPage cmPage = NavigatorHelper.openContentManager(session);
+		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		// 2. verify filtering: select content type in the search panel and try

@@ -17,29 +17,7 @@ import com.enonic.autotests.vo.contentmanager.StructuredContent;
  *
  */
 public class GridDeleteContentTests extends BaseContentManagerTest
-{
-	@Test(description = "add 2 new contents to a space and delete all, use a button 'Delete' from toolbar ")
-	public void delete_content()
-	{
-		logger.info("STARTED #####  select a content, press a button 'Delete' from toolbar and delete content from space ");
-		String name = "delete-content"+Math.abs( new Random().nextInt() );
-		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();
-		String[] parentNames = new String[]{REPONAME};
-		content.setParentNames(parentNames);
-		
-		//1. add a content to the space
-		logger.info("start to add content with name: " +content.getName()+ " to folder: " + REPONAME);
-		cManagerService.addContent(getTestSession(), content, true);
-		
-		List<BaseAbstractContent> contents = new ArrayList<>();
-		contents.add(content);
-        ContentGridPage page = cManagerService.deleteContentUseToolbar(getTestSession(), contents);
-		
-        //4. verify that both contents not present in the table:
-		Assert.assertFalse(page.findContentInTable(content, TEST_TIMEOUT),
-				String.format("the content wit name %s was deleted and should not be present in the table! ", content.getDisplayName()));
-		logger.info("FINISHED $$$  select a content, press a button 'Delete' from toolbar and delete content from space ");
-	}
+{	
 	
     @Test(description = "add 2 new contents to a space and delete all, use a button 'Delete' from toolbar ")
 	public void test_add_two_contents_and_delete_use_toolbar_button()

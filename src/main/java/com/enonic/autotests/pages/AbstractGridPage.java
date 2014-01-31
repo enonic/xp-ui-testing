@@ -18,7 +18,7 @@ public class AbstractGridPage extends Page
 	@FindBy(xpath = NEW_BUTTON_XPATH)
 	protected WebElement newButton;
 	
-	private final String CLEAR_SELECTION_LINK_XPATH = "//a[contains(@class,'admin-grid-toolbar-btn-clear-selection')]";
+	private final String CLEAR_SELECTION_LINK_XPATH = "//a[contains(@class,' x-box-item x-toolbar-item') and contains(.,'Clear')]";
 	@FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
 	protected WebElement clearSelectionLink;
 	
@@ -98,7 +98,7 @@ public class AbstractGridPage extends Page
 	{
 		String expanderElement = String.format(TD_CONTENT_NAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
 		getLogger().info("check if present expander for folder:"+ parentName +" xpath: " + expanderElement);
-		boolean isPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(),  By.xpath(expanderElement), 5);
+		boolean isPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(),  By.xpath(expanderElement), 2);
 		if (!isPresent)
 		{
 			getLogger().info("expander for folder:"+ parentName +" was not found! ");
