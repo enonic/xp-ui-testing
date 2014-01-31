@@ -49,24 +49,24 @@ class BrowsePanelSpec extends BaseGebSpec
 		grid.findContentInTable(content, 2l)
 	}
 
-	def "Given content BrowsePanel and existing content When content deleted Then the content should not be listed in the table"() 
-	{		
-		given:
-		go "admin"
-		String name = "delete-content"+Math.abs( new Random().nextInt() );
-		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();
-		String[] parent = [FULL_REPONAME]
-		content.setParentNames(parent);
-		contentService.addContent(getTestSession(), content, true);
-
-		when:
-		List<BaseAbstractContent> contents = new ArrayList<>();
-		contents.add(content);
-		ContentGridPage grid = contentService.deleteContentUseToolbar(getTestSession(), contents);
-
-		then:
-		!grid.findContentInTable(content, 2l)
-	}
+//	def "Given content BrowsePanel and existing content When content deleted Then the content should not be listed in the table"() 
+//	{		
+//		given:
+//		go "admin"
+//		String name = "delete-content"+Math.abs( new Random().nextInt() );
+//		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();
+//		String[] parent = [FULL_REPONAME]
+//		content.setParentNames(parent);
+//		contentService.addContent(getTestSession(), content, true);
+//
+//		when:
+//		List<BaseAbstractContent> contents = new ArrayList<>();
+//		contents.add(content);
+//		ContentGridPage grid = contentService.deleteContentUseToolbar(getTestSession(), contents);
+//
+//		then:
+//		!grid.findContentInTable(content, 2l)
+//	}
 
 
 	def "Given BrowsePanel When adding Folder content Then the content should be listed in the table"() 

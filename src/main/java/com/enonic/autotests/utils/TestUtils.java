@@ -93,7 +93,6 @@ public class TestUtils
 		logger.info("Get element by locator: " + locator.toString());
 		long startTime = System.currentTimeMillis();
 		driver.manage().timeouts().implicitlyWait(9, TimeUnit.SECONDS);
-		WebElement we = null;
 		boolean isFound = false;
 		for (int i = 0; i <= tries; i++)
 		{
@@ -101,7 +100,7 @@ public class TestUtils
 			//logger.info("Locating remaining time: " + (180 - (9 * (tries - i))) + " seconds.");
 			try
 			{
-				we = driver.findElement(locator);
+				driver.findElement(locator);
 				isFound = true;
 				break;
 			} catch (StaleElementReferenceException ser)
