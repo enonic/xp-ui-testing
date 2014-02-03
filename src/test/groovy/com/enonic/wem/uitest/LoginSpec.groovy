@@ -11,9 +11,15 @@ import geb.spock.GebSpec
 class LoginSpec
     extends BaseGebSpec
 {
-	@Shared ContentManagerService cManagerService = new ContentManagerService();
-	
-	String CHECK_TITLE_TEST_FOLDER_DISPLAYNAME = "BildeArkiv";
+		
+	def "Given login page When both username and password fields is empty Then Login Button must be disabled"()
+	{
+		when:
+		go "admin"
+		
+		then:
+		$( 'button.login-button' ).classes().contains( 'disabled' )
+	}
 	
     def "Given login page When both username and password fields have value Then Login Button must be enabled"()
     {
@@ -27,5 +33,29 @@ class LoginSpec
         then:
         !$( 'button.login-button' ).classes().contains( 'disabled' )
     }
+	
+	def "Given login page When only username field have value Then Login Button must be disabled"()
+	{
+		given:
+		go "admin"
+
+		when:
+		$( 'input.form-item', 0 ) << 'user'
+		report "login page, username is 'user', password is 'password'"
+		then:
+		$( 'button.login-button' ).classes().contains( 'disabled' )
+	}
+	
+	def "Given login page When only password field have value Then Login Button must be disabled"()
+	{
+		given:
+		go "admin"
+
+		when:
+		$( 'input.form-item', 1 ) << 'password'
+		report "login page, username is 'user', password is 'password'"
+		then:
+		$( 'button.login-button' ).classes().contains( 'disabled' )
+	}
 
 }
