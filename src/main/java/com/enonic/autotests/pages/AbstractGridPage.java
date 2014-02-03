@@ -222,7 +222,7 @@ public class AbstractGridPage extends Page
 		boolean isVisibleLink = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(CLEAR_SELECTION_LINK_XPATH), 2l);
 		if (!isVisibleLink)
 		{
-			throw new TestFrameworkException("The link 'Select All' was not found on the page, probably wrong xpath locator");
+			throw new TestFrameworkException("The link 'Clear Selection' was not found on the page, probably wrong xpath locator");
 		}
 		clearSelectionLink.click();
 	}

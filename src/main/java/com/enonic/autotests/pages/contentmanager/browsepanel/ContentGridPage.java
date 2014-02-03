@@ -408,7 +408,8 @@ public class ContentGridPage extends AbstractGridPage
 			// 1. select a checkbox and press the 'New' from toolbar.
 			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentName);
 			
-			boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
+			//boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
+			boolean isPresentCheckbox = TestUtils.getInstance().isDynamicElementPresent(getDriver(), By.xpath(spaceCheckBoxXpath), 3);
 			if (!isPresentCheckbox)
 			{
 				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentName + " was not found!");
