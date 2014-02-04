@@ -221,6 +221,8 @@ public class ContentGridPage extends AbstractGridPage
 	public DeleteContentDialog openDeleteContentDialog(List<BaseAbstractContent> contents)
 	{
 		String[] parents = contents.get(0).getParentNames();
+		if(parents !=null)
+		{
 		// 1. expand all spaces
 		for (int i = 0; i < parents.length; i++)
 		{
@@ -230,6 +232,8 @@ public class ContentGridPage extends AbstractGridPage
 						+ parents[i] + " , has no child ! ");
 			}
 		}
+		}
+	
 
 		// 2. check for existence and select a content to delete.
 		selectContentInTable(contents, parents);
@@ -412,6 +416,7 @@ public class ContentGridPage extends AbstractGridPage
 			boolean isPresentCheckbox = TestUtils.getInstance().isDynamicElementPresent(getDriver(), By.xpath(spaceCheckBoxXpath), 3);
 			if (!isPresentCheckbox)
 			{
+				TestUtils.getInstance().saveScreenshot(getSession());
 				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentName + " was not found!");
 			}
 			WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));

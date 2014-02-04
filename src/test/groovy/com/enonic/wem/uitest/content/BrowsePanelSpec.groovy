@@ -90,7 +90,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 
-		BaseAbstractContent content = StructuredContent.builder().withName("structuredcontent").withDisplayName("sturcured").build();
+		BaseAbstractContent content = StructuredContent.builder().withName("structuredcontent").withDisplayName("structured").build();
 		String[] parent = [FULL_REPONAME]
 		content.setParentNames(parent)
 
@@ -106,7 +106,7 @@ class BrowsePanelSpec extends BaseGebSpec
 	{
 		given:
 		go "admin"
-		BaseAbstractContent content = UnstructuredContent.builder().withName("unstructuredcontent").withDisplayName("unsturcured").build();
+		BaseAbstractContent content = UnstructuredContent.builder().withName("unstructuredcontent").withDisplayName("unstructured").build();
 		String[] parent = [FULL_REPONAME]
 		content.setParentNames(parent)
 

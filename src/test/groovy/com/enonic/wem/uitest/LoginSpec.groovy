@@ -41,7 +41,7 @@ class LoginSpec
 
 		when:
 		$( 'input.form-item', 0 ) << 'user'
-		report "login page, username is 'user', password is 'password'"
+		report "login page, username is 'user', password is empty"
 		then:
 		$( 'button.login-button' ).classes().contains( 'disabled' )
 	}
@@ -53,7 +53,7 @@ class LoginSpec
 
 		when:
 		$( 'input.form-item', 1 ) << 'password'
-		report "login page, username is 'user', password is 'password'"
+		report "login page, username is empty, password is 'password'"
 		then:
 		$( 'button.login-button' ).classes().contains( 'disabled' )
 	}
