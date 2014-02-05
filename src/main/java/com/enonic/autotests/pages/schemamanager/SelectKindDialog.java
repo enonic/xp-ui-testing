@@ -1,11 +1,10 @@
 package com.enonic.autotests.pages.schemamanager;
 
-import org.openqa.selenium.By;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.utils.TestUtils;
+import org.openqa.selenium.By;
 
 /**
  * 
@@ -30,7 +29,7 @@ public class SelectKindDialog extends Page
 	 * @param kind
 	 * @return
 	 */
-	public AddNewContentTypeWizard doSelectKind(String kind)
+	public ContentTypeWizardPanel doSelectKind(String kind)
 	{
 		String kindXpath = String.format(KIND, kind);
 		boolean isPpresent = TestUtils.getInstance().waitAndFind(By.xpath(kindXpath), getDriver());
@@ -40,7 +39,7 @@ public class SelectKindDialog extends Page
 			throw new TestFrameworkException("The kind of contentype" + kind + " was not found!!!");
 		}
 		findElement(By.xpath(kindXpath)).click();
-		AddNewContentTypeWizard wizard = new AddNewContentTypeWizard(getSession());
+		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
 		String displayName = null;
 		if (kind.equals(KindOfContentTypes.RELATIONSHIP_TYPE.getValue()))
 		{

@@ -1,17 +1,17 @@
 package com.enonic.autotests.services;
 
-import java.util.List;
-
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+
+import java.util.List;
 
 /**
  * Service for 'Content Manager' application.
@@ -44,8 +44,8 @@ public class ContentService
 		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
-		AddContentWizardPage wizardPage = cmPage.openAddContentWizard(contentTypeName,parentNames);
-		String expectedTitle = String.format(AddContentWizardPage.START_WIZARD_TITLE, contentTypeName);
+		ContentWizardPanel wizardPage = cmPage.openAddContentWizard(contentTypeName,parentNames);
+		String expectedTitle = String.format(ContentWizardPanel.START_WIZARD_TITLE, contentTypeName);
 		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = wizardPage.getTitle().equalsIgnoreCase(expectedTitle);
 		logger.info("expected title is "+ expectedTitle  +" actual title is: "+wizardPage.getTitle());
@@ -95,7 +95,7 @@ public class ContentService
 			return cmPage;
 		} else
 		{
-			return new AddContentWizardPage(session);
+			return new ContentWizardPanel(session);
 		}
 
 	}

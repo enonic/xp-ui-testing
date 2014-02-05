@@ -5,7 +5,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.AbstractGridPage;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -343,7 +343,7 @@ public class ContentGridPage extends AbstractGridPage
 	{
 		String[] parents = content.getParentNames();
 		
-		AddContentWizardPage wizard = openAddContentWizard(content.getContentTypeName(), parents);
+		ContentWizardPanel wizard = openAddContentWizard(content.getContentTypeName(), parents);
 		
 		if (isCloseWizard)
 		{
@@ -358,12 +358,12 @@ public class ContentGridPage extends AbstractGridPage
 	public void doUpdateContent(BaseAbstractContent content, BaseAbstractContent newcontent)
 	{
 
-		AddContentWizardPage wizard = openEditWizardPage(content);
+		ContentWizardPanel wizard = openEditWizardPage(content);
 		wizard.doTypeDataSaveAndClose(newcontent);
 
 	}
 	
-	public AddContentWizardPage openEditWizardPage(BaseAbstractContent content)
+	public ContentWizardPanel openEditWizardPage(BaseAbstractContent content)
 	{
 		boolean isPresent = findContentInTable(content, 2l);
 		if (!isPresent)
@@ -375,7 +375,7 @@ public class ContentGridPage extends AbstractGridPage
 		selectCheckbox(content);
 
 		editButton.click();
-		AddContentWizardPage wizard = new AddContentWizardPage(getSession());
+		ContentWizardPanel wizard = new ContentWizardPanel(getSession());
 		wizard.waitUntilWizardOpened( 1);
 		return wizard;
 	}
@@ -388,7 +388,7 @@ public class ContentGridPage extends AbstractGridPage
 	 * @param ctype
 	 * @return
 	 */
-	public AddContentWizardPage openAddContentWizard(String contentTypeName, String... parentNames)
+	public ContentWizardPanel openAddContentWizard(String contentTypeName, String... parentNames)
 	{
 		String parentName = null;
 		if (parentNames != null)
@@ -456,7 +456,7 @@ public class ContentGridPage extends AbstractGridPage
 			}
 		}
 		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
-		AddContentWizardPage wizard = newContentDialog.selectContentType(contentTypeName);
+		ContentWizardPanel wizard = newContentDialog.selectContentType(contentTypeName);
 		return wizard;
 	}
 

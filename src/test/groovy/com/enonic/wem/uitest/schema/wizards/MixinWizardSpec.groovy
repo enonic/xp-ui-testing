@@ -1,11 +1,10 @@
 package com.enonic.wem.uitest.schema.wizards
 
-import spock.lang.Shared;
-
-import com.enonic.autotests.pages.schemamanager.AddNewContentTypeWizard;
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
-import com.enonic.autotests.services.ContentTypeService;
-import com.enonic.wem.uitest.BaseGebSpec;
+import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel
+import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.services.ContentTypeService
+import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Shared
 
 class MixinWizardSpec extends BaseGebSpec {
 
@@ -17,7 +16,7 @@ class MixinWizardSpec extends BaseGebSpec {
 		go "admin"
 		
 		String longName25chars = "longnamelongnamelongnam25";
-		AddNewContentTypeWizard wizard = contentTypeService.openAddContentTypeWizard(getTestSession(), KindOfContentTypes.MIXIN);
+		ContentTypeWizardPanel wizard = contentTypeService.openAddContentTypeWizard(getTestSession(), KindOfContentTypes.MIXIN);
 		int width25 = wizard.doTypeLongNameAndGetInputWidth(longName25chars);
 		String longName27chars = "longnamelongnamelongnamqq27";
 		

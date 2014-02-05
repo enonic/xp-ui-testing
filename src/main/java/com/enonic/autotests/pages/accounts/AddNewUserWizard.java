@@ -1,5 +1,12 @@
 package com.enonic.autotests.pages.accounts;
 
+import com.enonic.autotests.AppConstants;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.pages.HomePage;
+import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,16 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.enonic.autotests.AppConstants;
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.BaseWizardPage;
-import com.enonic.autotests.pages.HomePage;
-import com.enonic.autotests.services.NavigatorHelper;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.User;
-
-public class AddNewUserWizard extends BaseWizardPage
+public class AddNewUserWizard extends WizardPanel
 {
 
 	public static final String SYSTEM_STORE_NAME = "userstores\\system";

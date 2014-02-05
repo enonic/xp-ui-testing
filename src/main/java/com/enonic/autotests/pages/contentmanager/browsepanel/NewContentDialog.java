@@ -2,7 +2,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 import org.openqa.selenium.By;
 
@@ -42,7 +42,7 @@ public class NewContentDialog
 	 * 
 	 * @param contentTypeName the name of a content type.
 	 */
-	public AddContentWizardPage selectContentType(String contentTypeName)
+	public ContentWizardPanel selectContentType(String contentTypeName)
 	{
 		
 		String ctypeXpath = String.format(CONTENTTYPE_NAME, contentTypeName);
@@ -59,7 +59,7 @@ public class NewContentDialog
 //			searchinput.sendKeys(contentTypeName);	
 //		} 
 		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), session.getDriver());
-		AddContentWizardPage wizard = new AddContentWizardPage(session);
+		ContentWizardPanel wizard = new ContentWizardPanel(session);
 		
 		//String title = "New " + type.getValue().toLowerCase();
 		//wizard.waitUntilWizardOpened(title, 1);
@@ -74,7 +74,7 @@ public class NewContentDialog
 	 */
 	public enum ContentTypeName
 	{
-		PAGE("page"), 
+		PAGE("page"),
 		DATA("data"),
 		TEXT("text"), 
 		MEDIA("media"), 

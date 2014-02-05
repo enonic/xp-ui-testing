@@ -1,12 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -14,6 +7,12 @@ import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class ItemViewPanelPage extends Page
 {
@@ -83,7 +82,7 @@ public class ItemViewPanelPage extends Page
 	public void doEditContentAndCloseWizard(String contentDisplayName,BaseAbstractContent newContent)
 	{
 		editButtonToolbar.click();
-		AddContentWizardPage wizard = new AddContentWizardPage(getSession());
+		ContentWizardPanel wizard = new ContentWizardPanel(getSession());
 		//when content opened and the 'Edit' button pressed, new wizard page appears and '2'  should be present in the red circle.
 		wizard.waitUntilWizardOpened( 2);
 		wizard.doTypeDataSaveAndClose(newContent);

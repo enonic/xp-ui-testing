@@ -1,7 +1,13 @@
 package com.enonic.autotests.pages.schemamanager;
 
-import java.util.List;
-
+import com.enonic.autotests.AppConstants;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.CreateContentTypeException;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.TextTransfer;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -9,20 +15,13 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-import com.enonic.autotests.AppConstants;
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.CreateContentTypeException;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.BaseWizardPage;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.utils.TextTransfer;
-import com.enonic.autotests.vo.schemamanger.ContentType;
+import java.util.List;
 
 /**
  * 'Schema Manager' application, Add new Content Type Wizard page.
  * 
  */
-public class AddNewContentTypeWizard extends BaseWizardPage
+public class ContentTypeWizardPanel extends WizardPanel
 {
 
 	private String NOTIF_MESSAGE = "\"%s\" was saved";
@@ -35,7 +34,7 @@ public class AddNewContentTypeWizard extends BaseWizardPage
 	 * 
 	 * @param session
 	 */
-	public AddNewContentTypeWizard( TestSession session )
+	public ContentTypeWizardPanel(TestSession session)
 	{
 		super(session);
 

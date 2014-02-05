@@ -1,22 +1,19 @@
 package com.enonic.autotests.pages;
 
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.utils.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.services.NavigatorHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Base class for wizards.
  *
  */
-public abstract class BaseWizardPage extends Page {
+public abstract class WizardPanel extends Page {
 
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
@@ -43,7 +40,7 @@ public abstract class BaseWizardPage extends Page {
 	@FindBy(name = "name")
 	protected WebElement nameInput;
 
-	public BaseWizardPage(TestSession session)
+	public WizardPanel(TestSession session)
 	{
 		super(session);
 

@@ -2,7 +2,7 @@ package com.enonic.autotests.services;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.pages.schemamanager.AddNewContentTypeWizard;
+import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel;
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
 import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
 import com.enonic.autotests.vo.schemamanger.ContentType;
@@ -29,15 +29,15 @@ public class ContentTypeService
 			
 		} else
 		{
-			return new AddNewContentTypeWizard(testSession);
+			return new ContentTypeWizardPanel(testSession);
 		}
 
 	}
-	public AddNewContentTypeWizard openAddContentTypeWizard(TestSession testSession,KindOfContentTypes kind)
+	public ContentTypeWizardPanel openAddContentTypeWizard(TestSession testSession,KindOfContentTypes kind)
 	{
 		SchemaGridPage schemaManagerPage = NavigatorHelper.openSchemaManager(testSession);
 		schemaManagerPage.doOpenAddNewTypeWizard(kind.getValue());
-		return new AddNewContentTypeWizard(testSession);
+		return new ContentTypeWizardPanel(testSession);
 	
 	}
 	

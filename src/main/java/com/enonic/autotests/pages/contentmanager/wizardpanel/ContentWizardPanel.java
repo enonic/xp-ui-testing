@@ -1,27 +1,26 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.BaseWizardPage;
 import com.enonic.autotests.pages.CloseWizardDialog;
+import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ArticleContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 import com.enonic.autotests.vo.contentmanager.MixinContent;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 /**
  *  'Content Manager' application, Add new Content Wizard page.
  *
  */
-public class AddContentWizardPage extends BaseWizardPage
+public class ContentWizardPanel extends WizardPanel
 {
 	public static  String START_WIZARD_TITLE = "New %s";
 	private String NOTIF_MESSAGE = "\"%s\" saved successfully!";
@@ -50,7 +49,7 @@ public class AddContentWizardPage extends BaseWizardPage
 	 * 
 	 * @param session
 	 */
-	public AddContentWizardPage( TestSession session )
+	public ContentWizardPanel(TestSession session)
 	{
 		super(session);
 

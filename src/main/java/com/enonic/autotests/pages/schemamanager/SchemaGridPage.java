@@ -1,19 +1,18 @@
 package com.enonic.autotests.pages.schemamanager;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.AbstractGridPage;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.AbstractGridPage;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.schemamanger.ContentType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 'Schema Manager' application, the dashboard page.
@@ -102,14 +101,14 @@ public class SchemaGridPage extends AbstractGridPage
 		getLogger().info("content type with name:" +contentTypeToEdit.getName() +" was selected in the table!");
 		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
 		editButton.click();
-		AddNewContentTypeWizard wizard = new AddNewContentTypeWizard(getSession());
-		getLogger().info("## AddNewContentTypeWizard  should be opened, waits title: " + contentTypeToEdit.getName());
+		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
+		getLogger().info("## ContentTypeWizardPanel  should be opened, waits title: " + contentTypeToEdit.getName());
 		wizard.waitUntilWizardOpened( 1);
 		wizard.doTypeDataSaveAndClose(newContentType);
 		
 	}
 	
-	public AddNewContentTypeWizard doOpenContentTypeForEdit(ContentType contentTypeToEdit)
+	public ContentTypeWizardPanel doOpenContentTypeForEdit(ContentType contentTypeToEdit)
 	{
 		String superTypeName = contentTypeToEdit.getSuperTypeNameFromConfig();
 		if(superTypeName != null)
@@ -140,7 +139,7 @@ public class SchemaGridPage extends AbstractGridPage
 		getLogger().info("content type with name:" +contentTypeToEdit.getName() +" was selected in the table!");
 		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
 		editButton.click();
-		AddNewContentTypeWizard wizard = new AddNewContentTypeWizard(getSession());	
+		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
 		wizard.waitUntilWizardOpened( 1);
 		return wizard;
 	}
@@ -202,7 +201,7 @@ public class SchemaGridPage extends AbstractGridPage
 
 	public void doAddContentType(ContentType contentType, boolean isCloseWizard)
 	{
-		AddNewContentTypeWizard wizard = doOpenAddNewTypeWizard(contentType.getKind().getValue());
+		ContentTypeWizardPanel wizard = doOpenAddNewTypeWizard(contentType.getKind().getValue());
 		if (isCloseWizard)
 		{
 			wizard.doTypeDataSaveAndClose(contentType);
@@ -212,7 +211,7 @@ public class SchemaGridPage extends AbstractGridPage
 		}
 	}
 
-	public AddNewContentTypeWizard doOpenAddNewTypeWizard(String kind)
+	public ContentTypeWizardPanel doOpenAddNewTypeWizard(String kind)
 	{
 		newButtonMenu.click();
 		SelectKindDialog selectDialog = new SelectKindDialog(getSession());
@@ -223,7 +222,7 @@ public class SchemaGridPage extends AbstractGridPage
 			throw new TestFrameworkException(String.format("Error during add new content type  %s, dialog was not opened!",kind));
 		}
 		getLogger().info("SelectKindDialog, content type should be selected:" + kind);
-		AddNewContentTypeWizard wizard = selectDialog.doSelectKind(kind);
+		ContentTypeWizardPanel wizard = selectDialog.doSelectKind(kind);
 		return wizard;
 		
 	}
