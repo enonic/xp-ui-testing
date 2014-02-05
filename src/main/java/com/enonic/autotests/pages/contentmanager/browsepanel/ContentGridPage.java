@@ -442,8 +442,8 @@ public class ContentGridPage extends AbstractGridPage
 			}
 		}
 		newButton.click();
-		NewContentDialog selectDialog = new NewContentDialog(getSession());
-		boolean isOpened = selectDialog.isOpened();
+		NewContentDialog newContentDialog = new NewContentDialog(getSession());
+		boolean isOpened = newContentDialog.isOpened();
 		if (!isOpened)
 		{
 			getLogger().error("NewContentDialog was not opened!", getSession());
@@ -456,7 +456,7 @@ public class ContentGridPage extends AbstractGridPage
 			}
 		}
 		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
-		AddContentWizardPage wizard = selectDialog.selectContentType(contentTypeName);
+		AddContentWizardPage wizard = newContentDialog.selectContentType(contentTypeName);
 		return wizard;
 	}
 
