@@ -4,7 +4,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 import org.openqa.selenium.By;
@@ -109,7 +109,7 @@ public class ItemViewPanelPage extends Page
 			throw new DeleteCMSObjectException("Confirm 'delete content' dialog was not closed!");
 		}
 		
-		ContentGridPage table = new ContentGridPage(getSession());
+		ContentBrowsePanel table = new ContentBrowsePanel(getSession());
 		table.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 	}
 	

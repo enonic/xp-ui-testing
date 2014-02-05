@@ -1,17 +1,16 @@
 package com.enonic.autotests.pages;
 
-import java.util.List;
-
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.TestUtils;
+import java.util.List;
 
-public class AbstractGridPage extends Page
+public class BrowsePanel extends Page
 {
 
 	protected  final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
@@ -47,7 +46,7 @@ public class AbstractGridPage extends Page
 	 * 
 	 * @param session
 	 */
-	public AbstractGridPage( TestSession session )
+	public BrowsePanel(TestSession session)
 	{
 		super(session);
 	}

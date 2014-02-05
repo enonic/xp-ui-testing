@@ -5,7 +5,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.CloseWizardDialog;
 import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ArticleContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -154,7 +154,7 @@ public class ContentWizardPanel extends WizardPanel
 		
 		TestUtils.getInstance().saveScreenshot(getSession());
 		// 2. populate main tab
-		populateMainTab(getSession(), content);
+		populateContentForm(getSession(), content);
 
 		// 3. check if enabled and press "Save".
 		getLogger().info("Clicks 'Save' button in toolbar");
@@ -201,7 +201,7 @@ public class ContentWizardPanel extends WizardPanel
 		}
 		
 
-		ContentGridPage page = new ContentGridPage(getSession());
+		ContentBrowsePanel page = new ContentBrowsePanel(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
 	}
@@ -212,7 +212,7 @@ public class ContentWizardPanel extends WizardPanel
 	 * @param session
 	 * @param content
 	 */
-	private void populateMainTab(TestSession session, BaseAbstractContent content)
+	private void populateContentForm(TestSession session, BaseAbstractContent content)
 	{
 		if (content instanceof MixinContent)
 		{

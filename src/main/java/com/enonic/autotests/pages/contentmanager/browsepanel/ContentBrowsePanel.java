@@ -4,7 +4,7 @@ import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.AbstractGridPage;
+import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
@@ -23,7 +23,7 @@ import java.util.List;
  * 'Content Manager' application, the dashboard page.
  * 
  */
-public class ContentGridPage extends AbstractGridPage
+public class ContentBrowsePanel extends BrowsePanel
 {
 	private static final String TITLE_XPATH = "//button[contains(@class,'home-button') and contains(.,'Content Manager')]";
 	
@@ -57,7 +57,7 @@ public class ContentGridPage extends AbstractGridPage
 	 * 
 	 * @param session
 	 */
-	public ContentGridPage( TestSession session )
+	public ContentBrowsePanel(TestSession session)
 	{
 		super(session);
 

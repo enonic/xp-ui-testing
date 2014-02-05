@@ -1,23 +1,13 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import java.util.Random;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
-import com.enonic.autotests.testdata.TestDataConvertor;
-
-import com.enonic.autotests.vo.schemamanger.ContentType;
-
-import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
-import com.enonic.autotests.vo.schemamanger.ContentType;
-import spock.lang.Shared;
-import spock.lang.Stepwise;
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
-import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
-import com.enonic.autotests.services.ContentTypeService;
-import com.enonic.autotests.vo.schemamanger.ContentType;
-import com.enonic.wem.uitest.BaseGebSpec;
-import com.enonic.wem.uitest.schema.cfg.MixinAddress;
+import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.services.ContentTypeService
+import com.enonic.autotests.vo.schemamanger.ContentType
+import com.enonic.wem.uitest.BaseGebSpec
+import com.enonic.wem.uitest.schema.cfg.MixinAddress
+import spock.lang.Shared
+import spock.lang.Stepwise
 
 @Stepwise
 class MixinSpec extends BaseGebSpec
@@ -37,7 +27,7 @@ class MixinSpec extends BaseGebSpec
 		contentTypeService.createContentType(getTestSession(), mixin, true)
 				
 		then:
-		SchemaGridPage grid = new SchemaGridPage(getTestSession())
+		SchemaBrowsePanel grid = new SchemaBrowsePanel(getTestSession())
 		grid.isContentTypePresentInTable(mixin)
 
 	}
@@ -54,7 +44,7 @@ class MixinSpec extends BaseGebSpec
 		newMixin.setName(newName);
 		
 		when:
-		SchemaGridPage schemasPage = contentTypeService.editContentType(getTestSession(), ct, newMixin);
+		SchemaBrowsePanel schemasPage = contentTypeService.editContentType(getTestSession(), ct, newMixin);
 		ct.setName(newName);
 		
 		then:
@@ -75,7 +65,7 @@ class MixinSpec extends BaseGebSpec
 		newMixin.setDisplayNameInConfig(newDisplayName );
 		
 		when:
-		SchemaGridPage schemasPage = contentTypeService.editContentType(getTestSession(), ct, newMixin)
+		SchemaBrowsePanel schemasPage = contentTypeService.editContentType(getTestSession(), ct, newMixin)
 		ct.setDisplayNameInConfig(newDisplayName );
 		then:
 		schemasPage.isContentTypePresentInTable(newMixin)
@@ -89,7 +79,7 @@ class MixinSpec extends BaseGebSpec
 		ContentType mixinToDelete = (ContentType)getTestSession().get(MIXIN_KEY)
 		
 		when:
-		SchemaGridPage schemasPage = contentTypeService.deleteContentType(getTestSession(), mixinToDelete);
+		SchemaBrowsePanel schemasPage = contentTypeService.deleteContentType(getTestSession(), mixinToDelete);
 		
 		then:
 		!schemasPage.isContentTypePresentInTable(mixinToDelete);

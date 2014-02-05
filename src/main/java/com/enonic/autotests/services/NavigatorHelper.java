@@ -1,20 +1,19 @@
 package com.enonic.autotests.services;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.accounts.AccountsPage;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.User;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class NavigatorHelper
 {
@@ -26,13 +25,13 @@ public class NavigatorHelper
 	 *            {@link TestSession} instance.
 	 * @return {@link SpaceAdminPage} instance.
 	 */
-	public static ContentGridPage openContentApp(TestSession testSession)
+	public static ContentBrowsePanel openContentApp(TestSession testSession)
 	{
 		if (testSession.isLoggedIn())
 		{
-			if (ContentGridPage.isOpened(testSession))
+			if (ContentBrowsePanel.isOpened(testSession))
 			{
-				return new ContentGridPage(testSession);
+				return new ContentBrowsePanel(testSession);
 			}
 			boolean isHomeButtonPresent = TestUtils.getInstance().waitAndFind(By.xpath(Page.HOME_BUTTON_XPATH), testSession.getDriver());
 			if (!isHomeButtonPresent)
@@ -43,29 +42,29 @@ public class NavigatorHelper
 			HomePage homepage = new HomePage(testSession);
 			testSession.getDriver().switchTo().window(testSession.getWindowHandle());
 			homepage.openContentManagerApplication();
-			return new ContentGridPage(testSession);
+			return new ContentBrowsePanel(testSession);
 		}
       // if user not logged in:
 		else
 		{
 
 			HomePage home = loginAndOpenHomePage(testSession);
-			ContentGridPage cmPage = home.openContentManagerApplication();
+			ContentBrowsePanel cmPage = home.openContentManagerApplication();
 			cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
 			return cmPage;
 		}
 
 	}
 
-	public static SchemaGridPage openSchemaManager(TestSession testSession)
+	public static SchemaBrowsePanel openSchemaManager(TestSession testSession)
 	{
-		if (SchemaGridPage.isOpened(testSession))
+		if (SchemaBrowsePanel.isOpened(testSession))
 		{
-			return new SchemaGridPage(testSession);
+			return new SchemaBrowsePanel(testSession);
 		} else
 		{
 			HomePage home = loginAndOpenHomePage(testSession);
-			SchemaGridPage schemasPage = home.openSchemaManagerApplication();
+			SchemaBrowsePanel schemasPage = home.openSchemaManagerApplication();
 			schemasPage.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 			return schemasPage;
 		}

@@ -4,7 +4,7 @@ import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
@@ -29,7 +29,7 @@ public class ContentService
 	public boolean openContentManagerAppAndVerify(TestSession session)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = true;
 		result &=cmPage.verifyTitle();
@@ -41,7 +41,7 @@ public class ContentService
 	{
 
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
 		ContentWizardPanel wizardPage = cmPage.openAddContentWizard(contentTypeName,parentNames);
@@ -70,7 +70,7 @@ public class ContentService
 	{
 		
 		// 1. open a 'content manager'
-	    ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+	    ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 	    // click by "Select All" link and get a number of selected rows:
 	    return cmPage.doSelectAll();
 			
@@ -88,7 +88,7 @@ public class ContentService
 	public Page addContent(TestSession session, BaseAbstractContent newcontent, boolean isCloseWizard)
 	{
 		// 1. open a 'content manager'		
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		cmPage.doAddContent(newcontent, isCloseWizard);
 		if (isCloseWizard)
 		{
@@ -110,7 +110,7 @@ public class ContentService
 	public boolean doOpenContentVerifyPage(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(content);
 		
 		boolean result = contentInfoPage.verifyContentInfoPage(content);
@@ -122,7 +122,7 @@ public class ContentService
 	public void doOpenContent(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		cmPage.doOpenContent(content);
 		
 		
@@ -134,12 +134,12 @@ public class ContentService
 	 * @param session
 	 * @param contentToEdit
 	 * @param newcontent
-	 * @return {@link ContentGridPage} instance. Table of content.
+	 * @return {@link com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel} instance. Table of content.
 	 */
-	public ContentGridPage doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
+	public ContentBrowsePanel doOpenContentAndEdit(TestSession session,  BaseAbstractContent contentToEdit,BaseAbstractContent newcontent)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		contentInfoPage.doCloseContentInfoView();
@@ -182,7 +182,7 @@ public class ContentService
 	public ItemViewPanelPage doOpenContentUseToolbar(TestSession session, BaseAbstractContent content)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent(content);
 		return contentInfoPage;
 	}
@@ -190,7 +190,7 @@ public class ContentService
 	public ItemViewPanelPage doOpenContentUseContextMenu(TestSession session, BaseAbstractContent contentToDelete)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContentFromContextMenu(contentToDelete);
 		return contentInfoPage;
 	}
@@ -200,12 +200,12 @@ public class ContentService
 	 * 
 	 * @param session
 	 * @param contents 
-	 * @return {@link ContentGridPage} instance. Table of content.
+	 * @return {@link com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel} instance. Table of content.
 	 */
-	public ContentGridPage deleteContentUseToolbar(TestSession session,  List<BaseAbstractContent> contents)
+	public ContentBrowsePanel deleteContentUseToolbar(TestSession session,  List<BaseAbstractContent> contents)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
         // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
 		cmPage.doClearSelection();
 		cmPage.doDeleteContent(contents);
@@ -215,7 +215,7 @@ public class ContentService
 	public DeleteContentDialog selectContentClickDeleteInToolbar(TestSession session,  List<BaseAbstractContent> contents)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
         // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
 		return cmPage.openDeleteContentDialog(contents);
 		
@@ -227,12 +227,12 @@ public class ContentService
 	 * @param session
 	 * @param contentToUpdate
 	 * @param newContent
-	 * @return {@link ContentGridPage} instance. Table of content.
+	 * @return {@link com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel} instance. Table of content.
 	 */
-	public ContentGridPage updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
+	public ContentBrowsePanel updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
 	{
 
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		cmPage.doUpdateContent(contentToUpdate, newContent);
 		return cmPage;
 	}

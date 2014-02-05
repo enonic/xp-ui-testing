@@ -1,19 +1,19 @@
 package com.enonic.autotests.services;
 
-import java.util.List;
-
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.FilterContentPanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModified;
 import com.enonic.autotests.vo.Space;
+
+import java.util.List;
 
 public class ContentFilterService
 {
 	public void doClearFilter(TestSession session)
 	{
 	
-		ContentGridPage cmPage = new ContentGridPage(session);
+		ContentBrowsePanel cmPage = new ContentBrowsePanel(session);
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		filterPanel.doClearFilter();
 	}
@@ -21,7 +21,7 @@ public class ContentFilterService
 	public List<String> filterByQuery(TestSession session, String query)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		filterPanel.executeQuery(query);
 		List<String> names = cmPage.getShowedContentNames();
@@ -31,7 +31,7 @@ public class ContentFilterService
 	public List<String> filterByDate(TestSession session, FilterPanelLastModified dateRange)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		filterPanel.doFilterByDate(dateRange);
 		List<String> names = cmPage.getShowedContentNames();
@@ -50,7 +50,7 @@ public class ContentFilterService
 	public List<String> seletcSpaceAndCheckContent(TestSession session, Space space)
 	{
 		// 1. open a 'content manager'
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		// 2. select space in the search panel and filter by space-name:
 		filterPanel.doFilterBySpaceDisplayName(space.getDisplayName());
@@ -69,10 +69,10 @@ public class ContentFilterService
 	 * @param parentNames
 	 * @return
 	 */
-	public ContentGridPage doFilterContentByContentTypeName(TestSession session, String contentTypeName)
+	public ContentBrowsePanel doFilterContentByContentTypeName(TestSession session, String contentTypeName)
 	{
 		// 1. open CM application(if not opened yet)
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(session);
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 
 		FilterContentPanel filterPanel = cmPage.getContentFilter();
 		// 2. verify filtering: select content type in the search panel and try

@@ -1,8 +1,8 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.services.NavigatorHelper;
-import com.enonic.wem.uitest.BaseGebSpec;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.wem.uitest.BaseGebSpec
 
 class ToolbarSpec extends BaseGebSpec {
 	
@@ -12,7 +12,7 @@ class ToolbarSpec extends BaseGebSpec {
 		go "admin"
 
 		when:
-		ContentGridPage cmPage = NavigatorHelper.openContentApp(getTestSession());
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(getTestSession());
 
 		then:
 		!cmPage.isDeleteButtonEnabled();

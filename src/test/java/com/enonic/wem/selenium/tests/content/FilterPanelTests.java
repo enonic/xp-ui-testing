@@ -1,6 +1,6 @@
 package com.enonic.wem.selenium.tests.content;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
 import com.enonic.autotests.services.ContentFilterService;
 import com.enonic.autotests.vo.contentmanager.ArchiveContent;
@@ -25,7 +25,7 @@ public class FilterPanelTests extends BaseContentManagerTest
 		cManagerService.addContent(getTestSession(), archive, true);
 		
 		// 2. do filter by ContentType and verify, that only this type of content is present on the page:
-		ContentGridPage contentGrid = filterService.doFilterContentByContentTypeName(getTestSession(), archive.getContentTypeName());
+		ContentBrowsePanel contentGrid = filterService.doFilterContentByContentTypeName(getTestSession(), archive.getContentTypeName());
 		
 		boolean isContentFiltered = true;
 		boolean result = contentGrid.findContentInTable(archive, TEST_TIMEOUT, isContentFiltered );

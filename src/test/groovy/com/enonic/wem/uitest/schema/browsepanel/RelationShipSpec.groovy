@@ -1,16 +1,12 @@
 package com.enonic.wem.uitest.schema.browsepanel
-import java.util.Random;
-import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
-import com.enonic.autotests.vo.schemamanger.ContentType;
-import java.util.Random;
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
-import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
-import com.enonic.autotests.testdata.TestDataConvertor;
-import com.enonic.autotests.vo.schemamanger.ContentType;
-import spock.lang.Shared;
-import com.enonic.autotests.services.ContentTypeService;
-import com.enonic.wem.uitest.BaseGebSpec;
-import com.enonic.wem.uitest.schema.cfg.LinkRelationship;
+
+import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.services.ContentTypeService
+import com.enonic.autotests.vo.schemamanger.ContentType
+import com.enonic.wem.uitest.BaseGebSpec
+import com.enonic.wem.uitest.schema.cfg.LinkRelationship
+import spock.lang.Shared
 
 class RelationshipSpec extends BaseGebSpec {
 
@@ -26,7 +22,7 @@ class RelationshipSpec extends BaseGebSpec {
 		relationship.setDisplayNameInConfig("testrelationship");
 
 		when:
-		SchemaGridPage grid = (SchemaGridPage) contentTypeService.createContentType(getTestSession(), relationship, true);
+		SchemaBrowsePanel grid = (SchemaBrowsePanel) contentTypeService.createContentType(getTestSession(), relationship, true);
 
 		then:
 		grid.isContentTypePresentInTable(relationship);
@@ -40,7 +36,7 @@ class RelationshipSpec extends BaseGebSpec {
 		String relationshipName = "relationship" + Math.abs(new Random().nextInt());
 		ContentType relToDelete = ContentType.with().name(relationshipName).kind(KindOfContentTypes.RELATIONSHIP_TYPE).configuration(relCFG).build();
 		relToDelete.setDisplayNameInConfig("relationshiptodelete");	
-		SchemaGridPage schemasPage = (SchemaGridPage) contentTypeService.createContentType(getTestSession(), relToDelete, true);
+		SchemaBrowsePanel schemasPage = (SchemaBrowsePanel) contentTypeService.createContentType(getTestSession(), relToDelete, true);
 
 		when:
 		contentTypeService.deleteContentType(getTestSession(), relToDelete);

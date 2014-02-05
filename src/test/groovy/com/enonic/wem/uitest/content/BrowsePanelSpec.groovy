@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.ContentService
 import com.enonic.autotests.vo.contentmanager.*
 import com.enonic.wem.uitest.BaseGebSpec
@@ -25,7 +25,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -42,7 +42,7 @@ class BrowsePanelSpec extends BaseGebSpec
 //		when:
 //		List<BaseAbstractContent> contents = new ArrayList<>();
 //		contents.add(content);
-//		ContentGridPage grid = contentService.deleteContentUseToolbar(getTestSession(), contents);
+//		ContentBrowsePanel grid = contentService.deleteContentUseToolbar(getTestSession(), contents);
 //
 //		then:
 //		!grid.findContentInTable(content, 2l)
@@ -61,7 +61,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 		
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -78,7 +78,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -94,7 +94,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -110,7 +110,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -127,7 +127,7 @@ class BrowsePanelSpec extends BaseGebSpec
 
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -144,7 +144,7 @@ class BrowsePanelSpec extends BaseGebSpec
 
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -161,7 +161,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 	def "Given BrowsePanel When adding Page content Then the content should be listed in the table"() 
@@ -176,7 +176,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -192,7 +192,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
 
@@ -216,7 +216,7 @@ class BrowsePanelSpec extends BaseGebSpec
 	//		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
 	//
 	//		then:
-	//		ContentGridPage grid = new ContentGridPage(getTestSession())
+	//		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 	//		grid.findContentInTable(newcontent, 2l)
 	//
 	//
@@ -240,7 +240,7 @@ class BrowsePanelSpec extends BaseGebSpec
 	//		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
 	//
 	//		then:
-	//		ContentGridPage grid = new ContentGridPage(getTestSession())
+	//		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 	//		grid.findContentInTable(newcontent, 2l)
 	//
 	//

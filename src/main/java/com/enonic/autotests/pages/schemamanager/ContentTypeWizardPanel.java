@@ -72,7 +72,7 @@ public class ContentTypeWizardPanel extends WizardPanel
 		{
 			throw new CreateContentTypeException("New Content type was not created, Erorr dialog with error message appeared ");
 		}
-		SchemaGridPage page = new SchemaGridPage(getSession());
+		SchemaBrowsePanel page = new SchemaBrowsePanel(getSession());
 		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
 
 	}

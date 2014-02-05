@@ -1,18 +1,14 @@
 package com.enonic.wem.uitest.content
 
-import java.util.ArrayList;
-import java.util.List;
-
-import spock.lang.Shared;
-import spock.lang.Stepwise;
-
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
-import com.enonic.autotests.services.ContentService;
-import com.enonic.autotests.services.ContentService.HowOpenContent;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-import com.enonic.autotests.vo.contentmanager.FolderContent;
-import com.enonic.wem.uitest.BaseGebSpec;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
+import com.enonic.autotests.services.ContentService
+import com.enonic.autotests.services.ContentService.HowOpenContent
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
+import com.enonic.autotests.vo.contentmanager.FolderContent
+import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Shared
+import spock.lang.Stepwise
 
 @Stepwise
 class BrowsePanelDeleteContentSpec extends BaseGebSpec
@@ -34,7 +30,7 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 		view.doDeleteContent(content.getDisplayName())
 		
 		then:
-		ContentGridPage grid = new ContentGridPage(getTestSession())
+		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		!grid.findContentInTable(content,2l)
 	}
 
@@ -50,7 +46,7 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 		contentList.add(content);
 		
 		when:
-		ContentGridPage page = contentService.deleteContentUseToolbar(getTestSession(), contentList)
+		ContentBrowsePanel page = contentService.deleteContentUseToolbar(getTestSession(), contentList)
 		
 		then:
 		!page.findContentInTable(content, 3l)
@@ -73,7 +69,7 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 		contentList.add(content2);
 		
 		when:
-		ContentGridPage page = contentService.deleteContentUseToolbar(getTestSession(), contentList)
+		ContentBrowsePanel page = contentService.deleteContentUseToolbar(getTestSession(), contentList)
 		
 		then:
 		!page.findContentInTable(content1, 2l) && 	!page.findContentInTable(content2, 2l)

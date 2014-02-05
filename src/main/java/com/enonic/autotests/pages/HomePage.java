@@ -1,16 +1,15 @@
 package com.enonic.autotests.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.accounts.AccountsPage;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.pages.schemamanager.SchemaGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.TestUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * Page Object for 'Home' page. Version 5.0
@@ -82,7 +81,7 @@ public class HomePage extends Page
 		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
 
 	}
-	public SchemaGridPage openSchemaManagerApplication()
+	public SchemaBrowsePanel openSchemaManagerApplication()
 	{
 		schemaManager.click();
 		
@@ -90,18 +89,18 @@ public class HomePage extends Page
 		getSession().setWindowHandle(whandle);
 		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_SCHEMA_MANAGER_FRAME_XPATH);
 		
-		return new SchemaGridPage(getSession());
+		return new SchemaBrowsePanel(getSession());
 	}
 
 	
-	public ContentGridPage openContentManagerApplication()
+	public ContentBrowsePanel openContentManagerApplication()
 	{
 		contentManager.click();
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
 		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_CONTENT_MANAGER_FRAME_XPATH);
 		
-		return new ContentGridPage(getSession());
+		return new ContentBrowsePanel(getSession());
 	}
 
 	public AccountsPage openAccountsApplication()

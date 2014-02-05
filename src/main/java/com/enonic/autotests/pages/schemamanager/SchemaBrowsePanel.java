@@ -2,7 +2,7 @@ package com.enonic.autotests.pages.schemamanager;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.AbstractGridPage;
+import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 import org.openqa.selenium.By;
@@ -18,7 +18,7 @@ import java.util.List;
  * 'Schema Manager' application, the dashboard page.
  * 
  */
-public class SchemaGridPage extends AbstractGridPage
+public class SchemaBrowsePanel extends BrowsePanel
 {
 	private static String titleXpath = "//button[contains(@class,'home-button') and contains(.,'Schema Manager')]"; 
 
@@ -64,7 +64,7 @@ public class SchemaGridPage extends AbstractGridPage
 	 * 
 	 * @param session
 	 */
-	public SchemaGridPage( TestSession session )
+	public SchemaBrowsePanel(TestSession session)
 	{
 		super(session);
 
