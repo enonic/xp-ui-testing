@@ -1,14 +1,13 @@
 package com.enonic.wem.selenium.tests.content;
 
-import java.util.Random;
-
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
+import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.autotests.services.ContentFilterService;
+import com.enonic.autotests.vo.contentmanager.ArchiveContent;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
-import com.enonic.autotests.services.ContentFilterService;
-import com.enonic.autotests.vo.contentmanager.ArchiveContent;
+import java.util.Random;
 
 public class FilterPanelTests extends BaseContentManagerTest
 {

@@ -1,31 +1,11 @@
 package com.enonic.wem.uitest.content
 
-import java.util.Random;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
-import com.enonic.autotests.vo.contentmanager.StructuredContent;
-import spock.lang.Shared;
-import spock.lang.Stepwise;
-
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
-import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
-import com.enonic.autotests.services.ContentService;
-import com.enonic.autotests.vo.contentmanager.ArchiveContent;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-import com.enonic.autotests.vo.contentmanager.CitationContent;
-import com.enonic.autotests.vo.contentmanager.DataContent;
-import com.enonic.autotests.vo.contentmanager.FolderContent;
-import com.enonic.autotests.vo.contentmanager.MediaContent;
-import com.enonic.autotests.vo.contentmanager.MixinContent;
-import com.enonic.autotests.vo.contentmanager.PageContent;
-import com.enonic.autotests.vo.contentmanager.ShortcutContent;
-import com.enonic.autotests.vo.contentmanager.StructuredContent;
-import com.enonic.autotests.vo.contentmanager.TextContent;
-import com.enonic.autotests.vo.contentmanager.UnstructuredContent;
-import com.enonic.wem.uitest.BaseGebSpec;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage
+import com.enonic.autotests.services.ContentService
+import com.enonic.autotests.vo.contentmanager.*
+import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Shared
+import spock.lang.Stepwise
 
 @Stepwise
 class BrowsePanelSpec extends BaseGebSpec 

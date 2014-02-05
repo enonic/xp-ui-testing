@@ -1,15 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
@@ -19,6 +9,15 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPag
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 'Content Manager' application, the dashboard page.
@@ -439,15 +438,15 @@ public class ContentGridPage extends AbstractGridPage
 			boolean isNewEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(NEW_BUTTON_XPATH), 2l);
 			if (!isNewEnabled)
 			{
-				throw new SaveOrUpdateException("CM application, impossible to open SelectContentTypeDialog, because the 'New' button is disabled!");
+				throw new SaveOrUpdateException("CM application, impossible to open NewContentDialog, because the 'New' button is disabled!");
 			}
 		}
 		newButton.click();
-		SelectContentTypeDialog selectDialog = new SelectContentTypeDialog(getSession());
+		NewContentDialog selectDialog = new NewContentDialog(getSession());
 		boolean isOpened = selectDialog.isOpened();
 		if (!isOpened)
 		{
-			getLogger().error("SelectContentTypeDialog was not opened!", getSession());
+			getLogger().error("NewContentDialog was not opened!", getSession());
 			if(parentNames != null)
 			{
 				throw new TestFrameworkException(String.format("Error during add content to space %s, dialog was not opened!"));
@@ -456,7 +455,7 @@ public class ContentGridPage extends AbstractGridPage
 				throw new TestFrameworkException("Error during add content to the root, dialog was not opened!");
 			}
 		}
-		getLogger().info("SelectContentTypeDialog, content type should be selected:" + contentTypeName);
+		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
 		AddContentWizardPage wizard = selectDialog.selectContentType(contentTypeName);
 		return wizard;
 	}

@@ -1,17 +1,16 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
-import org.openqa.selenium.By;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.AddContentWizardPage;
 import com.enonic.autotests.utils.TestUtils;
+import org.openqa.selenium.By;
 
 /**
  * Content Manager application/add new content/select content type
  *
  */
-public class SelectContentTypeDialog
+public class NewContentDialog
 {
 	private final static String DIALOG_TITLE_XPATH = "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
 	
@@ -25,7 +24,7 @@ public class SelectContentTypeDialog
 	 * 
 	 * @param session
 	 */
-	public SelectContentTypeDialog(TestSession session)
+	public NewContentDialog(TestSession session)
 	{
 		this.session = session;
 	}
