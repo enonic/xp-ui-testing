@@ -13,7 +13,7 @@ public class ConfirmationDialog
 
 	public static final String YES_BUTTON_XPATH = "//div[@class='modal-dialog confirmation-dialog']//div[@class='button-row']//button[text()='Yes']";
 	
-	private final String TITLE_XPATH = "//div[contains(@class,'confirmation-dialog')]//h2[contains(.,'Confirmation')]";
+	private final String TITLE_XPATH = "//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-header' and contains(.,'Confirmation')]";
 	
 	private TestSession session;
 	
@@ -33,6 +33,7 @@ public class ConfirmationDialog
 	
 	public boolean verifyIsOpened()
 	{
+		boolean res = TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath("//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-header' and contains(.,'Confirmation')]"), 2);
 		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(TITLE_XPATH), 2);
 	}
 

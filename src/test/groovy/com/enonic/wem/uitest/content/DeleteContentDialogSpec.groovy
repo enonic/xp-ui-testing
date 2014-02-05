@@ -6,7 +6,7 @@ import spock.lang.Shared;
 import spock.lang.Stepwise;
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
-import com.enonic.autotests.services.ContentManagerService;
+import com.enonic.autotests.services.ContentService;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 import com.enonic.autotests.vo.contentmanager.FolderContent;
 import com.enonic.wem.uitest.BaseGebSpec;
@@ -15,7 +15,7 @@ import com.enonic.wem.uitest.BaseGebSpec;
 class DeleteContentDialogSpec extends BaseGebSpec 
 {
 
-	@Shared ContentManagerService contentService = new ContentManagerService()
+	@Shared ContentService contentService = new ContentService()
 	@Shared String CONTENT_TO_DELETE_KEY = "deletecomntent_dialog_test"
 
 	def "setup: add a folder-content"() 

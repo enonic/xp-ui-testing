@@ -12,7 +12,7 @@ import spock.lang.Stepwise;
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentGridPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.SelectContentTypeDialog.ContentTypeName;
-import com.enonic.autotests.services.ContentManagerService;
+import com.enonic.autotests.services.ContentService;
 import com.enonic.autotests.vo.contentmanager.ArchiveContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 import com.enonic.autotests.vo.contentmanager.CitationContent;
@@ -33,13 +33,13 @@ class BrowsePanelSpec extends BaseGebSpec
 	@Shared String REPONAME = "test-folder";
 	@Shared String FULL_REPONAME = "/"+REPONAME;
 
-	@Shared ContentManagerService contentService = new ContentManagerService();
+	@Shared ContentService contentService = new ContentService();
 
 	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
 	{		
 		given:
 		go "admin"		
-		
+	
 		when:
 		BaseAbstractContent content = FolderContent.builder().withName(REPONAME).withDisplayName(REPONAME).build();
 		contentService.addContent(getTestSession(), content, true)

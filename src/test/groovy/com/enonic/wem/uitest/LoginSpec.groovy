@@ -3,7 +3,7 @@ package com.enonic.wem.uitest
 import spock.lang.Shared;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
-import com.enonic.autotests.services.ContentManagerService;
+import com.enonic.autotests.services.ContentService;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 import com.enonic.autotests.vo.contentmanager.FolderContent;
 import geb.spock.GebSpec

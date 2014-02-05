@@ -17,7 +17,7 @@ import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
  * Service for 'Content Manager' application.
  * 
  */
-public class ContentManagerService
+public class ContentService
 {
 
 	private Logger logger = Logger.getLogger();
@@ -147,34 +147,29 @@ public class ContentManagerService
 		return cmPage;
 	}
 	
-	/**
-	 * Finds a content, open preview for this content and click by "Delete" and confirm.
-	 * @param session
-	 * @param contentToDelete
-	 * @return {@link ContentGridPage} instance. Table of content.
-	 */
-	public ContentGridPage doOpenContentAndDelete(TestSession session, BaseAbstractContent contentToDelete, HowOpenContent how)
+	
+	public ItemViewPanelPage doOpenContent(TestSession session, BaseAbstractContent content, HowOpenContent how)
 	{
 		ItemViewPanelPage contentInfoPage;
 		switch (how)
 		{
 		case TOOLBAR:
 		{
-			contentInfoPage = doOpenContentUseToolbar(session, contentToDelete);
+			contentInfoPage = doOpenContentUseToolbar(session, content);
 			break;
 		}
 		case CONTEXT_MENU:
 		{
-			contentInfoPage = doOpenContentUseContextMenu(session, contentToDelete);
+			contentInfoPage = doOpenContentUseContextMenu(session, content);
 			break;
 		}
 		default:
-			contentInfoPage = doOpenContentUseToolbar(session, contentToDelete);
+			contentInfoPage = doOpenContentUseToolbar(session, content);
 			break;
 		}
 
-		contentInfoPage.doDeleteContent(contentToDelete.getDisplayName());
-		return new ContentGridPage(session);
+		
+		return contentInfoPage;
 	}
 	
 	

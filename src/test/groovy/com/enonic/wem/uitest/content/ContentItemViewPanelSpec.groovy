@@ -5,7 +5,7 @@ import org.testng.Assert;
 import spock.lang.Shared
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
-import com.enonic.autotests.services.ContentManagerService
+import com.enonic.autotests.services.ContentService
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.autotests.vo.contentmanager.StructuredContent;
@@ -14,7 +14,7 @@ import com.enonic.wem.uitest.BaseGebSpec
 class ContentItemViewPanelSpec extends BaseGebSpec
 {
 	
-	@Shared ContentManagerService contentService = new ContentManagerService();
+	@Shared ContentService contentService = new ContentService();
 	
 	def "Given content App BrowsePanel and existing content When content selected and Open button have clicked Then title with content display-name showed"()
 	{	

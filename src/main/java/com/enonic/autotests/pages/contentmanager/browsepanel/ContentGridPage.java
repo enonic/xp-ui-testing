@@ -43,9 +43,6 @@ public class ContentGridPage extends AbstractGridPage
 	@FindBy(xpath = SEARCH_INPUT_XPATH)
 	private WebElement searchInput;
 
-	
-
-	//private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/../td[contains(@class,'x-grid-cell-row-checker')]/div";
 	private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/..//div[@class='x-grid-row-checker']";
 
 	private String DIV_CONTENT_NAME_IN_TABLE = "//div[contains(@class,'x-grid-cell-inner ')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
@@ -178,6 +175,8 @@ public class ContentGridPage extends AbstractGridPage
 	public void doDeleteContent(List<BaseAbstractContent> contents)
 	{
 		String[] parents = contents.get(0).getParentNames();
+		if(parents != null)
+		{
 		// 1. expand all spaces
 		for (int i = 0; i < parents.length; i++)
 		{
@@ -187,6 +186,7 @@ public class ContentGridPage extends AbstractGridPage
 						+ parents[i] + " , has no child ! ");
 			}
 		}
+		}	
 
 		// 2. check for existence and select a content to delete.
 		selectContentInTable(contents, parents);
@@ -414,6 +414,19 @@ public class ContentGridPage extends AbstractGridPage
 			
 			//boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
 			boolean isPresentCheckbox = TestUtils.getInstance().isDynamicElementPresent(getDriver(), By.xpath(spaceCheckBoxXpath), 3);
+			
+			//TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
+			if (!isPresentCheckbox)
+			{
+				getDriver().navigate().refresh();
+				try
+				{
+					Thread.sleep(2000);
+				} catch (InterruptedException e)
+				{
+				}
+			}
+			isPresentCheckbox = TestUtils.getInstance().isDynamicElementPresent(getDriver(), By.xpath(spaceCheckBoxXpath), 3);
 			if (!isPresentCheckbox)
 			{
 				TestUtils.getInstance().saveScreenshot(getSession());
