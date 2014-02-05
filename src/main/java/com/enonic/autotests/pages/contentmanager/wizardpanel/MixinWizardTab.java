@@ -4,13 +4,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.pages.Page;
+import com.enonic.autotests.pages.Application;
 
 /**
  * Add new content wizard, Mixin Tab.
  * 
  */
-public class MixinWizardTab extends Page
+public class MixinWizardTab extends Application
 {
 
 	String adressBlock = "//div[contains(@class,admin-formitemset-container) and descendant::input[@name='street'] and descendant::input[@name='postalCode']]";

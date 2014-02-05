@@ -1,20 +1,20 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.DeleteCMSObjectException;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import java.util.List;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.DeleteCMSObjectException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
-public class ItemViewPanelPage extends Page
+public class ItemViewPanelPage extends Application
 {
 	
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
@@ -53,11 +53,6 @@ public class ItemViewPanelPage extends Page
 		
 	}
 
-	public ItemViewPanelPage( WebDriver driver )
-	{
-		super(driver);
-		
-	}
 
 	/**
 	 * Verify that red circle and "New Space" message presented on the top of

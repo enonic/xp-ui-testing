@@ -19,7 +19,6 @@ public class HomePage extends Page
 {
 	public static String TITLE = "Enonic CMS - Boot Page";
 
-	//@FindBy(xpath = "//div[@class = 'name-container' and text()='Content Manager']")
 	@FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
 	private WebElement contentManager;
 	

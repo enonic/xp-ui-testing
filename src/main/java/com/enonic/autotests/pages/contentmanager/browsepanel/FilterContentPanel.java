@@ -10,10 +10,10 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Page;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.TestUtils;
 
-public class FilterContentPanel extends Page
+public class FilterContentPanel extends Application
 {
 	private final String CLEAR_FILTER_LINK = "Clear filter";
 	

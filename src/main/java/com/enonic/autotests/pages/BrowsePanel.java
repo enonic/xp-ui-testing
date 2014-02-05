@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class BrowsePanel extends Page
+public class BrowsePanel extends Application
 {
 
 	protected  final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";

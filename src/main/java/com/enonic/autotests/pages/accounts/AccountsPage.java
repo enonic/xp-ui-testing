@@ -13,6 +13,7 @@ import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.CreateUserException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.User;
@@ -21,7 +22,7 @@ import com.enonic.autotests.vo.User;
  * 'Accounts' application, the dashboard page.
  * 
  */
-public class AccountsPage extends Page
+public class AccountsPage extends Application
 {
 	@FindBy(xpath = "//span[@class = 'x-btn-inner' and text()='Accounts']")
 	private WebElement titleElement;

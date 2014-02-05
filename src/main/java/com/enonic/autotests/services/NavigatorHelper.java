@@ -1,19 +1,20 @@
 package com.enonic.autotests.services;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
-import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.User;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class NavigatorHelper
 {
@@ -33,12 +34,12 @@ public class NavigatorHelper
 			{
 				return new ContentBrowsePanel(testSession);
 			}
-			boolean isHomeButtonPresent = TestUtils.getInstance().waitAndFind(By.xpath(Page.HOME_BUTTON_XPATH), testSession.getDriver());
+			boolean isHomeButtonPresent = TestUtils.getInstance().waitAndFind(By.xpath(Application.HOME_BUTTON_XPATH), testSession.getDriver());
 			if (!isHomeButtonPresent)
 			{
 				throw new TestFrameworkException("'go to home' button was not found");
 			}
-			testSession.getDriver().findElement(By.xpath(Page.HOME_BUTTON_XPATH)).click();
+			testSession.getDriver().findElement(By.xpath(Application.HOME_BUTTON_XPATH)).click();
 			HomePage homepage = new HomePage(testSession);
 			testSession.getDriver().switchTo().window(testSession.getWindowHandle());
 			homepage.openContentManagerApplication();

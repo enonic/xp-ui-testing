@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Base class for wizards.
  *
  */
-public abstract class WizardPanel extends Page {
+public abstract class WizardPanel extends Application {
 
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
