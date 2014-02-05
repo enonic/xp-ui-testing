@@ -388,28 +388,28 @@ public class ContentBrowsePanel extends BrowsePanel
 	 * @param ctype
 	 * @return
 	 */
-	public ContentWizardPanel openContentWizardPanel(String contentTypeName, String... parentNames)
+	public ContentWizardPanel openContentWizardPanel(String contentTypeName, String... contentPath)
 	{
-		String parentName = null;
-		if (parentNames != null)
+		String contentName = null;
+		if (contentPath != null)
 		{
-			parentName = parentNames[parentNames.length - 1];
+			contentName = contentPath[contentPath.length - 1];
 			// if parentNames.length == 0, so no need to expand space, new
 			// content will be added to the root folder
-			if (parentNames.length > 1)
+			if (contentPath.length > 1)
 			{
-				for (int i = 0; i < parentNames.length - 1; i++)
+				for (int i = 0; i < contentPath.length - 1; i++)
 				{
-					if (!doExpandFolder(parentNames[i]))
+					if (!doExpandFolder(contentPath[i]))
 					{
-						throw new TestFrameworkException("Impossible to add content to the  " + parentName + "wrong path to the parent, because "
-								+ parentNames[i] + " , has no child ! ");
+						throw new TestFrameworkException("Impossible to add content to the  " + contentName + "wrong path to the parent, because "
+								+ contentPath[i] + " , has no child ! ");
 					}
 				}
 			}
 
 			// 1. select a checkbox and press the 'New' from toolbar.
-			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentName);
+			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, contentName);
 			
 			//boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
 			boolean isPresentCheckbox = TestUtils.getInstance().isDynamicElementPresent(getDriver(), By.xpath(spaceCheckBoxXpath), 3);
@@ -429,7 +429,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			if (!isPresentCheckbox)
 			{
 				TestUtils.getInstance().saveScreenshot(getSession());
-				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentName + " was not found!");
+				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + contentName + " was not found!");
 			}
 			WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
 
@@ -447,7 +447,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		if (!isOpened)
 		{
 			getLogger().error("NewContentDialog was not opened!", getSession());
-			if(parentNames != null)
+			if(contentPath != null)
 			{
 				throw new TestFrameworkException(String.format("Error during add content to space %s, dialog was not opened!"));
 			}else
