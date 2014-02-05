@@ -16,4 +16,12 @@ public class Application extends Page
 		super(session);
 	}
 
+	public HomePage openHomePage()
+	{
+		gotoHomeButton.click();
+		HomePage page = new HomePage(getSession());
+		page.waitUntilAllFramesLoaded();
+		return page;
+	}
+
 }

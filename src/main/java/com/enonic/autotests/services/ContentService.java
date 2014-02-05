@@ -44,7 +44,7 @@ public class ContentService
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
-		ContentWizardPanel wizardPage = cmPage.openAddContentWizard(contentTypeName,parentNames);
+		ContentWizardPanel wizardPage = cmPage.openContentWizardPanel(contentTypeName,parentNames);
 		String expectedTitle = String.format(ContentWizardPanel.START_WIZARD_TITLE, contentTypeName);
 		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = wizardPage.getTitle().equalsIgnoreCase(expectedTitle);

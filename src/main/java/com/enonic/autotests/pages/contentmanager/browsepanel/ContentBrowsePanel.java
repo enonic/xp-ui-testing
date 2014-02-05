@@ -343,7 +343,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	{
 		String[] parents = content.getParentNames();
 		
-		ContentWizardPanel wizard = openAddContentWizard(content.getContentTypeName(), parents);
+		ContentWizardPanel wizard = openContentWizardPanel(content.getContentTypeName(), parents);
 		
 		if (isCloseWizard)
 		{
@@ -388,7 +388,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	 * @param ctype
 	 * @return
 	 */
-	public ContentWizardPanel openAddContentWizard(String contentTypeName, String... parentNames)
+	public ContentWizardPanel openContentWizardPanel(String contentTypeName, String... parentNames)
 	{
 		String parentName = null;
 		if (parentNames != null)
