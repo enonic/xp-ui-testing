@@ -10,7 +10,7 @@ class MixinWizardSpec extends BaseGebSpec {
 
 	@Shared ContentTypeService contentTypeService = new ContentTypeService();
 	
-	def "Given schema appa exist mixin, mixin-wizard opened When typing very long name Then input field width increases"(){
+	def "Given schema app and existing mixin, mixin-wizard opened When typing very long name Then input field width increases"(){
 		
 		given:
 		go "admin"
