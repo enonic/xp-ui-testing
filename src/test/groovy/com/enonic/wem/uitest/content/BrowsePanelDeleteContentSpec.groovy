@@ -17,7 +17,7 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 	@Shared ContentService contentService = new ContentService()
 	@Shared String DELETE_CONTENT_KEY = "deletecontent_test"
 
-	def "Given BrowsePanel and existing content, when content opened and delete button pressed Then the content should not be listed in the table"()
+	def "Given existing content, when content opened and delete button pressed Then the content should not be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -34,7 +34,7 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 		!grid.findContentInTable(content,2l)
 	}
 
-	def "Given BrowsePanel and existing content, when content selected and delete button pressed Then the content should not be listed in the table"()
+	def "Given existing content, when content selected and delete button pressed Then the content should not be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -52,7 +52,7 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 		!page.findContentInTable(content, 3l)
 	}
 	
-	def "Given BrowsePanel and existing two contents, when all content selected and delete button pressed Then the content should not be listed in the table"()
+	def "Given existing two contents, when all content selected and delete button pressed Then the content should not be listed in the table"()
 	{
 		given:
 		go "admin"

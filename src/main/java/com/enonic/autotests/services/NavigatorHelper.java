@@ -5,7 +5,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
@@ -13,7 +12,7 @@ import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.vo.User;
 
 public class NavigatorHelper
@@ -34,7 +33,7 @@ public class NavigatorHelper
 			{
 				return new ContentBrowsePanel(testSession);
 			}
-			boolean isHomeButtonPresent = TestUtils.getInstance().waitAndFind(By.xpath(Application.HOME_BUTTON_XPATH), testSession.getDriver());
+			boolean isHomeButtonPresent = SleepWaitHelper.waitAndFind(By.xpath(Application.HOME_BUTTON_XPATH), testSession.getDriver());
 			if (!isHomeButtonPresent)
 			{
 				throw new TestFrameworkException("'go to home' button was not found");
@@ -51,7 +50,7 @@ public class NavigatorHelper
 
 			HomePage home = loginAndOpenHomePage(testSession);
 			ContentBrowsePanel cmPage = home.openContentManagerApplication();
-			cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
+			cmPage.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 			return cmPage;
 		}
 
@@ -66,7 +65,7 @@ public class NavigatorHelper
 		{
 			HomePage home = loginAndOpenHomePage(testSession);
 			SchemaBrowsePanel schemasPage = home.openSchemaManagerApplication();
-			schemasPage.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
+			schemasPage.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 			return schemasPage;
 		}
 

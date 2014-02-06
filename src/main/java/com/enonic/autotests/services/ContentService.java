@@ -1,8 +1,10 @@
 package com.enonic.autotests.services;
 
-import com.enonic.autotests.AppConstants;
+import java.util.List;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.logger.Logger;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
@@ -10,8 +12,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-
-import java.util.List;
 
 /**
  * Service for 'Content Manager' application.
@@ -143,7 +143,7 @@ public class ContentService
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		contentInfoPage.doCloseContentInfoView();
-		cmPage.waituntilPageLoaded(AppConstants.PAGELOAD_TIMEOUT);
+		cmPage.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 		return cmPage;
 	}
 	

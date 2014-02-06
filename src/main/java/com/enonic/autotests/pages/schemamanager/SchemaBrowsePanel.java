@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.schemamanager;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 import org.openqa.selenium.By;
@@ -83,23 +84,16 @@ public class SchemaBrowsePanel extends BrowsePanel
 		getLogger().info("Check that a Content Type to edit is present in the table: " + contentTypeToEdit.getName());
 		
 		//3. click by 'Edit' button on toolbar
-		WebElement elem = TestUtils.getInstance().getDynamicElement(getDriver(), By.xpath(contentTypeXpath), 3);
+		WebElement elem = getDynamicElement(By.xpath(contentTypeXpath), 3);
 	    if(elem==null)
 	    {
 	    	throw new TestFrameworkException("element was not found:"+ contentTypeXpath);
 	    }
 			
-		try
-		{
-			Thread.sleep(500);
-		} catch (InterruptedException e)
-		{
-			
-			e.printStackTrace();
-		}
+	    SleepWaitHelper.sleep(500);
 		elem.click();
 		getLogger().info("content type with name:" +contentTypeToEdit.getName() +" was selected in the table!");
-		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
+		SleepWaitHelper.waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
 		editButton.click();
 		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
 		getLogger().info("## ContentTypeWizardPanel  should be opened, waits title: " + contentTypeToEdit.getName());
@@ -121,23 +115,16 @@ public class SchemaBrowsePanel extends BrowsePanel
 		getLogger().info("Check that a Content Type to edit is present in the table: " + contentTypeToEdit.getName());
 		
 		//3. click by 'Edit' button on toolbar
-		WebElement elem = TestUtils.getInstance().getDynamicElement(getDriver(), By.xpath(contentTypeXpath), 3);
+		WebElement elem = getDynamicElement(By.xpath(contentTypeXpath), 3);
 	    if(elem==null)
 	    {
 	    	throw new TestFrameworkException("element was not found:"+ contentTypeXpath);
 	    }
 			
-		try
-		{
-			Thread.sleep(500);
-		} catch (InterruptedException e)
-		{
-			
-			e.printStackTrace();
-		}
+	    SleepWaitHelper.sleep(500);
 		elem.click();
 		getLogger().info("content type with name:" +contentTypeToEdit.getName() +" was selected in the table!");
-		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
+		SleepWaitHelper.waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
 		editButton.click();
 		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
 		wizard.waitUntilWizardOpened( 1);
@@ -159,25 +146,18 @@ public class SchemaBrowsePanel extends BrowsePanel
 		  doExpandFolder(supertype);
 		}
 		String ctypeXpath = String.format(CONTENTTYPE_TABLE_ROW, contentTypeToDelete.getDisplayNameFromConfig(), contentTypeToDelete.getName());
-        boolean isContentTypePresent = TestUtils.getInstance().waitElementExist(getDriver(), ctypeXpath, 3);
+        boolean isContentTypePresent = SleepWaitHelper.waitElementExist(getDriver(), ctypeXpath, 3);
 		
 		if(!isContentTypePresent)
 		{
 			throw new TestFrameworkException("content type with name "+isContentTypePresent +" was not found!");
 		}
 		
-		try
-		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		SleepWaitHelper.sleep(1000);
 		//2. click by a contenttype
 		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), getDriver());		
 		//3. wait for deleteButton(in toolbar) is enabled
-		TestUtils.getInstance().waitUntilElementEnabled(getSession(), By.xpath(DELETE_BUTTON_XPATH));
+		SleepWaitHelper.waitUntilElementEnabled(getSession(), By.xpath(DELETE_BUTTON_XPATH));
 		//4. click by 'delete' button
 		deleteButton.click();
 		

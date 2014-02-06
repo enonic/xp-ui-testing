@@ -1,14 +1,8 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
-import com.enonic.autotests.AppConstants;
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.BrowsePanel;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -16,8 +10,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
+import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
 /**
  * 'Content Manager' application, the dashboard page.
@@ -142,7 +143,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), parents);
 		getLogger().info("Full name of content: "+ fullName);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);
-		boolean result = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(contentDescriptionXpath), timeout);
+		boolean result = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(contentDescriptionXpath), timeout);
 		if (result)
 		{
 			getLogger().info("The Content  was found in the Table! name:" + content.getDisplayName());
@@ -192,7 +193,7 @@ public class ContentBrowsePanel extends BrowsePanel
 
 	
 		// 3. check if enabled 'Delete' link.
-		boolean isEnabledDeleteButton = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(DELETE_BUTTON_XPATH), 2l);
+		boolean isEnabledDeleteButton = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath(DELETE_BUTTON_XPATH), 2l);
 		if (!isEnabledDeleteButton)
 		{
 			throw new SaveOrUpdateException("CM application, impossible to delete content, because the 'Delete' button is disabled!");
@@ -233,13 +234,12 @@ public class ContentBrowsePanel extends BrowsePanel
 		}
 		}
 	
-
 		// 2. check for existence and select a content to delete.
 		selectContentInTable(contents, parents);
 
 		
 		// 3. check if enabled 'Delete' link.
-		boolean isEnabledDeleteButton = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(DELETE_BUTTON_XPATH), 2l);
+		boolean isEnabledDeleteButton = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath(DELETE_BUTTON_XPATH), 2l);
 		if (!isEnabledDeleteButton)
 		{
 			throw new SaveOrUpdateException("CM application, impossible to delete content, because the 'Delete' button is disabled!");
@@ -296,18 +296,12 @@ public class ContentBrowsePanel extends BrowsePanel
 		getLogger().info("tries to find the content in a table, fullName of content is :" + fullName);
 	
 		getLogger().info("Xpath of checkbox for content is :" + contentCheckBoxXpath);
-		boolean isPresent = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(contentCheckBoxXpath), 3l);
+		boolean isPresent = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(contentCheckBoxXpath), 3l);
 		if(!isPresent)
 		{
 			throw new SaveOrUpdateException("checkbox for content with name : "+ content.getName() + "was not found");
 		}
-		try
-		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			
-		}
+		SleepWaitHelper.sleep(1000);
 		findElement(By.xpath(contentCheckBoxXpath)).click();
 
 	}
@@ -390,52 +384,46 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	public ContentWizardPanel openContentWizardPanel(String contentTypeName, String... contentPath)
 	{
-		String contentName = null;
+		String parentContent = null;
 		if (contentPath != null)
 		{
-			contentName = contentPath[contentPath.length - 1];
-			// if parentNames.length == 0, so no need to expand space, new
-			// content will be added to the root folder
+			parentContent = contentPath[contentPath.length - 1];
+			// if contentPath.length == 0, so no need to expand space, new content will be added to the root folder
 			if (contentPath.length > 1)
 			{
 				for (int i = 0; i < contentPath.length - 1; i++)
 				{
 					if (!doExpandFolder(contentPath[i]))
 					{
-						throw new TestFrameworkException("Impossible to add content to the  " + contentName + "wrong path to the parent, because "
+						throw new TestFrameworkException("Impossible to add content to the  " + parentContent + "wrong path to the parent, because "
 								+ contentPath[i] + " , has no child ! ");
 					}
 				}
 			}
 
 			// 1. select a checkbox and press the 'New' from toolbar.
-			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, contentName);
+			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentContent);
 			
 			//boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
-			boolean isPresentCheckbox = TestUtils.getInstance().isDynamicElementPresent(getDriver(), By.xpath(spaceCheckBoxXpath), 3);
+			boolean isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			
 			//TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
 			if (!isPresentCheckbox)
 			{
 				getDriver().navigate().refresh();
-				try
-				{
-					Thread.sleep(2000);
-				} catch (InterruptedException e)
-				{
-				}
+				SleepWaitHelper.sleep(2000);
 			}
-			isPresentCheckbox = TestUtils.getInstance().isDynamicElementPresent(getDriver(), By.xpath(spaceCheckBoxXpath), 3);
+			isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			if (!isPresentCheckbox)
 			{
 				TestUtils.getInstance().saveScreenshot(getSession());
-				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + contentName + " was not found!");
+				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContent + " was not found!");
 			}
 			WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
 
 			checkboxElement.click();
 			//selectRowByContentDisplayName(parentName);
-			boolean isNewEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath(NEW_BUTTON_XPATH), 2l);
+			boolean isNewEnabled = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath(NEW_BUTTON_XPATH), 2l);
 			if (!isNewEnabled)
 			{
 				throw new SaveOrUpdateException("CM application, impossible to open NewContentDialog, because the 'New' button is disabled!");
@@ -447,13 +435,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		if (!isOpened)
 		{
 			getLogger().error("NewContentDialog was not opened!", getSession());
-			if(contentPath != null)
-			{
-				throw new TestFrameworkException(String.format("Error during add content to space %s, dialog was not opened!"));
-			}else
-			{
-				throw new TestFrameworkException("Error during add content to the root, dialog was not opened!");
-			}
+			throw new TestFrameworkException("Error during add content, NewContentDialog dialog was not opened!");
 		}
 		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
 		ContentWizardPanel wizard = newContentDialog.selectContentType(contentTypeName);
@@ -462,7 +444,7 @@ public class ContentBrowsePanel extends BrowsePanel
 
 	public ItemViewPanelPage doOpenContent(BaseAbstractContent content)
 	{
-		boolean isPresent = findContentInTable(content, AppConstants.IMPLICITLY_WAIT);
+		boolean isPresent = findContentInTable(content, IMPLICITLY_WAIT);
 		if (!isPresent)
 		{
 			throw new TestFrameworkException("The content with name " + content.getName() + " and displayName:" + content.getDisplayName()
@@ -547,7 +529,7 @@ public class ContentBrowsePanel extends BrowsePanel
 
 	public boolean verifyTitle()
 	{
-		return TestUtils.getInstance().waitAndFind(By.xpath(TITLE_XPATH), getDriver());
+		return SleepWaitHelper.waitAndFind(By.xpath(TITLE_XPATH), getDriver());
 	}
 	public boolean verifyAllControls()
 	{

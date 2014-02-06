@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.SleepWaitHelper;
 
 public class ConfirmationDialog
 {
@@ -33,13 +33,12 @@ public class ConfirmationDialog
 	
 	public boolean verifyIsOpened()
 	{
-		boolean res = TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath("//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-header' and contains(.,'Confirmation')]"), 2);
-		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(TITLE_XPATH), 2);
+		return SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(TITLE_XPATH), 2);
 	}
 
 	public boolean verifyIsClosed()
 	{
-		return TestUtils.getInstance().waitsElementNotVisible(session, By.xpath(TITLE_XPATH), 2);
+		return SleepWaitHelper.waitsElementNotVisible(session.getDriver(), By.xpath(TITLE_XPATH), 2);
 	}
 
 	public void doConfirm()

@@ -11,7 +11,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.SleepWaitHelper;
 
 public class FilterContentPanel extends Application
 {
@@ -48,13 +48,7 @@ public class FilterContentPanel extends Application
 		getLogger().info("query will be applied : "+ query);
 		queryInput.sendKeys(query);
 		queryInput.sendKeys(Keys.ENTER);
-		try
-		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		SleepWaitHelper.sleep(1000);
 
 		getLogger().info("Filtered by : "+ query);
 	}
@@ -66,20 +60,14 @@ public class FilterContentPanel extends Application
 	public void doFilterByDate(FilterPanelLastModified date)
 	{
 		String rangeXpath = String.format(DATE_FILTER_ITEM, date.getValue());
-		boolean isVisible = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(rangeXpath), 1l);
+		boolean isVisible = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(rangeXpath), 1l);
 		if (!isVisible)
 		{ 
 			getLogger().info("range was not found: "+ date.getValue());
 			throw new TestFrameworkException("The link with name 'Clear Filter' was not found!");
 		}
 		getSession().getDriver().findElement(By.xpath(rangeXpath)).click();
-		try
-		{
-			Thread.sleep(500);
-		} catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		SleepWaitHelper.sleep(500);
 		getLogger().info("Filtered by : "+ date.getValue());
 	}
 
@@ -88,26 +76,17 @@ public class FilterContentPanel extends Application
 	 */
 	public void doClearFilter()
 	{
-		boolean isVisible = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.linkText(CLEAR_FILTER_LINK), 2l);
+		boolean isVisible = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.linkText(CLEAR_FILTER_LINK), 2l);
 		if (!isVisible)
 		{
 			getLogger().info("The link with name 'Clear Filter' was not found!");
 			throw new TestFrameworkException("The link with name 'Clear Filter' was not found!");
 		}
 		getSession().getDriver().findElement(By.linkText(CLEAR_FILTER_LINK)).click();
-		try
-		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		SleepWaitHelper.sleep(1000);
 	}
 
-	public List<String> getContentTypes()
-	{
-		return null;
-	}
+	
 
 	/**
 	 * Select a space on the search panel and filter contents.

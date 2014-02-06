@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import org.openqa.selenium.By;
 
@@ -35,7 +36,7 @@ public class NewContentDialog
 	 * @return true if dialog opened, otherwise false.
 	 */
 	public boolean isOpened() {
-		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(DIALOG_TITLE_XPATH), 1);
+		return SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(DIALOG_TITLE_XPATH), 1);
 	}
 	/**
 	 * Select content type by name.
@@ -46,7 +47,7 @@ public class NewContentDialog
 	{
 		
 		String ctypeXpath = String.format(CONTENTTYPE_NAME, contentTypeName);
-		boolean isContentNamePresent = TestUtils.getInstance().waitElementExist(session.getDriver(), ctypeXpath, 3);
+		boolean isContentNamePresent = SleepWaitHelper.waitElementExist(session.getDriver(), ctypeXpath, 3);
 		
 		if(!isContentNamePresent)
 		{

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.logger.Logger;
+import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 public class DeleteAccountDialog
@@ -79,12 +80,12 @@ public class DeleteAccountDialog
 	 */
 	public boolean verifyIsOpened()
 	{
-		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(DIALOG_TITLE_XPATH), 2);
+		return  SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(DIALOG_TITLE_XPATH), 2);
 	}
 
 	public boolean verifyIsClosed()
 	{
-		return TestUtils.getInstance().waitsElementNotVisible(session, By.xpath(DIALOG_TITLE_XPATH), 2);
+		return SleepWaitHelper.waitsElementNotVisible(session.getDriver(), By.xpath(DIALOG_TITLE_XPATH), 2);
 	}
 
 }

@@ -1,13 +1,7 @@
 package com.enonic.autotests.pages.schemamanager;
 
-import com.enonic.autotests.AppConstants;
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.CreateContentTypeException;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.utils.TextTransfer;
-import com.enonic.autotests.vo.schemamanger.ContentType;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -15,7 +9,14 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.CreateContentTypeException;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.TextTransfer;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
  * 'Schema Manager' application, Add new Content Type Wizard page.
@@ -47,7 +48,7 @@ public class ContentTypeWizardPanel extends WizardPanel
 	 */
 	public int doTypeLongNameAndGetInputWidth(String longName)
 	{
-		TestUtils.getInstance().clearAndType(getSession(), nameInput, longName);
+		clearAndType(nameInput, longName);
 		String width = findElement(By.xpath("//input[@name='name']")).getAttribute("style");
 
 		String aa = "width: 300px";
@@ -73,7 +74,7 @@ public class ContentTypeWizardPanel extends WizardPanel
 			throw new CreateContentTypeException("New Content type was not created, Erorr dialog with error message appeared ");
 		}
 		SchemaBrowsePanel page = new SchemaBrowsePanel(getSession());
-		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
+		page.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 
 	}
 	
@@ -103,10 +104,10 @@ public class ContentTypeWizardPanel extends WizardPanel
 	public void doTypeDataAndSave(ContentType contentType)
 	{
 		// 1. type a data: 'name' and 'Display Name'.
-		TestUtils.getInstance().clearAndType(getSession(), nameInput, contentType.getName());
+		clearAndType(nameInput, contentType.getName());
 		//2. type the XMLconfig data:
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath("//div[contains(@class,'CodeMirror')]//div[contains(@class,'CodeMirror-lines')]"));
-		if(getSession().getIsRemote()!=null && !getSession().getIsRemote())
+		if(getSession().getIsRemote() != null && !getSession().getIsRemote())
 		{
 			clearConfig(elems.get(0));
 			getLogger().info("set configuration from a Clipboard:");
@@ -127,7 +128,7 @@ public class ContentTypeWizardPanel extends WizardPanel
 		// 4. TODO check ERROR DIALOG
 
 		// 5. check notification message.
-		String mess = getNotificationMessage(getSession(), AppConstants.APP_SCHEMA_MANAGER_FRAME_XPATH);
+		String mess = getNotificationMessage(APP_SCHEMA_MANAGER_FRAME_XPATH);
 		if (mess == null)
 		{
 			throw new SaveOrUpdateException("A notification, that the content type with name" + contentType.getName() + " is saved - was not showed");

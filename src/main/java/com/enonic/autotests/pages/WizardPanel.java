@@ -1,13 +1,15 @@
 package com.enonic.autotests.pages;
 
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.utils.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Base class for wizards.
@@ -51,7 +53,7 @@ public abstract class WizardPanel extends Application {
 	 */
 	protected void doSaveFromToolbar() 
 	{
-		boolean isSaveButtonEnabled = TestUtils.getInstance().waitUntilElementEnabledNoException(getSession(), By.xpath("//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']"),2l);
+		boolean isSaveButtonEnabled = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath("//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']"),2l);
 		if(!isSaveButtonEnabled){
 			throw new SaveOrUpdateException("Impossible to save, button 'Save' is disabled!");
 		}
@@ -67,20 +69,19 @@ public abstract class WizardPanel extends Application {
 		HomePage page = new HomePage(getSession());
 
 		getSession().getDriver().switchTo().window(getSession().getWindowHandle());
-		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class='tab-count-container' and contains(@title,'1 tab(s) open')]"));
+		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class='tab-count-container' and contains(@title,'1 tab(s) open')]"));
 		return page;
 	}
 	/**
 	 * Gets notification message(Space 'namesapce' was saved), that appears at
 	 * the bottom of the WizardPage. <br>
 	 * 
-	 * @param session
-	 *            {@link TestSession} instance
+	 
 	 * @return notification message or null.
 	 * 
 	 */
-	protected String getNotificationMessage(TestSession session,String iframeXpath) {
-		String message = TestUtils.getInstance().getNotificationMessage(By.xpath("//div[@class='admin-notification-content']/span"), session.getDriver(),2l);
+	protected String getNotificationMessage(String iframeXpath) {
+		String message = TestUtils.getInstance().getNotificationMessage(By.xpath("//div[@class='admin-notification-content']/span"), getDriver(),2l);
 		return message;
 	}
 	/**
@@ -93,7 +94,7 @@ public abstract class WizardPanel extends Application {
 	public void waitUntilWizardOpened( Integer numberPage) {
 		String circleXpath = String.format(RED_CIRCLE_XPATH, numberPage.toString());
 		//String titleXpath = String.format(OBJECT_NAME_XPATH, displayName); 
-		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(circleXpath));
+        SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath(circleXpath));
 		//TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
 
 	}

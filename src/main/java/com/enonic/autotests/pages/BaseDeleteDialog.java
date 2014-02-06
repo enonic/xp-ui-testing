@@ -8,10 +8,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.enonic.autotests.AppConstants;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.logger.Logger;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.SleepWaitHelper;
 
 /**
  * Base confirm dialog for deleting spaces, contents, accounts
@@ -28,7 +27,6 @@ public abstract class BaseDeleteDialog
 	private WebElement deleteButton;
 
 	private TestSession session;
-	//private List<String> displayNamesToDelete = new ArrayList<>();
 
 	/**
 	 * The constructor
@@ -50,21 +48,7 @@ public abstract class BaseDeleteDialog
 	 */
 	public void doDelete()
 	{
-		// TODO this part is postponed
-		
-//		List<WebElement> itemsTodelete = session.getDriver().findElements(By.xpath(ITEMS_TO_DELETE));
-//		List<String> actual = new ArrayList<>();
-//		for (WebElement el : itemsTodelete)
-//		{
-//			actual.add(el.getText());
-//			logger.info("this item present in the confirm-delete dialog and will be deleted:" + el.getText());
-//		}
-//		boolean result = actual.equals(displayNamesToDelete);
-//		if (!result)
-//		{
-//			logger.error("list of names in the dialog-window are not as expected!", session);
-//			throw new DeleteCMSObjectException("list of names in the dialog-window are not equals with expected list of names!");
-//		}
+
 		deleteButton.click();
 	}
 	
@@ -88,12 +72,12 @@ public abstract class BaseDeleteDialog
 	 */
 	public boolean isOpened()
 	{
-		return TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(getTitleXpath()), AppConstants.IMPLICITLY_WAIT);
+		return SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(getTitleXpath()), Application.IMPLICITLY_WAIT);
 	}
 
 	public boolean verifyIsClosed()
 	{
-		return TestUtils.getInstance().waitsElementNotVisible(session, By.xpath(getTitleXpath()), AppConstants.IMPLICITLY_WAIT);
+		return SleepWaitHelper.waitsElementNotVisible(session.getDriver(), By.xpath(getTitleXpath()), Application.IMPLICITLY_WAIT);
 	}
 	
 	public abstract String getTitleXpath();

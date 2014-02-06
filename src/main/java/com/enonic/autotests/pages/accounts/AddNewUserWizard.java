@@ -1,12 +1,5 @@
 package com.enonic.autotests.pages.accounts;
 
-import com.enonic.autotests.AppConstants;
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.HomePage;
-import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +8,14 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.pages.HomePage;
+import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.User;
 
 public class AddNewUserWizard extends WizardPanel
 {
@@ -57,10 +58,9 @@ public class AddNewUserWizard extends WizardPanel
 		super(session);
 	}
 
-	public void doTypeDataSaveAndClose(TestSession session, User user, boolean isNew)
+	public void doTypeDataSaveAndClose( User user, boolean isNew)
 	{
-
-		doTypeDataAndSave(session, user, isNew);
+		doTypeDataAndSave(user, isNew);
 		closeButton.click();
 		AccountsPage accountspage = new AccountsPage(getSession());
 		long start = System.currentTimeMillis();
@@ -70,10 +70,7 @@ public class AddNewUserWizard extends WizardPanel
 
 		if (!isLoaded)
 		{
-			getLogger().error("expected page was not loaded. Waiting time is :" + res, session);
-			getLogger()
-					.error("doTypeDataSaveAndClose method. buttons 'Save ' and 'Close' were pressed, but page with table, containing the accounts does not appear  ",
-							session);
+			getLogger().error("expected page was not loaded. Waiting time is :" + res, getSession());
 			throw new SaveOrUpdateException(
 					"buttons 'Save ' and 'Close' in the wizard page were pressed, but Page, that contains all accounts, was not loaded");
 		}
@@ -83,15 +80,14 @@ public class AddNewUserWizard extends WizardPanel
 	/**
 	 * Gets validation message for UserName input.
 	 * 
-	 * @param session
 	 * @return validation message.('Invalid characters').
 	 */
-	public String getUserNameValidationMessage(TestSession session)
+	public String getUserNameValidationMessage()
 	{
-		boolean isPresentMessage = TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH), 1);
+		boolean isPresentMessage = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH), 1);
 		if (isPresentMessage)
 		{
-			return session.getDriver().findElement(By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH)).getText();
+			return getDriver().findElement(By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH)).getText();
 		} else
 		{
 			return null;
@@ -101,16 +97,15 @@ public class AddNewUserWizard extends WizardPanel
 	/**
 	 * Gets validation message for Email input.
 	 * 
-	 * @param session
 	 * @return validation message.('Invalid e-mail', 'available' or 'Not
 	 *         available')
 	 */
-	public String getEmailValidationMessage(TestSession session)
+	public String getEmailValidationMessage()
 	{
-		boolean isPresentMessage = TestUtils.getInstance().waitUntilVisibleNoException(session, By.xpath(EMAIL_VALIDATION_MESSAGE_XPATH), 2);
+		boolean isPresentMessage = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(EMAIL_VALIDATION_MESSAGE_XPATH), 2);
 		if (isPresentMessage)
 		{
-			return session.getDriver().findElement(By.xpath(EMAIL_VALIDATION_MESSAGE_XPATH)).getText();
+			return getDriver().findElement(By.xpath(EMAIL_VALIDATION_MESSAGE_XPATH)).getText();
 		} else
 		{
 			return null;
@@ -126,10 +121,10 @@ public class AddNewUserWizard extends WizardPanel
 	 * @param space
 	 *            this space should be created.
 	 */
-	public void doTypeDataAndSave(TestSession session, User user, boolean isNew)
+	public void doTypeDataAndSave( User user, boolean isNew)
 	{
-		TestUtils.getInstance().clearAndType(session, displayNameInput, user.getUserInfo().getDisplayName());
-		TestUtils.getInstance().clearAndType(session, nameInput, user.getUserInfo().getDisplayName());
+		clearAndType(displayNameInput, user.getUserInfo().getDisplayName());
+		clearAndType(nameInput, user.getUserInfo().getDisplayName());
 		if (isNew)
 		{
 			nameInput.sendKeys(user.getUserInfo().getName());
@@ -138,7 +133,7 @@ public class AddNewUserWizard extends WizardPanel
 			getLogger().info("The user name input is disabled. When user is edited, this element should be disabled!");
 		}
 
-		String nameValdationErrorMessage = getUserNameValidationMessage(session);
+		String nameValdationErrorMessage = getUserNameValidationMessage();
 		if (nameValdationErrorMessage != null)
 		{
 			getLogger().info("userinfo:  There validation message for User Name. " + nameValdationErrorMessage);
@@ -150,8 +145,8 @@ public class AddNewUserWizard extends WizardPanel
 			// verifySaveButtonState(nameValdationErrorMessage);
 		}// nameInput.getAttribute("aria-invalid").contains("true");
 
-		TestUtils.getInstance().clearAndType(session, emailInput, user.getUserInfo().getEmail());
-		String emailValdationMessage = getEmailValidationMessage(session);
+		clearAndType(emailInput, user.getUserInfo().getEmail());
+		String emailValdationMessage = getEmailValidationMessage();
 		if (emailValdationMessage != null)
 		{
 			getLogger().info("userinfo: email is" + emailValdationMessage);
@@ -185,8 +180,7 @@ public class AddNewUserWizard extends WizardPanel
 		// if save button is disabled, so exception will be thrown:
 		doSaveFromToolbar();
 
-		String mess = getNotificationMessage(session, AppConstants.APP_ACCOUNTS_FRAME_XPATH);
-
+		String mess = getNotificationMessage(APP_ACCOUNTS_FRAME_XPATH);
 		if (mess == null)
 		{
 			throw new SaveOrUpdateException("A notification, that the User with name" + user.getUserInfo().getName() + " is saved - was not showed");
@@ -220,7 +214,6 @@ public class AddNewUserWizard extends WizardPanel
 				{
 					try
 					{
-						// System.out.println("attributeName:"+attributeName+" attributeValue:"+attributeValue);
 						return element.getAttribute(attributeName).contains(attributeValue);
 
 					} catch (Exception e)

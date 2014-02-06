@@ -1,19 +1,21 @@
 package com.enonic.autotests.pages.schemamanager;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.PageFactory;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Page;
-import com.enonic.autotests.utils.TestUtils;
-import org.openqa.selenium.By;
+import com.enonic.autotests.utils.SleepWaitHelper;
 
 /**
  * 
  *
  */
-public class SelectKindDialog extends Page
+public class SelectKindDialog 
 {
 
 	private String KIND = "//div[@class='modal-dialog new-schema-dialog']//h6[text()='%s']";
+	private TestSession session;
 	
 	/**
 	 * The Constructor.
@@ -22,7 +24,8 @@ public class SelectKindDialog extends Page
 	 */
 	public SelectKindDialog( TestSession session )
 	{
-		super(session);
+		this.session = session;
+		PageFactory.initElements(session.getDriver(), this);
 	}
 
 	/**
@@ -32,27 +35,15 @@ public class SelectKindDialog extends Page
 	public ContentTypeWizardPanel doSelectKind(String kind)
 	{
 		String kindXpath = String.format(KIND, kind);
-		boolean isPpresent = TestUtils.getInstance().waitAndFind(By.xpath(kindXpath), getDriver());
+		boolean isPpresent = SleepWaitHelper.waitAndFind(By.xpath(kindXpath), session.getDriver());
 		
 		if (!isPpresent)
 		{
 			throw new TestFrameworkException("The kind of contentype" + kind + " was not found!!!");
 		}
-		findElement(By.xpath(kindXpath)).click();
-		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
-		String displayName = null;
-		if (kind.equals(KindOfContentTypes.RELATIONSHIP_TYPE.getValue()))
-		{
-			displayName = "New Relationship Type";
-			
-		} else if (kind.equals(KindOfContentTypes.MIXIN.getValue()))
-		{
-			displayName = "New Mixin";
-			
-		}else if(kind.equals(KindOfContentTypes.CONTENT_TYPE.getValue()))
-		{
-			displayName = "New Content Type";
-		}
+		session.getDriver().findElement(By.xpath(kindXpath)).click();
+		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(session);
+
 		wizard.waitUntilWizardOpened( 1);
 		return wizard;
 	}
@@ -63,7 +54,7 @@ public class SelectKindDialog extends Page
 	public boolean verifyIsOpened()
 	{
 		String title ="//div[@class='modal-dialog new-schema-dialog']/div[contains(.,'Select Kind')]";
-		return TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(title), 2);
+		return SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(title), 2);
 	}
 
 }

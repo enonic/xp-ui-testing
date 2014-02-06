@@ -1,14 +1,16 @@
 package com.enonic.autotests.pages;
 
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.TestUtils;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 public class BrowsePanel extends Application
 {
@@ -97,7 +99,7 @@ public class BrowsePanel extends Application
 	{
 		String expanderElement = String.format(TD_CONTENT_NAME +"/div/img[contains(@class,'x-tree-expander')]", parentName);
 		getLogger().info("check if present expander for folder:"+ parentName +" xpath: " + expanderElement);
-		boolean isPresent = TestUtils.getInstance().isDynamicElementPresent(getSession().getDriver(),  By.xpath(expanderElement), 2);
+		boolean isPresent = isDynamicElementPresent(By.xpath(expanderElement), 2);
 		if (!isPresent)
 		{
 			getLogger().info("expander for folder:"+ parentName +" was not found! ");
@@ -117,7 +119,7 @@ public class BrowsePanel extends Application
 	{
 		String trXpath = String.format(TD_CONTENT_NAME +"/parent::tr", name);
 	
-		WebElement rowElement = TestUtils.getInstance().getDynamicElement(getSession().getDriver(), By.xpath(trXpath), 5);
+		WebElement rowElement = getDynamicElement(By.xpath(trXpath), 5);
 		if (rowElement == null)
 		{
 			throw new TestFrameworkException("invalid locator  or space with name: "+ name+ " dose not exists! xpath =  " + trXpath);
@@ -130,7 +132,7 @@ public class BrowsePanel extends Application
 //		}
 		String attributeName = "class";
 		String attributeValue = "x-grid-tree-node-expanded";
-		return TestUtils.getInstance().waitAndCheckAttrValue(getDriver(), rowElement, attributeName, attributeValue, 1l);
+		return SleepWaitHelper.waitAndCheckAttrValue(getDriver(), rowElement, attributeName, attributeValue, 1l);
 	}
 
 	/**
@@ -149,7 +151,7 @@ public class BrowsePanel extends Application
 				
 		if (!elems.get(0).isDisplayed())
 		{ 
-			WebElement scrolled = TestUtils.getInstance().scrollTableAndFind(getSession(),expanderImgXpath ,DIV_SCROLL_XPATH);
+			WebElement scrolled = scrollTableAndFind(expanderImgXpath ,DIV_SCROLL_XPATH);
 			if(scrolled != null)
 			{
 				scrolled.click();
@@ -174,7 +176,7 @@ public class BrowsePanel extends Application
 	 */
 	public int doSelectAll()
 	{
-		boolean isVisibleLink = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(SELECT_ALL_LINK_XPATH), 2l);
+		boolean isVisibleLink = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(SELECT_ALL_LINK_XPATH), 2l);
 		if (!isVisibleLink)
 		{
 			throw new TestFrameworkException("The link 'Select All' was not found on the page, probably wrong xpath locator");
@@ -205,7 +207,7 @@ public class BrowsePanel extends Application
 		List<WebElement> rows = getSession().getDriver().findElements(By.xpath(ALL_ROWS_IN_CONTENT_TABLE_XPATH));
 		for (WebElement row : rows)
 		{
-			if (TestUtils.getInstance().waitAndCheckAttrValue(getSession().getDriver(), row, "class", "x-grid-row-selected", 1l))
+			if (SleepWaitHelper.waitAndCheckAttrValue(getDriver(), row, "class", "x-grid-row-selected", 1l))
 			{
 				number++;
 			}
@@ -218,7 +220,7 @@ public class BrowsePanel extends Application
 	 */
 	public void doClearSelection()
 	{
-		boolean isVisibleLink = TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(CLEAR_SELECTION_LINK_XPATH), 2l);
+		boolean isVisibleLink = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(CLEAR_SELECTION_LINK_XPATH), 2l);
 		if (!isVisibleLink)
 		{
 			throw new TestFrameworkException("The link 'Clear Selection' was not found on the page, probably wrong xpath locator");
@@ -244,7 +246,7 @@ public class BrowsePanel extends Application
 	public void selectRowByContentDisplayName(String displayName)
 	{
 		String rowXpath = String.format(TD_CONTENT_DISPLAYNAME, displayName);
-		TestUtils.getInstance().waitAndFind(By.xpath(rowXpath), getDriver());
+         SleepWaitHelper.waitAndFind(By.xpath(rowXpath), getDriver());
 		//findElement(By.xpath(rowXpath)).click();
 		
 		Actions builder = new Actions(getDriver()); 
@@ -253,7 +255,7 @@ public class BrowsePanel extends Application
 	public void selectRowByContentFullName(String fullName)
 	{
 		String rowXpath = String.format(TD_CONTENT_NAME, fullName);
-		TestUtils.getInstance().waitAndFind(By.xpath(rowXpath), getDriver());
+		SleepWaitHelper.waitAndFind(By.xpath(rowXpath), getDriver());
 		//findElement(By.xpath(rowXpath)).click();
 		
 		Actions builder = new Actions(getDriver()); 

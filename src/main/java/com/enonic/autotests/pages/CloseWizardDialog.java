@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.SleepWaitHelper;
 
 public class CloseWizardDialog extends BaseModalDialog
 {
@@ -23,7 +23,7 @@ public class CloseWizardDialog extends BaseModalDialog
 
 	public void doCloseNoSave()
 	{
-		boolean isPresent = TestUtils.getInstance().waitAndFind(By.xpath(NO_BUTTON_XPATH), getDriver());
+		boolean isPresent = SleepWaitHelper.waitAndFind(By.xpath(NO_BUTTON_XPATH), getDriver());
 		if(!isPresent)
 		{
 			throw new TestFrameworkException("'No' button was not found on modal dialog!");
@@ -43,7 +43,7 @@ public class CloseWizardDialog extends BaseModalDialog
 
 	public boolean isDialogPresent()
 	{
-		return TestUtils.getInstance().waitUntilVisibleNoException(getSession(), By.xpath(TITLE_XPATH), 1l);
+		return SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(TITLE_XPATH), 1l);
 	}
 	
 

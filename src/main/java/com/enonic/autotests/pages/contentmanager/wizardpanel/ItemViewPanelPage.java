@@ -11,6 +11,7 @@ import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
@@ -64,8 +65,8 @@ public class ItemViewPanelPage extends Application
 	public void waitUntilOpened(TestSession session, String displayName, Integer numberPage) {
 		String circleXpath = String.format(RED_CIRCLE_XPATH, numberPage.toString());
 		String titleXpath = String.format(VERIFY_TITLE_SPAN_XPATH, displayName);
-		TestUtils.getInstance().waitUntilVisible(session, By.xpath(circleXpath));
-		TestUtils.getInstance().waitUntilVisible(session, By.xpath(titleXpath));
+        SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath(circleXpath));
+        SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath(titleXpath));
 
 	}
 	
@@ -105,7 +106,7 @@ public class ItemViewPanelPage extends Application
 		}
 		
 		ContentBrowsePanel table = new ContentBrowsePanel(getSession());
-		table.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
+		table.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 	}
 	
 	/**

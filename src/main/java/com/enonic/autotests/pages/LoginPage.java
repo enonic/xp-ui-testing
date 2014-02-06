@@ -1,17 +1,14 @@
 package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.logger.Logger;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.SleepWaitHelper;
 
 /**
  * Page Object for Login page version 5.0
@@ -56,7 +53,7 @@ public class LoginPage extends Page
 	 */
 	public void doLogin(String username, String password)
 	{
-		boolean isLoginPageLoaded = TestUtils.getInstance().waitUntilTitleLoad(getSession(), TITLE, LOGIN_PAGE_TIMEOUT);
+		boolean isLoginPageLoaded = SleepWaitHelper.waitUntilTitleLoad(getDriver(), TITLE, LOGIN_PAGE_TIMEOUT);
 		if(!isLoginPageLoaded)
 		{
 			throw new TestFrameworkException("Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT);
@@ -64,7 +61,7 @@ public class LoginPage extends Page
 		logger.info("Login page title: "+getDriver().getTitle());
 		logger.info("Login action started. Username: " + username + " Password:" + password);
 		
-		boolean isEmailInputPresent = TestUtils.getInstance().waitAndFind(By.xpath(EMAIL_INPUT_XPATH), getDriver());
+		boolean isEmailInputPresent = SleepWaitHelper.waitAndFind(By.xpath(EMAIL_INPUT_XPATH), getDriver());
 		if(!isEmailInputPresent)
 		{
 			throw new TestFrameworkException(" input 'userid or e-mail' was not found on page!");
@@ -73,7 +70,7 @@ public class LoginPage extends Page
 
 		passwordInput.sendKeys(password);
 
-		boolean isEnabledButton = TestUtils.getInstance().waitAndFind(By.xpath(String.format(loginButtonXpath, loginEnabledClass)), getDriver());
+		boolean isEnabledButton = SleepWaitHelper.waitAndFind(By.xpath(String.format(loginButtonXpath, loginEnabledClass)), getDriver());
 		if (!isEnabledButton)
 		{
 			logger.info("the Button 'Log in' is disabled");

@@ -1,20 +1,23 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
-import com.enonic.autotests.AppConstants;
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.CloseWizardDialog;
-import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.contentmanager.ArticleContent;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-import com.enonic.autotests.vo.contentmanager.MixinContent;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.CloseWizardDialog;
+import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.contentmanager.ArticleContent;
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import com.enonic.autotests.vo.contentmanager.MixinContent;
 
 /**
  *  'Content Manager' application, Add new Content Wizard page.
@@ -28,9 +31,6 @@ public class ContentWizardPanel extends WizardPanel
 	private static final String TOOLBAR_PUBLISH_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Publish']";
 	private static final String TOOLBAR_DELETE_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Delete']";
 	public static final String TOOLBAR_DUPLICTAE_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Duplicate']";
-	
-	
-
 
 	@FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
 	private WebElement toolbarPublishButton;
@@ -124,31 +124,19 @@ public class ContentWizardPanel extends WizardPanel
 	 */
 	public void doTypeDataAndSave( BaseAbstractContent content)
 	{
-		try
-		{
-			Thread.sleep(2000);
-		} catch (InterruptedException e)
-		{
-			
-		}
+		SleepWaitHelper.sleep(1000);
 		// 1. type a data: 'name' and 'Display Name'.	
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
-		TestUtils.getInstance().clearAndType(getSession(), displayNameInput, content.getDisplayName());
+		clearAndType(displayNameInput, content.getDisplayName());
 		
-		try
-		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			
-		}
+		SleepWaitHelper.sleep(1000);
 		
-		if(content.getName()!=null && !content.getName().isEmpty())
+		if(StringUtils.isNotEmpty(content.getName()))
 		{
 			waitElementClickable(By.name("name"), 2);
 			getLogger().info("types name: "+ content.getName());
-			TestUtils.getInstance().clearAndType(getSession(), nameInput, content.getName());
+			clearAndType(nameInput, content.getName());
 			
 		}
 		
@@ -161,7 +149,7 @@ public class ContentWizardPanel extends WizardPanel
 		doSaveFromToolbar();
 
 		// 4. check notification message.
-		String mess = getNotificationMessage(getSession(), AppConstants.APP_CONTENT_MANAGER_FRAME_XPATH);
+		String mess = getNotificationMessage(APP_CONTENT_MANAGER_FRAME_XPATH);
 		getLogger().info("notification message has appeared:" + mess);
 		if (mess == null)
 		{
@@ -194,15 +182,15 @@ public class ContentWizardPanel extends WizardPanel
 		doTypeDataAndSave( content);
 		closeButton.click();	
 		
-		CloseWizardDialog dialog = new CloseWizardDialog(getSession());
-		if(dialog.isDialogPresent())
-		{
-			dialog.doCloseNoSave();
-		}
+//		CloseWizardDialog dialog = new CloseWizardDialog(getSession());
+//		if(dialog.isDialogPresent())
+//		{
+//			dialog.doCloseNoSave();
+//		}
 		
 
 		ContentBrowsePanel page = new ContentBrowsePanel(getSession());
-		page.waituntilPageLoaded(TestUtils.TIMEOUT_IMPLICIT);
+		page.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 
 	}
 	

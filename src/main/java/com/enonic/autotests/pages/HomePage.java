@@ -1,15 +1,16 @@
 package com.enonic.autotests.pages;
 
-import com.enonic.autotests.AppConstants;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * Page Object for 'Home' page. Version 5.0
@@ -76,8 +77,8 @@ public class HomePage extends Page
 	public void waitUntilAllFramesLoaded()
 	{
 		
-		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
-		TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
+		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
+		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
 
 	}
 	public SchemaBrowsePanel openSchemaManagerApplication()
@@ -86,7 +87,7 @@ public class HomePage extends Page
 		
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_SCHEMA_MANAGER_FRAME_XPATH);
+		NavigatorHelper.switchToIframe(getSession(), Application.APP_SCHEMA_MANAGER_FRAME_XPATH);
 		
 		return new SchemaBrowsePanel(getSession());
 	}
@@ -97,7 +98,7 @@ public class HomePage extends Page
 		contentManager.click();
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_CONTENT_MANAGER_FRAME_XPATH);
+		NavigatorHelper.switchToIframe(getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH);
 		
 		return new ContentBrowsePanel(getSession());
 	}
@@ -110,7 +111,7 @@ public class HomePage extends Page
 		
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), AppConstants.APP_ACCOUNTS_FRAME_XPATH);
+		NavigatorHelper.switchToIframe(getSession(), Application.APP_ACCOUNTS_FRAME_XPATH);
 		
 		return accountsPage;
 	}
