@@ -35,24 +35,9 @@ public class TestUtils
 	public static Logger logger = Logger.getLogger();
 	public static final String DATE_FORMAT_NOW = "yyyy-MM-dd-HH-mm-ss";
 
-	private static TestUtils instance;
 
 	
-
-	/**
-	 * @return
-	 */
-	public static synchronized TestUtils getInstance()
-	{
-		if (instance == null)
-		{
-			instance = new TestUtils();
-
-		}
-		return instance;
-	}
-
-	public String buildFullNameOfContent(String contentName, String... parentNames)
+	public static String buildFullNameOfContent(String contentName, String... parentNames)
 	{
 		StringBuilder builder = new StringBuilder();
 		if(parentNames == null)
@@ -84,7 +69,7 @@ public class TestUtils
 	}
 
 
-	public ContentTypeName getContentType(String ctype)
+	public static ContentTypeName getContentType(String ctype)
 	{
 		ContentTypeName result = null;
 		ContentTypeName[] values = ContentTypeName.values();
@@ -104,13 +89,11 @@ public class TestUtils
 	 * @param screenshotFileName
 	 * @param driver
 	 */
-	public String saveScreenshot(final TestSession testSession)
+	public static String saveScreenshot(final TestSession testSession)
 	{
 		WebDriver driver = testSession.getDriver();
 		String fileName = timeNow() + ".png";
 		File folder  = new File("target/screenshots");
-		//File folder = new File(System.getProperty("user.dir") + File.separator + "snapshots");
-
 		if (!folder.exists())
 		{
 			if (!folder.mkdir())
@@ -121,32 +104,20 @@ public class TestUtils
 				System.out.println("Folder for snapshots was created " + folder.getAbsolutePath());
 			}
 		}
-		File screenshot = null;
 
-		//if ((Boolean) testSession.get(TestSession.IS_REMOTE))
-		//{
-
-		//	WebDriver augmentedDriver = new Augmenter().augment(driver);
-		//	screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
-		//}// else
-		{
-			screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		}
-
+		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		String fullFileName = folder.getAbsolutePath() + File.separator + fileName;
-
 		try
 		{
 			FileUtils.copyFile(screenshot, new File(fullFileName));
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-
+		  logger.warning("screenshot was  not saved!");
 		}
 		return fileName;
 	}
 
-	public String timeNow()
+	public static String timeNow()
 	{
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
@@ -154,7 +125,7 @@ public class TestUtils
 
 	}
 
-	public void clickByLocator(final By locator, WebDriver driver)
+	public static void clickByLocator(final By locator, WebDriver driver)
 	{
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(locator));
 		myDynamicElement.click();
@@ -164,7 +135,7 @@ public class TestUtils
 	 * @param locator
 	 * @param driver
 	 */
-	public void clickByElement(final By locator, final WebDriver driver)
+	public static void clickByElement(final By locator, final WebDriver driver)
 	{
 		final long startTime = System.currentTimeMillis();
 		driver.manage().timeouts().implicitlyWait(Application.IMPLICITLY_WAIT, TimeUnit.SECONDS);
@@ -192,7 +163,7 @@ public class TestUtils
 		driver.manage().timeouts().implicitlyWait(Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS);
 	}
 
-	public String getNotificationMessage(final By locator, final WebDriver driver, long timeout)
+	public static String getNotificationMessage(final By locator, final WebDriver driver, long timeout)
 	{
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -205,13 +176,13 @@ public class TestUtils
 	 * @param driver
 	 * @return
 	 */
-	public boolean checkIfDisplayed(final By by, final WebDriver driver)
+	public static boolean checkIfDisplayed(final By by, final WebDriver driver)
 	{
 		List<WebElement> elements = driver.findElements(by);
 		return ((elements.size() > 0) && (elements.get(0).isDisplayed()));
 	}
 
-	public WebElement getIfDisplayed(final By by, final WebDriver driver)
+	public static WebElement getIfDisplayed(final By by, final WebDriver driver)
 	{
 		List<WebElement> elements = driver.findElements(by);
 		if ((elements.size() > 0) && (elements.get(0).isDisplayed()))
@@ -221,7 +192,7 @@ public class TestUtils
 		return null;
 	}
 
-	public String createTempFile(String s)
+	public static String createTempFile(String s)
 	{
 		try
 		{
@@ -236,7 +207,7 @@ public class TestUtils
 		}
 	}
 
-	public void writeStringToFile(String s, File file) throws IOException
+	public static void writeStringToFile(String s, File file) throws IOException
 	{
 		FileOutputStream in = null;
 		try

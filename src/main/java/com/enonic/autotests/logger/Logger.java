@@ -99,7 +99,7 @@ public class Logger implements ILogger {
 	}
 
 	public class PerfFormatter extends java.util.logging.Formatter {
-	
+		
 
 		String lineSeparator = java.security.AccessController.doPrivileged(
 			    new java.security.PrivilegedAction<String>() {
@@ -182,7 +182,7 @@ public class Logger implements ILogger {
 			return;
 
 		if (severity == Severity.ERROR && session != null) {
-			log(new Entry(severity, message + " SNAPSHOT: " + TestUtils.getInstance().saveScreenshot(session)));
+			log(new Entry(severity, message + " SNAPSHOT: " + TestUtils.saveScreenshot(session)));
 		} else
 			log(new Entry(severity, message));
 	}

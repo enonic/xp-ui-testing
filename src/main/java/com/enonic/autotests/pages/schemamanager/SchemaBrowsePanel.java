@@ -1,19 +1,20 @@
 package com.enonic.autotests.pages.schemamanager;
 
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.BrowsePanel;
-import com.enonic.autotests.utils.SleepWaitHelper;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.schemamanger.ContentType;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
  * 'Schema Manager' application, the dashboard page.
@@ -155,7 +156,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 		
 		SleepWaitHelper.sleep(1000);
 		//2. click by a contenttype
-		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), getDriver());		
+		TestUtils.clickByElement(By.xpath(ctypeXpath), getDriver());		
 		//3. wait for deleteButton(in toolbar) is enabled
 		SleepWaitHelper.waitUntilElementEnabled(getSession(), By.xpath(DELETE_BUTTON_XPATH));
 		//4. click by 'delete' button

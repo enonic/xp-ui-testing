@@ -170,13 +170,13 @@ public class AddNewUserWizard extends WizardPanel
 			{
 				if (toolbarSaveButton.isEnabled())
 				{
-					TestUtils.getInstance().saveScreenshot(getSession());
+					TestUtils.saveScreenshot(getSession());
 					Assert.fail("There is repeatPassword-validation error message, Button 'Save' on the toolbar is enabled, but should be disabled! ");
 				}
 			}
 		}
 
-		TestUtils.getInstance().saveScreenshot(getSession());
+		TestUtils.saveScreenshot(getSession());
 		// if save button is disabled, so exception will be thrown:
 		doSaveFromToolbar();
 
@@ -236,20 +236,16 @@ public class AddNewUserWizard extends WizardPanel
 		{
 			if (toolbarSaveButton.isEnabled())
 			{
-				TestUtils.getInstance().saveScreenshot(getSession());
+				TestUtils.saveScreenshot(getSession());
 				Assert.fail("There is email-validation error message, Button 'Save' on the toolbar is enabled, but should be disabled! ");
-				// throw new
-				// WebElementException("Button 'Save' on the toolbar is enabled, but should be disabled");
 			}
 		}
 		if (validationMessage.equals(USER_NAME_INVALID_CHARS))
 		{
 			if (toolbarSaveButton.isEnabled())
 			{
-				TestUtils.getInstance().saveScreenshot(getSession());
+				TestUtils.saveScreenshot(getSession());
 				Assert.fail("There is username-validation error message, Button 'Save' on the toolbar is enabled, but should be disabled! ");
-				// throw new
-				// WebElementException("Button 'Save' on the toolbar is enabled, but should be disabled");
 			}
 		}
 	}

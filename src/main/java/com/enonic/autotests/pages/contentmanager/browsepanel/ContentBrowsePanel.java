@@ -81,7 +81,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	public List<String> getNamesFromContentDetails()
 	{
 		List<String> contentNames = new ArrayList<>();
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(CONTENT_DETAILS_ALL_NAMES_XPATH));
+		List<WebElement> elems = getDriver().findElements(By.xpath(CONTENT_DETAILS_ALL_NAMES_XPATH));
 		for (WebElement el : elems)
 		{
 			contentNames.add(el.getText());
@@ -101,7 +101,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	public List<String> getShowedContentNames()
 	{
 		List<String> allNames = new ArrayList<>();
-		List<WebElement> rows = getSession().getDriver().findElements(By.xpath(ALL_NAMES_IN_CONTENT_TABLE_XPATH));
+		List<WebElement> rows = getDriver().findElements(By.xpath(ALL_NAMES_IN_CONTENT_TABLE_XPATH));
 		for (WebElement row : rows)
 		{
 			allNames.add(row.getText());
@@ -140,7 +140,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			}
 		}
 
-		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), parents);
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), parents);
 		getLogger().info("Full name of content: "+ fullName);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);
 		boolean result = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(contentDescriptionXpath), timeout);
@@ -416,7 +416,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			if (!isPresentCheckbox)
 			{
-				TestUtils.getInstance().saveScreenshot(getSession());
+				TestUtils.saveScreenshot(getSession());
 				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContent + " was not found!");
 			}
 			WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
@@ -453,7 +453,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		{
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
-		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), content.getParentNames());;
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getParentNames());;
 		// 2. check for existence of content in a parent space and select a content to open.
 		//selectCheckbox(content);	
 		selectRowByContentFullName(fullName );
@@ -483,7 +483,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
 		// 2. check for existence of content in a parent space and select a content to open.
-		String fullName = TestUtils.getInstance().buildFullNameOfContent(content.getName(), content.getParentNames());
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getParentNames());
 		getLogger().info("Full name of content: "+ fullName);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);	
 		WebElement element = findElement(By.xpath(contentDescriptionXpath));

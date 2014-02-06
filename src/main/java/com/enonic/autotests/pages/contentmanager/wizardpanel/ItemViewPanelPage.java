@@ -124,7 +124,7 @@ public class ItemViewPanelPage extends Application
 		{
 			getLogger().info("the actual dispalyName and expected are not equal!");
 		}
-		String fullContentName =  TestUtils.getInstance().buildFullNameOfContent(content.getName(), content.getParentNames());
+		String fullContentName =  TestUtils.buildFullNameOfContent(content.getName(), content.getParentNames());
 		elems = findElements(By.xpath(String.format(H4_FULL_NAME_XPATH, fullContentName))) ;
 		result &=elems.size()>0;
 		

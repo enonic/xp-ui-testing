@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.CloseWizardDialog;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.utils.SleepWaitHelper;
@@ -140,7 +139,7 @@ public class ContentWizardPanel extends WizardPanel
 			
 		}
 		
-		TestUtils.getInstance().saveScreenshot(getSession());
+		TestUtils.saveScreenshot(getSession());
 		// 2. populate main tab
 		populateContentForm(getSession(), content);
 
@@ -155,7 +154,7 @@ public class ContentWizardPanel extends WizardPanel
 		{
 			throw new SaveOrUpdateException("A notification, that the space with name" + content.getDisplayName() + " is saved - was not showed");
 		}
-		TestUtils.getInstance().saveScreenshot(getSession());
+		TestUtils.saveScreenshot(getSession());
 
 		//TODO verify notification message 
 		//String expectedNotificationMessage = String.format(NOTIF_MESSAGE, content.getDisplayName());

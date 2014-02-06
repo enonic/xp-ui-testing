@@ -59,7 +59,7 @@ public class NewContentDialog
 //			WebElement searchinput = session.getDriver().findElement(By.xpath(INPUT_SEARCH));
 //			searchinput.sendKeys(contentTypeName);	
 //		} 
-		TestUtils.getInstance().clickByElement(By.xpath(ctypeXpath), session.getDriver());
+		TestUtils.clickByElement(By.xpath(ctypeXpath), session.getDriver());
 		ContentWizardPanel wizard = new ContentWizardPanel(session);
 		
 		//String title = "New " + type.getValue().toLowerCase();

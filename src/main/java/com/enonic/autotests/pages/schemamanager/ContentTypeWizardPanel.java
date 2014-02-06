@@ -121,7 +121,7 @@ public class ContentTypeWizardPanel extends WizardPanel
 			paste.perform();
 		}
 		
-		TestUtils.getInstance().saveScreenshot(getSession());
+		TestUtils.saveScreenshot(getSession());
 		// 3. check if enabled and press "Save".
 		doSaveFromToolbar();
 		

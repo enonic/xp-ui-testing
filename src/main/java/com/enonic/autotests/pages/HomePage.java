@@ -10,7 +10,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.SleepWaitHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Page Object for 'Home' page. Version 5.0
@@ -39,7 +38,6 @@ public class HomePage extends Page
 	public HomePage(TestSession session)
 	{
 		super(session);
-
 	}
 
 	public void open(String username, String password)
@@ -48,15 +46,13 @@ public class HomePage extends Page
 		if(wh == null)
 		{
 			getSession().setWindowHandle(getDriver().getWindowHandle());
-		}
-		
+		}		
 		// open page via the driver.get(BASE_URL)
 		if(getSession().getBaseUrl()!=null)
 		{
 			getDriver().get(getSession().getBaseUrl());
 		}
 		
-
 		if (!getSession().isLoggedIn())
 		{
 			getLogger().info("try to login with userName:" + username + " password: " + password);
@@ -74,17 +70,22 @@ public class HomePage extends Page
 
 	}
 
+	/**
+	 * 
+	 */
 	public void waitUntilAllFramesLoaded()
 	{
 		
 		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
 		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
-
 	}
+	
+	/**
+	 * @return
+	 */
 	public SchemaBrowsePanel openSchemaManagerApplication()
 	{
-		schemaManager.click();
-		
+		schemaManager.click();	
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
 		NavigatorHelper.switchToIframe(getSession(), Application.APP_SCHEMA_MANAGER_FRAME_XPATH);
@@ -98,8 +99,7 @@ public class HomePage extends Page
 		contentManager.click();
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH);
-		
+		NavigatorHelper.switchToIframe(getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH);	
 		return new ContentBrowsePanel(getSession());
 	}
 
@@ -111,8 +111,7 @@ public class HomePage extends Page
 		
 		String whandle = getSession().getDriver().getWindowHandle();
 		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), Application.APP_ACCOUNTS_FRAME_XPATH);
-		
+		NavigatorHelper.switchToIframe(getSession(), Application.APP_ACCOUNTS_FRAME_XPATH);	
 		return accountsPage;
 	}
 
@@ -125,8 +124,6 @@ public class HomePage extends Page
 	public void openAdminConsole(String username, String password)
 	{
 		spaceAdmin.click();
-
-		TestUtils.getInstance().saveScreenshot(getSession());
 	}
 
 }

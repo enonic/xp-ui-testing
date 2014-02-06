@@ -81,7 +81,7 @@ public abstract class WizardPanel extends Application {
 	 * 
 	 */
 	protected String getNotificationMessage(String iframeXpath) {
-		String message = TestUtils.getInstance().getNotificationMessage(By.xpath("//div[@class='admin-notification-content']/span"), getDriver(),2l);
+		String message = TestUtils.getNotificationMessage(By.xpath("//div[@class='admin-notification-content']/span"), getDriver(),2l);
 		return message;
 	}
 	/**

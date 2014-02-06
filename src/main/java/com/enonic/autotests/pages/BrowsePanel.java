@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.SleepWaitHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 public class BrowsePanel extends Application
 {
@@ -71,7 +70,6 @@ public class BrowsePanel extends Application
 		if (!isExpanderPresent)
 		{
 			getLogger().info("The folder: " + parentName + " has no contents");
-			TestUtils.getInstance().saveScreenshot(getSession());
 			return false;
 		}
 		if (!isRowExapnded(parentName))
@@ -125,11 +123,6 @@ public class BrowsePanel extends Application
 			throw new TestFrameworkException("invalid locator  or space with name: "+ name+ " dose not exists! xpath =  " + trXpath);
 		}
 		
-//		if (!findElement(By.xpath(trXpath)).isDisplayed())
-//		{
-//			 TestUtils.getInstance().scrollTableAndFind(getSession(), trXpath, DIV_SCROLL_XPATH);
-//			
-//		}
 		String attributeName = "class";
 		String attributeValue = "x-grid-tree-node-expanded";
 		return SleepWaitHelper.waitAndCheckAttrValue(getDriver(), rowElement, attributeName, attributeValue, 1l);
@@ -243,6 +236,9 @@ public class BrowsePanel extends Application
 		return clearSelectionLink.getText();
 	}
 	
+	/**
+	 * @param displayName
+	 */
 	public void selectRowByContentDisplayName(String displayName)
 	{
 		String rowXpath = String.format(TD_CONTENT_DISPLAYNAME, displayName);
@@ -252,6 +248,10 @@ public class BrowsePanel extends Application
 		Actions builder = new Actions(getDriver()); 
 		builder.click(findElement(By.xpath(rowXpath))).build().perform();
 	}
+	
+	/**
+	 * @param fullName
+	 */
 	public void selectRowByContentFullName(String fullName)
 	{
 		String rowXpath = String.format(TD_CONTENT_NAME, fullName);
