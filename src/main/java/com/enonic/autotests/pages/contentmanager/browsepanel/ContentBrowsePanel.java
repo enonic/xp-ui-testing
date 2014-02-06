@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
@@ -61,7 +62,6 @@ public class ContentBrowsePanel extends BrowsePanel
 	public ContentBrowsePanel(TestSession session)
 	{
 		super(session);
-
 	}
 
 	public FilterContentPanel getContentFilter()
@@ -107,7 +107,6 @@ public class ContentBrowsePanel extends BrowsePanel
 			allNames.add(row.getText());
 		}
 		return allNames;
-
 	}
 
 
@@ -115,22 +114,19 @@ public class ContentBrowsePanel extends BrowsePanel
 	/**
 	 * Finds content by name. Filtering was applied and content filtered.
 	 * 
-	 * @param contentName
-	 *            the name of the content.
+	 * @param contentName the name of the content.
 	 * @param timeout
 	 * @param filtered
-	 * @param parents
-	 *            - names of parent spaces for this content, this names should
-	 *            be present in the full name of content.
+	 
 	 * @return true if content was found, otherwise return false.
 	 */
 	public boolean findContentInTable(BaseAbstractContent content, long timeout, boolean filtered)
 	{
 		
-		String[] parents = content.getParentNames();
-		if (!filtered && parents!= null)
+		String[] contentPath = content.getContentPath();
+		if (!filtered && contentPath != null)
 		{
-			for (String parentName : parents )
+			for (String parentName : contentPath )
 			{
 				if (!doExpandFolder(parentName))
 				{
@@ -140,7 +136,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			}
 		}
 
-		String fullName = TestUtils.buildFullNameOfContent(content.getName(), parents);
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), contentPath);
 		getLogger().info("Full name of content: "+ fullName);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);
 		boolean result = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(contentDescriptionXpath), timeout);
@@ -151,7 +147,6 @@ public class ContentBrowsePanel extends BrowsePanel
 		{
 			getLogger().info("Content  was not found in the Table! name: " + content.getDisplayName());
 		}
-
 		return result;
 	}
 
@@ -174,22 +169,22 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	public void doDeleteContent(List<BaseAbstractContent> contents)
 	{
-		String[] parents = contents.get(0).getParentNames();
-		if(parents != null)
+		String[] contentPath = contents.get(0).getContentPath();
+		if(contentPath != null)
 		{
 		// 1. expand all spaces
-		for (int i = 0; i < parents.length; i++)
+		for (int i = 0; i < contentPath.length; i++)
 		{
-			if (!doExpandFolder(parents[i]))
+			if (!doExpandFolder(contentPath[i]))
 			{
 				throw new TestFrameworkException("Impossible to delete content from folder! Wrong path to the parent folder, "
-						+ parents[i] + " , has no child ! ");
+						+ contentPath[i] + " , has no child ! ");
 			}
 		}
 		}	
 
 		// 2. check for existence and select a content to delete.
-		selectContentInTable(contents, parents);
+		selectContentInTable(contents, contentPath);
 
 	
 		// 3. check if enabled 'Delete' link.
@@ -220,22 +215,22 @@ public class ContentBrowsePanel extends BrowsePanel
  
 	public DeleteContentDialog openDeleteContentDialog(List<BaseAbstractContent> contents)
 	{
-		String[] parents = contents.get(0).getParentNames();
-		if(parents !=null)
+		String[] contentPath = contents.get(0).getContentPath();
+		if(contentPath !=null)
 		{
 		// 1. expand all spaces
-		for (int i = 0; i < parents.length; i++)
+		for (int i = 0; i < contentPath.length; i++)
 		{
-			if (!doExpandFolder(parents[i]))
+			if (!doExpandFolder(contentPath[i]))
 			{
 				throw new TestFrameworkException("Impossible to delete content from folder! Wrong path to the parent folder, "
-						+ parents[i] + " , has no child ! ");
+						+ contentPath[i] + " , has no child ! ");
 			}
 		}
 		}
 	
 		// 2. check for existence and select a content to delete.
-		selectContentInTable(contents, parents);
+		selectContentInTable(contents, contentPath);
 
 		
 		// 3. check if enabled 'Delete' link.
@@ -259,14 +254,13 @@ public class ContentBrowsePanel extends BrowsePanel
 	 * @param parentSpace
 	 * @param contents
 	 */
-	private void selectContentInTable(List<BaseAbstractContent> contents, String... parentNames)
+	private void selectContentInTable(List<BaseAbstractContent> contents, String... contentPath)
 	{
-		waitAndCheckContent(contents, parentNames);
+		waitAndCheckContent(contents, contentPath);
 		for (BaseAbstractContent content : contents)
 		{
 			selectCheckbox(content);
 		}
-
 	}
 
 	private void waitAndCheckContent(List<BaseAbstractContent> contents, String... parents)
@@ -279,7 +273,6 @@ public class ContentBrowsePanel extends BrowsePanel
 				throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 			}
 		}
-
 	}
 
 	/**
@@ -309,7 +302,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	private String buildFullName(BaseAbstractContent content)
 	{
        StringBuilder sb = new StringBuilder();
-       String[] names = content.getParentNames();
+       String[] names = content.getContentPath();
        if(names!=null)
        {
        for(String name:names)
@@ -322,8 +315,7 @@ public class ContentBrowsePanel extends BrowsePanel
        }
        }
        sb.append("/").append(content.getName());
-       return sb.toString();
-       
+       return sb.toString();    
 	}
 
 	/**
@@ -335,13 +327,15 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	public void doAddContent(BaseAbstractContent content, boolean isCloseWizard)
 	{
-		String[] parents = content.getParentNames();
+		String[] contentPath = content.getContentPath();
 		
-		ContentWizardPanel wizard = openContentWizardPanel(content.getContentTypeName(), parents);
+		ContentWizardPanel wizard = openContentWizardPanel(content.getContentTypeName(), contentPath);
 		
 		if (isCloseWizard)
 		{
 			wizard.doTypeDataSaveAndClose(content);
+			ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
+			panel.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 		} else
 		{
 			wizard.doTypeDataAndSave(content);
@@ -354,7 +348,8 @@ public class ContentBrowsePanel extends BrowsePanel
 
 		ContentWizardPanel wizard = openEditWizardPage(content);
 		wizard.doTypeDataSaveAndClose(newcontent);
-
+		ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
+		panel.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 	}
 	
 	public ContentWizardPanel openEditWizardPage(BaseAbstractContent content)
@@ -453,9 +448,10 @@ public class ContentBrowsePanel extends BrowsePanel
 		{
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
-		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getParentNames());;
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());;
 		// 2. check for existence of content in a parent space and select a content to open.
 		//selectCheckbox(content);	
+		SleepWaitHelper.sleep(1000);
 		selectRowByContentFullName(fullName );
 		if (!openButton.isEnabled())
 		{
@@ -483,7 +479,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
 		// 2. check for existence of content in a parent space and select a content to open.
-		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getParentNames());
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());
 		getLogger().info("Full name of content: "+ fullName);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);	
 		WebElement element = findElement(By.xpath(contentDescriptionXpath));

@@ -25,7 +25,6 @@ class ContentItemViewPanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), content, true)
 
 		when:
-		//contentService.doOpenContent(getTestSession(), content)
 		contentService.doOpenContentUseToolbar(getSession(), content);
 		
 		then:

@@ -115,7 +115,6 @@ public class FilterContentPanel extends Application
 	 */
 	public void doFilterByContentType(String contentTypeName)
 	{
-		//contentTypeName = "page";
 		String itemXpath = String.format(CONTENT_TYPE_FILTER_ITEM, contentTypeName);
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(itemXpath));
 		if (elems.size() == 0)

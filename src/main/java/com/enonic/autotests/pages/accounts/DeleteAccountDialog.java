@@ -11,7 +11,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.utils.SleepWaitHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 public class DeleteAccountDialog
 {

@@ -21,39 +21,36 @@ public class ItemViewPanelPage extends Application
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
 	public static  String VERIFY_TITLE_SPAN_XPATH = "//span[@class='label' and @title='%s']";
+	
 	public static String TITLE_SPAN_XPATH  = "//span[@class='label' and @title]";
 	
 	public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'x-btn start-button')]";
 
 	private static  String H1_DISPLAY_NAME_XPATH = "//div[@class='panel item-view-panel']//h1[text()='%s']";
+	
 	private static  String H4_FULL_NAME_XPATH = "//div[@class='panel item-view-panel']//h4[text()='%s']";
 	
 	private static final String TOOLBAR_EDIT_BUTTON_XPATH = "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Edit']";
 	
 	private static final String TOOLBAR_DELETE_BUTTON_XPATH = "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Delete']";
-	
-	
+		
 	@FindBy(xpath = TOOLBAR_EDIT_BUTTON_XPATH)
 	private WebElement editButtonToolbar;
 	
 	@FindBy(xpath = TOOLBAR_DELETE_BUTTON_XPATH)
 	private WebElement deleteButtonToolbar;
 	
-	
 	@FindBy(xpath = "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Close']")
 	protected WebElement closeButton;
-	
-	
+		
 	/**
 	 * The constructor.
 	 * @param session
 	 */
 	public ItemViewPanelPage( TestSession session )
 	{
-		super(session);
-		
+		super(session);	
 	}
-
 
 	/**
 	 * Verify that red circle and "New Space" message presented on the top of
@@ -62,12 +59,12 @@ public class ItemViewPanelPage extends Application
 	 * @param session
 	 *            {@link TestSession} instance
 	 */
-	public void waitUntilOpened(TestSession session, String displayName, Integer numberPage) {
+	public void waitUntilOpened(TestSession session, String displayName, Integer numberPage) 
+	{
 		String circleXpath = String.format(RED_CIRCLE_XPATH, numberPage.toString());
 		String titleXpath = String.format(VERIFY_TITLE_SPAN_XPATH, displayName);
         SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath(circleXpath));
         SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath(titleXpath));
-
 	}
 	
 	public void doCloseContentInfoView()
@@ -103,8 +100,7 @@ public class ItemViewPanelPage extends Application
 		if (!isClosed)
 		{
 			throw new DeleteCMSObjectException("Confirm 'delete content' dialog was not closed!");
-		}
-		
+		}		
 		ContentBrowsePanel table = new ContentBrowsePanel(getSession());
 		table.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 	}
@@ -124,11 +120,9 @@ public class ItemViewPanelPage extends Application
 		{
 			getLogger().info("the actual dispalyName and expected are not equal!");
 		}
-		String fullContentName =  TestUtils.buildFullNameOfContent(content.getName(), content.getParentNames());
+		String fullContentName =  TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());
 		elems = findElements(By.xpath(String.format(H4_FULL_NAME_XPATH, fullContentName))) ;
-		result &=elems.size()>0;
-		
-		
+		result &=elems.size()>0;		
 		return result;
 	}
 	
@@ -140,16 +134,13 @@ public class ItemViewPanelPage extends Application
 	{
 		boolean result = true;
 		boolean tmp;
-		
-		
+			
 		tmp = deleteButtonToolbar.isDisplayed() && deleteButtonToolbar.isEnabled();
 		if(!tmp)
 		{
 			getLogger().info("the delete button has wrong state");
 		}
-		result &= tmp;
-		
-		
+		result &= tmp;	
 		tmp = editButtonToolbar.isDisplayed() && editButtonToolbar.isEnabled();
 		if(!tmp)
 		{

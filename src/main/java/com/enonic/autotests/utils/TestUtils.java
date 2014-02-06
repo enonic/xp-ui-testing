@@ -33,9 +33,16 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.Co
 public class TestUtils
 {
 	public static Logger logger = Logger.getLogger();
+	
 	public static final String DATE_FORMAT_NOW = "yyyy-MM-dd-HH-mm-ss";
 
+	/**
+	 * The Default constructor.
+	 */
+	private TestUtils()
+	{
 
+	}
 	
 	public static String buildFullNameOfContent(String contentName, String... parentNames)
 	{
@@ -59,16 +66,11 @@ public class TestUtils
 		String fullContentName = builder.append(contentName).toString();
 		return fullContentName;
 	}
-
+	
 	/**
-	 * The Default constructor.
+	 * @param ctype
+	 * @return
 	 */
-	private TestUtils()
-	{
-
-	}
-
-
 	public static ContentTypeName getContentType(String ctype)
 	{
 		ContentTypeName result = null;
@@ -78,7 +80,6 @@ public class TestUtils
 			if (val.getValue().equalsIgnoreCase(ctype))
 			{
 				result = val;
-
 			}
 		}
 		return result;
@@ -104,7 +105,6 @@ public class TestUtils
 				System.out.println("Folder for snapshots was created " + folder.getAbsolutePath());
 			}
 		}
-
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		String fullFileName = folder.getAbsolutePath() + File.separator + fileName;
 		try
@@ -122,7 +122,6 @@ public class TestUtils
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
 		return sdf.format(cal.getTime());
-
 	}
 
 	public static void clickByLocator(final By locator, WebDriver driver)
@@ -168,7 +167,6 @@ public class TestUtils
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return element.getText();
-
 	}
 
 	/**
@@ -203,7 +201,6 @@ public class TestUtils
 		} catch (Exception e)
 		{
 			throw new TestFrameworkException("Error during creation TMP-file");
-
 		}
 	}
 

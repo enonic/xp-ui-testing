@@ -12,24 +12,24 @@ public abstract class BaseAbstractContent
 	private String displayName;
 	private String contentTypeName;
 
-	private String[] parentNames;
+	private String[] contentPath;
 
 	protected BaseAbstractContent( Builder<?> builder )
 	{
 		this.name = builder.name;
 		this.displayName = builder.displayName;
-		this.parentNames = builder.parentNames;
+		this.contentPath = builder.contentPath;
 		this.contentTypeName = builder.contentTypeName;
 	}
 
-	public String[] getParentNames()
+	public String[] getContentPath()
 	{
-		return parentNames;
+		return contentPath;
 	}
 
-	public void setParentNames(String[] parentNames)
+	public void setContentPath(String[] contentPath)
 	{
-		this.parentNames = parentNames;
+		this.contentPath = contentPath;
 	}
 
 	public String getName()
@@ -67,7 +67,7 @@ public abstract class BaseAbstractContent
 		private String name;
 		private String displayName;
 		private String contentTypeName;
-		private String[] parentNames;
+		private String[] contentPath;
 
 		public Builder<T> withName(String name)
 		{
@@ -87,9 +87,9 @@ public abstract class BaseAbstractContent
 			return this;
 		}
 
-		public Builder<T> withparentNames(String[] parents)
+		public Builder<T> withContentPath(String[] contentPath)
 		{
-			this.parentNames = parents;
+			this.contentPath = contentPath;
 			return this;
 		}
 

@@ -40,9 +40,6 @@ public class ContentWizardPanel extends WizardPanel
 	@FindBy(xpath = TOOLBAR_DUPLICTAE_BUTTON_XPATH)
 	private WebElement toolbarDuplicateButton;
 	
-	
-	
-
 	/**
 	 * The constructor.
 	 * 
@@ -85,6 +82,11 @@ public class ContentWizardPanel extends WizardPanel
 		}
 		return result;
 	}
+	
+	/**
+	 * @param session
+	 * @return
+	 */
 	private boolean verifyTollbar(TestSession session)
 	{
 		boolean result = true;
@@ -105,6 +107,9 @@ public class ContentWizardPanel extends WizardPanel
 		return result;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String getTitle()
 	{
 		List<WebElement> elems = getDriver().findElements(By.xpath("//div[child::span[@class='tabcount']]/span[@class='label']"));
@@ -127,16 +132,13 @@ public class ContentWizardPanel extends WizardPanel
 		// 1. type a data: 'name' and 'Display Name'.	
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
-		clearAndType(displayNameInput, content.getDisplayName());
-		
-		SleepWaitHelper.sleep(1000);
-		
+		clearAndType(displayNameInput, content.getDisplayName());	
+		SleepWaitHelper.sleep(1000);	
 		if(StringUtils.isNotEmpty(content.getName()))
 		{
 			waitElementClickable(By.name("name"), 2);
 			getLogger().info("types name: "+ content.getName());
-			clearAndType(nameInput, content.getName());
-			
+			clearAndType(nameInput, content.getName());		
 		}
 		
 		TestUtils.saveScreenshot(getSession());
@@ -146,7 +148,6 @@ public class ContentWizardPanel extends WizardPanel
 		// 3. check if enabled and press "Save".
 		getLogger().info("Clicks 'Save' button in toolbar");
 		doSaveFromToolbar();
-
 		// 4. check notification message.
 		String mess = getNotificationMessage(APP_CONTENT_MANAGER_FRAME_XPATH);
 		getLogger().info("notification message has appeared:" + mess);
@@ -166,9 +167,7 @@ public class ContentWizardPanel extends WizardPanel
 		//	throw new SaveOrUpdateException("the actual notification, that the content with name" + content.getDisplayName()
 		//			+ " is saved - is not equals expected!");
 		//}
-
 	}
-
 
 	/**
 	 * Types a data and close wizard.
@@ -180,17 +179,6 @@ public class ContentWizardPanel extends WizardPanel
 	{
 		doTypeDataAndSave( content);
 		closeButton.click();	
-		
-//		CloseWizardDialog dialog = new CloseWizardDialog(getSession());
-//		if(dialog.isDialogPresent())
-//		{
-//			dialog.doCloseNoSave();
-//		}
-		
-
-		ContentBrowsePanel page = new ContentBrowsePanel(getSession());
-		page.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
-
 	}
 	
 	/**

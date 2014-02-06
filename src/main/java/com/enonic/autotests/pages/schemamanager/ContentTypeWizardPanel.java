@@ -38,7 +38,6 @@ public class ContentTypeWizardPanel extends WizardPanel
 	public ContentTypeWizardPanel(TestSession session)
 	{
 		super(session);
-
 	}
 
 	/**
@@ -50,12 +49,10 @@ public class ContentTypeWizardPanel extends WizardPanel
 	{
 		clearAndType(nameInput, longName);
 		String width = findElement(By.xpath("//input[@name='name']")).getAttribute("style");
-
 		String aa = "width: 300px";
 		int start = aa.indexOf(":");
 		int end = aa.indexOf("px");
 		int value = Integer.valueOf(width.substring(start+1, end).trim());
-		
 		return value;
 	}
 
@@ -90,8 +87,7 @@ public class ContentTypeWizardPanel extends WizardPanel
 	private void clearConfig(WebElement configElement)
 	{
 		final Actions builder = new Actions( getSession().getDriver() );
-		builder.click( configElement ).sendKeys(Keys.chord(Keys.CONTROL, "a"), " " ).build().perform();
-		
+		builder.click( configElement ).sendKeys(Keys.chord(Keys.CONTROL, "a"), " " ).build().perform();		
 		getLogger().info("method fifnished :clearConfig ");
 		
 	}
@@ -165,7 +161,6 @@ public class ContentTypeWizardPanel extends WizardPanel
 		{
 			act.click(configElement).keyDown(Keys.CONTROL).sendKeys("v").keyUp(Keys.CONTROL).build().perform();
 			getLogger().info("copy paste from clipboard, os:windows");
-
 		}
 	}
 }

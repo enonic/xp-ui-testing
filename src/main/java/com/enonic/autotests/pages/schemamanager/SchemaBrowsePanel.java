@@ -69,7 +69,6 @@ public class SchemaBrowsePanel extends BrowsePanel
 	public SchemaBrowsePanel(TestSession session)
 	{
 		super(session);
-
 	}
 	
 	public void doEditContentType(ContentType contentTypeToEdit, ContentType newContentType)
@@ -99,8 +98,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
 		getLogger().info("## ContentTypeWizardPanel  should be opened, waits title: " + contentTypeToEdit.getName());
 		wizard.waitUntilWizardOpened( 1);
-		wizard.doTypeDataSaveAndClose(newContentType);
-		
+		wizard.doTypeDataSaveAndClose(newContentType);	
 	}
 	
 	public ContentTypeWizardPanel doOpenContentTypeForEdit(ContentType contentTypeToEdit)
@@ -204,8 +202,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 		}
 		getLogger().info("SelectKindDialog, content type should be selected:" + kind);
 		ContentTypeWizardPanel wizard = selectDialog.doSelectKind(kind);
-		return wizard;
-		
+		return wizard;		
 	}
 
 	/**
@@ -244,8 +241,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 		{
 		  //1. expand a supertype folder:
 		  doExpandFolder(superTypeName);
-		}
-		
+		}		
 		String contentTypeXpath = String.format(CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName());
 		getLogger().info("Check is Space present in table: " + contentTypeXpath);
 	
@@ -260,7 +256,5 @@ public class SchemaBrowsePanel extends BrowsePanel
 			getLogger().info("Content type  was not found in the Table!  " +   "Name:" + contentType.getName());
 			return false;
 		}
-
 	}
-
 }

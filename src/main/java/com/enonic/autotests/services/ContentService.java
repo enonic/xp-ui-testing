@@ -10,6 +10,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
+import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
@@ -57,8 +58,6 @@ public class ContentService
 
 	}
 	
-
-
 	/**
 	 * Selects all content in the table.
 	 * @param session
@@ -73,7 +72,6 @@ public class ContentService
 	    return cmPage.doSelectAll();
 			
 	}
-
 	
 	/**
 	 * Selects a parent folder or space in the table of content and adds new content.
@@ -113,7 +111,6 @@ public class ContentService
 		
 		boolean result = contentInfoPage.verifyContentInfoPage(content);
 		result &= contentInfoPage.verifyToolbar(content);
-
 		return result;
 	}
 	
@@ -121,9 +118,7 @@ public class ContentService
 	{
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
-		cmPage.doOpenContent(content);
-		
-		
+		cmPage.doOpenContent(content);		
 	}
 	
 	/**
@@ -138,14 +133,21 @@ public class ContentService
 	{
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
+		//cmPage.doClearSelection();
+	
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		contentInfoPage.doCloseContentInfoView();
 		cmPage.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
 		return cmPage;
 	}
-	
-	
+		
+	/**
+	 * @param session
+	 * @param content
+	 * @param how
+	 * @return
+	 */
 	public ItemViewPanelPage doOpenContent(TestSession session, BaseAbstractContent content, HowOpenContent how)
 	{
 		ItemViewPanelPage contentInfoPage;
@@ -169,8 +171,7 @@ public class ContentService
 		
 		return contentInfoPage;
 	}
-	
-	
+		
 	/**
 	 * Opens a content-info page
 	 * @param session
@@ -215,8 +216,7 @@ public class ContentService
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
         // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
-		return cmPage.openDeleteContentDialog(contents);
-		
+		return cmPage.openDeleteContentDialog(contents);		
 	}
 
 	/**

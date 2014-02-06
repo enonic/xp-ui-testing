@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.utils.SleepWaitHelper;
@@ -29,7 +28,6 @@ public abstract class WizardPanel extends Application {
 	@FindBy(xpath = TOOLBAR_CLOSEWIZARD_BUTTON_XPATH )
 	protected WebElement closeButton;
 
-
 	@FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
 	protected WebElement toolbarSaveButton;
 
@@ -42,10 +40,13 @@ public abstract class WizardPanel extends Application {
 	@FindBy(name = "name")
 	protected WebElement nameInput;
 
+	/**
+	 * The constructor
+	 * @param session
+	 */
 	public WizardPanel(TestSession session)
 	{
 		super(session);
-
 	}
 
 	/**
@@ -96,12 +97,10 @@ public abstract class WizardPanel extends Application {
 		//String titleXpath = String.format(OBJECT_NAME_XPATH, displayName); 
         SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath(circleXpath));
 		//TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
-
 	}
 	
 	public void waitElementClickable(By by, long timeout)
-	{
-		
+	{		
 		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.elementToBeClickable(by));
 	}
 
