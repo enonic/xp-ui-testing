@@ -30,7 +30,7 @@ public class ContentService
 	{
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
-		TestUtils.getInstance().saveScreenshot(session);
+		TestUtils.saveScreenshot(session);
 		boolean result = true;
 		result &=cmPage.verifyTitle();
 		//TODO should specified: what need to check?
@@ -39,14 +39,12 @@ public class ContentService
 	}
 	public boolean openAndVerifyAddContentWizardPage(TestSession session, String contentTypeName ,String ...parentNames)
 	{
-
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		
 		//2. select a space and open the 'add content wizard' (click by 'New') 
 		ContentWizardPanel wizardPage = cmPage.openContentWizardPanel(contentTypeName,parentNames);
 		String expectedTitle = String.format(ContentWizardPanel.START_WIZARD_TITLE, contentTypeName);
-		TestUtils.getInstance().saveScreenshot(session);
 		boolean result = wizardPage.getTitle().equalsIgnoreCase(expectedTitle);
 		logger.info("expected title is "+ expectedTitle  +" actual title is: "+wizardPage.getTitle());
 		if(!result)
@@ -231,7 +229,6 @@ public class ContentService
 	 */
 	public ContentBrowsePanel updateContent(TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent)
 	{
-
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 		cmPage.doUpdateContent(contentToUpdate, newContent);
 		return cmPage;
