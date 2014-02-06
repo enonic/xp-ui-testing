@@ -18,9 +18,7 @@ class BrowsePanelSpec extends BaseGebSpec
 
 	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
 	{		
-		if (!browser.baseUrl) {
-			browser.baseUrl = "http://localhost:8080/"
-	}
+		
 		given:
 		go "admin"		
 	
