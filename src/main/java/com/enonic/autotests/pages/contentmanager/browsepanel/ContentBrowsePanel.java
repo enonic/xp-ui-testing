@@ -304,7 +304,6 @@ public class ContentBrowsePanel extends BrowsePanel
 		{
 			throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 		}
-
 		// 2. check out is content present  in a parent space and select it to edit.
 		selectCheckbox(content);
 		editButton.click();
@@ -327,6 +326,12 @@ public class ContentBrowsePanel extends BrowsePanel
 		return selectKindOfContentAndOpenWizardPanel(contentTypeName);
 	}
 	
+	/**
+	 * Clicks by 'New' button from toolbar and open a dialog with title: "What do you want to create?"
+	 * 
+	 * @param contentTypeName the kind of content
+	 * @return {@ContentWizardPanel} instance.
+	 */
 	private ContentWizardPanel selectKindOfContentAndOpenWizardPanel(String contentTypeName)
 	{
 		// click by 'New' button from the toolbar
@@ -343,6 +348,8 @@ public class ContentBrowsePanel extends BrowsePanel
 		return wizard;
 	}
 	/**
+	 * Expands all folders, that present in the 'content path' and  clicks by a checkbox related to parent folder for new content.
+	 * 
 	 * @param contentPath
 	 */
 	private void selectParentFolderForContent(String[] contentPath)
@@ -384,6 +391,12 @@ public class ContentBrowsePanel extends BrowsePanel
 		}
 	}
 
+	/**
+	 * Clicks by row with content and  clicks by 'Open' button.
+	 * 
+	 * @param content
+	 * @return {@ItemViewPanelPage} instance
+	 */
 	public ItemViewPanelPage doOpenContent(BaseAbstractContent content)
 	{
 		boolean isPresent = findContentInTable(content, IMPLICITLY_WAIT);
@@ -411,6 +424,12 @@ public class ContentBrowsePanel extends BrowsePanel
 		return cinfo;
 	}
 	
+	/**
+	 * Select a content and right click on  mouse, opens a Item view panel.
+	 * 
+	 * @param content
+	 * @return {@ItemViewPanelPage} instance.
+	 */
 	public ItemViewPanelPage doOpenContentFromContextMenu(BaseAbstractContent content)
 	{
 		boolean isPresent = findContentInTable(content, 7l);
