@@ -106,8 +106,6 @@ public class ContentBrowsePanel extends BrowsePanel
 		return allNames;
 	}
 
-
-
 	/**
 	 * Finds content by name. Filtering was applied and content filtered.
 	 * 
@@ -213,7 +211,6 @@ public class ContentBrowsePanel extends BrowsePanel
 		}
 		// 4. click by 'Delete' link and open a confirm dialog.
 		deleteButton.click();
-
 		DeleteContentDialog dialog = new DeleteContentDialog(getSession());
 		return dialog;
 	}
@@ -255,8 +252,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	private void selectCheckbox(BaseAbstractContent content)
 	{
-		//String fullContentName = TestUtils.getInstance().buildFullNameOfContent(contentName, content.getParentNames());
-		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());//buildFullName(content);
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());
 		String contentCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, fullName);
 		getLogger().info("tries to find the content in a table, fullName of content is :" + fullName);
 	
@@ -277,12 +273,11 @@ public class ContentBrowsePanel extends BrowsePanel
 	 * @param content
 	 * @param isCloseWizard
 	 */
-	public void doAddContent(BaseAbstractContent content, boolean isCloseWizard)
+	public void doAddContent(BaseAbstractContent content, boolean isWizardShouldBeClosed)
 	{
 		String[] contentPath = content.getContentPath();	
-		ContentWizardPanel wizard = openContentWizardPanel(content.getContentTypeName(), contentPath);
-		
-		if (isCloseWizard)
+		ContentWizardPanel wizard = openContentWizardPanel(content.getContentTypeName(), contentPath);		
+		if (isWizardShouldBeClosed)
 		{
 			wizard.doTypeDataSaveAndClose(content);
 			ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
@@ -310,9 +305,8 @@ public class ContentBrowsePanel extends BrowsePanel
 			throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 		}
 
-		// 2. check for existence of content in a parent space and select a content fo edit.
+		// 2. check out is content present  in a parent space and select it to edit.
 		selectCheckbox(content);
-
 		editButton.click();
 		ContentWizardPanel wizard = new ContentWizardPanel(getSession());
 		wizard.waitUntilWizardOpened( 1);
@@ -328,6 +322,31 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	public ContentWizardPanel openContentWizardPanel(String contentTypeName, String... contentPath)
 	{
+		//1. click by a checkbox and select a parent folder 
+		selectParentFolderForContent(contentPath);
+		return selectKindOfContentAndOpenWizardPanel(contentTypeName);
+	}
+	
+	private ContentWizardPanel selectKindOfContentAndOpenWizardPanel(String contentTypeName)
+	{
+		// click by 'New' button from the toolbar
+		newButton.click();
+		NewContentDialog newContentDialog = new NewContentDialog(getSession());
+		boolean isOpened = newContentDialog.isOpened();
+		if (!isOpened)
+		{
+			getLogger().error("NewContentDialog was not opened!", getSession());
+			throw new TestFrameworkException("Error during add content, NewContentDialog dialog was not opened!");
+		}
+		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
+		ContentWizardPanel wizard = newContentDialog.selectContentType(contentTypeName);
+		return wizard;
+	}
+	/**
+	 * @param contentPath
+	 */
+	private void selectParentFolderForContent(String[] contentPath)
+	{
 		String parentContent = null;
 		if (contentPath != null)
 		{
@@ -339,8 +358,6 @@ public class ContentBrowsePanel extends BrowsePanel
 			 }
 			// 1. select a checkbox and press the 'New' from toolbar.
 			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentContent);
-			
-			//boolean isPresentCheckbox = TestUtils.getInstance().waitAndFind(By.xpath(spaceCheckBoxXpath), getDriver());
 			boolean isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			
 			//TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
@@ -365,17 +382,6 @@ public class ContentBrowsePanel extends BrowsePanel
 				throw new SaveOrUpdateException("CM application, impossible to open NewContentDialog, because the 'New' button is disabled!");
 			}
 		}
-		newButton.click();
-		NewContentDialog newContentDialog = new NewContentDialog(getSession());
-		boolean isOpened = newContentDialog.isOpened();
-		if (!isOpened)
-		{
-			getLogger().error("NewContentDialog was not opened!", getSession());
-			throw new TestFrameworkException("Error during add content, NewContentDialog dialog was not opened!");
-		}
-		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
-		ContentWizardPanel wizard = newContentDialog.selectContentType(contentTypeName);
-		return wizard;
 	}
 
 	public ItemViewPanelPage doOpenContent(BaseAbstractContent content)
@@ -383,25 +389,22 @@ public class ContentBrowsePanel extends BrowsePanel
 		boolean isPresent = findContentInTable(content, IMPLICITLY_WAIT);
 		if (!isPresent)
 		{
-			throw new TestFrameworkException("The content with name " + content.getName() + " and displayName:" + content.getDisplayName()
-					+ " was not found!");
+			throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 		} else
 		{
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
-		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());;
-		// 2. check for existence of content in a parent space and select a content to open.
-		//selectCheckbox(content);	
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());;	
 		SleepWaitHelper.sleep(1000);
+		//1. select a content
 		selectRowByContentFullName(fullName );
 		if (!openButton.isEnabled())
 		{
 			getLogger().info("'Open' link is disabled!");
 			new WebDriverWait(getSession().getDriver(), 2).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='toolbar']/button[text()='Open']")));
 		}
-		
-		openButton.click();
-		
+		//2. click by 'Open' button
+		openButton.click();		
 		ItemViewPanelPage cinfo = new ItemViewPanelPage(getSession());
 		int expectedNumberOfPage = 1;
 		cinfo.waitUntilOpened(getSession(), content.getDisplayName(), expectedNumberOfPage);
