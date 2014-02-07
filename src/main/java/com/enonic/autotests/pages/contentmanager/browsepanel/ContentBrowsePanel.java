@@ -90,9 +90,6 @@ public class ContentBrowsePanel extends BrowsePanel
 	}
 
 
-
-
-
 	/**
 	 * Gets all content names, showed in the contents-table.
 	 * 
@@ -121,8 +118,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	 * @return true if content was found, otherwise return false.
 	 */
 	public boolean findContentInTable(BaseAbstractContent content, long timeout, boolean filtered)
-	{
-		
+	{		
 		String[] contentPath = content.getContentPath();
 		if (!filtered && contentPath != null)
 		{
@@ -160,6 +156,25 @@ public class ContentBrowsePanel extends BrowsePanel
 	{
 		return findContentInTable(content, timeout, false);
 	}
+	
+	/**
+	 * @param contentPath
+	 */
+	private void doExpandAllFoldersFromContentPath(String[] contentPath)
+	{
+		
+		if(contentPath != null)
+		{
+			for (int i = 0; i < contentPath.length; i++)
+			{
+				if (!doExpandFolder(contentPath[i]))
+					{
+						throw new TestFrameworkException("Impossible to expand a folder! Wrong path to the parent folder, "
+						+ contentPath[i] + " , has no child ! ");
+					}
+			}
+		}	
+	}
 
 	/**
 	 * Delete contents from a space.
@@ -169,39 +184,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	public void doDeleteContent(List<BaseAbstractContent> contents)
 	{
-		String[] contentPath = contents.get(0).getContentPath();
-		if(contentPath != null)
-		{
-		// 1. expand all spaces
-		for (int i = 0; i < contentPath.length; i++)
-		{
-			if (!doExpandFolder(contentPath[i]))
-			{
-				throw new TestFrameworkException("Impossible to delete content from folder! Wrong path to the parent folder, "
-						+ contentPath[i] + " , has no child ! ");
-			}
-		}
-		}	
-
-		// 2. check for existence and select a content to delete.
-		selectContentInTable(contents, contentPath);
-
-	
-		// 3. check if enabled 'Delete' link.
-		boolean isEnabledDeleteButton = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath(DELETE_BUTTON_XPATH), 2l);
-		if (!isEnabledDeleteButton)
-		{
-			throw new SaveOrUpdateException("CM application, impossible to delete content, because the 'Delete' button is disabled!");
-		}
-		// 4. click by 'Delete' link and open a confirm dialog.
-		deleteButton.click();
-
-		DeleteContentDialog dialog = new DeleteContentDialog(getSession());
-		boolean isOpened = dialog.isOpened();
-		if (!isOpened)
-		{
-			throw new TestFrameworkException("Confirm 'delete content' dialog was not opened!");
-		}
+		DeleteContentDialog dialog = openDeleteContentDialog(contents);
 		// 5. press the button "Delete" on the dialog.
 		dialog.doDelete();
 		boolean isClosed = dialog.verifyIsClosed();
@@ -216,22 +199,11 @@ public class ContentBrowsePanel extends BrowsePanel
 	public DeleteContentDialog openDeleteContentDialog(List<BaseAbstractContent> contents)
 	{
 		String[] contentPath = contents.get(0).getContentPath();
-		if(contentPath !=null)
-		{
-		// 1. expand all spaces
-		for (int i = 0; i < contentPath.length; i++)
-		{
-			if (!doExpandFolder(contentPath[i]))
-			{
-				throw new TestFrameworkException("Impossible to delete content from folder! Wrong path to the parent folder, "
-						+ contentPath[i] + " , has no child ! ");
-			}
-		}
-		}
+        // 1. expand all folders
+		doExpandAllFoldersFromContentPath(contentPath);
 	
 		// 2. check for existence and select a content to delete.
 		selectContentInTable(contents, contentPath);
-
 		
 		// 3. check if enabled 'Delete' link.
 		boolean isEnabledDeleteButton = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath(DELETE_BUTTON_XPATH), 2l);
@@ -284,7 +256,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	private void selectCheckbox(BaseAbstractContent content)
 	{
 		//String fullContentName = TestUtils.getInstance().buildFullNameOfContent(contentName, content.getParentNames());
-		String fullName = buildFullName(content);
+		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());//buildFullName(content);
 		String contentCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, fullName);
 		getLogger().info("tries to find the content in a table, fullName of content is :" + fullName);
 	
@@ -296,26 +268,6 @@ public class ContentBrowsePanel extends BrowsePanel
 		}
 		SleepWaitHelper.sleep(1000);
 		findElement(By.xpath(contentCheckBoxXpath)).click();
-
-	}
-	
-	private String buildFullName(BaseAbstractContent content)
-	{
-       StringBuilder sb = new StringBuilder();
-       String[] names = content.getContentPath();
-       if(names!=null)
-       {
-       for(String name:names)
-       {
-    	   if(!name.startsWith("/"))
-    	   {
-    		   sb.append("/");
-    	   }
-    	   sb.append(name);
-       }
-       }
-       sb.append("/").append(content.getName());
-       return sb.toString();    
 	}
 
 	/**
@@ -327,8 +279,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	public void doAddContent(BaseAbstractContent content, boolean isCloseWizard)
 	{
-		String[] contentPath = content.getContentPath();
-		
+		String[] contentPath = content.getContentPath();	
 		ContentWizardPanel wizard = openContentWizardPanel(content.getContentTypeName(), contentPath);
 		
 		if (isCloseWizard)
@@ -345,7 +296,6 @@ public class ContentBrowsePanel extends BrowsePanel
 
 	public void doUpdateContent(BaseAbstractContent content, BaseAbstractContent newcontent)
 	{
-
 		ContentWizardPanel wizard = openEditWizardPage(content);
 		wizard.doTypeDataSaveAndClose(newcontent);
 		ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
@@ -369,7 +319,6 @@ public class ContentBrowsePanel extends BrowsePanel
 		return wizard;
 	}
 
-
 	/**
 	 * Select a content type and opens "Add new Content Wizard".
 	 * 
@@ -383,19 +332,11 @@ public class ContentBrowsePanel extends BrowsePanel
 		if (contentPath != null)
 		{
 			parentContent = contentPath[contentPath.length - 1];
-			// if contentPath.length == 0, so no need to expand space, new content will be added to the root folder
-			if (contentPath.length > 1)
-			{
-				for (int i = 0; i < contentPath.length - 1; i++)
-				{
-					if (!doExpandFolder(contentPath[i]))
-					{
-						throw new TestFrameworkException("Impossible to add content to the  " + parentContent + "wrong path to the parent, because "
-								+ contentPath[i] + " , has no child ! ");
-					}
-				}
-			}
 
+			if (contentPath.length > 1)
+			 {
+                doExpandAllFoldersFromContentPath(contentPath);
+			 }
 			// 1. select a checkbox and press the 'New' from toolbar.
 			String spaceCheckBoxXpath = String.format(CHECKBOX_ROW_CHECKER, parentContent);
 			
@@ -493,15 +434,12 @@ public class ContentBrowsePanel extends BrowsePanel
 		return cinfo;
 	}
 
-
-
 	/**
 	 * Waits until page loaded.
 	 * @param timeout
 	 */
 	public void waituntilPageLoaded(long timeout)
 	{
-
 		new WebDriverWait(getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TITLE_XPATH)));
 	}
 
