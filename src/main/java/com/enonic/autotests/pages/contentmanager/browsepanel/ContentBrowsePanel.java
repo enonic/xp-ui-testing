@@ -379,8 +379,8 @@ public class ContentBrowsePanel extends BrowsePanel
 				TestUtils.saveScreenshot(getSession());
 				//getDriver().navigate().refresh();
 				SleepWaitHelper.sleep(1000);
-			}
-			isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
+				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
+			}		
 			if (!isPresentCheckbox)
 			{
 				TestUtils.saveScreenshot(getSession());
