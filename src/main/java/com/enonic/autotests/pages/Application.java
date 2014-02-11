@@ -2,7 +2,6 @@ package com.enonic.autotests.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import com.enonic.autotests.TestSession;
 
 public class Application extends Page

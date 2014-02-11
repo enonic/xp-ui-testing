@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -26,13 +27,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
 
 public class TestUtils
 {
-	public static Logger logger = Logger.getLogger();
+	public static Logger logger = Logger.getLogger(TestUtils.class);
 	
 	public static final String DATE_FORMAT_NOW = "yyyy-MM-dd-HH-mm-ss";
 
@@ -112,7 +112,7 @@ public class TestUtils
 			FileUtils.copyFile(screenshot, new File(fullFileName));
 		} catch (IOException e)
 		{
-		  logger.warning("screenshot was  not saved!");
+		
 		}
 		return fileName;
 	}

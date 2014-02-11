@@ -60,7 +60,6 @@ public class HomePage extends Page
 			LoginPage loginPage = new LoginPage(getSession());
 			loginPage.doLogin(username, password);
 
-			getLogger().perfomance("user logged in " + username + "  password:" + password, start);
 			getSession().setLoggedIn(true);
 		}
 		else{

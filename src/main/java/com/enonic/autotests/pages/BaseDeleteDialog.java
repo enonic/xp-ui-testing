@@ -3,13 +3,13 @@ package com.enonic.autotests.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.utils.SleepWaitHelper;
 
 /**
@@ -18,7 +18,7 @@ import com.enonic.autotests.utils.SleepWaitHelper;
  */
 public abstract class BaseDeleteDialog
 {
-	protected Logger logger = Logger.getLogger();
+	protected Logger logger = Logger.getLogger(this.getClass());
 	
 	private final String ITEMS_TO_DELETE = "//div[contains(@class,'modal-dialog delete-dialog')]//div[@class='item-list']//h4";
 	

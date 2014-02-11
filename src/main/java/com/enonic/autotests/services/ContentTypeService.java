@@ -36,7 +36,7 @@ public class ContentTypeService
 	public ContentTypeWizardPanel openAddContentTypeWizard(TestSession testSession,KindOfContentTypes kind)
 	{
 		SchemaBrowsePanel schemaManagerPage = NavigatorHelper.openSchemaManager(testSession);
-		schemaManagerPage.doOpenAddNewTypeWizard(kind.getValue());
+		schemaManagerPage.doOpenContentTypeWizard(kind.getValue());
 		return new ContentTypeWizardPanel(testSession);
 	
 	}

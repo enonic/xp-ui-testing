@@ -57,28 +57,28 @@ public class ContentWizardPanel extends WizardPanel
 		result &= verifyTollbar(session);
 		if (!result)
 		{
-			getLogger().error("there are error during verifying the toolbar!", getSession());
+			logError("there are error during verifying the toolbar!");
 		}
 		// verify input fields , 'Go to home' and 'close ' buttons  
 		result &= displayNameInput.isDisplayed();
 		if (!displayNameInput.isDisplayed())
 		{
-			getLogger().error("'displayName' input is not present on the wizard page", getSession());
+			logError("'displayName' input is not present on the wizard page");
 		}
 		result &= nameInput.isDisplayed();
 		if (!nameInput.isDisplayed())
 		{
-			getLogger().error("'Name' input  is not present on the wizard page", getSession());
+			logError("'Name' input  is not present on the wizard page");
 		}
 		result &= gotoHomeButton.isDisplayed();
 		if (!gotoHomeButton.isDisplayed())
 		{
-			getLogger().error("Go To Home Page is not presented on the Wizard Page!", getSession());
+			logError("Go To Home Page is not presented on the Wizard Page!");
 		}
 		result &= closeButton.isDisplayed();
 		if (!closeButton.isDisplayed())
 		{
-			getLogger().error("'Close' should be presented on the Wizard Page!", getSession());
+			logError("'Close' should be presented on the Wizard Page!");
 		}
 		return result;
 	}
@@ -93,12 +93,13 @@ public class ContentWizardPanel extends WizardPanel
 		result &= toolbarSaveButton.isDisplayed() && toolbarSaveButton.isEnabled();
 		if (!result)
 		{
-			getLogger().error("error durin verifying the 'Save' toolbar-button !", getSession());
+			//getLogger().error("error durin verifying the 'Save' toolbar-button !", getSession());
+			getLogger().error("error durin verifying the 'Save' toolbar-button !");
 		}
 		result &= toolbarDeleteButton.isDisplayed() && !toolbarDeleteButton.isEnabled();
 		if (!(toolbarDeleteButton.isDisplayed() && !toolbarDeleteButton.isEnabled()))
 		{
-			getLogger().error("error during verifying the 'Delete' toolbar-button !", getSession());
+			//getLogger().error("error during verifying the 'Delete' toolbar-button !", getSession());
 		}
 		result &= toolbarPublishButton.isDisplayed() && toolbarPublishButton.isEnabled();
 		

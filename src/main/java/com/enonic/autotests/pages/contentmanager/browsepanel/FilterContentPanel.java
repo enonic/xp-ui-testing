@@ -100,7 +100,7 @@ public class FilterContentPanel extends Application
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(spaceXpath));
 		if (elems.size() == 0)
 		{
-			getLogger().error("space  was not found in the search panel:" + spaceName, getSession());
+			logError("space  was not found in the search panel:" + spaceName);
 			throw new ContentFilterException("space  was not found in the search panel:" + spaceName);
 		} else
 		{
@@ -119,7 +119,7 @@ public class FilterContentPanel extends Application
 		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(itemXpath));
 		if (elems.size() == 0)
 		{
-			getLogger().error("content type was not found in the search panel:" + contentTypeName, getSession());
+			logError("content type was not found in the search panel:" + contentTypeName);
 			throw new ContentFilterException("content type was not found in the search panel:" + contentTypeName);
 		} else
 		{

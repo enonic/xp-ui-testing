@@ -70,7 +70,7 @@ public class AddNewUserWizard extends WizardPanel
 
 		if (!isLoaded)
 		{
-			getLogger().error("expected page was not loaded. Waiting time is :" + res, getSession());
+			logError("expected page was not loaded. Waiting time is :" + res);
 			throw new SaveOrUpdateException(
 					"buttons 'Save ' and 'Close' in the wizard page were pressed, but Page, that contains all accounts, was not loaded");
 		}
@@ -257,58 +257,58 @@ public class AddNewUserWizard extends WizardPanel
 
 		if (greenSaveButton.isDisplayed())
 		{
-			getLogger().error("'green' save button displayed on the page, but should not be displayed, because required fields are empty!", session);
+			logError("'green' save button displayed on the page, but should not be displayed, because required fields are empty!");
 		}
 		result &= nameInput.isDisplayed();
 		if (!nameInput.isDisplayed())
 		{
-			getLogger().error("Input field for user name should be present, this is required field!", session);
+			logError("Input field for user name should be present, this is required field!");
 		}
 		result &= displayNameInput.isDisplayed();
 		if (!displayNameInput.isDisplayed())
 		{
-			getLogger().error("Input field for dispalyed user name should be present, this is required field!", session);
+			logError("Input field for dispalyed user name should be present, this is required field!");
 		}
 		result &= qualifiedName.isDisplayed() && qualifiedName.getAttribute("readonly") != null;
 		if (!qualifiedName.isDisplayed() && qualifiedName.isEnabled())
 		{
-			getLogger().error("Input field for qualifiedName  should be present, this is required field!", session);
+			logError("Input field for qualifiedName  should be present, this is required field!");
 		}
 		result &= toolbarSaveButton.isDisplayed();// toolbarSaveButton.isEnabled()
 		if (!toolbarSaveButton.isDisplayed())
 		{
-			getLogger().error("'Save' button is not presented on the toolbar", session);
+			logError("'Save' button is not presented on the toolbar");
 		}
 		result &= !toolbarSaveButton.isEnabled();
 		if (toolbarSaveButton.isEnabled())
 		{
-			getLogger().error("'Save' button on toolbar should be disabled, because required fields are empty!", session);
+			logError("'Save' button on toolbar should be disabled, because required fields are empty!");
 		}
 		result &= gotoHomeButton.isDisplayed();
 		if (!gotoHomeButton.isDisplayed())
 		{
-			getLogger().error("Go To Home Page is not presented on the Wizard Page!", session);
+			logError("Go To Home Page is not presented on the Wizard Page!");
 		}
 		result &= closeButton.isDisplayed();
 		if (!closeButton.isDisplayed())
 		{
-			getLogger().error("'Close' should be presented on the Wizard Page!", session);
+			logError("'Close' should be presented on the Wizard Page!");
 		}
 		result &= passwordInput.isDisplayed();
 		if (!passwordInput.isDisplayed())
 		{
-			getLogger().error(" 'passwordInput' should be presented on the Wizard Page!", session);
+			logError(" 'passwordInput' should be presented on the Wizard Page!");
 		}
 
 		result &= repeatPasswordInput.isDisplayed();
 		if (!repeatPasswordInput.isDisplayed())
 		{
-			getLogger().error(" 'repeatPasswordInput' should be presented on the Wizard Page!", session);
+			logError(" 'repeatPasswordInput' should be presented on the Wizard Page!");
 		}
 		result &= emailInput.isDisplayed();
 		if (!emailInput.isDisplayed())
 		{
-			getLogger().error(" 'emailInput' should be presented on the Wizard Page!", session);
+			logError(" 'emailInput' should be presented on the Wizard Page!");
 		}
 
 		return result;

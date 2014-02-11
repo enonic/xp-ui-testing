@@ -132,9 +132,8 @@ public class ContentTypeWizardPanel extends WizardPanel
 		String expectedNotificationMessage = String.format(NOTIF_MESSAGE, contentType.getName());
 		if (!mess.contains(expectedNotificationMessage))
 		{
-		//	getLogger().error(
-		//			"the actual notification and expected are not equals!  actual message:" + mess + " but expected:" + expectedNotificationMessage,
-		//			getSession());
+		//	logError(
+		//			"the actual notification and expected are not equals!  actual message:" + mess + " but expected:" + expectedNotificationMessage);
 		//	throw new SaveOrUpdateException("the actual notification, that the content type with name" + contentType.getName()
 		//			+ " was saved - and expected are not equals!");
 		}

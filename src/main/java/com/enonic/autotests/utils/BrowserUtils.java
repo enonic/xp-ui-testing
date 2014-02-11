@@ -2,8 +2,8 @@ package com.enonic.autotests.utils;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -18,10 +18,9 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import com.enonic.autotests.BrowserName;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.logger.Logger;
 
 public class BrowserUtils {
-	public static Logger logger = Logger.getLogger();
+	public static Logger logger = Logger.getLogger(BrowserUtils.class);
 
 	/**
 	 * @param browser

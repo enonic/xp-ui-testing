@@ -22,12 +22,12 @@ public class BrowsePanel extends Application
 	@FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
 	protected WebElement clearSelectionLink;
 	
-
 	private final String SELECT_ALL_LINK_XPATH = "//a[contains(@class,'x-toolbar-item') and (contains(.,'Select All') or contains(.,'Select all'))]";
 	@FindBy(xpath = SELECT_ALL_LINK_XPATH)
 	protected WebElement selectAllLink;
 	
-	@FindBy(xpath = "//div[@class='toolbar']/button[text()='Edit']")
+	protected final String EDIT_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='Edit']";
+	@FindBy(xpath = EDIT_BUTTON_XPATH)
 	protected WebElement editButton;
 
 	protected final String DELETE_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='Delete']";

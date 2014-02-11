@@ -1,25 +1,25 @@
 package com.enonic.autotests.pages;
 
 import java.util.List;
+
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.logger.Logger;
+import com.enonic.autotests.utils.TestUtils;
 import com.google.common.base.Predicate;
 
 public abstract class Page
@@ -27,8 +27,8 @@ public abstract class Page
 
 	private TestSession session;
 
+	private  Logger logger = Logger.getLogger(this.getClass());
 
-	private Logger logger = Logger.getLogger();
 
 	public Page( TestSession session )
 	{
@@ -48,7 +48,11 @@ public abstract class Page
 		PageFactory.initElements(driver, this);
 	}
 
-	
+	public void logError(String message)
+	{
+		logger.error(message);
+		TestUtils.saveScreenshot(getSession());
+	}
 	
 	/**
 	 * Types text in input field.

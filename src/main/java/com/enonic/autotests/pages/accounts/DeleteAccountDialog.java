@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.accounts;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,13 +10,12 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
-import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.utils.SleepWaitHelper;
 
 public class DeleteAccountDialog
 {
 
-	private Logger logger = Logger.getLogger();
+	//private Logger logger = Logger.getLogger(DeleteAccountDialog.class);
 	private final String DIALOG_TITLE_XPATH = "//div[contains(@class,'admin-window-header')]//h1[contains(.,'Delete Account(s)')]";
 
 	private final String ITEMS_TO_DELETE = "//div[contains(@class,'admin-window')]//div[@class='delete-container']//div[@class='delete-item']//h4";

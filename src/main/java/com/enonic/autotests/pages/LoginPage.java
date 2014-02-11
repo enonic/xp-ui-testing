@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.utils.SleepWaitHelper;
 
 /**
@@ -16,8 +15,6 @@ import com.enonic.autotests.utils.SleepWaitHelper;
  */
 public class LoginPage extends Page
 {
-
-	private static Logger logger = Logger.getLogger();
 
 	private String TITLE = "Enonic WEM Admin";
 	
@@ -58,8 +55,8 @@ public class LoginPage extends Page
 		{
 			throw new TestFrameworkException("Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT);
 		}
-		logger.info("Login page title: "+getDriver().getTitle());
-		logger.info("Login action started. Username: " + username + " Password:" + password);
+		getLogger().info("Login page title: "+getDriver().getTitle());
+		getLogger().info("Login action started. Username: " + username + " Password:" + password);
 		
 		boolean isEmailInputPresent = SleepWaitHelper.waitAndFind(By.xpath(EMAIL_INPUT_XPATH), getDriver());
 		if(!isEmailInputPresent)
@@ -73,7 +70,7 @@ public class LoginPage extends Page
 		boolean isEnabledButton = SleepWaitHelper.waitAndFind(By.xpath(String.format(loginButtonXpath, loginEnabledClass)), getDriver());
 		if (!isEnabledButton)
 		{
-			logger.info("the Button 'Log in' is disabled");
+			logError("the Button 'Log in' is disabled");
 			throw new AuthenticationException("wrong password or username");
 		}
 		WebElement loginButton = findElement(By.xpath(String.format(loginButtonXpath, loginEnabledClass)));

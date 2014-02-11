@@ -2,15 +2,15 @@ package com.enonic.autotests.services;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.Page;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
-import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
@@ -21,7 +21,7 @@ import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 public class ContentService
 {
 
-	private Logger logger = Logger.getLogger();
+	private Logger logger = Logger.getLogger(this.getClass());
 	
 	public enum HowOpenContent
 	{
@@ -136,6 +136,7 @@ public class ContentService
 		//cmPage.doClearSelection();
 	
 		ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( contentToEdit );
+		TestUtils.saveScreenshot(session);
 		contentInfoPage.doEditContentAndCloseWizard(contentToEdit.getDisplayName(), newcontent);
 		contentInfoPage.doCloseContentInfoView();
 		cmPage.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);

@@ -340,7 +340,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		boolean isOpened = newContentDialog.isOpened();
 		if (!isOpened)
 		{
-			getLogger().error("NewContentDialog was not opened!", getSession());
+			//getLogger().error("NewContentDialog was not opened!", getSession());
 			throw new TestFrameworkException("Error during add content, NewContentDialog dialog was not opened!");
 		}
 		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
@@ -377,7 +377,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			if (!isPresentCheckbox)
 			{
 				TestUtils.saveScreenshot(getSession());
-				throw new TestFrameworkException("wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContent + " was not found!");
+				throw new TestFrameworkException("Time: "+TestUtils.timeNow()+ "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContent + " was not found!");
 			}
 			WebElement checkboxElement = getDriver().findElement(By.xpath(spaceCheckBoxXpath));
 

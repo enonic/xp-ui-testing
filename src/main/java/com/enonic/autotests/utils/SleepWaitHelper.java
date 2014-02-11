@@ -3,6 +3,7 @@ package com.enonic.autotests.utils;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -14,13 +15,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.logger.Logger;
 import com.enonic.autotests.pages.Application;
 
 public class SleepWaitHelper
 {
 
-	public static Logger logger = Logger.getLogger();
+	public static Logger logger = Logger.getLogger(SleepWaitHelper.class);
 
 	public static void sleep(long millis)
 	{
@@ -123,7 +123,7 @@ public class SleepWaitHelper
 			new WebDriverWait(testSession.getDriver(), Application.IMPLICITLY_WAIT).until(ExpectedConditions.elementToBeClickable(by));
 		} catch (TimeoutException ex)
 		{
-			logger.error("TimeoutException, element is disabled" + by.toString(), testSession);
+			logger.error("TimeoutException, element is disabled" + by.toString());
 			throw new TestFrameworkException("Element is disabled but should be enabled! " + ex.getMessage());
 		}
 	}
