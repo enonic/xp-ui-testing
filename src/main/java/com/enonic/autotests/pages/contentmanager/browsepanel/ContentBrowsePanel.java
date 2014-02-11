@@ -370,6 +370,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			//TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
 			if (!isPresentCheckbox)
 			{
+				TestUtils.saveScreenshot(getSession());
 				getDriver().navigate().refresh();
 				SleepWaitHelper.sleep(2000);
 			}
