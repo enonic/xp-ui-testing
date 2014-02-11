@@ -374,7 +374,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
 				TestUtils.saveScreenshot(getSession());
-				openHomePage();
+				getDriver().get("http://localhost:9999/admin#/home");
 				TestUtils.saveScreenshot(getSession());
 				HomePage homepage = new HomePage(getSession());
 				homepage.openContentManagerApplication();
