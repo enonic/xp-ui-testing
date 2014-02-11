@@ -374,6 +374,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
 				TestUtils.saveScreenshot(getSession());
+				getDriver().navigate().refresh();
 				getDriver().get("http://localhost:9999/admin#/home");
 				TestUtils.saveScreenshot(getSession());
 				String whandle = getSession().getWindowHandle();
@@ -381,7 +382,7 @@ public class ContentBrowsePanel extends BrowsePanel
 				HomePage homepage = new HomePage(getSession());
 				homepage.openContentManagerApplication();
 				TestUtils.saveScreenshot(getSession());
-				//getDriver().navigate().refresh();
+				
 				SleepWaitHelper.sleep(1000);
 				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			}		
