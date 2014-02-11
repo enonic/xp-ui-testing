@@ -15,8 +15,10 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -371,8 +373,12 @@ public class ContentBrowsePanel extends BrowsePanel
 			if (!isPresentCheckbox)
 			{
 				TestUtils.saveScreenshot(getSession());
-				getDriver().navigate().refresh();
-				SleepWaitHelper.sleep(2000);
+				openHomePage();
+				HomePage homepage = new HomePage(getSession());
+				homepage.openContentManagerApplication();
+				TestUtils.saveScreenshot(getSession());
+				//getDriver().navigate().refresh();
+				SleepWaitHelper.sleep(1000);
 			}
 			isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			if (!isPresentCheckbox)
@@ -409,7 +415,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
 		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());;	
-		SleepWaitHelper.sleep(1000);
+		SleepWaitHelper.sleep(1000);		
 		//1. select a content
 		selectRowByContentFullName(fullName );
 		if (!openButton.isEnabled())
