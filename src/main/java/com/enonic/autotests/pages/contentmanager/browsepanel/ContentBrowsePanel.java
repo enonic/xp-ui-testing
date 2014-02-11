@@ -376,6 +376,8 @@ public class ContentBrowsePanel extends BrowsePanel
 				TestUtils.saveScreenshot(getSession());
 				getDriver().get("http://localhost:9999/admin#/home");
 				TestUtils.saveScreenshot(getSession());
+				String whandle = getSession().getWindowHandle();
+				getSession().getDriver().switchTo().window(whandle);
 				HomePage homepage = new HomePage(getSession());
 				homepage.openContentManagerApplication();
 				TestUtils.saveScreenshot(getSession());
