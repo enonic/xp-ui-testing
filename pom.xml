@@ -56,7 +56,11 @@
       <artifactId>spock-core</artifactId>
       <version>0.7-groovy-2.0</version>
     </dependency>
-
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
+	</dependency>
     <dependency>
       <groupId>org.gebish</groupId>
       <artifactId>geb-spock</artifactId>
