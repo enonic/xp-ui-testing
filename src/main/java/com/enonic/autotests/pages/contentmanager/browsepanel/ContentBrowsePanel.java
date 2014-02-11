@@ -372,8 +372,10 @@ public class ContentBrowsePanel extends BrowsePanel
 			//TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
 			if (!isPresentCheckbox)
 			{
+				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
 				TestUtils.saveScreenshot(getSession());
 				openHomePage();
+				TestUtils.saveScreenshot(getSession());
 				HomePage homepage = new HomePage(getSession());
 				homepage.openContentManagerApplication();
 				TestUtils.saveScreenshot(getSession());
