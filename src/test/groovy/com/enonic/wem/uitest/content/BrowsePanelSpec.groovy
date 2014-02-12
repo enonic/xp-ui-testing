@@ -17,7 +17,7 @@ class BrowsePanelSpec extends BaseGebSpec
 	@Shared String[] CONTENT_PATH = [FULL_REPONAME]
 
 	@Shared ContentService contentService = new ContentService();
-	@Ignore
+	
 	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
 	{
 		given:

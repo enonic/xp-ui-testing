@@ -240,6 +240,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			boolean isPresent = findContentInTable(content, 2l);
 			if (!isPresent)
 			{
+				TestUtils.saveScreenshot(getSession());
 				throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 			}
 		}
