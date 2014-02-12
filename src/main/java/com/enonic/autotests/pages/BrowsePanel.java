@@ -6,10 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.SleepWaitHelper;
 
 public class BrowsePanel extends Application
 {
@@ -74,7 +72,7 @@ public class BrowsePanel extends Application
 		}
 		if (!isRowExapnded(parentName))
 		{
-			clickByExpanderIcon(parentName);
+			clickByExpanderIcon(parentName);		
 //			boolean isExpanded = isRowExapnded(parentName);
 //			if (!isExpanded)
 //			{
@@ -125,7 +123,7 @@ public class BrowsePanel extends Application
 		
 		String attributeName = "class";
 		String attributeValue = "x-grid-tree-node-expanded";
-		return SleepWaitHelper.waitAndCheckAttrValue(getDriver(), rowElement, attributeName, attributeValue, 1l);
+		return waitAndCheckAttrValue(rowElement, attributeName, attributeValue, 1l);
 	}
 
 	/**
@@ -169,7 +167,7 @@ public class BrowsePanel extends Application
 	 */
 	public int doSelectAll()
 	{
-		boolean isVisibleLink = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(SELECT_ALL_LINK_XPATH), 2l);
+		boolean isVisibleLink = waitUntilVisibleNoException(By.xpath(SELECT_ALL_LINK_XPATH), 2l);
 		if (!isVisibleLink)
 		{
 			throw new TestFrameworkException("The link 'Select All' was not found on the page, probably wrong xpath locator");
@@ -185,7 +183,7 @@ public class BrowsePanel extends Application
 	 */
 	public int getTableRowNumber()
 	{
-		List<WebElement> rows = getSession().getDriver().findElements(By.xpath(ALL_ROWS_IN_CONTENT_TABLE_XPATH));
+		List<WebElement> rows = getDriver().findElements(By.xpath(ALL_ROWS_IN_CONTENT_TABLE_XPATH));
 		return rows.size();
 	}
 	
@@ -200,7 +198,7 @@ public class BrowsePanel extends Application
 		List<WebElement> rows = getSession().getDriver().findElements(By.xpath(ALL_ROWS_IN_CONTENT_TABLE_XPATH));
 		for (WebElement row : rows)
 		{
-			if (SleepWaitHelper.waitAndCheckAttrValue(getDriver(), row, "class", "x-grid-row-selected", 1l))
+			if (waitAndCheckAttrValue(row, "class", "x-grid-row-selected", 1l))
 			{
 				number++;
 			}
@@ -213,8 +211,8 @@ public class BrowsePanel extends Application
 	 */
 	public void doClearSelection()
 	{
-		boolean isVisibleLink = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(CLEAR_SELECTION_LINK_XPATH), 2l);
-		if (!isVisibleLink)
+		boolean isLeLinkVisible = waitUntilVisibleNoException(By.xpath(CLEAR_SELECTION_LINK_XPATH), 2l);
+		if (!isLeLinkVisible)
 		{
 			throw new TestFrameworkException("The link 'Clear Selection' was not found on the page, probably wrong xpath locator");
 		}
@@ -242,7 +240,7 @@ public class BrowsePanel extends Application
 	public void selectRowByContentDisplayName(String displayName)
 	{
 		String rowXpath = String.format(TD_CONTENT_DISPLAYNAME, displayName);
-         SleepWaitHelper.waitAndFind(By.xpath(rowXpath), getDriver());
+        waitAndFind(By.xpath(rowXpath));
 		//findElement(By.xpath(rowXpath)).click();
 		
 		Actions builder = new Actions(getDriver()); 
@@ -255,7 +253,7 @@ public class BrowsePanel extends Application
 	public void selectRowByContentFullName(String fullName)
 	{
 		String rowXpath = String.format(TD_CONTENT_NAME, fullName);
-		SleepWaitHelper.waitAndFind(By.xpath(rowXpath), getDriver());
+	    waitAndFind(By.xpath(rowXpath));
 		//findElement(By.xpath(rowXpath)).click();
 		
 		Actions builder = new Actions(getDriver()); 

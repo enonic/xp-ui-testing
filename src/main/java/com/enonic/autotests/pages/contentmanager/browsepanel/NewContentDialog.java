@@ -1,17 +1,18 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
+import org.openqa.selenium.By;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.BaseModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
-import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
-import org.openqa.selenium.By;
 
 /**
  * Content Manager application/add new content/select content type
  *
  */
-public class NewContentDialog
+public class NewContentDialog extends BaseModalDialog
 {
 	private final static String DIALOG_TITLE_XPATH = "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
 	
@@ -19,7 +20,6 @@ public class NewContentDialog
 	
 	private String INPUT_SEARCH= "//div[contains(@class,'column-right')]/input";
 	
-	private TestSession session;
 	/**
 	 * The constructor.
 	 * 
@@ -27,7 +27,7 @@ public class NewContentDialog
 	 */
 	public NewContentDialog(TestSession session)
 	{
-		this.session = session;
+		super(session);
 	}
 	
 	/**
@@ -35,9 +35,11 @@ public class NewContentDialog
 	 * 
 	 * @return true if dialog opened, otherwise false.
 	 */
-	public boolean isOpened() {
-		return SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(DIALOG_TITLE_XPATH), 1);
+	public boolean isOpened() 
+	{
+		return waitUntilVisibleNoException(By.xpath(DIALOG_TITLE_XPATH), 1);
 	}
+	
 	/**
 	 * Select content type by name.
 	 * 
@@ -47,7 +49,7 @@ public class NewContentDialog
 	{
 		
 		String ctypeXpath = String.format(CONTENTTYPE_NAME, contentTypeName);
-		boolean isContentNamePresent = SleepWaitHelper.waitElementExist(session.getDriver(), ctypeXpath, 3);
+		boolean isContentNamePresent = waitElementExist(ctypeXpath, 3);
 		
 		if(!isContentNamePresent)
 		{
@@ -59,8 +61,8 @@ public class NewContentDialog
 //			WebElement searchinput = session.getDriver().findElement(By.xpath(INPUT_SEARCH));
 //			searchinput.sendKeys(contentTypeName);	
 //		} 
-		TestUtils.clickByElement(By.xpath(ctypeXpath), session.getDriver());
-		ContentWizardPanel wizard = new ContentWizardPanel(session);
+		TestUtils.clickByElement(By.xpath(ctypeXpath), getDriver());
+		ContentWizardPanel wizard = new ContentWizardPanel(getSession());
 		
 		//String title = "New " + type.getValue().toLowerCase();
 		//wizard.waitUntilWizardOpened(title, 1);

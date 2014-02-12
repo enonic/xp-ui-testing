@@ -9,7 +9,7 @@ import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.WaitHelper;
 
 /**
  * Page Object for 'Home' page. Version 5.0
@@ -75,8 +75,8 @@ public class HomePage extends Page
 	public void waitUntilAllFramesLoaded()
 	{
 		
-		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
-		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
+		waitUntilVisible(By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
+		waitUntilVisible(By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
 	}
 	
 	/**

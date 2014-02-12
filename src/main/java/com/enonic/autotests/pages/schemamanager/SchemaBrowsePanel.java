@@ -11,7 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BrowsePanel;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.SleepHelper;
+import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
@@ -83,7 +84,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 	    {
 	    	throw new TestFrameworkException("element was not found:"+ contentTypeXpath);
 	    }			
-	    SleepWaitHelper.sleep(500);
+	    SleepHelper.sleep(500);
 		elem.click();
 		getLogger().info("content type with name:" +contentName +" was selected in the table!");
 	}
@@ -100,7 +101,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 		doExpandSuperTypeFolder(superTypeName);
 		//2. select a content type in a grid
 		selectRowWithContentType(contentTypeToEdit.getName(), contentTypeToEdit.getDisplayNameFromConfig());
-		SleepWaitHelper.waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
+		WaitHelper.waitUntilElementEnabled(getSession(), By.xpath(EDIT_BUTTON_XPATH));
 		editButton.click();
 		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
 		wizard.waitUntilWizardOpened(1);
@@ -131,7 +132,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 	private void confirmAndDelete(String contentTypeName)
 	{
 		// wait for deleteButton(in toolbar) is enabled
-		SleepWaitHelper.waitUntilElementEnabled(getSession(), By.xpath(DELETE_BUTTON_XPATH));
+		WaitHelper.waitUntilElementEnabled(getSession(), By.xpath(DELETE_BUTTON_XPATH));
 		// click by 'delete' button		
 		deleteButton.click();
 		

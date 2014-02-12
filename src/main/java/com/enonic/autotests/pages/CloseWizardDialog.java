@@ -6,7 +6,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.SleepWaitHelper;
 
 public class CloseWizardDialog extends BaseModalDialog
 {
@@ -15,16 +14,23 @@ public class CloseWizardDialog extends BaseModalDialog
 	private final String CANCEL_BUTTON_XPATH = "//div[@class='modal-dialog']//button[contains(.,'Cancel')]";
 	public final String TITLE_XPATH = "//h2[text()='Close wizard']";
 
-
+	/**
+	 * The constructor
+	 * 
+	 * @param session
+	 */
 	public CloseWizardDialog( TestSession session )
 	{
 		super(session);
 	}
 
+	/**
+	 * 
+	 */
 	public void doCloseNoSave()
 	{
-		boolean isPresent = SleepWaitHelper.waitAndFind(By.xpath(NO_BUTTON_XPATH), getDriver());
-		if(!isPresent)
+		boolean isPresent = waitAndFind(By.xpath(NO_BUTTON_XPATH));
+		if (!isPresent)
 		{
 			throw new TestFrameworkException("'No' button was not found on modal dialog!");
 		}
@@ -35,16 +41,22 @@ public class CloseWizardDialog extends BaseModalDialog
 	{
 
 	}
+
+	/**
+	 * @param timeout
+	 */
 	public void waituntilPageLoaded(long timeout)
 	{
-		
-		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TITLE_XPATH)));
+
+		new WebDriverWait(getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TITLE_XPATH)));
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isDialogPresent()
 	{
-		return SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(TITLE_XPATH), 1l);
+		return waitUntilVisibleNoException(By.xpath(TITLE_XPATH), 1l);
 	}
-	
 
 }

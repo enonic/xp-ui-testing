@@ -1,21 +1,18 @@
 package com.enonic.autotests.pages.schemamanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.PageFactory;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.pages.BaseModalDialog;
 
 /**
  * 
  *
  */
-public class SelectKindDialog 
+public class SelectKindDialog  extends BaseModalDialog
 {
 
 	private String KIND = "//div[@class='modal-dialog new-schema-dialog']//h6[text()='%s']";
-	private TestSession session;
 	
 	/**
 	 * The Constructor.
@@ -24,8 +21,7 @@ public class SelectKindDialog
 	 */
 	public SelectKindDialog( TestSession session )
 	{
-		this.session = session;
-		PageFactory.initElements(session.getDriver(), this);
+		super(session);
 	}
 
 	/**
@@ -35,15 +31,14 @@ public class SelectKindDialog
 	public ContentTypeWizardPanel doSelectKind(String kind)
 	{
 		String kindXpath = String.format(KIND, kind);
-		boolean isPpresent = SleepWaitHelper.waitAndFind(By.xpath(kindXpath), session.getDriver());
+		boolean isPpresent = waitAndFind(By.xpath(kindXpath));
 		
 		if (!isPpresent)
 		{
 			throw new TestFrameworkException("The kind of contentype" + kind + " was not found!!!");
 		}
-		session.getDriver().findElement(By.xpath(kindXpath)).click();
-		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(session);
-
+		getDriver().findElement(By.xpath(kindXpath)).click();
+		ContentTypeWizardPanel wizard = new ContentTypeWizardPanel(getSession());
 		wizard.waitUntilWizardOpened( 1);
 		return wizard;
 	}
@@ -54,7 +49,7 @@ public class SelectKindDialog
 	public boolean verifyIsOpened()
 	{
 		String title ="//div[@class='modal-dialog new-schema-dialog']/div[contains(.,'Select Kind')]";
-		return SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(title), 2);
+		return waitUntilVisibleNoException(By.xpath(title), 2);
 	}
 
 }

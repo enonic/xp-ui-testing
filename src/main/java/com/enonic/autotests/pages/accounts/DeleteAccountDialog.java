@@ -2,20 +2,17 @@ package com.enonic.autotests.pages.accounts;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.pages.BaseModalDialog;
 
-public class DeleteAccountDialog
+public class DeleteAccountDialog extends BaseModalDialog
 {
 
-	//private Logger logger = Logger.getLogger(DeleteAccountDialog.class);
 	private final String DIALOG_TITLE_XPATH = "//div[contains(@class,'admin-window-header')]//h1[contains(.,'Delete Account(s)')]";
 
 	private final String ITEMS_TO_DELETE = "//div[contains(@class,'admin-window')]//div[@class='delete-container']//div[@class='delete-item']//h4";
@@ -25,12 +22,14 @@ public class DeleteAccountDialog
 	@FindBy(xpath = DELETE_BUTTON_XPATH)
 	private WebElement deleteButton;
 
-	private TestSession session;
-
+	/**
+	 * The constructor.
+	 * 
+	 * @param session
+	 */
 	public DeleteAccountDialog( TestSession session )
 	{
-		this.session = session;
-		PageFactory.initElements(session.getDriver(), this);
+		super(session);
 	}
 
 	/**
@@ -42,8 +41,8 @@ public class DeleteAccountDialog
 	{
 		String userXpath = String.format("//div[contains(@class,'admin-user-info')]//h2[text()='%s']", displaynameToDelete);
 		if (displaynameToDelete != null)
-		{// session.getDriver().findElements(By.xpath("//div[contains(@class,'admin-user-info')]")).get(0).getText();
-			List<WebElement> elems = session.getDriver().findElements(By.xpath(userXpath));
+		{
+			List<WebElement> elems = findElements(By.xpath(userXpath));
 			if (elems.size() > 0)
 			{
 				WebElement accountNameTodelete = elems.get(0);
@@ -79,12 +78,12 @@ public class DeleteAccountDialog
 	 */
 	public boolean verifyIsOpened()
 	{
-		return  SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(DIALOG_TITLE_XPATH), 2);
+		return waitUntilVisibleNoException(By.xpath(DIALOG_TITLE_XPATH), 2);
 	}
 
 	public boolean verifyIsClosed()
 	{
-		return SleepWaitHelper.waitsElementNotVisible(session.getDriver(), By.xpath(DIALOG_TITLE_XPATH), 2);
+		return waitElementNotVisible(By.xpath(DIALOG_TITLE_XPATH), 2);
 	}
 
 }

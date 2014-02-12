@@ -7,16 +7,14 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.utils.SleepWaitHelper;
 
 /**
  * Base confirm dialog for deleting spaces, contents, accounts
  *
  */
-public abstract class BaseDeleteDialog
+public abstract class BaseDeleteDialog extends BaseModalDialog
 {
 	protected Logger logger = Logger.getLogger(this.getClass());
 	
@@ -26,8 +24,6 @@ public abstract class BaseDeleteDialog
 	@FindBy(xpath = DELETE_BUTTON_XPATH)
 	private WebElement deleteButton;
 
-	private TestSession session;
-
 	/**
 	 * The constructor
 	 * 
@@ -36,9 +32,7 @@ public abstract class BaseDeleteDialog
 	 */
 	public BaseDeleteDialog( TestSession session )
 	{
-		this.session = session;
-		//this.displayNamesToDelete = displayNamesToDelete;
-		PageFactory.initElements(session.getDriver(), this);
+		super(session);
 	}
 
 	/**
@@ -55,7 +49,7 @@ public abstract class BaseDeleteDialog
 	public List<String> getContentNameToDelete()
 	{
 		List<String> names = new ArrayList<>();
-		List<WebElement> itemsTodelete = session.getDriver().findElements(By.xpath(ITEMS_TO_DELETE));
+		List<WebElement> itemsTodelete = getDriver().findElements(By.xpath(ITEMS_TO_DELETE));
 		
 		for (WebElement el : itemsTodelete)
 		{
@@ -72,12 +66,12 @@ public abstract class BaseDeleteDialog
 	 */
 	public boolean isOpened()
 	{
-		return SleepWaitHelper.waitUntilVisibleNoException(session.getDriver(), By.xpath(getTitleXpath()), Application.IMPLICITLY_WAIT);
+		return waitUntilVisibleNoException(By.xpath(getTitleXpath()), Application.IMPLICITLY_WAIT);
 	}
 
 	public boolean verifyIsClosed()
 	{
-		return SleepWaitHelper.waitsElementNotVisible(session.getDriver(), By.xpath(getTitleXpath()), Application.IMPLICITLY_WAIT);
+		return waitElementNotVisible(By.xpath(getTitleXpath()), Application.IMPLICITLY_WAIT);
 	}
 	
 	public abstract String getTitleXpath();

@@ -15,10 +15,10 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
-import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.SleepHelper;
+import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
@@ -134,7 +134,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		String fullName = TestUtils.buildFullNameOfContent(content.getName(), contentPath);
 		getLogger().info("Full name of content: "+ fullName);
 		String contentDescriptionXpath = String.format(DIV_CONTENT_NAME_IN_TABLE, fullName);
-		boolean result = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(contentDescriptionXpath), timeout);
+		boolean result = waitUntilVisibleNoException(By.xpath(contentDescriptionXpath), timeout);
 		if (result)
 		{
 			getLogger().info("The Content  was found in the Table! name:" + content.getDisplayName());
@@ -205,7 +205,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		selectContentInTable(contents, contentPath);
 		
 		// 3. check if enabled 'Delete' link.
-		boolean isEnabledDeleteButton = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath(DELETE_BUTTON_XPATH), 2l);
+		boolean isEnabledDeleteButton = waitUntilElementEnabledNoException(By.xpath(DELETE_BUTTON_XPATH), 2l);
 		if (!isEnabledDeleteButton)
 		{
 			throw new SaveOrUpdateException("CM application, impossible to delete content, because the 'Delete' button is disabled!");
@@ -258,12 +258,12 @@ public class ContentBrowsePanel extends BrowsePanel
 		getLogger().info("tries to find the content in a table, fullName of content is :" + fullName);
 	
 		getLogger().info("Xpath of checkbox for content is :" + contentCheckBoxXpath);
-		boolean isPresent = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(contentCheckBoxXpath), 3l);
+		boolean isPresent = waitUntilVisibleNoException(By.xpath(contentCheckBoxXpath), 3l);
 		if(!isPresent)
 		{
 			throw new SaveOrUpdateException("checkbox for content with name : "+ content.getName() + "was not found");
 		}
-		SleepWaitHelper.sleep(1000);
+		SleepHelper.sleep(1000);
 		findElement(By.xpath(contentCheckBoxXpath)).click();
 	}
 
@@ -373,16 +373,11 @@ public class ContentBrowsePanel extends BrowsePanel
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
 				TestUtils.saveScreenshot(getSession());
-				getDriver().navigate().refresh();
-				getDriver().get("http://localhost:9999/admin#/home");
-				TestUtils.saveScreenshot(getSession());
-				String whandle = getSession().getWindowHandle();
-				getSession().getDriver().switchTo().window(whandle);
-				HomePage homepage = new HomePage(getSession());
-				homepage.openContentManagerApplication();
+				
 				TestUtils.saveScreenshot(getSession());
 				
-				SleepWaitHelper.sleep(1000);
+				
+				SleepHelper.sleep(1000);
 				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			}		
 			if (!isPresentCheckbox)
@@ -394,7 +389,7 @@ public class ContentBrowsePanel extends BrowsePanel
 
 			checkboxElement.click();
 			//selectRowByContentDisplayName(parentName);
-			boolean isNewEnabled = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath(NEW_BUTTON_XPATH), 2l);
+			boolean isNewEnabled = waitUntilElementEnabledNoException(By.xpath(NEW_BUTTON_XPATH), 2l);
 			if (!isNewEnabled)
 			{
 				throw new SaveOrUpdateException("CM application, impossible to open NewContentDialog, because the 'New' button is disabled!");
@@ -419,13 +414,13 @@ public class ContentBrowsePanel extends BrowsePanel
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
 		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());;	
-		SleepWaitHelper.sleep(1000);		
+		SleepHelper.sleep(1000);		
 		//1. select a content
 		selectRowByContentFullName(fullName );
 		if (!openButton.isEnabled())
 		{
 			getLogger().info("'Open' link is disabled!");
-			new WebDriverWait(getSession().getDriver(), 2).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='toolbar']/button[text()='Open']")));
+			new WebDriverWait(getDriver(), 2).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='toolbar']/button[text()='Open']")));
 		}
 		//2. click by 'Open' button
 		openButton.click();		
@@ -496,7 +491,7 @@ public class ContentBrowsePanel extends BrowsePanel
 
 	public boolean verifyTitle()
 	{
-		return SleepWaitHelper.waitAndFind(By.xpath(TITLE_XPATH), getDriver());
+		return waitAndFind(By.xpath(TITLE_XPATH));
 	}
 	public boolean verifyAllControls()
 	{

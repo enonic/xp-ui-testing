@@ -17,21 +17,10 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 
-public class SleepWaitHelper
+public class WaitHelper
 {
 
-	public static Logger logger = Logger.getLogger(SleepWaitHelper.class);
-
-	public static void sleep(long millis)
-	{
-		try
-		{
-			Thread.sleep(millis);
-		} catch (InterruptedException e)
-		{
-
-		}
-	}
+	public static Logger logger = Logger.getLogger(WaitHelper.class);
 
 	/**
 	 * @param by
@@ -40,7 +29,7 @@ public class SleepWaitHelper
 	 */
 	public static boolean waitAndFind(final By by, final WebDriver driver)
 	{
-		return waitAndFind(by, driver, 4l);
+		return waitAndFind(by, driver, Application.IMPLICITLY_WAIT);
 	}
 
 	public static boolean waitAndFind(final By by, final WebDriver driver, long timeout)

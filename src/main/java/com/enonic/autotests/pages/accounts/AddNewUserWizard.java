@@ -1,19 +1,14 @@
 package com.enonic.autotests.pages.accounts;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.User;
 
@@ -84,10 +79,10 @@ public class AddNewUserWizard extends WizardPanel
 	 */
 	public String getUserNameValidationMessage()
 	{
-		boolean isPresentMessage = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH), 1);
+		boolean isPresentMessage = waitUntilVisibleNoException(By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH), 1);
 		if (isPresentMessage)
 		{
-			return getDriver().findElement(By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH)).getText();
+			return findElement(By.xpath(USERNAME_VALIDATION_ERRORMESSAGE_XPATH)).getText();
 		} else
 		{
 			return null;
@@ -102,7 +97,7 @@ public class AddNewUserWizard extends WizardPanel
 	 */
 	public String getEmailValidationMessage()
 	{
-		boolean isPresentMessage = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(EMAIL_VALIDATION_MESSAGE_XPATH), 2);
+		boolean isPresentMessage = waitUntilVisibleNoException(By.xpath(EMAIL_VALIDATION_MESSAGE_XPATH), 2);
 		if (isPresentMessage)
 		{
 			return getDriver().findElement(By.xpath(EMAIL_VALIDATION_MESSAGE_XPATH)).getText();
@@ -202,33 +197,6 @@ public class AddNewUserWizard extends WizardPanel
 
 	}
 
-	private boolean waitAndCheckAttrValue(final WebElement element, final String attributeName, final String attributeValue, long timeout)
-	{
-		WebDriverWait wait = new WebDriverWait(getSession().getDriver(), timeout);
-		try
-		{
-			return wait.until(new ExpectedCondition<Boolean>()
-			{
-				@Override
-				public Boolean apply(WebDriver webDriver)
-				{
-					try
-					{
-						return element.getAttribute(attributeName).contains(attributeValue);
-
-					} catch (Exception e)
-					{
-
-						return false;
-					}
-				}
-			});
-		} catch (org.openqa.selenium.TimeoutException e)
-		{
-			return false;
-		}
-
-	}
 
 	private void verifySaveButtonState(String validationMessage)
 	{
@@ -317,12 +285,10 @@ public class AddNewUserWizard extends WizardPanel
 
 	public void verifyRedCircleOnHomePage(String accountName)
 	{
-		// 1. Click 'Home' button and verify, that the red circle is present on
-		// the HomePage:
+		// 1. Click 'Home' button and verify, that the red circle is present on the HomePage:
 		HomePage homepage = showHomePageAndVerifyCircle();
 		// 2. Click 'Accounts' and Go back to the 'AddNewSpaceWizard'
 		homepage.openAccountsApplication();
-
 		// 3. verify that the wizard is opened.
 		waitUntilWizardOpened( 1);
 

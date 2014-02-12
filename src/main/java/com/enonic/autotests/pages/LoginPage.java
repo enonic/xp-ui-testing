@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.SleepWaitHelper;
 
 /**
  * Page Object for Login page version 5.0
@@ -50,7 +49,7 @@ public class LoginPage extends Page
 	 */
 	public void doLogin(String username, String password)
 	{
-		boolean isLoginPageLoaded = SleepWaitHelper.waitUntilTitleLoad(getDriver(), TITLE, LOGIN_PAGE_TIMEOUT);
+		boolean isLoginPageLoaded = waitUntilTitleLoad(TITLE, LOGIN_PAGE_TIMEOUT);
 		if(!isLoginPageLoaded)
 		{
 			throw new TestFrameworkException("Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT);
@@ -58,7 +57,7 @@ public class LoginPage extends Page
 		getLogger().info("Login page title: "+getDriver().getTitle());
 		getLogger().info("Login action started. Username: " + username + " Password:" + password);
 		
-		boolean isEmailInputPresent = SleepWaitHelper.waitAndFind(By.xpath(EMAIL_INPUT_XPATH), getDriver());
+		boolean isEmailInputPresent = waitAndFind(By.xpath(EMAIL_INPUT_XPATH));
 		if(!isEmailInputPresent)
 		{
 			throw new TestFrameworkException(" input 'userid or e-mail' was not found on page!");
@@ -67,7 +66,7 @@ public class LoginPage extends Page
 
 		passwordInput.sendKeys(password);
 
-		boolean isEnabledButton = SleepWaitHelper.waitAndFind(By.xpath(String.format(loginButtonXpath, loginEnabledClass)), getDriver());
+		boolean isEnabledButton = waitAndFind(By.xpath(String.format(loginButtonXpath, loginEnabledClass)));
 		if (!isEnabledButton)
 		{
 			logError("the Button 'Log in' is disabled");

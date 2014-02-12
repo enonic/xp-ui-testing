@@ -12,7 +12,7 @@ import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.User;
 
 public class NavigatorHelper
@@ -33,7 +33,7 @@ public class NavigatorHelper
 			{
 				return new ContentBrowsePanel(testSession);
 			}
-			boolean isHomeButtonPresent = SleepWaitHelper.waitAndFind(By.xpath(Application.HOME_BUTTON_XPATH), testSession.getDriver());
+			boolean isHomeButtonPresent = WaitHelper.waitAndFind(By.xpath(Application.HOME_BUTTON_XPATH), testSession.getDriver());
 			if (!isHomeButtonPresent)
 			{
 				throw new TestFrameworkException("'go to home' button was not found");

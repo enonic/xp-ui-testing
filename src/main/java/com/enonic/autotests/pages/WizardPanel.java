@@ -5,16 +5,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.utils.SleepWaitHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Base class for wizards.
  *
  */
-public abstract class WizardPanel extends Application {
+public abstract class WizardPanel extends Application 
+{
 
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
@@ -54,7 +55,7 @@ public abstract class WizardPanel extends Application {
 	 */
 	protected void doSaveFromToolbar() 
 	{
-		boolean isSaveButtonEnabled = SleepWaitHelper.waitUntilElementEnabledNoException(getDriver(), By.xpath("//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']"),2l);
+		boolean isSaveButtonEnabled = waitUntilElementEnabledNoException(By.xpath("//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']"),2l);
 		if(!isSaveButtonEnabled){
 			throw new SaveOrUpdateException("Impossible to save, button 'Save' is disabled!");
 		}
@@ -69,8 +70,8 @@ public abstract class WizardPanel extends Application {
 		gotoHomeButton.click();
 		HomePage page = new HomePage(getSession());
 
-		getSession().getDriver().switchTo().window(getSession().getWindowHandle());
-		SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath("//div[@class='tab-count-container' and contains(@title,'1 tab(s) open')]"));
+		getDriver().switchTo().window(getSession().getWindowHandle());
+		waitUntilVisible(By.xpath("//div[@class='tab-count-container' and contains(@title,'1 tab(s) open')]"));
 		return page;
 	}
 	/**
@@ -95,13 +96,13 @@ public abstract class WizardPanel extends Application {
 	public void waitUntilWizardOpened( Integer numberPage) {
 		String circleXpath = String.format(RED_CIRCLE_XPATH, numberPage.toString());
 		//String titleXpath = String.format(OBJECT_NAME_XPATH, displayName); 
-        SleepWaitHelper.waitUntilVisible(getDriver(), By.xpath(circleXpath));
+        waitUntilVisible(By.xpath(circleXpath));
 		//TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
 	}
 	
 	public void waitElementClickable(By by, long timeout)
 	{		
-		new WebDriverWait(getSession().getDriver(), timeout).until(ExpectedConditions.elementToBeClickable(by));
+		new WebDriverWait(getDriver(), timeout).until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 }

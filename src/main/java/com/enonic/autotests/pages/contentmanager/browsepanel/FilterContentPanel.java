@@ -11,7 +11,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.SleepHelper;
 
 public class FilterContentPanel extends Application
 {
@@ -48,8 +48,7 @@ public class FilterContentPanel extends Application
 		getLogger().info("query will be applied : "+ query);
 		queryInput.sendKeys(query);
 		queryInput.sendKeys(Keys.ENTER);
-		SleepWaitHelper.sleep(1000);
-
+		SleepHelper.sleep(1000);
 		getLogger().info("Filtered by : "+ query);
 	}
 	/**
@@ -60,14 +59,14 @@ public class FilterContentPanel extends Application
 	public void doFilterByDate(FilterPanelLastModified date)
 	{
 		String rangeXpath = String.format(DATE_FILTER_ITEM, date.getValue());
-		boolean isVisible = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.xpath(rangeXpath), 1l);
+		boolean isVisible = waitUntilVisibleNoException(By.xpath(rangeXpath), 1l);
 		if (!isVisible)
 		{ 
 			getLogger().info("range was not found: "+ date.getValue());
 			throw new TestFrameworkException("The link with name 'Clear Filter' was not found!");
 		}
-		getSession().getDriver().findElement(By.xpath(rangeXpath)).click();
-		SleepWaitHelper.sleep(500);
+		getDriver().findElement(By.xpath(rangeXpath)).click();
+		SleepHelper.sleep(500);
 		getLogger().info("Filtered by : "+ date.getValue());
 	}
 
@@ -76,14 +75,14 @@ public class FilterContentPanel extends Application
 	 */
 	public void doClearFilter()
 	{
-		boolean isVisible = SleepWaitHelper.waitUntilVisibleNoException(getDriver(), By.linkText(CLEAR_FILTER_LINK), 2l);
+		boolean isVisible = waitUntilVisibleNoException(By.linkText(CLEAR_FILTER_LINK), 2l);
 		if (!isVisible)
 		{
 			getLogger().info("The link with name 'Clear Filter' was not found!");
 			throw new TestFrameworkException("The link with name 'Clear Filter' was not found!");
 		}
 		getSession().getDriver().findElement(By.linkText(CLEAR_FILTER_LINK)).click();
-		SleepWaitHelper.sleep(1000);
+		SleepHelper.sleep(1000);
 	}
 
 	
@@ -116,7 +115,7 @@ public class FilterContentPanel extends Application
 	public void doFilterByContentType(String contentTypeName)
 	{
 		String itemXpath = String.format(CONTENT_TYPE_FILTER_ITEM, contentTypeName);
-		List<WebElement> elems = getSession().getDriver().findElements(By.xpath(itemXpath));
+		List<WebElement> elems = getDriver().findElements(By.xpath(itemXpath));
 		if (elems.size() == 0)
 		{
 			logError("content type was not found in the search panel:" + contentTypeName);

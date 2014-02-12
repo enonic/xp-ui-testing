@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages;
 
 import java.util.List;
-
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -20,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.WaitHelper;
 import com.google.common.base.Predicate;
 
 public abstract class Page
@@ -29,7 +29,11 @@ public abstract class Page
 
 	private  Logger logger = Logger.getLogger(this.getClass());
 
-
+	/**
+	 * The constructor
+	 * 
+	 * @param session
+	 */
 	public Page( TestSession session )
 	{
 		this.session = session;
@@ -82,26 +86,94 @@ public abstract class Page
 				input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
                                  logger.info("text in input: " + text);
 			}
-
 		}
-
-	}
-	public TestSession getSession()
-	{
-		return session;
 	}
 	
-
-	public void setSession(TestSession session)
+	/**
+	 * @param by
+	 * @return
+	 */
+	public  boolean waitAndFind(final By by)
 	{
-		this.session = session;
+		return waitAndFind(by, Application.IMPLICITLY_WAIT);
+	}
+	
+	/**
+	 * @param by
+	 * @param timeout
+	 * @return
+	 */
+	public  boolean waitAndFind(final By by, long timeout)
+	{
+		return WaitHelper.waitAndFind(by, getDriver(), timeout);
 	}
 
-	public Logger getLogger()
+	/**
+	 * @param driver
+	 * @param by
+	 * @param timeout
+	 * @return
+	 */
+	public boolean waitsElementNotVisible(By by, long timeout)
 	{
-		return logger;
+		return WaitHelper.waitsElementNotVisible(getDriver(), by, timeout);
 	}
+	/**
+	 * @param driver
+	 * @param by
+	 * @param timeout
+	 * @return
+	 */
+	public boolean waitUntilVisibleNoException(By by, long timeout)
+	{
+		return WaitHelper.waitUntilVisibleNoException(getDriver(), by, timeout);
+	}
+	
+	/**
+	 * @param driver
+	 * @param by
+	 * @param timeout
+	 * @return true if element is visible , otherwise return false.
+	 */
 
+	public void waitUntilVisible( final By by)
+	{
+		WaitHelper.waitUntilVisible(getDriver(), by);
+	}
+	
+	/**
+	 * @param title
+	 * @param timeout
+	 * @return
+	 */
+	public boolean waitUntilTitleLoad(final String title, long timeout)
+	{
+		return WaitHelper.waitUntilTitleLoad(getDriver(), title, timeout);
+	}
+	/**
+	 * @param by
+	 * @param timeout
+	 * @return
+	 */
+	public boolean waitUntilElementEnabledNoException(final By by, long timeout)
+	{
+		return WaitHelper.waitUntilElementEnabledNoException(getDriver(), by, timeout);
+	}
+	/**
+	 * @param element
+	 * @param attributeName
+	 * @param attributeValue
+	 * @param timeout
+	 * @return
+	 */
+	public  boolean waitAndCheckAttrValue(final WebElement element, final String attributeName, final String attributeValue,long timeout)
+	{
+		return WaitHelper.waitAndCheckAttrValue(getDriver(), element, attributeName, attributeValue, timeout);
+	}
+	/**
+	 * @param by
+	 * @return
+	 */
 	public WebElement findElement(By by)
 	{
 		FluentWait<By> fluentWait = new FluentWait<By>(by);
@@ -251,5 +323,22 @@ public abstract class Page
 		}
 		return null;
 	}
+	
+	public TestSession getSession()
+	{
+		return session;
+	}
+	
+
+	public void setSession(TestSession session)
+	{
+		this.session = session;
+	}
+
+	public Logger getLogger()
+	{
+		return logger;
+	}
+	
 	
 }

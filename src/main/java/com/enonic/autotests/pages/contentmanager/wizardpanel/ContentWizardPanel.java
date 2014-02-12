@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.utils.SleepWaitHelper;
+import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ArticleContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -127,12 +127,12 @@ public class ContentWizardPanel extends WizardPanel
 	 */
 	public void doTypeDataAndSave( BaseAbstractContent content)
 	{
-		SleepWaitHelper.sleep(1000);
+		SleepHelper.sleep(1000);
 		// 1. type a data: 'name' and 'Display Name'.	
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
 		clearAndType(displayNameInput, content.getDisplayName());	
-		SleepWaitHelper.sleep(1000);	
+		SleepHelper.sleep(1000);	
 		if(StringUtils.isNotEmpty(content.getName()))
 		{
 			waitElementClickable(By.name("name"), 2);
