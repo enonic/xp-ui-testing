@@ -14,10 +14,10 @@ class BrowsePanelSpec extends BaseGebSpec
 {
 	@Shared String REPONAME = "test-folder";
 	@Shared String FULL_REPONAME = "/"+REPONAME;
-	@Shared String[] contentPath = [FULL_REPONAME]
+	@Shared String[] CONTENT_PATH = [FULL_REPONAME]
 
 	@Shared ContentService contentService = new ContentService();
-
+	
 	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
 	{
 		given:
@@ -34,13 +34,12 @@ class BrowsePanelSpec extends BaseGebSpec
 
 	@Ignore
 	def "Given content BrowsePanel and existing content When content deleted Then the content should not be listed in the table"() 
-	{		
+	{
 		given:
 		go "admin"
 		String name = "delete-content"+Math.abs( new Random().nextInt() );
-		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();
-		String[] parent = [FULL_REPONAME]
-		content.setContentPath(parent);
+		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();		
+		content.setContentPath(CONTENT_PATH);
 		contentService.addContent(getTestSession(), content, true);
 
 		when:
@@ -58,7 +57,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = FolderContent.builder().withName("foldercontent").withDisplayName("folder").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -73,7 +72,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = StructuredContent.builder().withName("structuredcontent").withDisplayName("structured").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -88,7 +87,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = UnstructuredContent.builder().withName("unstructuredcontent").withDisplayName("unstructured").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -103,7 +102,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = ArchiveContent.builder().withName("archivecontent").withDisplayName("archive").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -118,7 +117,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = MediaContent.builder().withName("mediacontent").withDisplayName("media").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -133,7 +132,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = DataContent.builder().withName("datacontent").withDisplayName("data").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -149,7 +148,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = TextContent.builder().withName("textcontent").withDisplayName("text").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -164,7 +163,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = PageContent.builder().withName("pagecontent").withDisplayName("page").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -180,7 +179,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		given:
 		go "admin"
 		BaseAbstractContent content = ShortcutContent.builder().withName("shortcutcontent").withDisplayName("shortcut").build();
-		content.setContentPath(contentPath)
+		content.setContentPath(CONTENT_PATH)
 
 		when:
 		contentService.addContent(getTestSession(), content, true)
@@ -198,13 +197,13 @@ class BrowsePanelSpec extends BaseGebSpec
 		go "admin"
 		String name = "editname"
 		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName(displayName).build();
-		contentToEdit.setContentPath(contentPath);
+		contentToEdit.setContentPath(CONTENT_PATH);
 		contentService.addContent(getTestSession(), contentToEdit, true)
 
 		when:
 		String newName = "edited" + Math.abs(new Random().nextInt());
 		StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName("edited").build();
-		newcontent.setContentPath(contentPath);
+		newcontent.setContentPath(CONTENT_PATH);
 		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
 
 		then:
@@ -216,19 +215,19 @@ class BrowsePanelSpec extends BaseGebSpec
 	
 	@Ignore
 	def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
-	{
+	{	
 		given:
 		go "admin"
 
 		String name = "editdisplayname"
 		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName(name).build();
-		contentToEdit.setContentPath(contentPath);
+		contentToEdit.setContentPath(CONTENT_PATH);
 		contentService.addContent(getTestSession(), contentToEdit, true)
 		
 		when:
 		String newDisplayName = "displaynamechanged" + Math.abs(new Random().nextInt());
 		StructuredContent newcontent = StructuredContent.builder().withName(name).withDisplayName(newDisplayName).build();
-		newcontent.setContentPath(contentPath);
+		newcontent.setContentPath(CONTENT_PATH);
 		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
 
 		then:

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -19,7 +20,8 @@ public abstract class WizardPanel extends Application
 
 	public static  String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
-	public static  String OBJECT_NAME_XPATH = "//span[@class='label' and contains(.,'%s')]";
+	public static  String APP_BAR_TABMENU_TITLE_XPATH = "//div[@class='tab-menu appbar-tabmenu']//span[@class='label']";
+	//public static  String APP_BAR_TABMENU_TITLE = "//div[@class='tab-menu appbar-tabmenu']//span[@class='label' and contains(.,'%s')]";
 			
 	public static final String TOOLBAR_SAVE_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']";
 	public static final String TOOLBAR_CLOSEWIZARD_BUTTON_XPATH = "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Close']";
@@ -48,6 +50,17 @@ public abstract class WizardPanel extends Application
 	public WizardPanel(TestSession session)
 	{
 		super(session);
+	}
+
+	public String getAppBarTabMenuTitle()
+	{
+		boolean result = waitAndFind(By.xpath(APP_BAR_TABMENU_TITLE_XPATH), 1);
+		if(result)
+		{
+			return getDriver().findElement(By.xpath(APP_BAR_TABMENU_TITLE_XPATH)).getText();
+		}else{
+			throw new TestFrameworkException("title was not found in AppBarTabMenu!");
+		}
 	}
 
 	/**
@@ -95,7 +108,7 @@ public abstract class WizardPanel extends Application
 	 */
 	public void waitUntilWizardOpened( Integer numberPage) {
 		String circleXpath = String.format(RED_CIRCLE_XPATH, numberPage.toString());
-		//String titleXpath = String.format(OBJECT_NAME_XPATH, displayName); 
+		//String titleXpath = String.format(APP_BAR_TABMENU_TITLE, displayName); 
         waitUntilVisible(By.xpath(circleXpath));
 		//TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
 	}

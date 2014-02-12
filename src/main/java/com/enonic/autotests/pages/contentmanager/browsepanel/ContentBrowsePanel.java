@@ -240,6 +240,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			boolean isPresent = findContentInTable(content, 2l);
 			if (!isPresent)
 			{
+				TestUtils.saveScreenshot(getSession());
 				throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 			}
 		}
@@ -372,11 +373,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			if (!isPresentCheckbox)
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
-				TestUtils.saveScreenshot(getSession());
-				
-				TestUtils.saveScreenshot(getSession());
-				
-				
+				//TODO type a word and do 'Clear filter'
 				SleepHelper.sleep(1000);
 				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			}		
