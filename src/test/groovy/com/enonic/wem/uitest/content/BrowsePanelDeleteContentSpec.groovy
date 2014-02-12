@@ -14,7 +14,6 @@ import spock.lang.Stepwise
 class BrowsePanelDeleteContentSpec extends BaseGebSpec
 {
 
-	@Shared ContentService contentService = new ContentService()
 	@Shared String DELETE_CONTENT_KEY = "deletecontent_test"
 
 	def "Given existing content, when content opened and delete button pressed Then the content should not be listed in the table"()
@@ -38,10 +37,7 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 	{
 		given:
 		go "admin"
-		String name = "deletecontent" + +Math.abs( new Random().nextInt() )
-		BaseAbstractContent content = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
-		contentService.addContent(getTestSession(), content, true)
-		
+		BaseAbstractContent content = addContentToBeDeleted();		
 		List<BaseAbstractContent> contentList = new ArrayList<>();
 		contentList.add(content);
 		
@@ -56,22 +52,16 @@ class BrowsePanelDeleteContentSpec extends BaseGebSpec
 	{
 		given:
 		go "admin"
-		String name = "deletecontent" + +Math.abs( new Random().nextInt() )
-		BaseAbstractContent content1 = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
-		contentService.addContent(getTestSession(), content1, true)
-		
-		name = "deletecontent" + +Math.abs( new Random().nextInt() )
-		BaseAbstractContent content2 = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
-		contentService.addContent(getTestSession(), content2, true)
-		
+		BaseAbstractContent content1 = addContentToBeDeleted();
+		BaseAbstractContent content2 = addContentToBeDeleted();	
 		List<BaseAbstractContent> contentList = new ArrayList<>();
-		contentList.add(content1);
+		contentList.add(content1);	
 		contentList.add(content2);
 		
 		when:
 		ContentBrowsePanel page = contentService.deleteContentUseToolbar(getTestSession(), contentList)
 		
 		then:
-		!page.findContentInTable(content1, 2l) && 	!page.findContentInTable(content2, 2l)
+		!page.findContentInTable(content1, 2l) && !page.findContentInTable(content2, 2l)
 	}
 }

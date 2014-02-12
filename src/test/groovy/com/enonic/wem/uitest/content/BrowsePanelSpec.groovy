@@ -15,8 +15,7 @@ class BrowsePanelSpec extends BaseGebSpec
 	@Shared String REPONAME = "test-folder";
 	@Shared String FULL_REPONAME = "/"+REPONAME;
 	@Shared String[] CONTENT_PATH = [FULL_REPONAME]
-
-	@Shared ContentService contentService = new ContentService();
+	
 	
 	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
 	{
@@ -32,19 +31,17 @@ class BrowsePanelSpec extends BaseGebSpec
 		grid.findContentInTable(content, 2l)
 	}
 
-	@Ignore
+	
 	def "Given content BrowsePanel and existing content When content deleted Then the content should not be listed in the table"() 
 	{
 		given:
 		go "admin"
-		String name = "delete-content"+Math.abs( new Random().nextInt() );
-		StructuredContent content = StructuredContent.builder().withName(name).withDisplayName("content-to-delete").build();		
-		content.setContentPath(CONTENT_PATH);
-		contentService.addContent(getTestSession(), content, true);
-
-		when:
+		BaseAbstractContent content = addContentToBeDeleted();
 		List<BaseAbstractContent> contents = new ArrayList<>();
 		contents.add(content);
+
+		when:
+		
 		ContentBrowsePanel grid = contentService.deleteContentUseToolbar(getTestSession(), contents);
 
 		then:

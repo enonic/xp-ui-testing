@@ -4,6 +4,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import spock.lang.Shared;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.services.ContentService;
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import com.enonic.autotests.vo.contentmanager.FolderContent;
 
 import geb.report.ReporterSupport;
 import geb.spock.GebSpec;
@@ -11,6 +14,7 @@ import geb.spock.GebSpec;
 class BaseGebSpec extends  GebSpec 
 {
 	@Shared TestSession session ;
+	@Shared ContentService contentService = new ContentService();
 	
 	@Override
 	def cleanup()
@@ -35,6 +39,13 @@ class BaseGebSpec extends  GebSpec
 		return session
 	}
 
+	BaseAbstractContent addContentToBeDeleted()
+	{
+		String name = "deletecontent" + +Math.abs( new Random().nextInt() )
+		BaseAbstractContent content = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
+		contentService.addContent(getTestSession(), content, true)
+		return content;
+	}
 	void setSessionBaseUrl(String navigationPath) 
 	{
 		StringBuilder sb = new StringBuilder()

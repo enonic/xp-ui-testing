@@ -15,12 +15,10 @@ import com.enonic.wem.uitest.BaseGebSpec;
 class DeleteContentDialogSpec extends BaseGebSpec 
 {
 
-	@Shared ContentService contentService = new ContentService()
 	@Shared String CONTENT_TO_DELETE_KEY = "deletecomntent_dialog_test"
 
 	def "setup: add a folder-content"() 
 	{
-
 		given:
 		go "admin"
 		BaseAbstractContent content = FolderContent.builder().withName("foldertodelete").withDisplayName("foldertodelete").build();
@@ -57,6 +55,5 @@ class DeleteContentDialogSpec extends BaseGebSpec
 		then:
 		List<String> namesFromDialog = dialog.getContentNameToDelete();
 		namesFromDialog.size() == 1 && content.getDisplayName().equals(namesFromDialog.get(0))
-
 	}
 }

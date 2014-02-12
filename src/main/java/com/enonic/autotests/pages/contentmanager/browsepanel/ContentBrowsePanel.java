@@ -2,14 +2,12 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -17,8 +15,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
-import com.enonic.autotests.utils.SleepHelper;
-import com.enonic.autotests.utils.WaitHelper;
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
@@ -264,7 +261,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		{
 			throw new SaveOrUpdateException("checkbox for content with name : "+ content.getName() + "was not found");
 		}
-		SleepHelper.sleep(1000);
+		sleep(1000);
 		findElement(By.xpath(contentCheckBoxXpath)).click();
 	}
 
@@ -374,7 +371,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
 				//TODO type a word and do 'Clear filter'
-				SleepHelper.sleep(1000);
+				sleep(1000);
 				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			}		
 			if (!isPresentCheckbox)
@@ -411,7 +408,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
 		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());;	
-		SleepHelper.sleep(1000);		
+		sleep(1000);		
 		//1. select a content
 		selectRowByContentFullName(fullName );
 		if (!openButton.isEnabled())

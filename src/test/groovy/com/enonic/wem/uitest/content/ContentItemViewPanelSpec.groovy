@@ -14,8 +14,6 @@ import com.enonic.wem.uitest.BaseGebSpec
 class ContentItemViewPanelSpec extends BaseGebSpec
 {
 	
-	@Shared ContentService contentService = new ContentService();
-	
 	def "Given content App BrowsePanel and existing content When content selected and Open button have clicked Then title with content display-name showed"()
 	{	
 		given:

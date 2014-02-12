@@ -1,17 +1,15 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.SleepHelper;
 
 public class FilterContentPanel extends Application
 {
@@ -48,7 +46,7 @@ public class FilterContentPanel extends Application
 		getLogger().info("query will be applied : "+ query);
 		queryInput.sendKeys(query);
 		queryInput.sendKeys(Keys.ENTER);
-		SleepHelper.sleep(1000);
+		sleep(1000);
 		getLogger().info("Filtered by : "+ query);
 	}
 	/**
@@ -66,7 +64,7 @@ public class FilterContentPanel extends Application
 			throw new TestFrameworkException("The link with name 'Clear Filter' was not found!");
 		}
 		getDriver().findElement(By.xpath(rangeXpath)).click();
-		SleepHelper.sleep(500);
+		sleep(500);
 		getLogger().info("Filtered by : "+ date.getValue());
 	}
 
@@ -81,8 +79,8 @@ public class FilterContentPanel extends Application
 			getLogger().info("The link with name 'Clear Filter' was not found!");
 			throw new TestFrameworkException("The link with name 'Clear Filter' was not found!");
 		}
-		getSession().getDriver().findElement(By.linkText(CLEAR_FILTER_LINK)).click();
-		SleepHelper.sleep(1000);
+		getDriver().findElement(By.linkText(CLEAR_FILTER_LINK)).click();
+		sleep(1000);
 	}
 
 	

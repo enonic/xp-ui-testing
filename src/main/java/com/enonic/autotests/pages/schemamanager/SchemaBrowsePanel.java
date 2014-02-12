@@ -1,17 +1,15 @@
 package com.enonic.autotests.pages.schemamanager;
 
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BrowsePanel;
-import com.enonic.autotests.utils.SleepHelper;
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
@@ -84,7 +82,7 @@ public class SchemaBrowsePanel extends BrowsePanel
 	    {
 	    	throw new TestFrameworkException("element was not found:"+ contentTypeXpath);
 	    }			
-	    SleepHelper.sleep(500);
+	    sleep(500);
 		elem.click();
 		getLogger().info("content type with name:" +contentName +" was selected in the table!");
 	}

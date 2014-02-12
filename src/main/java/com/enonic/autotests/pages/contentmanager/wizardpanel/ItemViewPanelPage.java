@@ -1,17 +1,15 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
@@ -103,7 +101,7 @@ public class ItemViewPanelPage extends Application
 		}		
 		ContentBrowsePanel table = new ContentBrowsePanel(getSession());
 		table.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
-		SleepHelper.sleep(200);
+		sleep(200);
 	}
 	
 	/**
