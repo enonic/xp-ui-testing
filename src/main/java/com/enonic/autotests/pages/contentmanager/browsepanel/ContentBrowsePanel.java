@@ -372,11 +372,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			if (!isPresentCheckbox)
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
-				TestUtils.saveScreenshot(getSession());
-				
-				TestUtils.saveScreenshot(getSession());
-				
-				
+				//TODO type a word and do 'Clear filter'
 				SleepHelper.sleep(1000);
 				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			}		

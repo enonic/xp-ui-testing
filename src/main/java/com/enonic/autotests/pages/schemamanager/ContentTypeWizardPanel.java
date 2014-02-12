@@ -45,15 +45,19 @@ public class ContentTypeWizardPanel extends WizardPanel
 	 * @param longName
 	 * @return
 	 */
-	public int doTypeLongNameAndGetInputWidth(String longName)
+	public int getInputNameWidth()
 	{
-		clearAndType(nameInput, longName);
-		String width = findElement(By.xpath("//input[@name='name']")).getAttribute("style");
-		String aa = "width: 300px";
-		int start = aa.indexOf(":");
-		int end = aa.indexOf("px");
-		int value = Integer.valueOf(width.substring(start+1, end).trim());
-		return value;
+		String width = nameInput.getAttribute("style");
+		//input Style should be like as: "width: 300px";
+		int start = width.indexOf(":");
+		int end = width.indexOf("px");
+		int inputWidth = Integer.valueOf(width.substring(start+1, end).trim());
+		return inputWidth;
+	}
+	
+	public void doTypeName(String name)
+	{
+		clearAndType(nameInput, name);
 	}
 
 	/**
