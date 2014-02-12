@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.utils.SleepHelper;
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ArticleContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -122,17 +122,16 @@ public class ContentWizardPanel extends WizardPanel
 
 	/**
 	 * Types data and press the "Save" button from the toolbar.
-	 * @param session
 	 * @param content
 	 */
 	public void doTypeDataAndSave( BaseAbstractContent content)
 	{
-		SleepHelper.sleep(1000);
+		sleep(1000);
 		// 1. type a data: 'name' and 'Display Name'.	
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
 		clearAndType(displayNameInput, content.getDisplayName());	
-		SleepHelper.sleep(1000);	
+		sleep(1000);
 		if(StringUtils.isNotEmpty(content.getName()))
 		{
 			waitElementClickable(By.name("name"), 2);
@@ -171,7 +170,6 @@ public class ContentWizardPanel extends WizardPanel
 	/**
 	 * Types a data and close wizard.
 	 * 
-	 * @param session
 	 * @param content
 	 */
 	public void doTypeDataSaveAndClose( BaseAbstractContent content)
