@@ -61,6 +61,7 @@ class ContentBrowsePanelSpec
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
+	
 	@Ignore
 	def "GIVEN BrowsePanel WHEN adding Structured-content THEN the content should be listed in the table"() 
 	{

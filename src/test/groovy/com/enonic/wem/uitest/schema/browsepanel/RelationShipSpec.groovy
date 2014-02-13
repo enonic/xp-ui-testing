@@ -14,7 +14,7 @@ class RelationshipSpec extends BaseGebSpec {
 
 	@Shared ContentTypeService contentTypeService = new ContentTypeService();
 
-	def "GIVEN BrowsePanel When adding relationship  Then the new relationship should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding relationship  Then the new relationship should be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -30,7 +30,7 @@ class RelationshipSpec extends BaseGebSpec {
 		grid.isContentTypePresentInTable(relationship);
 	}
 	
-	def "GIVEN BrowsePanel and existing relationship  When relationship deleted Then the this relationship should not be listed in the table"() 
+	def "GIVEN BrowsePanel and existing relationship  WHEN relationship deleted Then the this relationship should not be listed in the table"() 
 	{
 		given:
 		go "admin"
