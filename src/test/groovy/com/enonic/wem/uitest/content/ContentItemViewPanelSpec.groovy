@@ -14,7 +14,7 @@ import com.enonic.wem.uitest.BaseGebSpec
 class ContentItemViewPanelSpec extends BaseGebSpec
 {
 	
-	def "Given content App BrowsePanel and existing content When content selected and Open button have clicked Then title with content display-name showed"()
+	def "GIVEN content App BrowsePanel and existing content WHEN content selected and Open button have clicked THEN title with content display-name showed"()
 	{	
 		given:
 		go "admin"

@@ -26,7 +26,7 @@ class DeleteContentDialogSpec extends BaseGebSpec
 		getTestSession().put(CONTENT_TO_DELETE_KEY, content);
 	}
 
-	def "Given content App BrowsePanel and existing content When content selected and Delete button clicked Then delete dialog with title 'Delete Content' showed"() 
+	def "GIVEN content App BrowsePanel and existing content WHEN content selected and Delete button clicked THEN delete dialog with title 'Delete Content' showed"() 
 	{
 		given:
 		go "admin"
@@ -41,7 +41,7 @@ class DeleteContentDialogSpec extends BaseGebSpec
 		dialog.isOpened();
 	}
 	
-	def "Given content BrowsePanel and existing content When one content selected and Delete button clicked Then delete dialog with one content is displayed"() 
+	def "GIVEN content BrowsePanel and existing content WHEN one content selected and Delete button clicked THEN delete dialog with one content is displayed"() 
 	{
 		given:
 		go "admin"

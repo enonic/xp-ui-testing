@@ -16,13 +16,11 @@ class ContentBrowsePanelDeleteContentSpec
 
 	@Shared String DELETE_CONTENT_KEY = "deletecontent_test"
 
-	def "Given existing content, when content opened and delete button pressed Then the content should not be listed in the table"()
+	def "GIVEN existing content, WHEN content opened and delete button pressed THEN the content should not be listed in the table"()
 	{
 		given:
 		go "admin"
-		String name = "deletecontent" + +Math.abs( new Random().nextInt() )
-		BaseAbstractContent content = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
-		contentService.addContent(getTestSession(), content, true)
+		BaseAbstractContent content = addContentToBeDeleted();
 		ItemViewPanelPage view = contentService.doOpenContent(getTestSession(), content, HowOpenContent.TOOLBAR);
 		
 		when:
@@ -33,7 +31,7 @@ class ContentBrowsePanelDeleteContentSpec
 		!grid.findContentInTable(content,2l)
 	}
 
-	def "Given existing content, when content selected and delete button pressed Then the content should not be listed in the table"()
+	def "GIVEN existing content, WHEN content selected and delete button pressed THEN the content should not be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -48,7 +46,7 @@ class ContentBrowsePanelDeleteContentSpec
 		!page.findContentInTable(content, 3l)
 	}
 	
-	def "Given existing two contents, when all content selected and delete button pressed Then the content should not be listed in the table"()
+	def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
 	{
 		given:
 		go "admin"

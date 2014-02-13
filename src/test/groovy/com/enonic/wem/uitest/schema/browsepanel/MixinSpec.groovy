@@ -1,13 +1,15 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
+import spock.lang.Shared
+import spock.lang.Stepwise
+
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
 import com.enonic.autotests.services.ContentTypeService
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.MixinAddress
-import spock.lang.Shared
-import spock.lang.Stepwise
 
 @Stepwise
 class MixinSpec extends BaseGebSpec
@@ -15,7 +17,7 @@ class MixinSpec extends BaseGebSpec
 	@Shared ContentTypeService contentTypeService = new ContentTypeService();
 	@Shared String MIXIN_KEY = "mixin"
 
-	def "Given BrowsePanel When adding Mixin-adress  Then the new mixin should be listed in the table"()
+	def "GIVEN BrowsePanel WHEN adding Mixin-adress  THEN the new mixin should be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -33,14 +35,14 @@ class MixinSpec extends BaseGebSpec
 	}
 	
 
-	def "Given BrowsePanel and exist Mixin  When Mixin editet, name changed  Then the Mixin whith new name should be listed in the table"()
-	{   
+	def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, name changed  Then the Mixin whith new name should be listed in the table"()
+	{
 		given:
 		go "admin"
 		
 		ContentType ct = (ContentType)getTestSession().get(MIXIN_KEY);
 		ContentType newMixin = ct.cloneContentType();
-		String newName = "mixinrenamed"+ Math.abs(new Random().nextInt());
+		String newName =  NameHelper.unqiueContentName("mixinrenamed");
 		newMixin.setName(newName);
 		
 		when:
@@ -53,7 +55,7 @@ class MixinSpec extends BaseGebSpec
 	}
 	
 	
-	def "Given BrowsePanel and exist Mixin  When Mixin editet, display-name changed  Then the Mixin whith new display-name should be listed in the table"()
+	def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, display-name changed  Then the Mixin whith new display-name should be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -71,7 +73,7 @@ class MixinSpec extends BaseGebSpec
 		schemasPage.isContentTypePresentInTable(newMixin)
 	}
 			
-	def "Given BrowsePanel When existing selected mixin and clicking Delete Then Mixin is removed from list"()
+	def "GIVEN BrowsePanel WHEN existing Mixin selected and clicking Delete Then Mixin is removed from list"()
 	
 	{
 		given:

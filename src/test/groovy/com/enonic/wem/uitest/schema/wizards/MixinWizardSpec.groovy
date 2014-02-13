@@ -28,8 +28,7 @@ class MixinWizardSpec extends BaseGebSpec {
 		then:
 		wizard.getInputNameWidth() > width25
 	}
-	//TODO this test not finished yet
-	@Ignore
+	
 	def "Given schema app, mixin-wizard opened When typing a name Then name and title in AppBarTabMenu updated concurrently"()
 	{
 		given:

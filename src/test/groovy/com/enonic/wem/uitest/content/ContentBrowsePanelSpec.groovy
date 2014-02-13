@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.vo.contentmanager.*
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Ignore
@@ -15,7 +16,7 @@ class ContentBrowsePanelSpec
 	@Shared String FULL_REPONAME = "/"+REPONAME;
 	@Shared String[] CONTENT_PATH = [FULL_REPONAME]
 	
-	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Folder to root  THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"		
@@ -30,7 +31,7 @@ class ContentBrowsePanelSpec
 	}
 
 	@Ignore
-	def "Given content BrowsePanel and existing content When content deleted Then the content should not be listed in the table"() 
+	def "GIVEN content BrowsePanel and existing content WHEN content deleted THEN the content should not be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -46,11 +47,11 @@ class ContentBrowsePanelSpec
 	}
 
         @Ignore
-	def "Given BrowsePanel When adding Folder-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Folder-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
-		BaseAbstractContent content = FolderContent.builder().withName("foldercontent").withDisplayName("folder").build();
+		BaseAbstractContent content = FolderContent.builder().withName("foldercontent").withDisplayName("folder").build()
 		content.setContentPath(CONTENT_PATH)
 
 		when:
@@ -61,7 +62,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	@Ignore
-	def "Given BrowsePanel When adding Structured-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Structured-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -76,7 +77,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	@Ignore
-	def "Given BrowsePanel When adding Unstructured-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Unstructured-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -91,7 +92,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	@Ignore
-	def "Given BrowsePanel When adding Archive-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Archive-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -106,7 +107,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	@Ignore
-	def "Given BrowsePanel When adding Media-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Media-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -121,7 +122,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	@Ignore
-	def "Given BrowsePanel When adding Data-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Data-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -137,7 +138,7 @@ class ContentBrowsePanelSpec
 	}
 
 	@Ignore
-	def "Given BrowsePanel When adding Text-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Text-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
@@ -152,11 +153,11 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	@Ignore
-	def "Given BrowsePanel When adding Page-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Page-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
-		BaseAbstractContent content = PageContent.builder().withName("pagecontent").withDisplayName("page").build();
+		BaseAbstractContent content = PageContent.builder().withName("pagecontent").withDisplayName("page").build()
 		content.setContentPath(CONTENT_PATH)
 
 		when:
@@ -168,11 +169,11 @@ class ContentBrowsePanelSpec
 	}
 	
 	@Ignore
-	def "Given BrowsePanel When adding Shortcut-content Then the content should be listed in the table"() 
+	def "GIVEN BrowsePanel WHEN adding Shortcut-content THEN the content should be listed in the table"() 
 	{
 		given:
 		go "admin"
-		BaseAbstractContent content = ShortcutContent.builder().withName("shortcutcontent").withDisplayName("shortcut").build();
+		BaseAbstractContent content = ShortcutContent.builder().withName("shortcutcontent").withDisplayName("shortcut").build()
 		content.setContentPath(CONTENT_PATH)
 
 		when:
@@ -183,9 +184,9 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	
-	def "Given BrowsePanel and exist content  When content editet, name changed  Then the content whit new name should be listed in the table"()
+	def "GIVEN BrowsePanel and exist content  WHEN content editet, name changed  THEN the content whit new name should be listed in the table"()
 	{
-		String displayName = "editnametest";
+		String displayName = "editnametest"
 		given:
 		go "admin"
 		String name = "editname"
@@ -194,7 +195,7 @@ class ContentBrowsePanelSpec
 
 		when:
 		StructuredContent newcontent = cloneContentWithNewName(contentToEdit);
-		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
+		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent)
 
 		then:
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
@@ -203,19 +204,19 @@ class ContentBrowsePanelSpec
 
 	}
 	
-	def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
+	def "GIVEN BrowsePanel and exist content  WHEN content editet, display name changed  THEN the content whit new display-name should be listed in the table"()
 	{	
 		given:
 		go "admin"
 
 		String name = "editdisplayname"
-		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName(name).build();
+		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName(name).build()
 		contentToEdit.setContentPath(CONTENT_PATH);
 		contentService.addContent(getTestSession(), contentToEdit, true)
 		
 		when:
-		StructuredContent newcontent = cloneContentWithNewDispalyName(contentToEdit);
-		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
+		StructuredContent newcontent = cloneContentWithNewDispalyName(contentToEdit)
+		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent)
 
 		then:
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
@@ -226,13 +227,14 @@ class ContentBrowsePanelSpec
 	
 	StructuredContent cloneContentWithNewDispalyName(StructuredContent contentToedit)
 	{
-		String newDisplayName = "displaynamechanged" + Math.abs(new Random().nextInt());
+		String newDisplayName = NameHelper.unqiueContentName("displaynamechanged")
 		StructuredContent newcontent = StructuredContent.builder().withName(contentToedit.getName()).withDisplayName(newDisplayName).withContentPath(CONTENT_PATH).build();
 		return newcontent;
 	}
+	
 	StructuredContent cloneContentWithNewName(StructuredContent contentToedit)
 	{
-		String newName = "edited" + Math.abs(new Random().nextInt());
+		String newName = NameHelper.unqiueContentName("newname")
 		StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName(contentToedit.getDisplayName()).withContentPath(CONTENT_PATH).build();
 		
 	}

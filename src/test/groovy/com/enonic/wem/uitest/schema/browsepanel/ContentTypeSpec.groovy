@@ -1,20 +1,22 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
+import spock.lang.Shared
+
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
 import com.enonic.autotests.services.ContentTypeService
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.FolderContentTypeCfg
 import com.enonic.wem.uitest.schema.cfg.TextLineContentTypeCfg
-import spock.lang.Shared
 
 class ContentTypeSpec extends BaseGebSpec
 {
 
 	@Shared ContentTypeService contentTypeService = new ContentTypeService();
 	
-	def "Given BrowsePanel When adding Folder ContentType Then the new contentype should be listed in the table"()
+	def "GIVEN BrowsePanel WHEN adding Folder ContentType Then the new contentype should be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -29,7 +31,7 @@ class ContentTypeSpec extends BaseGebSpec
 
 	}
 	
-	def "Given schema BrowsePanel and exist Contentype  When Contentype editet, display-name changed  Then the Contentype whith new display-name should be listed in the table"()
+	def "GIVEN schema BrowsePanel and exist Contentype  WHEN Contentype editet, display-name changed  Then the Contentype whith new display-name should be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -45,7 +47,7 @@ class ContentTypeSpec extends BaseGebSpec
 		grid.isContentTypePresentInTable(newContentType);	
 	}
 
-	def "Given schema BrowsePanel and exist Contentype  When Contentype editet, name changed  Then the Contentype whith new name should be listed in the table"()
+	def "GIVEN schema BrowsePanel and exist Contentype  WHEN contentype editet, name changed  THEN the contentype whith new name should be listed in the table"()
 	{	
 		given:
 		go "admin"
@@ -62,7 +64,7 @@ class ContentTypeSpec extends BaseGebSpec
 		
 	}
 	
-	def "Given BrowsePanel When adding TextLine ContentType Then the new contentype should be listed in the table"()
+	def "GIVEN BrowsePanel WHEN adding TextLine ContentType THEN the new contentype should be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -78,7 +80,7 @@ class ContentTypeSpec extends BaseGebSpec
 
 	}
 	
-	def "Given BrowsePanel and created a contentType When contenttype deleted Then the the contentype should not be listed in the table"()
+	def "GIVEN BrowsePanel and created a contentType WHEN contenttype deleted THEN the the contentype should not be listed in the table"()
 	{
 		given:
 		go "admin"
@@ -97,7 +99,7 @@ class ContentTypeSpec extends BaseGebSpec
 	ContentType cloneContentTypeWithNewName(ContentType contenTypeToEdit)
 	{
 		ContentType newContenttype = contenTypeToEdit.cloneContentType()
-		String name = "edited" + Math.abs(new Random().nextInt())
+		String name = NameHelper.unqiueContentName("edited"); 
 		newContenttype.setName(name)
 		return newContenttype
 	}
@@ -105,7 +107,7 @@ class ContentTypeSpec extends BaseGebSpec
 	ContentType cloneContentTypeWithNewDisplayName(ContentType contenTypeToEdit)
 	{
 		ContentType newContentType = contenTypeToEdit.cloneContentType();
-		String displayName = "edited" + Math.abs(new Random().nextInt());
+		String displayName = NameHelper.unqiueContentName("edited"); 
 		newContentType.setDisplayNameInConfig(displayName);
 		return newContentType
 	}

@@ -1,15 +1,12 @@
 package com.enonic.wem.uitest
-import org.openqa.selenium.firefox.FirefoxDriver;
+import geb.spock.GebSpec
+import spock.lang.Shared
 
-import spock.lang.Shared;
-
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.services.ContentService;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-import com.enonic.autotests.vo.contentmanager.FolderContent;
-
-import geb.report.ReporterSupport;
-import geb.spock.GebSpec;
+import com.enonic.autotests.TestSession
+import com.enonic.autotests.services.ContentService
+import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
+import com.enonic.autotests.vo.contentmanager.FolderContent
 
 class BaseGebSpec extends  GebSpec 
 {
@@ -49,7 +46,7 @@ class BaseGebSpec extends  GebSpec
 	
 	BaseAbstractContent addContentToBeDeleted()
 	{
-		String name = "deletecontent" + +Math.abs( new Random().nextInt() )
+		String name = NameHelper.unqiueContentName("deletecontent");
 		BaseAbstractContent content = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
 		contentService.addContent(getTestSession(), content, true)
 		return content;
