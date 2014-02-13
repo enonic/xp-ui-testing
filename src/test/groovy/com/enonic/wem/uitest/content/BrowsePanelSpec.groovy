@@ -16,7 +16,6 @@ class BrowsePanelSpec extends BaseGebSpec
 	@Shared String FULL_REPONAME = "/"+REPONAME;
 	@Shared String[] CONTENT_PATH = [FULL_REPONAME]
 	
-	
 	def "Given BrowsePanel When adding Folder to root  Then the content should be listed in the table"() 
 	{
 		given:
@@ -31,7 +30,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		grid.findContentInTable(content, 2l)
 	}
 
-	
+	@Ignore
 	def "Given content BrowsePanel and existing content When content deleted Then the content should not be listed in the table"() 
 	{
 		given:
@@ -41,14 +40,13 @@ class BrowsePanelSpec extends BaseGebSpec
 		contents.add(content);
 
 		when:
-		
 		ContentBrowsePanel grid = contentService.deleteContentUseToolbar(getTestSession(), contents);
 
 		then:
 		!grid.findContentInTable(content, 2l)
 	}
 
-    @Ignore
+        @Ignore
 	def "Given BrowsePanel When adding Folder-content Then the content should be listed in the table"() 
 	{
 		given:
@@ -186,21 +184,17 @@ class BrowsePanelSpec extends BaseGebSpec
 		grid.findContentInTable(content, 2l)
 	}
 	
-	@Ignore
 	def "Given BrowsePanel and exist content  When content editet, name changed  Then the content whit new name should be listed in the table"()
 	{
 		String displayName = "editnametest";
 		given:
 		go "admin"
 		String name = "editname"
-		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName(displayName).build();
-		contentToEdit.setContentPath(CONTENT_PATH);
+		StructuredContent contentToEdit = StructuredContent.builder().withName(name).withDisplayName(displayName).withContentPath(CONTENT_PATH).build();
 		contentService.addContent(getTestSession(), contentToEdit, true)
 
 		when:
-		String newName = "edited" + Math.abs(new Random().nextInt());
-		StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName("edited").build();
-		newcontent.setContentPath(CONTENT_PATH);
+		StructuredContent newcontent = cloneContentWithNewName(contentToEdit);
 		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
 
 		then:
@@ -210,7 +204,6 @@ class BrowsePanelSpec extends BaseGebSpec
 
 	}
 	
-	@Ignore
 	def "Given BrowsePanel and exist content  When content editet, display name changed  Then the content whit new display-name should be listed in the table"()
 	{	
 		given:
@@ -222,9 +215,7 @@ class BrowsePanelSpec extends BaseGebSpec
 		contentService.addContent(getTestSession(), contentToEdit, true)
 		
 		when:
-		String newDisplayName = "displaynamechanged" + Math.abs(new Random().nextInt());
-		StructuredContent newcontent = StructuredContent.builder().withName(name).withDisplayName(newDisplayName).build();
-		newcontent.setContentPath(CONTENT_PATH);
+		StructuredContent newcontent = cloneContentWithNewDispalyName(contentToEdit);
 		contentService.doOpenContentAndEdit(getTestSession(), contentToEdit, newcontent);
 
 		then:
@@ -232,4 +223,18 @@ class BrowsePanelSpec extends BaseGebSpec
 		grid.findContentInTable(newcontent, 2l)
 	}
 
+	
+	
+	StructuredContent cloneContentWithNewDispalyName(StructuredContent contentToedit)
+	{
+		String newDisplayName = "displaynamechanged" + Math.abs(new Random().nextInt());
+		StructuredContent newcontent = StructuredContent.builder().withName(contentToedit.getName()).withDisplayName(newDisplayName).withContentPath(CONTENT_PATH).build();
+		return newcontent;
+	}
+	StructuredContent cloneContentWithNewName(StructuredContent contentToedit)
+	{
+		String newName = "edited" + Math.abs(new Random().nextInt());
+		StructuredContent newcontent = StructuredContent.builder().withName(newName).withDisplayName(contentToedit.getDisplayName()).withContentPath(CONTENT_PATH).build();
+		
+	}
 }

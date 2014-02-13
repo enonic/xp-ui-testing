@@ -29,7 +29,6 @@ class ContentTypeSpec extends BaseGebSpec
 
 	}
 	
-	
 	def "Given schema BrowsePanel and exist Contentype  When Contentype editet, display-name changed  Then the Contentype whith new display-name should be listed in the table"()
 	{
 		given:
@@ -39,9 +38,7 @@ class ContentTypeSpec extends BaseGebSpec
 		SchemaBrowsePanel grid = contentTypeService.createContentType(getTestSession(), ctype, true);
 		
 		when:
-		ContentType newContentType = ctype.cloneContentType();
-		String displayName = "edited" + Math.abs(new Random().nextInt());
-		newContentType.setDisplayNameInConfig(displayName);
+		ContentType newContentType = cloneContentTypeWithNewDisplayName(ctype);
 		contentTypeService.editContentType(getTestSession(), ctype, newContentType);
 	
 		then:
@@ -57,17 +54,13 @@ class ContentTypeSpec extends BaseGebSpec
 		SchemaBrowsePanel grid = contentTypeService.createContentType(getTestSession(), ctype, true);
 		
 		when:
-		ContentType newContentType = ctype.cloneContentType();
-		String name = "edited" + Math.abs(new Random().nextInt());
-		newContentType.setName(name);
+		ContentType newContentType = cloneContentTypeWithNewName(ctype)
 		contentTypeService.editContentType(getTestSession(), ctype, newContentType);
 		
 		then:
 		grid.isContentTypePresentInTable(newContentType);
 		
 	}
-	
-
 	
 	def "Given BrowsePanel When adding TextLine ContentType Then the new contentype should be listed in the table"()
 	{
@@ -99,6 +92,22 @@ class ContentTypeSpec extends BaseGebSpec
 		SchemaBrowsePanel schemasPage = contentTypeService.deleteContentType(getTestSession(), ctypeToDelete);
 		!schemasPage.isContentTypePresentInTable(ctypeToDelete);
 		
+	}
+	
+	ContentType cloneContentTypeWithNewName(ContentType contenTypeToEdit)
+	{
+		ContentType newContenttype = contenTypeToEdit.cloneContentType()
+		String name = "edited" + Math.abs(new Random().nextInt())
+		newContenttype.setName(name)
+		return newContenttype
+	}
+	
+	ContentType cloneContentTypeWithNewDisplayName(ContentType contenTypeToEdit)
+	{
+		ContentType newContentType = contenTypeToEdit.cloneContentType();
+		String displayName = "edited" + Math.abs(new Random().nextInt());
+		newContentType.setDisplayNameInConfig(displayName);
+		return newContentType
 	}
 	
 }

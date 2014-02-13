@@ -39,18 +39,19 @@ class BaseGebSpec extends  GebSpec
 		return session
 	}
 
-	BaseAbstractContent addContentToBeDeleted()
-	{
-		String name = "deletecontent" + +Math.abs( new Random().nextInt() )
-		BaseAbstractContent content = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
-		contentService.addContent(getTestSession(), content, true)
-		return content;
-	}
 	void setSessionBaseUrl(String navigationPath) 
 	{
 		StringBuilder sb = new StringBuilder()
 		sb.append(browser.baseUrl).append(navigationPath)
 		println "  buildUrl changed  now url is:  " + sb.toString()
 		getTestSession().setBaseUrl(sb.toString())
+	}
+	
+	BaseAbstractContent addContentToBeDeleted()
+	{
+		String name = "deletecontent" + +Math.abs( new Random().nextInt() )
+		BaseAbstractContent content = FolderContent.builder().withName(name).withDisplayName("contenttodelete").build();
+		contentService.addContent(getTestSession(), content, true)
+		return content;
 	}
 }
