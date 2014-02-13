@@ -1,16 +1,15 @@
 package com.enonic.wem.uitest.content
 
-import spock.lang.Ignore;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.vo.contentmanager.*
+import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.services.ContentService
-import com.enonic.autotests.vo.contentmanager.*
-import com.enonic.wem.uitest.BaseGebSpec
-
 @Stepwise
-class BrowsePanelSpec extends BaseGebSpec 
+class ContentBrowsePanelSpec
+    extends BaseGebSpec
 {
 	@Shared String REPONAME = "test-folder";
 	@Shared String FULL_REPONAME = "/"+REPONAME;

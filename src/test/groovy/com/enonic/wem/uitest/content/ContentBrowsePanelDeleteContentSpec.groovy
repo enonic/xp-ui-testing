@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
-import com.enonic.autotests.services.ContentService
 import com.enonic.autotests.services.ContentService.HowOpenContent
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
@@ -11,7 +10,8 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class BrowsePanelDeleteContentSpec extends BaseGebSpec
+class ContentBrowsePanelDeleteContentSpec
+    extends BaseGebSpec
 {
 
 	@Shared String DELETE_CONTENT_KEY = "deletecontent_test"
