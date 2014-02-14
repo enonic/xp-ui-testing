@@ -9,120 +9,120 @@ import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
-import com.enonic.autotests.utils.WaitHelper;
 
 /**
  * Page Object for 'Home' page. Version 5.0
- * 
  */
-public class HomePage extends Page
+public class HomePage
+    extends Page
 {
-	public static String TITLE = "Enonic CMS - Boot Page";
+    public static String TITLE = "Enonic CMS - Boot Page";
 
-	@FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
-	private WebElement contentManager;
-	
-	
-	@FindBy(xpath = "//div[@class = 'name-container' and text()='Schema Manager']")
-	private WebElement schemaManager;
-
-	@FindBy(xpath = "//div[@class = 'name-container' and text()='Space Admin']")
-	private WebElement spaceAdmin;
-
-	@FindBy(xpath = "//div[@class = 'name-container' and text()='Accounts']")
-	private WebElement accounts;
-
-	/**
-	 * @param session
-	 */
-	public HomePage(TestSession session)
-	{
-		super(session);
-	}
-
-	public void open(String username, String password)
-	{
-		String wh = getSession().getWindowHandle();
-		if(wh == null)
-		{
-			getSession().setWindowHandle(getDriver().getWindowHandle());
-		}		
-		// open page via the driver.get(BASE_URL)
-		if(getSession().getBaseUrl()!=null)
-		{
-			getDriver().get(getSession().getBaseUrl());
-		}
-		
-		if (!getSession().isLoggedIn())
-		{
-			getLogger().info("try to login with userName:" + username + " password: " + password);
-			long start = System.currentTimeMillis();
-			LoginPage loginPage = new LoginPage(getSession());
-			loginPage.doLogin(username, password);
-
-			getSession().setLoggedIn(true);
-		}
-		else{
-			getDriver().switchTo().window(wh);
-		}
-		waitUntilAllFramesLoaded();
-
-	}
-
-	/**
-	 * 
-	 */
-	public void waitUntilAllFramesLoaded()
-	{
-		
-		waitUntilVisible(By.xpath("//div[@class = 'name-container' and text()='Accounts']"));
-		waitUntilVisible(By.xpath("//div[@class = 'name-container' and text()='Schema Manager']"));
-	}
-	
-	/**
-	 * @return
-	 */
-	public SchemaBrowsePanel openSchemaManagerApplication()
-	{
-		schemaManager.click();	
-		String whandle = getSession().getDriver().getWindowHandle();
-		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), Application.APP_SCHEMA_MANAGER_FRAME_XPATH);
-		
-		return new SchemaBrowsePanel(getSession());
-	}
-
-	
-	public ContentBrowsePanel openContentManagerApplication()
-	{
-		contentManager.click();
-		String whandle = getSession().getDriver().getWindowHandle();
-		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH);	
-		return new ContentBrowsePanel(getSession());
-	}
-
-	public AccountsPage openAccountsApplication()
-	{
-		accounts.click();
-		AccountsPage accountsPage = new AccountsPage(getSession());
-		accountsPage.waituntilPageLoaded(2l);
-		
-		String whandle = getSession().getDriver().getWindowHandle();
-		getSession().setWindowHandle(whandle);
-		NavigatorHelper.switchToIframe(getSession(), Application.APP_ACCOUNTS_FRAME_XPATH);	
-		return accountsPage;
-	}
+    @FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
+    private WebElement contentManager;
 
 
-	/**
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	public void openAdminConsole(String username, String password)
-	{
-		spaceAdmin.click();
-	}
+    @FindBy(xpath = "//div[@class = 'name-container' and text()='Schema Manager']")
+    private WebElement schemaManager;
+
+    @FindBy(xpath = "//div[@class = 'name-container' and text()='Space Admin']")
+    private WebElement spaceAdmin;
+
+    @FindBy(xpath = "//div[@class = 'name-container' and text()='Accounts']")
+    private WebElement accounts;
+
+    /**
+     * @param session
+     */
+    public HomePage( TestSession session )
+    {
+        super( session );
+    }
+
+    public void open( String username, String password )
+    {
+        String wh = getSession().getWindowHandle();
+        if ( wh == null )
+        {
+            getSession().setWindowHandle( getDriver().getWindowHandle() );
+        }
+        // open page via the driver.get(BASE_URL)
+        if ( getSession().getBaseUrl() != null )
+        {
+            getDriver().get( getSession().getBaseUrl() );
+        }
+
+        if ( !getSession().isLoggedIn() )
+        {
+            getLogger().info( "try to login with userName:" + username + " password: " + password );
+            long start = System.currentTimeMillis();
+            LoginPage loginPage = new LoginPage( getSession() );
+            loginPage.doLogin( username, password );
+
+            getSession().setLoggedIn( true );
+        }
+        else
+        {
+            getDriver().switchTo().window( wh );
+        }
+        waitUntilAllFramesLoaded();
+
+    }
+
+    /**
+     *
+     */
+    public void waitUntilAllFramesLoaded()
+    {
+
+        waitUntilVisible( By.xpath( "//div[@class = 'name-container' and text()='Accounts']" ) );
+        waitUntilVisible( By.xpath( "//div[@class = 'name-container' and text()='Schema Manager']" ) );
+    }
+
+    /**
+     * @return
+     */
+    public SchemaBrowsePanel openSchemaManagerApplication()
+    {
+        schemaManager.click();
+        String whandle = getSession().getDriver().getWindowHandle();
+        getSession().setWindowHandle( whandle );
+        NavigatorHelper.switchToIframe( getSession(), Application.APP_SCHEMA_MANAGER_FRAME_XPATH );
+
+        return new SchemaBrowsePanel( getSession() );
+    }
+
+
+    public ContentBrowsePanel openContentManagerApplication()
+    {
+        contentManager.click();
+        String whandle = getSession().getDriver().getWindowHandle();
+        getSession().setWindowHandle( whandle );
+        NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
+        return new ContentBrowsePanel( getSession() );
+    }
+
+    public AccountsPage openAccountsApplication()
+    {
+        accounts.click();
+        AccountsPage accountsPage = new AccountsPage( getSession() );
+        accountsPage.waituntilPageLoaded( 2l );
+
+        String whandle = getSession().getDriver().getWindowHandle();
+        getSession().setWindowHandle( whandle );
+        NavigatorHelper.switchToIframe( getSession(), Application.APP_ACCOUNTS_FRAME_XPATH );
+        return accountsPage;
+    }
+
+
+    /**
+     * @param username
+     * @param password
+     * @return
+     */
+    public void openAdminConsole( String username, String password )
+    {
+        spaceAdmin.click();
+    }
 
 }

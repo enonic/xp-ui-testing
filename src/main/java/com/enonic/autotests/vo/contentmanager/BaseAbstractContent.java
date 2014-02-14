@@ -3,96 +3,99 @@ package com.enonic.autotests.vo.contentmanager;
 
 /**
  * Base class for all types of content.
- * 
- * 
  */
 public abstract class BaseAbstractContent
 {
-	private String name;
-	private String displayName;
-	private String contentTypeName;
+    private String name;
 
-	private String[] contentPath;
+    private String displayName;
 
-	protected BaseAbstractContent( Builder<?> builder )
-	{
-		this.name = builder.name;
-		this.displayName = builder.displayName;
-		this.contentPath = builder.contentPath;
-		this.contentTypeName = builder.contentTypeName;
-	}
+    private String contentTypeName;
 
-	public String[] getContentPath()
-	{
-		return contentPath;
-	}
+    private String[] contentPath;
 
-	public void setContentPath(String[] contentPath)
-	{
-		this.contentPath = contentPath;
-	}
+    protected BaseAbstractContent( Builder<?> builder )
+    {
+        this.name = builder.name;
+        this.displayName = builder.displayName;
+        this.contentPath = builder.contentPath;
+        this.contentTypeName = builder.contentTypeName;
+    }
 
-	public String getName()
-	{
-		return name;
-	}
+    public String[] getContentPath()
+    {
+        return contentPath;
+    }
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public void setContentPath( String[] contentPath )
+    {
+        this.contentPath = contentPath;
+    }
 
-	public String getDisplayName()
-	{
-		return displayName;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public void setDisplayName(String displayName)
-	{
-		this.displayName = displayName;
-	}
+    public void setName( String name )
+    {
+        this.name = name;
+    }
 
-	public String getContentTypeName()
-	{
-		return contentTypeName;
-	}
+    public String getDisplayName()
+    {
+        return displayName;
+    }
 
-	public void setContentTypeName(String contentTypeName)
-	{
-		this.contentTypeName = contentTypeName;
-	}
+    public void setDisplayName( String displayName )
+    {
+        this.displayName = displayName;
+    }
 
-	public static abstract class Builder<T extends BaseAbstractContent>
-	{
-		private String name;
-		private String displayName;
-		private String contentTypeName;
-		private String[] contentPath;
+    public String getContentTypeName()
+    {
+        return contentTypeName;
+    }
 
-		public Builder<T> withName(String name)
-		{
-			this.name = name;
-			return this;
-		}
+    public void setContentTypeName( String contentTypeName )
+    {
+        this.contentTypeName = contentTypeName;
+    }
 
-		public Builder<T> withDisplayName(String displayName)
-		{
-			this.displayName = displayName;
-			return this;
-		}
+    public static abstract class Builder<T extends BaseAbstractContent>
+    {
+        private String name;
 
-		public Builder<T> withType(String ctName)
-		{
-			this.contentTypeName = ctName;
-			return this;
-		}
+        private String displayName;
 
-		public Builder<T> withContentPath(String[] contentPath)
-		{
-			this.contentPath = contentPath;
-			return this;
-		}
+        private String contentTypeName;
 
-		public abstract T build();
-	}
+        private String[] contentPath;
+
+        public Builder<T> withName( String name )
+        {
+            this.name = name;
+            return this;
+        }
+
+        public Builder<T> withDisplayName( String displayName )
+        {
+            this.displayName = displayName;
+            return this;
+        }
+
+        public Builder<T> withType( String ctName )
+        {
+            this.contentTypeName = ctName;
+            return this;
+        }
+
+        public Builder<T> withContentPath( String[] contentPath )
+        {
+            this.contentPath = contentPath;
+            return this;
+        }
+
+        public abstract T build();
+    }
 }

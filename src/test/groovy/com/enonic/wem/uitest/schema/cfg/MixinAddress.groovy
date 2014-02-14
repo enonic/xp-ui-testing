@@ -1,7 +1,8 @@
 package com.enonic.wem.uitest.schema.cfg
 
-class MixinAddress {
-	static def CFG = '''
+class MixinAddress
+{
+    static def CFG = '''
 <mixin>
   <display-name>Test: Address Mixin</display-name>
   <items>

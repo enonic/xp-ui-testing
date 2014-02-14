@@ -32,195 +32,201 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.Co
 
 public class TestUtils
 {
-	public static Logger logger = Logger.getLogger(TestUtils.class);
-	
-	public static final String DATE_FORMAT_NOW = "yyyy-MM-dd-HH-mm-ss";
+    public static Logger logger = Logger.getLogger( TestUtils.class );
 
-	/**
-	 * The Default constructor.
-	 */
-	private TestUtils()
-	{
+    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd-HH-mm-ss";
 
-	}
-	
-	public static String buildFullNameOfContent(String contentName, String... parentNames)
-	{
-		StringBuilder builder = new StringBuilder();
-		if(parentNames == null)
-		{
-			builder.append("/").append(contentName);
-			return builder.toString();
-		}
-		if (parentNames.length == 0)
-		{
-			builder.append(contentName).append("/");
-			return builder.toString();
-		}
-		builder.append(parentNames[0].toLowerCase()).append("/");
-		for (int i = 1; i < parentNames.length; i++)
-		{
-			builder.append(parentNames[i].toLowerCase()).append("/");
-		}
+    /**
+     * The Default constructor.
+     */
+    private TestUtils()
+    {
 
-		String fullContentName = builder.append(contentName).toString();
-		return fullContentName;
-	}
-	
-	/**
-	 * @param ctype
-	 * @return
-	 */
-	public static ContentTypeName getContentType(String ctype)
-	{
-		ContentTypeName result = null;
-		ContentTypeName[] values = ContentTypeName.values();
-		for (ContentTypeName val : values)
-		{
-			if (val.getValue().equalsIgnoreCase(ctype))
-			{
-				result = val;
-			}
-		}
-		return result;
-	}
+    }
+
+    public static String buildFullNameOfContent( String contentName, String... parentNames )
+    {
+        StringBuilder builder = new StringBuilder();
+        if ( parentNames == null )
+        {
+            builder.append( "/" ).append( contentName );
+            return builder.toString();
+        }
+        if ( parentNames.length == 0 )
+        {
+            builder.append( contentName ).append( "/" );
+            return builder.toString();
+        }
+        builder.append( parentNames[0].toLowerCase() ).append( "/" );
+        for ( int i = 1; i < parentNames.length; i++ )
+        {
+            builder.append( parentNames[i].toLowerCase() ).append( "/" );
+        }
+
+        String fullContentName = builder.append( contentName ).toString();
+        return fullContentName;
+    }
+
+    /**
+     * @param ctype
+     * @return
+     */
+    public static ContentTypeName getContentType( String ctype )
+    {
+        ContentTypeName result = null;
+        ContentTypeName[] values = ContentTypeName.values();
+        for ( ContentTypeName val : values )
+        {
+            if ( val.getValue().equalsIgnoreCase( ctype ) )
+            {
+                result = val;
+            }
+        }
+        return result;
+    }
 
 
-	/**
-	 * @param screenshotFileName
-	 * @param driver
-	 */
-	public static String saveScreenshot(final TestSession testSession)
-	{
-		WebDriver driver = testSession.getDriver();
-		String fileName = timeNow() + ".png";
-		File folder  = new File("target/screenshots");
-		if (!folder.exists())
-		{
-			if (!folder.mkdir())
-			{
-				System.out.println("Folder for snapshots was not created ");
-			} else
-			{
-				System.out.println("Folder for snapshots was created " + folder.getAbsolutePath());
-			}
-		}
-		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String fullFileName = folder.getAbsolutePath() + File.separator + fileName;
-		try
-		{
-			FileUtils.copyFile(screenshot, new File(fullFileName));
-		} catch (IOException e)
-		{
-		
-		}
-		return fileName;
-	}
+    /**
+     * @param testSession
+     */
+    public static String saveScreenshot( final TestSession testSession )
+    {
+        WebDriver driver = testSession.getDriver();
+        String fileName = timeNow() + ".png";
+        File folder = new File( "target/screenshots" );
+        if ( !folder.exists() )
+        {
+            if ( !folder.mkdir() )
+            {
+                System.out.println( "Folder for snapshots was not created " );
+            }
+            else
+            {
+                System.out.println( "Folder for snapshots was created " + folder.getAbsolutePath() );
+            }
+        }
+        File screenshot = ( (TakesScreenshot) driver ).getScreenshotAs( OutputType.FILE );
+        String fullFileName = folder.getAbsolutePath() + File.separator + fileName;
+        try
+        {
+            FileUtils.copyFile( screenshot, new File( fullFileName ) );
+        }
+        catch ( IOException e )
+        {
 
-	public static String timeNow()
-	{
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
-		return sdf.format(cal.getTime());
-	}
+        }
+        return fileName;
+    }
 
-	public static void clickByLocator(final By locator, WebDriver driver)
-	{
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(locator));
-		myDynamicElement.click();
-	}
+    public static String timeNow()
+    {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat( DATE_FORMAT_NOW );
+        return sdf.format( cal.getTime() );
+    }
 
-	/**
-	 * @param locator
-	 * @param driver
-	 */
-	public static void clickByElement(final By locator, final WebDriver driver)
-	{
-		final long startTime = System.currentTimeMillis();
-		driver.manage().timeouts().implicitlyWait(Application.IMPLICITLY_WAIT, TimeUnit.SECONDS);
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(90000, TimeUnit.MILLISECONDS).pollingEvery(5500, TimeUnit.MILLISECONDS);
-		// .ignoring( StaleElementReferenceException.class );
-		wait.until(new ExpectedCondition<Boolean>()
-		{
-			@Override
-			public Boolean apply(WebDriver webDriver)
-			{
-				try
-				{
-					webDriver.findElement(locator).click();
-					return true;
-				} catch (StaleElementReferenceException e)
-				{
-					logger.info(e.getMessage() + "\n");
-					logger.info("Trying again...");
-					return false;
-				}
-			}
-		});
-		final long endTime = System.currentTimeMillis();
-		logger.info("clickByElement time is " + (endTime - startTime));
-		driver.manage().timeouts().implicitlyWait(Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS);
-	}
+    public static void clickByLocator( final By locator, WebDriver driver )
+    {
+        WebElement myDynamicElement = ( new WebDriverWait( driver, 10 ) ).until( ExpectedConditions.presenceOfElementLocated( locator ) );
+        myDynamicElement.click();
+    }
 
-	public static String getNotificationMessage(final By locator, final WebDriver driver, long timeout)
-	{
-		WebDriverWait wait = new WebDriverWait(driver, timeout);
-		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-		return element.getText();
-	}
+    /**
+     * @param locator
+     * @param driver
+     */
+    public static void clickByElement( final By locator, final WebDriver driver )
+    {
+        final long startTime = System.currentTimeMillis();
+        driver.manage().timeouts().implicitlyWait( Application.IMPLICITLY_WAIT, TimeUnit.SECONDS );
+        Wait<WebDriver> wait =
+            new FluentWait<WebDriver>( driver ).withTimeout( 90000, TimeUnit.MILLISECONDS ).pollingEvery( 5500, TimeUnit.MILLISECONDS );
+        // .ignoring( StaleElementReferenceException.class );
+        wait.until( new ExpectedCondition<Boolean>()
+        {
+            @Override
+            public Boolean apply( WebDriver webDriver )
+            {
+                try
+                {
+                    webDriver.findElement( locator ).click();
+                    return true;
+                }
+                catch ( StaleElementReferenceException e )
+                {
+                    logger.info( e.getMessage() + "\n" );
+                    logger.info( "Trying again..." );
+                    return false;
+                }
+            }
+        } );
+        final long endTime = System.currentTimeMillis();
+        logger.info( "clickByElement time is " + ( endTime - startTime ) );
+        driver.manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
+    }
 
-	/**
-	 * @param by
-	 * @param driver
-	 * @return
-	 */
-	public static boolean checkIfDisplayed(final By by, final WebDriver driver)
-	{
-		List<WebElement> elements = driver.findElements(by);
-		return ((elements.size() > 0) && (elements.get(0).isDisplayed()));
-	}
+    public static String getNotificationMessage( final By locator, final WebDriver driver, long timeout )
+    {
+        WebDriverWait wait = new WebDriverWait( driver, timeout );
+        WebElement element = wait.until( ExpectedConditions.visibilityOfElementLocated( locator ) );
+        return element.getText();
+    }
 
-	public static WebElement getIfDisplayed(final By by, final WebDriver driver)
-	{
-		List<WebElement> elements = driver.findElements(by);
-		if ((elements.size() > 0) && (elements.get(0).isDisplayed()))
-		{
-			return elements.get(0);
-		}
-		return null;
-	}
+    /**
+     * @param by
+     * @param driver
+     * @return
+     */
+    public static boolean checkIfDisplayed( final By by, final WebDriver driver )
+    {
+        List<WebElement> elements = driver.findElements( by );
+        return ( ( elements.size() > 0 ) && ( elements.get( 0 ).isDisplayed() ) );
+    }
 
-	public static String createTempFile(String s)
-	{
-		try
-		{
-			File f = File.createTempFile("uploadTest", "tempfile");
-			f.deleteOnExit();
-			writeStringToFile(s, f);
-			return f.getAbsolutePath();
-		} catch (Exception e)
-		{
-			throw new TestFrameworkException("Error during creation TMP-file");
-		}
-	}
+    public static WebElement getIfDisplayed( final By by, final WebDriver driver )
+    {
+        List<WebElement> elements = driver.findElements( by );
+        if ( ( elements.size() > 0 ) && ( elements.get( 0 ).isDisplayed() ) )
+        {
+            return elements.get( 0 );
+        }
+        return null;
+    }
 
-	public static void writeStringToFile(String s, File file) throws IOException
-	{
-		FileOutputStream in = null;
-		try
-		{
-			in = new FileOutputStream(file);
-			FileChannel fchan = in.getChannel();
-			BufferedWriter bf = new BufferedWriter(Channels.newWriter(fchan, "UTF-8"));
-			bf.write(s);
-			bf.close();
-		} finally
-		{
-			if (in != null)
-			{
-				in.close();
-			}
-		}
-	}
+    public static String createTempFile( String s )
+    {
+        try
+        {
+            File f = File.createTempFile( "uploadTest", "tempfile" );
+            f.deleteOnExit();
+            writeStringToFile( s, f );
+            return f.getAbsolutePath();
+        }
+        catch ( Exception e )
+        {
+            throw new TestFrameworkException( "Error during creation TMP-file" );
+        }
+    }
+
+    public static void writeStringToFile( String s, File file )
+        throws IOException
+    {
+        FileOutputStream in = null;
+        try
+        {
+            in = new FileOutputStream( file );
+            FileChannel fchan = in.getChannel();
+            BufferedWriter bf = new BufferedWriter( Channels.newWriter( fchan, "UTF-8" ) );
+            bf.write( s );
+            bf.close();
+        }
+        finally
+        {
+            if ( in != null )
+            {
+                in.close();
+            }
+        }
+    }
 
 }

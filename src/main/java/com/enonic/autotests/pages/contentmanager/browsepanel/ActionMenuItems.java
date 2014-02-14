@@ -2,16 +2,17 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 public enum ActionMenuItems
 {
-	NEW("New"), EDIT("Edit"),OPEN("Open"),DELETE("Delete"),DUPLICATE("Duplicate"),MOVE("Move");
-	private String value;
+    NEW( "New" ), EDIT( "Edit" ), OPEN( "Open" ), DELETE( "Delete" ), DUPLICATE( "Duplicate" ), MOVE( "Move" );
 
-	public String getValue()
-	{
-		return value;
-	}
+    private String value;
 
-	private ActionMenuItems( String value )
-	{
-		this.value = value;
-	}
+    public String getValue()
+    {
+        return value;
+    }
+
+    private ActionMenuItems( String value )
+    {
+        this.value = value;
+    }
 }

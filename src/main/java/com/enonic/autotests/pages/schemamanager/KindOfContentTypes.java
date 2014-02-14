@@ -2,16 +2,17 @@ package com.enonic.autotests.pages.schemamanager;
 
 public enum KindOfContentTypes
 {
-	MIXIN("Mixin"), CONTENT_TYPE("Content Type"), RELATIONSHIP_TYPE("Relationship Type");
-	private String value;
+    MIXIN( "Mixin" ), CONTENT_TYPE( "Content Type" ), RELATIONSHIP_TYPE( "Relationship Type" );
 
-	public String getValue()
-	{
-		return value;
-	}
+    private String value;
 
-	private KindOfContentTypes( String value )
-	{
-		this.value = value;
-	}
+    public String getValue()
+    {
+        return value;
+    }
+
+    private KindOfContentTypes( String value )
+    {
+        this.value = value;
+    }
 }

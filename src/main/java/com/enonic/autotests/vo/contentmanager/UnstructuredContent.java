@@ -3,31 +3,33 @@ package com.enonic.autotests.vo.contentmanager;
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
 
 
-public class UnstructuredContent extends BaseAbstractContent
+public class UnstructuredContent
+    extends BaseAbstractContent
 {
 
-	protected UnstructuredContent( Builder<?> builder )
-	{
-		super(builder);
-		setContentTypeName(ContentTypeName.UNSTRUCTURED.getValue());
-	
-	}
-	
-	public static abstract class Builder<T extends UnstructuredContent> extends BaseAbstractContent.Builder<T>
-	{
-		public abstract T build();
+    protected UnstructuredContent( Builder<?> builder )
+    {
+        super( builder );
+        setContentTypeName( ContentTypeName.UNSTRUCTURED.getValue() );
 
-	}
+    }
 
-	public static Builder<?> builder()
-	{
-		return new Builder<UnstructuredContent>()
-		{
-			@Override
-			public UnstructuredContent build()
-			{
-				return new UnstructuredContent(this);
-			}
-		};
-	}
+    public static abstract class Builder<T extends UnstructuredContent>
+        extends BaseAbstractContent.Builder<T>
+    {
+        public abstract T build();
+
+    }
+
+    public static Builder<?> builder()
+    {
+        return new Builder<UnstructuredContent>()
+        {
+            @Override
+            public UnstructuredContent build()
+            {
+                return new UnstructuredContent( this );
+            }
+        };
+    }
 }

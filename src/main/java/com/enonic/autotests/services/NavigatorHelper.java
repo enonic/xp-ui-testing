@@ -18,110 +18,107 @@ import com.enonic.autotests.vo.User;
 public class NavigatorHelper
 {
 
-	/**
-	 * Opens 'Content Manager' application.
-	 * 
-	 * @param testSession
-	 *            {@link TestSession} instance.
-	 * @return {@link SpaceAdminPage} instance.
-	 */
-	public static ContentBrowsePanel openContentApp(TestSession testSession)
-	{
-		if (testSession.isLoggedIn())
-		{
-			if (ContentBrowsePanel.isOpened(testSession))
-			{
-				return new ContentBrowsePanel(testSession);
-			}
-			boolean isHomeButtonPresent = WaitHelper.waitAndFind(By.xpath(Application.HOME_BUTTON_XPATH), testSession.getDriver());
-			if (!isHomeButtonPresent)
-			{
-				throw new TestFrameworkException("'go to home' button was not found");
-			}
-			testSession.getDriver().findElement(By.xpath(Application.HOME_BUTTON_XPATH)).click();
-			HomePage homepage = new HomePage(testSession);
-			testSession.getDriver().switchTo().window(testSession.getWindowHandle());
-			homepage.openContentManagerApplication();
-			return new ContentBrowsePanel(testSession);
-		}
-      // if user not logged in:
-		else
-		{
+    /**
+     * Opens 'Content Manager' application.
+     *
+     * @param testSession {@link TestSession} instance.
+     * @return {@link ContentBrowsePanel} instance.
+     */
+    public static ContentBrowsePanel openContentApp( TestSession testSession )
+    {
+        if ( testSession.isLoggedIn() )
+        {
+            if ( ContentBrowsePanel.isOpened( testSession ) )
+            {
+                return new ContentBrowsePanel( testSession );
+            }
+            boolean isHomeButtonPresent = WaitHelper.waitAndFind( By.xpath( Application.HOME_BUTTON_XPATH ), testSession.getDriver() );
+            if ( !isHomeButtonPresent )
+            {
+                throw new TestFrameworkException( "'go to home' button was not found" );
+            }
+            testSession.getDriver().findElement( By.xpath( Application.HOME_BUTTON_XPATH ) ).click();
+            HomePage homepage = new HomePage( testSession );
+            testSession.getDriver().switchTo().window( testSession.getWindowHandle() );
+            homepage.openContentManagerApplication();
+            return new ContentBrowsePanel( testSession );
+        }
+        // if user not logged in:
+        else
+        {
 
-			HomePage home = loginAndOpenHomePage(testSession);
-			ContentBrowsePanel cmPage = home.openContentManagerApplication();
-			cmPage.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
-			return cmPage;
-		}
+            HomePage home = loginAndOpenHomePage( testSession );
+            ContentBrowsePanel cmPage = home.openContentManagerApplication();
+            cmPage.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+            return cmPage;
+        }
 
-	}
+    }
 
-	public static SchemaBrowsePanel openSchemaManager(TestSession testSession)
-	{
-		if (SchemaBrowsePanel.isOpened(testSession))
-		{
-			return new SchemaBrowsePanel(testSession);
-		} else
-		{
-			HomePage home = loginAndOpenHomePage(testSession);
-			SchemaBrowsePanel schemasPage = home.openSchemaManagerApplication();
-			schemasPage.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
-			return schemasPage;
-		}
+    public static SchemaBrowsePanel openSchemaManager( TestSession testSession )
+    {
+        if ( SchemaBrowsePanel.isOpened( testSession ) )
+        {
+            return new SchemaBrowsePanel( testSession );
+        }
+        else
+        {
+            HomePage home = loginAndOpenHomePage( testSession );
+            SchemaBrowsePanel schemasPage = home.openSchemaManagerApplication();
+            schemasPage.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+            return schemasPage;
+        }
 
-	}
+    }
 
-	/**
-	 * Open 'Home' page, click by 'Accounts' link and open application's page.
-	 * 
-	 * @param testSession
-	 *            {@link TestSession} instance.
-	 * @return {@link AccountsPage} instance.
-	 */
-	public static AccountsPage openAccounts(TestSession testSession)
-	{
-		HomePage home = loginAndOpenHomePage(testSession);
-		return home.openAccountsApplication();
-	}
+    /**
+     * Open 'Home' page, click by 'Accounts' link and open application's page.
+     *
+     * @param testSession {@link TestSession} instance.
+     * @return {@link AccountsPage} instance.
+     */
+    public static AccountsPage openAccounts( TestSession testSession )
+    {
+        HomePage home = loginAndOpenHomePage( testSession );
+        return home.openAccountsApplication();
+    }
 
-	/**
-	 * @param testSession
-	 *            {@link TestSession} instance.
-	 * @param iframeXpath
-	 *            frame's xpath.
-	 */
-	public static void switchToIframe(TestSession testSession, String iframeXpath)
-	{
-		String whandle = testSession.getDriver().getWindowHandle();
-		testSession.getDriver().switchTo().window(whandle);
-		List<WebElement> frames = testSession.getDriver().findElements(By.xpath(iframeXpath));
-		if (frames.size() == 0)
-		{
-			throw new TestFrameworkException("Unable to switch to the iframe" + iframeXpath);
-		}
-		testSession.getDriver().switchTo().frame(frames.get(0));
-	}
+    /**
+     * @param testSession {@link TestSession} instance.
+     * @param iframeXpath frame's xpath.
+     */
+    public static void switchToIframe( TestSession testSession, String iframeXpath )
+    {
+        String whandle = testSession.getDriver().getWindowHandle();
+        testSession.getDriver().switchTo().window( whandle );
+        List<WebElement> frames = testSession.getDriver().findElements( By.xpath( iframeXpath ) );
+        if ( frames.size() == 0 )
+        {
+            throw new TestFrameworkException( "Unable to switch to the iframe" + iframeXpath );
+        }
+        testSession.getDriver().switchTo().frame( frames.get( 0 ) );
+    }
 
-	/**
-	 * 'Login' to cms and opens the 'Home' page that contains links to all
-	 * applications.
-	 * 
-	 * @param testSession
-	 *            {@link TestSession} instance.
-	 * @return {@link HomePage} instance.
-	 */
-	public static HomePage loginAndOpenHomePage(TestSession testSession)
-	{
-		User user = testSession.getCurrentUser();
-		HomePage home = new HomePage(testSession);
-		if (user != null)
-		{
-			home.open(user.getUserInfo().getName(), user.getUserInfo().getPassword());
-		} else
-		{
-			home.open("admin", "pass");
-		}
-		return home;
-	}
+    /**
+     * 'Login' to cms and opens the 'Home' page that contains links to all
+     * applications.
+     *
+     * @param testSession {@link TestSession} instance.
+     * @return {@link HomePage} instance.
+     */
+    public static HomePage loginAndOpenHomePage( TestSession testSession )
+    {
+        User user = testSession.getCurrentUser();
+        HomePage home = new HomePage( testSession );
+        if ( user != null )
+        {
+            home.open( user.getUserInfo().getName(), user.getUserInfo().getPassword() );
+        }
+        else
+        {
+            home.open( "admin", "pass" );
+        }
+        return home;
+    }
 
 }

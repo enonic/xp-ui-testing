@@ -10,107 +10,107 @@ import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Content Manager application/add new content/select content type
- *
  */
-public class NewContentDialog extends BaseModalDialog
+public class NewContentDialog
+    extends BaseModalDialog
 {
-	private final static String DIALOG_TITLE_XPATH = "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
-	
-	public static  String CONTENTTYPE_NAME = "//li[contains(@class,'content-type-list-item')]//p[text()='%s']";
-	
-	private String INPUT_SEARCH= "//div[contains(@class,'column-right')]/input";
-	
-	/**
-	 * The constructor.
-	 * 
-	 * @param session
-	 */
-	public NewContentDialog(TestSession session)
-	{
-		super(session);
-	}
-	
-	/**
-	 * Checks that 'AddNewContentWizard' is opened.
-	 * 
-	 * @return true if dialog opened, otherwise false.
-	 */
-	public boolean isOpened() 
-	{
-		return waitUntilVisibleNoException(By.xpath(DIALOG_TITLE_XPATH), 1);
-	}
-	
-	/**
-	 * Select content type by name.
-	 * 
-	 * @param contentTypeName the name of a content type.
-	 */
-	public ContentWizardPanel selectContentType(String contentTypeName)
-	{
-		
-		String ctypeXpath = String.format(CONTENTTYPE_NAME, contentTypeName);
-		boolean isContentNamePresent = waitElementExist(ctypeXpath, 3);
-		
-		if(!isContentNamePresent)
-		{
-			throw new TestFrameworkException("content type with name "+contentTypeName +" was not found!");
-		}
+    private final static String DIALOG_TITLE_XPATH =
+        "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
+
+    public static String CONTENTTYPE_NAME = "//li[contains(@class,'content-type-list-item')]//p[text()='%s']";
+
+    private String INPUT_SEARCH = "//div[contains(@class,'column-right')]/input";
+
+    /**
+     * The constructor.
+     *
+     * @param session
+     */
+    public NewContentDialog( TestSession session )
+    {
+        super( session );
+    }
+
+    /**
+     * Checks that 'AddNewContentWizard' is opened.
+     *
+     * @return true if dialog opened, otherwise false.
+     */
+    public boolean isOpened()
+    {
+        return waitUntilVisibleNoException( By.xpath( DIALOG_TITLE_XPATH ), 1 );
+    }
+
+    /**
+     * Select content type by name.
+     *
+     * @param contentTypeName the name of a content type.
+     */
+    public ContentWizardPanel selectContentType( String contentTypeName )
+    {
+
+        String ctypeXpath = String.format( CONTENTTYPE_NAME, contentTypeName );
+        boolean isContentNamePresent = waitElementExist( ctypeXpath, 3 );
+
+        if ( !isContentNamePresent )
+        {
+            throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
+        }
 //		boolean isDisplayed  = session.getDriver().findElement(By.xpath(ctypeXpath)).isDisplayed();
 //		if (!isDisplayed)
 //		{
 //			WebElement searchinput = session.getDriver().findElement(By.xpath(INPUT_SEARCH));
 //			searchinput.sendKeys(contentTypeName);	
 //		} 
-		TestUtils.clickByElement(By.xpath(ctypeXpath), getDriver());
-		ContentWizardPanel wizard = new ContentWizardPanel(getSession());
-		
-		//String title = "New " + type.getValue().toLowerCase();
-		//wizard.waitUntilWizardOpened(title, 1);
-		
-		return wizard;
+        TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
 
-	}
-	
-	/**
-	 * Predefined names of content type used.
-	 *
-	 */
-	public enum ContentTypeName
-	{
-		PAGE("page"),
-		DATA("data"),
-		TEXT("text"), 
-		MEDIA("media"), 
-		UNSTRUCTURED("unstructured"), 
-		STRUCTURED("structured"), 
-		MIXIN("mixin"), 
-		CITATION("citation"), 
-		LINK("link"), 
-		SPACE("space"), 
-		SHORTCUT("shortcut"),
-		FOLDER("folder"),
-		ARCHIVE("archive");
+        //String title = "New " + type.getValue().toLowerCase();
+        //wizard.waitUntilWizardOpened(title, 1);
 
-		private String value;
+        return wizard;
 
-		/**
-		 * Constructor.
-		 * 
-		 * @param name
-		 */
-		private ContentTypeName( String value )
-		{
-			this.value = value;
-		}
+    }
 
-		public String getValue()
-		{
-			return value;
-		}
+    /**
+     * Predefined names of content type used.
+     */
+    public enum ContentTypeName
+    {
+        PAGE( "page" ),
+        DATA( "data" ),
+        TEXT( "text" ),
+        MEDIA( "media" ),
+        UNSTRUCTURED( "unstructured" ),
+        STRUCTURED( "structured" ),
+        MIXIN( "mixin" ),
+        CITATION( "citation" ),
+        LINK( "link" ),
+        SPACE( "space" ),
+        SHORTCUT( "shortcut" ),
+        FOLDER( "folder" ),
+        ARCHIVE( "archive" );
 
-		public void setValue(String value)
-		{
-			this.value = value;
-		}
-	}
+        private String value;
+
+        /**
+         * Constructor.
+         *
+         * @param value
+         */
+        private ContentTypeName( String value )
+        {
+            this.value = value;
+        }
+
+        public String getValue()
+        {
+            return value;
+        }
+
+        public void setValue( String value )
+        {
+            this.value = value;
+        }
+    }
 }

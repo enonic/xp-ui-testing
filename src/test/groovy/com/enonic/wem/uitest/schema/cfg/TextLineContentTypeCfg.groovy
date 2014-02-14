@@ -1,7 +1,8 @@
 package com.enonic.wem.uitest.schema.cfg
 
-class TextLineContentTypeCfg {
-	static def CFG = '''
+class TextLineContentTypeCfg
+{
+    static def CFG = '''
 	<type>
 	<display-name>Text Line</display-name>
 	 <content-display-name-script />

@@ -7,38 +7,41 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.BaseModalDialog;
 
-public class ConfirmationDialog extends BaseModalDialog
+public class ConfirmationDialog
+    extends BaseModalDialog
 {
 
-	public static final String YES_BUTTON_XPATH = "//div[@class='modal-dialog confirmation-dialog']//div[@class='button-row']//button[text()='Yes']";
-	
-	private final String TITLE_XPATH = "//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-header' and contains(.,'Confirmation')]";
-	
-	@FindBy(xpath = YES_BUTTON_XPATH)
-	private WebElement yesButton;
+    public static final String YES_BUTTON_XPATH =
+        "//div[@class='modal-dialog confirmation-dialog']//div[@class='button-row']//button[text()='Yes']";
 
-	/**
-	 * The constructor
-	 * 
-	 * @param session
-	 */
-	public ConfirmationDialog( TestSession session)
-	{
-		super(session);
-	}
-	
-	public boolean verifyIsOpened()
-	{
-		return waitUntilVisibleNoException(By.xpath(TITLE_XPATH), 2);
-	}
+    private final String TITLE_XPATH =
+        "//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-header' and contains(.,'Confirmation')]";
 
-	public boolean verifyIsClosed()
-	{
-		return waitElementNotVisible(By.xpath(TITLE_XPATH), 2);
-	}
+    @FindBy(xpath = YES_BUTTON_XPATH)
+    private WebElement yesButton;
 
-	public void doConfirm()
-	{
-		yesButton.click();
-	}
+    /**
+     * The constructor
+     *
+     * @param session
+     */
+    public ConfirmationDialog( TestSession session )
+    {
+        super( session );
+    }
+
+    public boolean verifyIsOpened()
+    {
+        return waitUntilVisibleNoException( By.xpath( TITLE_XPATH ), 2 );
+    }
+
+    public boolean verifyIsClosed()
+    {
+        return waitElementNotVisible( By.xpath( TITLE_XPATH ), 2 );
+    }
+
+    public void doConfirm()
+    {
+        yesButton.click();
+    }
 }

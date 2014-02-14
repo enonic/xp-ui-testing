@@ -8,21 +8,22 @@ import com.enonic.autotests.pages.Application;
 
 /**
  * Add new content wizard, Mixin Tab.
- * 
  */
-public class MixinWizardTab extends Application
+public class MixinWizardTab
+    extends Application
 {
 
-	String adressBlock = "//div[contains(@class,admin-formitemset-container) and descendant::input[@name='street'] and descendant::input[@name='postalCode']]";
+    String adressBlock =
+        "//div[contains(@class,admin-formitemset-container) and descendant::input[@name='street'] and descendant::input[@name='postalCode']]";
 
-	@FindBy(xpath = "//button/span[contains(., 'Add Address')]")
-	private WebElement addAddressButton;
+    @FindBy(xpath = "//button/span[contains(., 'Add Address')]")
+    private WebElement addAddressButton;
 
-	public MixinWizardTab( TestSession session )
-	{
-		super(session);
+    public MixinWizardTab( TestSession session )
+    {
+        super( session );
 
-	}
+    }
 
 //	public void populateAddresses(MixinContent content)
 //	{

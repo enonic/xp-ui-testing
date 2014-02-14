@@ -1,7 +1,8 @@
 package com.enonic.wem.uitest.schema.cfg
 
-class FolderContentTypeCfg {
-	static def FOLDER_CFG = '''
+class FolderContentTypeCfg
+{
+    static def FOLDER_CFG = '''
 	<type>
 	  <module>system</module>
       <display-name>ctFolder</display-name>
