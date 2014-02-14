@@ -2,12 +2,14 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -18,6 +20,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.services.ContentFilterService;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import com.enonic.wem.api.content.ContentPath;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -144,6 +147,14 @@ public class ContentBrowsePanel
         return result;
     }
 
+    public boolean exists( ContentPath contentPath )
+    {
+
+        String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, contentPath.toString() );
+        // TODO: Is it really necessary with 2 seconds timeout?
+        return waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 2l );
+    }
+
     /**
      * Check content in the table of contents.
      *
@@ -174,9 +185,33 @@ public class ContentBrowsePanel
         }
     }
 
+    public void expandAndSelectContent( ContentPath contentPath )
+    {
+        expandContent( contentPath.getParentPath() );
+        selectContent( contentPath );
+    }
+
+    public void expandContent( ContentPath contentPath )
+    {
+        if ( contentPath != null )
+        {
+            for ( int i = 0; i < contentPath.elementCount(); i++ )
+            {
+                String element = contentPath.getElement( i );
+                if ( !doExpandFolder( element ) )
+                {
+                    throw new TestFrameworkException(
+                        "Impossible to expand ContentPath [" + contentPath.toString() + "]! Path element #" + ( i + 1 ) +
+                            " does not exist: " + element );
+                }
+            }
+        }
+    }
+
     /**
      * Delete contents from a space.
      *
+     * @param parentSpace
      * @param contents
      */
     public void doDeleteContent( List<BaseAbstractContent> contents )
@@ -214,12 +249,31 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public void deleteSelected()
+    {
+
+        clickToolbarDelete().doDelete();
+    }
+
+    public DeleteContentDialog clickToolbarDelete()
+    {
+
+        boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
+        if ( !isEnabledDeleteButton )
+        {
+            throw new SaveOrUpdateException( "CM application, impossible to delete content, because the 'Delete' button is disabled!" );
+        }
+        // 4. click by 'Delete' link and open a confirm dialog.
+        deleteButton.click();
+
+        return new DeleteContentDialog( getSession() );
+    }
 
     /**
      * Selects a content in a space or folder, throws exception if content was
      * not found.
      *
-     * @param contentPath
+     * @param parentSpace
      * @param contents
      */
     private void selectContentInTable( List<BaseAbstractContent> contents, String... contentPath )
@@ -254,6 +308,7 @@ public class ContentBrowsePanel
     /**
      * Clicks by a checkbox, linked with content and select row in the table.
      *
+     * @param parentSpaceName
      * @param content
      */
     private void selectCheckbox( BaseAbstractContent content )
@@ -272,11 +327,28 @@ public class ContentBrowsePanel
         findElement( By.xpath( contentCheckBoxXpath ) ).click();
     }
 
+
+    public void selectContent( ContentPath path )
+    {
+        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
+        getLogger().info( "tries to find content in table:" + path.toString() );
+
+        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
+        if ( !isPresent )
+        {
+            throw new SaveOrUpdateException( "checkbox for content: " + path.toString() + "was not found" );
+        }
+        sleep( 700 );
+        findElement( By.xpath( contentCheckBoxXpath ) ).click();
+    }
+
     /**
      * Adds the content to a space or folder.
      *
+     * @param space
      * @param content
-     * @param isWizardShouldBeClosed
+     * @param isCloseWizard
      */
     public void doAddContent( BaseAbstractContent content, boolean isWizardShouldBeClosed )
     {
@@ -321,8 +393,8 @@ public class ContentBrowsePanel
     /**
      * Select a content type and opens "Add new Content Wizard".
      *
-     * @param contentPath
-     * @param contentTypeName
+     * @param space
+     * @param ctype
      * @return
      */
     public ContentWizardPanel openContentWizardPanel( String contentTypeName, String... contentPath )

@@ -8,14 +8,20 @@ import com.enonic.autotests.vo.contentmanager.FolderContent
 import geb.spock.GebSpec
 import spock.lang.Shared
 
-class BaseGebSpec extends GebSpec
+class BaseGebSpec
+    extends GebSpec
 {
-    @Shared Properties defaultProperties;
-    @Shared TestSession session;
-    @Shared ContentService contentService = new ContentService();
+    @Shared 
+    Properties defaultProperties;
+    
+    @Shared
+    TestSession session;
+
+    @Shared
+    ContentService contentService = new ContentService();
 
     @Override
-    def cleanup( )
+    def cleanup()
     {
         if ( session != null )
         {
@@ -69,7 +75,7 @@ class BaseGebSpec extends GebSpec
         getTestSession().setBaseUrl( sb.toString() )
     }
 
-    BaseAbstractContent addContentToBeDeleted( )
+    BaseAbstractContent addContentToBeDeleted()
     {
         String name = NameHelper.unqiueContentName( "deletecontent" );
         BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "contenttodelete" ).build();

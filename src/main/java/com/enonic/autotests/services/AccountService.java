@@ -17,7 +17,7 @@ public class AccountService
      * @param newSysUser
      * @param isCloseWizard if true, therefore wizard should be closed.
      * @return {@link AccountsPage} instance. This page contains table with
-     *         users and groups.
+     * users and groups.
      */
     public AccountsPage updateSystemUser( TestSession session, SystemUser userToUpdate, SystemUser newSysUser, boolean isCloseWizard )
     {
@@ -34,7 +34,7 @@ public class AccountService
      * @param isCloseWizard if true, therefore wizard should be
      *                      closed.
      * @return {@link AccountsPage} instance. This page contains table with
-     *         users and groups.
+     * users and groups.
      */
     public AccountsPage deleteSystemUser( TestSession session, SystemUser user, boolean isCloseWizard )
     {
@@ -52,7 +52,7 @@ public class AccountService
      * @param user          {@link SystemUser} instance.
      * @param isCloseWizard if true, so Wizard will be closed after saving user info.
      * @return {@link AccountsPage} instance. This page contains table with
-     *         users and groups.
+     * users and groups.
      */
     public AccountsPage createSystemUser( TestSession session, SystemUser user, boolean isCloseWizard )
     {

@@ -119,7 +119,6 @@ public abstract class WizardPanel
     /**
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
-     *
      */
     public void waitUntilWizardOpened( Integer numberPage )
     {

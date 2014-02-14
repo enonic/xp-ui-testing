@@ -73,7 +73,7 @@ public class BrowsePanel
      *
      * @param parentName
      * @return true if space is not empty and was expanded, otherwise return
-     *         false.
+     * false.
      */
     public boolean doExpandFolder( String parentName )
     {
@@ -194,7 +194,7 @@ public class BrowsePanel
 
     /**
      * @return number of rows in the table of content. The row with header is
-     *         excluded.
+     * excluded.
      */
     public int getTableRowNumber()
     {

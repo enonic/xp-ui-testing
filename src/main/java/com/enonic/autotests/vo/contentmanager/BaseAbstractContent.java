@@ -1,6 +1,10 @@
 package com.enonic.autotests.vo.contentmanager;
 
 
+import com.google.common.base.Joiner;
+
+import com.enonic.wem.api.content.ContentPath;
+
 /**
  * Base class for all types of content.
  */
@@ -12,24 +16,35 @@ public abstract class BaseAbstractContent
 
     private String contentTypeName;
 
-    private String[] contentPath;
+    private String[] parentPaths;
 
     protected BaseAbstractContent( Builder<?> builder )
     {
         this.name = builder.name;
         this.displayName = builder.displayName;
-        this.contentPath = builder.contentPath;
+        this.parentPaths = builder.contentPath;
         this.contentTypeName = builder.contentTypeName;
+    }
+
+    public ContentPath getContentPath2()
+    {
+        String pathAsString = "";
+        if ( parentPaths != null && parentPaths.length == 0 )
+        {
+            pathAsString = Joiner.on( "/" ).skipNulls().join( parentPaths );
+        }
+        pathAsString += "/" + name;
+        return ContentPath.from( pathAsString );
     }
 
     public String[] getContentPath()
     {
-        return contentPath;
+        return parentPaths;
     }
 
     public void setContentPath( String[] contentPath )
     {
-        this.contentPath = contentPath;
+        this.parentPaths = contentPath;
     }
 
     public String getName()

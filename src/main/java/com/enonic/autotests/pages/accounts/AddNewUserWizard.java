@@ -100,7 +100,7 @@ public class AddNewUserWizard
      * Gets validation message for Email input.
      *
      * @return validation message.('Invalid e-mail', 'available' or 'Not
-     *         available')
+     * available')
      */
     public String getEmailValidationMessage()
     {

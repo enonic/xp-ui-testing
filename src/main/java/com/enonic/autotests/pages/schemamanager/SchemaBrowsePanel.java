@@ -213,7 +213,7 @@ public class SchemaBrowsePanel
     /**
      * @param session
      * @return true if 'Content Manager' opened and CMSpacesPage showed,
-     *         otherwise false.
+     * otherwise false.
      */
     public static boolean isOpened( TestSession session )
     {
