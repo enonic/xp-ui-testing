@@ -8,7 +8,7 @@ class ContentBrowsePanelToolbarSpec
     extends BaseGebSpec
 {
 	
-	def "GIVEN Content BrowsePanel WHEN no selected content THEN Delete bytton should be disabled"() 
+	def "GIVEN Content BrowsePanel WHEN no selected content THEN Delete button should be disabled"() 
 	{
 		given:
 		go "admin"
