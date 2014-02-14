@@ -54,6 +54,11 @@ public class BrowsePanel extends Application
 	{
 		return deleteButton.isEnabled();
 	}
+
+	public boolean isNewButtonEnabled()
+	{
+		return newButton.isEnabled();
+	}
 	
 	/**
 	 * clicks by 'expand' icon and expands a folder.

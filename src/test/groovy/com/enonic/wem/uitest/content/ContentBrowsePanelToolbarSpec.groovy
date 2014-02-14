@@ -19,4 +19,16 @@ class ContentBrowsePanelToolbarSpec
 		then:
 		!cmPage.isDeleteButtonEnabled();
 	}
+	
+	def "GIVEN Content BrowsePanel WHEN no selected content THEN New button should be enabled"()
+	{
+		given:
+		go "admin"
+
+		when:
+		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(getTestSession());
+
+		then:
+		cmPage.isNewButtonEnabled();
+	}
 }

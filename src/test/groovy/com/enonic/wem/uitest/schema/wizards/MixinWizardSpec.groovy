@@ -7,7 +7,8 @@ import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Ignore;
 import spock.lang.Shared
 
-class MixinWizardSpec extends BaseGebSpec {
+class MixinWizardSpec extends BaseGebSpec 
+{
 
 	@Shared ContentTypeService contentTypeService = new ContentTypeService();
 	
