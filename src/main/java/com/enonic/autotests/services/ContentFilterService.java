@@ -2,7 +2,7 @@ package com.enonic.autotests.services;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.pages.contentmanager.browsepanel.FilterContentPanel;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModified;
 import com.enonic.autotests.vo.Space;
 
@@ -14,25 +14,25 @@ public class ContentFilterService
 	{
 	
 		ContentBrowsePanel cmPage = new ContentBrowsePanel(session);
-		FilterContentPanel filterPanel = cmPage.getContentFilter();
+		ContentBrowseFilterPanel filterPanel = cmPage.getContentBrowseFilterPanel();
 		filterPanel.doClearFilter();
 	}
 
-	public List<String> filterByQuery(TestSession session, String query)
+	public List<String> doFilterByText(TestSession session, String text)
 	{
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
-		FilterContentPanel filterPanel = cmPage.getContentFilter();
-		filterPanel.executeQuery(query);
+		ContentBrowseFilterPanel filterPanel = cmPage.getContentBrowseFilterPanel();
+		filterPanel.doSearchByText(text);
 		List<String> names = cmPage.getShowedContentNames();
 		return names;
 	}
 	
-	public List<String> filterByDate(TestSession session, FilterPanelLastModified dateRange)
+	public List<String> doFilterByDate(TestSession session, FilterPanelLastModified dateRange)
 	{
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
-		FilterContentPanel filterPanel = cmPage.getContentFilter();
+		ContentBrowseFilterPanel filterPanel = cmPage.getContentBrowseFilterPanel();
 		filterPanel.doFilterByDate(dateRange);
 		List<String> names = cmPage.getShowedContentNames();
 		return names;
@@ -51,7 +51,7 @@ public class ContentFilterService
 	{
 		// 1. open a 'content manager'
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
-		FilterContentPanel filterPanel = cmPage.getContentFilter();
+		ContentBrowseFilterPanel filterPanel = cmPage.getContentBrowseFilterPanel();
 		// 2. select space in the search panel and filter by space-name:
 		filterPanel.doFilterBySpaceDisplayName(space.getDisplayName());
 		// 3. content were filtered, gets all names from the table :
@@ -74,7 +74,7 @@ public class ContentFilterService
 		// 1. open CM application(if not opened yet)
 		ContentBrowsePanel cmPage = NavigatorHelper.openContentApp(session);
 
-		FilterContentPanel filterPanel = cmPage.getContentFilter();
+		ContentBrowseFilterPanel filterPanel = cmPage.getContentBrowseFilterPanel();
 		// 2. verify filtering: select content type in the search panel and try
 		// to find new added content in the table:
 		filterPanel.doFilterByContentType(contentTypeName);

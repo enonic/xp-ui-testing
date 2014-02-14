@@ -125,12 +125,12 @@ public class ContentWizardPanel extends WizardPanel
 	 */
 	public void doTypeDataAndSave( BaseAbstractContent content)
 	{
-		sleep(1000);
+		sleep(500);
 		// 1. type a data: 'name' and 'Display Name'.	
 		waitElementClickable(By.name("displayName"), 2);
 		getLogger().info("types displayName: "+ content.getDisplayName());
 		clearAndType(displayNameInput, content.getDisplayName());	
-		sleep(1000);
+		sleep(500);
 		if(StringUtils.isNotEmpty(content.getName()))
 		{
 			waitElementClickable(By.name("name"), 2);

@@ -30,7 +30,6 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 
-	@Ignore
 	def "GIVEN content BrowsePanel and existing content WHEN content deleted THEN the content should not be listed in the table"() 
 	{
 		given:
@@ -46,7 +45,6 @@ class ContentBrowsePanelSpec
 		!grid.findContentInTable(content, 2l)
 	}
 
-        @Ignore
 	def "GIVEN BrowsePanel WHEN adding Folder-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -62,7 +60,6 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	
-	@Ignore
 	def "GIVEN BrowsePanel WHEN adding Structured-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -77,7 +74,7 @@ class ContentBrowsePanelSpec
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
-	@Ignore
+	
 	def "GIVEN BrowsePanel WHEN adding Unstructured-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -92,7 +89,7 @@ class ContentBrowsePanelSpec
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
-	@Ignore
+
 	def "GIVEN BrowsePanel WHEN adding Archive-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -107,7 +104,7 @@ class ContentBrowsePanelSpec
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
-	@Ignore
+
 	def "GIVEN BrowsePanel WHEN adding Media-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -122,7 +119,7 @@ class ContentBrowsePanelSpec
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
-	@Ignore
+
 	def "GIVEN BrowsePanel WHEN adding Data-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -138,7 +135,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 
-	@Ignore
+
 	def "GIVEN BrowsePanel WHEN adding Text-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -153,7 +150,7 @@ class ContentBrowsePanelSpec
 		ContentBrowsePanel grid = new ContentBrowsePanel(getTestSession())
 		grid.findContentInTable(content, 2l)
 	}
-	@Ignore
+
 	def "GIVEN BrowsePanel WHEN adding Page-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -169,7 +166,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	
-	@Ignore
+
 	def "GIVEN BrowsePanel WHEN adding Shortcut-content THEN the content should be listed in the table"() 
 	{
 		given:
@@ -185,7 +182,7 @@ class ContentBrowsePanelSpec
 		grid.findContentInTable(content, 2l)
 	}
 	
-	def "GIVEN BrowsePanel and exist content  WHEN content editet, name changed  THEN the content whit new name should be listed in the table"()
+	def "GIVEN BrowsePanel and existing content  WHEN content editet, name changed  THEN the content with new name should be listed in the table"()
 	{
 		String displayName = "editnametest"
 		given:
@@ -205,8 +202,8 @@ class ContentBrowsePanelSpec
 
 	}
 	
-	def "GIVEN BrowsePanel and exist content  WHEN content editet, display name changed  THEN the content whit new display-name should be listed in the table"()
-	{	
+	def "GIVEN BrowsePanel and existing content  WHEN content editet, display name changed  THEN the content with new display-name should be listed in the table"()
+	{
 		given:
 		go "admin"
 

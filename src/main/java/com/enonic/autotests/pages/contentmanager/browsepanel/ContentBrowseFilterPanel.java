@@ -11,9 +11,13 @@ import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 
-public class FilterContentPanel extends Application
+public class ContentBrowseFilterPanel extends Application
 {
 	private final String CLEAR_FILTER_LINK = "Clear filter";
+	
+	public static final String SEARCH_INPUT_XPATH = "//input[@class='text-search-field']";
+	@FindBy(xpath = SEARCH_INPUT_XPATH)
+	private WebElement searchInput;
 	
 	//this xpath specifies a checkbox for Filtering by 'content type name'
 	private String CONTENT_TYPE_FILTER_ITEM = "//div[@class='facet-group-view' and child::h2[text()='Content Type']]//div[@class='facet-entry-view' and child::label[contains(.,'%s')]]/label";
@@ -24,15 +28,13 @@ public class FilterContentPanel extends Application
 	//this xpath specifies a checkbox for Filtering by 'Last Modified'
 	private String DATE_FILTER_ITEM = "//div[@class='admin-facet-group' and @name='ranges']//div[contains(@class,'admin-facet') and descendant::label[contains(.,'%s')]]";
 
-	@FindBy(name = "query")
-	private WebElement queryInput;
 
 	/**
 	 * The constructor
 	 * 
 	 * @param session
 	 */
-	public FilterContentPanel( TestSession session )
+	public ContentBrowseFilterPanel( TestSession session )
 	{
 		super(session);
 
@@ -41,13 +43,13 @@ public class FilterContentPanel extends Application
 	/**
 	 * @param query
 	 */
-	public void executeQuery(String query)
+	public void doSearchByText(String text)
 	{
-		getLogger().info("query will be applied : "+ query);
-		queryInput.sendKeys(query);
-		queryInput.sendKeys(Keys.ENTER);
-		sleep(1000);
-		getLogger().info("Filtered by : "+ query);
+		getLogger().info("query will be applied : "+ text);
+		searchInput.sendKeys(text);
+		searchInput.sendKeys(Keys.ENTER);
+		sleep(200);
+		getLogger().info("Filtered by : "+ text);
 	}
 	/**
 	 * Clicks by range of date: '1 hour' or  '1 day' or '1 week'.
@@ -80,7 +82,7 @@ public class FilterContentPanel extends Application
 			throw new TestFrameworkException("The link with name 'Clear Filter' was not found!");
 		}
 		getDriver().findElement(By.linkText(CLEAR_FILTER_LINK)).click();
-		sleep(1000);
+		sleep(500);
 	}
 
 	

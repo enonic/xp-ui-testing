@@ -16,6 +16,7 @@ import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
+import com.enonic.autotests.services.ContentFilterService;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
@@ -37,10 +38,7 @@ public class ContentBrowsePanel extends BrowsePanel
 
 	@FindBy(xpath = "//div[@class='toolbar']/button[text()='Move']")
 	private WebElement moveButton;
-
-	private static final String SEARCH_INPUT_XPATH = "//input[@class='text-search-field']";
-	@FindBy(xpath = SEARCH_INPUT_XPATH)
-	private WebElement searchInput;
+	
 
 	private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/..//div[@class='x-grid-row-checker']";
 
@@ -50,7 +48,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	
 	private final String CONTENT_DETAILS_ALL_NAMES_XPATH = "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
 	
-	private FilterContentPanel contentFilter;
+	private ContentBrowseFilterPanel contentBrowseFilterPanel;
 
 	/**
 	 * The constructor.
@@ -62,13 +60,13 @@ public class ContentBrowsePanel extends BrowsePanel
 		super(session);
 	}
 
-	public FilterContentPanel getContentFilter()
+	public ContentBrowseFilterPanel getContentBrowseFilterPanel()
 	{
-		if (contentFilter == null)
+		if (contentBrowseFilterPanel == null)
 		{
-			contentFilter = new FilterContentPanel(getSession());
+			contentBrowseFilterPanel = new ContentBrowseFilterPanel(getSession());
 		}
-		return contentFilter;
+		return contentBrowseFilterPanel;
 	}
 
 	/**
@@ -232,11 +230,18 @@ public class ContentBrowsePanel extends BrowsePanel
 
 	private void waitAndCheckContent(List<BaseAbstractContent> contents, String... parents)
 	{
+		//TODO  this is a workaround for app issue, should be deleted after fixing
+		ContentFilterService fs = new ContentFilterService();
+		fs.doFilterByText(getSession(), "test");
+		fs.doClearFilter(getSession());
+		
 		for (BaseAbstractContent content : contents)
 		{
 			boolean isPresent = findContentInTable(content, 2l);
+			
 			if (!isPresent)
 			{
+				//
 				TestUtils.saveScreenshot(getSession());
 				throw new TestFrameworkException("The content with name " + content.getName() + " was not found!");
 			}
@@ -261,7 +266,7 @@ public class ContentBrowsePanel extends BrowsePanel
 		{
 			throw new SaveOrUpdateException("checkbox for content with name : "+ content.getName() + "was not found");
 		}
-		sleep(1000);
+		sleep(700);
 		findElement(By.xpath(contentCheckBoxXpath)).click();
 	}
 
@@ -333,13 +338,11 @@ public class ContentBrowsePanel extends BrowsePanel
 	 */
 	private ContentWizardPanel selectKindOfContentAndOpenWizardPanel(String contentTypeName)
 	{
-		// click by 'New' button from the toolbar
 		newButton.click();
 		NewContentDialog newContentDialog = new NewContentDialog(getSession());
 		boolean isOpened = newContentDialog.isOpened();
 		if (!isOpened)
 		{
-			//getLogger().error("NewContentDialog was not opened!", getSession());
 			throw new TestFrameworkException("Error during add content, NewContentDialog dialog was not opened!");
 		}
 		getLogger().info("NewContentDialog, content type should be selected:" + contentTypeName);
@@ -367,11 +370,14 @@ public class ContentBrowsePanel extends BrowsePanel
 			boolean isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			
 			//TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
-			if (!isPresentCheckbox)
+			if (isPresentCheckbox)
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
 				//TODO type a word and do 'Clear filter'
-				sleep(1000);
+				ContentFilterService fs = new ContentFilterService();
+				fs.doFilterByText(getSession(), "test");
+				fs.doClearFilter(getSession());
+				
 				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			}		
 			if (!isPresentCheckbox)
@@ -408,7 +414,7 @@ public class ContentBrowsePanel extends BrowsePanel
 			getLogger().info("doOpenContent::: content with name equals " + content.getDisplayName() + " was found");
 		}
 		String fullName = TestUtils.buildFullNameOfContent(content.getName(), content.getContentPath());;	
-		sleep(1000);		
+		sleep(700);		
 		//1. select a content
 		selectRowByContentFullName(fullName );
 		if (!openButton.isEnabled())
@@ -473,7 +479,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	public static boolean isOpened(TestSession session)
 	{
 		List<WebElement> title = session.getDriver().findElements(By.xpath(TITLE_XPATH));
-		List<WebElement> searchInput = session.getDriver().findElements(By.xpath(SEARCH_INPUT_XPATH));
+		List<WebElement> searchInput = session.getDriver().findElements(By.xpath(ContentBrowseFilterPanel.SEARCH_INPUT_XPATH));
 		if (title.size() > 0 && (searchInput.size() > 0  && searchInput.get(0).isDisplayed()))
 		{
 			return true;
@@ -491,7 +497,7 @@ public class ContentBrowsePanel extends BrowsePanel
 	{
 		boolean result = true;
 		result &= verifyTollbar();
-		result &= verifySearchPannel();
+		//result &= verifySearchPannel();
 		return result;
 	}
 
@@ -507,11 +513,6 @@ public class ContentBrowsePanel extends BrowsePanel
 		return result;
 	}
 
-	private boolean verifySearchPannel()
-	{
-		boolean result = true;
-		result &= searchInput.isDisplayed() && !searchInput.isEnabled();
-		return result;
-	}
+	
 
 }
