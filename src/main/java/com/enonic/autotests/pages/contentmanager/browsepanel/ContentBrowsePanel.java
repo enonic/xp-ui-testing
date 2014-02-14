@@ -370,12 +370,13 @@ public class ContentBrowsePanel extends BrowsePanel
 			boolean isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
 			
 			//TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
-			if (isPresentCheckbox)
+			if (!isPresentCheckbox)
 			{
 				getLogger().info("Grid is empty, test-folder was not found! try to find again ...");
 				//TODO type a word and do 'Clear filter'
 				ContentFilterService fs = new ContentFilterService();
 				fs.doFilterByText(getSession(), "test");
+				TestUtils.saveScreenshot(getSession());
 				fs.doClearFilter(getSession());
 				
 				isPresentCheckbox = isDynamicElementPresent(By.xpath(spaceCheckBoxXpath), 3);
