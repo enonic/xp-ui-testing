@@ -156,26 +156,13 @@ public class ContentWizardPanel
         // 3. check if enabled and press "Save".
         getLogger().info( "Clicks 'Save' button in toolbar" );
         doSaveFromToolbar();
-        // 4. check notification message.
-        String mess = getNotificationMessage( APP_CONTENT_MANAGER_FRAME_XPATH );
-        getLogger().info( "notification message has appeared:" + mess );
-        if ( mess == null )
+        TestUtils.saveScreenshot( getSession() );
+        boolean isSaveEnabled = isEnabledSaveButton();
+        if ( !isSaveEnabled )
         {
             throw new SaveOrUpdateException(
-                "A notification, that the space with name" + content.getDisplayName() + " is saved - was not showed" );
+                "the content with name" + content.getDisplayName() + " was not correctly saved, button 'Save' still disabled!" );
         }
-        TestUtils.saveScreenshot( getSession() );
-
-        //TODO verify notification message
-        //String expectedNotificationMessage = String.format(NOTIF_MESSAGE, content.getDisplayName());
-        //if (!mess.contains(expectedNotificationMessage))
-        //{
-        //	getLogger().error(
-        //			"the actual notification and expected are not equals!  actual message:" + mess + " but expected:" + expectedNotificationMessage,
-        //			getSession());
-        //	throw new SaveOrUpdateException("the actual notification, that the content with name" + content.getDisplayName()
-        //			+ " is saved - is not equals expected!");
-        //}
     }
 
     /**

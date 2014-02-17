@@ -119,7 +119,7 @@ public class AddNewUserWizard
     /**
      * Types space's data and press the 'Save' button on the toolbar.
      *
-     * @param user {@link User} instance
+     * @param user  {@link User} instance
      * @param isNew
      */
     public void doTypeDataAndSave( User user, boolean isNew )
@@ -183,28 +183,12 @@ public class AddNewUserWizard
         TestUtils.saveScreenshot( getSession() );
         // if save button is disabled, so exception will be thrown:
         doSaveFromToolbar();
-
-        String mess = getNotificationMessage( APP_ACCOUNTS_FRAME_XPATH );
-        if ( mess == null )
+        boolean isSaveEnabled = isEnabledSaveButton();
+        if ( !isSaveEnabled )
         {
             throw new SaveOrUpdateException(
-                "A notification, that the User with name" + user.getUserInfo().getName() + " is saved - was not showed" );
+                "the user with name" + user.getUserInfo().getName() + " was not correctly saved, button 'Save' still disabled!" );
         }
-        String expectedNotificationMessage = " ???";
-        // TODO notification message not implemented yet in the Accounts
-        // Application.
-        //
-        // if (!mess.equals(expectedNotificationMessage)) {
-        // getLogger().error(
-        // "the actual notification and expected are not equals!  actual message:"
-        // + mess + " but expected:" + expectedNotificationMessage,
-        // session);
-        // throw new
-        // SaveOrUpdateSpaceException("the actual notification, that the space with name"
-        // + space.getName()
-        // + " is saved - is not equals expected!");
-        // }
-
     }
 
 

@@ -84,6 +84,11 @@ public abstract class WizardPanel
         toolbarSaveButton.click();
     }
 
+    public boolean isEnabledSaveButton()
+    {
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
+    }
+
     /**
      * Checks tab-count on the Home page.(checks that one wizard was opened)
      *
@@ -105,7 +110,7 @@ public abstract class WizardPanel
      *
      * @return notification message or null.
      */
-    protected String getNotificationMessage( String iframeXpath )
+    public String getNotificationMessage()
     {
         String message = TestUtils.getNotificationMessage( By.xpath( "//div[@class='admin-notification-content']/span" ), getDriver(), 2l );
         return message;

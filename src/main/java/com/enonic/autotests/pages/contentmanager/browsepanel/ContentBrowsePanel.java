@@ -109,7 +109,7 @@ public class ContentBrowsePanel
     /**
      * Finds content by name. Filtering was applied and content filtered.
      *
-     * @param content to find
+     * @param content  to find
      * @param timeout
      * @param filtered
      * @return true if content was found, otherwise return false.

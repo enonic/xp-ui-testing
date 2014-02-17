@@ -131,25 +131,12 @@ public class ContentTypeWizardPanel
         TestUtils.saveScreenshot( getSession() );
         // 3. check if enabled and press "Save".
         doSaveFromToolbar();
-
-        // 4. TODO check ERROR DIALOG
-
-        // 5. check notification message.
-        String mess = getNotificationMessage( APP_SCHEMA_MANAGER_FRAME_XPATH );
-        if ( mess == null )
+        boolean isSaveEnabled = isEnabledSaveButton();
+        if ( !isSaveEnabled )
         {
             throw new SaveOrUpdateException(
-                "A notification, that the content type with name" + contentType.getName() + " is saved - was not showed" );
+                "the content with name" + contentType.getName() + " was not correctly saved, button 'Save' still disabled!" );
         }
-        String expectedNotificationMessage = String.format( NOTIF_MESSAGE, contentType.getName() );
-        if ( !mess.contains( expectedNotificationMessage ) )
-        {
-            //	logError(
-            //			"the actual notification and expected are not equals!  actual message:" + mess + " but expected:" + expectedNotificationMessage);
-            //	throw new SaveOrUpdateException("the actual notification, that the content type with name" + contentType.getName()
-            //			+ " was saved - and expected are not equals!");
-        }
-
     }
 
     /**
