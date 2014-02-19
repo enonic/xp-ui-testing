@@ -2,26 +2,22 @@ package com.enonic.wem.uitest
 
 import com.enonic.autotests.TestSession
 import com.enonic.autotests.services.ContentService
+import com.enonic.autotests.services.ContentTypeService;
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import geb.spock.GebSpec
 import spock.lang.Shared
 
-class BaseGebSpec
-    extends GebSpec
+class BaseGebSpec extends GebSpec
 {
-    @Shared 
-    Properties defaultProperties;
-    
-    @Shared
-    TestSession session;
-
-    @Shared
-    ContentService contentService = new ContentService();
+    @Shared Properties defaultProperties;
+    @Shared TestSession session;
+    @Shared ContentService contentService = new ContentService();
+	@Shared ContentTypeService contentTypeService = new ContentTypeService();
 
     @Override
-    def cleanup()
+    def cleanup( )
     {
         if ( session != null )
         {
@@ -75,9 +71,9 @@ class BaseGebSpec
         getTestSession().setBaseUrl( sb.toString() )
     }
 
-    BaseAbstractContent addContentToBeDeleted()
+    BaseAbstractContent addContentToBeDeleted( )
     {
-        String name = NameHelper.unqiueContentName( "deletecontent" );
+        String name = NameHelper.unqiueName( "deletecontent" );
         BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "contenttodelete" ).build();
         contentService.addContent( getTestSession(), content, true )
         return content;

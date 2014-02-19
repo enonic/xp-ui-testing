@@ -165,7 +165,7 @@ public class TestUtils
         driver.manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
     }
 
-    public static String getNotificationMessage( final By locator, final WebDriver driver, long timeout )
+    public static String waitNotificationMessage( final By locator, final WebDriver driver, long timeout )
     {
         WebDriverWait wait = new WebDriverWait( driver, timeout );
         WebElement element = wait.until( ExpectedConditions.visibilityOfElementLocated( locator ) );

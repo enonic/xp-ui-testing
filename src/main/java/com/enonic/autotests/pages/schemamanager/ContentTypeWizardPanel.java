@@ -24,9 +24,6 @@ import com.enonic.autotests.vo.schemamanger.ContentType;
 public class ContentTypeWizardPanel
     extends WizardPanel
 {
-
-    private String NOTIF_MESSAGE = "\"%s\" was saved";
-
     @FindBy(xpath = "//div[@class='CodeMirror']//textarea")
     protected WebElement configXMLTextArea;
 
@@ -55,6 +52,11 @@ public class ContentTypeWizardPanel
         return inputWidth;
     }
 
+    /**
+     * Types a name to the name-input field
+     *
+     * @param name
+     */
     public void doTypeName( String name )
     {
         clearAndType( nameInput, name );
@@ -107,6 +109,21 @@ public class ContentTypeWizardPanel
      */
     public void doTypeDataAndSave( ContentType contentType )
     {
+        doTypeData( contentType );
+
+        TestUtils.saveScreenshot( getSession() );
+        // 3. check if enabled and press "Save".
+        doSaveFromToolbar();
+        boolean isSaveEnabled = isEnabledSaveButton();
+        if ( !isSaveEnabled )
+        {
+            throw new SaveOrUpdateException(
+                "the content with name" + contentType.getName() + " was not correctly saved, button 'Save' still disabled!" );
+        }
+    }
+
+    public void doTypeData( ContentType contentType )
+    {
         // 1. type a data: 'name' and 'Display Name'.
         clearAndType( nameInput, contentType.getName() );
         //2. type the XMLconfig data:
@@ -126,16 +143,6 @@ public class ContentTypeWizardPanel
             builder.click( elems.get( 0 ) ).sendKeys( contentType.getConfigData() );
             final Action paste = builder.build();
             paste.perform();
-        }
-
-        TestUtils.saveScreenshot( getSession() );
-        // 3. check if enabled and press "Save".
-        doSaveFromToolbar();
-        boolean isSaveEnabled = isEnabledSaveButton();
-        if ( !isSaveEnabled )
-        {
-            throw new SaveOrUpdateException(
-                "the content with name" + contentType.getName() + " was not correctly saved, button 'Save' still disabled!" );
         }
     }
 

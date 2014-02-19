@@ -21,16 +21,13 @@ public abstract class WizardPanel
     public static String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
 
     public static String APP_BAR_TABMENU_TITLE_XPATH = "//div[@class='tab-menu appbar-tabmenu']//span[@class='label']";
-    //public static  String APP_BAR_TABMENU_TITLE = "//div[@class='tab-menu appbar-tabmenu']//span[@class='label' and contains(.,'%s')]";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']";
 
     public static final String TOOLBAR_CLOSEWIZARD_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Close']";
-
-    public static final String GREEN_SAVE_BUTTON_XPATH =
-        "//div[contains(@class,'x-btn-green-large')]//span[@class='x-btn-inner' and contains(., 'Save')]";
+   
 
     @FindBy(xpath = TOOLBAR_CLOSEWIZARD_BUTTON_XPATH)
     protected WebElement closeButton;
@@ -38,16 +35,14 @@ public abstract class WizardPanel
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
 
-    @FindBy(xpath = GREEN_SAVE_BUTTON_XPATH)
-    protected WebElement greenSaveButton;
-
     @FindBy(name = "displayName")
     protected WebElement displayNameInput;
 
     @FindBy(name = "name")
     protected WebElement nameInput;
 
-    /**
+
+	/**
      * The constructor
      *
      * @param session
@@ -69,14 +64,18 @@ public abstract class WizardPanel
             throw new TestFrameworkException( "title was not found in AppBarTabMenu!" );
         }
     }
+    
+    public String getNameInputValue()
+    {
+    	return nameInput.getAttribute("value");
+    }
 
     /**
      * Press the button 'Save', which located in the wizard's toolbar.
      */
     protected void doSaveFromToolbar()
     {
-        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException(
-            By.xpath( "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']" ), 2l );
+        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException(By.xpath(TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
         {
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is disabled!" );
@@ -84,9 +83,9 @@ public abstract class WizardPanel
         toolbarSaveButton.click();
     }
 
-    public boolean isEnabledSaveButton()
+    public boolean  isEnabledSaveButton()
     {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
+    	return waitUntilElementEnabledNoException(By.xpath(TOOLBAR_SAVE_BUTTON_XPATH), Application.IMPLICITLY_WAIT);
     }
 
     /**
@@ -110,15 +109,16 @@ public abstract class WizardPanel
      *
      * @return notification message or null.
      */
-    public String getNotificationMessage()
+    public String waitNotificationMessage()
     {
-        String message = TestUtils.getNotificationMessage( By.xpath( "//div[@class='admin-notification-content']/span" ), getDriver(), 2l );
+        String message = TestUtils.waitNotificationMessage( By.xpath( "//div[@class='admin-notification-content']/span" ), getDriver(), 2l );
         return message;
     }
 
     /**
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
+     *
      */
     public void waitUntilWizardOpened( Integer numberPage )
     {
@@ -133,4 +133,8 @@ public abstract class WizardPanel
         new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.elementToBeClickable( by ) );
     }
 
+    public WebElement getNameInput()
+   	{
+   		return nameInput;
+   	}
 }

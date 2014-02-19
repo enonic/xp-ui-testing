@@ -10,7 +10,7 @@ public class NameHelper
      *
      * @param name
      */
-    public static String unqiueContentName( String name )
+    public static String unqiueName( String name )
     {
         return name + Math.abs( new Random().nextInt() );
 

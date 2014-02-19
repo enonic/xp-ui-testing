@@ -227,7 +227,7 @@ class ContentBrowsePanelSpec
 
     StructuredContent cloneContentWithNewDispalyName( StructuredContent contentToedit )
     {
-        String newDisplayName = NameHelper.unqiueContentName( "displaynamechanged" )
+        String newDisplayName = NameHelper.unqiueName( "displaynamechanged" )
         StructuredContent newcontent = StructuredContent.builder().withName( contentToedit.getName() ).withDisplayName(
             newDisplayName ).withContentPath( CONTENT_PATH ).build();
         return newcontent;
@@ -235,7 +235,7 @@ class ContentBrowsePanelSpec
 
     StructuredContent cloneContentWithNewName( StructuredContent contentToedit )
     {
-        String newName = NameHelper.unqiueContentName( "newname" )
+        String newName = NameHelper.unqiueName( "newname" )
         StructuredContent newcontent = StructuredContent.builder().withName( newName ).withDisplayName(
             contentToedit.getDisplayName() ).withContentPath( CONTENT_PATH ).build();
 

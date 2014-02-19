@@ -100,7 +100,7 @@ public class AddNewUserWizard
      * Gets validation message for Email input.
      *
      * @return validation message.('Invalid e-mail', 'available' or 'Not
-     * available')
+     *         available')
      */
     public String getEmailValidationMessage()
     {
@@ -119,7 +119,7 @@ public class AddNewUserWizard
     /**
      * Types space's data and press the 'Save' button on the toolbar.
      *
-     * @param user  {@link User} instance
+     * @param user {@link User} instance
      * @param isNew
      */
     public void doTypeDataAndSave( User user, boolean isNew )
@@ -183,12 +183,12 @@ public class AddNewUserWizard
         TestUtils.saveScreenshot( getSession() );
         // if save button is disabled, so exception will be thrown:
         doSaveFromToolbar();
-        boolean isSaveEnabled = isEnabledSaveButton();
-        if ( !isSaveEnabled )
+        boolean isSaveEnabled =  isEnabledSaveButton();
+        if(!isSaveEnabled)
         {
-            throw new SaveOrUpdateException(
-                "the user with name" + user.getUserInfo().getName() + " was not correctly saved, button 'Save' still disabled!" );
-        }
+        	  throw new SaveOrUpdateException(
+                      "the user with name" + user.getUserInfo().getName() + " was not correctly saved, button 'Save' still disabled!" );
+        }    
     }
 
 
@@ -216,12 +216,7 @@ public class AddNewUserWizard
     public boolean verifyAllEmptyFields( TestSession session )
     {
         boolean result = true;
-        result &= !greenSaveButton.isDisplayed();
-
-        if ( greenSaveButton.isDisplayed() )
-        {
-            logError( "'green' save button displayed on the page, but should not be displayed, because required fields are empty!" );
-        }
+       
         result &= nameInput.isDisplayed();
         if ( !nameInput.isDisplayed() )
         {

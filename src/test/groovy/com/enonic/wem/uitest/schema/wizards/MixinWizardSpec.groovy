@@ -2,14 +2,10 @@ package com.enonic.wem.uitest.schema.wizards
 
 import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
-import com.enonic.autotests.services.ContentTypeService
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Shared
 
 class MixinWizardSpec extends BaseGebSpec
 {
-
-    @Shared ContentTypeService contentTypeService = new ContentTypeService();
 
     def "Given schema app, mixin-wizard opened When typing very long name Then input field width increases"( )
     {

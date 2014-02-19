@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.services.ContentTypeService
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
@@ -12,8 +11,6 @@ import spock.lang.Shared
 
 class ContentTypeSpec extends BaseGebSpec
 {
-
-    @Shared ContentTypeService contentTypeService = new ContentTypeService();
 
     def "GIVEN BrowsePanel WHEN adding Folder ContentType Then the new contentype should be listed in the table"( )
     {
@@ -98,7 +95,7 @@ class ContentTypeSpec extends BaseGebSpec
     ContentType cloneContentTypeWithNewName( ContentType contenTypeToEdit )
     {
         ContentType newContenttype = contenTypeToEdit.cloneContentType()
-        String name = NameHelper.unqiueContentName( "edited" );
+        String name = NameHelper.unqiueName( "edited" );
         newContenttype.setName( name )
         return newContenttype
     }
@@ -106,7 +103,7 @@ class ContentTypeSpec extends BaseGebSpec
     ContentType cloneContentTypeWithNewDisplayName( ContentType contenTypeToEdit )
     {
         ContentType newContentType = contenTypeToEdit.cloneContentType();
-        String displayName = NameHelper.unqiueContentName( "edited" );
+        String displayName = NameHelper.unqiueName( "edited" );
         newContentType.setDisplayNameInConfig( displayName );
         return newContentType
     }

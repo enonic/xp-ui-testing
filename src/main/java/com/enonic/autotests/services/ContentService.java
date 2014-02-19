@@ -39,24 +39,15 @@ public class ContentService
         return result;
     }
 
-    public boolean openAndVerifyAddContentWizardPage( TestSession session, String contentTypeName, String... parentNames )
+    
+    public ContentWizardPanel openContentWizardPanel(TestSession session, String contentTypeName, String... contentPath)
     {
-        // 1. open a 'content manager'
-        ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
+    	 ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
 
-        //2. select a space and open the 'add content wizard' (click by 'New')
-        ContentWizardPanel wizardPage = cmPage.openContentWizardPanel( contentTypeName, parentNames );
-        String expectedTitle = String.format( ContentWizardPanel.START_WIZARD_TITLE, contentTypeName );
-        boolean result = wizardPage.getTitle().equalsIgnoreCase( expectedTitle );
-        logger.info( "expected title is " + expectedTitle + " actual title is: " + wizardPage.getTitle() );
-        if ( !result )
-        {
-            logger.info( "VerifyAddContentWizardPage: expected title and actual are not equals!" );
-        }
-        wizardPage.waitUntilWizardOpened( 1 );
-        result &= wizardPage.verifyWizardPage( session );
-        return result;
-
+         //select a folder and open the 'add content wizard' (click by 'New')
+         ContentWizardPanel wizardPage = cmPage.openContentWizardPanel( contentTypeName, contentPath );
+         wizardPage.waitUntilWizardOpened(1);
+         return wizardPage;
     }
 
     /**
