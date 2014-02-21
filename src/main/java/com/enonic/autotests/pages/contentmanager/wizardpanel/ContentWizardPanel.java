@@ -45,6 +45,11 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_DUPLICTAE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
 
+    boolean isToolbarButtonEnabled(String xpath)
+    {
+    	return getDriver().findElement(By.xpath(xpath)).isEnabled();
+    }
+
     /**
      * The constructor.
      *

@@ -3,8 +3,12 @@ package com.enonic.wem.uitest.content
 import spock.lang.Ignore;
 import spock.lang.Shared;
 import spock.lang.Stepwise;
+
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
+import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.utils.ContentPathHelper;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 import com.enonic.wem.uitest.BaseGebSpec;
 import com.enonic.wem.uitest.schema.cfg.TwoTextLineContentTypeCfg;
@@ -13,6 +17,8 @@ import com.enonic.wem.uitest.schema.cfg.TwoTextLineContentTypeCfg;
 class ContentWizardPanelSpecValidation extends BaseGebSpec 
 {
 	@Shared String CTYPE_NAME = "twotextline"
+	@Shared
+	ContentBrowsePanel contentBrowsePanel;
 	
 	def "setup: create a contenttype with two textline"()
 	{
@@ -26,15 +32,18 @@ class ContentWizardPanelSpecValidation extends BaseGebSpec
 	def"GIVEN a ContentType with two TextLine Inputs AND one is required WHEN no inputs are filled out THEN Publish-button is disabled"()
 	{
 		given:
+		//go "admin"
+		//ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, null);
 		go "admin"
-		ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, null);
+		contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+		contentBrowsePanel.openContentWizardPanel(CTYPE_NAME, ContentPathHelper.buildRootContentPath());
 			
 		when:
 		$("input", name: "requiredTextLine") << ''
 		$("input", name: "unrequiredTextLine") << ''
 		
 		then:
-		$("button",  text: "Publish", disabled: "true").size() == 1
+		waitFor { $("button",  text: "Publish", disabled: "true").size() == 1}
 	}
 
 	@Ignore
@@ -42,13 +51,15 @@ class ContentWizardPanelSpecValidation extends BaseGebSpec
 	{
 		given:
 		go "admin"
-		ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, null);
+		//ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, null);
+		contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+		contentBrowsePanel.openContentWizardPanel(CTYPE_NAME, ContentPathHelper.buildRootContentPath());
 			
 		when:	
 		$("input", name: "requiredTextLine") << 'required line'
 		
 		then:
-		$("button",  text: "Publish", disabled: "true").size() == 0
+		waitFor { $("button",  text: "Publish", disabled: "true").size() == 0}
 	}
 	
 
@@ -57,14 +68,16 @@ class ContentWizardPanelSpecValidation extends BaseGebSpec
 	{
 		given:
 		go "admin"
-		ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, null);
+		contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+		contentBrowsePanel.openContentWizardPanel(CTYPE_NAME, ContentPathHelper.buildRootContentPath());
 		
 		when:
 		$("input", name: "requiredTextLine") << 'required line'
 		$("input", name: "unrequiredTextLine") << 'unrequired line'
 		
 		then:
-		$("button",  text: "Publish", disabled: "true").size() == 0
+		waitFor { $("button",  text: "Publish", disabled: "true").size() == 0}
+		
 	}
 	
 

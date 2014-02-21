@@ -44,28 +44,6 @@ public class TestUtils
 
     }
 
-    public static String buildFullNameOfContent( String contentName, String... parentNames )
-    {
-        StringBuilder builder = new StringBuilder();
-        if ( parentNames == null )
-        {
-            builder.append( "/" ).append( contentName );
-            return builder.toString();
-        }
-        if ( parentNames.length == 0 )
-        {
-            builder.append( contentName ).append( "/" );
-            return builder.toString();
-        }
-        builder.append( parentNames[0].toLowerCase() ).append( "/" );
-        for ( int i = 1; i < parentNames.length; i++ )
-        {
-            builder.append( parentNames[i].toLowerCase() ).append( "/" );
-        }
-
-        String fullContentName = builder.append( contentName ).toString();
-        return fullContentName;
-    }
 
     /**
      * @param ctype

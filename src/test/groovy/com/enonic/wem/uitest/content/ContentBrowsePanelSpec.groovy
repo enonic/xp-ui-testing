@@ -1,12 +1,17 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.*
-import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore;
 import spock.lang.Shared
 import spock.lang.Stepwise
+
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog;
+import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.ContentPathHelper
+import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.vo.contentmanager.*
+import com.enonic.wem.api.content.ContentPath
+import com.enonic.wem.uitest.BaseGebSpec
 
 @Stepwise
 class ContentBrowsePanelSpec
@@ -16,11 +21,9 @@ class ContentBrowsePanelSpec
     String REPONAME = "test-folder";
 
     @Shared
-    String FULL_REPONAME = "/" + REPONAME;
-
+    String[] PARENT_FOLDER_ARR = [REPONAME];
+	
     @Shared
-    String[] CONTENT_PATH = [FULL_REPONAME];
-
     ContentBrowsePanel contentBrowsePanel;
 
     def setup()
@@ -28,19 +31,21 @@ class ContentBrowsePanelSpec
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
-
+	
+  
     def "GIVEN new Content on root WHEN saved THEN the Content should be listed"()
     {
         given:
-        BaseAbstractContent content = FolderContent.builder().withName( REPONAME ).withDisplayName( REPONAME ).build();
-
+		ContentPath cpath = ContentPathHelper.buildContentPath(null, REPONAME )
+        BaseAbstractContent content = FolderContent.builder().withName( REPONAME ).withDisplayName( REPONAME ).withContentPath(cpath).build();
+		
         when:
         contentBrowsePanel.doAddContent( content, true );
 
         then:
-        contentBrowsePanel.exists( content.getContentPath2() );
+        contentBrowsePanel.exists( content.getContentPath() );
     }
-
+	
     def "GIVEN content BrowsePanel and existing content WHEN content deleted THEN the content should not be listed in the table"()
     {
         given:
@@ -51,140 +56,152 @@ class ContentBrowsePanelSpec
 
 
         when:
-        contentBrowsePanel.expandAndSelectContent( content.getContentPath2() );
+        contentBrowsePanel.expandAndSelectContent( content.getContentPath() );
         contentBrowsePanel.deleteSelected();
 
         then:
-        !contentBrowsePanel.exists( content.getContentPath2() );
+        !contentBrowsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN BrowsePanel WHEN adding Folder-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = FolderContent.builder().withName( "foldercontent" ).withDisplayName( "folder" ).build()
-        content.setContentPath( CONTENT_PATH )
+		String name =  "foldercontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "folder" ).withContentPath(cpath).build()
 
         when:
         contentService.addContent( getTestSession(), content, true )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath())
 
         then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.exists( content.getContentPath() )
     }
 
     def "GIVEN BrowsePanel WHEN adding Structured-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = StructuredContent.builder().withName( "structuredcontent" ).withDisplayName( "structured" ).build();
-        content.setContentPath( CONTENT_PATH )
+		String name =  "structuredcontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = StructuredContent.builder().withName( name ).withDisplayName( "structured" ).withContentPath(cpath).build();
+
 
         when:
         contentService.addContent( getTestSession(), content, true )
-
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+		
         then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN BrowsePanel WHEN adding Unstructured-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = UnstructuredContent.builder().withName( "unstructuredcontent" ).withDisplayName(
-            "unstructured" ).build();
-        content.setContentPath( CONTENT_PATH )
-
+		String name =  "unstructuredcontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = UnstructuredContent.builder().withName( name ).withDisplayName(
+            "unstructured" ).withContentPath(cpath).build();
+      
         when:
         contentService.addContent( getTestSession(), content, true )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+       
+	    then:
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN BrowsePanel WHEN adding Archive-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = ArchiveContent.builder().withName( "archivecontent" ).withDisplayName( "archive" ).build();
-        content.setContentPath( CONTENT_PATH )
+		String name =  "archivecontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = ArchiveContent.builder().withName( name ).withDisplayName( "archive" ).withContentPath(cpath).build()
+       
 
         when:
         contentService.addContent( getTestSession(), content, true )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+       
+		 then:
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN BrowsePanel WHEN adding Media-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = MediaContent.builder().withName( "mediacontent" ).withDisplayName( "media" ).build();
-        content.setContentPath( CONTENT_PATH )
+		String name =  "mediacontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = MediaContent.builder().withName( name ).withDisplayName( "media" ).withContentPath(cpath).build()
 
         when:
         contentService.addContent( getTestSession(), content, true )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+        
+		then:
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN BrowsePanel WHEN adding Data-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = DataContent.builder().withName( "datacontent" ).withDisplayName( "data" ).build();
-        content.setContentPath( CONTENT_PATH )
-
+		String name =  "datacontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = DataContent.builder().withName( name ).withDisplayName( "data" ).withContentPath(cpath).build();
+       
         when:
         contentService.addContent( getTestSession(), content, true )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+        
+		then:
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
 
     def "GIVEN BrowsePanel WHEN adding Text-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = TextContent.builder().withName( "textcontent" ).withDisplayName( "text" ).build();
-        content.setContentPath( CONTENT_PATH )
+		String name =  "textcontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = TextContent.builder().withName( name ).withDisplayName( "text" ).withContentPath(cpath).build()
 
         when:
         contentService.addContent( getTestSession(), content, true )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+        
+		then:
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN BrowsePanel WHEN adding Page-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = PageContent.builder().withName( "pagecontent" ).withDisplayName( "page" ).build()
-        content.setContentPath( CONTENT_PATH )
+		String name =  "pagecontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = PageContent.builder().withName( "pagecontent" ).withDisplayName( "page" ).withContentPath(cpath).build()
+       
 
         when:
         contentService.addContent( getTestSession(), content, true )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+        
+		then:
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
 
     def "GIVEN BrowsePanel WHEN adding Shortcut-content THEN the content should be listed in the table"()
     {
         given:
-        BaseAbstractContent content = ShortcutContent.builder().withName( "shortcutcontent" ).withDisplayName( "shortcut" ).build()
-        content.setContentPath( CONTENT_PATH )
-
+		String name =  "shortcutcontent";
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        BaseAbstractContent content = ShortcutContent.builder().withName( name ).withDisplayName( "shortcut" ).withContentPath(cpath).build()
+       
         when:
         contentService.addContent( getTestSession(), content, true )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( content, 2l )
+		contentBrowsePanel.expandContent(content.getContentPath().getParentPath());
+        
+		then:
+		contentBrowsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN BrowsePanel and existing content  WHEN content editet, name changed  THEN the content with new name should be listed in the table"()
@@ -192,17 +209,17 @@ class ContentBrowsePanelSpec
         String displayName = "editnametest"
         given:
         String name = "editname"
-        StructuredContent contentToEdit = StructuredContent.builder().withName( name ).withDisplayName( displayName ).withContentPath(
-            CONTENT_PATH ).build();
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        StructuredContent contentToEdit = StructuredContent.builder().withName( name ).withDisplayName( displayName ).withContentPath(cpath).build();
         contentService.addContent( getTestSession(), contentToEdit, true )
 
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit );
         contentService.doOpenContentAndEdit( getTestSession(), contentToEdit, newcontent )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( newcontent, 2l )
+		contentBrowsePanel.expandContent(newcontent.getContentPath().getParentPath());
+        
+		then:
+		contentBrowsePanel.exists( newcontent.getContentPath() );
 
 
     }
@@ -211,17 +228,17 @@ class ContentBrowsePanelSpec
     {
         given:
         String name = "editdisplayname"
-        StructuredContent contentToEdit = StructuredContent.builder().withName( name ).withDisplayName( name ).build()
-        contentToEdit.setContentPath( CONTENT_PATH );
+		ContentPath cpath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, name )
+        StructuredContent contentToEdit = StructuredContent.builder().withName( name ).withDisplayName( name ).withContentPath(cpath).build()
         contentService.addContent( getTestSession(), contentToEdit, true )
 
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
         contentService.doOpenContentAndEdit( getTestSession(), contentToEdit, newcontent )
-
-        then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        grid.findContentInTable( newcontent, 2l )
+		contentBrowsePanel.expandContent(newcontent.getContentPath().getParentPath());
+        
+		then:
+		contentBrowsePanel.exists( newcontent.getContentPath() );
     }
 
 
@@ -229,15 +246,16 @@ class ContentBrowsePanelSpec
     {
         String newDisplayName = NameHelper.unqiueName( "displaynamechanged" )
         StructuredContent newcontent = StructuredContent.builder().withName( contentToedit.getName() ).withDisplayName(
-            newDisplayName ).withContentPath( CONTENT_PATH ).build();
+            newDisplayName ).withContentPath( contentToedit.getContentPath() ).build();
         return newcontent;
     }
 
     StructuredContent cloneContentWithNewName( StructuredContent contentToedit )
     {
         String newName = NameHelper.unqiueName( "newname" )
+		ContentPath newContentPath = ContentPathHelper.buildContentPath(PARENT_FOLDER_ARR, newName);
         StructuredContent newcontent = StructuredContent.builder().withName( newName ).withDisplayName(
-            contentToedit.getDisplayName() ).withContentPath( CONTENT_PATH ).build();
+            contentToedit.getDisplayName() ).withContentPath( newContentPath ).build();
 
     }
 }

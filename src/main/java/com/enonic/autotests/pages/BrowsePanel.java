@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.wem.api.content.ContentPath;
 
 public class BrowsePanel
     extends Application
@@ -71,27 +72,21 @@ public class BrowsePanel
     /**
      * clicks by 'expand' icon and expands a folder.
      *
-     * @param parentName
+     * @param contentName
      * @return true if space is not empty and was expanded, otherwise return
-     * false.
+     *         false.
      */
-    public boolean doExpandFolder( String parentName )
+    public boolean clickByExpander( String name )
     {
-        boolean isExpanderPresent = isExpanderPresent( parentName );
+        boolean isExpanderPresent = isExpanderPresent( name );
         if ( !isExpanderPresent )
         {
-            getLogger().info( "The folder: " + parentName + " has no contents" );
+            getLogger().info( "The folder: " + name + " has no contents" );
             return false;
         }
-        if ( !isRowExapnded( parentName ) )
+        if ( !isRowExapnded(  name  ) )
         {
-            clickByExpanderIcon( parentName );
-//			boolean isExpanded = isRowExapnded(parentName);
-//			if (!isExpanded)
-//			{
-//				throw new TestFrameworkException("folder " + parentName + " was not expanded");
-//			}
-            //getLogger().info("parentContent:" + parentName + " expanded == " + isExpanded);
+        	findExpanderImageAndClick(  name  );
         }
 
         return true;
@@ -104,14 +99,14 @@ public class BrowsePanel
      * @param parentSpace
      * @return true if space has no any children., otherwise true.
      */
-    private boolean isExpanderPresent( String parentName )
+    private boolean isExpanderPresent( String contentName )
     {
-        String expanderElement = String.format( TD_CONTENT_NAME + "/div/img[contains(@class,'x-tree-expander')]", parentName );
-        getLogger().info( "check if present expander for folder:" + parentName + " xpath: " + expanderElement );
+        String expanderElement = String.format( TD_CONTENT_NAME + "/div/img[contains(@class,'x-tree-expander')]", contentName );
+        getLogger().info( "check if present expander for folder:" + contentName + " xpath: " + expanderElement );
         boolean isPresent = isDynamicElementPresent( By.xpath( expanderElement ), 2 );
         if ( !isPresent )
         {
-            getLogger().info( "expander for folder:" + parentName + " was not found! " );
+            getLogger().info( "expander for folder:" + contentName + " was not found! " );
             return false;
         }
 
@@ -144,7 +139,7 @@ public class BrowsePanel
      *
      * @param parentSpace
      */
-    private void clickByExpanderIcon( String parentName )
+    private void findExpanderImageAndClick( String parentName )
     {
         String expanderImgXpath = buildFolderExpanderXpath( parentName );
         List<WebElement> elems = getSession().getDriver().findElements( By.xpath( expanderImgXpath ) );
@@ -194,7 +189,7 @@ public class BrowsePanel
 
     /**
      * @return number of rows in the table of content. The row with header is
-     * excluded.
+     *         excluded.
      */
     public int getTableRowNumber()
     {

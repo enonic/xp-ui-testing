@@ -26,8 +26,8 @@ extends BaseGebSpec
         view.doDeleteContent( content.getDisplayName() )
 
         then:
-        ContentBrowsePanel grid = new ContentBrowsePanel( getTestSession() )
-        !grid.findContentInTable( content, 2l )
+        ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )  
+        !browsePanel.exists(content.getContentPath())
     }
 
     def "GIVEN existing content, WHEN content selected and delete button pressed THEN the content should not be listed in the table"( )
@@ -39,10 +39,10 @@ extends BaseGebSpec
         contentList.add( content );
 
         when:
-        ContentBrowsePanel page = contentService.deleteContentUseToolbar( getTestSession(), contentList )
+        ContentBrowsePanel browsePanel = contentService.deleteContentUseToolbar( getTestSession(), contentList )
 
         then:
-        !page.findContentInTable( content, 3l )
+        !browsePanel.exists(content.getContentPath())
     }
 
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"( )
@@ -56,9 +56,9 @@ extends BaseGebSpec
         contentList.add( content2 );
 
         when:
-        ContentBrowsePanel page = contentService.deleteContentUseToolbar( getTestSession(), contentList )
+        ContentBrowsePanel browsePanel = contentService.deleteContentUseToolbar( getTestSession(), contentList )
 
         then:
-        !page.findContentInTable( content1, 2l ) && !page.findContentInTable( content2, 2l )
+		!browsePanel.exists(content1.getContentPath()) && !browsePanel.exists(content2.getContentPath())
     }
 }

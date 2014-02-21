@@ -1,8 +1,6 @@
 package com.enonic.autotests.vo.contentmanager;
 
 
-import com.google.common.base.Joiner;
-
 import com.enonic.wem.api.content.ContentPath;
 
 /**
@@ -16,35 +14,24 @@ public abstract class BaseAbstractContent
 
     private String contentTypeName;
 
-    private String[] parentPaths;
+    private ContentPath contentPath;
 
     protected BaseAbstractContent( Builder<?> builder )
     {
         this.name = builder.name;
         this.displayName = builder.displayName;
-        this.parentPaths = builder.contentPath;
+        this.contentPath = builder.contentPath;
         this.contentTypeName = builder.contentTypeName;
     }
 
-    public ContentPath getContentPath2()
+    public ContentPath getContentPath()
     {
-        String pathAsString = "";
-        if ( parentPaths != null && parentPaths.length == 0 )
-        {
-            pathAsString = Joiner.on( "/" ).skipNulls().join( parentPaths );
-        }
-        pathAsString += "/" + name;
-        return ContentPath.from( pathAsString );
+        return contentPath;
     }
 
-    public String[] getContentPath()
+    public void setContentPath( ContentPath contentPath )
     {
-        return parentPaths;
-    }
-
-    public void setContentPath( String[] contentPath )
-    {
-        this.parentPaths = contentPath;
+        this.contentPath = contentPath;
     }
 
     public String getName()
@@ -85,7 +72,7 @@ public abstract class BaseAbstractContent
 
         private String contentTypeName;
 
-        private String[] contentPath;
+        private ContentPath contentPath;
 
         public Builder<T> withName( String name )
         {
@@ -105,7 +92,7 @@ public abstract class BaseAbstractContent
             return this;
         }
 
-        public Builder<T> withContentPath( String[] contentPath )
+        public Builder<T> withContentPath( ContentPath contentPath )
         {
             this.contentPath = contentPath;
             return this;

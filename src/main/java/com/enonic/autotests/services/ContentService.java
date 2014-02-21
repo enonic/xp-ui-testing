@@ -13,6 +13,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import com.enonic.wem.api.content.ContentPath;
 
 /**
  * Service for 'Content Manager' application.
@@ -40,7 +41,7 @@ public class ContentService
     }
 
     
-    public ContentWizardPanel openContentWizardPanel(TestSession session, String contentTypeName, String... contentPath)
+    public ContentWizardPanel openContentWizardPanel(TestSession session, String contentTypeName, ContentPath contentPath)
     {
     	 ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
 
@@ -212,20 +213,5 @@ public class ContentService
         ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
         // expand a space and selects contents, clicks by 'Delete' button from a toolbar and confirm deletion.
         return cmPage.openDeleteContentDialog( contents );
-    }
-
-    /**
-     * Finds a content in table, selects a checkbox, clicks by 'Edit' button,  update content and close a wizard.
-     *
-     * @param session
-     * @param contentToUpdate
-     * @param newContent
-     * @return {@link com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel} instance. Table of content.
-     */
-    public ContentBrowsePanel updateContent( TestSession session, BaseAbstractContent contentToUpdate, BaseAbstractContent newContent )
-    {
-        ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
-        cmPage.doUpdateContent( contentToUpdate, newContent );
-        return cmPage;
     }
 }

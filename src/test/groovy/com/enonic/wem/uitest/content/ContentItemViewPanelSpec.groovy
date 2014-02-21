@@ -1,8 +1,10 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
+import com.enonic.autotests.utils.ContentPathHelper;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
+import com.enonic.wem.api.content.ContentPath;
 import com.enonic.wem.uitest.BaseGebSpec
 
 class ContentItemViewPanelSpec extends BaseGebSpec
@@ -13,7 +15,8 @@ class ContentItemViewPanelSpec extends BaseGebSpec
         given:
         go "admin"
         String contentName = "itemviewtest";
-        BaseAbstractContent content = FolderContent.builder().withName( "itemviewtest" ).withDisplayName( "itemviewtest" ).build();
+		ContentPath cpath = ContentPathHelper.buildContentPath(null, contentName )
+        BaseAbstractContent content = FolderContent.builder().withName( "itemviewtest" ).withDisplayName( "itemviewtest" ).withContentPath(cpath).build();
         contentService.addContent( getTestSession(), content, true )
 
         when:

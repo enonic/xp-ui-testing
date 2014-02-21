@@ -72,7 +72,7 @@ public class SchemaBrowsePanel
     {
         if ( superTypeName != null )
         {
-            doExpandFolder( superTypeName );
+        	clickByExpander( superTypeName );
         }
     }
 

@@ -1,8 +1,10 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
+import com.enonic.autotests.utils.ContentPathHelper;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
+import com.enonic.wem.api.content.ContentPath;
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -17,7 +19,9 @@ class DeleteContentDialogSpec extends BaseGebSpec
     {
         given:
         go "admin"
-        BaseAbstractContent content = FolderContent.builder().withName( "foldertodelete" ).withDisplayName( "foldertodelete" ).build();
+		String name = "foldertodelete";
+		ContentPath path =ContentPathHelper.buildContentPath(null, name);
+        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "foldertodelete" ).withContentPath(path).build();
         contentService.addContent( getTestSession(), content, true )
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }
