@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog;
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.ContentPathHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.*
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
@@ -58,6 +59,7 @@ class ContentBrowsePanelSpec
         when:
         contentBrowsePanel.expandAndSelectContent( content.getContentPath() );
         contentBrowsePanel.deleteSelected();
+		TestUtils.saveScreenshot(getTestSession());
 
         then:
         !contentBrowsePanel.exists( content.getContentPath() );
