@@ -32,8 +32,6 @@ class ContentWizardPanelSpecValidation extends BaseGebSpec
 	def"GIVEN a ContentType with two TextLine Inputs AND one is required WHEN no inputs are filled out THEN Publish-button is disabled"()
 	{
 		given:
-		//go "admin"
-		//ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, null);
 		go "admin"
 		contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
 		contentBrowsePanel.openContentWizardPanel(CTYPE_NAME, ContentPathHelper.buildRootContentPath());
@@ -51,7 +49,6 @@ class ContentWizardPanelSpecValidation extends BaseGebSpec
 	{
 		given:
 		go "admin"
-		//ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, null);
 		contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
 		contentBrowsePanel.openContentWizardPanel(CTYPE_NAME, ContentPathHelper.buildRootContentPath());
 			
@@ -78,6 +75,19 @@ class ContentWizardPanelSpecValidation extends BaseGebSpec
 		then:
 		waitFor { $("button",  text: "Publish", disabled: "true").size() == 0}
 		
+	}
+	
+	def "GIVEN a ContentType with two TextLine Inputs AND one is required WHEN only the unrequired input is filled out THEN Publish-button is disabled"()
+	{
+		given:
+		go "admin"
+		ContentWizardPanel wizard = contentService.openContentWizardPanel(getTestSession(), CTYPE_NAME, ContentPathHelper.buildRootContentPath());
+		
+		when:
+		$("input", name: "unrequiredTextLine") << 'unrequired line'
+		
+		then:
+		waitFor { $("button",  text: "Publish", disabled: "true").size() == 1 }
 	}
 	
 
