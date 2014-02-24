@@ -12,7 +12,7 @@ public class ConfirmationDialog
 {
 
     public static final String YES_BUTTON_XPATH =
-        "//div[@class='modal-dialog confirmation-dialog']//div[@class='button-row']//button[text()='Yes']";
+        "//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-buttons']//button[text()='Yes']";
 
     private final String TITLE_XPATH =
         "//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-header' and contains(.,'Confirmation')]";
