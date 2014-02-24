@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.ContentService.HowOpenContent
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -24,7 +25,7 @@ extends BaseGebSpec
 
         when:
         view.doDeleteContent( content.getDisplayName() )
-
+        TestUtils.saveScreenshot(getTestSession());
         then:
         ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )  
         !browsePanel.exists(content.getContentPath())
@@ -40,7 +41,7 @@ extends BaseGebSpec
 
         when:
         ContentBrowsePanel browsePanel = contentService.deleteContentUseToolbar( getTestSession(), contentList )
-
+		TestUtils.saveScreenshot(getTestSession());
         then:
         !browsePanel.exists(content.getContentPath())
     }
@@ -57,7 +58,7 @@ extends BaseGebSpec
 
         when:
         ContentBrowsePanel browsePanel = contentService.deleteContentUseToolbar( getTestSession(), contentList )
-
+		TestUtils.saveScreenshot(getTestSession());
         then:
 		!browsePanel.exists(content1.getContentPath()) && !browsePanel.exists(content2.getContentPath())
     }
