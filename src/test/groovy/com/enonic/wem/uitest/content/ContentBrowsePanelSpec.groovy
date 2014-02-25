@@ -34,7 +34,7 @@ class ContentBrowsePanelSpec
     }
 	
   
-    def "GIVEN new Content on root WHEN saved THEN the Content should be listed"()
+    def "GIVEN BrowsePanel WHEN adding Folder to root THEN the content should be listed in the table"()
     {
         given:
 		ContentPath cpath = ContentPathHelper.buildContentPath(null, REPONAME )
@@ -65,7 +65,7 @@ class ContentBrowsePanelSpec
         !contentBrowsePanel.exists( content.getContentPath() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Folder-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content WHEN adding Folder-content into existing folder THEN the content should be listed in the table"()
     {
         given:
 		String name =  "foldercontent";
@@ -80,7 +80,7 @@ class ContentBrowsePanelSpec
 		contentBrowsePanel.exists( content.getContentPath() )
     }
 
-    def "GIVEN BrowsePanel WHEN adding Structured-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content WHEN adding Structured-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "structuredcontent";
@@ -96,7 +96,7 @@ class ContentBrowsePanelSpec
 		contentBrowsePanel.exists( content.getContentPath() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Unstructured-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content WHEN adding Unstructured-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "unstructuredcontent";
@@ -112,7 +112,7 @@ class ContentBrowsePanelSpec
 		contentBrowsePanel.exists( content.getContentPath() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Archive-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content WHEN adding Archive-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "archivecontent";
@@ -128,7 +128,7 @@ class ContentBrowsePanelSpec
 		contentBrowsePanel.exists( content.getContentPath() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Media-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content  WHEN adding Media-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "mediacontent";
@@ -143,7 +143,7 @@ class ContentBrowsePanelSpec
 		contentBrowsePanel.exists( content.getContentPath() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Data-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content  WHEN adding Data-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "datacontent";
@@ -159,7 +159,7 @@ class ContentBrowsePanelSpec
     }
 
 
-    def "GIVEN BrowsePanel WHEN adding Text-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content  WHEN adding Text-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "textcontent";
@@ -174,7 +174,7 @@ class ContentBrowsePanelSpec
 		contentBrowsePanel.exists( content.getContentPath() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Page-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content  WHEN adding Page-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "pagecontent";
@@ -191,7 +191,7 @@ class ContentBrowsePanelSpec
     }
 
 
-    def "GIVEN BrowsePanel WHEN adding Shortcut-content THEN the content should be listed in the table"()
+    def "GIVEN BrowsePanel and folder content  WHEN adding Shortcut-content THEN the content should be listed in the table"()
     {
         given:
 		String name =  "shortcutcontent";
