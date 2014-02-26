@@ -162,7 +162,7 @@ public class ContentTypeWizardPanel
         String os = System.getProperty( "os.name" ).toLowerCase();
         if ( os.indexOf( "mac" ) >= 0 )
         {
-            act.click( configElement ).keyDown( Keys.COMMAND ).sendKeys( "v" ).keyUp( Keys.CONTROL ).build().perform();
+            act.click( configElement ).keyDown( Keys.COMMAND ).sendKeys( "v" ).keyUp( Keys.COMMAND ).build().perform();
         }
         else
         {
