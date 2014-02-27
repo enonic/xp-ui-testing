@@ -168,6 +168,8 @@ public class ContentBrowsePanel
     public DeleteContentDialog openDeleteContentDialog( List<BaseAbstractContent> contents )
     {
         ContentPath contentPath = contents.get( 0 ).getContentPath();
+        //TODO remove it, when bug will be fixed! 
+        doWorkAround();
         // 1. expand all folders
         if(contentPath.elementCount()>1)
         {
@@ -227,9 +229,7 @@ public class ContentBrowsePanel
     private void waitAndCheckContent( List<BaseAbstractContent> contents )
     {
         //TODO  this is a workaround for app issue, should be deleted after fixing
-        ContentFilterService fs = new ContentFilterService();
-        fs.doFilterByText( getSession(), "test" );
-        fs.doClearFilter( getSession() );
+    	doWorkAround();
 
         for ( BaseAbstractContent content : contents )
         {
@@ -242,6 +242,13 @@ public class ContentBrowsePanel
                 throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
             }
         }
+    }
+    
+    private void doWorkAround()
+    {
+    	  ContentFilterService fs = new ContentFilterService();
+          fs.doFilterByText( getSession(), "test" );
+          fs.doClearFilter( getSession() );
     }
 
     /**
