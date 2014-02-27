@@ -151,7 +151,6 @@ public class ContentBrowsePanel
     /**
      * Delete contents from a space.
      *
-     * @param parentSpace
      * @param contents
      */
     public void doDeleteContent( List<BaseAbstractContent> contents )
@@ -214,7 +213,6 @@ public class ContentBrowsePanel
      * Selects a content in a space or folder, throws exception if content was
      * not found.
      *
-     * @param parentSpace
      * @param contents
      */
     private void selectContentInTable( List<BaseAbstractContent> contents )
@@ -249,7 +247,6 @@ public class ContentBrowsePanel
     /**
      * Clicks by a checkbox, linked with content and select row in the table.
      *
-     * @param parentSpaceName
      * @param content
      */
     private void selectCheckbox( BaseAbstractContent content )
@@ -287,9 +284,8 @@ public class ContentBrowsePanel
     /**
      * Adds the content to a space or folder.
      *
-     * @param space
      * @param content
-     * @param isCloseWizard
+     * @param isWizardShouldBeClosed
      */
     public void doAddContent( BaseAbstractContent content, boolean isWizardShouldBeClosed )
     {
@@ -328,8 +324,8 @@ public class ContentBrowsePanel
     /**
      * Select a content type and opens "Add new Content Wizard".
      *
-     * @param space
-     * @param ctype
+     * @param contentTypeName
+     * @param contentPath
      * @return
      */
     public ContentWizardPanel openContentWizardPanel( String contentTypeName, ContentPath contentPath )
@@ -367,7 +363,7 @@ public class ContentBrowsePanel
     /**
      * Expands all folders, that present in the 'content path' and  clicks by a checkbox related to parent folder for new content.
      *
-     * @param contentPath
+     * @param parentContentPath
      */
     private void selectParentForContent( ContentPath parentContentPath )
     {

@@ -74,7 +74,7 @@ class BaseGebSpec extends GebSpec
         getTestSession().setBaseUrl( sb.toString() )
     }
 
-    BaseAbstractContent addContentToBeDeleted( )
+    BaseAbstractContent addRootContentToBeDeleted( )
     {
         String name = NameHelper.unqiueName( "deletecontent" );
 		ContentPath cpath = ContentPathHelper.buildContentPath(null, name);

@@ -4,11 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.CreateContentTypeException;
@@ -16,7 +12,6 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.utils.TextTransfer;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
@@ -25,8 +20,6 @@ import com.enonic.autotests.vo.schemamanger.ContentType;
 public class ContentTypeWizardPanel
     extends WizardPanel
 {
-    @FindBy(xpath = "//div[@class='CodeMirror']//textarea")
-    protected WebElement configXMLTextArea;
 
     /**
      * The constructor.
@@ -95,14 +88,6 @@ public class ContentTypeWizardPanel
         }
     }
 
-    private void clearConfig( WebElement configElement )
-    {
-        final Actions builder = new Actions( getSession().getDriver() );
-        builder.click( configElement ).sendKeys( Keys.chord( Keys.CONTROL, "a" ), " " ).build().perform();
-        getLogger().info( "method fifnished :clearConfig " );
-
-    }
-
     /**
      * Types data and press the "Save" button from the toolbar.
      *
@@ -128,55 +113,15 @@ public class ContentTypeWizardPanel
         // 1. type a data: 'name' and 'Display Name'.
         clearAndType( nameInput, contentType.getName() );
         //2. type the XMLconfig data:
-        List<WebElement> elems = getSession().getDriver().findElements(
-            By.xpath( "//div[contains(@class,'CodeMirror')]//div[contains(@class,'CodeMirror-lines')]" ) );
-        if ( getSession().getIsRemote() != null && !getSession().getIsRemote() )
-        {
-            clearConfig( elems.get( 0 ) );
-            getLogger().info( "set configuration from a Clipboard:" );
-           // setConfigFromClipboard( contentType, elems.get( 0 ) );
-            setConfiguration( contentType.getConfigData().trim());
-           
+        getLogger().info( "set configuration from a Clipboard:" );
+        setConfiguration( contentType.getConfigData().trim());           
 
-        }
-        else
-        {
-
-            final Actions builder = new Actions( getSession().getDriver() );
-            builder.click( elems.get( 0 ) ).sendKeys( contentType.getConfigData() );
-            final Action paste = builder.build();
-            paste.perform();
-        }
     }
 
-    /**
-     * @param content
-     */
-    private void setClipboardContents( String content )
-    {
-        TextTransfer textTransfer = new TextTransfer();
-        textTransfer.setClipboardContents( content );
-    }
 
 	private void setConfiguration(String cfg)
 	{
 		((JavascriptExecutor) getSession().getDriver()).executeScript("window.api.dom.ElementRegistry.getElementById('api.ui.CodeArea').setValue(arguments[0])", cfg);
 	}
-    private void setConfigFromClipboard( ContentType ctype, WebElement configElement )
-    {
-        setClipboardContents( ctype.getConfigData().trim() );
-        final Actions act = new Actions( getDriver() );
-        String os = System.getProperty( "os.name" ).toLowerCase();
-        if ( os.indexOf( "mac" ) >= 0 )
-        {
-           // act.click( configElement ).keyDown( Keys.COMMAND ).sendKeys( "v" ).keyUp( Keys.COMMAND ).build().perform();
-            act.click( configElement ).sendKeys( Keys.chord( Keys.COMMAND, "v" )).build().perform();
-        }
-        else
-        {
-            //act.click( configElement ).keyDown( Keys.CONTROL ).sendKeys( "v" ).keyUp( Keys.CONTROL ).build().perform();
-        	 act.click( configElement ).sendKeys( Keys.chord( Keys.CONTROL, "v" )).build().perform();
-            getLogger().info( "copy paste from clipboard, os:windows" );
-        }
-    }
+
 }
