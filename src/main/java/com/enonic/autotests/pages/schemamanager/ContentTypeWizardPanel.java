@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.schemamanager;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -133,7 +134,9 @@ public class ContentTypeWizardPanel
         {
             clearConfig( elems.get( 0 ) );
             getLogger().info( "set configuration from a Clipboard:" );
-            setConfigFromClipboard( contentType, elems.get( 0 ) );
+           // setConfigFromClipboard( contentType, elems.get( 0 ) );
+            setConfiguration( contentType.getConfigData().trim());
+           
 
         }
         else
@@ -155,6 +158,10 @@ public class ContentTypeWizardPanel
         textTransfer.setClipboardContents( content );
     }
 
+	private void setConfiguration(String cfg)
+	{
+		((JavascriptExecutor) getSession().getDriver()).executeScript("window.api.dom.ElementRegistry.getElementById('api.ui.CodeArea').setValue(arguments[0])", cfg);
+	}
     private void setConfigFromClipboard( ContentType ctype, WebElement configElement )
     {
         setClipboardContents( ctype.getConfigData().trim() );
