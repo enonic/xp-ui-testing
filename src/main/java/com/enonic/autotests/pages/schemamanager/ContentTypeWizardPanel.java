@@ -162,11 +162,13 @@ public class ContentTypeWizardPanel
         String os = System.getProperty( "os.name" ).toLowerCase();
         if ( os.indexOf( "mac" ) >= 0 )
         {
-            act.click( configElement ).keyDown( Keys.COMMAND ).sendKeys( "v" ).keyUp( Keys.COMMAND ).build().perform();
+           // act.click( configElement ).keyDown( Keys.COMMAND ).sendKeys( "v" ).keyUp( Keys.COMMAND ).build().perform();
+            act.click( configElement ).sendKeys( Keys.chord( Keys.COMMAND, "v" )).build().perform();
         }
         else
         {
-            act.click( configElement ).keyDown( Keys.CONTROL ).sendKeys( "v" ).keyUp( Keys.CONTROL ).build().perform();
+            //act.click( configElement ).keyDown( Keys.CONTROL ).sendKeys( "v" ).keyUp( Keys.CONTROL ).build().perform();
+        	 act.click( configElement ).sendKeys( Keys.chord( Keys.CONTROL, "v" )).build().perform();
             getLogger().info( "copy paste from clipboard, os:windows" );
         }
     }
