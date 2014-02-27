@@ -158,7 +158,7 @@ public class ContentTypeWizardPanel
     private void setConfigFromClipboard( ContentType ctype, WebElement configElement )
     {
         setClipboardContents( ctype.getConfigData().trim() );
-        final Actions act = new Actions( getSession().getDriver() );
+        final Actions act = new Actions( getDriver() );
         String os = System.getProperty( "os.name" ).toLowerCase();
         if ( os.indexOf( "mac" ) >= 0 )
         {
