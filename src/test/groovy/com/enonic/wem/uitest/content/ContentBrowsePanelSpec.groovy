@@ -48,7 +48,7 @@ class ContentBrowsePanelSpec
     }
 
 
-    def "GIVEN creating new Content beneath an existing unexpanded AND saved AND wizard closed WHEN saved THEN new Content should be listed beneath parent"()
+    def "GIVEN creating new Content beneath an existing unexpanded AND saved WHEN wizard closed THEN new Content should be listed beneath parent"()
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
