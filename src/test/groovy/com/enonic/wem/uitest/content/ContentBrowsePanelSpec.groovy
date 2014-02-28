@@ -48,7 +48,7 @@ class ContentBrowsePanelSpec
     }
 
 
-    def "GIVEN creating new Content beneath an existing unexpanded AND saved WHEN wizard closed THEN new Content should be listed beneath parent"()
+    def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and wizard closed THEN parent should still be unexpanded"()
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
@@ -58,11 +58,10 @@ class ContentBrowsePanelSpec
             build();
 
         when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getParent() )
+        contentBrowsePanel.doAddContent( content, true );
 
         then:
-        contentBrowsePanel.exists( content.getPath() )
+        !contentBrowsePanel.exists( content.getPath() )
     }
 
     def "GIVEN creating new Content beneath an existing expanded WHEN saved THEN new Content should be listed beneath parent"()
