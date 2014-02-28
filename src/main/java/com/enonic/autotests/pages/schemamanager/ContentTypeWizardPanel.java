@@ -113,7 +113,7 @@ public class ContentTypeWizardPanel
         // 1. type a data: 'name' and 'Display Name'.
         clearAndType( nameInput, contentType.getName() );
         //2. type the XMLconfig data:
-        getLogger().info( "set configuration from a Clipboard:" );
+        getLogger().info( "set contenttype configuration " );
         setConfiguration( contentType.getConfigData().trim());           
 
     }

@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -11,10 +13,7 @@ import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class ItemViewPanelPage
     extends Application

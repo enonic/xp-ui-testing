@@ -169,7 +169,7 @@ extends BaseGebSpec
     }
 
 
-    def "GIVEN creating new Shortcut beneath an existing unexpanded  WHEN conten saved THEN the content should be listed beneath parent"( )
+    def "GIVEN creating new Shortcut beneath an existing unexpanded  WHEN content saved THEN the content should be listed beneath parent"( )
     {
         given:
         String name = "shortcutcontent";
