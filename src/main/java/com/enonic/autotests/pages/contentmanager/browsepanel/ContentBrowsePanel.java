@@ -429,6 +429,7 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContent( BaseAbstractContent content )
     {
+    	doWorkAround();
     	expandContent(content.getParent());
         boolean isPresent = exists( content.getPath());
         if ( !isPresent )
