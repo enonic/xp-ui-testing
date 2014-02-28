@@ -22,7 +22,7 @@ class ContentWizardPanel_ValidationSpec
     @Shared
     ContentBrowsePanel contentBrowsePanel;
 
-    def "setup: create a contenttype with two textline"()
+    def "create a contenttype with two textline"()
     {
         given:
         go "admin"

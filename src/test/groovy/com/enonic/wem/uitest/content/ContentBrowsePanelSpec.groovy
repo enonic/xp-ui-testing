@@ -78,23 +78,6 @@ class ContentBrowsePanelSpec
         contentBrowsePanel.exists( content.getContentPath() )
     }
 
-    def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
-    {
-        given:
-        BaseAbstractContent content = addRootContentToBeDeleted();
-        List<BaseAbstractContent> contents = new ArrayList<>();
-        contents.add( content );
-        ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )
-        browsePanel.doClearSelection();
-
-        when:
-        browsePanel.selectContent( content.getContentPath() )
-        browsePanel.deleteSelected();
-
-        then:
-        !browsePanel.exists( content.getContentPath() );
-    }
-
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
         String displayName = "editnametest"
