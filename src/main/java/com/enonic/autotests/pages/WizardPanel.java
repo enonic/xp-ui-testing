@@ -27,7 +27,7 @@ public abstract class WizardPanel
 
     public static final String TOOLBAR_CLOSEWIZARD_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Close']";
-   
+
 
     @FindBy(xpath = TOOLBAR_CLOSEWIZARD_BUTTON_XPATH)
     protected WebElement closeButton;
@@ -42,7 +42,7 @@ public abstract class WizardPanel
     protected WebElement nameInput;
 
 
-	/**
+    /**
      * The constructor
      *
      * @param session
@@ -64,10 +64,10 @@ public abstract class WizardPanel
             throw new TestFrameworkException( "title was not found in AppBarTabMenu!" );
         }
     }
-    
+
     public String getNameInputValue()
     {
-    	return nameInput.getAttribute("value");
+        return nameInput.getAttribute( "value" );
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract class WizardPanel
      */
     protected void doSaveFromToolbar()
     {
-        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException(By.xpath(TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
+        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
         {
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is disabled!" );
@@ -83,9 +83,9 @@ public abstract class WizardPanel
         toolbarSaveButton.click();
     }
 
-    public boolean  isEnabledSaveButton()
+    public boolean isEnabledSaveButton()
     {
-    	return waitUntilElementEnabledNoException(By.xpath(TOOLBAR_SAVE_BUTTON_XPATH), Application.IMPLICITLY_WAIT);
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
     }
 
     /**
@@ -111,14 +111,14 @@ public abstract class WizardPanel
      */
     public String waitNotificationMessage()
     {
-        String message = TestUtils.waitNotificationMessage( By.xpath( "//div[@class='admin-notification-content']/span" ), getDriver(), 2l );
+        String message =
+            TestUtils.waitNotificationMessage( By.xpath( "//div[@class='admin-notification-content']/span" ), getDriver(), 2l );
         return message;
     }
 
     /**
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
-     *
      */
     public void waitUntilWizardOpened( Integer numberPage )
     {
@@ -134,7 +134,7 @@ public abstract class WizardPanel
     }
 
     public WebElement getNameInput()
-   	{
-   		return nameInput;
-   	}
+    {
+        return nameInput;
+    }
 }

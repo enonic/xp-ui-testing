@@ -30,7 +30,7 @@ class ContentBrowsePanelSpec
     }
 
 
-    def "GIVEN BrowsePanel WHEN adding Folder on root THEN the content should be listed in the table"()
+    def "GIVEN creating new Content on root WHEN saved THEN new Content should be listed"()
     {
         given:
         ContentPath cpath = ContentPathHelper.buildContentPath( null, REPONAME )
@@ -45,7 +45,7 @@ class ContentBrowsePanelSpec
     }
 
 
-    def "GIVEN creating new Folder-content beneath an existing unexpanded WHEN conten saved THEN new Content should be listed beneath parent"()
+    def "GIVEN creating new Content beneath an existing unexpanded WHEN saved THEN new Content should be listed beneath parent"()
     {
         given:
         String name = "foldercontent";
@@ -60,138 +60,7 @@ class ContentBrowsePanelSpec
         contentBrowsePanel.exists( content.getContentPath() )
     }
 
-    def "GIVEN creating new Structured beneath an existing unexpanded WHEN conten saved THEN the content should be listed beneath parent"()
-    {
-        given:
-        String name = "structuredcontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = StructuredContent.builder().withName( name ).withDisplayName( "structured" ).withContentPath(
-            cpath ).build();
-
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-    def "GIVEN creating new Unstructured beneath an existing unexpanded WHEN conten saved THEN new Content should be listed beneath parent"()
-    {
-        given:
-        String name = "unstructuredcontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = UnstructuredContent.builder().withName( name ).withDisplayName( "unstructured" ).withContentPath(
-            cpath ).build();
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-    def "GIVEN creating new Archive beneath an existing unexpanded WHEN conten saved THEN the content should be listed beneath parent"()
-    {
-        given:
-        String name = "archivecontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = ArchiveContent.builder().withName( name ).withDisplayName( "archive" ).withContentPath(
-            cpath ).build()
-
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-    def "GIVEN creating new Media beneath an existing unexpanded  WHEN conten saved THEN the content should be listed beneath parent"()
-    {
-        given:
-        String name = "mediacontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = MediaContent.builder().withName( name ).withDisplayName( "media" ).withContentPath( cpath ).build()
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-    def "GIVEN creating new Data beneath an existing unexpanded  WHEN conten saved THEN the content should be listed beneath parent"()
-    {
-        given:
-        String name = "datacontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = DataContent.builder().withName( name ).withDisplayName( "data" ).withContentPath( cpath ).build();
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-
-    def "GIVEN creating new Text beneath an existing unexpanded  WHEN conten saved THEN the content should be listed beneath parent"()
-    {
-        given:
-        String name = "textcontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = TextContent.builder().withName( name ).withDisplayName( "text" ).withContentPath( cpath ).build()
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-    def "GIVEN creating new Page beneath an existing unexpanded  WHEN conten saved THEN the content should be listed beneath parent"()
-    {
-        given:
-        String name = "pagecontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = PageContent.builder().withName( "pagecontent" ).withDisplayName( "page" ).withContentPath(
-            cpath ).build()
-
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-
-    def "GIVEN creating new Shortcut beneath an existing unexpanded  WHEN content saved THEN the content should be listed beneath parent"()
-    {
-        given:
-        String name = "shortcutcontent";
-        ContentPath cpath = ContentPathHelper.buildContentPath( PARENT_FOLDER_ARR, name )
-        BaseAbstractContent content = ShortcutContent.builder().withName( name ).withDisplayName( "shortcut" ).withContentPath(
-            cpath ).build()
-
-        when:
-        contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getContentPath().getParentPath() );
-
-        then:
-        contentBrowsePanel.exists( content.getContentPath() );
-    }
-
-
-    def "GIVEN creating new Content beneath an existing expanded WHEN conten saved THEN new Content should be listed beneath parent"()
+    def "GIVEN creating new Content beneath an existing expanded WHEN saved THEN new Content should be listed beneath parent"()
     {
         given:
         String name = NameHelper.unqiueName( "folder" );
@@ -207,7 +76,7 @@ class ContentBrowsePanelSpec
         contentBrowsePanel.exists( content.getContentPath() )
     }
 
-    def "GIVEN  existing content  WHEN content editet, name changed  THEN the content with new name should be listed beneath parent"()
+    def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
         String displayName = "editnametest"
         given:
@@ -227,7 +96,7 @@ class ContentBrowsePanelSpec
 
     }
 
-    def "GIVEN existing content  WHEN content editet, display name changed  THEN the content with new display-name should be listed beneath parent"()
+    def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new displayName"()
     {
         given:
         String name = "editdisplayname"

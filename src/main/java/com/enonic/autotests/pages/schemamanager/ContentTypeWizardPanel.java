@@ -114,14 +114,15 @@ public class ContentTypeWizardPanel
         clearAndType( nameInput, contentType.getName() );
         //2. type the XMLconfig data:
         getLogger().info( "set contenttype configuration " );
-        setConfiguration( contentType.getConfigData().trim());           
+        setConfiguration( contentType.getConfigData().trim() );
 
     }
 
 
-	private void setConfiguration(String cfg)
-	{
-		((JavascriptExecutor) getSession().getDriver()).executeScript("window.api.dom.ElementRegistry.getElementById('api.ui.CodeArea').setValue(arguments[0])", cfg);
-	}
+    private void setConfiguration( String cfg )
+    {
+        ( (JavascriptExecutor) getSession().getDriver() ).executeScript(
+            "window.api.dom.ElementRegistry.getElementById('api.ui.CodeArea').setValue(arguments[0])", cfg );
+    }
 
 }

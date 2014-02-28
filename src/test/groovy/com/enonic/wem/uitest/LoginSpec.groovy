@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest
 
 class LoginSpec
-extends BaseGebSpec
+    extends BaseGebSpec
 {
 
-    def "Given login page When both username and password fields is empty Then Login Button must be disabled"( )
+    def "Given login page When both username and password fields is empty Then Login Button must be disabled"()
     {
         when:
         go "admin"
@@ -13,7 +13,7 @@ extends BaseGebSpec
         $( 'button.login-button' ).classes().contains( 'disabled' )
     }
 
-    def "Given login page When both username and password fields have value Then Login Button must be enabled"( )
+    def "Given login page When both username and password fields have value Then Login Button must be enabled"()
     {
         given:
         go "admin"
@@ -26,7 +26,7 @@ extends BaseGebSpec
         !$( 'button.login-button' ).classes().contains( 'disabled' )
     }
 
-    def "Given login page When only username field have value Then Login Button must be disabled"( )
+    def "Given login page When only username field have value Then Login Button must be disabled"()
     {
         given:
         go "admin"
@@ -38,7 +38,7 @@ extends BaseGebSpec
         $( 'button.login-button' ).classes().contains( 'disabled' )
     }
 
-    def "Given login page When only password field have value Then Login Button must be disabled"( )
+    def "Given login page When only password field have value Then Login Button must be disabled"()
     {
         given:
         go "admin"

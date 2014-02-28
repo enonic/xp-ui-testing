@@ -45,9 +45,9 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_DUPLICTAE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
 
-    boolean isToolbarButtonEnabled(String xpath)
+    boolean isToolbarButtonEnabled( String xpath )
     {
-    	return getDriver().findElement(By.xpath(xpath)).isEnabled();
+        return getDriver().findElement( By.xpath( xpath ) ).isEnabled();
     }
 
     /**

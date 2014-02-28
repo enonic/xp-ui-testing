@@ -11,15 +11,23 @@ import com.enonic.wem.api.content.ContentPath
 import geb.spock.GebSpec
 import spock.lang.Shared
 
-class BaseGebSpec extends GebSpec
+class BaseGebSpec
+    extends GebSpec
 {
-    @Shared Properties defaultProperties;
-    @Shared TestSession session;
-    @Shared ContentService contentService = new ContentService();
-    @Shared ContentTypeService contentTypeService = new ContentTypeService();
+    @Shared
+    Properties defaultProperties;
+
+    @Shared
+    TestSession session;
+
+    @Shared
+    ContentService contentService = new ContentService();
+
+    @Shared
+    ContentTypeService contentTypeService = new ContentTypeService();
 
     @Override
-    def cleanup( )
+    def cleanup()
     {
         if ( session != null )
         {
@@ -29,7 +37,7 @@ class BaseGebSpec extends GebSpec
         resetBrowser();
     }
 
-    def setupSpec( )
+    def setupSpec()
     {
         String baseUrl = System.getProperty( "geb.build.baseUrl" );
         println baseUrl
@@ -40,7 +48,7 @@ class BaseGebSpec extends GebSpec
 
     }
 
-    def setup( )
+    def setup()
     {
         String baseUrl = System.getProperty( "geb.build.baseUrl" );
         if ( baseUrl == null )
@@ -50,7 +58,7 @@ class BaseGebSpec extends GebSpec
     }
 
 
-    TestSession getTestSession( )
+    TestSession getTestSession()
     {
         println "    geTestSesion called!"
         if ( session == null )
@@ -73,17 +81,18 @@ class BaseGebSpec extends GebSpec
         getTestSession().setBaseUrl( sb.toString() )
     }
 
-    BaseAbstractContent addRootContentToBeDeleted( )
+    BaseAbstractContent addRootContentToBeDeleted()
     {
         String name = NameHelper.unqiueName( "deletecontent" );
         ContentPath cpath = ContentPathHelper.buildContentPath( null, name );
-        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "contenttodelete" ).withContentPath( cpath ).build();
+        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "contenttodelete" ).withContentPath(
+            cpath ).build();
 
         contentService.addContent( getTestSession(), content, true )
         return content;
     }
 
-    void loadProperties( )
+    void loadProperties()
     {
         defaultProperties = new Properties()
         InputStream input = null

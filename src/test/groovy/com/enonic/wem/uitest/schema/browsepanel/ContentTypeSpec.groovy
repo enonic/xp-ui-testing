@@ -8,15 +8,17 @@ import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.FolderContentTypeCfg
 import com.enonic.wem.uitest.schema.cfg.TextLineContentTypeCfg
 
-class ContentTypeSpec extends BaseGebSpec
+class ContentTypeSpec
+    extends BaseGebSpec
 {
 
-    def "GIVEN BrowsePanel WHEN adding Folder ContentType Then the new contentype should be listed in the table"( )
+    def "GIVEN BrowsePanel WHEN adding Folder ContentType Then the new contentype should be listed in the table"()
     {
         given:
         go "admin"
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "folderctype" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration( folderCFG ).build();
+        ContentType ctype = ContentType.with().name( "folderctype" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+            folderCFG ).build();
 
         when:
         SchemaBrowsePanel grid = contentTypeService.createContentType( getTestSession(), ctype, true )
@@ -26,12 +28,13 @@ class ContentTypeSpec extends BaseGebSpec
 
     }
 
-    def "GIVEN schema BrowsePanel and exist Contentype  WHEN Contentype edited, display-name changed  Then the Contentype with new display-name should be listed in the table"( )
+    def "GIVEN schema BrowsePanel and exist Contentype  WHEN Contentype edited, display-name changed  Then the Contentype with new display-name should be listed in the table"()
     {
         given:
         go "admin"
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "editdisplaynametest" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration( folderCFG ).build();
+        ContentType ctype = ContentType.with().name( "editdisplaynametest" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+            folderCFG ).build();
         SchemaBrowsePanel grid = contentTypeService.createContentType( getTestSession(), ctype, true );
 
         when:
@@ -42,12 +45,13 @@ class ContentTypeSpec extends BaseGebSpec
         grid.isContentTypePresentInTable( newContentType );
     }
 
-    def "GIVEN schema BrowsePanel and exist Contentype  WHEN Contentype edited, name changed  THEN the Contentype with new name should be listed in the table"( )
+    def "GIVEN schema BrowsePanel and exist Contentype  WHEN Contentype edited, name changed  THEN the Contentype with new name should be listed in the table"()
     {
         given:
         go "admin"
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "editnametest" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration( folderCFG ).build();
+        ContentType ctype = ContentType.with().name( "editnametest" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+            folderCFG ).build();
         SchemaBrowsePanel grid = contentTypeService.createContentType( getTestSession(), ctype, true );
 
         when:
@@ -59,12 +63,13 @@ class ContentTypeSpec extends BaseGebSpec
 
     }
 
-    def "GIVEN BrowsePanel WHEN adding TextLine ContentType THEN the new Contentype should be listed in the table"( )
+    def "GIVEN BrowsePanel WHEN adding TextLine ContentType THEN the new Contentype should be listed in the table"()
     {
         given:
         go "admin"
         String textLineCFG = TextLineContentTypeCfg.CFG
-        ContentType ctype = ContentType.with().name( "textlinectype" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration( textLineCFG ).build();
+        ContentType ctype = ContentType.with().name( "textlinectype" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+            textLineCFG ).build();
 
         when:
         contentTypeService.createContentType( getTestSession(), ctype, true )
@@ -75,12 +80,13 @@ class ContentTypeSpec extends BaseGebSpec
 
     }
 
-    def "GIVEN BrowsePanel and created a contentType WHEN Contenttype deleted THEN the Contentype should not be listed in the table"( )
+    def "GIVEN BrowsePanel and created a contentType WHEN Contenttype deleted THEN the Contentype should not be listed in the table"()
     {
         given:
         go "admin"
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctypeToDelete = ContentType.with().name( "ctypetodelete" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration( folderCFG ).build();
+        ContentType ctypeToDelete = ContentType.with().name( "ctypetodelete" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+            folderCFG ).build();
 
         when:
         contentTypeService.createContentType( getTestSession(), ctypeToDelete, true )

@@ -5,10 +5,10 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
 
 class ContentBrowsePanelToolbarSpec
-extends BaseGebSpec
+    extends BaseGebSpec
 {
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Delete button should be disabled"( )
+    def "GIVEN Content BrowsePanel WHEN no selected content THEN Delete button should be disabled"()
     {
         given:
         go "admin"
@@ -20,7 +20,7 @@ extends BaseGebSpec
         !cmPage.isDeleteButtonEnabled();
     }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN New button should be enabled"( )
+    def "GIVEN Content BrowsePanel WHEN no selected content THEN New button should be enabled"()
     {
         given:
         go "admin"

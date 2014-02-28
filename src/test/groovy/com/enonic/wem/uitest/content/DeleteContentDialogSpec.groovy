@@ -10,23 +10,26 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class DeleteContentDialogSpec extends BaseGebSpec
+class DeleteContentDialogSpec
+    extends BaseGebSpec
 {
 
-    @Shared String CONTENT_TO_DELETE_KEY = "deletecomntent_dialog_test"
+    @Shared
+    String CONTENT_TO_DELETE_KEY = "deletecomntent_dialog_test"
 
-    def "setup: add a folder-content"( )
+    def "setup: add a folder-content"()
     {
         given:
         go "admin"
         String name = "foldertodelete";
         ContentPath path = ContentPathHelper.buildContentPath( null, name );
-        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "foldertodelete" ).withContentPath( path ).build();
+        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "foldertodelete" ).withContentPath(
+            path ).build();
         contentService.addContent( getTestSession(), content, true )
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }
 
-    def "GIVEN content App BrowsePanel and existing content WHEN content selected and Delete button clicked THEN delete dialog with title 'Delete Content' showed"( )
+    def "GIVEN content App BrowsePanel and existing content WHEN content selected and Delete button clicked THEN delete dialog with title 'Delete Content' showed"()
     {
         given:
         go "admin"
@@ -41,7 +44,7 @@ class DeleteContentDialogSpec extends BaseGebSpec
         dialog.isOpened();
     }
 
-    def "GIVEN content BrowsePanel and existing content WHEN one content selected and Delete button clicked THEN delete dialog with one content is displayed"( )
+    def "GIVEN content BrowsePanel and existing content WHEN one content selected and Delete button clicked THEN delete dialog with one content is displayed"()
     {
         given:
         go "admin"

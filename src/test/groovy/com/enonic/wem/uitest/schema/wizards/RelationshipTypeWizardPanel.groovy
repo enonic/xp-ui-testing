@@ -10,19 +10,23 @@ import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.LinkRelationship
 import spock.lang.Shared
 
-class RelationshipTypeWizardPanel extends BaseGebSpec
+class RelationshipTypeWizardPanel
+    extends BaseGebSpec
 {
-    @Shared String RELATIONSHIP_WIZARD_TEST = "wizard_test_key"
+    @Shared
+    String RELATIONSHIP_WIZARD_TEST = "wizard_test_key"
 
-    def "GIVEN opened relationship wizard WHEN name typed and clicking Save THEN name is present on WizardPanel"( )
+    def "GIVEN opened relationship wizard WHEN name typed and clicking Save THEN name is present on WizardPanel"()
     {
         given:
         go "admin"
 
         String relationshipName = NameHelper.unqiueName( "relationship" );
         String relCFG = LinkRelationship.CFG
-        ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration( relCFG ).build();
-        ContentTypeWizardPanel wizard = contentTypeService.openAddContentTypeWizard( getTestSession(), KindOfContentTypes.RELATIONSHIP_TYPE );
+        ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+            relCFG ).build();
+        ContentTypeWizardPanel wizard = contentTypeService.openAddContentTypeWizard( getTestSession(),
+                                                                                     KindOfContentTypes.RELATIONSHIP_TYPE );
         wizard.doTypeData( relationship )
         getTestSession().put( RELATIONSHIP_WIZARD_TEST, relationship )
 
@@ -35,15 +39,17 @@ class RelationshipTypeWizardPanel extends BaseGebSpec
     }
 
 
-    def "GIVEN opened relationship wizard WHEN name typed and clicking Save THEN notification message is present"( )
+    def "GIVEN opened relationship wizard WHEN name typed and clicking Save THEN notification message is present"()
     {
         given:
         go "admin"
 
         String relationshipName = NameHelper.unqiueName( "relationship" );
         String relCFG = LinkRelationship.CFG
-        ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration( relCFG ).build();
-        ContentTypeWizardPanel wizard = contentTypeService.openAddContentTypeWizard( getTestSession(), KindOfContentTypes.RELATIONSHIP_TYPE );
+        ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+            relCFG ).build();
+        ContentTypeWizardPanel wizard = contentTypeService.openAddContentTypeWizard( getTestSession(),
+                                                                                     KindOfContentTypes.RELATIONSHIP_TYPE );
         wizard.doTypeData( relationship )
 
         when:
@@ -54,7 +60,7 @@ class RelationshipTypeWizardPanel extends BaseGebSpec
 
     }
 
-    def "GIVEN existing relationship-type WHEN it renamed and clicking Save THEN changed name is present on WizardPanel"( )
+    def "GIVEN existing relationship-type WHEN it renamed and clicking Save THEN changed name is present on WizardPanel"()
     {
         given:
         go "admin"

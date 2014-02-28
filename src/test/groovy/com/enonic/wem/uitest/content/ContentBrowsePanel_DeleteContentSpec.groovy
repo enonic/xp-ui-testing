@@ -11,12 +11,13 @@ import spock.lang.Stepwise
 
 @Stepwise
 class ContentBrowsePanel_DeleteContentSpec
-extends BaseGebSpec
+    extends BaseGebSpec
 {
 
-    @Shared String DELETE_CONTENT_KEY = "deletecontent_test"
+    @Shared
+    String DELETE_CONTENT_KEY = "deletecontent_test"
 
-    def "GIVEN existing content, WHEN content opened and delete button pressed THEN the content should not be listed in the table"( )
+    def "GIVEN existing content, WHEN content opened and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
         go "admin"
@@ -32,7 +33,7 @@ extends BaseGebSpec
     }
 
 
-    def "GIVEN a existing Content on root  WHEN content selected and delete button pressed THEN deleted content is no longer listed at root"( )
+    def "GIVEN a existing Content on root  WHEN content selected and delete button pressed THEN deleted content is no longer listed at root"()
     {
         given:
         go "admin"
@@ -52,7 +53,7 @@ extends BaseGebSpec
         !browsePanel.exists( content.getContentPath() );
     }
 
-    def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"( )
+    def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
         go "admin"

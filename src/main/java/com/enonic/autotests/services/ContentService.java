@@ -40,15 +40,15 @@ public class ContentService
         return result;
     }
 
-    
-    public ContentWizardPanel openContentWizardPanel(TestSession session, String contentTypeName, ContentPath contentPath)
-    {
-    	 ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
 
-         //select a folder and open the 'add content wizard' (click by 'New')
-         ContentWizardPanel wizardPage = cmPage.openContentWizardPanel( contentTypeName, contentPath );
-         wizardPage.waitUntilWizardOpened(1);
-         return wizardPage;
+    public ContentWizardPanel openContentWizardPanel( TestSession session, String contentTypeName, ContentPath contentPath )
+    {
+        ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
+
+        //select a folder and open the 'add content wizard' (click by 'New')
+        ContentWizardPanel wizardPage = cmPage.openContentWizardPanel( contentTypeName, contentPath );
+        wizardPage.waitUntilWizardOpened( 1 );
+        return wizardPage;
     }
 
     /**

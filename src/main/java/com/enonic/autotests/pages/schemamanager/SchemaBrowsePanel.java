@@ -72,7 +72,7 @@ public class SchemaBrowsePanel
     {
         if ( superTypeName != null )
         {
-        	clickByExpander( superTypeName );
+            clickByExpander( superTypeName );
         }
     }
 

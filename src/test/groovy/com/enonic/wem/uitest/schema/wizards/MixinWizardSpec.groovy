@@ -4,10 +4,11 @@ import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.wem.uitest.BaseGebSpec
 
-class MixinWizardSpec extends BaseGebSpec
+class MixinWizardSpec
+    extends BaseGebSpec
 {
 
-    def "Given schema app, mixin-wizard opened When typing very long name Then input field width increases"( )
+    def "Given schema app, mixin-wizard opened When typing very long name Then input field width increases"()
     {
         given:
         go "admin"
@@ -25,7 +26,7 @@ class MixinWizardSpec extends BaseGebSpec
         wizard.getInputNameWidth() > width25
     }
 
-    def "Given schema app, mixin-wizard opened When typing a name Then name and title in AppBarTabMenu updated concurrently"( )
+    def "Given schema app, mixin-wizard opened When typing a name Then name and title in AppBarTabMenu updated concurrently"()
     {
         given:
         go "admin"

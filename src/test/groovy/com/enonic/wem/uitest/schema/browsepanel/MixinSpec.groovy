@@ -10,11 +10,13 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class MixinSpec extends BaseGebSpec
+class MixinSpec
+    extends BaseGebSpec
 {
-    @Shared String MIXIN_KEY = "mixin"
+    @Shared
+    String MIXIN_KEY = "mixin"
 
-    def "GIVEN BrowsePanel WHEN adding Mixin-adress  THEN the new mixin should be listed in the table"( )
+    def "GIVEN BrowsePanel WHEN adding Mixin-adress  THEN the new mixin should be listed in the table"()
     {
         given:
         go "admin"
@@ -32,7 +34,7 @@ class MixinSpec extends BaseGebSpec
     }
 
 
-    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, name changed  Then the Mixin whith new name should be listed in the table"( )
+    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, name changed  Then the Mixin whith new name should be listed in the table"()
     {
         given:
         go "admin"
@@ -52,7 +54,7 @@ class MixinSpec extends BaseGebSpec
     }
 
 
-    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, display-name changed  Then the Mixin whith new display-name should be listed in the table"( )
+    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, display-name changed  Then the Mixin whith new display-name should be listed in the table"()
     {
         given:
         go "admin"
@@ -70,7 +72,7 @@ class MixinSpec extends BaseGebSpec
         schemasPage.isContentTypePresentInTable( newMixin )
     }
 
-    def "GIVEN BrowsePanel WHEN existing Mixin selected and clicking Delete Then Mixin is removed from list"( )
+    def "GIVEN BrowsePanel WHEN existing Mixin selected and clicking Delete Then Mixin is removed from list"()
 
     {
         given:

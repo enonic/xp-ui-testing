@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.wem.api.content.ContentPath;
 
 public class BrowsePanel
     extends Application
@@ -74,7 +73,7 @@ public class BrowsePanel
      *
      * @param contentName
      * @return true if space is not empty and was expanded, otherwise return
-     *         false.
+     * false.
      */
     public boolean clickByExpander( String name )
     {
@@ -84,9 +83,9 @@ public class BrowsePanel
             getLogger().info( "The folder: " + name + " has no contents" );
             return false;
         }
-        if ( !isRowExapnded(  name  ) )
+        if ( !isRowExapnded( name ) )
         {
-        	findExpanderImageAndClick(  name  );
+            findExpanderImageAndClick( name );
         }
 
         return true;
@@ -189,7 +188,7 @@ public class BrowsePanel
 
     /**
      * @return number of rows in the table of content. The row with header is
-     *         excluded.
+     * excluded.
      */
     public int getTableRowNumber()
     {
