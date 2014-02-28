@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.ContentService.HowOpenContent
-import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.wem.uitest.BaseGebSpec
@@ -15,17 +15,17 @@ class ContentBrowsePanel_DeleteContentSpec
     extends BaseGebSpec
 {
 
-	@Shared
-	ContentBrowsePanel contentBrowsePanel
-	
-	@Shared
-	String DELETE_CONTENT_KEY = "deletecontent_test"
-	
-	def setup()
-	{
-		go "admin"
-		contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-	}
+    @Shared
+    ContentBrowsePanel contentBrowsePanel
+
+    @Shared
+    String DELETE_CONTENT_KEY = "deletecontent_test"
+
+    def setup()
+    {
+        go "admin"
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+    }
 
 
     def "GIVEN existing content, WHEN content opened and delete button pressed THEN the content should not be listed in the table"()
@@ -37,8 +37,8 @@ class ContentBrowsePanel_DeleteContentSpec
         when:
         view.doDeleteContent( content.getDisplayName() )
         TestUtils.saveScreenshot( getTestSession() );
-        
-		then:
+
+        then:
         !contentBrowsePanel.exists( content.getContentPath() )
     }
 
@@ -57,20 +57,21 @@ class ContentBrowsePanel_DeleteContentSpec
         then:
         !contentBrowsePanel.exists( content1.getContentPath() ) && !contentBrowsePanel.exists( content2.getContentPath() )
     }
-	def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
-	{
-		given:
-		BaseAbstractContent content = addRootContentToBeDeleted();
-		List<BaseAbstractContent> contents = new ArrayList<>();
-		contents.add( content );
-		ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )
-		browsePanel.doClearSelection();
 
-		when:
-		contentBrowsePanel.selectContent( content.getContentPath() )
-		contentBrowsePanel.deleteSelected();
+    def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
+    {
+        given:
+        BaseAbstractContent content = addRootContentToBeDeleted();
+        List<BaseAbstractContent> contents = new ArrayList<>();
+        contents.add( content );
+        ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )
+        browsePanel.doClearSelection();
 
-		then:
-		!contentBrowsePanel.exists( content.getContentPath() );
-	}
+        when:
+        contentBrowsePanel.selectContent( content.getContentPath() )
+        contentBrowsePanel.deleteSelected();
+
+        then:
+        !contentBrowsePanel.exists( content.getContentPath() );
+    }
 }
