@@ -2,12 +2,10 @@ package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.services.ContentTypeService
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.LinkRelationship
-import spock.lang.Shared
 
 class RelationshipSpec extends BaseGebSpec
 {
