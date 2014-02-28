@@ -75,7 +75,7 @@ class ContentBrowsePanelSpec
 
         when:
         contentBrowsePanel.expandContent( content.getParent().getParentPath() )
-        contentService.addContent( getTestSession(), content, true )
+        contentBrowsePanel.doAddContent( content, true );
         contentBrowsePanel.expandContent( content.getParent() )
 
         then:
@@ -90,7 +90,7 @@ class ContentBrowsePanelSpec
             withName( "editname" ).
             withDisplayName( "editnametest" ).
             build();
-        contentService.addContent( getTestSession(), contentToEdit, true )
+        contentBrowsePanel.doAddContent( contentToEdit, true );
 
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit );
@@ -110,8 +110,7 @@ class ContentBrowsePanelSpec
             withName( "editdisplayname" ).
             withDisplayName( "editdisplayname" ).
             build()
-        contentService.addContent( getTestSession(), contentToEdit, true )
-
+        contentBrowsePanel.doAddContent( contentToEdit, true );
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
         contentService.doOpenContentAndEdit( getTestSession(), contentToEdit, newcontent )
