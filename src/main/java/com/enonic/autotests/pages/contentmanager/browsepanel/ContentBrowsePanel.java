@@ -298,6 +298,7 @@ public class ContentBrowsePanel
      */
     public void doAddContent( BaseAbstractContent content, boolean isWizardShouldBeClosed )
     {
+    	doWorkAround();
         ContentPath contentPath = content.getPath();
         ContentWizardPanel wizard = openContentWizardPanel( content.getContentTypeName(), contentPath );
         if ( isWizardShouldBeClosed )
