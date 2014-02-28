@@ -4,7 +4,9 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.ContentPathHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.*
+import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
+import com.enonic.autotests.vo.contentmanager.FolderContent
+import com.enonic.autotests.vo.contentmanager.StructuredContent
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -74,6 +76,25 @@ class ContentBrowsePanelSpec
 
         then:
         contentBrowsePanel.exists( content.getContentPath() )
+    }
+
+    def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
+    {
+        given:
+        go "admin"
+
+        BaseAbstractContent content = addRootContentToBeDeleted();
+        List<BaseAbstractContent> contents = new ArrayList<>();
+        contents.add( content );
+        ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )
+        browsePanel.doClearSelection();
+
+        when:
+        browsePanel.selectContent( content.getContentPath() )
+        browsePanel.deleteSelected();
+
+        then:
+        !browsePanel.exists( content.getContentPath() );
     }
 
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()

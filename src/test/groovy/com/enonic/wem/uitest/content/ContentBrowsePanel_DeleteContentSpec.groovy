@@ -33,26 +33,6 @@ class ContentBrowsePanel_DeleteContentSpec
     }
 
 
-    def "GIVEN a existing Content on root  WHEN content selected and delete button pressed THEN deleted content is no longer listed at root"()
-    {
-        given:
-        go "admin"
-
-        BaseAbstractContent content = addRootContentToBeDeleted();
-        List<BaseAbstractContent> contents = new ArrayList<>();
-        contents.add( content );
-        ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )
-        browsePanel.doClearSelection();
-
-        when:
-        browsePanel.selectContent( content.getContentPath() )
-        browsePanel.deleteSelected();
-        TestUtils.saveScreenshot( getTestSession() );
-
-        then:
-        !browsePanel.exists( content.getContentPath() );
-    }
-
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
