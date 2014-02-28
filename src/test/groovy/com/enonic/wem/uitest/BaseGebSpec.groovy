@@ -3,7 +3,6 @@ package com.enonic.wem.uitest
 import com.enonic.autotests.TestSession
 import com.enonic.autotests.services.ContentService
 import com.enonic.autotests.services.ContentTypeService
-import com.enonic.autotests.utils.ContentPathHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
@@ -84,9 +83,10 @@ class BaseGebSpec
     BaseAbstractContent addRootContentToBeDeleted()
     {
         String name = NameHelper.unqiueName( "deletecontent" );
-        ContentPath cpath = ContentPathHelper.buildContentPath( null, name );
-        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "contenttodelete" ).withContentPath(
-            cpath ).build();
+        BaseAbstractContent content = FolderContent.builder().
+            withName( name ).
+            withDisplayName( "contenttodelete" ).
+            withParent( ContentPath.ROOT ).build();
 
         contentService.addContent( getTestSession(), content, true )
         return content;

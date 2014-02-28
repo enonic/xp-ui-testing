@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
-import com.enonic.autotests.utils.ContentPathHelper
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
@@ -22,9 +21,11 @@ class DeleteContentDialogSpec
         given:
         go "admin"
         String name = "foldertodelete";
-        ContentPath path = ContentPathHelper.buildContentPath( null, name );
-        BaseAbstractContent content = FolderContent.builder().withName( name ).withDisplayName( "foldertodelete" ).withContentPath(
-            path ).build();
+        BaseAbstractContent content = FolderContent.builder().
+            withName( name ).
+            withDisplayName( "foldertodelete" ).
+            withParent( ContentPath.ROOT ).
+            build();
         contentService.addContent( getTestSession(), content, true )
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }

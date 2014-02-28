@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
-import com.enonic.autotests.utils.ContentPathHelper
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
@@ -16,9 +15,8 @@ class ContentItemViewPanelSpec
         given:
         go "admin"
         String contentName = "itemviewtest";
-        ContentPath cpath = ContentPathHelper.buildContentPath( null, contentName )
-        BaseAbstractContent content = FolderContent.builder().withName( "itemviewtest" ).withDisplayName( "itemviewtest" ).withContentPath(
-            cpath ).build();
+        BaseAbstractContent content = FolderContent.builder().withName( "itemviewtest" ).withDisplayName( "itemviewtest" ).withParent(
+            ContentPath.ROOT ).build();
         contentService.addContent( getTestSession(), content, true )
 
         when:

@@ -169,7 +169,7 @@ public class ContentBrowsePanel
 
     public DeleteContentDialog openDeleteContentDialog( List<BaseAbstractContent> contents )
     {
-        ContentPath contentPath = contents.get( 0 ).getContentPath();
+        ContentPath contentPath = contents.get( 0 ).getPath();
         //TODO remove it, when bug will be fixed! 
         doWorkAround();
         // 1. expand all folders
@@ -235,7 +235,7 @@ public class ContentBrowsePanel
 
         for ( BaseAbstractContent content : contents )
         {
-            boolean isExist = exists( content.getContentPath() );
+        	 boolean isExist = exists(content.getPath());
 
             if ( !isExist )
             {
@@ -260,7 +260,7 @@ public class ContentBrowsePanel
      */
     private void selectCheckbox( BaseAbstractContent content )
     {
-        String fullName = content.getContentPath().toString();
+        String fullName = content.getPath().toString();
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, fullName );
         getLogger().info( "tries to find the content in a table, fullName of content is :" + fullName );
 
@@ -298,7 +298,7 @@ public class ContentBrowsePanel
      */
     public void doAddContent( BaseAbstractContent content, boolean isWizardShouldBeClosed )
     {
-        ContentPath contentPath = content.getContentPath();
+        ContentPath contentPath = content.getPath();
         ContentWizardPanel wizard = openContentWizardPanel( content.getContentTypeName(), contentPath );
         if ( isWizardShouldBeClosed )
         {
@@ -315,8 +315,8 @@ public class ContentBrowsePanel
 
     public ContentWizardPanel openEditWizardPage( BaseAbstractContent content )
     {
-        expandContent( content.getContentPath().getParentPath() );
-        boolean isExist = exists( content.getContentPath() );
+       expandContent(content.getParent());
+       boolean isExist = exists(content.getPath());
         //        boolean isPresent = findContentInTable( content, 2l );
         if ( !isExist )
         {
@@ -429,8 +429,8 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContent( BaseAbstractContent content )
     {
-        expandContent( content.getContentPath().getParentPath() );
-        boolean isPresent = exists( content.getContentPath() );
+    	expandContent(content.getParent());
+        boolean isPresent = exists( content.getPath());
         if ( !isPresent )
         {
             throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
@@ -439,7 +439,7 @@ public class ContentBrowsePanel
         {
             getLogger().info( "doOpenContent::: content with name equals " + content.getDisplayName() + " was found" );
         }
-        String fullName = content.getContentPath().toString();
+        String fullName = content.getPath().toString();
         sleep( 700 );
         //1. select a content
         selectRowByContentFullName( fullName );
@@ -465,8 +465,8 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContentFromContextMenu( BaseAbstractContent content )
     {
-        expandContent( content.getContentPath().getParentPath() );
-        boolean isExists = exists( content.getContentPath() );
+    	expandContent(content.getParent());
+    	boolean isExists = exists(content.getPath());
         if ( !isExists )
         {
             throw new TestFrameworkException(
@@ -477,7 +477,7 @@ public class ContentBrowsePanel
             getLogger().info( "doOpenContent::: content with name equals " + content.getDisplayName() + " was found" );
         }
         // 2. check for existence of content in a parent space and select a content to open.
-        String fullName = content.getContentPath().toString();
+        String fullName =  content.getPath().toString();
         getLogger().info( "Full name of content: " + fullName );
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, fullName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );

@@ -8,30 +8,34 @@ import com.enonic.wem.api.content.ContentPath;
  */
 public abstract class BaseAbstractContent
 {
+    private ContentPath parent;
+
     private String name;
+
+    private ContentPath path;
 
     private String displayName;
 
     private String contentTypeName;
 
-    private ContentPath contentPath;
-
     protected BaseAbstractContent( Builder<?> builder )
     {
         this.name = builder.name;
+        this.parent = builder.parent;
+        this.path = ContentPath.from( this.parent, this.name );
+
         this.displayName = builder.displayName;
-        this.contentPath = builder.contentPath;
         this.contentTypeName = builder.contentTypeName;
     }
 
-    public ContentPath getContentPath()
+    public ContentPath getParent()
     {
-        return contentPath;
+        return parent;
     }
 
-    public void setContentPath( ContentPath contentPath )
+    public void setParent( ContentPath parent )
     {
-        this.contentPath = contentPath;
+        this.parent = parent;
     }
 
     public String getName()
@@ -42,6 +46,11 @@ public abstract class BaseAbstractContent
     public void setName( String name )
     {
         this.name = name;
+    }
+
+    public ContentPath getPath()
+    {
+        return path;
     }
 
     public String getDisplayName()
@@ -72,7 +81,7 @@ public abstract class BaseAbstractContent
 
         private String contentTypeName;
 
-        private ContentPath contentPath;
+        private ContentPath parent;
 
         public Builder<T> withName( String name )
         {
@@ -92,9 +101,9 @@ public abstract class BaseAbstractContent
             return this;
         }
 
-        public Builder<T> withContentPath( ContentPath contentPath )
+        public Builder<T> withParent( ContentPath contentPath )
         {
-            this.contentPath = contentPath;
+            this.parent = contentPath;
             return this;
         }
 

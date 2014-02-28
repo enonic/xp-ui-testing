@@ -39,7 +39,7 @@ class ContentBrowsePanel_DeleteContentSpec
         TestUtils.saveScreenshot( getTestSession() );
 
         then:
-        !contentBrowsePanel.exists( content.getContentPath() )
+        !contentBrowsePanel.exists( content.getPath() )
     }
 
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
@@ -55,7 +55,7 @@ class ContentBrowsePanel_DeleteContentSpec
         contentService.deleteContentUseToolbar( getTestSession(), contentList )
         TestUtils.saveScreenshot( getTestSession() );
         then:
-        !contentBrowsePanel.exists( content1.getContentPath() ) && !contentBrowsePanel.exists( content2.getContentPath() )
+        !contentBrowsePanel.exists( content1.getPath() ) && !contentBrowsePanel.exists( content2.getPath() )
     }
 
     def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
@@ -68,10 +68,10 @@ class ContentBrowsePanel_DeleteContentSpec
         browsePanel.doClearSelection();
 
         when:
-        contentBrowsePanel.selectContent( content.getContentPath() )
+        contentBrowsePanel.selectContent( content.getPath() )
         contentBrowsePanel.deleteSelected();
 
         then:
-        !contentBrowsePanel.exists( content.getContentPath() );
+        !contentBrowsePanel.exists( content.getPath() );
     }
 }
