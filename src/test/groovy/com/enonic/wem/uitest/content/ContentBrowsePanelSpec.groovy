@@ -81,8 +81,6 @@ class ContentBrowsePanelSpec
     def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
     {
         given:
-        go "admin"
-
         BaseAbstractContent content = addRootContentToBeDeleted();
         List<BaseAbstractContent> contents = new ArrayList<>();
         contents.add( content );

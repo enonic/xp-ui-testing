@@ -32,7 +32,6 @@ class ContentBrowsePanel_DeleteContentSpec
         !browsePanel.exists( content.getContentPath() )
     }
 
-
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
