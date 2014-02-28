@@ -44,7 +44,7 @@ class ContentBrowsePanelSpec
         contentBrowsePanel.doAddContent( content, true );
 
         then:
-        contentBrowsePanel.exists( content.getParent() );
+        contentBrowsePanel.exists( content.getPath() );
     }
 
 
@@ -59,10 +59,10 @@ class ContentBrowsePanelSpec
 
         when:
         contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getParent().getParentPath() )
+        contentBrowsePanel.expandContent( content.getParent() )
 
         then:
-        contentBrowsePanel.exists( content.getParent() )
+        contentBrowsePanel.exists( content.getPath() )
     }
 
     def "GIVEN creating new Content beneath an existing expanded WHEN saved THEN new Content should be listed beneath parent"()
@@ -77,10 +77,10 @@ class ContentBrowsePanelSpec
         when:
         contentBrowsePanel.expandContent( content.getParent().getParentPath() )
         contentService.addContent( getTestSession(), content, true )
-        contentBrowsePanel.expandContent( content.getParent().getParentPath() )
+        contentBrowsePanel.expandContent( content.getParent() )
 
         then:
-        contentBrowsePanel.exists( content.getParent() )
+        contentBrowsePanel.exists( content.getPath() )
     }
 
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
@@ -96,10 +96,10 @@ class ContentBrowsePanelSpec
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit );
         contentService.doOpenContentAndEdit( getTestSession(), contentToEdit, newcontent )
-        contentBrowsePanel.expandContent( newcontent.getParent().getParentPath() );
+        contentBrowsePanel.expandContent( newcontent.getParent() );
 
         then:
-        contentBrowsePanel.exists( newcontent.getParent() );
+        contentBrowsePanel.exists( newcontent.getPath() );
 
     }
 
@@ -116,10 +116,10 @@ class ContentBrowsePanelSpec
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
         contentService.doOpenContentAndEdit( getTestSession(), contentToEdit, newcontent )
-        contentBrowsePanel.expandContent( newcontent.getParent().getParentPath() );
+        contentBrowsePanel.expandContent( newcontent.getParent() );
 
         then:
-        contentBrowsePanel.exists( newcontent.getParent() );
+        contentBrowsePanel.exists( newcontent.getPath() );
     }
 
 
