@@ -71,21 +71,21 @@ public class BrowsePanel
     /**
      * clicks by 'expand' icon and expands a folder.
      *
-     * @param contentName
+     * @param contentPath
      * @return true if space is not empty and was expanded, otherwise return
      * false.
      */
-    public boolean clickByExpander( String name )
+    public boolean clickByExpander( String contentPath )
     {
-        boolean isExpanderPresent = isExpanderPresent( name );
+        boolean isExpanderPresent = isExpanderPresent( contentPath );
         if ( !isExpanderPresent )
         {
-            getLogger().info( "The folder: " + name + " has no contents" );
+            getLogger().info( "The folder: " + contentPath + " has no contents" );
             return false;
         }
-        if ( !isRowExapnded( name ) )
+        if ( !isRowExapnded( contentPath ) )
         {
-            findExpanderImageAndClick( name );
+            findExpanderImageAndClick( contentPath );
         }
 
         return true;
@@ -98,7 +98,7 @@ public class BrowsePanel
      * @param parentSpace
      * @return true if space has no any children., otherwise true.
      */
-    private boolean isExpanderPresent( String contentName )
+    public boolean isExpanderPresent( String contentName )
     {
         String expanderElement = String.format( TD_CONTENT_NAME + "/div/img[contains(@class,'x-tree-expander')]", contentName );
         getLogger().info( "check if present expander for folder:" + contentName + " xpath: " + expanderElement );
@@ -118,7 +118,7 @@ public class BrowsePanel
         return true;
     }
 
-    private boolean isRowExapnded( String name )
+    public boolean isRowExapnded( String name )
     {
         String trXpath = String.format( TD_CONTENT_NAME + "/parent::tr", name );
 

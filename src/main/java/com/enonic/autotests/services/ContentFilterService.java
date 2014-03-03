@@ -6,6 +6,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModified;
+import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.vo.Space;
 
 public class ContentFilterService
@@ -24,6 +25,7 @@ public class ContentFilterService
         ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session );
         ContentBrowseFilterPanel filterPanel = cmPage.getContentBrowseFilterPanel();
         filterPanel.doSearchByText( text );
+        SleepHelper.sleep( 1000 );
         List<String> names = cmPage.getShowedContentNames();
         return names;
     }

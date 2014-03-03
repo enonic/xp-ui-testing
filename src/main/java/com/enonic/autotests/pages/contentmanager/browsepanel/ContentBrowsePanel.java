@@ -126,25 +126,23 @@ public class ContentBrowsePanel
     public void expandContent( ContentPath contentPath )
     {
         ContentPath path = null;
-        List<String> namesToExpand = new ArrayList<>();
         if ( contentPath != null )
         {
             for ( int i = 0; i < contentPath.elementCount(); i++ )
             {
-                String element = contentPath.getElement( i );
-                namesToExpand.add( element );
+                String parentContent = contentPath.getElement( i );
                 if ( path == null )
                 {
-                    path = ContentPath.from( element );
+                    path = ContentPath.from( parentContent );
                 }
                 else
                 {
-                    path = ContentPath.from( path, element );
+                    path = ContentPath.from( path, parentContent );
                 }
 
                 if ( !clickByExpander( path.toString() ) )
                 {
-                    getLogger().info( "content with name " + element + "has no children! " );
+                    getLogger().info( "content with name " + parentContent + "has no children! " );
                 }
             }
         }
@@ -193,6 +191,9 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    /**
+     * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
+     */
     public void deleteSelected()
     {
 
@@ -235,7 +236,7 @@ public class ContentBrowsePanel
 
         for ( BaseAbstractContent content : contents )
         {
-        	 boolean isExist = exists(content.getPath());
+            boolean isExist = exists( content.getPath() );
 
             if ( !isExist )
             {
@@ -288,6 +289,7 @@ public class ContentBrowsePanel
         }
         sleep( 700 );
         findElement( By.xpath( contentCheckBoxXpath ) ).click();
+        getLogger().info( "check box was selected, content path is:" + path.toString() );
     }
 
     /**
@@ -298,7 +300,7 @@ public class ContentBrowsePanel
      */
     public void doAddContent( BaseAbstractContent content, boolean isWizardShouldBeClosed )
     {
-    	doWorkAround();
+        doWorkAround();
         ContentPath contentPath = content.getPath();
         ContentWizardPanel wizard = openContentWizardPanel( content.getContentTypeName(), contentPath );
         if ( isWizardShouldBeClosed )
@@ -316,8 +318,8 @@ public class ContentBrowsePanel
 
     public ContentWizardPanel openEditWizardPage( BaseAbstractContent content )
     {
-       expandContent(content.getParent());
-       boolean isExist = exists(content.getPath());
+        expandContent( content.getParent() );
+        boolean isExist = exists( content.getPath() );
         //        boolean isPresent = findContentInTable( content, 2l );
         if ( !isExist )
         {
@@ -430,9 +432,9 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContent( BaseAbstractContent content )
     {
-    	doWorkAround();
-    	expandContent(content.getParent());
-        boolean isPresent = exists( content.getPath());
+        doWorkAround();
+        expandContent( content.getParent() );
+        boolean isPresent = exists( content.getPath() );
         if ( !isPresent )
         {
             throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
@@ -467,8 +469,8 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContentFromContextMenu( BaseAbstractContent content )
     {
-    	expandContent(content.getParent());
-    	boolean isExists = exists(content.getPath());
+        expandContent( content.getParent() );
+        boolean isExists = exists( content.getPath() );
         if ( !isExists )
         {
             throw new TestFrameworkException(
@@ -479,7 +481,7 @@ public class ContentBrowsePanel
             getLogger().info( "doOpenContent::: content with name equals " + content.getDisplayName() + " was found" );
         }
         // 2. check for existence of content in a parent space and select a content to open.
-        String fullName =  content.getPath().toString();
+        String fullName = content.getPath().toString();
         getLogger().info( "Full name of content: " + fullName );
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, fullName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
@@ -509,9 +511,8 @@ public class ContentBrowsePanel
      */
     public static boolean isOpened( TestSession session )
     {
-        List<WebElement> title = session.getDriver().findElements( By.xpath( TITLE_XPATH ) );
         List<WebElement> searchInput = session.getDriver().findElements( By.xpath( ContentBrowseFilterPanel.SEARCH_INPUT_XPATH ) );
-        if ( title.size() > 0 && ( searchInput.size() > 0 && searchInput.get( 0 ).isDisplayed() ) )
+        if ( searchInput.size() > 0 && searchInput.get( 0 ).isDisplayed() )
         {
             return true;
         }

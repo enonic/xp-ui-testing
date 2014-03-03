@@ -84,8 +84,9 @@ class ContentWizardPanel_ValidationSpec
     {
         given:
         go "admin"
-        ContentWizardPanel wizard = contentService.openContentWizardPanel( getTestSession(), CTYPE_NAME,
-                                                                           ContentPath.ROOT );
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        ContentWizardPanel wizardPage = contentBrowsePanel.openContentWizardPanel( CTYPE_NAME, ContentPath.ROOT );
+        wizardPage.waitUntilWizardOpened( 1 )
 
         when:
         $( "input", name: "unrequiredTextLine" ) << 'unrequired line'

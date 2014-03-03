@@ -38,6 +38,7 @@ public class Application
     public HomePage openHomePage()
     {
         gotoHomeButton.click();
+        getDriver().switchTo().window( getSession().getWindowHandle() );
         HomePage page = new HomePage( getSession() );
         page.waitUntilAllFramesLoaded();
         return page;

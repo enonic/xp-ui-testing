@@ -1,6 +1,8 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
+import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
@@ -17,10 +19,12 @@ class ContentItemViewPanelSpec
         String contentName = "itemviewtest";
         BaseAbstractContent content = FolderContent.builder().withName( "itemviewtest" ).withDisplayName( "itemviewtest" ).withParent(
             ContentPath.ROOT ).build();
-        contentService.addContent( getTestSession(), content, true )
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+        contentBrowsePanel.doAddContent( content, true )
 
         when:
-        contentService.doOpenContentUseToolbar( getSession(), content );
+        ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session )
+        ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( content )
 
         then:
         ItemViewPanelPage itemView = new ItemViewPanelPage( getTestSession() )

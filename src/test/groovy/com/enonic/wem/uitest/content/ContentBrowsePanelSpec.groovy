@@ -1,11 +1,11 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
-import com.enonic.autotests.vo.contentmanager.FolderContent
-import com.enonic.autotests.vo.contentmanager.StructuredContent
+import com.enonic.autotests.vo.contentmanager.*
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -31,7 +31,7 @@ class ContentBrowsePanelSpec
     }
 
 
-    def "GIVEN creating new Content on root WHEN saved THEN new Content should be listed"()
+    def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
@@ -47,13 +47,31 @@ class ContentBrowsePanelSpec
         contentBrowsePanel.exists( content.getPath() );
     }
 
+    def "GIVEN creating new Content on root WHEN saved and HomeButton clicked THEN new Content should be listed"()
+    {
+        given:
+        BaseAbstractContent content = DataContent.builder().
+            withParent( ContentPath.ROOT ).
+            withName( NameHelper.unqiueName( "datacontent" ) ).
+            withDisplayName( "datacontent" ).
+            build();
+
+        when:
+        contentBrowsePanel.doAddContent( content, true )
+        contentBrowsePanel.openHomePage();
+        NavigatorHelper.openContentApp( getTestSession() )
+
+        then:
+        contentBrowsePanel.exists( content.getPath() )
+    }
+
 
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and wizard closed THEN parent should still be unexpanded"()
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
             withParent( ContentPath.from( REPONAME ) ).
-            withName( "foldercontent" ).
+            withName( NameHelper.unqiueName( "folder" ) ).
             withDisplayName( "folder" ).
             build();
 
@@ -61,10 +79,45 @@ class ContentBrowsePanelSpec
         contentBrowsePanel.doAddContent( content, true );
 
         then:
-        !contentBrowsePanel.exists( content.getPath() )
+        !contentBrowsePanel.isRowExapnded( content.getParent().toString() )
     }
 
-    def "GIVEN creating new Content beneath an existing expanded WHEN saved THEN new Content should be listed beneath parent"()
+    def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and HomeButton clicked THEN parent should still be unexpanded"()
+    {
+        given:
+        BaseAbstractContent content = FolderContent.builder().
+            withParent( ContentPath.from( REPONAME ) ).
+            withName( NameHelper.unqiueName( "folder" ) ).
+            withDisplayName( "folder" ).
+            build();
+
+        when:
+        contentBrowsePanel.doAddContent( content, true );
+        contentBrowsePanel.openHomePage();
+        NavigatorHelper.openContentApp( getTestSession() )
+
+        then:
+        !contentBrowsePanel.isRowExapnded( content.getParent().toString() )
+    }
+
+    def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
+    {
+        given:
+        String name = NameHelper.unqiueName( "archive" );
+        BaseAbstractContent content = ArchiveContent.builder().
+            withName( name ).
+            withDisplayName( "archive" ).
+            withParent( ContentPath.from( REPONAME ) ).build()
+
+        when:
+        contentBrowsePanel.expandContent( content.getParent() )
+        contentBrowsePanel.doAddContent( content, true );
+
+        then:
+        contentBrowsePanel.exists( content.getPath() )
+    }
+
+    def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
         given:
         String name = NameHelper.unqiueName( "folder" );
@@ -74,12 +127,13 @@ class ContentBrowsePanelSpec
             withParent( ContentPath.from( REPONAME ) ).build()
 
         when:
-        contentBrowsePanel.expandContent( content.getParent().getParentPath() )
-        contentBrowsePanel.doAddContent( content, true );
         contentBrowsePanel.expandContent( content.getParent() )
+        contentBrowsePanel.doAddContent( content, true );
+        contentBrowsePanel.openHomePage();
+        NavigatorHelper.openContentApp( getTestSession() )
 
         then:
-        contentBrowsePanel.exists( content.getPath() )
+        contentBrowsePanel.exists( content.getPath() ) && contentBrowsePanel.isRowExapnded( content.getParent().toString() )
     }
 
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
@@ -94,7 +148,11 @@ class ContentBrowsePanelSpec
 
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit );
-        contentService.doOpenContentAndEdit( getTestSession(), contentToEdit, newcontent )
+        ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( contentToEdit )
+        contentInfoPage.doEditContentAndCloseWizard( contentToEdit.getDisplayName(), newcontent )
+        contentInfoPage.doCloseContentInfoView();
+        contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+        contentBrowsePanel.expandContent( newcontent.getParent() );
         contentBrowsePanel.expandContent( newcontent.getParent() );
 
         then:
@@ -113,13 +171,15 @@ class ContentBrowsePanelSpec
         contentBrowsePanel.doAddContent( contentToEdit, true );
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
-        contentService.doOpenContentAndEdit( getTestSession(), contentToEdit, newcontent )
+        ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( contentToEdit )
+        contentInfoPage.doEditContentAndCloseWizard( contentToEdit.getDisplayName(), newcontent )
+        contentInfoPage.doCloseContentInfoView();
+        contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
         contentBrowsePanel.expandContent( newcontent.getParent() );
 
         then:
         contentBrowsePanel.exists( newcontent.getPath() );
     }
-
 
     StructuredContent cloneContentWithNewDispalyName( StructuredContent contentToedit )
     {

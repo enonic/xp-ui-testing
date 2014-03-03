@@ -1,8 +1,9 @@
 package com.enonic.wem.uitest
 
 import com.enonic.autotests.TestSession
-import com.enonic.autotests.services.ContentService
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.ContentTypeService
+import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
@@ -18,9 +19,6 @@ class BaseGebSpec
 
     @Shared
     TestSession session;
-
-    @Shared
-    ContentService contentService = new ContentService();
 
     @Shared
     ContentTypeService contentTypeService = new ContentTypeService();
@@ -82,13 +80,14 @@ class BaseGebSpec
 
     BaseAbstractContent addRootContentToBeDeleted()
     {
-        String name = NameHelper.unqiueName( "deletecontent" );
+        String name = NameHelper.unqiueName( "deletecontent" )
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
 
-        contentService.addContent( getTestSession(), content, true )
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+        contentBrowsePanel.doAddContent( content, true )
         return content;
     }
 

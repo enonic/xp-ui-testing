@@ -1,6 +1,9 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
+import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
@@ -22,11 +25,12 @@ class DeleteContentDialogSpec
         go "admin"
         String name = "foldertodelete";
         BaseAbstractContent content = FolderContent.builder().
-            withName( name ).
+            withName( NameHelper.unqiueName( name ) ).
             withDisplayName( "foldertodelete" ).
             withParent( ContentPath.ROOT ).
             build();
-        contentService.addContent( getTestSession(), content, true )
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+        contentBrowsePanel.doAddContent( content, true )
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }
 
@@ -39,7 +43,8 @@ class DeleteContentDialogSpec
         contents.add( content );
 
         when:
-        DeleteContentDialog dialog = contentService.selectContentClickDeleteInToolbar( getTestSession(), contents );
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
+        DeleteContentDialog dialog = contentBrowsePanel.openDeleteContentDialog( contents )
 
         then:
         dialog.isOpened();
@@ -54,7 +59,8 @@ class DeleteContentDialogSpec
         contents.add( content );
 
         when:
-        DeleteContentDialog dialog = contentService.selectContentClickDeleteInToolbar( getTestSession(), contents );
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
+        DeleteContentDialog dialog = contentBrowsePanel.openDeleteContentDialog( contents )
 
         then:
         List<String> namesFromDialog = dialog.getContentNameToDelete();

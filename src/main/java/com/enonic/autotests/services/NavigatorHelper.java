@@ -32,16 +32,21 @@ public class NavigatorHelper
             {
                 return new ContentBrowsePanel( testSession );
             }
-            boolean isHomeButtonPresent = WaitHelper.waitAndFind( By.xpath( Application.HOME_BUTTON_XPATH ), testSession.getDriver() );
-            if ( !isHomeButtonPresent )
+            boolean isHomeButtonPresent = WaitHelper.waitAndFind( By.xpath( Application.HOME_BUTTON_XPATH ), testSession.getDriver(), 1 );
+            if ( isHomeButtonPresent )
             {
-                throw new TestFrameworkException( "'go to home' button was not found" );
+                testSession.getDriver().findElement( By.xpath( Application.HOME_BUTTON_XPATH ) ).click();
+                testSession.getDriver().switchTo().window( testSession.getWindowHandle() );
+                HomePage homepage = new HomePage( testSession );
+                homepage.openContentManagerApplication();
+                return new ContentBrowsePanel( testSession );
             }
-            testSession.getDriver().findElement( By.xpath( Application.HOME_BUTTON_XPATH ) ).click();
-            HomePage homepage = new HomePage( testSession );
-            testSession.getDriver().switchTo().window( testSession.getWindowHandle() );
-            homepage.openContentManagerApplication();
-            return new ContentBrowsePanel( testSession );
+            else
+            {
+                HomePage homepage = new HomePage( testSession );
+                return homepage.openContentManagerApplication();
+            }
+
         }
         // if user not logged in:
         else

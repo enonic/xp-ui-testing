@@ -99,7 +99,9 @@ public class HomePage
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
-        return new ContentBrowsePanel( getSession() );
+        ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
+        panel.waituntilPageLoaded( 1 );
+        return panel;
     }
 
     public AccountsPage openAccountsApplication()
