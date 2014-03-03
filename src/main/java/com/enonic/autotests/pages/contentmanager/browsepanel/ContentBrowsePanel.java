@@ -116,6 +116,7 @@ public class ContentBrowsePanel
         getLogger().info("will verify is exists:"+ contentDescriptionXpath);
         boolean result  =  waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
         getLogger().info("content with path:" + contentDescriptionXpath + " isExists: "+ result);
+        TestUtils.saveScreenshot(getSession());
         return result;
     }
 
