@@ -113,8 +113,10 @@ public class ContentBrowsePanel
     {
 
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, contentPath.toString() );
-        // TODO: Is it really necessary with 2 seconds timeout?
-        return waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 2l );
+        getLogger().info("will verify is exists:"+ contentDescriptionXpath);
+        boolean result  =  waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
+        getLogger("content with path:" + contentDescriptionXpath + " isExists: "+ result);
+        return result;
     }
 
     public void expandAndSelectContent( ContentPath contentPath )
