@@ -108,7 +108,7 @@ public class ItemViewPanelPage
         }
         ContentBrowsePanel table = new ContentBrowsePanel( getSession() );
         table.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
-        sleep( 200 );
+        sleep( 500 );
     }
 
     /**
