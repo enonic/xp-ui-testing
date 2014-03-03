@@ -115,7 +115,7 @@ public class ContentBrowsePanel
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, contentPath.toString() );
         getLogger().info("will verify is exists:"+ contentDescriptionXpath);
         boolean result  =  waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
-        getLogger("content with path:" + contentDescriptionXpath + " isExists: "+ result);
+        getLogger().info("content with path:" + contentDescriptionXpath + " isExists: "+ result);
         return result;
     }
 
