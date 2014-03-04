@@ -19,9 +19,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     String REPONAME = "test-folder";
 
     @Shared
-    String[] PARENT_FOLDER_ARR = [REPONAME];
-
-    @Shared
     ContentBrowsePanel contentBrowsePanel;
 
     def setup()
