@@ -143,16 +143,15 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.doAddContent( contentToEdit, true );
 
         when:
-        StructuredContent newcontent = cloneContentWithNewName( contentToEdit );
+        StructuredContent newcontent = cloneContentWithNewName( contentToEdit )
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( contentToEdit )
         contentInfoPage.doEditContentAndCloseWizard( contentToEdit.getDisplayName(), newcontent )
         contentInfoPage.doCloseContentInfoView();
-        contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
-        contentBrowsePanel.expandContent( newcontent.getParent() );
-        contentBrowsePanel.expandContent( newcontent.getParent() );
+        contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT )
+        contentBrowsePanel.expandContent( newcontent.getParent() )
 
         then:
-        contentBrowsePanel.exists( newcontent.getPath() );
+        contentBrowsePanel.exists( newcontent.getPath() )
 
     }
 
