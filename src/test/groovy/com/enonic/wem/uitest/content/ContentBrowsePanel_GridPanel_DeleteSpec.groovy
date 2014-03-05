@@ -10,7 +10,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class ContentBrowsePanel_DeleteContentSpec
+class ContentBrowsePanel_GridPanel_DeleteSpec
     extends BaseGebSpec
 {
 
@@ -30,7 +30,7 @@ class ContentBrowsePanel_DeleteContentSpec
     {
         given:
         BaseAbstractContent content = addRootContentToBeDeleted();
-        ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( content )
+		ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( content )
 
         when:
         contentInfoPage.doDeleteContent( content.getDisplayName() )
@@ -39,7 +39,7 @@ class ContentBrowsePanel_DeleteContentSpec
         then:
         !contentBrowsePanel.exists( content.getPath() )
     }
-
+	
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
@@ -50,9 +50,9 @@ class ContentBrowsePanel_DeleteContentSpec
         contentList.add( content2 )
 
         when:
-        contentBrowsePanel.doClearSelection();
-        contentBrowsePanel.doDeleteContent( contentList )
-
+		contentBrowsePanel.doClearSelection();
+		contentBrowsePanel.doDeleteContent( contentList )
+     
         then:
         !contentBrowsePanel.exists( content1.getPath() ) && !contentBrowsePanel.exists( content2.getPath() )
     }

@@ -30,12 +30,17 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
-    private static final String TITLE_XPATH = "//button[contains(@class,'home-button') and contains(.,'Content Manager')]";
+    private static final String TABLE_ITEM_XPATH = "//h6[text()='BildeArkiv']";
 
     public static final String SPACES_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
 
+    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.HomeButton']";
+
     @FindBy(xpath = "//div[@class='toolbar']/button[text()='Duplicate']")
     private WebElement duplicateButton;
+
+    @FindBy(xpath = CONTENT_MANAGER_BUTTON)
+    private WebElement contentManagerButton;
 
     @FindBy(xpath = "//div[@class='toolbar']/button[text()='Open']")
     private WebElement openButton;
@@ -74,6 +79,13 @@ public class ContentBrowsePanel
             contentBrowseFilterPanel = new ContentBrowseFilterPanel( getSession() );
         }
         return contentBrowseFilterPanel;
+    }
+
+    public ContentBrowsePanel goToAppHome()
+    {
+    	contentManagerButton.click();
+    	waituntilPageLoaded(Application.IMPLICITLY_WAIT);
+    	return this;
     }
 
     /**
@@ -505,7 +517,7 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-        new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TITLE_XPATH ) ) );
+        new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
     }
 
     /**
@@ -523,11 +535,6 @@ public class ContentBrowsePanel
         {
             return false;
         }
-    }
-
-    public boolean verifyTitle()
-    {
-        return waitAndFind( By.xpath( TITLE_XPATH ) );
     }
 
     public boolean verifyAllControls()

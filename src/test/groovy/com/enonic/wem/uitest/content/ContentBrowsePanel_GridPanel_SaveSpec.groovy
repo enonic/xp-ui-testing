@@ -54,9 +54,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-        contentBrowsePanel.doAddContent( content, true )
-        contentBrowsePanel.openHomePage();
-        NavigatorHelper.openContentApp( getTestSession() )
+        contentBrowsePanel.doAddContent( content, false )
+		contentBrowsePanel.goToAppHome();
 
         then:
         contentBrowsePanel.exists( content.getPath() )
