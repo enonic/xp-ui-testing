@@ -37,8 +37,8 @@ class ContentWizardPanel_ValidationSpec
     {
         given:
         go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        contentBrowsePanel.openContentWizardPanel( CTYPE_NAME, ContentPath.ROOT );
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+		 contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
 
         when:
         $( "input", name: "requiredTextLine" ) << ''
@@ -53,8 +53,8 @@ class ContentWizardPanel_ValidationSpec
     {
         given:
         go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        contentBrowsePanel.openContentWizardPanel( CTYPE_NAME, ContentPath.ROOT );
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
 
         when:
         $( "input", name: "requiredTextLine" ) << 'required line'
@@ -69,7 +69,7 @@ class ContentWizardPanel_ValidationSpec
         given:
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        contentBrowsePanel.openContentWizardPanel( CTYPE_NAME, ContentPath.ROOT );
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
 
         when:
         $( "input", name: "requiredTextLine" ) << 'required line'
@@ -85,8 +85,7 @@ class ContentWizardPanel_ValidationSpec
         given:
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        ContentWizardPanel wizardPage = contentBrowsePanel.openContentWizardPanel( CTYPE_NAME, ContentPath.ROOT );
-        wizardPage.waitUntilWizardOpened( 1 )
+		contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
 
         when:
         $( "input", name: "unrequiredTextLine" ) << 'unrequired line'

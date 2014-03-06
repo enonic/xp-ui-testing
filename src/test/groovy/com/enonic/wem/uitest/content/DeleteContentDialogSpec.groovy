@@ -38,13 +38,13 @@ class DeleteContentDialogSpec
     {
         given:
         go "admin"
-        List<BaseAbstractContent> contents = new ArrayList<>();
+        List<BaseAbstractContent> contentList = new ArrayList<>();
         BaseAbstractContent content = (BaseAbstractContent) getTestSession().get( CONTENT_TO_DELETE_KEY );
-        contents.add( content );
+        contentList.add( content );
 
         when:
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
-        DeleteContentDialog dialog = contentBrowsePanel.openDeleteContentDialog( contents )
+		DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(contentList).clickToolbarDelete()
 
         then:
         dialog.isOpened();
@@ -54,13 +54,13 @@ class DeleteContentDialogSpec
     {
         given:
         go "admin"
-        List<BaseAbstractContent> contents = new ArrayList<>();
+        List<BaseAbstractContent> contentList = new ArrayList<>();
         BaseAbstractContent content = (BaseAbstractContent) getTestSession().get( CONTENT_TO_DELETE_KEY );
-        contents.add( content );
+        contentList.add( content );
 
         when:
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
-        DeleteContentDialog dialog = contentBrowsePanel.openDeleteContentDialog( contents )
+		DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(contentList).clickToolbarDelete()
 
         then:
         List<String> namesFromDialog = dialog.getContentNameToDelete();

@@ -54,8 +54,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentList.add( content2 )
 
         when:
-		contentBrowsePanel.doClearSelection();
-		contentBrowsePanel.openDeleteContentDialog(contentList).doDelete()
+		contentBrowsePanel.doClearSelection()
+		contentBrowsePanel.expandContent( content1.getParent() ).selectContentInTable(contentList).clickToolbarDelete().doDelete()
+		
      
         then:
         !contentBrowsePanel.exists( content1.getPath() ) && !contentBrowsePanel.exists( content2.getPath() )
@@ -71,7 +72,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         browsePanel.doClearSelection()
 
         when:
-        contentBrowsePanel.selectContent( content.getPath() )
+        contentBrowsePanel.selectRowWithContent( content.getPath() )
         contentBrowsePanel.deleteSelected();
 
         then:
@@ -95,8 +96,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 		
 
 		when:
-		contentBrowsePanel.expandContent(contentList.get(0).getParent())
-		contentBrowsePanel.openDeleteContentDialog(contentList).doDelete()
+		contentBrowsePanel.expandContent( contentList.get(0).getParent() ).selectContentInTable(contentList).clickToolbarDelete().doDelete()
 		
 		then:
 		!contentBrowsePanel.exists( contentList.get(0).getPath() )
