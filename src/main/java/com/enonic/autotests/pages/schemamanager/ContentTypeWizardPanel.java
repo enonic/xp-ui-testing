@@ -99,7 +99,7 @@ public class ContentTypeWizardPanel
 
         TestUtils.saveScreenshot( getSession() );
         // 3. check if enabled and press "Save".
-        doSaveFromToolbar();
+        save();
         boolean isSaveEnabled = isEnabledSaveButton();
         if ( !isSaveEnabled )
         {

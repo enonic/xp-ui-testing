@@ -20,7 +20,7 @@ class ContentItemViewPanelSpec
         BaseAbstractContent content = FolderContent.builder().withName( "itemviewtest" ).withDisplayName( "itemviewtest" ).withParent(
             ContentPath.ROOT ).build();
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        contentBrowsePanel.doAddContent( content, true )
+        addContent(contentBrowsePanel, content, true)
 
         when:
         ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( session )

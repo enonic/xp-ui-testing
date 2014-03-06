@@ -1,5 +1,7 @@
 package com.enonic.wem.uitest.schema.wizards
 
+import spock.lang.Shared
+
 import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
@@ -8,7 +10,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.LinkRelationship
-import spock.lang.Shared
 
 class RelationshipTypeWizardPanel
     extends BaseGebSpec
@@ -31,7 +32,7 @@ class RelationshipTypeWizardPanel
         getTestSession().put( RELATIONSHIP_WIZARD_TEST, relationship )
 
         when:
-        wizard.doSaveFromToolbar()
+        wizard.save()
 
         then:
         wizard.getNameInputValue().equals( relationshipName )
@@ -53,7 +54,7 @@ class RelationshipTypeWizardPanel
         wizard.doTypeData( relationship )
 
         when:
-        wizard.doSaveFromToolbar()
+        wizard.save()
 
         then:
         wizard.waitNotificationMessage() != null
@@ -71,7 +72,7 @@ class RelationshipTypeWizardPanel
         String newName = NameHelper.unqiueName( "newname" )
         ContentTypeWizardPanel wizard = browsePanel.doOpenContentTypeForEdit( relationship )
         wizard.clearAndType( wizard.getNameInput(), newName )
-        wizard.doSaveFromToolbar()
+        wizard.save()
 
         then:
         wizard.getNameInputValue().equals( newName )

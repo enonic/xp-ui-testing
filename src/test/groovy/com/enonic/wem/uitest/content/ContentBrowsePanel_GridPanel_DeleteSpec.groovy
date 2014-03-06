@@ -3,8 +3,12 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils
+import com.enonic.autotests.vo.contentmanager.ArchiveContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
+import com.enonic.autotests.vo.contentmanager.FolderContent;
+import com.enonic.wem.api.content.ContentPath;
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -33,7 +37,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 		ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( content )
 
         when:
-        contentInfoPage.doDeleteContent( content.getDisplayName() )
+		contentInfoPage.openDeleteConfirmationDialog().doConfirm()
         TestUtils.saveScreenshot( getTestSession() )
 
         then:
@@ -51,7 +55,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         when:
 		contentBrowsePanel.doClearSelection();
-		contentBrowsePanel.doDeleteContent( contentList )
+		contentBrowsePanel.openDeleteContentDialog(contentList).doDelete()
      
         then:
         !contentBrowsePanel.exists( content1.getPath() ) && !contentBrowsePanel.exists( content2.getPath() )
@@ -73,4 +77,28 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         then:
         !contentBrowsePanel.exists( content.getPath() )
     }
+	
+	def "GIVEN a Content beneath an existing WHEN deleted THEN deleted Content is no longer listed beneath parent"()
+	{
+		given:
+		BaseAbstractContent parent = FolderContent.builder().
+			withParent( ContentPath.ROOT ).
+			withName( NameHelper.unqiueName("parent") ).
+			withDisplayName( "parent" ).
+			build();
+			addContent(contentBrowsePanel, parent, true)
+		
+		addArchiveToParent(parent.getName())
+		
+		List<BaseAbstractContent> contentList = new ArrayList<>()
+		contentList.add( addArchiveToParent(parent.getName()) )
+		
+
+		when:
+		contentBrowsePanel.expandContent(contentList.get(0).getParent())
+		contentBrowsePanel.openDeleteContentDialog(contentList).doDelete()
+		
+		then:
+		!contentBrowsePanel.exists( contentList.get(0).getPath() )
+	}
 }

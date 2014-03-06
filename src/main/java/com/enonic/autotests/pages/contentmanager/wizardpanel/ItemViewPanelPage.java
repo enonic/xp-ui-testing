@@ -7,13 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class ItemViewPanelPage
     extends Application
@@ -81,17 +77,13 @@ public class ItemViewPanelPage
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         //when content opened and the 'Edit' button pressed, new wizard page appears and '2'  should be present in the red circle.
         wizard.waitUntilWizardOpened( 2 );
-        wizard.doTypeDataSaveAndClose( newContent );
+        wizard.typeData( newContent );
+        wizard.save();
+        wizard.close();
     }
 
-    /**
-     * Clicks by 'Delete' button on toolbar and confirms deletion.
-     *
-     * @param contentDisplayName
-     */
-    public void doDeleteContent( String contentDisplayName )
+    public ConfirmationDialog openDeleteConfirmationDialog()
     {
-        //1. click by delete and open a confirm dialog:
         deleteButtonToolbar.click();
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
         boolean isOpened = dialog.verifyIsOpened();
@@ -99,16 +91,7 @@ public class ItemViewPanelPage
         {
             throw new TestFrameworkException( "Confirm 'delete content' dialog was not opened!" );
         }
-        //2. confirm and close dialog
-        dialog.doConfirm();
-        boolean isClosed = dialog.verifyIsClosed();
-        if ( !isClosed )
-        {
-            throw new DeleteCMSObjectException( "Confirm 'delete content' dialog was not closed!" );
-        }
-        ContentBrowsePanel table = new ContentBrowsePanel( getSession() );
-        table.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
-        sleep( 500 );
+        return dialog;
     }
 
     /**

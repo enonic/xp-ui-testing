@@ -152,7 +152,7 @@ public class SchemaBrowsePanel
         }
         //confirm deleting
         dialog.doDelete();
-        boolean isClosed = dialog.verifyIsClosed();
+        boolean isClosed = dialog.waitForClosed();
         if ( !isClosed )
         {
             throw new TestFrameworkException( "Confirm delete space dialog was not closed!" );

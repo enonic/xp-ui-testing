@@ -54,7 +54,6 @@ public class NavigatorHelper
 
             HomePage home = loginAndOpenHomePage( testSession );
             ContentBrowsePanel cmPage = home.openContentManagerApplication();
-            cmPage.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
             return cmPage;
         }
 

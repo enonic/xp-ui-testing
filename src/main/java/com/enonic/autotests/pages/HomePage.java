@@ -55,7 +55,6 @@ public class HomePage
         if ( !getSession().isLoggedIn() )
         {
             getLogger().info( "try to login with userName:" + username + " password: " + password );
-            long start = System.currentTimeMillis();
             LoginPage loginPage = new LoginPage( getSession() );
             loginPage.doLogin( username, password );
 
@@ -100,8 +99,8 @@ public class HomePage
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
-        panel.waituntilPageLoaded( 1 );
-        getLogger().info("Content App opened");
+        panel.waituntilPageLoaded(Application.PAGELOAD_TIMEOUT);
+        getLogger().info( "Content App opened" );
         return panel;
     }
 

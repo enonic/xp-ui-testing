@@ -182,7 +182,7 @@ public class AddNewUserWizard
 
         TestUtils.saveScreenshot( getSession() );
         // if save button is disabled, so exception will be thrown:
-        doSaveFromToolbar();
+        save();
         boolean isSaveEnabled = isEnabledSaveButton();
         if ( !isSaveEnabled )
         {

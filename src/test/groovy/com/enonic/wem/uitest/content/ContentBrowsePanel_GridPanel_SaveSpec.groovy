@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -38,7 +39,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-        contentBrowsePanel.doAddContent( content, true );
+		addContent(contentBrowsePanel, content, true)
 
         then:
         contentBrowsePanel.exists( content.getPath() );
@@ -54,7 +55,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-        contentBrowsePanel.doAddContent( content, false )
+		addContent(contentBrowsePanel, content, false)
 		contentBrowsePanel.goToAppHome();
 
         then:
@@ -72,7 +73,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-        contentBrowsePanel.doAddContent( content, true );
+       	addContent(contentBrowsePanel, content, true)
 
         then:
         !contentBrowsePanel.isRowExapnded( content.getParent().toString() )
@@ -88,9 +89,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-        contentBrowsePanel.doAddContent( content, true );
-        contentBrowsePanel.openHomePage();
-        NavigatorHelper.openContentApp( getTestSession() )
+       	addContent(contentBrowsePanel, content, false)
+        contentBrowsePanel.goToAppHome()
 
         then:
         !contentBrowsePanel.isRowExapnded( content.getParent().toString() )
@@ -107,7 +107,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         contentBrowsePanel.expandContent( content.getParent() )
-        contentBrowsePanel.doAddContent( content, true );
+      	addContent(contentBrowsePanel, content, true)
 
         then:
         contentBrowsePanel.exists( content.getPath() )
@@ -124,7 +124,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         contentBrowsePanel.expandContent( content.getParent() )
-        contentBrowsePanel.doAddContent( content, true );
+      	addContent(contentBrowsePanel, content, true)
         contentBrowsePanel.openHomePage();
         NavigatorHelper.openContentApp( getTestSession() )
 
@@ -140,7 +140,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withName( "editname" ).
             withDisplayName( "editnametest" ).
             build();
-        contentBrowsePanel.doAddContent( contentToEdit, true );
+       	addContent(contentBrowsePanel, contentToEdit, true)
 
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit )
@@ -163,7 +163,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withName( "editdisplayname" ).
             withDisplayName( "editdisplayname" ).
             build()
-        contentBrowsePanel.doAddContent( contentToEdit, true );
+       	addContent(contentBrowsePanel, contentToEdit, true)
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( contentToEdit )

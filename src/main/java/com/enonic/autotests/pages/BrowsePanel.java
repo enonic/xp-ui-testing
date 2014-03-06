@@ -259,9 +259,9 @@ public class BrowsePanel
     /**
      * @param fullName
      */
-    public void selectRowByContentFullName( String fullName )
+    public void selectRowByContentPath( String contentPath )
     {
-        String rowXpath = String.format( TD_CONTENT_NAME, fullName );
+        String rowXpath = String.format( TD_CONTENT_NAME, contentPath );
         waitAndFind( By.xpath( rowXpath ) );
         //findElement(By.xpath(rowXpath)).click();
 

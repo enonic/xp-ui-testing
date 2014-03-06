@@ -83,9 +83,9 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel goToAppHome()
     {
-    	contentManagerButton.click();
-    	waituntilPageLoaded(Application.IMPLICITLY_WAIT);
-    	return this;
+        contentManagerButton.click();
+        waituntilPageLoaded( Application.IMPLICITLY_WAIT );
+        return this;
     }
 
     /**
@@ -125,10 +125,10 @@ public class ContentBrowsePanel
     {
 
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, contentPath.toString() );
-        getLogger().info("will verify is exists:"+ contentDescriptionXpath);
-        boolean result  =  waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
-        getLogger().info("content with path:" + contentDescriptionXpath + " isExists: "+ result);
-        TestUtils.saveScreenshot(getSession());
+        getLogger().info( "will verify is exists:" + contentDescriptionXpath );
+        boolean result = waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
+        getLogger().info( "content with path:" + contentDescriptionXpath + " isExists: " + result );
+        TestUtils.saveScreenshot( getSession() );
         return result;
     }
 
@@ -163,28 +163,11 @@ public class ContentBrowsePanel
         }
     }
 
-    /**
-     * Delete contents from a space.
-     *
-     * @param contents
-     */
-    public void doDeleteContent( List<BaseAbstractContent> contents )
-    {
-        DeleteContentDialog dialog = openDeleteContentDialog( contents );
-        // 5. press the button "Delete" on the dialog.
-        dialog.doDelete();
-        boolean isClosed = dialog.verifyIsClosed();
-        if ( !isClosed )
-        {
-            throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
-        }
-    }
-
     public DeleteContentDialog openDeleteContentDialog( List<BaseAbstractContent> contents )
     {
         ContentPath contentPath = contents.get( 0 ).getPath();
         //TODO remove it, when bug will be fixed! 
-        doWorkAround();
+        //doWorkAround();
         // 1. expand all folders
         if ( contentPath.elementCount() > 1 )
         {
@@ -247,7 +230,7 @@ public class ContentBrowsePanel
     private void waitAndCheckContent( List<BaseAbstractContent> contents )
     {
         //TODO  this is a workaround for app issue, should be deleted after fixing
-        doWorkAround();
+        //doWorkAround();
 
         for ( BaseAbstractContent content : contents )
         {
@@ -307,29 +290,6 @@ public class ContentBrowsePanel
         getLogger().info( "check box was selected, content path is:" + path.toString() );
     }
 
-    /**
-     * Adds the content to a space or folder.
-     *
-     * @param content
-     * @param isWizardShouldBeClosed
-     */
-    public void doAddContent( BaseAbstractContent content, boolean isWizardShouldBeClosed )
-    {
-        doWorkAround();
-        ContentPath contentPath = content.getPath();
-        ContentWizardPanel wizard = openContentWizardPanel( content.getContentTypeName(), contentPath );
-        if ( isWizardShouldBeClosed )
-        {
-            wizard.doTypeDataSaveAndClose( content );
-            ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
-            panel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
-        }
-        else
-        {
-            wizard.doTypeDataAndSave( content );
-        }
-
-    }
 
     public ContentWizardPanel openEditWizardPage( BaseAbstractContent content )
     {
@@ -346,6 +306,22 @@ public class ContentBrowsePanel
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened( 1 );
         return wizard;
+    }
+
+    public NewContentDialog openNewContentDialog( ContentPath contentPath )
+    {
+        if ( contentPath != null && !contentPath.isRoot() )
+        {
+            selectParentForContent( contentPath.getParentPath() );
+        }
+        newButton.click();
+        NewContentDialog newContentDialog = new NewContentDialog( getSession() );
+        boolean isOpened = newContentDialog.isOpened();
+        if ( !isOpened )
+        {
+            throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not opened!" );
+        }
+        return newContentDialog;
     }
 
     /**
@@ -447,7 +423,7 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContent( BaseAbstractContent content )
     {
-        doWorkAround();
+        //doWorkAround();
         expandContent( content.getParent() );
         boolean isPresent = exists( content.getPath() );
         if ( !isPresent )
@@ -461,7 +437,7 @@ public class ContentBrowsePanel
         String fullName = content.getPath().toString();
         sleep( 700 );
         //1. select a content
-        selectRowByContentFullName( fullName );
+        selectRowByContentPath( fullName );
         if ( !openButton.isEnabled() )
         {
             getLogger().info( "'Open' link is disabled!" );
@@ -517,7 +493,7 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-    	TestUtils.saveScreenshot(getSession());
+        TestUtils.saveScreenshot( getSession() );
         new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
     }
 

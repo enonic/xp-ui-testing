@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ArticleContent;
@@ -24,8 +23,6 @@ public class ContentWizardPanel
     extends WizardPanel
 {
     public static String START_WIZARD_TITLE = "New %s";
-
-    private String NOTIF_MESSAGE = "\"%s\" saved successfully!";
 
     private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Publish']";
@@ -139,7 +136,7 @@ public class ContentWizardPanel
      *
      * @param content
      */
-    public void doTypeDataAndSave( BaseAbstractContent content )
+    public ContentWizardPanel typeData( BaseAbstractContent content )
     {
         sleep( 500 );
         // 1. type a data: 'name' and 'Display Name'.
@@ -157,28 +154,7 @@ public class ContentWizardPanel
         TestUtils.saveScreenshot( getSession() );
         // 2. populate main tab
         populateContentForm( getSession(), content );
-
-        // 3. check if enabled and press "Save".
-        getLogger().info( "Clicks 'Save' button in toolbar" );
-        doSaveFromToolbar();
-        TestUtils.saveScreenshot( getSession() );
-        boolean isSaveEnabled = isEnabledSaveButton();
-        if ( !isSaveEnabled )
-        {
-            throw new SaveOrUpdateException(
-                "the content with name" + content.getDisplayName() + " was not correctly saved, button 'Save' still disabled!" );
-        }
-    }
-
-    /**
-     * Types a data and close wizard.
-     *
-     * @param content
-     */
-    public void doTypeDataSaveAndClose( BaseAbstractContent content )
-    {
-        doTypeDataAndSave( content );
-        closeButton.click();
+        return this;
     }
 
     /**

@@ -8,6 +8,8 @@ import com.enonic.autotests.pages.BaseModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 /**
  * Content Manager application/add new content/select content type
  */
@@ -56,18 +58,10 @@ public class NewContentDialog
         {
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
-//		boolean isDisplayed  = session.getDriver().findElement(By.xpath(ctypeXpath)).isDisplayed();
-//		if (!isDisplayed)
-//		{
-//			WebElement searchinput = session.getDriver().findElement(By.xpath(INPUT_SEARCH));
-//			searchinput.sendKeys(contentTypeName);	
-//		} 
+
         TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-
-        //String title = "New " + type.getValue().toLowerCase();
-        //wizard.waitUntilWizardOpened(title, 1);
-
+        sleep( 500 );
         return wizard;
 
     }

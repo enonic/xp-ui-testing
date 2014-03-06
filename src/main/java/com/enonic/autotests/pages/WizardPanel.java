@@ -52,6 +52,11 @@ public abstract class WizardPanel
         super( session );
     }
 
+    public void close()
+    {
+        closeButton.click();
+    }
+
     public String getAppBarTabMenuTitle()
     {
         boolean result = waitAndFind( By.xpath( APP_BAR_TABMENU_TITLE_XPATH ), 1 );
@@ -73,7 +78,7 @@ public abstract class WizardPanel
     /**
      * Press the button 'Save', which located in the wizard's toolbar.
      */
-    protected void doSaveFromToolbar()
+    public WizardPanel save()
     {
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
@@ -81,6 +86,13 @@ public abstract class WizardPanel
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is disabled!" );
         }
         toolbarSaveButton.click();
+        boolean isSaveEnabled = isEnabledSaveButton();
+        if ( !isSaveEnabled )
+        {
+            throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
+        }
+        return this;
+
     }
 
     public boolean isEnabledSaveButton()

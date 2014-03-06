@@ -30,7 +30,7 @@ class DeleteContentDialogSpec
             withParent( ContentPath.ROOT ).
             build();
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        contentBrowsePanel.doAddContent( content, true )
+        addContent(contentBrowsePanel, content, true)
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }
 

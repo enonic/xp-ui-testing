@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 
 /**
  * Base confirm dialog for deleting spaces, contents, accounts
@@ -46,6 +47,11 @@ public abstract class BaseDeleteDialog
     {
 
         deleteButton.click();
+        boolean isClosed = waitForClosed();
+        if ( !isClosed )
+        {
+            throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
+        }
     }
 
     public List<String> getContentNameToDelete()
@@ -71,7 +77,7 @@ public abstract class BaseDeleteDialog
         return waitUntilVisibleNoException( By.xpath( getTitleXpath() ), Application.IMPLICITLY_WAIT );
     }
 
-    public boolean verifyIsClosed()
+    public boolean waitForClosed()
     {
         return waitElementNotVisible( By.xpath( getTitleXpath() ), Application.IMPLICITLY_WAIT );
     }

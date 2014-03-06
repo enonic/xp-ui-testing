@@ -5,7 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.DeleteCMSObjectException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseModalDialog;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class ConfirmationDialog
     extends BaseModalDialog
@@ -35,13 +40,23 @@ public class ConfirmationDialog
         return waitUntilVisibleNoException( By.xpath( TITLE_XPATH ), 2 );
     }
 
-    public boolean verifyIsClosed()
+    public boolean waitForClosed()
     {
         return waitElementNotVisible( By.xpath( TITLE_XPATH ), 2 );
     }
 
-    public void doConfirm()
+    public ContentBrowsePanel doConfirm()
     {
         yesButton.click();
+
+        boolean isClosed = waitForClosed();
+        if ( !isClosed )
+        {
+            throw new DeleteCMSObjectException( "Confirm 'delete content' dialog was not closed!" );
+        }
+        ContentBrowsePanel table = new ContentBrowsePanel( getSession() );
+        table.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+        sleep( 500 );
+        return table;
     }
 }
