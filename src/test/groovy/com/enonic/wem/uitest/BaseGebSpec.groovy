@@ -112,7 +112,7 @@ class BaseGebSpec
         {
             contentBrowsePanel.selectParentForContent( content.getPath().getParentPath() );
         }
-        ContentWizardPanel wizard = contentBrowsePanel.openNewContentDialog().selectContentType( content.getContentTypeName() )
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() )
         wizard.typeData( content ).save();
         if ( isClose )
         {
