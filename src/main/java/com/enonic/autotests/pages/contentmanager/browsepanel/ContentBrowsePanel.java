@@ -303,7 +303,7 @@ public class ContentBrowsePanel
         return wizard;
     }
 
-   public NewContentDialog openNewContentDialog(  )
+   public NewContentDialog clickToolbarNew(  )
     {
     	  newButton.click();
     	  NewContentDialog newContentDialog = new NewContentDialog( getSession() );
