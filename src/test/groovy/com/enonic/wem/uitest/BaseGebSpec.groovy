@@ -2,11 +2,11 @@ package com.enonic.wem.uitest
 
 import com.enonic.autotests.TestSession
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.ContentTypeService
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.ArchiveContent;
+import com.enonic.autotests.vo.contentmanager.ArchiveContent
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
@@ -89,35 +89,39 @@ class BaseGebSpec
             withParent( ContentPath.ROOT ).build();
 
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        addContent(contentBrowsePanel, content, true )
+        addContent( contentBrowsePanel, content, true )
         return content;
     }
-	
-	BaseAbstractContent addArchiveToParent(String parentName)
-	{
-		String name = NameHelper.unqiueName( "archive" )
-		BaseAbstractContent content = ArchiveContent.builder().
-			withName( name ).
-			withDisplayName( "archive" ).
-			withParent( ContentPath.from( parentName ) ).build();
 
-		ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-		addContent(contentBrowsePanel, content, true )
-		return content;
-	}
-	
-	void addContent(ContentBrowsePanel contentBrowsePanel, BaseAbstractContent content, boolean isClose)
-	{
-		ContentWizardPanel wizard = contentBrowsePanel.openNewContentDialog(content.getPath()).selectContentType(content.getContentTypeName())
-		wizard.typeData(content).save();
-		if(isClose)
-		{
-			wizard.close();
-			contentBrowsePanel.waituntilPageLoaded(1)
-		}
-		
-	}
-	
+    BaseAbstractContent addArchiveToParent( String parentName )
+    {
+        String name = NameHelper.unqiueName( "archive" )
+        BaseAbstractContent content = ArchiveContent.builder().
+            withName( name ).
+            withDisplayName( "archive" ).
+            withParent( ContentPath.from( parentName ) ).build();
+
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+        addContent( contentBrowsePanel, content, true )
+        return content;
+    }
+
+    void addContent( ContentBrowsePanel contentBrowsePanel, BaseAbstractContent content, boolean isClose )
+    {
+        if ( !content.getPath().isRoot() )
+        {
+            contentBrowsePanel.selectParentForContent( content.getPath().getParentPath() );
+        }
+        ContentWizardPanel wizard = contentBrowsePanel.openNewContentDialog().selectContentType( content.getContentTypeName() )
+        wizard.typeData( content ).save();
+        if ( isClose )
+        {
+            wizard.close();
+            contentBrowsePanel.waituntilPageLoaded( 1 )
+        }
+
+    }
+
 
     void loadProperties()
     {

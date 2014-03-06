@@ -33,12 +33,12 @@ public class ContentBrowsePanel
     private static final String TABLE_ITEM_XPATH = "//h6[text()='BildeArkiv']";
 
     public static final String SPACES_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
-
+    
     public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.HomeButton']";
 
     @FindBy(xpath = "//div[@class='toolbar']/button[text()='Duplicate']")
     private WebElement duplicateButton;
-
+    
     @FindBy(xpath = CONTENT_MANAGER_BUTTON)
     private WebElement contentManagerButton;
 
@@ -80,12 +80,12 @@ public class ContentBrowsePanel
         }
         return contentBrowseFilterPanel;
     }
-
+    
     public ContentBrowsePanel goToAppHome()
     {
-        contentManagerButton.click();
-        waituntilPageLoaded( Application.IMPLICITLY_WAIT );
-        return this;
+    	contentManagerButton.click();
+    	waituntilPageLoaded(Application.IMPLICITLY_WAIT);
+    	return this;
     }
 
     /**
@@ -125,19 +125,16 @@ public class ContentBrowsePanel
     {
 
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, contentPath.toString() );
-        getLogger().info( "will verify is exists:" + contentDescriptionXpath );
-        boolean result = waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
-        getLogger().info( "content with path:" + contentDescriptionXpath + " isExists: " + result );
-        TestUtils.saveScreenshot( getSession() );
+        getLogger().info("will verify is exists:"+ contentDescriptionXpath);
+        boolean result  =  waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
+        getLogger().info("content with path:" + contentDescriptionXpath + " isExists: "+ result);
+        TestUtils.saveScreenshot(getSession());
         return result;
     }
 
-    public void expandAndSelectContent( ContentPath contentPath )
-    {
-        expandContent( contentPath.getParentPath() );
-        selectContent( contentPath );
-    }
-
+    /**
+     * @param contentPath
+     */
     public void expandContent( ContentPath contentPath )
     {
         ContentPath path = null;
@@ -166,8 +163,6 @@ public class ContentBrowsePanel
     public DeleteContentDialog openDeleteContentDialog( List<BaseAbstractContent> contents )
     {
         ContentPath contentPath = contents.get( 0 ).getPath();
-        //TODO remove it, when bug will be fixed! 
-        //doWorkAround();
         // 1. expand all folders
         if ( contentPath.elementCount() > 1 )
         {
@@ -190,7 +185,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
+     * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears. 
      */
     public void deleteSelected()
     {
@@ -234,7 +229,7 @@ public class ContentBrowsePanel
 
         for ( BaseAbstractContent content : contents )
         {
-            boolean isExist = exists( content.getPath() );
+        	 boolean isExist = exists(content.getPath());
 
             if ( !isExist )
             {
@@ -293,8 +288,8 @@ public class ContentBrowsePanel
 
     public ContentWizardPanel openEditWizardPage( BaseAbstractContent content )
     {
-        expandContent( content.getParent() );
-        boolean isExist = exists( content.getPath() );
+       expandContent(content.getParent());
+       boolean isExist = exists(content.getPath());
         //        boolean isPresent = findContentInTable( content, 2l );
         if ( !isExist )
         {
@@ -308,20 +303,16 @@ public class ContentBrowsePanel
         return wizard;
     }
 
-    public NewContentDialog openNewContentDialog( ContentPath contentPath )
+   public NewContentDialog openNewContentDialog(  )
     {
-        if ( contentPath != null && !contentPath.isRoot() )
-        {
-            selectParentForContent( contentPath.getParentPath() );
-        }
-        newButton.click();
-        NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        boolean isOpened = newContentDialog.isOpened();
-        if ( !isOpened )
-        {
-            throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not opened!" );
-        }
-        return newContentDialog;
+    	  newButton.click();
+    	  NewContentDialog newContentDialog = new NewContentDialog( getSession() );
+          boolean isOpened = newContentDialog.isOpened();
+          if ( !isOpened )
+          {
+              throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not opened!" );
+          }
+          return newContentDialog;
     }
 
     /**
@@ -368,7 +359,7 @@ public class ContentBrowsePanel
      *
      * @param parentContentPath
      */
-    private void selectParentForContent( ContentPath parentContentPath )
+    public void selectParentForContent( ContentPath parentContentPath )
     {
         if ( parentContentPath.elementCount() == 0 )
         {
@@ -379,23 +370,10 @@ public class ContentBrowsePanel
             expandContent( parentContentPath );
 
         }
-        // doExpandAllFoldersFromContentPath( contentPath );
+        
         // 1. select a checkbox and press the 'New' from toolbar.
         String spaceCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, parentContentPath );
         boolean isPresentCheckbox = isDynamicElementPresent( By.xpath( spaceCheckBoxXpath ), 3 );
-
-        //TODO workaround: issue with empty grid(this is a application issue, it  will be fixed some later )
-        if ( !isPresentCheckbox )
-        {
-            getLogger().info( "Grid is empty, test-folder was not found! try to find again ..." );
-            //TODO type a word and do 'Clear filter'
-            ContentFilterService fs = new ContentFilterService();
-            fs.doFilterByText( getSession(), "test" );
-            TestUtils.saveScreenshot( getSession() );
-            fs.doClearFilter( getSession() );
-
-            isPresentCheckbox = isDynamicElementPresent( By.xpath( spaceCheckBoxXpath ), 3 );
-        }
         if ( !isPresentCheckbox )
         {
             TestUtils.saveScreenshot( getSession() );
@@ -406,7 +384,6 @@ public class ContentBrowsePanel
         WebElement checkboxElement = getDriver().findElement( By.xpath( spaceCheckBoxXpath ) );
 
         checkboxElement.click();
-        //selectRowByContentDisplayName(parentName);
         boolean isNewEnabled = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), 2l );
         if ( !isNewEnabled )
         {
@@ -423,9 +400,9 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContent( BaseAbstractContent content )
     {
-        //doWorkAround();
-        expandContent( content.getParent() );
-        boolean isPresent = exists( content.getPath() );
+    	//doWorkAround();
+    	expandContent(content.getParent());
+        boolean isPresent = exists( content.getPath());
         if ( !isPresent )
         {
             throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
@@ -460,8 +437,8 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage doOpenContentFromContextMenu( BaseAbstractContent content )
     {
-        expandContent( content.getParent() );
-        boolean isExists = exists( content.getPath() );
+    	expandContent(content.getParent());
+    	boolean isExists = exists(content.getPath());
         if ( !isExists )
         {
             throw new TestFrameworkException(
@@ -472,7 +449,7 @@ public class ContentBrowsePanel
             getLogger().info( "doOpenContent::: content with name equals " + content.getDisplayName() + " was found" );
         }
         // 2. check for existence of content in a parent space and select a content to open.
-        String fullName = content.getPath().toString();
+        String fullName =  content.getPath().toString();
         getLogger().info( "Full name of content: " + fullName );
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, fullName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
@@ -493,7 +470,7 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-        TestUtils.saveScreenshot( getSession() );
+    	TestUtils.saveScreenshot(getSession());
         new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
     }
 
