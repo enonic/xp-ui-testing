@@ -30,7 +30,7 @@ class DeleteContentDialogSpec
             withParent( ContentPath.ROOT ).
             build();
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        addContent(contentBrowsePanel, content, true)
+        addContent( contentBrowsePanel, content, true )
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }
 
@@ -44,7 +44,8 @@ class DeleteContentDialogSpec
 
         when:
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
-		DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(contentList).clickToolbarDelete()
+        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
+            contentList ).clickToolbarDelete()
 
         then:
         dialog.isOpened();
@@ -60,7 +61,8 @@ class DeleteContentDialogSpec
 
         when:
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
-		DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(contentList).clickToolbarDelete()
+        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
+            contentList ).clickToolbarDelete()
 
         then:
         List<String> namesFromDialog = dialog.getContentNameToDelete();

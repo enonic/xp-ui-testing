@@ -1,11 +1,9 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
-import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.TwoTextLineContentTypeCfg
 import spock.lang.Ignore
@@ -38,7 +36,7 @@ class ContentWizardPanel_ValidationSpec
         given:
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-		 contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
 
         when:
         $( "input", name: "requiredTextLine" ) << ''
@@ -54,7 +52,7 @@ class ContentWizardPanel_ValidationSpec
         given:
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
 
         when:
         $( "input", name: "requiredTextLine" ) << 'required line'
@@ -69,7 +67,7 @@ class ContentWizardPanel_ValidationSpec
         given:
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
 
         when:
         $( "input", name: "requiredTextLine" ) << 'required line'
@@ -85,7 +83,7 @@ class ContentWizardPanel_ValidationSpec
         given:
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-		contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened(1)
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
 
         when:
         $( "input", name: "unrequiredTextLine" ) << 'unrequired line'

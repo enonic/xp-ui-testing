@@ -59,7 +59,7 @@ public class SchemaBrowsePanel
     {
         ContentTypeWizardPanel wizard = doOpenContentTypeForEdit( contentTypeToEdit );
         getLogger().info( "## ContentTypeWizardPanel  should be opened, waits title: " + contentTypeToEdit.getName() );
-        wizard.waitUntilWizardOpened( 1 );
+        wizard.waitUntilWizardOpened();
         wizard.doTypeDataSaveAndClose( newContentType );
     }
 
@@ -112,7 +112,7 @@ public class SchemaBrowsePanel
         WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( EDIT_BUTTON_XPATH ) );
         editButton.click();
         ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened( 1 );
+        wizard.waitUntilWizardOpened();
         return wizard;
     }
 

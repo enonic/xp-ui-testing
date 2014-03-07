@@ -85,7 +85,7 @@ public class AccountsPage
         // 2. click by 'Edit' and open Wizard page.
         AddNewUserWizard wizardPage = openForEditSystemUser();
 
-        wizardPage.waitUntilWizardOpened( 1 );
+        wizardPage.waitUntilWizardOpened();
         getLogger().info( "AddNewUserWizard  was successfully opened,  username  is : " + userToUpdate.getUserInfo().getName() );
         if ( isCloseWizard )
         {
@@ -106,7 +106,7 @@ public class AccountsPage
     {
         AddNewUserWizard wizardPage = openNewSystemUserWizard();
 
-        wizardPage.waitUntilWizardOpened( 1 );
+        wizardPage.waitUntilWizardOpened();
         getLogger().info( "AddNewUserWizard  was successfully opened,  username  is : " + user.getUserInfo().getName() );
         if ( isCloseWizard )
         {

@@ -58,7 +58,7 @@ public class ItemViewPanelPage
      *
      * @param session {@link TestSession} instance
      */
-    public void waitUntilOpened( TestSession session, String displayName, Integer numberPage )
+    public void waitUntilOpened( String displayName, Integer numberPage )
     {
         String circleXpath = String.format( RED_CIRCLE_XPATH, numberPage.toString() );
         String titleXpath = String.format( VERIFY_TITLE_SPAN_XPATH, displayName );
@@ -66,20 +66,17 @@ public class ItemViewPanelPage
         waitUntilVisible( By.xpath( titleXpath ) );
     }
 
-    public void doCloseContentInfoView()
+    public void close()
     {
         closeButton.click();
     }
 
-    public void doEditContentAndCloseWizard( String contentDisplayName, BaseAbstractContent newContent )
+    public ContentWizardPanel clickToolbarEdit()
     {
         editButtonToolbar.click();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-        //when content opened and the 'Edit' button pressed, new wizard page appears and '2'  should be present in the red circle.
-        wizard.waitUntilWizardOpened( 2 );
-        wizard.typeData( newContent );
-        wizard.save();
-        wizard.close();
+        wizard.waitUntilWizardOpened();
+        return wizard;
     }
 
     public ConfirmationDialog openDeleteConfirmationDialog()

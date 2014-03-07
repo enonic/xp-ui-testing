@@ -1,7 +1,5 @@
 package com.enonic.wem.uitest.schema.wizards
 
-import spock.lang.Shared
-
 import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
@@ -10,6 +8,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.LinkRelationship
+import spock.lang.Shared
 
 class RelationshipTypeWizardPanel
     extends BaseGebSpec

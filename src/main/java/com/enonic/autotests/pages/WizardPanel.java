@@ -18,7 +18,8 @@ public abstract class WizardPanel
     extends Application
 {
 
-    public static String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
+    //public static String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
+    public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
 
     public static String APP_BAR_TABMENU_TITLE_XPATH = "//div[@class='tab-menu appbar-tabmenu']//span[@class='label']";
 
@@ -132,9 +133,9 @@ public abstract class WizardPanel
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
      */
-    public void waitUntilWizardOpened( Integer numberPage )
+    public void waitUntilWizardOpened()
     {
-        String circleXpath = String.format( RED_CIRCLE_XPATH, numberPage.toString() );
+        String circleXpath = String.format( RED_CIRCLE_XPATH );
         //String titleXpath = String.format(APP_BAR_TABMENU_TITLE, displayName);
         waitUntilVisible( By.xpath( circleXpath ) );
         //TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));

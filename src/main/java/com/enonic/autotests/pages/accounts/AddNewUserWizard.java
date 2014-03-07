@@ -280,7 +280,7 @@ public class AddNewUserWizard
         // 2. Click 'Accounts' and Go back to the 'AddNewSpaceWizard'
         homepage.openAccountsApplication();
         // 3. verify that the wizard is opened.
-        waitUntilWizardOpened( 1 );
+        waitUntilWizardOpened();
 
     }
 }

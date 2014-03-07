@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -241,32 +240,6 @@ public class BrowsePanel
             throw new TestFrameworkException( "the 'Clear selection' Link was not found, probably wrong xpath locator!" );
         }
         return clearSelectionLink.getText();
-    }
-
-    /**
-     * @param displayName
-     */
-    public void selectRowByContentDisplayName( String displayName )
-    {
-        String rowXpath = String.format( TD_CONTENT_DISPLAYNAME, displayName );
-        waitAndFind( By.xpath( rowXpath ) );
-        //findElement(By.xpath(rowXpath)).click();
-
-        Actions builder = new Actions( getDriver() );
-        builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
-    }
-
-    /**
-     * @param fullName
-     */
-    public void selectRowByContentPath( String contentPath )
-    {
-        String rowXpath = String.format( TD_CONTENT_NAME, contentPath );
-        waitAndFind( By.xpath( rowXpath ) );
-        //findElement(By.xpath(rowXpath)).click();
-
-        Actions builder = new Actions( getDriver() );
-        builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
     }
 
 }

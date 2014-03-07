@@ -15,7 +15,6 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -159,7 +158,7 @@ public class ContentBrowsePanel
         }
         return this;
     }
-   
+
 
     /**
      * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
@@ -258,27 +257,9 @@ public class ContentBrowsePanel
         getLogger().info( "check box was selected, content path is:" + path.toString() );
     }
 
-
-    public ContentWizardPanel openEditWizardPage( BaseAbstractContent content )
-    {
-        expandContent( content.getParent() );
-        boolean isExist = exists( content.getPath() );
-        //        boolean isPresent = findContentInTable( content, 2l );
-        if ( !isExist )
-        {
-            throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
-        }
-        // 2. check out is content present  in a parent space and select it to edit.
-        selectCheckbox( content );
-        editButton.click();
-        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened( 1 );
-        return wizard;
-    }
-
     /**
      * Clicks by 'New' button and opens NewContentDialog
-     * 
+     *
      * @return
      */
     public NewContentDialog clickToolbarNew()
@@ -364,7 +345,29 @@ public class ContentBrowsePanel
         openButton.click();
         ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
         int expectedNumberOfPage = 1;
-        cinfo.waitUntilOpened( getSession(), content.getDisplayName(), expectedNumberOfPage );
+        cinfo.waitUntilOpened( content.getDisplayName(), expectedNumberOfPage );
+        return cinfo;
+    }
+
+    /**
+     * @param fullName
+     */
+    public ContentBrowsePanel selectRowByContentPath( String contentPath )
+    {
+        String rowXpath = String.format( TD_CONTENT_NAME, contentPath );
+        waitAndFind( By.xpath( rowXpath ) );
+        //findElement(By.xpath(rowXpath)).click();
+
+        Actions builder = new Actions( getDriver() );
+        builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
+        return this;
+    }
+
+    public ItemViewPanelPage clickToolbarOpen()
+    {
+        openButton.click();
+        ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
+        // cinfo.waitUntilOpened( getSession(), contentDisplayName, expectedNumberOfPage );
         return cinfo;
     }
 
@@ -398,7 +401,7 @@ public class ContentBrowsePanel
 
         ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
         int expectedNumberOfPage = 1;
-        cinfo.waitUntilOpened( getSession(), content.getDisplayName(), expectedNumberOfPage );
+        cinfo.waitUntilOpened( content.getDisplayName(), expectedNumberOfPage );
         return cinfo;
     }
 

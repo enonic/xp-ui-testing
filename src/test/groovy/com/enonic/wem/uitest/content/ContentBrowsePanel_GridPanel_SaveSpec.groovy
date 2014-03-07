@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -39,7 +39,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-		addContent(contentBrowsePanel, content, true)
+        addContent( contentBrowsePanel, content, true )
 
         then:
         contentBrowsePanel.exists( content.getPath() );
@@ -55,8 +55,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-		addContent(contentBrowsePanel, content, false)
-		contentBrowsePanel.goToAppHome();
+        addContent( contentBrowsePanel, content, false )
+        contentBrowsePanel.goToAppHome();
 
         then:
         contentBrowsePanel.exists( content.getPath() )
@@ -73,7 +73,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-       	addContent(contentBrowsePanel, content, true)
+        addContent( contentBrowsePanel, content, true )
 
         then:
         !contentBrowsePanel.isRowExapnded( content.getParent().toString() )
@@ -89,7 +89,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-       	addContent(contentBrowsePanel, content, false)
+        addContent( contentBrowsePanel, content, false )
         contentBrowsePanel.goToAppHome()
 
         then:
@@ -107,7 +107,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         contentBrowsePanel.expandContent( content.getParent() )
-      	addContent(contentBrowsePanel, content, true)
+        addContent( contentBrowsePanel, content, true )
 
         then:
         contentBrowsePanel.exists( content.getPath() )
@@ -124,7 +124,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         contentBrowsePanel.expandContent( content.getParent() )
-      	addContent(contentBrowsePanel, content, true)
+        addContent( contentBrowsePanel, content, true )
         contentBrowsePanel.openHomePage();
         NavigatorHelper.openContentApp( getTestSession() )
 
@@ -140,13 +140,15 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withName( "editname" ).
             withDisplayName( "editnametest" ).
             build();
-       	addContent(contentBrowsePanel, contentToEdit, true)
+        addContent( contentBrowsePanel, contentToEdit, true )
 
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit )
-        ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( contentToEdit )
-        contentInfoPage.doEditContentAndCloseWizard( contentToEdit.getDisplayName(), newcontent )
-        contentInfoPage.doCloseContentInfoView();
+        ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath(
+            contentToEdit.getPath().toString() ).clickToolbarOpen()
+        ContentWizardPanel wizard = contentInfoPage.clickToolbarEdit()
+        wizard.typeData( newcontent ).save().close()
+        contentInfoPage.close();
         contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT )
         contentBrowsePanel.expandContent( newcontent.getParent() )
 
@@ -163,12 +165,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withName( "editdisplayname" ).
             withDisplayName( "editdisplayname" ).
             build()
-       	addContent(contentBrowsePanel, contentToEdit, true)
+        addContent( contentBrowsePanel, contentToEdit, true )
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( contentToEdit )
-        contentInfoPage.doEditContentAndCloseWizard( contentToEdit.getDisplayName(), newcontent )
-        contentInfoPage.doCloseContentInfoView();
         contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
         contentBrowsePanel.expandContent( newcontent.getParent() );
 

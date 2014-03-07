@@ -73,7 +73,7 @@ public class AccountService
         AccountsPage accountspage = NavigatorHelper.openAccounts( testSession );
 
         AddNewUserWizard wizard = accountspage.openNewSystemUserWizard();
-        wizard.waitUntilWizardOpened( 1 );
+        wizard.waitUntilWizardOpened();
         return wizard.verifyAllEmptyFields( testSession );
     }
 
