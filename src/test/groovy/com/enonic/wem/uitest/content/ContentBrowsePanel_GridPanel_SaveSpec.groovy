@@ -74,7 +74,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build()
 
         when:
-        contentBrowsePanel.selectParentForContent( content.getPath().getParentPath() )
+        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() )
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close()
 
         then:
@@ -91,7 +91,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build()
 
         when:
-        contentBrowsePanel.selectParentForContent( content.getPath().getParentPath() )
+        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() )
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save()
         contentBrowsePanel.goToAppHome()
 
@@ -110,7 +110,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         contentBrowsePanel.expandContent( content.getParent() )
-        contentBrowsePanel.selectParentForContent( content.getPath().getParentPath() )
+        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() )
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close()
 
         then:
@@ -128,7 +128,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         contentBrowsePanel.expandContent( content.getParent() )
-        contentBrowsePanel.selectParentForContent( content.getPath().getParentPath() );
+        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save()
         contentBrowsePanel.openHomePage();
         NavigatorHelper.openContentApp( getTestSession() )
@@ -145,7 +145,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withName( "editname" ).
             withDisplayName( "editnametest" ).
             build()
-        contentBrowsePanel.selectParentForContent( contentToEdit.getPath().getParentPath() );
+        contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() );
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() ).typeData(
             contentToEdit ).save().close()
 
@@ -172,7 +172,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withName( "editdisplayname" ).
             withDisplayName( "editdisplayname" ).
             build()
-        contentBrowsePanel.selectParentForContent( contentToEdit.getPath().getParentPath() )
+        contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() )
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() ).typeData(
             contentToEdit ).save().close();
 

@@ -280,7 +280,7 @@ public class ContentBrowsePanel
      *
      * @param parentContentPath
      */
-    public void selectParentForContent( ContentPath parentContentPath )
+    public void clickByParentCheckbox( ContentPath parentContentPath )
     {
         if ( parentContentPath.elementCount() == 0 )
         {

@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -91,26 +89,6 @@ public class ItemViewPanelPage
         return dialog;
     }
 
-    /**
-     * @param content
-     * @return
-     */
-    public boolean verifyContentInfoPage( BaseAbstractContent content )
-    {
-        boolean result = true;
-        List<WebElement> elems = findElements( By.xpath( String.format( H1_DISPLAY_NAME_XPATH, content.getDisplayName() ) ) );
-        result &= elems.size() > 0;
-        String dispalayName = elems.get( 0 ).getText();
-        result &= content.getDisplayName().equals( dispalayName );
-        if ( !result )
-        {
-            getLogger().info( "the actual dispalyName and expected are not equal!" );
-        }
-        String fullName = content.getPath().toString();
-        elems = findElements( By.xpath( String.format( H4_FULL_NAME_XPATH, fullName ) ) );
-        result &= elems.size() > 0;
-        return result;
-    }
 
     /**
      * @param content

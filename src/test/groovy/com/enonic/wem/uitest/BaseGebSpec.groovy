@@ -104,7 +104,7 @@ class BaseGebSpec
             withParent( ContentPath.from( parentName ) ).build();
 
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-		contentBrowsePanel.selectParentForContent(ContentPath.from( parentName ))
+		contentBrowsePanel.clickByParentCheckbox(ContentPath.from( parentName ))
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
         return content;
     }

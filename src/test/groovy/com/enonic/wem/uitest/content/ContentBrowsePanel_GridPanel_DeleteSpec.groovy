@@ -92,7 +92,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
 
 
-        contentBrowsePanel.selectParentForContent( parent.getPath() )
+        contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         String archiveName = NameHelper.unqiueName( "archive" )
         BaseAbstractContent content = ArchiveContent.builder().
             withName( archiveName ).
