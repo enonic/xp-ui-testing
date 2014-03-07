@@ -10,6 +10,8 @@ import com.enonic.autotests.vo.contentmanager.ArchiveContent
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
+import com.enonic.wem.api.schema.content.ContentTypeName;
+
 import geb.spock.GebSpec
 import spock.lang.Shared
 
@@ -89,7 +91,7 @@ class BaseGebSpec
             withParent( ContentPath.ROOT ).build();
 
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        addContent( contentBrowsePanel, content, true )
+		contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
         return content;
     }
 
@@ -102,24 +104,9 @@ class BaseGebSpec
             withParent( ContentPath.from( parentName ) ).build();
 
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        addContent( contentBrowsePanel, content, true )
+		contentBrowsePanel.selectParentForContent(ContentPath.from( parentName ))
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
         return content;
-    }
-
-    void addContent( ContentBrowsePanel contentBrowsePanel, BaseAbstractContent content, boolean isClose )
-    {
-        if ( !content.getPath().isRoot() )
-        {
-            contentBrowsePanel.selectParentForContent( content.getPath().getParentPath() );
-        }
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() )
-        wizard.typeData( content ).save();
-        if ( isClose )
-        {
-            wizard.close();
-            contentBrowsePanel.waituntilPageLoaded( 1 )
-        }
-
     }
 
 

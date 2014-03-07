@@ -14,7 +14,7 @@ class ContentBrowsePanelToolbarSpec
         go "admin"
 
         when:
-        ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( getTestSession() );
+        ContentBrowsePanel cmPage = NavigatorHelper.openContentApp( getTestSession() )
 
         then:
         !cmPage.isDeleteButtonEnabled();
