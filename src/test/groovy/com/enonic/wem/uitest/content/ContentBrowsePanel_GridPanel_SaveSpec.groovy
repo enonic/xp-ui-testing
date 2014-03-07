@@ -8,6 +8,7 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.*
 import com.enonic.wem.api.content.ContentPath
+import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -39,7 +40,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         when:
-        addContent( contentBrowsePanel, content, true )
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() );
+        wizard.typeData( content ).save().close();
 
         then:
         contentBrowsePanel.exists( content.getPath() );
