@@ -158,7 +158,7 @@ public class ContentBrowsePanel
         }
         return this;
     }
-
+   
 
     /**
      * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
@@ -260,7 +260,7 @@ public class ContentBrowsePanel
 
     /**
      * Clicks by 'New' button and opens NewContentDialog
-     *
+     * 
      * @return
      */
     public NewContentDialog clickToolbarNew()
@@ -313,45 +313,11 @@ public class ContentBrowsePanel
 
     }
 
+   
     /**
-     * Clicks by row with content and  clicks by 'Open' button.
-     *
-     * @param content
-     * @return {@ItemViewPanelPage} instance
-     */
-    public ItemViewPanelPage doOpenContent( BaseAbstractContent content )
-    {
-        //doWorkAround();
-        expandContent( content.getParent() );
-        boolean isPresent = exists( content.getPath() );
-        if ( !isPresent )
-        {
-            throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
-        }
-        else
-        {
-            getLogger().info( "doOpenContent::: content with name equals " + content.getDisplayName() + " was found" );
-        }
-        String fullName = content.getPath().toString();
-        sleep( 700 );
-        //1. select a content
-        selectRowByContentPath( fullName );
-        if ( !openButton.isEnabled() )
-        {
-            getLogger().info( "'Open' link is disabled!" );
-            new WebDriverWait( getDriver(), 2 ).until(
-                ExpectedConditions.elementToBeClickable( By.xpath( "//div[@class='toolbar']/button[text()='Open']" ) ) );
-        }
-        //2. click by 'Open' button
-        openButton.click();
-        ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
-        int expectedNumberOfPage = 1;
-        cinfo.waitUntilOpened( content.getDisplayName(), expectedNumberOfPage );
-        return cinfo;
-    }
-
-    /**
-     * @param fullName
+     * Clicks by row with content(not clicks by a checkbox)
+     * 
+     * @param contentPath
      */
     public ContentBrowsePanel selectRowByContentPath( String contentPath )
     {
@@ -363,12 +329,11 @@ public class ContentBrowsePanel
         sleep(500);
         return this;
     }
-
+    
     public ItemViewPanelPage clickToolbarOpen()
     {
-        openButton.click();
+    	openButton.click();
         ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
-        // cinfo.waitUntilOpened( getSession(), contentDisplayName, expectedNumberOfPage );
         return cinfo;
     }
 
@@ -402,7 +367,7 @@ public class ContentBrowsePanel
 
         ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
         int expectedNumberOfPage = 1;
-        cinfo.waitUntilOpened( content.getDisplayName(), expectedNumberOfPage );
+        cinfo.waitUntilOpened(content.getDisplayName(), expectedNumberOfPage );
         return cinfo;
     }
 

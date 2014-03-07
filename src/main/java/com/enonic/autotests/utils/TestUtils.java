@@ -28,7 +28,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
 
 public class TestUtils
 {
@@ -42,25 +41,6 @@ public class TestUtils
     private TestUtils()
     {
 
-    }
-
-
-    /**
-     * @param ctype
-     * @return
-     */
-    public static ContentTypeName getContentType( String ctype )
-    {
-        ContentTypeName result = null;
-        ContentTypeName[] values = ContentTypeName.values();
-        for ( ContentTypeName val : values )
-        {
-            if ( val.getValue().equalsIgnoreCase( ctype ) )
-            {
-                result = val;
-            }
-        }
-        return result;
     }
 
 

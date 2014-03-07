@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
+import com.enonic.autotests.vo.contentmanager.ArchiveContent
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
@@ -87,9 +88,18 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             withName( NameHelper.unqiueName( "parent" ) ).
             withDisplayName( "parent" ).
             build();
-        addContent( contentBrowsePanel, parent, true )
+        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
-        addArchiveToParent( parent.getName() )
+
+
+        contentBrowsePanel.selectParentForContent( parent.getPath() )
+        String archiveName = NameHelper.unqiueName( "archive" )
+        BaseAbstractContent content = ArchiveContent.builder().
+            withName( archiveName ).
+            withDisplayName( "archive" ).
+            withParent( ContentPath.from( parent.getName() ) ).build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( parent ).save().close();
+
 
         List<BaseAbstractContent> contentList = new ArrayList<>()
         contentList.add( addArchiveToParent( parent.getName() ) )

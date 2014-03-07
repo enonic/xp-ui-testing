@@ -12,7 +12,6 @@ import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ArticleContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-import com.enonic.autotests.vo.contentmanager.MixinContent;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -165,11 +164,11 @@ public class ContentWizardPanel
      */
     private void populateContentForm( TestSession session, BaseAbstractContent content )
     {
-        if ( content instanceof MixinContent )
-        {
-            MixinWizardTab tab = new MixinWizardTab( session );
-            //tab.populateAddresses((MixinContent) content);
-        }
+//        if ( content instanceof MixinContent )
+//        {
+//            MixinWizardTab tab = new MixinWizardTab( session );
+//            //tab.populateAddresses((MixinContent) content);
+//        }
         if ( content instanceof ArticleContent )
         {
 

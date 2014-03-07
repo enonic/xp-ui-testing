@@ -1,6 +1,7 @@
 package com.enonic.autotests.vo.contentmanager;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName;
+
 
 
 public class FolderContent
@@ -10,7 +11,7 @@ public class FolderContent
     protected FolderContent( Builder<?> builder )
     {
         super( builder );
-        setContentTypeName( ContentTypeName.FOLDER.getValue() );
+        setContentTypeName( ContentTypeName.folder().toString() );
     }
 
     public static abstract class Builder<T extends FolderContent>

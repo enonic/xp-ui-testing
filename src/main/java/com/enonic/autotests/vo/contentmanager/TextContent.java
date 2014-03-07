@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo.contentmanager;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
 
 public class TextContent
@@ -10,7 +10,7 @@ public class TextContent
     protected TextContent( Builder<?> builder )
     {
         super( builder );
-        setContentTypeName( ContentTypeName.TEXT.getValue() );
+        setContentTypeName( ContentTypeName.textMedia().toString() );
 
     }
 

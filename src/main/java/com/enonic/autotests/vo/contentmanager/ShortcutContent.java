@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo.contentmanager;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
 
 public class ShortcutContent
@@ -10,7 +10,7 @@ public class ShortcutContent
     protected ShortcutContent( Builder<?> builder )
     {
         super( builder );
-        setContentTypeName( ContentTypeName.SHORTCUT.getValue() );
+        setContentTypeName( ContentTypeName.shortcut().toString() );
 
     }
 

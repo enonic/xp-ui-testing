@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo.contentmanager;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
 public class StructuredContent
     extends BaseAbstractContent
@@ -9,7 +9,7 @@ public class StructuredContent
     public StructuredContent( Builder<?> builder )
     {
         super( builder );
-        setContentTypeName( ContentTypeName.STRUCTURED.getValue() );
+        setContentTypeName( ContentTypeName.structured().toString() );
 
 
     }

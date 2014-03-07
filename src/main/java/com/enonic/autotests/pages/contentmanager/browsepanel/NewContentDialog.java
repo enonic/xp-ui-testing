@@ -65,46 +65,4 @@ public class NewContentDialog
         return wizard;
 
     }
-
-    /**
-     * Predefined names of content type used.
-     */
-    public enum ContentTypeName
-    {
-        PAGE( "page" ),
-        DATA( "data" ),
-        TEXT( "text" ),
-        MEDIA( "media" ),
-        UNSTRUCTURED( "unstructured" ),
-        STRUCTURED( "structured" ),
-        MIXIN( "mixin" ),
-        CITATION( "citation" ),
-        LINK( "link" ),
-        SPACE( "space" ),
-        SHORTCUT( "shortcut" ),
-        FOLDER( "folder" ),
-        ARCHIVE( "archive" );
-
-        private String value;
-
-        /**
-         * Constructor.
-         *
-         * @param value
-         */
-        private ContentTypeName( String value )
-        {
-            this.value = value;
-        }
-
-        public String getValue()
-        {
-            return value;
-        }
-
-        public void setValue( String value )
-        {
-            this.value = value;
-        }
-    }
 }

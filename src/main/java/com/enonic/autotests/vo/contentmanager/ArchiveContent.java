@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo.contentmanager;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
 
 public class ArchiveContent
@@ -10,7 +10,7 @@ public class ArchiveContent
     protected ArchiveContent( Builder<?> builder )
     {
         super( builder );
-        setContentTypeName( ContentTypeName.ARCHIVE.getValue() );
+        setContentTypeName( ContentTypeName.archiveMedia().toString() );
     }
 
     public static abstract class Builder<T extends ArchiveContent>

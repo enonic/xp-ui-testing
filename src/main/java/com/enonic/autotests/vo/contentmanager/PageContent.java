@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo.contentmanager;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
 
 public class PageContent
@@ -10,7 +10,7 @@ public class PageContent
     public PageContent( Builder<?> builder )
     {
         super( builder );
-        setContentTypeName( ContentTypeName.PAGE.getValue() );
+        setContentTypeName( ContentTypeName.page().toString() );
     }
 
     public static abstract class Builder<T extends PageContent>

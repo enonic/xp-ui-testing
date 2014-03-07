@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo.contentmanager;
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
 
 public class DataContent
@@ -10,7 +10,7 @@ public class DataContent
     protected DataContent( Builder<?> builder )
     {
         super( builder );
-        setContentTypeName( ContentTypeName.DATA.getValue() );
+        setContentTypeName( ContentTypeName.dataMedia().toString() );
     }
 
     public static abstract class Builder<T extends DataContent>

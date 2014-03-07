@@ -26,19 +26,17 @@ class ContentItemViewPanelSpec
     def "GIVEN content App BrowsePanel and existing content WHEN content selected and Open button have clicked THEN title with content display-name showed"()
     {
         given:
-        String contentName = NameHelper.unqiueName( "itemviewtest" );
+        String contentName = NameHelper.unqiueName( "itemviewtest" )
         BaseAbstractContent content = FolderContent.builder().withName( contentName ).withDisplayName( "itemviewtest" ).withParent(
             ContentPath.ROOT ).build();
-        addContent( contentBrowsePanel, content, true )
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
 
         when:
         ItemViewPanelPage itemView = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
         itemView.waitUntilOpened( content.getDisplayName(), 1 )
 
-        // ItemViewPanelPage contentInfoPage = cmPage.doOpenContent( content )
-
         then:
-        itemView.getTitle().equals( content.getDisplayName() );
+        itemView.getTitle().equals( content.getDisplayName() )
 
     }
 
