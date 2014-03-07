@@ -241,7 +241,7 @@ public class ContentBrowsePanel
     }
 
 
-    public void selectRowWithContent( ContentPath path )
+    public ContentBrowsePanel selectRowByCheckbox( ContentPath path )
     {
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
         getLogger().info( "tries to find content in table:" + path.toString() );
@@ -255,6 +255,7 @@ public class ContentBrowsePanel
         sleep( 700 );
         findElement( By.xpath( contentCheckBoxXpath ) ).click();
         getLogger().info( "check box was selected, content path is:" + path.toString() );
+        return this;
     }
 
     /**
@@ -356,10 +357,10 @@ public class ContentBrowsePanel
     {
         String rowXpath = String.format( TD_CONTENT_NAME, contentPath );
         waitAndFind( By.xpath( rowXpath ) );
-        //findElement(By.xpath(rowXpath)).click();
 
         Actions builder = new Actions( getDriver() );
         builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
+        sleep(500);
         return this;
     }
 
@@ -413,7 +414,12 @@ public class ContentBrowsePanel
     public void waituntilPageLoaded( long timeout )
     {
         TestUtils.saveScreenshot( getSession() );
-        new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
+        boolean isGridLoaded = waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ) , timeout);
+        if(!isGridLoaded)
+        {
+        	throw new TestFrameworkException("content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!");
+        }
+        //new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
     }
 
     /**

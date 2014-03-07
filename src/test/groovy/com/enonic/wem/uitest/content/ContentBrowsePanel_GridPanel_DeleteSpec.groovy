@@ -72,7 +72,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         browsePanel.doClearSelection()
 
         when:
-        contentBrowsePanel.selectRowWithContent( content.getPath() )
+        contentBrowsePanel.selectRowByCheckbox( content.getPath() )
         contentBrowsePanel.deleteSelected();
 
         then:

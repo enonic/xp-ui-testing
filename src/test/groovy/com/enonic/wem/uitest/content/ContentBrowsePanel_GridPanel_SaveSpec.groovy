@@ -144,8 +144,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit )
-        ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath(
-            contentToEdit.getPath().toString() ).clickToolbarOpen()
+        ItemViewPanelPage contentInfoPage = contentBrowsePanel.expandContent(contentToEdit.getParent()).selectRowByCheckbox(
+            contentToEdit.getPath()).clickToolbarOpen()
         ContentWizardPanel wizard = contentInfoPage.clickToolbarEdit()
         wizard.typeData( newcontent ).save().close()
         contentInfoPage.close();
@@ -168,8 +168,13 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         addContent( contentBrowsePanel, contentToEdit, true )
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
-        ItemViewPanelPage contentInfoPage = contentBrowsePanel.doOpenContent( contentToEdit )
-        contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+        
+		
+		ItemViewPanelPage contentInfoPage = contentBrowsePanel.expandContent(contentToEdit.getParent()).selectRowByCheckbox(
+			contentToEdit.getPath()).clickToolbarOpen()
+			
+		contentInfoPage.clickToolbarEdit().typeData( newcontent ).save().close()
+		contentInfoPage.close();
         contentBrowsePanel.expandContent( newcontent.getParent() );
 
         then:
