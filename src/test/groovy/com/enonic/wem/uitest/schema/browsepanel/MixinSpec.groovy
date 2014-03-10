@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
@@ -16,20 +17,30 @@ class MixinSpec
     @Shared
     String MIXIN_KEY = "mixin"
 
+    @Shared
+    SchemaBrowsePanel schemaBrowsePanel
+
+    def setup()
+    {
+        go "admin"
+        schemaBrowsePanel = NavigatorHelper.openSchemaManager( getTestSession() );
+    }
+
+
     def "GIVEN BrowsePanel WHEN adding Mixin-adress  THEN the new mixin should be listed in the table"()
     {
         given:
-        go "admin"
         String mixinCFG = MixinAddress.CFG
-        ContentType mixin = ContentType.with().name( "adressmixin" ).kind( KindOfContentTypes.MIXIN ).configuration( mixinCFG ).build();
+        ContentType mixin = ContentType.with().name( NameHelper.unqiueName( "adressmixin" ) ).kind(
+            KindOfContentTypes.MIXIN ).configuration( mixinCFG ).build();
         getTestSession().put( MIXIN_KEY, mixin );
 
         when:
-        contentTypeService.createContentType( getTestSession(), mixin, true )
+        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.MIXIN.getValue() ).typeData( mixin ).save().close()
 
         then:
         SchemaBrowsePanel grid = new SchemaBrowsePanel( getTestSession() )
-        grid.isContentTypePresentInTable( mixin )
+        grid.exists( mixin )
 
     }
 
@@ -37,19 +48,19 @@ class MixinSpec
     def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, name changed  Then the Mixin whith new name should be listed in the table"()
     {
         given:
-        go "admin"
-
-        ContentType ct = (ContentType) getTestSession().get( MIXIN_KEY );
-        ContentType newMixin = ct.cloneContentType();
+        ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY );
+        ContentType newMixin = mixinToEdit.cloneContentType();
         String newName = NameHelper.unqiueName( "mixinrenamed" );
         newMixin.setName( newName );
 
         when:
-        SchemaBrowsePanel schemasPage = contentTypeService.editContentType( getTestSession(), ct, newMixin );
-        ct.setName( newName );
+        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(),
+                                                    mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
+            newMixin ).save().close()
+        mixinToEdit.setName( newName );
 
         then:
-        schemasPage.isContentTypePresentInTable( newMixin );
+        schemaBrowsePanel.exists( newMixin );
 
     }
 
@@ -57,32 +68,33 @@ class MixinSpec
     def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, display-name changed  Then the Mixin whith new display-name should be listed in the table"()
     {
         given:
-        go "admin"
 
-        ContentType ct = (ContentType) getTestSession().get( MIXIN_KEY );
-        ContentType newMixin = ct.cloneContentType();
+        ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY );
+        ContentType newMixin = mixinToEdit.cloneContentType();
         String newDisplayName = "change display name test";
         // set a new display name:
         newMixin.setDisplayNameInConfig( newDisplayName );
 
         when:
-        SchemaBrowsePanel schemasPage = contentTypeService.editContentType( getTestSession(), ct, newMixin )
-        ct.setDisplayNameInConfig( newDisplayName );
+        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(),
+                                                    mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
+            newMixin ).save().close()
+        mixinToEdit.setDisplayNameInConfig( newDisplayName );
         then:
-        schemasPage.isContentTypePresentInTable( newMixin )
+        schemaBrowsePanel.exists( newMixin )
     }
 
     def "GIVEN BrowsePanel WHEN existing Mixin selected and clicking Delete Then Mixin is removed from list"()
 
     {
         given:
-        go "admin"
         ContentType mixinToDelete = (ContentType) getTestSession().get( MIXIN_KEY )
 
         when:
-        SchemaBrowsePanel schemasPage = contentTypeService.deleteContentType( getTestSession(), mixinToDelete );
+        schemaBrowsePanel.selectRowWithContentType( mixinToDelete.getName(),
+                                                    mixinToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()
 
         then:
-        !schemasPage.isContentTypePresentInTable( mixinToDelete );
+        !schemaBrowsePanel.exists( mixinToDelete );
     }
 }

@@ -7,8 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
@@ -158,7 +156,7 @@ public class ContentBrowsePanel
         }
         return this;
     }
-   
+
 
     /**
      * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
@@ -260,7 +258,7 @@ public class ContentBrowsePanel
 
     /**
      * Clicks by 'New' button and opens NewContentDialog
-     * 
+     *
      * @return
      */
     public NewContentDialog clickToolbarNew()
@@ -313,10 +311,10 @@ public class ContentBrowsePanel
 
     }
 
-   
+
     /**
      * Clicks by row with content(not clicks by a checkbox)
-     * 
+     *
      * @param contentPath
      */
     public ContentBrowsePanel selectRowByContentPath( String contentPath )
@@ -326,13 +324,13 @@ public class ContentBrowsePanel
 
         Actions builder = new Actions( getDriver() );
         builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
-        sleep(500);
+        sleep( 500 );
         return this;
     }
-    
+
     public ItemViewPanelPage clickToolbarOpen()
     {
-    	openButton.click();
+        openButton.click();
         ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
         return cinfo;
     }
@@ -367,7 +365,7 @@ public class ContentBrowsePanel
 
         ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
         int expectedNumberOfPage = 1;
-        cinfo.waitUntilOpened(content.getDisplayName(), expectedNumberOfPage );
+        cinfo.waitUntilOpened( content.getDisplayName(), expectedNumberOfPage );
         return cinfo;
     }
 
@@ -379,10 +377,11 @@ public class ContentBrowsePanel
     public void waituntilPageLoaded( long timeout )
     {
         TestUtils.saveScreenshot( getSession() );
-        boolean isGridLoaded = waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ) , timeout);
-        if(!isGridLoaded)
+        boolean isGridLoaded = waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ), timeout );
+        if ( !isGridLoaded )
         {
-        	throw new TestFrameworkException("content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!");
+            throw new TestFrameworkException(
+                "content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!" );
         }
         //new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
     }

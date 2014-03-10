@@ -2,20 +2,30 @@ package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.LinkRelationship
+import spock.lang.Shared
 
 class RelationshipSpec
     extends BaseGebSpec
 {
 
+    @Shared
+    SchemaBrowsePanel schemaBrowsePanel
+
+    def setup()
+    {
+        go "admin"
+        schemaBrowsePanel = NavigatorHelper.openSchemaManager( getTestSession() );
+    }
+
 
     def "GIVEN BrowsePanel WHEN adding relationship  THEN the new relationship should be listed in the table"()
     {
         given:
-        go "admin"
         String relCFG = LinkRelationship.CFG
         String relationshipName = NameHelper.unqiueName( "relationship" );
         ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
@@ -23,50 +33,53 @@ class RelationshipSpec
         relationship.setDisplayNameInConfig( "testrelationship" );
 
         when:
-        SchemaBrowsePanel grid = (SchemaBrowsePanel) contentTypeService.createContentType( getTestSession(), relationship, true );
+        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData(
+            relationship ).save().close()
 
         then:
-        grid.isContentTypePresentInTable( relationship );
+        schemaBrowsePanel.exists( relationship );
     }
 
     def "GIVEN BrowsePanel and existing relationship  WHEN relationship deleted THEN the this relationship should not be listed in the table"()
     {
         given:
-        go "admin"
         String relCFG = LinkRelationship.CFG
         String relationshipName = NameHelper.unqiueName( "relationship" );
         ContentType relToDelete = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToDelete.setDisplayNameInConfig( "relationshiptodelete" );
-        SchemaBrowsePanel schemasPage = (SchemaBrowsePanel) contentTypeService.createContentType( getTestSession(), relToDelete, true );
+        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData(
+            relToDelete ).save().close()
 
         when:
-        contentTypeService.deleteContentType( getTestSession(), relToDelete );
+        schemaBrowsePanel.selectRowWithContentType( relToDelete.getName(),
+                                                    relToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()
 
         then:
-        !schemasPage.isContentTypePresentInTable( relToDelete );
+        !schemaBrowsePanel.exists( relToDelete );
     }
 
     def "GIVEN BrowsePanel and existing relationship  WHEN relationship renamed THEN  relationship with new name should be listed in the table"()
     {
         given:
-        go "admin"
         String relCFG = LinkRelationship.CFG
         String relationshipName = NameHelper.unqiueName( "releditname" );
         ContentType relToEdit = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToEdit.setDisplayNameInConfig( "relationshiptoeditname" );
-        SchemaBrowsePanel schemasPage = (SchemaBrowsePanel) contentTypeService.createContentType( getTestSession(), relToEdit, true );
+        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData(
+            relToEdit ).save().close()
 
 
         when:
         String newName = NameHelper.unqiueName( "newname" );
         ContentType newRelationship = ContentType.with().name( newName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
-        contentTypeService.editContentType( getTestSession(), relToEdit, newRelationship )
+        schemaBrowsePanel.selectRowWithContentType( relToEdit.getName(), relToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
+            newRelationship ).save().close()
 
         then:
-        schemasPage.isContentTypePresentInTable( newRelationship );
+        schemaBrowsePanel.exists( newRelationship );
     }
 }
 

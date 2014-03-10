@@ -30,7 +30,7 @@ public class SelectKindDialog
      * @param kind
      * @return
      */
-    public ContentTypeWizardPanel doSelectKind( String kind )
+    public ContentTypeWizardPanel selectKind( String kind )
     {
         String kindXpath = String.format( KIND, kind );
         boolean isPpresent = waitAndFind( By.xpath( kindXpath ) );

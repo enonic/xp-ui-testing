@@ -3,7 +3,6 @@ package com.enonic.autotests.vo.contentmanager;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 
 
-
 public class FolderContent
     extends BaseAbstractContent
 {

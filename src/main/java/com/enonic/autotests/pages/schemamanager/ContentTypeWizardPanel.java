@@ -95,7 +95,7 @@ public class ContentTypeWizardPanel
      */
     public void doTypeDataAndSave( ContentType contentType )
     {
-        doTypeData( contentType );
+        typeData( contentType );
 
         TestUtils.saveScreenshot( getSession() );
         // 3. check if enabled and press "Save".
@@ -108,14 +108,14 @@ public class ContentTypeWizardPanel
         }
     }
 
-    public void doTypeData( ContentType contentType )
+    public ContentTypeWizardPanel typeData( ContentType contentType )
     {
         // 1. type a data: 'name' and 'Display Name'.
         clearAndType( nameInput, contentType.getName() );
         //2. type the XMLconfig data:
         getLogger().info( "set contenttype configuration " );
         setConfiguration( contentType.getConfigData().trim() );
-
+        return this;
     }
 
 

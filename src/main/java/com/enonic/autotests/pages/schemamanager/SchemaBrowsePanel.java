@@ -52,28 +52,18 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * @param contentTypeToEdit
-     * @param newContentType
-     */
-    public void doEditContentType( ContentType contentTypeToEdit, ContentType newContentType )
-    {
-        ContentTypeWizardPanel wizard = doOpenContentTypeForEdit( contentTypeToEdit );
-        getLogger().info( "## ContentTypeWizardPanel  should be opened, waits title: " + contentTypeToEdit.getName() );
-        wizard.waitUntilWizardOpened();
-        wizard.doTypeDataSaveAndClose( newContentType );
-    }
-
-    /**
      * Expands a folder, that is supertype for a content.
      *
      * @param superTypeName
      */
-    private void doExpandSuperTypeFolder( String superTypeName )
+    public SchemaBrowsePanel expandSuperTypeFolder( String superTypeName )
     {
         if ( superTypeName != null )
         {
             clickByExpander( superTypeName );
         }
+        sleep( 500 );
+        return this;
     }
 
     /**
@@ -82,7 +72,7 @@ public class SchemaBrowsePanel
      * @param contentName        the name of content
      * @param contentDisplayName the display-name of content
      */
-    private void selectRowWithContentType( String contentName, String contentDisplayName )
+    public SchemaBrowsePanel selectRowWithContentType( String contentName, String contentDisplayName )
     {
         String contentTypeXpath = String.format( CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentDisplayName, contentName );
         getLogger().info( "Check that a Content Type to edit is present in the table: " + contentName );
@@ -94,97 +84,36 @@ public class SchemaBrowsePanel
         }
         sleep( 500 );
         elem.click();
+        WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( EDIT_BUTTON_XPATH ) );
         getLogger().info( "content type with name:" + contentName + " was selected in the table!" );
+        return this;
     }
 
-    /**
-     * Expands a supertype folder, click by row with contentype and clicks by 'Edit' button.
-     *
-     * @param contentTypeToEdit
-     * @return {@ContentTypeWizardPanel} insatnce.
-     */
-    public ContentTypeWizardPanel doOpenContentTypeForEdit( ContentType contentTypeToEdit )
+
+    public ContentTypeWizardPanel clickToolbarEdit()
     {
-        String superTypeName = contentTypeToEdit.getSuperTypeNameFromConfig();
-        doExpandSuperTypeFolder( superTypeName );
-        //2. select a content type in a grid
-        selectRowWithContentType( contentTypeToEdit.getName(), contentTypeToEdit.getDisplayNameFromConfig() );
-        WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( EDIT_BUTTON_XPATH ) );
         editButton.click();
         ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
     }
 
-    /**
-     * Select a contentype or mixin or relationship and click by 'Delete' button in toolbar.
-     *
-     * @param contentTypeToDelete
-     */
-    public void doDeleteContentType( ContentType contentTypeToDelete )
+    public DeleteContentTypeDialog clickToolbarDelete()
     {
-        String supertype = contentTypeToDelete.getSuperTypeNameFromConfig();
-        doExpandSuperTypeFolder( supertype );
-
-        selectRowWithContentType( contentTypeToDelete.getName(), contentTypeToDelete.getDisplayNameFromConfig() );
-
-        confirmAndDelete( contentTypeToDelete.getName() );
-
-    }
-
-    /**
-     * Clicks by 'Delete' button confirms and delete a contentype.
-     *
-     * @param contentTypeName
-     */
-    private void confirmAndDelete( String contentTypeName )
-    {
-        // wait for deleteButton(in toolbar) is enabled
-        WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( DELETE_BUTTON_XPATH ) );
-        // click by 'delete' button
         deleteButton.click();
-
         DeleteContentTypeDialog dialog = new DeleteContentTypeDialog( getSession() );
         boolean result = dialog.isOpened();
         if ( !result )
         {
             throw new TestFrameworkException( "Confirm delete space dialog was not opened!" );
         }
-        //confirm deleting
-        dialog.doDelete();
-        boolean isClosed = dialog.waitForClosed();
-        if ( !isClosed )
-        {
-            throw new TestFrameworkException( "Confirm delete space dialog was not closed!" );
-        }
-        getLogger().info( "The Contentent Type  with name: " + contentTypeName + " was deleted!" );
+        return dialog;
     }
 
     /**
-     * @param contentType
-     * @param isWizardShouldBeClosed
+     * @return
      */
-    public void doAddContentType( ContentType contentType, boolean isWizardShouldBeClosed )
-    {
-        ContentTypeWizardPanel wizard = doOpenContentTypeWizard( contentType.getKind().getValue() );
-        if ( isWizardShouldBeClosed )
-        {
-            wizard.doTypeDataSaveAndClose( contentType );
-        }
-        else
-        {
-            wizard.doTypeDataAndSave( contentType );
-        }
-    }
-
-    /**
-     * Clicks by 'New' button from the toolbar, opens modal dialog with title: 'Select Kind', selects
-     * <br>a kind and opens a contentype wizard.
-     *
-     * @param kind
-     * @return {@ContentTypeWizardPanel} instance.
-     */
-    public ContentTypeWizardPanel doOpenContentTypeWizard( String kind )
+    public SelectKindDialog clickToolbarNew()
     {
         newButton.click();
         SelectKindDialog selectDialog = new SelectKindDialog( getSession() );
@@ -192,11 +121,9 @@ public class SchemaBrowsePanel
         if ( !isOpened )
         {
             logError( "SelectKindDialog was not opened!" );
-            throw new TestFrameworkException( String.format( "Error during add new content type  %s, dialog was not opened!", kind ) );
+            throw new TestFrameworkException( " 'Select contrnt type' dialog was not opened!" );
         }
-        getLogger().info( "SelectKindDialog, content type should be selected:" + kind );
-        ContentTypeWizardPanel wizard = selectDialog.doSelectKind( kind );
-        return wizard;
+        return selectDialog;
     }
 
     /**
@@ -234,10 +161,10 @@ public class SchemaBrowsePanel
      * @param contentType
      * @return
      */
-    public boolean isContentTypePresentInTable( ContentType contentType )
+    public boolean exists( ContentType contentType )
     {
         String superTypeName = contentType.getSuperTypeNameFromConfig();
-        doExpandSuperTypeFolder( superTypeName );
+        expandSuperTypeFolder( superTypeName );
         String contentTypeXpath =
             String.format( CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
         getLogger().info( "Check is Space present in table: " + contentTypeXpath );
