@@ -32,6 +32,7 @@ class ContentTypeSpec
 
         when:
         schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+		schemaBrowsePanel.expandSuperTypeFolder(ctype.getSuperTypeNameFromConfig())
 
         then:
         schemaBrowsePanel.exists( ctype )
@@ -84,10 +85,10 @@ class ContentTypeSpec
 
         when:
         schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+		schemaBrowsePanel.expandSuperTypeFolder(ctype.getSuperTypeNameFromConfig())
 
         then:
-        SchemaBrowsePanel grid = new SchemaBrowsePanel( getTestSession() )
-        grid.exists( ctype )
+        schemaBrowsePanel.exists( ctype )
 
     }
 

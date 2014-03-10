@@ -93,9 +93,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
-        String archiveName = NameHelper.unqiueName( "archive" )
         BaseAbstractContent content = ArchiveContent.builder().
-            withName( archiveName ).
+            withName( NameHelper.unqiueName( "archive" ) ).
             withDisplayName( "archive" ).
             withParent( ContentPath.from( parent.getName() ) ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( parent ).save().close();
@@ -112,4 +111,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         then:
         !contentBrowsePanel.exists( contentList.get( 0 ).getPath() )
     }
+	
+
 }
