@@ -127,6 +127,7 @@ public class ContentBrowseFilterPanel
         {
             elems.get( 0 ).click();
         }
+        sleep(1000);
         return elems.get( 0 ).getText();
     }
 
