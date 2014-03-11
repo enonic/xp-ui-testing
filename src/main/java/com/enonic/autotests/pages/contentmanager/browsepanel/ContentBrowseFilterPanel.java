@@ -127,11 +127,12 @@ public class ContentBrowseFilterPanel
         {
             elems.get( 0 ).click();
         }
-        sleep(1000);
+        waitsForSpinnerNotVisible();
+        //sleep(1000);
         return elems.get( 0 ).getText();
     }
 
-    public String getContentTypeFilterCount( String contentTypeName )
+    public Integer getContentTypeFilterCount( String contentTypeName )
     {
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
@@ -139,7 +140,7 @@ public class ContentBrowseFilterPanel
         {
             return null;
         }
-        return elems.get( 0 ).getText();
+        return Integer.valueOf(elems.get( 0 ).getText());
     }
 
     public List<String> getSpaceNames()

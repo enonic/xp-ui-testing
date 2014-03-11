@@ -1,9 +1,11 @@
 package com.enonic.autotests.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 
 public class Application
     extends Page
@@ -29,6 +31,8 @@ public class Application
 
     public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'appbar')]/button[@class='launcher-button']";
 
+    public static final String SPINNER_XPATH =  "//div[@id='api.ui.LoadMask']";
+
     @FindBy(xpath = HOME_BUTTON_XPATH)
     protected WebElement gotoHomeButton;
 
@@ -45,5 +49,14 @@ public class Application
         page.waitUntilAllFramesLoaded();
         return page;
     }
+    public void waitsForSpinnerNotVisible()
+    {
+    	 boolean result = waitsElementNotVisible(By.xpath(SPINNER_XPATH), IMPLICITLY_WAIT);
+         if(!result)
+         {
+         	throw new TestFrameworkException("after "+ IMPLICITLY_WAIT +" second, spinner still present" );
+         }
+    }
+   
 
 }

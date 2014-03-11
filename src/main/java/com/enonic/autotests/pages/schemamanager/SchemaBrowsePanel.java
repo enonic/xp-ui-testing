@@ -58,6 +58,7 @@ public class SchemaBrowsePanel
      */
     public SchemaBrowsePanel expandSuperTypeFolder( String superTypeName )
     {
+    	waitsForSpinnerNotVisible();
         if ( superTypeName != null )
         {
             clickByExpander( superTypeName );
@@ -163,12 +164,10 @@ public class SchemaBrowsePanel
      */
     public boolean exists( ContentType contentType )
     {
-        String superTypeName = contentType.getSuperTypeNameFromConfig();
-        // expandSuperTypeFolder( superTypeName );
         String contentTypeXpath =
             String.format( CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
         getLogger().info( "Check is contenttype is  present in the  table: " + contentTypeXpath );
-
+        waitsForSpinnerNotVisible();
         List<WebElement> elems = findElements( By.xpath( contentTypeXpath ) );
         if ( elems.size() > 0 )
         {
