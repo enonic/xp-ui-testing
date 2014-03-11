@@ -131,6 +131,17 @@ public class ContentBrowseFilterPanel
         return elems.get( 0 ).getText();
     }
 
+    public String getContentTypeFilterCount( String contentTypeName )
+    {
+        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
+        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
+        if ( elems.size() == 0 )
+        {
+            return null;
+        }
+        return elems.get( 0 ).getText();
+    }
+
     public List<String> getSpaceNames()
     {
         return null;

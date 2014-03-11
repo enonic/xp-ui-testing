@@ -167,7 +167,7 @@ public class SchemaBrowsePanel
         // expandSuperTypeFolder( superTypeName );
         String contentTypeXpath =
             String.format( CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
-        getLogger().info( "Check is Space present in table: " + contentTypeXpath );
+        getLogger().info( "Check is contenttype is  present in the  table: " + contentTypeXpath );
 
         List<WebElement> elems = findElements( By.xpath( contentTypeXpath ) );
         if ( elems.size() > 0 )
