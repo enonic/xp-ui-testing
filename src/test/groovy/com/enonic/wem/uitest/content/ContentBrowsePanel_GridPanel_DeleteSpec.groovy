@@ -39,7 +39,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         when:
         contentInfoPage.openDeleteConfirmationDialog().doConfirm()
-        TestUtils.saveScreenshot( getTestSession() )
 
         then:
         !contentBrowsePanel.exists( content.getPath() )

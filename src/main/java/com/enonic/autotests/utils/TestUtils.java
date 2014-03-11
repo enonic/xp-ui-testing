@@ -43,14 +43,10 @@ public class TestUtils
 
     }
 
-
-    /**
-     * @param testSession
-     */
-    public static String saveScreenshot( final TestSession testSession )
+    public static String saveScreenshot( final TestSession testSession, String screenshotName )
     {
         WebDriver driver = testSession.getDriver();
-        String fileName = timeNow() + ".png";
+         String fileName = screenshotName + ".png";
         File folder = new File( "target/screenshots" );
         if ( !folder.exists() )
         {
@@ -74,6 +70,15 @@ public class TestUtils
 
         }
         return fileName;
+    }
+
+    /**
+     * @param testSession
+     */
+    public static String saveScreenshot( final TestSession testSession )
+    {
+    	String fileName = timeNow() + ".png";
+    	return saveScreenshot(testSession, fileName);
     }
 
     public static String timeNow()

@@ -49,7 +49,8 @@ class ContentBrowsePanel_FilterPanel_Spec
 		
         when:
         filterPanel.clickByCleanFilter()
-		TestUtils.saveScreenshot(getTestSession())
+		contentBrowsePanel.waitsForSpinnerNotVisible();
+		TestUtils.saveScreenshot(getTestSession(), "CleanFilter1")
 		
         then:
 		filterPanel.waitForClearFilterLinkNotvisible();
@@ -63,7 +64,8 @@ class ContentBrowsePanel_FilterPanel_Spec
 		
 		when:
 		contentBrowsePanel.getFilterPanel().clickByCleanFilter()
-		TestUtils.saveScreenshot(getTestSession())
+		contentBrowsePanel.waitsForSpinnerNotVisible();
+		TestUtils.saveScreenshot(getTestSession(), "CleanFilter2")
 		
 		then:
 		!contentBrowsePanel.getFilterPanel().isAnySelectionPresent()
