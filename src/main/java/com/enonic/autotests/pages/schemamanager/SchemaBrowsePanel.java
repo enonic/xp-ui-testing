@@ -164,7 +164,7 @@ public class SchemaBrowsePanel
     public boolean exists( ContentType contentType )
     {
         String superTypeName = contentType.getSuperTypeNameFromConfig();
-       // expandSuperTypeFolder( superTypeName );
+        // expandSuperTypeFolder( superTypeName );
         String contentTypeXpath =
             String.format( CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
         getLogger().info( "Check is Space present in table: " + contentTypeXpath );

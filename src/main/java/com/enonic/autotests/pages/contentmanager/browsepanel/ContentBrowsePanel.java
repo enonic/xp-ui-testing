@@ -56,7 +56,7 @@ public class ContentBrowsePanel
     private final String CONTENT_DETAILS_ALL_NAMES_XPATH =
         "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
 
-    private ContentBrowseFilterPanel contentBrowseFilterPanel;
+    private ContentBrowseFilterPanel filterPanel;
 
     /**
      * The constructor.
@@ -68,13 +68,13 @@ public class ContentBrowsePanel
         super( session );
     }
 
-    public ContentBrowseFilterPanel getContentBrowseFilterPanel()
+    public ContentBrowseFilterPanel getFilterPanel()
     {
-        if ( contentBrowseFilterPanel == null )
+        if ( filterPanel == null )
         {
-            contentBrowseFilterPanel = new ContentBrowseFilterPanel( getSession() );
+            filterPanel = new ContentBrowseFilterPanel( getSession() );
         }
-        return contentBrowseFilterPanel;
+        return filterPanel;
     }
 
     public ContentBrowsePanel goToAppHome()
@@ -106,7 +106,7 @@ public class ContentBrowsePanel
      *
      * @return list of names.
      */
-    public List<String> getShowedContentNames()
+    public List<String> getContentNamesFromBrowsePanel()
     {
         List<String> allNames = new ArrayList<>();
         List<WebElement> rows = getDriver().findElements( By.xpath( ALL_NAMES_IN_CONTENT_TABLE_XPATH ) );

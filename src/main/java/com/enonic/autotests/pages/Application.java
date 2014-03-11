@@ -11,6 +11,8 @@ public class Application
 
     public static final long PAGELOAD_TIMEOUT = 4l;
 
+    public static final long REFRESH_TIMEOUT = 1l;
+
     public static final long IMPLICITLY_WAIT = 4l;
 
     public static final long DEFAULT_IMPLICITLY_WAIT = 2l;

@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,11 +27,7 @@ public class ContentBrowseFilterPanel
 
     //this xpath specifies a checkbox for Filtering by 'content type name'
     private String CONTENT_TYPE_FILTER_ITEM =
-        "//div[@class='facet-group-view' and child::h2[text()='Content Type']]//div[@class='facet-entry-view' and child::label[contains(.,'%s')]]/label";
-
-    //this xpath specifies a checkbox for Filtering by 'Space'
-    private String SPACE_FILTER_ITEM =
-        "//div[@class='admin-facet-group' and @name='space']//div[contains(@class,'admin-facet') and descendant::label[contains(.,'%s')]]";
+        "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and child::label[contains(.,'%s')]]//label";
 
     //this xpath specifies a checkbox for Filtering by 'Last Modified'
     private String DATE_FILTER_ITEM =
@@ -82,9 +79,9 @@ public class ContentBrowseFilterPanel
     /**
      * Clicks by link 'Clear Filter', located on the search panel.
      */
-    public void doClearFilter()
+    public void clickByCleanFilter()
     {
-        boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), 2l );
+        boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
         if ( !isVisible )
         {
             getLogger().info( "The link with name 'Clear Filter' was not found!" );
@@ -94,25 +91,22 @@ public class ContentBrowseFilterPanel
         sleep( 500 );
     }
 
-
-    /**
-     * Select a space on the search panel and filter contents.
-     *
-     * @param spaceName , a space name.
-     */
-    public void doFilterBySpaceDisplayName( String spaceName )
+    public boolean isAnySelectionPresent()
     {
-        String spaceXpath = String.format( SPACE_FILTER_ITEM, spaceName );
-        List<WebElement> elems = getSession().getDriver().findElements( By.xpath( spaceXpath ) );
-        if ( elems.size() == 0 )
-        {
-            logError( "space  was not found in the search panel:" + spaceName );
-            throw new ContentFilterException( "space  was not found in the search panel:" + spaceName );
-        }
-        else
-        {
-            elems.get( 0 ).click();
-        }
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        return (Boolean) executor.executeScript(
+            "return window.api.dom.ElementRegistry.getElementById('app.browse.filter.ContentBrowseFilterPanel').hasFilterSet()" );
+
+    }
+
+    public boolean waitForClearFilterLinkVisible()
+    {
+        return waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
+    }
+
+    public boolean waitForClearFilterLinkNotvisible()
+    {
+        return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
     }
 
     /**
@@ -120,7 +114,7 @@ public class ContentBrowseFilterPanel
      *
      * @param contentTypeName
      */
-    public void doFilterByContentType( String contentTypeName )
+    public String selectEntryInContentTypesFilter( String contentTypeName )
     {
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
@@ -133,6 +127,7 @@ public class ContentBrowseFilterPanel
         {
             elems.get( 0 ).click();
         }
+        return elems.get( 0 ).getText();
     }
 
     public List<String> getSpaceNames()

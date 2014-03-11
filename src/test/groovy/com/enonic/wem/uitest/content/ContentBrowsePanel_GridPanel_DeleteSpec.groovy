@@ -93,24 +93,55 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
+        BaseAbstractContent contentToDelete = ArchiveContent.builder().
+            withName( NameHelper.unqiueName( "archive" ) ).
+            withDisplayName( "delete content beneath parent" ).
+            withParent( ContentPath.from( parent.getName() ) ).build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData(
+            contentToDelete ).save().close();
+
+
+        List<BaseAbstractContent> contentList = new ArrayList<>()
+        contentList.add( contentToDelete )
+
+
+        when:
+        contentBrowsePanel.expandContent( contentToDelete.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete()
+
+        then:
+        !contentBrowsePanel.exists( contentToDelete.getPath() )
+    }
+
+
+    def "GIVEN a one and only Content beneath an existing WHEN deleted THEN expand icon of parent is no longer shown "()
+    {
+        given:
+        BaseAbstractContent parent = FolderContent.builder().
+            withParent( ContentPath.ROOT ).
+            withName( NameHelper.unqiueName( "parent" ) ).
+            withDisplayName( "expandicon-test" ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
+
+
+
+        contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         BaseAbstractContent content = ArchiveContent.builder().
             withName( NameHelper.unqiueName( "archive" ) ).
             withDisplayName( "archive" ).
             withParent( ContentPath.from( parent.getName() ) ).build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( parent ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+
 
 
         List<BaseAbstractContent> contentList = new ArrayList<>()
-        contentList.add( addArchiveToParent( parent.getName() ) )
+        contentList.add( content )
 
 
         when:
-        contentBrowsePanel.expandContent( contentList.get( 0 ).getParent() ).selectContentInTable(
-            contentList ).clickToolbarDelete().doDelete()
+        contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete()
 
         then:
-        !contentBrowsePanel.exists( contentList.get( 0 ).getPath() )
+        !contentBrowsePanel.isExpanderPresent( parent.getName() )
     }
-	
-
 }
