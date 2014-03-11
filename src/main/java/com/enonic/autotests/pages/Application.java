@@ -51,7 +51,11 @@ public class Application
     }
     public void waitsForSpinnerNotVisible()
     {
-    	 boolean result = waitsElementNotVisible(By.xpath(SPINNER_XPATH), IMPLICITLY_WAIT);
+    	waitsForSpinnerNotVisible(IMPLICITLY_WAIT);
+    }
+    public void waitsForSpinnerNotVisible(long timeout )
+    {
+    	 boolean result = waitsElementNotVisible(By.xpath(SPINNER_XPATH), timeout);
          if(!result)
          {
          	throw new TestFrameworkException("after "+ IMPLICITLY_WAIT +" second, spinner still present" );
