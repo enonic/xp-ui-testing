@@ -89,21 +89,6 @@ class BaseGebSpec
         return content;
     }
 
-    BaseAbstractContent addArchiveToParent( String parentName )
-    {
-        String name = NameHelper.unqiueName( "archive" )
-        BaseAbstractContent content = ArchiveContent.builder().
-            withName( name ).
-            withDisplayName( "archive" ).
-            withParent( ContentPath.from( parentName ) ).build();
-
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        contentBrowsePanel.clickByParentCheckbox( ContentPath.from( parentName ) )
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
-        return content;
-    }
-
-
     void loadProperties()
     {
         defaultProperties = new Properties()

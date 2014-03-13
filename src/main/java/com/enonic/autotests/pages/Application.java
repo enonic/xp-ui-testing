@@ -31,7 +31,7 @@ public class Application
 
     public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'appbar')]/button[@class='launcher-button']";
 
-    public static final String SPINNER_XPATH =  "//div[@id='api.ui.LoadMask']";
+    public static final String SPINNER_XPATH = "//div[@id='api.ui.LoadMask']";
 
     @FindBy(xpath = HOME_BUTTON_XPATH)
     protected WebElement gotoHomeButton;
@@ -49,18 +49,20 @@ public class Application
         page.waitUntilAllFramesLoaded();
         return page;
     }
+
     public void waitsForSpinnerNotVisible()
     {
-    	waitsForSpinnerNotVisible(IMPLICITLY_WAIT);
+        waitsForSpinnerNotVisible( IMPLICITLY_WAIT );
     }
-    public void waitsForSpinnerNotVisible(long timeout )
+
+    public void waitsForSpinnerNotVisible( long timeout )
     {
-    	 boolean result = waitsElementNotVisible(By.xpath(SPINNER_XPATH), timeout);
-         if(!result)
-         {
-         	throw new TestFrameworkException("after "+ IMPLICITLY_WAIT +" second, spinner still present" );
-         }
+        boolean result = waitsElementNotVisible( By.xpath( SPINNER_XPATH ), timeout );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "after " + IMPLICITLY_WAIT + " second, spinner still present" );
+        }
     }
-   
+
 
 }

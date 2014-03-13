@@ -8,7 +8,6 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -46,7 +45,7 @@ public class TestUtils
     public static String saveScreenshot( final TestSession testSession, String screenshotName )
     {
         WebDriver driver = testSession.getDriver();
-         String fileName = screenshotName + ".png";
+        String fileName = screenshotName + ".png";
         File folder = new File( "target/screenshots" );
         if ( !folder.exists() )
         {
@@ -77,8 +76,8 @@ public class TestUtils
      */
     public static String saveScreenshot( final TestSession testSession )
     {
-    	String fileName = timeNow() + ".png";
-    	return saveScreenshot(testSession, fileName);
+        String fileName = timeNow() + ".png";
+        return saveScreenshot( testSession, fileName );
     }
 
     public static String timeNow()
@@ -92,6 +91,18 @@ public class TestUtils
     {
         WebElement myDynamicElement = ( new WebDriverWait( driver, 10 ) ).until( ExpectedConditions.presenceOfElementLocated( locator ) );
         myDynamicElement.click();
+    }
+
+    public static int parseFilterLabel( String label )
+    {
+        int start = label.indexOf( "(" );
+        int end = label.indexOf( ")" );
+        if ( start == -1 || end == -1 )
+        {
+            throw new TestFrameworkException( "wrong label!" );
+        }
+        return Integer.valueOf( label.substring( start + 1, end ) );
+
     }
 
     /**
@@ -133,27 +144,6 @@ public class TestUtils
         WebDriverWait wait = new WebDriverWait( driver, timeout );
         WebElement element = wait.until( ExpectedConditions.visibilityOfElementLocated( locator ) );
         return element.getText();
-    }
-
-    /**
-     * @param by
-     * @param driver
-     * @return
-     */
-    public static boolean checkIfDisplayed( final By by, final WebDriver driver )
-    {
-        List<WebElement> elements = driver.findElements( by );
-        return ( ( elements.size() > 0 ) && ( elements.get( 0 ).isDisplayed() ) );
-    }
-
-    public static WebElement getIfDisplayed( final By by, final WebDriver driver )
-    {
-        List<WebElement> elements = driver.findElements( by );
-        if ( ( elements.size() > 0 ) && ( elements.get( 0 ).isDisplayed() ) )
-        {
-            return elements.get( 0 );
-        }
-        return null;
     }
 
     public static String createTempFile( String s )

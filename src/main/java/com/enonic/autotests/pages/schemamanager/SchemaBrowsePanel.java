@@ -58,7 +58,7 @@ public class SchemaBrowsePanel
      */
     public SchemaBrowsePanel expandSuperTypeFolder( String superTypeName )
     {
-    	waitsForSpinnerNotVisible();
+        waitsForSpinnerNotVisible();
         if ( superTypeName != null )
         {
             clickByExpander( superTypeName );

@@ -4,11 +4,11 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.ArchiveContent
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
+import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -33,7 +33,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN existing content, WHEN content opened and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
-        BaseAbstractContent content = addRootContentToBeDeleted()
+        BaseAbstractContent content = FolderContent.builder().
+            withName( NameHelper.unqiueName( "deletecontent" ) ).
+            withDisplayName( "contenttodelete" ).
+            withParent( ContentPath.ROOT ).build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
+
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
         contentInfoPage.waitUntilOpened( content.getDisplayName(), 1 )
 

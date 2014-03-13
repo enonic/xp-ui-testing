@@ -1,6 +1,9 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,6 +15,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -25,13 +29,11 @@ public class ContentBrowseFilterPanel
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     private WebElement searchInput;
 
-    //this xpath specifies a checkbox for Filtering by 'content type name'
     private String CONTENT_TYPE_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and child::label[contains(.,'%s')]]//label";
 
-    //this xpath specifies a checkbox for Filtering by 'Last Modified'
-    private String DATE_FILTER_ITEM =
-        "//div[@class='admin-facet-group' and @name='ranges']//div[contains(@class,'admin-facet') and descendant::label[contains(.,'%s')]]";
+    private String LAST_MODIFIED_FILTER_ITEM =
+        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label[contains(.,'%s')]]//label";
 
 
     /**
@@ -48,12 +50,12 @@ public class ContentBrowseFilterPanel
     /**
      * @param text
      */
-    public void doSearchByText( String text )
+    public void typeSearchText( String text )
     {
         getLogger().info( "query will be applied : " + text );
         searchInput.sendKeys( text );
         searchInput.sendKeys( Keys.ENTER );
-        sleep( 200 );
+        sleep( 1000 );
         getLogger().info( "Filtered by : " + text );
     }
 
@@ -62,9 +64,9 @@ public class ContentBrowseFilterPanel
      *
      * @param date
      */
-    public void doFilterByDate( FilterPanelLastModified date )
+    public void selectEntryInLastModifiedFilter( FilterPanelLastModified date )
     {
-        String rangeXpath = String.format( DATE_FILTER_ITEM, date.getValue() );
+        String rangeXpath = String.format( LAST_MODIFIED_FILTER_ITEM, date.getValue() );
         boolean isVisible = waitUntilVisibleNoException( By.xpath( rangeXpath ), 1l );
         if ( !isVisible )
         {
@@ -91,6 +93,9 @@ public class ContentBrowseFilterPanel
         sleep( 500 );
     }
 
+    /**
+     * @return true if there any any selected entries in the ContentBrowseFilterPanel, otherwise false.
+     */
     public boolean isAnySelectionPresent()
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
@@ -99,11 +104,19 @@ public class ContentBrowseFilterPanel
 
     }
 
+    /**
+     * Waits until link is visible.
+     *
+     * @return true if 'Clear Filter' link is present and visible, otherwise return false.
+     */
     public boolean waitForClearFilterLinkVisible()
     {
         return waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
     }
 
+    /**
+     * @return true if 'Clear Filter' link is not visible, otherwise return false.
+     */
     public boolean waitForClearFilterLinkNotvisible()
     {
         return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
@@ -128,10 +141,13 @@ public class ContentBrowseFilterPanel
             elems.get( 0 ).click();
         }
         waitsForSpinnerNotVisible();
-        //sleep(1000);
         return elems.get( 0 ).getText();
     }
 
+    /**
+     * @param contentTypeName
+     * @return
+     */
     public Integer getContentTypeFilterCount( String contentTypeName )
     {
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
@@ -140,7 +156,52 @@ public class ContentBrowseFilterPanel
         {
             return null;
         }
-        return Integer.valueOf(elems.get( 0 ).getText());
+        if ( !elems.get( 0 ).isDisplayed() )
+        {
+            return 0;
+        }
+        return TestUtils.parseFilterLabel( elems.get( 0 ).getText() );
+    }
+
+    public boolean isFilterEntryDisplayed()
+    {
+        return true;
+    }
+
+    public List<String> getContentTypeSelectedValues()
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        List list = (ArrayList) executor.executeScript(
+            "return window.api.dom.ElementRegistry.getElementById('app.browse.filter.ContentBrowseFilterPanel').getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')" );
+        Iterator it = list.iterator();
+        String value = null;
+        ArrayList<String> result = new ArrayList<>();
+        while ( it.hasNext() )
+        {
+            Map element = (Map) it.next();
+            value = (String) ( element ).get( "key" );
+            result.add( value );
+        }
+        return result;
+    }
+
+    /**
+     * @param filterItem
+     * @return
+     */
+    public Integer getLastModifiedCount( String filterItem )
+    {
+        String itemXpath = String.format( LAST_MODIFIED_FILTER_ITEM, filterItem );
+        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
+        if ( elems.size() == 0 )
+        {
+            return null;
+        }
+        if ( !elems.get( 0 ).isDisplayed() )
+        {
+            return 0;
+        }
+        return TestUtils.parseFilterLabel( elems.get( 0 ).getText() );
     }
 
     public List<String> getSpaceNames()
