@@ -52,8 +52,18 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
-        BaseAbstractContent content1 = addRootContentToBeDeleted()
-        BaseAbstractContent content2 = addRootContentToBeDeleted()
+        BaseAbstractContent content1 = FolderContent.builder().
+            withName( NameHelper.unqiueName( "deletecontent" ) ).
+            withDisplayName( "contenttodelete" ).
+            withParent( ContentPath.ROOT ).build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close()
+
+
+        BaseAbstractContent content2 = FolderContent.builder().
+            withName( NameHelper.unqiueName( "deletecontent" ) ).
+            withDisplayName( "contenttodelete" ).
+            withParent( ContentPath.ROOT ).build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close()
         List<BaseAbstractContent> contentList = new ArrayList<>()
         contentList.add( content1 )
         contentList.add( content2 )
@@ -70,7 +80,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
     {
         given:
-        BaseAbstractContent content = addRootContentToBeDeleted()
+        BaseAbstractContent content = FolderContent.builder().
+            withName( NameHelper.unqiueName( "deletecontent" ) ).
+            withDisplayName( "contenttodelete" ).
+            withParent( ContentPath.ROOT ).build();
+
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
         List<BaseAbstractContent> contents = new ArrayList<>()
         contents.add( content )
         ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )
@@ -94,8 +109,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
-
-
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         BaseAbstractContent contentToDelete = ArchiveContent.builder().
             withName( NameHelper.unqiueName( "archive" ) ).
@@ -107,7 +120,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         List<BaseAbstractContent> contentList = new ArrayList<>()
         contentList.add( contentToDelete )
-
 
         when:
         contentBrowsePanel.expandContent( contentToDelete.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete()
@@ -127,20 +139,15 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
-
-
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         BaseAbstractContent content = ArchiveContent.builder().
             withName( NameHelper.unqiueName( "archive" ) ).
             withDisplayName( "archive" ).
             withParent( ContentPath.from( parent.getName() ) ).build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-
-
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close()
 
         List<BaseAbstractContent> contentList = new ArrayList<>()
         contentList.add( content )
-
 
         when:
         contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete()

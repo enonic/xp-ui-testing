@@ -35,6 +35,8 @@ public class ContentBrowseFilterPanel
     private String LAST_MODIFIED_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label[contains(.,'%s')]]//label";
 
+    private String LAST_MODIFIED_FILTER_ENTRY =
+        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label]//label[contains(.,'%s')]";
 
     /**
      * The constructor
@@ -47,16 +49,63 @@ public class ContentBrowseFilterPanel
 
     }
 
+    public List<String> getAllContentTypesFilterEntries()
+    {
+        List<WebElement> elements = getDriver().findElements( By.xpath(
+            "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and child::label]//label" ) );
+        List<String> labels = new ArrayList<>();
+        for ( WebElement el : elements )
+        {
+            if ( el.isDisplayed() )
+            {
+                labels.add( el.getText() );
+            }
+        }
+        return labels;
+    }
+
+    public List<String> getAllLastModifiedFilterEntries()
+    {
+        List<WebElement> elements = getDriver().findElements( By.xpath(
+            "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label]//label" ) );
+        List<String> labels = new ArrayList<>();
+        for ( WebElement el : elements )
+        {
+            labels.add( el.getText() );
+        }
+        return labels;
+    }
+
+    public Integer getContentNumberFilteredByLastModified( FilterPanelLastModified entry )
+    {
+        String xpath = String.format( LAST_MODIFIED_FILTER_ENTRY, entry.getValue() );
+        List<WebElement> elements = getDriver().findElements( By.xpath( xpath ) );
+        if ( elements.size() == 0 )
+        {
+            getLogger().info( "entry was not found:: " + entry.getValue() );
+            return null;
+        }
+        if ( !elements.get( 0 ).isDisplayed() )
+        {
+            return 0;
+        }
+        else
+        {
+            return TestUtils.getNumberFromFilterLabel( elements.get( 0 ).getText() );
+        }
+    }
+
     /**
      * @param text
      */
-    public void typeSearchText( String text )
+    public ContentBrowseFilterPanel typeSearchText( String text )
     {
         getLogger().info( "query will be applied : " + text );
         searchInput.sendKeys( text );
         searchInput.sendKeys( Keys.ENTER );
         sleep( 1000 );
         getLogger().info( "Filtered by : " + text );
+        return this;
     }
 
     /**
@@ -148,7 +197,7 @@ public class ContentBrowseFilterPanel
      * @param contentTypeName
      * @return
      */
-    public Integer getContentTypeFilterCount( String contentTypeName )
+    public Integer getNumberFilteredByContenttype( String contentTypeName )
     {
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
@@ -160,7 +209,7 @@ public class ContentBrowseFilterPanel
         {
             return 0;
         }
-        return TestUtils.parseFilterLabel( elems.get( 0 ).getText() );
+        return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
     }
 
     public boolean isFilterEntryDisplayed()
@@ -168,7 +217,7 @@ public class ContentBrowseFilterPanel
         return true;
     }
 
-    public List<String> getContentTypeSelectedValues()
+    public List<String> getSelectedValuesForContentTypesFilter()
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         List list = (ArrayList) executor.executeScript(
@@ -201,7 +250,7 @@ public class ContentBrowseFilterPanel
         {
             return 0;
         }
-        return TestUtils.parseFilterLabel( elems.get( 0 ).getText() );
+        return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
     }
 
     public List<String> getSpaceNames()

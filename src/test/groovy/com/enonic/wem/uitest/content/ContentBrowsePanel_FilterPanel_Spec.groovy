@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModified
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -40,7 +41,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         TestUtils.saveScreenshot( getTestSession() )
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == TestUtils.parseFilterLabel( label )
+        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == TestUtils.getNumberFromFilterLabel( label )
     }
 
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should dissapear"()
@@ -81,14 +82,14 @@ class ContentBrowsePanel_FilterPanel_Spec
             withName( name ).
             withDisplayName( "folder" ).
             withParent( ContentPath.ROOT ).build()
-        int beforeAdding = filterPanel.getContentTypeFilterCount( "Folder" )
+        int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
         when:
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save()
         contentBrowsePanel.goToAppHome()
 
         then:
-        filterPanel.getContentTypeFilterCount( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
+        filterPanel.getNumberFilteredByContenttype( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
             lastModifiedBeforeAdding == 1
     }
 
@@ -100,14 +101,14 @@ class ContentBrowsePanel_FilterPanel_Spec
             withName( name ).
             withDisplayName( "folder" ).
             withParent( ContentPath.ROOT ).build()
-        int beforeAdding = filterPanel.getContentTypeFilterCount( "Folder" )
+        int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
         when:
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible()
 
         then:
-        filterPanel.getContentTypeFilterCount( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
+        filterPanel.getNumberFilteredByContenttype( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
             lastModifiedBeforeAdding == 1
     }
 
@@ -124,7 +125,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible()
-        int beforeRemoving = filterPanel.getContentTypeFilterCount( "Folder" )
+        int beforeRemoving = filterPanel.getNumberFilteredByContenttype( "Folder" )
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" )
         List<BaseAbstractContent> contentList = new ArrayList()
         contentList.add( content )
@@ -134,7 +135,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
 
         then:
-        beforeRemoving - filterPanel.getContentTypeFilterCount( "Folder" ) == 1 && lastModifiedBeforeRemoving -
+        beforeRemoving - filterPanel.getNumberFilteredByContenttype( "Folder" ) == 1 && lastModifiedBeforeRemoving -
             filterPanel.getLastModifiedCount( "hour" ) == 1
     }
 
@@ -154,10 +155,77 @@ class ContentBrowsePanel_FilterPanel_Spec
         when:
         filterPanel.typeSearchText( name )
         contentBrowsePanel.waitsForSpinnerNotVisible()
-
+        TestUtils.saveScreenshot( getTestSession(), "SearchText" )
 
         then:
-        filterPanel.getContentTypeFilterCount( "Folder" ) == 1 && filterPanel.getLastModifiedCount( "hour" ) == 1
+        filterPanel.getNumberFilteredByContenttype( "Folder" ) == 1 && filterPanel.getLastModifiedCount( "hour" ) == 1
+    }
+
+    def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN no changes in ContentTypes-filter"()
+    {
+        given:
+        List<String> beforeSelect = filterPanel.getAllContentTypesFilterEntries();
+
+        when:
+        filterPanel.selectEntryInContentTypesFilter( "Folder" )
+        List<String> afterSelect = filterPanel.getAllContentTypesFilterEntries();
+
+        then:
+        beforeSelect.equals( afterSelect )
+    }
+
+    def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN LastModified-filter should be updated with filtered values"()
+    {
+        given:
+        String name = NameHelper.unqiueName( "folder" );
+        BaseAbstractContent content = FolderContent.builder().
+            withName( name ).
+            withDisplayName( "folder" ).
+            withParent( ContentPath.ROOT ).build()
+
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
+
+
+        when:
+        String folderCount = filterPanel.selectEntryInContentTypesFilter( "Folder" )
+        Integer newLastModifiedNumber = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
+
+        then:
+        if ( lastModifiedNumberBefore == 0 )
+        {
+            TestUtils.getNumberFromFilterLabel( folderCount ) == newLastModifiedNumber
+        }
+
+        else
+        {
+            newLastModifiedNumber > lastModifiedNumberBefore
+        }
+
+
+    }
+    //@Ignored
+    //GIVEN Selections in ContentTypes-filter WHEN Selecting one entry in LastModified-filter THEN entries with no selection in ContentTypes-filter should dissapear from view
+
+    def "GIVEN selection in any filter WHEN adding text-search THEN all filters should be updated to only contain entries with selection and new count with match on text-search"()
+    {
+        given:
+        String name = NameHelper.unqiueName( "folder" );
+        BaseAbstractContent content = FolderContent.builder().
+            withName( name ).
+            withDisplayName( "folder" ).
+            withParent( ContentPath.ROOT ).build()
+
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        String label = filterPanel.selectEntryInContentTypesFilter( "Folder" )
+        println label
+        Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );
+
+        when:
+        Integer newFolderCount = filterPanel.typeSearchText( content.getName() ).getNumberFilteredByContenttype( "Folder" )
+        println newFolderCount
+        then:
+        ( newFolderCount == 1 ) && ( newFolderCount != folderCountBefore ) && ( filterPanel.getAllContentTypesFilterEntries().size() == 1 )
     }
 
 }

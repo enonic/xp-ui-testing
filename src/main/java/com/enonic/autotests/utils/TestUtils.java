@@ -76,7 +76,7 @@ public class TestUtils
      */
     public static String saveScreenshot( final TestSession testSession )
     {
-        String fileName = timeNow() + ".png";
+        String fileName = timeNow();
         return saveScreenshot( testSession, fileName );
     }
 
@@ -93,7 +93,7 @@ public class TestUtils
         myDynamicElement.click();
     }
 
-    public static int parseFilterLabel( String label )
+    public static int getNumberFromFilterLabel( String label )
     {
         int start = label.indexOf( "(" );
         int end = label.indexOf( ")" );

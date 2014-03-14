@@ -3,9 +3,9 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.*
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
@@ -151,13 +151,12 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit )
-        ItemViewPanelPage contentInfoPage = contentBrowsePanel.expandContent( contentToEdit.getParent() ).selectRowByCheckbox(
-            contentToEdit.getPath() ).clickToolbarOpen()
-        contentInfoPage.clickToolbarEdit().typeData( newcontent ).save().close()
+        contentBrowsePanel.expandContent( contentToEdit.getParent() ).selectRowByCheckbox(
+            contentToEdit.getPath() ).clickToolbarEdit().typeData( newcontent ).save().close()
 
-        contentInfoPage.close();
         contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT )
         contentBrowsePanel.expandContent( newcontent.getParent() )
+        TestUtils.saveScreenshot( getTestSession(), "editnametest1" )
 
         then:
         contentBrowsePanel.exists( newcontent.getPath() )
@@ -178,11 +177,9 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit )
-        ItemViewPanelPage contentInfoPage = contentBrowsePanel.expandContent( contentToEdit.getParent() ).selectRowByCheckbox(
-            contentToEdit.getPath() ).clickToolbarOpen()
+        contentBrowsePanel.expandContent( contentToEdit.getParent() ).selectRowByCheckbox(
+            contentToEdit.getPath() ).clickToolbarEdit().typeData( newcontent ).save().close()
 
-        contentInfoPage.clickToolbarEdit().typeData( newcontent ).save().close()
-        contentInfoPage.close()
         contentBrowsePanel.expandContent( newcontent.getParent() )
 
         then:

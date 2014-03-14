@@ -13,6 +13,7 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
@@ -84,22 +85,6 @@ public class ContentBrowsePanel
         return this;
     }
 
-    /**
-     * Gets content's names from 'Details panel'.
-     *
-     * @return list of names, or empty list if there are no seleted items
-     */
-    public List<String> getNamesFromContentDetails()
-    {
-        List<String> contentNames = new ArrayList<>();
-        List<WebElement> elems = getDriver().findElements( By.xpath( CONTENT_DETAILS_ALL_NAMES_XPATH ) );
-        for ( WebElement el : elems )
-        {
-            contentNames.add( el.getText() );
-        }
-        return contentNames;
-    }
-
 
     /**
      * Gets all content names, showed in the contents-table.
@@ -168,6 +153,9 @@ public class ContentBrowsePanel
         clickToolbarDelete().doDelete();
     }
 
+    /**
+     * @return
+     */
     public DeleteContentDialog clickToolbarDelete()
     {
 
@@ -336,6 +324,14 @@ public class ContentBrowsePanel
         return cinfo;
     }
 
+    public ContentWizardPanel clickToolbarEdit()
+    {
+        editButton.click();
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        return wizard;
+    }
+
     /**
      * Select a content and right click on  mouse, opens a Item view panel.
      *
@@ -377,10 +373,10 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-        TestUtils.saveScreenshot( getSession() );
         boolean isGridLoaded = waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
+            TestUtils.saveScreenshot( getSession(), "emptygrid-bug" );
             throw new TestFrameworkException(
                 "content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!" );
         }
