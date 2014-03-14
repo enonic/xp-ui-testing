@@ -78,6 +78,7 @@ public class ContentBrowseFilterPanel
 
     public Integer getContentNumberFilteredByLastModified( FilterPanelLastModified entry )
     {
+    	TestUtils.saveScreenshot(getSession(), "lastmodified");
         String xpath = String.format( LAST_MODIFIED_FILTER_ENTRY, entry.getValue() );
         List<WebElement> elements = getDriver().findElements( By.xpath( xpath ) );
         if ( elements.size() == 0 )
