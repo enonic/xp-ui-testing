@@ -374,7 +374,7 @@ public class ContentBrowsePanel
     public void waituntilPageLoaded( long timeout )
     {
     	sleep(1000);    
-        boolean isGridLoaded = waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ), timeout );
+        boolean isGridLoaded = waitAndFind(By.xpath(TABLE_ITEM_XPATH), timeout);//waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
             TestUtils.saveScreenshot( getSession(), "emptygrid-bug" );
