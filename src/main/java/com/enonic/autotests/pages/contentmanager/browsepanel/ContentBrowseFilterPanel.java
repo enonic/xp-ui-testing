@@ -179,6 +179,7 @@ public class ContentBrowseFilterPanel
      */
     public String selectEntryInContentTypesFilter( String contentTypeName )
     {
+    	TestUtils.saveScreenshot(getSession());
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
