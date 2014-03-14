@@ -153,7 +153,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         StructuredContent newcontent = cloneContentWithNewName( contentToEdit )
         contentBrowsePanel.expandContent( contentToEdit.getParent() ).selectRowByCheckbox(
             contentToEdit.getPath() ).clickToolbarEdit().typeData( newcontent ).save().close()
-
+	contentBrowsePanel.waitsForSpinnerNotVisible()
         contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT )
         contentBrowsePanel.expandContent( newcontent.getParent() )
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" )
@@ -180,6 +180,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.expandContent( contentToEdit.getParent() ).selectRowByCheckbox(
             contentToEdit.getPath() ).clickToolbarEdit().typeData( newcontent ).save().close()
 
+	contentBrowsePanel.waitsForSpinnerNotVisible()
+	contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT )
         contentBrowsePanel.expandContent( newcontent.getParent() )
 
         then:
