@@ -1,13 +1,6 @@
 package com.enonic.wem.uitest
 
 import com.enonic.autotests.TestSession
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
-import com.enonic.autotests.vo.contentmanager.FolderContent
-import com.enonic.wem.api.content.ContentPath
-import com.enonic.wem.api.schema.content.ContentTypeName
 import geb.spock.GebSpec
 import spock.lang.Shared
 

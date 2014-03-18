@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilter
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContenTypeDispalyNames
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -88,6 +89,37 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then:
         !existsBeforeUnselect && contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) )
+    }
+
+    def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
+    {
+        given:
+        String text = filterPanel.typeSearchText( "" )
+        contentBrowsePanel.waitsForSpinnerNotVisible()
+
+        when:
+        filterPanel.typeSearchText( PREDEFINED_FOLDER_NAME )
+        contentBrowsePanel.waitsForSpinnerNotVisible()
+        TestUtils.saveScreenshot( getTestSession(), "text-search1" )
+
+        then:
+        contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) ) &&
+            contentBrowsePanel.getContentNamesFromBrowsePanel().size() == 1
+    }
+
+    def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
+    {
+        given:
+        String text = filterPanel.typeSearchText( PREDEFINED_FOLDER_NAME )
+        contentBrowsePanel.waitsForSpinnerNotVisible()
+
+        when:
+        filterPanel.clickByCleanFilter()
+        contentBrowsePanel.waitsForSpinnerNotVisible()
+        TestUtils.saveScreenshot( getTestSession(), "text-search2" )
+
+        then:
+        contentBrowsePanel.exists( ContentPath.from( "homepage" ) ) && contentBrowsePanel.exists( ContentPath.from( "intranet" ) )
     }
 
 

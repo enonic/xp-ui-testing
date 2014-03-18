@@ -21,7 +21,7 @@ public abstract class WizardPanel
     //public static String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
     public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
 
-    public static String APP_BAR_TABMENU_TITLE_XPATH = "//div[@class='tab-menu appbar-tabmenu']//span[@class='label']";
+    public static String APP_BAR_TABMENU_TITLE_XPATH = "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']";
@@ -60,10 +60,10 @@ public abstract class WizardPanel
 
     public String getAppBarTabMenuTitle()
     {
-        boolean result = waitAndFind( By.xpath( APP_BAR_TABMENU_TITLE_XPATH ), 1 );
+        boolean result = getDriver().findElements( By.xpath( "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']" ) ).size() == 1;
         if ( result )
         {
-            return getDriver().findElement( By.xpath( APP_BAR_TABMENU_TITLE_XPATH ) ).getText();
+            return getDriver().findElement( By.xpath( APP_BAR_TABMENU_TITLE_XPATH ) ).getAttribute( "title" );
         }
         else
         {
