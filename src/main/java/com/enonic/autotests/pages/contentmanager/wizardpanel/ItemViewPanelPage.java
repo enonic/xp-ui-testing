@@ -21,10 +21,6 @@ public class ItemViewPanelPage
 
     public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'x-btn start-button')]";
 
-    private static String H1_DISPLAY_NAME_XPATH = "//div[@class='panel item-view-panel']//h1[text()='%s']";
-
-    private static String H4_FULL_NAME_XPATH = "//div[@class='panel item-view-panel']//h4[text()='%s']";
-
     private static final String TOOLBAR_EDIT_BUTTON_XPATH =
         "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Edit']";
 

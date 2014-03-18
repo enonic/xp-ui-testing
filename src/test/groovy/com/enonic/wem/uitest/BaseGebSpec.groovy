@@ -4,7 +4,6 @@ import com.enonic.autotests.TestSession
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.ArchiveContent
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
 import com.enonic.autotests.vo.contentmanager.FolderContent
 import com.enonic.wem.api.content.ContentPath
@@ -74,19 +73,6 @@ class BaseGebSpec
         sb.append( browser.baseUrl ).append( navigationPath )
         println "  buildUrl changed  now url is:  " + sb.toString()
         getTestSession().setBaseUrl( sb.toString() )
-    }
-
-    BaseAbstractContent addRootContentToBeDeleted()
-    {
-        String name = NameHelper.unqiueName( "deletecontent" )
-        BaseAbstractContent content = FolderContent.builder().
-            withName( name ).
-            withDisplayName( "contenttodelete" ).
-            withParent( ContentPath.ROOT ).build();
-
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
-        return content;
     }
 
     void loadProperties()

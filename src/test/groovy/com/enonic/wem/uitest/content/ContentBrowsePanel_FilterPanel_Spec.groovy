@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContenTypeDispalyNames
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModified
 import com.enonic.autotests.services.NavigatorHelper
@@ -23,10 +24,6 @@ class ContentBrowsePanel_FilterPanel_Spec
     @Shared
     ContentBrowseFilterPanel filterPanel
 
-    @Shared
-    String PAGE_CONTENT_TYPE_NAME = "Page"
-
-
     def setup()
     {
         go "admin"
@@ -37,7 +34,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN No selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
     {
         when:
-        String label = filterPanel.selectEntryInContentTypesFilter( PAGE_CONTENT_TYPE_NAME )
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
         TestUtils.saveScreenshot( getTestSession() )
 
         then:
@@ -47,7 +44,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should dissapear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( PAGE_CONTENT_TYPE_NAME )
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
 
         when:
         filterPanel.clickByCleanFilter()
@@ -62,7 +59,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should dissapear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( PAGE_CONTENT_TYPE_NAME )
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
 
         when:
         contentBrowsePanel.getFilterPanel().clickByCleanFilter()
@@ -151,7 +148,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible()
-		contentBrowsePanel.waituntilPageLoaded(1);
+        contentBrowsePanel.waituntilPageLoaded( 1 );
 
         when:
         filterPanel.typeSearchText( name )
@@ -185,7 +182,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             withParent( ContentPath.ROOT ).build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-		contentBrowsePanel.waituntilPageLoaded(1);
+        contentBrowsePanel.waituntilPageLoaded( 1 );
         Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
 
 
@@ -219,13 +216,13 @@ class ContentBrowsePanel_FilterPanel_Spec
             withParent( ContentPath.ROOT ).build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-		contentBrowsePanel.waituntilPageLoaded(1);
+        contentBrowsePanel.waituntilPageLoaded( 1 );
         String label = filterPanel.selectEntryInContentTypesFilter( "Folder" )
         Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );
 
         when:
         Integer newFolderCount = filterPanel.typeSearchText( content.getName() ).getNumberFilteredByContenttype( "Folder" )
-        
+
         then:
         ( newFolderCount == 1 ) && ( newFolderCount != folderCountBefore ) && ( filterPanel.getAllContentTypesFilterEntries().size() == 1 )
     }
