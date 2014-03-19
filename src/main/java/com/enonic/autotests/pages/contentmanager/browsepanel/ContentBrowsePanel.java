@@ -27,11 +27,17 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
-    private static final String TABLE_ITEM_XPATH = "//h6[text()='BildeArkiv']";
-
     public static final String SPACES_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
 
     public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.HomeButton']";
+
+    private static final String TABLE_ITEM_XPATH = "//h6[text()='BildeArkiv']";
+
+    private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH =
+        "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
+
+    private final String CONTENT_DETAILS_ALL_NAMES_XPATH =
+        "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
 
     @FindBy(xpath = "//div[@class='toolbar']/button[text()='Duplicate']")
     private WebElement duplicateButton;
@@ -45,17 +51,10 @@ public class ContentBrowsePanel
     @FindBy(xpath = "//div[@class='toolbar']/button[text()='Move']")
     private WebElement moveButton;
 
-
     private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/..//div[@class='x-grid-row-checker']";
 
     private String DIV_CONTENT_NAME_IN_TABLE =
         "//div[contains(@class,'x-grid-cell-inner ')]//div[@class='admin-tree-description' and descendant::p[contains(.,'%s')]]";
-
-    private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH =
-        "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
-
-    private final String CONTENT_DETAILS_ALL_NAMES_XPATH =
-        "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
 
     private ContentBrowseFilterPanel filterPanel;
 
@@ -67,6 +66,23 @@ public class ContentBrowsePanel
     public ContentBrowsePanel( TestSession session )
     {
         super( session );
+    }
+
+    /**
+     * @param session
+     * @return true if 'Content Manager' opened and CMSpacesPage showed, otherwise false.
+     */
+    public static boolean isOpened( TestSession session )
+    {
+        List<WebElement> searchInput = session.getDriver().findElements( By.xpath( ContentBrowseFilterPanel.SEARCH_INPUT_XPATH ) );
+        if ( searchInput.size() > 0 && searchInput.get( 0 ).isDisplayed() )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public ContentBrowseFilterPanel getFilterPanel()
@@ -84,7 +100,6 @@ public class ContentBrowsePanel
         waituntilPageLoaded( Application.IMPLICITLY_WAIT );
         return this;
     }
-
 
     /**
      * Gets all content names, showed in the contents-table.
@@ -143,7 +158,6 @@ public class ContentBrowsePanel
         return this;
     }
 
-
     /**
      * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
      */
@@ -170,12 +184,6 @@ public class ContentBrowsePanel
         return new DeleteContentDialog( getSession() );
     }
 
-    /**
-     * Selects a content in a space or folder, throws exception if content was
-     * not found.
-     *
-     * @param contents
-     */
     public ContentBrowsePanel selectContentInTable( List<BaseAbstractContent> contents )
     {
         waitAndCheckContent( contents );
@@ -186,24 +194,32 @@ public class ContentBrowsePanel
         return this;
     }
 
+    public ContentBrowsePanel selectContentInTable( BaseAbstractContent content )
+    {
+        waitAndCheckContent( content.getPath() );
+        selectCheckbox( content );
+        return this;
+    }
+
     private void waitAndCheckContent( List<BaseAbstractContent> contents )
     {
-        //TODO  this is a workaround for app issue, should be deleted after fixing
-        //doWorkAround();
-
         for ( BaseAbstractContent content : contents )
         {
-            boolean isExist = exists( content.getPath() );
-
-            if ( !isExist )
-            {
-                //
-                TestUtils.saveScreenshot( getSession() );
-                throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
-            }
+            waitAndCheckContent( content.getPath() );
         }
     }
 
+    private void waitAndCheckContent( ContentPath content )
+    {
+        boolean isExist = exists( content );
+
+        if ( !isExist )
+        {
+            //
+            TestUtils.saveScreenshot( getSession() );
+            throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
+        }
+    }
 
     /**
      * Clicks by a checkbox, linked with content and select row in the table.
@@ -226,7 +242,6 @@ public class ContentBrowsePanel
         findElement( By.xpath( contentCheckBoxXpath ) ).click();
         return this;
     }
-
 
     public ContentBrowsePanel selectRowByCheckbox( ContentPath path )
     {
@@ -273,11 +288,8 @@ public class ContentBrowsePanel
         {
             return;
         }
-        if ( parentContentPath.elementCount() > 1 )
-        {
-            expandContent( parentContentPath );
 
-        }
+        expandContent( parentContentPath );
 
         // 1. select a checkbox and press the 'New' from toolbar.
         String spaceCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, parentContentPath );
@@ -287,7 +299,8 @@ public class ContentBrowsePanel
             TestUtils.saveScreenshot( getSession() );
             throw new TestFrameworkException(
                 "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContentPath +
-                    " was not found!" );
+                    " was not found!"
+            );
         }
         WebElement checkboxElement = getDriver().findElement( By.xpath( spaceCheckBoxXpath ) );
 
@@ -299,7 +312,6 @@ public class ContentBrowsePanel
         }
 
     }
-
 
     /**
      * Clicks by row with content(not clicks by a checkbox)
@@ -383,23 +395,6 @@ public class ContentBrowsePanel
                 "content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!" );
         }
         //new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
-    }
-
-    /**
-     * @param session
-     * @return true if 'Content Manager' opened and CMSpacesPage showed, otherwise false.
-     */
-    public static boolean isOpened( TestSession session )
-    {
-        List<WebElement> searchInput = session.getDriver().findElements( By.xpath( ContentBrowseFilterPanel.SEARCH_INPUT_XPATH ) );
-        if ( searchInput.size() > 0 && searchInput.get( 0 ).isDisplayed() )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
 }
