@@ -40,11 +40,10 @@ public class LoginPage
     public LoginPage( TestSession session )
     {
         super( session );
-
     }
 
     /**
-     * Types the username and password and click the 'login' button.
+     * Types the user name and password and press the 'login' button.
      *
      * @param username
      * @param password

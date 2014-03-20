@@ -25,9 +25,6 @@ public class HomePage
     @FindBy(xpath = "//div[@class = 'name-container' and text()='Schema Manager']")
     private WebElement schemaManager;
 
-    @FindBy(xpath = "//div[@class = 'name-container' and text()='Space Admin']")
-    private WebElement spaceAdmin;
-
     @FindBy(xpath = "//div[@class = 'name-container' and text()='Accounts']")
     private WebElement accounts;
 
@@ -73,7 +70,6 @@ public class HomePage
      */
     public void waitUntilAllFramesLoaded()
     {
-
         waitUntilVisible( By.xpath( "//div[@class = 'name-container' and text()='Accounts']" ) );
         waitUntilVisible( By.xpath( "//div[@class = 'name-container' and text()='Schema Manager']" ) );
     }
@@ -100,7 +96,7 @@ public class HomePage
         NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waituntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
-        getLogger().info( "Content App opened" );
+        getLogger().info("Content App opened");
         return panel;
     }
 
@@ -114,17 +110,6 @@ public class HomePage
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.APP_ACCOUNTS_FRAME_XPATH );
         return accountsPage;
-    }
-
-
-    /**
-     * @param username
-     * @param password
-     * @return
-     */
-    public void openAdminConsole( String username, String password )
-    {
-        spaceAdmin.click();
     }
 
 }

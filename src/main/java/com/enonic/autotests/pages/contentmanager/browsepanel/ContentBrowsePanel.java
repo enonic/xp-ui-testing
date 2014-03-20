@@ -159,7 +159,6 @@ public class ContentBrowsePanel
      */
     public void deleteSelected()
     {
-
         clickToolbarDelete().doDelete();
     }
 
