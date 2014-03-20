@@ -59,7 +59,6 @@ class DeleteContentDialogSpec
     def "GIVEN content BrowsePanel and existing content WHEN one content selected and Delete button clicked THEN delete dialog with one content is displayed"()
     {
         given:
-        go "admin"
         List<BaseAbstractContent> contentList = new ArrayList<>();
         BaseAbstractContent content = (BaseAbstractContent) getTestSession().get( CONTENT_TO_DELETE_KEY );
         contentList.add( content );
