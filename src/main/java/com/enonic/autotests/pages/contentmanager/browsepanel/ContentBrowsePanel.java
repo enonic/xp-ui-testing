@@ -288,7 +288,7 @@ public class ContentBrowsePanel
             return;
         }
 
-        expandContent( parentContentPath );
+       // expandContent( parentContentPath );
 
         // 1. select a checkbox and press the 'New' from toolbar.
         String spaceCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, parentContentPath );
