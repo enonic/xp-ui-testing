@@ -25,7 +25,7 @@ class DeleteContentDialogSpec
         go "admin"
         String name = "foldertodelete";
         BaseAbstractContent content = FolderContent.builder().
-            withName( NameHelper.unqiueName( name ) ).
+            withName( NameHelper.uniqueName( name ) ).
             withDisplayName( "foldertodelete" ).
             withParent( ContentPath.ROOT ).
             build();

@@ -10,7 +10,7 @@ public class NameHelper
      *
      * @param name
      */
-    public static String unqiueName( String name )
+    public static String uniqueName( String name )
     {
         return name + Math.abs( new Random().nextInt() );
 

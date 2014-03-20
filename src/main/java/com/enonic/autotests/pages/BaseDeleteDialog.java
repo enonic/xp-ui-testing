@@ -31,7 +31,6 @@ public abstract class BaseDeleteDialog
      * The constructor
      *
      * @param session
-     * @param spacesToDelete
      */
     public BaseDeleteDialog( TestSession session )
     {

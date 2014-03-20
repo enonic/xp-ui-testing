@@ -67,10 +67,10 @@ public class ContentTypeWizardPanel
         closeButton.click();
         if ( checkoutErrorDialog() )
         {
-            throw new CreateContentTypeException( "New Content type was not created, Erorr dialog with error message appeared " );
+            throw new CreateContentTypeException( "New Content type was not created, error-dialog with error message appeared " );
         }
         SchemaBrowsePanel page = new SchemaBrowsePanel( getSession() );
-        page.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+        page.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
     }
 
@@ -112,8 +112,8 @@ public class ContentTypeWizardPanel
     {
         // 1. type a data: 'name' and 'Display Name'.
         clearAndType( nameInput, contentType.getName() );
-        //2. type the XMLconfig data:
-        getLogger().info( "set contenttype configuration " );
+        //2. type the XML-config data:
+        getLogger().info( "set content type configuration " );
         setConfiguration( contentType.getConfigData().trim() );
         return this;
     }

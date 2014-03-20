@@ -112,7 +112,7 @@ class ContentTypeSpec
     ContentType cloneContentTypeWithNewName( ContentType contenTypeToEdit )
     {
         ContentType newContenttype = contenTypeToEdit.cloneContentType()
-        String name = NameHelper.unqiueName( "edited" );
+        String name = NameHelper.uniqueName( "edited" );
         newContenttype.setName( name )
         return newContenttype
     }
@@ -120,7 +120,7 @@ class ContentTypeSpec
     ContentType cloneContentTypeWithNewDisplayName( ContentType contenTypeToEdit )
     {
         ContentType newContentType = contenTypeToEdit.cloneContentType();
-        String displayName = NameHelper.unqiueName( "edited" );
+        String displayName = NameHelper.uniqueName( "edited" );
         newContentType.setDisplayNameInConfig( displayName );
         return newContentType
     }

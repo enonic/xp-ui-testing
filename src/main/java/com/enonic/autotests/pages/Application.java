@@ -11,7 +11,7 @@ public class Application
     extends Page
 {
 
-    public static final long PAGELOAD_TIMEOUT = 4l;
+    public static final long PAGE_LOAD_TIMEOUT = 4l;
 
     public static final long REFRESH_TIMEOUT = 1l;
 

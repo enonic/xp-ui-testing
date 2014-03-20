@@ -110,7 +110,6 @@ public abstract class Page
     }
 
     /**
-     * @param driver
      * @param by
      * @param timeout
      * @return
@@ -121,7 +120,6 @@ public abstract class Page
     }
 
     /**
-     * @param driver
      * @param by
      * @param timeout
      * @return
@@ -132,9 +130,7 @@ public abstract class Page
     }
 
     /**
-     * @param driver
      * @param by
-     * @param timeout
      * @return true if element is visible , otherwise return false.
      */
 
@@ -265,7 +261,7 @@ public abstract class Page
             try
             {
                 we = getDriver().findElement( locator );
-                getLogger().info( "TestUtils.getDynamicElement: dynamic webelement was found!" );
+                getLogger().info( "TestUtils.getDynamicElement: dynamic web element was found!" );
                 return we;
             }
             catch ( StaleElementReferenceException ser )

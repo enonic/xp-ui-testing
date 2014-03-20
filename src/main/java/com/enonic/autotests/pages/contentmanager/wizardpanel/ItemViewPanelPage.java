@@ -50,7 +50,6 @@ public class ItemViewPanelPage
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
      *
-     * @param session {@link TestSession} instance
      */
     public void waitUntilOpened( String displayName, Integer numberPage )
     {

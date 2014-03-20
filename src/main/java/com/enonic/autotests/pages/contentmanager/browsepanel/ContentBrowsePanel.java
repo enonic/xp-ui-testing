@@ -176,7 +176,7 @@ public class ContentBrowsePanel
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
-            throw new SaveOrUpdateException( "CM application, impossible to delete content, because the 'Delete' button is disabled!" );
+            throw new SaveOrUpdateException( "Impossible to delete content, because the 'Delete' button is disabled!" );
         }
         // 4. click by 'Delete' link and open a confirm dialog.
         deleteButton.click();
@@ -215,7 +215,6 @@ public class ContentBrowsePanel
 
         if ( !isExist )
         {
-            //
             TestUtils.saveScreenshot( getSession() );
             throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
         }
@@ -308,7 +307,7 @@ public class ContentBrowsePanel
         boolean isNewEnabled = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), 2l );
         if ( !isNewEnabled )
         {
-            throw new SaveOrUpdateException( "CM application, impossible to open NewContentDialog, because the 'New' button is disabled!" );
+            throw new SaveOrUpdateException( "Impossible to open 'ContentWizardPanel', because the 'New' button is disabled!" );
         }
 
     }
@@ -390,7 +389,7 @@ public class ContentBrowsePanel
             waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );//waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), "emptygrid-bug" );
+            TestUtils.saveScreenshot( getSession(), "empty_grid_bug" );
             throw new TestFrameworkException(
                 "content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!" );
         }

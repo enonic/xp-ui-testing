@@ -74,7 +74,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN creating new Content WHEN saved and HomeButton clicked THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
-        String name = NameHelper.unqiueName( "folder" );
+        String name = NameHelper.uniqueName( "folder" );
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).
@@ -93,7 +93,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN creating new Content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
-        String name = NameHelper.unqiueName( "folder" );
+        String name = NameHelper.uniqueName( "folder" );
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).
@@ -114,7 +114,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN a Content WHEN deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
-        String name = NameHelper.unqiueName( "folder" );
+        String name = NameHelper.uniqueName( "folder" );
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).
@@ -140,7 +140,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN No selections or text-search WHEN adding text-search THEN all filters should be updated to only contain entries with matches in text-search"()
     {
         given:
-        String name = NameHelper.unqiueName( "folder" );
+        String name = NameHelper.uniqueName( "folder" );
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).
@@ -175,7 +175,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN LastModified-filter should be updated with filtered values"()
     {
         given:
-        String name = NameHelper.unqiueName( "folder" );
+        String name = NameHelper.uniqueName( "folder" );
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).
@@ -209,7 +209,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN selection in any filter WHEN adding text-search THEN all filters should be updated to only contain entries with selection and new count with match on text-search"()
     {
         given:
-        String name = NameHelper.unqiueName( "folder" );
+        String name = NameHelper.uniqueName( "folder" );
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).

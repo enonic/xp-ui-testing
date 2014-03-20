@@ -31,7 +31,7 @@ class MixinSpec
     {
         given:
         String mixinCFG = MixinAddress.CFG
-        ContentType mixin = ContentType.with().name( NameHelper.unqiueName( "adressmixin" ) ).kind(
+        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "adressmixin" ) ).kind(
             KindOfContentTypes.MIXIN ).configuration( mixinCFG ).build();
         getTestSession().put( MIXIN_KEY, mixin );
 
@@ -50,7 +50,7 @@ class MixinSpec
         given:
         ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY );
         ContentType newMixin = mixinToEdit.cloneContentType();
-        String newName = NameHelper.unqiueName( "mixinrenamed" );
+        String newName = NameHelper.uniqueName( "mixinrenamed" );
         newMixin.setName( newName );
 
         when:

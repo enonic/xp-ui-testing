@@ -19,7 +19,7 @@ public class NewContentDialog
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
 
-    public static String CONTENTTYPE_NAME = "//li[contains(@class,'content-type-list-item')]//p[text()='%s']";
+    public static String CONTENT_TYPE_NAME = "//li[contains(@class,'content-type-list-item')]//p[text()='%s']";
 
     private String INPUT_SEARCH = "//div[contains(@class,'column-right')]/input";
 
@@ -51,7 +51,7 @@ public class NewContentDialog
     public ContentWizardPanel selectContentType( String contentTypeName )
     {
 
-        String ctypeXpath = String.format( CONTENTTYPE_NAME, contentTypeName );
+        String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
         boolean isContentNamePresent = waitElementExist( ctypeXpath, 3 );
 
         if ( !isContentNamePresent )

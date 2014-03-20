@@ -37,7 +37,7 @@ public class SelectKindDialog
 
         if ( !isPpresent )
         {
-            throw new TestFrameworkException( "The kind of contentype" + kind + " was not found!!!" );
+            throw new TestFrameworkException( "The kind of content type" + kind + " was not found!!!" );
         }
         getDriver().findElement( By.xpath( kindXpath ) ).click();
         ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );

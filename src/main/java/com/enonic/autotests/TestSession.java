@@ -68,11 +68,6 @@ public class TestSession
         session.put( TestSession.START_URL, url );
     }
 
-    public String getBrowserName()
-    {
-        return (String) session.get( TestSession.BROWSER_NAME );
-    }
-
     public String getPlatform()
     {
         return (String) session.get( TestSession.PLATFORM );

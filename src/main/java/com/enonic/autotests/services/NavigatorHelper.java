@@ -69,7 +69,7 @@ public class NavigatorHelper
         {
             HomePage home = loginAndOpenHomePage( testSession );
             SchemaBrowsePanel schemasPage = home.openSchemaManagerApplication();
-            schemasPage.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+            schemasPage.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
             return schemasPage;
         }
 

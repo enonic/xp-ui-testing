@@ -29,7 +29,7 @@ public class ContentWizardPanel
     private static final String TOOLBAR_DELETE_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Delete']";
 
-    public static final String TOOLBAR_DUPLICTAE_BUTTON_XPATH =
+    public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Duplicate']";
 
     @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
@@ -38,7 +38,7 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON_XPATH)
     private WebElement toolbarDeleteButton;
 
-    @FindBy(xpath = TOOLBAR_DUPLICTAE_BUTTON_XPATH)
+    @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
 
     boolean isToolbarButtonEnabled( String xpath )
@@ -101,7 +101,7 @@ public class ContentWizardPanel
         if ( !result )
         {
             //getLogger().error("error durin verifying the 'Save' toolbar-button !", getSession());
-            getLogger().error( "error durin verifying the 'Save' toolbar-button !" );
+            getLogger().error( "error during verifying a toolbar, the 'Save' toolbar-button has wrong state!" );
         }
         result &= toolbarDeleteButton.isDisplayed() && !toolbarDeleteButton.isEnabled();
         if ( !( toolbarDeleteButton.isDisplayed() && !toolbarDeleteButton.isEnabled() ) )

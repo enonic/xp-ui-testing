@@ -38,7 +38,7 @@ public class SchemaBrowsePanel
     @FindBy(xpath = EXPORT_BUTTON_XPATH)
     private WebElement exportButton;
 
-    private String CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE =
+    private String CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE =
         "//table[contains(@class,'x-grid-table')]//div[@class='admin-tree-description' and descendant::h6[contains(.,'%s')] and descendant::p[contains(.,'%s')]]";
 
     /**
@@ -52,7 +52,7 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Expands a folder, that is supertype for a content.
+     * Expands a folder, that is super type for a content.
      *
      * @param superTypeName
      */
@@ -68,14 +68,14 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Selects a row with contenttype: clicks by row with content
+     * Selects a row with content type: clicks by row with content
      *
      * @param contentName        the name of content
      * @param contentDisplayName the display-name of content
      */
     public SchemaBrowsePanel selectRowWithContentType( String contentName, String contentDisplayName )
     {
-        String contentTypeXpath = String.format( CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentDisplayName, contentName );
+        String contentTypeXpath = String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, contentDisplayName, contentName );
         getLogger().info( "Check that a Content Type to edit is present in the table: " + contentName );
         //3. click by 'Edit' button on toolbar
         WebElement elem = getDynamicElement( By.xpath( contentTypeXpath ), 3 );
@@ -112,7 +112,7 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * @return
+     * @return  {@link SelectKindDialog}  instance.
      */
     public SelectKindDialog clickToolbarNew()
     {
@@ -122,7 +122,7 @@ public class SchemaBrowsePanel
         if ( !isOpened )
         {
             logError( "SelectKindDialog was not opened!" );
-            throw new TestFrameworkException( " 'Select contrnt type' dialog was not opened!" );
+            throw new TestFrameworkException( " 'Select content type' dialog was not opened!" );
         }
         return selectDialog;
     }
@@ -157,7 +157,7 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Returns true if a contenttype is present in the Browse Panel, otherwise returns false
+     * Returns true if a content type is present in the Browse Panel, otherwise returns false
      *
      * @param contentType
      * @return
@@ -165,8 +165,8 @@ public class SchemaBrowsePanel
     public boolean exists( ContentType contentType )
     {
         String contentTypeXpath =
-            String.format( CONTENTTYPE_NAME_AND_DISPLAYNAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
-        getLogger().info( "Check is contenttype is  present in the  table: " + contentTypeXpath );
+            String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
+        getLogger().info( "Check is content type is  present in the  table: " + contentTypeXpath );
         waitsForSpinnerNotVisible();
         List<WebElement> elems = findElements( By.xpath( contentTypeXpath ) );
         if ( elems.size() > 0 )

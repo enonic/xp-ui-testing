@@ -138,9 +138,9 @@ public class AddNewUserWizard
         String nameValdationErrorMessage = getUserNameValidationMessage();
         if ( nameValdationErrorMessage != null )
         {
-            getLogger().info( "userinfo:  There validation message for User Name. " + nameValdationErrorMessage );
+            getLogger().info( "user info:  There validation message for User Name. " + nameValdationErrorMessage );
             boolean isInvalid = waitAndCheckAttrValue( nameInput, "aria-invalid", "true", 2l );
-            getLogger().info( "userinfo, nameInput attribute 'aria-invalid' has value:  " + nameValdationErrorMessage );
+            getLogger().info( "user info, nameInput attribute 'aria-invalid' has value:  " + nameValdationErrorMessage );
             // TODO should be "Save" disabled if there is error validation
             // message?
             // Assert.fail("Add new User Wizard: there is error message near the 'User Name' input, but the state of the input is valid! The value of attribute 'aria-invalid' is true! ");
@@ -151,7 +151,7 @@ public class AddNewUserWizard
         String emailValdationMessage = getEmailValidationMessage();
         if ( emailValdationMessage != null )
         {
-            getLogger().info( "userinfo: email is" + emailValdationMessage );
+            getLogger().info( "user info: email is" + emailValdationMessage );
             verifySaveButtonState( emailValdationMessage );
         }
 
@@ -168,7 +168,7 @@ public class AddNewUserWizard
                 repeatPasswordInput.sendKeys( user.getUserInfo().getPassword() );
             }
             boolean isInvalid = waitAndCheckAttrValue( repeatPasswordInput, "aria-invalid", "true", 1l );
-            getLogger().info( "userinfo, repeatPasswordInput has  attribute 'invalid' with value equals:  " + isInvalid );
+            getLogger().info( "user info, repeatPasswordInput has  attribute 'invalid' with value equals:  " + isInvalid );
             if ( isInvalid )
             {
                 if ( toolbarSaveButton.isEnabled() )
@@ -225,7 +225,7 @@ public class AddNewUserWizard
         result &= displayNameInput.isDisplayed();
         if ( !displayNameInput.isDisplayed() )
         {
-            logError( "Input field for dispalyed user name should be present, this is required field!" );
+            logError( "Input field for displayed user name should be present, this is required field!" );
         }
         result &= qualifiedName.isDisplayed() && qualifiedName.getAttribute( "readonly" ) != null;
         if ( !qualifiedName.isDisplayed() && qualifiedName.isEnabled() )

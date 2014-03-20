@@ -21,15 +21,16 @@ public class LoginPage
 
     private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'userid or e-mail']";
 
+    private final String loginEnabledClass = "login-button";
+
+    private String loginButtonXpath = "//button[contains(@class,'%s')]";
+
+
     @FindBy(xpath = EMAIL_INPUT_XPATH)
     private WebElement usernameInput;
 
     @FindBy(xpath = "//input[@placeholder = 'password']")
     private WebElement passwordInput;
-
-    private final String loginEnabledClass = "login-button";
-
-    private String loginButtonXpath = "//button[contains(@class,'%s')]";
 
     /**
      * The constructor.
@@ -61,7 +62,7 @@ public class LoginPage
         boolean isEmailInputPresent = waitAndFind( By.xpath( EMAIL_INPUT_XPATH ) );
         if ( !isEmailInputPresent )
         {
-            throw new TestFrameworkException( " input 'userid or e-mail' was not found on page!" );
+            throw new TestFrameworkException( " input 'user id or e-mail' was not found on page!" );
         }
         usernameInput.sendKeys( username );
 
@@ -70,7 +71,7 @@ public class LoginPage
         boolean isEnabledButton = waitAndFind( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );
         if ( !isEnabledButton )
         {
-            logError( "the Button 'Log in' is disabled" );
+            logError( "The button 'Log in' is disabled" );
             throw new AuthenticationException( "wrong password or username" );
         }
         WebElement loginButton = findElement( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );

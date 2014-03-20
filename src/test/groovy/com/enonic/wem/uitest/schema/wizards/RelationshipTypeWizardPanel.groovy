@@ -29,7 +29,7 @@ class RelationshipTypeWizardPanel
     {
         given:
 
-        String relationshipName = NameHelper.unqiueName( "relationship" );
+        String relationshipName = NameHelper.uniqueName( "relationship" );
         String relCFG = LinkRelationship.CFG
         ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
@@ -50,7 +50,7 @@ class RelationshipTypeWizardPanel
     def "GIVEN opened relationship wizard WHEN name typed and clicking Save THEN notification message is present"()
     {
         given:
-        String relationshipName = NameHelper.unqiueName( "relationship" );
+        String relationshipName = NameHelper.uniqueName( "relationship" );
         String relCFG = LinkRelationship.CFG
         ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
@@ -71,7 +71,7 @@ class RelationshipTypeWizardPanel
         ContentType relationship = (ContentType) getTestSession().get( RELATIONSHIP_WIZARD_TEST )
 
         when:
-        String newName = NameHelper.unqiueName( "newname" )
+        String newName = NameHelper.uniqueName( "newname" )
         ContentTypeWizardPanel wizard = schemaBrowsePanel.selectRowWithContentType( relationship.getName(),
                                                                                     relationship.getDisplayNameFromConfig() ).clickToolbarEdit()
         wizard.clearAndType( wizard.getNameInput(), newName )

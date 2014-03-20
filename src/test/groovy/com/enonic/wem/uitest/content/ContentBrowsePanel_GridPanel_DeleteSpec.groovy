@@ -34,7 +34,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
-            withName( NameHelper.unqiueName( "deletecontent" ) ).
+            withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
@@ -53,14 +53,14 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         BaseAbstractContent content1 = FolderContent.builder().
-            withName( NameHelper.unqiueName( "deletecontent" ) ).
+	    withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close()
 
 
         BaseAbstractContent content2 = FolderContent.builder().
-            withName( NameHelper.unqiueName( "deletecontent" ) ).
+	    withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close()
@@ -81,7 +81,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
-            withName( NameHelper.unqiueName( "deletecontent" ) ).
+			withName(  NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
 
@@ -104,14 +104,14 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         given:
         BaseAbstractContent parent = FolderContent.builder().
             withParent( ContentPath.ROOT ).
-            withName( NameHelper.unqiueName( "parent" ) ).
+            withName( NameHelper.uniqueName( "parent" ) ).
             withDisplayName( "parent" ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         BaseAbstractContent contentToDelete = ArchiveContent.builder().
-            withName( NameHelper.unqiueName( "archive" ) ).
+            withName( NameHelper.uniqueName( "archive" ) ).
             withDisplayName( "delete content beneath parent" ).
             withParent( ContentPath.from( parent.getName() ) ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData(
@@ -134,14 +134,14 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         given:
         BaseAbstractContent parent = FolderContent.builder().
             withParent( ContentPath.ROOT ).
-            withName( NameHelper.unqiueName( "parent" ) ).
+            withName( NameHelper.uniqueName( "parent" ) ).
             withDisplayName( "expandicon-test" ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         BaseAbstractContent content = ArchiveContent.builder().
-            withName( NameHelper.unqiueName( "archive" ) ).
+            withName( NameHelper.uniqueName( "archive" ) ).
             withDisplayName( "archive" ).
             withParent( ContentPath.from( parent.getName() ) ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close()

@@ -15,6 +15,14 @@ public class BrowsePanel
 
     protected final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
 
+    private final String ALL_ROWS_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
+
+    protected String TD_CONTENT_DISPLAY_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
+
+    protected String TD_CONTENT_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
+
+    private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
+
     @FindBy(xpath = NEW_BUTTON_XPATH)
     protected WebElement newButton;
 
@@ -39,13 +47,7 @@ public class BrowsePanel
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
 
-    private final String ALL_ROWS_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
 
-    protected String TD_CONTENT_DISPLAYNAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
-
-    protected String TD_CONTENT_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
-
-    private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
 
     /**
      * The Constructor
@@ -94,7 +96,6 @@ public class BrowsePanel
      * Check if space has child. if the attribute 'class' contains a string
      * "x-grid-tree-node-leaf", so space has no any child.
      *
-     * @param parentSpace
      * @return true if space has no any children., otherwise true.
      */
     public boolean isExpanderPresent( String contentName )
@@ -134,8 +135,6 @@ public class BrowsePanel
 
     /**
      * clicks by expand-icon and expands a space.
-     *
-     * @param parentSpace
      */
     private void findExpanderImageAndClick( String parentName )
     {

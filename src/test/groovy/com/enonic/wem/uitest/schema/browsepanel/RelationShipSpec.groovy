@@ -27,7 +27,7 @@ class RelationshipSpec
     {
         given:
         String relCFG = LinkRelationship.CFG
-        String relationshipName = NameHelper.unqiueName( "relationship" );
+        String relationshipName = NameHelper.uniqueName( "relationship" );
         ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relationship.setDisplayNameInConfig( "testrelationship" );
@@ -44,7 +44,7 @@ class RelationshipSpec
     {
         given:
         String relCFG = LinkRelationship.CFG
-        String relationshipName = NameHelper.unqiueName( "relationship" );
+        String relationshipName = NameHelper.uniqueName( "relationship" );
         ContentType relToDelete = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToDelete.setDisplayNameInConfig( "relationshiptodelete" );
@@ -63,7 +63,7 @@ class RelationshipSpec
     {
         given:
         String relCFG = LinkRelationship.CFG
-        String relationshipName = NameHelper.unqiueName( "releditname" );
+        String relationshipName = NameHelper.uniqueName( "releditname" );
         ContentType relToEdit = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToEdit.setDisplayNameInConfig( "relationshiptoeditname" );
@@ -72,7 +72,7 @@ class RelationshipSpec
 
 
         when:
-        String newName = NameHelper.unqiueName( "newname" );
+        String newName = NameHelper.uniqueName( "newname" );
         ContentType newRelationship = ContentType.with().name( newName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         schemaBrowsePanel.selectRowWithContentType( relToEdit.getName(), relToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(

@@ -21,16 +21,16 @@ public abstract class WizardPanel
     //public static String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
     public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
 
-    public static String APP_BAR_TABMENU_TITLE_XPATH = "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']";
+    public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']";
 
-    public static final String TOOLBAR_CLOSEWIZARD_BUTTON_XPATH =
+    public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
         "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Close']";
 
 
-    @FindBy(xpath = TOOLBAR_CLOSEWIZARD_BUTTON_XPATH)
+    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH)
     protected WebElement closeButton;
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
@@ -63,7 +63,7 @@ public abstract class WizardPanel
         boolean result = getDriver().findElements( By.xpath( "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']" ) ).size() == 1;
         if ( result )
         {
-            return getDriver().findElement( By.xpath( APP_BAR_TABMENU_TITLE_XPATH ) ).getAttribute( "title" );
+            return getDriver().findElement( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).getAttribute( "title" );
         }
         else
         {
@@ -104,7 +104,7 @@ public abstract class WizardPanel
     /**
      * Checks tab-count on the Home page.(checks that one wizard was opened)
      *
-     * @return
+     * @return  {@link HomePage} instance.
      */
     public HomePage showHomePageAndVerifyCircle()
     {
@@ -117,7 +117,7 @@ public abstract class WizardPanel
     }
 
     /**
-     * Gets notification message(Space 'namesapce' was saved), that appears at
+     * Gets notification message, that appears at
      * the bottom of the WizardPage. <br>
      *
      * @return notification message or null.
@@ -136,7 +136,6 @@ public abstract class WizardPanel
     public void waitUntilWizardOpened()
     {
         String circleXpath = String.format( RED_CIRCLE_XPATH );
-        //String titleXpath = String.format(APP_BAR_TABMENU_TITLE, displayName);
         waitUntilVisible( By.xpath( circleXpath ) );
         //TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
     }

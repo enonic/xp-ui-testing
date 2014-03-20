@@ -55,7 +55,7 @@ public class ConfirmationDialog
             throw new DeleteCMSObjectException( "Confirm 'delete content' dialog was not closed!" );
         }
         ContentBrowsePanel table = new ContentBrowsePanel( getSession() );
-        table.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+        table.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         sleep( 500 );
         return table;
     }

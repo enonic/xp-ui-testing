@@ -17,6 +17,11 @@ import com.enonic.autotests.vo.User;
 public class AccountsPage
     extends Application
 {
+    private String SYSTEMUSER_NAME_AND_DISPLAYNAME_IN_TABLE =
+            "//table[contains(@class,'x-grid-table')]//div[@class='admin-grid-description'  and descendant::h6[contains(.,'%s')] and descendant::p[text()='system\\%s']]";
+
+    private String CHECKBOX_ROW_CHECKER = SYSTEMUSER_NAME_AND_DISPLAYNAME_IN_TABLE + "//ancestor::td/preceding-sibling::td";
+
     @FindBy(xpath = "//span[@class = 'x-btn-inner' and text()='Accounts']")
     private WebElement titleElement;
 
@@ -45,12 +50,6 @@ public class AccountsPage
     @FindBy(
         xpath = "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Export')]]")
     private WebElement exportButton;
-
-
-    private String SYSTEMUSER_NAME_AND_DISPLAYNAME_IN_TABLE =
-        "//table[contains(@class,'x-grid-table')]//div[@class='admin-grid-description'  and descendant::h6[contains(.,'%s')] and descendant::p[text()='system\\%s']]";
-
-    private String CHECKBOX_ROW_CHECKER = SYSTEMUSER_NAME_AND_DISPLAYNAME_IN_TABLE + "//ancestor::td/preceding-sibling::td";
 
     /**
      * The constructor.

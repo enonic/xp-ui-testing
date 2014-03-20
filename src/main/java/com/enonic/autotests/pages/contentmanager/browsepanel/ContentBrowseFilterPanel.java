@@ -40,19 +40,19 @@ public class ContentBrowseFilterPanel
 
     public enum ContenTypeDispalyNames
     {
-        FOLDER( "Folder" ), PAGE( "Page" );
+    	FOLDER("Folder"), PAGE("Page");
 
-        private String value;
+    	private String value;
 
-        ContenTypeDispalyNames( String value )
-        {
-            this.value = value;
-        }
+    	ContenTypeDispalyNames(String value)
+    	{
+    		this.value = value;
+    	}
 
-        public String getValue()
-        {
-            return value;
-        }
+    	public String getValue()
+    	{
+    		return value;
+    	}
     }
 
     /**
@@ -65,52 +65,52 @@ public class ContentBrowseFilterPanel
         super( session );
 
     }
-
+    
     public List<String> getAllContentTypesFilterEntries()
     {
         List<WebElement> elements = getDriver().findElements( By.xpath(
             "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and child::label]//label" ) );
-        List<String> labels = new ArrayList<>();
-        for ( WebElement el : elements )
-        {
-            if ( el.isDisplayed() )
+    	List<String> labels = new ArrayList<>();
+    	for(WebElement el:elements)
+    	{
+    		if(el.isDisplayed())
             {
-                labels.add( el.getText() );
-            }
+    		labels.add(el.getText());
+    	}
         }
-        return labels;
+    	return labels;
     }
-
+    
     public List<String> getAllLastModifiedFilterEntries()
     {
         List<WebElement> elements = getDriver().findElements( By.xpath(
             "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label]//label" ) );
-        List<String> labels = new ArrayList<>();
-        for ( WebElement el : elements )
-        {
-            labels.add( el.getText() );
-        }
-        return labels;
+    	List<String> labels = new ArrayList<>();
+    	for(WebElement el:elements)
+    	{
+    		labels.add(el.getText());
+    	}
+    	return labels;
     }
-
-    public Integer getContentNumberFilteredByLastModified( FilterPanelLastModified entry )
+    
+    public Integer getContentNumberFilteredByLastModified(FilterPanelLastModified entry)
     {
-        TestUtils.saveScreenshot( getSession(), "lastmodified" );
-        String xpath = String.format( LAST_MODIFIED_FILTER_ENTRY, entry.getValue() );
-        List<WebElement> elements = getDriver().findElements( By.xpath( xpath ) );
-        if ( elements.size() == 0 )
-        {
-            getLogger().info( "entry was not found:: " + entry.getValue() );
-            return null;
-        }
-        if ( !elements.get( 0 ).isDisplayed() )
-        {
-            return 0;
+    	TestUtils.saveScreenshot(getSession(), "lastmodified");
+    	String xpath = String.format( LAST_MODIFIED_FILTER_ENTRY, entry.getValue() );
+    	List<WebElement> elements = getDriver().findElements(By.xpath(xpath));
+    	if(elements.size() == 0)
+    	{
+    		getLogger().info("entry was not found:: "+ entry.getValue());
+    		return null;
+    	}
+    	if(!elements.get(0).isDisplayed())
+    	{
+    		return 0;
         }
         else
-        {
-            return TestUtils.getNumberFromFilterLabel( elements.get( 0 ).getText() );
-        }
+    	{
+    		return TestUtils.getNumberFromFilterLabel(elements.get(0).getText());
+    	}   	
     }
 
     /**
@@ -125,10 +125,10 @@ public class ContentBrowseFilterPanel
         getLogger().info( "Filtered by : " + text );
         return this;
     }
-
+    
     public String getSearchText()
     {
-        return searchInput.getAttribute( "value" );
+    	return searchInput.getAttribute("value");
     }
 
     /**
@@ -201,7 +201,7 @@ public class ContentBrowseFilterPanel
      */
     public String selectEntryInContentTypesFilter( String contenttypeDisplayName )
     {
-        TestUtils.saveScreenshot( getSession() );
+    	TestUtils.saveScreenshot(getSession());
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
@@ -211,19 +211,19 @@ public class ContentBrowseFilterPanel
         }
         else
         {
-            if ( !isSelectedEntryInFilter( contenttypeDisplayName ) )
-            {
-                elems.get( 0 ).click();
-                waitsForSpinnerNotVisible();
-            }
+        	if(!isSelectedEntryInFilter(contenttypeDisplayName))
+        	{
+        		elems.get( 0 ).click();
+        		waitsForSpinnerNotVisible();
+        	}
         }
-
+      
         return elems.get( 0 ).getText();
     }
-
-    public String deSelectEntryInContentTypesFilter( String contenttypeDisplayName )
+    
+    public String deSelectEntryInContentTypesFilter(String contenttypeDisplayName)
     {
-        TestUtils.saveScreenshot( getSession() );
+    	TestUtils.saveScreenshot(getSession());
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
@@ -233,14 +233,14 @@ public class ContentBrowseFilterPanel
         }
         else
         {
-            if ( isSelectedEntryInFilter( contenttypeDisplayName ) )
-            {
-                elems.get( 0 ).click();
-            }
-
+        	if(isSelectedEntryInFilter(contenttypeDisplayName))
+        	{
+        		elems.get( 0 ).click();
+        	}
+            
         }
         waitsForSpinnerNotVisible();
-        return getDriver().findElements( By.xpath( itemXpath ) ).get( 0 ).getText();// elems.get( 0 ).getText();
+        return  getDriver().findElements( By.xpath( itemXpath ) ).get(0).getText();// elems.get( 0 ).getText();
     }
 
     /**
@@ -262,9 +262,9 @@ public class ContentBrowseFilterPanel
         return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
     }
 
-    boolean isSelectedEntryInFilter( String contenttypeDisplayName )
+    boolean  isSelectedEntryInFilter(String contenttypeDisplayName)
     {
-        return getSelectedValuesForContentTypesFilter().contains( contenttypeDisplayName.toLowerCase() );
+	   return getSelectedValuesForContentTypesFilter().contains(contenttypeDisplayName.toLowerCase());
     }
 
     public List<String> getSelectedValuesForContentTypesFilter()

@@ -53,7 +53,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         given:
         BaseAbstractContent rootContent = DataContent.builder().
             withParent( ContentPath.ROOT ).
-            withName( NameHelper.unqiueName( "datacontent" ) ).
+            withName( NameHelper.uniqueName( "datacontent" ) ).
             withDisplayName( "datacontent" ).
             build();
 
@@ -74,7 +74,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         given:
         BaseAbstractContent content = FolderContent.builder().
             withParent( ContentPath.from( REPONAME ) ).
-            withName( NameHelper.unqiueName( "folder" ) ).
+            withName( NameHelper.uniqueName( "folder" ) ).
             withDisplayName( "folder" ).
             build();
 
@@ -94,7 +94,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         given:
         BaseAbstractContent content = FolderContent.builder().
             withParent( ContentPath.from( REPONAME ) ).
-            withName( NameHelper.unqiueName( "folder" ) ).
+            withName( NameHelper.uniqueName( "folder" ) ).
             withDisplayName( "folder" ).
             build();
 
@@ -113,7 +113,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
     {
         given:
-        String name = NameHelper.unqiueName( "archive" );
+        String name = NameHelper.uniqueName( "archive" );
         BaseAbstractContent content = ArchiveContent.builder().
             withName( name ).
             withDisplayName( "archive" ).
@@ -134,7 +134,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
         given:
-        String name = NameHelper.unqiueName( "folder" );
+        String name = NameHelper.uniqueName( "folder" );
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).
@@ -176,7 +176,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT );
+        contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         contentBrowsePanel.expandContent( newcontent.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
         contentBrowsePanel.exists( newcontent.getPath() );
@@ -205,14 +205,14 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible()
-        contentBrowsePanel.waituntilPageLoaded( Application.PAGELOAD_TIMEOUT )
+        contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT )
         contentBrowsePanel.expandContent( newcontent.getParent() )
         contentBrowsePanel.exists( newcontent.getPath() )
     }
 
     StructuredContent cloneContentWithNewDispalyName( StructuredContent contentToedit )
     {
-        String newDisplayName = NameHelper.unqiueName( "displaynamechanged" )
+        String newDisplayName = NameHelper.uniqueName( "displaynamechanged" )
         return StructuredContent.builder().
             withName( contentToedit.getName() ).
             withDisplayName( newDisplayName ).
@@ -222,7 +222,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
     StructuredContent cloneContentWithNewName( StructuredContent source )
     {
-        String newName = NameHelper.unqiueName( "newname" )
+        String newName = NameHelper.uniqueName( "newname" )
         return StructuredContent.builder().
             withName( newName ).
             withDisplayName( source.getDisplayName() ).
