@@ -110,7 +110,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
-        String text = filterPanel.typeSearchText( PREDEFINED_FOLDER_NAME )
+        filterPanel.typeSearchText( PREDEFINED_FOLDER_NAME )
         contentBrowsePanel.waitsForSpinnerNotVisible()
 
         when:

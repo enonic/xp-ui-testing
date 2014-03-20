@@ -71,7 +71,7 @@ class RelationshipTypeWizardPanel
         ContentType relationship = (ContentType) getTestSession().get( RELATIONSHIP_WIZARD_TEST )
 
         when:
-        String newName = NameHelper.uniqueName( "newname" )
+        String newName = NameHelper.uniqueName( "new-name" )
         ContentTypeWizardPanel wizard = schemaBrowsePanel.selectRowWithContentType( relationship.getName(),
                                                                                     relationship.getDisplayNameFromConfig() ).clickToolbarEdit()
         wizard.clearAndType( wizard.getNameInput(), newName )

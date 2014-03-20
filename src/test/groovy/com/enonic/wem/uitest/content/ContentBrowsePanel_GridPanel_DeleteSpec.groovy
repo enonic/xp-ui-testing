@@ -21,8 +21,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     @Shared
     ContentBrowsePanel contentBrowsePanel
 
-    @Shared
-    String DELETE_CONTENT_KEY = "deletecontent_test"
 
     def setup()
     {

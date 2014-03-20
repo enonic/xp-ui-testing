@@ -27,11 +27,11 @@ class MixinSpec
     }
 
 
-    def "GIVEN BrowsePanel WHEN adding Mixin-adress  THEN the new mixin should be listed in the table"()
+    def "GIVEN BrowsePanel WHEN adding Mixin-address  THEN the new mixin should be listed in the table"()
     {
         given:
         String mixinCFG = MixinAddress.CFG
-        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "adressmixin" ) ).kind(
+        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "addressmixin" ) ).kind(
             KindOfContentTypes.MIXIN ).configuration( mixinCFG ).build();
         getTestSession().put( MIXIN_KEY, mixin );
 
@@ -45,7 +45,7 @@ class MixinSpec
     }
 
 
-    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, name changed  Then the Mixin whith new name should be listed in the table"()
+    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin edited, name changed  Then the Mixin with new name should be listed in the table"()
     {
         given:
         ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY );
@@ -65,7 +65,7 @@ class MixinSpec
     }
 
 
-    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin editet, display-name changed  Then the Mixin whith new display-name should be listed in the table"()
+    def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin edited, display-name changed  Then the Mixin with new display-name should be listed in the table"()
     {
         given:
 

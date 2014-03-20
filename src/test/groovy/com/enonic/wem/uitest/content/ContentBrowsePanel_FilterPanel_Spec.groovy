@@ -41,7 +41,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.getContentNamesFromBrowsePanel().size() == TestUtils.getNumberFromFilterLabel( label )
     }
 
-    def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should dissapear"()
+    def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappear"()
     {
         given:
         String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
@@ -56,7 +56,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     }
 
 
-    def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should dissapear"()
+    def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should disappear"()
     {
         given:
         String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
@@ -204,7 +204,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
     }
     //@Ignored
-    //GIVEN Selections in ContentTypes-filter WHEN Selecting one entry in LastModified-filter THEN entries with no selection in ContentTypes-filter should dissapear from view
+    //GIVEN Selections in ContentTypes-filter WHEN Selecting one entry in LastModified-filter THEN entries with no selection in ContentTypes-filter should disappear from view
 
     def "GIVEN selection in any filter WHEN adding text-search THEN all filters should be updated to only contain entries with selection and new count with match on text-search"()
     {

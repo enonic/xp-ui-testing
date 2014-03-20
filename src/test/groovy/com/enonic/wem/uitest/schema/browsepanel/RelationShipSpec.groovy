@@ -63,7 +63,7 @@ class RelationshipSpec
     {
         given:
         String relCFG = LinkRelationship.CFG
-        String relationshipName = NameHelper.uniqueName( "releditname" );
+        String relationshipName = NameHelper.uniqueName( "rel-editname" );
         ContentType relToEdit = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToEdit.setDisplayNameInConfig( "relationshiptoeditname" );
@@ -72,7 +72,7 @@ class RelationshipSpec
 
 
         when:
-        String newName = NameHelper.uniqueName( "newname" );
+        String newName = NameHelper.uniqueName( "new-name" );
         ContentType newRelationship = ContentType.with().name( newName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         schemaBrowsePanel.selectRowWithContentType( relToEdit.getName(), relToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(

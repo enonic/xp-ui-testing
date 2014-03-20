@@ -27,7 +27,7 @@ class ContentWizardPanel_ValidationSpec
 
     }
 
-    def "create a contenttype with two textline"()
+    def "create a content type with two text line"()
     {
         given:
         String twoTextlineCFG = TwoTextLineContentTypeCfg.CFG

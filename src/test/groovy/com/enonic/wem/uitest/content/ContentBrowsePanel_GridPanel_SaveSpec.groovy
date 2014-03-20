@@ -18,7 +18,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     extends BaseGebSpec
 {
     @Shared
-    String REPONAME = "test-folder";
+    String REPO_NAME = "test-folder";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -34,8 +34,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         given:
         BaseAbstractContent rootContent = FolderContent.builder().
             withParent( ContentPath.ROOT ).
-            withName( REPONAME ).
-            withDisplayName( REPONAME ).
+            withName( REPO_NAME ).
+            withDisplayName( REPO_NAME ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() );
@@ -73,7 +73,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
-            withParent( ContentPath.from( REPONAME ) ).
+            withParent( ContentPath.from( REPO_NAME ) ).
             withName( NameHelper.uniqueName( "folder" ) ).
             withDisplayName( "folder" ).
             build();
@@ -93,7 +93,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
-            withParent( ContentPath.from( REPONAME ) ).
+            withParent( ContentPath.from( REPO_NAME ) ).
             withName( NameHelper.uniqueName( "folder" ) ).
             withDisplayName( "folder" ).
             build();
@@ -117,7 +117,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         BaseAbstractContent content = ArchiveContent.builder().
             withName( name ).
             withDisplayName( "archive" ).
-            withParent( ContentPath.from( REPONAME ) ).build();
+            withParent( ContentPath.from( REPO_NAME ) ).build();
 
         contentBrowsePanel.expandContent( content.getParent() );
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -138,7 +138,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         BaseAbstractContent content = FolderContent.builder().
             withName( name ).
             withDisplayName( "folder" ).
-            withParent( ContentPath.from( REPONAME ) ).build()
+            withParent( ContentPath.from( REPO_NAME ) ).build()
 
         contentBrowsePanel.expandContent( content.getParent() )
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -157,7 +157,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         StructuredContent contentToEdit = StructuredContent.builder().
-            withParent( ContentPath.from( REPONAME ) ).
+            withParent( ContentPath.from( REPO_NAME ) ).
             withName( "editname" ).
             withDisplayName( "editnametest" ).
             build();
@@ -187,7 +187,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         StructuredContent contentToEdit = StructuredContent.builder().
-            withParent( ContentPath.from( REPONAME ) ).
+            withParent( ContentPath.from( REPO_NAME ) ).
             withName( "editdisplayname" ).
             withDisplayName( "editdisplayname" ).
             build()

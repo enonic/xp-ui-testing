@@ -23,7 +23,7 @@ class ContentTypeSpec
         schemaBrowsePanel = NavigatorHelper.openSchemaManager( getTestSession() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Folder ContentType Then the new contentype should be listed in the table"()
+    def "GIVEN BrowsePanel WHEN adding Folder Content type Then the new content type should be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -39,7 +39,7 @@ class ContentTypeSpec
 
     }
 
-    def "GIVEN schema BrowsePanel and exist Contentype  WHEN Contentype edited, display-name changed  Then the Contentype with new display-name should be listed in the table"()
+    def "GIVEN schema BrowsePanel and exist Content type  WHEN Content type edited, display-name changed  Then the Content type with new display-name should be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -57,7 +57,7 @@ class ContentTypeSpec
         schemaBrowsePanel.exists( newContentType );
     }
 
-    def "GIVEN schema BrowsePanel and exist Contentype  WHEN Contentype edited, name changed  THEN the Contentype with new name should be listed in the table"()
+    def "GIVEN schema BrowsePanel and exist Content type  WHEN Content type edited, name changed  THEN the Content type with new name should be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -76,7 +76,7 @@ class ContentTypeSpec
 
     }
 
-    def "GIVEN BrowsePanel WHEN adding TextLine ContentType THEN the new Contentype should be listed in the table"()
+    def "GIVEN BrowsePanel WHEN adding 'TextLine' Content type THEN the new Content type should be listed in the table"()
     {
         given:
         String textLineCFG = TextLineContentTypeCfg.CFG
@@ -92,7 +92,7 @@ class ContentTypeSpec
 
     }
 
-    def "GIVEN BrowsePanel and created a contentType WHEN Contenttype deleted THEN the Contentype should not be listed in the table"()
+    def "GIVEN BrowsePanel and created a content type WHEN Content type deleted THEN the Content type should not be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -101,7 +101,7 @@ class ContentTypeSpec
         schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData(
             ctypeToDelete ).save().close()
         when:
-        schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ) selectRowWithContentType(
+        schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ) .selectRowWithContentType(
             ctypeToDelete.getName(), ctypeToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()
 
         then:
