@@ -21,8 +21,6 @@ public class NewContentDialog
 
     public static String CONTENT_TYPE_NAME = "//li[contains(@class,'content-type-list-item')]//p[text()='%s']";
 
-    private String INPUT_SEARCH = "//div[contains(@class,'column-right')]/input";
-
     /**
      * The constructor.
      *

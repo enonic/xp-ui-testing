@@ -53,7 +53,7 @@ class DeleteContentDialogSpec
             contentList ).clickToolbarDelete()
 
         then:
-        dialog.isOpened();
+        dialog.waitForOpened();
     }
 
     def "GIVEN content BrowsePanel and existing content WHEN one content selected and Delete button clicked THEN delete dialog with one content is displayed"()
@@ -67,6 +67,7 @@ class DeleteContentDialogSpec
         when:
         DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
             contentList ).clickToolbarDelete()
+		dialog.waitForOpened()
 
         then:
         List<String> namesFromDialog = dialog.getContentNameToDelete();

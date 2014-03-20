@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
 
 public class ItemViewPanelPage
     extends Application
@@ -51,7 +50,7 @@ public class ItemViewPanelPage
      * Page.
      *
      */
-    public void waitUntilOpened( String displayName, Integer numberPage )
+    public void waitUntilOpened(String displayName, Integer numberPage )
     {
         String circleXpath = String.format( RED_CIRCLE_XPATH, numberPage.toString() );
         String titleXpath = String.format( VERIFY_TITLE_SPAN_XPATH, displayName );
@@ -63,15 +62,23 @@ public class ItemViewPanelPage
     {
         closeButton.click();
     }
-
+    
+    /**
+     * Press the 'Edit' button and opens a  ContentWizardPanel.
+     * 
+     * @return {@link ContentWizardPanel} instance
+     */
     public ContentWizardPanel clickToolbarEdit()
     {
-        editButtonToolbar.click();
-        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened();
-        return wizard;
+    	 editButtonToolbar.click();
+         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+         wizard.waitUntilWizardOpened( );
+         return wizard;
     }
 
+    /**
+     * @return {@link ConfirmationDialog}
+     */
     public ConfirmationDialog openDeleteConfirmationDialog()
     {
         deleteButtonToolbar.click();
@@ -84,31 +91,9 @@ public class ItemViewPanelPage
         return dialog;
     }
 
-
     /**
-     * @param content
-     * @return
+     * @return title of this page.
      */
-    public boolean verifyToolbar( BaseAbstractContent content )
-    {
-        boolean result = true;
-        boolean tmp;
-
-        tmp = deleteButtonToolbar.isDisplayed() && deleteButtonToolbar.isEnabled();
-        if ( !tmp )
-        {
-            getLogger().info( "the delete button has wrong state" );
-        }
-        result &= tmp;
-        tmp = editButtonToolbar.isDisplayed() && editButtonToolbar.isEnabled();
-        if ( !tmp )
-        {
-            getLogger().info( "the edit button has wrong state" );
-        }
-        result &= tmp;
-        return result;
-    }
-
     public String getTitle()
     {
         return findElements( By.xpath( TITLE_SPAN_XPATH ) ).get( 0 ).getText();

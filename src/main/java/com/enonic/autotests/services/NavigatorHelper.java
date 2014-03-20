@@ -76,7 +76,7 @@ public class NavigatorHelper
     }
 
     /**
-     * Open 'Home' page, click by 'Accounts' link and open application's page.
+     * Open 'Home' page, click on 'Accounts' link and open application's page.
      *
      * @param testSession {@link TestSession} instance.
      * @return {@link AccountsPage} instance.

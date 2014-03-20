@@ -36,9 +36,6 @@ public class ContentBrowsePanel
     private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH =
         "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
 
-    private final String CONTENT_DETAILS_ALL_NAMES_XPATH =
-        "//div[contains(@id, 'contentDetail')]//div[contains(@class,'admin-selected-item-box')]//p";
-
     @FindBy(xpath = "//div[@class='toolbar']/button[text()='Duplicate']")
     private WebElement duplicateButton;
 
@@ -119,7 +116,6 @@ public class ContentBrowsePanel
 
     public boolean exists( ContentPath contentPath )
     {
-
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, contentPath.toString() );
         getLogger().info( "will verify is exists:" + contentDescriptionXpath );
         waitsForSpinnerNotVisible();
@@ -172,16 +168,15 @@ public class ContentBrowsePanel
      */
     public DeleteContentDialog clickToolbarDelete()
     {
-
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
             throw new SaveOrUpdateException( "Impossible to delete content, because the 'Delete' button is disabled!" );
         }
-        // 4. click by 'Delete' link and open a confirm dialog.
+        // 4. click on 'Delete' link and open a confirm dialog.
         deleteButton.click();
-
-        return new DeleteContentDialog( getSession() );
+        DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
+        return dialog;
     }
 
     public ContentBrowsePanel selectContentInTable( List<BaseAbstractContent> contents )
@@ -215,7 +210,7 @@ public class ContentBrowsePanel
 
         if ( !isExist )
         {
-            TestUtils.saveScreenshot( getSession() );
+            TestUtils.saveScreenshot( getSession(), content.getName() );
             throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
         }
     }
@@ -386,14 +381,13 @@ public class ContentBrowsePanel
     {
         sleep( 1000 );
         boolean isGridLoaded =
-            waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );//waitUntilVisibleNoException( By.xpath( TABLE_ITEM_XPATH ), timeout );
+            waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
             TestUtils.saveScreenshot( getSession(), "empty_grid_bug" );
             throw new TestFrameworkException(
                 "content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!" );
         }
-        //new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TABLE_ITEM_XPATH ) ) );
     }
 
 }

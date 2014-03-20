@@ -10,7 +10,7 @@ import com.enonic.autotests.pages.BaseModalDialog;
  *
  *
  */
-public class SelectKindDialog
+public class NewContentDialog
     extends BaseModalDialog
 {
 
@@ -21,7 +21,7 @@ public class SelectKindDialog
      *
      * @param session
      */
-    public SelectKindDialog( TestSession session )
+    public NewContentDialog( TestSession session )
     {
         super( session );
     }
@@ -41,7 +41,7 @@ public class SelectKindDialog
         }
         getDriver().findElement( By.xpath( kindXpath ) ).click();
         ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened();
+        wizard.waitUntilWizardOpened( );
         return wizard;
     }
 

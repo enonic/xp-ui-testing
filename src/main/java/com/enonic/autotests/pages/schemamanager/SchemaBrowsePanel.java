@@ -77,7 +77,7 @@ public class SchemaBrowsePanel
     {
         String contentTypeXpath = String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, contentDisplayName, contentName );
         getLogger().info( "Check that a Content Type to edit is present in the table: " + contentName );
-        //3. click by 'Edit' button on toolbar
+        //3. press the 'Edit' button on the toolbar
         WebElement elem = getDynamicElement( By.xpath( contentTypeXpath ), 3 );
         if ( elem == null )
         {
@@ -91,6 +91,11 @@ public class SchemaBrowsePanel
     }
 
 
+    /**
+     * Clicks on 'Edit' button on the toolbar.
+     * 
+     * @return {@link ContentTypeWizardPanel} instance.
+     */
     public ContentTypeWizardPanel clickToolbarEdit()
     {
         editButton.click();
@@ -99,11 +104,16 @@ public class SchemaBrowsePanel
         return wizard;
     }
 
+    /**
+     * Clicks on 'Delete' button on the toolbar.
+     * 
+     * @return {@link DeleteContentTypeDialog} instance.
+     */
     public DeleteContentTypeDialog clickToolbarDelete()
     {
         deleteButton.click();
         DeleteContentTypeDialog dialog = new DeleteContentTypeDialog( getSession() );
-        boolean result = dialog.isOpened();
+         boolean result = dialog.waitForOpened();
         if ( !result )
         {
             throw new TestFrameworkException( "Confirm delete space dialog was not opened!" );
@@ -112,12 +122,13 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * @return  {@link SelectKindDialog}  instance.
+     * Clicks on 'New' button on the toolbar and opens 'NewContentDialog'.
+     * @return  {@link NewContentDialog}  instance.
      */
-    public SelectKindDialog clickToolbarNew()
+    public NewContentDialog clickToolbarNew()
     {
         newButton.click();
-        SelectKindDialog selectDialog = new SelectKindDialog( getSession() );
+         NewContentDialog selectDialog = new NewContentDialog( getSession() );
         boolean isOpened = selectDialog.verifyIsOpened();
         if ( !isOpened )
         {

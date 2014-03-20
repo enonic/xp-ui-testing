@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,10 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.contentmanager.ArticleContent;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
  * 'Content Manager' application, Add new Content Wizard page.
@@ -39,12 +38,7 @@ public class ContentWizardPanel
     private WebElement toolbarDeleteButton;
 
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
-    private WebElement toolbarDuplicateButton;
-
-    boolean isToolbarButtonEnabled( String xpath )
-    {
-        return getDriver().findElement( By.xpath( xpath ) ).isEnabled();
-    }
+    private WebElement toolbarDuplicateButton;  
 
     /**
      * The constructor.
@@ -54,64 +48,6 @@ public class ContentWizardPanel
     public ContentWizardPanel( TestSession session )
     {
         super( session );
-
-    }
-
-    public boolean verifyWizardPage( TestSession session )
-    {
-        boolean result = true;
-        //1. verify the toolbar
-        result &= verifyTollbar( session );
-        if ( !result )
-        {
-            logError( "there are error during verifying the toolbar!" );
-        }
-        // verify input fields , 'Go to home' and 'close ' buttons
-        result &= displayNameInput.isDisplayed();
-        if ( !displayNameInput.isDisplayed() )
-        {
-            logError( "'displayName' input is not present on the wizard page" );
-        }
-        result &= nameInput.isDisplayed();
-        if ( !nameInput.isDisplayed() )
-        {
-            logError( "'Name' input  is not present on the wizard page" );
-        }
-        result &= gotoHomeButton.isDisplayed();
-        if ( !gotoHomeButton.isDisplayed() )
-        {
-            logError( "Go To Home Page is not presented on the Wizard Page!" );
-        }
-        result &= closeButton.isDisplayed();
-        if ( !closeButton.isDisplayed() )
-        {
-            logError( "'Close' should be presented on the Wizard Page!" );
-        }
-        return result;
-    }
-
-    /**
-     * @param session
-     * @return
-     */
-    private boolean verifyTollbar( TestSession session )
-    {
-        boolean result = true;
-        result &= toolbarSaveButton.isDisplayed() && toolbarSaveButton.isEnabled();
-        if ( !result )
-        {
-            //getLogger().error("error durin verifying the 'Save' toolbar-button !", getSession());
-            getLogger().error( "error during verifying a toolbar, the 'Save' toolbar-button has wrong state!" );
-        }
-        result &= toolbarDeleteButton.isDisplayed() && !toolbarDeleteButton.isEnabled();
-        if ( !( toolbarDeleteButton.isDisplayed() && !toolbarDeleteButton.isEnabled() ) )
-        {
-            //getLogger().error("error during verifying the 'Delete' toolbar-button !", getSession());
-        }
-        result &= toolbarPublishButton.isDisplayed() && toolbarPublishButton.isEnabled();
-
-        result &= toolbarDuplicateButton.isDisplayed() && !toolbarDuplicateButton.isEnabled();
-        return result;
     }
 
     /**
@@ -152,26 +88,6 @@ public class ContentWizardPanel
 
         TestUtils.saveScreenshot( getSession() );
         // 2. populate main tab
-        populateContentForm( getSession(), content );
         return this;
-    }
-
-    /**
-     * Populates a main tab in the wizard, Article, mixin...  tabs for example
-     *
-     * @param session
-     * @param content
-     */
-    private void populateContentForm( TestSession session, BaseAbstractContent content )
-    {
-//        if ( content instanceof MixinContent )
-//        {
-//            MixinWizardTab tab = new MixinWizardTab( session );
-//            //tab.populateAddresses((MixinContent) content);
-//        }
-        if ( content instanceof ArticleContent )
-        {
-
-        }
     }
 }

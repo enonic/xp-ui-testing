@@ -71,7 +71,7 @@ public abstract class BaseDeleteDialog
      *
      * @return true if dialog opened, otherwise false.
      */
-    public boolean isOpened()
+    public boolean waitForOpened()
     {
         return waitUntilVisibleNoException( By.xpath( getTitleXpath() ), Application.IMPLICITLY_WAIT );
     }

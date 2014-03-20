@@ -89,7 +89,7 @@ public class ContentTypeWizardPanel
     }
 
     /**
-     * Types data and press the "Save" button from the toolbar.
+     * Types data and press the "Save" button on the toolbar.
      *
      * @param contentType
      */
@@ -98,7 +98,7 @@ public class ContentTypeWizardPanel
         typeData( contentType );
 
         TestUtils.saveScreenshot( getSession() );
-        // 3. check if enabled and press "Save".
+        // 3. check if enabled and press the "Save" button.
         save();
         boolean isSaveEnabled = isEnabledSaveButton();
         if ( !isSaveEnabled )

@@ -71,7 +71,7 @@ public class AccountsPage
      */
     public void doEditAccount( User userToUpdate, User newUser, boolean isCloseWizard )
     {
-        // 1. click by checkbox.
+        // 1. click on a checkbox.
         String accountXpath =
             String.format( CHECKBOX_ROW_CHECKER, userToUpdate.getUserInfo().getName(), userToUpdate.getUserInfo().getDisplayName() );
         boolean isPresentCheckbox = waitUntilVisibleNoException( By.xpath( accountXpath ), 2l );
@@ -81,7 +81,7 @@ public class AccountsPage
         }
         WebElement checkbox = getSession().getDriver().findElement( By.xpath( accountXpath ) );
         checkbox.click();
-        // 2. click by 'Edit' and open Wizard page.
+        // 2. press the 'Edit' button and open Wizard page.
         AddNewUserWizard wizardPage = openForEditSystemUser();
 
         wizardPage.waitUntilWizardOpened();
@@ -104,7 +104,6 @@ public class AccountsPage
     public void createNewSystemUser( User user, boolean isCloseWizard )
     {
         AddNewUserWizard wizardPage = openNewSystemUserWizard();
-
         wizardPage.waitUntilWizardOpened();
         getLogger().info( "AddNewUserWizard  was successfully opened,  username  is : " + user.getUserInfo().getName() );
         if ( isCloseWizard )
@@ -125,7 +124,7 @@ public class AccountsPage
      */
     public void doDeleteAccount( User userToDelete )
     {
-        // 1. click by checkbox.
+        // 1. click on a checkbox.
         String accountXpath =
             String.format( CHECKBOX_ROW_CHECKER, userToDelete.getUserInfo().getName(), userToDelete.getUserInfo().getDisplayName() );
         boolean isPresentCheckbox = waitUntilVisibleNoException( By.xpath( accountXpath ), 2l );
@@ -135,7 +134,7 @@ public class AccountsPage
         }
         WebElement checkbox = getSession().getDriver().findElement( By.xpath( accountXpath ) );
         checkbox.click();
-        // 2. click by 'Delete' and open confirm dialog.
+        // 2. click on 'Delete' button and opens a confirm dialog.
         deleteButton.click();
 
         DeleteAccountDialog dialog = new DeleteAccountDialog( getSession() );
