@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilter
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContenTypeDispalyNames
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModified
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -81,6 +82,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             withParent( ContentPath.ROOT ).build()
         int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
+
         when:
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save()
         contentBrowsePanel.goToAppHome()
@@ -100,8 +102,11 @@ class ContentBrowsePanel_FilterPanel_Spec
             withParent( ContentPath.ROOT ).build()
         int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData(
+            content )
+
         when:
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        wizard.save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible()
 
         then:
@@ -126,6 +131,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" )
         List<BaseAbstractContent> contentList = new ArrayList()
         contentList.add( content )
+
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete()
         contentBrowsePanel.waitsForSpinnerNotVisible()
@@ -166,9 +172,10 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         filterPanel.selectEntryInContentTypesFilter( "Folder" )
-        List<String> afterSelect = filterPanel.getAllContentTypesFilterEntries();
+
 
         then:
+        List<String> afterSelect = filterPanel.getAllContentTypesFilterEntries();
         beforeSelect.equals( afterSelect )
     }
 
@@ -185,12 +192,11 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.waituntilPageLoaded( 1 );
         Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
 
-
         when:
         String folderCount = filterPanel.selectEntryInContentTypesFilter( "Folder" )
-        Integer newLastModifiedNumber = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
 
         then:
+        Integer newLastModifiedNumber = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
         if ( lastModifiedNumberBefore == 0 )
         {
             TestUtils.getNumberFromFilterLabel( folderCount ) == newLastModifiedNumber
@@ -221,9 +227,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );
 
         when:
-        Integer newFolderCount = filterPanel.typeSearchText( content.getName() ).getNumberFilteredByContenttype( "Folder" )
+        filterPanel.typeSearchText( content.getName() )
 
         then:
+        Integer newFolderCount = filterPanel.getNumberFilteredByContenttype( "Folder" )
         ( newFolderCount == 1 ) && ( newFolderCount != folderCountBefore ) && ( filterPanel.getAllContentTypesFilterEntries().size() == 1 )
     }
 

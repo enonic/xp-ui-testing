@@ -15,21 +15,28 @@ import spock.lang.Stepwise
 class DeleteContentDialogSpec
     extends BaseGebSpec
 {
+    @Shared
+    ContentBrowsePanel contentBrowsePanel
 
     @Shared
     String CONTENT_TO_DELETE_KEY = "deletecomntent_dialog_test"
 
+    def setup()
+    {
+        go "admin"
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+
+    }
+
     def "setup: add a folder-content"()
     {
         given:
-        go "admin"
         String name = "foldertodelete";
         BaseAbstractContent content = FolderContent.builder().
             withName( NameHelper.uniqueName( name ) ).
             withDisplayName( "foldertodelete" ).
             withParent( ContentPath.ROOT ).
             build();
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }
@@ -37,13 +44,11 @@ class DeleteContentDialogSpec
     def "GIVEN content App BrowsePanel and existing content WHEN content selected and Delete button clicked THEN delete dialog with title 'Delete Content' showed"()
     {
         given:
-        go "admin"
         List<BaseAbstractContent> contentList = new ArrayList<>();
         BaseAbstractContent content = (BaseAbstractContent) getTestSession().get( CONTENT_TO_DELETE_KEY );
         contentList.add( content );
 
         when:
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
         DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
             contentList ).clickToolbarDelete()
 
@@ -60,7 +65,6 @@ class DeleteContentDialogSpec
         contentList.add( content );
 
         when:
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( session )
         DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
             contentList ).clickToolbarDelete()
 

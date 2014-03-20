@@ -37,10 +37,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             withParent( ContentPath.ROOT ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
 
+        when:
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
         contentInfoPage.waitUntilOpened( content.getDisplayName(), 1 )
-
-        when:
         contentInfoPage.openDeleteConfirmationDialog().doConfirm()
 
         then:
@@ -51,23 +50,23 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         BaseAbstractContent content1 = FolderContent.builder().
-	    withName( NameHelper.uniqueName( "deletecontent" ) ).
+            withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close()
 
 
         BaseAbstractContent content2 = FolderContent.builder().
-	    withName( NameHelper.uniqueName( "deletecontent" ) ).
+            withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close()
         List<BaseAbstractContent> contentList = new ArrayList<>()
         contentList.add( content1 )
         contentList.add( content2 )
+        contentBrowsePanel.doClearSelection()
 
         when:
-        contentBrowsePanel.doClearSelection()
         contentBrowsePanel.expandContent( content1.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete()
 
 
@@ -79,7 +78,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         BaseAbstractContent content = FolderContent.builder().
-			withName(  NameHelper.uniqueName( "deletecontent" ) ).
+            withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
 

@@ -37,10 +37,9 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         when:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
         contentBrowsePanel.waitsForSpinnerNotVisible( 2 )
-        Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() )
-
 
         then:
+        Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() )
         numberOfFilteredContent == contentBrowsePanel.getContentNamesFromBrowsePanel().size()
     }
 
@@ -48,9 +47,9 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
+        boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) )
 
         when:
-        boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) )
         filterPanel.clickByCleanFilter()
         contentBrowsePanel.waitsForSpinnerNotVisible( 2 )
 
@@ -68,10 +67,9 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         when:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.FOLDER.getValue() )
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 )
-        Integer numberOfFolder = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.FOLDER.getValue() )
-
 
         then:
+        Integer numberOfFolder = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.FOLDER.getValue() )
         ( numberOfFolder + numberOfPages ) == contentBrowsePanel.getContentNamesFromBrowsePanel().size()
     }
 

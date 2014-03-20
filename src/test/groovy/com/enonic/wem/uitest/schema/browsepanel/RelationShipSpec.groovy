@@ -23,7 +23,7 @@ class RelationshipSpec
     }
 
 
-    def "GIVEN BrowsePanel WHEN adding relationship  THEN the new relationship should be listed in the table"()
+    def "GIVEN BrowsePanel WHEN adding Relationship  THEN the new Relationship should be listed in the table"()
     {
         given:
         String relCFG = LinkRelationship.CFG
@@ -40,7 +40,7 @@ class RelationshipSpec
         schemaBrowsePanel.exists( relationship );
     }
 
-    def "GIVEN BrowsePanel and existing relationship  WHEN relationship deleted THEN the this relationship should not be listed in the table"()
+    def "GIVEN BrowsePanel and existing Relationship  WHEN Relationship deleted THEN the this Relationship should not be listed in the table"()
     {
         given:
         String relCFG = LinkRelationship.CFG
@@ -59,7 +59,7 @@ class RelationshipSpec
         !schemaBrowsePanel.exists( relToDelete );
     }
 
-    def "GIVEN BrowsePanel and existing relationship  WHEN relationship renamed THEN  relationship with new name should be listed in the table"()
+    def "GIVEN BrowsePanel and existing Relationship  WHEN Relationship renamed THEN  Relationship with new name should be listed in the table"()
     {
         given:
         String relCFG = LinkRelationship.CFG

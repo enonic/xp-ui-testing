@@ -39,8 +39,7 @@ class MixinSpec
         schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.MIXIN.getValue() ).typeData( mixin ).save().close()
 
         then:
-        SchemaBrowsePanel grid = new SchemaBrowsePanel( getTestSession() )
-        grid.exists( mixin )
+        schemaBrowsePanel.exists( mixin )
 
     }
 
@@ -51,16 +50,16 @@ class MixinSpec
         ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY );
         ContentType newMixin = mixinToEdit.cloneContentType();
         String newName = NameHelper.uniqueName( "mixinrenamed" );
-        newMixin.setName( newName );
+        newMixin.setName( newName )
 
         when:
         schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(),
                                                     mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newMixin ).save().close()
-        mixinToEdit.setName( newName );
+        mixinToEdit.setName( newName )
 
         then:
-        schemaBrowsePanel.exists( newMixin );
+        schemaBrowsePanel.exists( newMixin )
 
     }
 
@@ -69,22 +68,23 @@ class MixinSpec
     {
         given:
 
-        ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY );
-        ContentType newMixin = mixinToEdit.cloneContentType();
-        String newDisplayName = "change display name test";
+        ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY )
+        ContentType newMixin = mixinToEdit.cloneContentType()
+        String newDisplayName = "change display name test"
         // set a new display name:
-        newMixin.setDisplayNameInConfig( newDisplayName );
+        newMixin.setDisplayNameInConfig( newDisplayName )
 
         when:
         schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(),
                                                     mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newMixin ).save().close()
-        mixinToEdit.setDisplayNameInConfig( newDisplayName );
+        mixinToEdit.setDisplayNameInConfig( newDisplayName )
+
         then:
         schemaBrowsePanel.exists( newMixin )
     }
 
-    def "GIVEN BrowsePanel WHEN existing Mixin selected and clicking Delete Then Mixin is removed from list"()
+    def "GIVEN BrowsePanel and existing Mixin WHEN Mixin selected and clicking Delete Then Mixin is removed from list"()
 
     {
         given:
@@ -95,6 +95,6 @@ class MixinSpec
                                                     mixinToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()
 
         then:
-        !schemaBrowsePanel.exists( mixinToDelete );
+        !schemaBrowsePanel.exists( mixinToDelete )
     }
 }

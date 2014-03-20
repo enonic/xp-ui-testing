@@ -23,7 +23,7 @@ class ContentTypeSpec
         schemaBrowsePanel = NavigatorHelper.openSchemaManager( getTestSession() );
     }
 
-    def "GIVEN BrowsePanel WHEN adding Folder Content type Then the new content type should be listed in the table"()
+    def "GIVEN BrowsePanel WHEN adding Folder 'Content type' Then the new content type should be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -39,7 +39,7 @@ class ContentTypeSpec
 
     }
 
-    def "GIVEN schema BrowsePanel and exist Content type  WHEN Content type edited, display-name changed  Then the Content type with new display-name should be listed in the table"()
+    def "GIVEN schema BrowsePanel and exist 'Content type'  WHEN 'Content type' edited, display-name changed  Then the Content type with new display-name should be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -48,16 +48,16 @@ class ContentTypeSpec
         schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
 
         when:
-        ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype );
+        ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype )
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
                                                                                                                 ctype.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newContentType ).save().close()
 
         then:
-        schemaBrowsePanel.exists( newContentType );
+        schemaBrowsePanel.exists( newContentType )
     }
 
-    def "GIVEN schema BrowsePanel and exist Content type  WHEN Content type edited, name changed  THEN the Content type with new name should be listed in the table"()
+    def "GIVEN schema BrowsePanel and exist 'Content type'  WHEN Content type edited, name changed  THEN the 'Content type' with new name should be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -72,11 +72,11 @@ class ContentTypeSpec
             newContentType ).save().close()
 
         then:
-        schemaBrowsePanel.exists( newContentType );
+        schemaBrowsePanel.exists( newContentType )
 
     }
 
-    def "GIVEN BrowsePanel WHEN adding 'TextLine' Content type THEN the new Content type should be listed in the table"()
+    def "GIVEN BrowsePanel WHEN adding 'TextLine - Content type' THEN the new 'Content type' should be listed in the table"()
     {
         given:
         String textLineCFG = TextLineContentTypeCfg.CFG
@@ -92,7 +92,7 @@ class ContentTypeSpec
 
     }
 
-    def "GIVEN BrowsePanel and created a content type WHEN Content type deleted THEN the Content type should not be listed in the table"()
+    def "GIVEN BrowsePanel and created a 'Content type' WHEN 'Content type' deleted THEN the it should not be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
@@ -101,27 +101,27 @@ class ContentTypeSpec
         schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData(
             ctypeToDelete ).save().close()
         when:
-        schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ) .selectRowWithContentType(
+        schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ).selectRowWithContentType(
             ctypeToDelete.getName(), ctypeToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()
 
         then:
-        !schemaBrowsePanel.exists( ctypeToDelete );
+        !schemaBrowsePanel.exists( ctypeToDelete )
 
     }
 
     ContentType cloneContentTypeWithNewName( ContentType contenTypeToEdit )
     {
         ContentType newContenttype = contenTypeToEdit.cloneContentType()
-        String name = NameHelper.uniqueName( "edited" );
+        String name = NameHelper.uniqueName( "edited" )
         newContenttype.setName( name )
         return newContenttype
     }
 
     ContentType cloneContentTypeWithNewDisplayName( ContentType contenTypeToEdit )
     {
-        ContentType newContentType = contenTypeToEdit.cloneContentType();
-        String displayName = NameHelper.uniqueName( "edited" );
-        newContentType.setDisplayNameInConfig( displayName );
+        ContentType newContentType = contenTypeToEdit.cloneContentType()
+        String displayName = NameHelper.uniqueName( "edited" )
+        newContentType.setDisplayNameInConfig( displayName )
         return newContentType
     }
 
