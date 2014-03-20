@@ -67,7 +67,7 @@ class DeleteContentDialogSpec
         when:
         DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
             contentList ).clickToolbarDelete()
-		dialog.waitForOpened()
+        dialog.waitForOpened()
 
         then:
         List<String> namesFromDialog = dialog.getContentNameToDelete();

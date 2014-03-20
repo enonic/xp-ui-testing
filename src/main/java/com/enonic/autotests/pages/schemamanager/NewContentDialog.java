@@ -41,7 +41,7 @@ public class NewContentDialog
         }
         getDriver().findElement( By.xpath( kindXpath ) ).click();
         ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened( );
+        wizard.waitUntilWizardOpened();
         return wizard;
     }
 

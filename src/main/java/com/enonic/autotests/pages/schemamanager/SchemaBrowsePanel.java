@@ -93,7 +93,7 @@ public class SchemaBrowsePanel
 
     /**
      * Clicks on 'Edit' button on the toolbar.
-     * 
+     *
      * @return {@link ContentTypeWizardPanel} instance.
      */
     public ContentTypeWizardPanel clickToolbarEdit()
@@ -106,14 +106,14 @@ public class SchemaBrowsePanel
 
     /**
      * Clicks on 'Delete' button on the toolbar.
-     * 
+     *
      * @return {@link DeleteContentTypeDialog} instance.
      */
     public DeleteContentTypeDialog clickToolbarDelete()
     {
         deleteButton.click();
         DeleteContentTypeDialog dialog = new DeleteContentTypeDialog( getSession() );
-         boolean result = dialog.waitForOpened();
+        boolean result = dialog.waitForOpened();
         if ( !result )
         {
             throw new TestFrameworkException( "Confirm delete space dialog was not opened!" );
@@ -123,12 +123,13 @@ public class SchemaBrowsePanel
 
     /**
      * Clicks on 'New' button on the toolbar and opens 'NewContentDialog'.
-     * @return  {@link NewContentDialog}  instance.
+     *
+     * @return {@link NewContentDialog}  instance.
      */
     public NewContentDialog clickToolbarNew()
     {
         newButton.click();
-         NewContentDialog selectDialog = new NewContentDialog( getSession() );
+        NewContentDialog selectDialog = new NewContentDialog( getSession() );
         boolean isOpened = selectDialog.verifyIsOpened();
         if ( !isOpened )
         {

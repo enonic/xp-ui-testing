@@ -18,7 +18,7 @@ public class AccountsPage
     extends Application
 {
     private String SYSTEMUSER_NAME_AND_DISPLAYNAME_IN_TABLE =
-            "//table[contains(@class,'x-grid-table')]//div[@class='admin-grid-description'  and descendant::h6[contains(.,'%s')] and descendant::p[text()='system\\%s']]";
+        "//table[contains(@class,'x-grid-table')]//div[@class='admin-grid-description'  and descendant::h6[contains(.,'%s')] and descendant::p[text()='system\\%s']]";
 
     private String CHECKBOX_ROW_CHECKER = SYSTEMUSER_NAME_AND_DISPLAYNAME_IN_TABLE + "//ancestor::td/preceding-sibling::td";
 

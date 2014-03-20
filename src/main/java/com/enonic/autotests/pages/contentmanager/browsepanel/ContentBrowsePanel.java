@@ -282,7 +282,7 @@ public class ContentBrowsePanel
             return;
         }
 
-       // expandContent( parentContentPath );
+        // expandContent( parentContentPath );
 
         // 1. select a checkbox and press the 'New' from toolbar.
         String spaceCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, parentContentPath );
@@ -292,8 +292,7 @@ public class ContentBrowsePanel
             TestUtils.saveScreenshot( getSession() );
             throw new TestFrameworkException(
                 "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContentPath +
-                    " was not found!"
-            );
+                    " was not found!" );
         }
         WebElement checkboxElement = getDriver().findElement( By.xpath( spaceCheckBoxXpath ) );
 
@@ -379,8 +378,7 @@ public class ContentBrowsePanel
     public void waituntilPageLoaded( long timeout )
     {
         sleep( 1000 );
-        boolean isGridLoaded =
-            waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
+        boolean isGridLoaded = waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
             TestUtils.saveScreenshot( getSession(), "empty_grid_bug" );

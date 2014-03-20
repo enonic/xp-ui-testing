@@ -104,7 +104,7 @@ public abstract class WizardPanel
     /**
      * Checks tab-count on the Home page.(checks that one wizard was opened)
      *
-     * @return  {@link HomePage} instance.
+     * @return {@link HomePage} instance.
      */
     public HomePage showHomePageAndVerifyCircle()
     {

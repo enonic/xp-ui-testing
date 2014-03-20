@@ -48,9 +48,8 @@ public class ItemViewPanelPage
     /**
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
-     *
      */
-    public void waitUntilOpened(String displayName, Integer numberPage )
+    public void waitUntilOpened( String displayName, Integer numberPage )
     {
         String circleXpath = String.format( RED_CIRCLE_XPATH, numberPage.toString() );
         String titleXpath = String.format( VERIFY_TITLE_SPAN_XPATH, displayName );
@@ -62,18 +61,18 @@ public class ItemViewPanelPage
     {
         closeButton.click();
     }
-    
+
     /**
      * Press the 'Edit' button and opens a  ContentWizardPanel.
-     * 
+     *
      * @return {@link ContentWizardPanel} instance
      */
     public ContentWizardPanel clickToolbarEdit()
     {
-    	 editButtonToolbar.click();
-         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-         wizard.waitUntilWizardOpened( );
-         return wizard;
+        editButtonToolbar.click();
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        return wizard;
     }
 
     /**

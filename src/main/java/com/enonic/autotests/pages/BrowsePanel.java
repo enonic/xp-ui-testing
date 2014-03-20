@@ -48,7 +48,6 @@ public class BrowsePanel
     protected WebElement deleteButton;
 
 
-
     /**
      * The Constructor
      *

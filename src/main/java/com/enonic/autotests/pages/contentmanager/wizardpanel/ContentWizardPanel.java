@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
-
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +11,8 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
  * 'Content Manager' application, Add new Content Wizard page.
@@ -38,7 +38,7 @@ public class ContentWizardPanel
     private WebElement toolbarDeleteButton;
 
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
-    private WebElement toolbarDuplicateButton;  
+    private WebElement toolbarDuplicateButton;
 
     /**
      * The constructor.
