@@ -42,10 +42,10 @@ public class ContentBrowsePanel
     @FindBy(xpath = CONTENT_MANAGER_BUTTON)
     private WebElement contentManagerButton;
 
-    @FindBy(xpath = "//div[@class='toolbar']/button[text()='Open']")
+    @FindBy(xpath = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Open']]")
     private WebElement openButton;
 
-    @FindBy(xpath = "//div[@class='toolbar']/button[text()='Move']")
+    @FindBy(xpath = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Move']]")
     private WebElement moveButton;
 
     private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/..//div[@class='x-grid-row-checker']";

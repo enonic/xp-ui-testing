@@ -13,7 +13,7 @@ public class BrowsePanel
     extends Application
 {
 
-    protected final String NEW_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='New']";
+    protected final String NEW_BUTTON_XPATH = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='New']]";
 
     private final String ALL_ROWS_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
 
@@ -37,12 +37,12 @@ public class BrowsePanel
     @FindBy(xpath = SELECT_ALL_LINK_XPATH)
     protected WebElement selectAllLink;
 
-    protected final String EDIT_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='Edit']";
+    protected final String EDIT_BUTTON_XPATH = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Edit']]";
 
     @FindBy(xpath = EDIT_BUTTON_XPATH)
     protected WebElement editButton;
 
-    protected final String DELETE_BUTTON_XPATH = "//div[@class='toolbar']/button[text()='Delete']";
+    protected final String DELETE_BUTTON_XPATH = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Delete']]";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
