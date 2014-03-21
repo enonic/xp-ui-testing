@@ -27,13 +27,29 @@ public class SchemaBrowsePanel
     public static final String SCHEMAS_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
 
     private final String REINDEX_BUTTON_XPATH =
-        "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Re-index')]]";
+        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Re-index']]";
+
+    private final String EDIT_BUTTON_XPATH =
+        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
+
+    private final String DELETE_BUTTON_XPATH =
+        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+
+    @FindBy(xpath = "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]")
+    protected WebElement newButton;
+
+    @FindBy(xpath = DELETE_BUTTON_XPATH)
+    protected WebElement deleteButton;
+
+    @FindBy(xpath = EDIT_BUTTON_XPATH)
+    protected WebElement editButton;
+
 
     @FindBy(xpath = REINDEX_BUTTON_XPATH)
     private WebElement reindexButton;
 
     private final String EXPORT_BUTTON_XPATH =
-        "//div[contains(@class,'x-toolbar-item')]//button[contains(@class,'x-btn-center') and descendant::span[contains(.,'Export')]]";
+        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Export']]";
 
     @FindBy(xpath = EXPORT_BUTTON_XPATH)
     private WebElement exportButton;
@@ -52,7 +68,7 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Expands a folder, that is super type for a content.
+     * Expands a folder, that is supertype for a content.
      *
      * @param superTypeName
      */
@@ -68,7 +84,7 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Selects a row with content type: clicks by row with content
+     * Selects a row with contenttype: clicks by row with content
      *
      * @param contentName        the name of content
      * @param contentDisplayName the display-name of content
@@ -169,7 +185,7 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Returns true if a content type is present in the Browse Panel, otherwise returns false
+     * Returns true if a contenttype is present in the Browse Panel, otherwise returns false
      *
      * @param contentType
      * @return
@@ -178,7 +194,7 @@ public class SchemaBrowsePanel
     {
         String contentTypeXpath =
             String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
-        getLogger().info( "Check is content type is  present in the  table: " + contentTypeXpath );
+        getLogger().info( "Check is contenttype is  present in the  table: " + contentTypeXpath );
         waitsForSpinnerNotVisible();
         List<WebElement> elems = findElements( By.xpath( contentTypeXpath ) );
         if ( elems.size() > 0 )

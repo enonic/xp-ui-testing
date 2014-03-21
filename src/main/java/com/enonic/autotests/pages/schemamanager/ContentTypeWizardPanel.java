@@ -5,6 +5,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.CreateContentTypeException;
@@ -20,6 +21,18 @@ import com.enonic.autotests.vo.schemamanger.ContentType;
 public class ContentTypeWizardPanel
     extends WizardPanel
 {
+
+    public static final String TOOLBAR_SAVE_BUTTON_XPATH =
+        "//div[@id='app.wizard.ContentTypeWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
+
+    public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
+        "//div[@id='app.wizard.ContentTypeWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
+
+    @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
+    protected WebElement toolbarSaveButton;
+
+    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH)
+    protected WebElement closeButton;
 
     /**
      * The constructor.
@@ -113,7 +126,7 @@ public class ContentTypeWizardPanel
         // 1. type a data: 'name' and 'Display Name'.
         clearAndType( nameInput, contentType.getName() );
         //2. type the XML-config data:
-        getLogger().info( "set content type configuration " );
+        getLogger().info( "set contenttype configuration " );
         setConfiguration( contentType.getConfigData().trim() );
         return this;
     }
@@ -125,4 +138,33 @@ public class ContentTypeWizardPanel
             "window.api.dom.ElementRegistry.getElementById('api.ui.CodeArea').setValue(arguments[0])", cfg );
     }
 
+    /**
+     * Press the button 'Save', which located in the wizard's toolbar.
+     */
+    public WizardPanel save()
+    {
+        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
+        if ( !isSaveButtonEnabled )
+        {
+            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is disabled!" );
+        }
+        toolbarSaveButton.click();
+        boolean isSaveEnabled = isEnabledSaveButton();
+        if ( !isSaveEnabled )
+        {
+            throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
+        }
+        return this;
+
+    }
+
+    public boolean isEnabledSaveButton()
+    {
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
+    }
+
+    public void close()
+    {
+        closeButton.click();
+    }
 }

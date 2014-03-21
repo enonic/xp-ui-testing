@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -22,19 +21,6 @@ public abstract class WizardPanel
     public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
 
     public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']";
-
-    public static final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Save']";
-
-    public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[@class='panel wizard-panel']/div[@class='toolbar']//button[text()='Close']";
-
-
-    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH)
-    protected WebElement closeButton;
-
-    @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
-    protected WebElement toolbarSaveButton;
 
     @FindBy(name = "displayName")
     protected WebElement displayNameInput;
@@ -53,14 +39,13 @@ public abstract class WizardPanel
         super( session );
     }
 
-    public void close()
-    {
-        closeButton.click();
-    }
+    public abstract void close();
+
 
     public String getAppBarTabMenuTitle()
     {
-        boolean result = getDriver().findElements( By.xpath( "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']" ) ).size() == 1;
+        boolean result =
+            getDriver().findElements( By.xpath( "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']" ) ).size() == 1;
         if ( result )
         {
             return getDriver().findElement( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).getAttribute( "title" );
@@ -76,30 +61,6 @@ public abstract class WizardPanel
         return nameInput.getAttribute( "value" );
     }
 
-    /**
-     * Press the button 'Save', which located in the wizard's toolbar.
-     */
-    public WizardPanel save()
-    {
-        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
-        if ( !isSaveButtonEnabled )
-        {
-            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is disabled!" );
-        }
-        toolbarSaveButton.click();
-        boolean isSaveEnabled = isEnabledSaveButton();
-        if ( !isSaveEnabled )
-        {
-            throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
-        }
-        return this;
-
-    }
-
-    public boolean isEnabledSaveButton()
-    {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
-    }
 
     /**
      * Checks tab-count on the Home page.(checks that one wizard was opened)

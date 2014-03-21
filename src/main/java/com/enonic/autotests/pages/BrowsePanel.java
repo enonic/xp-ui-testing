@@ -12,9 +12,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 public class BrowsePanel
     extends Application
 {
-
-    protected final String NEW_BUTTON_XPATH = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='New']]";
-
     private final String ALL_ROWS_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
 
     protected String TD_CONTENT_DISPLAY_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
@@ -23,8 +20,6 @@ public class BrowsePanel
 
     private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
 
-    @FindBy(xpath = NEW_BUTTON_XPATH)
-    protected WebElement newButton;
 
     private final String CLEAR_SELECTION_LINK_XPATH = "//a[contains(@class,' x-box-item x-toolbar-item') and contains(.,'Clear')]";
 
@@ -37,16 +32,6 @@ public class BrowsePanel
     @FindBy(xpath = SELECT_ALL_LINK_XPATH)
     protected WebElement selectAllLink;
 
-    protected final String EDIT_BUTTON_XPATH = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Edit']]";
-
-    @FindBy(xpath = EDIT_BUTTON_XPATH)
-    protected WebElement editButton;
-
-    protected final String DELETE_BUTTON_XPATH = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Delete']]";
-
-    @FindBy(xpath = DELETE_BUTTON_XPATH)
-    protected WebElement deleteButton;
-
 
     /**
      * The Constructor
@@ -56,16 +41,6 @@ public class BrowsePanel
     public BrowsePanel( TestSession session )
     {
         super( session );
-    }
-
-    public boolean isDeleteButtonEnabled()
-    {
-        return deleteButton.isEnabled();
-    }
-
-    public boolean isNewButtonEnabled()
-    {
-        return newButton.isEnabled();
     }
 
     /**

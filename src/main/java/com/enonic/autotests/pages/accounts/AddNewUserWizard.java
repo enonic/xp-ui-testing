@@ -8,7 +8,7 @@ import org.testng.Assert;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.HomePage;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.User;
@@ -24,6 +24,12 @@ public class AddNewUserWizard
     private final String EMAIL_AVAILABLE_MESSAGE = "Available";
 
     private final String USER_NAME_INVALID_CHARS = "Invalid characters";
+
+    public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
+        "//div[@id='app.wizard.UserWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
+
+    public static final String TOOLBAR_SAVE_BUTTON_XPATH =
+        "//div[@id='app.wizard.UserWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
 
     private final String EMAIL_VALIDATION_MESSAGE_XPATH =
         "//table[contains(@class,'x-form-item')]//div[contains(@class,'x-box-inner') and descendant::input[@name='email']]/descendant::div[@class='validationError' or @class='validationInfo']";
@@ -48,6 +54,12 @@ public class AddNewUserWizard
 
     @FindBy(how = How.NAME, using = "repeatPassword")
     private WebElement repeatPasswordInput;
+
+    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH)
+    protected WebElement closeButton;
+
+    @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
+    protected WebElement toolbarSaveButton;
 
     /**
      * The constructor.
@@ -138,9 +150,9 @@ public class AddNewUserWizard
         String nameValdationErrorMessage = getUserNameValidationMessage();
         if ( nameValdationErrorMessage != null )
         {
-            getLogger().info( "user info:  There validation message for User Name. " + nameValdationErrorMessage );
+            getLogger().info( "userinfo:  There validation message for User Name. " + nameValdationErrorMessage );
             boolean isInvalid = waitAndCheckAttrValue( nameInput, "aria-invalid", "true", 2l );
-            getLogger().info( "user info, nameInput attribute 'aria-invalid' has value:  " + nameValdationErrorMessage );
+            getLogger().info( "userinfo, nameInput attribute 'aria-invalid' has value:  " + nameValdationErrorMessage );
             // TODO should be "Save" disabled if there is error validation
             // message?
             // Assert.fail("Add new User Wizard: there is error message near the 'User Name' input, but the state of the input is valid! The value of attribute 'aria-invalid' is true! ");
@@ -151,7 +163,7 @@ public class AddNewUserWizard
         String emailValdationMessage = getEmailValidationMessage();
         if ( emailValdationMessage != null )
         {
-            getLogger().info( "user info: email is" + emailValdationMessage );
+            getLogger().info( "userinfo: email is" + emailValdationMessage );
             verifySaveButtonState( emailValdationMessage );
         }
 
@@ -168,7 +180,7 @@ public class AddNewUserWizard
                 repeatPasswordInput.sendKeys( user.getUserInfo().getPassword() );
             }
             boolean isInvalid = waitAndCheckAttrValue( repeatPasswordInput, "aria-invalid", "true", 1l );
-            getLogger().info( "user info, repeatPasswordInput has  attribute 'invalid' with value equals:  " + isInvalid );
+            getLogger().info( "userinfo, repeatPasswordInput has  attribute 'invalid' with value equals:  " + isInvalid );
             if ( isInvalid )
             {
                 if ( toolbarSaveButton.isEnabled() )
@@ -213,74 +225,33 @@ public class AddNewUserWizard
         }
     }
 
-    public boolean verifyAllEmptyFields( TestSession session )
+    /**
+     * Press the button 'Save', which located in the wizard's toolbar.
+     */
+    public WizardPanel save()
     {
-        boolean result = true;
-
-        result &= nameInput.isDisplayed();
-        if ( !nameInput.isDisplayed() )
+        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
+        if ( !isSaveButtonEnabled )
         {
-            logError( "Input field for user name should be present, this is required field!" );
+            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is disabled!" );
         }
-        result &= displayNameInput.isDisplayed();
-        if ( !displayNameInput.isDisplayed() )
+        toolbarSaveButton.click();
+        boolean isSaveEnabled = isEnabledSaveButton();
+        if ( !isSaveEnabled )
         {
-            logError( "Input field for displayed user name should be present, this is required field!" );
+            throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
         }
-        result &= qualifiedName.isDisplayed() && qualifiedName.getAttribute( "readonly" ) != null;
-        if ( !qualifiedName.isDisplayed() && qualifiedName.isEnabled() )
-        {
-            logError( "Input field for qualifiedName  should be present, this is required field!" );
-        }
-        result &= toolbarSaveButton.isDisplayed();// toolbarSaveButton.isEnabled()
-        if ( !toolbarSaveButton.isDisplayed() )
-        {
-            logError( "'Save' button is not presented on the toolbar" );
-        }
-        result &= !toolbarSaveButton.isEnabled();
-        if ( toolbarSaveButton.isEnabled() )
-        {
-            logError( "'Save' button on toolbar should be disabled, because required fields are empty!" );
-        }
-        result &= gotoHomeButton.isDisplayed();
-        if ( !gotoHomeButton.isDisplayed() )
-        {
-            logError( "Go To Home Page is not presented on the Wizard Page!" );
-        }
-        result &= closeButton.isDisplayed();
-        if ( !closeButton.isDisplayed() )
-        {
-            logError( "'Close' should be presented on the Wizard Page!" );
-        }
-        result &= passwordInput.isDisplayed();
-        if ( !passwordInput.isDisplayed() )
-        {
-            logError( " 'passwordInput' should be presented on the Wizard Page!" );
-        }
-
-        result &= repeatPasswordInput.isDisplayed();
-        if ( !repeatPasswordInput.isDisplayed() )
-        {
-            logError( " 'repeatPasswordInput' should be presented on the Wizard Page!" );
-        }
-        result &= emailInput.isDisplayed();
-        if ( !emailInput.isDisplayed() )
-        {
-            logError( " 'emailInput' should be presented on the Wizard Page!" );
-        }
-
-        return result;
+        return this;
 
     }
 
-    public void verifyRedCircleOnHomePage( String accountName )
+    public boolean isEnabledSaveButton()
     {
-        // 1. Click 'Home' button and verify, that the red circle is present on the HomePage:
-        HomePage homepage = showHomePageAndVerifyCircle();
-        // 2. Click 'Accounts' and Go back to the 'AddNewSpaceWizard'
-        homepage.openAccountsApplication();
-        // 3. verify that the wizard is opened.
-        waitUntilWizardOpened();
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
+    }
 
+    public void close()
+    {
+        closeButton.click();
     }
 }

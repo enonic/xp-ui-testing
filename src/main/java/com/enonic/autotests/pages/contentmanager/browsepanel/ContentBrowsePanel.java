@@ -36,16 +36,44 @@ public class ContentBrowsePanel
     private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH =
         "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
 
-    @FindBy(xpath = "//div[@class='toolbar']/button[text()='Duplicate']")
+    protected final String EDIT_BUTTON_XPATH =
+        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
+
+    protected final String DELETE_BUTTON_XPATH =
+        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+
+    public final String NEW_BUTTON_XPATH =
+        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]";
+
+    public final String DUPLICATE_BUTTON_XPATH =
+        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
+
+    public final String OPEN_BUTTON_XPATH =
+        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Open']]";
+
+    public final String MOVE_BUTTON_XPATH =
+        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Move']]";
+
+    @FindBy(xpath = NEW_BUTTON_XPATH)
+    private WebElement newButton;
+
+    @FindBy(xpath = EDIT_BUTTON_XPATH)
+    private WebElement editButton;
+
+    @FindBy(xpath = DELETE_BUTTON_XPATH)
+    protected WebElement deleteButton;
+
+
+    @FindBy(xpath = DUPLICATE_BUTTON_XPATH)
     private WebElement duplicateButton;
 
     @FindBy(xpath = CONTENT_MANAGER_BUTTON)
     private WebElement contentManagerButton;
 
-    @FindBy(xpath = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Open']]")
+    @FindBy(xpath = OPEN_BUTTON_XPATH)
     private WebElement openButton;
 
-    @FindBy(xpath = "//div[@id='app.browse.ContentBrowseToolbar']/button[child::span[text()='Move']]")
+    @FindBy(xpath = MOVE_BUTTON_XPATH)
     private WebElement moveButton;
 
     private String CHECKBOX_ROW_CHECKER = TD_CONTENT_NAME + "/..//div[@class='x-grid-row-checker']";
@@ -385,6 +413,16 @@ public class ContentBrowsePanel
             throw new TestFrameworkException(
                 "content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!" );
         }
+    }
+
+    public boolean isDeleteButtonEnabled()
+    {
+        return deleteButton.isEnabled();
+    }
+
+    public boolean isNewButtonEnabled()
+    {
+        return newButton.isEnabled();
     }
 
 }
