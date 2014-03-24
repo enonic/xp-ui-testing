@@ -96,7 +96,7 @@ public class HomePage
         NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        getLogger().info( "Content App opened" );
+        getLogger().info( "Content App loaded" );
         return panel;
     }
 

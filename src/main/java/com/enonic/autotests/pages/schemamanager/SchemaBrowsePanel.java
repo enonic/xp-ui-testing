@@ -11,6 +11,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.RelationshipWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
@@ -27,15 +31,19 @@ public class SchemaBrowsePanel
     public static final String SCHEMAS_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
 
     private final String REINDEX_BUTTON_XPATH =
-        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Re-index']]";
+        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Re-index']]";
 
     private final String EDIT_BUTTON_XPATH =
-        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
+        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
 
     private final String DELETE_BUTTON_XPATH =
-        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
 
-    @FindBy(xpath = "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]")
+    private SchemaType selectedSchemaType;
+
+
+    @FindBy(
+        xpath = "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]")
     protected WebElement newButton;
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
@@ -56,6 +64,8 @@ public class SchemaBrowsePanel
 
     private String CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE =
         "//table[contains(@class,'x-grid-table')]//div[@class='admin-tree-description' and descendant::h6[contains(.,'%s')] and descendant::p[contains(.,'%s')]]";
+
+    private String THUMBNAIL_FOR_SCHEMA = CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE + "/..//div/img";
 
     /**
      * The constructor
@@ -103,19 +113,36 @@ public class SchemaBrowsePanel
         elem.click();
         WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( EDIT_BUTTON_XPATH ) );
         getLogger().info( "content type with name:" + contentName + " was selected in the table!" );
+        specifySelectedSchemaType( contentName, contentDisplayName );
         return this;
     }
-
 
     /**
      * Clicks on 'Edit' button on the toolbar.
      *
      * @return {@link ContentTypeWizardPanel} instance.
      */
-    public ContentTypeWizardPanel clickToolbarEdit()
+    public SchemaWizardPanel clickToolbarEdit()
     {
+        SchemaWizardPanel wizard = null;
         editButton.click();
-        ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );
+        switch ( this.selectedSchemaType )
+        {
+            case CONTENT_TYPE:
+                wizard = new ContentTypeWizardPanel( getSession() );
+                break;
+            case MIXIN:
+                wizard = new MixinWizardPanel( getSession() );
+                break;
+
+            case RELATIONSHIP_TYPE:
+                wizard = new RelationshipWizardPanel( getSession() );
+                break;
+
+            default:
+                break;
+        }
+
         wizard.waitUntilWizardOpened();
         return wizard;
     }
@@ -206,6 +233,37 @@ public class SchemaBrowsePanel
         {
             getLogger().info( "Content type  was not found in the Table!  " + "Name:" + contentType.getName() );
             return false;
+        }
+    }
+
+    public SchemaType getSelectedSchemaType()
+    {
+        return selectedSchemaType;
+    }
+
+    public void specifySelectedSchemaType( String contentName, String contentDisplayName )
+    {
+
+        String contentTypeThumbnail = String.format( THUMBNAIL_FOR_SCHEMA, contentDisplayName, contentName );
+        List<WebElement> elems = getDriver().findElements( By.xpath( contentTypeThumbnail ) );
+        if ( elems.size() == 0 )
+        {
+            throw new TestFrameworkException(
+                "The thumbnail for schema element was not found!, please checkout the xpath: " + THUMBNAIL_FOR_SCHEMA );
+        }
+        String srcAttr = elems.get( 0 ).getAttribute( "src" );
+        if ( srcAttr.contains( "ContentType" ) )
+        {
+            this.selectedSchemaType = SchemaType.CONTENT_TYPE;
+        }
+        else if ( srcAttr.contains( "RelationshipType" ) )
+        {
+            this.selectedSchemaType = SchemaType.RELATIONSHIP_TYPE;
+
+        }
+        else if ( srcAttr.contains( "Mixin" ) )
+        {
+            this.selectedSchemaType = SchemaType.MIXIN;
         }
     }
 }

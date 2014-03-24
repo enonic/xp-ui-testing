@@ -5,6 +5,10 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BaseModalDialog;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.RelationshipWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel;
 
 /**
  *
@@ -30,8 +34,9 @@ public class NewContentDialog
      * @param kind
      * @return
      */
-    public ContentTypeWizardPanel selectKind( String kind )
+    public SchemaWizardPanel selectKind( String kind )
     {
+        SchemaWizardPanel wizard = null;
         String kindXpath = String.format( KIND, kind );
         boolean isPpresent = waitAndFind( By.xpath( kindXpath ) );
 
@@ -40,7 +45,23 @@ public class NewContentDialog
             throw new TestFrameworkException( "The kind of content type" + kind + " was not found!!!" );
         }
         getDriver().findElement( By.xpath( kindXpath ) ).click();
-        ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );
+        if ( kind.equals( SchemaType.CONTENT_TYPE.getValue() ) )
+        {
+            wizard = new ContentTypeWizardPanel( getSession() );
+        }
+        else if ( kind.equals( SchemaType.RELATIONSHIP_TYPE.getValue() ) )
+        {
+            wizard = new RelationshipWizardPanel( getSession() );
+        }
+        else if ( kind.equals( SchemaType.MIXIN.getValue() ) )
+        {
+            wizard = new MixinWizardPanel( getSession() );
+        }
+        else
+        {
+            throw new TestFrameworkException( "NewContentDialog: wrong schema type" );
+        }
+
         wizard.waitUntilWizardOpened();
         return wizard;
     }

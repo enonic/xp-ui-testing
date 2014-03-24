@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -27,12 +27,12 @@ class ContentTypeSpec
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "folderctype" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+        ContentType ctype = ContentType.with().name( "folderctype" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
             folderCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
-        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+		schemaBrowsePanel.expandSuperTypeFolder(ctype.getSuperTypeNameFromConfig())
 
         then:
         schemaBrowsePanel.exists( ctype )
@@ -43,9 +43,9 @@ class ContentTypeSpec
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "editdisplaynametest" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+        ContentType ctype = ContentType.with().name( "editdisplaynametest" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
             folderCFG ).build();
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
 
         when:
         ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype )
@@ -61,9 +61,9 @@ class ContentTypeSpec
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "editnametest" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+        ContentType ctype = ContentType.with().name( "editnametest" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
             folderCFG ).build();
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
 
         when:
         ContentType newContentType = cloneContentTypeWithNewName( ctype )
@@ -80,13 +80,13 @@ class ContentTypeSpec
     {
         given:
         String textLineCFG = TextLineContentTypeCfg.CFG
-        ContentType ctype = ContentType.with().name( "textlinectype" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+        ContentType ctype = ContentType.with().name( "textlinectype" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
             textLineCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
-        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
-
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+		schemaBrowsePanel.expandSuperTypeFolder(ctype.getSuperTypeNameFromConfig())
+		
         then:
         schemaBrowsePanel.exists( ctype )
 
@@ -96,9 +96,9 @@ class ContentTypeSpec
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctypeToDelete = ContentType.with().name( "ctypetodelete" ).kind( KindOfContentTypes.CONTENT_TYPE ).configuration(
+        ContentType ctypeToDelete = ContentType.with().name( "ctypetodelete" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
             folderCFG ).build();
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.CONTENT_TYPE.getValue() ).typeData(
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData(
             ctypeToDelete ).save().close()
         when:
         schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ).selectRowWithContentType(

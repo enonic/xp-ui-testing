@@ -21,10 +21,10 @@ public class ItemViewPanelPage
     public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'x-btn start-button')]";
 
     private static final String TOOLBAR_EDIT_BUTTON_XPATH =
-        "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Edit']";
+        "//div[contains(@id,'app.view.ContentItemViewToolbar')]//button[child::span[text()='Edit']]";
 
     private static final String TOOLBAR_DELETE_BUTTON_XPATH =
-        "//div[contains(@class,'panel item-view-panel')]//div[@class='toolbar']/button[text()='Delete']";
+        "//div[contains(@id,'app.view.ContentItemViewToolbar')]//button[child::span[text()='Delete']]";
 
     @FindBy(xpath = TOOLBAR_EDIT_BUTTON_XPATH)
     private WebElement editButtonToolbar;

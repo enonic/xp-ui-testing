@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -31,12 +31,12 @@ class MixinSpec
     {
         given:
         String mixinCFG = MixinAddress.CFG
-        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "addressmixin" ) ).kind(
-            KindOfContentTypes.MIXIN ).configuration( mixinCFG ).build();
+        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "addressmixin" ) ).schemaType(
+            SchemaType.MIXIN ).configuration( mixinCFG ).build();
         getTestSession().put( MIXIN_KEY, mixin );
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.MIXIN.getValue() ).typeData( mixin ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() ).typeData( mixin ).save().close()
 
         then:
         schemaBrowsePanel.exists( mixin )
@@ -79,7 +79,7 @@ class MixinSpec
                                                     mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newMixin ).save().close()
         mixinToEdit.setDisplayNameInConfig( newDisplayName )
-
+		
         then:
         schemaBrowsePanel.exists( newMixin )
     }

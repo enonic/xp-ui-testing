@@ -1,8 +1,10 @@
 package com.enonic.wem.uitest.schema.wizards
 
-import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.RelationshipWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel;
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
@@ -31,11 +33,11 @@ class RelationshipTypeWizardPanel
 
         String relationshipName = NameHelper.uniqueName( "relationship" );
         String relCFG = LinkRelationship.CFG
-        ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+        ContentType relationship = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
 
-        ContentTypeWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind(
-            KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData( relationship )
+        SchemaWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind(
+            SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData( relationship )
         getTestSession().put( RELATIONSHIP_WIZARD_TEST, relationship )
 
         when:
@@ -52,10 +54,10 @@ class RelationshipTypeWizardPanel
         given:
         String relationshipName = NameHelper.uniqueName( "relationship" );
         String relCFG = LinkRelationship.CFG
-        ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+        ContentType relationship = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
-        ContentTypeWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind(
-            KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData( relationship )
+        SchemaWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind(
+            SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData( relationship )
 
         when:
         wizard.save()
@@ -72,7 +74,7 @@ class RelationshipTypeWizardPanel
 
         when:
         String newName = NameHelper.uniqueName( "new-name" )
-        ContentTypeWizardPanel wizard = schemaBrowsePanel.selectRowWithContentType( relationship.getName(),
+        RelationshipWizardPanel wizard = schemaBrowsePanel.selectRowWithContentType( relationship.getName(),
                                                                                     relationship.getDisplayNameFromConfig() ).clickToolbarEdit()
         wizard.clearAndType( wizard.getNameInput(), newName )
         wizard.save()

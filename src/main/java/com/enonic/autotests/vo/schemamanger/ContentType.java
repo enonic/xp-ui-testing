@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo.schemamanger;
 
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes;
+import com.enonic.autotests.pages.schemamanager.SchemaType;
 
 /**
  * Model of ContentType.
@@ -12,7 +12,7 @@ public class ContentType
 
     private String configData;
 
-    private KindOfContentTypes kind;
+    private SchemaType schemaType;
 
     public void setDisplayNameInConfig( String newDisplayName )
     {
@@ -46,14 +46,14 @@ public class ContentType
 
     }
 
-    public KindOfContentTypes getKind()
+    public SchemaType getSchemaType()
     {
-        return kind;
+        return schemaType;
     }
 
-    public void setKind( KindOfContentTypes kind )
+    public void setSchemaType( SchemaType schematype )
     {
-        this.kind = kind;
+        this.schemaType = schematype;
     }
 
 
@@ -82,7 +82,7 @@ public class ContentType
         ContentType clon = new ContentType();
         clon.setName( this.getName() );
         clon.setConfigData( this.getConfigData() );
-        clon.setKind( this.getKind() );
+        clon.setSchemaType( this.getSchemaType() );
         return clon;
     }
 
@@ -95,7 +95,7 @@ public class ContentType
     {
         private String bName;
 
-        private KindOfContentTypes bKind;
+        private SchemaType bSchemaType;
 
         private String bConfigData;
 
@@ -117,9 +117,9 @@ public class ContentType
             return this;
         }
 
-        public Builder kind( KindOfContentTypes kind )
+        public Builder schemaType( SchemaType schemaType )
         {
-            this.bKind = kind;
+            this.bSchemaType = schemaType;
             return this;
         }
 
@@ -129,7 +129,7 @@ public class ContentType
 
             ctype.name = this.bName;
             ctype.configData = this.bConfigData;
-            ctype.kind = this.bKind;
+            ctype.schemaType = this.bSchemaType;
             return ctype;
         }
     }

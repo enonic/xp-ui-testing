@@ -24,7 +24,8 @@ public class ContentBrowseFilterPanel
 {
     private final String CLEAR_FILTER_LINK = "Clear filter";
 
-    public static final String SEARCH_INPUT_XPATH = "//input[@class='text-search-field']";
+    public static final String SEARCH_INPUT_XPATH =
+        "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";
 
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     private WebElement searchInput;

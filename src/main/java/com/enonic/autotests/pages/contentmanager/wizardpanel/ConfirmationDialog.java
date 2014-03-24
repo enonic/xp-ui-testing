@@ -17,7 +17,7 @@ public class ConfirmationDialog
 {
 
     public static final String YES_BUTTON_XPATH =
-        "//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-buttons']//button[text()='Yes']";
+        "//div[contains(@id,'api.ui.dialog.ConfirmationDialog')]//div[@class='dialog-buttons']//button/span[text()='Yes']";
 
     private final String TITLE_XPATH =
         "//div[@class='modal-dialog confirmation-dialog']//div[@class='dialog-header' and contains(.,'Confirmation')]";

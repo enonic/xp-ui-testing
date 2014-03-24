@@ -1,8 +1,9 @@
 package com.enonic.wem.uitest.schema.wizards
 
-import com.enonic.autotests.pages.schemamanager.ContentTypeWizardPanel
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -24,7 +25,7 @@ class MixinWizardSpec
         given:
 
         String longName25chars = "longnamelongnamelongnam25";
-        ContentTypeWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.MIXIN.getValue() )
+        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() )
         wizard.doTypeName( longName25chars );
         int width25 = wizard.getInputNameWidth();
         String longName27chars = "longnamelongnamelongnamqq27";
@@ -40,7 +41,7 @@ class MixinWizardSpec
     {
         given:
         String mixinName = "test";
-        ContentTypeWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.MIXIN.getValue() );
+        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() );
         wizard.doTypeName( mixinName );
         String actualTitle = wizard.getAppBarTabMenuTitle();
 

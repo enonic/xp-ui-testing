@@ -41,6 +41,34 @@ public abstract class WizardPanel
 
     public abstract void close();
 
+    public abstract WizardPanel save();
+
+    public abstract boolean isEnabledSaveButton();
+
+    /**
+     * Types a name to the name-input field
+     *
+     * @param name
+     */
+    public void doTypeName( String name )
+    {
+        clearAndType( nameInput, name );
+    }
+
+    /**
+     * calculates a width of input field.
+     *
+     * @return
+     */
+    public int getInputNameWidth()
+    {
+        String width = nameInput.getAttribute( "style" );
+        //input Style should be like as: "width: 300px";
+        int start = width.indexOf( ":" );
+        int end = width.indexOf( "px" );
+        int inputWidth = Integer.valueOf( width.substring( start + 1, end ).trim() );
+        return inputWidth;
+    }
 
     public String getAppBarTabMenuTitle()
     {
@@ -59,22 +87,6 @@ public abstract class WizardPanel
     public String getNameInputValue()
     {
         return nameInput.getAttribute( "value" );
-    }
-
-
-    /**
-     * Checks tab-count on the Home page.(checks that one wizard was opened)
-     *
-     * @return {@link HomePage} instance.
-     */
-    public HomePage showHomePageAndVerifyCircle()
-    {
-        gotoHomeButton.click();
-        HomePage page = new HomePage( getSession() );
-
-        getDriver().switchTo().window( getSession().getWindowHandle() );
-        waitUntilVisible( By.xpath( "//div[@class='tab-count-container' and contains(@title,'1 tab(s) open')]" ) );
-        return page;
     }
 
     /**

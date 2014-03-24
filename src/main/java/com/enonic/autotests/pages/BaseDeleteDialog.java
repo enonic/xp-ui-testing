@@ -22,7 +22,7 @@ public abstract class BaseDeleteDialog
     private final String ITEMS_TO_DELETE = "//div[contains(@class,'modal-dialog delete-dialog')]//div[@class='item-list']//h4";
 
     public static final String DELETE_BUTTON_XPATH =
-        "//div[@class='modal-dialog delete-dialog']//div[@class='dialog-buttons']//button[text()='Delete']";
+        "//div[@class='modal-dialog delete-dialog']//div[@class='dialog-buttons']//button/span[text()='Delete']";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     private WebElement deleteButton;

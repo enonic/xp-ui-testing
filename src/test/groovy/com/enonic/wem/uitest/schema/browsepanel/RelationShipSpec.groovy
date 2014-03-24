@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import com.enonic.autotests.pages.schemamanager.KindOfContentTypes
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -28,12 +28,12 @@ class RelationshipSpec
         given:
         String relCFG = LinkRelationship.CFG
         String relationshipName = NameHelper.uniqueName( "relationship" );
-        ContentType relationship = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+        ContentType relationship = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relationship.setDisplayNameInConfig( "testrelationship" );
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData(
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
             relationship ).save().close()
 
         then:
@@ -45,10 +45,10 @@ class RelationshipSpec
         given:
         String relCFG = LinkRelationship.CFG
         String relationshipName = NameHelper.uniqueName( "relationship" );
-        ContentType relToDelete = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+        ContentType relToDelete = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToDelete.setDisplayNameInConfig( "relationshiptodelete" );
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData(
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
             relToDelete ).save().close()
 
         when:
@@ -64,16 +64,16 @@ class RelationshipSpec
         given:
         String relCFG = LinkRelationship.CFG
         String relationshipName = NameHelper.uniqueName( "rel-editname" );
-        ContentType relToEdit = ContentType.with().name( relationshipName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+        ContentType relToEdit = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToEdit.setDisplayNameInConfig( "relationshiptoeditname" );
-        schemaBrowsePanel.clickToolbarNew().selectKind( KindOfContentTypes.RELATIONSHIP_TYPE.getValue() ).typeData(
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
             relToEdit ).save().close()
 
 
         when:
         String newName = NameHelper.uniqueName( "new-name" );
-        ContentType newRelationship = ContentType.with().name( newName ).kind( KindOfContentTypes.RELATIONSHIP_TYPE ).configuration(
+        ContentType newRelationship = ContentType.with().name( newName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         schemaBrowsePanel.selectRowWithContentType( relToEdit.getName(), relToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newRelationship ).save().close()

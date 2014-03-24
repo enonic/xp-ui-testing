@@ -25,19 +25,19 @@ public class ContentWizardPanel
     public static String START_WIZARD_TITLE = "New %s";
 
     private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-    		"//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Publish']]";
+        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Publish']]";
 
     private static final String TOOLBAR_DELETE_BUTTON_XPATH =
-    		"//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
 
     public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
-    		"//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
+        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
+        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
 
     public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
+        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
 
     @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
     private WebElement toolbarPublishButton;

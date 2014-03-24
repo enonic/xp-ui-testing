@@ -37,22 +37,22 @@ public class ContentBrowsePanel
         "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
 
     protected final String EDIT_BUTTON_XPATH =
-        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
 
     protected final String DELETE_BUTTON_XPATH =
-        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
 
     public final String NEW_BUTTON_XPATH =
-        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]";
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]";
 
     public final String DUPLICATE_BUTTON_XPATH =
-        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
 
     public final String OPEN_BUTTON_XPATH =
-        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Open']]";
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Open']]";
 
     public final String MOVE_BUTTON_XPATH =
-        "//div[@id='app.browse.ContentBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Move']]";
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Move']]";
 
     @FindBy(xpath = NEW_BUTTON_XPATH)
     private WebElement newButton;
