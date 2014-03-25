@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -22,6 +21,8 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public abstract class Page
 {
@@ -67,27 +68,12 @@ public abstract class Page
      */
     public void clearAndType( WebElement input, String text )
     {
-        if ( session.getIsRemote() != null && session.getIsRemote() )
-        {
-            input.sendKeys( Keys.chord( Keys.CONTROL, "a" ), text );
-        }
-        else
-        {
+        logger.info( "text will be typed: " + text );
+        input.clear();
+        sleep( 100 );
+        input.sendKeys( text );
+        logger.info( "text in input: " + text );
 
-            String os = System.getProperty( "os.name" ).toLowerCase();
-            logger.info( "clearAndType: OS System is " + os );
-            if ( os.indexOf( "mac" ) >= 0 )
-            {
-                input.sendKeys( Keys.chord( Keys.COMMAND, "a" ), text );
-            }
-            else
-            {
-                logger.info( "text will be typed: " + text );
-                input.sendKeys( Keys.chord( Keys.CONTROL, "a" ), " " );
-                input.sendKeys( Keys.chord( Keys.CONTROL, "a" ), text );
-                logger.info( "text in input: " + text );
-            }
-        }
     }
 
     /**
