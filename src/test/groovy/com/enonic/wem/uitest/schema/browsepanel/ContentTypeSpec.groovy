@@ -31,7 +31,8 @@ class ContentTypeSpec
             folderCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData( ctype ).save().close()
+		schemaBrowsePanel.waitsForSpinnerNotVisible()
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
 
         then:
@@ -69,7 +70,7 @@ class ContentTypeSpec
         when:
         ContentType newContentType = cloneContentTypeWithNewName( ctype )
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
-                                                                                                                ctype.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
+                                                                                                                ctype.getDisplayNameFromConfig() ).clickToolbarEdit().waitUntilWizardOpened().typeData(
             newContentType ).save().close()
         schemaBrowsePanel.waitsForSpinnerNotVisible()
 
@@ -86,7 +87,7 @@ class ContentTypeSpec
             textLineCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData( ctype ).save().close()
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
 
         then:
