@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -99,17 +98,4 @@ public class HomePage
         getLogger().info( "Content App loaded" );
         return panel;
     }
-
-    public AccountsPage openAccountsApplication()
-    {
-        accounts.click();
-        AccountsPage accountsPage = new AccountsPage( getSession() );
-        accountsPage.waituntilPageLoaded( 2l );
-
-        String whandle = getSession().getDriver().getWindowHandle();
-        getSession().setWindowHandle( whandle );
-        NavigatorHelper.switchToIframe( getSession(), Application.APP_ACCOUNTS_FRAME_XPATH );
-        return accountsPage;
-    }
-
 }

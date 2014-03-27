@@ -1,9 +1,8 @@
 package com.enonic.wem.uitest.schema.wizards
 
-import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
-import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
+import com.enonic.autotests.pages.schemamanager.SchemaType
+import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -41,7 +40,7 @@ class MixinWizardSpec
     {
         given:
         String mixinName = "test";
-        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() );
+        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() )
         wizard.doTypeName( mixinName );
         String actualTitle = wizard.getAppBarTabMenuTitle();
 

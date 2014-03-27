@@ -6,10 +6,10 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
-import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 
 public class MixinWizardPanel
-    extends SchemaWizardPanel
+    extends SchemaWizardPanel<ContentType>
 {
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[@id='app.wizard.MixinWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
@@ -42,7 +42,7 @@ public class MixinWizardPanel
     }
 
     @Override
-    public WizardPanel save()
+    public MixinWizardPanel save()
     {
         boolean isSaveButtonEnabled = isEnabledSaveButton();
         if ( !isSaveButtonEnabled )
@@ -63,5 +63,18 @@ public class MixinWizardPanel
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
     }
+
+
+    @Override
+    public MixinWizardPanel typeData( ContentType contentType )
+    {
+        // 1. type a data: 'name' and 'Display Name'.
+        clearAndType( nameInput, contentType.getName() );
+        //2. type the XML-config data:
+        getLogger().info( "set contenttype configuration " );
+        setConfiguration( contentType.getConfigData().trim() );
+        return this;
+    }
+
 
 }

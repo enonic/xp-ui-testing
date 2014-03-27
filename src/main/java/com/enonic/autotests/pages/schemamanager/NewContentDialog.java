@@ -34,9 +34,9 @@ public class NewContentDialog
      * @param kind
      * @return
      */
-    public SchemaWizardPanel selectKind( String kind )
+    public SchemaWizardPanel<?> selectKind( String kind )
     {
-        SchemaWizardPanel wizard = null;
+        SchemaWizardPanel<?> wizard = null;
         String kindXpath = String.format( KIND, kind );
         boolean isPpresent = waitAndFind( By.xpath( kindXpath ) );
 

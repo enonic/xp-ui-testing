@@ -13,7 +13,7 @@ import com.enonic.autotests.utils.TestUtils;
 /**
  * Base class for wizards.
  */
-public abstract class WizardPanel
+public abstract class WizardPanel<T>
     extends Application
 {
 
@@ -41,9 +41,11 @@ public abstract class WizardPanel
 
     public abstract void close();
 
-    public abstract WizardPanel save();
+    public abstract WizardPanel<T> save();
 
     public abstract boolean isEnabledSaveButton();
+
+    public abstract WizardPanel<T> typeData( T object );
 
     /**
      * Types a name to the name-input field
@@ -106,11 +108,12 @@ public abstract class WizardPanel
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
      */
-    public void waitUntilWizardOpened()
+    public WizardPanel<T> waitUntilWizardOpened()
     {
         String circleXpath = String.format( RED_CIRCLE_XPATH );
         waitUntilVisible( By.xpath( circleXpath ) );
         //TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
+        return this;
     }
 
     public void waitElementClickable( By by, long timeout )

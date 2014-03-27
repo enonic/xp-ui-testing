@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
@@ -31,8 +31,8 @@ class MixinSpec
     {
         given:
         String mixinCFG = MixinAddress.CFG
-        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "addressmixin" ) ).schemaType(
-            SchemaType.MIXIN ).configuration( mixinCFG ).build();
+        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "addressmixin" ) ).schemaType( SchemaType.MIXIN ).configuration(
+            mixinCFG ).build();
         getTestSession().put( MIXIN_KEY, mixin );
 
         when:
@@ -79,7 +79,7 @@ class MixinSpec
                                                     mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newMixin ).save().close()
         mixinToEdit.setDisplayNameInConfig( newDisplayName )
-		
+
         then:
         schemaBrowsePanel.exists( newMixin )
     }

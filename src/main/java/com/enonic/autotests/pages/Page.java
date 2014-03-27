@@ -197,7 +197,7 @@ public abstract class Page
     {
         getLogger().info( "Get element by locator: " + locator.toString() );
         long startTime = System.currentTimeMillis();
-        getDriver().manage().timeouts().implicitlyWait( 9, TimeUnit.SECONDS );
+        getDriver().manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
         boolean isFound = false;
         for ( int i = 0; i <= tries; i++ )
         {

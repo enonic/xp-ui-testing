@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
@@ -33,8 +33,7 @@ class RelationshipSpec
         relationship.setDisplayNameInConfig( "testrelationship" );
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
-            relationship ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData( relationship ).save().close()
 
         then:
         schemaBrowsePanel.exists( relationship );
@@ -48,8 +47,7 @@ class RelationshipSpec
         ContentType relToDelete = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToDelete.setDisplayNameInConfig( "relationshiptodelete" );
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
-            relToDelete ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData( relToDelete ).save().close()
 
         when:
         schemaBrowsePanel.selectRowWithContentType( relToDelete.getName(),
@@ -67,8 +65,7 @@ class RelationshipSpec
         ContentType relToEdit = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
             relCFG ).build();
         relToEdit.setDisplayNameInConfig( "relationshiptoeditname" );
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
-            relToEdit ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData( relToEdit ).save().close()
 
 
         when:

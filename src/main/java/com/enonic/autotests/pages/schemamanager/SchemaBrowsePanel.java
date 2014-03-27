@@ -122,9 +122,9 @@ public class SchemaBrowsePanel
      *
      * @return {@link ContentTypeWizardPanel} instance.
      */
-    public SchemaWizardPanel clickToolbarEdit()
+    public SchemaWizardPanel<?> clickToolbarEdit()
     {
-        SchemaWizardPanel wizard = null;
+        SchemaWizardPanel<?> wizard = null;
         editButton.click();
         switch ( this.selectedSchemaType )
         {

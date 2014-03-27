@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
@@ -32,7 +32,7 @@ class ContentTypeSpec
 
         when:
         schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
-		schemaBrowsePanel.expandSuperTypeFolder(ctype.getSuperTypeNameFromConfig())
+        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
 
         then:
         schemaBrowsePanel.exists( ctype )
@@ -52,6 +52,7 @@ class ContentTypeSpec
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
                                                                                                                 ctype.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newContentType ).save().close()
+        schemaBrowsePanel.waitsForSpinnerNotVisible()
 
         then:
         schemaBrowsePanel.exists( newContentType )
@@ -70,6 +71,7 @@ class ContentTypeSpec
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
                                                                                                                 ctype.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
             newContentType ).save().close()
+        schemaBrowsePanel.waitsForSpinnerNotVisible()
 
         then:
         schemaBrowsePanel.exists( newContentType )
@@ -85,8 +87,8 @@ class ContentTypeSpec
 
         when:
         schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
-		schemaBrowsePanel.expandSuperTypeFolder(ctype.getSuperTypeNameFromConfig())
-		
+        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
+
         then:
         schemaBrowsePanel.exists( ctype )
 
@@ -98,8 +100,7 @@ class ContentTypeSpec
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
         ContentType ctypeToDelete = ContentType.with().name( "ctypetodelete" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
             folderCFG ).build();
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData(
-            ctypeToDelete ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctypeToDelete ).save().close()
         when:
         schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ).selectRowWithContentType(
             ctypeToDelete.getName(), ctypeToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()

@@ -9,7 +9,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
-import com.enonic.autotests.pages.accounts.AccountsPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.utils.WaitHelper;
@@ -75,17 +74,6 @@ public class NavigatorHelper
 
     }
 
-    /**
-     * Open 'Home' page, click on 'Accounts' link and open application's page.
-     *
-     * @param testSession {@link TestSession} instance.
-     * @return {@link AccountsPage} instance.
-     */
-    public static AccountsPage openAccounts( TestSession testSession )
-    {
-        HomePage home = loginAndOpenHomePage( testSession );
-        return home.openAccountsApplication();
-    }
 
     /**
      * @param testSession {@link TestSession} instance.

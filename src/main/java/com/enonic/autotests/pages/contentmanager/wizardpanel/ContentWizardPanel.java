@@ -20,7 +20,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
  * 'Content Manager' application, Add new Content Wizard page.
  */
 public class ContentWizardPanel
-    extends WizardPanel
+    extends WizardPanel<BaseAbstractContent>
 {
     public static String START_WIZARD_TITLE = "New %s";
 
@@ -85,6 +85,7 @@ public class ContentWizardPanel
      *
      * @param content
      */
+    @Override
     public ContentWizardPanel typeData( BaseAbstractContent content )
     {
         sleep( 500 );
@@ -108,7 +109,8 @@ public class ContentWizardPanel
     /**
      * Press the button 'Save', which located in the wizard's toolbar.
      */
-    public WizardPanel save()
+    @Override
+    public ContentWizardPanel save()
     {
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
