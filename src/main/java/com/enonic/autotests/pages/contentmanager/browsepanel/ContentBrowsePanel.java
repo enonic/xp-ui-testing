@@ -434,7 +434,7 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-        // sleep( 2000 );//mac mini issue
+        sleep( 2000 );//mac mini issue
         boolean isGridLoaded = waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
