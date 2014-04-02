@@ -8,9 +8,10 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
-import com.enonic.autotests.vo.contentmanager.FolderContent
+import com.enonic.autotests.vo.contentmanager.Content
+
 import com.enonic.wem.api.content.ContentPath
+import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -76,12 +77,15 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "folder" );
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "folder" ).
-            withParent( ContentPath.ROOT ).build()
-        int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
-        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
+            withParent( ContentPath.ROOT ).
+            withContentType( ContentTypeName.folder() ).
+            build();
+
+        int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" );
+        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
 
         when:
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save()
@@ -96,10 +100,12 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "folder" );
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "folder" ).
-            withParent( ContentPath.ROOT ).build()
+            withParent( ContentPath.ROOT ).
+            withContentType( ContentTypeName.folder() ).
+            build();
         int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData(
@@ -120,16 +126,18 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "folder" );
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "folder" ).
-            withParent( ContentPath.ROOT ).build()
+            withContentType( ContentTypeName.folder() ).
+            withParent( ContentPath.ROOT ).
+            build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible()
-        int beforeRemoving = filterPanel.getNumberFilteredByContenttype( "Folder" )
-        int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" )
-        List<BaseAbstractContent> contentList = new ArrayList()
+        int beforeRemoving = filterPanel.getNumberFilteredByContenttype( "Folder" );
+        int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
+        List<Content> contentList = new ArrayList()
         contentList.add( content )
 
         when:
@@ -147,10 +155,12 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "folder" );
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "folder" ).
-            withParent( ContentPath.ROOT ).build()
+            withContentType( ContentTypeName.folder() ).
+            withParent( ContentPath.ROOT ).
+            build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible()
@@ -183,9 +193,10 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "folder" );
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "folder" ).
+            withContentType( ContentTypeName.folder() ).
             withParent( ContentPath.ROOT ).build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(
@@ -218,9 +229,10 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "folder" );
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "folder" ).
+            withContentType( ContentTypeName.folder() ).
             withParent( ContentPath.ROOT ).build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(

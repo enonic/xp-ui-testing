@@ -7,8 +7,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.autotests.vo.contentmanager.ArchiveContent
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
@@ -31,9 +30,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     def "GIVEN a unchanged Content WHEN closing THEN SaveBeforeCloseDialog must not appear"()
     {
         given:
-        BaseAbstractContent content = ArchiveContent.builder().
+        Content content = Content.builder().
             withName( NameHelper.uniqueName( "archive" ) ).
             withDisplayName( "archive" ).
+            withContentType( ContentTypeName.archiveMedia() ).
             withParent( ContentPath.ROOT ).build();
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
@@ -50,10 +50,13 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     def " GIVEN a changed Content WHEN closing THEN SaveBeforeCloseDialog must appear"()
     {
         given:
-        BaseAbstractContent content = ArchiveContent.builder().
+        Content content = Content.builder().
             withName( NameHelper.uniqueName( "archive" ) ).
             withDisplayName( "archive" ).
-            withParent( ContentPath.ROOT ).build();
+            withContentType( ContentTypeName.archiveMedia() ).
+            withParent( ContentPath.ROOT ).
+            build();
+
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
         content.setDisplayName( "chngedname" )
@@ -71,10 +74,15 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     def "GIVEN changing name of an existing Content and wizard closing WHEN Yes is chosen THEN Content is listed in BrowsePanel with it's new name"()
     {
         given:
-        BaseAbstractContent content = ArchiveContent.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).withDisplayName( "archive" ).withParent( ContentPath.ROOT ).build()
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
+        Content content = Content.builder().
+            withName( NameHelper.uniqueName( "archive" ) ).
+            withDisplayName( "archive" ).
+            withParent( ContentPath.ROOT ).
+            withContentType( ContentTypeName.archiveMedia() ).
+            build();
+
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().
+            selectContentType( ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
 
         content.setName( NameHelper.uniqueName( "newarchive" ) )
         wizard.typeData( content ).close()
@@ -92,8 +100,13 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     def "GIVEN changing name of an existing Content and wizard closing WHEN No is chosen THEN Content is listed in BrowsePanel with it's original name"()
     {
         given:
-        BaseAbstractContent content = ArchiveContent.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).withDisplayName( "archive" ).withParent( ContentPath.ROOT ).build()
+        Content content = Content.builder().
+            withName( NameHelper.uniqueName( "archive" ) ).
+            withDisplayName( "archive" ).
+            withParent( ContentPath.ROOT ).
+            withContentType( ContentTypeName.archiveMedia() ).
+            build();
+
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
         content.setName( NameHelper.uniqueName( "newarchive" ) )
@@ -112,8 +125,13 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     def "GIVEN changing an existing Content and wizard closing WHEN Cancel is chosen THEN wizard is still open"()
     {
         given:
-        BaseAbstractContent content = ArchiveContent.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).withDisplayName( "archive" ).withParent( ContentPath.ROOT ).build()
+        Content content = Content.builder().
+            withName( NameHelper.uniqueName( "archive" ) ).
+            withDisplayName( "archive" ).
+            withParent( ContentPath.ROOT ).
+            withContentType( ContentTypeName.archiveMedia() ).
+            build();
+
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
         content.setName( NameHelper.uniqueName( "newarchive" ) )

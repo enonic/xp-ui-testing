@@ -2,11 +2,9 @@ package com.enonic.autotests.vo.contentmanager;
 
 
 import com.enonic.wem.api.content.ContentPath;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
-/**
- * Base class for all types of content.
- */
-public abstract class BaseAbstractContent
+public class Content
 {
     private ContentPath parent;
 
@@ -18,7 +16,7 @@ public abstract class BaseAbstractContent
 
     private String contentTypeName;
 
-    protected BaseAbstractContent( Builder<?> builder )
+    protected Content( Builder builder )
     {
         this.name = builder.name;
         this.parent = builder.parent;
@@ -26,6 +24,11 @@ public abstract class BaseAbstractContent
 
         this.displayName = builder.displayName;
         this.contentTypeName = builder.contentTypeName;
+    }
+
+    public static Builder builder()
+    {
+        return new Builder();
     }
 
     public ContentPath getParent()
@@ -73,7 +76,7 @@ public abstract class BaseAbstractContent
         this.contentTypeName = contentTypeName;
     }
 
-    public static abstract class Builder<T extends BaseAbstractContent>
+    public static class Builder
     {
         private String name;
 
@@ -83,30 +86,45 @@ public abstract class BaseAbstractContent
 
         private ContentPath parent;
 
-        public Builder<T> withName( String name )
+        public Builder withName( String name )
         {
             this.name = name;
             return this;
         }
 
-        public Builder<T> withDisplayName( String displayName )
+        public Builder withDisplayName( String displayName )
         {
             this.displayName = displayName;
             return this;
         }
 
-        public Builder<T> withType( String ctName )
+        public Builder withType( String ctName )
         {
             this.contentTypeName = ctName;
             return this;
         }
 
-        public Builder<T> withParent( ContentPath contentPath )
+        public Builder withParent( ContentPath contentPath )
         {
             this.parent = contentPath;
             return this;
         }
 
-        public abstract T build();
+        public Builder withContentType( String contentTypeName )
+        {
+            this.contentTypeName = contentTypeName;
+            return this;
+        }
+
+        public Builder withContentType( ContentTypeName contentTypeName )
+        {
+            this.contentTypeName = contentTypeName.toString();
+            return this;
+        }
+
+        public Content build()
+        {
+            return new Content( this );
+        }
     }
 }

@@ -4,9 +4,9 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.ArchiveContent
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
-import com.enonic.autotests.vo.contentmanager.FolderContent
+
+import com.enonic.autotests.vo.contentmanager.Content
+
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
@@ -31,10 +31,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN existing content, WHEN content opened and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
-            withParent( ContentPath.ROOT ).build();
+            withContentType( ContentTypeName.folder() ).
+            withParent( ContentPath.ROOT ).
+            build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
 
         when:
@@ -49,20 +51,26 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
-        BaseAbstractContent content1 = FolderContent.builder().
+        Content content1 = Content.builder().
             withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
-            withParent( ContentPath.ROOT ).build();
+            withParent( ContentPath.ROOT ).
+            withContentType( ContentTypeName.folder() ).
+            build();
+
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close()
 
 
-        BaseAbstractContent content2 = FolderContent.builder().
+        Content content2 = Content.builder().
             withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
-            withParent( ContentPath.ROOT ).build();
+            withContentType( ContentTypeName.folder() ).
+            withParent( ContentPath.ROOT ).
+            build();
+
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
             content2 ).save().close()
-        List<BaseAbstractContent> contentList = new ArrayList<>()
+        List<Content> contentList = new ArrayList<>()
         contentList.add( content1 )
         contentList.add( content2 )
         contentBrowsePanel.waitsForSpinnerNotVisible()
@@ -80,14 +88,16 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
     {
         given:
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
-            withParent( ContentPath.ROOT ).build();
+            withContentType( ContentTypeName.folder() ).
+            withParent( ContentPath.ROOT ).
+            build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
             content ).save().close()
-        List<BaseAbstractContent> contents = new ArrayList<>()
+        List<Content> contents = new ArrayList<>()
         contents.add( content )
         contentBrowsePanel.waitsForSpinnerNotVisible()
         contentBrowsePanel.doClearSelection()
@@ -103,23 +113,27 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN a Content beneath an existing WHEN deleted THEN deleted Content is no longer listed beneath parent"()
     {
         given:
-        BaseAbstractContent parent = FolderContent.builder().
+        Content parent = Content.builder().
             withParent( ContentPath.ROOT ).
             withName( NameHelper.uniqueName( "parent" ) ).
             withDisplayName( "parent" ).
+            withContentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
-        BaseAbstractContent contentToDelete = ArchiveContent.builder().
+        Content contentToDelete = Content.builder().
             withName( NameHelper.uniqueName( "archive" ) ).
             withDisplayName( "delete content beneath parent" ).
-            withParent( ContentPath.from( parent.getName() ) ).build();
+            withParent( ContentPath.from( parent.getName() ) ).
+            withContentType( ContentTypeName.archiveMedia() ).
+            build();
+
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData(
             contentToDelete ).save().close();
 
 
-        List<BaseAbstractContent> contentList = new ArrayList<>()
+        List<Content> contentList = new ArrayList<>()
         contentList.add( contentToDelete )
 
         when:
@@ -133,21 +147,25 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN a one and only Content beneath an existing WHEN deleted THEN expand icon of parent is no longer shown "()
     {
         given:
-        BaseAbstractContent parent = FolderContent.builder().
+        Content parent = Content.builder().
             withParent( ContentPath.ROOT ).
             withName( NameHelper.uniqueName( "parent" ) ).
             withDisplayName( "expandicon-test" ).
+            withContentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
-        BaseAbstractContent content = ArchiveContent.builder().
+        Content content = Content.builder().
             withName( NameHelper.uniqueName( "archive" ) ).
             withDisplayName( "archive" ).
-            withParent( ContentPath.from( parent.getName() ) ).build();
+            withContentType( ContentTypeName.folder() ).
+            withParent( ContentPath.from( parent.getName() ) ).
+            build();
+
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close()
 
-        List<BaseAbstractContent> contentList = new ArrayList<>()
+        List<Content> contentList = new ArrayList<>()
         contentList.add( content )
 
         when:

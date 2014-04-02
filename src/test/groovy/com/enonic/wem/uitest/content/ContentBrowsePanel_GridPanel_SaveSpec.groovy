@@ -6,7 +6,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.autotests.vo.contentmanager.*
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
@@ -32,10 +32,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
     {
         given:
-        BaseAbstractContent rootContent = FolderContent.builder().
+        Content rootContent = Content.builder().
             withParent( ContentPath.ROOT ).
             withName( REPO_NAME ).
             withDisplayName( REPO_NAME ).
+            withContentType( ContentTypeName.folder() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() );
@@ -51,10 +52,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content on root WHEN saved and HomeButton clicked THEN new Content should be listed"()
     {
         given:
-        BaseAbstractContent rootContent = DataContent.builder().
+        Content rootContent = Content.builder().
             withParent( ContentPath.ROOT ).
             withName( NameHelper.uniqueName( "datacontent" ) ).
             withDisplayName( "datacontent" ).
+            withContentType( ContentTypeName.dataMedia() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
@@ -73,10 +75,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and wizard closed THEN parent should still be unexpanded"()
     {
         given:
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withParent( ContentPath.from( REPO_NAME ) ).
             withName( NameHelper.uniqueName( "folder" ) ).
             withDisplayName( "folder" ).
+            withContentType( ContentTypeName.folder() ).
             build()
 
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -93,10 +96,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and HomeButton clicked THEN parent should still be unexpanded"()
     {
         given:
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withParent( ContentPath.from( REPO_NAME ) ).
             withName( NameHelper.uniqueName( "folder" ) ).
             withDisplayName( "folder" ).
+            withContentType( ContentTypeName.folder() ).
             build();
 
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -115,10 +119,12 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         String name = NameHelper.uniqueName( "archive" );
-        BaseAbstractContent content = ArchiveContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "archive" ).
-            withParent( ContentPath.from( REPO_NAME ) ).build();
+            withContentType( ContentTypeName.archiveMedia() ).
+            withParent( ContentPath.from( REPO_NAME ) ).
+            build();
 
         contentBrowsePanel.expandContent( content.getParent() );
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -136,10 +142,12 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         String name = NameHelper.uniqueName( "folder" );
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( name ).
             withDisplayName( "folder" ).
-            withParent( ContentPath.from( REPO_NAME ) ).build()
+            withContentType( ContentTypeName.folder() ).
+            withParent( ContentPath.from( REPO_NAME ) ).
+            build()
 
         contentBrowsePanel.expandContent( content.getParent() )
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -157,16 +165,17 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
         given:
-        StructuredContent contentToEdit = StructuredContent.builder().
+        Content contentToEdit = Content.builder().
             withParent( ContentPath.from( REPO_NAME ) ).
             withName( "editname" ).
             withDisplayName( "editnametest" ).
+            withContentType( ContentTypeName.structured() ).
             build();
         contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() );
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close();
-        StructuredContent newcontent = cloneContentWithNewName( contentToEdit )
+        Content newcontent = cloneContentWithNewName( contentToEdit )
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).
             selectRowByCheckbox( contentToEdit.getPath() ).
             clickToolbarEdit();
@@ -187,16 +196,17 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new displayName"()
     {
         given:
-        StructuredContent contentToEdit = StructuredContent.builder().
+        Content contentToEdit = Content.builder().
             withParent( ContentPath.from( REPO_NAME ) ).
             withName( "editdisplayname" ).
             withDisplayName( "editdisplayname" ).
+            withContentType( ContentTypeName.structured() ).
             build()
         contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() )
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close();
 
-        StructuredContent newcontent = cloneContentWithNewDispalyName( contentToEdit );
+        Content newcontent = cloneContentWithNewDispalyName( contentToEdit );
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).
             selectRowByCheckbox( contentToEdit.getPath() ).clickToolbarEdit();
         wizard.typeData( newcontent );
@@ -211,23 +221,25 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( newcontent.getPath() )
     }
 
-    StructuredContent cloneContentWithNewDispalyName( StructuredContent contentToedit )
+    Content cloneContentWithNewDispalyName( Content source )
     {
         String newDisplayName = NameHelper.uniqueName( "displaynamechanged" )
-        return StructuredContent.builder().
-            withName( contentToedit.getName() ).
+        return Content.builder().
+            withName( source.getName() ).
             withDisplayName( newDisplayName ).
-            withParent( contentToedit.getParent() ).
+            withParent( source.getParent() ).
+            withContentType( source.getContentTypeName() ).
             build()
     }
 
-    StructuredContent cloneContentWithNewName( StructuredContent source )
+    Content cloneContentWithNewName( Content source )
     {
         String newName = NameHelper.uniqueName( "newname" )
-        return StructuredContent.builder().
+        return Content.builder().
             withName( newName ).
             withDisplayName( source.getDisplayName() ).
             withParent( source.getParent() ).
+            withContentType( source.getContentTypeName() ).
             build()
 
     }

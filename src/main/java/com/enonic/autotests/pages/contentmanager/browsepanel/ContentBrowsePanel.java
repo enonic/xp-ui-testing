@@ -16,7 +16,7 @@ import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import com.enonic.autotests.vo.contentmanager.Content;
 import com.enonic.wem.api.content.ContentPath;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -33,15 +33,6 @@ public class ContentBrowsePanel
 
     private static final String TABLE_ITEM_XPATH = "//h6[text()='BildeArkiv']";
 
-    private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH =
-        "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
-
-    protected final String EDIT_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
-
-    protected final String DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
-
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]";
 
@@ -54,15 +45,23 @@ public class ContentBrowsePanel
     public final String MOVE_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Move']]";
 
+    protected final String EDIT_BUTTON_XPATH =
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
+
+    protected final String DELETE_BUTTON_XPATH =
+        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+
+    private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH =
+        "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
+
+    @FindBy(xpath = DELETE_BUTTON_XPATH)
+    protected WebElement deleteButton;
+
     @FindBy(xpath = NEW_BUTTON_XPATH)
     private WebElement newButton;
 
     @FindBy(xpath = EDIT_BUTTON_XPATH)
     private WebElement editButton;
-
-    @FindBy(xpath = DELETE_BUTTON_XPATH)
-    protected WebElement deleteButton;
-
 
     @FindBy(xpath = DUPLICATE_BUTTON_XPATH)
     private WebElement duplicateButton;
@@ -218,10 +217,10 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public ContentBrowsePanel selectContentInTable( List<BaseAbstractContent> contents )
+    public ContentBrowsePanel selectContentInTable( List<Content> contents )
     {
         waitAndCheckContent( contents );
-        for ( BaseAbstractContent content : contents )
+        for ( Content content : contents )
         {
             if ( !isRowSelected( content.getPath().toString() ) )
             {
@@ -232,7 +231,7 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentBrowsePanel selectContentInTable( BaseAbstractContent content )
+    public ContentBrowsePanel selectContentInTable( Content content )
     {
         waitAndCheckContent( content.getPath() );
         if ( !isRowSelected( content.getPath().toString() ) )
@@ -242,7 +241,7 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentBrowsePanel deSelectContentInTable( BaseAbstractContent content )
+    public ContentBrowsePanel deSelectContentInTable( Content content )
     {
         waitAndCheckContent( content.getPath() );
         if ( isRowSelected( content.getPath().toString() ) )
@@ -252,9 +251,9 @@ public class ContentBrowsePanel
         return this;
     }
 
-    private void waitAndCheckContent( List<BaseAbstractContent> contents )
+    private void waitAndCheckContent( List<Content> contents )
     {
-        for ( BaseAbstractContent content : contents )
+        for ( Content content : contents )
         {
             waitAndCheckContent( content.getPath() );
         }
@@ -276,7 +275,7 @@ public class ContentBrowsePanel
      *
      * @param content
      */
-    private ContentBrowsePanel clickCheckbox( BaseAbstractContent content )
+    private ContentBrowsePanel clickCheckbox( Content content )
     {
         String fullName = content.getPath().toString();
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, fullName );
@@ -349,7 +348,8 @@ public class ContentBrowsePanel
             TestUtils.saveScreenshot( getSession() );
             throw new TestFrameworkException(
                 "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContentPath +
-                    " was not found!" );
+                    " was not found!"
+            );
         }
         WebElement checkboxElement = getDriver().findElement( By.xpath( spaceCheckBoxXpath ) );
 
@@ -399,7 +399,7 @@ public class ContentBrowsePanel
      * @param content
      * @return {@ItemViewPanelPage} instance.
      */
-    public ItemViewPanelPage doOpenContentFromContextMenu( BaseAbstractContent content )
+    public ItemViewPanelPage doOpenContentFromContextMenu( Content content )
     {
         expandContent( content.getParent() );
         boolean isExists = exists( content.getPath() );

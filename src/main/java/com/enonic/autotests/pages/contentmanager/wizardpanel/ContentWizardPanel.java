@@ -12,7 +12,7 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent;
+import com.enonic.autotests.vo.contentmanager.Content;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -20,16 +20,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
  * 'Content Manager' application, Add new Content Wizard page.
  */
 public class ContentWizardPanel
-    extends WizardPanel<BaseAbstractContent>
+    extends WizardPanel<Content>
 {
-    public static String START_WIZARD_TITLE = "New %s";
-
-    private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Publish']]";
-
-    private static final String TOOLBAR_DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
-
     public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
         "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
 
@@ -39,20 +31,28 @@ public class ContentWizardPanel
     public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
 
-    @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
-    private WebElement toolbarPublishButton;
+    private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
+        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Publish']]";
+
+    private static final String TOOLBAR_DELETE_BUTTON_XPATH =
+        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+
+    public static String START_WIZARD_TITLE = "New %s";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
+
+    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH)
+    protected WebElement closeButton;
+
+    @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
+    private WebElement toolbarPublishButton;
 
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON_XPATH)
     private WebElement toolbarDeleteButton;
 
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
-
-    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH)
-    protected WebElement closeButton;
 
     /**
      * The constructor.
@@ -86,7 +86,7 @@ public class ContentWizardPanel
      * @param content
      */
     @Override
-    public ContentWizardPanel typeData( BaseAbstractContent content )
+    public ContentWizardPanel typeData( Content content )
     {
         //sleep( 500 );
         // 1. type a data: 'name' and 'Display Name'.

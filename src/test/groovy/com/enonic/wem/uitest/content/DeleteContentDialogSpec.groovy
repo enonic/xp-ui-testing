@@ -4,9 +4,9 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.BaseAbstractContent
-import com.enonic.autotests.vo.contentmanager.FolderContent
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
+import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -32,10 +32,11 @@ class DeleteContentDialogSpec
     {
         given:
         String name = "foldertodelete";
-        BaseAbstractContent content = FolderContent.builder().
+        Content content = Content.builder().
             withName( NameHelper.uniqueName( name ) ).
             withDisplayName( "foldertodelete" ).
             withParent( ContentPath.ROOT ).
+            withContentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
@@ -44,8 +45,8 @@ class DeleteContentDialogSpec
     def "GIVEN content App BrowsePanel and existing content WHEN content selected and Delete button clicked THEN delete dialog with title 'Delete Content' showed"()
     {
         given:
-        List<BaseAbstractContent> contentList = new ArrayList<>();
-        BaseAbstractContent content = (BaseAbstractContent) getTestSession().get( CONTENT_TO_DELETE_KEY );
+        List<Content> contentList = new ArrayList<>();
+        Content content = (Content) getTestSession().get( CONTENT_TO_DELETE_KEY );
         contentList.add( content );
 
         when:
@@ -59,8 +60,8 @@ class DeleteContentDialogSpec
     def "GIVEN content BrowsePanel and existing content WHEN one content selected and Delete button clicked THEN delete dialog with one content is displayed"()
     {
         given:
-        List<BaseAbstractContent> contentList = new ArrayList<>();
-        BaseAbstractContent content = (BaseAbstractContent) getTestSession().get( CONTENT_TO_DELETE_KEY );
+        List<Content> contentList = new ArrayList<>();
+        Content content = (Content) getTestSession().get( CONTENT_TO_DELETE_KEY );
         contentList.add( content );
 
         when:
