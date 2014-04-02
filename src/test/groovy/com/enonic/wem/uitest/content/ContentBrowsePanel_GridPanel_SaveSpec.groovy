@@ -3,13 +3,20 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.api.content.ContentPath
+import com.enonic.wem.api.content.data.ContentData
+import com.enonic.wem.api.data.DataSet
+import com.enonic.wem.api.data.Value
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
+import com.enonic.wem.uitest.schema.cfg.TwoTextLineContentTypeCfg
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -29,6 +36,47 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
 
+    @Ignore
+    def "experiment"()
+    {
+        given:
+
+        String twoTextlineCFG = TwoTextLineContentTypeCfg.CFG
+        ContentType contentType = ContentType.with().
+            name( "person" ).
+            schemaType( SchemaType.CONTENT_TYPE ).
+            configuration( twoTextlineCFG ).
+            build();
+
+        ContentData data = new ContentData();
+        data.setProperty( "firstName", new Value.String( "Jorund" ) );
+        data.addProperty( "firstName", new Value.String( "Vier" ) );
+        data.addProperty( "surname", new Value.String( "Skriubakken" ) );
+        DataSet mySet = new DataSet( "address" );
+        mySet.setProperty( "street", new Value.String( "Sonstlei" ) )
+        mySet.setProperty( "postalCode", new Value.String( "1763" ) )
+        mySet.setProperty( "postalPlace", new Value.String( "HALDEN" ) )
+        data.add( mySet );
+
+        Content rootContent = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( REPO_NAME ).
+            displayName( REPO_NAME ).
+            contentType( ContentTypeName.structured() ).
+            data( data ).
+            build();
+
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() );
+        wizard.typeData( rootContent );
+        wizard.clickDataStep().type( rootContent.data );
+
+        when:
+        wizard.save().close();
+
+        then:
+        contentBrowsePanel.exists( rootContent.getPath() );
+    }
+
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
     {
         given:
@@ -39,7 +87,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             contentType( ContentTypeName.folder() ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         wizard.typeData( rootContent );
 
         when:

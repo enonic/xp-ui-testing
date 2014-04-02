@@ -125,4 +125,10 @@ public abstract class WizardPanel<T>
     {
         return nameInput;
     }
+
+    public void clickWizardStep( final int position )
+    {
+        // TODO: click step with position
+
+    }
 }

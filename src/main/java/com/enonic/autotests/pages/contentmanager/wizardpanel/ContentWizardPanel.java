@@ -103,7 +103,19 @@ public class ContentWizardPanel
 
         TestUtils.saveScreenshot( getSession() );
         // 2. populate main tab
+        if ( content.getData() != null )
+        {
+
+            clickDataStep().type( content.getData() );
+        }
+
         return this;
+    }
+
+    public ContentWizardStepForm clickDataStep()
+    {
+        clickWizardStep( 1 );
+        return new ContentWizardStepForm( getSession() );
     }
 
     /**

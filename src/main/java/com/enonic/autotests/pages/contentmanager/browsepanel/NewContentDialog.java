@@ -7,6 +7,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BaseModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -62,5 +63,10 @@ public class NewContentDialog
         sleep( 500 );
         return wizard;
 
+    }
+
+    public ContentWizardPanel selectContentType( ContentTypeName contentTypeName )
+    {
+        return selectContentType( contentTypeName.toString() );
     }
 }
