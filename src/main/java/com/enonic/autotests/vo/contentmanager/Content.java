@@ -98,12 +98,6 @@ public class Content
             return this;
         }
 
-        public Builder withType( String ctName )
-        {
-            this.contentTypeName = ctName;
-            return this;
-        }
-
         public Builder parent( ContentPath contentPath )
         {
             this.parent = contentPath;
