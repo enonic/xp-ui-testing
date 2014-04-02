@@ -33,10 +33,10 @@ class DeleteContentDialogSpec
         given:
         String name = "foldertodelete";
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( name ) ).
-            withDisplayName( "foldertodelete" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.folder() ).
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "foldertodelete" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );

@@ -28,10 +28,10 @@ class ContentItemViewPanelSpec
         given:
         String contentName = NameHelper.uniqueName( "itemviewtest" )
         Content content = Content.builder().
-            withName( contentName ).
-            withDisplayName( "itemviewtest" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.folder() ).
+            name( contentName ).
+            displayName( "itemviewtest" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();

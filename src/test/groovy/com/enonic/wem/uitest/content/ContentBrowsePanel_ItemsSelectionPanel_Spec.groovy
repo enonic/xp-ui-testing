@@ -48,19 +48,19 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     {
         given:
         Content siteHomepage = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( CONTENT_1_NAME ).
-            withDisplayName( CONTENT_1_DISPALY_NAME ).
-            withContentType( ContentTypeName.page() ).
+            parent( ContentPath.ROOT ).
+            name( CONTENT_1_NAME ).
+            displayName( CONTENT_1_DISPALY_NAME ).
+            contentType( ContentTypeName.page() ).
             build();
         contentBrowsePanel.selectContentInTable( siteHomepage )
 
         when:
         Content siteIntranet = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( CONTENT_2_NAME ).
-            withContentType( ContentTypeName.page() ).
-            withDisplayName( CONTENT_2_DISPALY_NAME ).
+            parent( ContentPath.ROOT ).
+            name( CONTENT_2_NAME ).
+            contentType( ContentTypeName.page() ).
+            displayName( CONTENT_2_DISPALY_NAME ).
             build();
         contentBrowsePanel.selectContentInTable( siteIntranet )
 
@@ -72,15 +72,15 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     {
         given:
         Content siteHomepage = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( CONTENT_1_NAME ).
-            withContentType( ContentTypeName.page() ).
-            withDisplayName( CONTENT_1_DISPALY_NAME ).build();
+            parent( ContentPath.ROOT ).
+            name( CONTENT_1_NAME ).
+            contentType( ContentTypeName.page() ).
+            displayName( CONTENT_1_DISPALY_NAME ).build();
         Content siteIntranet = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.page() ).
-            withName( CONTENT_2_NAME ).
-            withDisplayName( CONTENT_2_DISPALY_NAME ).build();
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.page() ).
+            name( CONTENT_2_NAME ).
+            displayName( CONTENT_2_DISPALY_NAME ).build();
         List<Content> list = new ArrayList<>()
         list.add( siteHomepage )
         list.add( siteIntranet )
@@ -89,10 +89,10 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
 
         when:
         Content folderBildearkiv = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.page() ).
-            withName( CONTENT_3_NAME ).
-            withDisplayName( CONTENT_3_DISPALY_NAME ).build();
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.page() ).
+            name( CONTENT_3_NAME ).
+            displayName( CONTENT_3_DISPALY_NAME ).build();
         contentBrowsePanel.selectContentInTable( folderBildearkiv )
 
         then:
@@ -103,22 +103,22 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     {
         given:
         Content siteHomepage = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( CONTENT_1_NAME ).
-            withContentType( ContentTypeName.page() ).
-            withDisplayName( CONTENT_1_DISPALY_NAME ).build();
+            parent( ContentPath.ROOT ).
+            name( CONTENT_1_NAME ).
+            contentType( ContentTypeName.page() ).
+            displayName( CONTENT_1_DISPALY_NAME ).build();
 
         Content siteIntranet = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( CONTENT_2_NAME ).
-            withContentType( ContentTypeName.page() ).
-            withDisplayName( CONTENT_2_DISPALY_NAME ).build();
+            parent( ContentPath.ROOT ).
+            name( CONTENT_2_NAME ).
+            contentType( ContentTypeName.page() ).
+            displayName( CONTENT_2_DISPALY_NAME ).build();
 
         Content folderBildearkiv = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( CONTENT_3_NAME ).
-            withContentType( ContentTypeName.page() ).
-            withDisplayName( CONTENT_3_DISPALY_NAME ).build()
+            parent( ContentPath.ROOT ).
+            name( CONTENT_3_NAME ).
+            contentType( ContentTypeName.page() ).
+            displayName( CONTENT_3_DISPALY_NAME ).build()
         List<Content> list = new ArrayList<>()
         list.add( siteHomepage )
         list.add( siteIntranet )

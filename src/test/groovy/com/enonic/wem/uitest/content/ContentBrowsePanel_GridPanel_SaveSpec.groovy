@@ -33,10 +33,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content rootContent = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( REPO_NAME ).
-            withDisplayName( REPO_NAME ).
-            withContentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
+            name( REPO_NAME ).
+            displayName( REPO_NAME ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() );
@@ -53,10 +53,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content rootContent = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( NameHelper.uniqueName( "datacontent" ) ).
-            withDisplayName( "datacontent" ).
-            withContentType( ContentTypeName.dataMedia() ).
+            parent( ContentPath.ROOT ).
+            name( NameHelper.uniqueName( "datacontent" ) ).
+            displayName( "datacontent" ).
+            contentType( ContentTypeName.dataMedia() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
@@ -76,10 +76,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content content = Content.builder().
-            withParent( ContentPath.from( REPO_NAME ) ).
-            withName( NameHelper.uniqueName( "folder" ) ).
-            withDisplayName( "folder" ).
-            withContentType( ContentTypeName.folder() ).
+            parent( ContentPath.from( REPO_NAME ) ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
             build()
 
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -97,10 +97,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content content = Content.builder().
-            withParent( ContentPath.from( REPO_NAME ) ).
-            withName( NameHelper.uniqueName( "folder" ) ).
-            withDisplayName( "folder" ).
-            withContentType( ContentTypeName.folder() ).
+            parent( ContentPath.from( REPO_NAME ) ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
@@ -120,10 +120,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         given:
         String name = NameHelper.uniqueName( "archive" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "archive" ).
-            withContentType( ContentTypeName.archiveMedia() ).
-            withParent( ContentPath.from( REPO_NAME ) ).
+            name( name ).
+            displayName( "archive" ).
+            contentType( ContentTypeName.archiveMedia() ).
+            parent( ContentPath.from( REPO_NAME ) ).
             build();
 
         contentBrowsePanel.expandContent( content.getParent() );
@@ -143,10 +143,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         given:
         String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "folder" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.from( REPO_NAME ) ).
+            name( name ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.from( REPO_NAME ) ).
             build()
 
         contentBrowsePanel.expandContent( content.getParent() )
@@ -166,10 +166,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content contentToEdit = Content.builder().
-            withParent( ContentPath.from( REPO_NAME ) ).
-            withName( "editname" ).
-            withDisplayName( "editnametest" ).
-            withContentType( ContentTypeName.structured() ).
+            parent( ContentPath.from( REPO_NAME ) ).
+            name( "editname" ).
+            displayName( "editnametest" ).
+            contentType( ContentTypeName.structured() ).
             build();
         contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() );
 
@@ -197,10 +197,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content contentToEdit = Content.builder().
-            withParent( ContentPath.from( REPO_NAME ) ).
-            withName( "editdisplayname" ).
-            withDisplayName( "editdisplayname" ).
-            withContentType( ContentTypeName.structured() ).
+            parent( ContentPath.from( REPO_NAME ) ).
+            name( "editdisplayname" ).
+            displayName( "editdisplayname" ).
+            contentType( ContentTypeName.structured() ).
             build()
         contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() )
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
@@ -225,10 +225,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         String newDisplayName = NameHelper.uniqueName( "displaynamechanged" )
         return Content.builder().
-            withName( source.getName() ).
-            withDisplayName( newDisplayName ).
-            withParent( source.getParent() ).
-            withContentType( source.getContentTypeName() ).
+            name( source.getName() ).
+            displayName( newDisplayName ).
+            parent( source.getParent() ).
+            contentType( source.getContentTypeName() ).
             build()
     }
 
@@ -236,10 +236,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         String newName = NameHelper.uniqueName( "newname" )
         return Content.builder().
-            withName( newName ).
-            withDisplayName( source.getDisplayName() ).
-            withParent( source.getParent() ).
-            withContentType( source.getContentTypeName() ).
+            name( newName ).
+            displayName( source.getDisplayName() ).
+            parent( source.getParent() ).
+            contentType( source.getContentTypeName() ).
             build()
 
     }

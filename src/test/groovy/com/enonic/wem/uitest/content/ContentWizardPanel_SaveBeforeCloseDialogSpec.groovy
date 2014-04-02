@@ -31,10 +31,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).
-            withDisplayName( "archive" ).
-            withContentType( ContentTypeName.archiveMedia() ).
-            withParent( ContentPath.ROOT ).build();
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "archive" ).
+            contentType( ContentTypeName.archiveMedia() ).
+            parent( ContentPath.ROOT ).build();
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
 
@@ -51,10 +51,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).
-            withDisplayName( "archive" ).
-            withContentType( ContentTypeName.archiveMedia() ).
-            withParent( ContentPath.ROOT ).
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "archive" ).
+            contentType( ContentTypeName.archiveMedia() ).
+            parent( ContentPath.ROOT ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
@@ -75,10 +75,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).
-            withDisplayName( "archive" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.archiveMedia() ).
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "archive" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.archiveMedia() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().
@@ -101,10 +101,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).
-            withDisplayName( "archive" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.archiveMedia() ).
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "archive" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.archiveMedia() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
@@ -126,10 +126,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).
-            withDisplayName( "archive" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.archiveMedia() ).
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "archive" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.archiveMedia() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(

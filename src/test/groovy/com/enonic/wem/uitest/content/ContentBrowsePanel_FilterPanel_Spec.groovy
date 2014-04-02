@@ -78,10 +78,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         given:
         String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "folder" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.folder() ).
+            name( name ).
+            displayName( "folder" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" );
@@ -101,10 +101,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         given:
         String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "folder" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.folder() ).
+            name( name ).
+            displayName( "folder" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
             build();
         int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
@@ -127,10 +127,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         given:
         String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "folder" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.ROOT ).
+            name( name ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
@@ -156,10 +156,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         given:
         String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "folder" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.ROOT ).
+            name( name ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
             build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
@@ -194,10 +194,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         given:
         String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "folder" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.ROOT ).build()
+            name( name ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(
             content ).save().close();
@@ -230,10 +230,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         given:
         String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            withName( name ).
-            withDisplayName( "folder" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.ROOT ).build()
+            name( name ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).build()
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(
             content ).save().close()

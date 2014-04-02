@@ -32,10 +32,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "deletecontent" ) ).
-            withDisplayName( "contenttodelete" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.ROOT ).
+            name( NameHelper.uniqueName( "deletecontent" ) ).
+            displayName( "contenttodelete" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
 
@@ -52,20 +52,20 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         Content content1 = Content.builder().
-            withName( NameHelper.uniqueName( "deletecontent" ) ).
-            withDisplayName( "contenttodelete" ).
-            withParent( ContentPath.ROOT ).
-            withContentType( ContentTypeName.folder() ).
+            name( NameHelper.uniqueName( "deletecontent" ) ).
+            displayName( "contenttodelete" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close()
 
 
         Content content2 = Content.builder().
-            withName( NameHelper.uniqueName( "deletecontent" ) ).
-            withDisplayName( "contenttodelete" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.ROOT ).
+            name( NameHelper.uniqueName( "deletecontent" ) ).
+            displayName( "contenttodelete" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
@@ -89,10 +89,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "deletecontent" ) ).
-            withDisplayName( "contenttodelete" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.ROOT ).
+            name( NameHelper.uniqueName( "deletecontent" ) ).
+            displayName( "contenttodelete" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
@@ -114,19 +114,19 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         Content parent = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( NameHelper.uniqueName( "parent" ) ).
-            withDisplayName( "parent" ).
-            withContentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
+            name( NameHelper.uniqueName( "parent" ) ).
+            displayName( "parent" ).
+            contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         Content contentToDelete = Content.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).
-            withDisplayName( "delete content beneath parent" ).
-            withParent( ContentPath.from( parent.getName() ) ).
-            withContentType( ContentTypeName.archiveMedia() ).
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "delete content beneath parent" ).
+            parent( ContentPath.from( parent.getName() ) ).
+            contentType( ContentTypeName.archiveMedia() ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData(
@@ -148,19 +148,19 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         Content parent = Content.builder().
-            withParent( ContentPath.ROOT ).
-            withName( NameHelper.uniqueName( "parent" ) ).
-            withDisplayName( "expandicon-test" ).
-            withContentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
+            name( NameHelper.uniqueName( "parent" ) ).
+            displayName( "expandicon-test" ).
+            contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close()
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         Content content = Content.builder().
-            withName( NameHelper.uniqueName( "archive" ) ).
-            withDisplayName( "archive" ).
-            withContentType( ContentTypeName.folder() ).
-            withParent( ContentPath.from( parent.getName() ) ).
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "archive" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.from( parent.getName() ) ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close()

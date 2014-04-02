@@ -86,13 +86,13 @@ public class Content
 
         private ContentPath parent;
 
-        public Builder withName( String name )
+        public Builder name( String name )
         {
             this.name = name;
             return this;
         }
 
-        public Builder withDisplayName( String displayName )
+        public Builder displayName( String displayName )
         {
             this.displayName = displayName;
             return this;
@@ -104,19 +104,19 @@ public class Content
             return this;
         }
 
-        public Builder withParent( ContentPath contentPath )
+        public Builder parent( ContentPath contentPath )
         {
             this.parent = contentPath;
             return this;
         }
 
-        public Builder withContentType( String contentTypeName )
+        public Builder contentType( String contentTypeName )
         {
             this.contentTypeName = contentTypeName;
             return this;
         }
 
-        public Builder withContentType( ContentTypeName contentTypeName )
+        public Builder contentType( ContentTypeName contentTypeName )
         {
             this.contentTypeName = contentTypeName.toString();
             return this;
