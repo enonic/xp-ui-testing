@@ -88,7 +88,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel typeData( BaseAbstractContent content )
     {
-        sleep( 500 );
+        //sleep( 500 );
         // 1. type a data: 'name' and 'Display Name'.
         waitElementClickable( By.name( "displayName" ), 2 );
         getLogger().info( "types displayName: " + content.getDisplayName() );

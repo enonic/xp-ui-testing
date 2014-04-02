@@ -57,15 +57,16 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withDisplayName( "datacontent" ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() )
-        wizard.typeData( rootContent );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
+            rootContent.getContentTypeName() ).waitUntilWizardOpened().typeData( rootContent )
+
 
         when:
-        wizard.save();
-        contentBrowsePanel.goToAppHome();
+        wizard.save()
+        contentBrowsePanel.goToAppHome()
 
         then:
-        contentBrowsePanel.exists( rootContent.getPath() );
+        contentBrowsePanel.exists( rootContent.getPath() )
     }
 
 
@@ -76,7 +77,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             withParent( ContentPath.from( REPO_NAME ) ).
             withName( NameHelper.uniqueName( "folder" ) ).
             withDisplayName( "folder" ).
-            build();
+            build()
 
         contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );

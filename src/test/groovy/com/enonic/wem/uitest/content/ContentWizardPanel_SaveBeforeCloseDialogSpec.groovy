@@ -55,7 +55,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             withDisplayName( "archive" ).
             withParent( ContentPath.ROOT ).build();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).typeData( content ).save()
+            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
         content.setDisplayName( "chngedname" )
         wizard.typeData( content )
 
@@ -74,7 +74,8 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         BaseAbstractContent content = ArchiveContent.builder().
             withName( NameHelper.uniqueName( "archive" ) ).withDisplayName( "archive" ).withParent( ContentPath.ROOT ).build()
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).typeData( content ).save()
+            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
+
         content.setName( NameHelper.uniqueName( "newarchive" ) )
         wizard.typeData( content ).close()
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )
@@ -94,7 +95,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         BaseAbstractContent content = ArchiveContent.builder().
             withName( NameHelper.uniqueName( "archive" ) ).withDisplayName( "archive" ).withParent( ContentPath.ROOT ).build()
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).typeData( content ).save()
+            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
         content.setName( NameHelper.uniqueName( "newarchive" ) )
         wizard.typeData( content ).close()
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )
@@ -114,7 +115,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         BaseAbstractContent content = ArchiveContent.builder().
             withName( NameHelper.uniqueName( "archive" ) ).withDisplayName( "archive" ).withParent( ContentPath.ROOT ).build()
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).typeData( content ).save()
+            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
         content.setName( NameHelper.uniqueName( "newarchive" ) )
         wizard.typeData( content ).close()
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )

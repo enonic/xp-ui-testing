@@ -69,5 +69,4 @@ public class RelationshipWizardPanel
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
     }
 
-
 }

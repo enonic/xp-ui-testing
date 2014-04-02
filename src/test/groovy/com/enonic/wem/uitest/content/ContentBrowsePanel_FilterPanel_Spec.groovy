@@ -188,7 +188,9 @@ class ContentBrowsePanel_FilterPanel_Spec
             withDisplayName( "folder" ).
             withParent( ContentPath.ROOT ).build()
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(
+            content ).save().close();
+        contentBrowsePanel.waitsForSpinnerNotVisible()
         contentBrowsePanel.waituntilPageLoaded( 1 );
         Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
 
@@ -221,7 +223,9 @@ class ContentBrowsePanel_FilterPanel_Spec
             withDisplayName( "folder" ).
             withParent( ContentPath.ROOT ).build()
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(
+            content ).save().close()
+        contentBrowsePanel.waitsForSpinnerNotVisible()
         contentBrowsePanel.waituntilPageLoaded( 1 );
         String label = filterPanel.selectEntryInContentTypesFilter( "Folder" )
         Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );

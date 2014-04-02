@@ -60,10 +60,13 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             withName( NameHelper.uniqueName( "deletecontent" ) ).
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close()
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
+            content2 ).save().close()
         List<BaseAbstractContent> contentList = new ArrayList<>()
         contentList.add( content1 )
         contentList.add( content2 )
+        contentBrowsePanel.waitsForSpinnerNotVisible()
+        contentBrowsePanel.waituntilPageLoaded( 2 )
         contentBrowsePanel.doClearSelection()
 
         when:
@@ -82,11 +85,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             withDisplayName( "contenttodelete" ).
             withParent( ContentPath.ROOT ).build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
+            content ).save().close()
         List<BaseAbstractContent> contents = new ArrayList<>()
         contents.add( content )
-        ContentBrowsePanel browsePanel = new ContentBrowsePanel( getTestSession() )
-        browsePanel.doClearSelection()
+        contentBrowsePanel.waitsForSpinnerNotVisible()
+        contentBrowsePanel.doClearSelection()
 
         when:
         contentBrowsePanel.selectRowByCheckbox( content.getPath() )

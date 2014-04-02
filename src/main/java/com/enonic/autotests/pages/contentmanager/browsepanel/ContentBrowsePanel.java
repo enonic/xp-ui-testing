@@ -83,6 +83,8 @@ public class ContentBrowsePanel
 
     private ContentBrowseFilterPanel filterPanel;
 
+    private ItemsSelectionPanel itemsSelectionPanel;
+
     /**
      * The constructor.
      *
@@ -119,9 +121,19 @@ public class ContentBrowsePanel
         return filterPanel;
     }
 
+    public ItemsSelectionPanel getItemSelectionPanel()
+    {
+        if ( itemsSelectionPanel == null )
+        {
+            itemsSelectionPanel = new ItemsSelectionPanel( getSession() );
+        }
+        return itemsSelectionPanel;
+    }
+
     public ContentBrowsePanel goToAppHome()
     {
         contentManagerButton.click();
+        sleep( 1000 );
         waituntilPageLoaded( Application.IMPLICITLY_WAIT );
         return this;
     }
@@ -211,7 +223,11 @@ public class ContentBrowsePanel
         waitAndCheckContent( contents );
         for ( BaseAbstractContent content : contents )
         {
-            selectCheckbox( content );
+            if ( !isRowSelected( content.getPath().toString() ) )
+            {
+                clickCheckbox( content );
+            }
+
         }
         return this;
     }
@@ -219,7 +235,20 @@ public class ContentBrowsePanel
     public ContentBrowsePanel selectContentInTable( BaseAbstractContent content )
     {
         waitAndCheckContent( content.getPath() );
-        selectCheckbox( content );
+        if ( !isRowSelected( content.getPath().toString() ) )
+        {
+            clickCheckbox( content );
+        }
+        return this;
+    }
+
+    public ContentBrowsePanel deSelectContentInTable( BaseAbstractContent content )
+    {
+        waitAndCheckContent( content.getPath() );
+        if ( isRowSelected( content.getPath().toString() ) )
+        {
+            clickCheckbox( content );
+        }
         return this;
     }
 
@@ -247,7 +276,7 @@ public class ContentBrowsePanel
      *
      * @param content
      */
-    private ContentBrowsePanel selectCheckbox( BaseAbstractContent content )
+    private ContentBrowsePanel clickCheckbox( BaseAbstractContent content )
     {
         String fullName = content.getPath().toString();
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, fullName );
@@ -405,7 +434,7 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-        sleep( 1000 );
+        // sleep( 2000 );//mac mini issue
         boolean isGridLoaded = waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {

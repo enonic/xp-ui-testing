@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class BrowsePanel
     extends Application
 {
@@ -187,11 +189,24 @@ public class BrowsePanel
         return number;
     }
 
+    public boolean isRowSelected( String contentName )
+    {
+        List<WebElement> rows =
+            getSession().getDriver().findElements( By.xpath( String.format( ( TD_CONTENT_NAME + "/parent::tr" ), contentName ) ) );
+        if ( rows.size() == 0 )
+        {
+            throw new TestFrameworkException( "row with content was not found, content name is " + contentName );
+        }
+        return waitAndCheckAttrValue( rows.get( 0 ), "class", "x-grid-row-selected", 1 );
+
+    }
+
     /**
      * Clicks by 'Clear Selection' and removes row-selections.
      */
     public void doClearSelection()
     {
+        sleep( 500 );//mac mimi issue
         boolean isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
         if ( !isLeLinkVisible )
         {

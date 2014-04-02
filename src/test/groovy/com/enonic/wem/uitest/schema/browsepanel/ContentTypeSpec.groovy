@@ -4,7 +4,7 @@ import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
 import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.SleepHelper;
+import com.enonic.autotests.utils.SleepHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.FolderContentTypeCfg
@@ -32,8 +32,9 @@ class ContentTypeSpec
             folderCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData( ctype ).save().close()
-		schemaBrowsePanel.waitsForSpinnerNotVisible()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData(
+            ctype ).save().close()
+        schemaBrowsePanel.waitsForSpinnerNotVisible()
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
 
         then:
@@ -55,7 +56,7 @@ class ContentTypeSpec
                                                                                                                 ctype.getDisplayNameFromConfig() ).clickToolbarEdit().waitUntilWizardOpened().typeData(
             newContentType ).save().close()
         schemaBrowsePanel.waitsForSpinnerNotVisible()
-		SleepHelper.sleep(2000)
+        SleepHelper.sleep( 2000 )
 
         then:
         schemaBrowsePanel.exists( newContentType )
@@ -89,7 +90,8 @@ class ContentTypeSpec
             textLineCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData( ctype ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData(
+            ctype ).save().close()
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
 
         then:

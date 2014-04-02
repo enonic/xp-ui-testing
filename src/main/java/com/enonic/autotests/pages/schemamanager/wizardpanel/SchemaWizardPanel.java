@@ -9,12 +9,22 @@ public abstract class SchemaWizardPanel<T>
     extends WizardPanel<T>
 {
 
+    /**
+     * The constructor.
+     *
+     * @param session
+     */
     public SchemaWizardPanel( TestSession session )
     {
         super( session );
     }
 
 
+    /**
+     * Find by ID the configuration text area and set value to CodeMirror java-script component.
+     *
+     * @param cfg content type configuration string.
+     */
     public void setConfiguration( String cfg )
     {
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript(
