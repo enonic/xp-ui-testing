@@ -42,8 +42,8 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: "requiredTextLine" ) << '';
-        $( "input", name: "unrequiredTextLine" ) << '';
+        $( "input", name: contains("requiredTextLine") ) << '';
+        $( "input", name: contains("unrequiredTextLine") ) << '';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 };
@@ -57,7 +57,7 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME )
 
         when:
-        $( "input", name: "requiredTextLine" ) << 'required line';
+        $( "input", name: contains("requiredTextLine") ) << 'required line';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 };
@@ -71,8 +71,8 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: "requiredTextLine" ) << 'required line';
-        $( "input", name: "unrequiredTextLine" ) << 'unrequired line';
+        $( "input", name: contains("requiredTextLine") ) << 'required line';
+        $( "input", name: contains("unrequiredTextLine") ) << 'unrequired line';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 };
@@ -86,7 +86,7 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: "unrequiredTextLine" ) << 'unrequired line';
+        $( "input", name: contains("unrequiredTextLine") ) << 'unrequired line';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 };

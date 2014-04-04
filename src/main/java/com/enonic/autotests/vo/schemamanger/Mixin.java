@@ -34,10 +34,12 @@ public class Mixin
     public static class Builder
         extends Schema.Builder<Builder>
     {
+        /**
+         * Constructor
+         */
         private Builder()
         {
             super();
-
         }
 
         private Builder( final Mixin source )
