@@ -5,6 +5,7 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.SchemaCfgHelper
 import com.enonic.autotests.utils.SleepHelper
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.FolderContentTypeCfg
@@ -54,7 +55,7 @@ class ContentTypeSpec
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
                                                                                                                 ctype.getDisplayNameFromConfig() ).
             clickToolbarEdit().typeData( newContentType ).save().close();
-        SleepHelper.sleep( 1000 );
+        TestUtils.saveScreenshot(getSession(), newContentType.getName());
 
         then:
         schemaBrowsePanel.exists( newContentType );
