@@ -71,6 +71,7 @@ public class ContentTypeWizardPanel
     public void close()
     {
         closeButton.click();
+        waitsForSpinnerNotVisible();
     }
 
 
@@ -83,5 +84,12 @@ public class ContentTypeWizardPanel
         getLogger().info( "set contenttype configuration " );
         setConfiguration( contentType.getConfigData().trim() );
         return this;
+    }
+
+    @Override
+    public boolean isOpened()
+    {
+        return toolbarSaveButton.isDisplayed();
+
     }
 }

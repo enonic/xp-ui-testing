@@ -7,10 +7,10 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.vo.schemamanger.ContentType;
+import com.enonic.autotests.vo.schemamanger.RelationshipType;
 
 public class RelationshipWizardPanel
-    extends SchemaWizardPanel<ContentType>
+    extends SchemaWizardPanel<RelationshipType>
 {
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.RelationshipTypeWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
@@ -36,13 +36,13 @@ public class RelationshipWizardPanel
 
     }
 
-    public RelationshipWizardPanel typeData( ContentType contentType )
+    public RelationshipWizardPanel typeData( RelationshipType relationship )
     {
         // 1. type a data: 'name' and 'Display Name'.
-        clearAndType( nameInput, contentType.getName() );
+        clearAndType( nameInput, relationship.getName() );
         //2. type the XML-config data:
         getLogger().info( "set contenttype configuration " );
-        setConfiguration( contentType.getConfigData().trim() );
+        setConfiguration( relationship.getConfigData().trim() );
         return this;
     }
 
@@ -67,6 +67,13 @@ public class RelationshipWizardPanel
     public boolean isEnabledSaveButton()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
+    }
+
+    @Override
+    public boolean isOpened()
+    {
+        return toolbarSaveButton.isDisplayed();
+
     }
 
 }

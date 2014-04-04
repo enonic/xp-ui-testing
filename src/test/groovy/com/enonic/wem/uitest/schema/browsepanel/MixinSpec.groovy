@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.schemamanger.ContentType
+import com.enonic.autotests.utils.SchemaCfgHelper
+import com.enonic.autotests.vo.schemamanger.Mixin
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.MixinAddress
 import spock.lang.Shared
@@ -15,10 +15,10 @@ class MixinSpec
     extends BaseGebSpec
 {
     @Shared
-    String MIXIN_KEY = "mixin"
+    String MIXIN_KEY = "mixin";
 
     @Shared
-    SchemaBrowsePanel schemaBrowsePanel
+    SchemaBrowsePanel schemaBrowsePanel;
 
     def setup()
     {
@@ -31,15 +31,14 @@ class MixinSpec
     {
         given:
         String mixinCFG = MixinAddress.CFG
-        ContentType mixin = ContentType.with().name( NameHelper.uniqueName( "addressmixin" ) ).schemaType( SchemaType.MIXIN ).configuration(
-            mixinCFG ).build();
+        Mixin mixin = Mixin.newMixin().name( NameHelper.uniqueName( "addressmixin" ) ).configData( mixinCFG ).build();
         getTestSession().put( MIXIN_KEY, mixin );
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() ).typeData( mixin ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( mixin.getSchemaKindUI().getValue() ).typeData( mixin ).save().close();
 
         then:
-        schemaBrowsePanel.exists( mixin )
+        schemaBrowsePanel.exists( mixin );
 
     }
 
@@ -47,19 +46,16 @@ class MixinSpec
     def "GIVEN BrowsePanel and existing Mixin  WHEN Mixin edited, name changed  Then the Mixin with new name should be listed in the table"()
     {
         given:
-        ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY );
-        ContentType newMixin = mixinToEdit.cloneContentType();
-        String newName = NameHelper.uniqueName( "mixinrenamed" );
-        newMixin.setName( newName )
+        Mixin mixinToEdit = (Mixin) getTestSession().get( MIXIN_KEY );
+        Mixin newMixin = cloneMixinWithNewName( mixinToEdit );
 
         when:
-        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(),
-                                                    mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
-            newMixin ).save().close()
-        mixinToEdit.setName( newName )
+        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(), mixinToEdit.getDisplayNameFromConfig() ).
+            clickToolbarEdit().typeData( newMixin ).save().close();
+        getTestSession().put( MIXIN_KEY, newMixin );
 
         then:
-        schemaBrowsePanel.exists( newMixin )
+        schemaBrowsePanel.exists( newMixin );
 
     }
 
@@ -68,33 +64,42 @@ class MixinSpec
     {
         given:
 
-        ContentType mixinToEdit = (ContentType) getTestSession().get( MIXIN_KEY )
-        ContentType newMixin = mixinToEdit.cloneContentType()
-        String newDisplayName = "change display name test"
-        // set a new display name:
-        newMixin.setDisplayNameInConfig( newDisplayName )
+        Mixin mixinToEdit = (Mixin) getTestSession().get( MIXIN_KEY );
+        Mixin newMixin = cloneMixinWithNewDisplayName( mixinToEdit );
 
         when:
-        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(),
-                                                    mixinToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().typeData(
-            newMixin ).save().close()
-        mixinToEdit.setDisplayNameInConfig( newDisplayName )
+        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(), mixinToEdit.getDisplayNameFromConfig() ).
+            clickToolbarEdit().typeData( newMixin ).save().close();
+        getTestSession().put( MIXIN_KEY, newMixin );
 
         then:
-        schemaBrowsePanel.exists( newMixin )
+        schemaBrowsePanel.exists( newMixin );
     }
 
     def "GIVEN BrowsePanel and existing Mixin WHEN Mixin selected and clicking Delete Then Mixin is removed from list"()
 
     {
         given:
-        ContentType mixinToDelete = (ContentType) getTestSession().get( MIXIN_KEY )
+        Mixin mixinToDelete = (Mixin) getTestSession().get( MIXIN_KEY );
 
         when:
         schemaBrowsePanel.selectRowWithContentType( mixinToDelete.getName(),
-                                                    mixinToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()
+                                                    mixinToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete();
 
         then:
-        !schemaBrowsePanel.exists( mixinToDelete )
+        !schemaBrowsePanel.exists( mixinToDelete );
+    }
+
+    Mixin cloneMixinWithNewDisplayName( Mixin source )
+    {
+        String newDisplayName = NameHelper.uniqueName( "newdisplayname" );
+        String newconfigData = SchemaCfgHelper.changeDisplayName( newDisplayName, source.getConfigData() );
+        return Mixin.newMixin().name( source.getName() ).configData( newconfigData ).build();
+    }
+
+    Mixin cloneMixinWithNewName( Mixin source )
+    {
+        String newName = NameHelper.uniqueName( "newname" );
+        return Mixin.newMixin().name( newName ).configData( source.getConfigData() ).build();
     }
 }

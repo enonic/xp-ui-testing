@@ -10,7 +10,7 @@ class LoginSpec
         go "admin"
 
         then:
-        $( 'button.login-button' ).classes().contains( 'disabled' )
+        $( 'button.login-button' ).classes().contains( 'disabled' );
     }
 
     def "Given login page When both username and password fields have value Then Login Button must be enabled"()
@@ -19,9 +19,9 @@ class LoginSpec
         go "admin"
 
         when:
-        $( 'input.form-item', 0 ) << 'user'
-        $( 'input.form-item', 1 ) << 'password'
-        report "login page, username is 'user', password is 'password'"
+        $( 'input.form-item', 0 ) << 'user';
+        $( 'input.form-item', 1 ) << 'password';
+
         then:
         !$( 'button.login-button' ).classes().contains( 'disabled' )
     }
@@ -32,10 +32,10 @@ class LoginSpec
         go "admin"
 
         when:
-        $( 'input.form-item', 0 ) << 'user'
-        report "login page, username is 'user', password is empty"
+        $( 'input.form-item', 0 ) << 'user';
+        report "login page, username is 'user', password is empty";
         then:
-        $( 'button.login-button' ).classes().contains( 'disabled' )
+        $( 'button.login-button' ).classes().contains( 'disabled' );
     }
 
     def "Given login page When only password field have value Then Login Button must be disabled"()
@@ -44,10 +44,10 @@ class LoginSpec
         go "admin"
 
         when:
-        $( 'input.form-item', 1 ) << 'password'
-        report "login page, username is empty, password is 'password'"
+        $( 'input.form-item', 1 ) << 'password';
+        report "login page, username is empty, password is 'password'";
         then:
-        $( 'button.login-button' ).classes().contains( 'disabled' )
+        $( 'button.login-button' ).classes().contains( 'disabled' );
     }
 
 }

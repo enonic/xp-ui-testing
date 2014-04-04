@@ -348,8 +348,7 @@ public class ContentBrowsePanel
             TestUtils.saveScreenshot( getSession() );
             throw new TestFrameworkException(
                 "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContentPath +
-                    " was not found!"
-            );
+                    " was not found!" );
         }
         WebElement checkboxElement = getDriver().findElement( By.xpath( spaceCheckBoxXpath ) );
 

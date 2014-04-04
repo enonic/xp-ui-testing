@@ -9,8 +9,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
-
 /**
  * Content Manager application/add new content/select content type
  */
@@ -60,7 +58,7 @@ public class NewContentDialog
 
         TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-        sleep( 500 );
+        wizard.waitUntilWizardOpened();//02.04
         return wizard;
 
     }

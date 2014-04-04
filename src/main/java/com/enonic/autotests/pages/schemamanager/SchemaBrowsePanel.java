@@ -16,7 +16,7 @@ import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.RelationshipWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel;
 import com.enonic.autotests.utils.WaitHelper;
-import com.enonic.autotests.vo.schemamanger.ContentType;
+import com.enonic.autotests.vo.schemamanger.Schema;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -39,7 +39,7 @@ public class SchemaBrowsePanel
     private final String DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
 
-    private SchemaType selectedSchemaType;
+    private SchemaKindUI selectedSchemaType;
 
 
     @FindBy(
@@ -165,14 +165,14 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Clicks on 'New' button on the toolbar and opens 'NewContentDialog'.
+     * Clicks on 'New' button on the toolbar and opens 'NewSchemaDialog'.
      *
-     * @return {@link NewContentDialog}  instance.
+     * @return {@link NewSchemaDialog}  instance.
      */
-    public NewContentDialog clickToolbarNew()
+    public NewSchemaDialog clickToolbarNew()
     {
         newButton.click();
-        NewContentDialog selectDialog = new NewContentDialog( getSession() );
+        NewSchemaDialog selectDialog = new NewSchemaDialog( getSession() );
         boolean isOpened = selectDialog.verifyIsOpened();
         if ( !isOpened )
         {
@@ -217,7 +217,7 @@ public class SchemaBrowsePanel
      * @param contentType
      * @return
      */
-    public boolean exists( ContentType contentType )
+    public boolean exists( Schema contentType )
     {
         String contentTypeXpath =
             String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
@@ -236,7 +236,7 @@ public class SchemaBrowsePanel
         }
     }
 
-    public SchemaType getSelectedSchemaType()
+    public SchemaKindUI getSelectedSchemaType()
     {
         return selectedSchemaType;
     }
@@ -254,16 +254,16 @@ public class SchemaBrowsePanel
         String srcAttr = elems.get( 0 ).getAttribute( "src" );
         if ( srcAttr.contains( "ContentType" ) )
         {
-            this.selectedSchemaType = SchemaType.CONTENT_TYPE;
+            this.selectedSchemaType = SchemaKindUI.CONTENT_TYPE;
         }
         else if ( srcAttr.contains( "RelationshipType" ) )
         {
-            this.selectedSchemaType = SchemaType.RELATIONSHIP_TYPE;
+            this.selectedSchemaType = SchemaKindUI.RELATIONSHIP_TYPE;
 
         }
         else if ( srcAttr.contains( "Mixin" ) )
         {
-            this.selectedSchemaType = SchemaType.MIXIN;
+            this.selectedSchemaType = SchemaKindUI.MIXIN;
         }
     }
 }

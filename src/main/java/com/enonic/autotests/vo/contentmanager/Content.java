@@ -7,17 +7,17 @@ import com.enonic.wem.api.schema.content.ContentTypeName;
 
 public class Content
 {
-    private ContentPath parent;
+    private final ContentPath parent;
 
-    private String name;
+    private final String name;
 
-    private ContentPath path;
+    private final ContentPath path;
 
-    private String displayName;
+    private final String displayName;
 
-    private String contentTypeName;
+    private final String contentTypeName;
 
-    private ContentData data;
+    private final ContentData data;
 
     protected Content( final Builder builder )
     {
@@ -46,11 +46,6 @@ public class Content
         return name;
     }
 
-    public void setName( String name )
-    {
-        this.name = name;
-    }
-
     public ContentPath getPath()
     {
         return path;
@@ -61,19 +56,9 @@ public class Content
         return displayName;
     }
 
-    public void setDisplayName( String displayName )
-    {
-        this.displayName = displayName;
-    }
-
     public String getContentTypeName()
     {
         return contentTypeName;
-    }
-
-    public void setContentTypeName( String contentTypeName )
-    {
-        this.contentTypeName = contentTypeName;
     }
 
     public ContentData getData()

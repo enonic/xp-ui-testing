@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.pages.schemamanager.SchemaType
+import com.enonic.autotests.pages.schemamanager.SchemaKindUI
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
@@ -16,7 +16,7 @@ class ContentWizardPanel_ValidationSpec
     extends BaseGebSpec
 {
     @Shared
-    String CTYPE_NAME = "twotextline"
+    String CTYPE_NAME = "twotextline";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -24,31 +24,29 @@ class ContentWizardPanel_ValidationSpec
     def setup()
     {
         go "admin"
-
     }
 
     def "create a contenttype with two textline"()
     {
         given:
         String twoTextlineCFG = TwoTextLineContentTypeCfg.CFG
-        ContentType ctype = ContentType.with().name( CTYPE_NAME ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
-            twoTextlineCFG ).build();
+        ContentType ctype = ContentType.newContentType().name( CTYPE_NAME ).configData( twoTextlineCFG ).build();
         SchemaBrowsePanel schemaBrowsePanel = NavigatorHelper.openSchemaManager( getTestSession() );
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaKindUI.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close();
     }
 
     def "GIVEN a ContentType with two TextLine Inputs AND one is required WHEN no inputs are filled out THEN Publish-button is disabled"()
     {
         given:
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: "requiredTextLine" ) << ''
-        $( "input", name: "unrequiredTextLine" ) << ''
+        $( "input", name: "requiredTextLine" ) << '';
+        $( "input", name: "unrequiredTextLine" ) << '';
 
         then:
-        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 }
+        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 };
     }
 
     @Ignore
@@ -56,13 +54,13 @@ class ContentWizardPanel_ValidationSpec
     {
         given:
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME )
 
         when:
-        $( "input", name: "requiredTextLine" ) << 'required line'
+        $( "input", name: "requiredTextLine" ) << 'required line';
 
         then:
-        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 }
+        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 };
     }
 
 
@@ -70,14 +68,14 @@ class ContentWizardPanel_ValidationSpec
     {
         given:
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: "requiredTextLine" ) << 'required line'
-        $( "input", name: "unrequiredTextLine" ) << 'unrequired line'
+        $( "input", name: "requiredTextLine" ) << 'required line';
+        $( "input", name: "unrequiredTextLine" ) << 'unrequired line';
 
         then:
-        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 }
+        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 };
 
     }
 
@@ -85,13 +83,13 @@ class ContentWizardPanel_ValidationSpec
     {
         given:
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME ).waitUntilWizardOpened()
+        contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: "unrequiredTextLine" ) << 'unrequired line'
+        $( "input", name: "unrequiredTextLine" ) << 'unrequired line';
 
         then:
-        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 }
+        waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 };
     }
 
 

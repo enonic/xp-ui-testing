@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.schema.wizards
 
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.pages.schemamanager.SchemaType
+import com.enonic.autotests.pages.schemamanager.SchemaKindUI
 import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
@@ -11,7 +11,7 @@ class MixinWizardSpec
     extends BaseGebSpec
 {
     @Shared
-    SchemaBrowsePanel schemaBrowsePanel
+    SchemaBrowsePanel schemaBrowsePanel;
 
     def setup()
     {
@@ -24,7 +24,7 @@ class MixinWizardSpec
         given:
 
         String longName25chars = "longnamelongnamelongnam25";
-        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() )
+        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaKindUI.MIXIN.getValue() )
         wizard.doTypeName( longName25chars );
         int width25 = wizard.getInputNameWidth();
         String longName27chars = "longnamelongnamelongnamqq27";
@@ -33,14 +33,14 @@ class MixinWizardSpec
         wizard.doTypeName( longName27chars );
 
         then:
-        wizard.getInputNameWidth() > width25
+        wizard.getInputNameWidth() > width25;
     }
 
     def "Given schema app, mixin-wizard opened When typing a name Then name and title in AppBarTabMenu updated concurrently"()
     {
         given:
         String mixinName = "test";
-        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.MIXIN.getValue() )
+        MixinWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaKindUI.MIXIN.getValue() );
         wizard.doTypeName( mixinName );
         String actualTitle = wizard.getAppBarTabMenuTitle();
 
@@ -51,6 +51,6 @@ class MixinWizardSpec
         String newActualTitle = wizard.getAppBarTabMenuTitle();
 
         then:
-        mixinName.equals( actualTitle ) && mixinNameUpdated.equals( newActualTitle )
+        mixinName.equals( actualTitle ) && mixinNameUpdated.equals( newActualTitle );
     }
 }

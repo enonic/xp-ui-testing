@@ -9,7 +9,6 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
@@ -21,37 +20,37 @@ class ContentBrowsePanel_FilterPanel_Spec
 {
 
     @Shared
-    ContentBrowsePanel contentBrowsePanel
+    ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    ContentBrowseFilterPanel filterPanel
+    ContentBrowseFilterPanel filterPanel;
 
     def setup()
     {
         go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
-        filterPanel = contentBrowsePanel.getFilterPanel()
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        filterPanel = contentBrowsePanel.getFilterPanel();
     }
 
     def "GIVEN No selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
     {
         when:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
-        TestUtils.saveScreenshot( getTestSession() )
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        TestUtils.saveScreenshot( getTestSession() );
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == TestUtils.getNumberFromFilterLabel( label )
+        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == TestUtils.getNumberFromFilterLabel( label );
     }
 
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
 
         when:
-        filterPanel.clickByCleanFilter()
+        filterPanel.clickByCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "CleanFilter1" )
+        TestUtils.saveScreenshot( getTestSession(), "CleanFilter1" );
 
         then:
         filterPanel.waitForClearFilterLinkNotvisible();
@@ -61,15 +60,15 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should disappear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
 
         when:
-        contentBrowsePanel.getFilterPanel().clickByCleanFilter()
+        contentBrowsePanel.getFilterPanel().clickByCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "CleanFilter2" )
+        TestUtils.saveScreenshot( getTestSession(), "CleanFilter2" );
 
         then:
-        !contentBrowsePanel.getFilterPanel().isAnySelectionPresent()
+        !contentBrowsePanel.getFilterPanel().isAnySelectionPresent();
     }
 
 
@@ -88,12 +87,12 @@ class ContentBrowsePanel_FilterPanel_Spec
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
 
         when:
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save()
-        contentBrowsePanel.goToAppHome()
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save();
+        contentBrowsePanel.goToAppHome();
 
         then:
         filterPanel.getNumberFilteredByContenttype( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
-            lastModifiedBeforeAdding == 1
+            lastModifiedBeforeAdding == 1;
     }
 
     def "GIVEN creating new Content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
@@ -106,18 +105,17 @@ class ContentBrowsePanel_FilterPanel_Spec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.folder() ).
             build();
-        int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" )
-        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" )
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData(
-            content )
+        int beforeAdding = filterPanel.getNumberFilteredByContenttype( "Folder" );
+        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).
+            typeData( content );
 
         when:
         wizard.save().close();
-        contentBrowsePanel.waitsForSpinnerNotVisible()
 
         then:
         filterPanel.getNumberFilteredByContenttype( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
-            lastModifiedBeforeAdding == 1
+            lastModifiedBeforeAdding == 1;
     }
 
     //This test ignored due the application BUG
@@ -134,20 +132,19 @@ class ContentBrowsePanel_FilterPanel_Spec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-        contentBrowsePanel.waitsForSpinnerNotVisible()
         int beforeRemoving = filterPanel.getNumberFilteredByContenttype( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
-        List<Content> contentList = new ArrayList()
-        contentList.add( content )
+        List<Content> contentList = new ArrayList();
+        contentList.add( content );
 
         when:
-        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete()
-        contentBrowsePanel.waitsForSpinnerNotVisible()
+        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.waitsForSpinnerNotVisible();
 
 
         then:
         beforeRemoving - filterPanel.getNumberFilteredByContenttype( "Folder" ) == 1 && lastModifiedBeforeRemoving -
-            filterPanel.getLastModifiedCount( "hour" ) == 1
+            filterPanel.getLastModifiedCount( "hour" ) == 1;
     }
 
 
@@ -160,19 +157,19 @@ class ContentBrowsePanel_FilterPanel_Spec
             displayName( "folder" ).
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
-            build()
+            build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-        contentBrowsePanel.waitsForSpinnerNotVisible()
+        contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waituntilPageLoaded( 1 );
 
         when:
-        filterPanel.typeSearchText( name )
-        contentBrowsePanel.waitsForSpinnerNotVisible()
-        TestUtils.saveScreenshot( getTestSession(), "SearchText" )
+        filterPanel.typeSearchText( name );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
+        TestUtils.saveScreenshot( getTestSession(), "SearchText" );
 
         then:
-        filterPanel.getNumberFilteredByContenttype( "Folder" ) == 1 && filterPanel.getLastModifiedCount( "hour" ) == 1
+        filterPanel.getNumberFilteredByContenttype( "Folder" ) == 1 && filterPanel.getLastModifiedCount( "hour" ) == 1;
     }
 
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN no changes in ContentTypes-filter"()
@@ -181,12 +178,12 @@ class ContentBrowsePanel_FilterPanel_Spec
         List<String> beforeSelect = filterPanel.getAllContentTypesFilterEntries();
 
         when:
-        filterPanel.selectEntryInContentTypesFilter( "Folder" )
+        filterPanel.selectEntryInContentTypesFilter( "Folder" );
 
 
         then:
         List<String> afterSelect = filterPanel.getAllContentTypesFilterEntries();
-        beforeSelect.equals( afterSelect )
+        beforeSelect.equals( afterSelect );
     }
 
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN LastModified-filter should be updated with filtered values"()
@@ -197,27 +194,26 @@ class ContentBrowsePanel_FilterPanel_Spec
             name( name ).
             displayName( "folder" ).
             contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).build()
+            parent( ContentPath.ROOT ).build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            content ).save().close();
-        contentBrowsePanel.waitsForSpinnerNotVisible()
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).
+            save().close();
         contentBrowsePanel.waituntilPageLoaded( 1 );
-        Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
+        Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
 
         when:
-        String folderCount = filterPanel.selectEntryInContentTypesFilter( "Folder" )
+        String folderCount = filterPanel.selectEntryInContentTypesFilter( "Folder" );
 
         then:
-        Integer newLastModifiedNumber = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR )
+        Integer newLastModifiedNumber = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
         if ( lastModifiedNumberBefore == 0 )
         {
-            TestUtils.getNumberFromFilterLabel( folderCount ) == newLastModifiedNumber
+            TestUtils.getNumberFromFilterLabel( folderCount ) == newLastModifiedNumber;
         }
 
         else
         {
-            newLastModifiedNumber > lastModifiedNumberBefore
+            newLastModifiedNumber > lastModifiedNumberBefore;
         }
 
 
@@ -233,21 +229,21 @@ class ContentBrowsePanel_FilterPanel_Spec
             name( name ).
             displayName( "folder" ).
             contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).build()
+            parent( ContentPath.ROOT ).build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            content ).save().close()
-        contentBrowsePanel.waitsForSpinnerNotVisible()
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).
+            save().close();
+
         contentBrowsePanel.waituntilPageLoaded( 1 );
-        String label = filterPanel.selectEntryInContentTypesFilter( "Folder" )
+        String label = filterPanel.selectEntryInContentTypesFilter( "Folder" );
         Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );
 
         when:
-        filterPanel.typeSearchText( content.getName() )
+        filterPanel.typeSearchText( content.getName() );
 
         then:
-        Integer newFolderCount = filterPanel.getNumberFilteredByContenttype( "Folder" )
-        ( newFolderCount == 1 ) && ( newFolderCount != folderCountBefore ) && ( filterPanel.getAllContentTypesFilterEntries().size() == 1 )
+        Integer newFolderCount = filterPanel.getNumberFilteredByContenttype( "Folder" );
+        ( newFolderCount == 1 ) && ( newFolderCount != folderCountBefore ) && ( filterPanel.getAllContentTypesFilterEntries().size() == 1 );
     }
 
 }

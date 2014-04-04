@@ -1,12 +1,11 @@
 package com.enonic.wem.uitest.schema.wizards
 
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.pages.schemamanager.wizardpanel.RelationshipWizardPanel
 import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.schemamanger.ContentType
+import com.enonic.autotests.vo.schemamanger.RelationshipType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.LinkRelationship
 import spock.lang.Shared
@@ -18,7 +17,7 @@ class RelationshipTypeWizardPanel
     String RELATIONSHIP_WIZARD_TEST = "wizard_test_key"
 
     @Shared
-    SchemaBrowsePanel schemaBrowsePanel
+    SchemaBrowsePanel schemaBrowsePanel;
 
     def setup()
     {
@@ -31,19 +30,19 @@ class RelationshipTypeWizardPanel
         given:
 
         String relationshipName = NameHelper.uniqueName( "relationship" );
-        String relCFG = LinkRelationship.CFG
-        ContentType relationship = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
-            relCFG ).build();
+        String relCFG = LinkRelationship.CFG;
+        RelationshipType relationship = RelationshipType.newRelationshipType().name( relationshipName ).
+            configData( relCFG ).build();
 
-        SchemaWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
-            relationship )
-        getTestSession().put( RELATIONSHIP_WIZARD_TEST, relationship )
+        SchemaWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( relationship.getSchemaKindUI().getValue() ).
+            typeData( relationship );
+        getTestSession().put( RELATIONSHIP_WIZARD_TEST, relationship );
 
         when:
-        wizard.save()
+        wizard.save();
 
         then:
-        wizard.getNameInputValue().equals( relationshipName )
+        wizard.getNameInputValue().equals( relationshipName );
 
     }
 
@@ -52,34 +51,33 @@ class RelationshipTypeWizardPanel
     {
         given:
         String relationshipName = NameHelper.uniqueName( "relationship" );
-        String relCFG = LinkRelationship.CFG
-        ContentType relationship = ContentType.with().name( relationshipName ).schemaType( SchemaType.RELATIONSHIP_TYPE ).configuration(
-            relCFG ).build();
-        SchemaWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.RELATIONSHIP_TYPE.getValue() ).typeData(
-            relationship )
+        String relCFG = LinkRelationship.CFG;
+        RelationshipType relationship = RelationshipType.newRelationshipType().name( relationshipName ).configData( relCFG ).build();
+        SchemaWizardPanel wizard = schemaBrowsePanel.clickToolbarNew().selectKind( relationship.getSchemaKindUI().getValue() ).
+            typeData( relationship );
 
         when:
-        wizard.save()
+        wizard.save();
 
         then:
-        wizard.waitNotificationMessage() != null
+        wizard.waitNotificationMessage() != null;
 
     }
 
     def "GIVEN existing relationship-type WHEN it renamed and clicking Save THEN changed name is present on WizardPanel"()
     {
         given:
-        ContentType relationship = (ContentType) getTestSession().get( RELATIONSHIP_WIZARD_TEST )
+        RelationshipType relationship = (RelationshipType) getTestSession().get( RELATIONSHIP_WIZARD_TEST );
 
         when:
-        String newName = NameHelper.uniqueName( "new-name" )
+        String newName = NameHelper.uniqueName( "new-name" );
         RelationshipWizardPanel wizard = schemaBrowsePanel.selectRowWithContentType( relationship.getName(),
-                                                                                     relationship.getDisplayNameFromConfig() ).clickToolbarEdit()
-        wizard.clearAndType( wizard.getNameInput(), newName )
-        wizard.save()
+                                                                                     relationship.getDisplayNameFromConfig() ).clickToolbarEdit();
+        wizard.clearAndType( wizard.getNameInput(), newName );
+        wizard.save();
 
         then:
-        wizard.getNameInputValue().equals( newName )
+        wizard.getNameInputValue().equals( newName );
 
     }
 }

@@ -35,15 +35,15 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             displayName( "archive" ).
             contentType( ContentTypeName.archiveMedia() ).
             parent( ContentPath.ROOT ).build();
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
+        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+            waitUntilWizardOpened().typeData( content ).save();
 
         when:
-        wizard.close()
+        wizard.close();
 
         then:
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )
-        !dialog.waitForPresent()
+        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
+        !dialog.waitForPresent();
 
     }
 
@@ -57,18 +57,17 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             parent( ContentPath.ROOT ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
-        content.setDisplayName( "chngedname" )
-        wizard.typeData( content )
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+            typeData( content ).save();
+        wizard.typeDisplayName( "changedname" );
 
         when:
         wizard.close()
-        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-appears" )
+        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-appears" );
 
         then:
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )
-        dialog.waitForPresent()
+        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
+        dialog.waitForPresent();
     }
 
     def "GIVEN changing name of an existing Content and wizard closing WHEN Yes is chosen THEN Content is listed in BrowsePanel with it's new name"()
@@ -82,19 +81,17 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().
-            selectContentType( ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
-
-        content.setName( NameHelper.uniqueName( "newarchive" ) )
-        wizard.typeData( content ).close()
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )
-        dialog.waitForPresent()
+            selectContentType( ContentTypeName.archiveMedia().toString() ).typeData( content ).save();
+        wizard.typeDisplayName( "changedname" ).close();
+        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
+        dialog.waitForPresent();
 
         when:
-        dialog.clickYesButton()
-        contentBrowsePanel.waitsForSpinnerNotVisible()
+        dialog.clickYesButton();
+        contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
-        contentBrowsePanel.exists( ContentPath.from( content.getName() ) )
+        contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
 
     def "GIVEN changing name of an existing Content and wizard closing WHEN No is chosen THEN Content is listed in BrowsePanel with it's original name"()
@@ -107,19 +104,18 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             contentType( ContentTypeName.archiveMedia() ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
-        content.setName( NameHelper.uniqueName( "newarchive" ) )
-        wizard.typeData( content ).close()
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )
-        dialog.waitForPresent()
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+            typeData( content ).save();
+        wizard.typeName( "newarchive" ).close();
+        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
+        dialog.waitForPresent();
 
         when:
-        dialog.clickNoButton()
-        contentBrowsePanel.waitsForSpinnerNotVisible()
+        dialog.clickNoButton();
+        contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
-        !contentBrowsePanel.exists( ContentPath.from( content.getName() ) )
+        !contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
 
     def "GIVEN changing an existing Content and wizard closing WHEN Cancel is chosen THEN wizard is still open"()
@@ -132,18 +128,18 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             contentType( ContentTypeName.archiveMedia() ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
-            ContentTypeName.archiveMedia().toString() ).waitUntilWizardOpened().typeData( content ).save()
-        content.setName( NameHelper.uniqueName( "newarchive" ) )
-        wizard.typeData( content ).close()
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() )
-        dialog.waitForPresent()
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+            typeData( content ).save();
+        wizard.typeName( "newarchive" ).close();
+        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
+        dialog.waitForPresent();
 
         when:
-        dialog.clickCancelButton()
-        contentBrowsePanel.waitsForSpinnerNotVisible()
-        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-cancel" )
+        dialog.clickCancelButton();
+        contentBrowsePanel.waitsForSpinnerNotVisible();
+        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-cancel" );
+
         then:
-        wizard.waitUntilWizardOpened()
+        wizard.isOpened();
     }
 }

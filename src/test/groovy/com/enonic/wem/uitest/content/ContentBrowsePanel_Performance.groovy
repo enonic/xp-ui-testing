@@ -10,7 +10,7 @@ class ContentBrowsePanel_Performance
 {
 
     @Shared
-    ContentBrowsePanel contentBrowsePanel
+    ContentBrowsePanel contentBrowsePanel;
 
     def setup()
     {
@@ -21,9 +21,9 @@ class ContentBrowsePanel_Performance
     def "GIVEN admin console WHEN Content app opened THEN grid should appears in 1 second"()
     {
         when:
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
 
         then:
-        contentBrowsePanel.waituntilPageLoaded( 1 )
+        contentBrowsePanel.waituntilPageLoaded( 1 );
     }
 }

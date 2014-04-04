@@ -112,6 +112,18 @@ public class ContentWizardPanel
         return this;
     }
 
+    public ContentWizardPanel typeDisplayName( String displayName )
+    {
+        clearAndType( displayNameInput, displayName );
+        return this;
+    }
+
+    public ContentWizardPanel typeName( String name )
+    {
+        clearAndType( nameInput, name );
+        return this;
+    }
+
     public ContentWizardStepForm clickDataStep()
     {
         clickWizardStep( 1 );
@@ -147,6 +159,14 @@ public class ContentWizardPanel
     public void close()
     {
         closeButton.click();
+        waitsForSpinnerNotVisible();
+    }
+
+    @Override
+    public boolean isOpened()
+    {
+        return toolbarSaveButton.isDisplayed();
+
     }
 
 }

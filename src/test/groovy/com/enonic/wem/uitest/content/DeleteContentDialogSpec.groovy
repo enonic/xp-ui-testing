@@ -16,15 +16,15 @@ class DeleteContentDialogSpec
     extends BaseGebSpec
 {
     @Shared
-    ContentBrowsePanel contentBrowsePanel
+    ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    String CONTENT_TO_DELETE_KEY = "deletecomntent_dialog_test"
+    String CONTENT_TO_DELETE_KEY = "deletecomntent_dialog_test";
 
     def setup()
     {
         go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() )
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
 
     }
 
@@ -50,8 +50,8 @@ class DeleteContentDialogSpec
         contentList.add( content );
 
         when:
-        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
-            contentList ).clickToolbarDelete()
+        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).
+            clickToolbarDelete();
 
         then:
         dialog.waitForOpened();
@@ -65,9 +65,9 @@ class DeleteContentDialogSpec
         contentList.add( content );
 
         when:
-        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable(
-            contentList ).clickToolbarDelete()
-        dialog.waitForOpened()
+        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).
+            clickToolbarDelete();
+        dialog.waitForOpened();
 
         then:
         List<String> namesFromDialog = dialog.getContentNameToDelete();

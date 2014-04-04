@@ -1,9 +1,9 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.pages.schemamanager.SchemaType
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.SchemaCfgHelper
 import com.enonic.autotests.utils.SleepHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
@@ -16,7 +16,7 @@ class ContentTypeSpec
 {
 
     @Shared
-    SchemaBrowsePanel schemaBrowsePanel
+    SchemaBrowsePanel schemaBrowsePanel;
 
     def setup()
     {
@@ -27,18 +27,17 @@ class ContentTypeSpec
     def "GIVEN BrowsePanel WHEN adding Folder 'Content type' Then the new content type should be listed in the table"()
     {
         given:
-        String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "folderctype" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
-            folderCFG ).build();
+        String folderCFG = FolderContentTypeCfg.FOLDER_CFG;
+        ContentType ctype = ContentType.newContentType().name( "folderctype" ).configData( folderCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData(
-            ctype ).save().close()
-        schemaBrowsePanel.waitsForSpinnerNotVisible()
-        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
+        schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).
+            typeData( ctype ).save().close();
+        schemaBrowsePanel.waituntilPageLoaded( 1 );
+        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() );
 
         then:
-        schemaBrowsePanel.exists( ctype )
+        schemaBrowsePanel.exists( ctype );
 
     }
 
@@ -46,39 +45,37 @@ class ContentTypeSpec
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "editdisplaynametest" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
-            folderCFG ).build();
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+        ContentType ctype = ContentType.newContentType().name( "editdisplaynametest" ).configData( folderCFG ).build();
+        schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).typeData( ctype ).save().close()
+        schemaBrowsePanel.waituntilPageLoaded( 1 );
 
         when:
         ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype )
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
-                                                                                                                ctype.getDisplayNameFromConfig() ).clickToolbarEdit().waitUntilWizardOpened().typeData(
-            newContentType ).save().close()
-        schemaBrowsePanel.waitsForSpinnerNotVisible()
-        SleepHelper.sleep( 2000 )
+                                                                                                                ctype.getDisplayNameFromConfig() ).
+            clickToolbarEdit().typeData( newContentType ).save().close();
+        SleepHelper.sleep( 1000 );
 
         then:
-        schemaBrowsePanel.exists( newContentType )
+        schemaBrowsePanel.exists( newContentType );
     }
 
     def "GIVEN schema BrowsePanel and exist 'Content type'  WHEN Content type edited, name changed  THEN the 'Content type' with new name should be listed in the table"()
     {
         given:
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctype = ContentType.with().name( "editnametest" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
-            folderCFG ).build();
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctype ).save().close()
+        ContentType ctype = ContentType.newContentType().name( "editnametest" ).configData( folderCFG ).build();
+        schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).typeData( ctype ).save().close();
+        schemaBrowsePanel.waituntilPageLoaded( 1 );
 
         when:
-        ContentType newContentType = cloneContentTypeWithNewName( ctype )
+        ContentType newContentType = cloneContentTypeWithNewName( ctype );
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
-                                                                                                                ctype.getDisplayNameFromConfig() ).clickToolbarEdit().waitUntilWizardOpened().typeData(
-            newContentType ).save().close()
-        schemaBrowsePanel.waitsForSpinnerNotVisible()
+                                                                                                                ctype.getDisplayNameFromConfig() ).
+            clickToolbarEdit().typeData( newContentType ).save().close();
 
         then:
-        schemaBrowsePanel.exists( newContentType )
+        schemaBrowsePanel.exists( newContentType );
 
     }
 
@@ -86,49 +83,50 @@ class ContentTypeSpec
     {
         given:
         String textLineCFG = TextLineContentTypeCfg.CFG
-        ContentType ctype = ContentType.with().name( "textlinectype" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
-            textLineCFG ).build();
+        ContentType ctype = ContentType.newContentType().name( "textlinectype" ).configData( textLineCFG ).build();
 
         when:
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).waitUntilWizardOpened().typeData(
-            ctype ).save().close()
-        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() )
+        schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).
+            typeData( ctype ).save().close();
+        schemaBrowsePanel.waituntilPageLoaded( 1 );
+        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() );
 
         then:
-        schemaBrowsePanel.exists( ctype )
+        schemaBrowsePanel.exists( ctype );
 
     }
 
     def "GIVEN BrowsePanel and created a 'Content type' WHEN 'Content type' deleted THEN the it should not be listed in the table"()
     {
         given:
-        String folderCFG = FolderContentTypeCfg.FOLDER_CFG
-        ContentType ctypeToDelete = ContentType.with().name( "ctypetodelete" ).schemaType( SchemaType.CONTENT_TYPE ).configuration(
-            folderCFG ).build();
-        schemaBrowsePanel.clickToolbarNew().selectKind( SchemaType.CONTENT_TYPE.getValue() ).typeData( ctypeToDelete ).save().close()
+        String folderCFG = FolderContentTypeCfg.FOLDER_CFG;
+        ContentType ctypeToDelete = ContentType.newContentType().name( "ctypetodelete" ).configData( folderCFG ).build();
+        schemaBrowsePanel.clickToolbarNew().selectKind( ctypeToDelete.getSchemaKindUI().getValue() ).typeData( ctypeToDelete ).
+            save().close();
+        schemaBrowsePanel.waituntilPageLoaded( 1 );
+
         when:
-        schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ).selectRowWithContentType(
-            ctypeToDelete.getName(), ctypeToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete()
+        schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ).
+            selectRowWithContentType( ctypeToDelete.getName(), ctypeToDelete.getDisplayNameFromConfig() ).
+            clickToolbarDelete().doDelete();
 
         then:
-        !schemaBrowsePanel.exists( ctypeToDelete )
+        !schemaBrowsePanel.exists( ctypeToDelete );
 
     }
 
-    ContentType cloneContentTypeWithNewName( ContentType contenTypeToEdit )
+
+    ContentType cloneContentTypeWithNewDisplayName( ContentType source )
     {
-        ContentType newContenttype = contenTypeToEdit.cloneContentType()
-        String name = NameHelper.uniqueName( "edited" )
-        newContenttype.setName( name )
-        return newContenttype
+        String newDisplayName = NameHelper.uniqueName( "newdisplayname" );
+        String newconfigData = SchemaCfgHelper.changeDisplayName( newDisplayName, source.getConfigData() );
+        return ContentType.newContentType().name( source.getName() ).configData( newconfigData ).build();
     }
 
-    ContentType cloneContentTypeWithNewDisplayName( ContentType contenTypeToEdit )
+    ContentType cloneContentTypeWithNewName( ContentType source )
     {
-        ContentType newContentType = contenTypeToEdit.cloneContentType()
-        String displayName = NameHelper.uniqueName( "edited" )
-        newContentType.setDisplayNameInConfig( displayName )
-        return newContentType
+        String newName = NameHelper.uniqueName( "newname" );
+        return ContentType.newContentType().name( newName ).configData( source.getConfigData() ).build();
     }
 
 }

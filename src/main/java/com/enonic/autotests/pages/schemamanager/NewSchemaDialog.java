@@ -14,7 +14,7 @@ import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel;
  *
  *
  */
-public class NewContentDialog
+public class NewSchemaDialog
     extends BaseModalDialog
 {
 
@@ -25,7 +25,7 @@ public class NewContentDialog
      *
      * @param session
      */
-    public NewContentDialog( TestSession session )
+    public NewSchemaDialog( TestSession session )
     {
         super( session );
     }
@@ -45,15 +45,15 @@ public class NewContentDialog
             throw new TestFrameworkException( "The kind of content type" + kind + " was not found!!!" );
         }
         getDriver().findElement( By.xpath( kindXpath ) ).click();
-        if ( kind.equals( SchemaType.CONTENT_TYPE.getValue() ) )
+        if ( kind.equals( SchemaKindUI.CONTENT_TYPE.getValue() ) )
         {
             wizard = new ContentTypeWizardPanel( getSession() );
         }
-        else if ( kind.equals( SchemaType.RELATIONSHIP_TYPE.getValue() ) )
+        else if ( kind.equals( SchemaKindUI.RELATIONSHIP_TYPE.getValue() ) )
         {
             wizard = new RelationshipWizardPanel( getSession() );
         }
-        else if ( kind.equals( SchemaType.MIXIN.getValue() ) )
+        else if ( kind.equals( SchemaKindUI.MIXIN.getValue() ) )
         {
             wizard = new MixinWizardPanel( getSession() );
         }
