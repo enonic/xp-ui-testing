@@ -15,6 +15,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 import com.enonic.wem.api.content.ContentPath;
@@ -133,6 +134,7 @@ public class ContentBrowsePanel
     {
         contentManagerButton.click();
         sleep( 1000 );
+        TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("gotoapphome"));
         waituntilPageLoaded( Application.IMPLICITLY_WAIT );
         return this;
     }
