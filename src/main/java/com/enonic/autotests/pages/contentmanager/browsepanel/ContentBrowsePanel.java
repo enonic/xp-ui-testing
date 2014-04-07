@@ -190,6 +190,7 @@ public class ContentBrowsePanel
                 }
             }
         }
+        waitsForSpinnerNotVisible();
         return this;
     }
 
