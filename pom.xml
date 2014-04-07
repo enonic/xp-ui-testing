@@ -25,7 +25,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>2.37.1</version>
+      <version>2.40.0</version>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
@@ -96,13 +96,16 @@
               <goal>purge-local-repository</goal>
             </goals>
             <configuration>
-              <reResolve>true</reResolve>
-              <excludes>
-                <exclude>org.apache</exclude>
-                <exclude>org.seleniumhq.selenium</exclude>
-                <exclude>org.testng</exclude>
-                <exclude>com.enonic.wem.test</exclude>
-              </excludes>
+            <manualIncludes>
+             <resolutionFuzziness>file</resolutionFuzziness>
+              <include>com.enonic.wem:wem-webapp</include>
+            </manualIncludes>
+<!--               <resolutionFuzziness>file</resolutionFuzziness> -->
+<!--               <reResolve>true</reResolve> -->
+<!--              <includes> -->
+<!--              <include>wem-webapp-5.0.0-SNAPSHOT.war</include> -->
+<!--              </includes> -->
+              
             </configuration>
           </execution>
         </executions>
