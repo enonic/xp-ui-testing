@@ -215,6 +215,7 @@ public class ContentBrowsePanel
         // 4. click on 'Delete' link and open a confirm dialog.
         deleteButton.click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
+        dialog.waitForOpened();
         return dialog;
     }
 
@@ -346,7 +347,7 @@ public class ContentBrowsePanel
         boolean isPresentCheckbox = isDynamicElementPresent( By.xpath( spaceCheckBoxXpath ), 3 );
         if ( !isPresentCheckbox )
         {
-            TestUtils.saveScreenshot( getSession() );
+            TestUtils.saveScreenshot( getSession(), "checkbox"+ parentContentPath.toString());
             throw new TestFrameworkException(
                 "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContentPath +
                     " was not found!" );
