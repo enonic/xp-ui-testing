@@ -118,8 +118,6 @@ class ContentBrowsePanel_FilterPanel_Spec
             lastModifiedBeforeAdding == 1;
     }
 
-    //This test ignored due the application BUG
-    @Ignore
     def "GIVEN a Content WHEN deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
