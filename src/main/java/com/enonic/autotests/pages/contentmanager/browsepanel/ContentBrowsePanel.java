@@ -350,9 +350,8 @@ public class ContentBrowsePanel
                 "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContentPath +
                     " was not found!" );
         }
-        WebElement checkboxElement = getDriver().findElement( By.xpath( spaceCheckBoxXpath ) );
+        getDriver().findElement( By.xpath( spaceCheckBoxXpath ) ).click();
 
-        checkboxElement.click();
         boolean isNewEnabled = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), 2l );
         if ( !isNewEnabled )
         {
