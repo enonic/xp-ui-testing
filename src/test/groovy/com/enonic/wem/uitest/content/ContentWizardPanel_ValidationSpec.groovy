@@ -49,7 +49,7 @@ class ContentWizardPanel_ValidationSpec
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 };
     }
 
-    @Ignore
+   
     def "GIVEN a ContentType with two TextLine Inputs AND one is required WHEN only the required input is filled out THEN Publish-button is enabled"()
     {
         given:

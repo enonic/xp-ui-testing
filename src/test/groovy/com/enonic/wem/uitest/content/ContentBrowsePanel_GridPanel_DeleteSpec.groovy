@@ -76,7 +76,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.doClearSelection();
 
         when:
-        contentBrowsePanel.expandContent( content1.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
 
         then:

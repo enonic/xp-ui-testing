@@ -335,14 +335,12 @@ public class ContentBrowsePanel
      *
      * @param parentContentPath
      */
-    public void clickByParentCheckbox( ContentPath parentContentPath )
+    public ContentBrowsePanel clickByParentCheckbox( ContentPath parentContentPath )
     {
         if ( parentContentPath.elementCount() == 0 )
         {
-            return;
+            return this;
         }
-
-        // expandContent( parentContentPath );
 
         // 1. select a checkbox and press the 'New' from toolbar.
         String spaceCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, parentContentPath );
@@ -361,7 +359,7 @@ public class ContentBrowsePanel
         {
             throw new SaveOrUpdateException( "Impossible to open 'ContentWizardPanel', because the 'New' button is disabled!" );
         }
-
+        return this;
     }
 
     /**
