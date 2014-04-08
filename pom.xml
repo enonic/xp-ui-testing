@@ -106,6 +106,30 @@
       </plugin-->
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.8</version>
+        <executions>
+          <execution>
+            <id>purge-local-dependencies</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>purge-local-repository</goal>
+            </goals>
+            <configuration>
+              <reResolve>true</reResolve>
+              <excludes>
+                <exclude>org.apache</exclude>
+                <exclude>org.seleniumhq.selenium</exclude>
+                <exclude>org.testng</exclude>
+                <exclude>com.enonic.wem.test</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>properties-maven-plugin</artifactId>
         <version>1.0-alpha-2</version>
