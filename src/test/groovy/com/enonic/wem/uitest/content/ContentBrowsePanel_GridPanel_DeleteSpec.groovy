@@ -187,12 +187,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         then:
         contentBrowsePanel.isNewButtonEnabled();
-
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
     }
 
-//	def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
-//	{
-//		
-//	}
+	def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
+	{
+		
+	}
 }
