@@ -84,6 +84,7 @@ public class ContentTypeWizardPanel
         clearAndType( nameInput, contentType.getName() );
         //2. type the XML-config data:
         getLogger().info( "set contenttype configuration " );
+        setConfiguration("");
         setConfiguration( contentType.getConfigData().trim() );
         TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("cfg"));
         return this;
