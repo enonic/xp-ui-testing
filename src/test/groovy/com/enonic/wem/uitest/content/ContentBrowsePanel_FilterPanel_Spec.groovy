@@ -129,6 +129,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
         int beforeRemoving = filterPanel.getNumberFilteredByContenttype( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
         List<Content> contentList = new ArrayList();
