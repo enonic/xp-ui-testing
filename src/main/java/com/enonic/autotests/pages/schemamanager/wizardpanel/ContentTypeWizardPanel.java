@@ -45,7 +45,7 @@ public class ContentTypeWizardPanel
     @Override
     public ContentTypeWizardPanel save()
     {
-        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
+       boolean isSaveButtonEnabled = isEnabledSaveButton();
 
         if ( !isSaveButtonEnabled )
         {
