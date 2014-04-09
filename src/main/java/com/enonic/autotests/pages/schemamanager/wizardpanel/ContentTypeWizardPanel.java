@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
@@ -83,6 +85,7 @@ public class ContentTypeWizardPanel
         //2. type the XML-config data:
         getLogger().info( "set contenttype configuration " );
         setConfiguration( contentType.getConfigData().trim() );
+        TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("cfg"));
         return this;
     }
 
