@@ -12,7 +12,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentBrowsePanel_FilterPanel_Spec
@@ -137,7 +136,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
-        contentBrowsePanel.waituntilPageLoaded(3);
+        contentBrowsePanel.waituntilPageLoaded( 3 );
 
 
         then:

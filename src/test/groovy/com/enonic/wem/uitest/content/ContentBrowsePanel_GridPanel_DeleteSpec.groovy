@@ -171,26 +171,26 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         then:
         !contentBrowsePanel.isExpanderPresent( parent.getName() );
     }
-	
-	def "GIVEN a Content on root WHEN deleted THEN New-button is enabled"()
-	{
-		given:
-		Content content = Content.builder().
-		name( NameHelper.uniqueName( "archive" ) ).
-		displayName( "archive" ).
-		contentType( ContentTypeName.folder() ).
-		parent( ContentPath.ROOT ).
-		build();
-		contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
-       when:
-	   contentBrowsePanel.selectContentInTable( content ).clickToolbarDelete().doDelete();
-	   
-	   then:
-	   contentBrowsePanel.isNewButtonEnabled();
-	   
-	contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-	}
-	
+
+    def "GIVEN a Content on root WHEN deleted THEN New-button is enabled"()
+    {
+        given:
+        Content content = Content.builder().
+            name( NameHelper.uniqueName( "archive" ) ).
+            displayName( "archive" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
+        when:
+        contentBrowsePanel.selectContentInTable( content ).clickToolbarDelete().doDelete();
+
+        then:
+        contentBrowsePanel.isNewButtonEnabled();
+
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+    }
+
 //	def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
 //	{
 //		

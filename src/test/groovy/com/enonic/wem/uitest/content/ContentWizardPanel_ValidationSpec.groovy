@@ -7,7 +7,6 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.TwoTextLineContentTypeCfg
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -42,14 +41,14 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: contains("requiredTextLine") ) << '';
-        $( "input", name: contains("unrequiredTextLine") ) << '';
+        $( "input", name: contains( "requiredTextLine" ) ) << '';
+        $( "input", name: contains( "unrequiredTextLine" ) ) << '';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 };
     }
 
-   
+
     def "GIVEN a ContentType with two TextLine Inputs AND one is required WHEN only the required input is filled out THEN Publish-button is enabled"()
     {
         given:
@@ -57,7 +56,7 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME )
 
         when:
-        $( "input", name: contains("requiredTextLine") ) << 'required line';
+        $( "input", name: contains( "requiredTextLine" ) ) << 'required line';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 };
@@ -71,8 +70,8 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: contains("requiredTextLine") ) << 'required line';
-        $( "input", name: contains("unrequiredTextLine") ) << 'unrequired line';
+        $( "input", name: contains( "requiredTextLine" ) ) << 'required line';
+        $( "input", name: contains( "unrequiredTextLine" ) ) << 'unrequired line';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 0 };
@@ -86,7 +85,7 @@ class ContentWizardPanel_ValidationSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( CTYPE_NAME );
 
         when:
-        $( "input", name: contains("unrequiredTextLine") ) << 'unrequired line';
+        $( "input", name: contains( "unrequiredTextLine" ) ) << 'unrequired line';
 
         then:
         waitFor { $( "button", text: "Publish", disabled: "true" ).size() == 1 };
