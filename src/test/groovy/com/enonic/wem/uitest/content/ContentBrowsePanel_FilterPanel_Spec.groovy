@@ -137,7 +137,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waituntilPageLoaded(3);
 
 
         then:

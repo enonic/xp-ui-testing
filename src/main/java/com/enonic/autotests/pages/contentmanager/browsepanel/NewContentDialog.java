@@ -6,6 +6,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BaseModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 
@@ -57,6 +58,8 @@ public class NewContentDialog
         }
 
         TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
+        waitsForSpinnerNotVisible();
+        TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("select-ct"));
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();//02.04
         return wizard;

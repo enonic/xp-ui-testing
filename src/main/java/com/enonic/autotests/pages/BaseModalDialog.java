@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.WaitHelper;
 
 public abstract class BaseModalDialog
@@ -32,6 +33,21 @@ public abstract class BaseModalDialog
     {
         return WaitHelper.waitUntilVisibleNoException( getDriver(), by, timeout );
     }
+
+    public void waitsForSpinnerNotVisible()
+    {
+        waitsForSpinnerNotVisible( Application.IMPLICITLY_WAIT );
+    }
+
+    public void waitsForSpinnerNotVisible( long timeout )
+    {
+    	boolean result  = WaitHelper.waitsElementNotVisible( getDriver(), By.xpath( Application.SPINNER_XPATH ), timeout );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "after " + Application.IMPLICITLY_WAIT + " second, spinner still present" );
+        }
+    }
+
 
     /**
      * @param driver

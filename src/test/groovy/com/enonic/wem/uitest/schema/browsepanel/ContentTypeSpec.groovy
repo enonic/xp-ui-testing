@@ -34,7 +34,7 @@ class ContentTypeSpec
         when:
         schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).
             typeData( ctype ).save().close();
-        schemaBrowsePanel.waituntilPageLoaded( 1 );
+        schemaBrowsePanel.waituntilPageLoaded( 3 );
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() );
 
         then:
@@ -48,7 +48,7 @@ class ContentTypeSpec
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
         ContentType ctype = ContentType.newContentType().name( "editdisplaynametest" ).configData( folderCFG ).build();
         schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).typeData( ctype ).save().close()
-        schemaBrowsePanel.waituntilPageLoaded( 1 );
+        schemaBrowsePanel.waituntilPageLoaded( 3 );
 
         when:
         ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype )
@@ -67,7 +67,7 @@ class ContentTypeSpec
         String folderCFG = FolderContentTypeCfg.FOLDER_CFG
         ContentType ctype = ContentType.newContentType().name( "editnametest" ).configData( folderCFG ).build();
         schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).typeData( ctype ).save().close();
-        schemaBrowsePanel.waituntilPageLoaded( 1 );
+        schemaBrowsePanel.waituntilPageLoaded( 3 );
 
         when:
         ContentType newContentType = cloneContentTypeWithNewName( ctype );
@@ -89,7 +89,7 @@ class ContentTypeSpec
         when:
         schemaBrowsePanel.clickToolbarNew().selectKind( ctype.getSchemaKindUI().getValue() ).
             typeData( ctype ).save().close();
-        schemaBrowsePanel.waituntilPageLoaded( 1 );
+        schemaBrowsePanel.waituntilPageLoaded( 3 );
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() );
 
         then:
@@ -104,7 +104,7 @@ class ContentTypeSpec
         ContentType ctypeToDelete = ContentType.newContentType().name( "ctypetodelete" ).configData( folderCFG ).build();
         schemaBrowsePanel.clickToolbarNew().selectKind( ctypeToDelete.getSchemaKindUI().getValue() ).typeData( ctypeToDelete ).
             save().close();
-        schemaBrowsePanel.waituntilPageLoaded( 1 );
+        schemaBrowsePanel.waituntilPageLoaded( 3 );
 
         when:
         schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ).
