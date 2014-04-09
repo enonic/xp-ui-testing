@@ -52,8 +52,12 @@ class ContentTypeSpec
         when:
         ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype )
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
-                                                                                                                ctype.getDisplayNameFromConfig() ).
-            clickToolbarEdit().typeData( newContentType ).save().close();
+                                                                                                                ctype.getDisplayNameFromConfig() );
+        ContentTypeWizardPanel wizard =  schemaBrowsePanel.clickToolbarEdit().typeData( newContentType );
+		wizard.save();
+		TestUtils.saveScreenshot(getSession(), newContentType.getName());
+		wizard.waitNotificationMessage();
+		wizard.close();
         TestUtils.saveScreenshot( getSession(), newContentType.getName() );
 
         then:
