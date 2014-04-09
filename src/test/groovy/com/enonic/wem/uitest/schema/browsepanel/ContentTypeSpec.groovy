@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.SchemaCfgHelper
