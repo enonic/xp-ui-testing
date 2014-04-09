@@ -134,8 +134,8 @@ public class ContentBrowsePanel
     {
         contentManagerButton.click();
         sleep( 1000 );
-        TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("gotoapphome"));
         waituntilPageLoaded( Application.IMPLICITLY_WAIT );
+        TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("gotoapphome"));
         return this;
     }
 
