@@ -14,6 +14,5 @@ class FolderContentTypeCfg
 	  <allow-children>true</allow-children>
 	  <form />
     </type>
-
 	'''
 }
