@@ -321,7 +321,7 @@ public class ContentBrowsePanel
     public NewContentDialog clickToolbarNew()
     {
         newButton.click();
-        sleep(200);
+        sleep(1000);
         TestUtils.saveScreenshot(getSession(),NameHelper.uniqueName("clicked"));
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         boolean isOpened = newContentDialog.isOpened();
