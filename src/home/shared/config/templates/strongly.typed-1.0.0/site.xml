@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<site-template>
+  <display-name>Strongly Typed template</display-name>
+  <description>Demo typed</description>
+  <url>http://enonic.net</url>
+  <vendor>
+    <name>Enonic AS</name>
+    <url>http://www.enonic.com</url>
+  </vendor>
+  <modules>
+    <module>strongly.typed-1.0.0</module>
+  </modules>
+  <content-filter/>
+  <root-content-type>trampoline</root-content-type>
+</site-template>

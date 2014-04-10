@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<type>
+    <display-name>Relationship limited allowed-to-types</display-name>
+    <super-type>structured</super-type>
+    <is-abstract>false</is-abstract>
+    <is-final>true</is-final>
+    <is-built-in>false</is-built-in>
+    <allow-child-content>true</allow-child-content>
+    <form>
+        <input name="myRelation" type="Relationship">
+            <label>A relation to an article</label>
+            <immutable>false</immutable>
+            <indexed>false</indexed>
+            <occurrences minimum="0" maximum="3"/>
+            <config>
+                <relationship-type>citation</relationship-type>
+            </config>
+        </input>
+    </form>
+</type>

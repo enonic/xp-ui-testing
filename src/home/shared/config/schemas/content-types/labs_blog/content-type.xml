@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<type>
+    <display-name>Labs Blog</display-name>
+    <super-type>structured</super-type>
+    <is-abstract>false</is-abstract>
+    <is-final>true</is-final>
+    <is-built-in>false</is-built-in>
+    <allow-child-content>true</allow-child-content>
+    <form>
+        <field-set name="blogFieldSet">
+            <label>Blog</label>
+            <items>
+                <input name="heading" type="TextLine">
+                    <label>Heading</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <form-item-set name="authors">
+                    <label>Authors</label>
+                    <items>
+                        <input name="author" type="TextLine">
+                            <label>Author</label>
+                            <immutable>false</immutable>
+                            <indexed>false</indexed>
+                            <occurrences minimum="0" maximum="1"/>
+                        </input>
+                    </items>
+                    <immutable>false</immutable>
+                    <occurrences minimum="0" maximum="1"/>
+                </form-item-set>
+                <form-item-set name="topics">
+                    <label>Topics</label>
+                    <items>
+                        <input name="topic" type="TextLine">
+                            <label>Topic</label>
+                            <immutable>false</immutable>
+                            <indexed>false</indexed>
+                            <occurrences minimum="0" maximum="1"/>
+                        </input>
+                    </items>
+                    <immutable>false</immutable>
+                    <occurrences minimum="0" maximum="1"/>
+                </form-item-set>
+                <input name="tags" type="TextLine">
+                    <label>Tags for tag cloud</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input name="preface" type="TextArea">
+                    <label>Preface</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                    <help-text>Preface</help-text>
+                </input>
+            </items>
+        </field-set>
+        <field-set name="articleFieldSet">
+            <label>Article Content</label>
+            <items>
+                <input name="slide_title" type="TextLine">
+                    <label>Slide Title</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input name="article_text" type="HtmlArea">
+                    <label>Article Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                    <help-text>HTML Area</help-text>
+                </input>
+            </items>
+        </field-set>
+    </form>
+</type>

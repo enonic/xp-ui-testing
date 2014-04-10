@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<type>
+    <display-name>Occurrences</display-name>
+    <super-type>structured</super-type>
+    <is-abstract>false</is-abstract>
+    <is-final>true</is-final>
+    <is-built-in>false</is-built-in>
+    <allow-child-content>true</allow-child-content>
+    <form>
+        <input name="textLineUnlimitedOccurrences" type="TextLine">
+            <label>TextLine with min 0 and unlimited max</label>
+            <immutable>false</immutable>
+            <indexed>false</indexed>
+            <occurrences minimum="0" maximum="0"/>
+        </input>
+        <input name="textLineUnrequiredMaxOne" type="TextLine">
+            <label>TextLine with min 0 and max 1</label>
+            <immutable>false</immutable>
+            <indexed>false</indexed>
+            <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input name="textLineRequiredAndUnlimitedOccurrences" type="TextLine">
+            <label>TextLine with min 1 and unlimited max</label>
+            <immutable>false</immutable>
+            <indexed>false</indexed>
+            <occurrences minimum="1" maximum="0"/>
+        </input>
+        <input name="textLineMin2Max4" type="TextLine">
+            <label>TextLine with min 2 and max 4</label>
+            <immutable>false</immutable>
+            <indexed>false</indexed>
+            <occurrences minimum="2" maximum="4"/>
+        </input>
+        <form-item-set name="formItemSetUnrequiredAndMaxOneOccurrence">
+            <label>Set with min 0 and max 1</label>
+            <items>
+                <input name="myText" type="TextLine">
+                    <label>My Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input name="myOtherText" type="TextLine">
+                    <label>My other Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+            </items>
+            <immutable>false</immutable>
+            <occurrences minimum="0" maximum="1"/>
+        </form-item-set>
+        <form-item-set name="formItemSetRequiredAndMaxOneOccurrence">
+            <label>Set with min 1 and max 1</label>
+            <items>
+                <input name="myText" type="TextLine">
+                    <label>My Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input name="myOtherText" type="TextLine">
+                    <label>My other Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+            </items>
+            <immutable>false</immutable>
+            <occurrences minimum="1" maximum="1"/>
+        </form-item-set>
+        <form-item-set name="formItemSetUnrequiredAndUnlimitedOccurrences">
+            <label>Set with min 0 and unlimited max</label>
+            <items>
+                <input name="myText" type="TextLine">
+                    <label>My Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input name="myOtherText" type="TextLine">
+                    <label>My other Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+            </items>
+            <immutable>false</immutable>
+            <occurrences minimum="0" maximum="0"/>
+        </form-item-set>
+        <form-item-set name="formItemSetRequiredAndUnlimitedOccurrences">
+            <label>Set with min 1 and unlimited max</label>
+            <items>
+                <input name="myText" type="TextLine">
+                    <label>My Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input name="myOtherText" type="TextLine">
+                    <label>My other Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+            </items>
+            <immutable>false</immutable>
+            <occurrences minimum="1" maximum="0"/>
+        </form-item-set>
+        <form-item-set name="formItemSetRequired2AndMax4Occurrences">
+            <label>Set with min 2 and max 4</label>
+            <items>
+                <input name="myText" type="TextLine">
+                    <label>My Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input name="myOtherText" type="TextLine">
+                    <label>My other Text</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+            </items>
+            <immutable>false</immutable>
+            <occurrences minimum="2" maximum="4"/>
+        </form-item-set>
+    </form>
+</type>

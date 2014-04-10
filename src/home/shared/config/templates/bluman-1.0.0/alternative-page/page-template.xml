@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<page-template>
+  <display-name>C Alternative Mustache Page Template</display-name>
+  <descriptor>bluman.trampoline-1.0.0:landing-page</descriptor>
+  <config>
+    <property name="background-color" type="String">blue</property>
+  </config>
+  <can-render>
+    <content-type>trampoline</content-type>
+  </can-render>
+  <regions>
+    <region name="main">
+      <part-component name="TrampolineAccessories" descriptor="bluman.trampoline-1.0.0:trampoline-accessories">
+        <config>
+          <property name="text" type="String">Take a part!</property>
+        </config>
+      </part-component>
+    </region>
+  </regions>
+</page-template>

@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="{{resourcesPath}}/css/bootstrap.css" rel="stylesheet">
+    <link href="{{resourcesPath}}/css/main.css" rel="stylesheet">
+
+    <link href="{{resourcesPath}}/css/bootstrap-responsive.css" rel="stylesheet">
+</head>
+
+<body data-live-edit-type="page" data-live-edit-key="{{path}}" data-live-edit-name="Jumping Jack - Frogger">
+<script src="{{resourcesPath}}/js/jquery.js"></script>
+
+<div class="container">
+
+    <div class="masthead">
+
+        <h3 class="muted">{{title}}</h3>
+
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <ul class="nav">
+                        <li><a href="#">Forside</a></li>
+                        <li class="active"><a href="#">Trampoline</a></li>
+                        <li class="active"><a href="#">Trampoline</a></li>
+                        <li><a href="#">Kjøpeguide</a></li>
+                        <li><a href="#">Kundeservice</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main" data-live-edit-type="region" data-live-edit-key="80" data-live-edit-name="{{mainRegion.name}}"
+         data-live-edit-region="{{mainRegion.regionPath}}">
+
+        {{#mainRegion.components}}
+
+        <!--# COMPONENT {{path}}-->
+
+        {{/mainRegion.components}}
+
+    </div>
+    <hr>
+
+    <div class="footer">
+        <small class="pull-right">Demo site made by Enonic 2013</small>
+    </div>
+
+</div>
+
+
+<script src="{{resourcesPath}}/js/bootstrap.js"></script>
+</body>
+</html>

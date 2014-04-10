@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<type>
+    <display-name>Shortcut</display-name>
+    <is-abstract>false</is-abstract>
+    <is-final>true</is-final>
+    <is-built-in>true</is-built-in>
+    <allow-child-content>true</allow-child-content>
+    <form/>
+</type>

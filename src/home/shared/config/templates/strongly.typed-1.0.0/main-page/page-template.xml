@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<page-template>
+  <display-name>Strongly Typed</display-name>
+  <descriptor>strongly.typed-1.0.0:page</descriptor>
+  <config />
+  <can-render>
+    <content-type>trampoline</content-type>
+  </can-render>
+  <regions>
+  </regions>
+</page-template>

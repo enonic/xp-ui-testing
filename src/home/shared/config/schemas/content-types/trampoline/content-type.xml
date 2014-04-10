@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type>
+  <display-name>Trampoline</display-name>
+  <content-display-name-script>$('vendor') + ' - ' + $('name')</content-display-name-script>
+  <super-type>structured</super-type>
+  <is-abstract>false</is-abstract>
+  <is-final>true</is-final>
+  <is-built-in>false</is-built-in>
+  <allow-child-content>true</allow-child-content>
+  <form>
+    <field-set name="basic">
+      <label>Basic information</label>
+      <items>
+        <input type="TextLine" name="vendor">
+          <label>Vendor</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="TextLine" name="name">
+          <label>Product Name</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="HtmlArea" name="description">
+          <label>Description</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+      </items>
+    </field-set>
+    <field-set name="details">
+      <label>Details</label>
+      <items>
+        <input type="TextLine" name="features">
+          <label>Features</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text>Provide key selling points</help-text>
+          <occurrences minimum="1" maximum="0"/>
+        </input>
+        <input type="ImageSelector" name="image">
+          <label>Image Gallery</label>
+          <immutable>false</immutable>
+          <indexed>false</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="0"/>
+          <config>
+            <relationship-type>image</relationship-type>
+          </config>
+        </input>
+      </items>
+    </field-set>
+    <input type="Relationship" name="accessories">
+      <label>Accessories</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <custom-text/>
+      <help-text/>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <relationship-type>like</relationship-type>
+      </config>
+    </input>
+    <field-set name="variants">
+      <label>Trampoline variants</label>
+      <items>
+        <form-item-set name="variant">
+          <label>Variant</label>
+          <immutable>false</immutable>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="0"/>
+          <items>
+            <input type="TextLine" name="id">
+              <label>Variant ID</label>
+              <immutable>false</immutable>
+              <indexed>false</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="TextLine" name="sku">
+              <label>SKU</label>
+              <immutable>false</immutable>
+              <indexed>true</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="TextLine" name="price">
+              <label>Price</label>
+              <immutable>false</immutable>
+              <indexed>true</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="ImageSelector" name="image">
+              <label>Variant Image</label>
+              <immutable>false</immutable>
+              <indexed>false</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+              <config>
+                <relationship-type>image</relationship-type>
+              </config>
+            </input>
+          </items>
+        </form-item-set>
+      </items>
+    </field-set>
+  </form>
+</type>

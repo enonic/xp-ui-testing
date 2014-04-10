@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<type>
+    <display-name>HTML Area</display-name>
+    <super-type>structured</super-type>
+    <is-abstract>false</is-abstract>
+    <is-final>true</is-final>
+    <is-built-in>false</is-built-in>
+    <allow-child-content>true</allow-child-content>
+    <form>
+        <input name="htmlarea_text" type="HtmlArea">
+            <label>HTML Area</label>
+            <immutable>false</immutable>
+            <indexed>false</indexed>
+            <occurrences minimum="0" maximum="1"/>
+            <help-text>HTML Area</help-text>
+        </input>
+    </form>
+</type>

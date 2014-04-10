@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<type>
+    <display-name>Using mixin: address</display-name>
+    <super-type>structured</super-type>
+    <is-abstract>false</is-abstract>
+    <is-final>true</is-final>
+    <is-built-in>false</is-built-in>
+    <allow-child-content>true</allow-child-content>
+    <form>
+        <mixin-reference name="address">
+            <reference>address</reference>
+        </mixin-reference>
+    </form>
+</type>

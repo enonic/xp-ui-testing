@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<relationship-type>
+    <display-name>Default</display-name>
+    <from-semantic>relates to</from-semantic>
+    <to-semantic>related of</to-semantic>
+    <allowed-from-types/>
+    <allowed-to-types/>
+</relationship-type>

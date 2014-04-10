@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<page-template>
+  <display-name>Xeon with banner</display-name>
+  <descriptor>xeon-1.0.0:banner-page</descriptor>
+  <config/>
+  <can-render>
+    <content-type>xeon</content-type>
+  </can-render>
+  <regions>
+    <region name="main">
+      <layout-component name="Layout-3-col" descriptor="xeon-1.0.0:layout-3-col">
+        <regions>
+          <region name="left">
+            <image-component name="Image"/>
+          </region>
+          <region name="center">
+            <image-component name="Image"/>
+          </region>
+          <region name="right">
+            <image-component name="Image"/>
+          </region>
+        </regions>
+      </layout-component>
+      <part-component name="mypart"/>
+    </region>
+  </regions>
+</page-template>

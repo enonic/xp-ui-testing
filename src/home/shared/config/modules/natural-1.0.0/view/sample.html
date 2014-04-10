@@ -1,0 +1,16 @@
+<html>
+<head>
+</head>
+<body>
+
+<h1 data-wem-text="${title}">Hello Dynamic :-)</h1>
+
+<h2>Root Contents:</h2>
+<ul>
+    <li data-th-each="content: ${contents}"><a
+        data-th-href="'?parent=' + ${content.path}"
+        data-th-text="${content.displayName}">My content</a></li>
+</ul>
+
+</body>
+</html>

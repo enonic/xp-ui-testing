@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<type>
+    <display-name>Content Display name script</display-name>
+    <content-display-name-script>$('firstName', 'middleName', 'lastName')</content-display-name-script>
+    <super-type>structured</super-type>
+    <is-abstract>false</is-abstract>
+    <is-final>true</is-final>
+    <is-built-in>false</is-built-in>
+    <allow-child-content>true</allow-child-content>
+    <form>
+        <input name="firstName" type="TextLine">
+            <label>First name</label>
+            <immutable>false</immutable>
+            <indexed>true</indexed>
+            <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input name="middleName" type="TextLine">
+            <label>Middle name</label>
+            <immutable>false</immutable>
+            <indexed>true</indexed>
+            <occurrences minimum="0" maximum="0"/>
+        </input>
+        <input name="lastName" type="TextLine">
+            <label>Last name</label>
+            <immutable>false</immutable>
+            <indexed>true</indexed>
+            <occurrences minimum="1" maximum="1"/>
+        </input>
+        <form-item-set name="namesFromAFormItemSet">
+            <label>Names from a FormItemSet</label>
+            <items>
+                <input name="myName" type="TextLine">
+                    <label>My name</label>
+                    <immutable>false</immutable>
+                    <indexed>false</indexed>
+                    <occurrences minimum="0" maximum="0"/>
+                </input>
+            </items>
+            <immutable>false</immutable>
+            <occurrences minimum="0" maximum="0"/>
+        </form-item-set>
+    </form>
+</type>
