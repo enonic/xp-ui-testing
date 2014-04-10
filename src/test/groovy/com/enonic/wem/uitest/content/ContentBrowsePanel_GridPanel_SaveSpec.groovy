@@ -117,7 +117,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( rootContent.getPath() );
     }
 
-
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and wizard closed THEN parent should still be unexpanded"()
     {
         given:

@@ -20,7 +20,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     ContentBrowseFilterPanel filterPanel;
 
     @Shared
-    String PREDEFINED_FOLDER_NAME = "bildearkiv";
+    String INITIAL_CONTENT_FOLDER_NAME = "bildearkiv";
 
     def setup()
     {
@@ -47,14 +47,14 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
-        boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) );
+        boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
 
         when:
         filterPanel.clickByCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible( 2 );
 
         then:
-        !beforeClean && contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) );
+        !beforeClean && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
     }
 
     def "GIVEN One selection in ContentTypes-filter WHEN Selecting one additional entry in ContentTypes-filter THEN all existing Content of the both selected types should be listed in gridPanel"()
@@ -78,7 +78,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         given:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
-        boolean existsBeforeUnselect = contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) );
+        boolean existsBeforeUnselect = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
 
         when:
         filterPanel.deSelectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
@@ -86,7 +86,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
 
         then:
-        !existsBeforeUnselect && contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) );
+        !existsBeforeUnselect && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
     }
 
     def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
@@ -96,19 +96,19 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         when:
-        filterPanel.typeSearchText( PREDEFINED_FOLDER_NAME );
+        filterPanel.typeSearchText( INITIAL_CONTENT_FOLDER_NAME );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "text-search1" );
 
         then:
-        contentBrowsePanel.exists( ContentPath.from( PREDEFINED_FOLDER_NAME ) ) &&
+        contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) ) &&
             contentBrowsePanel.getContentNamesFromBrowsePanel().size() == 1;
     }
 
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
-        filterPanel.typeSearchText( PREDEFINED_FOLDER_NAME );
+        filterPanel.typeSearchText( INITIAL_CONTENT_FOLDER_NAME );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         when:
@@ -117,7 +117,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then:
-        contentBrowsePanel.exists( ContentPath.from( "homepage" ) ) && contentBrowsePanel.exists( ContentPath.from( "intranet" ) );
+        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1;
     }
 
 

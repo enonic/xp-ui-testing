@@ -33,6 +33,16 @@ class ContentBrowsePanel_FilterPanel_Spec
 
     def "GIVEN No selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
     {
+        given:
+        String name = NameHelper.uniqueName( "page" );
+        Content page = Content.builder().
+            name( name ).
+            displayName( "page" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.page() ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+
         when:
         String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
         TestUtils.saveScreenshot( getTestSession() );
@@ -129,7 +139,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-		contentBrowsePanel.waituntilPageLoaded(2);
+        contentBrowsePanel.waituntilPageLoaded( 2 );
         int beforeRemoving = filterPanel.getNumberFilteredByContenttype( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
         List<Content> contentList = new ArrayList();

@@ -3,23 +3,26 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ItemsSelectionPanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class ContentBrowsePanel_ItemsSelectionPanel_Spec
     extends BaseGebSpec
 {
     @Shared
-    String CONTENT_1_NAME = "homepage";
+    String CONTENT_1_NAME = NameHelper.uniqueName( "homepage" );
 
     @Shared
     String CONTENT_1_DISPALY_NAME = "Homepage"
 
     @Shared
-    String CONTENT_2_NAME = "intranet"
+    String CONTENT_2_NAME = NameHelper.uniqueName( "intranet" );
 
     @Shared
     String CONTENT_2_DISPALY_NAME = "Intranet"
@@ -46,22 +49,31 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN one selected Content WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
         given:
-        Content siteHomepage = Content.builder().
+        Content firstContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_1_NAME ).
             displayName( CONTENT_1_DISPALY_NAME ).
             contentType( ContentTypeName.page() ).
             build();
-        contentBrowsePanel.selectContentInTable( siteHomepage );
+        contentBrowsePanel.clickToolbarNew().selectContentType( firstContent.getContentTypeName() ).
+            typeData( firstContent ).save().close();
+        contentBrowsePanel.waituntilPageLoaded( 3 );
 
-        when:
-        Content siteIntranet = Content.builder().
+        Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_2_NAME ).
             contentType( ContentTypeName.page() ).
             displayName( CONTENT_2_DISPALY_NAME ).
             build();
-        contentBrowsePanel.selectContentInTable( siteIntranet );
+        contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
+            typeData( secondContent ).save().close();
+
+        contentBrowsePanel.selectContentInTable( firstContent );
+
+        when:
+
+        contentBrowsePanel.waituntilPageLoaded( 3 );
+        contentBrowsePanel.selectContentInTable( secondContent );
 
         then:
         itemsSelectionPanel.getSeletedItemCount() == 2;
@@ -70,29 +82,29 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN two selected Content WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
         given:
-        Content siteHomepage = Content.builder().
+        Content firstContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_1_NAME ).
             contentType( ContentTypeName.page() ).
             displayName( CONTENT_1_DISPALY_NAME ).build();
-        Content siteIntranet = Content.builder().
+        Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.page() ).
             name( CONTENT_2_NAME ).
             displayName( CONTENT_2_DISPALY_NAME ).build();
         List<Content> list = new ArrayList<>();
-        list.add( siteHomepage );
-        list.add( siteIntranet );
+        list.add( firstContent );
+        list.add( secondContent );
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSeletedItemCount();
 
         when:
-        Content folderBildearkiv = Content.builder().
+        Content thirdContent = Content.builder().
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.page() ).
             name( CONTENT_3_NAME ).
             displayName( CONTENT_3_DISPALY_NAME ).build();
-        contentBrowsePanel.selectContentInTable( folderBildearkiv );
+        contentBrowsePanel.selectContentInTable( thirdContent );
 
         then:
         itemsSelectionPanel.getSeletedItemCount() == before + 1;

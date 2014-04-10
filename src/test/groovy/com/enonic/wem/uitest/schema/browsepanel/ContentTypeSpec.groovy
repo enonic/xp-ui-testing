@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
 import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
-import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
+import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.SchemaCfgHelper
@@ -54,11 +54,11 @@ class ContentTypeSpec
         ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype )
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
                                                                                                                 ctype.getDisplayNameFromConfig() );
-        ContentTypeWizardPanel wizard =  schemaBrowsePanel.clickToolbarEdit().typeData( newContentType );
-		wizard.save();
-		TestUtils.saveScreenshot(getSession(), newContentType.getName());
-		wizard.waitNotificationMessage();
-		wizard.close();
+        ContentTypeWizardPanel wizard = schemaBrowsePanel.clickToolbarEdit().typeData( newContentType );
+        wizard.save();
+        TestUtils.saveScreenshot( getSession(), newContentType.getName() );
+        wizard.waitNotificationMessage();
+        wizard.close();
         TestUtils.saveScreenshot( getSession(), newContentType.getName() );
 
         then:
