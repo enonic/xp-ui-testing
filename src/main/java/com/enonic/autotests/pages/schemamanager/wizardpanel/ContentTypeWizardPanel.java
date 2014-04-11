@@ -1,4 +1,5 @@
 package com.enonic.autotests.pages.schemamanager.wizardpanel;
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,8 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.schemamanger.ContentType;
 
 /**
@@ -59,6 +58,7 @@ public class ContentTypeWizardPanel
         {
             throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
         }
+        sleep(400);
         return this;
 
     }

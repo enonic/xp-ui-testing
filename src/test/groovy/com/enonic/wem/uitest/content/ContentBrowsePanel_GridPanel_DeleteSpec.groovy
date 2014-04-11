@@ -188,4 +188,35 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         then:
         contentBrowsePanel.isNewButtonEnabled();
     }
+	
+	def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
+	{
+		given:
+		Content content1 = Content.builder().
+			name( NameHelper.uniqueName( "archive" ) ).
+			displayName( "archive" ).
+			contentType( ContentTypeName.folder() ).
+			parent( ContentPath.ROOT ).
+			build();
+			
+		Content content2 = Content.builder().
+			name( NameHelper.uniqueName( "archive" ) ).
+			displayName( "archive" ).
+			contentType( ContentTypeName.folder() ).
+			parent( ContentPath.ROOT ).
+			build();
+			List<Content> contentList = new ArrayList<>();
+		contentList.add(content2);
+		contentList.add(content1);
+		contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
+		contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
+		
+		when:
+		contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+		
+		then:
+		contentBrowsePanel.isNewButtonEnabled();
+	}
 }

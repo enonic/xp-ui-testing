@@ -44,6 +44,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 			contentType( ContentTypeName.page() ).
 			build();
 		contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+		contentBrowsePanel.waituntilPageLoaded(3);
 
         when:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
