@@ -355,7 +355,7 @@ public class ContentBrowsePanel
                     " was not found!" );
         }
         getDriver().findElement( By.xpath( spaceCheckBoxXpath ) ).click();
-
+        sleep(200);
         boolean isNewEnabled = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), 2l );
         if ( !isNewEnabled )
         {

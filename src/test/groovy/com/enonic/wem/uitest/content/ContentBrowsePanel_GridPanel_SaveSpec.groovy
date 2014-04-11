@@ -177,6 +177,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( content );
 
         when:
+	TestUtils.saveScreenshot( getTestSession(), name );
         wizard.save().close();
         TestUtils.saveScreenshot( getTestSession(), name );
 
