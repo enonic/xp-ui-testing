@@ -19,7 +19,7 @@ public class NewContentDialog
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
 
-    public static String CONTENT_TYPE_NAME = "//li[contains(@class,'content-type-list-item')]//p[text()='%s']";
+    public static String CONTENT_TYPE_NAME = "//div[contains(@id,'app.create.NewContentDialogList')]//li[@class='content-types-list-item' and descendant::p[text()='%s']]";
 
     /**
      * The constructor.
