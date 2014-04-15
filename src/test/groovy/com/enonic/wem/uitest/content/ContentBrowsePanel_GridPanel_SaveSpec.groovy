@@ -224,7 +224,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( contentToEdit ).save().close();
         Content newcontent = cloneContentWithNewName( contentToEdit )
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).
-            selectRowByCheckbox( contentToEdit.getPath() ).clickToolbarEdit();
+            clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
         wizard.typeData( newcontent );
 
         when:
@@ -253,7 +253,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( contentToEdit ).save().close();
 
         Content newcontent = cloneContentWithNewDispalyName( contentToEdit );
-        wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).selectRowByCheckbox( contentToEdit.getPath() ).
+        wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getPath() ).
             clickToolbarEdit();
         wizard.typeData( newcontent );
 

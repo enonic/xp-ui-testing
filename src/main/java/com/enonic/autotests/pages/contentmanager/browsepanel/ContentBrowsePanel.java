@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -186,7 +187,7 @@ public class ContentBrowsePanel
                     path = ContentPath.from( path, parentContent );
                 }
 
-                if ( !clickByExpander( path.toString() ) )
+                if ( !this.<String>clickByExpander( path.toString() ) )
                 {
                     getLogger().info( "content with name " + parentContent + "has no children! " );
                 }
@@ -296,7 +297,7 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentBrowsePanel selectRowByCheckbox( ContentPath path )
+    public ContentBrowsePanel clickCheckboxAndSelectRow( ContentPath path )
     {
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
         getLogger().info( "tries to find content in table:" + path.toString() );
@@ -310,6 +311,24 @@ public class ContentBrowsePanel
         sleep( 700 );
         findElement( By.xpath( contentCheckBoxXpath ) ).click();
         getLogger().info( "check box was selected, content path is:" + path.toString() );
+      
+        return this;
+    }
+    
+    public ContentBrowsePanel pressSpacebarOnCheckbox( ContentPath path )
+    {
+        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
+        getLogger().info( "tries to find content in table:" + path.toString() );
+
+        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
+        if ( !isPresent )
+        {
+            throw new SaveOrUpdateException( "checkbox for content: " + path.toString() + "was not found" );
+        }
+        
+        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys(Keys.SPACE);
+        getLogger().info( "check box was selected, content path is:" + path.toString() );     
         return this;
     }
 

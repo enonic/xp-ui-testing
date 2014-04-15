@@ -100,7 +100,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.doClearSelection();
 
         when:
-        contentBrowsePanel.selectRowByCheckbox( content.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() );
         contentBrowsePanel.deleteSelected();
 
         then:
@@ -169,7 +169,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
-        !contentBrowsePanel.isExpanderPresent( parent.getName() );
+        !contentBrowsePanel.<ContentPath>isExpanderPresent( ContentPath.from(parent.getName()) );
     }
 
     def "GIVEN a Content on root WHEN deleted THEN New-button is enabled"()

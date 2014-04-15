@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -8,8 +10,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class BrowsePanel
     extends Application
@@ -52,17 +52,17 @@ public class BrowsePanel
      * @return true if space is not empty and was expanded, otherwise return
      * false.
      */
-    public boolean clickByExpander( String contentPath )
+    public <T> boolean clickByExpander( T element )
     {
-        boolean isExpanderPresent = isExpanderPresent( contentPath );
+        boolean isExpanderPresent = isExpanderPresent( element );
         if ( !isExpanderPresent )
         {
-            getLogger().info( "The folder: " + contentPath + " has no contents" );
+            getLogger().info( "This object: " + element.toString() + " has no child" );
             return false;
         }
-        if ( !isRowExapnded( contentPath ) )
+        if ( !isRowExapnded( element.toString() ) )
         {
-            findExpanderImageAndClick( contentPath );
+        	clickOnExpanderImage( element.toString() );
         }
 
         return true;
@@ -74,23 +74,17 @@ public class BrowsePanel
      *
      * @return true if space has no any children., otherwise true.
      */
-    public boolean isExpanderPresent( String contentName )
+    public <T>boolean isExpanderPresent( T contentPath )
     {
-        String expanderElement = String.format( TD_CONTENT_NAME + "/div/img[contains(@class,'x-tree-expander')]", contentName );
-        getLogger().info( "check if present expander for folder:" + contentName + " xpath: " + expanderElement );
+        String expanderElement = String.format( TD_CONTENT_NAME + "/div/img[contains(@class,'x-tree-expander')]", contentPath.toString() );
+        getLogger().info( "check if present expander for folder:" + contentPath.toString() + " xpath: " + expanderElement );
         boolean isPresent = isDynamicElementPresent( By.xpath( expanderElement ), 2 );
         if ( !isPresent )
         {
-            getLogger().info( "expander for folder:" + contentName + " was not found! " );
+            getLogger().info( "expander for folder:" + contentPath.toString() + " was not found! " );
             return false;
         }
 
-        //check if dispalyed:
-//		if (!findElement(By.xpath(expanderElement)).isDisplayed())
-//		{ 
-//			TestUtils.getInstance().scrollTableAndFind(getSession(), expanderElement, DIV_SCROLL_XPATH);
-//			
-//		}
         return true;
     }
 
@@ -112,9 +106,9 @@ public class BrowsePanel
     /**
      * clicks by expand-icon and expands a space.
      */
-    private void findExpanderImageAndClick( String parentName )
+    private void clickOnExpanderImage( String contentName )
     {
-        String expanderImgXpath = buildFolderExpanderXpath( parentName );
+        String expanderImgXpath = buildExpanderXpath( contentName );
         List<WebElement> elems = getSession().getDriver().findElements( By.xpath( expanderImgXpath ) );
         if ( elems.size() == 0 )
         {
@@ -132,12 +126,11 @@ public class BrowsePanel
         }
         else
         {
-
             elems.get( 0 ).click();
         }
     }
 
-    protected String buildFolderExpanderXpath( String name )
+    protected String buildExpanderXpath( String name )
     {
         return String.format( TD_CONTENT_NAME, name ) + "//ancestor::td//img[contains(@class,'x-tree-expander')]";
 
@@ -156,7 +149,7 @@ public class BrowsePanel
             throw new TestFrameworkException( "The link 'Select All' was not found on the page, probably wrong xpath locator" );
         }
         selectAllLink.click();
-        return getSelectedRowNumber();
+        return getSelectedRowsNumber();
     }
 
 
@@ -175,7 +168,7 @@ public class BrowsePanel
      *
      * @return a number of selected rows.
      */
-    public int getSelectedRowNumber()
+    public int getSelectedRowsNumber()
     {
         int number = 0;
         List<WebElement> rows = getSession().getDriver().findElements( By.xpath( ALL_ROWS_IN_CONTENT_TABLE_XPATH ) );
