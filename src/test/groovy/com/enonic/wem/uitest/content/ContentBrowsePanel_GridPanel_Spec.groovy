@@ -60,6 +60,7 @@ class ContentBrowsePanel_GridPanel_Spec  extends BaseGebSpec
 		contentBrowsePanel.pressSpacebarOnCheckbox(ContentPath.from(contentNames.get(0))); 
 		
 		then:
+		TestUtils.saveScreenshot(getTestSession(), "spacebartest");
 		contentBrowsePanel.getSelectedRowsNumber() == 0;
 	}
 	
