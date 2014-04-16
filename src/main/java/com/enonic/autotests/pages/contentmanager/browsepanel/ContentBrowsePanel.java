@@ -328,6 +328,7 @@ public class ContentBrowsePanel
         }
         
         findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys(Keys.SPACE);
+        sleep(300);
         getLogger().info( "check box was selected, content path is:" + path.toString() );     
         return this;
     }
