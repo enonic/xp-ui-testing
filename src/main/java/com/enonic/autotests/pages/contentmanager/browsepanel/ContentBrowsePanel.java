@@ -197,6 +197,17 @@ public class ContentBrowsePanel
         return this;
     }
 
+    public List<String> getChildNames(ContentPath contentPath)
+    {
+    	List<String> listNames = new ArrayList<>();
+    	List<WebElement> elems = findElements(By.xpath(String.format(TD_CHILDREN_CONTENT_NAMES,contentPath.toString()+"/")));
+    	for(WebElement el: elems)
+    	{
+    		listNames.add(el.getText());
+    	}
+    	return listNames;
+    }
+
     /**
      * Clicks by 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
      */
@@ -329,7 +340,7 @@ public class ContentBrowsePanel
         
         findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys(Keys.SPACE);
         sleep(300);
-        getLogger().info( "check box was selected, content path is:" + path.toString() );     
+        getLogger().info( "spacebar was pressed, content path is:" + path.toString() );     
         return this;
     }
 

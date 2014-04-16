@@ -7,9 +7,12 @@ import spock.lang.Shared
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.contentmanager.Content;
 import com.enonic.wem.api.content.ContentPath;
+import com.enonic.wem.api.schema.content.ContentTypeName;
 import com.enonic.wem.uitest.BaseGebSpec
 
 class ContentBrowsePanel_GridPanel_Spec  extends BaseGebSpec
@@ -55,12 +58,13 @@ class ContentBrowsePanel_GridPanel_Spec  extends BaseGebSpec
 		given:
 		List<String> contentNames = contentBrowsePanel.getContentNamesFromBrowsePanel();
 		contentBrowsePanel.clickCheckboxAndSelectRow(ContentPath.from(contentNames.get(0)));
+		TestUtils.saveScreenshot(getTestSession(), "spacebartest1");
 		
 		when:
 		contentBrowsePanel.pressSpacebarOnCheckbox(ContentPath.from(contentNames.get(0))); 
 		
 		then:
-		TestUtils.saveScreenshot(getTestSession(), "spacebartest");
+		TestUtils.saveScreenshot(getTestSession(), "spacebartest2");
 		contentBrowsePanel.getSelectedRowsNumber() == 0;
 	}
 	
@@ -96,6 +100,34 @@ class ContentBrowsePanel_GridPanel_Spec  extends BaseGebSpec
 		
 		expect:
 		getTestContentName(contentNames) !=null && contentBrowsePanel.isExpanderPresent(ContentPath.from(BILDERAKIV))
+	}
+	
+	def "GIVEN a Content on root having no children WHEN listed THEN expander is not shown"()
+	{
+		given:
+		String name = NameHelper.uniqueName( "mediadata" );
+		Content page = Content.builder().
+			name( name ).
+			displayName( "page" ).
+			parent( ContentPath.ROOT ).
+			contentType( ContentTypeName.MEDIA_DATA ).
+			build();
+		contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+		
+		expect:
+		!contentBrowsePanel.isExpanderPresent(ContentPath.from(name));
+	}
+	@Ignore
+	def "GIVEN a Content with a closed expander WHEN expanded THEN one or more children is listed beneath"()
+	{
+		expect:
+		!contentBrowsePanel.isRowExapnded(ContentPath.from(BILDERAKIV).toString());
+		
+		when:
+		contentBrowsePanel.expandContent(ContentPath.from(BILDERAKIV));
+		
+		then:
+		contentBrowsePanel.getChildNames(ContentPath.from(BILDERAKIV)) > 0;
 	}
 	
 	String getTestContentName(List<String> contentNames)

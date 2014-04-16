@@ -20,6 +20,8 @@ public class BrowsePanel
 
     protected String TD_CONTENT_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
 
+    protected String TD_CHILDREN_CONTENT_NAMES = "//table[contains(@class,'x-grid-table')]//td[descendant::p[contains(.,'%s')]]";
+
     private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
 
 
