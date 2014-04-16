@@ -353,7 +353,6 @@ public class ContentBrowsePanel
     {
         newButton.click();
         sleep(1000);
-        TestUtils.saveScreenshot(getSession(),NameHelper.uniqueName("clicked"));
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         boolean isOpened = newContentDialog.isOpened();
         if ( !isOpened )
