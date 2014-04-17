@@ -177,7 +177,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( content );
 
         when:
-	TestUtils.saveScreenshot( getTestSession(), name );
         wizard.save().close();
         TestUtils.saveScreenshot( getTestSession(), name );
 
@@ -233,7 +232,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        contentBrowsePanel.expandContent( newcontent.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
         contentBrowsePanel.exists( newcontent.getPath() );
 
@@ -263,7 +261,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        contentBrowsePanel.expandContent( newcontent.getParent() );
         contentBrowsePanel.exists( newcontent.getPath() );
     }
 

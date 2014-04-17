@@ -224,7 +224,7 @@ public class ContentBrowseFilterPanel
 
     public String deSelectEntryInContentTypesFilter( String contenttypeDisplayName )
     {
-        TestUtils.saveScreenshot( getSession() );
+    	TestUtils.saveScreenshot(getSession(), contenttypeDisplayName);
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
@@ -241,7 +241,7 @@ public class ContentBrowseFilterPanel
 
         }
         waitsForSpinnerNotVisible();
-        return getDriver().findElements( By.xpath( itemXpath ) ).get( 0 ).getText();// elems.get( 0 ).getText();
+        return  getDriver().findElements( By.xpath( itemXpath ) ).get(0).getText();
     }
 
     /**

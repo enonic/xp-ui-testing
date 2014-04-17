@@ -50,22 +50,23 @@ public class BrowsePanel
     /**
      * clicks by 'expand' icon and expands a folder.
      *
-     * @param contentPath
+     * @param name - the name of content type or contentPath
      * @return true if space is not empty and was expanded, otherwise return
      * false.
      */
-    public <T> boolean clickByExpander( T element )
+    public <T> boolean clickByExpander( T name )
     {
-        boolean isExpanderPresent = isExpanderPresent( element );
+        boolean isExpanderPresent = isExpanderPresent( name );
         if ( !isExpanderPresent )
         {
-            getLogger().info( "This object: " + element.toString() + " has no child" );
+            getLogger().info( "This object: " + name.toString() + " has no child" );
             return false;
         }
-        if ( !isRowExapnded( element.toString() ) )
-        {
-        	clickOnExpanderImage( element.toString() );
-        }
+        clickOnExpanderImage( name.toString() );
+//        if ( isRowExapnded( element.toString() ) )
+//        {
+//        	clickOnExpanderImage( element.toString() );
+//        }
 
         return true;
     }
@@ -108,9 +109,9 @@ public class BrowsePanel
     /**
      * clicks by expand-icon and expands a space.
      */
-    private void clickOnExpanderImage( String contentName )
+    private void clickOnExpanderImage( String name )
     {
-        String expanderImgXpath = buildExpanderXpath( contentName );
+        String expanderImgXpath = buildExpanderXpath( name );
         List<WebElement> elems = getSession().getDriver().findElements( By.xpath( expanderImgXpath ) );
         if ( elems.size() == 0 )
         {
@@ -184,13 +185,13 @@ public class BrowsePanel
         return number;
     }
 
-    public boolean isRowSelected( String contentName )
+    public boolean isRowSelected( String name )
     {
         List<WebElement> rows =
-            getSession().getDriver().findElements( By.xpath( String.format( ( TD_CONTENT_NAME + "/parent::tr" ), contentName ) ) );
+            getSession().getDriver().findElements( By.xpath( String.format( ( TD_CONTENT_NAME + "/parent::tr" ), name ) ) );
         if ( rows.size() == 0 )
         {
-            throw new TestFrameworkException( "row with content was not found, content name is " + contentName );
+            throw new TestFrameworkException( "row with content was not found, content name is " + name );
         }
         return waitAndCheckAttrValue( rows.get( 0 ), "class", "x-grid-row-selected", 1 );
 

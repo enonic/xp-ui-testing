@@ -156,17 +156,48 @@ public class ContentBrowsePanel
         return allNames;
     }
 
+    /**
+     * @param contentPath
+     * @return
+     */
     public boolean exists( ContentPath contentPath )
+    {
+       return exists(contentPath, Application.DEFAULT_IMPLICITLY_WAIT);
+    }
+    
+    /**
+     * @param contentPath
+     * @param timeout
+     * @return
+     */
+    public boolean exists( ContentPath contentPath, int timeout )
     {
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, contentPath.toString() );
         getLogger().info( "will verify is exists:" + contentDescriptionXpath );
         waitsForSpinnerNotVisible();
-        boolean result = waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), 1l );
+        boolean result = waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), timeout );
         getLogger().info( "content with path:" + contentDescriptionXpath + " isExists: " + result );
         TestUtils.saveScreenshot( getSession() );
         return result;
     }
 
+    /**
+     * @param contentPath
+     * @return
+     */
+    public ContentBrowsePanel unExpandContent( ContentPath contentPath )
+    {
+    	if(isRowExapnded(contentPath.toString()))
+    	{
+    		this.<String>clickByExpander( contentPath.toString());
+    		getLogger().info("content have been unexpanded: " + contentPath.toString());
+    	}else
+    	{
+    		getLogger().info("content was not expanded: " + contentPath.toString());
+    	}
+    	sleep(500);
+    	return this;
+    }
     /**
      * @param contentPath
      */
@@ -194,6 +225,7 @@ public class ContentBrowsePanel
             }
         }
         waitsForSpinnerNotVisible();
+        sleep(700);
         return this;
     }
 
@@ -240,29 +272,29 @@ public class ContentBrowsePanel
         {
             if ( !isRowSelected( content.getPath().toString() ) )
             {
-                clickCheckbox( content );
+            	clickCheckboxAndSelectRow( content.getPath() );
             }
 
         }
         return this;
     }
 
-    public ContentBrowsePanel selectContentInTable( Content content )
+    public ContentBrowsePanel selectContentInTable( ContentPath contentPath )
     {
-        waitAndCheckContent( content.getPath() );
-        if ( !isRowSelected( content.getPath().toString() ) )
+        waitAndCheckContent( contentPath );
+        if ( !isRowSelected( contentPath.toString() ) )
         {
-            clickCheckbox( content );
+        	clickCheckboxAndSelectRow( contentPath );
         }
         return this;
     }
 
-    public ContentBrowsePanel deSelectContentInTable( Content content )
+    public ContentBrowsePanel deSelectContentInTable( ContentPath contentPath )
     {
-        waitAndCheckContent( content.getPath() );
-        if ( isRowSelected( content.getPath().toString() ) )
+        waitAndCheckContent( contentPath );
+        if ( isRowSelected( contentPath.toString() ) )
         {
-            clickCheckbox( content );
+        	clickCheckboxAndSelectRow( contentPath );
         }
         return this;
     }
@@ -275,14 +307,14 @@ public class ContentBrowsePanel
         }
     }
 
-    private void waitAndCheckContent( ContentPath content )
+    private void waitAndCheckContent( ContentPath contentPath )
     {
-        boolean isExist = exists( content );
+        boolean isExist = exists( contentPath );
 
         if ( !isExist )
         {
-            TestUtils.saveScreenshot( getSession(), content.getName() );
-            throw new TestFrameworkException( "The content with name " + content.getName() + " was not found!" );
+            TestUtils.saveScreenshot( getSession(), contentPath.getName());
+            throw new TestFrameworkException( "The content with name " + contentPath.getName() + " was not found!" );
         }
     }
 
@@ -291,22 +323,22 @@ public class ContentBrowsePanel
      *
      * @param content
      */
-    private ContentBrowsePanel clickCheckbox( Content content )
-    {
-        String fullName = content.getPath().toString();
-        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, fullName );
-        getLogger().info( "tries to find the content in a table, fullName of content is :" + fullName );
-
-        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
-        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
-        if ( !isPresent )
-        {
-            throw new SaveOrUpdateException( "checkbox for content with name : " + content.getName() + "was not found" );
-        }
-        sleep( 700 );
-        findElement( By.xpath( contentCheckBoxXpath ) ).click();
-        return this;
-    }
+//    private ContentBrowsePanel clickCheckbox( ContentPath contentPath )
+//    {
+//        String name = contentPath.toString();
+//        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, name );
+//        getLogger().info( "tries to find the content in a table, fullName of content is :" + name );
+//
+//        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
+//        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
+//        if ( !isPresent )
+//        {
+//            throw new SaveOrUpdateException( "checkbox for content with name : " +contentPath.toString() + "was not found" );
+//        }
+//        sleep( 700 );
+//        findElement( By.xpath( contentCheckBoxXpath ) ).click();
+//        return this;
+//    }
 
     public ContentBrowsePanel clickCheckboxAndSelectRow( ContentPath path )
     {
@@ -326,7 +358,14 @@ public class ContentBrowsePanel
         return this;
     }
     
-    public ContentBrowsePanel pressSpacebarOnCheckbox( ContentPath path )
+    /**
+     * When row selected, there ia ability to click on Spacebar or ARROW_DOWN, ARROW_UP
+     * 
+     * @param path
+     * @param key
+     * @return {@link ContentBrowsePanel} instance.
+     */
+    public ContentBrowsePanel pressKeyOnRow( ContentPath path, Keys key )
     {
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
         getLogger().info( "tries to find content in table:" + path.toString() );
@@ -337,8 +376,7 @@ public class ContentBrowsePanel
         {
             throw new SaveOrUpdateException( "checkbox for content: " + path.toString() + "was not found" );
         }
-        
-        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys(Keys.SPACE);
+        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys(key);
         sleep(300);
         getLogger().info( "spacebar was pressed, content path is:" + path.toString() );     
         return this;
@@ -367,21 +405,21 @@ public class ContentBrowsePanel
      *
      * @param parentContentPath
      */
-    public ContentBrowsePanel clickByParentCheckbox( ContentPath parentContentPath )
+    public ContentBrowsePanel clickByParentCheckbox( ContentPath contentPath )
     {
-        if ( parentContentPath.elementCount() == 0 )
+        if ( contentPath.elementCount() == 0 )
         {
             return this;
         }
 
         // 1. select a checkbox and press the 'New' from toolbar.
-        String spaceCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, parentContentPath );
+        String spaceCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, contentPath.toString() );
         boolean isPresentCheckbox = isDynamicElementPresent( By.xpath( spaceCheckBoxXpath ), 3 );
         if ( !isPresentCheckbox )
         {
-            TestUtils.saveScreenshot( getSession(), "checkbox"+ parentContentPath.toString());
+            TestUtils.saveScreenshot( getSession(), "checkbox"+ contentPath.getName());
             throw new TestFrameworkException(
-                "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + parentContentPath +
+                "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + contentPath.toString() +
                     " was not found!" );
         }
         getDriver().findElement( By.xpath( spaceCheckBoxXpath ) ).click();
@@ -410,6 +448,10 @@ public class ContentBrowsePanel
         return this;
     }
 
+    /**
+     * Clicks on 'Open' button in toolbar.
+     * @return {@link ItemViewPanelPage} instance.
+     */
     public ItemViewPanelPage clickToolbarOpen()
     {
         openButton.click();
@@ -417,6 +459,11 @@ public class ContentBrowsePanel
         return cinfo;
     }
 
+    /**
+     * Clicks on 'Edit' button in toolbar.
+     * 
+     * @return {@link ContentWizardPanel} instance.
+     */
     public ContentWizardPanel clickToolbarEdit()
     {
         editButton.click();
@@ -434,7 +481,7 @@ public class ContentBrowsePanel
     public ItemViewPanelPage doOpenContentFromContextMenu( Content content )
     {
         expandContent( content.getParent() );
-        boolean isExists = exists( content.getPath() );
+        boolean isExists = exists( content.getPath(),Application.DEFAULT_IMPLICITLY_WAIT );
         if ( !isExists )
         {
             throw new TestFrameworkException(
@@ -476,11 +523,17 @@ public class ContentBrowsePanel
         }
     }
 
+    /**
+     * @return true if 'Delete' button enabled, otherwise false.
+     */
     public boolean isDeleteButtonEnabled()
     {
         return deleteButton.isEnabled();
     }
 
+    /**
+     *  @return true if 'New' button enabled, otherwise false.
+     */
     public boolean isNewButtonEnabled()
     {
         return newButton.isEnabled();

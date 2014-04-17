@@ -68,12 +68,12 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
             typeData( secondContent ).save().close();
 
-        contentBrowsePanel.selectContentInTable( firstContent );
+        contentBrowsePanel.selectContentInTable( firstContent.getPath() );
 
         when:
 
         contentBrowsePanel.waituntilPageLoaded( 3 );
-        contentBrowsePanel.selectContentInTable( secondContent );
+        contentBrowsePanel.selectContentInTable( secondContent.getPath() );
 
         then:
         itemsSelectionPanel.getSeletedItemCount() == 2;
@@ -104,7 +104,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             contentType( ContentTypeName.page() ).
             name( CONTENT_3_NAME ).
             displayName( CONTENT_3_DISPALY_NAME ).build();
-        contentBrowsePanel.selectContentInTable( thirdContent );
+        contentBrowsePanel.selectContentInTable( thirdContent.getPath() );
 
         then:
         itemsSelectionPanel.getSeletedItemCount() == before + 1;
@@ -138,7 +138,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         int before = itemsSelectionPanel.getSeletedItemCount();
 
         when:
-        contentBrowsePanel.deSelectContentInTable( folderBildearkiv );
+        contentBrowsePanel.deSelectContentInTable( folderBildearkiv.getPath() );
 
         then:
         itemsSelectionPanel.getSeletedItemCount() == before - 1;

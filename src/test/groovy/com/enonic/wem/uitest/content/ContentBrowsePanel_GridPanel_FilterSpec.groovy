@@ -4,11 +4,11 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilter
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContenTypeDispalyNames
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.autotests.vo.contentmanager.Content;
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
-import com.enonic.wem.api.schema.content.ContentTypeName;
+import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
@@ -36,15 +36,15 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given:
         boolean isClearFilterPresent = filterPanel.waitForClearFilterLinkNotvisible();
-		String name = NameHelper.uniqueName( "page" );
-		Content page = Content.builder().
-			name( name ).
-			displayName( "page" ).
-			parent( ContentPath.ROOT ).
-			contentType( ContentTypeName.page() ).
-			build();
-		contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
-		contentBrowsePanel.waituntilPageLoaded(3);
+        String name = NameHelper.uniqueName( "page" );
+        Content page = Content.builder().
+            name( name ).
+            displayName( "page" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.page() ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        contentBrowsePanel.waituntilPageLoaded( 3 );
 
         when:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )

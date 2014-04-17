@@ -17,7 +17,7 @@ public class Application
 
     public static final long IMPLICITLY_WAIT = 4l;
 
-    public static final long DEFAULT_IMPLICITLY_WAIT = 2l;
+    public static final int DEFAULT_IMPLICITLY_WAIT = 2;
 
     public static final String APP_SPACE_ADMIN_FRAME_XPATH = "//iframe[contains(@src,'space-manager')]";
 
