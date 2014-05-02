@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Page Object for Login page version 5.0
@@ -53,6 +55,8 @@ public class LoginPage
         boolean isLoginPageLoaded = waitUntilTitleLoad( TITLE, LOGIN_PAGE_TIMEOUT );
         if ( !isLoginPageLoaded )
         {
+        	String name = NameHelper.uniqueName("loginpage");
+        	TestUtils.saveScreenshot(getSession(),name);
             throw new TestFrameworkException( "Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT );
         }
         getLogger().info( "Login page title: " + getDriver().getTitle() );
