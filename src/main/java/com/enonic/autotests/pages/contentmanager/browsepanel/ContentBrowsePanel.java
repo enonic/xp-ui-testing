@@ -33,7 +33,8 @@ public class ContentBrowsePanel
 
     public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.HomeButton']";
 
-    private static final String TABLE_ITEM_XPATH = "//h6[text()='BildeArkiv']";
+    // private static final String TABLE_ITEM_XPATH = "//h6[text()='BildeArkiv']";
+    private static final String TABLE_ITEM_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
 
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]";
@@ -378,7 +379,7 @@ public class ContentBrowsePanel
         }
         findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys(key);
         sleep(300);
-        getLogger().info( "spacebar was pressed, content path is:" + path.toString() );     
+        getLogger().info( "key was typed:" + key.toString()+ " ,  content path is:" + path.toString() );     
         return this;
     }
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <page-template>
-  <display-name>Xeon with banner</display-name>
+  <display-name>Banner</display-name>
   <descriptor>xeon-1.0.0:banner-page</descriptor>
   <config/>
   <can-render>
     <content-type>xeon</content-type>
+    <content-type>page</content-type>
   </can-render>
   <regions>
     <region name="main">

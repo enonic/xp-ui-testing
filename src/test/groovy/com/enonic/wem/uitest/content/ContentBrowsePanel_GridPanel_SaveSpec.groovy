@@ -47,13 +47,13 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         ContentData data = new ContentData();
-        data.setProperty( "firstName", new Value.String( "Jorund" ) );
-        data.addProperty( "firstName", new Value.String( "Vier" ) );
-        data.addProperty( "surname", new Value.String( "Skriubakken" ) );
+        data.setProperty( "firstName", Value.newString( "Jorund" ) );
+        data.addProperty( "firstName", Value.newString( "Vier" ) );
+        data.addProperty( "surname", Value.newString( "Skriubakken" ) );
         DataSet mySet = new DataSet( "address" );
-        mySet.setProperty( "street", new Value.String( "Sonstlei" ) )
-        mySet.setProperty( "postalCode", new Value.String( "1763" ) )
-        mySet.setProperty( "postalPlace", new Value.String( "HALDEN" ) )
+        mySet.setProperty( "street", Value.newString( "Sonstlei" ) )
+        mySet.setProperty( "postalCode", Value.newString( "1763" ) )
+        mySet.setProperty( "postalPlace", Value.newString( "HALDEN" ) )
         data.add( mySet );
 
         Content rootContent = Content.builder().

@@ -9,45 +9,5 @@
   </vendor>
   <dependencies system-min-version="5.0.0" system-max-version="6.0.0"/>
   <form name="config">
-    <input type="TextArea" name="address">
-      <label>Address</label>
-      <immutable>false</immutable>
-      <indexed>false</indexed>
-      <custom-text/>
-      <help-text/>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
-    <input type="TextLine" name="phone">
-      <label>Phone</label>
-      <immutable>false</immutable>
-      <indexed>false</indexed>
-      <custom-text/>
-      <help-text/>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
-    <input type="TextLine" name="mail">
-      <label>Mail</label>
-      <immutable>false</immutable>
-      <indexed>false</indexed>
-      <custom-text/>
-      <help-text/>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
-    <input type="TextLine" name="facebook-page">
-      <label>Facebook Page</label>
-      <immutable>false</immutable>
-      <indexed>false</indexed>
-      <custom-text/>
-      <help-text/>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
-    <input type="TextLine" name="twitter-account">
-      <label>Twitter account</label>
-      <immutable>false</immutable>
-      <indexed>false</indexed>
-      <custom-text/>
-      <help-text/>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
   </form>
 </module>

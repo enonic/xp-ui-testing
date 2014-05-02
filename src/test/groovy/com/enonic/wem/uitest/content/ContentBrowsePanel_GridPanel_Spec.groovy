@@ -20,7 +20,7 @@ class ContentBrowsePanel_GridPanel_Spec
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    String BILDERAKIV = "bildearkiv";
+    String BILDERAKIV = "imagearchive";
 
 
     def setup()

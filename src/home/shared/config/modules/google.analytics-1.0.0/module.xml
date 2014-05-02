@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <display-name>Google Analytics</display-name>
+  <info>For demo purposes only.</info>
+  <url>http://google.com</url>
+  <vendor>
+    <name>Google</name>
+    <url>http://www.google.com</url>
+  </vendor>
+  <dependencies system-min-version="5.0.0" system-max-version="6.0.0"/>
+  <form name="config">
+    <input type="TextLine" name="site-key">
+      <label>Site key</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <custom-text/>
+      <help-text/>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+  </form>
+</module>

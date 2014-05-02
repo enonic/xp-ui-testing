@@ -28,10 +28,10 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     String CONTENT_2_DISPALY_NAME = "Intranet"
 
     @Shared
-    String CONTENT_3_NAME = "bildearkiv"
+    String CONTENT_3_NAME = "imagearchive"
 
     @Shared
-    String CONTENT_3_DISPALY_NAME = "Bildearkiv"
+    String CONTENT_3_DISPALY_NAME = "Image Archive"
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;

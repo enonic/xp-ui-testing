@@ -23,7 +23,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     ContentBrowseFilterPanel filterPanel;
 
     @Shared
-    String INITIAL_CONTENT_FOLDER_NAME = "bildearkiv";
+    String INITIAL_CONTENT_FOLDER_NAME = "imagearchive";
 
     def setup()
     {
