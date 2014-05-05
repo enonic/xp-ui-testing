@@ -207,6 +207,7 @@ public class ContentBrowseFilterPanel
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
         {
+            TestUtils.saveScreenshot(getSession(),contenttypeDisplayName);
             logError( "content type was not found in the search panel:" + contenttypeDisplayName );
             throw new ContentFilterException( "content type was not found in the search panel:" + contenttypeDisplayName );
         }
