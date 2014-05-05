@@ -114,7 +114,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then:
         contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) ) &&
-            contentBrowsePanel.getContentNamesFromBrowsePanel().size() == 1;
+           isStringPresentInName(contentBrowsePanel.getContentNamesFromBrowsePanel(), INITIAL_CONTENT_FOLDER_NAME);
     }
 
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
@@ -132,5 +132,19 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1;
     }
 
-
+  private isStringPresentInName(List<String>allNames, String name)
+  {
+	  if(allNames.isEmpty())
+	  {
+		  return false;
+	  }
+	  for(String uiName: allNames)
+	  {
+		  if(!uiName.contains(name))
+		  {
+			  return false;
+		  }
+	  }
+	  return true;
+  }
 }
