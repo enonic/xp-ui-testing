@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
@@ -167,7 +168,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentList.add( content );
 
         when:
-        contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.expandContent( content.getParent() )
+	TestUtils.saveScreenshot(getTestSession(), "deletecontentbeneath")
+	contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
         !contentBrowsePanel.<ContentPath> isExpanderPresent( ContentPath.from( parent.getName() ) );
