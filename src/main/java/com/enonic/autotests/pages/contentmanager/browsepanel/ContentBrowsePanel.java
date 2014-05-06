@@ -350,9 +350,10 @@ public class ContentBrowsePanel
         boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
         if ( !isPresent )
         {
-            throw new SaveOrUpdateException( "checkbox for content: " + path.toString() + "was not found" );
+            throw new SaveOrUpdateException( "checkbox for content: " + path.getName() + "was not found" );
         }
         sleep( 700 );
+        waitUntilVisible(By.xpath(String.format(TD_CONTENT_NAME, path.toString())+"//div[@class='admin-tree-thumbnail']/img"));
         findElement( By.xpath( contentCheckBoxXpath ) ).click();
         getLogger().info( "check box was selected, content path is:" + path.toString() );
       

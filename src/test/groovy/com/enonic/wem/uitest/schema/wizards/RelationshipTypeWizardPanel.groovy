@@ -9,7 +9,9 @@ import com.enonic.autotests.vo.schemamanger.RelationshipType
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.wem.uitest.schema.cfg.LinkRelationship
 import spock.lang.Shared
+import spock.lang.Stepwise;
 
+@Stepwise
 class RelationshipTypeWizardPanel
     extends BaseGebSpec
 {
