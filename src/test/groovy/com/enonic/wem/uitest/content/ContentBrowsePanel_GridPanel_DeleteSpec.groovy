@@ -37,7 +37,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
+		contentBrowsePanel.waituntilPageLoaded( 2 );
 
         when:
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
@@ -59,7 +60,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close();
-
+		contentBrowsePanel.waituntilPageLoaded( 1 );
 
         Content content2 = Content.builder().
             name( NameHelper.uniqueName( "deletecontent" ) ).
@@ -69,10 +70,11 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
-            content2 ).save().close()
-        List<Content> contentList = new ArrayList<>()
-        contentList.add( content1 )
-        contentList.add( content2 )
+            content2 ).save().close();
+		contentBrowsePanel.waituntilPageLoaded( 1 );
+        List<Content> contentList = new ArrayList<>();
+        contentList.add( content1 );
+        contentList.add( content2 );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waituntilPageLoaded( 2 );
         contentBrowsePanel.doClearSelection();
@@ -95,7 +97,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.ROOT ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close()
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
+		contentBrowsePanel.waituntilPageLoaded( 1 );
         List<Content> contents = new ArrayList<>();
         contents.add( content );
         contentBrowsePanel.waitsForSpinnerNotVisible();
@@ -119,7 +122,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
-
+		contentBrowsePanel.waituntilPageLoaded( 1 );
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         Content contentToDelete = Content.builder().
             name( NameHelper.uniqueName( "archive" ) ).
@@ -130,7 +133,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData( contentToDelete ).
             save().close();
-
+		contentBrowsePanel.waituntilPageLoaded( 1 );
 
         List<Content> contentList = new ArrayList<>()
         contentList.add( contentToDelete );
@@ -153,6 +156,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
+		contentBrowsePanel.waituntilPageLoaded( 1 );
 
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         Content content = Content.builder().
@@ -186,6 +190,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.ROOT ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
+		contentBrowsePanel.waituntilPageLoaded( 1 );
+		
         when:
         contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarDelete().doDelete();
 
