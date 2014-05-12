@@ -34,10 +34,10 @@ public class ContentBrowseFilterPanel
     	"//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";	
 
     private String LAST_MODIFIED_FILTER_ITEM =
-        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label[contains(.,'%s')]]//label";
+        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
 
     private String LAST_MODIFIED_FILTER_ENTRY =
-        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label]//label[contains(.,'%s')]";
+        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='checkbox form-input' and child::label]//label[contains(.,'%s')]";
 
     public enum ContenTypeDispalyNames
     {

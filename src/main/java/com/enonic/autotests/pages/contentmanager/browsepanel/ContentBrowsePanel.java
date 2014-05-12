@@ -442,7 +442,7 @@ public class ContentBrowsePanel
     public ContentBrowsePanel selectRowByContentPath( String contentPath )
     {
         String rowXpath = String.format( TD_CONTENT_NAME, contentPath );
-        waitAndFind( By.xpath( rowXpath ) );
+        boolean result = waitAndFind( By.xpath( rowXpath ) );
 
         Actions builder = new Actions( getDriver() );
         builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
@@ -515,13 +515,12 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-        sleep( 2000 );//mac mini issue
+        sleep( 1000 );
         boolean isGridLoaded = waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), "empty_grid_bug" );
-            throw new TestFrameworkException(
-                "content with xpath:" + TABLE_ITEM_XPATH + "was not visible, probably content was not loaded and grid is empty!" );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName("grid_bug" ));
+            throw new TestFrameworkException( "ContentBrowsePanel: content grid was not loaded!" );
         }
     }
 

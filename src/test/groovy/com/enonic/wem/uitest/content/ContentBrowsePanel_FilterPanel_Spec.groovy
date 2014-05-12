@@ -30,7 +30,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
     }
-
+    //bug CMS-3536
     def "GIVEN No selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
     {
         given:
@@ -42,6 +42,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             contentType( ContentTypeName.page() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
 
         when:
         String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
@@ -54,7 +55,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.FOLDER.getValue() );
 
         when:
         filterPanel.clickByCleanFilter();
@@ -69,7 +70,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should disappear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.FOLDER.getValue() );
 
         when:
         contentBrowsePanel.getFilterPanel().clickByCleanFilter();
@@ -104,6 +105,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             lastModifiedBeforeAdding == 1;
     }
 
+	//bug CMS-3536
     def "GIVEN creating new Content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
@@ -121,12 +123,13 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         wizard.save().close();
+	contentBrowsePanel.waituntilPageLoaded(2);
 
         then:
         filterPanel.getNumberFilteredByContenttype( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
             lastModifiedBeforeAdding == 1;
     }
-
+    //bug CMS-3536
     def "GIVEN a Content WHEN deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
@@ -206,7 +209,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).
             save().close();
-        contentBrowsePanel.waituntilPageLoaded( 1 );
+        contentBrowsePanel.waituntilPageLoaded( 2 );
         Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
 
         when:
@@ -226,8 +229,6 @@ class ContentBrowsePanel_FilterPanel_Spec
 
 
     }
-    //@Ignored
-    //GIVEN Selections in ContentTypes-filter WHEN Selecting one entry in LastModified-filter THEN entries with no selection in ContentTypes-filter should disappear from view
 
     def "GIVEN selection in any filter WHEN adding text-search THEN all filters should be updated to only contain entries with selection and new count with match on text-search"()
     {
