@@ -42,7 +42,6 @@ class ContentBrowsePanel_FilterPanel_Spec
             contentType( ContentTypeName.page() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
-		contentBrowsePanel.waituntilPageLoaded(2);
 
         when:
         String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
@@ -123,7 +122,6 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         wizard.save().close();
-	contentBrowsePanel.waituntilPageLoaded(2);
 
         then:
         filterPanel.getNumberFilteredByContenttype( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
@@ -142,7 +140,6 @@ class ContentBrowsePanel_FilterPanel_Spec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
-        contentBrowsePanel.waituntilPageLoaded( 2 );
         int beforeRemoving = filterPanel.getNumberFilteredByContenttype( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
         List<Content> contentList = new ArrayList();
@@ -172,7 +169,6 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waituntilPageLoaded( 1 );
 
         when:
         filterPanel.typeSearchText( name );
@@ -209,7 +205,6 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).
             save().close();
-        contentBrowsePanel.waituntilPageLoaded( 2 );
         Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
 
         when:
@@ -243,7 +238,6 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).
             save().close();
 
-        contentBrowsePanel.waituntilPageLoaded( 1 );
         String label = filterPanel.selectEntryInContentTypesFilter( "Folder" );
         Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );
 

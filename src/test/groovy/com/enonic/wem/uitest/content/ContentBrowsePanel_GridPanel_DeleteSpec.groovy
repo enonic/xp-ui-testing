@@ -38,7 +38,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.ROOT ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
-		contentBrowsePanel.waituntilPageLoaded( 2 );
 
         when:
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
@@ -60,7 +59,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close();
-		contentBrowsePanel.waituntilPageLoaded( 1 );
 
         Content content2 = Content.builder().
             name( NameHelper.uniqueName( "deletecontent" ) ).
@@ -71,7 +69,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
             content2 ).save().close();
-		contentBrowsePanel.waituntilPageLoaded( 1 );
+		
         List<Content> contentList = new ArrayList<>();
         contentList.add( content1 );
         contentList.add( content2 );
@@ -98,7 +96,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
-		contentBrowsePanel.waituntilPageLoaded( 1 );
         List<Content> contents = new ArrayList<>();
         contents.add( content );
         contentBrowsePanel.waitsForSpinnerNotVisible();
@@ -122,7 +119,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
-		contentBrowsePanel.waituntilPageLoaded( 1 );
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         Content contentToDelete = Content.builder().
             name( NameHelper.uniqueName( "archive" ) ).
@@ -156,8 +152,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
-		contentBrowsePanel.waituntilPageLoaded( 1 );
-
+		
         contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
         Content content = Content.builder().
             name( NameHelper.uniqueName( "archive" ) ).
@@ -171,13 +166,13 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         List<Content> contentList = new ArrayList<>();
         contentList.add( content );
 
-        when:
+        when:	
         contentBrowsePanel.expandContent( content.getParent() )
-	TestUtils.saveScreenshot(getTestSession(), "deletecontentbeneath")
-	contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+	    TestUtils.saveScreenshot(getTestSession(), "deletecontentbeneath")
+	    contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
-        !contentBrowsePanel.<ContentPath> isExpanderPresent( ContentPath.from( parent.getName() ) );
+        !contentBrowsePanel.<ContentPath>isExpanderPresent( ContentPath.from(parent.getName()) );
     }
 
     def "GIVEN a Content on root WHEN deleted THEN New-button is enabled"()
@@ -190,7 +185,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.ROOT ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
-		contentBrowsePanel.waituntilPageLoaded( 1 );
 		
         when:
         contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarDelete().doDelete();
@@ -198,35 +192,33 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         then:
         contentBrowsePanel.isNewButtonEnabled();
     }
-
-    def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
-    {
-        given:
-        Content content1 = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-
-        Content content2 = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-        List<Content> contentList = new ArrayList<>();
-        contentList.add( content2 );
-        contentList.add( content1 );
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close();
-        contentBrowsePanel.waituntilPageLoaded( 2 );
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close();
-        contentBrowsePanel.waituntilPageLoaded( 2 );
-
-        when:
-        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
-
-        then:
-        contentBrowsePanel.isNewButtonEnabled();
-    }
+	
+	def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
+	{
+		given:
+		Content content1 = Content.builder().
+			name( NameHelper.uniqueName( "archive" ) ).
+			displayName( "archive" ).
+			contentType( ContentTypeName.folder() ).
+			parent( ContentPath.ROOT ).
+			build();
+			
+		Content content2 = Content.builder().
+			name( NameHelper.uniqueName( "archive" ) ).
+			displayName( "archive" ).
+			contentType( ContentTypeName.folder() ).
+			parent( ContentPath.ROOT ).
+			build();
+			List<Content> contentList = new ArrayList<>();
+		contentList.add(content2);
+		contentList.add(content1);
+		contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close();
+		contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close();
+		
+		when:
+		contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+		
+		then:
+		contentBrowsePanel.isNewButtonEnabled();
+	}
 }

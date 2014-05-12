@@ -36,15 +36,14 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given:
         boolean isClearFilterPresent = filterPanel.waitForClearFilterLinkNotvisible();
-        String name = NameHelper.uniqueName( "page" );
-        Content page = Content.builder().
-            name( name ).
-            displayName( "page" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.page() ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
-        contentBrowsePanel.waituntilPageLoaded( 3 );
+		String name = NameHelper.uniqueName( "page" );
+		Content page = Content.builder().
+			name( name ).
+			displayName( "page" ).
+			parent( ContentPath.ROOT ).
+			contentType( ContentTypeName.page() ).
+			build();
+		contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
 
         when:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
@@ -129,7 +128,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1;
+         contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1;
     }
 
   private isStringPresentInName(List<String>allNames, String name)

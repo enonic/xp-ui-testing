@@ -238,12 +238,12 @@ public abstract class Page
     {
         getLogger().info( "Get element by locator: " + locator.toString() );
         long startTime = System.currentTimeMillis();
-        getDriver().manage().timeouts().implicitlyWait( 9, TimeUnit.SECONDS );
+        getDriver().manage().timeouts().implicitlyWait( 5, TimeUnit.SECONDS );
         WebElement we = null;
         for ( int i = 0; i <= tries; i++ )
         {
 
-            getLogger().info( "Locating remaining time: " + ( ( tries * 9 ) - ( 9 * ( tries - i ) ) ) + " seconds." );
+            getLogger().info( "Locating remaining time:  ..."  + " seconds." );
             try
             {
                 we = getDriver().findElement( locator );

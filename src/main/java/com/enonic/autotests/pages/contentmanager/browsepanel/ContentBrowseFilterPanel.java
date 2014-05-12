@@ -202,10 +202,9 @@ public class ContentBrowseFilterPanel
      */
     public String selectEntryInContentTypesFilter( String contenttypeDisplayName )
     {
-        TestUtils.saveScreenshot( getSession() );
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
-        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
-        if ( elems.size() == 0 )
+        WebElement element = getDynamicElement(By.xpath( itemXpath ), 2);
+        if ( element == null )
         {
             TestUtils.saveScreenshot(getSession(),contenttypeDisplayName);
             logError( "content type was not found in the search panel:" + contenttypeDisplayName );
@@ -215,12 +214,12 @@ public class ContentBrowseFilterPanel
         {
             if ( !isSelectedEntryInFilter( contenttypeDisplayName ) )
             {
-                elems.get( 0 ).click();
+        		element.click();
                 waitsForSpinnerNotVisible();
             }
         }
 
-        return elems.get( 0 ).getText();
+        return element.getText();
     }
 
     public String deSelectEntryInContentTypesFilter( String contenttypeDisplayName )
