@@ -90,6 +90,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         wizard.save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
 
         then:
         contentBrowsePanel.exists( rootContent.getPath() );
@@ -133,6 +134,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         wizard.save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
 
         then:
         !contentBrowsePanel.isRowExapnded( content.getParent().toString() );
@@ -178,6 +180,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         wizard.save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
         TestUtils.saveScreenshot( getTestSession(), name );
 
         then:
@@ -221,6 +224,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
         Content newcontent = cloneContentWithNewName( contentToEdit )
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).
             clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
@@ -249,6 +253,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close();
+		contentBrowsePanel.waituntilPageLoaded(2);
 
         Content newcontent = cloneContentWithNewDispalyName( contentToEdit );
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getPath() ).
