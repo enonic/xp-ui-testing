@@ -220,7 +220,7 @@
         <configuration>
           <container>
             <containerId>tomcat7x</containerId>
-
+			<timeout>180000</timeout>
             <systemProperties>
               <cms.home>${project.build.directory}/cms-home</cms.home>
             </systemProperties>
