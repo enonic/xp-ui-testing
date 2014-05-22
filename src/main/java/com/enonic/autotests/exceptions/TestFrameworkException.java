@@ -4,7 +4,7 @@ package com.enonic.autotests.exceptions;
  * A runtime exception representing a failure related with Test Framework. <br>
  * For example, wrong locator was specified or bad javaScript method was
  * executed...
- * <p/>
+ * <p>
  * 01.04.2013
  */
 public class TestFrameworkException

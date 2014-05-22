@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.BaseModalDialog;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -14,12 +14,13 @@ import com.enonic.wem.api.schema.content.ContentTypeName;
  * Content Manager application/add new content/select content type
  */
 public class NewContentDialog
-    extends BaseModalDialog
+    extends Application
 {
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
 
-    public static String CONTENT_TYPE_NAME = "//div[contains(@id,'app.create.NewContentDialogList')]//li[@class='content-types-list-item' and descendant::p[text()='%s']]";
+    public static String CONTENT_TYPE_NAME =
+        "//div[contains(@id,'app.create.NewContentDialogList')]//li[@class='content-types-list-item' and descendant::p[text()='%s']]";
 
     /**
      * The constructor.
@@ -59,9 +60,9 @@ public class NewContentDialog
 
         TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
         waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("select-ct"));
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "select-ct" ) );
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened();//02.04
+        wizard.waitUntilWizardOpened();
         return wizard;
 
     }

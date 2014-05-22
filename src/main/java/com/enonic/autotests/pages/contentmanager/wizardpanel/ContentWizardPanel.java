@@ -9,9 +9,9 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 
@@ -25,6 +25,8 @@ public class ContentWizardPanel
 {
     public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
         "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
+
+    public static final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'app.wizard.ContentWizardPanel')]";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
@@ -63,6 +65,7 @@ public class ContentWizardPanel
     public ContentWizardPanel( TestSession session )
     {
         super( session );
+
     }
 
     /**
@@ -89,7 +92,6 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel typeData( Content content )
     {
-        //sleep( 500 );
         // 1. type a data: 'name' and 'Display Name'.
         waitElementClickable( By.name( "displayName" ), 2 );
         getLogger().info( "types displayName: " + content.getDisplayName() );
@@ -157,19 +159,36 @@ public class ContentWizardPanel
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
     }
 
-    public void close()
-    {
-        closeButton.click();
-        waitsForSpinnerNotVisible();
-        ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
-        panel.waituntilPageLoaded(DEFAULT_IMPLICITLY_WAIT);
-    }
-
     @Override
     public boolean isOpened()
     {
         return toolbarSaveButton.isDisplayed();
 
+    }
+
+    @Override
+    public WizardPanel<Content> waitUntilWizardOpened()
+    {
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.DEFAULT_IMPLICITLY_WAIT );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "ContentWizard was not showed!" );
+        }
+        return this;
+    }
+
+    @Override
+    public String getWizardDivXpath()
+    {
+
+        return DIV_CONTENT_WIZARD_PANEL;
+    }
+
+
+    @Override
+    public WebElement getCloseButton()
+    {
+        return closeButton;
     }
 
 }

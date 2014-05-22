@@ -145,6 +145,11 @@ public abstract class Page
         return WaitHelper.waitUntilElementEnabledNoException( getDriver(), by, timeout );
     }
 
+    public Boolean waitElementExist( final String xpath, long timeout )
+    {
+        return WaitHelper.waitElementExist( getDriver(), xpath, timeout );
+    }
+
     /**
      * @param element
      * @param attributeName
@@ -243,7 +248,7 @@ public abstract class Page
         for ( int i = 0; i <= tries; i++ )
         {
 
-            getLogger().info( "Locating remaining time:  ..."  + " seconds." );
+            getLogger().info( "Locating remaining time:  ..." + " seconds." );
             try
             {
                 we = getDriver().findElement( locator );

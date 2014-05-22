@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.BaseModalDialog;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.RelationshipWizardPanel;
@@ -15,7 +15,7 @@ import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel;
  *
  */
 public class NewSchemaDialog
-    extends BaseModalDialog
+    extends Application
 {
 
     private String KIND = "//div[@class='modal-dialog new-schema-dialog']//h6[text()='%s']";

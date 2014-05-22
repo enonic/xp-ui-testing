@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages;
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
-
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -10,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class BrowsePanel
     extends Application
@@ -77,7 +77,7 @@ public class BrowsePanel
      *
      * @return true if space has no any children., otherwise true.
      */
-    public <T>boolean isExpanderPresent( T contentPath )
+    public <T> boolean isExpanderPresent( T contentPath )
     {
         String expanderElement = String.format( TD_CONTENT_NAME + "/div/img[contains(@class,'x-tree-expander')]", contentPath.toString() );
         getLogger().info( "check if present expander for folder:" + contentPath.toString() + " xpath: " + expanderElement );

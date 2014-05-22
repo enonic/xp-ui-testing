@@ -8,7 +8,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.exceptions.WizardPanelNotClosingException;
 import com.enonic.autotests.utils.TestUtils;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
  * Base class for wizards.
@@ -16,8 +19,6 @@ import com.enonic.autotests.utils.TestUtils;
 public abstract class WizardPanel<T>
     extends Application
 {
-
-    //public static String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
     public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
 
     public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']";
@@ -39,9 +40,66 @@ public abstract class WizardPanel<T>
         super( session );
     }
 
-    public abstract void close();
+    public SaveBeforeCloseDialog close()
+    {
+
+        CloseStatus status = null;
+        getCloseButton().click();
+        for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
+        {
+            status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );
+            if ( status.equals( CloseStatus.CLOSED ) || status.equals( CloseStatus.MODAL_DIALOG ) )
+            {
+                break;
+            }
+        }
+
+        if ( status.equals( CloseStatus.ERROR ) )
+        {
+            throw new WizardPanelNotClosingException( "ContentWizard was not closed and Modal dialog not present!" );
+
+        }
+        else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
+        {
+            return new SaveBeforeCloseDialog( getSession() );
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+
+    public abstract String getWizardDivXpath();
+
+    private CloseStatus verifyCloseAction( By by )
+    {
+        sleep( 100 );
+        boolean isWizardClosed = findElements( by ).size() == 0;
+        if ( isWizardClosed )
+        {
+            return CloseStatus.CLOSED;
+        }
+        else
+        {
+            SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
+            boolean isPresent = dialog.waitForPresent();
+            if ( isPresent )
+            {
+                return CloseStatus.MODAL_DIALOG;
+            }
+            return CloseStatus.ERROR;
+        }
+    }
+
+    public enum CloseStatus
+    {
+        CLOSED, MODAL_DIALOG, ERROR;
+    }
 
     public abstract WizardPanel<T> save();
+
+    public abstract WebElement getCloseButton();
 
     public abstract boolean isOpened();
 
@@ -101,9 +159,8 @@ public abstract class WizardPanel<T>
      */
     public String waitNotificationMessage()
     {
-        String message =
-            TestUtils.waitNotificationMessage( By.xpath( "//div[@class='notification-content']/span" ), getDriver(), 2l );
-        getLogger().info("No5tification message "+message);
+        String message = TestUtils.waitNotificationMessage( By.xpath( "//div[@class='notification-content']/span" ), getDriver(), 2l );
+        getLogger().info( "No5tification message " + message );
         return message;
     }
 
@@ -111,13 +168,7 @@ public abstract class WizardPanel<T>
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
      */
-    public WizardPanel<T> waitUntilWizardOpened()
-    {
-        String circleXpath = String.format( RED_CIRCLE_XPATH );
-        waitUntilVisible( By.xpath( circleXpath ) );
-        //TestUtils.getInstance().waitUntilVisible(getSession(), By.xpath(titleXpath));
-        return this;
-    }
+    public abstract WizardPanel<T> waitUntilWizardOpened();
 
     public void waitElementClickable( By by, long timeout )
     {

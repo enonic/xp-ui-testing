@@ -36,14 +36,14 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given:
         boolean isClearFilterPresent = filterPanel.waitForClearFilterLinkNotvisible();
-		String name = NameHelper.uniqueName( "page" );
-		Content page = Content.builder().
-			name( name ).
-			displayName( "page" ).
-			parent( ContentPath.ROOT ).
-			contentType( ContentTypeName.page() ).
-			build();
-		contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        String name = NameHelper.uniqueName( "page" );
+        Content page = Content.builder().
+            name( name ).
+            displayName( "page" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.page() ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
 
         when:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
@@ -113,7 +113,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then:
         contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) ) &&
-           isStringPresentInName(contentBrowsePanel.getContentNamesFromBrowsePanel(), INITIAL_CONTENT_FOLDER_NAME);
+            isStringPresentInName( contentBrowsePanel.getContentNamesFromBrowsePanel(), INITIAL_CONTENT_FOLDER_NAME );
     }
 
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
@@ -128,22 +128,22 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then:
-         contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1;
+        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1;
     }
 
-  private isStringPresentInName(List<String>allNames, String name)
-  {
-	  if(allNames.isEmpty())
-	  {
-		  return false;
-	  }
-	  for(String uiName: allNames)
-	  {
-		  if(!uiName.contains(name))
-		  {
-			  return false;
-		  }
-	  }
-	  return true;
-  }
+    private isStringPresentInName( List<String> allNames, String name )
+    {
+        if ( allNames.isEmpty() )
+        {
+            return false;
+        }
+        for ( String uiName : allNames )
+        {
+            if ( !uiName.contains( name ) )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

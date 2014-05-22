@@ -7,13 +7,12 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.BaseModalDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class ConfirmationDialog
-    extends BaseModalDialog
+    extends Application
 {
 
     public static final String YES_BUTTON_XPATH =

@@ -137,7 +137,7 @@ public class ContentBrowsePanel
         contentManagerButton.click();
         sleep( 1000 );
         waituntilPageLoaded( Application.IMPLICITLY_WAIT );
-        TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("gotoapphome"));
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "gotoapphome" ) );
         return this;
     }
 
@@ -163,9 +163,9 @@ public class ContentBrowsePanel
      */
     public boolean exists( ContentPath contentPath )
     {
-       return exists(contentPath, Application.DEFAULT_IMPLICITLY_WAIT);
+        return exists( contentPath, Application.DEFAULT_IMPLICITLY_WAIT );
     }
-    
+
     /**
      * @param contentPath
      * @param timeout
@@ -188,17 +188,19 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel unExpandContent( ContentPath contentPath )
     {
-    	if(isRowExapnded(contentPath.toString()))
-    	{
-    		this.<String>clickByExpander( contentPath.toString());
-    		getLogger().info("content have been unexpanded: " + contentPath.toString());
-    	}else
-    	{
-    		getLogger().info("content was not expanded: " + contentPath.toString());
-    	}
-    	sleep(500);
-    	return this;
+        if ( isRowExapnded( contentPath.toString() ) )
+        {
+            this.<String>clickByExpander( contentPath.toString() );
+            getLogger().info( "content have been unexpanded: " + contentPath.toString() );
+        }
+        else
+        {
+            getLogger().info( "content was not expanded: " + contentPath.toString() );
+        }
+        sleep( 500 );
+        return this;
     }
+
     /**
      * @param contentPath
      */
@@ -226,19 +228,19 @@ public class ContentBrowsePanel
             }
         }
         waitsForSpinnerNotVisible();
-        sleep(700);
+        sleep( 700 );
         return this;
     }
 
-    public List<String> getChildNames(ContentPath contentPath)
+    public List<String> getChildNames( ContentPath contentPath )
     {
-    	List<String> listNames = new ArrayList<>();
-    	List<WebElement> elems = findElements(By.xpath(String.format(TD_CHILDREN_CONTENT_NAMES,contentPath.toString()+"/")));
-    	for(WebElement el: elems)
-    	{
-    		listNames.add(el.getText());
-    	}
-    	return listNames;
+        List<String> listNames = new ArrayList<>();
+        List<WebElement> elems = findElements( By.xpath( String.format( TD_CHILDREN_CONTENT_NAMES, contentPath.toString() + "/" ) ) );
+        for ( WebElement el : elems )
+        {
+            listNames.add( el.getText() );
+        }
+        return listNames;
     }
 
     /**
@@ -273,7 +275,7 @@ public class ContentBrowsePanel
         {
             if ( !isRowSelected( content.getPath().toString() ) )
             {
-            	clickCheckboxAndSelectRow( content.getPath() );
+                clickCheckboxAndSelectRow( content.getPath() );
             }
 
         }
@@ -285,7 +287,7 @@ public class ContentBrowsePanel
         waitAndCheckContent( contentPath );
         if ( !isRowSelected( contentPath.toString() ) )
         {
-        	clickCheckboxAndSelectRow( contentPath );
+            clickCheckboxAndSelectRow( contentPath );
         }
         return this;
     }
@@ -295,7 +297,7 @@ public class ContentBrowsePanel
         waitAndCheckContent( contentPath );
         if ( isRowSelected( contentPath.toString() ) )
         {
-        	clickCheckboxAndSelectRow( contentPath );
+            clickCheckboxAndSelectRow( contentPath );
         }
         return this;
     }
@@ -314,7 +316,7 @@ public class ContentBrowsePanel
 
         if ( !isExist )
         {
-            TestUtils.saveScreenshot( getSession(), contentPath.getName());
+            TestUtils.saveScreenshot( getSession(), contentPath.getName() );
             throw new TestFrameworkException( "The content with name " + contentPath.getName() + " was not found!" );
         }
     }
@@ -340,7 +342,6 @@ public class ContentBrowsePanel
 //        findElement( By.xpath( contentCheckBoxXpath ) ).click();
 //        return this;
 //    }
-
     public ContentBrowsePanel clickCheckboxAndSelectRow( ContentPath path )
     {
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
@@ -353,16 +354,16 @@ public class ContentBrowsePanel
             throw new SaveOrUpdateException( "checkbox for content: " + path.getName() + "was not found" );
         }
         sleep( 700 );
-        waitUntilVisible(By.xpath(String.format(TD_CONTENT_NAME, path.toString())+"//div[@class='admin-tree-thumbnail']/img"));
+        waitUntilVisible( By.xpath( String.format( TD_CONTENT_NAME, path.toString() ) + "//div[@class='admin-tree-thumbnail']/img" ) );
         findElement( By.xpath( contentCheckBoxXpath ) ).click();
         getLogger().info( "check box was selected, content path is:" + path.toString() );
-      
+
         return this;
     }
-    
+
     /**
      * When row selected, there ia ability to click on Spacebar or ARROW_DOWN, ARROW_UP
-     * 
+     *
      * @param path
      * @param key
      * @return {@link ContentBrowsePanel} instance.
@@ -378,9 +379,9 @@ public class ContentBrowsePanel
         {
             throw new SaveOrUpdateException( "checkbox for content: " + path.toString() + "was not found" );
         }
-        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys(key);
-        sleep(300);
-        getLogger().info( "key was typed:" + key.toString()+ " ,  content path is:" + path.toString() );     
+        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
+        sleep( 300 );
+        getLogger().info( "key was typed:" + key.toString() + " ,  content path is:" + path.toString() );
         return this;
     }
 
@@ -392,7 +393,7 @@ public class ContentBrowsePanel
     public NewContentDialog clickToolbarNew()
     {
         newButton.click();
-        sleep(1000);
+        sleep( 1000 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         boolean isOpened = newContentDialog.isOpened();
         if ( !isOpened )
@@ -419,13 +420,13 @@ public class ContentBrowsePanel
         boolean isPresentCheckbox = isDynamicElementPresent( By.xpath( spaceCheckBoxXpath ), 3 );
         if ( !isPresentCheckbox )
         {
-            TestUtils.saveScreenshot( getSession(), "checkbox"+ contentPath.getName());
+            TestUtils.saveScreenshot( getSession(), "checkbox" + contentPath.getName() );
             throw new TestFrameworkException(
                 "Time: " + TestUtils.timeNow() + "  wrong xpath:" + spaceCheckBoxXpath + " or Space with name " + contentPath.toString() +
                     " was not found!" );
         }
         getDriver().findElement( By.xpath( spaceCheckBoxXpath ) ).click();
-        sleep(200);
+        sleep( 200 );
         boolean isNewEnabled = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), 2l );
         if ( !isNewEnabled )
         {
@@ -452,6 +453,7 @@ public class ContentBrowsePanel
 
     /**
      * Clicks on 'Open' button in toolbar.
+     *
      * @return {@link ItemViewPanelPage} instance.
      */
     public ItemViewPanelPage clickToolbarOpen()
@@ -463,7 +465,7 @@ public class ContentBrowsePanel
 
     /**
      * Clicks on 'Edit' button in toolbar.
-     * 
+     *
      * @return {@link ContentWizardPanel} instance.
      */
     public ContentWizardPanel clickToolbarEdit()
@@ -483,7 +485,7 @@ public class ContentBrowsePanel
     public ItemViewPanelPage doOpenContentFromContextMenu( Content content )
     {
         expandContent( content.getParent() );
-        boolean isExists = exists( content.getPath(),Application.DEFAULT_IMPLICITLY_WAIT );
+        boolean isExists = exists( content.getPath(), Application.DEFAULT_IMPLICITLY_WAIT );
         if ( !isExists )
         {
             throw new TestFrameworkException(
@@ -519,7 +521,7 @@ public class ContentBrowsePanel
         boolean isGridLoaded = waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName("grid_bug" ));
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_bug" ) );
             throw new TestFrameworkException( "ContentBrowsePanel: content grid was not loaded!" );
         }
     }
@@ -533,7 +535,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     *  @return true if 'New' button enabled, otherwise false.
+     * @return true if 'New' button enabled, otherwise false.
      */
     public boolean isNewButtonEnabled()
     {

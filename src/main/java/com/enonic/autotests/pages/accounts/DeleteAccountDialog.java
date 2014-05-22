@@ -8,10 +8,10 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.DeleteCMSObjectException;
-import com.enonic.autotests.pages.BaseModalDialog;
+import com.enonic.autotests.pages.Application;
 
 public class DeleteAccountDialog
-    extends BaseModalDialog
+    extends Application
 {
 
     private final String DIALOG_TITLE_XPATH = "//div[contains(@class,'admin-window-header')]//h1[contains(.,'Delete Account(s)')]";
@@ -64,15 +64,6 @@ public class DeleteAccountDialog
             // BUG : wrong number of accounts(not refreshed)
         }
 
-        // boolean result = actual.equals(spacesToDelete);
-        // if (!result) {
-        // logger.error("list of names in the dialog-window are not as expected!",
-        // session);
-        // throw new
-        // DeleteSpaceException("list of names in the dialog-window are not equals with expected list of names!");
-        // }
-        // WebElement deleteButton =
-        // session.getDriver().findElement(By.xpath(DELETE_BUTTON_XPATH));
         deleteButton.click();
     }
 

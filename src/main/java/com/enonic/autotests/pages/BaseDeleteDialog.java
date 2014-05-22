@@ -15,7 +15,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
  * Base confirm dialog for deleting spaces, contents, accounts
  */
 public abstract class BaseDeleteDialog
-    extends BaseModalDialog
+    extends Application
 {
     protected Logger logger = Logger.getLogger( this.getClass() );
 

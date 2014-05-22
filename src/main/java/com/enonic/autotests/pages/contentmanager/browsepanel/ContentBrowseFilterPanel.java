@@ -31,7 +31,7 @@ public class ContentBrowseFilterPanel
     private WebElement searchInput;
 
     private String CONTENT_TYPE_FILTER_ITEM =
-    	"//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";	
+        "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
 
     private String LAST_MODIFIED_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
@@ -70,7 +70,7 @@ public class ContentBrowseFilterPanel
     public List<String> getAllContentTypesFilterEntries()
     {
         List<WebElement> elements = getDriver().findElements( By.xpath(
-            "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and child::label]//label" ) );
+            "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and descendant::label]//label" ) );
         List<String> labels = new ArrayList<>();
         for ( WebElement el : elements )
         {
@@ -156,7 +156,7 @@ public class ContentBrowseFilterPanel
      */
     public void clickByCleanFilter()
     {
-        boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
+        boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.ONE_SEC );
         if ( !isVisible )
         {
             getLogger().info( "The link with name 'Clear Filter' was not found!" );
@@ -184,7 +184,7 @@ public class ContentBrowseFilterPanel
      */
     public boolean waitForClearFilterLinkVisible()
     {
-        return waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
+        return waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.ONE_SEC );
     }
 
     /**
@@ -192,7 +192,7 @@ public class ContentBrowseFilterPanel
      */
     public boolean waitForClearFilterLinkNotvisible()
     {
-        return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.REFRESH_TIMEOUT );
+        return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.ONE_SEC );
     }
 
     /**
@@ -203,10 +203,10 @@ public class ContentBrowseFilterPanel
     public String selectEntryInContentTypesFilter( String contenttypeDisplayName )
     {
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
-        WebElement element = getDynamicElement(By.xpath( itemXpath ), 2);
+        WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
         if ( element == null )
         {
-            TestUtils.saveScreenshot(getSession(),contenttypeDisplayName);
+            TestUtils.saveScreenshot( getSession(), contenttypeDisplayName );
             logError( "content type was not found in the search panel:" + contenttypeDisplayName );
             throw new ContentFilterException( "content type was not found in the search panel:" + contenttypeDisplayName );
         }
@@ -214,7 +214,7 @@ public class ContentBrowseFilterPanel
         {
             if ( !isSelectedEntryInFilter( contenttypeDisplayName ) )
             {
-        		element.click();
+                element.click();
                 waitsForSpinnerNotVisible();
             }
         }
@@ -224,7 +224,7 @@ public class ContentBrowseFilterPanel
 
     public String deSelectEntryInContentTypesFilter( String contenttypeDisplayName )
     {
-    	TestUtils.saveScreenshot(getSession(), contenttypeDisplayName);
+        TestUtils.saveScreenshot( getSession(), contenttypeDisplayName );
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
@@ -241,7 +241,7 @@ public class ContentBrowseFilterPanel
 
         }
         waitsForSpinnerNotVisible();
-        return  getDriver().findElements( By.xpath( itemXpath ) ).get(0).getText();
+        return getDriver().findElements( By.xpath( itemXpath ) ).get( 0 ).getText();
     }
 
     /**

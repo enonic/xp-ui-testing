@@ -16,13 +16,13 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     extends BaseGebSpec
 {
     @Shared
-    String CONTENT_1_NAME = NameHelper.uniqueName("homepage");
+    String CONTENT_1_NAME = NameHelper.uniqueName( "homepage" );
 
     @Shared
     String CONTENT_1_DISPALY_NAME = "Homepage"
 
     @Shared
-    String CONTENT_2_NAME = NameHelper.uniqueName("intranet");
+    String CONTENT_2_NAME = NameHelper.uniqueName( "intranet" );
 
     @Shared
     String CONTENT_2_DISPALY_NAME = "Intranet"
@@ -55,23 +55,23 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             displayName( CONTENT_1_DISPALY_NAME ).
             contentType( ContentTypeName.page() ).
             build();
-		contentBrowsePanel.clickToolbarNew().selectContentType( firstContent.getContentTypeName() ).
-			typeData( firstContent ).save().close();
-		
-		Content secondContent = Content.builder().
-			parent( ContentPath.ROOT ).
-			name( CONTENT_2_NAME ).
-			contentType( ContentTypeName.page() ).
-			displayName( CONTENT_2_DISPALY_NAME ).
-			build();
-		contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
-			typeData( secondContent ).save().close();
-		
+        contentBrowsePanel.clickToolbarNew().selectContentType( firstContent.getContentTypeName() ).
+            typeData( firstContent ).save().close();
+
+        Content secondContent = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( CONTENT_2_NAME ).
+            contentType( ContentTypeName.page() ).
+            displayName( CONTENT_2_DISPALY_NAME ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
+            typeData( secondContent ).save().close();
+
         contentBrowsePanel.selectContentInTable( firstContent.getPath() );
 
         when:
-       
-		contentBrowsePanel.waituntilPageLoaded(3);
+
+        contentBrowsePanel.waituntilPageLoaded( 3 );
         contentBrowsePanel.selectContentInTable( secondContent.getPath() );
 
         then:
@@ -108,7 +108,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         then:
         itemsSelectionPanel.getSeletedItemCount() == before + 1;
     }
-	
+
     def "GIVEN three selected Content WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
         given:

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title data-th-text="${content.displayName}">Xeon | OnePage Responsive Theme</title>
+    <title>Xeon | OnePage Responsive Theme</title>
     <link data-th-href="${context.url.createResourceUrl('css/bootstrap.min.css')}" href="../public/css/bootstrap.min.css" rel="stylesheet" />
     <link data-th-href="${context.url.createResourceUrl('css/font-awesome.min.css')}" href="../public/css/font-awesome.min.css" rel="stylesheet" />
     <link data-th-href="${context.url.createResourceUrl('css/prettyPhoto.css')}" href="../public/css/prettyPhoto.css" rel="stylesheet" />
@@ -32,13 +32,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">
-                        <img data-th-src="${logoUrl}" src="../images/logo.png"/>
-                    </a>
+                    <a class="navbar-brand" href="index.html"></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" data-th-each="content, iterStat : ${contents}">
-                        <li data-th-if="${iterStat.index == 0}"><a href="#"><i class="icon-home"></i></a></li>
+                        <li data-th-if="${iterStat.index == 0}" class="active"><a href="#main-slider"><i class="icon-home"></i></a></li>
                         <li><a data-th-text="${content.displayName}" href="#services">Services</a></li>
                         <li data-th-remove="all"><a href="#portfolio">Portfolio</a></li>
                         <li data-th-remove="all"><a href="#pricing">Pricing</a></li>
@@ -71,10 +69,7 @@
         <div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
             <div data-wem-component="${component.path}" data-th-remove="tag" />
         </div>
-        <!--# COMPONENT module:contact-form -->
     </div>
-
-
 
     <footer id="footer">
         <div class="container">

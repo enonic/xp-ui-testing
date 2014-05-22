@@ -1,10 +1,8 @@
 var component = portal.component;
-var slides = component.config.dataSets("slide");
 
 var params = {
 	context: portal,
-	component: component,
-    slides: slides
+	component: component
 };
 
 var body = system.thymeleaf.render('view/banner.html', params);

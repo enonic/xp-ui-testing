@@ -7,14 +7,14 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.CreateUserException;
-import com.enonic.autotests.pages.BaseModalDialog;
+import com.enonic.autotests.pages.Application;
 
 /**
  * Representation of "Select User Store" dialog, this dialog appears, when button
  * New->
  */
 public class SelectUserStoreDialog
-    extends BaseModalDialog
+    extends Application
 {
     private final String HEADER_XPATH =
         "//div[contains(@class,'admin-window')]/div[contains(@class, 'admin-window-header') and descendant::h1[contains(.,'New User')]]";

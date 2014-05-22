@@ -104,7 +104,6 @@ class ContentBrowsePanel_FilterPanel_Spec
             lastModifiedBeforeAdding == 1;
     }
 
-	//bug CMS-3536
     def "GIVEN creating new Content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
@@ -127,7 +126,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         filterPanel.getNumberFilteredByContenttype( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
             lastModifiedBeforeAdding == 1;
     }
-    //bug CMS-3536
+
     def "GIVEN a Content WHEN deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
@@ -243,6 +242,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         filterPanel.typeSearchText( content.getName() );
+        TestUtils.saveScreenshot( getTestSession(), "typed_name" );
 
         then:
         Integer newFolderCount = filterPanel.getNumberFilteredByContenttype( "Folder" );

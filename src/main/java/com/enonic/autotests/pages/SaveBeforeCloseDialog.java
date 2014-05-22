@@ -8,7 +8,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 
 public class SaveBeforeCloseDialog
-    extends BaseModalDialog
+    extends Application
 {
     private final String YES_BUTTON_XPATH =
         "//div[contains(@id,'api.app.wizard.SaveBeforeCloseDialog')]//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'es')]]";
@@ -88,9 +88,17 @@ public class SaveBeforeCloseDialog
     /**
      * @return
      */
+    public boolean waitForPresent( long timeout )
+    {
+        return waitUntilVisibleNoException( By.xpath( TITLE_XPATH ), timeout );
+    }
+
+    /**
+     * @return
+     */
     public boolean waitForPresent()
     {
-        return waitUntilVisibleNoException( By.xpath( TITLE_XPATH ), 1l );
+        return waitForPresent( Application.DEFAULT_IMPLICITLY_WAIT );
     }
 
 }

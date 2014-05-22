@@ -142,7 +142,7 @@ public class SchemaBrowsePanel
             default:
                 break;
         }
-        sleep(500);
+        sleep( 500 );
         wizard.waitForTextAreaLoaded();
         return wizard;
     }

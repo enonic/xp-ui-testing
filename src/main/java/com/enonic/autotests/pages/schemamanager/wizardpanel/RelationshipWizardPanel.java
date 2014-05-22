@@ -6,12 +6,16 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.vo.schemamanger.RelationshipType;
 
 public class RelationshipWizardPanel
     extends SchemaWizardPanel<RelationshipType>
 {
+    public final String DIV_RELATIONSHIP_WIZARD = "//div[contains(@id,'app.wizard.RelationshipTypeWizardPanel')]";
+
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.RelationshipTypeWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
 
@@ -29,12 +33,6 @@ public class RelationshipWizardPanel
         super( session );
     }
 
-    @Override
-    public void close()
-    {
-        closeButton.click();
-
-    }
 
     public RelationshipWizardPanel typeData( RelationshipType relationship )
     {
@@ -74,6 +72,31 @@ public class RelationshipWizardPanel
     {
         return toolbarSaveButton.isDisplayed();
 
+    }
+
+    @Override
+    public WizardPanel<RelationshipType> waitUntilWizardOpened()
+    {
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_RELATIONSHIP_WIZARD ), Application.DEFAULT_IMPLICITLY_WAIT );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "RelationshipWizardPanel was not showed!" );
+        }
+        return this;
+    }
+
+    @Override
+    public String getWizardDivXpath()
+    {
+
+        return DIV_RELATIONSHIP_WIZARD;
+    }
+
+
+    @Override
+    public WebElement getCloseButton()
+    {
+        return closeButton;
     }
 
 }

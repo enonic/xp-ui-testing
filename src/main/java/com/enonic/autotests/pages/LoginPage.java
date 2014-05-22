@@ -55,8 +55,8 @@ public class LoginPage
         boolean isLoginPageLoaded = waitUntilTitleLoad( TITLE, LOGIN_PAGE_TIMEOUT );
         if ( !isLoginPageLoaded )
         {
-        	String name = NameHelper.uniqueName("loginpage");
-        	TestUtils.saveScreenshot(getSession(),name);
+            String name = NameHelper.uniqueName( "loginpage" );
+            TestUtils.saveScreenshot( getSession(), name );
             throw new TestFrameworkException( "Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT );
         }
         getLogger().info( "Login page title: " + getDriver().getTitle() );

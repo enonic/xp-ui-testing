@@ -6,14 +6,17 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.WaitHelper;
 
 public class Application
     extends Page
 {
 
+    public static final int NUMBER_TRIES_TO_CLOSE = 2;
+
     public static final long PAGE_LOAD_TIMEOUT = 4l;
 
-    public static final long REFRESH_TIMEOUT = 1l;
+    public static final long ONE_SEC = 1l;
 
     public static final long IMPLICITLY_WAIT = 4l;
 
@@ -62,6 +65,11 @@ public class Application
         {
             throw new TestFrameworkException( "after " + IMPLICITLY_WAIT + " second, spinner still present" );
         }
+    }
+
+    public boolean waitElementNotVisible( By by, long timeout )
+    {
+        return WaitHelper.waitsElementNotVisible( getDriver(), by, timeout );
     }
 
 

@@ -8,7 +8,6 @@
     <url>http://www.enonic.com</url>
   </vendor>
   <modules>
-    <module>google.analytics-1.0.0</module>
     <module>xeon-1.0.0</module>
     <module>com.enonic.image-1.0.0</module>
   </modules>

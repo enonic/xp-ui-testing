@@ -6,11 +6,16 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.vo.schemamanger.Mixin;
 
 public class MixinWizardPanel
     extends SchemaWizardPanel<Mixin>
 {
+    public final String DIV_MIXIN_WIZARD = "//div[contains(@id,'app.wizard.MixinWizardPanel')]";
+
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[@id='app.wizard.MixinWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
 
@@ -33,13 +38,6 @@ public class MixinWizardPanel
         super( session );
     }
 
-
-    @Override
-    public void close()
-    {
-        closeButton.click();
-
-    }
 
     @Override
     public MixinWizardPanel save()
@@ -81,6 +79,32 @@ public class MixinWizardPanel
     {
         return toolbarSaveButton.isDisplayed();
 
+    }
+
+
+    @Override
+    public WizardPanel<Mixin> waitUntilWizardOpened()
+    {
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_MIXIN_WIZARD ), Application.DEFAULT_IMPLICITLY_WAIT );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "MixinWizardPanel was not showed!" );
+        }
+        return this;
+    }
+
+    @Override
+    public String getWizardDivXpath()
+    {
+
+        return DIV_MIXIN_WIZARD;
+    }
+
+
+    @Override
+    public WebElement getCloseButton()
+    {
+        return closeButton;
     }
 
 }

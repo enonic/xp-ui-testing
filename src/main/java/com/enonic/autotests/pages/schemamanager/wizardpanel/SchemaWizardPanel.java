@@ -33,9 +33,9 @@ public abstract class SchemaWizardPanel<T>
             "window.api.dom.ElementRegistry.getElementById('api.ui.CodeArea').setValue(arguments[0])", cfg );
     }
 
-    public boolean  waitForTextAreaLoaded()
+    public boolean waitForTextAreaLoaded()
     {
-    	 return waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'api.ui.CodeArea')]" ), Application.DEFAULT_IMPLICITLY_WAIT );
+        return waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'api.ui.CodeArea')]" ), Application.DEFAULT_IMPLICITLY_WAIT );
     }
 
 }

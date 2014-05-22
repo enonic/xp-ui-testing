@@ -74,7 +74,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.exists( rootContent.getPath() );
     }
-	
+
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
     {
         given:
@@ -94,7 +94,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.exists( rootContent.getPath() );
     }
-	
+
     def "GIVEN creating new Content on root WHEN saved and HomeButton clicked THEN new Content should be listed"()
     {
         given:
@@ -159,7 +159,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         !contentBrowsePanel.isRowExapnded( content.getParent().toString() );
     }
-	
+
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
     {
         given:
@@ -178,7 +178,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when:
         wizard.save().close();
-		TestUtils.saveScreenshot( getTestSession(), name );
+        TestUtils.saveScreenshot( getTestSession(), name );
 
         then:
         contentBrowsePanel.exists( content.getPath() );

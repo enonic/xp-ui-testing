@@ -1,5 +1,4 @@
 package com.enonic.autotests.pages.schemamanager.wizardpanel;
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,8 +6,12 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.vo.schemamanger.ContentType;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
  * 'Schema Manager' application, Add new Content Type Wizard page.
@@ -16,6 +19,7 @@ import com.enonic.autotests.vo.schemamanger.ContentType;
 public class ContentTypeWizardPanel
     extends SchemaWizardPanel<ContentType>
 {
+    public final String DIV_CONTENTTYPE_WIZARD = "//div[contains(@id,'app.wizard.ContentTypeWizardPanel')]";
 
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.ContentTypeWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
@@ -46,7 +50,7 @@ public class ContentTypeWizardPanel
     @Override
     public ContentTypeWizardPanel save()
     {
-       boolean isSaveButtonEnabled = isEnabledSaveButton();
+        boolean isSaveButtonEnabled = isEnabledSaveButton();
 
         if ( !isSaveButtonEnabled )
         {
@@ -58,7 +62,7 @@ public class ContentTypeWizardPanel
         {
             throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
         }
-        sleep(400);
+        sleep( 400 );
         return this;
 
     }
@@ -69,13 +73,6 @@ public class ContentTypeWizardPanel
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
     }
 
-    @Override
-    public void close()
-    {
-        closeButton.click();
-        waitsForSpinnerNotVisible();
-    }
-
 
     @Override
     public ContentTypeWizardPanel typeData( ContentType contentType )
@@ -84,7 +81,7 @@ public class ContentTypeWizardPanel
         clearAndType( nameInput, contentType.getName() );
         //2. type the XML-config data:
         getLogger().info( "set contenttype configuration " );
-        setConfiguration("");
+        setConfiguration( "" );
         setConfiguration( contentType.getConfigData().trim() );
         return this;
     }
@@ -94,5 +91,32 @@ public class ContentTypeWizardPanel
     {
         return toolbarSaveButton.isDisplayed();
 
+    }
+
+
+    @Override
+    public WizardPanel<ContentType> waitUntilWizardOpened()
+    {
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENTTYPE_WIZARD ), Application.DEFAULT_IMPLICITLY_WAIT );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "ContentTypeWizard not showed!" );
+        }
+        return this;
+    }
+
+
+    @Override
+    public String getWizardDivXpath()
+    {
+
+        return DIV_CONTENTTYPE_WIZARD;
+    }
+
+
+    @Override
+    public WebElement getCloseButton()
+    {
+        return closeButton;
     }
 }

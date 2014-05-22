@@ -39,11 +39,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             waitUntilWizardOpened().typeData( content ).save();
 
         when:
-        wizard.close();
+        SaveBeforeCloseDialog dialog = wizard.close();
 
         then:
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
-        !dialog.waitForPresent();
+        dialog == null;
 
     }
 
@@ -62,12 +61,11 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         wizard.typeDisplayName( "changedname" );
 
         when:
-        wizard.close()
+        SaveBeforeCloseDialog dialog = wizard.close()
         TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-appears" );
 
         then:
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
-        dialog.waitForPresent();
+        dialog != null;
     }
 
     def "GIVEN changing name of an existing Content and wizard closing WHEN Yes is chosen THEN Content is listed in BrowsePanel with it's new name"()
@@ -106,9 +104,8 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
             typeData( content ).save();
-        wizard.typeName( "newarchive" ).close();
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
-        dialog.waitForPresent();
+        SaveBeforeCloseDialog dialog = wizard.typeName( "newarchive" ).close();
+
 
         when:
         dialog.clickNoButton();
@@ -130,9 +127,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
             typeData( content ).save();
-        wizard.typeName( "newarchive" ).close();
-        SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
-        dialog.waitForPresent();
+        SaveBeforeCloseDialog dialog = wizard.typeName( "newarchive" ).close();
 
         when:
         dialog.clickCancelButton();
