@@ -393,7 +393,7 @@ public class ContentBrowsePanel
     public NewContentDialog clickToolbarNew()
     {
         newButton.click();
-        sleep( 1000 );
+        sleep( 200 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         boolean isOpened = newContentDialog.isOpened();
         if ( !isOpened )
@@ -517,7 +517,6 @@ public class ContentBrowsePanel
      */
     public void waituntilPageLoaded( long timeout )
     {
-        sleep( 1000 );
         boolean isGridLoaded = waitAndFind( By.xpath( TABLE_ITEM_XPATH ), timeout );
         if ( !isGridLoaded )
         {

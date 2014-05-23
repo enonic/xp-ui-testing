@@ -112,9 +112,8 @@ public class TestUtils
     public static void clickByElement( final By locator, final WebDriver driver )
     {
         final long startTime = System.currentTimeMillis();
-        driver.manage().timeouts().implicitlyWait( Application.IMPLICITLY_WAIT, TimeUnit.SECONDS );
         Wait<WebDriver> wait =
-            new FluentWait<WebDriver>( driver ).withTimeout( 90000, TimeUnit.MILLISECONDS ).pollingEvery( 5500, TimeUnit.MILLISECONDS );
+            new FluentWait<WebDriver>( driver ).withTimeout( Application.IMPLICITLY_WAIT, TimeUnit.MILLISECONDS ).pollingEvery( 500, TimeUnit.MILLISECONDS );
         // .ignoring( StaleElementReferenceException.class );
         wait.until( new ExpectedCondition<Boolean>()
         {
@@ -136,7 +135,6 @@ public class TestUtils
         } );
         final long endTime = System.currentTimeMillis();
         logger.info( "clickByElement time is " + ( endTime - startTime ) );
-        driver.manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
     }
 
     public static String waitNotificationMessage( final By locator, final WebDriver driver, long timeout )

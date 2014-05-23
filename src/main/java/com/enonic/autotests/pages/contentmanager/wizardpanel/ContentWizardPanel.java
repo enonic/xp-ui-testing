@@ -169,7 +169,7 @@ public class ContentWizardPanel
     @Override
     public WizardPanel<Content> waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.DEFAULT_IMPLICITLY_WAIT );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_4 );
         if ( !result )
         {
             throw new TestFrameworkException( "ContentWizard was not showed!" );

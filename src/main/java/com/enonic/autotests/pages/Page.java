@@ -252,7 +252,7 @@ public abstract class Page
             try
             {
                 we = getDriver().findElement( locator );
-                getLogger().info( "TestUtils.getDynamicElement: dynamic web element was found!" );
+                getLogger().info( "getDynamicElement: dynamic web element was found!" );
                 return we;
             }
             catch ( StaleElementReferenceException ser )

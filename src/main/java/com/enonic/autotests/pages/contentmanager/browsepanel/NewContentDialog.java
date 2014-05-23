@@ -49,20 +49,18 @@ public class NewContentDialog
      */
     public ContentWizardPanel selectContentType( String contentTypeName )
     {
-
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
-        boolean isContentNamePresent = waitElementExist( ctypeXpath, 3 );
-
+        boolean isContentNamePresent = waitElementExist( ctypeXpath, Application.EXPLICIT_3 );
         if ( !isContentNamePresent )
         {
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
-
-        TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
+        getDriver().findElement(By.xpath(ctypeXpath)).click();          
+        //TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
         waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "select-ct" ) );
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "contentwizard" ) );
         return wizard;
 
     }

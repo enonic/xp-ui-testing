@@ -119,7 +119,15 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
-        filterPanel.typeSearchText( INITIAL_CONTENT_FOLDER_NAME );
+		String name = NameHelper.uniqueName( "archive" );
+		Content page = Content.builder().
+			name( name ).
+			displayName( "archive" ).
+			parent( ContentPath.ROOT ).
+			contentType( ContentTypeName.archiveMedia() ).
+			build();
+		contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        filterPanel.typeSearchText( name );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         when:
@@ -128,7 +136,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1;
+        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1 && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
     }
 
     private isStringPresentInName( List<String> allNames, String name )

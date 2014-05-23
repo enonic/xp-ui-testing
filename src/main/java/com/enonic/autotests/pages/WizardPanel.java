@@ -54,7 +54,7 @@ public abstract class WizardPanel<T>
             }
         }
 
-        if ( status.equals( CloseStatus.ERROR ) )
+        if ( status == null )
         {
             throw new WizardPanelNotClosingException( "ContentWizard was not closed and Modal dialog not present!" );
 
@@ -88,13 +88,13 @@ public abstract class WizardPanel<T>
             {
                 return CloseStatus.MODAL_DIALOG;
             }
-            return CloseStatus.ERROR;
+            return null;
         }
     }
 
     public enum CloseStatus
     {
-        CLOSED, MODAL_DIALOG, ERROR;
+        CLOSED, MODAL_DIALOG;
     }
 
     public abstract WizardPanel<T> save();
