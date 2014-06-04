@@ -10,6 +10,7 @@ import com.enonic.autotests.pages.WizardPanel;
 public abstract class SchemaWizardPanel<T>
     extends WizardPanel<T>
 {
+    private final String CODE_AREA_CFG = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
 
     /**
      * The constructor.
@@ -29,13 +30,14 @@ public abstract class SchemaWizardPanel<T>
      */
     public void setConfiguration( String cfg )
     {
-        ( (JavascriptExecutor) getSession().getDriver() ).executeScript(
-            "window.api.dom.ElementRegistry.getElementById('api.ui.CodeArea').setValue(arguments[0])", cfg );
+        String id = getDriver().findElement( By.xpath( "//div[contains(@id,'api.ui.CodeArea')]" ) ).getAttribute( "id" );
+        String js = String.format( CODE_AREA_CFG, id );
+        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, cfg );
+
     }
 
     public boolean waitForTextAreaLoaded()
     {
         return waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'api.ui.CodeArea')]" ), Application.DEFAULT_IMPLICITLY_WAIT );
     }
-
 }
