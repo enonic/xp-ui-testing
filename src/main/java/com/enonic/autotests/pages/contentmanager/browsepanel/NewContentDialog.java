@@ -25,7 +25,7 @@ public class NewContentDialog
     /**
      * The constructor.
      *
-     * @param session
+     * @param session  {@link TestSession}   instance.
      */
     public NewContentDialog( TestSession session )
     {
@@ -55,7 +55,7 @@ public class NewContentDialog
         {
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
-        getDriver().findElement(By.xpath(ctypeXpath)).click();          
+        getDriver().findElement( By.xpath( ctypeXpath ) ).click();
         //TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
         waitsForSpinnerNotVisible();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );

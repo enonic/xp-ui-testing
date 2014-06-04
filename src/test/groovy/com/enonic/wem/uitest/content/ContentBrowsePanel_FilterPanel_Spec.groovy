@@ -30,7 +30,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
     }
-    //bug CMS-3536
+
     def "GIVEN No selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
     {
         given:

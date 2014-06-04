@@ -21,7 +21,7 @@ public class Application
     public static final long IMPLICITLY_WAIT = 4l;
 
     public static final long EXPLICIT_4 = 4l;
-    
+
     public static final long EXPLICIT_3 = 3l;
 
     public static final int DEFAULT_IMPLICITLY_WAIT = 2;

@@ -276,6 +276,7 @@ public class ContentBrowsePanel
             if ( !isRowSelected( content.getPath().toString() ) )
             {
                 clickCheckboxAndSelectRow( content.getPath() );
+                sleep( 300 );
             }
 
         }
@@ -324,24 +325,8 @@ public class ContentBrowsePanel
     /**
      * Clicks by a checkbox, linked with content and select row in the table.
      *
-     * @param content
+     * @param path
      */
-//    private ContentBrowsePanel clickCheckbox( ContentPath contentPath )
-//    {
-//        String name = contentPath.toString();
-//        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, name );
-//        getLogger().info( "tries to find the content in a table, fullName of content is :" + name );
-//
-//        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
-//        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
-//        if ( !isPresent )
-//        {
-//            throw new SaveOrUpdateException( "checkbox for content with name : " +contentPath.toString() + "was not found" );
-//        }
-//        sleep( 700 );
-//        findElement( By.xpath( contentCheckBoxXpath ) ).click();
-//        return this;
-//    }
     public ContentBrowsePanel clickCheckboxAndSelectRow( ContentPath path )
     {
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
@@ -406,7 +391,7 @@ public class ContentBrowsePanel
     /**
      * Expands all folders, that present in the 'content path' and  clicks by a checkbox related to parent folder for new content.
      *
-     * @param parentContentPath
+     * @param contentPath
      */
     public ContentBrowsePanel clickByParentCheckbox( ContentPath contentPath )
     {
