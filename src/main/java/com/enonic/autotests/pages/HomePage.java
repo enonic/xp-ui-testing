@@ -71,9 +71,7 @@ public class HomePage
      */
     public void waitUntilAllFramesLoaded()
     {
-    	TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("homepage"));
-        waitUntilVisible( By.xpath( "//div[@class = 'name-container' and text()='Accounts']" ) );
-        waitUntilVisible( By.xpath( "//div[@class = 'name-container' and text()='Schema Manager']" ) );
+    	waitUntilVisibleNoException(By.xpath("//div[contains(@id,'app.launcher.AppSelector')]"), Application.EXPLICIT_3);
     }
 
     /**
