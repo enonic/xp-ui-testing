@@ -50,7 +50,7 @@ public class NewContentDialog
     public ContentWizardPanel selectContentType( String contentTypeName )
     {
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
-        boolean isContentNamePresent = waitElementExist( ctypeXpath, Application.EXPLICIT_3 );
+        boolean isContentNamePresent = waitElementExist( ctypeXpath, Application.EXPLICIT_4 );
         if ( !isContentNamePresent )
         {
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );

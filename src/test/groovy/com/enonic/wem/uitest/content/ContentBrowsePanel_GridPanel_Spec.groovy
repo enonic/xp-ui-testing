@@ -150,7 +150,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.pressKeyOnRow( ContentPath.from( BILDERAKIV ), Keys.ARROW_DOWN );
-
+		TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
         then:
         !contentBrowsePanel.isRowSelected( ContentPath.from( BILDERAKIV ).toString() ) && contentBrowsePanel.getSelectedRowsNumber() ==
             before;
