@@ -135,6 +135,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.unExpandContent( ContentPath.from( BILDERAKIV ) );
+		TestUtils.saveScreenshot( getTestSession(), "unexpandtest" );
 
         then:
         contentBrowsePanel.getChildNames( ContentPath.from( BILDERAKIV ) ).size() == 0;

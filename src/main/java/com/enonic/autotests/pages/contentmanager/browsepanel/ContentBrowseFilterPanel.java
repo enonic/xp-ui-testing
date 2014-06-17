@@ -69,6 +69,15 @@ public class ContentBrowseFilterPanel
 
     public List<String> getAllContentTypesFilterEntries()
     {
+        boolean result =
+            waitUntilVisibleNoException( By.xpath( "//input[@type='checkbox']/label(contains(.,'Folder'))" ), Application.EXPLICIT_3 );
+    	// we should wait it because, when BrowsePanel not loaded, all labels on FilterPanel are in lower case.
+    	if(!result)
+    	{
+    		getLogger().info("The 'Folder' filter not present in FilterPanel");
+    	}
+    	getLogger().info("The 'Folder' filter not present in FilterPanel");
+    	
         List<WebElement> elements = getDriver().findElements( By.xpath(
             "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and descendant::label]//label" ) );
         List<String> labels = new ArrayList<>();

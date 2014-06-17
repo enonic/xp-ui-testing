@@ -49,11 +49,11 @@ public class ItemViewPanelPage
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
      */
-    public void waitUntilOpened( String displayName, Integer numberPage )
+    public void waitUntilOpened(String displayName)
     {
-        String circleXpath = String.format( RED_CIRCLE_XPATH, numberPage.toString() );
+       // String circleXpath = String.format( RED_CIRCLE_XPATH, numberPage.toString() );
         String titleXpath = String.format( VERIFY_TITLE_SPAN_XPATH, displayName );
-        waitUntilVisible( By.xpath( circleXpath ) );
+        //waitUntilVisible( By.xpath( circleXpath ) );
         waitUntilVisible( By.xpath( titleXpath ) );
     }
 

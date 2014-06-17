@@ -41,7 +41,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         when:
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
-        contentInfoPage.waitUntilOpened( content.getDisplayName(), 1 );
+        contentInfoPage.waitUntilOpened( content.getDisplayName() );
         contentInfoPage.openDeleteConfirmationDialog().doConfirm();
 
         then:

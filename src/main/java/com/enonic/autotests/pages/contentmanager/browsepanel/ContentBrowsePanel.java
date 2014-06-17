@@ -178,7 +178,7 @@ public class ContentBrowsePanel
         waitsForSpinnerNotVisible();
         boolean result = waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), timeout );
         getLogger().info( "content with path:" + contentDescriptionXpath + " isExists: " + result );
-        TestUtils.saveScreenshot( getSession() );
+        TestUtils.saveScreenshot( getSession(),contentPath.getName() );
         return result;
     }
 
@@ -276,7 +276,7 @@ public class ContentBrowsePanel
             if ( !isRowSelected( content.getPath().toString() ) )
             {
                 clickCheckboxAndSelectRow( content.getPath() );
-                sleep( 300 );
+                sleep(500);
             }
 
         }
@@ -378,12 +378,12 @@ public class ContentBrowsePanel
     public NewContentDialog clickToolbarNew()
     {
         newButton.click();
-        sleep( 200 );
+        sleep( 500 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        boolean isOpened = newContentDialog.isOpened();
-        if ( !isOpened )
+        boolean isLoaded = newContentDialog.waituntilDialogShowed(Application.EXPLICIT_3);
+        if ( !isLoaded )
         {
-            throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not opened!" );
+            throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not showed!" );
         }
         return newContentDialog;
     }
@@ -429,7 +429,6 @@ public class ContentBrowsePanel
     {
         String rowXpath = String.format( TD_CONTENT_NAME, contentPath );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
-
         Actions builder = new Actions( getDriver() );
         builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
         sleep( 500 );
@@ -490,8 +489,8 @@ public class ContentBrowsePanel
         action.contextClick( element ).click().build().perform();
 
         ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
-        int expectedNumberOfPage = 1;
-        cinfo.waitUntilOpened( content.getDisplayName(), expectedNumberOfPage );
+       
+        cinfo.waitUntilOpened( content.getDisplayName() );
         return cinfo;
     }
 

@@ -104,7 +104,7 @@ public class ContentWizardPanel
             clearAndType( nameInput, content.getName() );
         }
 
-        TestUtils.saveScreenshot( getSession() );
+        TestUtils.saveScreenshot( getSession(), content.getName() );
         // 2. populate main tab
         if ( content.getData() != null )
         {

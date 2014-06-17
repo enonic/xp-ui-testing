@@ -59,7 +59,7 @@ public class NewSchemaDialog
         }
         else
         {
-            throw new TestFrameworkException( "NewContentDialog: wrong schema type" );
+            throw new TestFrameworkException( "NewSchemaDialog: wrong schema type" );
         }
 
         wizard.waitUntilWizardOpened();

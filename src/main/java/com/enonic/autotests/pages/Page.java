@@ -163,6 +163,29 @@ public abstract class Page
     }
 
     /**
+     * @param element
+     * @param attributeName
+     * @param timeout
+     * @return
+     */
+    public boolean isAttributePresent( final WebElement element, final String attributeName, long timeout )
+    {
+    	String result = WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
+        return result != null ? true:false;
+    }
+    
+    /**
+     * @param element
+     * @param attributeName
+     * @param timeout
+     * @return
+     */
+    public String getAttribute( final WebElement element, final String attributeName, long timeout)
+    {
+    	return WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
+    }
+
+    /**
      * @param by
      * @return
      */
@@ -170,7 +193,7 @@ public abstract class Page
     {
         FluentWait<By> fluentWait = new FluentWait<By>( by );
         fluentWait.pollingEvery( 500, TimeUnit.MILLISECONDS );
-        fluentWait.withTimeout( 8l, TimeUnit.SECONDS );
+        fluentWait.withTimeout( 3l, TimeUnit.SECONDS );
         fluentWait.until( new Predicate<By>()
         {
             public boolean apply( By by )

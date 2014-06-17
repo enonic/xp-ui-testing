@@ -136,7 +136,8 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1 && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1 &&
+            contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
     }
 
     private isStringPresentInName( List<String> allNames, String name )

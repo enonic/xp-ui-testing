@@ -219,16 +219,17 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
         contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() );
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
-        wizard.typeData( contentToEdit ).save().close();
+        ContentWizardPanel contentWizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
+        contentWizard.typeData( contentToEdit ).save().close();
 
         Content newcontent = cloneContentWithNewName( contentToEdit )
-        wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).
-            clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
-        wizard.typeData( newcontent );
+        contentBrowsePanel.expandContent( contentToEdit.getParent() );
+		TestUtils.saveScreenshot( getTestSession(), "editnametest" );
+        contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
+        contentWizard.typeData( newcontent );
 
         when:
-        wizard.save().close();
+        contentWizard.save().close();
 
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
