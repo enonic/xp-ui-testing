@@ -1,7 +1,9 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -37,6 +39,13 @@ public class NewContentDialog
     public static final String LIST_ITEMS_SITES =
         "//div[contains(@id,'app.create.NewContentDialogList')]/ul/li[@class='content-types-list-item site']";
 
+    public static final String SEARCH_INPUT = "//input[contains(@id,'api.ui.TextInput')]";
+    
+    private  final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
+    
+    @FindBy(xpath = SEARCH_INPUT)
+    private WebElement searchInput;
+
     /**
      * The constructor.
      *
@@ -47,6 +56,13 @@ public class NewContentDialog
         super( session );
     }
 
+   public NewContentDialog clearSearchInput()
+   {
+	   String id = getDriver().findElement(By.xpath( "//input[contains(@id,'api.ui.TextInput')]")).getAttribute("id");
+	   String js = String.format(SEARCH_INPUT_SCRIPT, id);
+	   	( (JavascriptExecutor) getSession().getDriver() ).executeScript(js,"" );
+	   	return this;
+   }
     /**
      * Checks that 'AddNewContentWizard' is opened.
      *
@@ -66,6 +82,12 @@ public class NewContentDialog
     {
         return waitUntilVisibleNoException( By.xpath( DIALOG_TITLE_XPATH ), timeout );
 
+    }
+
+    public NewContentDialog typeSearchText(String text)
+    {
+    	clearAndType( searchInput,text );
+    	return this;
     }
 
     /**
@@ -136,7 +158,7 @@ public class NewContentDialog
         return this;
     }
 
-    public int getNumberContentTypesFromFilterLink( FilterName filter )
+    public int getNumberItemsFromFilterLink( FilterName filter )
     {
         String text = null;
         //waits until content will be loaded and 'All (0)' changed to 'All (43)'
