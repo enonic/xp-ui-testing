@@ -224,7 +224,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         Content newcontent = cloneContentWithNewName( contentToEdit )
         contentBrowsePanel.expandContent( contentToEdit.getParent() );
-		TestUtils.saveScreenshot( getTestSession(), "editnametest" );
+        TestUtils.saveScreenshot( getTestSession(), "editnametest" );
         contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
         contentWizard.typeData( newcontent );
 

@@ -9,8 +9,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
-import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -40,29 +38,30 @@ public class NewContentDialog
         "//div[contains(@id,'app.create.NewContentDialogList')]/ul/li[@class='content-types-list-item site']";
 
     public static final String SEARCH_INPUT = "//input[contains(@id,'api.ui.TextInput')]";
-    
-    private  final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
-    
+
+    private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
+
     @FindBy(xpath = SEARCH_INPUT)
     private WebElement searchInput;
 
     /**
      * The constructor.
      *
-     * @param session  {@link TestSession}   instance.
+     * @param session {@link TestSession}   instance.
      */
     public NewContentDialog( TestSession session )
     {
         super( session );
     }
 
-   public NewContentDialog clearSearchInput()
-   {
-	   String id = getDriver().findElement(By.xpath( "//input[contains(@id,'api.ui.TextInput')]")).getAttribute("id");
-	   String js = String.format(SEARCH_INPUT_SCRIPT, id);
-	   	( (JavascriptExecutor) getSession().getDriver() ).executeScript(js,"" );
-	   	return this;
-   }
+    public NewContentDialog clearSearchInput()
+    {
+        String id = getDriver().findElement( By.xpath( "//input[contains(@id,'api.ui.TextInput')]" ) ).getAttribute( "id" );
+        String js = String.format( SEARCH_INPUT_SCRIPT, id );
+        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, "" );
+        return this;
+    }
+
     /**
      * Checks that 'AddNewContentWizard' is opened.
      *
@@ -84,10 +83,10 @@ public class NewContentDialog
 
     }
 
-    public NewContentDialog typeSearchText(String text)
+    public NewContentDialog typeSearchText( String text )
     {
-    	clearAndType( searchInput,text );
-    	return this;
+        clearAndType( searchInput, text );
+        return this;
     }
 
     /**

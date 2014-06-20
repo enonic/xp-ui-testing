@@ -38,7 +38,7 @@ class ContentItemViewPanelSpec
 
         when:
         ItemViewPanelPage itemView = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen();
-        itemView.waitUntilOpened( content.getDisplayName());
+        itemView.waitUntilOpened( content.getDisplayName() );
 
         then:
         itemView.getTitle().equals( content.getDisplayName() );

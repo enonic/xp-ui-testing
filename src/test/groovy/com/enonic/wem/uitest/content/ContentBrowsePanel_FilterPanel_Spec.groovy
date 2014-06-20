@@ -45,7 +45,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         String label = filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
-        TestUtils.saveScreenshot( getTestSession(),"filter-panel" );
+        TestUtils.saveScreenshot( getTestSession(), "filter-panel" );
 
         then:
         contentBrowsePanel.getContentNamesFromBrowsePanel().size() == TestUtils.getNumberFromFilterLabel( label );

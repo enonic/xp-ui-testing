@@ -119,14 +119,14 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
-		String name = NameHelper.uniqueName( "archive" );
-		Content page = Content.builder().
-			name( name ).
-			displayName( "archive" ).
-			parent( ContentPath.ROOT ).
-			contentType( ContentTypeName.archiveMedia() ).
-			build();
-		contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        String name = NameHelper.uniqueName( "archive" );
+        Content page = Content.builder().
+            name( name ).
+            displayName( "archive" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.archiveMedia() ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
         filterPanel.typeSearchText( name );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 

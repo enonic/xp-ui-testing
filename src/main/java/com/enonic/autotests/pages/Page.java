@@ -170,19 +170,19 @@ public abstract class Page
      */
     public boolean isAttributePresent( final WebElement element, final String attributeName, long timeout )
     {
-    	String result = WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
-        return result != null ? true:false;
+        String result = WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
+        return result != null ? true : false;
     }
-    
+
     /**
      * @param element
      * @param attributeName
      * @param timeout
      * @return
      */
-    public String getAttribute( final WebElement element, final String attributeName, long timeout)
+    public String getAttribute( final WebElement element, final String attributeName, long timeout )
     {
-    	return WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
+        return WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
     }
 
     /**

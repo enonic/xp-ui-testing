@@ -57,6 +57,8 @@ public class ContentBrowsePanel
     private final String ALL_NAMES_IN_CONTENT_TABLE_XPATH =
         "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]//div[@class='admin-tree-description']/descendant::p";
 
+    private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
+
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
 
@@ -178,7 +180,7 @@ public class ContentBrowsePanel
         waitsForSpinnerNotVisible();
         boolean result = waitUntilVisibleNoException( By.xpath( contentDescriptionXpath ), timeout );
         getLogger().info( "content with path:" + contentDescriptionXpath + " isExists: " + result );
-        TestUtils.saveScreenshot( getSession(),contentPath.getName() );
+        TestUtils.saveScreenshot( getSession(), contentPath.getName() );
         return result;
     }
 
@@ -276,7 +278,7 @@ public class ContentBrowsePanel
             if ( !isRowSelected( content.getPath().toString() ) )
             {
                 clickCheckboxAndSelectRow( content.getPath() );
-                sleep(500);
+                sleep( 500 );
             }
 
         }
@@ -380,7 +382,7 @@ public class ContentBrowsePanel
         newButton.click();
         sleep( 500 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        boolean isLoaded = newContentDialog.waituntilDialogShowed(Application.EXPLICIT_3);
+        boolean isLoaded = newContentDialog.waituntilDialogShowed( Application.EXPLICIT_3 );
         if ( !isLoaded )
         {
             throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not showed!" );
@@ -460,38 +462,82 @@ public class ContentBrowsePanel
         return wizard;
     }
 
+
     /**
-     * Select a content and right click on  mouse, opens a Item view panel.
+     * Start to delete a content from menu in context menu.
      *
-     * @param content
-     * @return {@ItemViewPanelPage} instance.
+     * @param path
+     * @return {@link DeleteContentDialog} instance.
      */
-    public ItemViewPanelPage doOpenContentFromContextMenu( Content content )
+    public DeleteContentDialog selectDeleteFromContextMenu( ContentPath path )
     {
-        expandContent( content.getParent() );
-        boolean isExists = exists( content.getPath(), Application.DEFAULT_IMPLICITLY_WAIT );
-        if ( !isExists )
-        {
-            throw new TestFrameworkException(
-                "The content with name " + content.getName() + " and displayName:" + content.getDisplayName() + " was not found!" );
-        }
-        else
-        {
-            getLogger().info( "doOpenContent::: content with name equals " + content.getDisplayName() + " was found" );
-        }
-        // 2. check for existence of content in a parent space and select a content to open.
-        String fullName = content.getPath().toString();
+        openContextMenu( path );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).get( 0 ).click();
+        DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
+        dialog.waitForOpened();
+        return dialog;
+    }
+
+    /**
+     * Start to delete a content from menu in context menu.
+     *
+     * @param path
+     * @return {@link DeleteContentDialog} instance.
+     */
+    public ContentWizardPanel selectEditFromContextMenu( ContentPath path )
+    {
+        openContextMenu( path );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).get( 0 ).click();
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        return wizard;
+    }
+
+
+    /**
+     * Opens context menu and select 'Open' item
+     *
+     * @param path
+     * @return
+     */
+    public ItemViewPanelPage selectOpenFromContextMenu( ContentPath path )
+    {
+        openContextMenu( path );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Open" ) ) ).get( 0 ).click();
+        ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
+        return cinfo;
+    }
+
+    /**
+     * Opens context menu and select 'New' item
+     *
+     * @param path
+     * @return
+     */
+    public NewContentDialog selectNewFromContextMenu( ContentPath path )
+    {
+        openContextMenu( path );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
+        NewContentDialog newContentDialog = new NewContentDialog( getSession() );
+        newContentDialog.waituntilDialogShowed( Application.EXPLICIT_3 );
+        return newContentDialog;
+    }
+
+    /**
+     * Clicks on content and opens context menu.
+     *
+     * @param path
+     */
+    private void openContextMenu( ContentPath path )
+    {
+        String fullName = path.toString();
         getLogger().info( "Full name of content: " + fullName );
         String contentDescriptionXpath = String.format( DIV_CONTENT_NAME_IN_TABLE, fullName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
         Actions action = new Actions( getDriver() );
-        //action.contextClick(element).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ENTER).build().perform();
-        action.contextClick( element ).click().build().perform();
 
-        ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
-       
-        cinfo.waitUntilOpened( content.getDisplayName() );
-        return cinfo;
+        action.contextClick( element ).build().perform();
+        sleep( 100 );
     }
 
     /**

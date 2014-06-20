@@ -69,7 +69,7 @@ public class HomePage
      */
     public void waitUntilAllFramesLoaded()
     {
-    	waitUntilVisibleNoException(By.xpath("//div[contains(@id,'app.launcher.AppSelector')]"), Application.EXPLICIT_3);
+        waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_3 );
     }
 
     /**

@@ -135,7 +135,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.unExpandContent( ContentPath.from( BILDERAKIV ) );
-		TestUtils.saveScreenshot( getTestSession(), "unexpandtest" );
+        TestUtils.saveScreenshot( getTestSession(), "unexpandtest" );
 
         then:
         contentBrowsePanel.getChildNames( ContentPath.from( BILDERAKIV ) ).size() == 0;
@@ -151,7 +151,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.pressKeyOnRow( ContentPath.from( BILDERAKIV ), Keys.ARROW_DOWN );
-		TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
         then:
         !contentBrowsePanel.isRowSelected( ContentPath.from( BILDERAKIV ).toString() ) && contentBrowsePanel.getSelectedRowsNumber() ==
             before;
