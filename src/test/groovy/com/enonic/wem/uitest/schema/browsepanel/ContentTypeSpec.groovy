@@ -90,7 +90,7 @@ class ContentTypeSpec
             typeData( ctype ).save().close();
         schemaBrowsePanel.waituntilPageLoaded( 3 );
         schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() );
-		TestUtils.saveScreenshot( getTestSession(),"filter-panel" );
+        TestUtils.saveScreenshot( getTestSession(), "filter-panel" );
 
         then:
         schemaBrowsePanel.exists( ctype );

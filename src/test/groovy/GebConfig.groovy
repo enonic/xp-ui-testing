@@ -1,7 +1,4 @@
 import org.openqa.selenium.firefox.FirefoxDriver
-import geb.report.ReportState
-import geb.report.Reporter
-import geb.report.ReportingListener
 
 import java.util.logging.Level
 
