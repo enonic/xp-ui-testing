@@ -71,7 +71,7 @@ class ContentWizardPanel_TabMenuSpec
 
     }
 
-    @Ignore
+   
     def "GIVEN content Wizard opened and typed a name of content WHEN 'close' button in tab-menu clicked THEN 'SaveBeforeClose' dialog showed"()
     {
         given:
@@ -87,7 +87,7 @@ class ContentWizardPanel_TabMenuSpec
 
     }
 
-    @Ignore
+   
     def "GIVEN typed name of content and wizard closing WHEN Yes is chosen THEN Content is listed in BrowsePanel with it's new name"()
     {
         given:
