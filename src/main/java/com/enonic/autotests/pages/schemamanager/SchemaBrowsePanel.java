@@ -89,7 +89,7 @@ public class SchemaBrowsePanel
         {
             clickByExpander( superTypeName );
         }
-        sleep( 500 );
+        sleep( 1500 );
         return this;
     }
 

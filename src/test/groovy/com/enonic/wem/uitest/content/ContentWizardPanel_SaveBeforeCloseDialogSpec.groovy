@@ -104,7 +104,8 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
             typeData( content ).save();
-        SaveBeforeCloseDialog dialog = wizard.typeName( "newarchive" ).close();
+		String newName = NameHelper.uniqueName("newarchive");
+        SaveBeforeCloseDialog dialog = wizard.typeName(  ).close();
 
 
         when:
@@ -112,7 +113,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
-        !contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
+        contentBrowsePanel.exists( ContentPath.from( content.getName() ) ) && !contentBrowsePanel.exists( ContentPath.from( newName ) );
     }
 
     def "GIVEN changing an existing Content and wizard closing WHEN Cancel is chosen THEN wizard is still open"()
