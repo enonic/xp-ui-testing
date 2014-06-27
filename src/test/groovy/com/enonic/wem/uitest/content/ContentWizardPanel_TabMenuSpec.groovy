@@ -27,7 +27,7 @@ class ContentWizardPanel_TabMenuSpec
     }
 
 
-    def "GIVEN started adding a  'Archive' and Wizard opened WHEN tab-menu button clicked THEN list item with 'New Archive' present"()
+    def "GIVEN started adding a 'Archive' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'New Archive' is present"()
     {
         given:
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
@@ -41,7 +41,7 @@ class ContentWizardPanel_TabMenuSpec
 
     }
 
-    def "GIVEN started adding a  'Archive' and 'Folder' two Wizards opened WHEN tab-menu button clicked THEN list item with 'New Archive' and 'New Folder' are present"()
+    def "GIVEN started adding a 'Archive' and 'Folder' two Wizards is opened WHEN tab-menu button clicked THEN list of items with two names is present"()
     {
         given:
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
@@ -57,7 +57,7 @@ class ContentWizardPanel_TabMenuSpec
 
     }
 
-    def "GIVEN content Wizard opened WHEN 'close' button on tab-menu clicked THEN wizard closed and BrowsePanel showed"()
+    def "GIVEN content Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
     {
         given:
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
@@ -72,7 +72,7 @@ class ContentWizardPanel_TabMenuSpec
     }
 
    
-    def "GIVEN content Wizard opened and typed a name of content WHEN 'close' button in tab-menu clicked THEN 'SaveBeforeClose' dialog showed"()
+    def "GIVEN content Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
     {
         given:
         String dispalyName = "testname";
@@ -88,7 +88,7 @@ class ContentWizardPanel_TabMenuSpec
     }
 
    
-    def "GIVEN typed name of content and wizard closing WHEN Yes is chosen THEN Content is listed in BrowsePanel with it's new name"()
+    def "GIVEN ContentWizard opened, data is typed, tabmenuItem(close) pressed WHEN Yes is chosen THEN new Content is listed in BrowsePanel"()
     {
         given:
         Content content = Content.builder().

@@ -54,12 +54,12 @@ public class SaveBeforeCloseDialog
 
     public void clickNoButton()
     {
-        boolean isPresent = waitAndFind( By.xpath( CANCEL_BUTTON_XPATH ) );
+        boolean isPresent = waitAndFind( By.xpath( NO_BUTTON_XPATH ) );
         if ( !isPresent )
         {
-            throw new TestFrameworkException( "'Cancel' button was not found on modal dialog!" );
+            throw new TestFrameworkException( "'No' button was not found on modal dialog!" );
         }
-        findElement( By.xpath( CANCEL_BUTTON_XPATH ) ).click();
+        findElement( By.xpath( NO_BUTTON_XPATH ) ).click();
     }
 
     /**
