@@ -26,7 +26,8 @@ public class ContentWizardPanel
     public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
         "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Duplicate']]";
 
-    public static final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'app.wizard.ContentWizardPanel') and not(contains(@style,'display: none'))]";
+    public static final String DIV_CONTENT_WIZARD_PANEL =
+        "//div[contains(@id,'app.wizard.ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
@@ -169,9 +170,9 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-    	//waitUntilVisibleNoException(by, timeout)
+        //waitUntilVisibleNoException(by, timeout)
         boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_4 );
-        findElements(By.xpath( DIV_CONTENT_WIZARD_PANEL ));
+        findElements( By.xpath( DIV_CONTENT_WIZARD_PANEL ) );
         if ( !result )
         {
             throw new TestFrameworkException( "ContentWizard was not showed!" );

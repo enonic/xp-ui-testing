@@ -24,10 +24,11 @@ public abstract class WizardPanel<T>
     public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
 
     public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'api.app.AppBarTabMenuButton')]//span[@class='label']";
-    
-    public static String ITEM_FROM_TAB_MENU_ITEM_LIST = "//div[contains(@id,'api.app.AppBar')]//li[contains(@id,'api.app.AppBarTabMenuItem') and child::span[contains(.,'%s')]]";
 
-    public static String BUTTON_CLOSE_IN_TAB_MENU_ITEM = ITEM_FROM_TAB_MENU_ITEM_LIST+"/button";
+    public static String ITEM_FROM_TAB_MENU_ITEM_LIST =
+        "//div[contains(@id,'api.app.AppBar')]//li[contains(@id,'api.app.AppBarTabMenuItem') and child::span[contains(.,'%s')]]";
+
+    public static String BUTTON_CLOSE_IN_TAB_MENU_ITEM = ITEM_FROM_TAB_MENU_ITEM_LIST + "/button";
 
     @FindBy(name = "displayName")
     protected WebElement displayNameInput;
@@ -74,12 +75,13 @@ public abstract class WizardPanel<T>
             return null;
         }
     }
-    public SaveBeforeCloseDialog closeInTabMenuItem(String title)
+
+    public SaveBeforeCloseDialog closeInTabMenuItem( String title )
     {
 
         CloseStatus status = null;
-        findElements(By.xpath(String.format(BUTTON_CLOSE_IN_TAB_MENU_ITEM, title)));
-        findElement(By.xpath(String.format(BUTTON_CLOSE_IN_TAB_MENU_ITEM, title))).click();
+        findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) );
+        findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) ).click();
         for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
         {
             status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );
@@ -147,7 +149,7 @@ public abstract class WizardPanel<T>
      *
      * @param name
      */
-    public  WizardPanel<T> doTypeName( String name )
+    public WizardPanel<T> doTypeName( String name )
     {
         clearAndType( nameInput, name );
         return this;
@@ -184,22 +186,23 @@ public abstract class WizardPanel<T>
 
     public WizardPanel<T> showTabMenuItems()
     {
-    	findElements(By.xpath(APP_BAR_TAB_MENU_TITLE_XPATH)).get(0).click();
-    	sleep(300);
-    	return this;
+        findElements( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).get( 0 ).click();
+        sleep( 300 );
+        return this;
     }
-    
-    public boolean isTabMenuItemPresent(String itemText)
+
+    public boolean isTabMenuItemPresent( String itemText )
     {
-    	List<WebElement> elems = findElements(By.xpath("//div[contains(@id,'api.app.AppBar')]//li[contains(@id,'api.app.AppBarTabMenuItem')]/span"));
-    	for(WebElement element: elems)
-    	{
-    		if(element.getText().contains(itemText))
-    		{
-    			return true;
-    		}
-    	}
-    	return false;
+        List<WebElement> elems =
+            findElements( By.xpath( "//div[contains(@id,'api.app.AppBar')]//li[contains(@id,'api.app.AppBarTabMenuItem')]/span" ) );
+        for ( WebElement element : elems )
+        {
+            if ( element.getText().contains( itemText ) )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getNameInputValue()

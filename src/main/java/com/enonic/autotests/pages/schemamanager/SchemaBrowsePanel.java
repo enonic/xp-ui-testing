@@ -4,18 +4,23 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.RelationshipWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.SchemaWizardPanel;
 import com.enonic.autotests.utils.WaitHelper;
+import com.enonic.autotests.vo.schemamanger.ContentType;
 import com.enonic.autotests.vo.schemamanger.Schema;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -38,6 +43,14 @@ public class SchemaBrowsePanel
 
     private final String DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+
+    private String CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE =
+        "//table[contains(@class,'x-grid-table')]//div[@class='admin-tree-description' and descendant::h6[contains(.,'%s')] and descendant::p[contains(.,'%s')]]";
+
+    private String THUMBNAIL_FOR_SCHEMA = CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE + "/..//div/img";
+
+    private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
+
 
     private SchemaKindUI selectedSchemaType;
 
@@ -62,10 +75,6 @@ public class SchemaBrowsePanel
     @FindBy(xpath = EXPORT_BUTTON_XPATH)
     private WebElement exportButton;
 
-    private String CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE =
-        "//table[contains(@class,'x-grid-table')]//div[@class='admin-tree-description' and descendant::h6[contains(.,'%s')] and descendant::p[contains(.,'%s')]]";
-
-    private String THUMBNAIL_FOR_SCHEMA = CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE + "/..//div/img";
 
     /**
      * The constructor
@@ -243,7 +252,6 @@ public class SchemaBrowsePanel
 
     public void specifySelectedSchemaType( String contentName, String contentDisplayName )
     {
-
         String contentTypeThumbnail = String.format( THUMBNAIL_FOR_SCHEMA, contentDisplayName, contentName );
         List<WebElement> elems = getDriver().findElements( By.xpath( contentTypeThumbnail ) );
         if ( elems.size() == 0 )
@@ -266,4 +274,82 @@ public class SchemaBrowsePanel
             this.selectedSchemaType = SchemaKindUI.MIXIN;
         }
     }
+
+    /**
+     * Start to delete a content type from menu in context menu.
+     *
+     * @param ctype
+     * @return {@link DeleteContentTypeDialog} instance.
+     */
+    public DeleteContentTypeDialog selectDeleteFromContextMenu( ContentType ctype )
+    {
+        openContextMenu( ctype );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).get( 0 ).click();
+        DeleteContentTypeDialog dialog = new DeleteContentTypeDialog( getSession() );
+        dialog.waitForOpened();
+        return dialog;
+    }
+
+    /**
+     * clicks on a  content type and selects 'Edit' from a context menu.
+     *
+     * @param ctype
+     * @return {@link ContentTypeWizardPanel} instance.
+     */
+    public ContentTypeWizardPanel selectEditFromContextMenu( ContentType ctype )
+    {
+        openContextMenu( ctype );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).get( 0 ).click();
+        ContentTypeWizardPanel wizard = new ContentTypeWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        return wizard;
+    }
+
+
+    /**
+     * clicks on a  content type and selects 'Open' from a context menu.
+     *
+     * @param ctype
+     * @return
+     */
+    public ItemViewPanelPage selectOpenFromContextMenu( ContentType ctype )
+    {
+        openContextMenu( ctype );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Open" ) ) ).get( 0 ).click();
+        ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
+        return cinfo;
+    }
+
+    /**
+     * clicks on a  content type and selects 'New' from a context menu.
+     *
+     * @param ctype
+     * @return
+     */
+    public NewContentDialog selectNewFromContextMenu( ContentType ctype )
+    {
+        openContextMenu( ctype );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
+        NewContentDialog newContentDialog = new NewContentDialog( getSession() );
+        newContentDialog.waituntilDialogShowed( Application.EXPLICIT_3 );
+        return newContentDialog;
+    }
+
+    /**
+     * Clicks on content type and opens context menu.
+     *
+     * @param ctype
+     */
+    private void openContextMenu( ContentType ctype )
+    {
+        getLogger().info( "open a context menu on : " + ctype.getName() );
+        String contentTypeDescriptionXpath =
+            String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, ctype.getDisplayNameFromConfig(), ctype.getName() );
+        WebElement element = findElement( By.xpath( contentTypeDescriptionXpath ) );
+        Actions action = new Actions( getDriver() );
+
+        action.contextClick( element ).build().perform();
+        sleep( 100 );
+    }
+
 }
