@@ -349,7 +349,7 @@ public class SchemaBrowsePanel
         Actions action = new Actions( getDriver() );
 
         action.contextClick( element ).build().perform();
-        sleep( 100 );
+        sleep( 500 );
     }
 
 }

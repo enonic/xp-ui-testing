@@ -5,7 +5,7 @@ import geb.spock.GebSpec
 import spock.lang.Shared
 
 class BaseGebSpec
-    extends GebSpec
+    extends GebSpec 
 {
     @Shared
     Properties defaultProperties;
@@ -26,22 +26,32 @@ class BaseGebSpec
 
     def setupSpec()
     {
-        String baseUrl = System.getProperty( "geb.build.baseUrl" );
-        println baseUrl
-        if ( baseUrl == null )
-        {
-            loadProperties();
-        }
+		println "browser.baseUrl in GebConfig.groovy is"+ browser.baseUrl;
+		if(browser.baseUrl == null)
+		{
+		String baseUrl = System.getProperty( "geb.build.baseUrl" );
+		println "baseUrl as System property is"+ baseUrl;
+		if ( baseUrl == null )
+		{
+			
+			loadProperties();
+			println "baseUrl was loaded from the properties file: "+ defaultProperties.get( "base.url" );
+		}
+		}
+	}
 
-    }
 
     def setup()
     {
+		println "browser.baseUrl in GebConfig.groovy is"+ browser.baseUrl;
+		if(browser.baseUrl == null)
+		{
         String baseUrl = System.getProperty( "geb.build.baseUrl" );
         if ( baseUrl == null )
         {
             browser.baseUrl = defaultProperties.get( "base.url" )
         }
+		}
     }
 
 
@@ -75,9 +85,7 @@ class BaseGebSpec
 
         try
         {
-
             input = new FileInputStream( "tests.properties" )
-
             // load a properties file
             defaultProperties.load( input );
             println defaultProperties.getProperty( "base.url" )

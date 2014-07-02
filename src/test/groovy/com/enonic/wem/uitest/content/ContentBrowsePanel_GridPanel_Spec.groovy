@@ -104,13 +104,13 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "mediadata" );
-        Content page = Content.builder().
+        Content mediadata = Content.builder().
             name( name ).
-            displayName( "page" ).
+            displayName( "mediadata" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.MEDIA_DATA ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( mediadata.getContentTypeName() ).typeData( mediadata ).save().close();
 
         expect:
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( name ) );

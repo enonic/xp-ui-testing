@@ -234,6 +234,16 @@ public class ContentBrowsePanel
         return this;
     }
 
+    public ContentWizardPanel doubleclickOnContent( ContentPath contentPath )
+    {
+    	String rowXpath = String.format( TD_CONTENT_NAME, contentPath );
+        boolean result = waitAndFind( By.xpath( rowXpath ) );
+    	Actions builder = new Actions( getDriver() );
+        builder.doubleClick( findElement( By.xpath( rowXpath ) ) ).build().perform();
+        sleep( 500 );
+        return new ContentWizardPanel(getSession());
+    }
+
     public List<String> getChildNames( ContentPath contentPath )
     {
         List<String> listNames = new ArrayList<>();
@@ -367,7 +377,7 @@ public class ContentBrowsePanel
             throw new SaveOrUpdateException( "checkbox for content: " + path.toString() + "was not found" );
         }
         findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
-        sleep( 300 );
+        sleep( 500 );
         getLogger().info( "key was typed:" + key.toString() + " ,  content path is:" + path.toString() );
         return this;
     }
