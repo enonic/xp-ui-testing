@@ -182,7 +182,7 @@ public class SchemaBrowsePanel
     {
         newButton.click();
         NewSchemaDialog selectDialog = new NewSchemaDialog( getSession() );
-        boolean isOpened = selectDialog.verifyIsOpened();
+        boolean isOpened = selectDialog.isOpened(Application.EXPLICIT_3);
         if ( !isOpened )
         {
             logError( "SelectKindDialog was not opened!" );
@@ -326,13 +326,13 @@ public class SchemaBrowsePanel
      * @param ctype
      * @return
      */
-    public NewContentDialog selectNewFromContextMenu( ContentType ctype )
+    public NewSchemaDialog selectNewFromContextMenu( ContentType ctype )
     {
         openContextMenu( ctype );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
-        NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        newContentDialog.waituntilDialogShowed( Application.EXPLICIT_3 );
-        return newContentDialog;
+        NewSchemaDialog newSchemaDialog = new NewSchemaDialog( getSession() );
+        newSchemaDialog.isOpened( Application.EXPLICIT_3 );
+        return newSchemaDialog;
     }
 
     /**

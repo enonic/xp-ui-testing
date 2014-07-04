@@ -69,10 +69,10 @@ public class NewSchemaDialog
     /**
      * @return
      */
-    public boolean verifyIsOpened()
+    public boolean isOpened(long timeout)
     {
         String title = "//div[@class='modal-dialog new-schema-dialog']/div[contains(.,'Select Kind')]";
-        return waitUntilVisibleNoException( By.xpath( title ), 2 );
+        return waitUntilVisibleNoException( By.xpath( title ), timeout );
     }
 
 }

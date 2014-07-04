@@ -1,16 +1,16 @@
 package com.enonic.wem.uitest.schema.browsepanel
 
-import spock.lang.Shared;
-import spock.lang.Stepwise;
+import spock.lang.Shared
+import spock.lang.Stepwise
 
-import com.enonic.autotests.pages.schemamanager.DeleteContentTypeDialog;
-import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
-import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
-import com.enonic.autotests.services.NavigatorHelper;
-import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.vo.schemamanger.ContentType;
-import com.enonic.wem.uitest.BaseGebSpec;
-import com.enonic.wem.uitest.schema.cfg.FolderContentTypeCfg;
+import com.enonic.autotests.pages.schemamanager.NewSchemaDialog
+import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel
+import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel
+import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.vo.schemamanger.ContentType
+import com.enonic.wem.uitest.BaseGebSpec
+import com.enonic.wem.uitest.schema.cfg.FolderContentTypeCfg
 
 @Stepwise
 class SchemaBrowsePanel_ContextMenuSpec extends BaseGebSpec 
@@ -42,6 +42,20 @@ class SchemaBrowsePanel_ContextMenuSpec extends BaseGebSpec
 		
 		then:
 		wizard.waitUntilWizardOpened();
+
+	}
+	
+	def "GIVEN a content type WHEN content type selected and 'New' selected from the context menu THEN content type wizard opened"()
+	{
+		given:
+		ContentType ctype = (ContentType)getTestSession().get(TEST_CONTENTYPE_KEY);
+		schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() );
+		
+		when:
+		NewSchemaDialog newSchemaDialog =  schemaBrowsePanel.selectNewFromContextMenu(ctype);
+		
+		then:
+		newSchemaDialog.isOpened(3);
 
 	}
 	
