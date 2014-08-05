@@ -17,10 +17,10 @@ public class RelationshipWizardPanel
     public final String DIV_RELATIONSHIP_WIZARD = "//div[contains(@id,'app.wizard.RelationshipTypeWizardPanel')]";
 
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.RelationshipTypeWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
+        "//div[contains(@id,'app.wizard.RelationshipTypeWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
 
     public final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.RelationshipTypeWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
+        "//div[contains(@id,'app.wizard.RelationshipTypeWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;

@@ -36,13 +36,13 @@ public class SchemaBrowsePanel
     public static final String SCHEMAS_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
 
     private final String REINDEX_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Re-index']]";
+        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Re-index']]";
 
     private final String EDIT_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Edit']]";
+        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Edit']]";
 
     private final String DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Delete']]";
+        "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
     private String CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE =
         "//table[contains(@class,'x-grid-table')]//div[@class='admin-tree-description' and descendant::h6[contains(.,'%s')] and descendant::p[contains(.,'%s')]]";
@@ -56,7 +56,7 @@ public class SchemaBrowsePanel
 
 
     @FindBy(
-        xpath = "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='New']]")
+        xpath = "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]")
     protected WebElement newButton;
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
@@ -70,7 +70,7 @@ public class SchemaBrowsePanel
     private WebElement reindexButton;
 
     private final String EXPORT_BUTTON_XPATH =
-        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Export']]";
+        "//div[@id='app.browse.SchemaBrowseToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Export']]";
 
     @FindBy(xpath = EXPORT_BUTTON_XPATH)
     private WebElement exportButton;

@@ -37,7 +37,7 @@ public class NewContentDialog
     public static final String LIST_ITEMS_SITES =
         "//div[contains(@id,'app.create.NewContentDialogList')]/ul/li[@class='content-types-list-item site']";
 
-    public static final String SEARCH_INPUT = "//input[contains(@id,'api.ui.TextInput')]";
+    public static final String SEARCH_INPUT = "//input[contains(@id,'api.ui.text.TextInput')]";
 
     private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
 
@@ -56,7 +56,7 @@ public class NewContentDialog
 
     public NewContentDialog clearSearchInput()
     {
-        String id = getDriver().findElement( By.xpath( "//input[contains(@id,'api.ui.TextInput')]" ) ).getAttribute( "id" );
+	   String id = getDriver().findElement(By.xpath( SEARCH_INPUT)).getAttribute("id");
         String js = String.format( SEARCH_INPUT_SCRIPT, id );
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, "" );
         return this;

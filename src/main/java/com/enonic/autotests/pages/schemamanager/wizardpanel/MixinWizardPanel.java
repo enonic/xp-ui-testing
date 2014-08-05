@@ -17,10 +17,10 @@ public class MixinWizardPanel
     public final String DIV_MIXIN_WIZARD = "//div[contains(@id,'app.wizard.MixinWizardPanel')]";
 
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[@id='app.wizard.MixinWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
+        "//div[@id='app.wizard.MixinWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
 
     public final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[@id='app.wizard.MixinWizardToolbar']/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
+        "//div[@id='app.wizard.MixinWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;

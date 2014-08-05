@@ -22,10 +22,10 @@ public class ContentTypeWizardPanel
     public final String DIV_CONTENTTYPE_WIZARD = "//div[contains(@id,'app.wizard.ContentTypeWizardPanel')]";
 
     public final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.ContentTypeWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Save']]";
+        "//div[contains(@id,'app.wizard.ContentTypeWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
 
     public final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.ContentTypeWizardToolbar')]/*[contains(@id, 'api.ui.ActionButton') and child::span[text()='Close']]";
+        "//div[contains(@id,'app.wizard.ContentTypeWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
