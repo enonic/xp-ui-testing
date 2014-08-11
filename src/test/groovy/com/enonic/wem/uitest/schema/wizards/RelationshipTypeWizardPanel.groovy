@@ -73,8 +73,7 @@ class RelationshipTypeWizardPanel
 
         when:
         String newName = NameHelper.uniqueName( "new-name" );
-        RelationshipWizardPanel wizard = schemaBrowsePanel.selectRowWithContentType( relationship.getName(),
-                                                                                     relationship.getDisplayNameFromConfig() ).clickToolbarEdit();
+        RelationshipWizardPanel wizard = schemaBrowsePanel.selectRowWithContentType( relationship.getName() ).clickToolbarEdit();
         wizard.clearAndType( wizard.getNameInput(), newName );
         wizard.save();
 

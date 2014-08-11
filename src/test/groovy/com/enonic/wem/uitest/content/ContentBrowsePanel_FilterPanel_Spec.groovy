@@ -48,7 +48,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "filter-panel" );
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == TestUtils.getNumberFromFilterLabel( label );
+        contentBrowsePanel.getRowNumber() == TestUtils.getNumberFromFilterLabel( label );
     }
 
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappear"()

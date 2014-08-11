@@ -13,7 +13,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.ContentTypeWizardPanel;
 import com.enonic.autotests.pages.schemamanager.wizardpanel.MixinWizardPanel;
@@ -26,14 +25,14 @@ import com.enonic.autotests.vo.schemamanger.Schema;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
- * 'Schema Manager' application, the dashboard page.
+ * 'Schema Manager' application, the Schema Browse panel page.
  */
 public class SchemaBrowsePanel
     extends BrowsePanel
 {
     private static String titleXpath = "//button[contains(@class,'home-button') and contains(.,'Schema Manager')]";
 
-    public static final String SCHEMAS_TABLE_CELLS_XPATH = "//table[contains(@class,'x-grid-table')]//td[contains(@class,'x-grid-cell')]";
+    public static final String SCHEMA_ITEM_ROW = "//div[contains(@class,'ui-widget-content slick-row')]";
 
     private final String REINDEX_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Re-index']]";
@@ -44,13 +43,7 @@ public class SchemaBrowsePanel
     private final String DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.SchemaBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
-    private String CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE =
-        "//table[contains(@class,'x-grid-table')]//div[@class='admin-tree-description' and descendant::h6[contains(.,'%s')] and descendant::p[contains(.,'%s')]]";
-
-    private String THUMBNAIL_FOR_SCHEMA = CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE + "/..//div/img";
-
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
-
 
     private SchemaKindUI selectedSchemaType;
 
@@ -87,7 +80,7 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Expands a folder, that is supertype for a content.
+     * Expands a folder, that is super type for a content type.
      *
      * @param superTypeName
      */
@@ -96,33 +89,30 @@ public class SchemaBrowsePanel
         waitsForSpinnerNotVisible();
         if ( superTypeName != null )
         {
-            clickByExpander( superTypeName );
+            clickOnExpander( superTypeName );
         }
         sleep( 1500 );
         return this;
     }
 
     /**
-     * Selects a row with contenttype: clicks by row with content
+     * Selects a row with content type: clicks by row with content
      *
-     * @param contentName        the name of content
-     * @param contentDisplayName the display-name of content
+     * @param contentTypeName the name of content type
      */
-    public SchemaBrowsePanel selectRowWithContentType( String contentName, String contentDisplayName )
+    public SchemaBrowsePanel selectRowWithContentType( String contentTypeName )
     {
-        String contentTypeXpath = String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, contentDisplayName, contentName );
-        getLogger().info( "Check that a Content Type to edit is present in the table: " + contentName );
-        //3. press the 'Edit' button on the toolbar
-        WebElement elem = getDynamicElement( By.xpath( contentTypeXpath ), 3 );
-        if ( elem == null )
+        String contentTypeXpath = String.format( DIV_NAMES_VIEW, contentTypeName );
+        WebElement ctype = getDynamicElement( By.xpath( contentTypeXpath ), Application.NUMBER_TRIES_TO_FIND_ELEMENT );
+        if ( ctype == null )
         {
             throw new TestFrameworkException( "element was not found:" + contentTypeXpath );
         }
         sleep( 500 );
-        elem.click();
+        ctype.click();
         WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( EDIT_BUTTON_XPATH ) );
-        getLogger().info( "content type with name:" + contentName + " was selected in the table!" );
-        specifySelectedSchemaType( contentName, contentDisplayName );
+        getLogger().info( "content type with name:" + contentTypeName + " was selected in the table!" );
+        setSchemaType( contentTypeName );
         return this;
     }
 
@@ -182,7 +172,7 @@ public class SchemaBrowsePanel
     {
         newButton.click();
         NewSchemaDialog selectDialog = new NewSchemaDialog( getSession() );
-        boolean isOpened = selectDialog.isOpened(Application.EXPLICIT_3);
+        boolean isOpened = selectDialog.isOpened( Application.EXPLICIT_3 );
         if ( !isOpened )
         {
             logError( "SelectKindDialog was not opened!" );
@@ -199,13 +189,12 @@ public class SchemaBrowsePanel
     public void waituntilPageLoaded( long timeout )
     {
         new WebDriverWait( getSession().getDriver(), timeout ).until(
-            ExpectedConditions.visibilityOfElementLocated( By.xpath( SCHEMAS_TABLE_CELLS_XPATH ) ) );
+            ExpectedConditions.visibilityOfElementLocated( By.xpath( SCHEMA_ITEM_ROW ) ) );
     }
 
     /**
      * @param session
-     * @return true if 'Content Manager' opened and CMSpacesPage showed,
-     * otherwise false.
+     * @return true if 'Content Manager' opened, otherwise false.
      */
     public static boolean isOpened( TestSession session )
     {
@@ -221,45 +210,41 @@ public class SchemaBrowsePanel
     }
 
     /**
-     * Returns true if a contenttype is present in the Browse Panel, otherwise returns false
+     * Returns true if a content type is present in the Browse Panel, otherwise returns false
      *
      * @param contentType
      * @return
      */
     public boolean exists( Schema contentType )
     {
-        String contentTypeXpath =
-            String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, contentType.getDisplayNameFromConfig(), contentType.getName() );
-        getLogger().info( "Check is contenttype is  present in the  table: " + contentTypeXpath );
+        String contentTypeXpath = String.format( DIV_NAMES_VIEW, contentType.getName() );
+        getLogger().info( "Check is contenttype is present in the browse panel: " + contentTypeXpath );
         waitsForSpinnerNotVisible();
         List<WebElement> elems = findElements( By.xpath( contentTypeXpath ) );
         if ( elems.size() > 0 )
         {
-            getLogger().info( "Content type  was found in the Table! " + "Name:" + contentType.getName() );
+            getLogger().info( "Content type was found in the browse panel! " + "Name:" + contentType.getName() );
             return true;
         }
         else
         {
-            getLogger().info( "Content type  was not found in the Table!  " + "Name:" + contentType.getName() );
+            getLogger().info( "Content type was not found in the browse panel!  " + "Name:" + contentType.getName() );
             return false;
         }
     }
 
-    public SchemaKindUI getSelectedSchemaType()
-    {
-        return selectedSchemaType;
-    }
 
-    public void specifySelectedSchemaType( String contentName, String contentDisplayName )
+    public void setSchemaType( String contentTypeName )
     {
-        String contentTypeThumbnail = String.format( THUMBNAIL_FOR_SCHEMA, contentDisplayName, contentName );
-        List<WebElement> elems = getDriver().findElements( By.xpath( contentTypeThumbnail ) );
+        String contentTypeIcon = String.format(
+            DIV_NAMES_VIEW + "/ancestor::div[contains(@id,'SchemaNamesAndIconView') ]/div[contains(@class,'overlay-wrapper')]",
+            contentTypeName );
+        List<WebElement> elems = getDriver().findElements( By.xpath( contentTypeIcon ) );
         if ( elems.size() == 0 )
         {
-            throw new TestFrameworkException(
-                "The thumbnail for schema element was not found!, please checkout the xpath: " + THUMBNAIL_FOR_SCHEMA );
+            throw new TestFrameworkException( "The icon for schema element was not found! Please check the xpath: " + contentTypeIcon );
         }
-        String srcAttr = elems.get( 0 ).getAttribute( "src" );
+        String srcAttr = elems.get( 0 ).getAttribute( "class" );
         if ( srcAttr.contains( "ContentType" ) )
         {
             this.selectedSchemaType = SchemaKindUI.CONTENT_TYPE;
@@ -281,7 +266,7 @@ public class SchemaBrowsePanel
      * @param ctype
      * @return {@link DeleteContentTypeDialog} instance.
      */
-    public DeleteContentTypeDialog selectDeleteFromContextMenu( ContentType ctype )
+    public DeleteContentTypeDialog selectDeleteInContextMenu( ContentType ctype )
     {
         openContextMenu( ctype );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).get( 0 ).click();
@@ -296,7 +281,7 @@ public class SchemaBrowsePanel
      * @param ctype
      * @return {@link ContentTypeWizardPanel} instance.
      */
-    public ContentTypeWizardPanel selectEditFromContextMenu( ContentType ctype )
+    public ContentTypeWizardPanel selectEditInContextMenu( ContentType ctype )
     {
         openContextMenu( ctype );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).get( 0 ).click();
@@ -307,12 +292,12 @@ public class SchemaBrowsePanel
 
 
     /**
-     * clicks on a  content type and selects 'Open' from a context menu.
+     * clicks on a content type and selects 'Open' from a context menu.
      *
      * @param ctype
      * @return
      */
-    public ItemViewPanelPage selectOpenFromContextMenu( ContentType ctype )
+    public ItemViewPanelPage selectOpenInContextMenu( ContentType ctype )
     {
         openContextMenu( ctype );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Open" ) ) ).get( 0 ).click();
@@ -326,7 +311,7 @@ public class SchemaBrowsePanel
      * @param ctype
      * @return
      */
-    public NewSchemaDialog selectNewFromContextMenu( ContentType ctype )
+    public NewSchemaDialog selectNewInContextMenu( ContentType ctype )
     {
         openContextMenu( ctype );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
@@ -343,9 +328,8 @@ public class SchemaBrowsePanel
     private void openContextMenu( ContentType ctype )
     {
         getLogger().info( "open a context menu on : " + ctype.getName() );
-        String contentTypeDescriptionXpath =
-            String.format( CONTENT_TYPE_NAME_AND_DISPLAY_NAME_IN_TABLE, ctype.getDisplayNameFromConfig(), ctype.getName() );
-        WebElement element = findElement( By.xpath( contentTypeDescriptionXpath ) );
+        String contentTypeXpath = String.format( DIV_NAMES_VIEW, ctype.getName() );
+        WebElement element = findElement( By.xpath( contentTypeXpath ) );
         Actions action = new Actions( getDriver() );
 
         action.contextClick( element ).build().perform();

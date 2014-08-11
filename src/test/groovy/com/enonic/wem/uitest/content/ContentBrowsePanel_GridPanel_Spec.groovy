@@ -32,10 +32,10 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN Content listed on root WHEN no selection THEN all rows are white"()
     {
         given:
-        List<String> contentNames = contentBrowsePanel.getContentNamesFromBrowsePanel();
+        int rowNumber = contentBrowsePanel.getRowNumber();
 
         expect:
-        contentBrowsePanel.getSelectedRowsNumber() == 0 && contentNames.size() > 0;
+        contentBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
 
     }
 
@@ -88,7 +88,7 @@ class ContentBrowsePanel_GridPanel_Spec
         int selectedNumber = contentBrowsePanel.doSelectAll();
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == selectedNumber;
+        contentBrowsePanel.getRowNumber() == selectedNumber;
     }
 
     def "GIVEN a Content on root having a child WHEN listed THEN expander is shown"()

@@ -14,6 +14,8 @@ public class Application
 
     public static final int NUMBER_TRIES_TO_CLOSE = 2;
 
+    public static final int NUMBER_TRIES_TO_FIND_ELEMENT = 2;
+
     public static final long PAGE_LOAD_TIMEOUT = 7l;
 
     public static final long ONE_SEC = 1l;

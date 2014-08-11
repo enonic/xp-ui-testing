@@ -10,7 +10,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentWizardPanel_TabMenuSpec
@@ -71,7 +70,7 @@ class ContentWizardPanel_TabMenuSpec
 
     }
 
-   
+
     def "GIVEN content Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
     {
         given:
@@ -87,7 +86,7 @@ class ContentWizardPanel_TabMenuSpec
 
     }
 
-   
+
     def "GIVEN ContentWizard opened, data is typed, tabmenuItem(close) pressed WHEN Yes is chosen THEN new Content is listed in BrowsePanel"()
     {
         given:

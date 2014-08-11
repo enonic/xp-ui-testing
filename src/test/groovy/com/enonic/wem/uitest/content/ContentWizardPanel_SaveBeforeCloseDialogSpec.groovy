@@ -104,8 +104,8 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
             typeData( content ).save();
-		String newName = NameHelper.uniqueName("newarchive");
-        SaveBeforeCloseDialog dialog = wizard.typeName(  ).close();
+        String newName = NameHelper.uniqueName( "newarchive" );
+        SaveBeforeCloseDialog dialog = wizard.typeName().close();
 
 
         when:

@@ -48,8 +48,7 @@ class RelationshipSpec
         schemaBrowsePanel.clickToolbarNew().selectKind( relToDelete.getSchemaKindUI().getValue() ).typeData( relToDelete ).save().close();
 
         when:
-        schemaBrowsePanel.selectRowWithContentType( relToDelete.getName(),
-                                                    relToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete();
+        schemaBrowsePanel.selectRowWithContentType( relToDelete.getName() ).clickToolbarDelete().doDelete();
 
         then:
         !schemaBrowsePanel.exists( relToDelete );
@@ -67,8 +66,7 @@ class RelationshipSpec
 
         when:
         RelationshipType newRelationship = cloneRelationshipWithNewName( relToEdit );
-        schemaBrowsePanel.selectRowWithContentType( relToEdit.getName(), relToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().
-            typeData( newRelationship ).save().close();
+        schemaBrowsePanel.selectRowWithContentType( relToEdit.getName() ).clickToolbarEdit().typeData( newRelationship ).save().close();
 
         then:
         schemaBrowsePanel.exists( newRelationship );
@@ -86,7 +84,7 @@ class RelationshipSpec
 
         when:
         RelationshipType newRelationship = cloneRelationshipNewDisplayName( relToEdit );
-        schemaBrowsePanel.selectRowWithContentType( relToEdit.getName(), relToEdit.getDisplayNameFromConfig() ).clickToolbarEdit().
+        schemaBrowsePanel.selectRowWithContentType( relToEdit.getName() ).clickToolbarEdit().
             typeData( newRelationship ).save().close();
 
         then:

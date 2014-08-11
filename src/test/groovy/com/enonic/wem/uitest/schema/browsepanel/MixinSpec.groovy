@@ -50,8 +50,7 @@ class MixinSpec
         Mixin newMixin = cloneMixinWithNewName( mixinToEdit );
 
         when:
-        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(), mixinToEdit.getDisplayNameFromConfig() ).
-            clickToolbarEdit().typeData( newMixin ).save().close();
+        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName() ).clickToolbarEdit().typeData( newMixin ).save().close();
         getTestSession().put( MIXIN_KEY, newMixin );
 
         then:
@@ -68,8 +67,7 @@ class MixinSpec
         Mixin newMixin = cloneMixinWithNewDisplayName( mixinToEdit );
 
         when:
-        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName(), mixinToEdit.getDisplayNameFromConfig() ).
-            clickToolbarEdit().typeData( newMixin ).save().close();
+        schemaBrowsePanel.selectRowWithContentType( mixinToEdit.getName() ).clickToolbarEdit().typeData( newMixin ).save().close();
         getTestSession().put( MIXIN_KEY, newMixin );
 
         then:
@@ -83,8 +81,7 @@ class MixinSpec
         Mixin mixinToDelete = (Mixin) getTestSession().get( MIXIN_KEY );
 
         when:
-        schemaBrowsePanel.selectRowWithContentType( mixinToDelete.getName(),
-                                                    mixinToDelete.getDisplayNameFromConfig() ).clickToolbarDelete().doDelete();
+        schemaBrowsePanel.selectRowWithContentType( mixinToDelete.getName() ).clickToolbarDelete().doDelete();
 
         then:
         !schemaBrowsePanel.exists( mixinToDelete );

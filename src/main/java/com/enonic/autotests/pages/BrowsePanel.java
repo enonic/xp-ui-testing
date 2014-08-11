@@ -14,24 +14,23 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class BrowsePanel
     extends Application
 {
-    private final String ALL_ROWS_IN_CONTENT_TABLE_XPATH = "//table[contains(@class,'x-grid-table')]//tr[contains(@class,'x-grid-row')]";
+    protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
-    protected String TD_CONTENT_DISPLAY_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::h6[text()='%s']]";
-
-    protected String TD_CONTENT_NAME = "//table[contains(@class,'x-grid-table')]//td[descendant::p[text()='%s']]";
+    protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[@title='%s']]";
 
     protected String TD_CHILDREN_CONTENT_NAMES = "//table[contains(@class,'x-grid-table')]//td[descendant::p[contains(.,'%s')]]";
 
-    private static String DIV_SCROLL_XPATH = "//table[contains(@class,'x-grid-table-resizer')]/parent::div[contains(@id,'treeview')]";
+    private final String CLEAR_SELECTION_LINK_XPATH =
+        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[text()='Clear Selection']";
 
-
-    private final String CLEAR_SELECTION_LINK_XPATH = "//a[contains(@class,' x-box-item x-toolbar-item') and contains(.,'Clear')]";
+    private String BROWSE_PANEL_ITEM_EXPANDER =
+        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
     @FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
     protected WebElement clearSelectionLink;
 
     private final String SELECT_ALL_LINK_XPATH =
-        "//a[contains(@class,'x-toolbar-item') and (contains(.,'Select All') or contains(.,'Select all'))]";
+        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[text()='Select All' or text()='Select all']";
 
     @FindBy(xpath = SELECT_ALL_LINK_XPATH)
     protected WebElement selectAllLink;
@@ -48,13 +47,22 @@ public class BrowsePanel
     }
 
     /**
-     * clicks by 'expand' icon and expands a folder.
+     * @return the number of rows in Browse Panel.
+     */
+    public int getRowNumber()
+    {
+        return findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) ).size();
+    }
+
+
+    /**
+     * clicks on 'expand' icon and expands a folder.
      *
      * @param name - the name of content type or contentPath
      * @return true if space is not empty and was expanded, otherwise return
      * false.
      */
-    public <T> boolean clickByExpander( T name )
+    public <T> boolean clickOnExpander( T name )
     {
         boolean isExpanderPresent = isExpanderPresent( name );
         if ( !isExpanderPresent )
@@ -62,24 +70,19 @@ public class BrowsePanel
             getLogger().info( "This object: " + name.toString() + " has no child" );
             return false;
         }
-        clickOnExpanderImage( name.toString() );
-//        if ( isRowExapnded( element.toString() ) )
-//        {
-//        	clickOnExpanderImage( element.toString() );
-//        }
-
+        String expanderIcon = String.format( BROWSE_PANEL_ITEM_EXPANDER, name.toString() );
+        findElement( By.xpath( expanderIcon ) ).click();
         return true;
     }
 
     /**
-     * Check if space has child. if the attribute 'class' contains a string
-     * "x-grid-tree-node-leaf", so space has no any child.
+     * If content or content type has a child, so expander icon should be present near the item from BrowsePanel.
      *
-     * @return true if space has no any children., otherwise true.
+     * @return true if expander icon is present, otherwise false.
      */
     public <T> boolean isExpanderPresent( T contentPath )
     {
-        String expanderElement = String.format( TD_CONTENT_NAME + "/div/img[contains(@class,'x-tree-expander')]", contentPath.toString() );
+        String expanderElement = String.format( BROWSE_PANEL_ITEM_EXPANDER, contentPath.toString() );
         getLogger().info( "check if present expander for folder:" + contentPath.toString() + " xpath: " + expanderElement );
         boolean isPresent = isDynamicElementPresent( By.xpath( expanderElement ), 2 );
         if ( !isPresent )
@@ -91,53 +94,25 @@ public class BrowsePanel
         return true;
     }
 
+    /**
+     * @return true if row in BrowsePanel is expanded, otherwise false.
+     */
     public boolean isRowExapnded( String name )
     {
-        String trXpath = String.format( TD_CONTENT_NAME + "/parent::tr", name );
+        String expanderXpath = String.format( BROWSE_PANEL_ITEM_EXPANDER, name );
 
-        WebElement rowElement = getDynamicElement( By.xpath( trXpath ), 5 );
+        WebElement rowElement = getDynamicElement( By.xpath( expanderXpath ), 5 );
         if ( rowElement == null )
         {
-            throw new TestFrameworkException( "invalid locator  or space with name: " + name + " dose not exists! xpath =  " + trXpath );
+            throw new TestFrameworkException(
+                "invalid locator  or space with name: " + name + " does not exist! xpath =  " + expanderXpath );
         }
 
         String attributeName = "class";
-        String attributeValue = "x-grid-tree-node-expanded";
+        String attributeValue = "collapse";
         return waitAndCheckAttrValue( rowElement, attributeName, attributeValue, 1l );
     }
 
-    /**
-     * clicks by expand-icon and expands a space.
-     */
-    private void clickOnExpanderImage( String name )
-    {
-        String expanderImgXpath = buildExpanderXpath( name );
-        List<WebElement> elems = getSession().getDriver().findElements( By.xpath( expanderImgXpath ) );
-        if ( elems.size() == 0 )
-        {
-            throw new TestFrameworkException( "invalid locator for content-expander or space dose not exist! " + expanderImgXpath );
-        }
-
-        if ( !elems.get( 0 ).isDisplayed() )
-        {
-            WebElement scrolled = scrollTableAndFind( expanderImgXpath, DIV_SCROLL_XPATH );
-            if ( scrolled != null )
-            {
-                scrolled.click();
-            }
-
-        }
-        else
-        {
-            elems.get( 0 ).click();
-        }
-    }
-
-    protected String buildExpanderXpath( String name )
-    {
-        return String.format( TD_CONTENT_NAME, name ) + "//ancestor::td//img[contains(@class,'x-tree-expander')]";
-
-    }
 
     /**
      * Clicks by "Select All" and selects all items from the table.
@@ -157,16 +132,6 @@ public class BrowsePanel
 
 
     /**
-     * @return number of rows in the table of content. The row with header is
-     * excluded.
-     */
-    public int getTableRowNumber()
-    {
-        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_ROWS_IN_CONTENT_TABLE_XPATH ) );
-        return rows.size();
-    }
-
-    /**
      * Gets a number of selected items in the table.
      *
      * @return a number of selected rows.
@@ -174,10 +139,10 @@ public class BrowsePanel
     public int getSelectedRowsNumber()
     {
         int number = 0;
-        List<WebElement> rows = getSession().getDriver().findElements( By.xpath( ALL_ROWS_IN_CONTENT_TABLE_XPATH ) );
+        List<WebElement> rows = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'checkboxsel')]" ) );
         for ( WebElement row : rows )
         {
-            if ( waitAndCheckAttrValue( row, "class", "x-grid-row-selected", 1l ) )
+            if ( waitAndCheckAttrValue( row, "class", "selected", 1l ) )
             {
                 number++;
             }
@@ -188,12 +153,12 @@ public class BrowsePanel
     public boolean isRowSelected( String name )
     {
         List<WebElement> rows =
-            getSession().getDriver().findElements( By.xpath( String.format( ( TD_CONTENT_NAME + "/parent::tr" ), name ) ) );
+            findElements( By.xpath( String.format( ( DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
         if ( rows.size() == 0 )
         {
             throw new TestFrameworkException( "row with content was not found, content name is " + name );
         }
-        return waitAndCheckAttrValue( rows.get( 0 ), "class", "x-grid-row-selected", 1 );
+        return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
 
     }
 
@@ -219,7 +184,7 @@ public class BrowsePanel
      */
     public String getClearSelectionText()
     {
-        List<WebElement> elems = getSession().getDriver().findElements( By.xpath( CLEAR_SELECTION_LINK_XPATH ) );
+        List<WebElement> elems = findElements( By.xpath( CLEAR_SELECTION_LINK_XPATH ) );
         if ( elems.size() == 0 )
         {
             throw new TestFrameworkException( "the 'Clear selection' Link was not found, probably wrong xpath locator!" );

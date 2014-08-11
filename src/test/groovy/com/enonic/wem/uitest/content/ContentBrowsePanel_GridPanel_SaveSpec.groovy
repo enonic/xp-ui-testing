@@ -159,7 +159,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         !contentBrowsePanel.isRowExapnded( content.getParent().toString() );
     }
-
+    //not implemented in wem-ce
+    @Ignore
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
     {
         given:
@@ -183,7 +184,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.exists( content.getPath() );
     }
-
+    //not implemented in wem-ce
+    @Ignore
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
         given:
@@ -208,6 +210,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( content.getPath() ) && contentBrowsePanel.isRowExapnded( content.getParent().toString() );
     }
 
+    @Ignore
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
         given:
@@ -234,11 +237,14 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+
+        //contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
         contentBrowsePanel.exists( newcontent.getPath() );
 
     }
 
+    @Ignore
     def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new displayName"()
     {
         given:
@@ -263,6 +269,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+
+        //contentBrowsePanel.expandContent( contentToEdit.getParent() );
         contentBrowsePanel.exists( newcontent.getPath() );
     }
 

@@ -50,8 +50,8 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.waitsForSpinnerNotVisible( 2 )
 
         then:
-        Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() )
-        numberOfFilteredContent == contentBrowsePanel.getContentNamesFromBrowsePanel().size()
+        Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() );
+        numberOfFilteredContent == contentBrowsePanel.getRowNumber();
     }
 
     def "GIVEN Selections in any filter WHEN clicking clean filter THEN initial grid view displayed "()
@@ -81,7 +81,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then:
         Integer numberOfFolder = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.FOLDER.getValue() );
-        ( numberOfFolder + numberOfPages ) == contentBrowsePanel.getContentNamesFromBrowsePanel().size();
+        ( numberOfFolder + numberOfPages ) == contentBrowsePanel.getRowNumber();
     }
 
     def "GIVEN One one selection in any filter WHEN deselecting selection THEN initial grid view displayed "()
@@ -136,10 +136,16 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then:
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() > 1 &&
-            contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        contentBrowsePanel.getRowNumber() > 1 && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
     }
 
+    /**
+     *
+     * Checks that a string is present in all names of content
+     * @param allNames
+     * @param name
+     * @return if each name contains a searched text.
+     */
     private isStringPresentInName( List<String> allNames, String name )
     {
         if ( allNames.isEmpty() )

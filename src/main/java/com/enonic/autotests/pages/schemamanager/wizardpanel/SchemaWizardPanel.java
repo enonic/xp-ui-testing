@@ -11,6 +11,7 @@ public abstract class SchemaWizardPanel<T>
     extends WizardPanel<T>
 {
     private final String CODE_AREA_CFG = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
+
     private final String CODE_AREA_XPATH = "//div[contains(@id,'api.ui.text.CodeArea')]";
 
     /**
@@ -31,7 +32,7 @@ public abstract class SchemaWizardPanel<T>
      */
     public void setConfiguration( String cfg )
     {
-    	String id = getDriver().findElement(By.xpath( CODE_AREA_XPATH )).getAttribute("id");
+        String id = getDriver().findElement( By.xpath( CODE_AREA_XPATH ) ).getAttribute( "id" );
         String js = String.format( CODE_AREA_CFG, id );
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, cfg );
 
@@ -39,6 +40,6 @@ public abstract class SchemaWizardPanel<T>
 
     public boolean waitForTextAreaLoaded()
     {
-    	 return waitUntilVisibleNoException( By.xpath( CODE_AREA_XPATH ), Application.DEFAULT_IMPLICITLY_WAIT );
+        return waitUntilVisibleNoException( By.xpath( CODE_AREA_XPATH ), Application.DEFAULT_IMPLICITLY_WAIT );
     }
 }

@@ -56,7 +56,7 @@ public class NewContentDialog
 
     public NewContentDialog clearSearchInput()
     {
-	   String id = getDriver().findElement(By.xpath( SEARCH_INPUT)).getAttribute("id");
+        String id = getDriver().findElement( By.xpath( SEARCH_INPUT ) ).getAttribute( "id" );
         String js = String.format( SEARCH_INPUT_SCRIPT, id );
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, "" );
         return this;

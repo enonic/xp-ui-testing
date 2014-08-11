@@ -51,12 +51,12 @@ class ContentTypeSpec
 
         when:
         ContentType newContentType = cloneContentTypeWithNewDisplayName( ctype )
-        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
-                                                                                                                ctype.getDisplayNameFromConfig() );
+        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName() );
         schemaBrowsePanel.clickToolbarEdit().typeData( newContentType ).save().close();
         TestUtils.saveScreenshot( getSession(), newContentType.getName() );
 
         then:
+        //bug: need to expand a super type folder!
         schemaBrowsePanel.exists( newContentType );
     }
 
@@ -70,11 +70,11 @@ class ContentTypeSpec
 
         when:
         ContentType newContentType = cloneContentTypeWithNewName( ctype );
-        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName(),
-                                                                                                                ctype.getDisplayNameFromConfig() ).
+        schemaBrowsePanel.expandSuperTypeFolder( ctype.getSuperTypeNameFromConfig() ).selectRowWithContentType( ctype.getName() ).
             clickToolbarEdit().typeData( newContentType ).save().close();
 
         then:
+        //bug: need to expand a super type folder!
         schemaBrowsePanel.exists( newContentType );
 
     }
@@ -108,8 +108,7 @@ class ContentTypeSpec
 
         when:
         schemaBrowsePanel.expandSuperTypeFolder( ctypeToDelete.getSuperTypeNameFromConfig() ).
-            selectRowWithContentType( ctypeToDelete.getName(), ctypeToDelete.getDisplayNameFromConfig() ).
-            clickToolbarDelete().doDelete();
+            selectRowWithContentType( ctypeToDelete.getName() ).clickToolbarDelete().doDelete();
 
         then:
         !schemaBrowsePanel.exists( ctypeToDelete );
