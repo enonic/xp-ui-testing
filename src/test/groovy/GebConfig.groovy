@@ -1,12 +1,23 @@
-import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.remote.RemoteWebDriver
 
 import java.util.logging.Level
 
 // Use firefox by default
 driver = {
-    def driver = new FirefoxDriver()
-    driver.setLogLevel( Level.INFO )
+
+    Properties props = new Properties()
+    File propsFile = new File( 'tests.properties' )
+    props.load( propsFile.newDataInputStream() )
+
+    def pathToDriver = props.getProperty( 'chromedriver.path' )
+    System.setProperty( "webdriver.chrome.driver", pathToDriver )
+
+    def driver = new ChromeDriver()
+    //driver.setLogLevel(Level.INFO)
     driver.manage().window().maximize()
+    println "default configuration"
     return driver
 }
 // Set reports directory
@@ -14,16 +25,18 @@ reportsDir = 'target/geb-reports'
 
 reportOnTestFailureOnly = false
 
+//baseUrl ='http://localhost:8080/'
 
 environments {
 
-    firefox {
+    remote {
         driver = {
-            def d = new FirefoxDriver()
-            d.setLogLevel( Level.INFO )
-            d.manage().window().maximize()
-            return d
+            def driver = new RemoteWebDriver( new URL( "http://10.10.9.152:4444/wd/hub" ), DesiredCapabilities.firefox() )
+            driver.setLogLevel( Level.INFO );
+            driver.manage().window().maximize();
+            return driver;
         }
     }
+
 
 }

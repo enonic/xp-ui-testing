@@ -150,8 +150,8 @@ class ContentBrowsePanel_GridPanel_Spec
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( ContentPath.from( BILDERAKIV ), Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
+        contentBrowsePanel.pressKeyOnRow( ContentPath.from( BILDERAKIV ), Keys.ARROW_UP );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_up" );
         then:
         !contentBrowsePanel.isRowSelected( ContentPath.from( BILDERAKIV ).toString() ) && contentBrowsePanel.getSelectedRowsNumber() ==
             before;
@@ -172,7 +172,8 @@ class ContentBrowsePanel_GridPanel_Spec
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( ContentPath.from( name ), Keys.ARROW_UP );
+        contentBrowsePanel.pressKeyOnRow( ContentPath.from( name ), Keys.ARROW_DOWN );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
 
         then:
         !contentBrowsePanel.isRowSelected( ContentPath.from( name ).toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;

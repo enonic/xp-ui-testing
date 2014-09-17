@@ -16,7 +16,7 @@ public class Application
 
     public static final int NUMBER_TRIES_TO_FIND_ELEMENT = 2;
 
-    public static final long PAGE_LOAD_TIMEOUT = 7l;
+    public static final long PAGE_LOAD_TIMEOUT = 15l;
 
     public static final long ONE_SEC = 1l;
 
@@ -25,6 +25,8 @@ public class Application
     public static final long EXPLICIT_4 = 4l;
 
     public static final long EXPLICIT_3 = 3l;
+
+    public static final long EXPLICIT_2 = 2l;
 
     public static final int DEFAULT_IMPLICITLY_WAIT = 2;
 

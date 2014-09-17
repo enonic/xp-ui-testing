@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContenTypeDispalyNames
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
@@ -47,7 +48,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         when:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
-        contentBrowsePanel.waitsForSpinnerNotVisible( 2 )
+        contentBrowsePanel.waitsForSpinnerNotVisible()
 
         then:
         Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() );
@@ -58,11 +59,12 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
         boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
 
         when:
         filterPanel.clickByCleanFilter();
-        contentBrowsePanel.waitsForSpinnerNotVisible( 2 );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
         !beforeClean && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
@@ -72,7 +74,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given:
         filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
-        contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
         Integer numberOfPages = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() );
 
         when:
@@ -93,7 +95,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         when:
         filterPanel.deSelectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
-        contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
 
 
         then:
@@ -102,9 +104,6 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
     def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
     {
-        given:
-        String text = filterPanel.typeSearchText( "" );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
 
         when:
         filterPanel.typeSearchText( INITIAL_CONTENT_FOLDER_NAME );
@@ -127,6 +126,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             contentType( ContentTypeName.archiveMedia() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         filterPanel.typeSearchText( name );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 

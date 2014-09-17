@@ -29,9 +29,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
-    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.HomeButton']";
+    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton']";
 
-    private static final String GRID_DIV_XPATH = "//div[contains(@id,'api.ui.grid.Grid')]";
+    private static final String GRID_DIV_XPATH = "//div[contains(@id,'api.app.NamesView')]";
 
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";

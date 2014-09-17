@@ -171,7 +171,7 @@ public class ContentBrowseFilterPanel
             getLogger().info( "The link with name 'Clear Filter' was not found!" );
             throw new TestFrameworkException( "The link with name 'Clear Filter' was not found!" );
         }
-        getDriver().findElement( By.linkText( CLEAR_FILTER_LINK ) ).click();
+        findElements( By.linkText( CLEAR_FILTER_LINK ) ).get( 0 ).click();
         sleep( 500 );
     }
 
@@ -221,6 +221,8 @@ public class ContentBrowseFilterPanel
         }
         else
         {
+
+            waitsForSpinnerNotVisible();
             if ( !isSelectedEntryInFilter( contenttypeDisplayName ) )
             {
                 element.click();

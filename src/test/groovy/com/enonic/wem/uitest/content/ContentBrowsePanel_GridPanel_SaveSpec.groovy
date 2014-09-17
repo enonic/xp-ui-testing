@@ -14,7 +14,6 @@ import com.enonic.wem.api.data.DataSet
 import com.enonic.wem.api.data.Value
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
-import com.enonic.wem.uitest.schema.cfg.TwoTextLineContentTypeCfg
 import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise

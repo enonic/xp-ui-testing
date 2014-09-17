@@ -26,11 +26,11 @@ class BaseGebSpec
 
     def setupSpec()
     {
-        println "browser.baseUrl in GebConfig.groovy is" + browser.baseUrl;
+        println "browser.baseUrl in GebConfig.groovy is :" + browser.baseUrl;
         if ( browser.baseUrl == null )
         {
             String baseUrl = System.getProperty( "geb.build.baseUrl" );
-            println "baseUrl as System property is" + baseUrl;
+            println "baseUrl as System property is  " + baseUrl;
             if ( baseUrl == null )
             {
 
@@ -49,7 +49,8 @@ class BaseGebSpec
             String baseUrl = System.getProperty( "geb.build.baseUrl" );
             if ( baseUrl == null )
             {
-                browser.baseUrl = defaultProperties.get( "base.url" )
+                println "from defaultProperties" + browser.baseUrl;
+                browser.baseUrl = defaultProperties.get( "base.url" );
             }
         }
     }
@@ -57,7 +58,7 @@ class BaseGebSpec
 
     TestSession getTestSession()
     {
-        println "    geTestSesion called!"
+        println "    geTestSession called!"
         if ( session == null )
         {
             println "creating new test session"

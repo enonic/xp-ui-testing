@@ -23,10 +23,10 @@ public abstract class WizardPanel<T>
 {
     public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
 
-    public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'api.app.AppBarTabMenuButton')]//span[@class='label']";
+    public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'api.app.bar.AppBarTabMenuButton')]//span[@class='label']";
 
     public static String ITEM_FROM_TAB_MENU_ITEM_LIST =
-        "//div[contains(@id,'api.app.AppBar')]//li[contains(@id,'api.app.AppBarTabMenuItem') and child::span[contains(.,'%s')]]";
+        "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[contains(.,'%s')]]";
 
     public static String BUTTON_CLOSE_IN_TAB_MENU_ITEM = ITEM_FROM_TAB_MENU_ITEM_LIST + "/button";
 
@@ -172,15 +172,14 @@ public abstract class WizardPanel<T>
 
     public String getAppBarTabMenuTitle()
     {
-        boolean result =
-            getDriver().findElements( By.xpath( "//div[@id='api.app.AppBarTabMenuButton']//span[@class='label']" ) ).size() == 1;
+        boolean result = waitUntilVisibleNoException( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ), Application.EXPLICIT_2 );
         if ( result )
         {
-            return getDriver().findElement( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).getAttribute( "title" );
+            return findElement( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).getAttribute( "title" );
         }
         else
         {
-            throw new TestFrameworkException( "title was not found in AppBarTabMenu!" );
+            throw new TestFrameworkException( "title was not found or not visible in AppBarTabMenu!" );
         }
     }
 
@@ -194,7 +193,7 @@ public abstract class WizardPanel<T>
     public boolean isTabMenuItemPresent( String itemText )
     {
         List<WebElement> elems =
-            findElements( By.xpath( "//div[contains(@id,'api.app.AppBar')]//li[contains(@id,'api.app.AppBarTabMenuItem')]/span" ) );
+            findElements( By.xpath( "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]/span" ) );
         for ( WebElement element : elems )
         {
             if ( element.getText().contains( itemText ) )
