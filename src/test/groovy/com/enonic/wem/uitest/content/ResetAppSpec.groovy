@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.versiontest.VersiontestPage
+import com.enonic.autotests.pages.versiontest.VersionTestPage
 import com.enonic.autotests.utils.SleepHelper
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -9,13 +9,13 @@ class ResetAppSpec
     extends BaseGebSpec
 {
     @Shared
-    VersiontestPage versiontestPage;
+    VersionTestPage versiontestPage;
 
 
     def setup()
     {
         go "http://versiontest2/"
-        versiontestPage = new VersiontestPage( getTestSession() );
+        versiontestPage = new VersionTestPage( getTestSession() );
 
     }
 
