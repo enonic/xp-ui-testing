@@ -7,7 +7,6 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.autotests.vo.schemamanger.ContentType
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.content.data.ContentData
 import com.enonic.wem.api.data.DataSet
@@ -38,13 +37,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "experiment"()
     {
         given:
-
-        String twoTextlineCFG = TwoTextLineContentTypeCfg.CFG;
-        ContentType contentType = ContentType.newContentType().
-            name( "person" ).
-            configData( twoTextlineCFG ).
-            build();
-
         ContentData data = new ContentData();
         data.setProperty( "firstName", Value.newString( "Jorund" ) );
         data.addProperty( "firstName", Value.newString( "Vier" ) );
@@ -134,7 +126,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.save().close();
 
         then:
-        !contentBrowsePanel.isRowExapnded( content.getParent().toString() );
+        !contentBrowsePanel.isRowExpanded( content.getParent().toString() );
     }
 
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and HomeButton clicked THEN parent should still be unexpanded"()
@@ -156,7 +148,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.goToAppHome();
 
         then:
-        !contentBrowsePanel.isRowExapnded( content.getParent().toString() );
+        !contentBrowsePanel.isRowExpanded( content.getParent().toString() );
     }
     //not implemented in wem-ce
     @Ignore
@@ -206,7 +198,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.goToAppHome();
 
         then:
-        contentBrowsePanel.exists( content.getPath() ) && contentBrowsePanel.isRowExapnded( content.getParent().toString() );
+        contentBrowsePanel.exists( content.getPath() ) && contentBrowsePanel.isRowExpanded( content.getParent().toString() );
     }
 
     @Ignore

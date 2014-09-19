@@ -97,7 +97,7 @@ public class BrowsePanel
     /**
      * @return true if row in BrowsePanel is expanded, otherwise false.
      */
-    public boolean isRowExapnded( String name )
+    public boolean isRowExpanded( String name )
     {
         String expanderXpath = String.format( BROWSE_PANEL_ITEM_EXPANDER, name );
 

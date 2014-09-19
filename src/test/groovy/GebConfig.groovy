@@ -22,10 +22,7 @@ driver = {
 }
 // Set reports directory
 reportsDir = 'target/geb-reports'
-
 reportOnTestFailureOnly = false
-
-//baseUrl ='http://localhost:8080/'
 
 environments {
 

@@ -10,7 +10,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.User;
 
@@ -54,22 +53,6 @@ public class NavigatorHelper
             HomePage home = loginAndOpenHomePage( testSession );
             ContentBrowsePanel cmPage = home.openContentManagerApplication();
             return cmPage;
-        }
-
-    }
-
-    public static SchemaBrowsePanel openSchemaManager( TestSession testSession )
-    {
-        if ( SchemaBrowsePanel.isOpened( testSession ) )
-        {
-            return new SchemaBrowsePanel( testSession );
-        }
-        else
-        {
-            HomePage home = loginAndOpenHomePage( testSession );
-            SchemaBrowsePanel schemasPage = home.openSchemaManagerApplication();
-            schemasPage.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-            return schemasPage;
         }
 
     }

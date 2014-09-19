@@ -23,19 +23,22 @@ class BaseGebSpec
 
         resetBrowser();
     }
-
+    // run before the first feature method
     def setupSpec()
     {
-        println "browser.baseUrl in GebConfig.groovy is :" + browser.baseUrl;
+        println " browser.baseUrl in GebConfig.groovy is : " + browser.baseUrl;
         if ( browser.baseUrl == null )
         {
             String baseUrl = System.getProperty( "geb.build.baseUrl" );
-            println "baseUrl as System property is  " + baseUrl;
             if ( baseUrl == null )
             {
 
                 loadProperties();
-                println "baseUrl was loaded from the properties file: " + defaultProperties.get( "base.url" );
+                println "   baseUrl was loaded from the properties file: " + defaultProperties.get( "base.url" );
+            }
+            else
+            {
+                println "baseUrl was loaded as system property " + baseUrl;
             }
         }
     }
@@ -43,13 +46,14 @@ class BaseGebSpec
 
     def setup()
     {
-        println "browser.baseUrl in GebConfig.groovy is" + browser.baseUrl;
+        println "browser.baseUrl in GebConfig.groovy is   " + browser.baseUrl;
         if ( browser.baseUrl == null )
         {
             String baseUrl = System.getProperty( "geb.build.baseUrl" );
+
             if ( baseUrl == null )
             {
-                println "from defaultProperties" + browser.baseUrl;
+                println " from defaultProperties" + browser.baseUrl;
                 browser.baseUrl = defaultProperties.get( "base.url" );
             }
         }
@@ -58,15 +62,12 @@ class BaseGebSpec
 
     TestSession getTestSession()
     {
-        println "    geTestSession called!"
+        println "    geTestSession called!  "
         if ( session == null )
         {
-            println "creating new test session"
             session = new TestSession()
             session.setDriver( browser.driver )
             session.setIsRemote( false )
-            println "testSession is" + session.getBaseUrl();
-            println browser.baseUrl
         }
         return session
     }

@@ -119,7 +119,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content with a closed expander WHEN expanded THEN one or more children is listed beneath"()
     {
         expect:
-        !contentBrowsePanel.isRowExapnded( ContentPath.from( BILDERAKIV ).toString() );
+        !contentBrowsePanel.isRowExpanded( ContentPath.from( BILDERAKIV ).toString() );
 
         when:
         contentBrowsePanel.expandContent( ContentPath.from( BILDERAKIV ) );

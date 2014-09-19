@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.pages.schemamanager.SchemaBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
 
 /**
@@ -70,19 +69,6 @@ public class HomePage
     public void waitUntilAllFramesLoaded()
     {
         waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_3 );
-    }
-
-    /**
-     * @return
-     */
-    public SchemaBrowsePanel openSchemaManagerApplication()
-    {
-        schemaManager.click();
-        String whandle = getSession().getDriver().getWindowHandle();
-        getSession().setWindowHandle( whandle );
-        NavigatorHelper.switchToIframe( getSession(), Application.APP_SCHEMA_MANAGER_FRAME_XPATH );
-
-        return new SchemaBrowsePanel( getSession() );
     }
 
 

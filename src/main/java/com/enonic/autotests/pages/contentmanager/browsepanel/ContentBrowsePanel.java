@@ -188,7 +188,7 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel unExpandContent( ContentPath contentPath )
     {
-        if ( isRowExapnded( contentPath.toString() ) )
+        if ( isRowExpanded( contentPath.toString() ) )
         {
             this.<String>clickOnExpander( contentPath.toString() );
             getLogger().info( "content have been unexpanded: " + contentPath.toString() );
