@@ -1,6 +1,5 @@
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.remote.DesiredCapabilities
-import org.openqa.selenium.remote.RemoteWebDriver
+import org.openqa.selenium.firefox.FirefoxDriver
 
 import java.util.logging.Level
 
@@ -26,12 +25,13 @@ reportOnTestFailureOnly = false
 
 environments {
 
-    remote {
+    firefox {
         driver = {
-            def driver = new RemoteWebDriver( new URL( "http://10.10.9.152:4444/wd/hub" ), DesiredCapabilities.firefox() )
-            driver.setLogLevel( Level.INFO );
-            driver.manage().window().maximize();
-            return driver;
+            def driver = new FirefoxDriver()
+            driver.setLogLevel( Level.INFO )
+            driver.manage().window().maximize()
+            println "default configuration"
+            return driver
         }
     }
 
