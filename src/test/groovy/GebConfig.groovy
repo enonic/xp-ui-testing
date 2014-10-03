@@ -1,4 +1,3 @@
-import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 
 import java.util.logging.Level
@@ -13,7 +12,8 @@ driver = {
     def pathToDriver = props.getProperty( 'chromedriver.path' )
     System.setProperty( "webdriver.chrome.driver", pathToDriver )
 
-    def driver = new ChromeDriver()
+    // def driver = new ChromeDriver()
+    def driver = new FirefoxDriver()
     //driver.setLogLevel(Level.INFO)
     driver.manage().window().maximize()
     println "default configuration"
@@ -30,7 +30,7 @@ environments {
             def driver = new FirefoxDriver()
             driver.setLogLevel( Level.INFO )
             driver.manage().window().maximize()
-            println "default configuration"
+            println "firefox configuration"
             return driver
         }
     }

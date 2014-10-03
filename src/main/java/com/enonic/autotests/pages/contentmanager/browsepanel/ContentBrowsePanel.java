@@ -132,7 +132,7 @@ public class ContentBrowsePanel
     {
         contentManagerButton.click();
         sleep( 1000 );
-        waituntilPageLoaded( Application.IMPLICITLY_WAIT );
+        waitUntilPageLoaded( Application.IMPLICITLY_WAIT );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "gotoapphome" ) );
         return this;
     }
@@ -564,7 +564,7 @@ public class ContentBrowsePanel
      *
      * @param timeout
      */
-    public void waituntilPageLoaded( long timeout )
+    public void waitUntilPageLoaded( long timeout )
     {
         boolean isGridLoaded = waitAndFind( By.xpath( GRID_DIV_XPATH ), timeout );
         if ( !isGridLoaded )

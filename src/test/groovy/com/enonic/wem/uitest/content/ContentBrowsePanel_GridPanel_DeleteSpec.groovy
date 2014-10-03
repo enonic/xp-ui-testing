@@ -58,7 +58,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content1.getContentTypeName() ).typeData( content1 ).save().close();
 
         Content content2 = Content.builder().
             name( NameHelper.uniqueName( "deletecontent" ) ).
@@ -67,14 +67,14 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.ROOT ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).waitUntilWizardOpened().typeData(
+        contentBrowsePanel.clickToolbarNew().selectContentType( content2.getContentTypeName() ).waitUntilWizardOpened().typeData(
             content2 ).save().close();
 
         List<Content> contentList = new ArrayList<>();
         contentList.add( content1 );
         contentList.add( content2 );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waituntilPageLoaded( 2 );
+        contentBrowsePanel.waitUntilPageLoaded( 2 );
         contentBrowsePanel.doClearSelection();
 
         when:
@@ -95,7 +95,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.ROOT ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         List<Content> contents = new ArrayList<>();
         contents.add( content );
         contentBrowsePanel.waitsForSpinnerNotVisible();
@@ -129,7 +129,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData( contentToDelete ).
             save().close();
-        contentBrowsePanel.waituntilPageLoaded( 1 );
+        contentBrowsePanel.waitUntilPageLoaded( 1 );
 
         List<Content> contentList = new ArrayList<>()
         contentList.add( contentToDelete );
@@ -179,12 +179,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folderToDelete" ).
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
 
         when:
         contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarDelete().doDelete();
@@ -197,15 +197,15 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given:
         Content content1 = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folderToDelete1" ).
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
 
         Content content2 = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folderToDelete2" ).
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();

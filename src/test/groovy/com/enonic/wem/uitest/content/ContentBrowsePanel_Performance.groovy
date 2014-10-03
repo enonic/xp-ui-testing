@@ -24,6 +24,6 @@ class ContentBrowsePanel_Performance
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
 
         then:
-        contentBrowsePanel.waituntilPageLoaded( 1 );
+        contentBrowsePanel.waitUntilPageLoaded( 1 );
     }
 }

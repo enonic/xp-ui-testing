@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 /**
  * Base confirm dialog for deleting spaces, contents, accounts
  */
@@ -51,6 +53,7 @@ public abstract class BaseDeleteDialog
         {
             throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
         }
+        sleep( 500 );
     }
 
     public List<String> getContentNameToDelete()

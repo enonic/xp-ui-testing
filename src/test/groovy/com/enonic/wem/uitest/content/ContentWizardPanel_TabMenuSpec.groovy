@@ -74,12 +74,12 @@ class ContentWizardPanel_TabMenuSpec
     def "GIVEN content Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
     {
         given:
-        String dispalyName = "testname";
+        String displayName = "testname";
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
-            waitUntilWizardOpened().typeDisplayName( dispalyName ).showTabMenuItems();
+            waitUntilWizardOpened().typeDisplayName( displayName ).showTabMenuItems();
 
         when:
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( dispalyName );
+        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( displayName );
 
         then:
         dialog != null;

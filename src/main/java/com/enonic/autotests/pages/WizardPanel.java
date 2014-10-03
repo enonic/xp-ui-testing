@@ -52,6 +52,7 @@ public abstract class WizardPanel<T>
 
         CloseStatus status = null;
         getCloseButton().click();
+        sleep( 500 );
         for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
         {
             status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );

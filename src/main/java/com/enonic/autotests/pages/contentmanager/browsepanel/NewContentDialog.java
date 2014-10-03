@@ -102,12 +102,12 @@ public class NewContentDialog
         {
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
-        getDriver().findElement( By.xpath( ctypeXpath ) ).click();
-        //TestUtils.clickByElement( By.xpath( ctypeXpath ), getDriver() );
+        sleep( 500 );
+        findElements( By.xpath( ctypeXpath ) ).get( 0 ).click();
+        // TestUtils.clickOnElement( By.xpath( ctypeXpath ), getDriver() );
         waitsForSpinnerNotVisible();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
-        //TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "contentwizard" ) );
         return wizard;
 
     }

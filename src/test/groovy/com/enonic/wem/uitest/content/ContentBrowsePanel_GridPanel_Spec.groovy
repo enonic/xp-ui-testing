@@ -20,7 +20,7 @@ class ContentBrowsePanel_GridPanel_Spec
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    String BILDERAKIV = "imagearchive";
+    String FOLDER_WITH_CHILD = NameHelper.uniqueName( "folder" );
 
 
     def setup()
@@ -94,10 +94,27 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content on root having a child WHEN listed THEN expander is shown"()
     {
         given:
-        List<String> contentNames = contentBrowsePanel.getContentNamesFromBrowsePanel();
+        Content folderWithChild = Content.builder().
+            name( FOLDER_WITH_CHILD ).
+            displayName( "folderWithChild" ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
+            build();
+        Content child = Content.builder().
+            name( "child" ).
+            displayName( "child" ).
+            contentType( ContentTypeName.archiveMedia() ).
+            parent( ContentPath.from( folderWithChild.getName() ) ).
+            build();
+
+        contentBrowsePanel.clickToolbarNew().selectContentType( folderWithChild.getContentTypeName() ).typeData(
+            folderWithChild ).save().close();
+        contentBrowsePanel.clickByParentCheckbox( folderWithChild.getPath() )
+        contentBrowsePanel.clickToolbarNew().selectContentType( child.getContentTypeName() ).typeData( child ).save().close();
 
         expect:
-        getTestContentName( contentNames ) != null && contentBrowsePanel.isExpanderPresent( ContentPath.from( BILDERAKIV ) )
+        contentBrowsePanel.exists( folderWithChild.getPath() ) &&
+            contentBrowsePanel.isExpanderPresent( ContentPath.from( FOLDER_WITH_CHILD ) )
     }
 
     def "GIVEN a Content on root having no children WHEN listed THEN expander is not shown"()
@@ -119,26 +136,26 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content with a closed expander WHEN expanded THEN one or more children is listed beneath"()
     {
         expect:
-        !contentBrowsePanel.isRowExpanded( ContentPath.from( BILDERAKIV ).toString() );
+        !contentBrowsePanel.isRowExpanded( ContentPath.from( FOLDER_WITH_CHILD ).toString() );
 
         when:
-        contentBrowsePanel.expandContent( ContentPath.from( BILDERAKIV ) );
+        contentBrowsePanel.expandContent( ContentPath.from( FOLDER_WITH_CHILD ) );
 
         then:
-        contentBrowsePanel.getChildNames( ContentPath.from( BILDERAKIV ) ).size() > 0;
+        contentBrowsePanel.getChildNames( ContentPath.from( FOLDER_WITH_CHILD ) ).size() > 0;
     }
 
     def "GIVEN a Content with an open expander WHEN closed THEN no children are listed beneath"()
     {
         given:
-        contentBrowsePanel.expandContent( ContentPath.from( BILDERAKIV ) );
+        contentBrowsePanel.expandContent( ContentPath.from( FOLDER_WITH_CHILD ) );
 
         when:
-        contentBrowsePanel.unExpandContent( ContentPath.from( BILDERAKIV ) );
+        contentBrowsePanel.unExpandContent( ContentPath.from( FOLDER_WITH_CHILD ) );
         TestUtils.saveScreenshot( getTestSession(), "unexpandtest" );
 
         then:
-        contentBrowsePanel.getChildNames( ContentPath.from( BILDERAKIV ) ).size() == 0;
+        contentBrowsePanel.getChildNames( ContentPath.from( FOLDER_WITH_CHILD ) ).size() == 0;
     }
 
 
@@ -146,28 +163,28 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given:
 
-        contentBrowsePanel.selectContentInTable( ContentPath.from( BILDERAKIV ) );
+        contentBrowsePanel.selectContentInTable( ContentPath.from( FOLDER_WITH_CHILD ) );
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( ContentPath.from( BILDERAKIV ), Keys.ARROW_UP );
+        contentBrowsePanel.pressKeyOnRow( ContentPath.from( FOLDER_WITH_CHILD ), Keys.ARROW_UP );
         TestUtils.saveScreenshot( getTestSession(), "arrow_up" );
         then:
-        !contentBrowsePanel.isRowSelected( ContentPath.from( BILDERAKIV ).toString() ) && contentBrowsePanel.getSelectedRowsNumber() ==
-            before;
+        !contentBrowsePanel.isRowSelected( ContentPath.from( FOLDER_WITH_CHILD ).toString() ) &&
+            contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
     def "GIVEN a Content selected WHEN arrow up is typed THEN previous row is selected"()
     {
         given:
-        String name = NameHelper.uniqueName( "page" );
-        Content page = Content.builder().
+        String name = NameHelper.uniqueName( "data" );
+        Content data = Content.builder().
             name( name ).
-            displayName( "page" ).
+            displayName( "data" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.page() ).
+            contentType( ContentTypeName.dataMedia() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( data.getContentTypeName() ).typeData( data ).save().close();
         contentBrowsePanel.selectContentInTable( ContentPath.from( name ) );
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
@@ -183,7 +200,7 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         for ( String name : contentNames )
         {
-            if ( name.contains( BILDERAKIV ) )
+            if ( name.contains( FOLDER_WITH_CHILD ) )
             {
                 return name;
             }

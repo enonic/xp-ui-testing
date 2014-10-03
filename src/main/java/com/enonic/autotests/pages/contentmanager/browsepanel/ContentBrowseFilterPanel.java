@@ -39,13 +39,13 @@ public class ContentBrowseFilterPanel
     private String LAST_MODIFIED_FILTER_ENTRY =
         "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='checkbox form-input' and child::label]//label[contains(.,'%s')]";
 
-    public enum ContenTypeDispalyNames
+    public enum ContentTypeDisplayNames
     {
-        FOLDER( "Folder" ), PAGE( "Page" );
+        FOLDER( "Folder" ), DATA( "Data" ), ARCHIVE( "Archive" );
 
         private String value;
 
-        ContenTypeDispalyNames( String value )
+        ContentTypeDisplayNames( String value )
         {
             this.value = value;
         }
@@ -207,65 +207,63 @@ public class ContentBrowseFilterPanel
     /**
      * Select a content type on the search panel and filter contents.
      *
-     * @param contenttypeDisplayName
+     * @param contentTypeDisplayName
      */
-    public String selectEntryInContentTypesFilter( String contenttypeDisplayName )
+    public String selectEntryInContentTypesFilter( String contentTypeDisplayName )
     {
-        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
+        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeDisplayName );
         WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
         if ( element == null )
         {
-            TestUtils.saveScreenshot( getSession(), contenttypeDisplayName );
-            logError( "content type was not found in the search panel:" + contenttypeDisplayName );
-            throw new ContentFilterException( "content type was not found in the search panel:" + contenttypeDisplayName );
+            TestUtils.saveScreenshot( getSession(), contentTypeDisplayName );
+            logError( "content type was not found in the search panel:" + contentTypeDisplayName );
+            throw new ContentFilterException( "content type was not found in the search panel:" + contentTypeDisplayName );
         }
         else
         {
 
             waitsForSpinnerNotVisible();
-            if ( !isSelectedEntryInFilter( contenttypeDisplayName ) )
+            if ( !isSelectedEntryInFilter( contentTypeDisplayName ) )
             {
                 element.click();
                 waitsForSpinnerNotVisible();
             }
         }
 
-        return element.getText();
+        return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();
     }
 
-    public String deSelectEntryInContentTypesFilter( String contenttypeDisplayName )
+    public String deselectEntryInContentTypesFilter( String contentTypeDisplayName )
     {
-        TestUtils.saveScreenshot( getSession(), contenttypeDisplayName );
-        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contenttypeDisplayName );
-        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
-        if ( elems.size() == 0 )
+        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeDisplayName );
+        WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
+        if ( element == null )
         {
-            logError( "content type was not found in the search panel:" + contenttypeDisplayName );
-            throw new ContentFilterException( "content type was not found in the search panel:" + contenttypeDisplayName );
+            logError( "content type was not found in the search panel:" + contentTypeDisplayName );
+            throw new ContentFilterException( "content type was not found in the search panel:" + contentTypeDisplayName );
         }
         else
         {
-            if ( isSelectedEntryInFilter( contenttypeDisplayName ) )
-            {
-                elems.get( 0 ).click();
-            }
+
+            element.click();
+
 
         }
         waitsForSpinnerNotVisible();
-        return getDriver().findElements( By.xpath( itemXpath ) ).get( 0 ).getText();
+        return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();
     }
 
     /**
      * @param contentTypeName
      * @return
      */
-    public Integer getNumberFilteredByContenttype( String contentTypeName )
+    public Integer getNumberFilteredByContentType( String contentTypeName )
     {
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
         {
-            return null;
+            return 0;
         }
         if ( !elems.get( 0 ).isDisplayed() )
         {
@@ -274,9 +272,9 @@ public class ContentBrowseFilterPanel
         return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
     }
 
-    boolean isSelectedEntryInFilter( String contenttypeDisplayName )
+    boolean isSelectedEntryInFilter( String contentTypeDisplayName )
     {
-        return getSelectedValuesForContentTypesFilter().contains( contenttypeDisplayName.toLowerCase() );
+        return getSelectedValuesForContentTypesFilter().contains( contentTypeDisplayName.toLowerCase() );
     }
 
     public List<String> getSelectedValuesForContentTypesFilter()
@@ -313,11 +311,6 @@ public class ContentBrowseFilterPanel
             return 0;
         }
         return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
-    }
-
-    public List<String> getSpaceNames()
-    {
-        return null;
     }
 
 }

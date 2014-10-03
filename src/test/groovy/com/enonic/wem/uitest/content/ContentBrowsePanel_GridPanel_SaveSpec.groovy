@@ -227,7 +227,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
         //contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
@@ -259,7 +259,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
         //contentBrowsePanel.expandContent( contentToEdit.getParent() );
         contentBrowsePanel.exists( newcontent.getPath() );

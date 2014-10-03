@@ -109,7 +109,7 @@ public class TestUtils
      * @param locator
      * @param driver
      */
-    public static void clickByElement( final By locator, final WebDriver driver )
+    public static void clickOnElement( final By locator, final WebDriver driver )
     {
         final long startTime = System.currentTimeMillis();
         Wait<WebDriver> wait =

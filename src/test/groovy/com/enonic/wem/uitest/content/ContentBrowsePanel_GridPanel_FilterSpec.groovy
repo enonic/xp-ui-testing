@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContenTypeDispalyNames
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContentTypeDisplayNames
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -12,7 +12,9 @@ import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class ContentBrowsePanel_GridPanel_FilterSpec
     extends BaseGebSpec
 {
@@ -24,7 +26,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     ContentBrowseFilterPanel filterPanel;
 
     @Shared
-    String INITIAL_CONTENT_FOLDER_NAME = "imagearchive";
+    String INITIAL_CONTENT_FOLDER_NAME = NameHelper.uniqueName( "initfolder" );
 
     def setup()
     {
@@ -33,32 +35,48 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         filterPanel = contentBrowsePanel.getFilterPanel();
     }
 
+    def "add initial content"()
+    {
+        when:
+        Content initialFolder = Content.builder().
+            name( INITIAL_CONTENT_FOLDER_NAME ).
+            displayName( "initialFolder" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( initialFolder.getContentTypeName() ).typeData(
+            initialFolder ).save().close();
+        contentBrowsePanel.waitsForSpinnerNotVisible();
+
+        then:
+        contentBrowsePanel.exists( initialFolder.getPath() );
+    }
+
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN all existing Content of the selected type should be listed in gridPanel"()
     {
         given:
-        boolean isClearFilterPresent = filterPanel.waitForClearFilterLinkNotvisible();
-        String name = NameHelper.uniqueName( "page" );
-        Content page = Content.builder().
+        String name = NameHelper.uniqueName( "data" );
+        Content data = Content.builder().
             name( name ).
-            displayName( "page" ).
+            displayName( "data" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.page() ).
+            contentType( ContentTypeName.dataMedia() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( data.getContentTypeName() ).typeData( data ).save().close();
 
         when:
-        filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() )
-        contentBrowsePanel.waitsForSpinnerNotVisible()
+        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.DATA.getValue() );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
-        Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() );
+        Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.DATA.getValue() );
         numberOfFilteredContent == contentBrowsePanel.getRowNumber();
     }
 
-    def "GIVEN Selections in any filter WHEN clicking clean filter THEN initial grid view displayed "()
+    def "GIVEN Selections in any filter WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
-        filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.DATA.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
 
@@ -73,33 +91,35 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN One selection in ContentTypes-filter WHEN Selecting one additional entry in ContentTypes-filter THEN all existing Content of the both selected types should be listed in gridPanel"()
     {
         given:
-        filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.DATA.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        Integer numberOfPages = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.PAGE.getValue() );
+        Integer numberOfData = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.DATA.getValue() );
 
         when:
-        filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.FOLDER.getValue() );
+        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.FOLDER.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
 
         then:
-        Integer numberOfFolder = filterPanel.getNumberFilteredByContenttype( ContenTypeDispalyNames.FOLDER.getValue() );
-        ( numberOfFolder + numberOfPages ) == contentBrowsePanel.getRowNumber();
+        Integer numberOfFolder = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
+        ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowNumber();
     }
 
     def "GIVEN One one selection in any filter WHEN deselecting selection THEN initial grid view displayed "()
     {
         given:
-        filterPanel.selectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.DATA.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
-        boolean existsBeforeUnselect = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        TestUtils.saveScreenshot( getTestSession(), "one-selection" );
+        boolean existsBeforeDeselect = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
 
         when:
-        filterPanel.deSelectEntryInContentTypesFilter( ContenTypeDispalyNames.PAGE.getValue() );
+        filterPanel.deselectEntryInContentTypesFilter( ContentTypeDisplayNames.DATA.getValue() );
+        TestUtils.saveScreenshot( getTestSession(), "one-selection-deselected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
 
         then:
-        !existsBeforeUnselect && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        !existsBeforeDeselect && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
     }
 
     def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
@@ -126,7 +146,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             contentType( ContentTypeName.archiveMedia() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
-        contentBrowsePanel.waituntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         filterPanel.typeSearchText( name );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 

@@ -16,22 +16,22 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     extends BaseGebSpec
 {
     @Shared
-    String CONTENT_1_NAME = NameHelper.uniqueName( "homepage" );
+    String CONTENT_1_NAME = NameHelper.uniqueName( "data" );
 
     @Shared
-    String CONTENT_1_DISPALY_NAME = "Homepage"
+    String CONTENT_1_DISPLAY_NAME = "DataTest"
 
     @Shared
-    String CONTENT_2_NAME = NameHelper.uniqueName( "intranet" );
+    String CONTENT_2_NAME = NameHelper.uniqueName( "archive" );
 
     @Shared
-    String CONTENT_2_DISPALY_NAME = "Intranet"
+    String CONTENT_2_DISPLAY_NAME = "ArchiveTest"
 
     @Shared
-    String CONTENT_3_NAME = "imagearchive"
+    String CONTENT_3_NAME = NameHelper.uniqueName( "folder" );
 
     @Shared
-    String CONTENT_3_DISPALY_NAME = "Image Archive"
+    String CONTENT_3_DISPLAY_NAME = "folderTest"
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -52,8 +52,8 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content firstContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_1_NAME ).
-            displayName( CONTENT_1_DISPALY_NAME ).
-            contentType( ContentTypeName.page() ).
+            displayName( CONTENT_1_DISPLAY_NAME ).
+            contentType( ContentTypeName.dataMedia() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( firstContent.getContentTypeName() ).
             typeData( firstContent ).save().close();
@@ -61,8 +61,8 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_2_NAME ).
-            contentType( ContentTypeName.page() ).
-            displayName( CONTENT_2_DISPALY_NAME ).
+            contentType( ContentTypeName.archiveMedia() ).
+            displayName( CONTENT_2_DISPLAY_NAME ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
             typeData( secondContent ).save().close();
@@ -71,7 +71,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
 
         when:
 
-        contentBrowsePanel.waituntilPageLoaded( 3 );
+        contentBrowsePanel.waitUntilPageLoaded( 3 );
         contentBrowsePanel.selectContentInTable( secondContent.getPath() );
 
         then:
@@ -81,28 +81,34 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN two selected Content WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
         given:
+        Content thirdContent = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( CONTENT_3_NAME ).
+            contentType( ContentTypeName.archiveMedia() ).
+            displayName( CONTENT_3_DISPLAY_NAME ).
+            build();
+        contentBrowsePanel.clickToolbarNew().selectContentType( thirdContent.getContentTypeName() ).
+            typeData( thirdContent ).save().close();
+
         Content firstContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_1_NAME ).
-            contentType( ContentTypeName.page() ).
-            displayName( CONTENT_1_DISPALY_NAME ).build();
+            contentType( ContentTypeName.dataMedia() ).
+            displayName( CONTENT_1_DISPLAY_NAME ).build();
         Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.page() ).
+            contentType( ContentTypeName.archiveMedia() ).
             name( CONTENT_2_NAME ).
-            displayName( CONTENT_2_DISPALY_NAME ).build();
+            displayName( CONTENT_2_DISPLAY_NAME ).build();
         List<Content> list = new ArrayList<>();
         list.add( firstContent );
         list.add( secondContent );
+
         contentBrowsePanel.selectContentInTable( list );
+
         int before = itemsSelectionPanel.getSeletedItemCount();
 
         when:
-        Content thirdContent = Content.builder().
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.page() ).
-            name( CONTENT_3_NAME ).
-            displayName( CONTENT_3_DISPALY_NAME ).build();
         contentBrowsePanel.selectContentInTable( thirdContent.getPath() );
 
         then:
@@ -112,32 +118,32 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN three selected Content WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
         given:
-        Content siteHomepage = Content.builder().
+        Content dataContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_1_NAME ).
-            contentType( ContentTypeName.page() ).
-            displayName( CONTENT_1_DISPALY_NAME ).build();
+            contentType( ContentTypeName.dataMedia() ).
+            displayName( CONTENT_1_DISPLAY_NAME ).build();
 
-        Content siteIntranet = Content.builder().
+        Content archiveContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_2_NAME ).
-            contentType( ContentTypeName.page() ).
-            displayName( CONTENT_2_DISPALY_NAME ).build();
+            contentType( ContentTypeName.archiveMedia() ).
+            displayName( CONTENT_2_DISPLAY_NAME ).build();
 
-        Content folderBildearkiv = Content.builder().
+        Content folderContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_3_NAME ).
-            contentType( ContentTypeName.page() ).
-            displayName( CONTENT_3_DISPALY_NAME ).build();
+            contentType( ContentTypeName.folder() ).
+            displayName( CONTENT_3_DISPLAY_NAME ).build();
         List<Content> list = new ArrayList<>();
-        list.add( siteHomepage );
-        list.add( siteIntranet );
-        list.add( folderBildearkiv );
+        list.add( dataContent );
+        list.add( archiveContent );
+        list.add( folderContent );
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSeletedItemCount();
 
         when:
-        contentBrowsePanel.deSelectContentInTable( folderBildearkiv.getPath() );
+        contentBrowsePanel.deSelectContentInTable( folderContent.getPath() );
 
         then:
         itemsSelectionPanel.getSeletedItemCount() == before - 1;
