@@ -37,7 +37,7 @@ public class WaitHelper
         driver.manage().timeouts().implicitlyWait( timeout, TimeUnit.SECONDS );
         List<WebElement> elements = driver.findElements( by );
         driver.manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
-        return ( ( elements.size() > 0 ) && ( elements.get( 0 ).isDisplayed() ) );
+        return ( ( elements.size() > 0 ) );   //&& ( elements.get( 0 ).isDisplayed() )
     }
 
     /**

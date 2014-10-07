@@ -22,7 +22,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     extends BaseGebSpec
 {
     @Shared
-    String REPO_NAME = "test-folder";
+    String REPO_NAME = NameHelper.uniqueName( "test-folder" );
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -175,7 +175,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.exists( content.getPath() );
     }
-    //not implemented in wem-ce
+    //not implemented in wem-ce(parent content collapsed)
     @Ignore
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
@@ -200,7 +200,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.exists( content.getPath() ) && contentBrowsePanel.isRowExpanded( content.getParent().toString() );
     }
-
+    //not implemented in wem-ce(parent content collapsed)
     @Ignore
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
@@ -216,11 +216,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel contentWizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         contentWizard.typeData( contentToEdit ).save().close();
 
-        Content newcontent = cloneContentWithNewName( contentToEdit )
+        Content newContent = cloneContentWithNewName( contentToEdit )
         contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest" );
         contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
-        contentWizard.typeData( newcontent );
+        contentWizard.typeData( newContent );
 
         when:
         contentWizard.save().close();
@@ -231,10 +231,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         //contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
-        contentBrowsePanel.exists( newcontent.getPath() );
+        contentBrowsePanel.exists( newContent.getPath() );
 
     }
-
+    //not implemented in wem-ce(parent content collapsed)
     @Ignore
     def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new displayName"()
     {
@@ -249,10 +249,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close();
 
-        Content newcontent = cloneContentWithNewDispalyName( contentToEdit );
+        Content newContent = cloneContentWithNewDisplayName( contentToEdit );
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getPath() ).
             clickToolbarEdit();
-        wizard.typeData( newcontent );
+        wizard.typeData( newContent );
 
         when:
         wizard.save().close();
@@ -262,10 +262,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
         //contentBrowsePanel.expandContent( contentToEdit.getParent() );
-        contentBrowsePanel.exists( newcontent.getPath() );
+        contentBrowsePanel.exists( newContent.getPath() );
     }
 
-    Content cloneContentWithNewDispalyName( Content source )
+    Content cloneContentWithNewDisplayName( Content source )
     {
         String newDisplayName = NameHelper.uniqueName( "displaynamechanged" );
         return Content.builder().

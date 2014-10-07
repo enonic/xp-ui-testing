@@ -15,7 +15,9 @@ class ResetAppSpec
 
     def setup()
     {
-        go "http://versiontest2/"
+        String resetUrl = System.getProperty( "geb.build.resetUrl" );
+        // go "http://versiontest2/";
+        go resetUrl;
         versiontestPage = new VersionTestPage( getTestSession() );
 
     }

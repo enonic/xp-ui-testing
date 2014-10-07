@@ -50,7 +50,7 @@ class DeleteContentDialogSpec
         contentList.add( content );
 
         when:
-        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).
+        DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( contentList ).
             clickToolbarDelete();
 
         then:
@@ -65,7 +65,7 @@ class DeleteContentDialogSpec
         contentList.add( content );
 
         when:
-        DeleteContentDialog dialog = contentBrowsePanel.expandContent( content.getParent() ).selectContentInTable( contentList ).
+        DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( contentList ).
             clickToolbarDelete();
         dialog.waitForOpened();
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -54,6 +55,10 @@ public class ContentBrowsePanel
     private final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
 
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
+
+    private String NOT_LOADED_CONTENT_XPATH = "//div[contains(@class,'children-to-load')]";
+
+    private final String DIV_WITH_SCROLL = "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[contains(@class,'slickgrid')]";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
@@ -166,28 +171,67 @@ public class ContentBrowsePanel
     /**
      * @param contentPath
      * @param timeout
-     * @return
+     * @return true if content exists, otherwise false.
      */
     public boolean exists( ContentPath contentPath, int timeout )
     {
         boolean result;
         waitsForSpinnerNotVisible();
         String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
-        getLogger().info( "will verify is exists:" + contentNameXpath );
 
-        result = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
-        getLogger().info( "content with path:" + contentNameXpath + " isExists: " + result );
-
+        List<WebElement> notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
+        if ( notLoadedElements.size() > 0 )
+        {
+            result = doScrollAndFind( contentPath );
+        }
+        else
+        {
+            result = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
+        }
+        getLogger().info( "content with path:" + contentPath.toString() + " isExists: " + result );
         TestUtils.saveScreenshot( getSession(), contentPath.getName() );
         return result;
     }
 
+    public boolean doScrollAndFind( ContentPath contentPath )
+    {
+        String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
+        boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), 2 );
+        if ( loaded )
+        {
+            return true;
+        }
+        int scrollTop = 70;
+        List<WebElement> notLoadedElements;
+        do
+        {
+            //do scroll
+            WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
+            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
+            sleep( 500 );
+            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
+            if ( waitUntilVisibleNoException( By.xpath( contentNameXpath ), 2 ) )
+            {
+                return true;
+            }
+            scrollTop += scrollTop;
+        }
+        while ( notLoadedElements.size() > 0 );
+        return false;
+    }
+
     /**
      * @param contentPath
-     * @return
+     * @return {@link ContentBrowsePanel} instance
      */
     public ContentBrowsePanel unExpandContent( ContentPath contentPath )
     {
+
+        if ( !doScrollAndFind( contentPath ) )
+        {
+            throw new TestFrameworkException( "unExpandContent: content was not found! " + contentPath );
+        }
+
         if ( isRowExpanded( contentPath.toString() ) )
         {
             this.<String>clickOnExpander( contentPath.toString() );
@@ -208,6 +252,11 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel expandContent( ContentPath contentPath )
     {
+        if ( !doScrollAndFind( contentPath ) )
+        {
+            throw new TestFrameworkException( "expandContent: content was not found! " + contentPath );
+        }
+
         ContentPath path = null;
         if ( contentPath != null )
         {
@@ -234,7 +283,7 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentWizardPanel doubleclickOnContent( ContentPath contentPath )
+    public ContentWizardPanel doubleClickOnContent( ContentPath contentPath )
     {
         sleep( 500 );
         String rowXpath = String.format( DIV_NAMES_VIEW, contentPath );
