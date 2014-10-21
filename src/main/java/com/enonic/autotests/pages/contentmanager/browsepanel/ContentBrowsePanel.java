@@ -221,6 +221,36 @@ public class ContentBrowsePanel
     }
 
     /**
+     * @return the number of rows in Browse Panel.
+     */
+    public int getRowNumber()
+    {
+        List<WebElement> elements = findElements( By.xpath( DIV_WITH_SCROLL ) );
+        if ( elements.size() > 0 )
+        {
+            doScrollAllContent();
+        }
+        return findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) ).size();
+    }
+
+    public void doScrollAllContent()
+    {
+        int scrollTop = 70;
+        List<WebElement> notLoadedElements;
+        do
+        {
+            //do scroll
+            WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
+            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
+            sleep( 500 );
+            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
+
+            scrollTop += scrollTop;
+        }
+        while ( notLoadedElements.size() > 0 );
+    }
+
+    /**
      * @param contentPath
      * @return {@link ContentBrowsePanel} instance
      */
@@ -464,7 +494,7 @@ public class ContentBrowsePanel
      *
      * @param contentPath {@link ContentPath} instance.
      */
-    public ContentBrowsePanel clickByParentCheckbox( ContentPath contentPath )
+    public ContentBrowsePanel clickOnParentCheckbox( ContentPath contentPath )
     {
         if ( contentPath.elementCount() == 0 )
         {

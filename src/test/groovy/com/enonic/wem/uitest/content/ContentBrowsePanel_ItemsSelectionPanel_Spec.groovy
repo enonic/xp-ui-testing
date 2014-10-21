@@ -28,10 +28,10 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     String CONTENT_2_DISPLAY_NAME = "ArchiveTest"
 
     @Shared
-    String CONTENT_3_NAME = NameHelper.uniqueName( "folder" );
+    String CONTENT_3_NAME = NameHelper.uniqueName( "archive" );
 
     @Shared
-    String CONTENT_3_DISPLAY_NAME = "folderTest"
+    String CONTENT_3_DISPLAY_NAME = "archiveTest"
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;

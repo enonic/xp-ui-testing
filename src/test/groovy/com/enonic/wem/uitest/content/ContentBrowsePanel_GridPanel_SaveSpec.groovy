@@ -118,7 +118,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             contentType( ContentTypeName.folder() ).
             build();
 
-        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
+        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content );
 
@@ -139,7 +139,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             contentType( ContentTypeName.folder() ).
             build();
 
-        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
+        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).
             typeData( content );
 
@@ -150,8 +150,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         !contentBrowsePanel.isRowExpanded( content.getParent().toString() );
     }
-    //not implemented in wem-ce
-    @Ignore
+
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
     {
         given:
@@ -164,7 +163,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
 
         contentBrowsePanel.expandContent( content.getParent() );
-        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
+        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content );
 
@@ -175,8 +174,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.exists( content.getPath() );
     }
-    //not implemented in wem-ce(parent content collapsed)
-    @Ignore
+
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
         given:
@@ -189,7 +187,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build()
 
         contentBrowsePanel.expandContent( content.getParent() );
-        contentBrowsePanel.clickByParentCheckbox( content.getPath().getParentPath() );
+        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content );
 
@@ -200,8 +198,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         then:
         contentBrowsePanel.exists( content.getPath() ) && contentBrowsePanel.isRowExpanded( content.getParent().toString() );
     }
-    //not implemented in wem-ce(parent content collapsed)
-    @Ignore
+
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
         given:
@@ -211,7 +208,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             displayName( "editnametest" ).
             contentType( ContentTypeName.structured() ).
             build();
-        contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() );
+        contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
 
         ContentWizardPanel contentWizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         contentWizard.typeData( contentToEdit ).save().close();
@@ -219,6 +216,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         Content newContent = cloneContentWithNewName( contentToEdit )
         contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest" );
+        contentBrowsePanel.deSelectContentInTable( ContentPath.from( REPO_NAME ) );
         contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
         contentWizard.typeData( newContent );
 
@@ -229,13 +227,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
-        //contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
         contentBrowsePanel.exists( newContent.getPath() );
 
     }
-    //not implemented in wem-ce(parent content collapsed)
-    @Ignore
+
     def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new displayName"()
     {
         given:
@@ -245,7 +241,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             displayName( "editdisplayname" ).
             contentType( ContentTypeName.structured() ).
             build();
-        contentBrowsePanel.clickByParentCheckbox( contentToEdit.getPath().getParentPath() );
+        contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close();
 
@@ -261,7 +257,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
-        //contentBrowsePanel.expandContent( contentToEdit.getParent() );
         contentBrowsePanel.exists( newContent.getPath() );
     }
 

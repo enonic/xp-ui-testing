@@ -119,7 +119,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
-        contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
+        contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
         Content contentToDelete = Content.builder().
             name( NameHelper.uniqueName( "archive" ) ).
             displayName( "delete content beneath parent" ).
@@ -153,7 +153,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
 
-        contentBrowsePanel.clickByParentCheckbox( parent.getPath() )
+        contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
         Content content = Content.builder().
             name( NameHelper.uniqueName( "archive" ) ).
             displayName( "archive" ).

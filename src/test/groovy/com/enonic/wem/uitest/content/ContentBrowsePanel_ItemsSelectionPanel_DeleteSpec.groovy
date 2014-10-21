@@ -47,7 +47,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             contentType( ContentTypeName.dataMedia() ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickByParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.clickOnParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType(
             content1.getContentTypeName() );
         wizard.typeData( content1 ).save().close();
         contentList.add( content1 );
@@ -58,7 +58,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             contentType( ContentTypeName.dataMedia() ).
             build();
 
-        contentBrowsePanel.clickByParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType( content2.getContentTypeName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( content2.getContentTypeName() );
         wizard.typeData( content2 ).save().close();
         contentList.add( content2 );
         Content content3 = Content.builder().
@@ -68,7 +68,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             contentType( ContentTypeName.dataMedia() ).
             build();
 
-        contentBrowsePanel.clickByParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType( content3.getContentTypeName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( content3.getContentTypeName() );
         wizard.typeData( content3 ).save().close();
         contentList.add( content3 );
 

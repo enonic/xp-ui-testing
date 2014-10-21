@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +17,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.google.common.base.Predicate;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 
@@ -323,30 +321,6 @@ public abstract class Page
         } );
     }
 
-
-    public WebElement scrollTableAndFind( String elementXpath, String scrollXpath )
-    {
-        WebElement element = null;
-        List<WebElement> divScroll = getDriver().findElements( By.xpath( scrollXpath ) );
-        if ( divScroll.size() == 0 )
-        {
-            throw new TestFrameworkException( "Div was not found xpath: " + scrollXpath );
-        }
-        long gridHeight =
-            (Long) ( (JavascriptExecutor) getDriver() ).executeScript( "return arguments[0].scrollHeight", divScroll.get( 0 ) );
-
-        for ( int scrollTop = 0; scrollTop <= gridHeight; )
-        {
-            scrollTop += 40;
-            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", divScroll.get( 0 ), scrollTop );
-            element = getDriver().findElement( By.xpath( elementXpath ) );
-            if ( element.isDisplayed() )
-            {
-                return element;
-            }
-        }
-        return null;
-    }
 
     public TestSession getSession()
     {

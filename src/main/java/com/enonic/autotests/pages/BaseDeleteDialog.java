@@ -21,7 +21,7 @@ public abstract class BaseDeleteDialog
 {
     protected Logger logger = Logger.getLogger( this.getClass() );
 
-    private final String ITEMS_TO_DELETE = "//div[contains(@class,'modal-dialog delete-dialog')]//div[@class='item-list']//h4";
+    private final String ITEMS_TO_DELETE = "//div[contains(@class,'modal-dialog delete-dialog')]//div[@class='item-list']//h6";
 
     public static final String DELETE_BUTTON_XPATH =
         "//div[@class='modal-dialog delete-dialog']//div[@class='dialog-buttons']//button/span[text()='Delete']";
@@ -59,9 +59,9 @@ public abstract class BaseDeleteDialog
     public List<String> getContentNameToDelete()
     {
         List<String> names = new ArrayList<>();
-        List<WebElement> itemsTodelete = getDriver().findElements( By.xpath( ITEMS_TO_DELETE ) );
+        List<WebElement> itemsToDelete = getDriver().findElements( By.xpath( ITEMS_TO_DELETE ) );
 
-        for ( WebElement el : itemsTodelete )
+        for ( WebElement el : itemsToDelete )
         {
             names.add( el.getText() );
             logger.info( "this item present in the confirm-delete dialog and will be deleted:" + el.getText() );

@@ -109,7 +109,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( folderWithChild.getContentTypeName() ).typeData(
             folderWithChild ).save().close();
-        contentBrowsePanel.clickByParentCheckbox( folderWithChild.getPath() )
+        contentBrowsePanel.clickOnParentCheckbox( folderWithChild.getPath() )
         contentBrowsePanel.clickToolbarNew().selectContentType( child.getContentTypeName() ).typeData( child ).save().close();
 
         expect:

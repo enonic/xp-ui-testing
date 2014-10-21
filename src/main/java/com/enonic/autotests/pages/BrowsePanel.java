@@ -16,7 +16,7 @@ public class BrowsePanel
 {
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
-    protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[@title='%s']]";
+    protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]";
 
     protected String TD_CHILDREN_CONTENT_NAMES = "//table[contains(@class,'x-grid-table')]//td[descendant::p[contains(.,'%s')]]";
 
@@ -44,14 +44,6 @@ public class BrowsePanel
     public BrowsePanel( TestSession session )
     {
         super( session );
-    }
-
-    /**
-     * @return the number of rows in Browse Panel.
-     */
-    public int getRowNumber()
-    {
-        return findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) ).size();
     }
 
 
