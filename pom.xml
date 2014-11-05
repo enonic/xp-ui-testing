@@ -32,25 +32,16 @@
       <artifactId>commons-lang</artifactId>
       <version>2.6</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>6.8</version>
-    </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.10</version>
     </dependency>
-
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
       <version>2.1.8</version>
     </dependency>
-
     <dependency>
       <groupId>org.spockframework</groupId>
       <artifactId>spock-core</artifactId>
@@ -66,18 +57,30 @@
       <artifactId>geb-spock</artifactId>
       <version>0.9.2</version>
     </dependency>
-
     <dependency>
       <groupId>com.enonic.wem</groupId>
       <artifactId>wem-api</artifactId>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
-      <groupId>com.enonic.wem</groupId>
-      <artifactId>wem-webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
+      <groupId>org.ops4j.pax.exam</groupId>
+      <artifactId>pax-exam-junit4</artifactId>
+      <version>4.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.exam</groupId>
+      <artifactId>pax-exam-container-karaf</artifactId>
+      <version>4.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-aether</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.4</version>
     </dependency>
   </dependencies>
 
@@ -122,7 +125,22 @@
           </dependency>
         </dependencies>
       </plugin>
-
+      <plugin>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>exam-maven-plugin</artifactId>
+        <version>4.3.0</version>
+        <configuration>
+          <configClass>com.enonic.autotests.KarafConfig</configClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>start-container</goal>
+              <goal>stop-container</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <!-- END OF GENERIC BUILD -->

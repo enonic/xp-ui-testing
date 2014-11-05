@@ -91,7 +91,7 @@ public class NavigatorHelper
         }
         else
         {
-            home.open( "admin", "pass" );
+            home.open( "admin", "password" );
         }
         return home;
     }
