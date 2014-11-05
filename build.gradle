@@ -27,6 +27,10 @@ dependencies {
     distro 'com.enonic.wem.modules:seedsavers:1.0.0@jar'
 }
 
+test {
+    // excludes = ['**']
+}
+
 task startServer << {
     ext.karafServer = new KarafServer()
     ext.karafServer.files( configurations.distro.resolve() )
@@ -36,13 +40,9 @@ task startServer << {
 }
 
 task stopServer << {
-    ext.karafServer.stop();
+    ext.karafServer.stop()
 }
 
-test {
-    // excludes = ['**']
-}
-
-test.dependsOn = [startServer]
-test.finalizedBy = [stopServer]
+task testEmbedded( dependsOn: [startServer, test] )
+testEmbedded.finalizedBy = [stopServer]
 
