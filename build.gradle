@@ -28,9 +28,8 @@ dependencies {
 }
 
 test {
-    // excludes = ['**']
-}
 
+}
 task startServer << {
     ext.karafServer = new KarafServer()
     ext.karafServer.files( configurations.distro.resolve() )
@@ -40,9 +39,21 @@ task startServer << {
 }
 
 task stopServer << {
-    ext.karafServer.stop()
+    startServer.karafServer.stop()
 }
 
-task testEmbedded( dependsOn: [startServer, test] )
+task clearData( type: Test, dependsOn: ['startServer'] ) << {
+    excludes = ['**/*Spec.*']
+    include '**/CleanAndInitializeDataSpec.class'
+    // include 'test/groovy/com/enonic/wem/uitest/content/CleanAndInitializeDataSpec.class'
+    // include '/test/groovy/com/enonic/wem/uitest/content/CleanAndInitializeDataSpec.class'
+}
+
+task testEmbedded( type: Test, dependsOn: [clearData] ) << {
+    scanForTestClasses = false
+    include '**/*Spec.class'
+    exclude '**/CleanAndInitializeDataSpec.class'
+    forkEvery = null
+}
 testEmbedded.finalizedBy = [stopServer]
 

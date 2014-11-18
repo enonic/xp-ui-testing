@@ -246,6 +246,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( contentToEdit ).save().close();
 
         Content newContent = cloneContentWithNewDisplayName( contentToEdit );
+        contentBrowsePanel.deSelectContentInTable( ContentPath.from( REPO_NAME ) );
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getPath() ).
             clickToolbarEdit();
         wizard.typeData( newContent );

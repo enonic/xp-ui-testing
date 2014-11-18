@@ -21,7 +21,7 @@ public class BrowsePanel
     protected String TD_CHILDREN_CONTENT_NAMES = "//table[contains(@class,'x-grid-table')]//td[descendant::p[contains(.,'%s')]]";
 
     private final String CLEAR_SELECTION_LINK_XPATH =
-        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[text()='Clear Selection']";
+        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[contains(.,'Clear Selection')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
         DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";

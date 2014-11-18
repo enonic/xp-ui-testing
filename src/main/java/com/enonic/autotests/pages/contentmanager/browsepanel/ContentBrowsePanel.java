@@ -237,8 +237,11 @@ public class ContentBrowsePanel
     {
         int scrollTop = 70;
         List<WebElement> notLoadedElements;
+        int count = 0;
         do
         {
+            count++;
+            getLogger().info( "scroll count: " + count );
             //do scroll
             WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
             ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
@@ -246,6 +249,12 @@ public class ContentBrowsePanel
             notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
 
             scrollTop += scrollTop;
+            // throws because there is bug:CMS-4413 Content Manager, Content Grid, children not loaded
+            // to avoid a eternal loop exception will be thrown:
+            if ( count > 3 )
+            {
+                throw new TestFrameworkException( "scrolling of  content interrupted" );
+            }
         }
         while ( notLoadedElements.size() > 0 );
     }

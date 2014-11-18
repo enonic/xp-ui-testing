@@ -16,10 +16,7 @@ class BaseGebSpec
     @Override
     def cleanup()
     {
-        if ( session != null )
-        {
-            session.setLoggedIn( false )
-        }
+        session = null;
 
         resetBrowser();
     }

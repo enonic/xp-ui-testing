@@ -47,8 +47,6 @@ public abstract class Page
      */
     public Page( WebDriver driver )
     {
-        this.session = new TestSession();
-        session.setDriver( driver );
         PageFactory.initElements( driver, this );
     }
 
