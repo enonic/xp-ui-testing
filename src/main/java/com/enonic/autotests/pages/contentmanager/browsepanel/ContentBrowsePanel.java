@@ -195,6 +195,7 @@ public class ContentBrowsePanel
 
     public boolean doScrollAndFind( ContentPath contentPath )
     {
+        int count = 0;
         String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
         boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), 2 );
         if ( loaded )
@@ -205,6 +206,7 @@ public class ContentBrowsePanel
         List<WebElement> notLoadedElements;
         do
         {
+            count++;
             //do scroll
             WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
             ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
@@ -215,6 +217,12 @@ public class ContentBrowsePanel
                 return true;
             }
             scrollTop += scrollTop;
+            // throws because there is bug:CMS-4413 Content Manager, Content Grid, children not loaded
+            // to avoid a eternal loop exception will be thrown:
+            if ( count > 3 )
+            {
+                throw new TestFrameworkException( "scrolling of  content interrupted" );
+            }
         }
         while ( notLoadedElements.size() > 0 );
         return false;

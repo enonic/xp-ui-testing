@@ -31,9 +31,12 @@ test {
 
 }
 task startServer << {
+
+    logging.captureStandardOutput LogLevel.INFO
+
     ext.karafServer = new KarafServer()
     ext.karafServer.files( configurations.distro.resolve() )
-    ext.karafServer.startupDelay( 10000 )
+    ext.karafServer.startupDelay( 25000 )
     ext.karafServer.unpackDir( file( 'build/karaf' ) )
     ext.karafServer.start()
 }
@@ -42,17 +45,29 @@ task stopServer << {
     startServer.karafServer.stop()
 }
 
-task clearData( type: Test, dependsOn: ['startServer'] ) << {
-    excludes = ['**/*Spec.*']
-    include '**/CleanAndInitializeDataSpec.class'
-    // include 'test/groovy/com/enonic/wem/uitest/content/CleanAndInitializeDataSpec.class'
-    // include '/test/groovy/com/enonic/wem/uitest/content/CleanAndInitializeDataSpec.class'
+task clearData( type: Test, dependsOn: ['startServer'] ) {
+    scanForTestClasses = true
+    exclude '**/*Spec.class'
+    exclude '**/*Suite.*'
+    include '**/CleanAndInitializeData.class'
 }
 
-task testEmbedded( type: Test, dependsOn: [clearData] ) << {
+
+
+
+tasks.withType( Test ) {
+    jvmArgs '-Xms128m', '-Xmx1024m'
+    testLogging {
+        exceptionFormat "full"
+        events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+        displayGranularity = 0
+    }
+}
+task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
-    exclude '**/CleanAndInitializeDataSpec.class'
+    exclude '**/CleanAndInitializeData.class'
+    exclude '**/*Suite.*'
     forkEvery = null
 }
 testEmbedded.finalizedBy = [stopServer]

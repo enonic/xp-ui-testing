@@ -6,7 +6,7 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
-class ResetAppSpec
+class VersiontestResetApp
     extends BaseGebSpec
 {
     @Shared

@@ -30,7 +30,7 @@ public class BrowsePanel
     protected WebElement clearSelectionLink;
 
     private final String SELECT_ALL_LINK_XPATH =
-        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[text()='Select All' or text()='Select all']";
+        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[contains(.,'Select All') or contains(.,'Select all')]";
 
     @FindBy(xpath = SELECT_ALL_LINK_XPATH)
     protected WebElement selectAllLink;

@@ -8,7 +8,7 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
-class CleanAndInitializeDataSpec
+class CleanAndInitializeData
     extends BaseGebSpec
 {
     @Shared

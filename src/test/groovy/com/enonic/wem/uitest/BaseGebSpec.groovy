@@ -16,7 +16,10 @@ class BaseGebSpec
     @Override
     def cleanup()
     {
-        session = null;
+        if ( session != null )
+        {
+            session.setLoggedIn( false )
+        }
 
         resetBrowser();
     }
@@ -50,8 +53,8 @@ class BaseGebSpec
 
             if ( baseUrl == null )
             {
-                println " from defaultProperties" + browser.baseUrl;
                 browser.baseUrl = defaultProperties.get( "base.url" );
+                println " baseUrl from defaultProperties  " + browser.baseUrl;
             }
         }
     }
@@ -59,7 +62,6 @@ class BaseGebSpec
 
     TestSession getTestSession()
     {
-        println "    geTestSession called!  "
         if ( session == null )
         {
             session = new TestSession()
