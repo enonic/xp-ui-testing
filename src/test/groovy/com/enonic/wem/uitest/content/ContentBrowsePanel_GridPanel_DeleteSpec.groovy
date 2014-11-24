@@ -138,7 +138,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.expandContent( contentToDelete.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
-        !contentBrowsePanel.exists( contentToDelete.getPath() );
+        !contentBrowsePanel.exists( contentToDelete.getPath(), true );
     }
 
 

@@ -17,6 +17,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
@@ -115,6 +116,14 @@ public class ContentBrowsePanel
         }
     }
 
+    public ContentBrowsePanel refreshPanelInBrowser()
+    {
+        getDriver().navigate().refresh();
+        NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
+        return this;
+    }
+
+
     public ContentBrowseFilterPanel getFilterPanel()
     {
         if ( filterPanel == null )
@@ -165,35 +174,47 @@ public class ContentBrowsePanel
      */
     public boolean exists( ContentPath contentPath )
     {
-        return exists( contentPath, Application.DEFAULT_IMPLICITLY_WAIT );
+        return exists( contentPath, Application.DEFAULT_IMPLICITLY_WAIT, false );
+    }
+
+    public boolean exists( ContentPath contentPath, boolean saveScreenshot )
+    {
+        return exists( contentPath, Application.DEFAULT_IMPLICITLY_WAIT, saveScreenshot );
     }
 
     /**
      * @param contentPath
      * @param timeout
+     * @param saveScreenshot  if true, screenshot will be saved.
      * @return true if content exists, otherwise false.
      */
-    public boolean exists( ContentPath contentPath, int timeout )
+    public boolean exists( ContentPath contentPath, int timeout, boolean saveScreenshot )
     {
+        NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
         boolean result;
-        waitsForSpinnerNotVisible();
+        // waitsForSpinnerNotVisible();
         String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
 
         List<WebElement> notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
         if ( notLoadedElements.size() > 0 )
         {
-            result = doScrollAndFind( contentPath );
+            result = doScrollAndFindContent( contentPath );
         }
         else
         {
             result = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
         }
         getLogger().info( "content with path:" + contentPath.toString() + " isExists: " + result );
-        TestUtils.saveScreenshot( getSession(), contentPath.getName() );
+
+        if ( saveScreenshot )
+        {
+            TestUtils.saveScreenshot( getSession(), contentPath.getName() );
+        }
+
         return result;
     }
 
-    public boolean doScrollAndFind( ContentPath contentPath )
+    public boolean doScrollAndFindContent( ContentPath contentPath )
     {
         int count = 0;
         String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
@@ -206,8 +227,13 @@ public class ContentBrowsePanel
         List<WebElement> notLoadedElements;
         do
         {
-            count++;
             //do scroll
+            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
+            if ( notLoadedElements.size() == 0 )
+            {
+                break;
+            }
+            count++;
             WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
             ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
             sleep( 500 );
@@ -241,21 +267,24 @@ public class ContentBrowsePanel
         return findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) ).size();
     }
 
-    public void doScrollAllContent()
+    private void doScrollAllContent()
     {
         int scrollTop = 70;
         List<WebElement> notLoadedElements;
         int count = 0;
         do
         {
+            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
+            if ( notLoadedElements.size() == 0 )
+            {
+                break;
+            }
             count++;
             getLogger().info( "scroll count: " + count );
             //do scroll
             WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
             ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
             sleep( 500 );
-            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
-
             scrollTop += scrollTop;
             // throws because there is bug:CMS-4413 Content Manager, Content Grid, children not loaded
             // to avoid a eternal loop exception will be thrown:
@@ -274,7 +303,7 @@ public class ContentBrowsePanel
     public ContentBrowsePanel unExpandContent( ContentPath contentPath )
     {
 
-        if ( !doScrollAndFind( contentPath ) )
+        if ( !doScrollAndFindContent( contentPath ) )
         {
             throw new TestFrameworkException( "unExpandContent: content was not found! " + contentPath );
         }
@@ -299,7 +328,7 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel expandContent( ContentPath contentPath )
     {
-        if ( !doScrollAndFind( contentPath ) )
+        if ( !doScrollAndFindContent( contentPath ) )
         {
             throw new TestFrameworkException( "expandContent: content was not found! " + contentPath );
         }
@@ -432,7 +461,7 @@ public class ContentBrowsePanel
 
     private void waitAndCheckContent( ContentPath contentPath )
     {
-        boolean isExist = exists( contentPath );
+        boolean isExist = exists( contentPath, false );
 
         if ( !isExist )
         {

@@ -30,11 +30,7 @@ public class Application
 
     public static final int DEFAULT_IMPLICITLY_WAIT = 2;
 
-    public static final String APP_SPACE_ADMIN_FRAME_XPATH = "//iframe[contains(@src,'space-manager')]";
-
     public static final String APP_CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";
-
-    public static final String APP_SCHEMA_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'schema-manager')]";
 
     public static final String APP_ACCOUNTS_FRAME_XPATH = "//iframe[contains(@src,'app-account.html')]";
 
