@@ -161,9 +161,9 @@ public class ContentBrowseFilterPanel
     }
 
     /**
-     * Clicks by link 'Clear Filter', located on the search panel.
+     * Clicks on link 'Clear Filter', located on the search panel.
      */
-    public void clickByCleanFilter()
+    public void clickOnCleanFilter()
     {
         boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.ONE_SEC );
         if ( !isVisible )

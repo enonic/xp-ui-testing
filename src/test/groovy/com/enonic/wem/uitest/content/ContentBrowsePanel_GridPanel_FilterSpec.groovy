@@ -81,7 +81,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
 
         when:
-        filterPanel.clickByCleanFilter();
+        filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
@@ -151,7 +151,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         when:
-        filterPanel.clickByCleanFilter();
+        filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 

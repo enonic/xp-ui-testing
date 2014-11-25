@@ -59,7 +59,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.DATA.getValue() );
 
         when:
-        filterPanel.clickByCleanFilter();
+        filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "CleanFilter1" );
 
@@ -74,7 +74,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.DATA.getValue() );
 
         when:
-        contentBrowsePanel.getFilterPanel().clickByCleanFilter();
+        contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "CleanFilter2" );
 
