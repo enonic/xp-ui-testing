@@ -51,6 +51,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
+        and: "add new child content beneath the parent"
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.clickToolbarNew().selectContentType( archiveContent.getContentTypeName() ).typeData(
             archiveContent ).save().close();
@@ -71,16 +72,11 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.unExpandContent( parentContent.getPath() );
 
 
-        then: "content deleted and  not exist in view"
-        // contentBrowsePanel.isRowSelected(  )
+        then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
         selectedNames.contains( "parentContent" ) && selectedNames.contains( "childArchive" ) && selectedNames.size() == 2;
-        // contentBrowsePanel.getItemSelectionPanel(  ).getSelectedItemCount(  )  == before ;
     }
 
-    def "GIVEN expanded parent content and content beneath the parent, both contents a selected  WHEN parent content is unexpanded  THEN only"()
-    {
 
-    }
 
 }
