@@ -12,6 +12,9 @@ import spock.lang.Shared
 class ContentBrowseItemsSelectionPanel_ShoppingCart
     extends BaseGebSpec
 {
+    private final PARENT_ROOT_CONTENT = "parent_content"
+
+    private final ARCHIVE_CHILD_CONTENT = "archive_root_content"
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -23,7 +26,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     }
 
 
-    def "GIVEN expanded parent content and content beneath the parent, both contents a selected  WHEN parent content is unexpanded  THEN only one item is selected in the grid panel but items present in selection panel"()
+    def "GIVEN expanded parent content and content beneath the parent, both contents are selected  WHEN parent content is collapsed  THEN only one item is selected in the grid panel but two items present in selection panel"()
     {
         setup: "build a new folder-content and archive content"
         String name = NameHelper.uniqueName( "folder" );
@@ -46,6 +49,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.clickToolbarNew().selectContentType( parentContent.getContentTypeName() ).typeData(
             parentContent ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible();
+        getTestSession().put( PARENT_ROOT_CONTENT, parentContent );
 
         //workaround for  CMS-4406
         contentBrowsePanel.refreshPanelInBrowser();
@@ -55,6 +59,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.clickToolbarNew().selectContentType( archiveContent.getContentTypeName() ).typeData(
             archiveContent ).save().close();
+        getTestSession().put( ARCHIVE_CHILD_CONTENT, archiveContent );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         //workaround for  CMS-4406
@@ -77,6 +82,22 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         selectedNames.contains( "parentContent" ) && selectedNames.contains( "childArchive" ) && selectedNames.size() == 2;
     }
 
+    def "GIVEN a selected content  WHEN search text typed and one more content selected  THEN only one item should be  present in selection panel"()
+    {
+        setup: "select a root content and type search text in filter panel"
+        Content parentContent = getTestSession().get( PARENT_ROOT_CONTENT );
+        Content childContent = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        contentBrowsePanel.selectContentInTable( parentContent.getPath() );
+        contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
+
+        when: "all contents filtered and row with one more content clicked "
+        contentBrowsePanel.selectRowByContentPath( childContent.getPath().toString() );
+
+        then: "only one item should be present "
+        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        //selectedNames.contains( "parentContent" ) && selectedNames.contains( "childArchive" ) &&
+        selectedNames.size() == 1;
+    }
 
 
 }
