@@ -73,7 +73,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( ContentPath.from( contentNames.get( 0 ) ) );
 
         when:
-        contentBrowsePanel.doClearSelection();
+        contentBrowsePanel.clickOnClearSelection();
 
         then:
         contentBrowsePanel.getSelectedRowsNumber() == 0;
@@ -82,10 +82,10 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN no Content selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
     {
         given:
-        contentBrowsePanel.doClearSelection();
+        contentBrowsePanel.clickOnClearSelection();
 
         when:
-        int selectedNumber = contentBrowsePanel.doSelectAll();
+        int selectedNumber = contentBrowsePanel.clickOnSelectAll();
 
         then:
         contentBrowsePanel.getRowNumber() == selectedNumber;

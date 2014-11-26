@@ -77,18 +77,18 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contents.add( parentContent );
         contents.add( archiveContent );
         contentBrowsePanel.selectContentInTable( contents );
-        int before = contentBrowsePanel.getItemSelectionPanel().getSelectedItemCount()
 
         when: "un expand a parent content "
         contentBrowsePanel.unExpandContent( parentContent.getPath() );
+        contentBrowsePanel.getSelectedRowsNumber();
 
-
-        then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items "
+        then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items, but only one row is selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
-        selectedNames.contains( "parentContent" ) && selectedNames.contains( "childArchive" ) && selectedNames.size() == 2;
+        selectedNames.contains( "parentContent" ) && selectedNames.contains( "childArchive" ) && selectedNames.size() == 2 &&
+            contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN a selected content  WHEN search text typed and one more row with content clicked  THEN only one item should be  present in selection panel"()
+    def "GIVEN a selected content  WHEN search text typed and one more row with content clicked  THEN selection panel has no any items"()
     {
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
@@ -96,15 +96,49 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
-        when: "all contents filtered and row with one more content clicked "
+        when: "all contents filtered and one more row with content clicked "
         contentBrowsePanel.selectRowByContentPath( childContent.getPath().toString() );
 
-        then: "only one item should be present "
+        then: "no any items should not be present in the selection panel  "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
-        //selectedNames.contains( "parentContent" ) && selectedNames.contains( "childArchive" ) &&
-        selectedNames.size() == 1;
+        selectedNames.size() == 0;
     }
 
+    def "GIVEN a selected content AND search text typed WHEN one more checkbox near a content clicked THEN two items should be  present in selection panel"()
+    {
+        setup: "select a root content and type search text in filter panel"
+        Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
+        Content childContent = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        contentBrowsePanel.selectContentInTable( parentContent.getPath() );
+        contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
+
+        when: "search text typed and one more checkbox clicked and  content selected "
+        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getPath() );
+
+        then: "two item should be present in selection panel"
+        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        selectedNames.size() == 2;
+    }
+
+    def "GIVEN a selected content AND search text typed AND one more checkbox near a  content clicked WHEN 'Clear filter' clicked THEN two items should be  present in the selection panel"()
+    {
+        setup: "select a root content and type search text in filter panel"
+        Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
+        Content childContent = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        contentBrowsePanel.selectContentInTable( parentContent.getPath() );
+        contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
+
+        and: "search text typed and one more checkbox clicked and  content selected "
+        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getPath() );
+
+        when: "search text typed and one more checkbox clicked and  content selected "
+        contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
+
+        then: "two item should be present in selection panel"
+        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        selectedNames.size() == 2;
+    }
+    //-----------------------------------
     def "GIVEN two folders in the root AND search text typed AND both folder selected WHEN filter cleared  THEN two contents still selected"()
     {
         setup: "select a root content and type search text in filter panel"
@@ -130,7 +164,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         List<Content> contents = new ArrayList<>();
         contents.add( folder1 );
         contents.add( folder2 );
-        and: "two contents are selected in the grid"
+        and: "two checkbox clicked and contents are selected in the grid"
         contentBrowsePanel.selectContentInTable( contents );
 
         when: "filter cleared "
@@ -139,6 +173,31 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         then: "still two items should be present in the selection panel "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
         selectedNames.size() == 2;
+    }
+
+
+    def "GIVEN browse panel opened  WHEN Select All clicked  THEN number of items in the selection panel and number of items in 'Select all' are equals "()
+    {
+
+        when: "filter cleared "
+        contentBrowsePanel.clickOnSelectAll();
+
+        then: "number of items in the selection panel and number of items in 'Select all' are equals"
+        contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames().size() == contentBrowsePanel.getSelectedRowsNumber();
+
+    }
+
+    def "GIVEN browse panel opened AND 'Select All' clicked  WHEN 'Clear Selection' clicked  THEN there are no any items in the selection panel"()
+    {
+        setup: "click on 'Select All' link"
+        contentBrowsePanel.clickOnSelectAll();
+
+        when: "'Clear Selection' link pressed "
+        contentBrowsePanel.clickOnClearSelection();
+
+        then: "there are no any items in the selection panel"
+        contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames().size() == 0;
+
     }
 
 

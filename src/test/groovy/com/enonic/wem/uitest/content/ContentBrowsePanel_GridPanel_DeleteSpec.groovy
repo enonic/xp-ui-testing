@@ -75,7 +75,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentList.add( content2 );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waitUntilPageLoaded( 2 );
-        contentBrowsePanel.doClearSelection();
+        contentBrowsePanel.clickOnClearSelection();
 
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
@@ -99,7 +99,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         List<Content> contents = new ArrayList<>();
         contents.add( content );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.doClearSelection();
+        contentBrowsePanel.clickOnClearSelection();
 
         when:
         contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() );

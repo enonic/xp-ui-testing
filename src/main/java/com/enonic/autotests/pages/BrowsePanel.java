@@ -111,7 +111,7 @@ public class BrowsePanel
      *
      * @return the number of selected rows.
      */
-    public int doSelectAll()
+    public int clickOnSelectAll()
     {
         boolean isVisibleLink = waitUntilVisibleNoException( By.xpath( SELECT_ALL_LINK_XPATH ), 2l );
         if ( !isVisibleLink )
@@ -155,9 +155,9 @@ public class BrowsePanel
     }
 
     /**
-     * Clicks by 'Clear Selection' and removes row-selections.
+     * Clicks on 'Clear Selection' link and removes row-selections.
      */
-    public void doClearSelection()
+    public void clickOnClearSelection()
     {
         sleep( 500 );
         boolean isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
