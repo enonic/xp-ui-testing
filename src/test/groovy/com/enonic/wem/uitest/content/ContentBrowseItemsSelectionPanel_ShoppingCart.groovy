@@ -176,13 +176,13 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     }
 
 
-    def "GIVEN browse panel opened  WHEN Select All clicked  THEN number of items in the selection panel and number of items in 'Select all' are equals "()
+    def "GIVEN browse panel opened  WHEN Select All clicked  THEN number of items in the selection panel and number of selected rows in the grid are equals "()
     {
 
         when: "filter cleared "
         contentBrowsePanel.clickOnSelectAll();
 
-        then: "number of items in the selection panel and number of items in 'Select all' are equals"
+        then: "number of items in the selection panel and number of of selected rows in the grid are equals"
         contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames().size() == contentBrowsePanel.getSelectedRowsNumber();
 
     }
