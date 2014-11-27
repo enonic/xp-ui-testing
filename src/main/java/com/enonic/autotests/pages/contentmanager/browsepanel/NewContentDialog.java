@@ -23,7 +23,7 @@ public class NewContentDialog
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
 
     public static String CONTENT_TYPE_NAME =
-        "//div[contains(@id,'app.create.NewContentDialogList')]//li[@class='content-types-list-item' and descendant::p[text()='%s']]";
+        "//div[contains(@id,'app.create.NewContentDialog')]//li[@class='content-types-list-item' and descendant::p[text()='%s']]";
 
     public static final String SHOW_ALL_LINK = "//div[@class='content-type-facet']/span[contains(.,'All')]";
 
@@ -32,10 +32,10 @@ public class NewContentDialog
     public static final String FILTER_BY_SITES_LINK = "//div[@class='content-type-facet']/span[contains(.,'Sites')]";
 
     public static final String ALL_LIST_ITEMS =
-        "//div[contains(@id,'app.create.NewContentDialogList')]/ul/li[contains(@class,'content-types-list-item')]";
+        "//div[contains(@id,'app.create.NewContentDialog')]/ul/li[contains(@class,'content-types-list-item')]";
 
     public static final String LIST_ITEMS_SITES =
-        "//div[contains(@id,'app.create.NewContentDialogList')]/ul/li[@class='content-types-list-item site']";
+        "//div[contains(@id,'app.create.NewContentDialog')]/ul/li[@class='content-types-list-item site']";
 
     public static final String SEARCH_INPUT = "//input[contains(@id,'api.ui.text.TextInput')]";
 
