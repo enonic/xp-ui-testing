@@ -107,10 +107,10 @@ public class ContentWizardPanel
 
         TestUtils.saveScreenshot( getSession(), content.getName() );
         // 2. populate main tab
-        if ( content.getData() != null )
+        if ( content.getPropertyTree() != null )
         {
 
-            clickDataStep().type( content.getData() );
+            clickDataStep().type( content.getPropertyTree() );
         }
 
         return this;

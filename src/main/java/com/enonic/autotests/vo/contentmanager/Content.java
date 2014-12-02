@@ -2,7 +2,7 @@ package com.enonic.autotests.vo.contentmanager;
 
 
 import com.enonic.wem.api.content.ContentPath;
-import com.enonic.wem.api.content.data.ContentData;
+import com.enonic.wem.api.data.PropertyTree;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 
 public class Content
@@ -17,7 +17,7 @@ public class Content
 
     private final String contentTypeName;
 
-    private final ContentData data;
+    private final PropertyTree propertyTree;
 
     protected Content( final Builder builder )
     {
@@ -28,7 +28,7 @@ public class Content
         this.displayName = builder.displayName;
         this.contentTypeName = builder.contentTypeName;
 
-        this.data = builder.data;
+        this.propertyTree = builder.propertyTree;
     }
 
     public static Builder builder()
@@ -61,9 +61,9 @@ public class Content
         return contentTypeName;
     }
 
-    public ContentData getData()
+    public PropertyTree getPropertyTree()
     {
-        return data;
+        return propertyTree;
     }
 
     public static class Builder
@@ -76,7 +76,7 @@ public class Content
 
         private ContentPath parent;
 
-        private ContentData data;
+        private PropertyTree propertyTree;
 
         public Builder name( String name )
         {
@@ -108,9 +108,9 @@ public class Content
             return this;
         }
 
-        public Builder data( final ContentData value )
+        public Builder propertyTree( final PropertyTree value )
         {
-            this.data = value;
+            this.propertyTree = value;
             return this;
         }
 

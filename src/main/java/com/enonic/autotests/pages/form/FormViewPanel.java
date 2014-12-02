@@ -3,7 +3,7 @@ package com.enonic.autotests.pages.form;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Page;
-import com.enonic.wem.api.data.RootDataSet;
+import com.enonic.wem.api.data.PropertyTree;
 
 public class FormViewPanel
     extends Page
@@ -13,7 +13,7 @@ public class FormViewPanel
         super( session );
     }
 
-    public FormViewPanel type( final RootDataSet data )
+    public FormViewPanel type( final PropertyTree propertyTree )
     {
 
         // TODO: Type given data into form

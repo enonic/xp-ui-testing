@@ -8,8 +8,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
-import com.enonic.wem.api.content.data.ContentData
-import com.enonic.wem.api.data.DataSet
 import com.enonic.wem.api.data.Value
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
@@ -36,34 +34,34 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     @Ignore
     def "experiment"()
     {
-        given:
-        ContentData data = new ContentData();
-        data.setProperty( "firstName", Value.newString( "Jorund" ) );
-        data.addProperty( "firstName", Value.newString( "Vier" ) );
-        data.addProperty( "surname", Value.newString( "Skriubakken" ) );
-        DataSet mySet = new DataSet( "address" );
-        mySet.setProperty( "street", Value.newString( "Sonstlei" ) )
-        mySet.setProperty( "postalCode", Value.newString( "1763" ) )
-        mySet.setProperty( "postalPlace", Value.newString( "HALDEN" ) )
-        data.add( mySet );
-
-        Content rootContent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( REPO_NAME ).
-            displayName( REPO_NAME ).
-            contentType( ContentTypeName.structured() ).
-            data( data ).
-            build();
-
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() );
-        wizard.typeData( rootContent );
-        wizard.clickDataStep().type( rootContent.data );
-
-        when:
-        wizard.save().close();
-
-        then:
-        contentBrowsePanel.exists( rootContent.getPath() );
+//        given:
+//        ContentData data = new ContentData();
+//        data.setProperty( "firstName", Value.newString( "Jorund" ) );
+//        data.addProperty( "firstName", Value.newString( "Vier" ) );
+//        data.addProperty( "surname", Value.newString( "Skriubakken" ) );
+//        DataSet mySet = new DataSet( "address" );
+//        mySet.setProperty( "street", Value.newString( "Sonstlei" ) )
+//        mySet.setProperty( "postalCode", Value.newString( "1763" ) )
+//        mySet.setProperty( "postalPlace", Value.newString( "HALDEN" ) )
+//        data.add( mySet );
+//
+//        Content rootContent = Content.builder().
+//            parent( ContentPath.ROOT ).
+//            name( REPO_NAME ).
+//            displayName( REPO_NAME ).
+//            contentType( ContentTypeName.structured() ).
+//            data( data ).
+//            build();
+//
+//        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() );
+//        wizard.typeData( rootContent );
+//        wizard.clickDataStep().type( rootContent.data );
+//
+//        when:
+//        wizard.save().close();
+//
+//        then:
+//        contentBrowsePanel.exists( rootContent.getPath() );
     }
 
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
