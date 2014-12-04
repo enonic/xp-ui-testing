@@ -7,10 +7,9 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.utils.WaitHelper;
+import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.vo.User;
 
 public class NavigatorHelper
@@ -30,21 +29,8 @@ public class NavigatorHelper
             {
                 return new ContentBrowsePanel( testSession );
             }
-            boolean isHomeButtonPresent = WaitHelper.waitAndFind( By.xpath( Application.HOME_BUTTON_XPATH ), testSession.getDriver(), 1 );
-            if ( isHomeButtonPresent )
-            {
-                testSession.getDriver().findElement( By.xpath( Application.HOME_BUTTON_XPATH ) ).click();
-                testSession.getDriver().switchTo().window( testSession.getWindowHandle() );
-                HomePage homepage = new HomePage( testSession );
-                homepage.openContentManagerApplication();
-                return new ContentBrowsePanel( testSession );
-            }
-            else
-            {
-                HomePage homepage = new HomePage( testSession );
-                return homepage.openContentManagerApplication();
-            }
-
+            //TODO navigate to Content Manager Application
+            return new ContentBrowsePanel( testSession );
         }
         // if user not logged in:
         else
@@ -53,6 +39,28 @@ public class NavigatorHelper
             HomePage home = loginAndOpenHomePage( testSession );
             ContentBrowsePanel cmPage = home.openContentManagerApplication();
             return cmPage;
+        }
+
+    }
+
+    public static UserBrowsePanel openUserManager( TestSession testSession )
+    {
+        if ( testSession.isLoggedIn() )
+        {
+            if ( UserBrowsePanel.isOpened( testSession ) )
+            {
+                return new UserBrowsePanel( testSession );
+            }
+            //TODO navigate to User Manager Application
+            return new UserBrowsePanel( testSession );
+        }
+        // if user not logged in:
+        else
+        {
+
+            HomePage home = loginAndOpenHomePage( testSession );
+            UserBrowsePanel userBrowsePanel = home.openUserManagerApplication();
+            return userBrowsePanel;
         }
 
     }

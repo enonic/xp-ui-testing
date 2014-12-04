@@ -57,10 +57,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.waitsForSpinnerNotVisible();
         getTestSession().put( PARENT_ROOT_FOLDER, parentContent );
 
-        //workaround for  CMS-4406
-        contentBrowsePanel.refreshPanelInBrowser();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-
         and: "add new child content beneath the parent"
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.clickToolbarNew().selectContentType( archiveContent.getContentTypeName() ).typeData(
@@ -68,9 +64,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         getTestSession().put( ARCHIVE_CHILD_CONTENT, archiveContent );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-        //workaround for  CMS-4406
-        contentBrowsePanel.refreshPanelInBrowser();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
 
         contentBrowsePanel.expandContent( parentContent.getPath() );
         List<Content> contents = new ArrayList<>();
@@ -155,9 +148,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.clickToolbarNew().selectContentType( folder2.getContentTypeName() ).typeData( folder2 ).save().close();
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-        //workaround for  CMS-4406
-        contentBrowsePanel.refreshPanelInBrowser();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
 
         and: "type a part of name common for both contents "
         contentBrowsePanel.getFilterPanel().typeSearchText( SHOPPING_CART_BASE_NAME );
@@ -202,7 +192,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        String name = NameHelper.uniqueName( SHOPPING_CART_BASE_NAME );
         Content childArchive = getTestSession().get( ARCHIVE_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
 

@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
 
 /**
@@ -14,10 +15,11 @@ import com.enonic.autotests.services.NavigatorHelper;
 public class HomePage
     extends Page
 {
-    public static String TITLE = "Enonic CMS - Boot Page";
-
     @FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
     private WebElement contentManager;
+
+    @FindBy(xpath = "//a[contains(@href,'user-manager')]//div[contains(.,'User Manager')]")
+    private WebElement userManager;
 
 
     @FindBy(xpath = "//div[@class = 'name-container' and text()='Schema Manager']")
@@ -77,11 +79,24 @@ public class HomePage
         contentManager.click();
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
-        NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
+        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
         getLogger().info( "Content App loaded" );
+        return panel;
+    }
+
+    public UserBrowsePanel openUserManagerApplication()
+    {
+        userManager.click();
+        String whandle = getSession().getDriver().getWindowHandle();
+        getSession().setWindowHandle( whandle );
+        NavigatorHelper.switchToIframe( getSession(), Application.USER_MANAGER_FRAME_XPATH );
+        UserBrowsePanel panel = new UserBrowsePanel( getSession() );
+        panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        panel.waitsForSpinnerNotVisible();
+        getLogger().info( "User Manger App loaded" );
         return panel;
     }
 }

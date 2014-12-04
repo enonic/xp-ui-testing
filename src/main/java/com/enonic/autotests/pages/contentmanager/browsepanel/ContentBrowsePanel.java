@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -31,9 +30,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
-    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton']";
+    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' and text()='Content Manager']";
 
-    private static final String GRID_DIV_XPATH = "//div[contains(@id,'api.app.NamesView')]";
 
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";
@@ -53,13 +51,7 @@ public class ContentBrowsePanel
     protected final String DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
-    private final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
-
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
-
-    private String NOT_LOADED_CONTENT_XPATH = "//div[contains(@class,'children-to-load')]";
-
-    private final String DIV_WITH_SCROLL = "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[contains(@class,'slickgrid')]";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
@@ -82,9 +74,6 @@ public class ContentBrowsePanel
     @FindBy(xpath = MOVE_BUTTON_XPATH)
     private WebElement moveButton;
 
-    private String CHECKBOX_ROW_CHECKER =
-        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
-
     private ContentBrowseFilterPanel filterPanel;
 
     private ItemsSelectionPanel itemsSelectionPanel;
@@ -92,7 +81,7 @@ public class ContentBrowsePanel
     /**
      * The constructor.
      *
-     * @param session
+     * @param session  {@link TestSession} instance
      */
     public ContentBrowsePanel( TestSession session )
     {
@@ -100,7 +89,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * @param session
+     * @param session  {@link TestSession} instance
      * @return true if 'Content Manager' opened and CMSpacesPage showed, otherwise false.
      */
     public static boolean isOpened( TestSession session )
@@ -119,7 +108,7 @@ public class ContentBrowsePanel
     public ContentBrowsePanel refreshPanelInBrowser()
     {
         getDriver().navigate().refresh();
-        NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
+        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         return this;
     }
 
@@ -182,119 +171,53 @@ public class ContentBrowsePanel
         return exists( contentPath, Application.DEFAULT_IMPLICITLY_WAIT, saveScreenshot );
     }
 
+    public boolean exists( ContentPath contentPath, int timeout )
+    {
+        return exists( contentPath, timeout, false );
+    }
+
     /**
      * @param contentPath
      * @param timeout
-     * @param saveScreenshot  if true, screenshot will be saved.
+     * @param saveScreenshot if true, screenshot will be saved.
      * @return true if content exists, otherwise false.
      */
     public boolean exists( ContentPath contentPath, int timeout, boolean saveScreenshot )
     {
-        NavigatorHelper.switchToIframe( getSession(), Application.APP_CONTENT_MANAGER_FRAME_XPATH );
-        boolean result;
-        // waitsForSpinnerNotVisible();
-        String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
-
-        List<WebElement> notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
-        if ( notLoadedElements.size() > 0 )
-        {
-            result = doScrollAndFindContent( contentPath );
-        }
-        else
-        {
-            result = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
-        }
-        getLogger().info( "content with path:" + contentPath.toString() + " isExists: " + result );
+        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
+        boolean result = doScrollAndFindContent( contentPath );
 
         if ( saveScreenshot )
         {
             TestUtils.saveScreenshot( getSession(), contentPath.getName() );
         }
-
         return result;
     }
 
     public boolean doScrollAndFindContent( ContentPath contentPath )
     {
-        int count = 0;
         String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
         boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), 2 );
         if ( loaded )
         {
             return true;
         }
-        int scrollTop = 70;
-        List<WebElement> notLoadedElements;
+        int scrollTop = calculateScrollTop();
         do
         {
-            //do scroll
-            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
-            if ( notLoadedElements.size() == 0 )
+            doScrollSlickGrid( scrollTop );
+            scrollTop += scrollTop;
+            if ( waitUntilVisibleNoException( By.xpath( contentNameXpath ), 1 ) )
             {
-                break;
-            }
-            count++;
-            WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
-            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
-            sleep( 500 );
-            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
-            if ( waitUntilVisibleNoException( By.xpath( contentNameXpath ), 2 ) )
-            {
+                getLogger().info( "content was found: " + contentPath.toString() );
                 return true;
             }
-            scrollTop += scrollTop;
-            // throws because there is bug:CMS-4413 Content Manager, Content Grid, children not loaded
-            // to avoid a eternal loop exception will be thrown:
-            if ( count > 3 )
-            {
-                throw new TestFrameworkException( "scrolling of  content interrupted" );
-            }
         }
-        while ( notLoadedElements.size() > 0 );
+        while ( !isScrollingFinished( calculateItemsAreaHeight() ) );
+        getLogger().info( "slick-grid was scrolled and content was not found!" );
         return false;
     }
 
-    /**
-     * @return the number of rows in Browse Panel.
-     */
-    public int getRowNumber()
-    {
-        List<WebElement> elements = findElements( By.xpath( DIV_WITH_SCROLL ) );
-        if ( elements.size() > 0 )
-        {
-            doScrollAllContent();
-        }
-        return findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) ).size();
-    }
-
-    private void doScrollAllContent()
-    {
-        int scrollTop = 70;
-        List<WebElement> notLoadedElements;
-        int count = 0;
-        do
-        {
-            notLoadedElements = findElements( By.xpath( NOT_LOADED_CONTENT_XPATH ) );
-            if ( notLoadedElements.size() == 0 )
-            {
-                break;
-            }
-            count++;
-            getLogger().info( "scroll count: " + count );
-            //do scroll
-            WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
-            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
-            sleep( 500 );
-            scrollTop += scrollTop;
-            // throws because there is bug:CMS-4413 Content Manager, Content Grid, children not loaded
-            // to avoid a eternal loop exception will be thrown:
-            if ( count > 3 )
-            {
-                throw new TestFrameworkException( "scrolling of  content interrupted" );
-            }
-        }
-        while ( notLoadedElements.size() > 0 );
-    }
 
     /**
      * @param contentPath
@@ -493,34 +416,16 @@ public class ContentBrowsePanel
         return this;
     }
 
-    /**
-     * When row selected, there ia ability to click on Spacebar or ARROW_DOWN, ARROW_UP
-     *
-     * @param path
-     * @param key
-     * @return {@link ContentBrowsePanel} instance.
-     */
-    public ContentBrowsePanel pressKeyOnRow( ContentPath path, Keys key )
+    public BrowsePanel pressKeyOnRow( ContentPath path, Keys key )
     {
-        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
-        getLogger().info( "tries to find content in table:" + path.toString() );
-
-        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
-        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
-        if ( !isPresent )
-        {
-            throw new SaveOrUpdateException( "checkbox for content: " + path.toString() + "was not found" );
-        }
-        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
-        sleep( 500 );
-        getLogger().info( "key was typed:" + key.toString() + " ,  content path is:" + path.toString() );
-        return this;
+        return pressKeyOnRow( path.toString(), key );
     }
+
 
     /**
      * Clicks on 'New' button and opens NewContentDialog
      *
-     * @return
+     * @return {@link NewContentDialog} instance.
      */
     public NewContentDialog clickToolbarNew()
     {
@@ -545,6 +450,11 @@ public class ContentBrowsePanel
         if ( contentPath.elementCount() == 0 )
         {
             return this;
+        }
+
+        if ( !doScrollAndFindContent( contentPath ) )
+        {
+            throw new TestFrameworkException( "content was not found: " + contentPath.toString() );
         }
 
         String checkBoxXpath = String.format( CHECKBOX_ROW_CHECKER, contentPath.toString() );
@@ -573,11 +483,7 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel selectRowByContentPath( String contentPath )
     {
-        String rowXpath = String.format( DIV_NAMES_VIEW, contentPath );
-        boolean result = waitAndFind( By.xpath( rowXpath ) );
-        Actions builder = new Actions( getDriver() );
-        builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
-        sleep( 500 );
+        clickAndSelectRow( contentPath );
         return this;
     }
 
@@ -589,8 +495,7 @@ public class ContentBrowsePanel
     public ItemViewPanelPage clickToolbarOpen()
     {
         openButton.click();
-        ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
-        return cinfo;
+        return new ItemViewPanelPage( getSession() );
     }
 
     /**
@@ -682,21 +587,6 @@ public class ContentBrowsePanel
 
         action.contextClick( element ).build().perform();
         sleep( 100 );
-    }
-
-    /**
-     * Waits until page loaded.
-     *
-     * @param timeout
-     */
-    public void waitUntilPageLoaded( long timeout )
-    {
-        boolean isGridLoaded = waitAndFind( By.xpath( GRID_DIV_XPATH ), timeout );
-        if ( !isGridLoaded )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_bug" ) );
-            throw new TestFrameworkException( "ContentBrowsePanel: content grid was not loaded!" );
-        }
     }
 
     /**

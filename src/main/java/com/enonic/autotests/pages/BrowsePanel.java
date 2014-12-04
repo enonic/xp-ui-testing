@@ -1,27 +1,45 @@
 package com.enonic.autotests.pages;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class BrowsePanel
+public abstract class BrowsePanel
     extends Application
 {
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
     protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]";
 
-    protected String TD_CHILDREN_CONTENT_NAMES = "//table[contains(@class,'x-grid-table')]//td[descendant::p[contains(.,'%s')]]";
+    protected final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
 
-    private final String CLEAR_SELECTION_LINK_XPATH =
+    protected String CHECKBOX_ROW_CHECKER =
+        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
+
+    protected static final String DIV_WITH_NAME = "//div[contains(@id,'api.app.NamesView')]";
+
+    protected final String DIV_WITH_SCROLL = "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[contains(@class,'slickgrid')]";
+
+    protected final String CLEAR_SELECTION_LINK_XPATH =
         "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[contains(.,'Clear Selection')]";
+
+    protected String NOT_LOADED_CONTENT_XPATH = "//div[contains(@class,'children-to-load')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
         DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
@@ -46,6 +64,7 @@ public class BrowsePanel
         super( session );
     }
 
+    public abstract BrowsePanel goToAppHome();
 
     /**
      * clicks on 'expand' icon and expands a folder.
@@ -97,7 +116,7 @@ public class BrowsePanel
         if ( rowElement == null )
         {
             throw new TestFrameworkException(
-                "invalid locator  or space with name: " + name + " does not exist! xpath =  " + expanderXpath );
+                "invalid locator or content with name: " + name + " does not exist! xpath =  " + expanderXpath );
         }
 
         String attributeName = "class";
@@ -184,4 +203,115 @@ public class BrowsePanel
         return clearSelectionLink.getText();
     }
 
+    /**
+     * Waits until page loaded.
+     *
+     * @param timeout
+     */
+    public void waitUntilPageLoaded( long timeout )
+    {
+        boolean isGridLoaded = waitAndFind( By.xpath( DIV_WITH_NAME ), timeout );
+        if ( !isGridLoaded )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_bug" ) );
+            throw new TestFrameworkException( "BrowsePanel:  grid was not loaded!" );
+        }
+    }
+
+    /**
+     * scrolls and count number of rows in browse panel.
+     */
+    public int getRowNumber()
+    {
+        Set<String> set = new HashSet<>();
+        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
+        int scrollTop = calculateScrollTop();
+        do
+        {
+            WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
+            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
+            sleep( 500 );
+            scrollTop += scrollTop;
+            set.addAll( getRowTopValues() );
+        }
+        while ( isScrollingFinished( calculateItemsAreaHeight() ) );
+        return set.size();
+    }
+
+    private Set<String> getRowTopValues()
+    {
+        List<WebElement> elements = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) );
+        Set set = elements.stream().map( element -> {
+            return element.getAttribute( "style" );
+        } ).collect( Collectors.toSet() );
+        return set;
+    }
+
+    /**
+     * When row selected, there ia ability to click on Spacebar or ARROW_DOWN, ARROW_UP
+     *
+     * @param item the item name.
+     * @param key
+     * @return {@link BrowsePanel} instance.
+     */
+    public BrowsePanel pressKeyOnRow( String item, Keys key )
+    {
+        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, item );
+        getLogger().info( "tries to find content in table:" + item );
+
+        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
+        if ( !isPresent )
+        {
+            throw new SaveOrUpdateException( "checkbox for item: " + item + "was not found" );
+        }
+        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
+        sleep( 500 );
+        getLogger().info( "key was typed:" + key.toString() + " ,   name is:" + item );
+        return this;
+    }
+
+    public BrowsePanel clickAndSelectRow( String itemName )
+    {
+        String rowXpath = String.format( DIV_NAMES_VIEW, itemName );
+        boolean result = waitAndFind( By.xpath( rowXpath ) );
+        Actions builder = new Actions( getDriver() );
+        builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
+        sleep( 500 );
+        return this;
+    }
+
+    protected int calculateScrollTop()
+    {
+        Object viewPortHeight = ( (JavascriptExecutor) getDriver() ).executeScript(
+            "return document.getElementsByClassName('slick-viewport')[0].style.height" );
+        return Integer.valueOf( viewPortHeight.toString().substring( 0, viewPortHeight.toString().indexOf( "px" ) ) );
+    }
+
+    protected int calculateItemsAreaHeight()
+    {
+        Object scrollHeight = ( (JavascriptExecutor) getDriver() ).executeScript(
+            "return document.getElementsByClassName('slick-viewport')[0].scrollHeight" );
+        return Integer.valueOf( scrollHeight.toString() );
+    }
+
+    protected void doScrollSlickGrid( int step )
+    {
+        ( (JavascriptExecutor) getDriver() ).executeScript( "document.getElementsByClassName('slick-viewport')[0].scrollTop = " + step );
+        sleep( 500 );
+    }
+
+    /**
+     * each 'slick-row' has a attribute : style="top:90px"  , so we can find a last row.
+     * Scrolling will be  finished, when slick row is last.
+     */
+    protected boolean isScrollingFinished( int scrollHeight )
+    {
+        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
+        String topOfLastElement = elements.get( elements.size() - 1 ).getAttribute( "style" );
+        int top =
+            Integer.valueOf( topOfLastElement.substring( topOfLastElement.indexOf( ":" ) + 1, topOfLastElement.indexOf( "px" ) ).trim() );
+        return scrollHeight - top < 200;
+
+    }
 }
