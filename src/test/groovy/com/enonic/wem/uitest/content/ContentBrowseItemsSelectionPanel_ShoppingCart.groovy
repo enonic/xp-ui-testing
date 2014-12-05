@@ -73,7 +73,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
 
         when: "un expand a parent content "
         contentBrowsePanel.unExpandContent( parentContent.getPath() );
-        contentBrowsePanel.getSelectedRowsNumber();
 
         then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items, but only one row is selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
@@ -169,7 +168,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        String name = NameHelper.uniqueName( SHOPPING_CART_BASE_NAME );
         Content childArchive = getTestSession().get( ARCHIVE_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
 

@@ -149,16 +149,40 @@ public abstract class BrowsePanel
      */
     public int getSelectedRowsNumber()
     {
-        int number = 0;
-        List<WebElement> rows = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'checkboxsel')]" ) );
-        for ( WebElement row : rows )
+        scrollViewPortToTop();
+        Set<String> names = new HashSet<>();
+        names.addAll( getSelectedGridItemNames() );
+        if ( !isViewportScrollable() )
         {
-            if ( waitAndCheckAttrValue( row, "class", "selected", 1l ) )
-            {
-                number++;
-            }
+            return names.size();
         }
-        return number;
+        else
+        {
+            //scroll and count
+            long scrollTopBefore;
+            long scrollTopAfter;
+            long valueForScroll = getViewportHeight();
+            for (; ; )
+            {
+                scrollTopBefore = getViewportScrollTopValue();
+                scrollTopAfter = doScrollViewport( valueForScroll );
+                names.addAll( getSelectedGridItemNames() );
+                if ( scrollTopBefore == scrollTopAfter )
+                {
+                    break;
+                }
+                valueForScroll += valueForScroll;
+            }
+            return names.size();
+        }
+    }
+
+    private Set<String> getSelectedGridItemNames()
+    {
+        List<WebElement> rows =
+            findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[@class='sub-name']" ) );
+        Set<String> set = rows.stream().map( WebElement::getText ).collect( Collectors.toSet() );
+        return set;
     }
 
     public boolean isRowSelected( String name )
@@ -223,20 +247,55 @@ public abstract class BrowsePanel
      */
     public int getRowNumber()
     {
+        scrollViewPortToTop();
         Set<String> set = new HashSet<>();
-        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
-        int scrollTop = calculateScrollTop();
-        do
+        set.addAll( getRowTopValues() );
+        if ( !isViewportScrollable() )
         {
-            WebElement element = findElements( By.xpath( DIV_WITH_SCROLL ) ).get( 0 );
-            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", element, scrollTop );
-            sleep( 500 );
-            scrollTop += scrollTop;
+            return set.size();
+        }
+        // else, do scroll and add values.
+        long newScrollTop = getViewportHeight();
+        long scrollTopBefore;
+        long scrollTopAfter;
+        for (; ; )
+        {
+            scrollTopBefore = getViewportScrollTopValue();
+            scrollTopAfter = doScrollViewport( newScrollTop );
+            if ( scrollTopBefore == scrollTopAfter )
+            {
+                break;
+            }
+            newScrollTop += newScrollTop;
             set.addAll( getRowTopValues() );
         }
-        while ( isScrollingFinished( calculateItemsAreaHeight() ) );
         return set.size();
     }
+
+    public Long doScrollViewport( long step )
+    {
+        WebElement viewportElement = findElements( By.xpath( "//div[@class='slick-viewport']" ) ).get( 0 );
+        ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
+        sleep( 500 );
+        return getViewportScrollTopValue();
+    }
+
+    public boolean isViewportScrollable()
+    {
+        String styleValue = findElements( By.xpath( "//div[@class='grid-canvas']" ) ).get( 0 ).getAttribute( "style" );
+        int gridCanvasHeight = getHeightFromStyleString( styleValue );
+        styleValue = findElements( By.xpath( "//div[@class='slick-viewport']" ) ).get( 0 ).getAttribute( "style" );
+        int viewportHeight = getHeightFromStyleString( styleValue );
+        return gridCanvasHeight - viewportHeight > 50;
+    }
+
+    private int getHeightFromStyleString( String styleString )
+    {
+        int startIndex = styleString.lastIndexOf( "height:" ) + "height:".length();
+        int endIndex = styleString.lastIndexOf( "px" );
+        return Integer.valueOf( styleString.substring( startIndex, endIndex ).trim() );
+    }
+
 
     private Set<String> getRowTopValues()
     {
@@ -281,24 +340,18 @@ public abstract class BrowsePanel
         return this;
     }
 
-    protected int calculateScrollTop()
+    protected int getViewportHeight()
     {
         Object viewPortHeight = ( (JavascriptExecutor) getDriver() ).executeScript(
             "return document.getElementsByClassName('slick-viewport')[0].style.height" );
         return Integer.valueOf( viewPortHeight.toString().substring( 0, viewPortHeight.toString().indexOf( "px" ) ) );
     }
 
-    protected int calculateItemsAreaHeight()
+    protected int getGridCanvasHeight()
     {
         Object scrollHeight = ( (JavascriptExecutor) getDriver() ).executeScript(
             "return document.getElementsByClassName('slick-viewport')[0].scrollHeight" );
         return Integer.valueOf( scrollHeight.toString() );
-    }
-
-    protected void doScrollSlickGrid( int step )
-    {
-        ( (JavascriptExecutor) getDriver() ).executeScript( "document.getElementsByClassName('slick-viewport')[0].scrollTop = " + step );
-        sleep( 500 );
     }
 
     /**
@@ -313,5 +366,16 @@ public abstract class BrowsePanel
             Integer.valueOf( topOfLastElement.substring( topOfLastElement.indexOf( ":" ) + 1, topOfLastElement.indexOf( "px" ) ).trim() );
         return scrollHeight - top < 200;
 
+    }
+
+    public Long getViewportScrollTopValue()
+    {
+        return (Long) ( (JavascriptExecutor) getDriver() ).executeScript(
+            "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
+    }
+
+    public void scrollViewPortToTop()
+    {
+        ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
     }
 }

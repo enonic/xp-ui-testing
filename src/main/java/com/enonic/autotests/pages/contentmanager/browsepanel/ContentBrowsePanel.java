@@ -81,7 +81,7 @@ public class ContentBrowsePanel
     /**
      * The constructor.
      *
-     * @param session  {@link TestSession} instance
+     * @param session {@link TestSession} instance
      */
     public ContentBrowsePanel( TestSession session )
     {
@@ -89,7 +89,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * @param session  {@link TestSession} instance
+     * @param session {@link TestSession} instance
      * @return true if 'Content Manager' opened and CMSpacesPage showed, otherwise false.
      */
     public static boolean isOpened( TestSession session )
@@ -202,18 +202,25 @@ public class ContentBrowsePanel
         {
             return true;
         }
-        int scrollTop = calculateScrollTop();
-        do
+        int scrollTopValue = getViewportHeight();
+        long scrollTopBefore;
+        long scrollTopAfter;
+        for (; ; )
         {
-            doScrollSlickGrid( scrollTop );
-            scrollTop += scrollTop;
+            scrollTopBefore = getViewportScrollTopValue();
+            scrollTopAfter = doScrollViewport( scrollTopValue );
+
             if ( waitUntilVisibleNoException( By.xpath( contentNameXpath ), 1 ) )
             {
                 getLogger().info( "content was found: " + contentPath.toString() );
                 return true;
             }
+            if ( scrollTopBefore == scrollTopAfter )
+            {
+                break;
+            }
+            scrollTopValue += scrollTopValue;
         }
-        while ( !isScrollingFinished( calculateItemsAreaHeight() ) );
         getLogger().info( "slick-grid was scrolled and content was not found!" );
         return false;
     }
