@@ -163,66 +163,18 @@ public class ContentBrowsePanel
      */
     public boolean exists( ContentPath contentPath )
     {
-        return exists( contentPath, Application.DEFAULT_IMPLICITLY_WAIT, false );
+        return exists( contentPath.toString(), false );
     }
 
     public boolean exists( ContentPath contentPath, boolean saveScreenshot )
     {
-        return exists( contentPath, Application.DEFAULT_IMPLICITLY_WAIT, saveScreenshot );
+        return exists( contentPath.toString(), saveScreenshot );
     }
 
-    public boolean exists( ContentPath contentPath, int timeout )
-    {
-        return exists( contentPath, timeout, false );
-    }
-
-    /**
-     * @param contentPath
-     * @param timeout
-     * @param saveScreenshot if true, screenshot will be saved.
-     * @return true if content exists, otherwise false.
-     */
-    public boolean exists( ContentPath contentPath, int timeout, boolean saveScreenshot )
-    {
-        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
-        boolean result = doScrollAndFindContent( contentPath );
-
-        if ( saveScreenshot )
-        {
-            TestUtils.saveScreenshot( getSession(), contentPath.getName() );
-        }
-        return result;
-    }
 
     public boolean doScrollAndFindContent( ContentPath contentPath )
     {
-        String contentNameXpath = String.format( DIV_NAMES_VIEW, contentPath.toString() );
-        boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), 2 );
-        if ( loaded )
-        {
-            return true;
-        }
-        int scrollTopValue = getViewportHeight();
-        long scrollTopBefore;
-        long scrollTopAfter;
-        for (; ; )
-        {
-            scrollTopBefore = getViewportScrollTopValue();
-            scrollTopAfter = doScrollViewport( scrollTopValue );
-
-            if ( waitUntilVisibleNoException( By.xpath( contentNameXpath ), 1 ) )
-            {
-                getLogger().info( "content was found: " + contentPath.toString() );
-                return true;
-            }
-            if ( scrollTopBefore == scrollTopAfter )
-            {
-                break;
-            }
-            scrollTopValue += scrollTopValue;
-        }
-        getLogger().info( "slick-grid was scrolled and content was not found!" );
-        return false;
+        return doScrollAndFindGridItem( contentPath.toString() );
     }
 
 
@@ -240,7 +192,7 @@ public class ContentBrowsePanel
 
         if ( isRowExpanded( contentPath.toString() ) )
         {
-            this.<String>clickOnExpander( contentPath.toString() );
+            this.clickOnExpander( contentPath.toString() );
             getLogger().info( "content have been unexpanded: " + contentPath.toString() );
         }
         else
@@ -278,7 +230,7 @@ public class ContentBrowsePanel
                     path = ContentPath.from( path, parentContent );
                 }
 
-                if ( !this.<String>clickOnExpander( path.toString() ) )
+                if ( !this.clickOnExpander( path.toString() ) )
                 {
                     getLogger().info( "content with name " + parentContent + "has no children! " );
                 }
@@ -428,7 +380,10 @@ public class ContentBrowsePanel
         return pressKeyOnRow( path.toString(), key );
     }
 
-
+    public boolean isExpanderPresent( ContentPath contentPath )
+    {
+        return isExpanderPresent( contentPath.toString() );
+    }
     /**
      * Clicks on 'New' button and opens NewContentDialog
      *

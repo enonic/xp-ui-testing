@@ -144,6 +144,7 @@ public abstract class WizardPanel<T>
     public abstract boolean isEnabledSaveButton();
 
     public abstract WizardPanel<T> typeData( T object );
+    // public abstract WizardPanel<T> typeDisplayName( String name );
 
     /**
      * Types a name to the name-input field
@@ -183,8 +184,14 @@ public abstract class WizardPanel<T>
             throw new TestFrameworkException( "title was not found or not visible in AppBarTabMenu!" );
         }
     }
+    //tab-menu appbar-tab-menu expanded
 
-    public WizardPanel<T> showTabMenuItems()
+    /**
+     * Clicks on  'AppBarTabMenu' and expands it, list of AppBarTabMenuItem should appears.
+     *
+     * @return {@link WizardPanel} instance
+     */
+    public WizardPanel<T> expandTabMenu()
     {
         findElements( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).get( 0 ).click();
         sleep( 300 );
@@ -243,5 +250,11 @@ public abstract class WizardPanel<T>
     {
         // TODO: click step with position
 
+    }
+
+    public WizardPanel<T> typeDisplayName( String displayName )
+    {
+        clearAndType( displayNameInput, displayName );
+        return this;
     }
 }

@@ -32,11 +32,8 @@ class UserBrowsePanel_GridPanel_Spec
 
     def "GIVEN user browse panel opened WHEN first is clicked THEN first row is blue"()
     {
-        given:
-        List<String> contentNames = userBrowsePanel.getNamesFromBrowsePanel();
-
         when:
-        userBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         then:
         userBrowsePanel.getSelectedRowsNumber() == 1;
@@ -45,7 +42,7 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN a Content selected WHEN spacebar is typed THEN row is no longer selected"()
     {
         given:
-        userBrowsePanel.clickCheckboxAndSelectRow( "system" );
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
         TestUtils.saveScreenshot( getTestSession(), "spacebar-system1" );
 
         when:
@@ -60,13 +57,13 @@ class UserBrowsePanel_GridPanel_Spec
     {
         given:
         List<String> contentNames = userBrowsePanel.getNamesFromBrowsePanel();
-        userBrowsePanel.clickCheckboxAndSelectRow( "system" );
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         when:
         userBrowsePanel.clickOnClearSelection();
 
         then:
-        userBrowsePanel.getSelectedRowsNumber() == 0;
+        userBrowsePanel.getSelectedRowsNumber() == 0 && contentNames.size() > 0;
     }
 
     def "GIVEN no items selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
@@ -74,11 +71,27 @@ class UserBrowsePanel_GridPanel_Spec
         given:
         userBrowsePanel.clickOnClearSelection();
 
-        when:
+        when: "'Select all'-link is clicked"
         int selectedNumber = userBrowsePanel.clickOnSelectAll();
 
-        then:
+        then: "the number of rows in the grid the same as number in the 'Select All' link"
         userBrowsePanel.getRowNumber() == selectedNumber;
     }
+
+    def "GIVEN a 'system' folder on root having a child WHEN listed THEN expander is shown"()
+    {
+        expect: " expander is shown near the 'system' folder"
+        userBrowsePanel.isExpanderPresent( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
+    }
+
+    def "GIVEN a 'system' folder on root  WHEN folder expanded THEN 'Users' and 'Groups' shown"()
+    {
+        when: " a 'system' folder expanded"
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+
+        then: "'users' should be shown"
+        userBrowsePanel.exists( "users", true );
+    }
+
 
 }

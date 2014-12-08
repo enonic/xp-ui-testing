@@ -15,6 +15,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -69,19 +70,19 @@ public abstract class BrowsePanel
     /**
      * clicks on 'expand' icon and expands a folder.
      *
-     * @param name - the name of content type or contentPath
+     * @param gridItemName - the name of item in the browse panel.
      * @return true if space is not empty and was expanded, otherwise return
      * false.
      */
-    public <T> boolean clickOnExpander( T name )
+    public boolean clickOnExpander( String gridItemName )
     {
-        boolean isExpanderPresent = isExpanderPresent( name );
+        boolean isExpanderPresent = isExpanderPresent( gridItemName );
         if ( !isExpanderPresent )
         {
-            getLogger().info( "This object: " + name.toString() + " has no child" );
+            getLogger().info( "This object: " + gridItemName + " has no child" );
             return false;
         }
-        String expanderIcon = String.format( BROWSE_PANEL_ITEM_EXPANDER, name.toString() );
+        String expanderIcon = String.format( BROWSE_PANEL_ITEM_EXPANDER, gridItemName );
         findElement( By.xpath( expanderIcon ) ).click();
         return true;
     }
@@ -91,14 +92,14 @@ public abstract class BrowsePanel
      *
      * @return true if expander icon is present, otherwise false.
      */
-    public <T> boolean isExpanderPresent( T contentPath )
+    public boolean isExpanderPresent( String contentPath )
     {
-        String expanderElement = String.format( BROWSE_PANEL_ITEM_EXPANDER, contentPath.toString() );
+        String expanderElement = String.format( BROWSE_PANEL_ITEM_EXPANDER, contentPath );
         getLogger().info( "check if present expander for folder:" + contentPath.toString() + " xpath: " + expanderElement );
         boolean isPresent = isDynamicElementPresent( By.xpath( expanderElement ), 2 );
         if ( !isPresent )
         {
-            getLogger().info( "expander for folder:" + contentPath.toString() + " was not found! " );
+            getLogger().info( "expander for folder:" + contentPath + " was not found! " );
             return false;
         }
 
@@ -377,5 +378,67 @@ public abstract class BrowsePanel
     public void scrollViewPortToTop()
     {
         ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
+    }
+
+    public boolean doScrollAndFindGridItem( String gridItem, int timeout )
+    {
+        String contentNameXpath = String.format( DIV_NAMES_VIEW, gridItem );
+        boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
+        if ( loaded )
+        {
+            return true;
+        }
+        int scrollTopValue = getViewportHeight();
+        long scrollTopBefore;
+        long scrollTopAfter;
+        for (; ; )
+        {
+            scrollTopBefore = getViewportScrollTopValue();
+            scrollTopAfter = doScrollViewport( scrollTopValue );
+
+            if ( waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout ) )
+            {
+                getLogger().info( "content was found: " + gridItem );
+                return true;
+            }
+            if ( scrollTopBefore == scrollTopAfter )
+            {
+                break;
+            }
+            scrollTopValue += scrollTopValue;
+        }
+        getLogger().info( "slick-grid was scrolled and content was not found!" );
+        return false;
+    }
+
+    public boolean doScrollAndFindGridItem( String gridItem )
+    {
+        return doScrollAndFindGridItem( gridItem, Application.DEFAULT_IMPLICITLY_WAIT );
+    }
+
+    /**
+     * @param itemName
+     * @param saveScreenshot if true, screenshot will be saved.
+     * @return true if content exists, otherwise false.
+     */
+    public boolean exists( String itemName, boolean saveScreenshot )
+    {
+        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
+        boolean result = doScrollAndFindGridItem( itemName );
+
+        if ( saveScreenshot )
+        {
+            String name;
+            if ( itemName.contains( "/" ) )
+            {
+                name = itemName.substring( itemName.lastIndexOf( "/" ) + 1 );
+            }
+            else
+            {
+                name = itemName;
+            }
+            TestUtils.saveScreenshot( getSession(), name );
+        }
+        return result;
     }
 }

@@ -116,12 +116,6 @@ public class ContentWizardPanel
         return this;
     }
 
-    public ContentWizardPanel typeDisplayName( String displayName )
-    {
-        clearAndType( displayNameInput, displayName );
-        return this;
-    }
-
     public ContentWizardPanel typeName( String name )
     {
         clearAndType( nameInput, name );
@@ -170,9 +164,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        //waitUntilVisibleNoException(by, timeout)
         boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_4 );
-        findElements( By.xpath( DIV_CONTENT_WIZARD_PANEL ) );
         if ( !result )
         {
             throw new TestFrameworkException( "ContentWizard was not showed!" );

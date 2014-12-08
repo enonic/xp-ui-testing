@@ -32,10 +32,10 @@ class ContentWizardPanel_TabMenuSpec
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
             waitUntilWizardOpened();
 
-        when:
-        wizard.showTabMenuItems();
+        when: "AppBarTabMenu was clicked"
+        wizard.expandTabMenu();
 
-        then:
+        then: "item menu with title should appears"
         wizard.isTabMenuItemPresent( "New Archive" );
 
     }
@@ -48,8 +48,8 @@ class ContentWizardPanel_TabMenuSpec
         contentBrowsePanel.goToAppHome();
         wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened();
-        when:
-        wizard.showTabMenuItems();
+        when: "AppBarTabMenu was clicked"
+        wizard.expandTabMenu();
 
         then:
         wizard.isTabMenuItemPresent( "New Archive" ) && wizard.isTabMenuItemPresent( "New Folder" );
@@ -58,14 +58,14 @@ class ContentWizardPanel_TabMenuSpec
 
     def "GIVEN content Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
     {
-        given:
+        given: "content wizard was opened ad AppBarTabMenu clicked"
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
-            waitUntilWizardOpened().showTabMenuItems();
+            waitUntilWizardOpened().expandTabMenu();
 
-        when:
+        when: "no any data typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( "New Archive" );
 
-        then:
+        then: "close dialog should not showed"
         dialog == null;
 
     }
@@ -76,7 +76,7 @@ class ContentWizardPanel_TabMenuSpec
         given:
         String displayName = "testname";
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
-            waitUntilWizardOpened().typeDisplayName( displayName ).showTabMenuItems();
+            waitUntilWizardOpened().typeDisplayName( displayName ).expandTabMenu();
 
         when:
         SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( displayName );
@@ -97,14 +97,14 @@ class ContentWizardPanel_TabMenuSpec
             contentType( ContentTypeName.archiveMedia() ).
             build();
         WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
-            waitUntilWizardOpened().typeData( content ).showTabMenuItems();
+            waitUntilWizardOpened().typeData( content ).expandTabMenu();
 
-        when:
+        when: "'close' button in the tabMenu pressed and 'Yes' button on confirm dialog chosen "
         SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( content.getDisplayName() );
         dialog.clickYesButton();
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-        then:
+        then: "new content listed in the browse panel"
         contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
 
     }

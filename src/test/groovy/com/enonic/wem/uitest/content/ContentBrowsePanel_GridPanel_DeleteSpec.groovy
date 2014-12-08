@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
@@ -45,7 +44,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentInfoPage.openDeleteConfirmationDialog().doConfirm();
 
         then:
-        !contentBrowsePanel.exists( content.getPath(), Application.DEFAULT_IMPLICITLY_WAIT );
+        !contentBrowsePanel.exists( content.getPath(), true );
     }
 
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
@@ -172,7 +171,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
-        !contentBrowsePanel.<ContentPath> isExpanderPresent( ContentPath.from( parent.getName() ) );
+        !contentBrowsePanel.isExpanderPresent( ContentPath.from( parent.getName() ) );
     }
 
     def "GIVEN a Content on root WHEN deleted THEN New-button is enabled"()
