@@ -34,12 +34,10 @@ public class Application
 
     public static final String SPINNER_XPATH = "//div[@id='api.ui.LoadMask']";
 
-
     public Application( TestSession session )
     {
         super( session );
     }
-
 
     public void waitsForSpinnerNotVisible()
     {

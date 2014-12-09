@@ -93,5 +93,57 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.exists( "users", true );
     }
 
+    def "GIVEN a 'roles' folder on root  WHEN folder expanded THEN 'superuser'  shown"()
+    {
+        when: " a 'roles' folder expanded"
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+
+        then: "'superuser' should be shown"
+        userBrowsePanel.exists( "superuser", true );
+    }
+
+    def "GIVEN a 'system' folder with an open expander WHEN closed THEN no children are listed beneath"()
+    {
+        given:
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        TestUtils.saveScreenshot( getTestSession(), "system-expanded" );
+        when:
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        TestUtils.saveScreenshot( getTestSession(), "system-collapsed" );
+
+        then:
+        userBrowsePanel.getChildNames( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() ).size() == 0;
+    }
+
+    def "GIVEN a 'system' folder selected WHEN arrow down is typed THEN next row is selected"()
+    {
+        given: "a 'system folder is selected'"
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+        int before = userBrowsePanel.getSelectedRowsNumber();
+
+        when: "'arrow down' typed"
+        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.SYSTEM.getValue(), Keys.ARROW_DOWN );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_down_user" );
+
+        then: "'system' is not selected now and another folder in the root directory is selected"
+        !userBrowsePanel.isRowSelected( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() ) && userBrowsePanel.getSelectedRowsNumber() ==
+            before;
+    }
+
+    def "GIVEN a 'roles' selected WHEN arrow up is typed THEN another row is selected"()
+    {
+        given: "'roles folder is selected'"
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.ROLES );
+        int before = userBrowsePanel.getSelectedRowsNumber();
+
+        when: "arrow up typed"
+        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES.getValue(), Keys.ARROW_UP );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_up_user" );
+
+        then: "roles is not selected now, another folder in the root directory is selected"
+        !userBrowsePanel.isRowSelected( UserBrowsePanel.BrowseItemType.ROLES.getValue() ) && userBrowsePanel.getSelectedRowsNumber() ==
+            before;
+    }
+
 
 }

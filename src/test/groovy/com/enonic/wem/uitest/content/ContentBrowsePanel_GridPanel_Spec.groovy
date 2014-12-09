@@ -167,8 +167,8 @@ class ContentBrowsePanel_GridPanel_Spec
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( ContentPath.from( FOLDER_WITH_CHILD ), Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_up" );
+        contentBrowsePanel.pressKeyOnRow( ContentPath.from( FOLDER_WITH_CHILD ), Keys.ARROW_DOWN );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
         then:
         !contentBrowsePanel.isRowSelected( ContentPath.from( FOLDER_WITH_CHILD ).toString() ) &&
             contentBrowsePanel.getSelectedRowsNumber() == before;
@@ -185,12 +185,12 @@ class ContentBrowsePanel_GridPanel_Spec
             contentType( ContentTypeName.dataMedia() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( data.getContentTypeName() ).typeData( data ).save().close();
-        contentBrowsePanel.selectContentInTable( ContentPath.from( name ) );
+        contentBrowsePanel.selectContentInTable( ContentPath.from( FOLDER_WITH_CHILD ) );
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( ContentPath.from( name ), Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
+        contentBrowsePanel.pressKeyOnRow( ContentPath.from( name ), Keys.ARROW_UP );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_up" );
 
         then:
         !contentBrowsePanel.isRowSelected( ContentPath.from( name ).toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;

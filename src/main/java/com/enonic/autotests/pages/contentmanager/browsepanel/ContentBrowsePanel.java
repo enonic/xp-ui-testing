@@ -252,24 +252,10 @@ public class ContentBrowsePanel
         return new ContentWizardPanel( getSession() );
     }
 
-    /**
-     * Gets content names, that are children for parent.
-     *
-     * @param contentPath parent content path
-     * @return list of content names.
-     */
+
     public List<String> getChildNames( ContentPath contentPath )
     {
-        List<String> listNames = new ArrayList<>();
-        String pElement =
-            String.format( "//div[contains(@id,'api.app.NamesView')and child::p[contains(@title,'%s/')]]/p[@class='sub-name']",
-                           contentPath );
-        List<WebElement> elems = findElements( By.xpath( String.format( pElement, contentPath ) ) );
-        for ( WebElement el : elems )
-        {
-            listNames.add( el.getAttribute( "title" ) );
-        }
-        return listNames;
+        return getChildNames( contentPath.toString() );
     }
 
     /**
@@ -353,26 +339,13 @@ public class ContentBrowsePanel
     }
 
     /**
-     * Clicks by a checkbox, linked with content and select row in the table.
+     * Clicks on a checkbox, linked with content and selects a row in the table.
      *
-     * @param path
+     * @param path a content path.
      */
     public ContentBrowsePanel clickCheckboxAndSelectRow( ContentPath path )
     {
-        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, path.toString() );
-        getLogger().info( "tries to find content in table:" + path.toString() );
-
-        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
-        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
-        if ( !isPresent )
-        {
-            throw new SaveOrUpdateException( "checkbox for content: " + path.getName() + "was not found" );
-        }
-        sleep( 700 );
-        findElement( By.xpath( contentCheckBoxXpath ) ).click();
-        getLogger().info( "check box was selected, content path is:" + path.toString() );
-
-        return this;
+        return clickCheckboxAndSelectRow( path.toString() );
     }
 
     public BrowsePanel pressKeyOnRow( ContentPath path, Keys key )
@@ -384,6 +357,7 @@ public class ContentBrowsePanel
     {
         return isExpanderPresent( contentPath.toString() );
     }
+
     /**
      * Clicks on 'New' button and opens NewContentDialog
      *

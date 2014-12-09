@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
@@ -108,19 +107,8 @@ public class UserBrowsePanel
 
     public UserBrowsePanel clickCheckboxAndSelectRow( BrowseItemType itemType )
     {
-        String itemCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, itemType.getValue() );
+        return clickCheckboxAndSelectRow( itemType.getValue() );
 
-        getLogger().debug( "Xpath of checkbox  is :" + itemCheckBoxXpath );
-        boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
-        if ( !isPresent )
-        {
-            throw new SaveOrUpdateException( "checkbox for : " + itemType + "was not found" );
-        }
-        sleep( 700 );
-        findElement( By.xpath( itemCheckBoxXpath ) ).click();
-        getLogger().info( "check box was selected,  name is:" + itemType );
-        getSession().put( ITEM_TYPE, itemType );
-        return this;
     }
 
     /**

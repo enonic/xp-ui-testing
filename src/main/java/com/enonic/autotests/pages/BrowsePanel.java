@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -423,7 +423,6 @@ public abstract class BrowsePanel
      */
     public boolean exists( String itemName, boolean saveScreenshot )
     {
-        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         boolean result = doScrollAndFindGridItem( itemName );
 
         if ( saveScreenshot )
@@ -440,5 +439,44 @@ public abstract class BrowsePanel
             TestUtils.saveScreenshot( getSession(), name );
         }
         return result;
+    }
+
+    /**
+     * Gets item names, that are children for parent.
+     *
+     * @param parentItemName parent item name
+     * @return list of item names.
+     */
+    public List<String> getChildNames( String parentItemName )
+    {
+        List<String> listNames = new ArrayList<>();
+        String pElement =
+            String.format( "//div[contains(@id,'api.app.NamesView')and child::p[contains(@title,'%s/')]]/p[@class='sub-name']",
+                           parentItemName );
+        List<WebElement> elements = findElements( By.xpath( String.format( pElement, parentItemName ) ) );
+        return elements.stream().map( element -> {
+            return element.getAttribute( "title" );
+        } ).collect( Collectors.toList() );
+    }
+
+    public <T extends BrowsePanel> T clickCheckboxAndSelectRow( String itemName )
+    {
+        if ( !doScrollAndFindGridItem( itemName ) )
+        {
+            throw new TestFrameworkException( "grid item was not found! " + itemName );
+        }
+        String itemCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, itemName );
+
+        getLogger().info( "Xpath of checkbox for item is :" + itemCheckBoxXpath );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
+        if ( !isPresent )
+        {
+            throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
+        }
+        sleep( 700 );
+        findElement( By.xpath( itemCheckBoxXpath ) ).click();
+        getLogger().info( "check box was selected, item: " + itemName );
+
+        return (T) this;
     }
 }
