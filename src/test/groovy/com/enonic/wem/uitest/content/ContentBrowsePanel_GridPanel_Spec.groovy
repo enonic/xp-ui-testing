@@ -189,12 +189,43 @@ class ContentBrowsePanel_GridPanel_Spec
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( ContentPath.from( name ), Keys.ARROW_UP );
+        contentBrowsePanel.pressKeyOnRow( ContentPath.from( FOLDER_WITH_CHILD ), Keys.ARROW_UP );
         TestUtils.saveScreenshot( getTestSession(), "arrow_up" );
 
         then:
-        !contentBrowsePanel.isRowSelected( ContentPath.from( name ).toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
+        !contentBrowsePanel.isRowSelected( ContentPath.from( FOLDER_WITH_CHILD ).toString() ) &&
+            contentBrowsePanel.getSelectedRowsNumber() == before;
     }
+
+    def "GIVEN a selected and expanded folder and  WHEN arrow left is typed THEN folder becomes collapsed"()
+    {
+        given: "a selected and expanded folder(content)"
+        ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
+        contentBrowsePanel.selectContentInTable( path );
+        contentBrowsePanel.expandContent( path )
+
+        when: "arrow left typed"
+        contentBrowsePanel.pressKeyOnRow( path, Keys.ARROW_LEFT );
+        TestUtils.saveScreenshot( getTestSession(), "content_arrow_left" );
+
+        then: "folder is collapsed"
+        !contentBrowsePanel.isRowExpanded( path.toString() );
+    }
+
+    def "GIVEN a selected and collapsed folder and  WHEN arrow right is typed THEN folder becomes expanded"()
+    {
+        given: "a selected and collapsed folder(content)"
+        ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
+        contentBrowsePanel.selectContentInTable( path );
+
+        when: "arrow left typed"
+        contentBrowsePanel.pressKeyOnRow( path, Keys.ARROW_RIGHT );
+        TestUtils.saveScreenshot( getTestSession(), "content_arrow_right" );
+
+        then: "folder is collapsed"
+        contentBrowsePanel.isRowExpanded( path.toString() );
+    }
+
 
     String getTestContentName( List<String> contentNames )
     {

@@ -145,5 +145,32 @@ class UserBrowsePanel_GridPanel_Spec
             before;
     }
 
+    def "GIVEN a 'roles' is collapsed and selected WHEN arrow right is typed THEN folder becomes expanded"()
+    {
+        given: "'roles folder is collapsed and selected'"
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.ROLES );
+
+        when: "arrow right typed"
+        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES.getValue(), Keys.ARROW_RIGHT );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_right_user" );
+
+        then: "'roles' folder is expanded"
+        userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+    }
+
+    def "GIVEN a 'roles' is expanded and selected WHEN arrow left is typed THEN folder becomes collapsed"()
+    {
+        given: "'roles folder is expanded and selected'"
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.ROLES );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+
+        when: "arrow left typed"
+        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES.getValue(), Keys.ARROW_LEFT );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_left_user" );
+
+        then: "'roles' folder is collapsed"
+        !userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+    }
+
 
 }

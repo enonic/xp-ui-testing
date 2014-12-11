@@ -317,7 +317,6 @@ public abstract class BrowsePanel
     public BrowsePanel pressKeyOnRow( String item, Keys key )
     {
         String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, item );
-        getLogger().info( "tries to find content in table:" + item );
 
         getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
         boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
@@ -330,6 +329,21 @@ public abstract class BrowsePanel
         getLogger().info( "key was typed:" + key.toString() + " ,   name is:" + item );
         return this;
     }
+
+    public BrowsePanel holdShiftAndPressArrow( String itemName, int number, Keys key )
+    {
+        sleep( 5000 );
+        Actions action = new Actions( getDriver() );
+        List<CharSequence> list = new ArrayList<>( number );
+        for ( int i = 0; i < number; i++ )
+        {
+            list.add( key );
+        }
+        action.keyDown( Keys.SHIFT ).sendKeys( list.toArray( new Keys[list.size()] ) ).keyUp( Keys.SHIFT ).build().perform();
+        sleep( 1000 );
+        return this;
+    }
+
 
     public BrowsePanel clickAndSelectRow( String itemName )
     {

@@ -350,6 +350,11 @@ public class ContentBrowsePanel
 
     public BrowsePanel pressKeyOnRow( ContentPath path, Keys key )
     {
+        boolean result = doScrollAndFindGridItem( path.toString() );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "grid item was not found! " + path.toString() );
+        }
         return pressKeyOnRow( path.toString(), key );
     }
 
