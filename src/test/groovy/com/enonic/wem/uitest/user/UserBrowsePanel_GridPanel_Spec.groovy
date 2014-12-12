@@ -72,10 +72,10 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.clickOnClearSelection();
 
         when: "'Select all'-link is clicked"
-        int selectedNumber = userBrowsePanel.clickOnSelectAll();
+        userBrowsePanel.clickOnSelectAll();
 
         then: "the number of rows in the grid the same as number in the 'Select All' link"
-        userBrowsePanel.getRowNumber() == selectedNumber;
+        userBrowsePanel.getRowNumber() == userBrowsePanel.getSelectedRowsNumber();
     }
 
     def "GIVEN a 'system' folder on root having a child WHEN listed THEN expander is shown"()
@@ -172,5 +172,17 @@ class UserBrowsePanel_GridPanel_Spec
         !userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
     }
 
+    def "GIVEN selected folder and WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
+    {
+        given: "selected and expanded 'System' folder"
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
 
+        when: "arrow down typed 3 times"
+        userBrowsePanel.holdShiftAndPressArrow( UserBrowsePanel.BrowseItemType.SYSTEM.getValue(), 3, Keys.ARROW_DOWN );
+        TestUtils.saveScreenshot( getTestSession(), "user_arrow_down_shift" );
+
+        then: "n+1 rows are selected in the browse panel"
+        userBrowsePanel.getSelectedRowsNumber() == 4
+    }
 }

@@ -78,7 +78,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         contentBrowsePanel.expandContent( content1.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
-        itemsSelectionPanel.getSeletedItemCount() == 0;
+        itemsSelectionPanel.getSelectedItemCount() == 0;
     }
 
 }

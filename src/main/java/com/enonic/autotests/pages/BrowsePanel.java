@@ -109,20 +109,24 @@ public abstract class BrowsePanel
     /**
      * @return true if row in BrowsePanel is expanded, otherwise false.
      */
-    public boolean isRowExpanded( String name )
+    public boolean isRowExpanded( String itemName )
     {
-        String expanderXpath = String.format( BROWSE_PANEL_ITEM_EXPANDER, name );
+        if ( !doScrollAndFindGridItem( itemName ) )
+        {
+            throw new TestFrameworkException( "grid item was not found! " + itemName );
+        }
+        String expanderXpath = String.format( BROWSE_PANEL_ITEM_EXPANDER, itemName );
 
-        WebElement rowElement = getDynamicElement( By.xpath( expanderXpath ), 5 );
-        if ( rowElement == null )
+        WebElement expanderElement = findElements( By.xpath( expanderXpath ) ).get( 0 );
+        if ( expanderElement == null )
         {
             throw new TestFrameworkException(
-                "invalid locator or content with name: " + name + " does not exist! xpath =  " + expanderXpath );
+                "invalid locator or content with name: " + itemName + " does not exist! xpath =  " + expanderXpath );
         }
 
         String attributeName = "class";
         String attributeValue = "collapse";
-        return waitAndCheckAttrValue( rowElement, attributeName, attributeValue, 1l );
+        return waitAndCheckAttrValue( expanderElement, attributeName, attributeValue, 1l );
     }
 
 
@@ -131,7 +135,7 @@ public abstract class BrowsePanel
      *
      * @return the number of selected rows.
      */
-    public int clickOnSelectAll()
+    public void clickOnSelectAll()
     {
         boolean isVisibleLink = waitUntilVisibleNoException( By.xpath( SELECT_ALL_LINK_XPATH ), 2l );
         if ( !isVisibleLink )
@@ -139,7 +143,7 @@ public abstract class BrowsePanel
             throw new TestFrameworkException( "The link 'Select All' was not found on the page, probably wrong xpath locator" );
         }
         selectAllLink.click();
-        return getSelectedRowsNumber();
+        sleep( 2000 );
     }
 
 
@@ -184,6 +188,21 @@ public abstract class BrowsePanel
             findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[@class='sub-name']" ) );
         Set<String> set = rows.stream().map( WebElement::getText ).collect( Collectors.toSet() );
         return set;
+    }
+
+    private Set<String> getGridItemsWithCheckbox()
+    {
+        List<WebElement> rows =
+            findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "//div[contains(@class,'slick-cell-checkboxsel')]" ) );
+        Set<String> set = rows.stream().map( WebElement::getText ).collect( Collectors.toSet() );
+        return set;
+    }
+
+    private Set<String> getGridItemNames()
+    {
+        List<WebElement> elements = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH +
+                                                                "//div[contains(@class,'slick-cell l1 r1')]//div[@class='names-and-icon-view small']//p[@class='sub-name']" ) );
+        return elements.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toSet() );
     }
 
     public boolean isRowSelected( String name )
@@ -250,7 +269,7 @@ public abstract class BrowsePanel
     {
         scrollViewPortToTop();
         Set<String> set = new HashSet<>();
-        set.addAll( getRowTopValues() );
+        set.addAll( getGridItemNames() );
         if ( !isViewportScrollable() )
         {
             return set.size();
@@ -268,7 +287,7 @@ public abstract class BrowsePanel
                 break;
             }
             newScrollTop += newScrollTop;
-            set.addAll( getRowTopValues() );
+            set.addAll( getGridItemNames() );
         }
         return set.size();
     }
@@ -277,7 +296,7 @@ public abstract class BrowsePanel
     {
         WebElement viewportElement = findElements( By.xpath( "//div[@class='slick-viewport']" ) ).get( 0 );
         ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
-        sleep( 500 );
+        sleep( 1000 );
         return getViewportScrollTopValue();
     }
 
@@ -297,15 +316,6 @@ public abstract class BrowsePanel
         return Integer.valueOf( styleString.substring( startIndex, endIndex ).trim() );
     }
 
-
-    private Set<String> getRowTopValues()
-    {
-        List<WebElement> elements = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) );
-        Set set = elements.stream().map( element -> {
-            return element.getAttribute( "style" );
-        } ).collect( Collectors.toSet() );
-        return set;
-    }
 
     /**
      * When row selected, there ia ability to click on Spacebar or ARROW_DOWN, ARROW_UP
@@ -392,6 +402,7 @@ public abstract class BrowsePanel
     public void scrollViewPortToTop()
     {
         ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
+        sleep( 1000 );
     }
 
     public boolean doScrollAndFindGridItem( String gridItem, int timeout )

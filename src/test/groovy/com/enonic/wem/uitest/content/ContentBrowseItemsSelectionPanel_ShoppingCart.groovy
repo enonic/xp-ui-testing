@@ -197,7 +197,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
         contentBrowsePanel.getFilterPanel().typeSearchText( childArchive.getName() );
 
         and: "click on row with the child content"
-        contentBrowsePanel.selectRowByContentPath( childArchive.getPath().toString() );//  selectContentInTable( childArchive.getPath(  ) )
+        contentBrowsePanel.selectRowByContentPath( childArchive.getPath().toString() );
 
         when: "click on 'Clear filter' link and expand a parent content"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();

@@ -20,7 +20,7 @@ class ContentBrowsePanel_GridPanel_Spec
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    String FOLDER_WITH_CHILD = NameHelper.uniqueName( "folder" );
+    String FOLDER_WITH_CHILD = NameHelper.uniqueName( "test-folder" );
 
 
     def setup()
@@ -85,10 +85,10 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.clickOnClearSelection();
 
         when:
-        int selectedNumber = contentBrowsePanel.clickOnSelectAll();
+        contentBrowsePanel.clickOnSelectAll();
 
         then:
-        contentBrowsePanel.getRowNumber() == selectedNumber;
+        contentBrowsePanel.getRowNumber() == contentBrowsePanel.getSelectedRowsNumber();
     }
 
     def "GIVEN a Content on root having a child WHEN listed THEN expander is shown"()
@@ -96,7 +96,7 @@ class ContentBrowsePanel_GridPanel_Spec
         given:
         Content folderWithChild = Content.builder().
             name( FOLDER_WITH_CHILD ).
-            displayName( "folderWithChild" ).
+            displayName( "test-folder" ).
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
@@ -222,10 +222,37 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.pressKeyOnRow( path, Keys.ARROW_RIGHT );
         TestUtils.saveScreenshot( getTestSession(), "content_arrow_right" );
 
-        then: "folder is collapsed"
+        then: "folder is expanded"
         contentBrowsePanel.isRowExpanded( path.toString() );
     }
 
+    def "GIVEN selected folder and WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
+    {
+        given: "selected and collapsed folder(content)"
+        ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
+        contentBrowsePanel.selectContentInTable( path );
+
+        when: "arrow down typed 3 times"
+        contentBrowsePanel.holdShiftAndPressArrow( path.toString(), 3, Keys.ARROW_DOWN );
+        TestUtils.saveScreenshot( getTestSession(), "content_arrow_down_shift" );
+
+        then: "n+1 rows are selected in the browse panel"
+        contentBrowsePanel.getSelectedRowsNumber() == 4
+    }
+
+    def "GIVEN selected folder and WHEN hold a shift and arrow up is typed  3-times THEN 4 selected rows appears in the grid "()
+    {
+        given: "selected and collapsed folder(content)"
+        ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
+        contentBrowsePanel.selectContentInTable( path );
+
+        when: "arrow up typed 3 times"
+        contentBrowsePanel.holdShiftAndPressArrow( path.toString(), 3, Keys.ARROW_UP );
+        TestUtils.saveScreenshot( getTestSession(), "content_arrow_up_shift" );
+
+        then: "n+1 rows are selected in the browse panel"
+        contentBrowsePanel.getSelectedRowsNumber() == 4
+    }
 
     String getTestContentName( List<String> contentNames )
     {

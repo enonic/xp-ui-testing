@@ -75,7 +75,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         contentBrowsePanel.selectContentInTable( secondContent.getPath() );
 
         then:
-        itemsSelectionPanel.getSeletedItemCount() == 2;
+        itemsSelectionPanel.getSelectedItemCount() == 2;
     }
 
     def "GIVEN two selected Content WHEN selecting one more THEN three SelectionItem-s are listed"()
@@ -106,13 +106,13 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
 
         contentBrowsePanel.selectContentInTable( list );
 
-        int before = itemsSelectionPanel.getSeletedItemCount();
+        int before = itemsSelectionPanel.getSelectedItemCount();
 
         when:
         contentBrowsePanel.selectContentInTable( thirdContent.getPath() );
 
         then:
-        itemsSelectionPanel.getSeletedItemCount() == before + 1;
+        itemsSelectionPanel.getSelectedItemCount() == before + 1;
     }
 
     def "GIVEN three selected Content WHEN deselecting one THEN two SelectionItem-s are listed"()
@@ -140,12 +140,12 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         list.add( archiveContent );
         list.add( folderContent );
         contentBrowsePanel.selectContentInTable( list );
-        int before = itemsSelectionPanel.getSeletedItemCount();
+        int before = itemsSelectionPanel.getSelectedItemCount();
 
         when:
         contentBrowsePanel.deSelectContentInTable( folderContent.getPath() );
 
         then:
-        itemsSelectionPanel.getSeletedItemCount() == before - 1;
+        itemsSelectionPanel.getSelectedItemCount() == before - 1;
     }
 }
