@@ -33,7 +33,8 @@ public abstract class BrowsePanel
     protected String CHECKBOX_ROW_CHECKER =
         DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
 
-    protected static final String DIV_WITH_NAME = "//div[contains(@id,'api.app.NamesView')]";
+    protected static final String DIV_WITH_NAME =
+        "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]//div[contains(@id,'api.app.NamesView')]";
 
     protected final String DIV_WITH_SCROLL = "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[contains(@class,'slickgrid')]";
 

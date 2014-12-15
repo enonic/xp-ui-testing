@@ -32,7 +32,7 @@ class CleanAndInitializeData
 
         SleepHelper.sleep( 5000 );
         startPage.clickOnInitializeData();
-        SleepHelper.sleep( 20000 );
+        SleepHelper.sleep( 30000 );
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         TestUtils.saveScreenshot( getTestSession(), "cm-opened" );
