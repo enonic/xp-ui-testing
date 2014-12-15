@@ -26,18 +26,19 @@ class CleanAndInitializeData
 
     def "clean data and initialize demo data"()
     {
-        when:
+        when: "click on 'clear data' link and click on 'initialize data' link"
         TestUtils.saveScreenshot( getTestSession(), "startPage-opened" );
         startPage.clickOnClearData();
 
-        SleepHelper.sleep( 5000 );
+        SleepHelper.sleep( 4000 );
         startPage.clickOnInitializeData();
-        SleepHelper.sleep( 30000 );
+        SleepHelper.sleep( 15000 );
+
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         TestUtils.saveScreenshot( getTestSession(), "cm-opened" );
 
-        then:
+        then: "not empty grid should be showed"
         contentBrowsePanel.waitUntilPageLoaded( 5 );
     }
 
