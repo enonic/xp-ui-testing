@@ -201,7 +201,7 @@
     <profile>
       <id>localtest</id>
       <activation>
-        <!--  <activeByDefault>true</activeByDefault> -->
+        <activeByDefault>true</activeByDefault>
         <property>
           <name>localtest</name>
         </property>
@@ -211,34 +211,9 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-            <executions>
-
-              <execution>
-                <id>junit</id>
-                <phase>integration-test</phase>
-                <goals>
-                  <goal>test</goal>
-                </goals>
                 <configuration>
-                  <reportsDirectory>${project.build.directory}/geb-reports</reportsDirectory>
-                  <testNGArtifactName>none:none</testNGArtifactName>
-                  <skip>false</skip>
-                  <includes>
-                    <include>**/IntegrationSuite.java</include>
-                  </includes>
-
-                  <excludes>
-                    <exclude>com/enonic/wem/uitest/BaseGebSpec*</exclude>
-                  </excludes>
-                  <systemPropertyVariables>
-                    <geb.build.baseUrl>http://localhost:8080/admin</geb.build.baseUrl>
-                  </systemPropertyVariables>
+                  <skipTests>true</skipTests>
                 </configuration>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>

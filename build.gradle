@@ -36,7 +36,7 @@ task startServer << {
 
     ext.karafServer = new KarafServer()
     ext.karafServer.files( configurations.distro.resolve() )
-    ext.karafServer.startupDelay( 25000 )
+    ext.karafServer.startupDelay( 50000 )
     ext.karafServer.unpackDir( file( 'build/karaf' ) )
     ext.karafServer.start()
 }
