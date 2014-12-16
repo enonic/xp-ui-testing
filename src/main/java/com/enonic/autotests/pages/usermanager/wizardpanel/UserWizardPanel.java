@@ -20,7 +20,7 @@ public class UserWizardPanel
     extends WizardPanel<User>
 {
     public static final String DIV_USER_WIZARD_PANEL =
-        "//div[contains(@id,'app.wizard.PrincipalWizardPanel') and not(contains(@style,'display: none'))]";
+        "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";
 
     public static final String TOOLBAR_SAVE_BUTTON =
         "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";

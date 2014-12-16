@@ -107,6 +107,8 @@ public class UserBrowsePanel
 
     public UserBrowsePanel clickCheckboxAndSelectRow( BrowseItemType itemType )
     {
+
+        getSession().put( ITEM_TYPE, itemType );
         return clickCheckboxAndSelectRow( itemType.getValue() );
 
     }

@@ -23,6 +23,7 @@ class UserWizardPanel_TabMenuSpec
     def "GIVEN started adding a 'User' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'New User' is present"()
     {
         given: "'Users' folder clicked and user wizard opened"
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
             UserBrowsePanel.BrowseItemType.USERS ).clickToolbarNew().waitUntilWizardOpened();
 
