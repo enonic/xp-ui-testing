@@ -93,13 +93,13 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.exists( "users", true );
     }
 
-    def "GIVEN a 'roles' folder on root  WHEN folder expanded THEN 'superuser'  shown"()
+    def "GIVEN a 'roles' folder on root  WHEN folder expanded THEN 'ea' enterprise administrator shown"()
     {
         when: " a 'roles' folder expanded"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
 
-        then: "'administrator' should be shown"
-        userBrowsePanel.exists( "administrator", true );
+        then: "'ea' - enterprise administrator should be shown"
+        userBrowsePanel.exists( "ea", true );
     }
 
     def "GIVEN a 'system' folder with an open expander WHEN closed THEN no children are listed beneath"()
