@@ -32,6 +32,8 @@ public class ContentBrowsePanel
 {
     public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' and text()='Content Manager']";
 
+    protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH =
+        "//div[contains(@id,'app.browse.ContentBrowsePanel')]" + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
 
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";
@@ -148,7 +150,7 @@ public class ContentBrowsePanel
     public List<String> getContentNamesFromBrowsePanel()
     {
         List<String> allNames = new ArrayList<>();
-        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_NAMES_FROM_BROWSE_PANEL_XPATH ) );
+        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH ) );
         for ( WebElement row : rows )
         {
             allNames.add( row.getAttribute( "title" ) );

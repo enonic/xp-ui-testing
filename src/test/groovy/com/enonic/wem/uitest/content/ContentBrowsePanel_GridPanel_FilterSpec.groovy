@@ -174,11 +174,11 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         }
         for ( String uiName : allNames )
         {
-            if ( !uiName.contains( name ) )
+            if ( uiName.contains( name ) )
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }
