@@ -10,7 +10,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
-import com.enonic.autotests.vo.User;
+import com.enonic.autotests.vo.ApplicationUser;
 
 public class NavigatorHelper
 {
@@ -91,11 +91,11 @@ public class NavigatorHelper
      */
     public static HomePage loginAndOpenHomePage( TestSession testSession )
     {
-        User user = testSession.getCurrentUser();
+        ApplicationUser applicationUser = testSession.getCurrentUser();
         HomePage home = new HomePage( testSession );
-        if ( user != null )
+        if ( applicationUser != null )
         {
-            home.open( user.getUserInfo().getName(), user.getUserInfo().getPassword() );
+            home.open( applicationUser.getUserInfo().getName(), applicationUser.getUserInfo().getPassword() );
         }
         else
         {

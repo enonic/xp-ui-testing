@@ -1,6 +1,6 @@
 package com.enonic.autotests.vo;
 
-public abstract class User
+public abstract class ApplicationUser
 {
     private UserInfo userInfo;
 

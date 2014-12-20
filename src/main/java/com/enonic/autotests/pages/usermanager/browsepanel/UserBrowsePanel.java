@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -16,6 +17,7 @@ import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel;
+import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -27,7 +29,7 @@ public class UserBrowsePanel
 
     public enum BrowseItemType
     {
-        USERS( "users" ), GROUPS( "groups" ), ROLES( "roles" ), SYSTEM( "system" );
+        USERS( "users" ), GROUPS( "groups" ), ROLES( "roles" ), SYSTEM( "system" ), USER_STORE( "user_store" );
 
         private BrowseItemType( String type )
         {
@@ -51,17 +53,14 @@ public class UserBrowsePanel
     public final String DUPLICATE_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
 
-    public final String OPEN_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Open']]";
-
-    public final String MOVE_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Move']]";
-
     protected final String EDIT_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Edit']]";
 
     protected final String DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+
+    protected final String SYNCH_BUTTON_XPATH =
+        "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Synch']]";
 
     @FindBy(xpath = USER_MANAGER_BUTTON)
     private WebElement userManagerButton;
@@ -71,6 +70,9 @@ public class UserBrowsePanel
 
     @FindBy(xpath = EDIT_BUTTON_XPATH)
     private WebElement editButton;
+
+    @FindBy(xpath = DELETE_BUTTON_XPATH)
+    private WebElement deleteButton;
 
     @FindBy(xpath = DUPLICATE_BUTTON_XPATH)
     private WebElement duplicateButton;
@@ -113,6 +115,33 @@ public class UserBrowsePanel
 
     }
 
+    public UserBrowsePanel selectGroupsFolderInUserStore( String userStoreName )
+    {
+        //1.expand a userStore:
+        if ( isRowExpanded( userStoreName ) )
+        {
+            clickOnExpander( userStoreName );
+        }
+
+        getSession().put( ITEM_TYPE, BrowseItemType.GROUPS );
+        return clickOnRowAndSelectGroupInUserStore( userStoreName );
+
+    }
+
+    public UserBrowsePanel clickOnRowAndSelectGroupInUserStore( String userStoreName )
+    {
+        //"//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]"
+        String GROUP_ROW = String.format( DIV_NAMES_VIEW, userStoreName ) + "/ancestor::div[contains(@class,'slick-row')] " +
+            "//following-sibling::div//" +
+            String.format( "div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]", "groups" );
+        ////div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'enonic')]]/ancestor::div[contains(@class,'slick-row')]//following-sibling::div//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'groups')]]
+        Actions builder = new Actions( getDriver() );
+        builder.click( findElement( By.xpath( GROUP_ROW ) ) ).build().perform();
+        sleep( 500 );
+        return this;
+    }
+
+
     /**
      * @param session
      * @return true if 'Content Manager' opened and CMSpacesPage showed, otherwise false.
@@ -140,8 +169,14 @@ public class UserBrowsePanel
         // WizardPanel<T> result;
         newButton.click();
         sleep( 500 );
-        BrowseItemType type = (BrowseItemType) getSession().get( ITEM_TYPE );
-        switch ( type )
+
+        BrowseItemType selectedItem = (BrowseItemType) getSession().get( ITEM_TYPE );
+        if ( selectedItem == null )
+        {
+            return new UserStoreWizardPanel( getSession() );
+        }
+
+        switch ( selectedItem )
         {
             case ROLES:
                 return new RoleWizardPanel( getSession() );
@@ -153,5 +188,32 @@ public class UserBrowsePanel
                 throw new TestFrameworkException( "unknown type of principal!" );
         }
     }
+
+    /**
+     * @return true if 'Delete' button enabled, otherwise false.
+     */
+    public boolean isDeleteButtonEnabled()
+    {
+        return deleteButton.isEnabled();
+    }
+
+    /**
+     * @return true if 'New' button enabled, otherwise false.
+     */
+    public boolean isNewButtonEnabled()
+    {
+        return newButton.isEnabled();
+    }
+
+    public boolean isEditButtonEnabled()
+    {
+        return editButton.isEnabled();
+    }
+
+    public boolean isDuplicateEnabled()
+    {
+        return duplicateButton.isEnabled();
+    }
+
 
 }

@@ -191,13 +191,6 @@ public abstract class BrowsePanel
         return set;
     }
 
-    private Set<String> getGridItemsWithCheckbox()
-    {
-        List<WebElement> rows =
-            findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "//div[contains(@class,'slick-cell-checkboxsel')]" ) );
-        Set<String> set = rows.stream().map( WebElement::getText ).collect( Collectors.toSet() );
-        return set;
-    }
 
     private Set<String> getGridItemNames()
     {

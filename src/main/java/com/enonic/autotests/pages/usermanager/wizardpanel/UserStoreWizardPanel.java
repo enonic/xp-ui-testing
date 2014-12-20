@@ -15,24 +15,20 @@ import com.enonic.autotests.vo.usermanager.User;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-
-public class UserWizardPanel
+public class UserStoreWizardPanel
     extends WizardPanel<User>
 {
-    public static final String DIV_USER_WIZARD_PANEL =
-        "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";
+    public static final String DIV_USER_STORE_WIZARD_PANEL =
+        "//div[contains(@id,'app.wizard.UserStoreWizardPanel') and not(contains(@style,'display: none'))]";
 
     public static final String TOOLBAR_SAVE_BUTTON =
-        "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
+        "//div[contains(@id,'app.wizard.UserStoreWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
 
     public static final String TOOLBAR_CLOSE_WIZARD_BUTTON =
-        "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
-
-    private static final String TOOLBAR_DUPLICATE_BUTTON =
-        "//div[@id='app.wizard.PrincipalWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
+        "//div[contains(@id,'app.wizard.UserStoreWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
     private static final String TOOLBAR_DELETE_BUTTON =
-        "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+        "//div[contains(@id,'app.wizard.UserStoreWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
@@ -43,16 +39,13 @@ public class UserWizardPanel
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
 
-    @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON)
-    private WebElement toolbarDuplicateButton;
-
 
     /**
      * The constructor.
      *
      * @param session
      */
-    public UserWizardPanel( TestSession session )
+    public UserStoreWizardPanel( TestSession session )
     {
         super( session );
 
@@ -61,7 +54,7 @@ public class UserWizardPanel
     @Override
     public String getWizardDivXpath()
     {
-        return DIV_USER_WIZARD_PANEL;
+        return DIV_USER_STORE_WIZARD_PANEL;
     }
 
     @Override
@@ -96,7 +89,7 @@ public class UserWizardPanel
         return this;
     }
 
-    public UserWizardPanel typeDisplayName( String displayName )
+    public UserStoreWizardPanel typeDisplayName( String displayName )
     {
         clearAndType( displayNameInput, displayName );
         return this;
@@ -116,16 +109,17 @@ public class UserWizardPanel
     }
 
     @Override
-    public UserWizardPanel waitUntilWizardOpened()
+    public UserStoreWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_USER_WIZARD_PANEL ), Application.EXPLICIT_4 );
-        findElements( By.xpath( DIV_USER_WIZARD_PANEL ) );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_USER_STORE_WIZARD_PANEL ), Application.EXPLICIT_4 );
+        findElements( By.xpath( DIV_USER_STORE_WIZARD_PANEL ) );
         if ( !result )
         {
-            throw new TestFrameworkException( "UserWizard was not showed!" );
+            throw new TestFrameworkException( "UserStoreWizard was not showed!" );
         }
         return this;
     }
 
 
 }
+

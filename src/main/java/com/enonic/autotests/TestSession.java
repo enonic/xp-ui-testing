@@ -6,7 +6,7 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.CapabilityType;
 
-import com.enonic.autotests.vo.User;
+import com.enonic.autotests.vo.ApplicationUser;
 
 public class TestSession
 {
@@ -106,14 +106,14 @@ public class TestSession
         return session.put( TestSession.WEBDRIVER, driver );
     }
 
-    public void setUser( User user )
+    public void setUser( ApplicationUser applicationUser )
     {
-        session.put( TestSession.CURRENT_USER, user );
+        session.put( TestSession.CURRENT_USER, applicationUser );
     }
 
-    public User getCurrentUser()
+    public ApplicationUser getCurrentUser()
     {
-        return (User) session.get( TestSession.CURRENT_USER );
+        return (ApplicationUser) session.get( TestSession.CURRENT_USER );
     }
 
     public String getWindowHandle()

@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.Group;
@@ -95,6 +97,12 @@ public class GroupWizardPanel
     @Override
     public WizardPanel<Group> waitUntilWizardOpened()
     {
-        return null;
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_ROLE_WIZARD_PANEL ), Application.EXPLICIT_4 );
+        findElements( By.xpath( DIV_ROLE_WIZARD_PANEL ) );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "UserWizard was not showed!" );
+        }
+        return this;
     }
 }
