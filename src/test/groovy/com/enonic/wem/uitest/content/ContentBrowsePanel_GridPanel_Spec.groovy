@@ -101,9 +101,9 @@ class ContentBrowsePanel_GridPanel_Spec
             parent( ContentPath.ROOT ).
             build();
         Content child = Content.builder().
-            name( "child" ).
-            displayName( "child" ).
-            contentType( ContentTypeName.archiveMedia() ).
+            name( "childfolder" ).
+            displayName( "child_folder" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.from( folderWithChild.getName() ) ).
             build();
 
@@ -120,14 +120,14 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content on root having no children WHEN listed THEN expander is not shown"()
     {
         given:
-        String name = NameHelper.uniqueName( "mediadata" );
-        Content mediadata = Content.builder().
+        String name = NameHelper.uniqueName( "structured" );
+        Content structured = Content.builder().
             name( name ).
-            displayName( "mediadata" ).
+            displayName( "structured" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.MEDIA_DATA ).
+            contentType( ContentTypeName.structured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( mediadata.getContentTypeName() ).typeData( mediadata ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( structured.getContentTypeName() ).typeData( structured ).save().close();
 
         expect:
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( name ) );
@@ -177,14 +177,14 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content selected WHEN arrow up is typed THEN previous row is selected"()
     {
         given:
-        String name = NameHelper.uniqueName( "data" );
-        Content data = Content.builder().
+        String name = NameHelper.uniqueName( "structured" );
+        Content content = Content.builder().
             name( name ).
-            displayName( "data" ).
+            displayName( "structured_arrow" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.dataMedia() ).
+            contentType( ContentTypeName.structured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( data.getContentTypeName() ).typeData( data ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.selectContentInTable( ContentPath.from( FOLDER_WITH_CHILD ) );
         int before = contentBrowsePanel.getSelectedRowsNumber();
 

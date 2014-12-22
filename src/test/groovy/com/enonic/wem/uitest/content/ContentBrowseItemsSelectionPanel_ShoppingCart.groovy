@@ -18,7 +18,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
 
     private final ROOT_FOLDER_2 = "parent_content"
 
-    private final ARCHIVE_CHILD_CONTENT = "archive_content"
+    private final STRUCTURED_CHILD_CONTENT = "structured_content"
 
     private final SHOPPING_CART_BASE_NAME = "shoppingcart"
 
@@ -34,7 +34,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
 
     def "GIVEN expanded parent content and content beneath the parent, both contents are selected  WHEN parent content is collapsed  THEN only one item is selected in the grid panel but two items present in selection panel"()
     {
-        setup: "build a new folder-content and archive content"
+        setup: "build a new folder-content and child content"
         String name = NameHelper.uniqueName( SHOPPING_CART_BASE_NAME );
 
         Content parentContent = Content.builder().
@@ -43,11 +43,11 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
-        String archiveName = NameHelper.uniqueName( "archive" );
-        Content archiveContent = Content.builder().
+        String archiveName = NameHelper.uniqueName( "child" );
+        Content structuredContent = Content.builder().
             name( archiveName ).
-            displayName( "childArchive" ).
-            contentType( ContentTypeName.archiveMedia() ).
+            displayName( "childContent" ).
+            contentType( ContentTypeName.structured() ).
             parent( ContentPath.from( parentContent.getName() ) ).
             build();
 
@@ -59,16 +59,16 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
 
         and: "add new child content beneath the parent"
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( archiveContent.getContentTypeName() ).typeData(
-            archiveContent ).save().close();
-        getTestSession().put( ARCHIVE_CHILD_CONTENT, archiveContent );
+        contentBrowsePanel.clickToolbarNew().selectContentType( structuredContent.getContentTypeName() ).typeData(
+            structuredContent ).save().close();
+        getTestSession().put( STRUCTURED_CHILD_CONTENT, structuredContent );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
 
         contentBrowsePanel.expandContent( parentContent.getPath() );
         List<Content> contents = new ArrayList<>();
         contents.add( parentContent );
-        contents.add( archiveContent );
+        contents.add( structuredContent );
         contentBrowsePanel.selectContentInTable( contents );
 
         when: "un expand a parent content "
@@ -76,7 +76,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
 
         then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items, but only one row is selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
-        selectedNames.contains( "parentContent" ) && selectedNames.contains( "childArchive" ) && selectedNames.size() == 2 &&
+        selectedNames.contains( "parentContent" ) && selectedNames.contains( "childContent" ) && selectedNames.size() == 2 &&
             contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
@@ -84,7 +84,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
@@ -100,7 +100,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
@@ -116,7 +116,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
@@ -168,14 +168,14 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childArchive = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
 
         and: "type a name of child content in the filter panel"
-        contentBrowsePanel.getFilterPanel().typeSearchText( childArchive.getName() );
+        contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
         and: "click on checkbox near the child content, when all content were filtered"
-        contentBrowsePanel.clickCheckboxAndSelectRow( childArchive.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getPath() );
 
         when: "click on 'Clear filter' link and expand a parent content"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
@@ -190,14 +190,14 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childArchive = getTestSession().get( ARCHIVE_CHILD_CONTENT );
+        Content child = getTestSession().get( STRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
 
         and: "and type a name of child content in the filter panel"
-        contentBrowsePanel.getFilterPanel().typeSearchText( childArchive.getName() );
+        contentBrowsePanel.getFilterPanel().typeSearchText( child.getName() );
 
         and: "click on row with the child content"
-        contentBrowsePanel.selectRowByContentPath( childArchive.getPath().toString() );
+        contentBrowsePanel.selectRowByContentPath( child.getPath().toString() );
 
         when: "click on 'Clear filter' link and expand a parent content"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();

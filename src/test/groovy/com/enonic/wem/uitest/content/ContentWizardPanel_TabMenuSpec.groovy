@@ -19,6 +19,12 @@ class ContentWizardPanel_TabMenuSpec
     @Shared
     ContentBrowsePanel contentBrowsePanel;
 
+    @Shared
+    String FOLDER_TAB_MENU_ITEM = "New Folder"
+
+    @Shared
+    String STRUCTURED_TAB_MENU_ITEM = "New Structured"
+
     def setup()
     {
         go "admin"
@@ -26,24 +32,24 @@ class ContentWizardPanel_TabMenuSpec
     }
 
 
-    def "GIVEN started adding a 'Archive' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'New Archive' is present"()
+    def "GIVEN started adding a 'Folder' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'New Folder' is present"()
     {
         given:
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened();
 
         when: "AppBarTabMenu was clicked"
         wizard.expandTabMenu();
 
         then: "item menu with title should appears"
-        wizard.isTabMenuItemPresent( "New Archive" );
+        wizard.isTabMenuItemPresent( FOLDER_TAB_MENU_ITEM );
 
     }
 
-    def "GIVEN started adding a 'Archive' and 'Folder' two Wizards is opened WHEN tab-menu button clicked THEN list of items with two names is present"()
+    def "GIVEN started adding a 'Structured' and 'Folder' two Wizards is opened WHEN tab-menu button clicked THEN list of items with two names is present"()
     {
         given:
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.structured().toString() ).
             waitUntilWizardOpened();
         contentBrowsePanel.goToAppHome();
         wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
@@ -52,18 +58,18 @@ class ContentWizardPanel_TabMenuSpec
         wizard.expandTabMenu();
 
         then:
-        wizard.isTabMenuItemPresent( "New Archive" ) && wizard.isTabMenuItemPresent( "New Folder" );
+        wizard.isTabMenuItemPresent( STRUCTURED_TAB_MENU_ITEM ) && wizard.isTabMenuItemPresent( FOLDER_TAB_MENU_ITEM );
 
     }
 
     def "GIVEN content Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
     {
         given: "content wizard was opened ad AppBarTabMenu clicked"
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened().expandTabMenu();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( "New Archive" );
+        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( FOLDER_TAB_MENU_ITEM );
 
         then: "close dialog should not showed"
         dialog == null;
@@ -75,7 +81,7 @@ class ContentWizardPanel_TabMenuSpec
     {
         given:
         String displayName = "testname";
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened().typeDisplayName( displayName ).expandTabMenu();
 
         when:
@@ -91,12 +97,12 @@ class ContentWizardPanel_TabMenuSpec
     {
         given:
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.folder() ).
             build();
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened().typeData( content ).expandTabMenu();
 
         when: "'close' button in the tabMenu pressed and 'Yes' button on confirm dialog chosen "

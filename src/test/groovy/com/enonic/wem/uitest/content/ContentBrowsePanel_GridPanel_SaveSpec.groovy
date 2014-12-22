@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
-import com.enonic.wem.api.data.Value
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Ignore
@@ -89,9 +88,9 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         given:
         Content rootContent = Content.builder().
             parent( ContentPath.ROOT ).
-            name( NameHelper.uniqueName( "datacontent" ) ).
-            displayName( "datacontent" ).
-            contentType( ContentTypeName.dataMedia() ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() ).
@@ -152,11 +151,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
     {
         given:
-        String name = NameHelper.uniqueName( "archive" );
+        String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
             name( name ).
-            displayName( "archive" ).
-            contentType( ContentTypeName.archiveMedia() ).
+            displayName( "folder-child" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.from( REPO_NAME ) ).
             build();
 

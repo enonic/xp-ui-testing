@@ -31,11 +31,11 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
-            contentType( ContentTypeName.archiveMedia() ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).build();
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened().typeData( content ).save();
 
         when:
@@ -50,13 +50,13 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
-            contentType( ContentTypeName.archiveMedia() ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( content ).save();
         wizard.typeDisplayName( "changedname" );
 
@@ -72,14 +72,14 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().
-            selectContentType( ContentTypeName.archiveMedia().toString() ).typeData( content ).save();
+            selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save();
         wizard.typeDisplayName( "changedname" ).close();
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
         dialog.waitForPresent();
@@ -96,15 +96,15 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.folder() ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( content ).save();
-        String newName = NameHelper.uniqueName( "newarchive" );
+        String newName = NameHelper.uniqueName( "newfolder" );
         SaveBeforeCloseDialog dialog = wizard.typeName( newName ).close();
 
 
@@ -120,15 +120,15 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
     {
         given:
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.folder() ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.archiveMedia().toString() ).
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( content ).save();
-        SaveBeforeCloseDialog dialog = wizard.typeName( "newarchive" ).close();
+        SaveBeforeCloseDialog dialog = wizard.typeName( "newfolder" ).close();
 
         when:
         dialog.clickCancelButton();

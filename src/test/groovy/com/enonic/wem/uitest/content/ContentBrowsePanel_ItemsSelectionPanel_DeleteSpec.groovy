@@ -44,7 +44,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             name( NameHelper.uniqueName( "first" ) ).
             displayName( "first" ).
             parent( ContentPath.from( parent.getName() ) ).
-            contentType( ContentTypeName.dataMedia() ).
+            contentType( ContentTypeName.shortcut() ).
             build();
 
         ContentWizardPanel wizard = contentBrowsePanel.clickOnParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType(
@@ -55,7 +55,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             parent( ContentPath.from( parent.getName() ) ).
             name( NameHelper.uniqueName( "second" ) ).
             displayName( "second" ).
-            contentType( ContentTypeName.dataMedia() ).
+            contentType( ContentTypeName.shortcut() ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content2.getContentTypeName() );
@@ -65,7 +65,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             parent( ContentPath.from( parent.getName() ) ).
             name( NameHelper.uniqueName( "third" ) ).
             displayName( "third" ).
-            contentType( ContentTypeName.dataMedia() ).
+            contentType( ContentTypeName.shortcut() ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content3.getContentTypeName() );

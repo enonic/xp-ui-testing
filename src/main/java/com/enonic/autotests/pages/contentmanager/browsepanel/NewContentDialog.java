@@ -32,10 +32,10 @@ public class NewContentDialog
     public static final String FILTER_BY_SITES_LINK = "//div[@class='content-type-facet']/span[contains(.,'Sites')]";
 
     public static final String ALL_LIST_ITEMS =
-        "//div[contains(@id,'app.create.NewContentDialog')]/ul/li[contains(@class,'content-types-list-item')]";
+        "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[contains(@class,'content-types-list-item')]";
 
     public static final String LIST_ITEMS_SITES =
-        "//div[contains(@id,'app.create.NewContentDialog')]/ul/li[@class='content-types-list-item site']";
+        "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[@class='content-types-list-item site']";
 
     public static final String SEARCH_INPUT = "//input[contains(@id,'api.ui.text.TextInput')]";
 
@@ -88,6 +88,16 @@ public class NewContentDialog
         clearAndType( searchInput, text );
         return this;
     }
+
+    public ContentBrowsePanel doUploadFile()
+    {
+        findElements( By.xpath( "//div[@class='file-uploader form-input']//div[@class='dropzone']" ) ).get( 0 ).click();
+        // upload.sendKeys("d:/serg.jpg"  );
+        sleep( 500 );
+        getDriver().switchTo().activeElement().sendKeys( "d:/serg.jpg" );
+        return new ContentBrowsePanel( getSession() );
+    }
+
 
     /**
      * Select content type by name.

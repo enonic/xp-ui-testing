@@ -401,6 +401,7 @@ public abstract class BrowsePanel
 
     public boolean doScrollAndFindGridItem( String gridItem, int timeout )
     {
+        scrollViewPortToTop();
         String contentNameXpath = String.format( DIV_NAMES_VIEW, gridItem );
         boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
         if ( loaded )

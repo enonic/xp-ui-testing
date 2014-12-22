@@ -16,22 +16,22 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     extends BaseGebSpec
 {
     @Shared
-    String CONTENT_1_NAME = NameHelper.uniqueName( "data" );
+    String CONTENT_1_NAME = NameHelper.uniqueName( "folder" );
 
     @Shared
-    String CONTENT_1_DISPLAY_NAME = "DataTest"
+    String CONTENT_1_DISPLAY_NAME = "FolderTest"
 
     @Shared
-    String CONTENT_2_NAME = NameHelper.uniqueName( "archive" );
+    String CONTENT_2_NAME = NameHelper.uniqueName( "shortcut" );
 
     @Shared
-    String CONTENT_2_DISPLAY_NAME = "ArchiveTest"
+    String CONTENT_2_DISPLAY_NAME = "ShortcutTest"
 
     @Shared
-    String CONTENT_3_NAME = NameHelper.uniqueName( "archive" );
+    String CONTENT_3_NAME = NameHelper.uniqueName( "structured" );
 
     @Shared
-    String CONTENT_3_DISPLAY_NAME = "archiveTest"
+    String CONTENT_3_DISPLAY_NAME = "structuredTest"
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -53,7 +53,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             parent( ContentPath.ROOT ).
             name( CONTENT_1_NAME ).
             displayName( CONTENT_1_DISPLAY_NAME ).
-            contentType( ContentTypeName.dataMedia() ).
+            contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( firstContent.getContentTypeName() ).
             typeData( firstContent ).save().close();
@@ -61,7 +61,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_2_NAME ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.shortcut() ).
             displayName( CONTENT_2_DISPLAY_NAME ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
@@ -84,7 +84,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content thirdContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_3_NAME ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.structured() ).
             displayName( CONTENT_3_DISPLAY_NAME ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( thirdContent.getContentTypeName() ).
@@ -93,11 +93,11 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content firstContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_1_NAME ).
-            contentType( ContentTypeName.dataMedia() ).
+            contentType( ContentTypeName.folder() ).
             displayName( CONTENT_1_DISPLAY_NAME ).build();
         Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.shortcut() ).
             name( CONTENT_2_NAME ).
             displayName( CONTENT_2_DISPLAY_NAME ).build();
         List<Content> list = new ArrayList<>();
@@ -118,27 +118,28 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN three selected Content WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
         given:
-        Content dataContent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( CONTENT_1_NAME ).
-            contentType( ContentTypeName.dataMedia() ).
-            displayName( CONTENT_1_DISPLAY_NAME ).build();
-
-        Content archiveContent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( CONTENT_2_NAME ).
-            contentType( ContentTypeName.archiveMedia() ).
-            displayName( CONTENT_2_DISPLAY_NAME ).build();
-
         Content folderContent = Content.builder().
             parent( ContentPath.ROOT ).
-            name( CONTENT_3_NAME ).
+            name( CONTENT_1_NAME ).
             contentType( ContentTypeName.folder() ).
+            displayName( CONTENT_1_DISPLAY_NAME ).build();
+
+        Content shortcutContent = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( CONTENT_2_NAME ).
+            contentType( ContentTypeName.shortcut() ).
+            displayName( CONTENT_2_DISPLAY_NAME ).build();
+
+        Content structuredContent = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( CONTENT_3_NAME ).
+            contentType( ContentTypeName.structured() ).
             displayName( CONTENT_3_DISPLAY_NAME ).build();
         List<Content> list = new ArrayList<>();
-        list.add( dataContent );
-        list.add( archiveContent );
+        list.add( shortcutContent );
         list.add( folderContent );
+        list.add( structuredContent );
+
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSelectedItemCount();
 

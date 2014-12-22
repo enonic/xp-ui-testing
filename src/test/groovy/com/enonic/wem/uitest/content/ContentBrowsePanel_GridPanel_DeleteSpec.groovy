@@ -110,7 +110,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
     def "GIVEN a Content beneath an existing WHEN deleted THEN deleted Content is no longer listed beneath parent"()
     {
-        given: "folder content added at the root and added child archive to this folder"
+        given: "folder content added at the root and added child content to this folder"
         Content parent = Content.builder().
             parent( ContentPath.ROOT ).
             name( NameHelper.uniqueName( "parent" ) ).
@@ -120,10 +120,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
         contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
         Content contentToDelete = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
+            name( NameHelper.uniqueName( "folder" ) ).
             displayName( "delete content beneath parent" ).
             parent( ContentPath.from( parent.getName() ) ).
-            contentType( ContentTypeName.archiveMedia() ).
+            contentType( ContentTypeName.folder() ).
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData( contentToDelete ).
@@ -133,7 +133,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         List<Content> contentList = new ArrayList<>()
         contentList.add( contentToDelete );
 
-        when: "parent folder expanded and child archive selected and 'Delete' button on toolbar pressed"
+        when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
         contentBrowsePanel.expandContent( contentToDelete.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then: "deleted Content is no longer listed beneath parent"
@@ -143,7 +143,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
     def "GIVEN a one and only Content beneath an existing WHEN deleted THEN expand icon of parent is no longer shown "()
     {
-        given: "folder content added at the root and added child archive to this folder"
+        given: "folder content added at the root and added child content to this folder"
         Content parent = Content.builder().
             parent( ContentPath.ROOT ).
             name( NameHelper.uniqueName( "parent" ) ).
@@ -154,9 +154,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "archive" ) ).
-            displayName( "archive" ).
-            contentType( ContentTypeName.folder() ).
+            name( NameHelper.uniqueName( "structured" ) ).
+            displayName( "structured" ).
+            contentType( ContentTypeName.structured() ).
             parent( ContentPath.from( parent.getName() ) ).
             build();
 
