@@ -86,6 +86,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.clickOnSelectAll();
+        TestUtils.saveScreenshot( getTestSession(), "select-all1" );
 
         then:
         contentBrowsePanel.getRowNumber() == contentBrowsePanel.getSelectedRowsNumber();
