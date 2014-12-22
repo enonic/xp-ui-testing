@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ItemsSelectionPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
@@ -75,7 +76,10 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
 
 
         when:
-        contentBrowsePanel.expandContent( content1.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.expandContent( content1.getParent() );
+        TestUtils.saveScreenshot( getTestSession(), "delete-three" );
+
+        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
         itemsSelectionPanel.getSelectedItemCount() == 0;
