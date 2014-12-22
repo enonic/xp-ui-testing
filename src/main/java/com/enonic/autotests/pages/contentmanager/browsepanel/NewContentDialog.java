@@ -1,5 +1,14 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -89,12 +98,36 @@ public class NewContentDialog
         return this;
     }
 
-    public ContentBrowsePanel doUploadFile()
+    public ContentBrowsePanel doUploadFile( String resName )
+        throws AWTException
     {
         findElements( By.xpath( "//div[@class='file-uploader form-input']//div[@class='dropzone']" ) ).get( 0 ).click();
-        // upload.sendKeys("d:/serg.jpg"  );
         sleep( 500 );
-        getDriver().switchTo().activeElement().sendKeys( "d:/serg.jpg" );
+
+        URL dirURL = NewContentDialog.class.getClassLoader().getResource( resName );
+        File file = null;
+        try
+        {
+            file = new File( dirURL.toURI() );
+        }
+        catch ( URISyntaxException e )
+        {
+
+        }
+
+        StringSelection ss = new StringSelection( file.getAbsolutePath() );
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents( ss, null );
+        Robot robot = new Robot();
+        robot.delay( 1000 );
+
+        robot.keyPress( KeyEvent.VK_CONTROL );
+        robot.keyPress( KeyEvent.VK_V );
+        robot.keyRelease( KeyEvent.VK_V );
+        robot.keyRelease( KeyEvent.VK_CONTROL );
+        robot.keyPress( KeyEvent.VK_ENTER );
+        robot.keyRelease( KeyEvent.VK_ENTER );
+        robot.delay( 1000 );
+
         return new ContentBrowsePanel( getSession() );
     }
 
