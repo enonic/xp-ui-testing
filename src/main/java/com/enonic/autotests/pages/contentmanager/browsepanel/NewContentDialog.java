@@ -105,6 +105,10 @@ public class NewContentDialog
         sleep( 500 );
 
         URL dirURL = NewContentDialog.class.getClassLoader().getResource( resName );
+        if ( dirURL == null )
+        {
+            throw new TestFrameworkException( "tests resource for upload tests was not found:" + resName );
+        }
         File file = null;
         try
         {
@@ -112,7 +116,7 @@ public class NewContentDialog
         }
         catch ( URISyntaxException e )
         {
-
+            getLogger().error( "wrong uri for file " + resName );
         }
 
         StringSelection ss = new StringSelection( file.getAbsolutePath() );
@@ -126,7 +130,6 @@ public class NewContentDialog
         robot.keyRelease( KeyEvent.VK_CONTROL );
         robot.keyPress( KeyEvent.VK_ENTER );
         robot.keyRelease( KeyEvent.VK_ENTER );
-        robot.delay( 1000 );
 
         return new ContentBrowsePanel( getSession() );
     }
