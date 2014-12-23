@@ -26,6 +26,7 @@ class ContentUploadSpec
     {
         when: "un expand a parent content "
         contentBrowsePanel.clickToolbarNew().doUploadFile( path );
+        sleep( 1000 )
 
         then: ""
         TestUtils.saveScreenshot( getSession(), "upload-png" )
