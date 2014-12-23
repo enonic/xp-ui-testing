@@ -22,13 +22,14 @@ class ContentUploadSpec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
 
-    def "GIVEN "()
+    def "GIVEN opened a new content dialog WHEN drop zone clicked and file selected THEN new content present in browse panel "()
     {
         when: "un expand a parent content "
         contentBrowsePanel.clickToolbarNew().doUploadFile( path );
-        TestUtils.saveScreenshot( getSession(), "ss" )
+        TestUtils.saveScreenshot( getSession(), "uploadpng1" )
 
         then: ""
+        TestUtils.saveScreenshot( getSession(), "uploadpng2" )
         contentBrowsePanel.exists( ContentPath.from( "ea-png" ) )
     }
 }
