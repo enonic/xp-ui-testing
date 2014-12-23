@@ -131,6 +131,7 @@ public class NewContentDialog
         sleep( 2000 );
         robot.keyPress( KeyEvent.VK_ENTER );
         robot.keyRelease( KeyEvent.VK_ENTER );
+        sleep( 2000 );
         return new ContentBrowsePanel( getSession() );
     }
 
