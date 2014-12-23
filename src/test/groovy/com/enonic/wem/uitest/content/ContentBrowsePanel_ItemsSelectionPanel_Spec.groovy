@@ -19,19 +19,19 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     String CONTENT_1_NAME = NameHelper.uniqueName( "folder" );
 
     @Shared
-    String CONTENT_1_DISPLAY_NAME = "FolderTest"
+    String CONTENT_1_DISPLAY_NAME = "folder1Test"
 
     @Shared
-    String CONTENT_2_NAME = NameHelper.uniqueName( "shortcut" );
+    String CONTENT_2_NAME = NameHelper.uniqueName( "folder" );
 
     @Shared
-    String CONTENT_2_DISPLAY_NAME = "ShortcutTest"
+    String CONTENT_2_DISPLAY_NAME = "folder2Test"
 
     @Shared
-    String CONTENT_3_NAME = NameHelper.uniqueName( "structured" );
+    String CONTENT_3_NAME = NameHelper.uniqueName( "folder" );
 
     @Shared
-    String CONTENT_3_DISPLAY_NAME = "structuredTest"
+    String CONTENT_3_DISPLAY_NAME = "folder3Test"
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -61,7 +61,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_2_NAME ).
-            contentType( ContentTypeName.shortcut() ).
+            contentType( ContentTypeName.folder() ).
             displayName( CONTENT_2_DISPLAY_NAME ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
@@ -84,7 +84,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content thirdContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_3_NAME ).
-            contentType( ContentTypeName.structured() ).
+            contentType( ContentTypeName.folder() ).
             displayName( CONTENT_3_DISPLAY_NAME ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( thirdContent.getContentTypeName() ).
@@ -97,7 +97,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             displayName( CONTENT_1_DISPLAY_NAME ).build();
         Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.shortcut() ).
+            contentType( ContentTypeName.folder() ).
             name( CONTENT_2_NAME ).
             displayName( CONTENT_2_DISPLAY_NAME ).build();
         List<Content> list = new ArrayList<>();
@@ -127,13 +127,13 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         Content shortcutContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_2_NAME ).
-            contentType( ContentTypeName.shortcut() ).
+            contentType( ContentTypeName.folder() ).
             displayName( CONTENT_2_DISPLAY_NAME ).build();
 
         Content structuredContent = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_3_NAME ).
-            contentType( ContentTypeName.structured() ).
+            contentType( ContentTypeName.folder() ).
             displayName( CONTENT_3_DISPLAY_NAME ).build();
         List<Content> list = new ArrayList<>();
         list.add( shortcutContent );
