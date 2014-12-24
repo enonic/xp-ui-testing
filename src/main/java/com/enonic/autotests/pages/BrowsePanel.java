@@ -205,6 +205,7 @@ public abstract class BrowsePanel
             findElements( By.xpath( String.format( ( DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
         if ( rows.size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), "select-error" );
             throw new TestFrameworkException( "row with content was not found, content name is " + name );
         }
         return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
@@ -401,7 +402,6 @@ public abstract class BrowsePanel
 
     public boolean doScrollAndFindGridItem( String gridItem, int timeout )
     {
-        scrollViewPortToTop();
         String contentNameXpath = String.format( DIV_NAMES_VIEW, gridItem );
         boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
         if ( loaded )
@@ -443,6 +443,7 @@ public abstract class BrowsePanel
      */
     public boolean exists( String itemName, boolean saveScreenshot )
     {
+        scrollViewPortToTop();
         boolean result = doScrollAndFindGridItem( itemName );
 
         if ( saveScreenshot )

@@ -173,13 +173,6 @@ public class ContentBrowsePanel
         return exists( contentPath.toString(), saveScreenshot );
     }
 
-
-    public boolean doScrollAndFindContent( ContentPath contentPath )
-    {
-        return doScrollAndFindGridItem( contentPath.toString() );
-    }
-
-
     /**
      * @param contentPath
      * @return {@link ContentBrowsePanel} instance
@@ -187,7 +180,7 @@ public class ContentBrowsePanel
     public ContentBrowsePanel unExpandContent( ContentPath contentPath )
     {
 
-        if ( !doScrollAndFindContent( contentPath ) )
+        if ( !doScrollAndFindGridItem( contentPath.toString() ) )
         {
             throw new TestFrameworkException( "unExpandContent: content was not found! " + contentPath );
         }
@@ -212,7 +205,7 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel expandContent( ContentPath contentPath )
     {
-        if ( !doScrollAndFindContent( contentPath ) )
+        if ( !doScrollAndFindGridItem( contentPath.toString() ) )
         {
             throw new TestFrameworkException( "expandContent: content was not found! " + contentPath );
         }
@@ -288,22 +281,16 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel selectContentInTable( List<Content> contents )
     {
-        waitAndCheckContent( contents );
         for ( Content content : contents )
         {
-            if ( !isRowSelected( content.getPath().toString() ) )
-            {
-                clickCheckboxAndSelectRow( content.getPath() );
-                sleep( 500 );
-            }
-
+            selectContentInTable( content.getPath() );
         }
         return this;
     }
 
     public ContentBrowsePanel selectContentInTable( ContentPath contentPath )
     {
-        waitAndCheckContent( contentPath );
+        boolean exist = doScrollAndFindGridItem( contentPath.toString() );
         if ( !isRowSelected( contentPath.toString() ) )
         {
             clickCheckboxAndSelectRow( contentPath );
@@ -313,35 +300,12 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel deSelectContentInTable( ContentPath contentPath )
     {
-        waitAndCheckContent( contentPath );
+        boolean exist = doScrollAndFindGridItem( contentPath.toString() );
         if ( isRowSelected( contentPath.toString() ) )
         {
             clickCheckboxAndSelectRow( contentPath );
         }
-        else
-        {
-            TestUtils.saveScreenshot( getSession(), "deselectfailed" );
-        }
         return this;
-    }
-
-    private void waitAndCheckContent( List<Content> contents )
-    {
-        for ( Content content : contents )
-        {
-            waitAndCheckContent( content.getPath() );
-        }
-    }
-
-    private void waitAndCheckContent( ContentPath contentPath )
-    {
-        boolean isExist = exists( contentPath, false );
-
-        if ( !isExist )
-        {
-            TestUtils.saveScreenshot( getSession(), contentPath.getName() );
-            throw new TestFrameworkException( "The content with name " + contentPath.getName() + " was not found!" );
-        }
     }
 
     /**
@@ -399,7 +363,7 @@ public class ContentBrowsePanel
             return this;
         }
 
-        if ( !doScrollAndFindContent( contentPath ) )
+        if ( !doScrollAndFindGridItem( contentPath.toString() ) )
         {
             throw new TestFrameworkException( "content was not found: " + contentPath.toString() );
         }
