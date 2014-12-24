@@ -318,6 +318,10 @@ public class ContentBrowsePanel
         {
             clickCheckboxAndSelectRow( contentPath );
         }
+        else
+        {
+            TestUtils.saveScreenshot( getSession(), "deselectfailed" );
+        }
         return this;
     }
 

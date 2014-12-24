@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ItemsSelectionPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
@@ -144,6 +145,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         int before = itemsSelectionPanel.getSelectedItemCount();
 
         when:
+        TestUtils.saveScreenshot( getSession(), "issue_deselect" )
         contentBrowsePanel.deSelectContentInTable( folderContent.getPath() );
 
         then:
