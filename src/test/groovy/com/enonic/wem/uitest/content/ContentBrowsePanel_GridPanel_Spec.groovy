@@ -243,7 +243,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
     def "GIVEN selected folder and WHEN hold a shift and arrow up is typed  3-times THEN 4 selected rows appears in the grid "()
     {
-        given: "selected and collapsed folder(content)"
+        given: "selected and collapsed folder"
         ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
         contentBrowsePanel.selectContentInTable( path );
 
