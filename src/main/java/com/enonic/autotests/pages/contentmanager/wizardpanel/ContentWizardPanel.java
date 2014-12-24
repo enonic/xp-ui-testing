@@ -12,7 +12,6 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 
@@ -142,7 +141,7 @@ public class ContentWizardPanel
         }
         toolbarSaveButton.click();
         boolean isSaveEnabled = isEnabledSaveButton();
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "save-content" ) );
+        //TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "save-content" ) );
         if ( !isSaveEnabled )
         {
             throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
