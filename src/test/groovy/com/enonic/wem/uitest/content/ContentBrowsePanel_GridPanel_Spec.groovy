@@ -20,7 +20,7 @@ class ContentBrowsePanel_GridPanel_Spec
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    String FOLDER_WITH_CHILD = NameHelper.uniqueName( "folder-test" );
+    String FOLDER_WITH_CHILD = NameHelper.uniqueName( "folder-grid" );
 
 
     def setup()
