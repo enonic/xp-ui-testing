@@ -112,7 +112,9 @@ public class NewContentDialog
         File file = null;
         try
         {
+            getLogger().info( "path to resource  is###: " + dirURL.toURI() );
             file = new File( dirURL.toURI() );
+
         }
         catch ( URISyntaxException e )
         {
