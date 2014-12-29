@@ -130,7 +130,7 @@ public class NewContentDialog
         robot.keyPress( KeyEvent.VK_V );
         robot.keyRelease( KeyEvent.VK_V );
         robot.keyRelease( KeyEvent.VK_CONTROL );
-        sleep( 2000 );
+        sleep( 3000 );
         robot.keyPress( KeyEvent.VK_ENTER );
         robot.keyRelease( KeyEvent.VK_ENTER );
         sleep( 2000 );
