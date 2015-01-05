@@ -26,7 +26,7 @@ class ContentUploadSpec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
 
-    def "GIVEN opened a new content dialog WHEN drop zone clicked and file selected THEN new content present in browse panel "()
+    def "GIVEN opened a new content dialog WHEN upload button clicked and file selected THEN new content present in browse panel "()
     {
         given: "opened a new content dialog"
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
@@ -40,7 +40,7 @@ class ContentUploadSpec
         contentBrowsePanel.exists( ContentPath.from( "ea-png" ) )
     }
 
-    def "GIVEN opened a new content dialog WHEN drop zone clicked and zip archive selected THEN new content appears in browse panel "()
+    def "GIVEN opened a new content dialog WHEN upload button clicked and zip archive selected THEN new content appears in browse panel "()
     {
         given: "opened a new content dialog"
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
