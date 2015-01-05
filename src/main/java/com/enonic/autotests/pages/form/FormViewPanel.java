@@ -13,11 +13,12 @@ public class FormViewPanel
         super( session );
     }
 
-    public FormViewPanel type( final PropertyTree propertyTree )
+    public FormViewPanel type( final PropertyTree data )
     {
 
         // TODO: Type given data into form
-
+        //  Iterable<Property> result = data.getProperties();
+        // result.forEach(  );
         return this;
     }
 }

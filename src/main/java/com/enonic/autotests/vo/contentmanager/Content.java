@@ -17,7 +17,7 @@ public class Content
 
     private final String contentTypeName;
 
-    private final PropertyTree propertyTree;
+    private final PropertyTree data;
 
     protected Content( final Builder builder )
     {
@@ -28,7 +28,7 @@ public class Content
         this.displayName = builder.displayName;
         this.contentTypeName = builder.contentTypeName;
 
-        this.propertyTree = builder.propertyTree;
+        this.data = builder.data;
     }
 
     public static Builder builder()
@@ -61,12 +61,12 @@ public class Content
         return contentTypeName;
     }
 
-    public PropertyTree getPropertyTree()
+    public PropertyTree getData()
     {
-        return propertyTree;
+        return data;
     }
 
-    public static class Builder
+    public static class Builder<B>
     {
         private String name;
 
@@ -76,41 +76,54 @@ public class Content
 
         private ContentPath parent;
 
-        private PropertyTree propertyTree;
+        private PropertyTree data;
 
-        public Builder name( String name )
+        public B name( String name )
         {
             this.name = name;
-            return this;
+            return (B) this;
         }
 
-        public Builder displayName( String displayName )
+        Builder()
+        {
+        }
+
+        public Builder( Content content )
+        {
+            this.name = content.getName();
+            this.displayName = content.getDisplayName();
+            this.data = content.getData();
+            this.parent = content.getParent();
+            this.contentTypeName = content.getContentTypeName();
+        }
+
+        public B displayName( String displayName )
         {
             this.displayName = displayName;
-            return this;
+            return (B) this;
         }
 
-        public Builder parent( ContentPath contentPath )
+        public B parent( ContentPath contentPath )
         {
             this.parent = contentPath;
-            return this;
+            return (B) this;
         }
 
-        public Builder contentType( String contentTypeName )
+        public B contentType( String contentTypeName )
         {
             this.contentTypeName = contentTypeName;
-            return this;
+            return (B) this;
         }
 
-        public Builder contentType( ContentTypeName contentTypeName )
+        public B contentType( ContentTypeName contentTypeName )
         {
             this.contentTypeName = contentTypeName.toString();
-            return this;
+            return (B) this;
         }
 
-        public Builder propertyTree( final PropertyTree value )
+        public Builder data( final PropertyTree value )
         {
-            this.propertyTree = value;
+            this.data = value;
             return this;
         }
 

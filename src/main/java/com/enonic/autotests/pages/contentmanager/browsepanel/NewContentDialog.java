@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -34,11 +34,6 @@ public class NewContentDialog
     public static String CONTENT_TYPE_NAME =
         "//div[contains(@id,'app.create.NewContentDialog')]//li[@class='content-types-list-item' and descendant::p[text()='%s']]";
 
-    public static final String SHOW_ALL_LINK = "//div[@class='content-type-facet']/span[contains(.,'All')]";
-
-    public static final String FILTER_BY_CONTENT_LINK = "//div[@class='content-type-facet']/span[contains(.,'Content')]";
-
-    public static final String FILTER_BY_SITES_LINK = "//div[@class='content-type-facet']/span[contains(.,'Sites')]";
 
     public static final String ALL_LIST_ITEMS =
         "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[contains(@class,'content-types-list-item')]";
@@ -46,9 +41,14 @@ public class NewContentDialog
     public static final String LIST_ITEMS_SITES =
         "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[@class='content-types-list-item site']";
 
-    public static final String SEARCH_INPUT = "//input[contains(@id,'api.ui.text.TextInput')]";
+    public static final String SEARCH_INPUT = "//div[contains(@id,'api.ui.text.FileInput')]/input";
 
     private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
+
+    private final String UPLOAD_FILE_BUTTON = "//div[contains(@id,'api.ui.text.FileInput')]/button";
+
+    @FindBy(xpath = UPLOAD_FILE_BUTTON)
+    private WebElement uploadButton;
 
     @FindBy(xpath = SEARCH_INPUT)
     private WebElement searchInput;
@@ -65,9 +65,19 @@ public class NewContentDialog
 
     public NewContentDialog clearSearchInput()
     {
-        String id = getDriver().findElement( By.xpath( SEARCH_INPUT ) ).getAttribute( "id" );
-        String js = String.format( SEARCH_INPUT_SCRIPT, id );
-        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, "" );
+        String os = System.getProperty( "os.name" ).toLowerCase();
+
+        if ( os.indexOf( "mac" ) >= 0 )
+        {
+            searchInput.sendKeys( Keys.chord( Keys.COMMAND, "a" ), Keys.DELETE );
+        }
+        else
+        {
+            searchInput.sendKeys( Keys.chord( Keys.CONTROL, "a" ), Keys.DELETE );
+        }
+        // String id = getDriver().findElement( By.xpath( SEARCH_INPUT ) ).getAttribute( "id" );
+        //String js = String.format( SEARCH_INPUT_SCRIPT, id );
+        //( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, "" );
         return this;
     }
 
@@ -86,7 +96,7 @@ public class NewContentDialog
      *
      * @return true if dialog opened, otherwise false.
      */
-    public boolean waituntilDialogShowed( long timeout )
+    public boolean waitUntilDialogShowed( long timeout )
     {
         return waitUntilVisibleNoException( By.xpath( DIALOG_TITLE_XPATH ), timeout );
 
@@ -101,7 +111,7 @@ public class NewContentDialog
     public ContentBrowsePanel doUploadFile( String resName )
         throws AWTException
     {
-        findElements( By.xpath( "//div[@class='file-uploader form-input']//div[@class='dropzone']" ) ).get( 0 ).click();
+        uploadButton.click();
         sleep( 500 );
 
         URL dirURL = NewContentDialog.class.getClassLoader().getResource( resName );
@@ -172,69 +182,6 @@ public class NewContentDialog
         return selectContentType( contentTypeName.toString() );
     }
 
-    /**
-     * Clicks on 'Content' link in the FilterPanel that located in the dialog window.
-     *
-     * @return {@link NewContentDialog} instance.
-     */
-    public NewContentDialog doFilterByContent()
-    {
-        waitsElementNotVisible( By.xpath( "//span[contains(.,'All (0)')]" ), Application.EXPLICIT_3 );
-        findElements( By.xpath( FILTER_BY_CONTENT_LINK ) ).get( 0 ).click();
-        sleep( 500 );
-        return this;
-    }
-
-    public NewContentDialog doClickShowAll()
-    {
-        findElements( By.xpath( SHOW_ALL_LINK ) ).get( 0 ).click();
-        sleep( 500 );
-        return this;
-    }
-
-    /**
-     * Clicks on 'Sites' link in the FilterPanel that located in the dialog window.
-     *
-     * @return {@link NewContentDialog} instance.
-     */
-    public NewContentDialog doFilterBySites()
-    {
-        waitsElementNotVisible( By.xpath( "//span[contains(.,'All (0)')]" ), Application.EXPLICIT_3 );
-
-        findElements( By.xpath( FILTER_BY_SITES_LINK ) ).get( 0 ).click();
-        sleep( 700 );
-        return this;
-    }
-
-    public int getNumberItemsFromFilterLink( FilterName filter )
-    {
-        String text = null;
-        //waits until content will be loaded and 'All (0)' changed to 'All (43)'
-        waitsElementNotVisible( By.xpath( "//span[contains(.,'All (0)')]" ), Application.EXPLICIT_3 );
-        switch ( filter )
-        {
-            case CONTENT:
-                text = findElement( By.xpath( FILTER_BY_CONTENT_LINK ) ).getText();
-                break;
-            case SITES:
-                text = findElement( By.xpath( FILTER_BY_SITES_LINK ) ).getText();
-                break;
-
-            case SHOW_ALL:
-                text = findElement( By.xpath( SHOW_ALL_LINK ) ).getText();
-                break;
-
-        }
-        return parseText( text );
-    }
-
-    private int parseText( String text )
-    {
-        int startIndex = text.indexOf( "(" );
-        int endIndex = text.indexOf( ")" );
-        int number = Integer.valueOf( text.substring( startIndex + 1, endIndex ) );
-        return number;
-    }
 
     /**
      * Gets number of content types from the 'list-items'-view
@@ -259,36 +206,6 @@ public class NewContentDialog
             getLogger().info( "list of content types is empty" );
         }
         return findElements( By.xpath( LIST_ITEMS_SITES ) ).size();
-    }
-
-
-    public enum FilterName
-    {
-        SHOW_ALL, CONTENT, SITES
-    }
-
-    public boolean isLinkActive( FilterName name )
-    {
-        WebElement element = null;
-        switch ( name )
-        {
-            case SHOW_ALL:
-                element = findElement( By.xpath( SHOW_ALL_LINK ) );
-                break;
-            case CONTENT:
-                element = findElement( By.xpath( FILTER_BY_CONTENT_LINK ) );
-                break;
-            case SITES:
-                element = findElement( By.xpath( FILTER_BY_SITES_LINK ) );
-                break;
-        }
-        String classAttr = getAttribute( element, "class", Application.EXPLICIT_3 );
-        return classAttr.contains( "active" );
-    }
-
-    public boolean isPresentElement( String xpath )
-    {
-        return findElements( By.xpath( xpath ) ).size() > 0;
     }
 
 }

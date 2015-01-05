@@ -343,7 +343,7 @@ public class ContentBrowsePanel
         newButton.click();
         sleep( 500 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        boolean isLoaded = newContentDialog.waituntilDialogShowed( Application.EXPLICIT_3 );
+        boolean isLoaded = newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_3 );
         if ( !isLoaded )
         {
             throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not showed!" );
@@ -479,7 +479,7 @@ public class ContentBrowsePanel
         openContextMenu( path );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        newContentDialog.waituntilDialogShowed( Application.EXPLICIT_3 );
+        newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_3 );
         return newContentDialog;
     }
 
