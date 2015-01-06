@@ -29,7 +29,7 @@ public class NewContentDialog
     extends Application
 {
     private final static String DIALOG_TITLE_XPATH =
-        "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'What do you want to create?')]";
+        "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
 
     public static String CONTENT_TYPE_NAME =
         "//div[contains(@id,'app.create.NewContentDialog')]//li[@class='content-types-list-item' and descendant::p[text()='%s']]";
@@ -45,7 +45,7 @@ public class NewContentDialog
 
     private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
 
-    private final String UPLOAD_FILE_BUTTON = "//div[contains(@id,'api.ui.text.FileInput')]/button";
+    private final String UPLOAD_FILE_BUTTON = "//a[@class='dropzone']";
 
     @FindBy(xpath = UPLOAD_FILE_BUTTON)
     private WebElement uploadButton;
