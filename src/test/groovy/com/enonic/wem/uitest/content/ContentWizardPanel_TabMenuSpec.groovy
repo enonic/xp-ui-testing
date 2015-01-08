@@ -23,7 +23,7 @@ class ContentWizardPanel_TabMenuSpec
     String FOLDER_TAB_MENU_ITEM = "New Folder"
 
     @Shared
-    String STRUCTURED_TAB_MENU_ITEM = "New Structured"
+    String UNSTRUCTURED_TAB_MENU_ITEM = "New Unstructured"
 
     def setup()
     {
@@ -49,7 +49,7 @@ class ContentWizardPanel_TabMenuSpec
     def "GIVEN started adding a 'Structured' and 'Folder' two Wizards is opened WHEN tab-menu button clicked THEN list of items with two names is present"()
     {
         given:
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.structured().toString() ).
+        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.unstructured().toString() ).
             waitUntilWizardOpened();
         contentBrowsePanel.goToAppHome();
         wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
@@ -58,7 +58,7 @@ class ContentWizardPanel_TabMenuSpec
         wizard.expandTabMenu();
 
         then:
-        wizard.isTabMenuItemPresent( STRUCTURED_TAB_MENU_ITEM ) && wizard.isTabMenuItemPresent( FOLDER_TAB_MENU_ITEM );
+        wizard.isTabMenuItemPresent( UNSTRUCTURED_TAB_MENU_ITEM ) && wizard.isTabMenuItemPresent( FOLDER_TAB_MENU_ITEM );
 
     }
 

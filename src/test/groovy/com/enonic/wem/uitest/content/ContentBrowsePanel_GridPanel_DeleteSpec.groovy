@@ -154,9 +154,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "structured" ) ).
-            displayName( "structured" ).
-            contentType( ContentTypeName.structured() ).
+            name( NameHelper.uniqueName( "unstructured" ) ).
+            displayName( "unstructured" ).
+            contentType( ContentTypeName.unstructured() ).
             parent( ContentPath.from( parent.getName() ) ).
             build();
 

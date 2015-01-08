@@ -131,7 +131,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             contentType( ContentTypeName.folder() ).
             displayName( CONTENT_2_DISPLAY_NAME ).build();
 
-        Content structuredContent = Content.builder().
+        Content folderContent2 = Content.builder().
             parent( ContentPath.ROOT ).
             name( CONTENT_3_NAME ).
             contentType( ContentTypeName.folder() ).
@@ -139,7 +139,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         List<Content> list = new ArrayList<>();
         list.add( shortcutContent );
         list.add( folderContent );
-        list.add( structuredContent );
+        list.add( folderContent2 );
 
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSelectedItemCount();

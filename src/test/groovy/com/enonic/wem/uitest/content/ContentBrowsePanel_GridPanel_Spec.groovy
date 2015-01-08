@@ -121,14 +121,14 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content on root having no children WHEN listed THEN expander is not shown"()
     {
         given:
-        String name = NameHelper.uniqueName( "structured" );
-        Content structured = Content.builder().
+        String name = NameHelper.uniqueName( "unstructured" );
+        Content unstructured = Content.builder().
             name( name ).
-            displayName( "structured" ).
+            displayName( "unstructured" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.structured() ).
+            contentType( ContentTypeName.unstructured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( structured.getContentTypeName() ).typeData( structured ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( unstructured.getContentTypeName() ).typeData( unstructured ).save().close();
 
         expect:
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( name ) );
@@ -178,12 +178,12 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content selected WHEN arrow up is typed THEN previous row is selected"()
     {
         given:
-        String name = NameHelper.uniqueName( "structured" );
+        String name = NameHelper.uniqueName( "unstructured" );
         Content content = Content.builder().
             name( name ).
-            displayName( "structured_arrow" ).
+            displayName( "unstructured_arrow" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.structured() ).
+            contentType( ContentTypeName.unstructured() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
         contentBrowsePanel.selectContentInTable( ContentPath.from( FOLDER_WITH_CHILD ) );

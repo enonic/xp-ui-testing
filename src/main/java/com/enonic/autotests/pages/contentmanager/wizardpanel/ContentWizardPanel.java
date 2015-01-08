@@ -109,8 +109,7 @@ public class ContentWizardPanel
         // 2. populate main tab
         if ( content.getData() != null )
         {
-
-            clickDataStep().type( content.getData() );
+            clickDataStep().type( content.getData(), content.getContentTypeName() );
         }
 
         return this;

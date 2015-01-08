@@ -37,17 +37,17 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN No selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
     {
         given:
-        String name = NameHelper.uniqueName( "structured" );
+        String name = NameHelper.uniqueName( "unstructured" );
         Content page = Content.builder().
             name( name ).
-            displayName( "structured" ).
+            displayName( "unstructured" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.structured() ).
+            contentType( ContentTypeName.unstructured() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
 
         when:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.STRUCTURED.getValue() );
+        String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "filter-panel" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         then:
@@ -57,7 +57,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.STRUCTURED.getValue() );
+        String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
 
         when:
         filterPanel.clickOnCleanFilter();
@@ -72,7 +72,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should disappear"()
     {
         given:
-        String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.STRUCTURED.getValue() );
+        String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
 
         when:
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();

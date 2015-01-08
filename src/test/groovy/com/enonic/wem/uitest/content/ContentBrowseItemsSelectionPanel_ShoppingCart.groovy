@@ -18,7 +18,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
 
     private final ROOT_FOLDER_2 = "parent_content"
 
-    private final STRUCTURED_CHILD_CONTENT = "structured_content"
+    private final UNSTRUCTURED_CHILD_CONTENT = "unstructured_content"
 
     private final SHOPPING_CART_BASE_NAME = "shoppingcart"
 
@@ -44,10 +44,10 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
             parent( ContentPath.ROOT ).
             build();
         String archiveName = NameHelper.uniqueName( "child" );
-        Content structuredContent = Content.builder().
+        Content unstructuredContent = Content.builder().
             name( archiveName ).
             displayName( "childContent" ).
-            contentType( ContentTypeName.structured() ).
+            contentType( ContentTypeName.unstructured() ).
             parent( ContentPath.from( parentContent.getName() ) ).
             build();
 
@@ -59,16 +59,16 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
 
         and: "add new child content beneath the parent"
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( structuredContent.getContentTypeName() ).typeData(
-            structuredContent ).save().close();
-        getTestSession().put( STRUCTURED_CHILD_CONTENT, structuredContent );
+        contentBrowsePanel.clickToolbarNew().selectContentType( unstructuredContent.getContentTypeName() ).typeData(
+            unstructuredContent ).save().close();
+        getTestSession().put( UNSTRUCTURED_CHILD_CONTENT, unstructuredContent );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
 
         contentBrowsePanel.expandContent( parentContent.getPath() );
         List<Content> contents = new ArrayList<>();
         contents.add( parentContent );
-        contents.add( structuredContent );
+        contents.add( unstructuredContent );
         contentBrowsePanel.selectContentInTable( contents );
 
         when: "un expand a parent content "
@@ -84,7 +84,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
+        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
@@ -100,7 +100,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
+        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
@@ -116,7 +116,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
+        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
@@ -168,7 +168,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( STRUCTURED_CHILD_CONTENT );
+        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
 
         and: "type a name of child content in the filter panel"
@@ -190,7 +190,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
     {
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content child = getTestSession().get( STRUCTURED_CHILD_CONTENT );
+        Content child = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
         contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
 
         and: "and type a name of child content in the filter panel"
