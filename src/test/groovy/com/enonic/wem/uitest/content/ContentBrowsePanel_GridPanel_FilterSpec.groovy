@@ -65,7 +65,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
 
         when:
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.STRUCTURED.getValue() );
+        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
