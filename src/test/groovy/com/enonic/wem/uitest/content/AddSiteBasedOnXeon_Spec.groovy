@@ -8,7 +8,6 @@ import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.data.PropertyTree
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -41,20 +40,20 @@ class AddSiteBasedOnXeon_Spec
 
     }
 
-    @Ignore
+
     def "GIVEN exists on root a Site based on Xeon WHEN site expanded and templates folder selected AND page-template added  THEN new template should be listed beneath a 'Templates' folder"()
     {
         given:
-        String name = "pagetemplate";
-        PropertyTree data = new PropertyTree();
-        Content pageTemplate = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "xeon-page-template" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ContentTypeName.pageTemplate() ).data( data ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close();
+        Content pageTemplate = buildPageTemplate();
 
+        when: "site expanded and 'Templates' folder selected and page-template added"
+        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
+        contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME + "/_templates" ) ).clickToolbarNew().selectContentType(
+            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close();
+        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME + "/_templates" ) );
+
+        then: " new template should be listed beneath a 'Templates' folder"
+        contentBrowsePanel.exists( pageTemplate.getPath() );
     }
 
     private Content buildSiteBasedOnXeon()
@@ -71,5 +70,22 @@ class AddSiteBasedOnXeon_Spec
             contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
+    }
+
+    private Content buildPageTemplate()
+    {
+        String name = "pagetemplate";
+
+        PropertyTree data = new PropertyTree();
+        data.addStrings( "nameInMenu", "item1" );
+        data.addStrings( "pageController", "Main page" );
+
+        Content pageTemplate = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "xeon-page-template" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ContentTypeName.pageTemplate() ).data( data ).
+            build();
+        return pageTemplate;
     }
 }

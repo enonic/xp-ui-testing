@@ -374,20 +374,6 @@ public abstract class BrowsePanel
         return Integer.valueOf( scrollHeight.toString() );
     }
 
-    /**
-     * each 'slick-row' has a attribute : style="top:90px"  , so we can find a last row.
-     * Scrolling will be  finished, when slick row is last.
-     */
-    protected boolean isScrollingFinished( int scrollHeight )
-    {
-        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
-        String topOfLastElement = elements.get( elements.size() - 1 ).getAttribute( "style" );
-        int top =
-            Integer.valueOf( topOfLastElement.substring( topOfLastElement.indexOf( ":" ) + 1, topOfLastElement.indexOf( "px" ) ).trim() );
-        return scrollHeight - top < 200;
-
-    }
-
     public Long getViewportScrollTopValue()
     {
         return (Long) ( (JavascriptExecutor) getDriver() ).executeScript(
@@ -400,9 +386,9 @@ public abstract class BrowsePanel
         sleep( 1000 );
     }
 
-    public boolean doScrollAndFindGridItem( String gridItem, int timeout )
+    public boolean doScrollAndFindGridItem( String gridItemName, int timeout )
     {
-        String contentNameXpath = String.format( DIV_NAMES_VIEW, gridItem );
+        String contentNameXpath = String.format( DIV_NAMES_VIEW, gridItemName );
         boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
         if ( loaded )
         {
@@ -418,7 +404,7 @@ public abstract class BrowsePanel
 
             if ( waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout ) )
             {
-                getLogger().info( "content was found: " + gridItem );
+                getLogger().info( "content was found: " + gridItemName );
                 return true;
             }
             if ( scrollTopBefore == scrollTopAfter )
@@ -431,9 +417,9 @@ public abstract class BrowsePanel
         return false;
     }
 
-    public boolean doScrollAndFindGridItem( String gridItem )
+    public boolean doScrollAndFindGridItem( String gridItemName )
     {
-        return doScrollAndFindGridItem( gridItem, Application.DEFAULT_IMPLICITLY_WAIT );
+        return doScrollAndFindGridItem( gridItemName, Application.DEFAULT_IMPLICITLY_WAIT );
     }
 
     /**

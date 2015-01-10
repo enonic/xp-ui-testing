@@ -30,6 +30,8 @@ public class Application
 
     public static final String CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";
 
+    public static final String LIVE_EDIT_FRAME = "//iframe[@class='live-edit-frame']";
+
     public static final String USER_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'user-manager')]";
 
     public static final String SPINNER_XPATH = "//div[@id='api.ui.LoadMask']";

@@ -165,7 +165,7 @@ public class ContentBrowsePanel
      */
     public boolean exists( ContentPath contentPath )
     {
-        return exists( contentPath.toString(), false );
+        return exists( contentPath.getName(), false );
     }
 
     public boolean exists( ContentPath contentPath, boolean saveScreenshot )
@@ -224,11 +224,14 @@ public class ContentBrowsePanel
                 {
                     path = ContentPath.from( path, parentContent );
                 }
-
-                if ( !this.clickOnExpander( path.toString() ) )
+                if ( !isRowExpanded( path.getName() ) )
                 {
-                    getLogger().info( "content with name " + parentContent + "has no children! " );
+                    if ( !this.clickOnExpander( path.toString() ) )
+                    {
+                        getLogger().info( "content with name " + parentContent + "has no children! " );
+                    }
                 }
+
             }
         }
         waitsForSpinnerNotVisible();
@@ -290,8 +293,8 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel selectContentInTable( ContentPath contentPath )
     {
-        boolean exist = doScrollAndFindGridItem( contentPath.toString() );
-        if ( !isRowSelected( contentPath.toString() ) )
+        boolean exist = doScrollAndFindGridItem( contentPath.getName() );
+        if ( !isRowSelected( contentPath.getName() ) )
         {
             clickCheckboxAndSelectRow( contentPath );
         }
@@ -300,7 +303,7 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel deSelectContentInTable( ContentPath contentPath )
     {
-        boolean exist = doScrollAndFindGridItem( contentPath.toString() );
+        boolean exist = doScrollAndFindGridItem( contentPath.getName() );
         if ( isRowSelected( contentPath.toString() ) )
         {
             clickCheckboxAndSelectRow( contentPath );
@@ -315,7 +318,7 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel clickCheckboxAndSelectRow( ContentPath path )
     {
-        return clickCheckboxAndSelectRow( path.toString() );
+        return clickCheckboxAndSelectRow( path.getName() );
     }
 
     public BrowsePanel pressKeyOnRow( ContentPath path, Keys key )

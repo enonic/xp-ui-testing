@@ -77,7 +77,7 @@ public class NavigatorHelper
         List<WebElement> frames = testSession.getDriver().findElements( By.xpath( iframeXpath ) );
         if ( frames.size() == 0 )
         {
-            throw new TestFrameworkException( "Unable to switch to the iframe" + iframeXpath );
+            throw new TestFrameworkException( "Unable to switch to the iframe " + iframeXpath );
         }
         testSession.getDriver().switchTo().frame( frames.get( 0 ) );
     }

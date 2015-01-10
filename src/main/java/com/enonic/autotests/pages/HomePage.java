@@ -77,8 +77,6 @@ public class HomePage
     public ContentBrowsePanel openContentManagerApplication()
     {
         contentManager.click();
-        String whandle = getSession().getDriver().getWindowHandle();
-        getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
