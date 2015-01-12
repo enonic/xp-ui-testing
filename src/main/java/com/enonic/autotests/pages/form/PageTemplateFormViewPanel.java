@@ -48,7 +48,7 @@ public class PageTemplateFormViewPanel
         String nameInMenu = data.getString( "nameInMenu" );
         if ( nameInMenu != null )
         {
-            typeMenuTab( nameInMenu );
+            // typeMenuTab( nameInMenu );
         }
         selectPageController( data.getString( "pageController" ) );
         return this;

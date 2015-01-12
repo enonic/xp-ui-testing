@@ -5,7 +5,7 @@ import spock.lang.Ignore
 class LoginSpec
     extends BaseGebSpec
 {
-
+    @Ignore
     def "Given login page When both username and password fields is empty Then Login Button must be disabled"()
     {
         when:
