@@ -1,5 +1,7 @@
 package com.enonic.wem.uitest
 
+import spock.lang.Ignore
+
 class LoginSpec
     extends BaseGebSpec
 {
@@ -13,6 +15,7 @@ class LoginSpec
         $( 'button.login-button' ).classes().contains( 'disabled' );
     }
 
+    @Ignore
     def "Given login page When both username and password fields have value Then Login Button must be enabled"()
     {
         given:
@@ -26,6 +29,7 @@ class LoginSpec
         !$( 'button.login-button' ).classes().contains( 'disabled' )
     }
 
+    @Ignore
     def "Given login page When only username field have value Then Login Button must be disabled"()
     {
         given:
@@ -38,6 +42,7 @@ class LoginSpec
         $( 'button.login-button' ).classes().contains( 'disabled' );
     }
 
+    @Ignore
     def "Given login page When only password field have value Then Login Button must be disabled"()
     {
         given:
