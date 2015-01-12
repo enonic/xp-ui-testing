@@ -1,15 +1,13 @@
 package com.enonic.autotests.pages.form;
 
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.wem.api.data.PropertyTree;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 
@@ -19,7 +17,7 @@ public class PageTemplateFormViewPanel
     extends FormViewPanel
 {
     private String MENU_ITEM_CHECKBOX =
-        "//div[contains(@id,'api.form.InputView-1') and descendant::div[@title='Menu item']]//div[contains(@id,'api.ui.Checkbox')]/label";
+        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Menu item']]//div[contains(@id,'api.ui.Checkbox')]/label";
 
     private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT =
         "//div[@id='api.content.page.PageDescriptorDropdown']//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
@@ -58,35 +56,14 @@ public class PageTemplateFormViewPanel
 
     private void selectPageController( String pageName )
     {
-        switchToLiveEditFrame();
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
         //do filter options:
         findElements( By.xpath( "//input[@id='api.ui.selector.dropdown.DropdownOptionFilterInput']" ) ).get( 0 ).sendKeys( pageName );
         //select a 'Main page'
         findElements( By.xpath( "//div[@id='api.content.page.PageDescriptorDropdown']//h6[@title='Main page']" ) ).get( 0 ).click();
 
-        switchToContentManagerFrame();
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
 
-    }
-
-    private void switchToLiveEditFrame()
-    {
-        getDriver().switchTo().window( getDriver().getWindowHandle() );
-        //switch from content manager frame to 'main' frame
-        getDriver().switchTo().frame( 0 );
-        List<WebElement> liveEditFrames = findElements( By.xpath( Application.LIVE_EDIT_FRAME ) );
-        if ( liveEditFrames.size() == 0 )
-        {
-            throw new TestFrameworkException( "Unable to switch to the iframe " );
-        }
-        //switch to 'live edit' frame
-        getDriver().switchTo().frame( liveEditFrames.get( 0 ) );
-    }
-
-    private void switchToContentManagerFrame()
-    {
-        getDriver().switchTo().window( getDriver().getWindowHandle() );
-        List<WebElement> cm = findElements( By.xpath( Application.CONTENT_MANAGER_FRAME_XPATH ) );
-        getDriver().switchTo().frame( cm.get( 0 ) );
     }
 
     private void typeMenuTab( String nameInMenu )
