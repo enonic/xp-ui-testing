@@ -1,11 +1,11 @@
 package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -71,14 +71,15 @@ public class LoginPage
 
         passwordInput.sendKeys( password );
 
-        boolean isEnabledButton = waitAndFind( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );
-        if ( !isEnabledButton )
-        {
-            logError( "The button 'Log in' is disabled" );
-            throw new AuthenticationException( "wrong password or username" );
-        }
-        WebElement loginButton = findElement( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );
-        loginButton.click();
+//        boolean isEnabledButton = waitAndFind( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );
+//        if ( !isEnabledButton )
+//        {
+//            logError( "The button 'Log in' is disabled" );
+//            throw new AuthenticationException( "wrong password or username" );
+//        }
+//        WebElement loginButton = findElement( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );
+//        loginButton.click();
+        passwordInput.sendKeys( Keys.ENTER );
 
     }
 
