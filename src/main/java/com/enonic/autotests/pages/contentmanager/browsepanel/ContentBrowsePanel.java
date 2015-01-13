@@ -30,7 +30,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
-    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' and text()='Content Manager']";
+    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='Content Manager']";
 
     protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH =
         "//div[contains(@id,'app.browse.ContentBrowsePanel')]" + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
