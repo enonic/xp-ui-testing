@@ -1,6 +1,9 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.liveedit.ContextWindow
+import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -30,8 +33,7 @@ class AddSiteBasedOnXeon_Spec
 
     def "GIVEN creating new Site based on Xeon on root WHEN saved and wizard closed THEN new site should be listed"()
     {
-        given:
-        Content site = buildSiteBasedOnXeon();
+        given: Content site = buildSiteBasedOnXeon();
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close();
 
@@ -41,10 +43,9 @@ class AddSiteBasedOnXeon_Spec
     }
 
 
-    def "GIVEN exists on root a Site based on Xeon WHEN site expanded and templates folder selected AND page-template added  THEN new template should be listed beneath a 'Templates' folder"()
+    def "GIVEN exists on root a site, based on Xeon WHEN site expanded and templates folder selected AND page-template added  THEN new template should be listed beneath a 'Templates' folder"()
     {
-        given:
-        Content pageTemplate = buildPageTemplate();
+        given: Content pageTemplate = buildPageTemplate();
 
         when: "site expanded and 'Templates' folder selected and page-template added"
         contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
@@ -55,6 +56,36 @@ class AddSiteBasedOnXeon_Spec
         then: " new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getPath() );
     }
+
+    def "GIVEN site opened for edit WHEN 'toggle window' button on toolbar clicked  THEN ContextWindow  appears"()
+    {
+        given: "site based on Xeon opened for edit"
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+
+        when: "button on toolbar clicked"
+        ContextWindow contextWindow = contentWizard.showContextWindow();
+
+        then: "context window appears"
+        contextWindow.isContextWindowPresent();
+    }
+
+    def "GIVEN site opened for edit and context window showed WHEN ContextWindow  opened in live edit AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
+    {
+        given: ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable(
+            ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
+
+
+        when: "3 column layout dragged into 'live edit' frame and site saved"
+        LiveFormPanel liveEditPanel = contextWindow.addComponentByDragAndDrop( "layout", null ).getLayoutComponentView().selectLayout(
+            "3-col" );
+
+
+        then: "layout component appears in the 'live edit' frame and number of regions is 3"
+        liveEditPanel.isLayoutComponentPresent() && liveEditPanel.getLayoutColumnNumber() == 3;
+
+    }
+
 
     private Content buildSiteBasedOnXeon()
     {

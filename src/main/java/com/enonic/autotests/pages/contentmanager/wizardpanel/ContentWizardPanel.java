@@ -12,6 +12,7 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 
@@ -41,6 +42,9 @@ public class ContentWizardPanel
     private static final String TOOLBAR_DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
+    private static final String CONTEXT_WINDOW_TOGGLER =
+        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'app.wizard.page.contextwindow.ContextWindowToggler')]";
+
     public static String START_WIZARD_TITLE = "New %s";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
@@ -58,6 +62,9 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
 
+    @FindBy(xpath = CONTEXT_WINDOW_TOGGLER)
+    private WebElement toolbarShowContextWindow;
+
     /**
      * The constructor.
      *
@@ -67,6 +74,14 @@ public class ContentWizardPanel
     {
         super( session );
 
+    }
+
+    public ContextWindow showContextWindow()
+    {
+        toolbarShowContextWindow.click();
+        ContextWindow cw = new ContextWindow( getSession() );
+        cw.waitUntilWindowLoaded( 1l );
+        return cw;
     }
 
     /**
