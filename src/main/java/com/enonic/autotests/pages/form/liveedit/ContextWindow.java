@@ -62,8 +62,12 @@ public class ContextWindow
 
     public ContextWindow clickOnInsertLink()
     {
-        String insertButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem') and @title='Insert']";
-        findElements( By.xpath( insertButtonXpath ) ).get( 0 ).click();
+        String insertButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ @title='Insert']";
+        if ( findElements( By.xpath( insertButtonXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Insert link was not found on the ContextWindow!" );
+        }
+        findElement( By.xpath( insertButtonXpath ) ).click();
         sleep( 3000 );
         return this;
     }
