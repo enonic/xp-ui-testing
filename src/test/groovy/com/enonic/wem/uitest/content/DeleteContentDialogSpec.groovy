@@ -38,7 +38,8 @@ class DeleteContentDialogSpec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.folder() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
         getTestSession().put( CONTENT_TO_DELETE_KEY, content );
     }
 

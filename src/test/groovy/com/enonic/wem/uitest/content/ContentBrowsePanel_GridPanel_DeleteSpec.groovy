@@ -36,7 +36,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close(
+            content.getDisplayName() );
 
         when:
         ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
@@ -57,7 +58,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content1.getContentTypeName() ).typeData( content1 ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content1.getContentTypeName() ).typeData( content1 ).save().close(
+            content1.getDisplayName() );
 
         Content content2 = Content.builder().
             name( NameHelper.uniqueName( "deletecontent" ) ).
@@ -67,7 +69,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content2.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            content2 ).save().close();
+            content2 ).save().close( content2.getDisplayName() );
 
         List<Content> contentList = new ArrayList<>();
         contentList.add( content1 );
@@ -94,7 +96,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.ROOT ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
         List<Content> contents = new ArrayList<>();
         contents.add( content );
         contentBrowsePanel.waitsForSpinnerNotVisible();
@@ -117,7 +120,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             displayName( "parent" ).
             contentType( ContentTypeName.folder() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close(
+            parent.getDisplayName() );
         contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
         Content contentToDelete = Content.builder().
             name( NameHelper.uniqueName( "folder" ) ).
@@ -127,7 +131,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData( contentToDelete ).
-            save().close();
+            save().close( contentToDelete.getDisplayName() );
         contentBrowsePanel.waitUntilPageLoaded( 1 );
 
         List<Content> contentList = new ArrayList<>()
@@ -150,7 +154,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             displayName( "expandicon-test" ).
             contentType( ContentTypeName.folder() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close(
+            parent.getDisplayName() );
 
         contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
         Content content = Content.builder().
@@ -160,7 +165,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.from( parent.getName() ) ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
 
         List<Content> contentList = new ArrayList<>();
         contentList.add( content );
@@ -183,7 +189,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
 
         when: "just created content deleted"
         contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarDelete().doDelete();
@@ -211,8 +218,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         List<Content> contentList = new ArrayList<>();
         contentList.add( content2 );
         contentList.add( content1 );
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close(
+            content1.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close(
+            content2.getDisplayName() );
 
         when: "both contents selected in the grid and  deleted"
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();

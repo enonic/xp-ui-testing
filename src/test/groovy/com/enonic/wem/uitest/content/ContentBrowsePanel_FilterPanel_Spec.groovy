@@ -12,7 +12,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -38,13 +37,14 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         String name = NameHelper.uniqueName( "unstructured" );
-        Content page = Content.builder().
+        Content content = Content.builder().
             name( name ).
             displayName( "unstructured" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.unstructured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
 
         when:
         String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
@@ -123,14 +123,14 @@ class ContentBrowsePanel_FilterPanel_Spec
             typeData( content );
 
         when:
-        wizard.save().close();
+        wizard.save().close( content.getDisplayName() );
 
         then:
         filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
             lastModifiedBeforeAdding == 1;
     }
 
-    @Ignore
+
     def "GIVEN a Content WHEN deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
@@ -142,7 +142,8 @@ class ContentBrowsePanel_FilterPanel_Spec
             parent( ContentPath.ROOT ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
         int beforeRemoving = filterPanel.getNumberFilteredByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
         List<Content> contentList = new ArrayList();
@@ -170,7 +171,8 @@ class ContentBrowsePanel_FilterPanel_Spec
             parent( ContentPath.ROOT ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         when:
@@ -207,7 +209,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             parent( ContentPath.ROOT ).build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).
-            save().close();
+            save().close( content.getDisplayName() );
         Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
 
         when:
@@ -239,7 +241,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             parent( ContentPath.ROOT ).build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).
-            save().close();
+            save().close( content.getDisplayName() );
 
         String label = filterPanel.selectEntryInContentTypesFilter( "Folder" );
         Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );

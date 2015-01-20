@@ -16,7 +16,7 @@ class GroupWizardPanel_TabMenuSpec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
-    String TAB_MENU_ITEM = "New Group"
+    String TAB_MENU_ITEM = "[New Group]"
 
     def setup()
     {
@@ -25,16 +25,13 @@ class GroupWizardPanel_TabMenuSpec
     }
 
 
-    def "GIVEN started adding a 'system Group' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'New Group' is present"()
+    def "WHEN started adding a 'system Group' and Wizard opened  THEN list of items with one name 'New Group' is present"()
     {
-        given: "'Groups' folder,that located beneath a 'System' folder, was selected, the 'New' button pressed  and group wizard opened"
+        when: "'Groups' folder,that located beneath a 'System' folder, was selected, the 'New' button pressed  and group wizard opened"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "system_exp" );
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
             UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened();
-
-        when: "AppBarTabMenu on the group wizard clicked and menu items showed"
-        wizard.expandTabMenu();
 
         then: "item with title 'New Role' is present "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
@@ -46,10 +43,10 @@ class GroupWizardPanel_TabMenuSpec
         given: "group wizard was opened ad AppBarTabMenu clicked"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened().expandTabMenu();
+            UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( TAB_MENU_ITEM );
+        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
         TestUtils.saveScreenshot( getTestSession(), "grw_close1" );
 
         then: "close dialog should not be showed"
@@ -63,11 +60,10 @@ class GroupWizardPanel_TabMenuSpec
         String displayName = "testname";
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName(
-            displayName ).expandTabMenu();
+            UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
         when: "TabmenuItem(close) clicked"
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( displayName );
+        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
         TestUtils.saveScreenshot( getTestSession(), "grw_close2" );
 
         then: "'SaveBeforeClose' dialog showed"

@@ -44,8 +44,8 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.folder() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( initialFolder.getContentTypeName() ).typeData(
-            initialFolder ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( initialFolder.getContentTypeName() ).typeData( initialFolder ).save().close(
+            initialFolder.getDisplayName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
@@ -62,7 +62,8 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.unstructured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
 
         when:
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
@@ -146,7 +147,8 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.folder() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close(
+            page.getDisplayName() );
         contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         filterPanel.typeSearchText( name );
         contentBrowsePanel.waitsForSpinnerNotVisible();

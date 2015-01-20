@@ -18,7 +18,10 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 {
 
     @Shared
-    ContentBrowsePanel contentBrowsePanel
+    ContentBrowsePanel contentBrowsePanel;
+
+    @Shared
+    String newDisplayName = "changeDisplayName"
 
 
     def setup()
@@ -39,7 +42,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
             waitUntilWizardOpened().typeData( content ).save();
 
         when:
-        SaveBeforeCloseDialog dialog = wizard.close();
+        SaveBeforeCloseDialog dialog = wizard.close( content.getDisplayName() );
 
         then:
         dialog == null;
@@ -58,10 +61,11 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( content ).save();
-        wizard.typeDisplayName( "changedname" );
+
+        wizard.typeDisplayName( newDisplayName );
 
         when:
-        SaveBeforeCloseDialog dialog = wizard.close()
+        SaveBeforeCloseDialog dialog = wizard.close( newDisplayName )
         TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-appears" );
 
         then:
@@ -80,7 +84,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().
             selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save();
-        wizard.typeDisplayName( "changedname" ).close();
+        wizard.typeDisplayName( newDisplayName ).close( newDisplayName );
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
         dialog.waitForPresent();
 
@@ -105,7 +109,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( content ).save();
         String newName = NameHelper.uniqueName( "newfolder" );
-        SaveBeforeCloseDialog dialog = wizard.typeName( newName ).close();
+        SaveBeforeCloseDialog dialog = wizard.typeName( newName ).close( content.getDisplayName() );
 
 
         when:
@@ -128,7 +132,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( content ).save();
-        SaveBeforeCloseDialog dialog = wizard.typeName( "newfolder" ).close();
+        SaveBeforeCloseDialog dialog = wizard.typeName( "newfolder" ).close( content.getDisplayName() );
 
         when:
         dialog.clickCancelButton();

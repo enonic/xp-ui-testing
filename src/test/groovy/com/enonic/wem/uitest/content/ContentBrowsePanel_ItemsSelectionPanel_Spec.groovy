@@ -57,7 +57,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             contentType( ContentTypeName.folder() ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( firstContent.getContentTypeName() ).
-            typeData( firstContent ).save().close();
+            typeData( firstContent ).save().close( firstContent.getDisplayName() );
 
         Content secondContent = Content.builder().
             parent( ContentPath.ROOT ).
@@ -66,7 +66,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             displayName( CONTENT_2_DISPLAY_NAME ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( secondContent.getContentTypeName() ).
-            typeData( secondContent ).save().close();
+            typeData( secondContent ).save().close( secondContent.getDisplayName() );
 
         contentBrowsePanel.selectContentInTable( firstContent.getPath() );
 
@@ -89,7 +89,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
             displayName( CONTENT_3_DISPLAY_NAME ).
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( thirdContent.getContentTypeName() ).
-            typeData( thirdContent ).save().close();
+            typeData( thirdContent ).save().close( thirdContent.getDisplayName() );
 
         Content firstContent = Content.builder().
             parent( ContentPath.ROOT ).

@@ -37,7 +37,7 @@ class ContentUploadSpec
 
         then: "new png file content appears in the browse panel"
         TestUtils.saveScreenshot( getSession(), "upload-png" )
-        contentBrowsePanel.exists( ContentPath.from( "ea-png" ) )
+        contentBrowsePanel.exists( ContentPath.from( "ea.png" ) )
     }
 
     def "GIVEN opened a new content dialog WHEN upload button clicked and zip archive selected THEN new content appears in browse panel "()
@@ -51,6 +51,6 @@ class ContentUploadSpec
 
         then: "new archive content appears in the browse panel"
         TestUtils.saveScreenshot( getSession(), "upload-zip" )
-        contentBrowsePanel.exists( ContentPath.from( "img-zip" ) )
+        contentBrowsePanel.exists( ContentPath.from( "img.zip" ) )
     }
 }

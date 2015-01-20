@@ -21,7 +21,13 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class WizardPanel<T>
     extends Application
 {
-    public static String RED_CIRCLE_XPATH = "//span[@class='tabcount']";
+
+    public static String APP_BAR_TAB_MENU = "//div[contains(@id,'api.app.bar.AppBarTabMenu')]";
+
+    public static String APP_BAR_TAB_MENU_ITEM =
+        APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[@title='%s']]";
+
+    public static String CLOSE_TAB_BUTTON = APP_BAR_TAB_MENU_ITEM + "/button";
 
     public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'api.app.bar.AppBarTabMenuButton')]//span[@class='label']";
 
@@ -47,11 +53,14 @@ public abstract class WizardPanel<T>
         super( session );
     }
 
-    public SaveBeforeCloseDialog close()
+    public SaveBeforeCloseDialog close( String displayName )
     {
-
         CloseStatus status = null;
-        getCloseButton().click();
+        if ( findElements( By.xpath( String.format( CLOSE_TAB_BUTTON, displayName ) ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "close button for tab with name " + displayName + " was not found!" );
+        }
+        findElements( By.xpath( String.format( CLOSE_TAB_BUTTON, displayName ) ) ).get( 0 ).click();
         sleep( 500 );
         for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
         {
@@ -77,11 +86,10 @@ public abstract class WizardPanel<T>
         }
     }
 
-    public SaveBeforeCloseDialog closeInTabMenuItem( String title )
+    public SaveBeforeCloseDialog closeTabMenuItem( String title )
     {
 
         CloseStatus status = null;
-        findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) );
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) ).click();
         for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
         {
@@ -184,24 +192,11 @@ public abstract class WizardPanel<T>
             throw new TestFrameworkException( "title was not found or not visible in AppBarTabMenu!" );
         }
     }
-    //tab-menu appbar-tab-menu expanded
-
-    /**
-     * Clicks on  'AppBarTabMenu' and expands it, list of AppBarTabMenuItem should appears.
-     *
-     * @return {@link WizardPanel} instance
-     */
-    public WizardPanel<T> expandTabMenu()
-    {
-        findElements( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).get( 0 ).click();
-        sleep( 300 );
-        return this;
-    }
 
     public boolean isTabMenuItemPresent( String itemText )
     {
-        List<WebElement> elems =
-            findElements( By.xpath( "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]/span" ) );
+        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]//span" ) );
+
         for ( WebElement element : elems )
         {
             if ( element.getText().contains( itemText ) )

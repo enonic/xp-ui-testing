@@ -16,7 +16,7 @@ class RoleWizardPanel_TabMenuSpec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
-    String TAB_MENU_ITEM = "New Role"
+    String TAB_MENU_ITEM = "[New Role]"
 
     def setup()
     {
@@ -25,17 +25,14 @@ class RoleWizardPanel_TabMenuSpec
     }
 
 
-    def "GIVEN started adding a 'Role' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'New Role' is present"()
+    def "WHEN started adding a 'Role' and Wizard opened  THEN new tab with  name 'New Role' is present"()
     {
-        given: "'Roles' folder clicked and role wizard opened"
+        when: "'Roles' folder clicked and 'New' button clicked and role wizard opened"
         RoleWizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
             UserBrowsePanel.BrowseItemType.ROLES ).clickToolbarNew().waitUntilWizardOpened();
+        TestUtils.saveScreenshot( getTestSession(), "tab_role" );
 
-        when: "AppBarTabMenu on the role wizard clicked and menu items showed"
-        wizard.expandTabMenu();
-        TestUtils.saveScreenshot( getTestSession(), "tabmenu_role" );
-
-        then: "item with title 'New Role' is present "
+        then: "tab with title 'New Role' is present "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
 
     }
@@ -44,10 +41,10 @@ class RoleWizardPanel_TabMenuSpec
     {
         given: "content wizard was opened ad AppBarTabMenu clicked"
         RoleWizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.ROLES ).clickToolbarNew().waitUntilWizardOpened().expandTabMenu();
+            UserBrowsePanel.BrowseItemType.ROLES ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( TAB_MENU_ITEM );
+        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
         TestUtils.saveScreenshot( getTestSession(), "role_close1" );
 
         then: "close dialog should not be showed"
@@ -60,10 +57,10 @@ class RoleWizardPanel_TabMenuSpec
         given: "role Wizard opened and name is typed"
         String displayName = "testname";
         RoleWizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.ROLES ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName ).expandTabMenu();
+            UserBrowsePanel.BrowseItemType.ROLES ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
         when: "TabmenuItem(close) clicked"
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( displayName );
+        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
         TestUtils.saveScreenshot( getTestSession(), "role_close2" );
 
         then: "'SaveBeforeClose' dialog showed"

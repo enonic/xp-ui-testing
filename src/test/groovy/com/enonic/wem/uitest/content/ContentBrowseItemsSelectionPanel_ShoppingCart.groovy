@@ -52,15 +52,15 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
             build();
 
         and: "add new content: click on 'new' button, populate a wizard and close it"
-        contentBrowsePanel.clickToolbarNew().selectContentType( parentContent.getContentTypeName() ).typeData(
-            parentContent ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( parentContent.getContentTypeName() ).typeData( parentContent ).save().close(
+            parentContent.getDisplayName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         getTestSession().put( PARENT_ROOT_FOLDER, parentContent );
 
         and: "add new child content beneath the parent"
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
         contentBrowsePanel.clickToolbarNew().selectContentType( unstructuredContent.getContentTypeName() ).typeData(
-            unstructuredContent ).save().close();
+            unstructuredContent ).save().close( unstructuredContent.getDisplayName() );
         getTestSession().put( UNSTRUCTURED_CHILD_CONTENT, unstructuredContent );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
@@ -144,7 +144,8 @@ class ContentBrowseItemsSelectionPanel_ShoppingCart
             build();
 
         and: "add new content: click on 'new' button, populate a wizard and close it"
-        contentBrowsePanel.clickToolbarNew().selectContentType( folder2.getContentTypeName() ).typeData( folder2 ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( folder2.getContentTypeName() ).typeData( folder2 ).save().close(
+            folder2.getDisplayName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
 

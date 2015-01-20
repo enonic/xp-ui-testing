@@ -16,7 +16,7 @@ class UserStoreWizardPanel_TabMenuSpec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
-    String TAB_MENU_ITEM = "New User Store"
+    String TAB_MENU_ITEM = "[New User Store]"
 
     def setup()
     {
@@ -25,14 +25,11 @@ class UserStoreWizardPanel_TabMenuSpec
     }
 
 
-    def "GIVEN started adding a 'User Store' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'User Store' is present"()
+    def "WHEN started adding a 'User Store' and Wizard opened THEN new tab with name '[New User Store]' is present"()
     {
-        given: "the 'New' button on toolbar pressed and the 'user store' wizard opened"
+        when: "the 'New' button on toolbar pressed and the 'user store' wizard opened"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
         UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
-
-        when: "AppBarTabMenu on the group wizard clicked and menu items showed"
-        wizard.expandTabMenu();
 
         then: "item with title 'New User Store' is present "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
@@ -43,10 +40,10 @@ class UserStoreWizardPanel_TabMenuSpec
     {
         given: "'user store' wizard was opened ad AppBarTabMenu clicked"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
-        UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened().expandTabMenu();
+        UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( TAB_MENU_ITEM );
+        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
         TestUtils.saveScreenshot( getTestSession(), "user_close1" );
 
 
@@ -60,11 +57,10 @@ class UserStoreWizardPanel_TabMenuSpec
         given: "'user store' Wizard opened and name is typed"
         String displayName = "testname";
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened().typeDisplayName(
-            displayName ).expandTabMenu();
+        UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
         when: "TabmenuItem(close) clicked"
-        SaveBeforeCloseDialog dialog = wizard.closeInTabMenuItem( displayName );
+        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
         TestUtils.saveScreenshot( getTestSession(), "user_close2" );
 
         then: "'SaveBeforeClose' dialog showed"

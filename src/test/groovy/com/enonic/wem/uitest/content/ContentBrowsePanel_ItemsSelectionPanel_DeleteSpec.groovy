@@ -38,7 +38,8 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             displayName( "parent" ).
             contentType( ContentTypeName.folder() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() ).typeData( parent ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() ).typeData( parent ).save().close(
+            parent.getDisplayName() );
 
         List<Content> contentList = new ArrayList<>()
         Content content1 = Content.builder().
@@ -50,7 +51,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickOnParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType(
             content1.getContentTypeName() );
-        wizard.typeData( content1 ).save().close();
+        wizard.typeData( content1 ).save().close( content1.getDisplayName() );
         contentList.add( content1 );
         Content content2 = Content.builder().
             parent( ContentPath.from( parent.getName() ) ).
@@ -60,7 +61,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content2.getContentTypeName() );
-        wizard.typeData( content2 ).save().close();
+        wizard.typeData( content2 ).save().close( content2.getDisplayName() );
         contentList.add( content2 );
         Content content3 = Content.builder().
             parent( ContentPath.from( parent.getName() ) ).
@@ -70,7 +71,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content3.getContentTypeName() );
-        wizard.typeData( content3 ).save().close();
+        wizard.typeData( content3 ).save().close( content3.getDisplayName() );
         contentList.add( content3 );
 
 

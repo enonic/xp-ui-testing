@@ -289,7 +289,8 @@ public abstract class BrowsePanel
 
     public Long doScrollViewport( long step )
     {
-        WebElement viewportElement = findElements( By.xpath( "//div[@class='slick-viewport']" ) ).get( 0 );
+        WebElement viewportElement =
+            findElements( By.xpath( "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[@class='slick-viewport']" ) ).get( 0 );
         ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
         sleep( 1000 );
         return getViewportScrollTopValue();
@@ -329,7 +330,11 @@ public abstract class BrowsePanel
         {
             throw new SaveOrUpdateException( "checkbox for item: " + item + "was not found" );
         }
-        findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
+        // findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
+        Actions actions = new Actions( getDriver() );
+        actions.moveToElement( findElement( By.xpath( contentCheckBoxXpath ) ) );
+        actions.sendKeys( key );
+        actions.build().perform();
         sleep( 500 );
         getLogger().info( "key was typed:" + key.toString() + " ,   name is:" + item );
         return this;
@@ -393,6 +398,10 @@ public abstract class BrowsePanel
         if ( loaded )
         {
             return true;
+        }
+        if ( !isViewportScrollable() )
+        {
+            return false;
         }
         int scrollTopValue = getViewportHeight();
         long scrollTopBefore;

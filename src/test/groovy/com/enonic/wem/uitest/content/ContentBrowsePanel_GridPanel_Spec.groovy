@@ -109,9 +109,10 @@ class ContentBrowsePanel_GridPanel_Spec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( folderWithChild.getContentTypeName() ).typeData(
-            folderWithChild ).save().close();
+            folderWithChild ).save().close( folderWithChild.getDisplayName() );
         contentBrowsePanel.clickOnParentCheckbox( folderWithChild.getPath() )
-        contentBrowsePanel.clickToolbarNew().selectContentType( child.getContentTypeName() ).typeData( child ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( child.getContentTypeName() ).typeData( child ).save().close(
+            child.getDisplayName() );
 
         expect:
         contentBrowsePanel.exists( folderWithChild.getPath() ) &&
@@ -128,7 +129,8 @@ class ContentBrowsePanel_GridPanel_Spec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.unstructured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( unstructured.getContentTypeName() ).typeData( unstructured ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( unstructured.getContentTypeName() ).typeData( unstructured ).save().close(
+            unstructured.getDisplayName() );
 
         expect:
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( name ) );
@@ -185,7 +187,8 @@ class ContentBrowsePanel_GridPanel_Spec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.unstructured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
         contentBrowsePanel.selectContentInTable( ContentPath.from( FOLDER_WITH_CHILD ) );
         int before = contentBrowsePanel.getSelectedRowsNumber();
 

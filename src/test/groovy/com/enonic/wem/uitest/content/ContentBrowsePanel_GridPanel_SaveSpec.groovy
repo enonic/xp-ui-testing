@@ -43,7 +43,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( rootContent );
 
         when:
-        wizard.save().close();
+        wizard.save().close( rootContent.getDisplayName() );
 
         then:
         contentBrowsePanel.exists( rootContent.getPath() );
@@ -86,7 +86,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( content );
 
         when:
-        wizard.save().close();
+        wizard.save().close( content.getDisplayName() );
 
         then:
         !contentBrowsePanel.isRowExpanded( content.getParent().toString() );
@@ -131,7 +131,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( content );
 
         when:
-        wizard.save().close();
+        wizard.save().close( content.getDisplayName() );
         TestUtils.saveScreenshot( getTestSession(), name );
 
         then:
@@ -174,7 +174,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
 
         ContentWizardPanel contentWizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
-        contentWizard.typeData( contentToEdit ).save().close();
+        contentWizard.typeData( contentToEdit ).save().close( contentToEdit.getDisplayName() );
 
         Content newContent = cloneContentWithNewName( contentToEdit )
         contentBrowsePanel.expandContent( contentToEdit.getParent() );
@@ -184,7 +184,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentWizard.typeData( newContent );
 
         when:
-        contentWizard.save().close();
+        contentWizard.save().close( newContent.getDisplayName() );
 
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
@@ -206,7 +206,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
         contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
-        wizard.typeData( contentToEdit ).save().close();
+        wizard.typeData( contentToEdit ).save().close( contentToEdit.getDisplayName() );
 
         Content newContent = cloneContentWithNewDisplayName( contentToEdit );
         contentBrowsePanel.deSelectContentInTable( ContentPath.from( REPO_NAME ) );
@@ -215,7 +215,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( newContent );
 
         when:
-        wizard.save().close();
+        wizard.save().close( newContent.getDisplayName() );
 
         then:
         contentBrowsePanel.waitsForSpinnerNotVisible();

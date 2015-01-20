@@ -34,7 +34,8 @@ class ContentItemViewPanelSpec
             contentType( ContentTypeName.folder() ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close();
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
 
         when:
         ItemViewPanelPage itemView = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen();
