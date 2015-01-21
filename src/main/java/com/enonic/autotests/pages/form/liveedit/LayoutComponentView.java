@@ -16,6 +16,8 @@ public class LayoutComponentView
 
     private final String OPTION_FILTER = "//input[contains(@id,'selector.combobox.ComboBoxOptionFilterInput')]";
 
+    public static String REGION_XPATH = "//div[contains(@id,'api.liveedit.RegionView') and descendant::p[contains(.,'%s')]]";
+
     @FindBy(xpath = COMPONENT_CONTAINER + OPTION_FILTER)
     private WebElement optionFilterInput;
 

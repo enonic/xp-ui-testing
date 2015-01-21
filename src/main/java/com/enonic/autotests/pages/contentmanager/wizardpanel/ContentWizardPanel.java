@@ -78,9 +78,13 @@ public class ContentWizardPanel
 
     public ContextWindow showContextWindow()
     {
-        toolbarShowContextWindow.click();
         ContextWindow cw = new ContextWindow( getSession() );
-        cw.waitUntilWindowLoaded( 1l );
+        if ( !cw.isContextWindowPresent() )
+        {
+            toolbarShowContextWindow.click();
+            cw.waitUntilWindowLoaded( 1l );
+        }
+
         return cw;
     }
 

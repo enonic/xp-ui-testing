@@ -1,3 +1,4 @@
+import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
 
@@ -13,8 +14,8 @@ driver = {
     def pathToDriver = props.getProperty( 'chromedriver.path' )
     System.setProperty( "webdriver.chrome.driver", pathToDriver )
 
-    //def driver = new ChromeDriver()
-    def driver = new FirefoxDriver()
+    def driver = new ChromeDriver()
+    //def driver = new FirefoxDriver()
 
     // FirefoxProfile profile = new FirefoxProfile();
     //  profile.setEnableNativeEvents( true );
