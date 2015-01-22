@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<type>
-    <display-name>Structured</display-name>
-    <is-abstract>true</is-abstract>
-    <is-final>false</is-final>
-    <is-built-in>true</is-built-in>
-    <allow-child-content>true</allow-child-content>
-    <form/>
-</type>

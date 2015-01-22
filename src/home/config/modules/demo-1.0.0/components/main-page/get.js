@@ -1,1 +1,0 @@
-__context.response.body = 'Hello world!';
