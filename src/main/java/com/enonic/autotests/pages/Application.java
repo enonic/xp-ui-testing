@@ -36,6 +36,8 @@ public class Application
 
     public static final String USER_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'user-manager')]";
 
+    public static final String MODULE_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'module-manager')]";
+
     public static final String SPINNER_XPATH = "//div[@id='api.ui.LoadMask']";
 
     public Application( TestSession session )

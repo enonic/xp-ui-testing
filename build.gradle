@@ -24,9 +24,6 @@ dependencies {
 
 
     distro 'com.enonic.wem:wem-distro:5.0.0-SNAPSHOT@zip'
-    distro 'com.enonic.wem.modules:xeon:1.0.0@jar'
-    distro 'com.enonic.wem.modules:seedsavers:1.0.0@jar'
-    distro 'com.enonic.wem.modules:xslt:1.0.0@jar'
     distro 'com.enonic.wem.modules:features:1.0.0@jar'
     distro 'com.enonic.wem.modules:demo:1.0.0@jar'
 
@@ -50,11 +47,19 @@ task stopServer << {
     startServer.karafServer.stop()
 }
 
-task clearData( type: Test, dependsOn: ['startServer'] ) {
+task clearData( type: Test, dependsOn: ['installModules'] ) {
     scanForTestClasses = true
     exclude '**/*Spec.class'
     exclude '**/*Suite.*'
     include '**/CleanAndInitializeData.class'
+}
+
+task installModules( type: Test, dependsOn: ['startServer'] ) {
+
+    scanForTestClasses = true
+    exclude '**/*Spec.class'
+    exclude '**/*Suite.*'
+    include '**/InstallModules.class'
 }
 
 
@@ -68,10 +73,11 @@ tasks.withType( Test ) {
         displayGranularity = 0
     }
 }
-task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
+task testEmbedded( type: Test, dependsOn: [startServer, installModules, clearData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
+    exclude '**/InstallModules.class'
     exclude '**/*Suite.*'
     forkEvery = null
 }

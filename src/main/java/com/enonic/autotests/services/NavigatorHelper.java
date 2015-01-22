@@ -11,6 +11,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.vo.ApplicationUser;
 
@@ -62,6 +63,28 @@ public class NavigatorHelper
 
             HomePage home = loginAndOpenHomePage( testSession );
             UserBrowsePanel userBrowsePanel = home.openUserManagerApplication();
+            return userBrowsePanel;
+        }
+
+    }
+
+    public static ModuleBrowsePanel openModules( TestSession testSession )
+    {
+        if ( testSession.isLoggedIn() )
+        {
+            if ( UserBrowsePanel.isOpened( testSession ) )
+            {
+                return new ModuleBrowsePanel( testSession );
+            }
+            //TODO navigate to Modules Manager Application
+            return new ModuleBrowsePanel( testSession );
+        }
+        // if user not logged in:
+        else
+        {
+
+            HomePage home = loginAndOpenHomePage( testSession );
+            ModuleBrowsePanel userBrowsePanel = home.openModulesApplication();
             return userBrowsePanel;
         }
 
