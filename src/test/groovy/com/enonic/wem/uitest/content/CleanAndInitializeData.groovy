@@ -31,6 +31,7 @@ class CleanAndInitializeData
         startPage.clickOnClearData();
 
         SleepHelper.sleep( 4000 );
+        TestUtils.saveScreenshot( getSession(), "after_clean" )
         startPage.clickOnInitializeData();
         SleepHelper.sleep( 30000 );
 
