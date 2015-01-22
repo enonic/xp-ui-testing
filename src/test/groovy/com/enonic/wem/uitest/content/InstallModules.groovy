@@ -52,7 +52,7 @@ class InstallModules
         moduleBrowsePanel.waitAndCheckIsButtonEnabled( ModuleBrowsePanel.START_BUTTON );
 
         when: "button 'Start' on the toolbar pressed"
-        moduleBrowsePanel.clickToolbarStart();
+        moduleBrowsePanel.clickOnToolbarStart();
 
         then: "status for module becomes 'started'"
         moduleBrowsePanel.getModuleStatus( XEON_MODULE_NAME ).equals( "started" );
