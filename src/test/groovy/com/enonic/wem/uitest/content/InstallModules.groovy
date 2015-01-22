@@ -43,4 +43,16 @@ class InstallModules
         then:
         moduleBrowsePanel.exists( XEON_MODULE_NAME, true );
     }
+
+    def "GIVEN module selected in the browse panel WHEN 'Start' button pressed  THEN status 'started' appears near the module in browse panel "()
+    {
+        given:
+        moduleBrowsePanel.clickAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.waitAndCheckIsButtonEnabled( ModuleBrowsePanel.START_BUTTON );
+        when:
+        moduleBrowsePanel.clickToolbarStart();
+
+        then:
+        moduleBrowsePanel.getModuleStatus( XEON_MODULE_NAME ).equals( "started" );
+    }
 }

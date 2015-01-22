@@ -24,6 +24,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BrowsePanel
     extends Application
 {
+    public static String ROW =
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and @title='%s']]";
+
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
     protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]";
