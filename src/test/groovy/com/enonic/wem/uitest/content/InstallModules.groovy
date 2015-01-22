@@ -35,24 +35,26 @@ class InstallModules
 
     def "GIVEN install dialog was opened  WHEN  module string typed THEN new module appears in the grid"()
     {
-        given:
+        given: "click on 'Install' button on the toolbar, dialog window appears"
         InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
-        when:
+
+        when: "url typed and 'Install' button "
         moduleBrowsePanel = dialog.typeModuleURL( MODULE_STRING ).clickOnInstall();
 
-        then:
-        moduleBrowsePanel.exists( XEON_MODULE_NAME, true );
+        then: "new module exists in the browse panel and status is stopped "
+        moduleBrowsePanel.exists( XEON_MODULE_NAME, true ) && moduleBrowsePanel.getModuleStatus( XEON_MODULE_NAME ).equals( "stopped" );
     }
 
     def "GIVEN module selected in the browse panel WHEN 'Start' button pressed  THEN status 'started' appears near the module in browse panel "()
     {
-        given:
+        given: "select a existing  module"
         moduleBrowsePanel.clickAndSelectRow( XEON_MODULE_NAME );
         moduleBrowsePanel.waitAndCheckIsButtonEnabled( ModuleBrowsePanel.START_BUTTON );
-        when:
+
+        when: "button 'Start' on the toolbar pressed"
         moduleBrowsePanel.clickToolbarStart();
 
-        then:
+        then: "status for module becomes 'started'"
         moduleBrowsePanel.getModuleStatus( XEON_MODULE_NAME ).equals( "started" );
     }
 }

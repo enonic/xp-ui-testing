@@ -20,9 +20,11 @@ public class ModuleBrowsePanel
     public static final String INSTALL_BUTTON =
         TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Install']]";
 
+    public static final String UPDATE_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Update']]";
+
     public static final String START_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Start']]";
 
-    public static final String STOP_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Start']]";
+    public static final String STOP_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Stop']]";
 
     public static final String UNINSTALL_BUTTON =
         TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Uninstall']]";
@@ -30,6 +32,9 @@ public class ModuleBrowsePanel
 
     @FindBy(xpath = INSTALL_BUTTON)
     private WebElement installButton;
+
+    @FindBy(xpath = UPDATE_BUTTON)
+    private WebElement updateButton;
 
     @FindBy(xpath = START_BUTTON)
     private WebElement startButton;
@@ -64,14 +69,26 @@ public class ModuleBrowsePanel
         return dialog;
     }
 
-    public ModuleBrowsePanel clickToolbarStop()
+    public ModuleBrowsePanel clickOnToolbarUninstall()
     {
-        stopButton.click();
+
+        if ( !waitAndCheckIsButtonEnabled( UNINSTALL_BUTTON ) )
+        {
+            throw new TestFrameworkException( "impossible to uninstall button, because button disabled!" );
+        }
+        uninstallButton.click();
 
         return this;
     }
 
-    public ModuleBrowsePanel clickToolbarStart()
+    public ModuleBrowsePanel clickOnToolbarStop()
+    {
+        stopButton.click();
+        return this;
+    }
+
+
+    public ModuleBrowsePanel clickOnToolbarStart()
     {
         startButton.click();
         sleep( 300 );
@@ -82,6 +99,32 @@ public class ModuleBrowsePanel
     {
         return waitUntilElementEnabledNoException( By.xpath( buttonXpath ), 2 );
     }
+
+    public boolean isUninstallButtonEnabled()
+    {
+        return uninstallButton.isEnabled();
+    }
+
+    public boolean isStartButtonEnabled()
+    {
+        return startButton.isEnabled();
+    }
+
+    public boolean isStopButtonEnabled()
+    {
+        return stopButton.isEnabled();
+    }
+
+    public boolean isInstallButtonEnabled()
+    {
+        return installButton.isEnabled();
+    }
+
+    public boolean isUpdateButtonEnabled()
+    {
+        return updateButton.isEnabled();
+    }
+
 
     public String getModuleStatus( String moduleName )
     {
