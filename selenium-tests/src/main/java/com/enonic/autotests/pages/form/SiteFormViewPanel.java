@@ -17,7 +17,7 @@ public class SiteFormViewPanel
     @FindBy(xpath = "//div[contains(@id,'api.form.FormView')]//textarea[contains(@name,'description')]")
     private WebElement descriptionInput;
 
-    @FindBy(xpath = "//div[@name='moduleSelector']//div[@class='dropdown-handle']")
+    @FindBy(xpath = "//div[contains(@id,'ModuleConfiguratorComboBox' ) and contains(@class,'form-input composite-input rich-combobox')]//div[@class='dropdown-handle']")
     private WebElement moduleSelectorComboBox;
 
 
