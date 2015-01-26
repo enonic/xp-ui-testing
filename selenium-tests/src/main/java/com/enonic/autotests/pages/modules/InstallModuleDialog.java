@@ -57,6 +57,13 @@ public class InstallModuleDialog
     public ModuleBrowsePanel clickOnInstall()
     {
         installButton.click();
+        String classString = findElement( By.xpath( "//div[contains(@id, 'NotificationMessage')]" ) ).getAttribute( "class" );
+        if ( classString.contains( "error" ) )
+        {
+            String text = findElement(
+                By.xpath( "//div[contains(@id, 'NotificationMessage')]//div[@class='notification-content']//span" ) ).getText();
+            throw new TestFrameworkException( "message was: " + text );
+        }
         sleep( 400 );
         return new ModuleBrowsePanel( getSession() );
     }

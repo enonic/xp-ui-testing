@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.modules.InstallModuleDialog
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -43,6 +44,8 @@ class InstallAndUninstallModuleSpec
 
         when: "url typed and 'Install' button "
         moduleBrowsePanel = dialog.typeModuleURL( TEST_MODULE_URL ).clickOnInstall();
+        TestUtils.saveScreenshot( getSession(), "test_module_install" )
+
 
         then: "new module exists in the browse panel and status is stopped "
         moduleBrowsePanel.exists( TEST_MODULE_NAME, true ) && moduleBrowsePanel.getModuleStatus( TEST_MODULE_NAME ).equals( "stopped" );

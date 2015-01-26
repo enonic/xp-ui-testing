@@ -3,8 +3,11 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.liveedit.ContextWindow
+import com.enonic.autotests.pages.form.liveedit.LayoutComponentView
+import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.data.PropertyTree
@@ -54,6 +57,7 @@ class AddSiteBasedOnXeon_Spec
         contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME + "/_templates" ) ).clickToolbarNew().selectContentType(
             pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME + "/_templates" ) );
+        TestUtils.saveScreenshot( getSession(), "xeon_template" );
 
         then: " new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getPath() );
@@ -74,19 +78,21 @@ class AddSiteBasedOnXeon_Spec
     @Ignore
     def "GIVEN site opened for edit and context window showed WHEN ContextWindow  opened in live edit AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
     {
-        // given:
-        // ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
-        // ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
+        given:
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
 
-        // when: "3 column layout dragged into 'live edit' frame and site saved"
-        // LayoutComponentView layoutComponentView = contextWindow.addComponentByDragAndDrop( "layout", null )
-        // LiveFormPanel liveFormPanel = layoutComponentView.selectLayout( "3-col" );
-        // NavigatorHelper.switchToContentManagerFrame( getSession() );
-        // contentWizard.save();
+        when: "3 column layout dragged into 'live edit' frame and site saved"
+        LayoutComponentView layoutComponentView = contextWindow.addComponentByDragAndDrop( "layout", null );
+        TestUtils.saveScreenshot( getSession(), "xeon_layoutcomponent" );
+        LiveFormPanel liveFormPanel = layoutComponentView.selectLayout( "3-col" );
+        TestUtils.saveScreenshot( getSession(), "xeon_3col" );
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        contentWizard.save();
 
-        // then: "layout component appears in the 'live edit' frame and number of regions is 3"
-        //NavigatorHelper.switchToLiveEditFrame( getSession() );
-        //liveFormPanel.isLayoutComponentPresent() && liveFormPanel.getLayoutColumnNumber() == 3;
+        then: "layout component appears in the 'live edit' frame and number of regions is 3"
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        liveFormPanel.isLayoutComponentPresent() && liveFormPanel.getLayoutColumnNumber() == 3;
 
 
     }

@@ -16,7 +16,7 @@ class InstallModules
     String XEON_MODULE_NAME = "com.enonic.wem.modules.xeon";
 
     @Shared
-    String MODULE_STRING = "mvn:com.enonic.wem.modules/xeon/1.0.0";
+    String MODULE_URL = "mvn:com.enonic.wem.modules/xeon/1.0.0";
 
     def setup()
     {
@@ -39,7 +39,7 @@ class InstallModules
         InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
 
         when: "url typed and 'Install' button "
-        moduleBrowsePanel = dialog.typeModuleURL( MODULE_STRING ).clickOnInstall();
+        moduleBrowsePanel = dialog.typeModuleURL( MODULE_URL ).clickOnInstall();
 
         then: "new module exists in the browse panel and status is stopped "
         moduleBrowsePanel.exists( XEON_MODULE_NAME, true ) && moduleBrowsePanel.getModuleStatus( XEON_MODULE_NAME ).equals( "stopped" );

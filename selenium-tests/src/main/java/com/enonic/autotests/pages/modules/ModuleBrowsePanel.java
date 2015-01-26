@@ -29,6 +29,8 @@ public class ModuleBrowsePanel
     public static final String UNINSTALL_BUTTON =
         TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Uninstall']]";
 
+    private ModuleBrowseItemsSelectionPanel itemsSelectionPanel;
+
 
     @FindBy(xpath = INSTALL_BUTTON)
     private WebElement installButton;
@@ -134,5 +136,24 @@ public class ModuleBrowsePanel
             throw new TestFrameworkException( "state was not found in the table ! module name is " + moduleName );
         }
         return findElements( By.xpath( stateCell ) ).get( 0 ).getText();
+    }
+
+    public ModuleBrowseItemsSelectionPanel getItemSelectionPanel()
+    {
+        if ( itemsSelectionPanel == null )
+        {
+            itemsSelectionPanel = new ModuleBrowseItemsSelectionPanel( getSession() );
+        }
+        return itemsSelectionPanel;
+    }
+
+    public ModuleBrowsePanel deSelectModuleInTable( String moduleName )
+    {
+
+        if ( isRowSelected( moduleName ) )
+        {
+            clickCheckboxAndSelectRow( moduleName );
+        }
+        return this;
     }
 }
