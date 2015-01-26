@@ -1,85 +1,28 @@
-import com.enonic.uitest.server.KarafServer
-
-apply plugin: 'groovy'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'http://repo.enonic.com/public'
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'http://repo.enonic.net/public'
+        }
+    }
+    dependencies {
+        classpath 'com.enonic.wem.gradle:wem-gradle-plugin:0.1-SNAPSHOT'
     }
 }
 
-configurations {
-    distro
-}
+allprojects {
+    apply plugin: 'java-base'
+    apply plugin: 'maven'
 
-dependencies {
-    compile 'org.seleniumhq.selenium:selenium-java:2.43.1'
-    compile 'com.enonic.xp:core-api:5.0.0-SNAPSHOT'
-    compile 'log4j:log4j:1.2.17'
-    compile 'org.codehaus.groovy:groovy-all:2.1.8'
-    compile 'org.spockframework:spock-core:0.7-groovy-2.0'
-    compile 'org.gebish:geb-spock:0.9.2'
+    group = 'com.enonic.xp.ui-testing'
+    version = '5.0.0-SNAPSHOT'
 
-
-    distro 'com.enonic.xp:distro:5.0.0-SNAPSHOT@zip'
-    distro 'com.enonic.wem.modules:features:1.0.0@jar'
-    distro 'com.enonic.wem.modules:demo:1.0.0@jar'
-
-}
-
-test {
-
-}
-task startServer << {
-
-    logging.captureStandardOutput LogLevel.INFO
-
-    ext.karafServer = new KarafServer()
-    ext.karafServer.files( configurations.distro.resolve() )
-    ext.karafServer.startupDelay( 50000 )
-    ext.karafServer.unpackDir( file( 'build/karaf' ) )
-    ext.karafServer.start()
-}
-
-task stopServer << {
-    startServer.karafServer.stop()
-}
-
-task clearData( type: Test, dependsOn: ['installModules'] ) {
-    scanForTestClasses = true
-    exclude '**/*Spec.class'
-    exclude '**/*Suite.*'
-    include '**/CleanAndInitializeData.class'
-}
-
-task installModules( type: Test, dependsOn: ['startServer'] ) {
-
-    scanForTestClasses = true
-    exclude '**/*Spec.class'
-    exclude '**/*Suite.*'
-    include '**/InstallModules.class'
-}
-
-
-
-
-tasks.withType( Test ) {
-    jvmArgs '-Xms128m', '-Xmx1024m'
-    testLogging {
-        exceptionFormat "full"
-        events "started", "passed", "skipped", "failed", "standardOut", "standardError"
-        displayGranularity = 0
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url 'http://repo.enonic.com/public'
+        }
     }
 }
-task testEmbedded( type: Test, dependsOn: [startServer, installModules, clearData] ) {
-    scanForTestClasses = false
-    include '**/*Spec.class'
-    exclude '**/CleanAndInitializeData.class'
-    exclude '**/InstallModules.class'
-    exclude '**/*Suite.*'
-    forkEvery = null
-}
-testEmbedded.finalizedBy = [stopServer]
 

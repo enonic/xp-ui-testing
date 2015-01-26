@@ -15,11 +15,11 @@ class InstallAndUninstallModuleSpec
     ModuleBrowsePanel moduleBrowsePanel;
 
     @Shared
-    String TEST_MODULE_NAME = "com.enonic.wem.test.modules.selenium";
+    String TEST_MODULE_NAME = "com.enonic.xp.ui-testing.first-module";
 
 
     @Shared
-    String TEST_MODULE_URL = "mvn:com.enonic.wem.test.modules/selenium/1.0.0";
+    String TEST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.0-SNAPSHOT";
 
     def setup()
     {
