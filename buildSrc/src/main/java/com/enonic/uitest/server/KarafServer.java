@@ -73,7 +73,7 @@ public final class KarafServer
 
         for ( final File file : files )
         {
-            if ( file.getName().startsWith( "wem-distro-" ) )
+            if ( file.getName().startsWith( "distro-" ) )
             {
                 distConfig.frameworkUrl( file.toURI().toString() );
             }
