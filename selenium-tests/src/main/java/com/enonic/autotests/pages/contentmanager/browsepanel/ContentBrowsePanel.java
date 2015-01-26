@@ -78,7 +78,7 @@ public class ContentBrowsePanel
 
     private ContentBrowseFilterPanel filterPanel;
 
-    private ItemsSelectionPanel itemsSelectionPanel;
+    private ContentBrowseItemsSelectionPanel itemsSelectionPanel;
 
     /**
      * The constructor.
@@ -124,11 +124,11 @@ public class ContentBrowsePanel
         return filterPanel;
     }
 
-    public ItemsSelectionPanel getItemSelectionPanel()
+    public ContentBrowseItemsSelectionPanel getItemSelectionPanel()
     {
         if ( itemsSelectionPanel == null )
         {
-            itemsSelectionPanel = new ItemsSelectionPanel( getSession() );
+            itemsSelectionPanel = new ContentBrowseItemsSelectionPanel( getSession() );
         }
         return itemsSelectionPanel;
     }

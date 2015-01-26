@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemsSelectionPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ItemsSelectionPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -19,7 +19,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    ItemsSelectionPanel itemsSelectionPanel;
+    ContentBrowseItemsSelectionPanel itemsSelectionPanel;
 
     def setup()
     {
