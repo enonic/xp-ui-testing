@@ -51,7 +51,7 @@ class ModuleBrowsePanelToolbarSpec
         !moduleBrowsePanel.isUpdateButtonEnabled();
     }
 
-    def "GIVEN Module BrowsePanel WHEN one selected started module THEN Stop button should be disabled"()
+    def "GIVEN Module BrowsePanel WHEN one selected started module THEN Stop button should be enabled"()
     {
         when: " one module selected in the table"
         moduleBrowsePanel.clickAndSelectRow( XEON_MODULE_NAME );
