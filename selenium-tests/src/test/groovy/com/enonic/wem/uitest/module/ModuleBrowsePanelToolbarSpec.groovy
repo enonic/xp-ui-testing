@@ -1,4 +1,4 @@
-package com.enonic.wem.uitest.content
+package com.enonic.wem.uitest.module
 
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
