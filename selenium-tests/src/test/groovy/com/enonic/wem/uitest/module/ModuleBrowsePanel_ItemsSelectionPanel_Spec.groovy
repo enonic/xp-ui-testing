@@ -76,12 +76,10 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
 
     def "GIVEN three selected module WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
-
         given: "there are three selected module in browse panel"
         moduleBrowsePanel.clickCheckboxAndSelectRow( TEST_MODULE_NAME );
         moduleBrowsePanel.clickCheckboxAndSelectRow( XSLT_MODULE_NAME );
         moduleBrowsePanel.clickCheckboxAndSelectRow( XEON_MODULE_NAME );
-
 
         when: "one module was deselected"
         moduleBrowsePanel.deSelectModuleInTable( XEON_MODULE_NAME );
@@ -89,5 +87,16 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
         then: "only two items are listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;
 
+    }
+
+    def "WHEN two selected module  THEN two SelectionItem-s with the same name are listed"()
+    {
+        when: "two module are selected"
+        moduleBrowsePanel.clickCheckboxAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( TEST_MODULE_NAME );
+
+        then: "three SelectionItem-s are listed"
+        List actualNames = itemsSelectionPanel.getSelectedItemNames();
+        actualNames.size() == 2 && actualNames.contains( TEST_MODULE_NAME ) && actualNames.contains( XEON_MODULE_NAME );
     }
 }

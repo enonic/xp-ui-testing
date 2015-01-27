@@ -12,6 +12,7 @@ public class ModuleBrowseItemsSelectionPanel
         CONTAINER = "//div[contains(@id,'ModuleBrowseItemPanel')]";
         ITEMS_SELECTION_PANEL = CONTAINER + "//div[contains(@id,'app.browse.ModuleBrowseItemsSelectionPanel')]";
         ALL_SELECTED_ITEMS = ITEMS_SELECTION_PANEL + "//div[contains(@id,'api.app.browse.SelectionItem')]";
+        SELECTED_ITEM_NAME = "//p[@class='sub-name']";
     }
 
 

@@ -26,10 +26,17 @@ public class ContextWindow
 
     private final String DIV_DROP = "//div[@class='live-edit-drop-target-placeholder']";
 
+    private final String DIV_MOVE = "//div[contains(@id,'api.liveedit.RegionPlaceholder')]//p[text()='Drop components here']";
+
+
     private final String INSERTABLES_GRID = "//div[contains(@id,'InsertablesGrid')]";
 
     private final String GRID_ITEM =
         INSERTABLES_GRID + "//div[contains(@class,'grid-row') and descendant::div[@data-live-edit-type ='%s']]";
+
+    private final String LAYOUT_DROPZONE = "//div[contains(@id,'api.liveedit.RegionDropzone') and @class='region-dropzone layout']";
+
+    private final String TOOLBAR_DIV = "//div[contains(@id,'app.wizard.ContentWizardToolbar')]";
 
 
     @FindBy(xpath = "//li[contains(@class,'tab-bar-item') and @title= 'Insert']")
@@ -72,33 +79,26 @@ public class ContextWindow
         return this;
     }
 
-    /**
-     * Waits until page loaded.
-     *
-     * @param componentName layout or image or text
-     * @param region        image or text will be inserted to this region
-     */
-
-    public LiveFormPanel addComponentByDragAndDrop( String componentName, String region )
+    public UIComponent addComponentByDragAndDrop2( String componentName, String region )
     {
         String gridItem = String.format( GRID_ITEM, componentName );
-        WebElement from = findElements( By.xpath( gridItem ) ).get( 0 );
+        WebElement componentForDrag = findElements( By.xpath( gridItem ) ).get( 0 );
         Actions builder = new Actions( getDriver() );
 
-        builder.clickAndHold( from ).build().perform();
+        builder.clickAndHold( componentForDrag ).build().perform();
         WebElement frameTarget = getDriver().findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
         int offsetX = frameTarget.getLocation().x;
 
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        WebElement target = getDriver().findElement( By.xpath( "//div[@id='main' and @data-live-edit-id='2']" ) );
+        WebElement target = getDriver().findElement( By.xpath( "//div[@id='main' and @data-live-edit-id]" ) );
         builder.moveToElement( target ).release( target ).build().perform();
-        sleep( 500 );
+        sleep( 3000 );
         try
         {
             Robot robot = new Robot();
             robot.setAutoDelay( 500 );
-            robot.mouseMove( offsetX - 100, target.getLocation().getY() );
-            robot.mouseMove( offsetX + 300, target.getLocation().getY() + 220 );
+            robot.mouseMove( offsetX - 500, target.getLocation().getY() );
+            robot.mouseMove( offsetX + 500, target.getLocation().getY() + 220 );
 
             robot.mousePress( InputEvent.BUTTON1_MASK );
             robot.mouseRelease( InputEvent.BUTTON1_MASK );
@@ -113,8 +113,93 @@ public class ContextWindow
         if ( componentName.equalsIgnoreCase( "layout" ) )
         {
 
-            liveFormPanel.setLayoutComponentView( new LayoutComponentView( getSession() ) );
+            // liveFormPanel.setLayoutComponentView( new LayoutComponentView( getSession() ) );
+            return new LayoutComponentView( getSession() );
         }
-        return liveFormPanel;
+        if ( componentName.equalsIgnoreCase( "image" ) )
+        {
+
+            return new ImageComponentView( getSession() );
+        }
+        return null;
+    }
+
+    public UIComponent addComponentByDragAndDrop( String componentName, String regionXpath )
+    {
+        String gridItem = String.format( GRID_ITEM, componentName );
+        WebElement componentForDrag = findElements( By.xpath( gridItem ) ).get( 0 );
+
+        Actions builder = new Actions( getDriver() );
+        builder.clickAndHold( componentForDrag ).build().perform();
+
+        WebElement liveEditFrame = getDriver().findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
+        int liveEditFrameX = liveEditFrame.getLocation().x;
+        int liveEditFrameY = liveEditFrame.getLocation().y;
+        int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
+
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        WebElement dropComponentDiv = findElement( By.xpath( "//div[@id='main']" ) );
+
+        int mainDivY = dropComponentDiv.getLocation().y;
+        int mainDivX = dropComponentDiv.getLocation().x;
+
+        Robot robot = getRobot();
+
+        int xOffset = calculateOffsetX( liveEditFrameX );
+        robot.mouseMove( mainDivX + xOffset, mainDivY - 20 );
+        robot.waitForIdle();
+
+        int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY );
+        robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
+        robot.waitForIdle();
+
+        sleep( 2000 );
+        WebElement dropZoneLayout = getDriver().findElement( By.xpath( LAYOUT_DROPZONE ) );
+        builder.release( dropZoneLayout ).build().perform();
+
+        if ( componentName.equalsIgnoreCase( "layout" ) )
+        {
+            return new LayoutComponentView( getSession() );
+        }
+        if ( componentName.equalsIgnoreCase( "image" ) )
+        {
+
+            return new ImageComponentView( getSession() );
+        }
+        return null;
+    }
+
+    private int calculateOffsetY( int toolbarHeight, int liveEditFrameY )
+    {
+        WebElement mainDiv = findElement( By.xpath( "//div[@id='main']" ) );
+        int mainOffsetY = mainDiv.getSize().getHeight() / 2;
+
+        int navBarHeight = findElements( By.xpath( "//div[@id='navbar']" ) ).get( 0 ).getSize().getHeight();
+        int yOffset = toolbarHeight + navBarHeight + liveEditFrameY + mainOffsetY;
+
+        return yOffset;
+    }
+
+    private int calculateOffsetX( int liveEditFrameX )
+    {
+        WebElement mainDiv = findElement( By.xpath( "//div[@id='main']" ) );
+        int mainOffsetX = mainDiv.getSize().getWidth() / 2;
+        int xOffset = liveEditFrameX + mainOffsetX;
+
+        return xOffset;
+    }
+
+    private Robot getRobot()
+    {
+        Robot robot = null;
+        try
+        {
+            robot = new Robot();
+        }
+        catch ( AWTException e )
+        {
+            getLogger().error( "Robot mouseMove failed" );
+        }
+        return robot;
     }
 }
