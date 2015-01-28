@@ -46,7 +46,7 @@ public class TestUtils
     {
         WebDriver driver = testSession.getDriver();
         String fileName = screenshotName + ".png";
-        File folder = new File( "target/screenshots" );
+        File folder = new File( "build/screenshots" );
         if ( !folder.exists() )
         {
             if ( !folder.mkdir() )
