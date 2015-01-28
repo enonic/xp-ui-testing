@@ -179,7 +179,7 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         when: "arrow down typed 3 times"
-        userBrowsePanel.holdShiftAndPressArrow( UserBrowsePanel.BrowseItemType.SYSTEM.getValue(), 3, Keys.ARROW_DOWN );
+        userBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
         TestUtils.saveScreenshot( getTestSession(), "user_arrow_down_shift" );
 
         then: "n+1 rows are selected in the browse panel"

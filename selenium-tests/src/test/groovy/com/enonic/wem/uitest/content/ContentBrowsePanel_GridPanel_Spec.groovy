@@ -162,7 +162,7 @@ class ContentBrowsePanel_GridPanel_Spec
     }
 
 
-    def "GIVEN a Content selected WHEN arrow down is typed THEN next row is selected"()
+    def "GIVEN a selected Content  WHEN arrow down is typed THEN next row is selected"()
     {
         given:
 
@@ -177,7 +177,7 @@ class ContentBrowsePanel_GridPanel_Spec
             contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
-    def "GIVEN a Content selected WHEN arrow up is typed THEN previous row is selected"()
+    def "GIVEN a selected content WHEN arrow up is typed THEN previous row is selected"()
     {
         given:
         String name = NameHelper.uniqueName( "unstructured" );
@@ -201,7 +201,7 @@ class ContentBrowsePanel_GridPanel_Spec
             contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
-    def "GIVEN a selected and expanded folder and  WHEN arrow left is typed THEN folder becomes collapsed"()
+    def "GIVEN a selected and expanded content and  WHEN arrow left is typed THEN folder becomes collapsed"()
     {
         given: "a selected and expanded folder(content)"
         ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
@@ -216,7 +216,7 @@ class ContentBrowsePanel_GridPanel_Spec
         !contentBrowsePanel.isRowExpanded( path.toString() );
     }
 
-    def "GIVEN a selected and collapsed folder and  WHEN arrow right is typed THEN folder becomes expanded"()
+    def "GIVEN a selected and collapsed content and  WHEN arrow right is typed THEN folder becomes expanded"()
     {
         given: "a selected and collapsed folder(content)"
         ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
@@ -230,28 +230,27 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.isRowExpanded( path.toString() );
     }
 
-    def "GIVEN selected folder and WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN selected content and WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
     {
         given: "selected and collapsed folder(content)"
         ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
         contentBrowsePanel.selectContentInTable( path );
 
         when: "arrow down typed 3 times"
-        contentBrowsePanel.holdShiftAndPressArrow( path.toString(), 3, Keys.ARROW_DOWN );
+        contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
         TestUtils.saveScreenshot( getTestSession(), "content_arrow_down_shift" );
 
         then: "n+1 rows are selected in the browse panel"
         contentBrowsePanel.getSelectedRowsNumber() == 4
     }
 
-    def "GIVEN selected folder and WHEN hold a shift and arrow up is typed  3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN selected content  WHEN hold a shift and arrow up is typed  3-times THEN 4 selected rows appears in the grid "()
     {
-        given: "selected and collapsed folder"
-        ContentPath path = ContentPath.from( FOLDER_WITH_CHILD );
-        contentBrowsePanel.selectContentInTable( path );
+        given: "one content  is selected and collapsed "
+        contentBrowsePanel.clickCheckboxAndSelectRow( 4 );
 
         when: "arrow up typed 3 times"
-        contentBrowsePanel.holdShiftAndPressArrow( path.toString(), 3, Keys.ARROW_UP );
+        contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );
         TestUtils.saveScreenshot( getTestSession(), "content_arrow_up_shift" );
 
         then: "n+1 rows are selected in the browse panel"

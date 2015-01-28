@@ -32,26 +32,37 @@ public class ContentBrowsePanel
 {
     public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='Content Manager']";
 
-    protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowsePanel')]" + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
+    private final String BASE_TOOLBAR_XPATH = "//div[contains(@id,'app.browse.ContentBrowseToolbar')]";
 
-    public final String NEW_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";
+    private final String BASE_PANEL_XPATH = "//div[contains(@id,'app.browse.ContentBrowsePanel')]";
 
-    public final String DUPLICATE_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
+    protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH = BASE_PANEL_XPATH + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
 
-    public final String OPEN_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Open']]";
 
-    public final String MOVE_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Move']]";
+    private final String NEW_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";
 
-    protected final String EDIT_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Edit']]";
+    private final String DUPLICATE_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
 
-    protected final String DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'app.browse.ContentBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+    private final String OPEN_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Open']]";
+
+    private final String MOVE_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Move']]";
+
+    private final String EDIT_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Edit']]";
+
+    private final String DELETE_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+
+    private final String SORT_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Sort']]";
+
+    private final String PUBLISH_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Publish']]";
+
 
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
 
@@ -73,8 +84,14 @@ public class ContentBrowsePanel
     @FindBy(xpath = OPEN_BUTTON_XPATH)
     private WebElement openButton;
 
+    @FindBy(xpath = SORT_BUTTON_XPATH)
+    private WebElement sortButton;
+
     @FindBy(xpath = MOVE_BUTTON_XPATH)
     private WebElement moveButton;
+
+    @FindBy(xpath = PUBLISH_BUTTON_XPATH)
+    private WebElement publishButton;
 
     private ContentBrowseFilterPanel filterPanel;
 
@@ -518,5 +535,36 @@ public class ContentBrowsePanel
     {
         return newButton.isEnabled();
     }
+
+    public boolean isSortButtonEnabled()
+    {
+        return sortButton.isEnabled();
+    }
+
+    public boolean isDuplicateButtonEnabled()
+    {
+        return duplicateButton.isEnabled();
+    }
+
+    public boolean isMoveButtonEnabled()
+    {
+        return moveButton.isEnabled();
+    }
+
+    public boolean isEditButtonEnabled()
+    {
+        return editButton.isEnabled();
+    }
+
+    public boolean isPublishButtonEnabled()
+    {
+        return publishButton.isEnabled();
+    }
+
+    public boolean isOpenButtonEnabled()
+    {
+        return openButton.isEnabled();
+    }
+
 
 }

@@ -186,7 +186,7 @@ public abstract class BrowsePanel
         }
     }
 
-    private Set<String> getSelectedGridItemNames()
+    public Set<String> getSelectedGridItemNames()
     {
         List<WebElement> rows =
             findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[@class='sub-name']" ) );
@@ -343,9 +343,10 @@ public abstract class BrowsePanel
         return this;
     }
 
-    public BrowsePanel holdShiftAndPressArrow( String itemName, int number, Keys key )
+
+    public BrowsePanel holdShiftAndPressArrow( int number, Keys key )
     {
-        sleep( 5000 );
+        sleep( 1000 );
         Actions action = new Actions( getDriver() );
         List<CharSequence> list = new ArrayList<>( number );
         for ( int i = 0; i < number; i++ )
@@ -498,4 +499,42 @@ public abstract class BrowsePanel
 
         return (T) this;
     }
+
+    public <T extends BrowsePanel> T clickCheckboxAndSelectRow( int number )
+    {
+
+        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
+        if ( elements.size() == 0 )
+        {
+            throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
+        }
+
+        findElements( By.xpath(
+            "//div[@class='grid-canvas']//div[contains(@class,'slick-row')]//div[contains(@class,'slick-cell-checkboxsel')]/label" ) ).get(
+            number ).click();
+        sleep( 200 );
+
+        return (T) this;
+    }
+
+    public BrowsePanel pressKeyOnRow( int number, Keys key )
+    {
+        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
+        if ( elements.size() == 0 )
+        {
+            throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
+        }
+
+        WebElement element = findElements( By.xpath( "//div[@class='grid-canvas']//div[contains(@class,'slick-row')]" ) ).get( number );
+
+        // findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
+        ////div[contains(@class,'slick-cell-checkboxsel')]/label
+        Actions actions = new Actions( getDriver() );
+        actions.moveToElement( element );
+        actions.sendKeys( key );
+        actions.build().perform();
+        sleep( 500 );
+        return this;
+    }
+
 }
