@@ -78,11 +78,13 @@ public class ContentWizardPanel
 
     public ContextWindow showContextWindow()
     {
+        TestUtils.saveScreenshot( getSession(), "show_contwindow1" );
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.isContextWindowPresent() )
         {
             toolbarShowContextWindow.click();
             cw.waitUntilWindowLoaded( 1l );
+            TestUtils.saveScreenshot( getSession(), "show_contwindow2" );
         }
 
         return cw;
