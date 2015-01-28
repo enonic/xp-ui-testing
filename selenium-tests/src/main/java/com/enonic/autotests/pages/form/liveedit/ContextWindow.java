@@ -74,8 +74,8 @@ public class ContextWindow
         {
             throw new TestFrameworkException( "Insert link was not found on the ContextWindow!" );
         }
-        findElement( By.xpath( insertButtonXpath ) ).click();
-        sleep( 3000 );
+        findElements( By.xpath( insertButtonXpath ) ).get( 0 ).click();
+        sleep( 1000 );
         return this;
     }
 
