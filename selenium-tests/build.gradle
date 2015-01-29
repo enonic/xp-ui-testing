@@ -53,7 +53,7 @@ task installModules( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
     scanForTestClasses = true
     exclude '**/*Spec.class'
     exclude '**/*Suite.*'
-    include '**/InstallModules.class'
+    include '**/InstallXeonModule.class'
 }
 
 tasks.withType( Test ) {
@@ -68,7 +68,7 @@ task testEmbedded( type: Test, dependsOn: [startServer, installModules, clearDat
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
-    exclude '**/InstallModules.class'
+    exclude '**/InstallXeonModule.class'
     exclude '**/*Suite.*'
     forkEvery = null
 }
