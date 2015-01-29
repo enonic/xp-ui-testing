@@ -77,6 +77,9 @@ public class UserBrowsePanel
     @FindBy(xpath = DUPLICATE_BUTTON_XPATH)
     private WebElement duplicateButton;
 
+    @FindBy(xpath = SYNCH_BUTTON_XPATH)
+    private WebElement synchButton;
+
     /**
      * The Constructor
      *
@@ -213,6 +216,11 @@ public class UserBrowsePanel
     public boolean isDuplicateEnabled()
     {
         return duplicateButton.isEnabled();
+    }
+
+    public boolean isSynchEnabled()
+    {
+        return synchButton.isEnabled();
     }
 
 

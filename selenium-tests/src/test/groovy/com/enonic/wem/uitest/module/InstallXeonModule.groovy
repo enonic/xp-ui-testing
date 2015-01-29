@@ -6,7 +6,7 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
-class InstallModules
+class InstallXeonModule
     extends BaseGebSpec
 {
     @Shared

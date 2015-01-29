@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.module
 
+import com.enonic.autotests.pages.modules.InstallModuleDialog
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
@@ -18,6 +19,11 @@ class ModuleBrowsePanel_GridPanel_Spec
     @Shared
     String XEON_MODULE_NAME = "com.enonic.wem.modules.xeon";
 
+    @Shared
+    String TEST_MODULE_NAME = "com.enonic.xp.ui-testing.first-module";
+
+    @Shared
+    String TEST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.0-SNAPSHOT";
 
     def setup()
     {
@@ -105,6 +111,16 @@ class ModuleBrowsePanel_GridPanel_Spec
 
         then:
         moduleBrowsePanel.getSelectedRowsNumber() == 1 && !namesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
+    }
+
+    def "WHEN  install dialog opened and module string typed THEN new module appears in the grid"()
+    {
+        when: "url typed and 'Install' button "
+        InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
+        moduleBrowsePanel = dialog.typeModuleURL( TEST_MODULE_URL ).clickOnInstall();
+
+        then: "new module exists in the browse panel "
+        moduleBrowsePanel.exists( TEST_MODULE_NAME, true );
     }
 
 

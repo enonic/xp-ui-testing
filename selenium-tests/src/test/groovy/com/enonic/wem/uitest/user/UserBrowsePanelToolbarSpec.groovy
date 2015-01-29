@@ -32,16 +32,31 @@ class UserBrowsePanelToolbarSpec
         userBrowsePanel.isNewButtonEnabled();
     }
 
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Edit' button should be enabled"()
+    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Edit' button should be disabled"()
     {
 
         expect:
         !userBrowsePanel.isEditButtonEnabled();
     }
 
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Duplicate' button should be enabled"()
+    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Duplicate' button should be disabled"()
     {
         expect:
-        !userBrowsePanel.isEditButtonEnabled();
+        !userBrowsePanel.isDuplicateEnabled();
+    }
+
+    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Synch' button should be disabled"()
+    {
+        expect:
+        !userBrowsePanel.isSynchEnabled();
+    }
+
+    def "GIVEN user BrowsePanel WHEN 'System' folder selected THEN 'Edit' button should be enabled"()
+    {
+        when:
+        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+
+        then:
+        userBrowsePanel.isEditButtonEnabled();
     }
 }
