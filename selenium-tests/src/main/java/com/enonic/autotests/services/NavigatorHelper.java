@@ -13,6 +13,7 @@ import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.ApplicationUser;
 
 public class NavigatorHelper
@@ -84,6 +85,7 @@ public class NavigatorHelper
         {
 
             HomePage home = loginAndOpenHomePage( testSession );
+            TestUtils.saveScreenshot( testSession, "homepage" );
             ModuleBrowsePanel userBrowsePanel = home.openModulesApplication();
             return userBrowsePanel;
         }
