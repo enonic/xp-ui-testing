@@ -44,7 +44,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
             parent( ContentPath.ROOT ).
             build();
         String archiveName = NameHelper.uniqueName( "child" );
-        Content unstructuredContent = Content.builder().
+        Content unstructuredChildContent = Content.builder().
             name( archiveName ).
             displayName( "childContent" ).
             contentType( ContentTypeName.unstructured() ).
@@ -59,16 +59,16 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
 
         and: "add new child content beneath the parent"
         contentBrowsePanel.selectContentInTable( parentContent.getPath() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( unstructuredContent.getContentTypeName() ).typeData(
-            unstructuredContent ).save().close( unstructuredContent.getDisplayName() );
-        getTestSession().put( UNSTRUCTURED_CHILD_CONTENT, unstructuredContent );
+        contentBrowsePanel.clickToolbarNew().selectContentType( unstructuredChildContent.getContentTypeName() ).typeData(
+            unstructuredChildContent ).save().close( unstructuredChildContent.getDisplayName() );
+        getTestSession().put( UNSTRUCTURED_CHILD_CONTENT, unstructuredChildContent );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
 
         contentBrowsePanel.expandContent( parentContent.getPath() );
         List<Content> contents = new ArrayList<>();
         contents.add( parentContent );
-        contents.add( unstructuredContent );
+        contents.add( unstructuredChildContent );
         contentBrowsePanel.selectContentInTable( contents );
 
         when: "un expand a parent content "
@@ -76,7 +76,8 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
 
         then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items, but only one row is selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
-        selectedNames.contains( "parentContent" ) && selectedNames.contains( "childContent" ) && selectedNames.size() == 2 &&
+        selectedNames.contains( parentContent.getDisplayName() ) && selectedNames.contains( unstructuredChildContent.getDisplayName() ) &&
+            selectedNames.size() == 2 &&
             contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 

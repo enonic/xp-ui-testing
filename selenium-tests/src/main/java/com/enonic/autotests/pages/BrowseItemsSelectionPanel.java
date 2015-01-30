@@ -19,8 +19,9 @@ public abstract class BrowseItemsSelectionPanel
 
     protected String ALL_SELECTED_ITEMS;
 
-    protected String SELECTED_ITEM_NAME;
+    protected String SELECTED_ITEM_NAME = "//p[@class='sub-name']";
 
+    protected String SELECTED_ITEM_DISPLAY_NAME = "//h6[@class='main-name']";
 
     public BrowseItemsSelectionPanel( final TestSession session )
     {
@@ -41,6 +42,17 @@ public abstract class BrowseItemsSelectionPanel
             return Collections.emptyList();
         }
         List<WebElement> h6Elements = getDriver().findElements( By.xpath( ALL_SELECTED_ITEMS + SELECTED_ITEM_NAME ) );
+        return h6Elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
+
+    }
+
+    public List<String> getSelectedItemDisplayNames()
+    {
+        if ( !isVisible() )
+        {
+            return Collections.emptyList();
+        }
+        List<WebElement> h6Elements = getDriver().findElements( By.xpath( ALL_SELECTED_ITEMS + SELECTED_ITEM_DISPLAY_NAME ) );
         return h6Elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
 
     }
