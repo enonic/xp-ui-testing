@@ -19,11 +19,11 @@ driver = {
 
     }
 
-    //def driver = new ChromeDriver()
-    def driver = new FirefoxDriver()
+    def driver = new ChromeDriver()
+    //def driver = new FirefoxDriver()
 
-    FirefoxProfile profile = new FirefoxProfile();
-    profile.setEnableNativeEvents( true );
+    //FirefoxProfile profile = new FirefoxProfile();
+    //profile.setEnableNativeEvents( true );
     // def driver = new FirefoxDriver( profile );
     //driver.setLogLevel(Level.INFO)
     driver.manage().window().maximize()
