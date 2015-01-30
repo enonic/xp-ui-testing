@@ -11,7 +11,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class ContentBrowseItemsSelectionPanel_ShoppingCart
+class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     extends BaseGebSpec
 {
     private final PARENT_ROOT_FOLDER = "parent_content"
