@@ -17,7 +17,8 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
 
 
     @Shared
-    String XEON_MODULE_NAME = "com.enonic.wem.modules.xeon";
+    String DEMO_MODULE_NAME = "com.enonic.wem.modules.demo";
+    // String XEON_MODULE_NAME = "com.enonic.wem.modules.xeon";
 
     @Shared
     String TEST_MODULE_NAME = "com.enonic.xp.ui-testing.first-module";
@@ -53,7 +54,7 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN one selected module WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
         given: " there is a one selected module"
-        moduleBrowsePanel.clickAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickAndSelectRow( DEMO_MODULE_NAME );
 
         when: "selected a one more module"
         moduleBrowsePanel.clickCheckboxAndSelectRow( TEST_MODULE_NAME );
@@ -64,11 +65,11 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN two selected module WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
         given: " there is a two selected module"
-        moduleBrowsePanel.clickAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickAndSelectRow( XSLT_MODULE_NAME );
 
         when: "selected a one more module"
         moduleBrowsePanel.clickCheckboxAndSelectRow( TEST_MODULE_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( XSLT_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( DEMO_MODULE_NAME );
 
         then: "three SelectionItem-s are listed"
         itemsSelectionPanel.getSelectedItemCount() == 3;
@@ -79,10 +80,10 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
         given: "there are three selected module in browse panel"
         moduleBrowsePanel.clickCheckboxAndSelectRow( TEST_MODULE_NAME );
         moduleBrowsePanel.clickCheckboxAndSelectRow( XSLT_MODULE_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( DEMO_MODULE_NAME );
 
         when: "one module was deselected"
-        moduleBrowsePanel.deSelectModuleInTable( XEON_MODULE_NAME );
+        moduleBrowsePanel.deSelectModuleInTable( DEMO_MODULE_NAME );
 
         then: "only two items are listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;
@@ -92,11 +93,11 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
     def "WHEN two selected module  THEN two SelectionItem-s with the same name are listed"()
     {
         when: "two module are selected"
-        moduleBrowsePanel.clickCheckboxAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( DEMO_MODULE_NAME );
         moduleBrowsePanel.clickCheckboxAndSelectRow( TEST_MODULE_NAME );
 
         then: "three SelectionItem-s are listed"
         List actualNames = itemsSelectionPanel.getSelectedItemNames();
-        actualNames.size() == 2 && actualNames.contains( TEST_MODULE_NAME ) && actualNames.contains( XEON_MODULE_NAME );
+        actualNames.size() == 2 && actualNames.contains( TEST_MODULE_NAME ) && actualNames.contains( DEMO_MODULE_NAME );
     }
 }
