@@ -16,19 +16,45 @@ class ModuleBrowsePanel_GridPanel_Spec
     @Shared
     ModuleBrowsePanel moduleBrowsePanel;
 
-    @Shared
-    String XEON_MODULE_NAME = "com.enonic.wem.modules.xeon";
 
     @Shared
-    String TEST_MODULE_NAME = "com.enonic.xp.ui-testing.first-module";
+    String TEST1_MODULE_NAME = "com.enonic.xp.ui-testing.first-module";
 
     @Shared
-    String TEST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.0-SNAPSHOT";
+    String TEST1_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.0-SNAPSHOT";
+
+
+    @Shared
+    String TEST2_MODULE_URL = "mvn:com.enonic.xp.ui-testing/all-contenttypes/5.0.0-SNAPSHOT";
+
+    @Shared
+    String TEST2_MODULE_NAME = "com.enonic.xp.ui-testing.all-contenttypes";
+
 
     def setup()
     {
         go "admin"
         moduleBrowsePanel = NavigatorHelper.openModules( getTestSession() );
+    }
+
+    def "WHEN first tests module added THEN new module appears in the grid"()
+    {
+        when: "url typed and 'Install' button "
+        InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
+        moduleBrowsePanel = dialog.typeModuleURL( TEST1_MODULE_URL ).clickOnInstall();
+
+        then: "new module exists in the browse panel "
+        moduleBrowsePanel.exists( TEST1_MODULE_NAME, true );
+    }
+
+    def "WHEN second module added THEN new module appears in the grid"()
+    {
+        when: "url typed and 'Install' button "
+        InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
+        moduleBrowsePanel = dialog.typeModuleURL( TEST2_MODULE_URL ).clickOnInstall();
+
+        then: "new module exists in the browse panel "
+        moduleBrowsePanel.exists( TEST2_MODULE_NAME, true );
     }
 
     def "GIVEN modules listed on root WHEN no selection THEN all rows are white"()
@@ -47,7 +73,7 @@ class ModuleBrowsePanel_GridPanel_Spec
         int before = moduleBrowsePanel.getSelectedRowsNumber();
 
         when:
-        moduleBrowsePanel.clickCheckboxAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( TEST1_MODULE_NAME );
 
         then:
         moduleBrowsePanel.getSelectedRowsNumber() == 1 && before == 0;
@@ -57,11 +83,11 @@ class ModuleBrowsePanel_GridPanel_Spec
     {
         given:
 
-        moduleBrowsePanel.clickCheckboxAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( TEST1_MODULE_NAME );
         TestUtils.saveScreenshot( getTestSession(), "modulespacebartest1" );
 
         when:
-        moduleBrowsePanel.pressKeyOnRow( XEON_MODULE_NAME, Keys.SPACE );
+        moduleBrowsePanel.pressKeyOnRow( TEST1_MODULE_NAME, Keys.SPACE );
 
         then:
         TestUtils.saveScreenshot( getTestSession(), "modulespacebartest2" );
@@ -71,7 +97,7 @@ class ModuleBrowsePanel_GridPanel_Spec
     def "GIVEN a selected module  WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
     {
         given:
-        moduleBrowsePanel.clickCheckboxAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( TEST1_MODULE_NAME );
         int before = moduleBrowsePanel.getSelectedRowsNumber();
 
         when:
@@ -112,17 +138,6 @@ class ModuleBrowsePanel_GridPanel_Spec
         then:
         moduleBrowsePanel.getSelectedRowsNumber() == 1 && !namesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
     }
-
-    def "WHEN  install dialog opened and module string typed THEN new module appears in the grid"()
-    {
-        when: "url typed and 'Install' button "
-        InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
-        moduleBrowsePanel = dialog.typeModuleURL( TEST_MODULE_URL ).clickOnInstall();
-
-        then: "new module exists in the browse panel "
-        moduleBrowsePanel.exists( TEST_MODULE_NAME, true );
-    }
-
 
     def "GIVEN a selected module  WHEN arrow up is typed THEN previous row is selected"()
     {
