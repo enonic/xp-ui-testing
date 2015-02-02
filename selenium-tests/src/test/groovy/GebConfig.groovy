@@ -1,3 +1,4 @@
+import org.openqa.selenium.Platform
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
@@ -8,27 +9,40 @@ import java.util.logging.Level
 driver = {
 
     def path = System.getProperty( "webdriver.chrome.driver" )
-    if(path == null){
+    if ( path == null )
+    {
         println "specify a path to chrome webdriver:"
         Properties props = new Properties()
         File propsFile = new File( 'tests.properties' )
         props.load( propsFile.newDataInputStream() )
-
-        def pathToDriver = props.getProperty( 'chromedriver.path' )
-        System.setProperty( "webdriver.chrome.driver", pathToDriver )
-
+        def pathToDriver;
+        if ( Platform.current.is( Platform.WINDOWS ) )
+        {
+            pathToDriver = props.getProperty( 'windows.chromedriver.path' )
+        }
+    }
+    else if ( Platform.current.is( Platform.LINUX ) )
+    {
+        pathToDriver = props.getProperty( 'linux.chromedriver.path' )
+    }
+    else
+    {
+        throw new RuntimeException( "Unsupported operating system [${Platform.current}]" )
     }
 
-    def driver = new ChromeDriver()
-    //def driver = new FirefoxDriver()
+    System.setProperty( "webdriver.chrome.driver", pathToDriver )
+}
 
-    //FirefoxProfile profile = new FirefoxProfile();
-    //profile.setEnableNativeEvents( true );
-    // def driver = new FirefoxDriver( profile );
-    //driver.setLogLevel(Level.INFO)
-    driver.manage().window().maximize()
-    println "default configuration"
-    return driver
+def driver = new ChromeDriver()
+//def driver = new FirefoxDriver()
+
+//FirefoxProfile profile = new FirefoxProfile();
+//profile.setEnableNativeEvents( true );
+// def driver = new FirefoxDriver( profile );
+//driver.setLogLevel(Level.INFO)
+driver.manage().window().maximize()
+println "default configuration"
+return driver
 }
 // Set reports directory
 reportsDir = 'build/geb-reports'
@@ -51,7 +65,8 @@ environments {
     chrome {
         driver = {
             def path = System.getProperty( "webdriver.chrome.driver" )
-            if(path == null){
+            if ( path == null )
+            {
                 println "specify a path to chrome webdriver"
                 Properties props = new Properties()
                 File propsFile = new File( 'tests.properties' )
