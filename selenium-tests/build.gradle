@@ -24,7 +24,8 @@ test {
 
 }
 
-task buildModules( dependsOn: [':test-modules:first-module:install', ':test-modules:xeon:install'] )
+task buildModules(
+    dependsOn: [':test-modules:first-module:install', ':test-modules:xeon:install', ':test-modules:all-contenttypes:install'] )
 
 task startServer << {
     logging.captureStandardOutput LogLevel.INFO
