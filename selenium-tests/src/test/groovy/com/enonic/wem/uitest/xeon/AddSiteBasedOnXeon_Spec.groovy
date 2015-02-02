@@ -1,4 +1,4 @@
-package com.enonic.wem.uitest.content
+package com.enonic.wem.uitest.xeon
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -32,6 +32,7 @@ class AddSiteBasedOnXeon_Spec
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
+
 
     def "GIVEN creating new Site based on Xeon on root WHEN saved and wizard closed THEN new site should be listed"()
     {

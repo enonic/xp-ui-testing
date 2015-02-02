@@ -22,7 +22,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContextWindow
     extends Application
 {
-    private final String DIV_CONTEXT_WINDOW = "//div[contains(@id,'app.wizard.page.contextwindow.ContextWindow')]";
+    private final String DIV_CONTEXT_WINDOW =
+        "//div[contains(@id,'app.wizard.page.contextwindow.ContextWindow') and not(contains(@class,'hidden'))]";
 
     private final String DIV_DROP = "//div[@class='live-edit-drop-target-placeholder']";
 

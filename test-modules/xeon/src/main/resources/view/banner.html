@@ -1,0 +1,18 @@
+<section data-th-attr="data-live-edit-type=${component.type}" id="main-slider" class="carousel">
+    <div class="carousel-inner">
+        <div class="item" data-th-each="slide, iterStat : ${slides}" data-th-class="${iterStat.index == 0}? 'item active' : 'item'">
+            <div class="container">
+                <div class="carousel-content">
+                    <h1 data-th-text="${slide.header}">Free Onepage Theme</h1>
+
+                    <p class="lead" data-th-text="${slide.subtitle}">Xeon is the best free one-page responsive theme available around the
+                        globe<br/>Download it right now for free</p>
+                </div>
+            </div>
+        </div>
+        <!--/.item-->
+    </div>
+    <!--/.carousel-inner-->
+    <a class="prev" href="#main-slider" data-slide="prev"><i class="icon-angle-left"></i></a>
+    <a class="next" href="#main-slider" data-slide="next"><i class="icon-angle-right"></i></a>
+</section><!--/#main-slider-->

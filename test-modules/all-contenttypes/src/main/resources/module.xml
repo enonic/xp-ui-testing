@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <display-name>Selenium all conten types module</display-name>
+  <info>Selenium Testing Module</info>
+  <url>http://shapebootstrap.net/</url>
+  <vendor>
+    <name>Enonic AS</name>
+    <url>http://www.enonic.com</url>
+  </vendor>
+  <dependencies system-min-version="5.0.0" system-max-version="6.0.0"/>
+  <metadata-schemas>
+    <metadata-schema name="system:menu"/>
+  </metadata-schemas>
+  <config>
+    <field-set name="info">
+      <label>Info</label>
+      <items>
+        <input type="ImageSelector" name="logo">
+          <label>Logo</label>
+          <immutable>false</immutable>
+          <indexed>false</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <relationship-type>system:related-image</relationship-type>
+          </config>
+        </input>
+        <input type="TextArea" name="description">
+          <label>Description</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="TextLine" name="company">
+          <label>Company</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="TextLine" name="mail">
+          <label>E-mail</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+      </items>
+    </field-set>
+    <field-set name="locations">
+      <label>Locations</label>
+      <items>
+        <form-item-set name="location">
+          <label>Location</label>
+          <immutable>false</immutable>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="0"/>
+          <items>
+            <input type="TextLine" name="label">
+              <label>Label</label>
+              <immutable>false</immutable>
+              <indexed>false</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="TextLine" name="street">
+              <label>Street</label>
+              <immutable>false</immutable>
+              <indexed>true</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="TextLine" name="city">
+              <label>City</label>
+              <immutable>false</immutable>
+              <indexed>true</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="TextLine" name="zip">
+              <label>Zip code</label>
+              <immutable>false</immutable>
+              <indexed>true</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="TextLine" name="country">
+              <label>Country</label>
+              <immutable>false</immutable>
+              <indexed>true</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+            <input type="TextLine" name="phone">
+              <label>Phone</label>
+              <immutable>false</immutable>
+              <indexed>true</indexed>
+              <custom-text/>
+              <help-text/>
+              <occurrences minimum="1" maximum="1"/>
+            </input>
+          </items>
+        </form-item-set>
+      </items>
+    </field-set>
+    <field-set name="social">
+      <label>Social</label>
+      <items>
+        <input type="TextLine" name="twitter">
+          <label>Twitter</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="facebook">
+          <label>Facebook</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="linkedin">
+          <label>LinkedIn</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="google">
+          <label>Google +</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="pintrest">
+          <label>Pintrest</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="youtube">
+          <label>Youtube</label>
+          <immutable>false</immutable>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+      </items>
+    </field-set>
+    <input type="TextLine" name="copyright">
+      <label>Copyright</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <custom-text/>
+      <help-text/>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+  </config>
+</module>

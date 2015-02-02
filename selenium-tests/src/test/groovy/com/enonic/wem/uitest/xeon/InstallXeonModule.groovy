@@ -1,4 +1,4 @@
-package com.enonic.wem.uitest.module
+package com.enonic.wem.uitest.xeon
 
 import com.enonic.autotests.pages.modules.InstallModuleDialog
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel

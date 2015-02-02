@@ -1,2 +1,4 @@
 include ':test-modules:first-module'
+include ':test-modules:xeon'
+include ':test-modules:all-contenttypes'
 include ':selenium-tests'

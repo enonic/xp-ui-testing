@@ -24,7 +24,7 @@ test {
 
 }
 
-task buildModules(dependsOn: [':test-modules:first-module:install'])
+task buildModules( dependsOn: [':test-modules:first-module:install', ':test-modules:xeon:install'] )
 
 task startServer << {
     logging.captureStandardOutput LogLevel.INFO
@@ -39,14 +39,15 @@ task stopServer << {
     startServer.karafServer.stop()
 }
 
-task clearData( type: Test, dependsOn: ['installModules'] ) {
+//task clearData( type: Test, dependsOn: ['installModules'] ) {
+task clearData( type: Test, dependsOn: ['startServer'] ) {
     scanForTestClasses = true
     exclude '**/*Spec.class'
     exclude '**/*Suite.*'
     include '**/CleanAndInitializeData.class'
 }
 
-task installModules( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
+task installXeon( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
 
     scanForTestClasses = true
     exclude '**/*Spec.class'
@@ -62,12 +63,23 @@ tasks.withType( Test ) {
         displayGranularity = 0
     }
 }
-task testEmbedded( type: Test, dependsOn: [startServer, installModules, clearData] ) {
+task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
-    exclude '**/InstallXeonModule.class'
-    exclude '**/*Suite.*'
+    exclude '**/xeon/**'
+    forkEvery = null
+}
+
+task testXeonLiveEdit( type: Test, dependsOn: [startServer, installXeon, clearData] ) {
+    scanForTestClasses = false
+    include '**/xeon/*Spec.class'
+
+    exclude '**/CleanAndInitializeData.class'
+    exclude '**/xeon/InstallXeonModule.class'
+    exclude '**/content/**'
+    exclude '**/module/**'
+    exclude '**/user/**'
     forkEvery = null
 }
 testEmbedded.finalizedBy = [stopServer]
