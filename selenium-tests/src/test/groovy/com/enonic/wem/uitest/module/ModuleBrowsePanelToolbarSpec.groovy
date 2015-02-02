@@ -12,7 +12,7 @@ class ModuleBrowsePanelToolbarSpec
     ModuleBrowsePanel moduleBrowsePanel;
 
     @Shared
-    String XEON_MODULE_NAME = "com.enonic.wem.modules.xeon";
+    String FEATURES_MODULE_NAME = "com.enonic.wem.modules.features";
 
 
     def setup()
@@ -54,7 +54,7 @@ class ModuleBrowsePanelToolbarSpec
     def "GIVEN Module BrowsePanel WHEN one selected started module THEN Stop button should be enabled"()
     {
         when: " one module selected in the table"
-        moduleBrowsePanel.clickAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickAndSelectRow( FEATURES_MODULE_NAME );
 
         then: "Stop button becomes enabled"
         moduleBrowsePanel.isStopButtonEnabled();
@@ -63,7 +63,7 @@ class ModuleBrowsePanelToolbarSpec
     def "GIVEN Module BrowsePanel WHEN one selected started module THEN Update button should be enabled"()
     {
         when: " one module selected in the table"
-        moduleBrowsePanel.clickAndSelectRow( XEON_MODULE_NAME );
+        moduleBrowsePanel.clickAndSelectRow( FEATURES_MODULE_NAME );
 
         then: "Update button becomes enabled"
         moduleBrowsePanel.isUpdateButtonEnabled();
