@@ -31,18 +31,18 @@ driver = {
     }
 
     System.setProperty( "webdriver.chrome.driver", pathToDriver )
-}
 
-def driver = new ChromeDriver()
+
+    def driver = new ChromeDriver()
 //def driver = new FirefoxDriver()
 
 //FirefoxProfile profile = new FirefoxProfile();
 //profile.setEnableNativeEvents( true );
 // def driver = new FirefoxDriver( profile );
 //driver.setLogLevel(Level.INFO)
-driver.manage().window().maximize()
-println "default configuration"
-return driver
+    driver.manage().window().maximize()
+    println "default configuration"
+    return driver
 }
 // Set reports directory
 reportsDir = 'build/geb-reports'
