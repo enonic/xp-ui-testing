@@ -45,7 +45,7 @@ public class NewContentDialog
 
     private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
 
-    private final String UPLOAD_FILE_BUTTON = "//a[@class='dropzone']";
+    private final String UPLOAD_FILE_BUTTON = "//a[contains(@id,'image-uploader-dropzone') and @class='dropzone']";
 
     @FindBy(xpath = UPLOAD_FILE_BUTTON)
     private WebElement uploadButton;
