@@ -52,7 +52,6 @@ task installXeon( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
 
     scanForTestClasses = true
     exclude '**/*Spec.class'
-    exclude '**/*Suite.*'
     include '**/InstallXeonModule.class'
 }
 
@@ -69,6 +68,7 @@ task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
     exclude '**/xeon/**'
+    include '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
 
@@ -81,6 +81,17 @@ task testXeonLiveEdit( type: Test, dependsOn: [startServer, installXeon, clearDa
     exclude '**/content/**'
     exclude '**/module/**'
     exclude '**/user/**'
+    forkEvery = null
+}
+
+task testUploadContent( type: Test, dependsOn: [clearData] ) {
+    scanForTestClasses = false
+    exclude '**/xeon/*Spec.class'
+    exclude '**/CleanAndInitializeData.class'
+    exclude '**/xeon/**'
+    exclude '**/module/**'
+    exclude '**/user/**'
+    include '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
 testEmbedded.finalizedBy = [stopServer]
