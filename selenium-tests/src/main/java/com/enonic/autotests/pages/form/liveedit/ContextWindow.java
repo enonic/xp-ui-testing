@@ -113,8 +113,6 @@ public class ContextWindow
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         if ( componentName.equalsIgnoreCase( "layout" ) )
         {
-
-            // liveFormPanel.setLayoutComponentView( new LayoutComponentView( getSession() ) );
             return new LayoutComponentView( getSession() );
         }
         if ( componentName.equalsIgnoreCase( "image" ) )
@@ -125,7 +123,7 @@ public class ContextWindow
         return null;
     }
 
-    public UIComponent addComponentByDragAndDrop( String componentName, String regionXpath )
+    public UIComponent addComponentByDragAndDrop( String componentName, String regionXpath, String... headers )
     {
         String gridItem = String.format( GRID_ITEM, componentName );
         WebElement componentForDrag = findElements( By.xpath( gridItem ) ).get( 0 );
@@ -139,7 +137,7 @@ public class ContextWindow
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        WebElement dropComponentDiv = findElement( By.xpath( "//div[@id='main']" ) );
+        WebElement dropComponentDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
 
         int mainDivY = dropComponentDiv.getLocation().y;
         int mainDivX = dropComponentDiv.getLocation().x;
@@ -150,7 +148,7 @@ public class ContextWindow
         robot.mouseMove( mainDivX + xOffset, mainDivY - 20 );
         robot.waitForIdle();
 
-        int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY );
+        int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
         robot.waitForIdle();
 
@@ -170,20 +168,24 @@ public class ContextWindow
         return null;
     }
 
-    private int calculateOffsetY( int toolbarHeight, int liveEditFrameY )
+    private int calculateOffsetY( int toolbarHeight, int liveEditFrameY, String... elements )
     {
-        WebElement mainDiv = findElement( By.xpath( "//div[@id='main']" ) );
+        WebElement mainDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
         int mainOffsetY = mainDiv.getSize().getHeight() / 2;
+        int height = 0;
+        for ( int i = 0; i < elements.length; i++ )
+        {
+            height += findElements( By.xpath( elements[i] ) ).get( 0 ).getSize().getHeight();
+        }
 
-        int navBarHeight = findElements( By.xpath( "//div[@id='navbar']" ) ).get( 0 ).getSize().getHeight();
-        int yOffset = toolbarHeight + navBarHeight + liveEditFrameY + mainOffsetY;
+        int yOffset = toolbarHeight + height + liveEditFrameY + mainOffsetY;
 
         return yOffset;
     }
 
     private int calculateOffsetX( int liveEditFrameX )
     {
-        WebElement mainDiv = findElement( By.xpath( "//div[@id='main']" ) );
+        WebElement mainDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
         int mainOffsetX = mainDiv.getSize().getWidth() / 2;
         int xOffset = liveEditFrameX + mainOffsetX;
 

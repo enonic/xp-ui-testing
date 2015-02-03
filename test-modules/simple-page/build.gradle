@@ -1,0 +1,9 @@
+apply plugin: 'module'
+
+module {
+    displayName = 'Simple Site Module'
+}
+
+dependencies {
+    compile 'com.enonic.xp:core-api:5.0.0-SNAPSHOT'
+}

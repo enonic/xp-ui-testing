@@ -25,7 +25,7 @@ test {
 }
 
 task buildModules(
-    dependsOn: [':test-modules:first-module:install', ':test-modules:xeon:install', ':test-modules:all-contenttypes:install'] )
+    dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:all-contenttypes:install'] )
 
 task startServer << {
     logging.captureStandardOutput LogLevel.INFO
@@ -48,11 +48,11 @@ task clearData( type: Test, dependsOn: ['startServer'] ) {
     include '**/CleanAndInitializeData.class'
 }
 
-task installXeon( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
+task installSimpleSiteModule( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
 
     scanForTestClasses = true
     exclude '**/*Spec.class'
-    include '**/InstallXeonModule.class'
+    include '**/liveedit/InstallSimpleSiteModule.class'
 }
 
 tasks.withType( Test ) {
@@ -67,32 +67,29 @@ task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
-    exclude '**/xeon/**'
     exclude '**/content/ContentUploadSpec.class'
+    exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
 }
 
-task testXeonLiveEdit( type: Test, dependsOn: [startServer, installXeon, clearData] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: ['startServer', 'installSimpleSiteModule', 'clearData'] ) {
     scanForTestClasses = false
-    include '**/xeon/*Spec.class'
+    include '**/liveedit/*Spec.class'
 
     exclude '**/CleanAndInitializeData.class'
-    exclude '**/xeon/InstallXeonModule.class'
     exclude '**/content/**'
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
 }
 
-task testUploadContent( type: Test, dependsOn: [clearData] ) {
+task testUploadContent( type: Test, dependsOn: ['clearData'] ) {
     scanForTestClasses = false
-    exclude '**/xeon/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
-    exclude '**/xeon/**'
     exclude '**/module/**'
     exclude '**/user/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
-testEmbedded.finalizedBy = [stopServer]
+testEmbedded.finalizedBy = ['stopServer']
 

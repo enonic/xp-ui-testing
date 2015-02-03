@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -30,8 +31,23 @@ public class LayoutComponentView
     {
         optionFilterInput.sendKeys( layoutName );
         sleep( 200 );
+        if ( !isLayoutExists( layoutName ) )
+        {
+            throw new TestFrameworkException( "The layout with name: " + layoutName + "  was not found!" );
+        }
+        clickOnOptionsItem( layoutName );
+        return new LiveFormPanel( getSession() );
+    }
+
+    private boolean isLayoutExists( String layoutName )
+    {
+        return findElements( By.xpath( COMPONENT_CONTAINER + String.format(
+            "//div[contains(@id,'api.app.NamesAndIconView')]//h6[@class='main-name' and text()='%s']", layoutName ) ) ).size() > 0;
+    }
+
+    private void clickOnOptionsItem( String layoutName )
+    {
         findElements( By.xpath( COMPONENT_CONTAINER + String.format(
             "//div[contains(@id,'api.app.NamesAndIconView')]//h6[@class='main-name' and text()='%s']", layoutName ) ) ).get( 0 ).click();
-        return new LiveFormPanel( getSession() );
     }
 }

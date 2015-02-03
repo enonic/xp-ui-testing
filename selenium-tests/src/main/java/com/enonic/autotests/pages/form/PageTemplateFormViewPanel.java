@@ -59,8 +59,9 @@ public class PageTemplateFormViewPanel
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         //do filter options:
         findElements( By.xpath( "//input[@id='api.ui.selector.dropdown.DropdownOptionFilterInput']" ) ).get( 0 ).sendKeys( pageName );
-        //select a 'Main page'
-        findElements( By.xpath( "//div[@id='api.content.page.PageDescriptorDropdown']//h6[@title='Main page']" ) ).get( 0 ).click();
+        //select a 'page name'
+        String pageItemXpath = String.format( "//div[@id='api.content.page.PageDescriptorDropdown']//h6[@title='%s']", pageName );
+        findElements( By.xpath( pageItemXpath ) ).get( 0 ).click();
 
         NavigatorHelper.switchToContentManagerFrame( getSession() );
 
