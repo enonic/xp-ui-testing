@@ -68,7 +68,7 @@ task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
     exclude '**/xeon/**'
-    include '**/content/ContentUploadSpec.class'
+    exclude '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
 
