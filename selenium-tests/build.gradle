@@ -74,10 +74,10 @@ task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
 
 task testSimpleSiteLiveEdit( type: Test, dependsOn: ['startServer', 'installSimpleSiteModule', 'clearData'] ) {
     scanForTestClasses = false
-    include '**/liveedit/*Spec.class'
 
+    include '**/liveedit/CreateSiteWithLayoutSpec.class'
     exclude '**/CleanAndInitializeData.class'
-    exclude '**/content/**'
+
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
