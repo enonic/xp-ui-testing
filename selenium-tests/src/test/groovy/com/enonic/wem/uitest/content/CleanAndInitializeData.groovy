@@ -28,10 +28,10 @@ class CleanAndInitializeData
     {
         when: "click on 'clear data' link and click on 'initialize data' link"
         TestUtils.saveScreenshot( getTestSession(), "startPage-opened" );
-        startPage.clickOnClearData();
+        //startPage.clickOnClearData();
 
-        SleepHelper.sleep( 4000 );
-        TestUtils.saveScreenshot( getSession(), "after_clean" )
+        //SleepHelper.sleep( 4000 );
+        //TestUtils.saveScreenshot( getSession(), "after_clean" )
         startPage.clickOnInitializeData();
         SleepHelper.sleep( 30000 );
 
