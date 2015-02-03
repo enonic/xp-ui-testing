@@ -133,14 +133,15 @@ public class NewContentDialog
 
         StringSelection ss = new StringSelection( file.getAbsolutePath() );
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents( ss, null );
-        sleep( 1000 );
+        sleep( 1500 );
         Robot robot = new Robot();
-
+        robot.waitForIdle();
         robot.keyPress( KeyEvent.VK_CONTROL );
         robot.keyPress( KeyEvent.VK_V );
+        sleep( 500 );
         robot.keyRelease( KeyEvent.VK_V );
         robot.keyRelease( KeyEvent.VK_CONTROL );
-        sleep( 3000 );
+        sleep( 2000 );
         robot.keyPress( KeyEvent.VK_ENTER );
         robot.keyRelease( KeyEvent.VK_ENTER );
         sleep( 2000 );
