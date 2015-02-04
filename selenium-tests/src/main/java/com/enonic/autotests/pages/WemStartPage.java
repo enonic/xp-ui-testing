@@ -36,6 +36,10 @@ public class WemStartPage
         {
             throw new TestFrameworkException( "initialize  data link was not found: " + INITIALIZE_DEMO_DATA_LINK );
         }
+        if ( !findElements( By.xpath( INITIALIZE_DEMO_DATA_LINK ) ).get( 0 ).isDisplayed() )
+        {
+            throw new TestFrameworkException( "initialize  data link  not visible: " + INITIALIZE_DEMO_DATA_LINK );
+        }
         findElements( By.xpath( INITIALIZE_DEMO_DATA_LINK ) ).get( 0 ).click();
         return this;
     }
