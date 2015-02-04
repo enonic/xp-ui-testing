@@ -5,6 +5,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -107,13 +108,15 @@ public class ContextWindow
         int mainDivX = dropComponentDiv.getLocation().x;
 
         Robot robot = getRobot();
-
+        robot.setAutoWaitForIdle( true );
         int xOffset = calculateOffsetX( liveEditFrameX );
         robot.mouseMove( mainDivX + xOffset, mainDivY - 20 );
+        robot.delay( 500 );
         robot.waitForIdle();
 
         int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
+        robot.delay( 500 );
         robot.waitForIdle();
 
         //  builder.moveToElement( dropComponentDiv ).click().build().perform();
@@ -134,6 +137,16 @@ public class ContextWindow
         }
         return null;
     }
+
+    private void hoverTo( WebElement webElement )
+    {
+        String javaScript = "var evObj = document.createEvent('MouseEvents');" +
+            "evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);" +
+            "arguments[0].dispatchEvent(evObj);";
+
+        ( (JavascriptExecutor) getDriver() ).executeScript( javaScript, webElement );
+    }
+
 
     private int calculateOffsetY( int toolbarHeight, int liveEditFrameY, String... elements )
     {
