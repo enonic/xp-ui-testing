@@ -119,6 +119,7 @@ public class ContextWindow
         //  builder.moveToElement( dropComponentDiv ).click().build().perform();
 
         sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "layout_dropzone" );
         WebElement dropZoneLayout = getDriver().findElement( By.xpath( LAYOUT_DROPZONE ) );
         builder.release( dropZoneLayout ).build().perform();
 
