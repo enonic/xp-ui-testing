@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 /**
  * Page Object for 'Home' page. Version 5.0
@@ -80,6 +81,7 @@ public class HomePage
 
     public ContentBrowsePanel openContentManagerApplication()
     {
+        TestUtils.saveScreenshot( getSession(), "cm" );
         contentManager.click();
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
