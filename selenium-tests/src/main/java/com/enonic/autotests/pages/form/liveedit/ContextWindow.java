@@ -3,7 +3,6 @@ package com.enonic.autotests.pages.form.liveedit;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -80,48 +79,7 @@ public class ContextWindow
         return this;
     }
 
-    public UIComponent addComponentByDragAndDrop2( String componentName, String region )
-    {
-        String gridItem = String.format( GRID_ITEM, componentName );
-        WebElement componentForDrag = findElements( By.xpath( gridItem ) ).get( 0 );
-        Actions builder = new Actions( getDriver() );
 
-        builder.clickAndHold( componentForDrag ).build().perform();
-        WebElement frameTarget = getDriver().findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
-        int offsetX = frameTarget.getLocation().x;
-
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
-        WebElement target = getDriver().findElement( By.xpath( "//div[@id='main' and @data-live-edit-id]" ) );
-        builder.moveToElement( target ).release( target ).build().perform();
-        sleep( 3000 );
-        try
-        {
-            Robot robot = new Robot();
-            robot.setAutoDelay( 500 );
-            robot.mouseMove( offsetX - 500, target.getLocation().getY() );
-            robot.mouseMove( offsetX + 500, target.getLocation().getY() + 220 );
-
-            robot.mousePress( InputEvent.BUTTON1_MASK );
-            robot.mouseRelease( InputEvent.BUTTON1_MASK );
-        }
-        catch ( AWTException e )
-        {
-            getLogger().error( "Robot mouseMove failed" );
-        }
-
-        sleep( 7000 );
-        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        if ( componentName.equalsIgnoreCase( "layout" ) )
-        {
-            return new LayoutComponentView( getSession() );
-        }
-        if ( componentName.equalsIgnoreCase( "image" ) )
-        {
-
-            return new ImageComponentView( getSession() );
-        }
-        return null;
-    }
 
     public UIComponent addComponentByDragAndDrop( String componentName, String regionXpath, String... headers )
     {
@@ -138,7 +96,12 @@ public class ContextWindow
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        WebElement dropComponentDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
+        //WebElement dropComponentDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
+        if ( findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionView')]" ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "the div element was not found!" );
+        }
+        WebElement dropComponentDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionView')]" ) ).get( 0 );
 
         int mainDivY = dropComponentDiv.getLocation().y;
         int mainDivX = dropComponentDiv.getLocation().x;
@@ -153,7 +116,9 @@ public class ContextWindow
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
         robot.waitForIdle();
 
-        sleep( 2000 );
+        //  builder.moveToElement( dropComponentDiv ).click().build().perform();
+
+        sleep( 1000 );
         WebElement dropZoneLayout = getDriver().findElement( By.xpath( LAYOUT_DROPZONE ) );
         builder.release( dropZoneLayout ).build().perform();
 
