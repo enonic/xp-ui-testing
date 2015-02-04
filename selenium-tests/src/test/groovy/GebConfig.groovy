@@ -39,8 +39,11 @@ driver = {
 
     }
 
-    def driver = new ChromeDriver();
-    driver.manage().window().maximize()
+    //  def driver = new ChromeDriver();
+    // driver.manage().window().maximize()
+    FirefoxProfile profile = new FirefoxProfile();
+    profile.setEnableNativeEvents( true );
+    def driver = new FirefoxDriver( profile );
     println "default configuration"
     return driver
 }
