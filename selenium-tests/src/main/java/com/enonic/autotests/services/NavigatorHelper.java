@@ -149,7 +149,7 @@ public class NavigatorHelper
         }
         else
         {
-            home.open( "admin", "password" );
+            home.open( "su", "password" );
         }
         return home;
     }
