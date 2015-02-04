@@ -16,7 +16,7 @@ class RoleWizardPanel_TabMenuSpec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
-    String TAB_MENU_ITEM = "[New Role]"
+    String TAB_MENU_ITEM = "<New Role>"
 
     def setup()
     {

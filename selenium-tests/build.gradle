@@ -41,7 +41,7 @@ task stopServer << {
 }
 
 //task clearData( type: Test, dependsOn: ['installModules'] ) {
-task clearData( type: Test, dependsOn: ['startServer'] ) {
+task initializeData( type: Test, dependsOn: ['startServer'] ) {
     scanForTestClasses = true
     exclude '**/*Spec.class'
     exclude '**/*Suite.*'
@@ -63,7 +63,7 @@ tasks.withType( Test ) {
         displayGranularity = 0
     }
 }
-task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
+task testEmbedded( type: Test, dependsOn: [startServer, initializeData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
@@ -72,7 +72,7 @@ task testEmbedded( type: Test, dependsOn: [startServer, clearData] ) {
     forkEvery = null
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: ['startServer', 'installSimpleSiteModule', 'clearData'] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: ['startServer', 'installSimpleSiteModule', 'initializeData'] ) {
     scanForTestClasses = false
 
     include '**/liveedit/CreateSiteWithLayoutSpec.class'
@@ -83,7 +83,7 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: ['startServer', 'installSimp
     forkEvery = null
 }
 
-task testUploadContent( type: Test, dependsOn: ['clearData'] ) {
+task testUploadContent( type: Test, dependsOn: ['initializeData'] ) {
     scanForTestClasses = false
     exclude '**/CleanAndInitializeData.class'
     exclude '**/module/**'

@@ -99,7 +99,7 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
 
         then: "'ea' - enterprise administrator should be shown"
-        userBrowsePanel.exists( "ea", true );
+        userBrowsePanel.exists( "system.admin", true );
     }
 
     def "GIVEN a 'system' folder with an open expander WHEN closed THEN no children are listed beneath"()
