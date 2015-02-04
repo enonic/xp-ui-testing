@@ -14,7 +14,9 @@ import com.enonic.wem.api.data.PropertyTree
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class CreateSiteWithLayoutSpec
     extends BaseGebSpec
 {
@@ -84,6 +86,7 @@ class CreateSiteWithLayoutSpec
         given:
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
+        TestUtils.saveScreenshot( getSession(), "drag_and_drop" )
 
         when: "3 column layout dragged into 'live edit' frame and site saved"
         LayoutComponentView layoutComponentView = contextWindow.addComponentByDragAndDrop( "layout", null, LIVE_EDIT_FRAME_SITE_HEADER );

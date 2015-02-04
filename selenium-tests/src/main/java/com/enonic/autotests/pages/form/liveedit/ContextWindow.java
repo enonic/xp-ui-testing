@@ -125,6 +125,7 @@ public class ContextWindow
 
     public UIComponent addComponentByDragAndDrop( String componentName, String regionXpath, String... headers )
     {
+        sleep( 3000 );
         String gridItem = String.format( GRID_ITEM, componentName );
         WebElement componentForDrag = findElements( By.xpath( gridItem ) ).get( 0 );
 
