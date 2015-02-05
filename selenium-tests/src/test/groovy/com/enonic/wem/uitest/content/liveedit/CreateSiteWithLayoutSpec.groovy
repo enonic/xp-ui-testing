@@ -13,6 +13,7 @@ import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.data.PropertyTree
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -81,18 +82,20 @@ class CreateSiteWithLayoutSpec
     }
 
 
+    @Ignore
     def "GIVEN site opened for edit and context window showed WHEN ContextWindow  opened in live edit AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
     {
         given:
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        contentWizard.unlockLiveEdit();
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "drag_and_drop" )
 
         when: "3 column layout dragged into 'live edit' frame and site saved"
         LayoutComponentView layoutComponentView = contextWindow.addComponentByDragAndDrop( "layout", null, LIVE_EDIT_FRAME_SITE_HEADER );
-        TestUtils.saveScreenshot( getSession(), "xeon_layoutcomponent" );
+        TestUtils.saveScreenshot( getSession(), "simple_layoutcomponent" );
         LiveFormPanel liveFormPanel = layoutComponentView.selectLayout( "3-col" );
-        TestUtils.saveScreenshot( getSession(), "xeon_3col" );
+        TestUtils.saveScreenshot( getSession(), "layout_3col" );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         contentWizard.save();
 

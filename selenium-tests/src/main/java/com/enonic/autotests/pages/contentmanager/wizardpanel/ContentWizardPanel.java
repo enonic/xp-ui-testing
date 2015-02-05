@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -13,6 +14,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 
@@ -88,6 +90,24 @@ public class ContentWizardPanel
         }
 
         return cw;
+    }
+
+    public ContentWizardPanel unlockLiveEdit()
+    {
+
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        if ( findElements( By.xpath( "//div[@class='centered']/a[text()='Unlock']" ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Ulock link was not foun in the live edit frame" );
+        }
+        WebElement link = findElements( By.xpath( "//div[@class='centered']/a[text()='Unlock']" ) ).get( 0 );
+        Actions builder = new Actions( getDriver() );
+        builder.moveToElement( link ).perform();
+        sleep( 1000 );
+        builder.click( link ).build().perform();
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        return this;
+
     }
 
     /**
