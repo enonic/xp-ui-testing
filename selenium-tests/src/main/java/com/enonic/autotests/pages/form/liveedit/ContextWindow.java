@@ -81,7 +81,6 @@ public class ContextWindow
     }
 
 
-
     public UIComponent addComponentByDragAndDrop( String componentName, String regionXpath, String... headers )
     {
         sleep( 3000 );
@@ -97,12 +96,12 @@ public class ContextWindow
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        //WebElement dropComponentDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
+        WebElement dropComponentDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
         if ( findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionView')]" ) ).size() == 0 )
         {
             throw new TestFrameworkException( "the div element was not found!" );
         }
-        WebElement dropComponentDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionView')]" ) ).get( 0 );
+        //WebElement dropComponentDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionView')]" ) ).get( 0 );
 
         int mainDivY = dropComponentDiv.getLocation().y;
         int mainDivX = dropComponentDiv.getLocation().x;
@@ -110,21 +109,23 @@ public class ContextWindow
         Robot robot = getRobot();
         robot.setAutoWaitForIdle( true );
         int xOffset = calculateOffsetX( liveEditFrameX );
-        robot.mouseMove( mainDivX + xOffset, mainDivY - 20 );
-        robot.delay( 500 );
-        robot.waitForIdle();
-
+        robot.mouseMove( mainDivX + xOffset, mainDivY - 10 );
         int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
-        robot.delay( 500 );
-        robot.waitForIdle();
-
-        //  builder.moveToElement( dropComponentDiv ).click().build().perform();
-
         sleep( 1000 );
+        //RELEASE
+        builder.moveToElement( dropComponentDiv ).release( dropComponentDiv );
+        sleep( 1000 );
+        builder.build().perform();
+
+        WebElement dragHelper = findElements( By.xpath( "//div[@id='drag-helper']" ) ).get( 0 );
+        Actions builder2 = new Actions( getDriver() );
+        builder2.clickAndHold( dragHelper ).build().perform();
+
+        builder2.moveToElement( dropComponentDiv ).build().perform();
         TestUtils.saveScreenshot( getSession(), "layout_dropzone" );
         WebElement dropZoneLayout = getDriver().findElement( By.xpath( LAYOUT_DROPZONE ) );
-        builder.release( dropZoneLayout ).build().perform();
+        builder2.release( dropZoneLayout ).build().perform();
 
         if ( componentName.equalsIgnoreCase( "layout" ) )
         {

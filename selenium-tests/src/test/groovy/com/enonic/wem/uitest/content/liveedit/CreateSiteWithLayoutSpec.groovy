@@ -13,7 +13,6 @@ import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.data.PropertyTree
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -82,7 +81,6 @@ class CreateSiteWithLayoutSpec
     }
 
 
-    @Ignore
     def "GIVEN site opened for edit and context window showed WHEN ContextWindow  opened in live edit AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
     {
         given:
