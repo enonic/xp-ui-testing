@@ -16,6 +16,7 @@ import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
 import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 
@@ -122,6 +123,7 @@ public class ContentWizardPanel
         Actions builder = new Actions( getDriver() );
         builder.moveToElement( frame ).build().perform();
         sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "unlock" ) );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveEdit = new LiveFormPanel( getSession() );
         boolean result = liveEdit.isShaderDisplayed();
