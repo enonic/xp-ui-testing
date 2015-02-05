@@ -99,6 +99,7 @@ public class ContentWizardPanel
         if ( findElements( By.xpath( "//div[@class='centered']/a[text()='Unlock']" ) ).size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), "unlock_not_present" );
+            NavigatorHelper.switchToContentManagerFrame( getSession() );
             return this;
             //throw new TestFrameworkException( "Ulock link was not foun in the live edit frame" );
         }
