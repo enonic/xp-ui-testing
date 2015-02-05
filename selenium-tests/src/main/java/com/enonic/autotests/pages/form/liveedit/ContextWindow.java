@@ -113,10 +113,12 @@ public class ContextWindow
         int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
         sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "drag_helper1" );
         //RELEASE
         builder.moveToElement( dropComponentDiv ).release( dropComponentDiv );
         sleep( 1000 );
         builder.build().perform();
+        TestUtils.saveScreenshot( getSession(), "drag_helper2" );
 
         WebElement dragHelper = findElements( By.xpath( "//div[@id='drag-helper']" ) ).get( 0 );
         Actions builder2 = new Actions( getDriver() );
