@@ -80,6 +80,27 @@ class CreateSiteWithLayoutSpec
         contextWindow.isContextWindowPresent();
     }
 
+    def "WHEN site opened for edit  THEN Live Edit frame should be locked"()
+    {
+        when: "site opened for edit"
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+
+        then: " the 'Live Edit' frame should be locked"
+        contentWizard.isLiveEditLocked();
+    }
+
+
+    def "GIVEN site opened for edit WHEN link 'Unlock' clicked on 'Live Edit' frame  THEN Live Edit frame is unlocked"()
+    {
+        given: "site opened for edit"
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+
+        when:
+        contentWizard.unlockLiveEdit();
+
+        then: "the 'Live Edit' frame should be locked"
+        !contentWizard.isLiveEditLocked();
+    }
 
     def "GIVEN site opened for edit and context window showed WHEN ContextWindow  opened in live edit AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
     {

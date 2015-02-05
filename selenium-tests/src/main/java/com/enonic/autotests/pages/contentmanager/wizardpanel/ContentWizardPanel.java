@@ -14,6 +14,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
+import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
@@ -46,6 +47,8 @@ public class ContentWizardPanel
 
     private static final String CONTEXT_WINDOW_TOGGLER =
         "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'app.wizard.page.contextwindow.ContextWindowToggler')]";
+
+    private final String UNLOCK_LINK = "//div[@class='centered']/a[text()='Unlock']";
 
     public static String START_WIZARD_TITLE = "New %s";
 
@@ -96,14 +99,14 @@ public class ContentWizardPanel
     {
 
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        if ( findElements( By.xpath( "//div[@class='centered']/a[text()='Unlock']" ) ).size() == 0 )
+        if ( findElements( By.xpath( UNLOCK_LINK ) ).size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), "unlock_not_present" );
             NavigatorHelper.switchToContentManagerFrame( getSession() );
             return this;
             //throw new TestFrameworkException( "Ulock link was not foun in the live edit frame" );
         }
-        WebElement link = findElements( By.xpath( "//div[@class='centered']/a[text()='Unlock']" ) ).get( 0 );
+        WebElement link = findElements( By.xpath( UNLOCK_LINK ) ).get( 0 );
         Actions builder = new Actions( getDriver() );
         builder.moveToElement( link ).perform();
         sleep( 1000 );
@@ -111,6 +114,20 @@ public class ContentWizardPanel
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
 
+    }
+
+    public boolean isLiveEditLocked()
+    {
+        WebElement frame = findElements( By.xpath( Application.LIVE_EDIT_FRAME ) ).get( 0 );
+        Actions builder = new Actions( getDriver() );
+        builder.moveToElement( frame ).build().perform();
+        sleep( 1000 );
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveEdit = new LiveFormPanel( getSession() );
+        boolean result = liveEdit.isShaderDisplayed();
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+
+        return result;
     }
 
     /**

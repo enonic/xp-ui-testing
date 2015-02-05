@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.form.liveedit;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -15,6 +16,8 @@ public class LiveFormPanel
     private final String PANEL_DIV = "//div[contains(@id,'app.wizard.page.LiveFormPanel')]";
 
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
+
+    public final String SHADER_PAGE = "//div[@class='shader page']";
 
     private LayoutComponentView layoutComponentView;
 
@@ -58,4 +61,17 @@ public class LiveFormPanel
         return findElements( By.xpath( LAYOUT_COMPONENT + "//div[contains(@id,'liveedit.RegionView')]" ) ).size();
 
     }
+
+    public boolean isShaderDisplayed()
+    {
+        if ( findElements( By.xpath( SHADER_PAGE ) ).size() == 0 )
+        {
+            return false;
+        }
+        WebElement elem = findElements( By.xpath( SHADER_PAGE ) ).get( 0 );
+        String style = elem.getAttribute( "style" );
+        return !style.contains( "display: none" );
+
+    }
+
 }
