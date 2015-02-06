@@ -17,6 +17,8 @@ public class LiveFormPanel
 
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
 
+    public final String IMAGE_COMPONENT_VIEW = "//div[contains(@id,'api.liveedit.image.ImageComponentView')]";
+
     public final String SHADER_PAGE = "//div[@class='shader page']";
 
     private LayoutComponentView layoutComponentView;
@@ -71,7 +73,11 @@ public class LiveFormPanel
         WebElement elem = findElements( By.xpath( SHADER_PAGE ) ).get( 0 );
         String style = elem.getAttribute( "style" );
         return !style.contains( "display: none" );
+    }
 
+    public int getNumberImagesInLayout()
+    {
+        return findElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) ).size();
     }
 
 }

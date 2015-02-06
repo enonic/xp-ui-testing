@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.liveedit.ContextWindow
+import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LayoutComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.services.NavigatorHelper
@@ -80,7 +81,8 @@ class CreateSiteWithLayoutSpec
         contextWindow.isContextWindowPresent();
     }
 
-    def "WHEN site opened for edit  THEN Live Edit frame should be locked"()
+
+    def "WHEN site opened for edit  AND page template is automatic THEN Live Edit frame should be locked"()
     {
         when: "site opened for edit"
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
@@ -90,7 +92,7 @@ class CreateSiteWithLayoutSpec
     }
 
 
-    def "GIVEN site opened for edit WHEN link 'Unlock' clicked on 'Live Edit' frame  THEN Live Edit frame is unlocked"()
+    def "GIVEN site opened for edit  AND page template is automatic WHEN link 'Unlock' clicked on 'Live Edit' frame  THEN Live Edit frame is unlocked"()
     {
         given: "site opened for edit"
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
@@ -102,7 +104,8 @@ class CreateSiteWithLayoutSpec
         !contentWizard.isLiveEditLocked();
     }
 
-    def "GIVEN site opened for edit and context window showed WHEN ContextWindow  opened in live edit AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
+
+    def "GIVEN site opened for edit WHEN 'layout item'  dragged AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
     {
         given:
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
@@ -111,7 +114,7 @@ class CreateSiteWithLayoutSpec
         TestUtils.saveScreenshot( getSession(), "drag_and_drop" )
 
         when: "3 column layout dragged into 'live edit' frame and site saved"
-        LayoutComponentView layoutComponentView = contextWindow.addComponentByDragAndDrop( "layout", null, LIVE_EDIT_FRAME_SITE_HEADER );
+        LayoutComponentView layoutComponentView = contextWindow.addLayoutByDragAndDrop( LIVE_EDIT_FRAME_SITE_HEADER );
         TestUtils.saveScreenshot( getSession(), "simple_layoutcomponent" );
         LiveFormPanel liveFormPanel = layoutComponentView.selectLayout( "3-col" );
         TestUtils.saveScreenshot( getSession(), "layout_3col" );
@@ -123,6 +126,67 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.isLayoutComponentPresent() && liveFormPanel.getLayoutColumnNumber() == 3;
 
 
+    }
+
+    def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on to left region AND site saved THEN layout with one image present on the live edit frame"()
+    {
+        given:
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+
+        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
+        TestUtils.saveScreenshot( getSession(), "insert_left" )
+
+        when: "3 images dragged into 'live edit' frame and site saved"
+        ImageComponentView imageComponentView = contextWindow.insertImageByDragAndDrop( "left", LIVE_EDIT_FRAME_SITE_HEADER );
+        LiveFormPanel liveFormPanel = imageComponentView.selectImageItemFromList( "bro.jpg" );
+        TestUtils.saveScreenshot( getSession(), "left_inserted" );
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        contentWizard.save();
+
+        then: "new image present in the 'live edit' frame"
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        liveFormPanel.getNumberImagesInLayout() == 1;
+    }
+
+    def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on center region AND site saved THEN layout with two images present on the live edit frame"()
+    {
+        given:
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+
+        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
+        TestUtils.saveScreenshot( getSession(), "insert_images1" )
+
+        when: "3 images dragged into 'live edit' frame and site saved"
+        ImageComponentView imageComponentView = contextWindow.insertImageByDragAndDrop( "center", LIVE_EDIT_FRAME_SITE_HEADER );
+        LiveFormPanel liveFormPanel = imageComponentView.selectImageItemFromList( "telk.png" );
+        TestUtils.saveScreenshot( getSession(), "center_iserted" );
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        contentWizard.save();
+
+        then: "new image present in the 'live edit' frame"
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        liveFormPanel.getNumberImagesInLayout() == 2;
+    }
+
+    def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on right region AND site saved THEN layout with 3 images present on the live edit frame"()
+    {
+        given:
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+
+        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
+        TestUtils.saveScreenshot( getSession(), "insert_images1" )
+
+        when: "3 images dragged into 'live edit' frame and site saved"
+        ImageComponentView imageComponentView = contextWindow.insertImageByDragAndDrop( "right", LIVE_EDIT_FRAME_SITE_HEADER );
+        TestUtils.saveScreenshot( getSession(), "simple_layoutcomponent" );
+        LiveFormPanel liveFormPanel = imageComponentView.selectImageItemFromList( "geek.png" );
+        TestUtils.saveScreenshot( getSession(), "right_inserted" );
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        contentWizard.save();
+
+        then: "new image present in the 'live edit' frame"
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        liveFormPanel.getNumberImagesInLayout() == 3;
     }
 
 
