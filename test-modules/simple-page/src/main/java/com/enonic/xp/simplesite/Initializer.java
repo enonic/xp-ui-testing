@@ -89,9 +89,7 @@ public class Initializer
         throws Exception
     {
 
-        final ContentPath imageArchivePath = contentService.create( createFolder().
-            parent( ContentPath.ROOT ).
-            displayName( "Simple Page Images" ) ).getPath();
+        final ContentPath imageArchivePath = contentService.create( createFolder() ).getPath();
 
         for ( final String fileName : FOLDER_IMAGES )
         {
@@ -133,12 +131,15 @@ public class Initializer
 
     private CreateContentParams createFolder()
     {
-        return new CreateContentParams().
-            owner( PrincipalKey.ofAnonymous() ).
-            contentData( new PropertyTree() ).
-            type( ContentTypeName.folder() );
-    }
 
+        return CreateContentParams.create().
+
+            type( ContentTypeName.templateFolder() ).parent( ContentPath.ROOT ).displayName( "Simple Page Images" ).
+            requireValid( true ).owner( PrincipalKey.ofAnonymous() ).
+            contentData( new PropertyTree() ).type( ContentTypeName.folder() ).
+            build();
+
+    }
 
     private static Form createMediaImageForm()
 
