@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+  <reference id="contentService" interface="com.enonic.wem.api.content.ContentService"/>
+  <reference id="contentTypeService" interface="com.enonic.wem.api.schema.content.ContentTypeService"/>
+  <reference id="securityService" interface="com.enonic.wem.api.security.SecurityService"/>
+
+  <service auto-export="interfaces">
+    <bean class="com.enonic.xp.simplesite.Initializer">
+      <property name="contentService" ref="contentService"/>
+      <property name="contentTypeService" ref="contentTypeService"/>
+      <property name="securityService" ref="securityService"/>
+    </bean>
+  </service>
+
+</blueprint>
