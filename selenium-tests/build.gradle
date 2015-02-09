@@ -16,8 +16,8 @@ dependencies {
 
 
     distro 'com.enonic.xp:distro:5.0.0-SNAPSHOT@zip'
-    distro 'com.enonic.wem.modules:features:5.0.0-SNAPSHOT@jar'
-    distro 'com.enonic.wem.modules:demo:5.0.0-SNAPSHOT@jar'
+    distro 'com.enonic.wem.modules:features:2.0.0-SNAPSHOT@jar'
+    distro 'com.enonic.wem.modules:demo:2.0.0-SNAPSHOT@jar'
 }
 
 test {
