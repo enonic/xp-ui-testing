@@ -16,9 +16,7 @@ import com.enonic.wem.api.form.Input;
 import com.enonic.wem.api.form.inputtype.InputTypes;
 import com.enonic.wem.api.initializer.DataInitializer;
 import com.enonic.wem.api.schema.content.ContentTypeName;
-import com.enonic.wem.api.schema.content.ContentTypeService;
 import com.enonic.wem.api.security.PrincipalKey;
-import com.enonic.wem.api.security.SecurityService;
 
 
 public class Initializer
@@ -37,10 +35,6 @@ public class Initializer
 
 
     private ContentService contentService;
-
-    private ContentTypeService contentTypeService;
-
-    private SecurityService securityService;
 
     @Override
     public void initialize()
@@ -159,16 +153,6 @@ public class Initializer
     public void setContentService( final ContentService contentService )
     {
         this.contentService = contentService;
-    }
-
-    public void setContentTypeService( final ContentTypeService contentTypeService )
-    {
-        this.contentTypeService = contentTypeService;
-    }
-
-    public void setSecurityService( final SecurityService securityService )
-    {
-        this.securityService = securityService;
     }
 
 }

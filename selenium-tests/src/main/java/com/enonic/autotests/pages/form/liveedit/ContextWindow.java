@@ -34,9 +34,9 @@ public class ContextWindow
     private final String GRID_ITEM =
         INSERTABLES_GRID + "//div[contains(@class,'grid-row') and descendant::div[@data-live-edit-type ='%s']]";
 
-    private final String LAYOUT_DROPZONE = "//div[contains(@id,'api.liveedit.RegionDropzone') and @class='region-dropzone layout']";
+    private final String LAYOUT_DROPZONE = "//div[@class='message' and text()='Drop Layout here'] ";
 
-    private final String IMAGE_DROPZONE = "//div[contains(@id,'api.liveedit.RegionDropzone') and @class='region-dropzone image']";
+    private final String IMAGE_DROPZONE = "//div[@class='message' and text()='Drop Image here'] ";
 
     private final String TOOLBAR_DIV = "//div[contains(@id,'app.wizard.ContentWizardToolbar')]";
 
@@ -175,7 +175,7 @@ public class ContextWindow
         Robot robot = getRobot();
         robot.setAutoWaitForIdle( true );
         int xOffset = calculateOffsetX( liveEditFrameX );
-        robot.mouseMove( mainDivX + xOffset, mainDivY - 170 );
+        robot.mouseMove( mainDivX + xOffset, 0 );
         int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
         sleep( 1000 );
