@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -27,26 +26,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
 
-    def "GIVEN existing content, WHEN content opened and delete button pressed THEN the content should not be listed in the table"()
-    {
-        given:
-        Content content = Content.builder().
-            name( NameHelper.uniqueName( "deletecontent" ) ).
-            displayName( "contenttodelete" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content ).save().close(
-            content.getDisplayName() );
-
-        when:
-        ItemViewPanelPage contentInfoPage = contentBrowsePanel.selectRowByContentPath( content.getPath().toString() ).clickToolbarOpen()
-        contentInfoPage.waitUntilOpened( content.getDisplayName() );
-        contentInfoPage.openDeleteConfirmationDialog().doConfirm();
-
-        then:
-        !contentBrowsePanel.exists( content.getPath(), true );
-    }
 
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
