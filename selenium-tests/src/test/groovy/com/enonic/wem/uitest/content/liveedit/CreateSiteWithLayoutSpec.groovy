@@ -62,7 +62,7 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME + "/_templates" ) ).clickToolbarNew().selectContentType(
             pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME + "/_templates" ) );
-        TestUtils.saveScreenshot( getSession(), "xeon_template" );
+        TestUtils.saveScreenshot( getSession(), "simple_template" );
 
         then: " new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getPath() );
@@ -71,7 +71,7 @@ class CreateSiteWithLayoutSpec
 
     def "GIVEN site opened for edit WHEN 'toggle window' button on toolbar clicked  THEN ContextWindow  appears"()
     {
-        given: "site based on Xeon opened for edit"
+        given: "site opened for edit"
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
 
         when: "button on toolbar clicked"
