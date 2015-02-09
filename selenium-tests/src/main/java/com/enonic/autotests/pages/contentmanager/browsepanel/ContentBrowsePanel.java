@@ -45,8 +45,8 @@ public class ContentBrowsePanel
     private final String DUPLICATE_BUTTON_XPATH =
         BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
 
-    private final String OPEN_BUTTON_XPATH =
-        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Open']]";
+    private final String PREVIEW_BUTTON_XPATH =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Preview']]";
 
     private final String MOVE_BUTTON_XPATH =
         BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Move']]";
@@ -81,8 +81,8 @@ public class ContentBrowsePanel
     @FindBy(xpath = CONTENT_MANAGER_BUTTON)
     private WebElement contentManagerButton;
 
-    @FindBy(xpath = OPEN_BUTTON_XPATH)
-    private WebElement openButton;
+    @FindBy(xpath = PREVIEW_BUTTON_XPATH)
+    private WebElement previewButton;
 
     @FindBy(xpath = SORT_BUTTON_XPATH)
     private WebElement sortButton;
@@ -433,9 +433,9 @@ public class ContentBrowsePanel
      *
      * @return {@link ItemViewPanelPage} instance.
      */
-    public ItemViewPanelPage clickToolbarOpen()
+    public ItemViewPanelPage clickToolbarPreview()
     {
-        openButton.click();
+        previewButton.click();
         return new ItemViewPanelPage( getSession() );
     }
 
@@ -571,9 +571,9 @@ public class ContentBrowsePanel
         return publishButton.isEnabled();
     }
 
-    public boolean isOpenButtonEnabled()
+    public boolean isPreviewButtonEnabled()
     {
-        return openButton.isEnabled();
+        return previewButton.isEnabled();
     }
 
 

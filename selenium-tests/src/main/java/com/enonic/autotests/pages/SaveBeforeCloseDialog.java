@@ -17,7 +17,7 @@ public class SaveBeforeCloseDialog
         "//div[contains(@id,'api.app.wizard.SaveBeforeCloseDialog')]//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'o')]]";
 
     private final String CANCEL_BUTTON_XPATH =
-        "//div[contains(@id,'api.app.wizard.SaveBeforeCloseDialog')]//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'Cancel')]]";
+        "//div[contains(@id,'api.app.wizard.SaveBeforeCloseDialog')]//button[contains(@class, 'cancel-button')]";
 
 
     public final String TITLE_XPATH = "//h2[text()='Close wizard']";

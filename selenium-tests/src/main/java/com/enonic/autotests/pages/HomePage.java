@@ -83,7 +83,7 @@ public class HomePage
         contentManager.click();
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
-        panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        // panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
         getLogger().info( "Content App loaded" );
         return panel;
@@ -109,7 +109,7 @@ public class HomePage
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.MODULE_MANAGER_FRAME_XPATH );
         ModuleBrowsePanel panel = new ModuleBrowsePanel( getSession() );
-        panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        // panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
         getLogger().info( "Module Manger App loaded" );
         return panel;

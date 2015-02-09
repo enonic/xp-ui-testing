@@ -16,8 +16,8 @@ dependencies {
 
 
     distro 'com.enonic.xp:distro:5.0.0-SNAPSHOT@zip'
-    distro 'com.enonic.wem.modules:features:1.0.0@jar'
-    distro 'com.enonic.wem.modules:demo:1.0.0@jar'
+    distro 'com.enonic.wem.modules:features:5.0.0-SNAPSHOT@jar'
+    distro 'com.enonic.wem.modules:demo:5.0.0-SNAPSHOT@jar'
 }
 
 test {
@@ -72,7 +72,7 @@ task testEmbedded( type: Test, dependsOn: [startServer, initializeData] ) {
     forkEvery = null
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: ['startServer', 'installSimpleSiteModule', 'initializeData'] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: ['installSimpleSiteModule', 'initializeData'] ) {
     scanForTestClasses = false
 
     include '**/liveedit/CreateSiteWithLayoutSpec.class'
@@ -81,7 +81,9 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: ['startServer', 'installSimp
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
+    initializeData.shouldRunAfter installSimpleSiteModule
 }
+
 
 task testUploadContent( type: Test, dependsOn: ['initializeData'] ) {
     scanForTestClasses = false

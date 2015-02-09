@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentBrowsePanelToolbarSpec
@@ -30,10 +31,10 @@ class ContentBrowsePanelToolbarSpec
         contentBrowsePanel.isNewButtonEnabled();
     }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Open button should be disabled"()
+    def "GIVEN Content BrowsePanel WHEN no selected content THEN Preview button should be disabled"()
     {
         expect:
-        !contentBrowsePanel.isOpenButtonEnabled();
+        !contentBrowsePanel.isPreviewButtonEnabled();
     }
 
     def "GIVEN Content BrowsePanel WHEN no selected content THEN Edit button should be disabled"()
@@ -75,13 +76,14 @@ class ContentBrowsePanelToolbarSpec
         contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    def "GIVEN Content BrowsePanel WHEN one content selected THEN Open button should be enabled"()
+    @Ignore
+    def "GIVEN Content BrowsePanel WHEN one site selected THEN Open button should be enabled"()
     {
         when:
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
 
         then:
-        contentBrowsePanel.isOpenButtonEnabled();
+        contentBrowsePanel.isPreviewButtonEnabled();
     }
 
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Sort button should be enabled"()

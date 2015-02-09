@@ -8,6 +8,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentItemViewPanelSpec
@@ -22,7 +23,7 @@ class ContentItemViewPanelSpec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
 
-
+    @Ignore
     def "GIVEN content App BrowsePanel and existing content WHEN content selected and Open button have clicked THEN title with content display-name showed"()
     {
         given:
