@@ -16,8 +16,8 @@ dependencies {
 
 
     distro 'com.enonic.xp:distro:5.0.0-SNAPSHOT@zip'
-    distro 'com.enonic.wem.modules:features:2.0.0-SNAPSHOT@jar'
-    distro 'com.enonic.wem.modules:demo:2.0.0-SNAPSHOT@jar'
+    // distro 'com.enonic.wem.modules:features:2.0.0-SNAPSHOT@jar'
+    //distro 'com.enonic.wem.modules:demo:2.0.0-SNAPSHOT@jar'
 }
 
 test {
@@ -63,12 +63,30 @@ tasks.withType( Test ) {
         displayGranularity = 0
     }
 }
-task testEmbedded( type: Test, dependsOn: [startServer, initializeData] ) {
+task testContentManager( type: Test, dependsOn: [startServer, initializeData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
+    forkEvery = null
+}
+
+task testUser( type: Test, dependsOn: [startServer, initializeData] ) {
+    scanForTestClasses = false
+    include '**/user/*Spec.class'
+    exclude '**/CleanAndInitializeData.class'
+    exclude '**/content/**'
+    exclude '**/module/**'
+    forkEvery = null
+}
+
+task testModule( type: Test, dependsOn: [startServer, initializeData] ) {
+    scanForTestClasses = false
+    include '**/module/*Spec.class'
+    exclude '**/CleanAndInitializeData.class'
+    exclude '**/content/**'
+    exclude '**/user/**'
     forkEvery = null
 }
 
@@ -93,5 +111,8 @@ task testUploadContent( type: Test, dependsOn: ['initializeData'] ) {
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
-testEmbedded.finalizedBy = ['stopServer']
+testModule.finalizedBy = ['stopServer']
+testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
+testUser.finalizedBy = ['stopServer']
+testContentManager.finalizedBy = ['stopServer']
 
