@@ -1,15 +1,9 @@
 apply plugin: 'groovy'
 
 repositories {
-    mavenLocal()
     mavenCentral()
     maven {
         url 'http://repo.enonic.com/public'
     }
 }
 
-dependencies {
-    compile 'org.ops4j.pax.url:pax-url-aether:2.2.0'
-    compile 'org.ops4j.pax.exam:pax-exam-container-karaf:4.3.0'
-    compile 'org.slf4j:slf4j-simple:1.7.4'
-}

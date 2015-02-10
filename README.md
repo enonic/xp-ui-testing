@@ -1,5 +1,7 @@
 
 # Enonic WEM UI Testing
 
-TODO: Write about running the UI tests.
+Execute tests using refresh dependencies option in gradle:
+
+    gradle --refresh-dependencies
 

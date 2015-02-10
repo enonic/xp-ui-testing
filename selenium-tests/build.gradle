@@ -1,9 +1,15 @@
-import com.enonic.uitest.server.KarafServer
+import com.enonic.uitest.server.ServerInstance
 
 apply plugin: 'groovy'
 
 configurations {
     distro
+}
+
+ext {
+    xpVersion = '5.0.0-SNAPSHOT'
+    unpackDir = "$buildDir/install"
+    distroDir = "$unpackDir/enonic-xp-$xpVersion"
 }
 
 dependencies {
@@ -14,29 +20,31 @@ dependencies {
     compile 'org.spockframework:spock-core:0.7-groovy-2.0'
     compile 'org.gebish:geb-spock:0.10.0'
 
-
-    distro 'com.enonic.xp:distro:5.0.0-SNAPSHOT@zip'
-    distro 'com.enonic.wem.modules:demo:2.0.0-SNAPSHOT@jar'
-}
-
-test {
-
+    distro "com.enonic.xp:distro:$xpVersion@zip"
 }
 
 task buildModules(
     dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:all-contenttypes:install'] )
 
-task startServer << {
-    logging.captureStandardOutput LogLevel.INFO
-    ext.karafServer = new KarafServer()
-    ext.karafServer.files( configurations.distro.resolve() )
-    ext.karafServer.startupDelay( 50000 )
-    ext.karafServer.unpackDir( file( 'build/karaf' ) )
-    ext.karafServer.start()
+task unpackDistro( type: Copy ) {
+    from {
+        configurations.distro.collect { zipTree( it ) }
+    }
+    into file( unpackDir )
+}
+
+task startServer( dependsOn: unpackDistro ) {
+    doLast {
+        // logging.captureStandardOutput LogLevel.INFO
+        ext.xpServer = new ServerInstance()
+        ext.xpServer.installDir = file( distroDir )
+        ext.xpServer.startupDelay = 20000
+        ext.xpServer.start()
+    }
 }
 
 task stopServer << {
-    startServer.karafServer.stop()
+    ext.xpServer.stop()
 }
 
 //task clearData( type: Test, dependsOn: ['installModules'] ) {
@@ -62,6 +70,7 @@ tasks.withType( Test ) {
         displayGranularity = 0
     }
 }
+
 task testContentManager( type: Test, dependsOn: [startServer, initializeData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
