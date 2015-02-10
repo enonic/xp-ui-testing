@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.form.liveedit;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -32,7 +33,7 @@ public class ContextWindow
     private final String INSERTABLES_GRID = "//div[contains(@id,'InsertablesGrid')]";
 
     private final String GRID_ITEM =
-        INSERTABLES_GRID + "//div[contains(@class,'grid-row') and descendant::div[@data-live-edit-type ='%s']]";
+        INSERTABLES_GRID + "//div[contains(@class,'grid-row') and descendant::div[@data-portal-component-type ='%s']]";
 
     private final String LAYOUT_DROPZONE = "//div[@class='message' and text()='Drop Layout here'] ";
 
@@ -103,17 +104,18 @@ public class ContextWindow
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        WebElement dropComponentDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
+        WebElement regionDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
 
-        showDragHelper( dropComponentDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
+        showDragHelper( regionDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
+        sleep( 1000 );
         //RELEASE
-        builder.moveToElement( dropComponentDiv ).release( dropComponentDiv );
+        builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
 
-        TestUtils.saveScreenshot( getSession(), "drag_helper2" );
+        TestUtils.saveScreenshot( getSession(), "drag_helperLayout" );
 
-        moveDragHelperToTargetAndReleaseOnDropZone( dropComponentDiv, LAYOUT_DROPZONE );
+        //moveDragHelperToTargetAndReleaseOnDropZone( dropComponentDiv, LAYOUT_DROPZONE );
         return new LayoutComponentView( getSession() );
     }
 
@@ -144,17 +146,16 @@ public class ContextWindow
         {
             throw new TestFrameworkException( String.format( "the region: %s was not found!", regionName ) );
         }
-        WebElement dropComponentDiv = findElement( By.xpath( regionXpath ) );
+        WebElement regionPlaceHolderDiv = findElement( By.xpath( regionXpath ) );
 
-        showDragHelper( dropComponentDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
+        showDragHelper( regionPlaceHolderDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
 
-        TestUtils.saveScreenshot( getSession(), "drag_helper3" );
+        TestUtils.saveScreenshot( getSession(), "drag_helperImage" );
         //RELEASE
-        builder.moveToElement( dropComponentDiv ).release( dropComponentDiv );
-        sleep( 1000 );
+        builder.release( regionPlaceHolderDiv );
         builder.build().perform();
 
-        moveDragHelperToTargetAndReleaseOnDropZone( dropComponentDiv, IMAGE_DROPZONE );
+        //moveDragHelperToTargetAndReleaseOnDropZone( regionPlaceHolderDiv, IMAGE_DROPZONE );
         return new ImageComponentView( getSession() );
     }
 
@@ -175,11 +176,18 @@ public class ContextWindow
         Robot robot = getRobot();
         robot.setAutoWaitForIdle( true );
         int xOffset = calculateOffsetX( liveEditFrameX );
-        robot.mouseMove( mainDivX + xOffset, 0 );
+        robot.mouseMove( mainDivX + xOffset, mainDivY - 10 );
+        sleep( 1000 );
         int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "drag_helper3" );
+        List<WebElement> elements = findElements( By.xpath( "//div[@id='drag-helper' and not(contains(@style, 'display: none'))]" ) );
+        TestUtils.saveScreenshot( getSession(), "drag_helperShow" );
+        if ( elements.size() == 0 )
+        {
+            throw new TestFrameworkException( "drag helper not showed!" );
+        }
+
     }
 
     /**
@@ -190,7 +198,8 @@ public class ContextWindow
      */
     private void moveDragHelperToTargetAndReleaseOnDropZone( WebElement targetElement, String dropZone )
     {
-        WebElement dragHelper = findElements( By.xpath( "//div[@id='drag-helper']" ) ).get( 0 );
+        List<WebElement> elements = findElements( By.xpath( "//div[@id='drag-helper' and not(contains(@style, 'display: none'))]" ) );
+        WebElement dragHelper = elements.get( 0 );
         Actions builder2 = new Actions( getDriver() );
         builder2.clickAndHold( dragHelper ).build().perform();
 

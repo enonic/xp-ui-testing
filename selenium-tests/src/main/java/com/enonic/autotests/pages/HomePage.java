@@ -43,7 +43,6 @@ public class HomePage
 
     public void open( String username, String password )
     {
-        TestUtils.saveScreenshot( getSession(), "home2" );
         String wh = getSession().getWindowHandle();
         if ( wh == null )
         {

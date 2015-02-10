@@ -12,6 +12,6 @@
     </input>
   </config>
   <regions>
-    <region name="main"/>
+    <region data-portal-component-type="region" name="main"/>
   </regions>
 </page-component>

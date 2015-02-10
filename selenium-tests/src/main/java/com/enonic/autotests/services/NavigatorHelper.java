@@ -141,7 +141,6 @@ public class NavigatorHelper
      */
     public static HomePage loginAndOpenHomePage( TestSession testSession )
     {
-        TestUtils.saveScreenshot( testSession, "home1" );
         ApplicationUser applicationUser = testSession.getCurrentUser();
         HomePage home = new HomePage( testSession );
         if ( applicationUser != null )

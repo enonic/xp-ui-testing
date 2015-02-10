@@ -8,7 +8,7 @@
 <body>
 <h1>Simple Site, with a view and region!</h1>
 
-<div data-live-edit-type="region">
+<div class="container" data-portal-component-type="region">
     <div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
         <div data-wem-component="${component.path}" data-th-remove="tag"/>
     </div>

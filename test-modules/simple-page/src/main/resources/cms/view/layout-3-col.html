@@ -1,23 +1,23 @@
-<div class="row" data-th-attr="data-live-edit-type=${component.type}">
+<div class="row">
 
-    <div data-live-edit-type="region" class="col-sm-4">
+    <div data-portal-component-type="region" class="col-sm-4">
 
         <div data-th-each="component : ${leftRegion.components}" data-th-remove="tag">
-            <div data-wem-component="${component.path}" data-th-remove="tag"/>
+            <div data-wem-component="${component.path}" data-th-remove="tag" />
         </div>
 
     </div>
-    <div data-live-edit-type="region" class="col-sm-4">
+    <div data-portal-component-type="region" class="col-sm-4">
 
         <div data-th-each="component : ${centerRegion.components}" data-th-remove="tag">
-            <div data-wem-component="${component.path}" data-th-remove="tag"/>
+            <div data-wem-component="${component.path}" data-th-remove="tag" />
         </div>
 
     </div>
-    <div data-live-edit-type="region" class="col-sm-4">
+    <div data-portal-component-type="region" class="col-sm-4">
 
         <div data-th-each="component : ${rightRegion.components}" data-th-remove="tag">
-            <div data-wem-component="${component.path}" data-th-remove="tag"/>
+            <div data-wem-component="${component.path}" data-th-remove="tag" />
         </div>
 
     </div>
