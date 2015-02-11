@@ -1,6 +1,5 @@
 package com.enonic.autotests.pages.form;
 
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -9,19 +8,20 @@ import com.enonic.wem.api.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class DateFormViewPanel
+
+public class TimeFormViewPanel
     extends FormViewPanel
 {
-    public static String REQUIRED_DATE_PROPERTY = "req_date";
+    public static String REQUIRED_TIME_PROPERTY = "req_time";
 
     private final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
     @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Required Date']]//input[contains(@id,'TextInput')]")
-    private WebElement reqDateInput;
+        "//div[contains(@id,'api.form.InputView') and descendant::div[contains(@title,'Required Time')]]//input[contains(@id,'TextInput')]")
+    private WebElement reqTimeInput;
 
 
-    public DateFormViewPanel( final TestSession session )
+    public TimeFormViewPanel( final TestSession session )
     {
         super( session );
     }
@@ -29,15 +29,15 @@ public class DateFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        String date = data.getString( REQUIRED_DATE_PROPERTY );
-        // type a date
-        reqDateInput.sendKeys( date );
+        String time = data.getString( REQUIRED_TIME_PROPERTY );
+        // type a date time
+        reqTimeInput.sendKeys( time );
         sleep( 300 );
         return this;
     }
 
-    public String getRequiredDateValue()
+    public String getRequiredTimeValue()
     {
-        return reqDateInput.getAttribute( "value");
+        return reqTimeInput.getAttribute( "value" );
     }
 }

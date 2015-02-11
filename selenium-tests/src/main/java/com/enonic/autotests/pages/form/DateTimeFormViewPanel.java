@@ -29,9 +29,9 @@ public class DateTimeFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        String description = data.getString( REQUIRED_DATE_TIME_PROPERTY );
+        String dateTime = data.getString( REQUIRED_DATE_TIME_PROPERTY );
         // type a date time
-        reqDateTimeInput.sendKeys( description );
+        reqDateTimeInput.sendKeys( dateTime );
         sleep( 300 );
         return this;
     }

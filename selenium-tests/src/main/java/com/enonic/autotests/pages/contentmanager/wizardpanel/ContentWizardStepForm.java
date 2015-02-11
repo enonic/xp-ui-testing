@@ -8,10 +8,12 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.WizardStepForm;
 import com.enonic.autotests.pages.form.DateFormViewPanel;
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
+import com.enonic.autotests.pages.form.DoubleFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
+import com.enonic.autotests.pages.form.TimeFormViewPanel;
 import com.enonic.wem.api.data.PropertyTree;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 
@@ -34,6 +36,14 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( ModuleContentType.DATE_TIME.getName() ) )
         {
             formViewPanel = new DateTimeFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TIME.getName() ) )
+        {
+            formViewPanel = new TimeFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.DOUBLE.getName() ) )
+        {
+            formViewPanel = new DoubleFormViewPanel( getSession() );
         }
         else if ( contentTypeName.contains( ModuleContentType.DATE.getName() ) )
         {
