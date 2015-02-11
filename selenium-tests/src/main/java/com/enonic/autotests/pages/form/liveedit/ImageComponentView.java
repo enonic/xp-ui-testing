@@ -83,8 +83,12 @@ public class ImageComponentView
 
     private void clickOnOptionsItem( String imageName )
     {
-        findElements( By.xpath( EMPTY_IMAGE_COMPONENT_CONTAINER + String.format(
-            "//div[contains(@id,'api.app.NamesAndIconView')]//h6[@class='main-name' and text()='%s']", imageName ) ) ).get( 0 ).click();
+        String optionXpath = EMPTY_IMAGE_COMPONENT_CONTAINER + String.format(
+            "//div[contains(@id,'api.app.NamesAndIconView')]//h6[@class='main-name' and text()='%s']", imageName );
+        if(findElements( By.xpath( optionXpath ) ).size() == 0){
+            throw new TestFrameworkException( "Image with name:  " +imageName + "  was not found!" );
+        }
+        findElements( By.xpath(optionXpath ) ).get( 0 ).click();
     }
 
     private void saveInSystemClipboard( String filePath )

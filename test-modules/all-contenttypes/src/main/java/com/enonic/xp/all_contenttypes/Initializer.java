@@ -1,4 +1,4 @@
-package com.enonic.xp.simplesite;
+package com.enonic.xp.all_contenttypes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,15 +25,11 @@ public class Initializer
     private final static Logger LOG = LoggerFactory.getLogger( Initializer.class );
 
     private static final String[] FOLDER_IMAGES =
-        {"bro.jpg", "Pop_02.jpg", "Pop_03.jpg", "Pop_04.jpg", "seng.jpg", "foss.jpg", "telk.png", "geek.png", "enterprise.png", "item1.png",
-            "item2.png", "team1.png", "team2.png"};
+        {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "elephant.png", "dollar.png"};
 
 
-    private static final Form MEDIA_IMAGE_FORM = createMediaImageForm();
-
-    private static final String IMAGE_ARCHIVE_PATH_ELEMENT = "imagearchive";
-
-
+    private static final String FOLDER_NAME = "All Content types images";
+    
     private ContentService contentService;
 
     @Override
@@ -58,14 +54,14 @@ public class Initializer
     private void createImages()
         throws Exception
     {
-        final ContentPath imageArchivePath = ContentPath.from( ContentPath.ROOT, IMAGE_ARCHIVE_PATH_ELEMENT );
+        final ContentPath imageArchivePath = ContentPath.from( ContentPath.ROOT, FOLDER_NAME );
         if ( hasContent( imageArchivePath ) )
         {
             LOG.info( "Already initialized with data. Skipping." );
             return;
         }
 
-        LOG.info( "Initializing demo content..." );
+        LOG.info( "Initializing content for 'All content types selenium tests' " );
         final long tm = System.currentTimeMillis();
 
         try
@@ -74,7 +70,7 @@ public class Initializer
         }
         finally
         {
-            LOG.info( "Initialized demo content in " + ( System.currentTimeMillis() - tm ) + " ms" );
+            LOG.info( "Initialized content for 'All content types' in " + ( System.currentTimeMillis() - tm ) + " ms" );
         }
 
     }
@@ -128,27 +124,27 @@ public class Initializer
 
         return CreateContentParams.create().
 
-            type( ContentTypeName.templateFolder() ).parent( ContentPath.ROOT ).displayName( "Simple Page Images" ).
+            type( ContentTypeName.templateFolder() ).parent( ContentPath.ROOT ).displayName( FOLDER_NAME ).
             requireValid( true ).owner( PrincipalKey.ofAnonymous() ).
             contentData( new PropertyTree() ).type( ContentTypeName.folder() ).
             build();
 
     }
 
-    private static Form createMediaImageForm()
-
-    {
-        return Form.newForm().
-            addFormItem( Input.newInput().name( "image" ).
-                inputType( InputTypes.IMAGE_UPLOADER ).build() ).
-            addFormItem( Input.newInput().name( "mimeType" ).
-                inputType( InputTypes.TEXT_LINE ).
-                label( "Mime type" ).
-                occurrences( 1, 1 ).
-                build() ).
-
-            build();
-    }
+//    private static Form createMediaImageForm()
+//
+//    {
+//        return Form.newForm().
+//            addFormItem( Input.newInput().name( "image" ).
+//                inputType( InputTypes.IMAGE_UPLOADER ).build() ).
+//            addFormItem( Input.newInput().name( "mimeType" ).
+//                inputType( InputTypes.TEXT_LINE ).
+//                label( "Mime type" ).
+//                occurrences( 1, 1 ).
+//                build() ).
+//
+//            build();
+//    }
 
     public void setContentService( final ContentService contentService )
     {

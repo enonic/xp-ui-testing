@@ -6,7 +6,10 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.WizardStepForm;
+import com.enonic.autotests.pages.form.DateFormViewPanel;
+import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
+import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
 import com.enonic.wem.api.data.PropertyTree;
@@ -18,7 +21,6 @@ public class ContentWizardStepForm
     public ContentWizardStepForm( final TestSession session )
     {
         super( session );
-        // XXX: Verify that ContentWizardStepForm is visible, if not throw exception
         waitUntilVisible( By.xpath( "//div[contains(@id,'ContentWizardStepForm')]" ) );
     }
 
@@ -29,11 +31,15 @@ public class ContentWizardStepForm
         {
             formViewPanel = new SiteFormViewPanel( getSession() );
         }
-        // we can fill in any other form   (not only system)
-        else if ( contentTypeName.equals( "demo:geopoint" ) )
+        else if ( contentTypeName.contains( ModuleContentType.DATE_TIME.getName() ) )
         {
-            throw new TestFrameworkException( "ContentWizardStepForm:  not implemented for demo:geopoint" );
+            formViewPanel = new DateTimeFormViewPanel( getSession() );
         }
+        else if ( contentTypeName.contains( ModuleContentType.DATE.getName() ) )
+        {
+            formViewPanel = new DateFormViewPanel( getSession() );
+        }
+
         else if ( contentTypeName.equals( ContentTypeName.pageTemplate().toString() ) )
         {
             formViewPanel = new PageTemplateFormViewPanel( getSession() );

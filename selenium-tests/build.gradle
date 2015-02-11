@@ -62,6 +62,12 @@ task installSimpleSiteModule( type: Test, dependsOn: ['buildModules', 'startServ
     include '**/liveedit/InstallSimpleSiteModule.class'
 }
 
+task installAllContentTypesModule( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
+    scanForTestClasses = true
+    exclude '**/*Spec.class'
+    include '**/input_types/InstallContentTypesModule.class'
+}
+
 tasks.withType( Test ) {
     jvmArgs '-Xms128m', '-Xmx1024m'
     testLogging {
@@ -71,13 +77,16 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [startServer, initializeData] ) {
+task testContentManager( type: Test, dependsOn: [startServer, installAllContentTypesModule, initializeData] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/CleanAndInitializeData.class'
+    exclude '**/module/**'
+    exclude '**/user/**'
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
+    initializeData.shouldRunAfter installAllContentTypesModule
 }
 
 task testUser( type: Test, dependsOn: [startServer, initializeData] ) {
