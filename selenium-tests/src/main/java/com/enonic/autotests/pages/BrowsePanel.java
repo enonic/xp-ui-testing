@@ -87,7 +87,7 @@ public abstract class BrowsePanel
             return false;
         }
         String expanderIcon = String.format( BROWSE_PANEL_ITEM_EXPANDER, gridItemName );
-        findElement( By.xpath( expanderIcon ) ).click();
+        findElements( By.xpath( expanderIcon ) ).get( 0 ).click();
         return true;
     }
 
@@ -493,7 +493,7 @@ public abstract class BrowsePanel
         {
             throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
         }
-        sleep( 700 );
+        sleep( 1000 );
         findElement( By.xpath( itemCheckBoxXpath ) ).click();
         getLogger().info( "check box was selected, item: " + itemName );
 

@@ -41,7 +41,7 @@ class InstallContentTypesModule
     def "GIVEN module selected in the browse panel WHEN 'Start' button pressed  THEN status 'started' appears near the module in browse panel "()
     {
         given: "select a existing  module"
-        moduleBrowsePanel.clickAndSelectRow( ALL_CONTENT_TYPES_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( ALL_CONTENT_TYPES_MODULE_NAME );
         moduleBrowsePanel.waitAndCheckIsButtonEnabled( ModuleBrowsePanel.START_BUTTON );
 
         when: "button 'Start' on the toolbar pressed"
