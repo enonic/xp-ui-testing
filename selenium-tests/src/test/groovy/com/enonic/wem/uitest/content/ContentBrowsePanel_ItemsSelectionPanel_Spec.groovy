@@ -108,6 +108,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         contentBrowsePanel.selectContentInTable( list );
 
         int before = itemsSelectionPanel.getSelectedItemCount();
+        TestUtils.saveScreenshot( getSession(), "select_2_items" )
 
         when:
         contentBrowsePanel.selectContentInTable( thirdContent.getPath() );
