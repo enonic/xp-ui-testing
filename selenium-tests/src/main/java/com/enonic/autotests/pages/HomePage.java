@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -106,7 +107,10 @@ public class HomePage
 
     public ModuleBrowsePanel openModulesApplication()
     {
+        TestUtils.saveScreenshot( getSession(), "home_module_1" );
         modules.click();
+        SleepHelper.sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "home_module_2" );
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.MODULE_MANAGER_FRAME_XPATH );
