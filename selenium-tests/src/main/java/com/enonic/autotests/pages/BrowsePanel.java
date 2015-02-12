@@ -87,8 +87,8 @@ public abstract class BrowsePanel
             return false;
         }
         String expanderIcon = String.format( BROWSE_PANEL_ITEM_EXPANDER, gridItemName );
-        waitForClickableAndClick( By.xpath( expanderIcon ) );
-        // findElements( By.xpath( expanderIcon ) ).get( 0 ).click();
+        //waitForClickableAndClick( By.xpath( expanderIcon ) );
+        findElements( By.xpath( expanderIcon ) ).get( 0 ).click();
         return true;
     }
 

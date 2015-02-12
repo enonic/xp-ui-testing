@@ -17,7 +17,7 @@ public class LiveFormPanel
 
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
 
-    public final String IMAGE_COMPONENT_VIEW = "//div[contains(@id,'api.liveedit.image.ImageComponentView')]";
+    public final String IMAGE_COMPONENT_VIEW = "//figure[contains(@id,'api.liveedit.image.ImageComponentView')]";
 
     public final String SHADER_PAGE = "//div[@class='shader page']";
 

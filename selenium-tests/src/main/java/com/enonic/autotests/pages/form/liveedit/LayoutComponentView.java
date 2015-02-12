@@ -41,13 +41,11 @@ public class LayoutComponentView
 
     private boolean isLayoutExists( String layoutName )
     {
-        return findElements( By.xpath( COMPONENT_CONTAINER + String.format(
-            "//div[contains(@id,'api.app.NamesAndIconView')]//h6[@class='main-name' and text()='%s']", layoutName ) ) ).size() > 0;
+        return findElements( By.xpath( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, layoutName ) ) ).size() > 0;
     }
 
     private void clickOnOptionsItem( String layoutName )
     {
-        findElements( By.xpath( COMPONENT_CONTAINER + String.format(
-            "//div[contains(@id,'api.app.NamesAndIconView')]//h6[@class='main-name' and text()='%s']", layoutName ) ) ).get( 0 ).click();
+        findElements( By.xpath( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, layoutName ) ) ).get( 0 ).click();
     }
 }

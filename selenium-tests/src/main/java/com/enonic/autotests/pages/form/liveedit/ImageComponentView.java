@@ -35,8 +35,8 @@ public class ImageComponentView
 
     public LiveFormPanel selectImageItemFromList( String imageName )
     {
-        clickOnDropDown();
-        clickOnOptionsItem( imageName );
+        // clickOnDropDown();
+        selectOptionsItem( imageName );
         return new LiveFormPanel( getSession() );
     }
 
@@ -49,6 +49,54 @@ public class ImageComponentView
         }
         findElements( By.xpath( dropDownButtonXpath ) ).get( 0 ).click();
         sleep( 1000 );
+    }
+
+    private void clickOnUploadButtonAndShowDropZone()
+    {
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        findElements( By.xpath( "//div[contains(@id,'ImageUploadDialog') and @style]//a[@class='dropzone']" ) ).get( 0 ).click();
+    }
+
+    private void selectOptionsItem( String imageName )
+    {
+        if ( findElements( By.xpath( EMPTY_IMAGE_COMPONENT_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]" ) ).size() ==
+            0 )
+        {
+            throw new TestFrameworkException( "ImageComponentView: options filter input was not found!" );
+        }
+        findElements( By.xpath( EMPTY_IMAGE_COMPONENT_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]" ) ).get(
+            0 ).sendKeys( imageName );
+        sleep( 300 );
+        String optionXpath = String.format( NAMES_ICON_VIEW, imageName );
+        if ( findElements( By.xpath( optionXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Image with name:  " + imageName + "  was not found!" );
+        }
+        findElements( By.xpath( optionXpath ) ).get( 0 ).click();
+    }
+
+
+    private void saveInSystemClipboard( String filePath )
+    {
+        URL dirURL = ImageComponentView.class.getClassLoader().getResource( filePath );
+        if ( dirURL == null )
+        {
+            throw new TestFrameworkException( "tests resource for upload tests was not found:" + filePath );
+        }
+        File file = null;
+        try
+        {
+            getLogger().info( "path to resource  is###: " + dirURL.toURI() );
+            file = new File( dirURL.toURI() );
+
+        }
+        catch ( URISyntaxException e )
+        {
+            getLogger().error( "wrong uri for file " + filePath );
+        }
+
+        StringSelection ss = new StringSelection( file.getAbsolutePath() );
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents( ss, null );
     }
 
     public LiveFormPanel doUploadImage( String imagePath )
@@ -73,45 +121,6 @@ public class ImageComponentView
         sleep( 2000 );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         return new LiveFormPanel( getSession() );
-    }
-
-    private void clickOnUploadButtonAndShowDropZone()
-    {
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
-        findElements( By.xpath( "//div[contains(@id,'ImageUploadDialog') and @style]//a[@class='dropzone']" ) ).get( 0 ).click();
-    }
-
-    private void clickOnOptionsItem( String imageName )
-    {
-        String optionXpath = EMPTY_IMAGE_COMPONENT_CONTAINER + String.format(
-            "//div[contains(@id,'api.app.NamesAndIconView')]//h6[@class='main-name' and text()='%s']", imageName );
-        if(findElements( By.xpath( optionXpath ) ).size() == 0){
-            throw new TestFrameworkException( "Image with name:  " +imageName + "  was not found!" );
-        }
-        findElements( By.xpath(optionXpath ) ).get( 0 ).click();
-    }
-
-    private void saveInSystemClipboard( String filePath )
-    {
-        URL dirURL = ImageComponentView.class.getClassLoader().getResource( filePath );
-        if ( dirURL == null )
-        {
-            throw new TestFrameworkException( "tests resource for upload tests was not found:" + filePath );
-        }
-        File file = null;
-        try
-        {
-            getLogger().info( "path to resource  is###: " + dirURL.toURI() );
-            file = new File( dirURL.toURI() );
-
-        }
-        catch ( URISyntaxException e )
-        {
-            getLogger().error( "wrong uri for file " + filePath );
-        }
-
-        StringSelection ss = new StringSelection( file.getAbsolutePath() );
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents( ss, null );
     }
 
 }
