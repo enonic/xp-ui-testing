@@ -17,6 +17,8 @@ import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+import static com.enonic.autotests.utils.SleepHelper.sleep
+
 @Stepwise
 class CreateSiteWithLayoutSpec
     extends BaseGebSpec
@@ -61,6 +63,7 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
         contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME + "/_templates" ) ).clickToolbarNew().selectContentType(
             pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
+        sleep( 2000 );
         contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME + "/_templates" ) );
         TestUtils.saveScreenshot( getSession(), "simple_template" );
 
