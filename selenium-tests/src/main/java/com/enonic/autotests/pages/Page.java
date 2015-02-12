@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -208,6 +209,40 @@ public abstract class Page
         } );
         return getDriver().findElement( by );
     }
+
+    public void waitForClickableAndClick( By by )
+    {
+        FluentWait<By> fluentWait = new FluentWait<By>( by );
+        fluentWait.withTimeout( 3, TimeUnit.SECONDS ).pollingEvery( 500, TimeUnit.MICROSECONDS ).ignoring( NoSuchElementException.class );
+
+        try
+        {
+            getDriver().findElement( by ).click();
+        }
+        catch ( WebDriverException e )
+        {
+
+            try
+            {
+                fluentWait.until( new Predicate<By>()
+                {
+                    public boolean apply( By by )
+                    {
+
+                        return getDriver().findElement( by ).isEnabled();
+                    }
+                } );
+                getDriver().findElement( by ).click();
+            }
+            catch ( WebDriverException f )
+            {
+                logger.info( "[getElementByXpath] FluentWait findElement threw exception:\n\n" + f + "\n\n" );
+
+                throw new WebDriverException( "Unable to find element " + by.toString() );
+            }
+        }
+    }
+
 
     public List<WebElement> findElements( By by )
     {
