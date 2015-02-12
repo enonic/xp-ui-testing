@@ -3,6 +3,8 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.modules.InstallModuleDialog
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.TestUtils
+import com.enonic.autotests.utils.WaitHelper
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
@@ -41,6 +43,8 @@ class InstallContentTypesModule
     def "GIVEN module selected in the browse panel WHEN 'Start' button pressed  THEN status 'started' appears near the module in browse panel "()
     {
         given: "select a existing  module"
+        WaitHelper.sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "start_module" )
         moduleBrowsePanel.clickCheckboxAndSelectRow( ALL_CONTENT_TYPES_MODULE_NAME );
         moduleBrowsePanel.waitAndCheckIsButtonEnabled( ModuleBrowsePanel.START_BUTTON );
 
