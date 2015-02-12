@@ -130,6 +130,6 @@ task testUploadContent( type: Test, dependsOn: ['initializeData'] ) {
 }
 testModule.finalizedBy = ['stopServer']
 testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
-testUser.finalizedBy = ['stopServer']
+//testUser.finalizedBy = ['stopServer']
 testContentManager.finalizedBy = ['stopServer']
 
