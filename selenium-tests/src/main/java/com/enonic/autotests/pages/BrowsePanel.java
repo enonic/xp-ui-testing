@@ -493,8 +493,8 @@ public abstract class BrowsePanel
         {
             throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
         }
-        sleep( 1000 );
         findElement( By.xpath( itemCheckBoxXpath ) ).click();
+        sleep( 1000 );
         getLogger().info( "check box was selected, item: " + itemName );
 
         return (T) this;

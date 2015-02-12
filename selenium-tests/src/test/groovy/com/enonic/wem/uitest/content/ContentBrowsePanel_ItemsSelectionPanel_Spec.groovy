@@ -113,6 +113,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         contentBrowsePanel.selectContentInTable( thirdContent.getPath() );
 
         then:
+        TestUtils.saveScreenshot( getSession(), "select_3_items" )
         itemsSelectionPanel.getSelectedItemCount() == before + 1;
     }
 
@@ -145,8 +146,9 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         int before = itemsSelectionPanel.getSelectedItemCount();
 
         when:
-        TestUtils.saveScreenshot( getSession(), "issue_deselect" )
+        TestUtils.saveScreenshot( getSession(), "deselect_before" );
         contentBrowsePanel.deSelectContentInTable( folderContent.getPath() );
+        TestUtils.saveScreenshot( getSession(), "deselect_after" );
 
         then:
         itemsSelectionPanel.getSelectedItemCount() == before - 1;
