@@ -86,6 +86,7 @@ public class ModuleBrowsePanel
     public ModuleBrowsePanel clickOnToolbarStop()
     {
         stopButton.click();
+        sleep( 1500 );
         return this;
     }
 

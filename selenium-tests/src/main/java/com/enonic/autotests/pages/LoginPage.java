@@ -17,7 +17,7 @@ public class LoginPage
     extends Page
 {
 
-    private String TITLE = "Enonic WEM Admin";
+    private String TITLE = "Enonic XP Admin";
 
     private long LOGIN_PAGE_TIMEOUT = 10;
 

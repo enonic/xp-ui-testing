@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <display-name>Test Module 2</display-name>
+  <info>Selenium Testing Module</info>
+  <url>http://shapebootstrap.net/</url>
+  <vendor>
+    <name>Enonic AS</name>
+    <url>http://www.enonic.com</url>
+  </vendor>
+  <dependencies system-min-version="5.0.0" system-max-version="6.0.0"/>
+  <metadata-schemas>
+    <metadata-schema name="system:menu"/>
+  </metadata-schemas>
+  <config>
+
+  </config>
+</module>

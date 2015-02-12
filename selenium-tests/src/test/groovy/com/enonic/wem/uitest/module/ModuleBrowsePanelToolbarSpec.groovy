@@ -1,19 +1,10 @@
 package com.enonic.wem.uitest.module
 
-import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Shared
 
 class ModuleBrowsePanelToolbarSpec
-    extends BaseGebSpec
+    extends BaseModuleSpec
 {
-    @Shared
-    ModuleBrowsePanel moduleBrowsePanel;
-
-    @Shared
-    String FEATURES_MODULE_NAME = "com.enonic.wem.modules.features";
-
 
     def setup()
     {
@@ -54,7 +45,7 @@ class ModuleBrowsePanelToolbarSpec
     def "GIVEN Module BrowsePanel WHEN one selected started module THEN Stop button should be enabled"()
     {
         when: " one module selected in the table"
-        moduleBrowsePanel.clickAndSelectRow( FEATURES_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
         then: "Stop button becomes enabled"
         moduleBrowsePanel.isStopButtonEnabled();
@@ -63,7 +54,7 @@ class ModuleBrowsePanelToolbarSpec
     def "GIVEN Module BrowsePanel WHEN one selected started module THEN Update button should be enabled"()
     {
         when: " one module selected in the table"
-        moduleBrowsePanel.clickAndSelectRow( FEATURES_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
         then: "Update button becomes enabled"
         moduleBrowsePanel.isUpdateButtonEnabled();

@@ -24,7 +24,8 @@ dependencies {
 }
 
 task buildModules(
-    dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:all-contenttypes:install'] )
+    dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:all-contenttypes:install',
+                ':test-modules:second-module:install', ':test-modules:third-module:install', ':test-modules:fourth-module:install', ':test-modules:test-module:install'] )
 
 task unpackDistro( type: Copy ) {
     from {
@@ -53,6 +54,12 @@ task initializeData( type: Test, dependsOn: ['startServer'] ) {
     exclude '**/*Spec.class'
     exclude '**/*Suite.*'
     include '**/CleanAndInitializeData.class'
+}
+
+task installTestModules( type: Test, dependsOn: ['startServer'] ) {
+    scanForTestClasses = true
+    exclude '**/*Spec.class'
+    include '**/module/InstallTestModules.class'
 }
 
 task installSimpleSiteModule( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
@@ -98,13 +105,13 @@ task testUser( type: Test, dependsOn: [startServer, initializeData] ) {
     forkEvery = null
 }
 
-task testModule( type: Test, dependsOn: [startServer, initializeData] ) {
+task testModule( type: Test, dependsOn: [buildModules, startServer, installTestModules] ) {
     scanForTestClasses = false
     include '**/module/*Spec.class'
-    exclude '**/CleanAndInitializeData.class'
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
+    installTestModules.shouldRunAfter startServer
 }
 
 task testSimpleSiteLiveEdit( type: Test, dependsOn: ['installSimpleSiteModule', 'initializeData'] ) {
@@ -128,7 +135,7 @@ task testUploadContent( type: Test, dependsOn: ['initializeData'] ) {
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
-testModule.finalizedBy = ['stopServer']
+//testModule.finalizedBy = ['stopServer']
 testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
 //testUser.finalizedBy = ['stopServer']
 testContentManager.finalizedBy = ['stopServer']

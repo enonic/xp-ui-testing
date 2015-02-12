@@ -4,23 +4,12 @@ import com.enonic.autotests.pages.modules.InstallModuleDialog
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class InstallAndUninstallModuleSpec
-    extends BaseGebSpec
+    extends BaseModuleSpec
 {
-    @Shared
-    ModuleBrowsePanel moduleBrowsePanel;
-
-    @Shared
-    String TEST_MODULE_NAME = "com.enonic.xp.ui-testing.first-module";
-
-
-    @Shared
-    String TEST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.0-SNAPSHOT";
 
     def setup()
     {

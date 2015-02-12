@@ -1,35 +1,12 @@
 package com.enonic.wem.uitest.module
 
-import com.enonic.autotests.pages.modules.InstallModuleDialog
-import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.uitest.BaseGebSpec
 import org.openqa.selenium.Keys
-import spock.lang.Shared
 
 class ModuleBrowsePanel_GridPanel_Spec
-    extends BaseGebSpec
+    extends BaseModuleSpec
 {
-
-
-    @Shared
-    ModuleBrowsePanel moduleBrowsePanel;
-
-
-    @Shared
-    String TEST1_MODULE_NAME = "com.enonic.xp.ui-testing.first-module";
-
-    @Shared
-    String TEST1_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.0-SNAPSHOT";
-
-
-    @Shared
-    String TEST2_MODULE_URL = "mvn:com.enonic.xp.ui-testing/all-contenttypes/5.0.0-SNAPSHOT";
-
-    @Shared
-    String TEST2_MODULE_NAME = "com.enonic.xp.ui-testing.all-contenttypes";
-
 
     def setup()
     {
@@ -37,25 +14,6 @@ class ModuleBrowsePanel_GridPanel_Spec
         moduleBrowsePanel = NavigatorHelper.openModules( getTestSession() );
     }
 
-    def "WHEN first tests module added THEN new module appears in the grid"()
-    {
-        when: "url typed and 'Install' button "
-        InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
-        moduleBrowsePanel = dialog.typeModuleURL( TEST1_MODULE_URL ).clickOnInstall();
-
-        then: "new module exists in the browse panel "
-        moduleBrowsePanel.exists( TEST1_MODULE_NAME, true );
-    }
-
-    def "WHEN second module added THEN new module appears in the grid"()
-    {
-        when: "url typed and 'Install' button "
-        InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
-        moduleBrowsePanel = dialog.typeModuleURL( TEST2_MODULE_URL ).clickOnInstall();
-
-        then: "new module exists in the browse panel "
-        moduleBrowsePanel.exists( TEST2_MODULE_NAME, true );
-    }
 
     def "GIVEN modules listed on root WHEN no selection THEN all rows are white"()
     {
@@ -73,7 +31,7 @@ class ModuleBrowsePanel_GridPanel_Spec
         int before = moduleBrowsePanel.getSelectedRowsNumber();
 
         when:
-        moduleBrowsePanel.clickCheckboxAndSelectRow( TEST1_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
 
         then:
         moduleBrowsePanel.getSelectedRowsNumber() == 1 && before == 0;
@@ -82,12 +40,11 @@ class ModuleBrowsePanel_GridPanel_Spec
     def "GIVEN a selected module  WHEN spacebar is typed THEN row is no longer selected"()
     {
         given:
-
-        moduleBrowsePanel.clickCheckboxAndSelectRow( TEST1_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
         TestUtils.saveScreenshot( getTestSession(), "modulespacebartest1" );
 
         when:
-        moduleBrowsePanel.pressKeyOnRow( TEST1_MODULE_NAME, Keys.SPACE );
+        moduleBrowsePanel.pressKeyOnRow( FIRST_MODULE_NAME, Keys.SPACE );
 
         then:
         TestUtils.saveScreenshot( getTestSession(), "modulespacebartest2" );
@@ -97,7 +54,7 @@ class ModuleBrowsePanel_GridPanel_Spec
     def "GIVEN a selected module  WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
     {
         given:
-        moduleBrowsePanel.clickCheckboxAndSelectRow( TEST1_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
         int before = moduleBrowsePanel.getSelectedRowsNumber();
 
         when:

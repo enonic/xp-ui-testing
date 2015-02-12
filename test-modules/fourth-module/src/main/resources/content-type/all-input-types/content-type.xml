@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>All the Input Types</display-name>
+  <super-type>system:structured</super-type>
+  <is-abstract>false</is-abstract>
+  <is-final>true</is-final>
+  <is-built-in>false</is-built-in>
+  <allow-child-content>true</allow-child-content>
+  <form>
+    <input name="myCheckbox" type="Checkbox">
+      <label>Checkbox</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myComboBox" type="ComboBox">
+      <label>ComboBox</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <options>
+          <option>
+            <label>myOption 1</label>
+            <value>o1</value>
+          </option>
+          <option>
+            <label>myOption 2</label>
+            <value>o2</value>
+          </option>
+        </options>
+      </config>
+    </input>
+    <input name="myDate" type="Date">
+      <label>Date</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myDateTime" type="DateTime">
+      <label>DateTime</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myDouble" type="Double">
+      <label>Double</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myGeoPoint" type="GeoPoint">
+      <label>GeoPoint</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myImageSelector" type="ImageSelector">
+      <label>ImageSelector</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <relationship-type>system:related-image</relationship-type>
+      </config>
+    </input>
+    <input name="myHtmlArea" type="HtmlArea">
+      <label>HtmlArea</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myLong" type="Long">
+      <label>Long</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myRelationship" type="Relationship">
+      <label>Relationship (like)</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <relationship-type>system:like</relationship-type>
+      </config>
+    </input>
+    <input name="mySingleSelectorAsDropdown" type="SingleSelector">
+      <label>SingleSelector as Dropdown</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <options>
+          <option>
+            <label>myOption 1</label>
+            <value>o1</value>
+          </option>
+          <option>
+            <label>myOption 2</label>
+            <value>o2</value>
+          </option>
+        </options>
+        <selector-type>DROPDOWN</selector-type>
+      </config>
+    </input>
+    <input name="mySingleSelectorAsRadio" type="SingleSelector">
+      <label>SingleSelector as Radio</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <options>
+          <option>
+            <label>myOption 1</label>
+            <value>o1</value>
+          </option>
+          <option>
+            <label>myOption 2</label>
+            <value>o2</value>
+          </option>
+        </options>
+        <selector-type>RADIO</selector-type>
+      </config>
+    </input>
+    <input name="mySingleSelectorAsComboBox" type="SingleSelector">
+      <label>SingleSelector as ComboBox</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <options>
+          <option>
+            <label>myOption 1</label>
+            <value>o1</value>
+          </option>
+          <option>
+            <label>myOption 2</label>
+            <value>o2</value>
+          </option>
+        </options>
+        <selector-type>COMBOBOX</selector-type>
+      </config>
+    </input>
+    <input name="myTag" type="Tag">
+      <label>Tag</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myTextLine" type="TextLine">
+      <label>TextLine</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myTextArea" type="TextArea">
+      <label>TextArea</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myTime" type="Time">
+      <label>Time</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="myXml" type="Xml">
+      <label>Xml</label>
+      <immutable>false</immutable>
+      <indexed>false</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+  </form>
+</content-type>
