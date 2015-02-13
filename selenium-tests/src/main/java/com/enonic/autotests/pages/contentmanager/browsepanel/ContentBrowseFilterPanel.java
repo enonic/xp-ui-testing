@@ -172,7 +172,7 @@ public class ContentBrowseFilterPanel
             throw new TestFrameworkException( "The link with name 'Clear Filter' was not found!" );
         }
         findElements( By.linkText( CLEAR_FILTER_LINK ) ).get( 0 ).click();
-        sleep( 500 );
+        sleep( 2000 );
     }
 
     /**
