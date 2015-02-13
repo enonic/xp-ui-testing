@@ -52,7 +52,7 @@ public abstract class BaseDeleteDialog
         {
             throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
         }
-        sleep( 500 );
+        sleep( 1000 );
     }
 
     public List<String> getContentNameToDelete()

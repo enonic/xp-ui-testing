@@ -152,6 +152,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
         contentBrowsePanel.waitUntilPageLoaded( 3 );
+        TestUtils.saveScreenshot( getSession(), "LastModified_filter" )
 
 
         then:
