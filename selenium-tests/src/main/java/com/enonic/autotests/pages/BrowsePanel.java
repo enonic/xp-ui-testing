@@ -121,7 +121,7 @@ public abstract class BrowsePanel
             throw new TestFrameworkException( "grid item was not found! " + itemName );
         }
         String expanderXpath = String.format( BROWSE_PANEL_ITEM_EXPANDER, itemName );
-
+        boolean result = waitUntilVisibleNoException( By.xpath( expanderXpath ), 3 );
         List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
         if ( elements.size() == 0 )
         {

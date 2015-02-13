@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.api.schema.content.ContentTypeName
@@ -218,6 +219,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     {
         when: "filter cleared "
         contentBrowsePanel.clickOnSelectAll();
+        TestUtils.saveScreenshot( getSession(), "select_all_clicked" )
 
         then: "number of items in the selection panel and number of of selected rows in the grid are equals"
         contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames().size() == contentBrowsePanel.getSelectedRowsNumber();
