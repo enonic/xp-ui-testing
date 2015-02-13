@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
@@ -21,6 +22,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class HomePage
     extends Page
 {
+    private final String CM_LINK = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]";
     @FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
     private WebElement contentManager;
 
@@ -79,13 +81,23 @@ public class HomePage
      */
     public void waitUntilAllFramesLoaded()
     {
-        waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_3 );
+        if ( !waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_3 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "homepage" ) );
+            throw new TestFrameworkException( "Home Page loads too long!" );
+        }
+        // waitUntilVisibleNoException( By.xpath( "//a[contains(@href,'content-manager')]"),3);
+        if ( !waitUntilVisibleNoException( By.xpath( CM_LINK ), Application.EXPLICIT_3 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm_link" ) );
+            throw new TestFrameworkException( "Content Manager link not present on the home Page!!" );
+        }
     }
 
 
     public ContentBrowsePanel openContentManagerApplication()
     {
-
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-w" ) );
         contentManager.click();
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm" ) );
         sleep( 1000 );
