@@ -3,11 +3,8 @@
 
   <reference id="contentService" interface="com.enonic.wem.api.content.ContentService"/>
 
-
-  <service auto-export="interfaces">
-    <bean class="com.enonic.xp.simplesite.Initializer">
-      <property name="contentService" ref="contentService"/>
-    </bean>
-  </service>
+  <bean class="com.enonic.xp.simplesite.Initializer" init-method="initialize">
+    <property name="contentService" ref="contentService"/>
+  </bean>
 
 </blueprint>

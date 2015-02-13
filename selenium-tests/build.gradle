@@ -34,6 +34,10 @@ task unpackDistro( type: Copy ) {
     into file( unpackDir )
 }
 
+//ext {
+//    xpServer = new ServerInstance()
+//}
+
 task startServer( dependsOn: unpackDistro ) {
     doLast {
         // logging.captureStandardOutput LogLevel.INFO
@@ -48,13 +52,6 @@ task stopServer << {
     ext.xpServer.stop()
 }
 
-//task clearData( type: Test, dependsOn: ['installModules'] ) {
-task initializeData( type: Test, dependsOn: ['startServer'] ) {
-    scanForTestClasses = true
-    exclude '**/*Spec.class'
-    exclude '**/*Suite.*'
-    include '**/CleanAndInitializeData.class'
-}
 
 task installTestModules( type: Test, dependsOn: ['startServer'] ) {
     scanForTestClasses = true
@@ -84,22 +81,20 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [startServer, installAllContentTypesModule, initializeData] ) {
+task testContentManager( type: Test, dependsOn: [startServer, installAllContentTypesModule] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
-    exclude '**/CleanAndInitializeData.class'
     exclude '**/module/**'
     exclude '**/user/**'
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
-    initializeData.shouldRunAfter installAllContentTypesModule
+
 }
 
-task testUser( type: Test, dependsOn: [startServer, initializeData] ) {
+task testUser( type: Test, dependsOn: [startServer] ) {
     scanForTestClasses = false
     include '**/user/*Spec.class'
-    exclude '**/CleanAndInitializeData.class'
     exclude '**/content/**'
     exclude '**/module/**'
     forkEvery = null
@@ -114,29 +109,25 @@ task testModule( type: Test, dependsOn: [buildModules, startServer, installTestM
     installTestModules.shouldRunAfter startServer
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: ['installSimpleSiteModule', 'initializeData'] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: ['installSimpleSiteModule'] ) {
     scanForTestClasses = false
 
     include '**/liveedit/CreateSiteWithLayoutSpec.class'
-    exclude '**/CleanAndInitializeData.class'
-
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
-    initializeData.shouldRunAfter installSimpleSiteModule
 }
 
 
-task testUploadContent( type: Test, dependsOn: ['initializeData'] ) {
+task testUploadContent( type: Test, dependsOn: ['startServer'] ) {
     scanForTestClasses = false
-    exclude '**/CleanAndInitializeData.class'
     exclude '**/module/**'
     exclude '**/user/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
-//testModule.finalizedBy = ['stopServer']
+testModule.finalizedBy = ['stopServer']
 testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
-//testUser.finalizedBy = ['stopServer']
+testUser.finalizedBy = ['stopServer']
 testContentManager.finalizedBy = ['stopServer']
 

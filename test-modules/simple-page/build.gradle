@@ -1,4 +1,4 @@
-apply plugin: 'module'
+apply plugin: 'com.enonic.xp.gradle.module'
 
 module {
     displayName = 'Simple Site Module'

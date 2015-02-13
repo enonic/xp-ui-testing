@@ -4,10 +4,8 @@
   <reference id="contentService" interface="com.enonic.wem.api.content.ContentService"/>
 
 
-  <service auto-export="interfaces">
-    <bean class="com.enonic.xp.all_contenttypes.Initializer">
+  <bean class="com.enonic.xp.all_contenttypes.Initializer" init-method="initialize">
       <property name="contentService" ref="contentService"/>
     </bean>
-  </service>
 
 </blueprint>

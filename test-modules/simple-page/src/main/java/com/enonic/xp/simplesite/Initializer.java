@@ -14,13 +14,11 @@ import com.enonic.wem.api.data.PropertyTree;
 import com.enonic.wem.api.form.Form;
 import com.enonic.wem.api.form.Input;
 import com.enonic.wem.api.form.inputtype.InputTypes;
-import com.enonic.wem.api.initializer.DataInitializer;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 import com.enonic.wem.api.security.PrincipalKey;
 
 
 public class Initializer
-    implements DataInitializer
 {
     private final static Logger LOG = LoggerFactory.getLogger( Initializer.class );
 
@@ -36,7 +34,6 @@ public class Initializer
 
     private ContentService contentService;
 
-    @Override
     public void initialize()
         throws Exception
     {

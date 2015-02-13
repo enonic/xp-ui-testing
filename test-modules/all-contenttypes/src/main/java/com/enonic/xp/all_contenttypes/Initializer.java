@@ -11,16 +11,11 @@ import com.enonic.wem.api.content.ContentService;
 import com.enonic.wem.api.content.CreateContentParams;
 import com.enonic.wem.api.content.CreateMediaParams;
 import com.enonic.wem.api.data.PropertyTree;
-import com.enonic.wem.api.form.Form;
-import com.enonic.wem.api.form.Input;
-import com.enonic.wem.api.form.inputtype.InputTypes;
-import com.enonic.wem.api.initializer.DataInitializer;
 import com.enonic.wem.api.schema.content.ContentTypeName;
 import com.enonic.wem.api.security.PrincipalKey;
 
 
 public class Initializer
-    implements DataInitializer
 {
     private final static Logger LOG = LoggerFactory.getLogger( Initializer.class );
 
@@ -29,10 +24,9 @@ public class Initializer
 
 
     private static final String FOLDER_NAME = "All Content types images";
-    
+
     private ContentService contentService;
 
-    @Override
     public void initialize()
         throws Exception
     {
@@ -131,20 +125,6 @@ public class Initializer
 
     }
 
-//    private static Form createMediaImageForm()
-//
-//    {
-//        return Form.newForm().
-//            addFormItem( Input.newInput().name( "image" ).
-//                inputType( InputTypes.IMAGE_UPLOADER ).build() ).
-//            addFormItem( Input.newInput().name( "mimeType" ).
-//                inputType( InputTypes.TEXT_LINE ).
-//                label( "Mime type" ).
-//                occurrences( 1, 1 ).
-//                build() ).
-//
-//            build();
-//    }
 
     public void setContentService( final ContentService contentService )
     {
