@@ -241,13 +241,13 @@ public class ContentBrowsePanel
                 {
                     path = ContentPath.from( path, parentContent );
                 }
-                if ( !isRowExpanded( path.getName() ) )
-                {
+                //if ( !isRowExpanded( path.getName() ) )
+                // {
                     if ( !this.clickOnExpander( path.toString() ) )
                     {
                         getLogger().info( "content with name " + parentContent + "has no children! " );
                     }
-                }
+                // }
 
             }
         }

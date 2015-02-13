@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.module
 
-class ModuleDetailsPanel
+class ModuleBrowsePanel_ItemStatisticPanel_Spec
     extends BaseModuleSpec
 {
     // def WHEN One module is selected THEN The details panel should show Build date, version, key and System requirement

@@ -122,8 +122,8 @@ public abstract class BrowsePanel
         }
         String expanderXpath = String.format( BROWSE_PANEL_ITEM_EXPANDER, itemName );
 
-        WebElement expanderElement = findElements( By.xpath( expanderXpath ) ).get( 0 );
-        if ( expanderElement == null )
+        List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
+        if ( elements.size() == 0 )
         {
             throw new TestFrameworkException(
                 "invalid locator or content with name: " + itemName + " does not exist! xpath =  " + expanderXpath );
@@ -131,7 +131,7 @@ public abstract class BrowsePanel
 
         String attributeName = "class";
         String attributeValue = "collapse";
-        return waitAndCheckAttrValue( expanderElement, attributeName, attributeValue, 1l );
+        return waitAndCheckAttrValue( elements.get( 0 ), attributeName, attributeValue, 1l );
     }
 
 
