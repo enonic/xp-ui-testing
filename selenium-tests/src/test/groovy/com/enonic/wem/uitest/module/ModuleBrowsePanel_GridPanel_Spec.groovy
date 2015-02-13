@@ -25,7 +25,7 @@ class ModuleBrowsePanel_GridPanel_Spec
 
     }
 
-    def "GIVEN modules listed on root WHEN one row is clicked THEN it row is blue"()
+    def "GIVEN modules listed on root WHEN one row is clicked THEN its row is blue"()
     {
         given:
         int before = moduleBrowsePanel.getSelectedRowsNumber();

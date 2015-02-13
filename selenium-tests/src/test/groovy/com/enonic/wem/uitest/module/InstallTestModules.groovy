@@ -16,7 +16,7 @@ class InstallTestModules
     }
 
 
-    def "WHEN the first module installed and started THEN new module appears with 'stopped' status"()
+    def "WHEN the first module installed and started THEN new module appears with 'started' status"()
     {
         setup: "click on 'Install' button on the toolbar, dialog window appears"
         InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
@@ -35,7 +35,7 @@ class InstallTestModules
         moduleBrowsePanel.exists( FIRST_MODULE_NAME, true ) && moduleBrowsePanel.getModuleStatus( FIRST_MODULE_NAME ).equals( "started" );
     }
 
-    def "WHEN the second module installed and started THEN new module appears with 'stopped' status"()
+    def "WHEN the second module installed and started THEN new module appears with 'started' status"()
     {
         setup: "click on 'Install' button on the toolbar, dialog window appears"
         InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
@@ -54,7 +54,7 @@ class InstallTestModules
         moduleBrowsePanel.exists( SECOND_MODULE_NAME, true ) && moduleBrowsePanel.getModuleStatus( SECOND_MODULE_NAME ).equals( "started" );
     }
 
-    def "WHEN the third module installed and started THEN new module appears with 'stopped' status"()
+    def "WHEN the third module installed and started THEN new module appears with 'started' status"()
     {
         setup: "click on 'Install' button on the toolbar, dialog window appears"
         InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();
@@ -73,7 +73,7 @@ class InstallTestModules
         moduleBrowsePanel.exists( THIRD_MODULE_NAME, true ) && moduleBrowsePanel.getModuleStatus( THIRD_MODULE_NAME ).equals( "started" );
     }
 
-    def "WHEN the fourth module installed and started THEN new module appears with 'stopped' status"()
+    def "WHEN the fourth module installed and started THEN new module appears with 'started' status"()
     {
         setup: "click on 'Install' button on the toolbar, dialog window appears"
         InstallModuleDialog dialog = moduleBrowsePanel.clickToolbarInstall();

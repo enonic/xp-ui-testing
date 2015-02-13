@@ -29,6 +29,10 @@ driver = {
         {
             pathToDriver = props.getProperty( 'linux.chromedriver.path' )
         }
+        else if ( Platform.current.is( Platform.MAC ) )
+        {
+            pathToDriver = props.getProperty( 'mac.chromedriver.path' )
+        }
         else
         {
             throw new RuntimeException( "Unsupported operating system [${Platform.current}]" )
