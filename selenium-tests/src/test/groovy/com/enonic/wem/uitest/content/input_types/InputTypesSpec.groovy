@@ -1,11 +1,11 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.DoubleFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
-import com.enonic.autotests.pages.modules.ModuleBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -45,14 +45,16 @@ class InputTypesSpec
     @Shared
     ContentBrowsePanel contentBrowsePanel;
 
+
     @Shared
-    ModuleBrowsePanel moduleBrowsePanel;
+    ContentBrowseFilterPanel filterPanel;
 
 
     def setup()
     {
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        filterPanel = contentBrowsePanel.getFilterPanel();
     }
 
     def "create a site based on module with all content types"()
@@ -75,7 +77,8 @@ class InputTypesSpec
             dateContent.getContentTypeName() ).typeData( dateContent ).save().close( dateContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
+        filterPanel.typeSearchText( dateContent.getName() );
+        //contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
         contentBrowsePanel.clickCheckboxAndSelectRow( dateContent.getPath() ).clickToolbarEdit();
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
@@ -92,7 +95,8 @@ class InputTypesSpec
             dateTimeContent.getContentTypeName() ).typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
+        filterPanel.typeSearchText( dateTimeContent.getName() );
+        //contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
         contentBrowsePanel.clickCheckboxAndSelectRow( dateTimeContent.getPath() ).clickToolbarEdit();
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
@@ -109,7 +113,8 @@ class InputTypesSpec
             timeContent.getContentTypeName() ).typeData( timeContent ).save().close( timeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
+        //contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
+        filterPanel.typeSearchText( timeContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( timeContent.getPath() ).clickToolbarEdit();
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
@@ -127,7 +132,8 @@ class InputTypesSpec
             doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
+        /// contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
+        filterPanel.typeSearchText( doubleContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
