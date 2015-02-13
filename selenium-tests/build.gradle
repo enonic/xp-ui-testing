@@ -10,6 +10,7 @@ ext {
     xpVersion = '5.0.0-SNAPSHOT'
     unpackDir = "$buildDir/install"
     distroDir = "$unpackDir/enonic-xp-$xpVersion"
+    // xpServer = new ServerInstance()
 }
 
 dependencies {
@@ -34,22 +35,22 @@ task unpackDistro( type: Copy ) {
     into file( unpackDir )
 }
 
-//ext {
-//    xpServer = new ServerInstance()
-//}
+ext {
+    xpServer = new ServerInstance()
+}
 
 task startServer( dependsOn: unpackDistro ) {
     doLast {
         // logging.captureStandardOutput LogLevel.INFO
-        ext.xpServer = new ServerInstance()
-        ext.xpServer.installDir = file( distroDir )
-        ext.xpServer.startupDelay = 20000
-        ext.xpServer.start()
+        // ext.xpServer = new ServerInstance()
+        xpServer.installDir = file( distroDir )
+        xpServer.startupDelay = 20000
+        xpServer.start()
     }
 }
 
 task stopServer << {
-    ext.xpServer.stop()
+    xpServer.stop()
 }
 
 
