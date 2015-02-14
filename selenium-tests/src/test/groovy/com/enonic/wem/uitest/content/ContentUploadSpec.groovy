@@ -6,6 +6,7 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.api.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentUploadSpec
@@ -40,6 +41,7 @@ class ContentUploadSpec
         contentBrowsePanel.exists( ContentPath.from( "ea.png" ) )
     }
 
+    @Ignore
     def "GIVEN opened a new content dialog WHEN upload button clicked and zip archive selected THEN new content appears in browse panel "()
     {
         given: "opened a new content dialog"
