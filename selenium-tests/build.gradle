@@ -9,8 +9,9 @@ configurations {
 ext {
     xpVersion = '5.0.0-SNAPSHOT'
     unpackDir = "$buildDir/install"
+    screenshotsDir = "$buildDir/screenshots"
+    reportsDir = "$buildDir/repots"
     distroDir = "$unpackDir/enonic-xp-$xpVersion"
-    // xpServer = new ServerInstance()
 }
 
 dependencies {
@@ -23,7 +24,9 @@ dependencies {
 
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
-
+task deleteFolders( type: Delete ) {
+    delete unpackDir, screenshotsDir, reportsDir
+}
 task buildModules(
     dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:all-contenttypes:install',
                 ':test-modules:second-module:install', ':test-modules:third-module:install', ':test-modules:fourth-module:install', ':test-modules:test-module:install'] )
@@ -82,7 +85,7 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [startServer, installAllContentTypesModule] ) {
+task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, installAllContentTypesModule] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/module/**'
@@ -90,30 +93,34 @@ task testContentManager( type: Test, dependsOn: [startServer, installAllContentT
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
+    startServer.shouldRunAfter deleteFolders
 
 }
 
-task testUser( type: Test, dependsOn: [startServer] ) {
+task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
     scanForTestClasses = false
     include '**/user/*Spec.class'
     exclude '**/content/**'
     exclude '**/module/**'
     forkEvery = null
+    startServer.shouldRunAfter deleteFolders
 }
 
-task testModule( type: Test, dependsOn: [buildModules, startServer, installTestModules] ) {
+task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installTestModules] ) {
     scanForTestClasses = false
     include '**/module/*Spec.class'
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
+    startServer.shouldRunAfter deleteFolders
     installTestModules.shouldRunAfter startServer
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: ['installSimpleSiteModule'] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpleSiteModule] ) {
     scanForTestClasses = false
 
     include '**/liveedit/CreateSiteWithLayoutSpec.class'
+    include '**/content/ContentUploadSpec.class'
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
@@ -127,6 +134,7 @@ task testUploadContent( type: Test, dependsOn: ['startServer'] ) {
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
 }
+
 testModule.finalizedBy = ['stopServer']
 testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
 testUser.finalizedBy = ['stopServer']

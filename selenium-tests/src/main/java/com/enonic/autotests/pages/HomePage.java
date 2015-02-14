@@ -97,13 +97,12 @@ public class HomePage
 
     public ContentBrowsePanel openContentManagerApplication()
     {
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-w" ) );
         contentManager.click();
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm" ) );
         sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-opened" ) );
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
-        // panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
         getLogger().info( "Content App loaded" );
         return panel;

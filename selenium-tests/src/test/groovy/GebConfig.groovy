@@ -53,7 +53,7 @@ driver = {
     return driver
 }
 // Set reports directory
-reportsDir = 'build/geb-reports'
+reportsDir = 'build/reports'
 reportOnTestFailureOnly = false
 
 environments {
