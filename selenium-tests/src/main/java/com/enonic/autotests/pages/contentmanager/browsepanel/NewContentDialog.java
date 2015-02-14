@@ -112,7 +112,7 @@ public class NewContentDialog
         throws AWTException
     {
         uploadButton.click();
-        sleep( 500 );
+        sleep( 1000 );
 
         URL dirURL = NewContentDialog.class.getClassLoader().getResource( resName );
         if ( dirURL == null )
