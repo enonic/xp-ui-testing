@@ -15,6 +15,8 @@ import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 @Stepwise
 class ContentBrowsePanel_FilterPanel_Spec
     extends BaseGebSpec
@@ -144,6 +146,8 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
             content.getDisplayName() );
+        sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "LastModified_filter1" )
         int beforeRemoving = filterPanel.getNumberFilteredByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
         List<Content> contentList = new ArrayList();
@@ -152,7 +156,8 @@ class ContentBrowsePanel_FilterPanel_Spec
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
         contentBrowsePanel.waitUntilPageLoaded( 3 );
-        TestUtils.saveScreenshot( getSession(), "LastModified_filter" )
+        sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "LastModified_filter2" )
 
 
         then:
