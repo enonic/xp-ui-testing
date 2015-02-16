@@ -1,10 +1,15 @@
 package com.enonic.xp.all_contenttypes;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
+
+
 
 import com.enonic.xp.content.ContentPath;
 import com.enonic.xp.content.ContentService;
@@ -14,7 +19,7 @@ import com.enonic.xp.data.PropertyTree;
 import com.enonic.xp.schema.content.ContentTypeName;
 import com.enonic.xp.security.PrincipalKey;
 
-
+@Component(immediate = true)
 public class Initializer
 {
     private final static Logger LOG = LoggerFactory.getLogger( Initializer.class );
@@ -27,6 +32,7 @@ public class Initializer
 
     private ContentService contentService;
 
+    @Activate
     public void initialize()
         throws Exception
     {
@@ -126,6 +132,7 @@ public class Initializer
     }
 
 
+    @Reference
     public void setContentService( final ContentService contentService )
     {
         this.contentService = contentService;

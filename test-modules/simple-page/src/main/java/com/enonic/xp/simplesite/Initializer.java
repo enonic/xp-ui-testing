@@ -1,5 +1,8 @@
 package com.enonic.xp.simplesite;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +21,7 @@ import com.enonic.xp.schema.content.ContentTypeName;
 import com.enonic.xp.security.PrincipalKey;
 
 
+@Component(immediate = true)
 public class Initializer
 {
     private final static Logger LOG = LoggerFactory.getLogger( Initializer.class );
@@ -34,6 +38,7 @@ public class Initializer
 
     private ContentService contentService;
 
+    @Activate
     public void initialize()
         throws Exception
     {
@@ -147,6 +152,7 @@ public class Initializer
             build();
     }
 
+    @Reference
     public void setContentService( final ContentService contentService )
     {
         this.contentService = contentService;
