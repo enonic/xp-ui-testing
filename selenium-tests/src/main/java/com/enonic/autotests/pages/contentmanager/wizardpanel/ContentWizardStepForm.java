@@ -14,8 +14,8 @@ import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
 import com.enonic.autotests.pages.form.TimeFormViewPanel;
-import com.enonic.wem.api.data.PropertyTree;
-import com.enonic.wem.api.schema.content.ContentTypeName;
+import com.enonic.xp.data.PropertyTree;
+import com.enonic.xp.schema.content.ContentTypeName;
 
 public class ContentWizardStepForm
     extends WizardStepForm

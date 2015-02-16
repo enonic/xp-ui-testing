@@ -4,7 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.api.content.ContentPath
+import com.enonic.xp.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Ignore
 import spock.lang.Shared

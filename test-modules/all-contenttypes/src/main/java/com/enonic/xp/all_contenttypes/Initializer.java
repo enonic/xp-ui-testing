@@ -6,13 +6,13 @@ import org.slf4j.LoggerFactory;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 
-import com.enonic.wem.api.content.ContentPath;
-import com.enonic.wem.api.content.ContentService;
-import com.enonic.wem.api.content.CreateContentParams;
-import com.enonic.wem.api.content.CreateMediaParams;
-import com.enonic.wem.api.data.PropertyTree;
-import com.enonic.wem.api.schema.content.ContentTypeName;
-import com.enonic.wem.api.security.PrincipalKey;
+import com.enonic.xp.content.ContentPath;
+import com.enonic.xp.content.ContentService;
+import com.enonic.xp.content.CreateContentParams;
+import com.enonic.xp.content.CreateMediaParams;
+import com.enonic.xp.data.PropertyTree;
+import com.enonic.xp.schema.content.ContentTypeName;
+import com.enonic.xp.security.PrincipalKey;
 
 
 public class Initializer

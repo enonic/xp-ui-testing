@@ -1,9 +1,9 @@
 package com.enonic.autotests.vo.contentmanager;
 
 
-import com.enonic.wem.api.content.ContentPath;
-import com.enonic.wem.api.data.PropertyTree;
-import com.enonic.wem.api.schema.content.ContentTypeName;
+import com.enonic.xp.content.ContentPath;
+import com.enonic.xp.data.PropertyTree;
+import com.enonic.xp.schema.content.ContentTypeName;
 
 public class Content
 {

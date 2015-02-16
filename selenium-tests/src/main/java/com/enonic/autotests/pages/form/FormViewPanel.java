@@ -3,7 +3,7 @@ package com.enonic.autotests.pages.form;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Page;
-import com.enonic.wem.api.data.PropertyTree;
+import com.enonic.xp.data.PropertyTree;
 
 public abstract class FormViewPanel
     extends Page

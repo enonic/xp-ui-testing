@@ -5,8 +5,8 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.wem.api.content.ContentPath
-import com.enonic.wem.api.schema.content.ContentTypeName
+import com.enonic.xp.content.ContentPath
+import com.enonic.xp.schema.content.ContentTypeName
 import com.enonic.wem.uitest.BaseGebSpec
 import org.openqa.selenium.Keys
 import spock.lang.Shared
