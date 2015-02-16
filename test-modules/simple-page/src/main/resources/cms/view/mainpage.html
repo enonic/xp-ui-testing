@@ -10,7 +10,7 @@
 
 <div class="container" data-portal-component-type="region">
     <div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
-        <div data-wem-component="${component.path}" data-th-remove="tag"/>
+        <div data-portal-componen="${component.path}" data-th-remove="tag"/>
     </div>
 </div>
 </body>
