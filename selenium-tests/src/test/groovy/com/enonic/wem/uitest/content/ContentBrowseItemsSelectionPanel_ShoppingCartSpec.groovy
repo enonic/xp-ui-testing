@@ -5,9 +5,9 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -185,6 +185,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         when: "click on 'Clear filter' link and expand a parent content"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
         sleep( 2000 );
+        TestUtils.saveScreenshot( getSession(), "shopingcart_bug" )
         contentBrowsePanel.expandContent( parentFolder.getPath() );
 
         then: "two items should be present in the selection panel and two rows are selected in the grid "
