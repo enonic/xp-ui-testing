@@ -10,12 +10,5 @@
       <occurrences minimum="0" maximum="1"/>
       <help-text>..that's the question!</help-text>
     </input>
-    <input name="requiredLong" type="Long">
-      <label>Required Long</label>
-      <indexed>true</indexed>
-      <custom-text>Custom text</custom-text>
-      <occurrences minimum="1" maximum="0"/>
-      <help-text>..that's the question!</help-text>
-    </input>
   </form>
 </content-type>

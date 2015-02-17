@@ -4,7 +4,7 @@
   <super-type>base:structured</super-type>
   <form>
     <input name="checkbox" type="Checkbox">
-      <label>To check or not to check</label>
+      <label>To Check</label>
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
       <occurrences minimum="0" maximum="1"/>

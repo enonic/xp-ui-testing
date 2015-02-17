@@ -6,10 +6,12 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.WizardStepForm;
+import com.enonic.autotests.pages.form.CheckBoxFormViewPanel;
 import com.enonic.autotests.pages.form.DateFormViewPanel;
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
+import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
@@ -48,6 +50,15 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( ModuleContentType.DATE.getName() ) )
         {
             formViewPanel = new DateFormViewPanel( getSession() );
+        }
+
+        else if ( contentTypeName.contains( ModuleContentType.GEO_POINT.getName() ) )
+        {
+            formViewPanel = new GeoPointFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.CHECKBOX.getName() ) )
+        {
+            formViewPanel = new CheckBoxFormViewPanel( getSession() );
         }
 
         else if ( contentTypeName.equals( ContentTypeName.pageTemplate().toString() ) )

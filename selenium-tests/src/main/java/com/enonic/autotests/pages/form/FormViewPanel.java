@@ -8,6 +8,10 @@ import com.enonic.xp.data.PropertyTree;
 public abstract class FormViewPanel
     extends Page
 {
+    protected static final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
+
+    protected static String VALUE_INPUT =
+        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='%s']]//input[contains(@id,'TextInput')]";
     public FormViewPanel( final TestSession session )
     {
         super( session );

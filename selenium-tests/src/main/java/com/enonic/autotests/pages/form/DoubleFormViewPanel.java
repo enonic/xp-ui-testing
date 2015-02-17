@@ -12,13 +12,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class DoubleFormViewPanel
     extends FormViewPanel
 {
-    public static String REQUIRED_DOUBLE_PROPERTY = "req_double";
-
-    private final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
+    public static String DOUBLE_PROPERTY = "double";
 
     @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Required Double']]//input[contains(@id,'TextInput')]")
-    private WebElement reqDoubleInput;
+        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Double']]//input[contains(@id,'TextInput')]")
+    private WebElement doubleInput;
 
 
     public DoubleFormViewPanel( final TestSession session )
@@ -29,15 +27,15 @@ public class DoubleFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        String doubleValue = data.getString( REQUIRED_DOUBLE_PROPERTY );
+        String doubleValue = data.getString( DOUBLE_PROPERTY );
         // type a date
-        reqDoubleInput.sendKeys( doubleValue );
+        doubleInput.sendKeys( doubleValue );
         sleep( 300 );
         return this;
     }
 
-    public String getRequiredDoubleValue()
+    public String getDoubleValue()
     {
-        return reqDoubleInput.getAttribute( "value" );
+        return doubleInput.getAttribute( "value" );
     }
 }

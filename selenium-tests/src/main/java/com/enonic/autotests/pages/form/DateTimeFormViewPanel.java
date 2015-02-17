@@ -12,13 +12,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class DateTimeFormViewPanel
     extends FormViewPanel
 {
-    public static String REQUIRED_DATE_TIME_PROPERTY = "req_date_time";
-
-    private final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
+    public static String DATE_TIME_PROPERTY = "date_time";
 
     @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView') and descendant::div[contains(@title,'Required Date')]]//input[contains(@id,'TextInput')]")
-    private WebElement reqDateTimeInput;
+        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='DateTime']]//input[contains(@id,'TextInput')]")
+    private WebElement dateTimeInput;
 
 
     public DateTimeFormViewPanel( final TestSession session )
@@ -29,15 +27,15 @@ public class DateTimeFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        String dateTime = data.getString( REQUIRED_DATE_TIME_PROPERTY );
+        String dateTime = data.getString( DATE_TIME_PROPERTY );
         // type a date time
-        reqDateTimeInput.sendKeys( dateTime );
+        dateTimeInput.sendKeys( dateTime );
         sleep( 300 );
         return this;
     }
 
-    public String getRequiredDateTimeValue()
+    public String getDateTimeValue()
     {
-        return reqDateTimeInput.getAttribute( "value" );
+        return dateTimeInput.getAttribute( "value" );
     }
 }

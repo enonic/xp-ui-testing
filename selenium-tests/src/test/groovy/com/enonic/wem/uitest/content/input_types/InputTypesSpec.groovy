@@ -2,17 +2,15 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.form.DateFormViewPanel
-import com.enonic.autotests.pages.form.DateTimeFormViewPanel
-import com.enonic.autotests.pages.form.DoubleFormViewPanel
-import com.enonic.autotests.pages.form.TimeFormViewPanel
+import com.enonic.autotests.pages.form.*
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
-import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -38,6 +36,9 @@ class InputTypesSpec
 
     @Shared
     String TEST_DATE_TIME = "2015-02-28 19:01";
+
+    @Shared
+    String TEST_GEOLOCATION = "10,10";
 
     @Shared
     String SITE_NAME;
@@ -69,6 +70,7 @@ class InputTypesSpec
         contentBrowsePanel.exists( site.getPath() );
     }
 
+
     def "GIVEN content type with name 'Date' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
     {
         given: "add a content with type 'Date'"
@@ -83,7 +85,7 @@ class InputTypesSpec
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
-        formViewPanel.getRequiredDateValue().equals( TEST_DATE )
+        formViewPanel.getDateValue().equals( TEST_DATE )
 
     }
 
@@ -101,7 +103,7 @@ class InputTypesSpec
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
-        dateTimeFormViewPanel.getRequiredDateTimeValue().equals( TEST_DATE_TIME );
+        dateTimeFormViewPanel.getDateTimeValue().equals( TEST_DATE_TIME );
 
     }
 
@@ -119,12 +121,12 @@ class InputTypesSpec
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
-        timeFormViewPanel.getRequiredTimeValue().equals( TEST_TIME );
+        timeFormViewPanel.getTimeValue().equals( TEST_TIME );
 
     }
 
 
-    def "GIVEN content type with name 'Double' selected and wizard opened WHEN double valye typed and content saved THEN new content with correct date listed "()
+    def "GIVEN content type with name 'Double' selected and wizard opened WHEN double value typed and content saved THEN new content with correct Double value  listed "()
     {
         given: "add a content with type 'Double'"
         Content doubleContent = buildDoubleContent();
@@ -132,14 +134,66 @@ class InputTypesSpec
             doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        /// contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
         filterPanel.typeSearchText( doubleContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
-        doubleFormViewPanel.getRequiredDoubleValue().equals( TEST_DOUBLE );
+        doubleFormViewPanel.getDoubleValue().equals( TEST_DOUBLE );
 
+    }
+
+
+    def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
+    {
+        given: "add a content with type 'Geo point'"
+        Content doubleContent = buildGeoPointContent();
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
+
+        when: "site expanded and just created content selected and 'Edit' button clicked"
+        filterPanel.typeSearchText( doubleContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
+        GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
+
+        then: "actual value in the form view and expected should be equals"
+        geoPointFormViewPanel.getGeoPointValue().equals( TEST_GEOLOCATION );
+
+    }
+
+    @Ignore
+    def "GIVEN content type with name 'checkbox' selected and wizard opened WHEN  the checkbox selected and content saved THEN new content with correct boolean value listed "()
+    {
+        given: "add a content with type 'checkbox'"
+        Content doubleContent = buildCheckBoxContent();
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
+
+        when: "site expanded and just created content selected and 'Edit' button clicked"
+        filterPanel.typeSearchText( doubleContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
+        CheckBoxFormViewPanel checkBoxFormViewPanel = new CheckBoxFormViewPanel( getSession() );
+
+        then: "actual value in the form view and expected should be equals"
+        checkBoxFormViewPanel.isChecked();
+
+    }
+
+    private Content buildCheckBoxContent()
+    {
+        String name = "checkbox";
+
+        PropertyTree data = new PropertyTree();
+        data.addBoolean( CheckBoxFormViewPanel.CHECKBOX_PROPERTY, true );
+
+
+        Content checkboxContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "checkbox content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":checkbox" ).data( data ).
+            build();
+        return checkboxContent;
     }
 
 
@@ -148,7 +202,7 @@ class InputTypesSpec
         String name = "date";
 
         PropertyTree data = new PropertyTree();
-        data.addStrings( DateFormViewPanel.REQUIRED_DATE_PROPERTY, TEST_DATE );
+        data.addStrings( DateFormViewPanel.DATE_PROPERTY, TEST_DATE );
 
 
         Content dateContent = Content.builder().
@@ -165,7 +219,7 @@ class InputTypesSpec
         String name = "double";
 
         PropertyTree data = new PropertyTree();
-        data.addStrings( DoubleFormViewPanel.REQUIRED_DOUBLE_PROPERTY, TEST_DOUBLE );
+        data.addStrings( DoubleFormViewPanel.DOUBLE_PROPERTY, TEST_DOUBLE );
 
 
         Content dateContent = Content.builder().
@@ -177,13 +231,30 @@ class InputTypesSpec
         return dateContent;
     }
 
+    private Content buildGeoPointContent()
+    {
+        String name = "geopoint";
+
+        PropertyTree data = new PropertyTree();
+        data.addStrings( GeoPointFormViewPanel.GEO_POINT_PROPERTY, TEST_GEOLOCATION );
+
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "geo point content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":geopoint" ).data( data ).
+            build();
+        return dateContent;
+    }
+
 
     private Content buildTimeContent()
     {
         String name = "time";
 
         PropertyTree data = new PropertyTree();
-        data.addStrings( TimeFormViewPanel.REQUIRED_TIME_PROPERTY, TEST_TIME );
+        data.addStrings( TimeFormViewPanel.TIME_PROPERTY, TEST_TIME );
 
 
         Content dateContent = Content.builder().
@@ -200,7 +271,7 @@ class InputTypesSpec
         String name = "datetime";
 
         PropertyTree contentData = new PropertyTree();
-        contentData.addStrings( DateTimeFormViewPanel.REQUIRED_DATE_TIME_PROPERTY, TEST_DATE_TIME );
+        contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, TEST_DATE_TIME );
 
 
         Content dateTimeContent = Content.builder().

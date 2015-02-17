@@ -4,10 +4,10 @@
   <super-type>base:structured</super-type>
   <form>
     <input name="geo-location" type="GeoPoint">
-      <label>geo location</label>
+      <label>Geo Location</label>
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
-      <occurrences minimum="0" maximum="0"/>
+      <occurrences minimum="0" maximum="1"/>
       <help-text>Where are you?</help-text>
     </input>
   </form>
