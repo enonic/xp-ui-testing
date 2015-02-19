@@ -24,21 +24,21 @@ class BaseModuleSpec
 
 
     @Shared
-    String FIRST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.0-SNAPSHOT";
+    String FIRST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/first-module/5.0.1-SNAPSHOT";
 
     @Shared
-    String SECOND_MODULE_URL = "mvn:com.enonic.xp.ui-testing/second-module/5.0.0-SNAPSHOT";
+    String SECOND_MODULE_URL = "mvn:com.enonic.xp.ui-testing/second-module/5.0.1-SNAPSHOT";
 
     @Shared
-    String THIRD_MODULE_URL = "mvn:com.enonic.xp.ui-testing/third-module/5.0.0-SNAPSHOT";
+    String THIRD_MODULE_URL = "mvn:com.enonic.xp.ui-testing/third-module/5.0.1-SNAPSHOT";
 
     @Shared
-    String FOURTH_MODULE_URL = "mvn:com.enonic.xp.ui-testing/fourth-module/5.0.0-SNAPSHOT";
+    String FOURTH_MODULE_URL = "mvn:com.enonic.xp.ui-testing/fourth-module/5.0.1-SNAPSHOT";
 
     @Shared
     String TEST_MODULE_NAME = "com.enonic.xp.ui-testing.test-module";
 
 
     @Shared
-    String TEST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/test-module/5.0.0-SNAPSHOT";
+    String TEST_MODULE_URL = "mvn:com.enonic.xp.ui-testing/test-module/5.0.1-SNAPSHOT";
 }
