@@ -11,12 +11,12 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.usermanager.User;
+import com.enonic.autotests.vo.usermanager.UserStore;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class UserStoreWizardPanel
-    extends WizardPanel<User>
+    extends WizardPanel<UserStore>
 {
     public static final String DIV_USER_STORE_WIZARD_PANEL =
         "//div[contains(@id,'app.wizard.UserStoreWizardPanel') and not(contains(@style,'display: none'))]";
@@ -58,9 +58,11 @@ public class UserStoreWizardPanel
     }
 
     @Override
-    public WizardPanel<User> save()
+    public WizardPanel<UserStore> save()
     {
-        return null;
+        toolbarSaveButton.click();
+        sleep( 1000 );
+        return this;
     }
 
     @Override
@@ -70,23 +72,25 @@ public class UserStoreWizardPanel
     }
 
     @Override
-    public WizardPanel<User> typeData( final User user )
+    public WizardPanel<UserStore> typeData( final UserStore userStore )
     {
         // 1. type a data: 'name' and 'Display Name'.
         waitElementClickable( By.name( "displayName" ), 2 );
-        getLogger().info( "types displayName: " + user.getDisplayName() );
-        clearAndType( displayNameInput, user.getDisplayName() );
+        clearAndType( displayNameInput, userStore.getDisplayName() );
         sleep( 500 );
-        if ( StringUtils.isNotEmpty( user.getDisplayName() ) )
+        if ( StringUtils.isNotEmpty( userStore.getName() ) )
         {
             waitElementClickable( By.name( "name" ), 2 );
-            getLogger().info( "types name: " + user.getDisplayName() );
-            //  clearAndType( nameInput, user.getName() );
+            clearAndType( nameInput, userStore.getName() );
         }
-        TestUtils.saveScreenshot( getSession(), user.getDisplayName() );
-        // 2. populate main tab
-
+        TestUtils.saveScreenshot( getSession(), userStore.getDisplayName() );
         return this;
+    }
+
+    public String getStoreNameInputValue()
+    {
+        return nameInput.getAttribute( "value" );
+
     }
 
     public UserStoreWizardPanel typeDisplayName( String displayName )
@@ -118,6 +122,12 @@ public class UserStoreWizardPanel
             throw new TestFrameworkException( "UserStoreWizard was not showed!" );
         }
         return this;
+    }
+
+
+    public boolean isSaveButtonEnabled()
+    {
+        return toolbarSaveButton.isEnabled();
     }
 
 

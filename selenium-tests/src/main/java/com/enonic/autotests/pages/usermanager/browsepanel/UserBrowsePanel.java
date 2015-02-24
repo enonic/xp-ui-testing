@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -99,6 +100,36 @@ public class UserBrowsePanel
         return this;
     }
 
+    public UserBrowsePanel expandStoreAndSelectUsers( String storeName )
+    {
+        clickAndSelectRow( storeName );
+        sleep( 700 );
+        pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        clickAndSelectRow( "users" );
+        getSession().put( ITEM_TYPE, BrowseItemType.USERS );
+        return this;
+    }
+
+    public UserBrowsePanel expandUsersFolder( String storeName )
+    {
+        expandStoreAndSelectUsers( storeName );
+        pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        return this;
+    }
+
+    public DeleteUserStoreDialog clickToolbarDelete()
+    {
+        boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
+        if ( !isEnabledDeleteButton )
+        {
+            throw new TestFrameworkException( "Impossible to delete a user store, because the 'Delete' button is disabled!" );
+        }
+        deleteButton.click();
+        DeleteUserStoreDialog dialog = new DeleteUserStoreDialog( getSession() );
+        dialog.waitForOpened();
+        return dialog;
+    }
+
     public List<String> getNamesFromBrowsePanel()
     {
         List<String> allNames = new ArrayList<>();
@@ -169,7 +200,6 @@ public class UserBrowsePanel
      */
     public WizardPanel clickToolbarNew()
     {
-        // WizardPanel<T> result;
         newButton.click();
         sleep( 500 );
 
@@ -190,6 +220,14 @@ public class UserBrowsePanel
             default:
                 throw new TestFrameworkException( "unknown type of principal!" );
         }
+
+    }
+
+    public UserStoreWizardPanel openUserStoreWizard()
+    {
+        newButton.click();
+        sleep( 1000 );
+        return new UserStoreWizardPanel( getSession() );
     }
 
     /**

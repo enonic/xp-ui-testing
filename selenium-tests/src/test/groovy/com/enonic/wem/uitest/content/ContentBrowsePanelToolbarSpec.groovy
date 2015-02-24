@@ -76,16 +76,6 @@ class ContentBrowsePanelToolbarSpec
         contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    @Ignore
-    def "GIVEN Content BrowsePanel WHEN one site selected THEN Open button should be enabled"()
-    {
-        when:
-        contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
-
-        then:
-        contentBrowsePanel.isPreviewButtonEnabled();
-    }
-
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Sort button should be enabled"()
     {
         when:

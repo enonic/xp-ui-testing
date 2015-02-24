@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.usermanager.wizardpanel;
 
 
-import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,6 +32,9 @@ public class UserWizardPanel
 
     private static final String TOOLBAR_DELETE_BUTTON =
         "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+
+    @FindBy(xpath = "//input[@type = 'email']")
+    protected WebElement emailInput;
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
@@ -67,7 +69,9 @@ public class UserWizardPanel
     @Override
     public WizardPanel<User> save()
     {
-        return null;
+        toolbarSaveButton.click();
+        sleep( 1000 );
+        return this;
     }
 
     @Override
@@ -84,12 +88,8 @@ public class UserWizardPanel
         getLogger().info( "types displayName: " + user.getDisplayName() );
         clearAndType( displayNameInput, user.getDisplayName() );
         sleep( 500 );
-        if ( StringUtils.isNotEmpty( user.getDisplayName() ) )
-        {
-            waitElementClickable( By.name( "name" ), 2 );
-            getLogger().info( "types name: " + user.getDisplayName() );
-            //  clearAndType( nameInput, user.getName() );
-        }
+        clearAndType( emailInput, user.getEmail() );
+        sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), user.getDisplayName() );
         // 2. populate main tab
 

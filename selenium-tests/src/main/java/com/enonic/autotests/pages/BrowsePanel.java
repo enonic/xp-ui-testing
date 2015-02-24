@@ -93,6 +93,14 @@ public abstract class BrowsePanel
         return true;
     }
 
+    public BrowsePanel expandItem( String gritItemName )
+    {
+        clickAndSelectRow( gritItemName );
+        sleep( 700 );
+        pressKeyOnRow( gritItemName, Keys.ARROW_RIGHT );
+        return this;
+    }
+
     /**
      * If content or content type has a child, so expander icon should be present near the item from BrowsePanel.
      *

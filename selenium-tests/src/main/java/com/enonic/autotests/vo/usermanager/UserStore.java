@@ -7,18 +7,14 @@ public class UserStore
 
     private final String displayName;
 
+    private final String description;
 
-    UserStore( final String name, final String displayName )
+
+    public UserStore( final Builder builder )
     {
-        this.name = name;
-        this.displayName = displayName;
-
-    }
-
-    UserStore( final Builder builder )
-    {
-        name = builder.name;
-        displayName = builder.displayName;
+        this.name = builder.name;
+        this.displayName = builder.displayName;
+        this.description = builder.description;
     }
 
     public String getName()
@@ -31,6 +27,10 @@ public class UserStore
         return displayName;
     }
 
+    public static Builder builder()
+    {
+        return new Builder();
+    }
 
     public static class Builder
     {
@@ -38,14 +38,17 @@ public class UserStore
 
         String displayName;
 
-        Builder()
+        String description;
+
+        private Builder()
         {
         }
 
-        Builder( final UserStore userStore )
+        private Builder( final UserStore userStore )
         {
             this.displayName = userStore.displayName;
             this.name = userStore.name;
+            this.description = userStore.description;
 
         }
 
@@ -61,6 +64,17 @@ public class UserStore
         {
             this.displayName = displayName;
             return this;
+        }
+
+        public Builder description( final String description )
+        {
+            this.description = description;
+            return this;
+        }
+
+        public UserStore build()
+        {
+            return new UserStore( this );
         }
     }
 }
