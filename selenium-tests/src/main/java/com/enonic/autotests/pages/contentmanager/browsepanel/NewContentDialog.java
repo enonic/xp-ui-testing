@@ -36,7 +36,7 @@ public class NewContentDialog
 
 
     public static final String ALL_LIST_ITEMS =
-        "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[contains(@class,'content-types-list-item')]";
+        "//div[contains(@id,'app.create.NewContentDialog') and not(contains(@class,'mock-modal-dialog'))]//ul/li[contains(@class,'content-types-list-item')]";
 
     public static final String LIST_ITEMS_SITES =
         "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[@class='content-types-list-item site']";
