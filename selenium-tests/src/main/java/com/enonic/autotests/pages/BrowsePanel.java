@@ -135,11 +135,11 @@ public abstract class BrowsePanel
         {
             result =   doScrollAndFindGridItem( expanderXpath, 2 );
         }
-        if ( !result )
-        {
-            throw new TestFrameworkException(
-                "invalid locator or expander for content with name: " + itemName + " does not exist! xpath =  " + expanderXpath );
-        }
+//        if ( !result )
+//        {
+//            throw new TestFrameworkException(
+//                "invalid locator or expander for content with name: " + itemName + " does not exist! xpath =  " );
+//        }
 
         List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
 
