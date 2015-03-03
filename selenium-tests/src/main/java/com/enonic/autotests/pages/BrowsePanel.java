@@ -131,12 +131,18 @@ public abstract class BrowsePanel
         }
         String expanderXpath = String.format( BROWSE_PANEL_ITEM_EXPANDER, itemName );
         boolean result = waitUntilVisibleNoException( By.xpath( expanderXpath ), 3 );
-        List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
-        if ( elements.size() == 0 )
+        if ( !result )
+        {
+            result =   doScrollAndFindGridItem( expanderXpath, 2 );
+        }
+        if ( !result )
         {
             throw new TestFrameworkException(
-                "invalid locator or content with name: " + itemName + " does not exist! xpath =  " + expanderXpath );
+                "invalid locator or expander for content with name: " + itemName + " does not exist! xpath =  " + expanderXpath );
         }
+
+        List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
+
 
         String attributeName = "class";
         String attributeValue = "collapse";
@@ -437,7 +443,7 @@ public abstract class BrowsePanel
             scrollTopValue += scrollTopValue;
         }
         getLogger().info( "slick-grid was scrolled and content was not found!" );
-        TestUtils.saveScreenshot(getSession(), "scroll_" +gridItemName );
+        TestUtils.saveScreenshot( getSession(), "scroll_" + gridItemName );
         return false;
     }
 
