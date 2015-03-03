@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
@@ -23,6 +24,7 @@ public class HomePage
     extends Page
 {
     private final String CM_LINK = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]";
+
     @FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
     private WebElement contentManager;
 
@@ -72,21 +74,24 @@ public class HomePage
         {
             getDriver().switchTo().window( wh );
         }
-        waitUntilAllFramesLoaded();
+
+        if ( !isLoaded() )
+        {
+            throw new AuthenticationException( "Authentication failed, home page was not opened!" );
+        }
 
     }
 
-    /**
-     *
-     */
-    public void waitUntilAllFramesLoaded()
+    boolean isLoaded()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_3 ) )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "homepage" ) );
-            throw new TestFrameworkException( "Home Page loads too long!" );
-        }
-        // waitUntilVisibleNoException( By.xpath( "//a[contains(@href,'content-manager')]"),3);
+        boolean result =
+            waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_3 );
+        return result;
+    }
+
+
+    public void waitUntilContentManagerLoaded()
+    {
         if ( !waitUntilVisibleNoException( By.xpath( CM_LINK ), Application.EXPLICIT_3 ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm_link" ) );
@@ -94,9 +99,9 @@ public class HomePage
         }
     }
 
-
     public ContentBrowsePanel openContentManagerApplication()
     {
+        waitUntilContentManagerLoaded();
         contentManager.click();
         sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-opened" ) );

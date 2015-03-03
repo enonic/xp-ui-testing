@@ -28,7 +28,7 @@ public class DoubleFormViewPanel
     public FormViewPanel type( final PropertyTree data )
     {
         String doubleValue = data.getString( DOUBLE_PROPERTY );
-        // type a date
+        // type a double
         doubleInput.sendKeys( doubleValue );
         sleep( 300 );
         return this;

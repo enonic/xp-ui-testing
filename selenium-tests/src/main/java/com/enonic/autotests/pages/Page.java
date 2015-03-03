@@ -69,7 +69,7 @@ public abstract class Page
         input.clear();
         sleep( 100 );
         input.sendKeys( text );
-        sleep( 100 );
+        sleep( 300 );
 
         logger.info( "text in input: " + text );
 

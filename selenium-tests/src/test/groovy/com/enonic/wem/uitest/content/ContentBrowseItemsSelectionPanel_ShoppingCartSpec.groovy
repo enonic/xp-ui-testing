@@ -80,8 +80,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items, but only one row is selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
         selectedNames.contains( parentContent.getDisplayName() ) && selectedNames.contains( unstructuredChildContent.getDisplayName() ) &&
-            selectedNames.size() == 2 &&
-            contentBrowsePanel.getSelectedRowsNumber() == 1;
+            selectedNames.size() == 2 && contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
     def "GIVEN a selected content  WHEN search text typed and one more row with content clicked  THEN selection panel has no any items"()
@@ -185,7 +184,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         when: "click on 'Clear filter' link and expand a parent content"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
         sleep( 2000 );
-        TestUtils.saveScreenshot( getSession(), "shopingcart_bug" )
         contentBrowsePanel.expandContent( parentFolder.getPath() );
 
         then: "two items should be present in the selection panel and two rows are selected in the grid "

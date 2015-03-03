@@ -165,7 +165,7 @@ public class ContentWizardPanel
         {
             waitElementClickable( By.name( "name" ), 2 );
             getLogger().info( "types name: " + content.getName() );
-            clearAndType( nameInput, content.getName() );
+            clearAndType( nameInput, content.getName().trim() );
         }
 
         TestUtils.saveScreenshot( getSession(), content.getName() );

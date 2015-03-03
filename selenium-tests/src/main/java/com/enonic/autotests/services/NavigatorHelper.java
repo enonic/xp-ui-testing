@@ -14,7 +14,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.vo.ApplicationUser;
+import com.enonic.autotests.vo.usermanager.User;
 
 public class NavigatorHelper
 {
@@ -141,11 +141,11 @@ public class NavigatorHelper
      */
     public static HomePage loginAndOpenHomePage( TestSession testSession )
     {
-        ApplicationUser applicationUser = testSession.getCurrentUser();
+        User user = testSession.getCurrentUser();
         HomePage home = new HomePage( testSession );
-        if ( applicationUser != null )
+        if ( user != null )
         {
-            home.open( applicationUser.getUserInfo().getName(), applicationUser.getUserInfo().getPassword() );
+            home.open( user.getDisplayName(), user.getPassword() );
         }
         else
         {

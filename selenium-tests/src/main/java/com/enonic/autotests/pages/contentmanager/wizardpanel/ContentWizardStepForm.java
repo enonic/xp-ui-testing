@@ -12,6 +12,7 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
 import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
+import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
@@ -64,6 +65,10 @@ public class ContentWizardStepForm
         else if ( contentTypeName.equals( ContentTypeName.pageTemplate().toString() ) )
         {
             formViewPanel = new PageTemplateFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.LONG.getName() ) )
+        {
+            formViewPanel = new LongFormViewPanel( getSession() );
         }
         else
         {

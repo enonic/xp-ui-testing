@@ -20,10 +20,10 @@ class ContentWizardPanel_TabMenuSpec
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
-    String FOLDER_TAB_MENU_ITEM = "<New Folder>"
+    String FOLDER_TAB_MENU_ITEM = "<Unnamed Folder>"
 
     @Shared
-    String UNSTRUCTURED_TAB_MENU_ITEM = "<New Unstructured>"
+    String UNSTRUCTURED_TAB_MENU_ITEM = "<Unnamed Unstructured>"
 
     def setup()
     {

@@ -35,6 +35,9 @@ class InputTypesSpec
     String TEST_DOUBLE = "123.4";
 
     @Shared
+    String TEST_LONG = "1234567890123456";
+
+    @Shared
     String TEST_DATE_TIME = "2015-02-28 19:01";
 
     @Shared
@@ -80,7 +83,6 @@ class InputTypesSpec
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         filterPanel.typeSearchText( dateContent.getName() );
-        //contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
         contentBrowsePanel.clickCheckboxAndSelectRow( dateContent.getPath() ).clickToolbarEdit();
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
@@ -98,7 +100,6 @@ class InputTypesSpec
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         filterPanel.typeSearchText( dateTimeContent.getName() );
-        //contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
         contentBrowsePanel.clickCheckboxAndSelectRow( dateTimeContent.getPath() ).clickToolbarEdit();
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
@@ -115,7 +116,6 @@ class InputTypesSpec
             timeContent.getContentTypeName() ).typeData( timeContent ).save().close( timeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        //contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
         filterPanel.typeSearchText( timeContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( timeContent.getPath() ).clickToolbarEdit();
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
@@ -124,7 +124,6 @@ class InputTypesSpec
         timeFormViewPanel.getTimeValue().equals( TEST_TIME );
 
     }
-
 
     def "GIVEN content type with name 'Double' selected and wizard opened WHEN double value typed and content saved THEN new content with correct Double value  listed "()
     {
@@ -140,6 +139,23 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         doubleFormViewPanel.getDoubleValue().equals( TEST_DOUBLE );
+
+    }
+
+    def "GIVEN content type with name 'Long' selected and wizard opened WHEN long value typed and content saved THEN new content with correct Long value  listed "()
+    {
+        given: "add a content with type 'Long'"
+        Content longContent = buildLongContent();
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            longContent.getContentTypeName() ).typeData( longContent ).save().close( longContent.getDisplayName() );
+
+        when: "site expanded and just created content selected and 'Edit' button clicked"
+        filterPanel.typeSearchText( longContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( longContent.getPath() ).clickToolbarEdit();
+        LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
+
+        then: "actual value in the form view and expected should be equals"
+        longFormViewPanel.getLongValue().equals( TEST_LONG );
 
     }
 
@@ -165,13 +181,13 @@ class InputTypesSpec
     def "GIVEN content type with name 'checkbox' selected and wizard opened WHEN  the checkbox selected and content saved THEN new content with correct boolean value listed "()
     {
         given: "add a content with type 'checkbox'"
-        Content doubleContent = buildCheckBoxContent();
+        Content checkBoxContent = buildCheckBoxContent();
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
+            checkBoxContent.getContentTypeName() ).typeData( checkBoxContent ).save().close( checkBoxContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( doubleContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
+        filterPanel.typeSearchText( checkBoxContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( checkBoxContent.getPath() ).clickToolbarEdit();
         CheckBoxFormViewPanel checkBoxFormViewPanel = new CheckBoxFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
@@ -227,6 +243,23 @@ class InputTypesSpec
             displayName( "double content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":double" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+    private Content buildLongContent()
+    {
+        String name = "long";
+
+        PropertyTree data = new PropertyTree();
+        data.addStrings( LongFormViewPanel.LONG_PROPERTY, TEST_LONG );
+
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "long content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":long" ).data( data ).
             build();
         return dateContent;
     }
