@@ -16,7 +16,7 @@ class UserWizardPanel_TabMenuSpec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
-    String TAB_MENU_ITEM = "<New User>"
+    String TAB_MENU_ITEM = "<Unnamed User>"
 
     def setup()
     {

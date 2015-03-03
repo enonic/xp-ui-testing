@@ -16,7 +16,7 @@ class UserStoreWizardPanel_TabMenuSpec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
-    String TAB_MENU_ITEM = "<New User Store>"
+    String TAB_MENU_ITEM = "<Unnamed User Store>"
 
     def setup()
     {

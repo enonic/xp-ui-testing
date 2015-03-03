@@ -16,7 +16,7 @@ class GroupWizardPanel_TabMenuSpec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
-    String TAB_MENU_ITEM = "<New Group>"
+    String TAB_MENU_ITEM = "<Unnamed Group>"
 
     def setup()
     {
