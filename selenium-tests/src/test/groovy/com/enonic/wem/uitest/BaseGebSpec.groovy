@@ -26,6 +26,11 @@ class BaseGebSpec
     // run before the first feature method
     def setupSpec()
     {
+        initializeBaseUrl();
+    }
+
+    protected initializeBaseUrl()
+    {
         println " browser.baseUrl in GebConfig.groovy is : " + browser.baseUrl;
         if ( browser.baseUrl == null )
         {
@@ -42,7 +47,6 @@ class BaseGebSpec
             }
         }
     }
-
 
     def setup()
     {

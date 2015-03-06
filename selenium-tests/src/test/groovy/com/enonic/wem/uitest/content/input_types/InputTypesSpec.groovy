@@ -14,16 +14,9 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-@Stepwise
 class InputTypesSpec
-    extends BaseGebSpec
+    extends Base_InputFields_Occurences
 {
-
-    @Shared
-    String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.all-contenttypes";
-
-    @Shared
-    String MODULE_DISPLAY_NAME = "All Content Types Module";
 
     @Shared
     String TEST_DATE = "2015-02-28";
@@ -42,36 +35,6 @@ class InputTypesSpec
 
     @Shared
     String TEST_GEOLOCATION = "10,10";
-
-    @Shared
-    String SITE_NAME;
-
-    @Shared
-    ContentBrowsePanel contentBrowsePanel;
-
-
-    @Shared
-    ContentBrowseFilterPanel filterPanel;
-
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        filterPanel = contentBrowsePanel.getFilterPanel();
-    }
-
-    def "create a site based on module with all content types"()
-    {
-        given:
-        Content site = buildSite();
-        when: "data typed and saved and wizard closed"
-        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-            site.getDisplayName() );
-
-        then: " new site should be listed"
-        contentBrowsePanel.exists( site.getPath() );
-    }
 
 
     def "GIVEN content type with name 'Date' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
@@ -316,19 +279,5 @@ class InputTypesSpec
         return dateTimeContent;
     }
 
-    private Content buildSite()
-    {
-        SITE_NAME = NameHelper.uniqueName( "inputtypes" );
-        PropertyTree data = new PropertyTree();
-        data.addString( "moduleKey", MODULE_DISPLAY_NAME );
-        data.addStrings( "description", "all content types  site " )
-        Content site = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( SITE_NAME ).
-            displayName( "site-contenttypes-based" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
-            build();
-        return site;
-    }
+
 }

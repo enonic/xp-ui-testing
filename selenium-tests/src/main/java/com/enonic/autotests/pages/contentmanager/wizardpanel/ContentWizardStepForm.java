@@ -16,6 +16,10 @@ import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
+import com.enonic.autotests.pages.form.TextLine0_1_FormViewPanel;
+import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel;
+import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel;
+import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel;
 import com.enonic.autotests.pages.form.TimeFormViewPanel;
 import com.enonic.xp.data.PropertyTree;
 import com.enonic.xp.schema.content.ContentTypeName;
@@ -69,6 +73,22 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( ModuleContentType.LONG.getName() ) )
         {
             formViewPanel = new LongFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE1_0.getName() ) )
+        {
+            formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE1_1.getName() ) )
+        {
+            formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE0_1.getName() ) )
+        {
+            formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE2_5.getName() ) )
+        {
+            formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
         }
         else
         {

@@ -90,6 +90,10 @@ public abstract class WizardPanel<T>
     {
 
         CloseStatus status = null;
+        if ( findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "tab menu item :" + title + "  was not found!!" );
+        }
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) ).click();
         for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
         {
