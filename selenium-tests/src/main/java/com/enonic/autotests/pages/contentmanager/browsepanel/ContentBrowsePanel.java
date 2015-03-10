@@ -124,6 +124,15 @@ public class ContentBrowsePanel
         }
     }
 
+    public String getContentStatus( ContentPath path )
+    {
+        String statusXpath = String.format(
+            "//div[contains(@class,'slick-row') and descendant::p[contains(@title,'%s')]]//div[contains(@class,'slick-cell')][4]/span",
+            path.toString() );
+        return findElements( By.xpath( statusXpath ) ).get( 0 ).getText();
+
+    }
+
     public ContentBrowsePanel refreshPanelInBrowser()
     {
         getDriver().navigate().refresh();

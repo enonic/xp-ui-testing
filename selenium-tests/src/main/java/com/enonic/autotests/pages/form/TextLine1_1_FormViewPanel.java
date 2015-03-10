@@ -18,6 +18,8 @@ public class TextLine1_1_FormViewPanel
 
     private final String TEXT_INPUT_XPATH = FORM_VIEW + "//input[contains(@name,'TextLine_1_1')]";
 
+    public static final String VALIDATION_MESSAGE = "Min 1 occurrence required";
+
     public TextLine1_1_FormViewPanel( final TestSession session )
     {
         super( session );
@@ -37,8 +39,14 @@ public class TextLine1_1_FormViewPanel
             throw new TestFrameworkException( "required text input was not found" );
         }
         String text = data.getString( TEXT_INPUT_PROPERTY );
-        textInput.sendKeys( text );
-
+        if ( text != null )
+        {
+            textInput.sendKeys( text );
+        }
+        else
+        {
+            getLogger().info( "TextLine1:1 - there are no ane text data for typing in the TexTline" );
+        }
         return this;
     }
 

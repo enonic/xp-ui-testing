@@ -3,8 +3,8 @@
   <display-name>Text Line</display-name>
   <super-type>base:structured</super-type>
   <form>
-    <input name="textline_0_1" type="TextLine">
-      <label>Text Line 0:1</label>
+    <input name="TextLine_0_1" type="TextLine">
+    <label>Text Line 0:1</label>
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
       <occurrences minimum="0" maximum="1"/>

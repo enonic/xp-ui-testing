@@ -213,6 +213,13 @@ public class ContentWizardPanel
 
     }
 
+    public ContentWizardPanel clickOnPublishButton()
+    {
+        toolbarPublishButton.click();
+        sleep( 500 );
+        return this;
+    }
+
     public boolean isEnabledSaveButton()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );

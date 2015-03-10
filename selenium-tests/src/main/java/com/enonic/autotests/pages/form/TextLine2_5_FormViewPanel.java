@@ -15,9 +15,11 @@ import com.enonic.xp.data.PropertyTree;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class TextLine2_5_FormViewPanel
-    extends FormViewPanel
+    extends BaseTextLineFormViewPanel
 {
-    private final String TEXT_INPUTS_XPATH = FORM_VIEW + "//input[contains(@name,'TextLine_2_5')]";
+    public static final String VALIDATION_MESSAGE = "Min 2 occurrences required";
+
+    private final String TEXT_INPUTS_XPATH = FORM_VIEW + "//input[contains(@name,'TextLine2_5')]";
 
     public TextLine2_5_FormViewPanel( final TestSession session )
     {
@@ -42,6 +44,10 @@ public class TextLine2_5_FormViewPanel
             if ( i >= 5 )
             {
                 throw new TestFrameworkException( "number of text inputs can not be more than 5" );
+            }
+            if ( i >= inputs.size() )
+            {
+                break;
             }
             inputs.get( i ).sendKeys( sourceProperty.getValue().toString() );
             sleep( 300 );

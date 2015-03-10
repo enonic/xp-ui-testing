@@ -16,7 +16,10 @@ public abstract class BaseTextLineFormViewPanel
     extends FormViewPanel
 {
 
-    protected String ADD_BUTTON_XPATH = FORM_VIEW + "//button[contains(@id,'api.ui.button.Button')]";
+    protected String VALIDATION_VIEWER = FORM_VIEW + "//div[contains(@id, 'ValidationRecordingViewer')]";
+
+    protected String ADD_BUTTON_XPATH = FORM_VIEW +
+        "//button[contains(@id,'api.ui.button.Button') and child::span[text()='Add'] and not(contains(@style,'display: none'))]";
 
     public BaseTextLineFormViewPanel( final TestSession session )
     {
@@ -37,6 +40,33 @@ public abstract class BaseTextLineFormViewPanel
     {
         List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[contains(@id,'TextLine')]//a[@class='remove-button']" ) );
         return allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size();
+    }
+
+    public boolean isValidationMessagePresent()
+    {
+        List<WebElement> result = findElements( By.xpath( VALIDATION_VIEWER ) );
+        if ( result.size() == 0 )
+        {
+            return false;
+        }
+        else
+        {
+            return result.get( 0 ).isDisplayed();
+        }
+    }
+
+    public String getValidationMessage()
+    {
+        return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
+    }
+
+    public BaseTextLineFormViewPanel clickOnAddButton( int times )
+    {
+        for ( int i = 0; i < times; i++ )
+        {
+            clickOnAddButton();
+        }
+        return this;
     }
 
     public BaseTextLineFormViewPanel clickOnAddButton()

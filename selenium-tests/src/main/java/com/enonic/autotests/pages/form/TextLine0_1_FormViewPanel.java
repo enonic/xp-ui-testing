@@ -35,7 +35,14 @@ public class TextLine0_1_FormViewPanel
             throw new TestFrameworkException( "text input was not found" );
         }
         String text = data.getString( TEXT_INPUT_PROPERTY );
-        textInput.sendKeys( text );
+        if ( text != null )
+        {
+            textInput.sendKeys( text );
+        }
+        else
+        {
+            getLogger().info( "TextLine1:1 - there are no ane text data for typing in the TexTline" );
+        }
 
         return this;
     }
