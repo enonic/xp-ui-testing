@@ -94,7 +94,7 @@ public class ModuleBrowsePanel
     public ModuleBrowsePanel clickOnToolbarStart()
     {
         startButton.click();
-        sleep( 1500 );
+        sleep( 2000 );
         return this;
     }
 
