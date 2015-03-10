@@ -116,7 +116,7 @@ public class HomePage
     public UserBrowsePanel openUserManagerApplication()
     {
         userManager.click();
-        sleep( 1000 );
+        sleep( 1500 );
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.USER_MANAGER_FRAME_XPATH );
