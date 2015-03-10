@@ -104,7 +104,7 @@ public class HomePage
         waitUntilContentManagerLoaded();
         contentManager.click();
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-opened" ) );
+
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
@@ -116,7 +116,8 @@ public class HomePage
     public UserBrowsePanel openUserManagerApplication()
     {
         userManager.click();
-        sleep( 1500 );
+        sleep( 2000 );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "user-app" ) );
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.USER_MANAGER_FRAME_XPATH );
