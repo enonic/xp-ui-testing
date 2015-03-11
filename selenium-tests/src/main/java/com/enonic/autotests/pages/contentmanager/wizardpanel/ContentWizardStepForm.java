@@ -16,6 +16,7 @@ import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
+import com.enonic.autotests.pages.form.TagFormViewPanel;
 import com.enonic.autotests.pages.form.TextLine0_1_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel;
@@ -89,6 +90,10 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( ModuleContentType.TEXTLINE2_5.getName() ) )
         {
             formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TAG0_5.getName() ) )
+        {
+            formViewPanel = new TagFormViewPanel( getSession() );
         }
         else
         {

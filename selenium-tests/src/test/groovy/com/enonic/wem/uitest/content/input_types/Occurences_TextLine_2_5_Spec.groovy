@@ -175,9 +175,6 @@ class Occurences_TextLine_2_5_Spec
         data.addString( "3", FOURTH_TEST_TEXT );
         data.addString( "4", FIVES_TEST_TEXT );
 
-
-
-
         Content textLineContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "textline2_5 content" ).
