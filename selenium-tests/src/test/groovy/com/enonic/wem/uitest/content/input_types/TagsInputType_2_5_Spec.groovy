@@ -8,9 +8,10 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 
-class TagsInputType_0_5_Spec
+class TagsInputType_2_5_Spec
     extends Base_InputFields_Occurences
 
 {
@@ -29,11 +30,12 @@ class TagsInputType_0_5_Spec
     @Shared
     String TAG_5 = "tag5"
 
-
-    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN no one tag added and  'Save' and 'Publish' buttons pressed THEN new content with status 'online' appears "()
+    //XP-158
+    @Ignore
+    def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN no one tag added and  'Save' and 'Publish' buttons pressed THEN new content with status 'online' appears "()
     {
-        given: "start to add a content with type 'Tag 0:5'"
-        Content tagContent = buildTag_0_5_Content( 0 );
+        given: "start to add a content with type 'Tag 2:5'"
+        Content tagContent = buildTag_2_5_Content( 2 );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
 
@@ -45,33 +47,28 @@ class TagsInputType_0_5_Spec
         contentBrowsePanel.getContentStatus( tagContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
-
-    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN one tag added and 'Save' button pressed and just created content opened THEN only one Tag with correct name present on wizard "()
+    def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN validation message appears"()
     {
-        given: "start to add a content with type 'Tag 0:5'"
-        Content tagContent = buildTag_0_5_Content( 1 );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
+        given: "start to add a content with type 'Tag 2:5'"
+        Content textLineContent = buildTag_2_5_Content( 1 );
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
+            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
 
-
-        when: "type a data and 'save' and open for edit new created content"
-        contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+        when:
+        contentWizardPanel.clickOnPublishButton();
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
-        then: "one tag with correct text present on the page"
-        formViewPanel.getNumberOfTags() == 1;
+        then: "new content listed in the grid and can be opened for edit"
+        formViewPanel.isValidationMessagePresent();
         and:
-        formViewPanel.getTagsText().contains( TAG_1 );
+        formViewPanel.getValidationMessage() == String.format( TagFormViewPanel.VALIDATION_MESSAGE, 2 );
     }
 
     def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()
     {
         given: "start to add a content with type 'Tag 0:5'"
 
-        Content tagContent = buildTag_0_5_Content( 5 );
+        Content tagContent = buildTag_2_5_Content( 5 );
         ContentWizardPanel contentWizardPanel =
             contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
                 tagContent.getContentTypeName() );
@@ -91,7 +88,7 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
 
-        Content tagContent = buildTag_0_5_Content( 5 );
+        Content tagContent = buildTag_2_5_Content( 5 );
         ContentWizardPanel contentWizardPanel =
             contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
                 tagContent.getContentTypeName() ).typeData( tagContent );
@@ -106,12 +103,34 @@ class TagsInputType_0_5_Spec
         then: "one tag with correct text present on the page"
         formViewPanel.isTagsInputDisplayed() && !isDisplayedBefore;
     }
+    //XP-158
+    @Ignore
+    def "GIVEN creating new Tag-content 2:5 on root WHEN 2  tags added and button 'Save' and 'Publish' pressed  and just created content opened THEN two tags with correct name are present"()
+    {
+        given: "start to add a content with type 'Tag 2:5'"
+        Content tagContent = buildTag_2_5_Content( 2 );
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
+            SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
 
+        when: "type a data and 'save' and open for edit new created content"
+        contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
+        filterPanel.typeSearchText( tagContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+        TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
+
+        then: "one tag with correct text present on the page"
+        formViewPanel.getNumberOfTags() == 2;
+        and:
+        String[] tags = [TAG_1, TAG_2];
+        formViewPanel.getTagsText().contains( tags.toList() );
+
+    }
+    //XP-158
+    @Ignore
     def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page "()
     {
-        given: "start to add a content with type 'Tag 0:5'"
-
-        Content tagContent = buildTag_0_5_Content( 5 );
+        given: "start to add a content with type 'Tag 2:5'"
+        Content tagContent = buildTag_2_5_Content( 5 );
         ContentWizardPanel contentWizardPanel =
             contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
                 tagContent.getContentTypeName() );
@@ -134,7 +153,7 @@ class TagsInputType_0_5_Spec
     private PropertyTree buildData( int numberOfTags )
     {
         PropertyTree data = new PropertyTree();
-        data.setLong( "min", 0 );
+        data.setLong( "min", 2 );
         data.setLong( "max", 5 );
         switch ( numberOfTags )
         {
@@ -162,15 +181,15 @@ class TagsInputType_0_5_Spec
         return data;
     }
 
-    private Content buildTag_0_5_Content( int numberOfTags )
+    private Content buildTag_2_5_Content( int numberOfTags )
     {
         PropertyTree data = buildData( numberOfTags );
-        String name = "tag0_5";
+        String name = "tag2_5";
         Content textLineContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
-            displayName( "tag0_5 content" ).
+            displayName( "tag2_5 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":tag0_5" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":tag2_5" ).data( data ).
             build();
         return textLineContent;
     }

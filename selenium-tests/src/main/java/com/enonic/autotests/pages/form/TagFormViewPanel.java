@@ -19,6 +19,10 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class TagFormViewPanel
     extends FormViewPanel
 {
+    public static String VALIDATION_MESSAGE = "Min %s occurrences required";
+
+    protected String VALIDATION_VIEWER = FORM_VIEW + "//div[contains(@id, 'ValidationRecordingViewer')]";
+
     private final String TAGS_INPUT_XPATH = FORM_VIEW + "//input[@type='text']";
 
     private final String LI_TAG_XPATH = FORM_VIEW + "//ul/li[contains(@id,'api.ui.tags.Tag')]";
@@ -31,6 +35,25 @@ public class TagFormViewPanel
 
     @FindBy(xpath = TAGS_INPUT_XPATH)
     private WebElement tagsInput;
+
+    public boolean isValidationMessagePresent()
+    {
+        List<WebElement> result = findElements( By.xpath( VALIDATION_VIEWER ) );
+        if ( result.size() == 0 )
+        {
+            return false;
+        }
+        else
+        {
+            return result.get( 0 ).isDisplayed();
+        }
+    }
+
+    public String getValidationMessage()
+    {
+        return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
+    }
+
 
     @Override
     public FormViewPanel type( final PropertyTree data )
@@ -77,5 +100,18 @@ public class TagFormViewPanel
         return spans.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
+    public TagFormViewPanel removeLastTag()
+    {
+        List<WebElement> spans = findElements( By.xpath( LI_TAG_XPATH + "/a" ) );
+        if ( spans.size() != 0 )
+        {
+            spans.get( spans.size() - 1 ).click();
+        }
+        else
+        {
+            throw new TestFrameworkException( "no one tag was found!" );
+        }
+        return this;
+    }
 
 }

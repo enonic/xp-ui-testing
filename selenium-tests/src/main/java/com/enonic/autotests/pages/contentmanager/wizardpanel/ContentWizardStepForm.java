@@ -91,7 +91,9 @@ public class ContentWizardStepForm
         {
             formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TAG0_5.getName() ) )
+        else if ( contentTypeName.contains( ModuleContentType.TAG0_5.getName() ) ||
+            contentTypeName.contains( ModuleContentType.TAG2_5.getName() ) ||
+            contentTypeName.contains( ModuleContentType.TAG_UNLIM.getName() ) )
         {
             formViewPanel = new TagFormViewPanel( getSession() );
         }
