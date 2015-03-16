@@ -64,9 +64,9 @@ class TagsInputType_2_5_Spec
         formViewPanel.getValidationMessage() == String.format( TagFormViewPanel.VALIDATION_MESSAGE, 2 );
     }
 
-    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()
+    def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()
     {
-        given: "start to add a content with type 'Tag 0:5'"
+        given: "start to add a content with type 'Tag 2:5'"
 
         Content tagContent = buildTag_2_5_Content( 5 );
         ContentWizardPanel contentWizardPanel =
@@ -86,7 +86,7 @@ class TagsInputType_2_5_Spec
 
     def "GIVEN five tags added in input is disabled WHEN one of the fives tags removed  THEN input text becomes enabled again"()
     {
-        given: "start to add a content with type 'Tag 0:5'"
+        given: "start to add a content with type 'Tag 2:5'"
 
         Content tagContent = buildTag_2_5_Content( 5 );
         ContentWizardPanel contentWizardPanel =
