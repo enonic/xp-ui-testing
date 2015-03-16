@@ -95,6 +95,7 @@ public class TagFormViewPanel
 
     public List<String> getTagsText()
     {
+        sleep( 500 );
         TestUtils.saveScreenshot( getSession(), "tags-text" );
         List<WebElement> spans = findElements( By.xpath( LI_TAG_XPATH + "/span" ) );
         return spans.stream().map( WebElement::getText ).collect( Collectors.toList() );
