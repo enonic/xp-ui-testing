@@ -57,6 +57,7 @@ class TagsInputType_0_5_Spec
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
+        contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( tagContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
@@ -92,9 +93,8 @@ class TagsInputType_0_5_Spec
         given: "start to add a content with type 'Tag 0:5'"
 
         Content tagContent = buildTag_0_5_Content( 5 );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() ).typeData( tagContent );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
@@ -119,6 +119,7 @@ class TagsInputType_0_5_Spec
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
+        contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( tagContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );

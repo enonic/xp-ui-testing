@@ -1,11 +1,25 @@
 package com.enonic.autotests.vo.usermanager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User
     extends Principal
 {
     private String email;
 
     private String password;
+
+    private List<Role> roles;
+
+    public void addRole( Role role )
+    {
+        if ( roles == null )
+        {
+            roles = new ArrayList<>();
+        }
+        roles.add( role );
+    }
 
     public static Builder create( final User user )
     {
@@ -22,6 +36,7 @@ public class User
         super( builder );
         this.email = builder.email;
         this.password = builder.password;
+        this.roles = builder.roles;
     }
 
     public String getEmail()
@@ -42,6 +57,8 @@ public class User
 
         private String password;
 
+        private List<Role> roles;
+
         private Builder()
         {
             super();
@@ -50,6 +67,12 @@ public class User
         public Builder email( String email )
         {
             this.email = email;
+            return this;
+        }
+
+        public Builder roles( List<Role> roles )
+        {
+            this.roles = roles;
             return this;
         }
 
