@@ -106,7 +106,11 @@ public class UserWizardPanel
         sleep( 1000 );
         clearAndType( passwordInput, user.getPassword() );
         sleep( 500 );
-        addRoles( user.getRoles() );
+        if ( user.getRoles() != null )
+        {
+            addRoles( user.getRoles() );
+        }
+
         TestUtils.saveScreenshot( getSession(), user.getDisplayName() );
         return this;
     }
