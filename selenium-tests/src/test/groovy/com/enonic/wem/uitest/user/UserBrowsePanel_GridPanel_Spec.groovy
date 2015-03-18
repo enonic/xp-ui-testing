@@ -141,8 +141,8 @@ class UserBrowsePanel_GridPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "arrow_up_user" );
 
         then: "roles is not selected now, another folder in the root directory is selected"
-        !userBrowsePanel.isRowSelected( UserBrowsePanel.BrowseItemType.ROLES.getValue() ) && userBrowsePanel.getSelectedRowsNumber() ==
-            before;
+        !userBrowsePanel.isRowSelected( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() ) &&
+            userBrowsePanel.getSelectedRowsNumber() == before;
     }
 
     def "GIVEN a 'roles' is collapsed and selected WHEN arrow right is typed THEN folder becomes expanded"()

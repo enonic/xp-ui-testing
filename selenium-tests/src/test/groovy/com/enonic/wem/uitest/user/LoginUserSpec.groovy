@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.ChangeUserPasswordDialog
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
@@ -76,6 +77,7 @@ class LoginUserSpec
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
         HomePage home = NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        TestUtils.saveScreenshot( getSession(), "logged" );
 
         then:
         home.isLoaded();
@@ -96,7 +98,7 @@ class LoginUserSpec
 
         when:
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
-
+        TestUtils.saveScreenshot( getSession(), "ch-pass-dialog" );
         then:
         dialog.isOpened();
 
@@ -136,6 +138,7 @@ class LoginUserSpec
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        TestUtils.saveScreenshot( getSession(), "login-failed" );
 
         then:
         thrown( AuthenticationException )
@@ -148,6 +151,7 @@ class LoginUserSpec
         User user = User.builder().displayName( USER_NAME ).password( NEW_USER_PASSWORD ).build();
         getTestSession().setUser( user );
         HomePage home = NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        TestUtils.saveScreenshot( getSession(), "login-new-pass" );
 
         then:
         home.isLoaded();
