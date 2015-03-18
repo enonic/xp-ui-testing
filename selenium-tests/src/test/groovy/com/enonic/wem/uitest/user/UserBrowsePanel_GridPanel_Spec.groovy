@@ -137,7 +137,7 @@ class UserBrowsePanel_GridPanel_Spec
         int before = userBrowsePanel.getSelectedRowsNumber();
 
         when: "arrow up typed"
-        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES.getValue(), Keys.ARROW_UP );
+        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_UP );
         TestUtils.saveScreenshot( getTestSession(), "arrow_up_user" );
 
         then: "roles is not selected now, another folder in the root directory is selected"
