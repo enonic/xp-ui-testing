@@ -54,7 +54,7 @@ class UserBrowsePanelToolbarSpec
     def "GIVEN user BrowsePanel WHEN 'System' folder selected THEN 'Edit' button should be enabled"()
     {
         when:
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         then:
         userBrowsePanel.isEditButtonEnabled();

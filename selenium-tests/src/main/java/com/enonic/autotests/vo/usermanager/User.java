@@ -10,15 +10,20 @@ public class User
 
     private String password;
 
-    private List<Role> roles;
+    private List<String> roles;
 
-    public void addRole( Role role )
+    public void addRole( String role )
     {
         if ( roles == null )
         {
             roles = new ArrayList<>();
         }
         roles.add( role );
+    }
+
+    public List<String> getRoles()
+    {
+        return roles;
     }
 
     public static Builder create( final User user )
@@ -57,7 +62,7 @@ public class User
 
         private String password;
 
-        private List<Role> roles;
+        private List<String> roles;
 
         private Builder()
         {
@@ -70,7 +75,7 @@ public class User
             return this;
         }
 
-        public Builder roles( List<Role> roles )
+        public Builder roles( List<String> roles )
         {
             this.roles = roles;
             return this;

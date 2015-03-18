@@ -33,7 +33,7 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN user browse panel opened WHEN first is clicked THEN first row is blue"()
     {
         when:
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         then:
         userBrowsePanel.getSelectedRowsNumber() == 1;
@@ -42,7 +42,7 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN a Content selected WHEN spacebar is typed THEN row is no longer selected"()
     {
         given:
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
         TestUtils.saveScreenshot( getTestSession(), "spacebar-system1" );
 
         when:
@@ -57,7 +57,7 @@ class UserBrowsePanel_GridPanel_Spec
     {
         given:
         List<String> contentNames = userBrowsePanel.getNamesFromBrowsePanel();
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         when:
         userBrowsePanel.clickOnClearSelection();
@@ -96,7 +96,7 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN a 'roles' folder on root  WHEN folder expanded THEN 'ea' enterprise administrator shown"()
     {
         when: " a 'roles' folder expanded"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
 
         then: "'ea' - enterprise administrator should be shown"
         userBrowsePanel.exists( "system.admin", true );
@@ -118,7 +118,7 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN a 'system' folder selected WHEN arrow down is typed THEN next row is selected"()
     {
         given: "a 'system folder is selected'"
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
         int before = userBrowsePanel.getSelectedRowsNumber();
 
         when: "'arrow down' typed"
@@ -133,7 +133,7 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN a 'roles' selected WHEN arrow up is typed THEN another row is selected"()
     {
         given: "'roles folder is selected'"
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.ROLES );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.ROLES_FOLDER );
         int before = userBrowsePanel.getSelectedRowsNumber();
 
         when: "arrow up typed"
@@ -148,35 +148,35 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN a 'roles' is collapsed and selected WHEN arrow right is typed THEN folder becomes expanded"()
     {
         given: "'roles folder is collapsed and selected'"
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.ROLES );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.ROLES_FOLDER );
 
         when: "arrow right typed"
-        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES.getValue(), Keys.ARROW_RIGHT );
+        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_RIGHT );
         TestUtils.saveScreenshot( getTestSession(), "arrow_right_user" );
 
         then: "'roles' folder is expanded"
-        userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+        userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
     }
 
     def "GIVEN a 'roles' is expanded and selected WHEN arrow left is typed THEN folder becomes collapsed"()
     {
         given: "'roles folder is expanded and selected'"
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.ROLES );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.ROLES_FOLDER );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
 
         when: "arrow left typed"
-        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES.getValue(), Keys.ARROW_LEFT );
+        userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_LEFT );
         TestUtils.saveScreenshot( getTestSession(), "arrow_left_user" );
 
         then: "'roles' folder is collapsed"
-        !userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES.getValue() );
+        !userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
     }
 
     def "GIVEN selected folder and WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
     {
         given: "selected and expanded 'System' folder"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
-        userBrowsePanel.clickCheckboxAndSelectRow( UserBrowsePanel.BrowseItemType.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         when: "arrow down typed 3 times"
         userBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );

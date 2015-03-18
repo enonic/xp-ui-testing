@@ -24,7 +24,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BrowsePanel
     extends Application
 {
-    public static String ROW =
+    public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and @title='%s']]";
 
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
@@ -70,6 +70,8 @@ public abstract class BrowsePanel
     }
 
     public abstract BrowsePanel goToAppHome();
+
+    public abstract WizardPanel clickToolbarEdit();
 
     /**
      * clicks on 'expand' icon and expands a folder.
@@ -133,7 +135,7 @@ public abstract class BrowsePanel
         boolean result = waitUntilVisibleNoException( By.xpath( expanderXpath ), 3 );
         if ( !result )
         {
-            result =   doScrollAndFindGridItem( expanderXpath, 2 );
+            result = doScrollAndFindGridItem( expanderXpath, 2 );
         }
 //        if ( !result )
 //        {
@@ -142,7 +144,6 @@ public abstract class BrowsePanel
 //        }
 
         List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
-
 
         String attributeName = "class";
         String attributeValue = "collapse";
@@ -495,6 +496,7 @@ public abstract class BrowsePanel
             return element.getAttribute( "title" );
         } ).collect( Collectors.toList() );
     }
+
 
     public <T extends BrowsePanel> T clickCheckboxAndSelectRow( String itemName )
     {

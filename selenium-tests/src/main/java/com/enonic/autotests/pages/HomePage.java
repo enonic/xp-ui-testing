@@ -35,12 +35,6 @@ public class HomePage
     private WebElement modules;
 
 
-    @FindBy(xpath = "//div[@class = 'name-container' and text()='Schema Manager']")
-    private WebElement schemaManager;
-
-    @FindBy(xpath = "//div[@class = 'name-container' and text()='Accounts']")
-    private WebElement accounts;
-
     /**
      * @param session
      */
@@ -142,5 +136,10 @@ public class HomePage
         panel.waitsForSpinnerNotVisible();
         getLogger().info( "Module Manger App loaded" );
         return panel;
+    }
+
+    public boolean isContentManagerDisplayed()
+    {
+        return contentManager.isDisplayed();
     }
 }

@@ -29,8 +29,8 @@ class UserWizardPanel_TabMenuSpec
     {
         when: "'Users' folder clicked and 'New' button pressed and 'user wizard' opened"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.USERS ).clickToolbarNew().waitUntilWizardOpened();
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
+            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New User' is present on the tab menu "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
@@ -41,8 +41,8 @@ class UserWizardPanel_TabMenuSpec
     {
         given: "group wizard was opened ad AppBarTabMenu clicked"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.USERS ).clickToolbarNew().waitUntilWizardOpened();
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
+            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
@@ -58,8 +58,8 @@ class UserWizardPanel_TabMenuSpec
         given: "user Wizard opened and name is typed"
         String displayName = "testname";
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.USERS ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
+            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
         when: "TabmenuItem(close) clicked"
         SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );

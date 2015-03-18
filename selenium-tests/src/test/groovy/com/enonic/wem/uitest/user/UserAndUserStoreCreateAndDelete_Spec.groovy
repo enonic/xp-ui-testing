@@ -19,6 +19,9 @@ class UserAndUserStoreCreateAndDelete_Spec
     UserBrowsePanel userBrowsePanel;
 
     @Shared
+    User user;
+
+    @Shared
     int randomInt = Math.abs( new Random().nextInt() );
 
     @Shared
@@ -28,7 +31,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     private String USER_STORE_PATH = "/user-store" + randomInt;
 
     @Shared
-    private String USER_STORE_NAME = "user-store" + randomInt;
+    private String GENERATED_USER_STORE_NAME = "user-store" + randomInt;
 
     @Shared
     private String USER_NAME = NameHelper.uniqueName( "user" );
@@ -48,14 +51,14 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "GIVEN creating new UserStore WHEN display name typed THEN the real name equals as expected"()
     {
         given:
-        UserStore userStore = buildUserStoreWithDisplayName( USER_STORE_DISPLAY_NAME );
+        UserStore userStore = UserTestUtils.buildUserStoreWithDisplayName( USER_STORE_DISPLAY_NAME );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "name typed"
         userStoreWizardPanel.typeData( userStore );
 
         then: "the real name equals as expected"
-        userStoreWizardPanel.getStoreNameInputValue() == USER_STORE_NAME
+        userStoreWizardPanel.getStoreNameInputValue() == GENERATED_USER_STORE_NAME
 
 
     }
@@ -63,7 +66,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "GIVEN creating new UserStore WHEN display name typed and 'Save' button pressed THEN 'Save' button becomes disabled"()
     {
         given:
-        UserStore userStore = buildUserStoreWithDisplayName( USER_STORE_DISPLAY_NAME );
+        UserStore userStore = UserTestUtils.buildUserStoreWithDisplayName( USER_STORE_DISPLAY_NAME );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "name typed and 'Save' pressed"
@@ -82,14 +85,14 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "WHEN new User Store added  THEN it should be listed in browse panel"()
     {
         expect: "new User Store listed and verify, that real name is the same as expected"
-        userBrowsePanel.exists( USER_STORE_NAME, false );
+        userBrowsePanel.exists( GENERATED_USER_STORE_NAME, false );
 
     }
 
     def "GIVEN existing a User Store WHEN a user added to User Store THEN new user listed beneath a User Store "()
     {
         given:
-        User user = buildTestUser( USER_NAME );
+        user = buildTestUser( USER_NAME );
         UserWizardPanel userWizardPanel = userBrowsePanel.expandStoreAndSelectUsers( USER_STORE_PATH ).clickToolbarNew();
 
         when: "name typed and 'Save' pressed"
@@ -97,7 +100,7 @@ class UserAndUserStoreCreateAndDelete_Spec
         userBrowsePanel.expandUsersFolder( USER_STORE_PATH );
 
 
-        then: "'Save' button becomes disabled"
+        then: "new user present beneath a store"
         userBrowsePanel.exists( USER_NAME, true );
 
 
@@ -114,16 +117,10 @@ class UserAndUserStoreCreateAndDelete_Spec
         deleteDialog.doDelete();
 
         then: "new User Store listed and verify, that real name is the same as expected"
-        !userBrowsePanel.exists( USER_STORE_NAME, false );
+        !userBrowsePanel.exists( GENERATED_USER_STORE_NAME, false );
 
     }
 
-
-    private UserStore buildUserStoreWithDisplayName( String displayName )
-    {
-        return UserStore.builder().displayName( displayName ).build();
-
-    }
 
     private User buildTestUser( String userName )
     {

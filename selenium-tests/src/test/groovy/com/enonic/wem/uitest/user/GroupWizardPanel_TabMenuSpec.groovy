@@ -30,8 +30,8 @@ class GroupWizardPanel_TabMenuSpec
         when: "'Groups' folder,that located beneath a 'System' folder, was selected, the 'New' button pressed  and group wizard opened"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "system_exp" );
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened();
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
+            UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New Role' is present "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
@@ -42,8 +42,8 @@ class GroupWizardPanel_TabMenuSpec
     {
         given: "group wizard was opened ad AppBarTabMenu clicked"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened();
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
+            UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
@@ -59,8 +59,8 @@ class GroupWizardPanel_TabMenuSpec
         given: "group Wizard opened and name is typed"
         String displayName = "testname";
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRow(
-            UserBrowsePanel.BrowseItemType.GROUPS ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
+            UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
         when: "TabmenuItem(close) clicked"
         SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );

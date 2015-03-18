@@ -9,26 +9,26 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class ContentBrowseFilterPanel
-    extends Application
+    extends BaseBrowseFilterPanel
 {
-    private final String CLEAR_FILTER_LINK = "Clear filter";
-
-    public static final String SEARCH_INPUT_XPATH =
-        "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";
-
-    @FindBy(xpath = SEARCH_INPUT_XPATH)
-    private WebElement searchInput;
+//    private final String CLEAR_FILTER_LINK = "Clear filter";
+//
+//    public static final String SEARCH_INPUT_XPATH =
+//        "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";
+//
+//    @FindBy(xpath = SEARCH_INPUT_XPATH)
+//    private WebElement searchInput;
 
     private String CONTENT_TYPE_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";

@@ -1,7 +1,10 @@
 package com.enonic.autotests.pages.usermanager.wizardpanel;
 
 
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -18,6 +21,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class UserWizardPanel
     extends WizardPanel<User>
 {
+    public static String GRID_ROW =
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(@title,'%s')]]";
+
     public static final String DIV_USER_WIZARD_PANEL =
         "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";
 
@@ -33,8 +39,17 @@ public class UserWizardPanel
     private static final String TOOLBAR_DELETE_BUTTON =
         "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
+    private final String ROLE_OPTIONS_FILTER_INPUT =
+        "//div[contains(@id,'FormItem') and child::label[text()='Roles']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+
+    @FindBy(xpath = DIV_USER_WIZARD_PANEL + ROLE_OPTIONS_FILTER_INPUT)
+    protected WebElement roleOptionsFilter;
+
     @FindBy(xpath = "//input[@type = 'email']")
     protected WebElement emailInput;
+
+    @FindBy(xpath = "//input[@type = 'password']")
+    protected WebElement passwordInput;
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
@@ -83,23 +98,64 @@ public class UserWizardPanel
     @Override
     public WizardPanel<User> typeData( final User user )
     {
-        // 1. type a data: 'name' and 'Display Name'.
         waitElementClickable( By.name( "displayName" ), 2 );
         getLogger().info( "types displayName: " + user.getDisplayName() );
         clearAndType( displayNameInput, user.getDisplayName() );
         sleep( 500 );
         clearAndType( emailInput, user.getEmail() );
         sleep( 1000 );
+        clearAndType( passwordInput, user.getPassword() );
+        sleep( 500 );
+        addRoles( user.getRoles() );
         TestUtils.saveScreenshot( getSession(), user.getDisplayName() );
-        // 2. populate main tab
-
         return this;
+    }
+
+    private void addRoles( List<String> names )
+    {
+        names.stream().forEach( roleName -> addRole( roleName ) );
+    }
+
+    private void addRole( String roleName )
+    {
+        roleOptionsFilter.sendKeys( roleName );
+        sleep( 1000 );
+        String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", roleName );
+        if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Role was not found!" );
+        }
+        if ( isRoleSelected( roleName ) )
+        {
+            findElements( By.xpath( rowCheckboxXpath ) ).get( 0 ).click();
+            roleOptionsFilter.sendKeys( Keys.ENTER );
+            sleep( 300 );
+        }
+
+    }
+
+    private boolean isRoleSelected( String roleName )
+    {
+        return findElements( By.xpath( String.format( GRID_ROW + "//input[@type='checkbox']", roleName ) ) ).get( 0 ).getAttribute(
+            "value" ) != "on";
     }
 
     public UserWizardPanel typeDisplayName( String displayName )
     {
         clearAndType( displayNameInput, displayName );
         return this;
+    }
+
+    public UserWizardPanel typePassword( String password )
+    {
+        clearAndType( passwordInput, password );
+        return this;
+    }
+
+    public ChangeUserPasswordDialog clickOnChangePassword()
+    {
+        findElements( By.xpath( "//button[contains(@class,'change-password-button')]" ) ).get( 0 ).click();
+        return new ChangeUserPasswordDialog( getSession() );
     }
 
     @Override

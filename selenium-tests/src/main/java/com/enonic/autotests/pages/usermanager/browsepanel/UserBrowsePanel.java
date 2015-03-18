@@ -30,7 +30,8 @@ public class UserBrowsePanel
 
     public enum BrowseItemType
     {
-        USERS( "users" ), GROUPS( "groups" ), ROLES( "roles" ), SYSTEM( "system" ), USER_STORE( "user_store" );
+        USERS_FOLDER( "users" ), USER( "user" ), GROUPS_FOLDER( "groups" ), GROUP( "group" ), ROLES_FOLDER( "roles" ), ROLE(
+        "role" ), SYSTEM( "system" ), USER_STORE( "user_store" );
 
         private BrowseItemType( String type )
         {
@@ -81,6 +82,17 @@ public class UserBrowsePanel
     @FindBy(xpath = SYNCH_BUTTON_XPATH)
     private WebElement synchButton;
 
+    private UserBrowseFilterPanel userBrowseFilterPanel;
+
+    public UserBrowseFilterPanel getUserBrowseFilterPanel()
+    {
+        if ( userBrowseFilterPanel == null )
+        {
+            userBrowseFilterPanel = new UserBrowseFilterPanel( getSession() );
+        }
+        return userBrowseFilterPanel;
+    }
+
     /**
      * The Constructor
      *
@@ -106,7 +118,7 @@ public class UserBrowsePanel
         sleep( 700 );
         pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
         clickAndSelectRow( "users" );
-        getSession().put( ITEM_TYPE, BrowseItemType.USERS );
+        getSession().put( ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
     }
 
@@ -141,11 +153,17 @@ public class UserBrowsePanel
         return allNames;
     }
 
-    public UserBrowsePanel clickCheckboxAndSelectRow( BrowseItemType itemType )
+    public UserBrowsePanel clickCheckboxAndSelectFolder( BrowseItemType itemType )
     {
-
         getSession().put( ITEM_TYPE, itemType );
         return clickCheckboxAndSelectRow( itemType.getValue() );
+
+    }
+
+    public UserBrowsePanel clickCheckboxAndSelectUser( String userAppItemName )
+    {
+        getSession().put( ITEM_TYPE, BrowseItemType.USER );
+        return clickCheckboxAndSelectRow( userAppItemName );
 
     }
 
@@ -157,7 +175,7 @@ public class UserBrowsePanel
             clickOnExpander( userStoreName );
         }
 
-        getSession().put( ITEM_TYPE, BrowseItemType.GROUPS );
+        getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return clickOnRowAndSelectGroupInUserStore( userStoreName );
 
     }
@@ -211,11 +229,11 @@ public class UserBrowsePanel
 
         switch ( selectedItem )
         {
-            case ROLES:
+            case ROLES_FOLDER:
                 return new RoleWizardPanel( getSession() );
-            case GROUPS:
+            case GROUPS_FOLDER:
                 return new GroupWizardPanel( getSession() );
-            case USERS:
+            case USERS_FOLDER:
                 return new UserWizardPanel( getSession() );
             default:
                 throw new TestFrameworkException( "unknown type of principal!" );
@@ -261,5 +279,30 @@ public class UserBrowsePanel
         return synchButton.isEnabled();
     }
 
+    @Override
+    public WizardPanel clickToolbarEdit()
+    {
+
+        editButton.click();
+        BrowseItemType selectedItem = (BrowseItemType) getSession().get( ITEM_TYPE );
+        if ( selectedItem == null )
+        {
+            return new UserStoreWizardPanel( getSession() );
+        }
+
+        switch ( selectedItem )
+        {
+            case ROLE:
+                return new RoleWizardPanel( getSession() );
+            case GROUP:
+                return new GroupWizardPanel( getSession() );
+            case USER:
+                return new UserWizardPanel( getSession() );
+            default:
+                throw new TestFrameworkException( "unknown type of item!" );
+        }
+
+
+    }
 
 }

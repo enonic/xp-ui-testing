@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.WizardPanel;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -98,6 +99,12 @@ public class ModuleBrowsePanel
         return this;
     }
 
+    @Override
+    public WizardPanel clickToolbarEdit()
+    {
+        throw new TestFrameworkException( "not implemented for Modules app" );
+    }
+
     public boolean waitAndCheckIsButtonEnabled( String buttonXpath )
     {
         return waitUntilElementEnabledNoException( By.xpath( buttonXpath ), 2 );
@@ -131,7 +138,7 @@ public class ModuleBrowsePanel
 
     public String getModuleStatus( String moduleName )
     {
-        String stateCell = String.format( ROW, moduleName ) + "//div[contains(@class,'state')]";
+        String stateCell = String.format( GRID_ROW, moduleName ) + "//div[contains(@class,'state')]";
         if ( findElements( By.xpath( stateCell ) ).size() == 0 )
         {
             throw new TestFrameworkException( "state was not found in the table ! module name is " + moduleName );
