@@ -1,6 +1,9 @@
 package com.enonic.autotests.vo.contentmanager;
 
 
+import java.util.List;
+
+import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry;
 import com.enonic.xp.content.ContentPath;
 import com.enonic.xp.data.PropertyTree;
 import com.enonic.xp.schema.content.ContentTypeName;
@@ -17,6 +20,8 @@ public class Content
 
     private final String contentTypeName;
 
+    private final List<ContentAclEntry> aclEntries;
+
     private final PropertyTree data;
 
     protected Content( final Builder builder )
@@ -29,6 +34,7 @@ public class Content
         this.contentTypeName = builder.contentTypeName;
 
         this.data = builder.data;
+        this.aclEntries = builder.aclEntries;
     }
 
     public static Builder builder()
@@ -61,6 +67,11 @@ public class Content
         return contentTypeName;
     }
 
+    public List<ContentAclEntry> getAclEntries()
+    {
+        return this.aclEntries;
+    }
+
     public PropertyTree getData()
     {
         return data;
@@ -77,6 +88,8 @@ public class Content
         private ContentPath parent;
 
         private PropertyTree data;
+
+        private List<ContentAclEntry> aclEntries;
 
         public B name( String name )
         {
@@ -95,11 +108,18 @@ public class Content
             this.data = content.getData();
             this.parent = content.getParent();
             this.contentTypeName = content.getContentTypeName();
+            this.aclEntries = content.getAclEntries();
         }
 
         public B displayName( String displayName )
         {
             this.displayName = displayName;
+            return (B) this;
+        }
+
+        public B aclEntries( List<ContentAclEntry> aclEntries )
+        {
+            this.aclEntries = aclEntries;
             return (B) this;
         }
 

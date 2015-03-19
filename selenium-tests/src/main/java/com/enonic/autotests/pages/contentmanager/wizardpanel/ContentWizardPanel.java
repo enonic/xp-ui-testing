@@ -176,6 +176,12 @@ public class ContentWizardPanel
             stepForm.type( content.getData(), content.getContentTypeName() );
         }
 
+        if ( content.getAclEntries() != null )
+        {
+            SecurityWizardStepForm securityWizardStepForm = new SecurityWizardStepForm( getSession() );
+            securityWizardStepForm.editPermissions( content.getAclEntries() );
+        }
+
         return this;
     }
 

@@ -47,7 +47,7 @@ public class UserBrowsePanel
 
     }
 
-    public static final String USER_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' and text()='Content Manager']";
+    public static final String USER_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' and text()='User Manager']";
 
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";

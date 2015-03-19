@@ -111,6 +111,11 @@ public class HomePage
     {
         userManager.click();
         sleep( 2000 );
+        boolean isFrameLoaded = waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_4 );
+        if ( !isFrameLoaded )
+        {
+            throw new TestFrameworkException( "User app not loaded or is loading too long!" );
+        }
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "user-app" ) );
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
