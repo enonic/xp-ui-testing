@@ -25,10 +25,12 @@ public class HomePage
 {
     private final String CM_LINK = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]";
 
+    private final String USER_APP_LINK = "//a[contains(@href,'user-manager')]//div[contains(.,'User Manager')]";
+
     @FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
     private WebElement contentManager;
 
-    @FindBy(xpath = "//a[contains(@href,'user-manager')]//div[contains(.,'User Manager')]")
+    @FindBy(xpath = USER_APP_LINK)
     private WebElement userManager;
 
     @FindBy(xpath = "//a[contains(@href,'module-manager')]//div[contains(.,'Modules')]")
@@ -109,14 +111,19 @@ public class HomePage
 
     public UserBrowsePanel openUserManagerApplication()
     {
+        if ( waitUntilVisibleNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_3 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "userManagerLink" ) );
+        }
         userManager.click();
-        sleep( 2000 );
         boolean isFrameLoaded = waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_4 );
         if ( !isFrameLoaded )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "user-app" ) );
             throw new TestFrameworkException( "User app not loaded or is loading too long!" );
+
         }
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "user-app" ) );
+
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.USER_MANAGER_FRAME_XPATH );
