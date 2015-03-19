@@ -124,6 +124,7 @@ class LoginUserSpec
         when:
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
         dialog.doChangePassword( NEW_USER_PASSWORD );
+        TestUtils.saveScreenshot( getSession(), "pass_changed" )
         userWizardPanel.save().close( user.getDisplayName() );
 
         then:
