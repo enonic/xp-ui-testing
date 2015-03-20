@@ -114,6 +114,11 @@ public abstract class Page
         return WaitHelper.waitUntilVisibleNoException( getDriver(), by, timeout );
     }
 
+    public boolean waitUntilClickableNoException( By by, long timeout )
+    {
+        return WaitHelper.waitUntilClickableNoException( getDriver(), by, timeout );
+    }
+
     /**
      * @param by
      * @return true if element is visible , otherwise return false.
