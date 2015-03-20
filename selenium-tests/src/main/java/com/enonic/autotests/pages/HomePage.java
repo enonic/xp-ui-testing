@@ -97,7 +97,11 @@ public class HomePage
 
     public ContentBrowsePanel openContentManagerApplication()
     {
-        waitUntilContentManagerLoaded();
+        if ( !waitUntilClickableNoException( By.xpath( CM_LINK ), Application.EXPLICIT_3 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "ContentManagerLink" ) );
+            throw new TestFrameworkException( "Content Manager link not clickable !" );
+        }
         contentManager.click();
         sleep( 1000 );
 
@@ -111,9 +115,11 @@ public class HomePage
 
     public UserBrowsePanel openUserManagerApplication()
     {
-        if ( waitUntilVisibleNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_3 ) )
+        if ( !waitUntilClickableNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_3 ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "userManagerLink" ) );
+            throw new TestFrameworkException( "Content Manager link not clickable!" );
+
         }
         userManager.click();
         boolean isFrameLoaded = waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_4 );
