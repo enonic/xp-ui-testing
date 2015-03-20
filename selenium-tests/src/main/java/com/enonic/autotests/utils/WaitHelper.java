@@ -83,6 +83,20 @@ public class WaitHelper
         }
     }
 
+    public static boolean waitUntilClickableNoException( WebDriver driver, By by, long timeout )
+    {
+        WebDriverWait wait = new WebDriverWait( driver, timeout );
+        try
+        {
+            wait.until( ExpectedConditions.elementToBeClickable( by ) );
+            return true;
+        }
+        catch ( Exception e )
+        {
+            return false;
+        }
+    }
+
     public static void waitUntilVisible( final WebDriver driver, final By by )
     {
         new WebDriverWait( driver, Application.IMPLICITLY_WAIT ).until( ExpectedConditions.visibilityOfElementLocated( by ) );
