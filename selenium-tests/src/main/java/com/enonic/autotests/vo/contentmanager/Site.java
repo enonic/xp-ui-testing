@@ -28,7 +28,7 @@ public class Site
     }
 
     public static class Builder
-        extends Content.Builder<Builder>
+        extends Content.Builder<Builder, Site>
     {
         private String moduleName;
 

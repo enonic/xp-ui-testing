@@ -77,7 +77,7 @@ public class Content
         return data;
     }
 
-    public static class Builder<B>
+    public static class Builder<BUILDER extends Builder, C extends Content>
     {
         private String name;
 
@@ -91,10 +91,10 @@ public class Content
 
         private List<ContentAclEntry> aclEntries;
 
-        public B name( String name )
+        public Builder<BUILDER, C> name( final String name )
         {
             this.name = name;
-            return (B) this;
+            return this;
         }
 
         Builder()
@@ -111,34 +111,34 @@ public class Content
             this.aclEntries = content.getAclEntries();
         }
 
-        public B displayName( String displayName )
+        public Builder<BUILDER, C> displayName( String displayName )
         {
             this.displayName = displayName;
-            return (B) this;
+            return this;
         }
 
-        public B aclEntries( List<ContentAclEntry> aclEntries )
+        public Builder<BUILDER, C> aclEntries( List<ContentAclEntry> aclEntries )
         {
             this.aclEntries = aclEntries;
-            return (B) this;
+            return this;
         }
 
-        public B parent( ContentPath contentPath )
+        public Builder<BUILDER, C> parent( ContentPath contentPath )
         {
             this.parent = contentPath;
-            return (B) this;
+            return this;
         }
 
-        public B contentType( String contentTypeName )
+        public Builder<BUILDER, C> contentType( String contentTypeName )
         {
             this.contentTypeName = contentTypeName;
-            return (B) this;
+            return this;
         }
 
-        public B contentType( ContentTypeName contentTypeName )
+        public Builder<BUILDER, C> contentType( ContentTypeName contentTypeName )
         {
             this.contentTypeName = contentTypeName.toString();
-            return (B) this;
+            return this;
         }
 
         public Builder data( final PropertyTree value )

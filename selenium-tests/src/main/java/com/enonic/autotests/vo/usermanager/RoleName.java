@@ -4,7 +4,7 @@ package com.enonic.autotests.vo.usermanager;
 public enum RoleName
 {
 
-    CMS_ADMIN( "cms.admin" ), ADMIN_CONSOLE( "system.admin.login" );
+    CMS_ADMIN( "cms.admin" ), ADMIN_CONSOLE( "system.admin.login" ), CM_APP( "cms.cm.app" );
 
     private String role;
 

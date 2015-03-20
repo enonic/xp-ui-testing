@@ -2,14 +2,21 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.exceptions.AuthenticationException
 import com.enonic.autotests.pages.HomePage
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.ChangeUserPasswordDialog
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
+import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
+import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
+import com.enonic.xp.content.ContentPath
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -34,7 +41,7 @@ class LoginUserSpec
     private String USER_STORE_PATH = "/user-store" + randomInt;
 
     @Shared
-    private String USER_NAME = "test-login-user";
+    private String USER_NAME = "testloginuser";//NameHelper.uniqueName( "user" );
 
     @Shared
     User user
@@ -53,7 +60,7 @@ class LoginUserSpec
         userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
 
         and: "start adding a new user"
-        String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CMS_ADMIN.getValue()];
+        String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CM_APP.getValue()];
         user = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( USER_PASSWORD ).roles(
             roles.toList() ).build();
 
@@ -69,6 +76,33 @@ class LoginUserSpec
         userBrowsePanel.exists( user.getDisplayName(), true );
     }
 
+    def "GIVEN  name of an existing Content and wizard closing WHEN No is chosen THEN Content is listed in BrowsePanel with it's original name"()
+    {
+        given:
+        ContentAclEntry entry = new ContentAclEntry();
+        entry.setPrincipalName( USER_NAME )
+        entry.setPermissionSuite( PermissionSuite.CAN_READ );
+        List<ContentAclEntry> aclEntries = new ArrayList<>()
+        aclEntries.add( entry );
+        Content content = Content.builder().
+            name( NameHelper.uniqueName( "folder" ) ).
+            displayName( "folder" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
+            aclEntries( aclEntries ).
+            build();
+
+        go "admin"
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+
+
+        when: "new content with permissions CAN_READ for user  saved"
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
+            typeData( content ).save().close( content.getDisplayName() );
+
+        then: "content listed in the grid"
+        contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
+    }
 
     def "WHEN new created user logged in THEN home page with only one application(CM) loaded "()
     {
@@ -83,6 +117,20 @@ class LoginUserSpec
         home.isLoaded();
         and:
         home.isContentManagerDisplayed();
+
+    }
+
+    def "WHEN new created user logged and opened a CM app THEN only one content should be present in the grid "()
+    {
+        when:
+        go "admin"
+        User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
+        getTestSession().setUser( user );
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        TestUtils.saveScreenshot( getSession(), "logged_cm" );
+
+        then:
+        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == 1
 
     }
 
@@ -106,8 +154,6 @@ class LoginUserSpec
         dialog.isCancelButtonDisplayed();
         and:
         dialog.isChangeButtonDisplayed();
-        //and: "change button should be disabled"
-        //!dialog.isChangeButtonEnabled();
 
     }
 

@@ -36,7 +36,7 @@ public class PageTemplate
     }
 
     public static class Builder
-        extends Content.Builder<Builder>
+        extends Content.Builder<Builder, PageTemplate>
     {
         private List<String> supports;
 

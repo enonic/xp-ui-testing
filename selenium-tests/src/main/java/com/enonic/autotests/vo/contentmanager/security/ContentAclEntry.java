@@ -6,6 +6,8 @@ import java.util.List;
 
 public class ContentAclEntry
 {
+    private PermissionSuite suite;
+
     private String principalName;
 
     private List<String> permissions = new ArrayList<>();
@@ -15,6 +17,15 @@ public class ContentAclEntry
         return this.permissions;
     }
 
+    public void setPermissionSuite( PermissionSuite suite )
+    {
+        this.suite = suite;
+    }
+
+    public PermissionSuite getPermissionSuite()
+    {
+        return this.suite;
+    }
 
     public void setPermissions( final List<String> permissions )
     {
