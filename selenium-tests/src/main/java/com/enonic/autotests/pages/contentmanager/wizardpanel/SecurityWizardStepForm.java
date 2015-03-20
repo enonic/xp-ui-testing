@@ -10,6 +10,8 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.WizardStepForm;
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class SecurityWizardStepForm
     extends WizardStepForm
 {
@@ -31,6 +33,7 @@ public class SecurityWizardStepForm
 
     public SecurityWizardStepForm editPermissions( List<ContentAclEntry> aclEntries )
     {
+        sleep( 1000 );
         editPermissionsButton.click();
         EditPermissionsDialog dialog = new EditPermissionsDialog( getSession() );
         dialog.waitForOpened().clickOnInheritCheckbox().updatePermissions( aclEntries );
