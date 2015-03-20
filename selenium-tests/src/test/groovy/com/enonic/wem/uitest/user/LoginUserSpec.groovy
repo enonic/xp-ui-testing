@@ -17,6 +17,7 @@ import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -52,7 +53,7 @@ class LoginUserSpec
     @Shared
     String NEW_USER_PASSWORD = "password1";
 
-
+    @Ignore
     def "setup: add a test user to the system user store"()
     {
         setup: "add a user"
@@ -76,6 +77,7 @@ class LoginUserSpec
         userBrowsePanel.exists( user.getDisplayName(), true );
     }
 
+    @Ignore
     def "GIVEN  name of an existing Content and wizard closing WHEN No is chosen THEN Content is listed in BrowsePanel with it's original name"()
     {
         given:
@@ -104,6 +106,7 @@ class LoginUserSpec
         contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
 
+    @Ignore
     def "WHEN new created user logged in THEN home page with only one application(CM) loaded "()
     {
         when:
@@ -120,6 +123,7 @@ class LoginUserSpec
 
     }
 
+    @Ignore
     def "WHEN new created user logged and opened a CM app THEN only one content should be present in the grid "()
     {
         when:
@@ -134,6 +138,7 @@ class LoginUserSpec
 
     }
 
+    @Ignore
     def "GIVEN opened user for edit WHEN 'change password' button pressed THEN modal dialog appears"()
     {
         given:
@@ -157,6 +162,7 @@ class LoginUserSpec
 
     }
 
+    @Ignore
     def "changing a password for existing user"()
     {
         given:
@@ -178,6 +184,7 @@ class LoginUserSpec
 
     }
 
+    @Ignore
     def "WHEN password changed for existing user THEN old password should not work for login"()
     {
         when:
@@ -191,6 +198,7 @@ class LoginUserSpec
         thrown( AuthenticationException )
     }
 
+    @Ignore
     def "WHEN user logged in with the new password THEN home page loaded"()
     {
         when:
