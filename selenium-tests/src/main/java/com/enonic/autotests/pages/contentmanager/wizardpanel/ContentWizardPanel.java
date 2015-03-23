@@ -178,6 +178,9 @@ public class ContentWizardPanel
 
         if ( content.getAclEntries() != null )
         {
+            String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SECURITY_LINK_TEXT );
+            findElements( By.xpath( securityTabXpath ) ).get( 0 ).click();
+            sleep( 300 );
             SecurityWizardStepForm securityWizardStepForm = new SecurityWizardStepForm( getSession() );
             securityWizardStepForm.editPermissions( content.getAclEntries() );
         }

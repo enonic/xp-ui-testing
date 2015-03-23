@@ -21,6 +21,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class WizardPanel<T>
     extends Application
 {
+    public static String TABS_NAVIGATOR_LINK = "//ul[contains(@id,'wizard.WizardStepNavigator')]";
+
+    public static String NAVIGATOR_TAB_ITEM_LINK = TABS_NAVIGATOR_LINK + "//li/span[@title='%s']";
+
+    public static final String SECURITY_LINK_TEXT = "Security";
 
     public static String APP_BAR_TAB_MENU = "//div[contains(@id,'api.app.bar.AppBarTabMenu')]";
 

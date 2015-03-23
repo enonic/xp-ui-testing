@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.WizardStepForm;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -34,9 +33,8 @@ public class SecurityWizardStepForm
 
     public SecurityWizardStepForm editPermissions( List<ContentAclEntry> aclEntries )
     {
-        sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "editPermButton" );
-        editPermissionsButton.click();
+        sleep( 300 );
+        findElements( By.xpath( CONTAINER_XPATH + EDIT_PERMISSION_BUTTON ) ).get( 0 ).click();
         EditPermissionsDialog dialog = new EditPermissionsDialog( getSession() );
         dialog.waitForOpened().clickOnInheritCheckbox().updatePermissions( aclEntries );
         return this;
