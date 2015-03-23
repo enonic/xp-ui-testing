@@ -15,8 +15,6 @@ import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.utils.TestUtils;
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
-
 /**
  * Page Object for 'Home' page. Version 5.0
  */
@@ -103,7 +101,14 @@ public class HomePage
             throw new TestFrameworkException( "Content Manager link not clickable !" );
         }
         contentManager.click();
-        sleep( 1000 );
+        boolean isFrameLoaded =
+            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.CONTENT_MANAGER_FRAME_XPATH ), Application.EXPLICIT_4 );
+        if ( !isFrameLoaded )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-app" ) );
+            throw new TestFrameworkException( "CM app not loaded or is loading too long!" );
+
+        }
 
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
