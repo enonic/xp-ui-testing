@@ -102,6 +102,8 @@ class LoginUserSpec
             typeData( content ).save().close( content.getDisplayName() );
 
         then: "content listed in the grid"
+        //TODO remove it when app bug#  XP-204 will be fixed!
+        contentBrowsePanel.refreshPanelInBrowser();
         TestUtils.saveScreenshot( getSession(), "login-content" );
         contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
