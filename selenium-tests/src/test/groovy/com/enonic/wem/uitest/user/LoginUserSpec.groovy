@@ -77,7 +77,7 @@ class LoginUserSpec
     }
 
 
-    def "GIVEN  name of an existing Content and wizard closing WHEN No is chosen THEN Content is listed in BrowsePanel with it's original name"()
+    def "WHEN new content with permissions for just created user added THEN Content is listed in BrowsePanel"()
     {
         given:
         ContentAclEntry entry = new ContentAclEntry();
@@ -86,7 +86,7 @@ class LoginUserSpec
         List<ContentAclEntry> aclEntries = new ArrayList<>()
         aclEntries.add( entry );
         Content content = Content.builder().
-            name( NameHelper.uniqueName( "folder" ) ).
+            name( NameHelper.uniqueName( "folder-login" ) ).
             displayName( "folder" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.folder() ).
@@ -104,7 +104,30 @@ class LoginUserSpec
         then: "content listed in the grid"
         //TODO remove it when app bug#  XP-204 will be fixed!
         contentBrowsePanel.refreshPanelInBrowser();
-        TestUtils.saveScreenshot( getSession(), "login-content" );
+        TestUtils.saveScreenshot( getSession(), "login-content1" );
+        contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
+    }
+
+    def "WHEN new content without any permissions for just created user added THEN Content is listed in BrowsePanel"()
+    {
+        given:
+        Content content = Content.builder().
+            name( NameHelper.uniqueName( "folder-login" ) ).
+            displayName( "folder" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.folder() ).
+            build();
+
+        go "admin"
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+
+
+        when: "new content with permissions CAN_READ for user  saved"
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
+            typeData( content ).save().close( content.getDisplayName() );
+
+        then: "content listed in the grid"
+        TestUtils.saveScreenshot( getSession(), "login-content2" );
         contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
 
