@@ -102,7 +102,7 @@ class LoginUserSpec
             typeData( content ).save().close( content.getDisplayName() );
 
         then: "content listed in the grid"
-        TestUtils( getSession(), "login-content" )
+        TestUtils.saveScreenshot( getSession(), "login-content" );
         contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
 
