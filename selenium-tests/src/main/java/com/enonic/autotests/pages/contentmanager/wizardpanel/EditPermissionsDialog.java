@@ -21,7 +21,7 @@ public class EditPermissionsDialog
     private final String CONTAINER_XPATH = "//div[contains(@id,'app.wizard.EditPermissionsDialog')]";
 
     private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]/label";
-//input[@type='checkbox']";
+
 
     private final String OPTIONS_FILTER_INPUT = CONTAINER_XPATH + "//input[contains(@id,'combobox.ComboBoxOptionFilterInput')]";
 
