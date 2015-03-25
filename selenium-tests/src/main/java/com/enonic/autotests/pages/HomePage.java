@@ -79,14 +79,14 @@ public class HomePage
     boolean isLoaded()
     {
         boolean result =
-            waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_3 );
+            waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_NORMAL );
         return result;
     }
 
 
     public void waitUntilContentManagerLoaded()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( CM_LINK ), Application.EXPLICIT_3 ) )
+        if ( !waitUntilVisibleNoException( By.xpath( CM_LINK ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm_link" ) );
             throw new TestFrameworkException( "Content Manager link not present on the home Page!!" );
@@ -95,14 +95,14 @@ public class HomePage
 
     public ContentBrowsePanel openContentManagerApplication()
     {
-        if ( !waitUntilClickableNoException( By.xpath( CM_LINK ), Application.EXPLICIT_3 ) )
+        if ( !waitUntilClickableNoException( By.xpath( CM_LINK ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "ContentManagerLink" ) );
             throw new TestFrameworkException( "Content Manager link not clickable !" );
         }
         contentManager.click();
         boolean isFrameLoaded =
-            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.CONTENT_MANAGER_FRAME_XPATH ), Application.EXPLICIT_4 );
+            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.CONTENT_MANAGER_FRAME_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isFrameLoaded )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-app" ) );
@@ -120,14 +120,15 @@ public class HomePage
 
     public UserBrowsePanel openUserManagerApplication()
     {
-        if ( !waitUntilClickableNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_3 ) )
+        if ( !waitUntilClickableNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "userManagerLink" ) );
             throw new TestFrameworkException( "Content Manager link not clickable!" );
 
         }
         userManager.click();
-        boolean isFrameLoaded = waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_4 );
+        boolean isFrameLoaded =
+            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isFrameLoaded )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "user-app" ) );

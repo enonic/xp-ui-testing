@@ -113,7 +113,7 @@ public class TestUtils
     {
         final long startTime = System.currentTimeMillis();
         Wait<WebDriver> wait =
-            new FluentWait<WebDriver>( driver ).withTimeout( Application.IMPLICITLY_WAIT, TimeUnit.MILLISECONDS ).pollingEvery( 500,
+            new FluentWait<WebDriver>( driver ).withTimeout( Application.EXPLICIT_NORMAL, TimeUnit.MILLISECONDS ).pollingEvery( 500,
                                                                                                                                 TimeUnit.MILLISECONDS );
         // .ignoring( StaleElementReferenceException.class );
         wait.until( new ExpectedCondition<Boolean>()

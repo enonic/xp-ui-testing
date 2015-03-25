@@ -71,7 +71,7 @@ public abstract class BrowsePanel
 
     public abstract BrowsePanel goToAppHome();
 
-    public abstract WizardPanel clickToolbarEdit();
+    public abstract <T extends WizardPanel> T clickToolbarEdit();
 
     /**
      * clicks on 'expand' icon and expands a folder.
@@ -412,7 +412,7 @@ public abstract class BrowsePanel
         sleep( 1000 );
     }
 
-    public boolean doScrollAndFindGridItem( String gridItemName, int timeout )
+    public boolean doScrollAndFindGridItem( String gridItemName, long timeout )
     {
         String contentNameXpath = String.format( DIV_NAMES_VIEW, gridItemName );
         boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
@@ -450,7 +450,7 @@ public abstract class BrowsePanel
 
     public boolean doScrollAndFindGridItem( String gridItemName )
     {
-        return doScrollAndFindGridItem( gridItemName, Application.DEFAULT_IMPLICITLY_WAIT );
+        return doScrollAndFindGridItem( gridItemName, Application.EXPLICIT_QUICK );
     }
 
     /**

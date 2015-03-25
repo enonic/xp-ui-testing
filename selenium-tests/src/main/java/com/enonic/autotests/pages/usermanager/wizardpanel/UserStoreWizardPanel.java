@@ -102,7 +102,7 @@ public class UserStoreWizardPanel
     @Override
     public boolean isEnabledSaveButton()
     {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON ), Application.IMPLICITLY_WAIT );
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON ), Application.EXPLICIT_NORMAL );
     }
 
     @Override
@@ -115,7 +115,7 @@ public class UserStoreWizardPanel
     @Override
     public UserStoreWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_USER_STORE_WIZARD_PANEL ), Application.EXPLICIT_4 );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_USER_STORE_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         findElements( By.xpath( DIV_USER_STORE_WIZARD_PANEL ) );
         if ( !result )
         {

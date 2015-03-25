@@ -98,7 +98,7 @@ public class SaveBeforeCloseDialog
      */
     public boolean waitForPresent()
     {
-        return waitForPresent( Application.DEFAULT_IMPLICITLY_WAIT );
+        return waitForPresent( Application.EXPLICIT_NORMAL );
     }
 
 }

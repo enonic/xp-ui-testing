@@ -97,7 +97,7 @@ public class GroupWizardPanel
     @Override
     public WizardPanel<Group> waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_ROLE_WIZARD_PANEL ), Application.EXPLICIT_4 );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_ROLE_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         findElements( By.xpath( DIV_ROLE_WIZARD_PANEL ) );
         if ( !result )
         {

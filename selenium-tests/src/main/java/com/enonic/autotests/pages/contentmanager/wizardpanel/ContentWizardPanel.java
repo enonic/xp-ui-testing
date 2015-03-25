@@ -181,7 +181,7 @@ public class ContentWizardPanel
 
             SecurityWizardStepForm securityWizardStepForm = clickOnSecurityTabLink();
 
-            securityWizardStepForm.clickOnEditPermissionsButton().clickOnInheritCheckbox().updatePermissions( content.getAclEntries() );
+            securityWizardStepForm.clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions( content.getAclEntries() );
         }
 
         return this;
@@ -238,7 +238,7 @@ public class ContentWizardPanel
 
     public boolean isEnabledSaveButton()
     {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.IMPLICITLY_WAIT );
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
     @Override
@@ -251,7 +251,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_4 );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
             throw new TestFrameworkException( "ContentWizard was not showed!" );

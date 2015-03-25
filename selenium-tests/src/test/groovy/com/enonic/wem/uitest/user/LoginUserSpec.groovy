@@ -80,9 +80,7 @@ class LoginUserSpec
     def "WHEN new content with permissions for just created user added THEN Content is listed in BrowsePanel"()
     {
         given:
-        ContentAclEntry entry = new ContentAclEntry();
-        entry.setPrincipalName( USER_NAME )
-        entry.setPermissionSuite( PermissionSuite.CAN_READ );
+        ContentAclEntry entry = ContentAclEntry.builder().principalName( USER_NAME ).suite( PermissionSuite.CAN_READ ).build();
         List<ContentAclEntry> aclEntries = new ArrayList<>()
         aclEntries.add( entry );
         Content content = Content.builder().

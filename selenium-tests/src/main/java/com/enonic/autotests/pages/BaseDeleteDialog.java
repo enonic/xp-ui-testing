@@ -75,12 +75,12 @@ public abstract class BaseDeleteDialog
      */
     public boolean waitForOpened()
     {
-        return waitUntilVisibleNoException( By.xpath( getTitleXpath() ), Application.IMPLICITLY_WAIT );
+        return waitUntilVisibleNoException( By.xpath( getTitleXpath() ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean waitForClosed()
     {
-        return waitElementNotVisible( By.xpath( getTitleXpath() ), Application.IMPLICITLY_WAIT );
+        return waitElementNotVisible( By.xpath( getTitleXpath() ), Application.EXPLICIT_NORMAL );
     }
 
     public abstract String getTitleXpath();

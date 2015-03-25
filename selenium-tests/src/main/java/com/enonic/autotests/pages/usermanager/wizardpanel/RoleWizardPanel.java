@@ -96,7 +96,7 @@ public class RoleWizardPanel
     @Override
     public RoleWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_ROLE_WIZARD_PANEL ), Application.EXPLICIT_4 );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_ROLE_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
             throw new TestFrameworkException( "RoleWizard was not opened!" );

@@ -29,14 +29,14 @@ public class WaitHelper
      */
     public static boolean waitAndFind( final By by, final WebDriver driver )
     {
-        return waitAndFind( by, driver, Application.IMPLICITLY_WAIT );
+        return waitAndFind( by, driver, Application.EXPLICIT_NORMAL );
     }
 
     public static boolean waitAndFind( final By by, final WebDriver driver, long timeout )
     {
         driver.manage().timeouts().implicitlyWait( timeout, TimeUnit.SECONDS );
         List<WebElement> elements = driver.findElements( by );
-        driver.manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
+        driver.manage().timeouts().implicitlyWait( Application.EXPLICIT_NORMAL, TimeUnit.SECONDS );
         return ( ( elements.size() > 0 ) );
     }
 
@@ -99,12 +99,12 @@ public class WaitHelper
 
     public static void waitUntilVisible( final WebDriver driver, final By by )
     {
-        new WebDriverWait( driver, Application.IMPLICITLY_WAIT ).until( ExpectedConditions.visibilityOfElementLocated( by ) );
+        new WebDriverWait( driver, Application.EXPLICIT_NORMAL ).until( ExpectedConditions.visibilityOfElementLocated( by ) );
     }
 
     public static void waitUntilTitleVisible( final WebDriver driver, final String title )
     {
-        ( new WebDriverWait( driver, Application.IMPLICITLY_WAIT ) ).until( new ExpectedCondition<Boolean>()
+        ( new WebDriverWait( driver, Application.EXPLICIT_NORMAL ) ).until( new ExpectedCondition<Boolean>()
         {
             public Boolean apply( WebDriver d )
             {
@@ -126,7 +126,7 @@ public class WaitHelper
     {
         try
         {
-            new WebDriverWait( testSession.getDriver(), Application.IMPLICITLY_WAIT ).until(
+            new WebDriverWait( testSession.getDriver(), Application.EXPLICIT_NORMAL ).until(
                 ExpectedConditions.elementToBeClickable( by ) );
         }
         catch ( TimeoutException ex )

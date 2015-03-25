@@ -1,7 +1,9 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -20,7 +22,9 @@ public class EditPermissionsDialog
 {
     private final String CONTAINER_XPATH = "//div[contains(@id,'app.wizard.EditPermissionsDialog')]";
 
-    private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]/label";
+    private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]";
+
+    private final String INHERIT_PERMISSIONS_CHECKBOX_LABEL = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]/label";
 
 
     private final String OPTIONS_FILTER_INPUT = CONTAINER_XPATH + "//input[contains(@id,'combobox.ComboBoxOptionFilterInput')]";
@@ -32,7 +36,7 @@ public class EditPermissionsDialog
     private String ACL_ENTRY_ROW =
         "//div[contains(@class,'access-control-entry') and descendant::p[@class='sub-name' and contains(@title,'%s')]]";
 
-    @FindBy(xpath = INHERIT_PERMISSIONS_CHECKBOX)
+    @FindBy(xpath = INHERIT_PERMISSIONS_CHECKBOX_LABEL)
     WebElement inheritPermissionsCheckbox;
 
     public EditPermissionsDialog( TestSession session )
@@ -42,21 +46,33 @@ public class EditPermissionsDialog
 
     public EditPermissionsDialog waitForOpened()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_XPATH ), EXPLICIT_2 ) )
+        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_XPATH ), EXPLICIT_NORMAL ) )
         {
             throw new TestFrameworkException( "Edit Permissions Dialog was not opened!" );
         }
         return this;
     }
 
-    public EditPermissionsDialog clickOnInheritCheckbox()
+    public boolean isOpened()
+    {
+        return findElements( By.xpath( CONTAINER_XPATH ) ).size() > 0;
+    }
+
+    public EditPermissionsDialog uncheckInheritCheckbox()
     {
         inheritPermissionsCheckbox.click();
-        if ( !waitUntilVisibleNoException( By.xpath( OPTIONS_FILTER_INPUT ), Application.EXPLICIT_2 ) )
+        //setCheckedForInheritCheckbox( false );
+        if ( !waitUntilVisibleNoException( By.xpath( OPTIONS_FILTER_INPUT ), Application.EXPLICIT_NORMAL ) )
         {
             throw new TestFrameworkException( "options filter input not found!" );
         }
         return this;
+    }
+
+    public boolean isOptionsFilterDisplayed()
+    {
+
+        return findElements( By.xpath( OPTIONS_FILTER_INPUT ) ).size() > 0;
     }
 
     public EditPermissionsDialog updatePermissions( List<ContentAclEntry> entries )
@@ -87,7 +103,7 @@ public class EditPermissionsDialog
     {
         findElement( By.xpath( OPTIONS_FILTER_INPUT ) ).sendKeys( principalName );
         By principalBy = By.xpath( String.format( PRINCIPAL_PATH, principalName ) );
-        if ( !waitUntilVisibleNoException( principalBy, EXPLICIT_2 ) )
+        if ( !waitUntilVisibleNoException( principalBy, EXPLICIT_QUICK ) )
         {
             throw new TestFrameworkException( "principal was not found! : " + principalName );
         }
@@ -101,11 +117,77 @@ public class EditPermissionsDialog
             0 ).click();
         By tabMenuItemBy = By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) +
                                          String.format( "//li[contains(@id,'TabMenuItem')]/span[@title='%s']", suite.getValue() ) );
-        if ( !waitUntilVisibleNoException( tabMenuItemBy, EXPLICIT_2 ) )
+        if ( !waitUntilVisibleNoException( tabMenuItemBy, EXPLICIT_QUICK ) )
         {
             throw new TestFrameworkException( suite.getValue() + "  was not found in the tab menu!" );
         }
         findElement( tabMenuItemBy ).click();
         sleep( 500 );
+    }
+
+    public boolean isInheritPermissionsCheckboxDisplayed()
+    {
+        return inheritPermissionsCheckbox.isDisplayed();
+    }
+
+    public boolean isInheritCheckBoxChecked()
+    {
+        WebElement checkbox = findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]" ) ).get( 0 );
+        return isCheckBoxChecked( checkbox.getAttribute( "id" ) );
+    }
+
+    public EditPermissionsDialog setCheckedForInheritCheckbox( boolean value )
+    {
+        boolean isChecked = isInheritCheckBoxChecked();
+        if ( ( !isChecked && value ) || ( isChecked && !value ) )
+        {
+            inheritPermissionsCheckbox.click();
+        }
+        //String id = findElements( By.xpath( INHERIT_PERMISSIONS_CHECKBOX ) ).get( 0 ).getAttribute( "id" );
+        //setChecked( id, value );
+        return this;
+    }
+
+    public List<String> getPrincipalNames()
+    {
+        List<WebElement> elements =
+            findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']" ) );
+        return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    public List<ContentAclEntry> getAclEntries()
+    {
+        ContentAclEntry.Builder builder;
+        List<ContentAclEntry> entries = new ArrayList<>();
+        List<WebElement> principals =
+            findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']" ) );
+
+        List<String> principalsStrings = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
+
+        List<WebElement> suites = findElements( By.xpath(
+            "//div[contains(@id,'app.wizard.EditPermissionsDialog')]//div[contains(@id,'api.app.NamesView')]/following::div//span[@class='label']" ) );
+        List<String> suitesStrings =
+            suites.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+        for ( int i = 0; i < principalsStrings.size(); i++ )
+        {
+            builder = ContentAclEntry.builder();
+            builder.principalName( principalsStrings.get( i ) );
+            builder.suite( getSuite( suitesStrings.get( i ) ) );
+            entries.add( builder.build() );
+        }
+        return entries;
+    }
+
+    private PermissionSuite getSuite( String suiteString )
+    {
+        switch ( suiteString )
+        {
+            case "Full Access":
+                return PermissionSuite.FULL_ACCESS;
+            case "Can Read":
+                return PermissionSuite.CAN_READ;
+            default:
+                return PermissionSuite.CUSTOM;
+        }
     }
 }

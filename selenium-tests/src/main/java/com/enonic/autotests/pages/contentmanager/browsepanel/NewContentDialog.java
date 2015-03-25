@@ -157,7 +157,7 @@ public class NewContentDialog
     public ContentWizardPanel selectContentType( String contentTypeName )
     {
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
-        boolean isContentNamePresent = waitElementExist( ctypeXpath, Application.EXPLICIT_4 );
+        boolean isContentNamePresent = waitElementExist( ctypeXpath, Application.EXPLICIT_NORMAL );
         if ( !isContentNamePresent )
         {
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
@@ -191,7 +191,7 @@ public class NewContentDialog
      */
     public int getNumberContentTypesFromList()
     {
-        boolean isPresentList = waitUntilVisibleNoException( By.xpath( ALL_LIST_ITEMS ), Application.EXPLICIT_3 );
+        boolean isPresentList = waitUntilVisibleNoException( By.xpath( ALL_LIST_ITEMS ), Application.EXPLICIT_NORMAL );
         if ( !isPresentList )
         {
             getLogger().info( "list of content types is empty" );
@@ -201,7 +201,7 @@ public class NewContentDialog
 
     public int getNumberSitesFromList()
     {
-        boolean isPresentList = waitUntilVisibleNoException( By.xpath( ALL_LIST_ITEMS ), Application.EXPLICIT_3 );
+        boolean isPresentList = waitUntilVisibleNoException( By.xpath( ALL_LIST_ITEMS ), Application.EXPLICIT_NORMAL );
         if ( !isPresentList )
         {
             getLogger().info( "list of content types is empty" );

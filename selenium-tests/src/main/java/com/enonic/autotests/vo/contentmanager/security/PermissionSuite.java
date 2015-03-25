@@ -2,7 +2,7 @@ package com.enonic.autotests.vo.contentmanager.security;
 
 public enum PermissionSuite
 {
-    CAN_READ( "Can Read" ), CAN_WRITE( "Can Write" ), CAN_PUBLISH( "Can Publish" ), FULL_ACCESS( "Full Access" );
+    CAN_READ( "Can Read" ), CAN_WRITE( "Can Write" ), CAN_PUBLISH( "Can Publish" ), FULL_ACCESS( "Full Access" ), CUSTOM( "Custom..." );
 
     private PermissionSuite( String value )
     {

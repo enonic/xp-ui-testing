@@ -81,7 +81,7 @@ public abstract class Page
      */
     public boolean waitAndFind( final By by )
     {
-        return waitAndFind( by, Application.IMPLICITLY_WAIT );
+        return waitAndFind( by, Application.EXPLICIT_NORMAL );
     }
 
     /**
@@ -263,7 +263,7 @@ public abstract class Page
     {
         getLogger().info( "Get element by locator: " + locator.toString() );
         long startTime = System.currentTimeMillis();
-        getDriver().manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
+        getDriver().manage().timeouts().implicitlyWait( Application.EXPLICIT_QUICK, TimeUnit.SECONDS );
         boolean isFound = false;
         for ( int i = 0; i <= tries; i++ )
         {
@@ -291,7 +291,7 @@ public abstract class Page
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         getLogger().info( "Finished click after waiting for " + totalTime + " milliseconds." );
-        getDriver().manage().timeouts().implicitlyWait( Application.DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS );
+        getDriver().manage().timeouts().implicitlyWait( Application.EXPLICIT_QUICK, TimeUnit.SECONDS );
         return isFound;
     }
 
@@ -334,7 +334,7 @@ public abstract class Page
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         getLogger().info( "Finished click after waiting for " + totalTime + " milliseconds." );
-        getDriver().manage().timeouts().implicitlyWait( Application.IMPLICITLY_WAIT, TimeUnit.SECONDS );
+        getDriver().manage().timeouts().implicitlyWait( Application.EXPLICIT_NORMAL, TimeUnit.SECONDS );
         getLogger().info( "getDynamicElement is  null: " );
         return we;
     }

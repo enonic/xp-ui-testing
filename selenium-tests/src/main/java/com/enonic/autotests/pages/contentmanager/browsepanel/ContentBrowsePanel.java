@@ -163,7 +163,7 @@ public class ContentBrowsePanel
     {
         contentManagerButton.click();
         sleep( 1000 );
-        waitUntilPageLoaded( Application.IMPLICITLY_WAIT );
+        waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "gotoapphome" ) );
         return this;
     }
@@ -372,7 +372,7 @@ public class ContentBrowsePanel
         newButton.click();
         sleep( 500 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        boolean isLoaded = newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_3 );
+        boolean isLoaded = newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
             throw new TestFrameworkException( "Error during add content, NewContentDialog dialog was not showed!" );
@@ -385,7 +385,7 @@ public class ContentBrowsePanel
         sortButton.click();
         sleep( 500 );
         SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
-        sortContentDialog.waitForLoaded( Application.EXPLICIT_3 );
+        sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
 
         return sortContentDialog;
     }
@@ -518,7 +518,7 @@ public class ContentBrowsePanel
         openContextMenu( path );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_3 );
+        newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         return newContentDialog;
     }
 

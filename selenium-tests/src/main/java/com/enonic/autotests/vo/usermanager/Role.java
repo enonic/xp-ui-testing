@@ -3,6 +3,7 @@ package com.enonic.autotests.vo.usermanager;
 public class Role
     extends Principal
 {
+    private String name;
     public static Builder create( final Role role )
     {
         return new Builder( role );
@@ -16,6 +17,7 @@ public class Role
     public static class Builder
         extends Principal.Builder<Builder>
     {
+        private String name;
         private Builder()
         {
             super();

@@ -70,7 +70,7 @@ public class ContentBrowseFilterPanel
     public List<String> getAllContentTypesFilterEntries()
     {
         boolean result =
-            waitUntilVisibleNoException( By.xpath( "//input[@type='checkbox']/label(contains(.,'Folder'))" ), Application.EXPLICIT_3 );
+            waitUntilVisibleNoException( By.xpath( "//input[@type='checkbox']/label(contains(.,'Folder'))" ), Application.EXPLICIT_NORMAL );
         // we should wait it because, when BrowsePanel not loaded, all labels on FilterPanel are in lower case.
         if ( !result )
         {
@@ -165,7 +165,7 @@ public class ContentBrowseFilterPanel
      */
     public void clickOnCleanFilter()
     {
-        boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.ONE_SEC );
+        boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
         if ( !isVisible )
         {
             getLogger().info( "The link with name 'Clear Filter' was not found!" );
@@ -193,7 +193,7 @@ public class ContentBrowseFilterPanel
      */
     public boolean waitForClearFilterLinkVisible()
     {
-        return waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.ONE_SEC );
+        return waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
     }
 
     /**
@@ -201,7 +201,7 @@ public class ContentBrowseFilterPanel
      */
     public boolean waitForClearFilterLinkNotvisible()
     {
-        return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.ONE_SEC );
+        return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
     }
 
     /**

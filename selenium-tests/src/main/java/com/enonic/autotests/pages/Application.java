@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -9,24 +10,18 @@ import com.enonic.autotests.utils.WaitHelper;
 public class Application
     extends Page
 {
+    public String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
     public static final int NUMBER_TRIES_TO_CLOSE = 2;
 
-    public static final int NUMBER_TRIES_TO_FIND_ELEMENT = 2;
-
     public static final long PAGE_LOAD_TIMEOUT = 15l;
 
-    public static final long ONE_SEC = 1l;
+    public static final long EXPLICIT_LONG = 4l;
 
-    public static final long IMPLICITLY_WAIT = 4l;
+    public static final long EXPLICIT_NORMAL = 3;
 
-    public static final long EXPLICIT_4 = 4l;
+    public static final long EXPLICIT_QUICK = 2;
 
-    public static final long EXPLICIT_3 = 3l;
-
-    public static final long EXPLICIT_2 = 2l;
-
-    public static final int DEFAULT_IMPLICITLY_WAIT = 2;
 
     public static final String CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";
 
@@ -47,7 +42,7 @@ public class Application
 
     public void waitsForSpinnerNotVisible()
     {
-        waitsForSpinnerNotVisible( IMPLICITLY_WAIT );
+        waitsForSpinnerNotVisible( EXPLICIT_NORMAL );
     }
 
     public void waitsForSpinnerNotVisible( long timeout )
@@ -55,7 +50,7 @@ public class Application
         boolean result = waitsElementNotVisible( By.xpath( SPINNER_XPATH ), timeout );
         if ( !result )
         {
-            throw new TestFrameworkException( "after " + IMPLICITLY_WAIT + " second, spinner still present" );
+            throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
         }
     }
 
@@ -64,5 +59,22 @@ public class Application
         return WaitHelper.waitsElementNotVisible( getDriver(), by, timeout );
     }
 
+    public Application setChecked( String checkboxId, boolean value )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+
+        String script = String.format( ELEMENT_BY_ID + ".setChecked(arguments[0])", checkboxId );
+        executor.executeScript( script, value );
+        return this;
+    }
+
+    public boolean isCheckBoxChecked( String checkboxId )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+
+        String script = String.format( ELEMENT_BY_ID + ".isChecked()", checkboxId );
+        return (Boolean) executor.executeScript( script );
+
+    }
 
 }

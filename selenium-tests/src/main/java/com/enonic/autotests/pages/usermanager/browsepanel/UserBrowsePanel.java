@@ -108,7 +108,7 @@ public class UserBrowsePanel
     {
         userManagerButton.click();
         sleep( 1000 );
-        waitUntilPageLoaded( Application.IMPLICITLY_WAIT );
+        waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         return this;
     }
 

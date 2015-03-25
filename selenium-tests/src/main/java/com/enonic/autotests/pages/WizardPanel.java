@@ -191,7 +191,7 @@ public abstract class WizardPanel<T>
 
     public String getAppBarTabMenuTitle()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ), Application.EXPLICIT_2 );
+        boolean result = waitUntilVisibleNoException( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ), Application.EXPLICIT_NORMAL );
         if ( result )
         {
             return findElement( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).getAttribute( "title" );
