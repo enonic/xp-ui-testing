@@ -48,7 +48,7 @@ public class EditPermissionsDialog
 
     public EditPermissionsDialog waitForOpened()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_XPATH ), EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_XPATH ), EXPLICIT_LONG ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-perm-dialog" ) );
             throw new TestFrameworkException( "Edit Permissions Dialog was not opened!" );
