@@ -28,7 +28,8 @@ public class SecurityWizardStepForm
 
     public EditPermissionsDialog clickOnEditPermissionsButton()
     {
-        findElements( By.xpath( CONTAINER_XPATH + EDIT_PERMISSION_BUTTON ) ).get( 0 ).click();
+        //findElements( By.xpath( CONTAINER_XPATH + EDIT_PERMISSION_BUTTON ) ).get( 0 ).click();
+        editPermissionsButton.click();
         EditPermissionsDialog modalDialog = new EditPermissionsDialog( getSession() );
         modalDialog.waitForOpened();
         return modalDialog;
