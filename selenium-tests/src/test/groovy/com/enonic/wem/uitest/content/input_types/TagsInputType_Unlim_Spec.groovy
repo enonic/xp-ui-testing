@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -117,6 +118,7 @@ class TagsInputType_Unlim_Spec
         filterPanel.typeSearchText( tagContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "tags-unlim_bug" )
 
         then: "one tag with correct text present on the page"
         formViewPanel.getNumberOfTags() == 6;

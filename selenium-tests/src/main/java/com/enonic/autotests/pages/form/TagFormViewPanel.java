@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
@@ -96,9 +97,9 @@ public class TagFormViewPanel
     public List<String> getTagsText()
     {
         sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "tags-text" );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "tags-text" ) );
         List<WebElement> spans = findElements( By.xpath( LI_TAG_XPATH + "/span" ) );
-        return spans.stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return spans.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public TagFormViewPanel removeLastTag()

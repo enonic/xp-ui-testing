@@ -97,6 +97,24 @@ class ContentWizard_EditPermissionsDialog_Spec
         modalDialog.getAclEntries().equals( getExpected() );
     }
 
+    def "GIVEN 'Edit Permissions' opened WHEN new role added THEN new ACL entry with new role and 'Can Read' operations appears"()
+    {
+        given:
+        filterPanel.typeSearchText( CONTENT_NAME )
+        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+        ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
+
+        when: "new acl-entry added"
+        modalDialog.setCheckedForInheritCheckbox( false ).addPermission( entry );
+
+        then:
+        List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
+        aclEntries.size() == 3;
+
+
+    }
+
     private List<ContentAclEntry> getExpected()
     {
         List<ContentAclEntry> entries = new ArrayList<>();

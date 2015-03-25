@@ -12,6 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry;
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite;
 
@@ -48,6 +50,7 @@ public class EditPermissionsDialog
     {
         if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_XPATH ), EXPLICIT_NORMAL ) )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-perm-dialog" ) );
             throw new TestFrameworkException( "Edit Permissions Dialog was not opened!" );
         }
         return this;
@@ -77,15 +80,18 @@ public class EditPermissionsDialog
 
     public EditPermissionsDialog updatePermissions( List<ContentAclEntry> entries )
     {
-        entries.stream().forEach( e -> updatePermission( e ) );
+        entries.stream().forEach( e -> addPermission( e ) );
         return this;
     }
 
-    public EditPermissionsDialog updatePermission( ContentAclEntry entry )
+    public EditPermissionsDialog addPermission( ContentAclEntry entry )
     {
         selectPrincipal( entry.getPrincipalName() );
-        selectOperations( entry.getPrincipalName(), entry.getPermissionSuite() );
-        clickOnApply();
+        if ( entry.getPermissionSuite() != null )
+        {
+            selectOperations( entry.getPrincipalName(), entry.getPermissionSuite() );
+        }//when operations not specified, CAN_READ will be applied by default
+        // clickOnApply();
         return this;
     }
 
@@ -159,13 +165,13 @@ public class EditPermissionsDialog
     {
         ContentAclEntry.Builder builder;
         List<ContentAclEntry> entries = new ArrayList<>();
-        List<WebElement> principals =
-            findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']" ) );
+        List<WebElement> principals = findElements( By.xpath(
+            CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']" ) );
 
         List<String> principalsStrings = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
 
         List<WebElement> suites = findElements( By.xpath(
-            "//div[contains(@id,'app.wizard.EditPermissionsDialog')]//div[contains(@id,'api.app.NamesView')]/following::div//span[@class='label']" ) );
+            CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'TabMenuButton')]//span[@class='label']" ) );
         List<String> suitesStrings =
             suites.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
         for ( int i = 0; i < principalsStrings.size(); i++ )

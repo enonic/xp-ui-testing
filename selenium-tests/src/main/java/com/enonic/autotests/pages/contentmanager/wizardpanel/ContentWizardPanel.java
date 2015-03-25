@@ -181,7 +181,8 @@ public class ContentWizardPanel
 
             SecurityWizardStepForm securityWizardStepForm = clickOnSecurityTabLink();
 
-            securityWizardStepForm.clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions( content.getAclEntries() );
+            securityWizardStepForm.clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
+                content.getAclEntries() ).clickOnApply();
         }
 
         return this;
