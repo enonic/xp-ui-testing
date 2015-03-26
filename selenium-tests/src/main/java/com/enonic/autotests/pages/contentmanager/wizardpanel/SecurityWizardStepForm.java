@@ -13,7 +13,7 @@ public class SecurityWizardStepForm
     private final String CONTAINER_XPATH = "//div[contains(@id,'SecurityWizardStepForm')]";
 
     private final String EDIT_PERMISSION_BUTTON =
-        "//button[contains(@id,'api.ui.button.Button') and child::span[text()='Edit Permissions']]";
+        "//button[contains(@class,'edit-permissions') and child::span[text()='Edit Permissions']]";
 
 
     @FindBy(xpath = CONTAINER_XPATH + EDIT_PERMISSION_BUTTON)
