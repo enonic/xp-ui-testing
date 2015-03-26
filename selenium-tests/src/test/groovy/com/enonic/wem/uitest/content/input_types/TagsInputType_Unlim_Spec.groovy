@@ -59,10 +59,9 @@ class TagsInputType_Unlim_Spec
                 tagContent.getContentTypeName() );
 
 
-        when: "type a data and 'save' and open for edit new created content"
+        when: "type a data and 'save' and open for edit the new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+        openContentForEdit( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"
@@ -115,8 +114,8 @@ class TagsInputType_Unlim_Spec
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+
+        openContentForEdit( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "tags-unlim_bug" )
 
@@ -127,6 +126,12 @@ class TagsInputType_Unlim_Spec
         formViewPanel.getTagsText().containsAll( tags.toList() );
     }
 
+    private void openContentForEdit( Content tagContent )
+    {
+        contentBrowsePanel.clickOnClearSelection();
+        filterPanel.typeSearchText( tagContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+    }
 
     private PropertyTree buildData( int numberOfTags )
     {
