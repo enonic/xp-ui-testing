@@ -180,7 +180,7 @@ public class ContentWizardPanel
         {
 
             SecurityWizardStepForm securityWizardStepForm = clickOnSecurityTabLink();
-
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "securitytabclicked" ) );
             securityWizardStepForm.clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
                 content.getAclEntries() ).clickOnApply();
         }
