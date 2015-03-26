@@ -309,9 +309,13 @@ public abstract class BrowsePanel
 
     public Long doScrollViewport( long step )
     {
-        WebElement viewportElement =
-            findElements( By.xpath( "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[@class='slick-viewport']" ) ).get( 0 );
-        ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
+        if ( findElements( By.xpath( "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[@class='slick-viewport']" ) ).size() != 0 )
+        {
+            WebElement viewportElement =
+                findElements( By.xpath( "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[@class='slick-viewport']" ) ).get( 0 );
+            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
+        }
+
         sleep( 1000 );
         return getViewportScrollTopValue();
     }
