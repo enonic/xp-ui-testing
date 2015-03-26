@@ -15,6 +15,8 @@ import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.utils.TestUtils;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 /**
  * Page Object for 'Home' page. Version 5.0
  */
@@ -126,6 +128,7 @@ public class HomePage
             throw new TestFrameworkException( "Content Manager link not clickable!" );
 
         }
+        sleep( 1000 );
         userManager.click();
         boolean isFrameLoaded =
             waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_NORMAL );
