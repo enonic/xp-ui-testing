@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -35,9 +36,18 @@ public class SecurityWizardStepForm
         Actions builder = new Actions( getDriver() );
         builder.click( findElement( By.xpath( EDIT_PERMISSION_BUTTON ) ) ).build().perform();
         // editPermissionsButton.click();
+        //click();
         sleep( 1000 );
         EditPermissionsDialog modalDialog = new EditPermissionsDialog( getSession() );
         modalDialog.waitForOpened();
         return modalDialog;
+    }
+
+    private void click()
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        String id = editPermissionsButton.getAttribute( "id" );
+        String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s').getHTMLElement().click()", id );
+        executor.executeScript( script );
     }
 }

@@ -92,6 +92,20 @@ public class EditPermissionsDialog
             selectOperations( entry.getPrincipalName(), entry.getPermissionSuite() );
         }//when operations not specified, CAN_READ will be applied by default
         // clickOnApply();
+        sleep( 500 );
+        return this;
+    }
+
+    public EditPermissionsDialog removeAclEntry( String principalName )
+    {
+        if ( findElements(
+            By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//a[@class='icon-close']" ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Principal with name :" + principalName + "  was not found!" );
+        }
+        findElements( By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//a[@class='icon-close']" ) ).get(
+            0 ).click();
+
         return this;
     }
 

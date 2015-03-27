@@ -21,7 +21,10 @@ class ContentWizard_EditPermissionsDialog_Spec
     String CONTENT_NAME = NameHelper.uniqueName( "folder" );
 
     @Shared
-    Content content
+    Content content;
+
+    @Shared
+    int DEFAULT_NUMBER_OF_ACL_ENTRIES = 2;
 
     def "setup: add a test folder"()
     {
@@ -92,7 +95,7 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         List<String> principals = modalDialog.getPrincipalNames();
         then:
-        principals.size() == 2;
+        principals.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
         and:
         modalDialog.getAclEntries().equals( getExpected() );
     }
@@ -110,10 +113,30 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         then:
         List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
-        aclEntries.size() == 3;
+        aclEntries.size() == ( DEFAULT_NUMBER_OF_ACL_ENTRIES + 1 );
 
 
     }
+
+    def "GIVEN 'Edit Permissions' opened WHEN one acl entry deleted THEN not present on dialog"()
+    {
+        given:
+        filterPanel.typeSearchText( CONTENT_NAME )
+        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+        ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
+        modalDialog.setCheckedForInheritCheckbox( false ).addPermission( entry );
+
+        when: "acl-entry removed"
+        modalDialog.removeAclEntry( RoleName.SYSTEM_USER_MANAGER.getValue() );
+
+        then:
+        List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
+        aclEntries.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
+
+
+    }
+
 
     private List<ContentAclEntry> getExpected()
     {
