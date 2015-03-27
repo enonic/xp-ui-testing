@@ -1,33 +1,23 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import com.enonic.wem.uitest.BaseGebSpec
 import org.openqa.selenium.Keys
 import spock.lang.Shared
 
 class ContentBrowsePanel_GridPanel_Spec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
-
-
-    @Shared
-    ContentBrowsePanel contentBrowsePanel;
 
     @Shared
     String FOLDER_WITH_CHILD = NameHelper.uniqueName( "folder" );
 
+    @Shared
+    String CHILD_CONTENT_NAME = "childfolder";
 
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-    }
 
     def "GIVEN Content listed on root WHEN no selection THEN all rows are white"()
     {
@@ -117,6 +107,18 @@ class ContentBrowsePanel_GridPanel_Spec
         expect:
         contentBrowsePanel.exists( folderWithChild.getPath() ) &&
             contentBrowsePanel.isExpanderPresent( ContentPath.from( FOLDER_WITH_CHILD ) )
+    }
+
+    def "GIVEN a parent folder with child WHEN the name of parent typed in the TextSearchField and folder expanded THEN child content appears "()
+    {
+        given:
+        filterPanel.typeSearchText( FOLDER_WITH_CHILD )
+
+        when:
+        contentBrowsePanel.expandContent( ContentPath.from( FOLDER_WITH_CHILD ) );
+        then:
+        ContentPath childPath = ContentPath.from( ContentPath.from( FOLDER_WITH_CHILD ), CHILD_CONTENT_NAME );
+        contentBrowsePanel.exists( childPath );
     }
 
     def "GIVEN a Content on root having no children WHEN listed THEN expander is not shown"()
