@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -156,6 +157,7 @@ class Occurences_TextLine_2_5_Spec
 
         when:
         contentWizardPanel.clickOnPublishButton();
+        TestUtils.saveScreenshot( getSession(), "tl_2_5_publish" )
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
 
         then: "new content listed in the grid and can be opened for edit"

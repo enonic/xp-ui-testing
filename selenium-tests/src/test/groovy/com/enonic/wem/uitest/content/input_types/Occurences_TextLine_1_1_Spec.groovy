@@ -2,14 +2,12 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import com.enonic.xp.data.Value
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurences_TextLine_1_1_Spec
@@ -78,6 +76,7 @@ class Occurences_TextLine_1_1_Spec
         when:
         contentWizardPanel.clickOnPublishButton();
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "tl_2_1_publish" )
 
         then: "new content listed in the grid and can be opened for edit"
         formViewPanel.isValidationMessagePresent();
