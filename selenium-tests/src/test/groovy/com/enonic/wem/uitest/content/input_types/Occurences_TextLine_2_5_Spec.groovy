@@ -53,7 +53,7 @@ class Occurences_TextLine_2_5_Spec
             textLineContent.getContentTypeName() )
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
 
-        then: "one text input should be displayed in the form view"
+        then: "button 'Remove' not present on page"
         formViewPanel.getNumberOfDisplayedRemoveButtons() == 0;
     }
 
