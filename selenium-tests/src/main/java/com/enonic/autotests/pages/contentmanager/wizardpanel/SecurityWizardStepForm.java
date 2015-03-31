@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.WizardStepForm;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -39,6 +41,7 @@ public class SecurityWizardStepForm
         //click();
         sleep( 1000 );
         EditPermissionsDialog modalDialog = new EditPermissionsDialog( getSession() );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "perm_dialog" ) );
         modalDialog.waitForOpened();
         return modalDialog;
     }
