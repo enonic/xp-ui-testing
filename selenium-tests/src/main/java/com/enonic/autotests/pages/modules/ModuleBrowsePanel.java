@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
 
@@ -72,6 +73,12 @@ public class ModuleBrowsePanel
         return dialog;
     }
 
+    @Override
+    public <T extends Application> T clickToolbarNew()
+    {
+        throw new TestFrameworkException( "method not exists for module app" );
+    }
+
     public ModuleBrowsePanel clickOnToolbarUninstall()
     {
 
@@ -95,7 +102,7 @@ public class ModuleBrowsePanel
     public ModuleBrowsePanel clickOnToolbarStart()
     {
         startButton.click();
-        sleep( 2000 );
+        sleep( 3000 );
         return this;
     }
 

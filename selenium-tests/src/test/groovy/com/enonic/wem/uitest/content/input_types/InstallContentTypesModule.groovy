@@ -50,6 +50,7 @@ class InstallContentTypesModule
 
         when: "button 'Start' on the toolbar pressed"
         moduleBrowsePanel.clickOnToolbarStart();
+        TestUtils.saveScreenshot( getSession(), "module-started" )
 
         then: "status for module becomes 'started'"
         moduleBrowsePanel.getModuleStatus( ALL_CONTENT_TYPES_MODULE_NAME ).equals( "started" );

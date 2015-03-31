@@ -73,6 +73,8 @@ public abstract class BrowsePanel
 
     public abstract <T extends WizardPanel> T clickToolbarEdit();
 
+    public abstract <T extends Application> T clickToolbarNew();
+
     /**
      * clicks on 'expand' icon and expands a folder.
      *
