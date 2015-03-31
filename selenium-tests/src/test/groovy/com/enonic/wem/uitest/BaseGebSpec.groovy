@@ -49,7 +49,6 @@ class BaseGebSpec
 
     def setup()
     {
-        println "browser.baseUrl in GebConfig.groovy is   " + browser.baseUrl;
         if ( browser.baseUrl == null )
         {
             String baseUrl = System.getProperty( "geb.build.baseUrl" );
