@@ -253,6 +253,7 @@ public class ContentWizardPanel
     public ContentWizardPanel waitUntilWizardOpened()
     {
         boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "contentwizard" ) );
         if ( !result )
         {
             throw new TestFrameworkException( "ContentWizard was not showed!" );
