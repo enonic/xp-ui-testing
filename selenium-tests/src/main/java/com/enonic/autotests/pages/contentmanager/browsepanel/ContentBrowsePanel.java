@@ -531,6 +531,7 @@ public class ContentBrowsePanel
     {
         String path = contentPath.toString();
         getLogger().info( "opening a context menu, content path of content: " + path );
+        TestUtils.saveScreenshot( getSession(), "menu_" + contentPath.getName() );
         String contentDescriptionXpath = String.format( DIV_NAMES_VIEW, path );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
         Actions action = new Actions( getDriver() );
