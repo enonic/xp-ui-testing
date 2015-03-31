@@ -8,6 +8,7 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurences_TextLine_1_1_Spec
@@ -64,8 +65,8 @@ class Occurences_TextLine_1_1_Spec
         and: "saved strings are present in the Content Wizard"
         valueFromUI.contains( TEST_TEXT );
     }
-
-
+    //xp-121
+    @Ignore
     def "GIVEN creating new TextLine1:1 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'TextLine 1:1'"

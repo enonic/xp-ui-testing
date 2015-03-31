@@ -30,8 +30,7 @@ class TagsInputType_2_5_Spec
     @Shared
     String TAG_5 = "tag5"
 
-    //XP-158
-    @Ignore
+
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN no one tag added and  'Save' and 'Publish' buttons pressed THEN new content with status 'online' appears "()
     {
         given: "start to add a content with type 'Tag 2:5'"
@@ -46,7 +45,8 @@ class TagsInputType_2_5_Spec
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( tagContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
     }
-
+    // XP-121
+    @Ignore
     def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'Tag 2:5'"
@@ -103,8 +103,8 @@ class TagsInputType_2_5_Spec
         then: "one tag with correct text present on the page"
         formViewPanel.isTagsInputDisplayed() && !isDisplayedBefore;
     }
-    //XP-158
-    @Ignore
+
+
     def "GIVEN creating new Tag-content 2:5 on root WHEN 2  tags added and button 'Save' and 'Publish' pressed  and just created content opened THEN two tags with correct name are present"()
     {
         given: "start to add a content with type 'Tag 2:5'"
@@ -122,11 +122,11 @@ class TagsInputType_2_5_Spec
         formViewPanel.getNumberOfTags() == 2;
         and:
         String[] tags = [TAG_1, TAG_2];
-        formViewPanel.getTagsText().contains( tags.toList() );
+        List<String> ttt = formViewPanel.getTagsText();
+        ttt.containsAll( tags.toList() );
 
     }
-    //XP-158
-    @Ignore
+
     def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page "()
     {
         given: "start to add a content with type 'Tag 2:5'"

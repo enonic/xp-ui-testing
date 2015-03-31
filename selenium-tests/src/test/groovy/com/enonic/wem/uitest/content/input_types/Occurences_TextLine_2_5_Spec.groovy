@@ -147,7 +147,8 @@ class Occurences_TextLine_2_5_Spec
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( textLineContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
     }
-
+    //xp-121
+    @Ignore
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'TextLine 2:5'"
