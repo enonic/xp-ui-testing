@@ -87,11 +87,9 @@ class TagsInputType_2_5_Spec
     def "GIVEN five tags added in input is disabled WHEN one of the fives tags removed  THEN input text becomes enabled again"()
     {
         given: "start to add a content with type 'Tag 2:5'"
-
         Content tagContent = buildTag_2_5_Content( 5 );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() ).typeData( tagContent );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
@@ -114,8 +112,7 @@ class TagsInputType_2_5_Spec
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+        openContentForEdit( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"
@@ -127,7 +124,7 @@ class TagsInputType_2_5_Spec
 
     }
 
-    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page "()
+    def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page "()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
@@ -138,8 +135,7 @@ class TagsInputType_2_5_Spec
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+        openContentForEdit( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"

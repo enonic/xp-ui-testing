@@ -77,4 +77,11 @@ class Base_InputFields_Occurences
             build();
         return site;
     }
+
+    public void openContentForEdit( Content tagContent )
+    {
+        contentBrowsePanel.clickOnClearSelection();
+        filterPanel.typeSearchText( tagContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+    }
 }

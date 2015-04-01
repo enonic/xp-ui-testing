@@ -126,12 +126,6 @@ class TagsInputType_Unlim_Spec
         formViewPanel.getTagsText().containsAll( tags.toList() );
     }
 
-    private void openContentForEdit( Content tagContent )
-    {
-        contentBrowsePanel.clickOnClearSelection();
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
-    }
 
     private PropertyTree buildData( int numberOfTags )
     {
