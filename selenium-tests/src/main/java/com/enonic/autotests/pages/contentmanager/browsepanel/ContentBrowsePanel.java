@@ -470,6 +470,10 @@ public class ContentBrowsePanel
      */
     public DeleteContentDialog selectDeleteFromContextMenu( ContentPath path )
     {
+        if ( !doScrollAndFindGridItem( path.toString() ) )
+        {
+            throw new TestFrameworkException( "content was not found: " + path.toString() );
+        }
         openContextMenu( path );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).get( 0 ).click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
@@ -485,6 +489,10 @@ public class ContentBrowsePanel
      */
     public ContentWizardPanel selectEditFromContextMenu( ContentPath path )
     {
+        if ( !doScrollAndFindGridItem( path.toString() ) )
+        {
+            throw new TestFrameworkException( "content was not found: " + path.toString() );
+        }
         openContextMenu( path );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).get( 0 ).click();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
@@ -494,20 +502,6 @@ public class ContentBrowsePanel
 
 
     /**
-     * Opens context menu and select 'Open' item
-     *
-     * @param path
-     * @return
-     */
-    public ItemViewPanelPage selectOpenFromContextMenu( ContentPath path )
-    {
-        openContextMenu( path );
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Open" ) ) ).get( 0 ).click();
-        ItemViewPanelPage cinfo = new ItemViewPanelPage( getSession() );
-        return cinfo;
-    }
-
-    /**
      * Opens context menu and select 'New' item
      *
      * @param path
@@ -515,6 +509,10 @@ public class ContentBrowsePanel
      */
     public NewContentDialog selectNewFromContextMenu( ContentPath path )
     {
+        if ( !doScrollAndFindGridItem( path.toString() ) )
+        {
+            throw new TestFrameworkException( "content was not found: " + path.toString() );
+        }
         openContextMenu( path );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
