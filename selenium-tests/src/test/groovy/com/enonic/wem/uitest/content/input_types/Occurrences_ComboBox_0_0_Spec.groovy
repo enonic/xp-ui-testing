@@ -43,7 +43,7 @@ class Occurrences_ComboBox_0_0_Spec
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboboxContent );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
@@ -148,7 +148,7 @@ class Occurrences_ComboBox_0_0_Spec
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
 
         when: "type a data and 'save' and 'publish'"
-        wizard.clickOnPublishButton().close( comboboxContent.getDisplayName() );
+        wizard.clickOnPublishButton().close( comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
