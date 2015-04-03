@@ -1,11 +1,18 @@
 package com.enonic.autotests.pages.form;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.xp.data.PropertyTree;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class ComboBoxFormViewPanel
     extends FormViewPanel
@@ -27,23 +34,45 @@ public class ComboBoxFormViewPanel
 
     @Override
     public FormViewPanel type( final PropertyTree data )
-    {  // data.getProperty(  )
-        optionFilterInput.sendKeys();
-//        if ( inputs.size() == 0 )
-//        {
-//            throw new TestFrameworkException( "text input was not found" );
-//        }
-//        String text = data.getString( OPTION_STRING );
-//        if ( text != null )
-//        {
-//            optionFilterInput.sendKeys( text );
-//        }
-//        else
-//        {
-//            getLogger().info( "TextLine1:1 - there are no ane text data for typing in the TexTline" );
-//        }
+    {
+        for ( final String option : data.getStrings( "options" ) )
+        {
+
+            clearAndType( optionFilterInput, option );
+            sleep( 700 );
+            selectOption( option );
+            sleep( 300 );
+        }
 
         return this;
+    }
+
+    public ComboBoxFormViewPanel clickOnLastRemoveButton()
+    {
+        List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[@class='selected-option']//a[@class='remove']" ) );
+
+        List<WebElement> list = allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
+        if ( list.size() == 0 )
+        {
+            throw new TestFrameworkException( "Remove button was not found" );
+        }
+        list.get( list.size() - 1 ).click();
+        sleep( 500 );
+        return this;
+
+    }
+
+    private void selectOption( String option )
+    {
+        if ( findElements( By.xpath(
+            String.format( "//div[@class='slick-viewport']//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']",
+                           option ) ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "option was not found! " + option );
+        }
+        findElements( By.xpath(
+            String.format( "//div[@class='slick-viewport']//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']",
+                           option ) ) ).get( 0 ).click();
     }
 
     public boolean isOptionFilterInputEnabled()
@@ -51,5 +80,9 @@ public class ComboBoxFormViewPanel
         return optionFilterInput.isEnabled();
     }
 
-
+    public List<String> getSelectedOptionValues()
+    {
+        List<WebElement> elements = findElements( By.xpath( FORM_VIEW + "//div[@class='selected-option']//div[@class='option-value']" ) );
+        return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
+    }
 }

@@ -1,21 +1,15 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.form.*
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Ignore
 import spock.lang.Shared
-import spock.lang.Stepwise
 
 class InputTypesSpec
-    extends Base_InputFields_Occurences
+    extends Base_InputFields_Occurrences
 {
 
     @Shared

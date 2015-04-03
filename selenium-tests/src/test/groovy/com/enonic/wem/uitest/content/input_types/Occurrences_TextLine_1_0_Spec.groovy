@@ -9,8 +9,8 @@ import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.data.Value
 import spock.lang.Shared
 
-class Occurences_TextLine_1_0_Spec
-    extends Base_InputFields_Occurences
+class Occurrences_TextLine_1_0_Spec
+    extends Base_InputFields_Occurrences
 
 {
     @Shared

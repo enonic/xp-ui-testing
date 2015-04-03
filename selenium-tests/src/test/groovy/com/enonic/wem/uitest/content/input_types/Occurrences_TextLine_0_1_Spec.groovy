@@ -3,15 +3,14 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine0_1_FormViewPanel
-import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 
-class Occurences_TextLine_0_1_Spec
-    extends Base_InputFields_Occurences
+class Occurrences_TextLine_0_1_Spec
+    extends Base_InputFields_Occurrences
 
 {
     @Shared

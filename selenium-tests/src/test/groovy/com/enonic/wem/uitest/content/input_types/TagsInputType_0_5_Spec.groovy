@@ -11,7 +11,7 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 
 class TagsInputType_0_5_Spec
-    extends Base_InputFields_Occurences
+    extends Base_InputFields_Occurrences
 
 {
     @Shared

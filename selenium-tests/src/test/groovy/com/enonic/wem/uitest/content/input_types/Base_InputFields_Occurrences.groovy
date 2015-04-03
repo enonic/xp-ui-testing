@@ -13,7 +13,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class Base_InputFields_Occurences
+class Base_InputFields_Occurrences
     extends BaseGebSpec
 
 {
@@ -76,12 +76,5 @@ class Base_InputFields_Occurences
             contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
-    }
-
-    public void openContentForEdit( Content tagContent )
-    {
-        contentBrowsePanel.clickOnClearSelection();
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
     }
 }

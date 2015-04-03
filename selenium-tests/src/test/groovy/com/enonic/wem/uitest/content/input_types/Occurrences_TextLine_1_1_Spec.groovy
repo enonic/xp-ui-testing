@@ -11,8 +11,8 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Ignore
 import spock.lang.Shared
 
-class Occurences_TextLine_1_1_Spec
-    extends Base_InputFields_Occurences
+class Occurrences_TextLine_1_1_Spec
+    extends Base_InputFields_Occurrences
 
 {
     @Shared

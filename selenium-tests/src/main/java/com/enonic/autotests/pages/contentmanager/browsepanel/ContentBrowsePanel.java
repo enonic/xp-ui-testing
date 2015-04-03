@@ -124,11 +124,24 @@ public class ContentBrowsePanel
         }
     }
 
+    public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )
+    {
+        clickOnClearSelection();
+        filterPanel.typeSearchText( content.getName() );
+        clickCheckboxAndSelectRow( content.getPath() ).clickToolbarEdit();
+        return new ContentWizardPanel( getSession() );
+    }
+
     public String getContentStatus( ContentPath path )
     {
         String statusXpath = String.format(
             "//div[contains(@class,'slick-row') and descendant::p[contains(@title,'%s')]]//div[contains(@class,'slick-cell')][4]/span",
             path.toString() );
+        if ( findElements( By.xpath( statusXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "content was not found " + path.getName() );
+
+        }
         return findElements( By.xpath( statusXpath ) ).get( 0 ).getText();
 
     }

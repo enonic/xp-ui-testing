@@ -12,7 +12,7 @@ import spock.lang.Ignore
 import spock.lang.Shared
 
 class TagsInputType_2_5_Spec
-    extends Base_InputFields_Occurences
+    extends Base_InputFields_Occurrences
 
 {
     @Shared
@@ -112,7 +112,7 @@ class TagsInputType_2_5_Spec
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        openContentForEdit( tagContent );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"
@@ -135,7 +135,7 @@ class TagsInputType_2_5_Spec
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        openContentForEdit( tagContent );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"

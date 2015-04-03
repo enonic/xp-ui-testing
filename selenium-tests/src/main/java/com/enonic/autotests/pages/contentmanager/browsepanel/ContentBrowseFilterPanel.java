@@ -128,6 +128,10 @@ public class ContentBrowseFilterPanel
      */
     public ContentBrowseFilterPanel typeSearchText( String text )
     {
+        if ( !searchInput.isDisplayed() )
+        {
+            throw new TestFrameworkException( "browse panel or search input not displayed" );
+        }
         getLogger().info( "query will be applied : " + text );
         searchInput.sendKeys( text );
         searchInput.sendKeys( Keys.ENTER );

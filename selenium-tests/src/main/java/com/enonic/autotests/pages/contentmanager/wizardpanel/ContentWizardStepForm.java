@@ -7,6 +7,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.WizardStepForm;
 import com.enonic.autotests.pages.form.CheckBoxFormViewPanel;
+import com.enonic.autotests.pages.form.ComboBoxFormViewPanel;
 import com.enonic.autotests.pages.form.DateFormViewPanel;
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
@@ -96,6 +97,13 @@ public class ContentWizardStepForm
             contentTypeName.contains( ModuleContentType.TAG_UNLIM.getName() ) )
         {
             formViewPanel = new TagFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.COMBOBOX0_0.getName() ) ||
+            contentTypeName.contains( ModuleContentType.COMBOBOX0_1.getName() ) ||
+            contentTypeName.contains( ModuleContentType.COMBOBOX1_1.getName() ) ||
+            contentTypeName.contains( ModuleContentType.COMBOBOX2_4.getName() ) )
+        {
+            formViewPanel = new ComboBoxFormViewPanel( getSession() );
         }
         else
         {

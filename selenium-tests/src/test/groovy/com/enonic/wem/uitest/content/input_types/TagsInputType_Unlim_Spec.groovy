@@ -12,7 +12,7 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 
 class TagsInputType_Unlim_Spec
-    extends Base_InputFields_Occurences
+    extends Base_InputFields_Occurrences
 
 {
     @Shared
@@ -61,7 +61,7 @@ class TagsInputType_Unlim_Spec
 
         when: "type a data and 'save' and open for edit the new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        openContentForEdit( tagContent );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"
@@ -115,7 +115,7 @@ class TagsInputType_Unlim_Spec
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
 
-        openContentForEdit( tagContent );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "tags-unlim_bug" )
 

@@ -9,7 +9,7 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 
 class DateContentValidation_Spec
-    extends Base_InputFields_Occurences
+    extends Base_InputFields_Occurrences
 
 {
 
