@@ -32,7 +32,7 @@ class Occurrences_ComboBox_0_0_Spec
         then: "option filter input is present and enabled"
         formViewPanel.isOptionFilterInputEnabled();
         and:
-        formViewPanel.getSelectedOptionValues() == 0;
+        formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
     def "GIVEN saving of Combobox-content (0:0) without options WHEN content opened for edit THEN no one selected options present in form view"()
