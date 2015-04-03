@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.ContentUtils
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
@@ -75,6 +76,21 @@ class Occurrences_ComboBox_0_1_Spec
 
     }
 
+    def "GIVEN a existing new ComboBox 0:1 with option  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()
+    {
+        given: "existing new ComboBox 0:0 with options'"
+        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
+
+        when: "type a data and 'save' and 'publish'"
+        wizard.clickOnPublishButton().close( content_with_opt.getDisplayName() );
+        //TODO remove it when bug for searchInput will be fixed
+        contentBrowsePanel.refreshPanelInBrowser();
+        filterPanel.typeSearchText( content_with_opt.getName() );
+
+        then: "content has a 'online' status"
+        contentBrowsePanel.getContentStatus( content_with_opt.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+    }
+
     def "GIVEN ComboBox-content (0:1) with one selected option and one option removed and content saved WHEN content opened for edit THEN no options selected on the page "()
     {
         given: "content with tree options opened for edit' and one option removed"
@@ -84,6 +100,7 @@ class Occurrences_ComboBox_0_1_Spec
         wizard.save().close( content_with_opt.getDisplayName() );
 
         when: "when content opened for edit again"
+        //TODO remove it's string when bug with searchText will be fixed
         contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
@@ -94,6 +111,19 @@ class Occurrences_ComboBox_0_1_Spec
         and: "and options have a correct text"
         formViewPanel.isOptionFilterInputEnabled();
 
+    }
+
+    def "WHEN content without option saved and published THEN it content with status equals 'Online' listed"()
+    {
+        when: "content without option saved and published"
+        Content comboBoxContent = buildComboBox0_1_Content( 0 );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+            comboBoxContent.getDisplayName() );
+        filterPanel.typeSearchText( comboBoxContent.getName() );
+
+        then: "content has a 'online' status"
+        contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
 
