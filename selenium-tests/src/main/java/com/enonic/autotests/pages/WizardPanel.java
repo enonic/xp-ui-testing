@@ -36,10 +36,10 @@ public abstract class WizardPanel<T>
 
     public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'api.app.bar.AppBarTabMenuButton')]//span[@class='label']";
 
-    public static String ITEM_FROM_TAB_MENU_ITEM_LIST =
-        "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[contains(.,'%s')]]";
+    public static String TAB_MENU_ITEM =
+        "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'AppBarTabMenuItem') and child::span[@title ='%s']]";
 
-    public static String BUTTON_CLOSE_IN_TAB_MENU_ITEM = ITEM_FROM_TAB_MENU_ITEM_LIST + "/button";
+    public static String BUTTON_CLOSE_IN_TAB_MENU_ITEM = TAB_MENU_ITEM + "/button";
 
     @FindBy(name = "displayName")
     protected WebElement displayNameInput;
@@ -177,7 +177,7 @@ public abstract class WizardPanel<T>
     /**
      * calculates a width of input field.
      *
-     * @return
+     * @return width of input
      */
     public int getInputNameWidth()
     {

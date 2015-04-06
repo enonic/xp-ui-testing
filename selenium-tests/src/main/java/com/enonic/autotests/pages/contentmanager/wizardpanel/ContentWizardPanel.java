@@ -96,6 +96,16 @@ public class ContentWizardPanel
         return cw;
     }
 
+    public boolean isContentInvalid( String contentDisplayName )
+    {         //"//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[contains(.,'%s')]]";
+        List<WebElement> elements = findElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) );
+        if ( elements.size() == 0 )
+        {
+            throw new TestFrameworkException( "tab menu item with name: " + contentDisplayName + " was not found" );
+        }
+        return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
+    }
+
     public ContentWizardPanel unlockLiveEdit()
     {
 
