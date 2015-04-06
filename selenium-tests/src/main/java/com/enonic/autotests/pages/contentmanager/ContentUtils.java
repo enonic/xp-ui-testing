@@ -1,6 +1,8 @@
 package com.enonic.autotests.pages.contentmanager;
 
 
+import java.util.List;
+
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.xp.data.PropertyTree;
 
@@ -37,6 +39,13 @@ public class ContentUtils
 
 
         }
+        return data;
+    }
+
+    public static PropertyTree buildSingleSelectionData( List<String> options )
+    {
+        PropertyTree data = new PropertyTree();
+        data.addStrings( "options", options );
         return data;
     }
 }

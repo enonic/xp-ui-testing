@@ -5,21 +5,21 @@
   <form>
 
     <input name="ss_dropdown" type="SingleSelector">
-      <label>Single Selector, dropdown</label>
+      <label>s_s 0_0, dropdown</label>
       <indexed>true</indexed>
       <occurrences minimum="0" maximum="0"/>
       <config>
         <options>
           <option>
-            <label>myOption 1</label>
+            <label>option A</label>
             <value>o1</value>
           </option>
           <option>
-            <label>myOption 2</label>
+            <label>option B</label>
             <value>o2</value>
           </option>
           <option>
-            <label>myOption 3</label>
+            <label>option C</label>
             <value>o3</value>
           </option>
         </options>

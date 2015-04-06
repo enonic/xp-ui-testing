@@ -62,17 +62,16 @@ public class ComboBoxFormViewPanel
 
     }
 
-    private void selectOption( String option )
+    protected void selectOption( String option )
     {
-        if ( findElements( By.xpath(
-            String.format( "//div[@class='slick-viewport']//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']",
-                           option ) ) ).size() == 0 )
+        List<WebElement> elements = findElements( By.xpath(
+            String.format( "//div[@class='slick-viewport']//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']", option ) ) );
+        List<WebElement> displayedElements = elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
+        if ( displayedElements.size() == 0 )
         {
             throw new TestFrameworkException( "option was not found! " + option );
         }
-        findElements( By.xpath(
-            String.format( "//div[@class='slick-viewport']//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']",
-                           option ) ) ).get( 0 ).click();
+        displayedElements.get( 0 ).click();
     }
 
     public boolean isOptionFilterInputEnabled()

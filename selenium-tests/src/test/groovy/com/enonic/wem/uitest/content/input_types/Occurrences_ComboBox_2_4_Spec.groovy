@@ -43,7 +43,7 @@ class Occurrences_ComboBox_2_4_Spec
 
     def "GIVEN saving of ComboBox-content (2:4) without options WHEN content opened for edit THEN no one selected options present on page "()
     {
-        given: "new content with type ComboBox0_1 added'"
+        given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
@@ -114,7 +114,7 @@ class Occurrences_ComboBox_2_4_Spec
 
     def "GIVEN saving of  ComboBox-content (2:4) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
     {
-        given: "new content with type ComboBox1_1 added'"
+        given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );

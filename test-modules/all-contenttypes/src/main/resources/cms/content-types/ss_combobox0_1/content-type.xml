@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>Single selectors</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input name="ss_combobox" type="SingleSelector">
+      <label>Single Selector, combo-box</label>
+      <indexed>true</indexed>
+      <occurrences minimum="0" maximum="1"/>
+      <config>
+        <options>
+          <option>
+            <label>option A</label>
+            <value>o1</value>
+          </option>
+          <option>
+            <label>option B</label>
+            <value>o2</value>
+          </option>
+          <option>
+            <label>option C</label>
+            <value>o3</value>
+          </option>
+        </options>
+        <selector-type>COMBOBOX</selector-type>
+      </config>
+    </input>
+  </form>
+</content-type>
