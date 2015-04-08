@@ -16,7 +16,7 @@ import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
 import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
-import com.enonic.autotests.pages.form.SSComboBoxFormViewPanel;
+import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
 import com.enonic.autotests.pages.form.TagFormViewPanel;
 import com.enonic.autotests.pages.form.TextAreaFormViewPanel;
@@ -109,7 +109,7 @@ public class ContentWizardStepForm
         } //
         else if ( contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_COMBOBOX0_0.getName() ) )
         {
-            formViewPanel = new SSComboBoxFormViewPanel( getSession() );
+            formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
         }
         else if ( contentTypeName.contains( ModuleContentType.TEXT_AREA.getName() ) )
         {
