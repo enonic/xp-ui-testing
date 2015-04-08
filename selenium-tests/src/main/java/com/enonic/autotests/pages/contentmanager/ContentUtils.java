@@ -45,7 +45,10 @@ public class ContentUtils
     public static PropertyTree buildSingleSelectionData( List<String> options )
     {
         PropertyTree data = new PropertyTree();
-        data.addStrings( "options", options );
+        if ( options != null )
+        {
+            data.addStrings( "options", options );
+        }
         return data;
     }
 }

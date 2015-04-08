@@ -10,7 +10,7 @@ import com.enonic.autotests.utils.WaitHelper;
 public class Application
     extends Page
 {
-    public String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
+    public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
     public static final int NUMBER_TRIES_TO_CLOSE = 2;
 
