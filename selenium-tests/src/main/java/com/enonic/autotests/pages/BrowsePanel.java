@@ -32,7 +32,7 @@ public abstract class BrowsePanel
     protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]";
 
     protected String CONTENT_SUMMARY_VIEWER =
-        "//div[contains(@id,'ContentSummaryAndCompareStatusViewer' and child::p[@class='sub-name' and contains(@title,'%s')]]";
+        "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[@class='sub-name' and contains(@title,'%s')]]";
 
     protected final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
 

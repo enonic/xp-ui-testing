@@ -3,8 +3,8 @@
   <display-name>Single selectors</display-name>
   <super-type>base:structured</super-type>
   <form>
-    <input name="ss_combobox" type="SingleSelector">
-      <label>not required, combo-box</label>
+    <input name="ss_radio" type="SingleSelector">
+      <label>not required, radio</label>
       <indexed>true</indexed>
       <occurrences minimum="0" maximum="1"/>
       <config>
@@ -22,7 +22,7 @@
             <value>o3</value>
           </option>
         </options>
-        <selector-type>COMBOBOX</selector-type>
+        <selector-type>RADIO</selector-type>
       </config>
     </input>
   </form>

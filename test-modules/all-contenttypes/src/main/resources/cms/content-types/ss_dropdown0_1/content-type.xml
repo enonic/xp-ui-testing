@@ -5,7 +5,7 @@
   <form>
 
     <input name="ss_dropdown" type="SingleSelector">
-      <label>s_s 0_1, dropdown</label>
+      <label>not required, dropdown</label>
       <indexed>true</indexed>
       <occurrences minimum="0" maximum="1"/>
       <config>

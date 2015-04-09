@@ -3,11 +3,10 @@
   <display-name>Single selectors</display-name>
   <super-type>base:structured</super-type>
   <form>
-
-    <input name="ss_dropdown" type="SingleSelector">
-      <label>s_s 0_0, dropdown</label>
+    <input name="ss_radio" type="SingleSelector">
+      <label>required, radio</label>
       <indexed>true</indexed>
-      <occurrences minimum="0" maximum="0"/>
+      <occurrences minimum="1" maximum="1"/>
       <config>
         <options>
           <option>
@@ -23,7 +22,7 @@
             <value>o3</value>
           </option>
         </options>
-        <selector-type>DROPDOWN</selector-type>
+        <selector-type>RADIO</selector-type>
       </config>
     </input>
   </form>

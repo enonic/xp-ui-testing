@@ -13,7 +13,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class Occurrences_SSelector_Combobox_0_0_Spec
+class Occurrences_SSelector_Combobox_0_1_Spec
     extends Base_InputFields_Occurrences
 
 {
@@ -22,11 +22,11 @@ class Occurrences_SSelector_Combobox_0_0_Spec
     Content content_wit_opt;
 
 
-    def "WHEN wizard for adding a 'Single Selector Combo box-content(0:0)' opened THEN option filter input is present "()
+    def "WHEN wizard for adding a 'Single Selector Combo box-content' opened THEN option filter input is present "()
     {
         when: "start to add a content with type 'Single Selector ComboBox 0:0'"
         String option = null;
-        Content comboBoxContent = buildSSelectorComboBox0_0_Content( option );
+        Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() )
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
@@ -35,11 +35,11 @@ class Occurrences_SSelector_Combobox_0_0_Spec
         formViewPanel.isOptionFilterInputDisplayed();
     }
 
-    def "GIVEN saving of 'Single Selector Combo box-content(0:0)' without options WHEN content opened for edit THEN no one selected options present in form view"()
+    def "GIVEN saving of not required 'Single Selector Combo box-content' without options WHEN content opened for edit THEN no one selected options present in form view"()
     {
-        given: "new content with type 'Single Selector ComboBox 0:0'"
+        given: "new content with type 'Single Selector ComboBox'"
         String option = null;
-        Content comboBoxContent = buildSSelectorComboBox0_0_Content( option );
+        Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -52,11 +52,11 @@ class Occurrences_SSelector_Combobox_0_0_Spec
 
     }
 
-    def "GIVEN saving of 'Single Selector Combo box-content(0:0)' without options WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
+    def "GIVEN saving of not required 'Single Selector Combo box-content' without options WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
     {
-        given: "new content with type 'Single Selector ComboBox 0:0'"
+        given: "new content with type 'Single Selector ComboBox'"
         String option = null;
-        Content comboBoxContent = buildSSelectorComboBox0_0_Content( option );
+        Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
@@ -65,15 +65,17 @@ class Occurrences_SSelector_Combobox_0_0_Spec
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        and:
+        !contentBrowsePanel.isInvalidContent( comboBoxContent.getPath().toString() );
 
     }
 
-    def "GIVEN saving of 'Single Selector Combo box-content(0:0)' with  selected option WHEN content opened for edit THEN correct selected option and button 'Remove' present in form view"()
+    def "GIVEN saving of not required 'Single Selector Combo box-content' with  selected option WHEN content opened for edit THEN correct selected option and button 'Remove' present in form view"()
     {
-        given: "new content with type Single Selector ComboBox 0:0'"
+        given: "new content with type 'Single Selector ComboBox'"
         String option = "option A";
-        content_wit_opt = buildSSelectorComboBox0_0_Content( option );
+        content_wit_opt = buildSSelectorComboBox0_1_Content( option );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
@@ -87,9 +89,9 @@ class Occurrences_SSelector_Combobox_0_0_Spec
         !formViewPanel.isOptionFilterInputDisplayed();
     }
 
-    def "GIVEN a 'Single Selector Combo box-content(0:0)' with selected option WHEN content opened and option changed THEN new option displayed"()
+    def "GIVEN a not required 'Single Selector Combo box-content' with selected option WHEN content opened and option changed THEN new option displayed"()
     {
-        given: "a content with type Single Selector ComboBox 0:0' opened for edit"
+        given: "a content with type Single Selector ComboBox' opened for edit"
         String newOption = "option B";
         PropertyTree newData = ContentUtils.buildSingleSelectionData( newOption );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -110,9 +112,9 @@ class Occurrences_SSelector_Combobox_0_0_Spec
     }
     //TODO XP-259 impossible to remove a selected option
     @Ignore
-    def "GIVEN a Single Selector' Combobox-content (0:0)' with selected option WHEN option removed and 'close' and 'save' pressed THEN option not selected in form view"()
+    def "GIVEN a not required Single Selector' Combobox-content' with selected option WHEN option removed and 'close' and 'save' pressed THEN option not selected in form view"()
     {
-        given: "new content with type 'Single Selector ComboBox 0:0'"
+        given: "new content with type 'Single Selector ComboBox'"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
         boolean inputDisplayedBeforeRemoving = formViewPanel.isOptionFilterInputDisplayed();
@@ -134,14 +136,14 @@ class Occurrences_SSelector_Combobox_0_0_Spec
 
     }
 
-    private Content buildSSelectorComboBox0_0_Content( String option )
+    private Content buildSSelectorComboBox0_1_Content( String option )
     {
         PropertyTree data = ContentUtils.buildSingleSelectionData( option );
         Content textLineContent = Content.builder().
-            name( NameHelper.uniqueName( "ss_cbox0_0_" ) ).
+            name( NameHelper.uniqueName( "ss_cbox0_1_" ) ).
             displayName( "ss_cbox0_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":ss_combobox0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":ss_combobox0_1" ).data( data ).
             build();
         return textLineContent;
     }
