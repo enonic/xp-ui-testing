@@ -88,7 +88,7 @@ class Occurrences_ComboBox_2_4_Spec
 
     }
     //TODO remove it when bug will be fixed::
-    //bug XP-259
+    //bug XP-259   and XP-261
     @Ignore
     def "GIVEN ComboBox-content (2:4) with two selected options and one option removed and content saved WHEN content opened for edit THEN one option selected on the page "()
     {

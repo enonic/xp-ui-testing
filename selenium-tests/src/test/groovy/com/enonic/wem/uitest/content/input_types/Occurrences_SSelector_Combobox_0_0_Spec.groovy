@@ -1,0 +1,148 @@
+package com.enonic.wem.uitest.content.input_types
+
+import com.enonic.autotests.pages.contentmanager.ContentUtils
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView
+import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.xp.content.ContentPath
+import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
+import spock.lang.Shared
+import spock.lang.Stepwise
+
+@Stepwise
+class Occurrences_SSelector_Combobox_0_0_Spec
+    extends Base_InputFields_Occurrences
+
+{
+
+    @Shared
+    Content content_wit_opt;
+
+
+    def "WHEN wizard for adding a 'Single Selector Combo box-content(0:0)' opened THEN option filter input is present "()
+    {
+        when: "start to add a content with type 'Single Selector ComboBox 0:0'"
+        String option = null;
+        Content comboBoxContent = buildSSelectorComboBox0_0_Content( option );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            comboBoxContent.getContentTypeName() )
+        SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+
+        then: "option filter input is present and enabled"
+        formViewPanel.isOptionFilterInputDisplayed();
+    }
+
+    def "GIVEN saving of 'Single Selector Combo box-content(0:0)' without options WHEN content opened for edit THEN no one selected options present in form view"()
+    {
+        given: "new content with type 'Single Selector ComboBox 0:0'"
+        String option = null;
+        Content comboBoxContent = buildSSelectorComboBox0_0_Content( option );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+
+        when: "content opened for edit"
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
+        SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+
+        then:
+        formViewPanel.getSelectedOption().isEmpty();
+
+    }
+
+    def "GIVEN saving of 'Single Selector Combo box-content(0:0)' without options WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
+    {
+        given: "new content with type 'Single Selector ComboBox 0:0'"
+        String option = null;
+        Content comboBoxContent = buildSSelectorComboBox0_0_Content( option );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+            comboBoxContent.getDisplayName() );
+
+        when: "content opened for edit"
+        filterPanel.typeSearchText( comboBoxContent.getName() );
+
+        then:
+        contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+
+    }
+
+    def "GIVEN saving of 'Single Selector Combo box-content(0:0)' with  selected option WHEN content opened for edit THEN correct selected option and button 'Remove' present in form view"()
+    {
+        given: "new content with type Single Selector ComboBox 0:0'"
+        String option = "option A";
+        content_wit_opt = buildSSelectorComboBox0_0_Content( option );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
+            content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+
+        when: "content opened for edit"
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+        SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+
+        then:
+        formViewPanel.getSelectedOption() == option;
+        and: "options filter not displayed"
+        !formViewPanel.isOptionFilterInputDisplayed();
+    }
+
+    def "GIVEN a 'Single Selector Combo box-content(0:0)' with selected option WHEN content opened and option changed THEN new option displayed"()
+    {
+        given: "a content with type Single Selector ComboBox 0:0' opened for edit"
+        String newOption = "option B";
+        PropertyTree newData = ContentUtils.buildSingleSelectionData( newOption );
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+
+
+        when: "new option selected"
+        SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+        formViewPanel.clickOnRemoveOptionButton().type( newData );
+        contentWizardPanel.save().close( content_wit_opt.getDisplayName() );
+
+        //TODO XP-261 remove it's string when bug with searchText will be fixed
+        contentBrowsePanel.refreshPanelInBrowser();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+
+        then: "new selected option displayed"
+        formViewPanel.getSelectedOption() == newOption;
+
+    }
+    //TODO XP-259 impossible to remove a selected option
+    @Ignore
+    def "GIVEN a Single Selector' Combobox-content (0:0)' with selected option WHEN option removed and 'close' and 'save' pressed THEN option not selected in form view"()
+    {
+        given: "new content with type 'Single Selector ComboBox 0:0'"
+        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+        SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+        boolean inputDisplayedBeforeRemoving = formViewPanel.isOptionFilterInputDisplayed();
+
+        when: "content opened for edit"
+        formViewPanel.clickOnRemoveOptionButton();
+        wizard.save().close( content_wit_opt.getDisplayName() );
+        //TODO XP-261 remove it's string when bug with searchText will be fixed
+        contentBrowsePanel.refreshPanelInBrowser();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+
+        then:
+        !inputDisplayedBeforeRemoving;
+        and:
+        formViewPanel.isOptionFilterInputDisplayed();
+        and:
+        formViewPanel.getSelectedOption().isEmpty();
+
+
+    }
+
+    private Content buildSSelectorComboBox0_0_Content( String option )
+    {
+        PropertyTree data = ContentUtils.buildSingleSelectionData( option );
+        Content textLineContent = Content.builder().
+            name( NameHelper.uniqueName( "ss_cbox0_0_" ) ).
+            displayName( "ss_cbox0_1 content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":ss_combobox0_0" ).data( data ).
+            build();
+        return textLineContent;
+    }
+}
