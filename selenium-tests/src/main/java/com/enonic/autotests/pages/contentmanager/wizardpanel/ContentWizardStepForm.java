@@ -107,7 +107,8 @@ public class ContentWizardStepForm
         {
             formViewPanel = new ComboBoxFormViewPanel( getSession() );
         } //
-        else if ( contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_COMBOBOX0_0.getName() ) )
+        else if ( contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_COMBOBOX0_0.getName() ) ||
+            contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_COMBOBOX0_1.getName() ) )
         {
             formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
         }
