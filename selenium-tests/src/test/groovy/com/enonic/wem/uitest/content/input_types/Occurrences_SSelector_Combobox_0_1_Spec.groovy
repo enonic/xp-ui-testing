@@ -24,7 +24,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
 
     def "WHEN wizard for adding a 'Single Selector Combo box-content' opened THEN option filter input is present "()
     {
-        when: "start to add a content with type 'Single Selector ComboBox 0:0'"
+        when: "start to add a content with type 'Single Selector ComboBox 0:1'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
