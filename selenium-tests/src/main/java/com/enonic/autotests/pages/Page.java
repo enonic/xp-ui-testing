@@ -197,7 +197,7 @@ public abstract class Page
     {
         FluentWait<By> fluentWait = new FluentWait<By>( by );
         fluentWait.pollingEvery( 500, TimeUnit.MILLISECONDS );
-        fluentWait.withTimeout( 3l, TimeUnit.SECONDS );
+        fluentWait.withTimeout( Application.EXPLICIT_LONG, TimeUnit.SECONDS );
         fluentWait.until( new Predicate<By>()
         {
             public boolean apply( By by )
