@@ -101,9 +101,6 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
         formViewPanel.clickOnRemoveOptionButton().type( newData );
         contentWizardPanel.save().close( content_wit_opt.getDisplayName() );
-
-        //TODO XP-261 remove it's string when bug with searchText will be fixed
-        contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
         then: "new selected option displayed"

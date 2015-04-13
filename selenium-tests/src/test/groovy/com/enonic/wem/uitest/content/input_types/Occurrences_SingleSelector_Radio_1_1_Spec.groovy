@@ -90,9 +90,6 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
         formViewPanel.selectOption( newOption );
         contentWizardPanel.save().close( content_wit_opt.getDisplayName() );
-
-        //TODO XP-261 remove it's string when bug with searchText will be fixed
-        contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
         then: "new selected option displayed"
