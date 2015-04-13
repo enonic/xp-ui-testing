@@ -9,7 +9,7 @@ import com.enonic.autotests.TestSession;
 public class BaseBrowseFilterPanel
     extends Application
 {
-    public final String CLEAR_FILTER_LINK = "Clear filter";
+    public static final String CLEAR_FILTER_LINK = "Clear filter";
 
     public static final String SEARCH_INPUT_XPATH =
         "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";

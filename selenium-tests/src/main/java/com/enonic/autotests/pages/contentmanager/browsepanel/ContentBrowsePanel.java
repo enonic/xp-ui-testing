@@ -13,6 +13,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
@@ -131,6 +132,12 @@ public class ContentBrowsePanel
     public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )
     {
         clickOnClearSelection();
+
+        if ( findElements( By.linkText( BaseBrowseFilterPanel.CLEAR_FILTER_LINK ) ).size() > 0 )
+        {
+            findElements( By.linkText( BaseBrowseFilterPanel.CLEAR_FILTER_LINK ) ).get( 0 ).click();
+        }
+
         filterPanel.typeSearchText( content.getName() );
         clickCheckboxAndSelectRow( content.getPath() ).clickToolbarEdit();
         return new ContentWizardPanel( getSession() );
