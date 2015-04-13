@@ -17,6 +17,7 @@ import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView;
+import com.enonic.autotests.pages.form.SingleSelectorRadioFormView;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
 import com.enonic.autotests.pages.form.TagFormViewPanel;
 import com.enonic.autotests.pages.form.TextAreaFormViewPanel;
@@ -111,6 +112,11 @@ public class ContentWizardStepForm
             contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_COMBOBOX1_1.getName() ) )
         {
             formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_RADIO0_1.getName() ) ||
+            contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_RADIO1_1.getName() ) )
+        {
+            formViewPanel = new SingleSelectorRadioFormView( getSession() );
         }
         else if ( contentTypeName.contains( ModuleContentType.TEXT_AREA.getName() ) )
         {
