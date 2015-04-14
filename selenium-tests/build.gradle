@@ -7,7 +7,7 @@ configurations {
 }
 
 ext {
-    xpVersion = '5.0.1-SNAPSHOT'
+    xpVersion = '5.0.2-SNAPSHOT'
     unpackDir = "$buildDir/install"
     screenshotsDir = "$buildDir/screenshots"
     reportsDir = "$buildDir/repots"
@@ -16,7 +16,7 @@ ext {
 
 dependencies {
     compile 'org.seleniumhq.selenium:selenium-java:2.45.0'
-    compile 'com.enonic.xp:core-api:5.0.1-SNAPSHOT'
+    compile 'com.enonic.xp:core-api:5.0.2-SNAPSHOT'
     compile 'log4j:log4j:1.2.17'
     compile 'org.codehaus.groovy:groovy-all:2.1.8'
     compile 'org.spockframework:spock-core:0.7-groovy-2.0'
