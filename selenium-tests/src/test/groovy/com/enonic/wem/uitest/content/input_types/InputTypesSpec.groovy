@@ -5,7 +5,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class InputTypesSpec
@@ -116,7 +115,6 @@ class InputTypesSpec
 
     }
 
-
     def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
     {
         given: "add a content with type 'Geo point'"
@@ -134,7 +132,7 @@ class InputTypesSpec
 
     }
 
-    @Ignore
+
     def "GIVEN content type with name 'checkbox' selected and wizard opened WHEN  the checkbox selected and content saved THEN new content with correct boolean value listed "()
     {
         given: "add a content with type 'checkbox'"
@@ -143,8 +141,7 @@ class InputTypesSpec
             checkBoxContent.getContentTypeName() ).typeData( checkBoxContent ).save().close( checkBoxContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( checkBoxContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( checkBoxContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( checkBoxContent )
         CheckBoxFormViewPanel checkBoxFormViewPanel = new CheckBoxFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"

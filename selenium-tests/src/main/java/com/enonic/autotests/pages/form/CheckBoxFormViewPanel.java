@@ -1,8 +1,6 @@
 package com.enonic.autotests.pages.form;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,7 +18,7 @@ public class CheckBoxFormViewPanel
 
 
     @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='To Check']]//div[contains(@id,'Checkbox')]//input[@type='checkbox']")
+        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='To Check']]//div[contains(@id,'api.ui.Checkbox')]")
     private WebElement checkBox;
 
 
@@ -33,18 +31,7 @@ public class CheckBoxFormViewPanel
     public FormViewPanel type( final PropertyTree data )
     {
         boolean checkboxValue = data.getBoolean( CHECKBOX_PROPERTY );
-        if ( checkBox.getAttribute( "checked" ) == null && checkboxValue )
-        {
-            List<WebElement> ele = findElements( By.xpath(
-                "//div[contains(@id,'api.form.InputView') and descendant::div[@title='To Check']]//div[contains(@class,'checkbox')]//input" ) );
-
-            Actions actions = new Actions( getDriver() );
-            actions.click( ele.get( 0 ) ).build().perform();
-
-            sleep( 1000 );
-
-        }
-
+        setChecked( checkboxValue );
         sleep( 300 );
         return this;
     }
@@ -60,6 +47,15 @@ public class CheckBoxFormViewPanel
         actions.build().perform();
         sleep( 500 );
 
+        return this;
+    }
+
+    private CheckBoxFormViewPanel setChecked( boolean checked )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        String id = checkBox.getAttribute( "id" );
+        String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s')" + ".setChecked(%b)", id, checked );
+        executor.executeScript( script );
         return this;
     }
 
