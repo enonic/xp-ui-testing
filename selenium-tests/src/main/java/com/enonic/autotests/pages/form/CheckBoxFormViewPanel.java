@@ -64,6 +64,9 @@ public class CheckBoxFormViewPanel
 
     public boolean isChecked()
     {
-        return checkBox.getAttribute( "checked" ) != null;
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        String id = checkBox.getAttribute( "id" );
+        String script = String.format( "return window.api.dom.ElementRegistry.getElementById('%s')" + ".isChecked()", id );
+        return (Boolean) executor.executeScript( script );
     }
 }
