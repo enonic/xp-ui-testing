@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 
-
-
 import com.enonic.xp.content.ContentPath;
 import com.enonic.xp.content.ContentService;
 import com.enonic.xp.content.CreateContentParams;
@@ -28,7 +26,9 @@ public class Initializer
         {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "elephant.png", "dollar.png"};
 
 
-    private static final String FOLDER_NAME = "All Content types images";
+    private static final String FOLDER_DISPLAY_NAME = "All Content types images";
+
+    private static final String FOLDER_NAME = "all-content-types-images";
 
     private ContentService contentService;
 
@@ -43,6 +43,7 @@ public class Initializer
     {
         try
         {
+            LOG.info( "path is  " + path );
             return this.contentService.getByPath( path ) != null;
         }
         catch ( final Exception e )
@@ -124,7 +125,7 @@ public class Initializer
 
         return CreateContentParams.create().
 
-            type( ContentTypeName.templateFolder() ).parent( ContentPath.ROOT ).displayName( FOLDER_NAME ).
+            type( ContentTypeName.templateFolder() ).parent( ContentPath.ROOT ).displayName( FOLDER_DISPLAY_NAME ).
             requireValid( true ).owner( PrincipalKey.ofAnonymous() ).
             contentData( new PropertyTree() ).type( ContentTypeName.folder() ).
             build();
