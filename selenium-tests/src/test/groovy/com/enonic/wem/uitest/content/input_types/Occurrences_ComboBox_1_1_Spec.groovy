@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -99,8 +100,6 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.save().close( content_with_opt.getDisplayName() );
 
         when: "when content selected in the grid and opened for edit again"
-        //TODO remove it's string when bug with searchText will be fixed
-        contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         then: "no options selected on the page "
@@ -126,6 +125,25 @@ class Occurrences_ComboBox_1_1_Spec
 
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+    }
+
+
+    def "GIVEN creating new ComboBox-content (1:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
+    {
+        given: "start to add a content with type 'ComboBox-content (1:1)'"
+        Content textLineContent = buildComboBox1_1_Content( 0 );
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
+            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
+
+        when:
+        contentWizardPanel.clickOnPublishButton();
+        TestUtils.saveScreenshot( getSession(), "tcbox1_1_publish" )
+        ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
+
+        then: "new content listed in the grid and can be opened for edit"
+        formViewPanel.isValidationMessagePresent();
+        and:
+        formViewPanel.getValidationMessage() == ComboBoxFormViewPanel.VALIDATION_MESSAGE_1_1;
     }
 
     private Content buildComboBox1_1_Content( int numberOptions )

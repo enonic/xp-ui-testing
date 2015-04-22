@@ -16,8 +16,6 @@ public abstract class BaseTextLineFormViewPanel
     extends FormViewPanel
 {
 
-    protected String VALIDATION_VIEWER = FORM_VIEW + "//div[contains(@id, 'ValidationRecordingViewer')]";
-
     protected String ADD_BUTTON_XPATH = FORM_VIEW +
         "//button[contains(@id,'api.ui.button.Button') and child::span[text()='Add'] and not(contains(@style,'display: none'))]";
 
@@ -42,18 +40,6 @@ public abstract class BaseTextLineFormViewPanel
         return allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size();
     }
 
-    public boolean isValidationMessagePresent()
-    {
-        List<WebElement> result = findElements( By.xpath( VALIDATION_VIEWER ) );
-        if ( result.size() == 0 )
-        {
-            return false;
-        }
-        else
-        {
-            return result.get( 0 ).isDisplayed();
-        }
-    }
 
     public String getValidationMessage()
     {

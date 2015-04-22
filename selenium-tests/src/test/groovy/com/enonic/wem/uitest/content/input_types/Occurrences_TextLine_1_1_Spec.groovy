@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_TextLine_1_1_Spec
@@ -65,25 +64,6 @@ class Occurrences_TextLine_1_1_Spec
         and: "saved strings are present in the Content Wizard"
         valueFromUI.contains( TEST_TEXT );
     }
-    //xp-121
-    @Ignore
-    def "GIVEN creating new TextLine1:1 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
-    {
-        given: "start to add a content with type 'TextLine 1:1'"
-        Content textLineContent = buildTextLine1_1_Content();
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
-
-        when:
-        contentWizardPanel.clickOnPublishButton();
-        TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "tl_2_1_publish" )
-
-        then: "new content listed in the grid and can be opened for edit"
-        formViewPanel.isValidationMessagePresent();
-        and:
-        formViewPanel.getValidationMessage() == TextLine1_1_FormViewPanel.VALIDATION_MESSAGE;
-    }
 
     def "GIVEN creating new TextLine1:1 on root WHEN data typed and 'Save' and  'Publish' are pressed THEN new content with status equals 'Online' listed"()
     {
@@ -99,6 +79,24 @@ class Occurrences_TextLine_1_1_Spec
 
         then:
         contentBrowsePanel.getContentStatus( textLineContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+    }
+
+    def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
+    {
+        given: "start to add a content with type 'TextLine 1:1'"
+        Content textLineContent = buildTextLine1_1_Content();
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
+            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
+
+        when:
+        contentWizardPanel.clickOnPublishButton();
+        TestUtils.saveScreenshot( getSession(), "tl_1_1_publish" )
+        TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
+
+        then: "new content listed in the grid and can be opened for edit"
+        formViewPanel.isValidationMessagePresent();
+        and:
+        formViewPanel.getValidationMessage() == TextLine1_1_FormViewPanel.VALIDATION_MESSAGE;
     }
 
 

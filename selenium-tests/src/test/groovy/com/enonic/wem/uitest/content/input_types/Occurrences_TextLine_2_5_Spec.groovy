@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_TextLine_2_5_Spec
@@ -43,8 +42,7 @@ class Occurrences_TextLine_2_5_Spec
         formViewPanel.getNumberOfTextInputs() == 2;
     }
 
-    //XP-121
-    @Ignore
+
     def "WHEN wizard for adding a TextLine-content (2:5) opened THEN button 'Remove' not present on page "()
     {
         when: "start to add a content with type 'TextLine 2:5'"
@@ -147,8 +145,7 @@ class Occurrences_TextLine_2_5_Spec
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( textLineContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
     }
-    //xp-121
-    @Ignore
+
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'TextLine 2:5'"

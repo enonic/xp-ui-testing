@@ -18,6 +18,7 @@ public class ComboBoxFormViewPanel
     extends FormViewPanel
 
 {
+    public static String VALIDATION_MESSAGE_1_1 = "Min 1 occurrence required";
 
     protected final String COMBO_BOX = "//div[contains(@id,'ComboBox')]";
 
@@ -83,5 +84,17 @@ public class ComboBoxFormViewPanel
     {
         List<WebElement> elements = findElements( By.xpath( FORM_VIEW + "//div[@class='selected-option']//div[@class='option-value']" ) );
         return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    public String getValidationMessage()
+    {
+        if ( isValidationMessagePresent() )
+        {
+            return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
+        }
+        else
+        {
+            throw new TestFrameworkException( "validation message was not found!" );
+        }
     }
 }
