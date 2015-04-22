@@ -141,9 +141,9 @@ public class Initializer
 
     {
         return Form.newForm().
-            addFormItem( Input.newInput().name( "image" ).
+            addFormItem( Input.create().name( "image" ).
                 inputType( InputTypes.IMAGE_UPLOADER ).build() ).
-            addFormItem( Input.newInput().name( "mimeType" ).
+            addFormItem( Input.create().name( "mimeType" ).
                 inputType( InputTypes.TEXT_LINE ).
                 label( "Mime type" ).
                 occurrences( 1, 1 ).
