@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -107,6 +108,23 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         formViewPanel.getSelectedOption() == newOption;
 
     }
+
+    def "GIVEN creating new Single Selector ComboBox-content (0:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message not appears"()
+    {
+        given: "start to add a content with type 'Single selector ComboBox-content (0:1)'"
+        Content textLineContent = buildSSelectorComboBox0_1_Content( null );
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
+            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
+
+        when:
+        contentWizardPanel.clickOnPublishButton();
+        TestUtils.saveScreenshot( getSession(), "ss_cbox0_1_publish" )
+        SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+
+        then: "new content listed in the grid and can be opened for edit"
+        !formViewPanel.isValidationMessagePresent();
+
+    }
     //TODO XP-259 impossible to remove a selected option
     @Ignore
     def "GIVEN a not required Single Selector' Combobox-content' with selected option WHEN option removed and 'close' and 'save' pressed THEN option not selected in form view"()
@@ -129,7 +147,6 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         formViewPanel.isOptionFilterInputDisplayed();
         and:
         formViewPanel.getSelectedOption().isEmpty();
-
 
     }
 

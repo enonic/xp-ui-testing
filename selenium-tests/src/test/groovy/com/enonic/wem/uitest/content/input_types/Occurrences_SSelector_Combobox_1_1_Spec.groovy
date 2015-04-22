@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -32,9 +33,9 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         formViewPanel.isOptionFilterInputDisplayed();
     }
 
-    def "GIVEN saving of 'Single Selector Combo box-content(0:1)' without required option WHEN content opened for edit THEN option not selected on the page"()
+    def "GIVEN saving of 'Single Selector Combo box-content(1:1)' without required option WHEN content opened for edit THEN option not selected on the page"()
     {
-        given: "new content with type 'Single Selector ComboBox 0:1'"
+        given: "new content with type 'Single Selector ComboBox 1:1'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
@@ -48,7 +49,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    def "GIVEN saving of 'Single Selector Combo box-content(0:1)' without required option WHEN content saved  THEN invalid content listed"()
+    def "GIVEN saving of 'Single Selector Combo box-content(1:1)' without required option WHEN content saved  THEN invalid content listed"()
     {
         when: "content without required option saved"
         String option = null;
@@ -63,7 +64,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
 
     def "GIVEN saving of 'Single Selector Combo box-content' with selected options WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
     {
-        given: "new content with type 'Single Selector ComboBox 0:0'"
+        given: "new content with type 'Single Selector ComboBox 1:1'"
         String option = "option A";
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
@@ -98,9 +99,9 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         !formViewPanel.isOptionFilterInputDisplayed();
     }
 
-    def "GIVEN a 'Single Selector Combo box-content(0:0)' with selected option WHEN content opened and option changed THEN new option displayed"()
+    def "GIVEN a 'Single Selector Combo box-content(1:1)' with selected option WHEN content opened and option changed THEN new option displayed"()
     {
-        given: "a content with type Single Selector ComboBox 0:0' opened for edit"
+        given: "a content with type Single Selector ComboBox 1:1' opened for edit"
         String newOption = "option B";
         PropertyTree newData = ContentUtils.buildSingleSelectionData( newOption );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -115,6 +116,24 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         then: "new selected option displayed"
         formViewPanel.getSelectedOption() == newOption;
 
+    }
+
+    def "GIVEN creating new Single Selector ComboBox-content (1:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
+    {
+        given: "start to add a content with type 'ComboBox-content (1:1)'"
+        Content content = buildSSelectorComboBox1_1_Content( null )
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
+            SITE_NAME ).clickToolbarNew().selectContentType( content.getContentTypeName() );
+
+        when:
+        contentWizardPanel.clickOnPublishButton();
+        TestUtils.saveScreenshot( getSession(), "ss_cbox1_1_publish" )
+        SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
+
+        then: "new content listed in the grid and can be opened for edit"
+        formViewPanel.isValidationMessagePresent();
+        and:
+        formViewPanel.getValidationMessage() == SingleSelectorComboBoxFormView.VALIDATION_MESSAGE_1_1;
     }
     //TODO XP-259 impossible to remove a selected option
     @Ignore

@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -95,6 +96,24 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         then: "new selected option displayed"
         formViewPanel.getSelectedOption() == newOption;
 
+    }
+
+    def "GIVEN creating new Single Selector Radio-content (1:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
+    {
+        given: "start to add a content with type 'single selector Radio-content (1:1)'"
+        Content content = buildSingleSelectorRadio1_1_Content( null )
+        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
+            SITE_NAME ).clickToolbarNew().selectContentType( content.getContentTypeName() );
+
+        when:
+        contentWizardPanel.clickOnPublishButton();
+        TestUtils.saveScreenshot( getSession(), "ss_radio1_1_publish" )
+        SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
+
+        then: "new content listed in the grid and can be opened for edit"
+        formViewPanel.isValidationMessagePresent();
+        and:
+        formViewPanel.getValidationMessage() == SingleSelectorRadioFormView.VALIDATION_MESSAGE_1_1;
     }
 
 
