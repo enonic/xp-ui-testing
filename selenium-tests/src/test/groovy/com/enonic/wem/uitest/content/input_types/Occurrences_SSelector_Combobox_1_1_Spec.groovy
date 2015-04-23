@@ -146,6 +146,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         formViewPanel.clickOnRemoveOptionButton();
         wizard.save().close( content_wit_opt.getDisplayName() );
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+        TestUtils.saveScreenshot( getSession(), "ss_cbox1_1_opt" )
 
         then:
         !inputDisplayedBeforeRemoving;
