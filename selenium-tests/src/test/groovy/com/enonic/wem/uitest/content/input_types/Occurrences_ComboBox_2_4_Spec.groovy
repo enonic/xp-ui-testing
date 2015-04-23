@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_ComboBox_2_4_Spec
@@ -87,9 +86,7 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.isOptionFilterInputEnabled();
 
     }
-    //TODO remove it when bug will be fixed::
-    //bug XP-259   and XP-261
-    @Ignore
+
     def "GIVEN ComboBox-content (2:4) with two selected options and one option removed and content saved WHEN content opened for edit THEN one option selected on the page "()
     {
         given: "content with one required option opened for edit' and one option removed"
@@ -99,8 +96,6 @@ class Occurrences_ComboBox_2_4_Spec
         wizard.save().close( content_with_opt.getDisplayName() );
 
         when: "when content selected in the grid and opened for edit again"
-        //TODO remove it's string when bug with searchText will be fixed
-        contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         then: "no options selected on the page "

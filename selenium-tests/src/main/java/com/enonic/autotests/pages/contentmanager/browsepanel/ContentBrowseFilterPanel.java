@@ -22,13 +22,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowseFilterPanel
     extends BaseBrowseFilterPanel
 {
-//    private final String CLEAR_FILTER_LINK = "Clear filter";
-//
-//    public static final String SEARCH_INPUT_XPATH =
-//        "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";
-//
-//    @FindBy(xpath = SEARCH_INPUT_XPATH)
-//    private WebElement searchInput;
 
     private String CONTENT_TYPE_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
@@ -167,16 +160,18 @@ public class ContentBrowseFilterPanel
     /**
      * Clicks on link 'Clear Filter', located on the search panel.
      */
-    public void clickOnCleanFilter()
+    public ContentBrowseFilterPanel clickOnCleanFilter()
     {
         boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
         if ( !isVisible )
         {
-            getLogger().info( "The link with name 'Clear Filter' was not found!" );
-            throw new TestFrameworkException( "The link with name 'Clear Filter' was not found!" );
+            // getLogger().info( "The link with name 'Clear Filter' was not found!" );
+            //throw new TestFrameworkException( "The link with name 'Clear Filter' was not found!" );
+            return this;
         }
         findElements( By.linkText( CLEAR_FILTER_LINK ) ).get( 0 ).click();
         sleep( 2000 );
+        return this;
     }
 
     /**

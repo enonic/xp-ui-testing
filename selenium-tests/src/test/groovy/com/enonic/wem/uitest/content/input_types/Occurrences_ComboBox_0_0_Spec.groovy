@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -102,8 +101,7 @@ class Occurrences_ComboBox_0_0_Spec
         formViewPanel.isOptionFilterInputEnabled();
 
     }
-    //xp-258-259
-    @Ignore
+
     def "GIVEN ComboBox-content (0:0) with three options and one option removed and content saved WHEN content opened for edit THEN two selected options and buttons 'Remove' present on the page "()
     {
         given: "content with tree options opened for edit' and one option removed"
@@ -113,7 +111,6 @@ class Occurrences_ComboBox_0_0_Spec
         wizard.save().close( content_wit_opt.getDisplayName() );
 
         when: "when content opened for edit again"
-        contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
         then: "only two options are present in the form view"
@@ -125,8 +122,7 @@ class Occurrences_ComboBox_0_0_Spec
         optValues.containsAll( options.toList() );
 
     }
-    //xp-258-259
-    @Ignore
+
     def "GIVEN a existing new ComboBox 0:0 with options  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()
     {
         given: "existing new ComboBox 0:0 with options'"
@@ -134,7 +130,7 @@ class Occurrences_ComboBox_0_0_Spec
 
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnPublishButton().close( content_wit_opt.getDisplayName() );
-        filterPanel.typeSearchText( content_wit_opt.getName() );
+        filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( content_wit_opt.getPath() ).equals( ContentStatus.ONLINE.getValue() )

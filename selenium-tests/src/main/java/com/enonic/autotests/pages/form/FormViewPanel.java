@@ -1,10 +1,7 @@
 package com.enonic.autotests.pages.form;
 
 
-import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
@@ -29,15 +26,8 @@ public abstract class FormViewPanel
 
     public boolean isValidationMessagePresent()
     {
-        List<WebElement> result = findElements( By.xpath( VALIDATION_VIEWER ) );
-        if ( result.size() == 0 )
-        {
-            return false;
-        }
-        else
-        {
-            return result.get( 0 ).isDisplayed();
-        }
+        return waitUntilVisibleNoException( By.xpath( VALIDATION_VIEWER ), Application.EXPLICIT_NORMAL );
+
     }
 
 }

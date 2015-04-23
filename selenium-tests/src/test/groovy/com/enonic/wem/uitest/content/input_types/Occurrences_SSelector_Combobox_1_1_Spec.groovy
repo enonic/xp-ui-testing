@@ -9,7 +9,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_SSelector_Combobox_1_1_Spec
@@ -135,8 +134,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         and:
         formViewPanel.getValidationMessage() == SingleSelectorComboBoxFormView.VALIDATION_MESSAGE_1_1;
     }
-    //TODO XP-259 impossible to remove a selected option
-    @Ignore
+
     def "GIVEN a Single Selector' ComboBox-content' with selected option WHEN option removed and 'close' and 'save' pressed THEN option not selected in form view"()
     {
         given: "new content with type 'Single Selector ComboBox'"
@@ -147,8 +145,6 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         when: "content opened for edit"
         formViewPanel.clickOnRemoveOptionButton();
         wizard.save().close( content_wit_opt.getDisplayName() );
-        //TODO XP-261 remove it's string when bug with searchText will be fixed
-        contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
         then:
