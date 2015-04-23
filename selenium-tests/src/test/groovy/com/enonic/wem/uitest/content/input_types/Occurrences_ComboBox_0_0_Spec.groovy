@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -115,6 +116,7 @@ class Occurrences_ComboBox_0_0_Spec
 
         then: "only two options are present in the form view"
         List<String> optValues = formViewPanel.getSelectedOptionValues();
+        TestUtils.saveScreenshot( getSession(), "00remove_opt" )
         optValues.size() == 2;
 
         and: "and options have a correct text"

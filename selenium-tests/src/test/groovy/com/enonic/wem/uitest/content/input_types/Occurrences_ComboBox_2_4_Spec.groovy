@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -99,6 +100,7 @@ class Occurrences_ComboBox_2_4_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         then: "no options selected on the page "
+        TestUtils.saveScreenshot( getSession(), "24remove_opt" )
         List<String> optValues = formViewPanel.getSelectedOptionValues();
         optValues.size() == 1;
 
