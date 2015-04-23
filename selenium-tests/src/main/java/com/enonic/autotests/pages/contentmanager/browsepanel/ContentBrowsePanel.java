@@ -498,12 +498,43 @@ public class ContentBrowsePanel
         {
             throw new TestFrameworkException( "content was not found: " + path.toString() );
         }
-        openContextMenu( path );
+        openContextMenu( path.getName() );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).get( 0 ).click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
     }
+
+    public ContentBrowsePanel selectPublishFromContextMenu( ContentPath path )
+    {
+        getFilterPanel().clickOnCleanFilter().typeSearchText( path.getName() );
+        openContextMenu( path.getName() );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Publish" ) ) ).get( 0 ).click();
+        sleep( 2000 );
+        return this;
+
+    }
+
+    public ContentBrowsePanel selectDuplicateFromContextMenu( ContentPath path )
+    {
+        getFilterPanel().clickOnCleanFilter().typeSearchText( path.getName() );
+        openContextMenu( path.getName() );
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).get( 0 ).click();
+        return this;
+
+    }
+
+    public boolean isEnableContextMenuItem( String contentName, String action )
+    {
+        getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
+        openContextMenu( contentName );
+        if ( findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "menu item was not found!  " + action );
+        }
+        return findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).get( 0 ).isEnabled();
+    }
+
 
     /**
      * Start to delete a content from menu in context menu.
@@ -517,7 +548,7 @@ public class ContentBrowsePanel
         {
             throw new TestFrameworkException( "content was not found: " + path.toString() );
         }
-        openContextMenu( path );
+        openContextMenu( path.getName() );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).get( 0 ).click();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
@@ -537,24 +568,19 @@ public class ContentBrowsePanel
         {
             throw new TestFrameworkException( "content was not found: " + path.toString() );
         }
-        openContextMenu( path );
+        openContextMenu( path.getName() );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         return newContentDialog;
     }
 
-    /**
-     * Right-clicks on a content and opens a context menu.
-     *
-     * @param contentPath
-     */
-    private void openContextMenu( ContentPath contentPath )
+    private void openContextMenu( String contentName )
     {
-        String path = contentPath.toString();
-        getLogger().info( "opening a context menu, content path of content: " + path );
-        TestUtils.saveScreenshot( getSession(), "menu_" + contentPath.getName() );
-        String contentDescriptionXpath = String.format( DIV_NAMES_VIEW, path );
+
+        getLogger().info( "opening a context menu, content path of content: " + contentName );
+        TestUtils.saveScreenshot( getSession(), "menu_" + contentName );
+        String contentDescriptionXpath = String.format( DIV_NAMES_VIEW, contentName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
         Actions action = new Actions( getDriver() );
 
