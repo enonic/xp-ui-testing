@@ -178,7 +178,7 @@ public class ContentWizardPanel
             clearAndType( nameInput, content.getName().trim() );
         }
 
-        TestUtils.saveScreenshot( getSession(), content.getName() );
+        //TestUtils.saveScreenshot( getSession(), content.getName() );
         // 2. populate main tab
         if ( content.getData() != null )
         {
@@ -263,7 +263,7 @@ public class ContentWizardPanel
     public ContentWizardPanel waitUntilWizardOpened()
     {
         boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "contentwizard" ) );
+        //TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "contentwizard" ) );
         if ( !result )
         {
             throw new TestFrameworkException( "ContentWizard was not showed!" );
