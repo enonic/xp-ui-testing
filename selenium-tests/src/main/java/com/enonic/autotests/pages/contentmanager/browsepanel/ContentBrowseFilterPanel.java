@@ -121,7 +121,8 @@ public class ContentBrowseFilterPanel
      */
     public ContentBrowseFilterPanel typeSearchText( String text )
     {
-        if ( !searchInput.isDisplayed() )
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( SEARCH_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isVisible )
         {
             throw new TestFrameworkException( "browse panel or search input not displayed" );
         }
