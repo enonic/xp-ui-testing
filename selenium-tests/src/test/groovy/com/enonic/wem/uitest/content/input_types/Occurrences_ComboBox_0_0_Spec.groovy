@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.SleepHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
@@ -134,6 +135,8 @@ class Occurrences_ComboBox_0_0_Spec
 
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnPublishButton().close( content_wit_opt.getDisplayName() );
+        //TODO remove it
+        SleepHelper.sleep( 2000 );
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
         then: "content has a 'online' status"
