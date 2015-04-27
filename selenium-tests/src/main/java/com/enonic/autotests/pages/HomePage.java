@@ -104,7 +104,7 @@ public class HomePage
         }
         contentManager.click();
         boolean isFrameLoaded =
-            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.CONTENT_MANAGER_FRAME_XPATH ), Application.EXPLICIT_NORMAL );
+            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.CONTENT_MANAGER_FRAME_XPATH ), Application.EXPLICIT_LONG );
         if ( !isFrameLoaded )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-app" ) );
