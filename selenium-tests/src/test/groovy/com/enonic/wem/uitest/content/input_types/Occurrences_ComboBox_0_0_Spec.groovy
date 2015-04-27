@@ -137,6 +137,7 @@ class Occurrences_ComboBox_0_0_Spec
         wizard.clickOnPublishButton().close( content_wit_opt.getDisplayName() );
         //TODO remove it
         SleepHelper.sleep( 2000 );
+        TestUtils.saveScreenshot( getSession(), "occ" )
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
         then: "content has a 'online' status"
