@@ -127,7 +127,8 @@ public class ContentBrowseFilterPanel
             throw new TestFrameworkException( "browse panel or search input not displayed" );
         }
         getLogger().info( "query will be applied : " + text );
-        searchInput.sendKeys( text );
+        clearAndType( searchInput, text );
+        //searchInput.sendKeys( text );
         searchInput.sendKeys( Keys.ENTER );
         sleep( 1000 );
         getLogger().info( "Filtered by : " + text );

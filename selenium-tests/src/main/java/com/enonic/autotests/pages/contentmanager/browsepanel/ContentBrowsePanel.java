@@ -414,6 +414,16 @@ public class ContentBrowsePanel
         return sortContentDialog;
     }
 
+    public MoveContentDialog clickToolbarMove()
+    {
+        moveButton.click();
+        sleep( 500 );
+        MoveContentDialog moveContentDialog = new MoveContentDialog( getSession() );
+        moveContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+
+        return moveContentDialog;
+    }
+
     /**
      * Expands all contents from 'content path' and clicks on a checkbox near the content, that will be parent for new content.
      *

@@ -169,8 +169,12 @@ public class ContentWizardPanel
         // 1. type a data: 'name' and 'Display Name'.
         waitElementClickable( By.name( "displayName" ), 2 );
         getLogger().info( "types displayName: " + content.getDisplayName() );
-        clearAndType( displayNameInput, content.getDisplayName() );
-        sleep( 500 );
+        if ( content.getDisplayName() != null )
+        {
+            clearAndType( displayNameInput, content.getDisplayName() );
+            sleep( 500 );
+        }
+
         if ( StringUtils.isNotEmpty( content.getName() ) )
         {
             waitElementClickable( By.name( "name" ), 2 );
