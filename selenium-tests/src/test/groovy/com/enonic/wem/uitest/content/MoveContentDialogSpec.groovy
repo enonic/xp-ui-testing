@@ -1,9 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.MoveContentDialog
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -15,10 +13,10 @@ class MoveContentDialogSpec
 
 
     @Shared
-    String FIRST_CONTENT_NAME = "first";
+    String FIRST_DISPLAY_CONTENT_NAME = "first";
 
     @Shared
-    String SECOND_CONTENT_NAME = "second";
+    String SECOND_DISPLAY_CONTENT_NAME = "second";
 
     @Shared
     Content FIRST_CONTENT;
@@ -30,7 +28,7 @@ class MoveContentDialogSpec
     def "add first folder content"()
     {
         when:
-        FIRST_CONTENT = buildFolderContent( FIRST_CONTENT_NAME );
+        FIRST_CONTENT = buildFolderContent( "movetest", FIRST_DISPLAY_CONTENT_NAME );
         contentBrowsePanel.clickToolbarNew().selectContentType( FIRST_CONTENT.getContentTypeName() ).typeData( FIRST_CONTENT ).save().close(
             FIRST_CONTENT.getDisplayName() );
         then:
@@ -40,7 +38,7 @@ class MoveContentDialogSpec
     def "add second folder content"()
     {
         when:
-        SECOND_CONTENT = buildFolderContent( SECOND_CONTENT_NAME );
+        SECOND_CONTENT = buildFolderContent( "movetest", SECOND_DISPLAY_CONTENT_NAME );
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData(
             SECOND_CONTENT ).save().close( SECOND_CONTENT.getDisplayName() );
         then:
@@ -105,15 +103,5 @@ class MoveContentDialogSpec
 
     }
 
-    private Content buildFolderContent( String displayName )
-    {
-        String name = NameHelper.uniqueName( "movetest" );
-        Content content = Content.builder().
-            name( name ).
-            displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-        return content;
-    }
+
 }

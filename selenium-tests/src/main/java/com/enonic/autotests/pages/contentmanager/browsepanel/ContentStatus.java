@@ -3,7 +3,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 public enum ContentStatus
 {
-    NEW( "New" ), ONLINE( "Online" );
+    NEW( "New" ), ONLINE( "Online" ), MODIFIED( "Modified" );
 
     private String value;
 

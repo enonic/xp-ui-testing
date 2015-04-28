@@ -31,6 +31,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
+    public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
+
     public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='Content Manager']";
 
     private final String BASE_TOOLBAR_XPATH = "//div[contains(@id,'app.browse.ContentBrowseToolbar')]";
@@ -99,6 +101,15 @@ public class ContentBrowsePanel
     public ContentBrowsePanel( TestSession session )
     {
         super( session );
+    }
+
+    public String waitNotificationMessage()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE ), Application.EXPLICIT_NORMAL ) )
+        {
+            return null;
+        }
+        return findElements( By.xpath( NOTIFICATION_MESSAGE ) ).get( 0 ).getText();
     }
 
     /**
@@ -330,6 +341,18 @@ public class ContentBrowsePanel
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
+    }
+
+    public ContentBrowsePanel clickToolbarPublish()
+    {
+        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isEnabled )
+        {
+            throw new SaveOrUpdateException( "Impossible to publish content, because the 'publish' button is disabled!" );
+        }
+        publishButton.click();
+
+        return this;
     }
 
     public ContentBrowsePanel selectContentInTable( List<Content> contents )
