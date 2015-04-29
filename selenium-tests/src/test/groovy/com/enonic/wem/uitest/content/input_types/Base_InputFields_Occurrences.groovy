@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
@@ -58,6 +59,7 @@ class Base_InputFields_Occurrences
             site = buildSite();
             contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
                 site.getDisplayName() );
+            TestUtils.saveScreenshot( getSession(), "site_all_contenttypes" )
         }
     }
 
