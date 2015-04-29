@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -32,6 +33,8 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDateContent( BAD_FORMAT_DATE );
+        filterPanel.typeSearchText( SITE_NAME );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_search" ) );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
 
@@ -48,6 +51,8 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDateContent( WRONG_DAY_DATE );
+        filterPanel.typeSearchText( SITE_NAME );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
 
@@ -64,6 +69,8 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDateContent( WRONG_MONTH_DATE );
+        filterPanel.typeSearchText( SITE_NAME );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
 
@@ -80,6 +87,8 @@ class DateContentValidation_Spec
     {
         given: "date with correct date format"
         Content dateContent = buildDateContent( CORRECT_DATE );
+        filterPanel.typeSearchText( SITE_NAME );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
 

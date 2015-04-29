@@ -18,7 +18,7 @@ class InstallContentTypesModule
     String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.all-contenttypes";
 
     @Shared
-    String ALL_CONTENT_TYPES_MODULE_URL = "mvn:com.enonic.xp.ui-testing/all-contenttypes/5.0.2-SNAPSHOT";
+    String ALL_CONTENT_TYPES_MODULE_URL = "mvn:com.enonic.xp.ui-testing/all-contenttypes/5.1.0-SNAPSHOT";
 
 
     def setup()

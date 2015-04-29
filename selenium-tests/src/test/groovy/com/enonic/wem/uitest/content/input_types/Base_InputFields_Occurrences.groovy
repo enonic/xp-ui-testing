@@ -64,7 +64,7 @@ class Base_InputFields_Occurrences
             site = buildSite();
             contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
                 site.getDisplayName() );
-            TestUtils.saveScreenshot( getSession(), "site_saved" )
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
         }
     }
 
