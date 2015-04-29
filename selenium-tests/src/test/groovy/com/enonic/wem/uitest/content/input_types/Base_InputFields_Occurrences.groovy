@@ -59,6 +59,7 @@ class Base_InputFields_Occurrences
     {
         Content site;
         ContentPath sitePath = ContentPath.from( ContentPath.ROOT, SITE_NAME );
+        filterPanel.typeSearchText( SITE_NAME );
         if ( !contentBrowsePanel.exists( sitePath ) )
         {
             site = buildSite();

@@ -15,6 +15,7 @@ import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -124,6 +125,7 @@ public class ContentBrowseFilterPanel
         boolean isVisible = waitUntilVisibleNoException( By.xpath( SEARCH_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isVisible )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "filterinput" ) );
             throw new TestFrameworkException( "browse panel or search input not displayed" );
         }
         getLogger().info( "query will be applied : " + text );
