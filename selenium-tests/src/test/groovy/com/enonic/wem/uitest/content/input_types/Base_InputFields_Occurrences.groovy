@@ -46,7 +46,11 @@ class Base_InputFields_Occurrences
         setup: "add a site, based on test module"
         addSite();
 
-        expect: " test site should be listed"
+        when:
+        filterPanel.typeSearchText( SITE_NAME );
+        TestUtils.saveScreenshot( getSession(), SITE_NAME )
+
+        then: " test site should be listed"
         contentBrowsePanel.exists( ContentPath.from( ContentPath.ROOT, SITE_NAME ) );
     }
 
@@ -59,7 +63,7 @@ class Base_InputFields_Occurrences
             site = buildSite();
             contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
                 site.getDisplayName() );
-            TestUtils.saveScreenshot( getSession(), "site_all_contenttypes" )
+            TestUtils.saveScreenshot( getSession(), "site_saved" )
         }
     }
 
