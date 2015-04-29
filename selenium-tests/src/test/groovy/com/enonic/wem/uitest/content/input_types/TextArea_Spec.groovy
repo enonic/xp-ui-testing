@@ -16,6 +16,7 @@ class TextArea_Spec
     {
         when: "wizard opened"
         Content textAreaContent = build_TextArea_Content( "test" );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             textAreaContent.getContentTypeName() );
 
@@ -30,6 +31,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "" );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textAreaContent.getContentTypeName() );
 
@@ -45,6 +47,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textAreaContent.getContentTypeName() );
 
@@ -61,6 +64,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close( textAreaContent.getDisplayName() ); ;
 

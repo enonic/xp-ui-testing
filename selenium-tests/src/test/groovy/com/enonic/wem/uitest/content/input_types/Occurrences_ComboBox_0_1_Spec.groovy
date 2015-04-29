@@ -23,6 +23,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         when: "start to add a content with type 'ComboBox 0:1'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() )
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
@@ -37,6 +38,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -57,6 +59,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         content_with_opt = buildComboBox0_1_Content( 1 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
 
@@ -117,6 +120,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );

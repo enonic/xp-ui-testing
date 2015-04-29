@@ -24,6 +24,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "start to add a content with type 'ComboBox 2:4'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() )
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
@@ -46,6 +47,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -69,6 +71,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         content_with_opt = buildComboBox2_4_Content( 2 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
 
@@ -115,6 +118,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -139,6 +143,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );

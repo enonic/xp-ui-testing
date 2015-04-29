@@ -70,6 +70,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Time'"
         Content timeContent = buildTimeContent();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             timeContent.getContentTypeName() ).typeData( timeContent ).save().close( timeContent.getDisplayName() );
 
@@ -87,6 +88,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Double'"
         Content doubleContent = buildDoubleContent();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
 
@@ -104,6 +106,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Long'"
         Content longContent = buildLongContent();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             longContent.getContentTypeName() ).typeData( longContent ).save().close( longContent.getDisplayName() );
 
@@ -121,6 +124,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Geo point'"
         Content doubleContent = buildGeoPointContent();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
 
@@ -139,6 +143,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'checkbox'"
         Content checkBoxContent = buildCheckBoxContent();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             checkBoxContent.getContentTypeName() ).typeData( checkBoxContent ).save().close( checkBoxContent.getDisplayName() );
 

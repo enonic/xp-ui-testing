@@ -25,6 +25,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "start to add a content with type 'ComboBox 1:1'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() );
 
@@ -46,6 +47,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -69,6 +71,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         content_with_opt = buildComboBox1_1_Content( 1 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
 
@@ -118,6 +121,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox1_1_Content( 1 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
@@ -132,6 +136,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "start to add a content with type 'ComboBox-content (1:1)'"
         Content textLineContent = buildComboBox1_1_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
 

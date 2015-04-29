@@ -10,7 +10,7 @@ public class DeleteContentDialog
     extends BaseDeleteDialog
 {
     private final String TITLE_XPATH =
-        "//div[contains(@id,'ContentDeleteDialog')]//div[contains(@id,'api.ui.dialog.ModalDialogHeader') and child::h2[text()='Delete Content']]";
+        "//div[contains(@id,'ContentDeleteDialog')]//div[contains(@id,'api.ui.dialog.ModalDialogHeader') and child::h2[text()='Delete item']]";
 
     /**
      * The constructor.

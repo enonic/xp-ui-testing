@@ -25,6 +25,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         when: "start to add a content with type 'Single Selector ComboBox'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() )
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
@@ -38,6 +39,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         given: "new content with type 'Single Selector ComboBox 1:1'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -54,6 +56,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         when: "content without required option saved"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -67,6 +70,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         given: "new content with type 'Single Selector ComboBox 1:1'"
         String option = "option A";
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
@@ -86,6 +90,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         given: "saving of content with required Single Selector ComboBox'"
         String option = "option A";
         content_wit_opt = buildSSelectorComboBox1_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
@@ -122,7 +127,8 @@ class Occurrences_SSelector_Combobox_1_1_Spec
     def "GIVEN creating new Single Selector ComboBox-content (1:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'ComboBox-content (1:1)'"
-        Content content = buildSSelectorComboBox1_1_Content( null )
+        Content content = buildSSelectorComboBox1_1_Content( null );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( content.getContentTypeName() );
 

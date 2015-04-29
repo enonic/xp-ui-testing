@@ -38,6 +38,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
 
@@ -54,6 +55,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 1 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel =
             contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
                 tagContent.getContentTypeName() );
@@ -75,6 +77,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
@@ -91,6 +94,7 @@ class TagsInputType_Unlim_Spec
     {
         when: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
@@ -107,6 +111,7 @@ class TagsInputType_Unlim_Spec
         given: "start to add a content with type 'Tag unlimited'"
 
         Content tagContent = buildTag_Unlim_Content( 6 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel =
             contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
                 tagContent.getContentTypeName() );

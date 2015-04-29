@@ -22,6 +22,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         when: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             textLineContent.getContentTypeName() )
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
@@ -34,6 +35,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         when: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             textLineContent.getContentTypeName() )
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
@@ -46,6 +48,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() )
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
@@ -69,6 +72,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() )
 
@@ -85,6 +89,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
 

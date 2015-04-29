@@ -24,6 +24,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         when: "start to add a content with type 'Single Selector DropDown 0:1'"
         String option = null;
         Content dropDownContent = buildSingleSelectorDropDown0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             dropDownContent.getContentTypeName() )
         SingleSelectorDropDownFormView formViewPanel = new SingleSelectorDropDownFormView( getSession() );
@@ -37,6 +38,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         given: "new content with type 'Single Selector DropDown'"
         String option = null;
         Content dropDownContent = buildSingleSelectorDropDown0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             dropDownContent.getContentTypeName() ).typeData( dropDownContent ).save().close( dropDownContent.getDisplayName() );
 
@@ -54,6 +56,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         given: "new content with type 'Single Selector DropDown'"
         String option = null;
         Content dropDownContent = buildSingleSelectorDropDown0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             dropDownContent.getContentTypeName() ).typeData( dropDownContent ).save().clickOnPublishButton().close(
             dropDownContent.getDisplayName() );
@@ -73,6 +76,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         given: "new content with type 'Single Selector ComboBox'"
         String option = "option A";
         content_wit_opt = buildSingleSelectorDropDown0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 

@@ -35,6 +35,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 2 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
 
@@ -51,6 +52,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content textLineContent = buildTag_2_5_Content( 1 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
 
@@ -69,6 +71,7 @@ class TagsInputType_2_5_Spec
         given: "start to add a content with type 'Tag 2:5'"
 
         Content tagContent = buildTag_2_5_Content( 5 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel =
             contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
                 tagContent.getContentTypeName() );
@@ -88,6 +91,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
@@ -107,6 +111,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 2 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
 
@@ -128,6 +133,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel =
             contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
                 tagContent.getContentTypeName() );

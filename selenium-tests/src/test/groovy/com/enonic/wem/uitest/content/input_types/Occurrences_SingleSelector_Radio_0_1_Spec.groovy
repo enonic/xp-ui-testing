@@ -25,6 +25,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         when: "start to add a content with type 'Single Selector Radio 0:1'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( radioContent.getContentTypeName() )
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
@@ -38,6 +39,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
 
@@ -55,6 +57,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             radioContent.getContentTypeName() ).typeData( radioContent ).save().clickOnPublishButton().close(
             radioContent.getDisplayName() );
@@ -74,6 +77,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = "option A";
         content_wit_opt = buildSingleSelectorRadio0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
@@ -107,6 +111,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
     {
         given: "start to add a content with type 'Single selector Radio-content (0:1)'"
         Content textLineContent = buildSingleSelectorRadio0_1_Content( null );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
 

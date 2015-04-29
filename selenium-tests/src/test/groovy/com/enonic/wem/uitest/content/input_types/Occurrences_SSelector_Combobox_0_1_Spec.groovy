@@ -28,6 +28,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         when: "start to add a content with type 'Single Selector ComboBox 0:1'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() )
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
@@ -41,6 +42,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         given: "new content with type 'Single Selector ComboBox'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -58,6 +60,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         given: "new content with type 'Single Selector ComboBox'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
@@ -77,6 +80,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         given: "new content with type 'Single Selector ComboBox'"
         String option = "option A";
         content_wit_opt = buildSSelectorComboBox0_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
@@ -113,6 +117,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
     {
         given: "start to add a content with type 'Single selector ComboBox-content (0:1)'"
         Content textLineContent = buildSSelectorComboBox0_1_Content( null );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
             SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
 

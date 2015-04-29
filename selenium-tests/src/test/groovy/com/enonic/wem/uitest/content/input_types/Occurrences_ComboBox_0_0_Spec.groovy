@@ -27,6 +27,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         when: "start to add a content with type 'ComboBox 0:0'"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() )
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
@@ -41,6 +42,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type Combobbox0_0 added'"
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -62,6 +64,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type ComboBox 0_0 added"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
@@ -85,6 +88,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type ComboBox0_0 added'"
         content_wit_opt = buildComboBox0_0_Content( 3 );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
@@ -148,6 +152,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "a creating of a new ComboBox 0:0 without options"
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
+        filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
 
