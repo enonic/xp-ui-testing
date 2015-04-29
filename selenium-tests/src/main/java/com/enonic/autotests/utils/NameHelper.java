@@ -16,4 +16,16 @@ public class NameHelper
 
     }
 
+    public static String resolveScreenshotName( String item )
+    {
+        if ( item.contains( "/" ) )
+        {
+            return item.substring( item.lastIndexOf( "/" ) + 1 );
+        }
+        else
+        {
+            return item;
+        }
+    }
+
 }

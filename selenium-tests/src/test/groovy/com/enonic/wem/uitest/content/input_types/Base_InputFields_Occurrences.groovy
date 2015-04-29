@@ -45,7 +45,6 @@ class Base_InputFields_Occurrences
         setup: "add a site, based on test module"
         addSite();
 
-
         expect: " test site should be listed"
         contentBrowsePanel.exists( ContentPath.from( ContentPath.ROOT, SITE_NAME ) );
     }

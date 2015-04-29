@@ -453,7 +453,7 @@ public abstract class BrowsePanel
             scrollTopValue += scrollTopValue;
         }
         getLogger().info( "slick-grid was scrolled and content was not found!" );
-        TestUtils.saveScreenshot( getSession(), "scroll_" + gridItemName );
+        TestUtils.saveScreenshot( getSession(), "scrolled_" + NameHelper.resolveScreenshotName( gridItemName ) );
         return false;
     }
 
