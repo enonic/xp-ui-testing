@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class TagsInputType_2_5_Spec
@@ -46,8 +45,7 @@ class TagsInputType_2_5_Spec
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( tagContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
     }
-    // XP-121
-    @Ignore
+
     def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'Tag 2:5'"
