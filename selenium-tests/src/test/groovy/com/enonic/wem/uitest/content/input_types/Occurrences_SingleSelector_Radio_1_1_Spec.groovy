@@ -56,6 +56,7 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio1_1_Content( option );
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
 
@@ -89,7 +90,6 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         given: "a content with type 'Single Selector Radio' opened for edit"
         String newOption = "option B";
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
-
 
         when: "new option selected"
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );

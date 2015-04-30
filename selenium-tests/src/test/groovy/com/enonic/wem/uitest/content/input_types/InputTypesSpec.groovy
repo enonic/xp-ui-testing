@@ -36,6 +36,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Date'"
         Content dateContent = buildDateContent();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             dateContent.getContentTypeName() ).typeData( dateContent ).save().close( dateContent.getDisplayName() );
 
@@ -53,6 +54,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Date Time'"
         Content dateTimeContent = buildDateTimeContent();
+        filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             dateTimeContent.getContentTypeName() ).typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
 
