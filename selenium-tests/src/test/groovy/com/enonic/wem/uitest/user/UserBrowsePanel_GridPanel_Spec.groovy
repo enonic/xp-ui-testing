@@ -5,6 +5,7 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.BaseGebSpec
 import org.openqa.selenium.Keys
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class UserBrowsePanel_GridPanel_Spec
@@ -145,6 +146,8 @@ class UserBrowsePanel_GridPanel_Spec
             userBrowsePanel.getSelectedRowsNumber() == before;
     }
 
+    //TODO remove it when the  XP-436 will be fixed
+    @Ignore
     def "GIVEN a 'roles' is collapsed and selected WHEN arrow right is typed THEN folder becomes expanded"()
     {
         given: "'roles folder is collapsed and selected'"
@@ -157,7 +160,8 @@ class UserBrowsePanel_GridPanel_Spec
         then: "'roles' folder is expanded"
         userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
     }
-
+    //TODO remove it when the  XP-436 will be fixed
+    @Ignore
     def "GIVEN a 'roles' is expanded and selected WHEN arrow left is typed THEN folder becomes collapsed"()
     {
         given: "'roles folder is expanded and selected'"
