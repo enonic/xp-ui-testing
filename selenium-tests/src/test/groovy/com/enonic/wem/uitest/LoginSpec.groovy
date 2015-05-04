@@ -55,8 +55,8 @@ class LoginSpec
     {
 
         when:
-        $( 'input.form-item', 0 ) << 'admin';
-        $( 'input.form-item', 1 ) << 'password';
+        $( 'input.input-view', 0 ) << 'admin';
+        $( 'input.input-view', 1 ) << 'password';
         TestUtils.saveScreenshot( getSession(), "login_pass" )
 
         then:
