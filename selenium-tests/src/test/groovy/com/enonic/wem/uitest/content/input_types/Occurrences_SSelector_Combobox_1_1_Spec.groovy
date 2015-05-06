@@ -44,6 +44,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saveBeforeClose" ) );
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
 
