@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.exceptions.WizardPanelNotClosingException;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -83,6 +84,7 @@ public abstract class WizardPanel<T>
         }
         else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saveBeforeClose" ) );
             return new SaveBeforeCloseDialog( getSession() );
         }
         else
