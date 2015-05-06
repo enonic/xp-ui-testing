@@ -22,14 +22,13 @@ public class UserBrowseFilterPanel
 
     }
 
-
     /**
      * @param text
      */
     public UserBrowseFilterPanel typeSearchText( String text )
     {
         getLogger().info( "query will be applied : " + text );
-        searchInput.sendKeys( text );
+        clearAndType( searchInput, text );
         searchInput.sendKeys( Keys.ENTER );
         sleep( 1000 );
         getLogger().info( "Filtered by : " + text );

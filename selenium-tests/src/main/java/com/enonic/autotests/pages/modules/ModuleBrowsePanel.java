@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.BaseDeleteDialog;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
 
@@ -170,5 +171,11 @@ public class ModuleBrowsePanel
             clickCheckboxAndSelectRow( moduleName );
         }
         return this;
+    }
+
+    @Override
+    public BaseDeleteDialog clickToolbarDelete()
+    {
+        throw new TestFrameworkException( "Delete button not present in Modules!" );
     }
 }

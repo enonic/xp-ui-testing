@@ -78,6 +78,8 @@ public abstract class BrowsePanel
 
     public abstract <T extends Application> T clickToolbarNew();
 
+    public abstract <T extends BaseDeleteDialog> T clickToolbarDelete();
+
     /**
      * clicks on 'expand' icon and expands a folder.
      *

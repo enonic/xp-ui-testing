@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.user
 
-import com.enonic.autotests.pages.usermanager.browsepanel.DeleteUserStoreDialog
+import com.enonic.autotests.pages.usermanager.browsepanel.DeleteUserItemDialog
+import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowseFilterPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
@@ -9,14 +10,18 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.autotests.vo.usermanager.UserStore
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class UserAndUserStoreCreateAndDelete_Spec
     extends BaseGebSpec
 {
     @Shared
     UserBrowsePanel userBrowsePanel;
+
+    @Shared
+    UserBrowseFilterPanel userBrowseFilterPanel;
 
     @Shared
     User user;
@@ -46,6 +51,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     {
         go "admin"
         userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
+        userBrowseFilterPanel = userBrowsePanel.getUserBrowseFilterPanel();
     }
 
     def "GIVEN creating new UserStore WHEN display name typed THEN the real name equals as expected"()
@@ -102,18 +108,40 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         then: "new user present beneath a store"
         userBrowsePanel.exists( USER_NAME, true );
-
-
     }
 
-    @Ignore
+
+    def "GIVEN existing a User Store with a user WHEN the User Store selected THEN  the 'Delete' button on toolbar is disabled "()
+    {
+        when: "select a existing 'User Store' with a user "
+        userBrowsePanel.clickCheckboxAndSelectRow( USER_STORE_PATH );
+
+        then: "button 'Delete' on toolbar is disabled"
+        !userBrowsePanel.isDeleteButtonEnabled();
+    }
+
+    def "GIVEN selected existing user and 'Delete' on toolbar pressed WHEN 'Yes' button pressed on a confirmation dialog THEN user not listed in the browse panel"()
+    {
+        given: "user deleted"
+        userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
+        DeleteUserItemDialog dialog = userBrowsePanel.clickCheckboxAndSelectRow( user.getDisplayName() ).clickToolbarDelete();
+
+        when:
+        dialog.doDelete();
+
+        then: "user no longer exists"
+        userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
+        !userBrowsePanel.exists( USER_NAME, true );
+    }
+
+
     def "GIVEN existing 'User Store', WHEN 'User Store' selected and 'Delete' button pressed THEN  deleted User Store is no longer listed at root"()
     {
         given: "select a existing 'User Store' "
         userBrowsePanel.clickCheckboxAndSelectRow( USER_STORE_PATH );
 
         when: "'Delete' button pressed"
-        DeleteUserStoreDialog deleteDialog = userBrowsePanel.clickToolbarDelete();
+        DeleteUserItemDialog deleteDialog = userBrowsePanel.clickToolbarDelete();
         deleteDialog.doDelete();
 
         then: "new User Store listed and verify, that real name is the same as expected"

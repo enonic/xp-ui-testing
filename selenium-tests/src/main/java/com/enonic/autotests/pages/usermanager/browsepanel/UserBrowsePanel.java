@@ -103,6 +103,16 @@ public class UserBrowsePanel
         super( session );
     }
 
+    public UserBrowseFilterPanel getFilterPanel()
+    {
+        if ( userBrowseFilterPanel == null )
+        {
+            userBrowseFilterPanel = new UserBrowseFilterPanel( getSession() );
+        }
+        return userBrowseFilterPanel;
+    }
+
+
     @Override
     public UserBrowsePanel goToAppHome()
     {
@@ -129,7 +139,8 @@ public class UserBrowsePanel
         return this;
     }
 
-    public DeleteUserStoreDialog clickToolbarDelete()
+    @Override
+    public DeleteUserItemDialog clickToolbarDelete()
     {
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
@@ -137,7 +148,7 @@ public class UserBrowsePanel
             throw new TestFrameworkException( "Impossible to delete a user store, because the 'Delete' button is disabled!" );
         }
         deleteButton.click();
-        DeleteUserStoreDialog dialog = new DeleteUserStoreDialog( getSession() );
+        DeleteUserItemDialog dialog = new DeleteUserItemDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
     }
@@ -182,11 +193,9 @@ public class UserBrowsePanel
 
     public UserBrowsePanel clickOnRowAndSelectGroupInUserStore( String userStoreName )
     {
-        //"//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]"
         String GROUP_ROW = String.format( DIV_NAMES_VIEW, userStoreName ) + "/ancestor::div[contains(@class,'slick-row')] " +
             "//following-sibling::div//" +
             String.format( "div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]", "groups" );
-        ////div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'enonic')]]/ancestor::div[contains(@class,'slick-row')]//following-sibling::div//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'groups')]]
         Actions builder = new Actions( getDriver() );
         builder.click( findElement( By.xpath( GROUP_ROW ) ) ).build().perform();
         sleep( 500 );
