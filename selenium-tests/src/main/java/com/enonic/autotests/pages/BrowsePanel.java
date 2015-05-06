@@ -104,8 +104,12 @@ public abstract class BrowsePanel
 
     public BrowsePanel expandItem( String gritItemName )
     {
-        clickAndSelectRow( gritItemName );
-        sleep( 700 );
+        if ( !isRowSelected( gritItemName ) )
+        {
+            clickAndSelectRow( gritItemName );
+            sleep( 700 );
+        }
+
         pressKeyOnRow( gritItemName, Keys.ARROW_RIGHT );
         return this;
     }

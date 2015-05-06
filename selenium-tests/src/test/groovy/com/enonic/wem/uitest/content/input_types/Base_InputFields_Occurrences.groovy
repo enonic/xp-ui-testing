@@ -23,7 +23,7 @@ class Base_InputFields_Occurrences
 
 
     @Shared
-    static String SITE_NAME = NameHelper.uniqueName( "inputtypes" );
+    static String SITE_NAME = "inputtypes39507008";//NameHelper.uniqueName( "inputtypes" );
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types Module";
