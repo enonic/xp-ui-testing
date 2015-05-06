@@ -44,6 +44,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
             radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
 
         when: "content opened for edit"
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "close" ) )
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( radioContent );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
