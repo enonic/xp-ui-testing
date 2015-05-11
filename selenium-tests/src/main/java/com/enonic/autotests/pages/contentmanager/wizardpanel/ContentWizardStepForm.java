@@ -27,6 +27,8 @@ import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel;
 import com.enonic.autotests.pages.form.TimeFormViewPanel;
+import com.enonic.autotests.pages.form.TinyMCE0_0_FormViewPanel;
+import com.enonic.autotests.pages.form.TinyMCE0_1_FormViewPanel;
 import com.enonic.xp.data.PropertyTree;
 import com.enonic.xp.schema.content.ContentTypeName;
 
@@ -127,6 +129,15 @@ public class ContentWizardStepForm
             contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_DROPDOWN1_1.getName() ) )
         {
             formViewPanel = new SingleSelectorDropDownFormView( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TINY_MCE0_1.getName() ) )
+        {
+            formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( ModuleContentType.TINY_MCE0_0.getName() ) ||
+            contentTypeName.contains( ModuleContentType.TINY_MCE0_2.getName() ) )
+        {
+            formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
         }
 
         else

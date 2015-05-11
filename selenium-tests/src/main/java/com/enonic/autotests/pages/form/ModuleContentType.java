@@ -9,7 +9,8 @@ public enum ModuleContentType
     ":combobox0_1" ), COMBOBOX1_1( ":combobox1_1" ), COMBOBOX2_4( ":combobox2_4" ), SINGLE_SELECTOR_COMBOBOX0_1(
     ":ss_combobox0_1" ), SINGLE_SELECTOR_COMBOBOX1_1( ":ss_combobox1_1" ), TEXT_AREA( ":textarea" ), SINGLE_SELECTOR_RADIO0_1(
     ":ss_radio0_1" ), SINGLE_SELECTOR_RADIO1_1( ":ss_radio1_1" ), SINGLE_SELECTOR_DROPDOWN0_1(
-    ":ss_dropdown0_1" ), SINGLE_SELECTOR_DROPDOWN1_1( ":ss_dropdown1_1" );
+    ":ss_dropdown0_1" ), SINGLE_SELECTOR_DROPDOWN1_1( ":ss_dropdown1_1" ), TINY_MCE0_1( ":tiny_mce_0_1" ), TINY_MCE0_2(
+    ":tiny_mce_0_2" ), TINY_MCE0_0( ":tiny_mce_0_0" );
 
     private String name;
 

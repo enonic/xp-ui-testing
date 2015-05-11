@@ -5,12 +5,10 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.SleepHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -108,8 +106,7 @@ class Occurrences_ComboBox_0_0_Spec
         formViewPanel.isOptionFilterInputEnabled();
 
     }
-    //TODO remove it when sources will be updated on teamcity
-    @Ignore
+
     def "GIVEN ComboBox-content (0:0) with three options and one option removed and content saved WHEN content opened for edit THEN two selected options and buttons 'Remove' present on the page "()
     {
         given: "content with tree options opened for edit' and one option removed"
@@ -139,8 +136,7 @@ class Occurrences_ComboBox_0_0_Spec
 
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnPublishButton().close( content_wit_opt.getDisplayName() );
-        //TODO remove it
-        SleepHelper.sleep( 2000 );
+
         TestUtils.saveScreenshot( getSession(), "occ" )
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
