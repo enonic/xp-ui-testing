@@ -61,10 +61,9 @@ class Occurrences_TinyMCE_0_1_Spec
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
-        String text = formViewPanel.getText();
 
-        then: "editor is empty"
-        formViewPanel.getTextFromEmptyTextArea();
+        then: "text area is empty"
+        formViewPanel.isTextAreaEmpty();
 
     }
 

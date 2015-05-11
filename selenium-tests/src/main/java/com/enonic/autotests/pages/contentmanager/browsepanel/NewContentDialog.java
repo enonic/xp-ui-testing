@@ -18,6 +18,8 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.schema.content.ContentTypeName;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -156,15 +158,17 @@ public class NewContentDialog
      */
     public ContentWizardPanel selectContentType( String contentTypeName )
     {
+        String searchString = contentTypeName.substring( contentTypeName.indexOf( ":" ) + 1 );
+        clearAndType( searchInput, searchString );
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
-        boolean isContentNamePresent = waitElementExist( ctypeXpath, Application.EXPLICIT_NORMAL );
+        boolean isContentNamePresent = waitUntilVisibleNoException( By.xpath( ctypeXpath ), Application.EXPLICIT_NORMAL );
         if ( !isContentNamePresent )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "no_type" ) );
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
         sleep( 500 );
         findElements( By.xpath( ctypeXpath ) ).get( 0 ).click();
-        // TestUtils.clickOnElement( By.xpath( ctypeXpath ), getDriver() );
         waitsForSpinnerNotVisible();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();

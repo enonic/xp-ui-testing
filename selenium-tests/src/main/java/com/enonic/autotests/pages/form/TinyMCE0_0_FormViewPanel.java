@@ -16,7 +16,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class TinyMCE0_0_FormViewPanel
     extends BaseTinyMCEFormViewPanel
 {
-    private final String TINY_MCE_INNERHTML = "return document.getElementsByTagName('iframe')[0].contentDocument.body.innerHTML;";
 
     private final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 

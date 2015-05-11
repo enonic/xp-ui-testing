@@ -115,7 +115,6 @@ public class ContentWizardPanel
             TestUtils.saveScreenshot( getSession(), "unlock_not_present" );
             NavigatorHelper.switchToContentManagerFrame( getSession() );
             return this;
-            //throw new TestFrameworkException( "Ulock link was not foun in the live edit frame" );
         }
         WebElement link = findElements( By.xpath( UNLOCK_LINK ) ).get( 0 );
         Actions builder = new Actions( getDriver() );

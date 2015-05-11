@@ -48,13 +48,8 @@ public class TinyMCE0_1_FormViewPanel
 
     public String getText()
     {
-        //getDriver().switchTo().window( getSession().getWindowHandle() );
-        //NavigatorHelper.switchToIframe( getSession(), "//iframe[contains(@id,'api.ui.text.TextArea')]" );
         List<WebElement> frames = findElements( By.xpath( "//iframe[contains(@id,'api.ui.text.TextArea')]" ) );
         getDriver().switchTo().frame( frames.get( 0 ) );
-//        boolean result = true;
-        //Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TINY_MCE_INNERHTML );
-        // String text = obj.toString();
         Object obj =
             ( (JavascriptExecutor) getSession().getDriver() ).executeScript( "return document.getElementById('tinymce').innerHTML" );
         String text = obj.toString();
@@ -62,8 +57,9 @@ public class TinyMCE0_1_FormViewPanel
         return text;
     }
 
-    public String getTextFromEmptyTextArea()
+    public boolean isTextAreaEmpty()
     {
-        return "<p><br data-mce-bogus=\"1\"></p>";
+        String actual = getText();
+        return actual.equals( "<p><br data-mce-bogus=\"1\"></p>" );
     }
 }
