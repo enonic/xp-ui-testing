@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>Tiny MCE editor</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input name="htmlarea_text3" type="TinyMCE">
+      <label>HTML content 0:0</label>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+  </form>
+</content-type>
