@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -82,5 +83,11 @@ class Base_InputFields_Occurrences
             contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
+    }
+
+    protected ContentWizardPanel openWizard( String contentTypeName )
+    {
+        filterPanel.typeSearchText( SITE_NAME );
+        return contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( contentTypeName );
     }
 }

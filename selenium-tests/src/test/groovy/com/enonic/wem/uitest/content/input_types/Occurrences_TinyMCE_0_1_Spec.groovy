@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TinyMCE0_1_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -22,9 +23,8 @@ class Occurrences_TinyMCE_0_1_Spec
     {
         when: "start to add a content with type 'TinyMCE 0:1'"
         Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            tinyMceContent.getContentTypeName() );
+
+        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -38,9 +38,8 @@ class Occurrences_TinyMCE_0_1_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            tinyMceContent.getContentTypeName() ).typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
+        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
@@ -56,9 +55,8 @@ class Occurrences_TinyMCE_0_1_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_1_Content( null );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            tinyMceContent.getContentTypeName() ).typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
+        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
