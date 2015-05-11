@@ -6,7 +6,9 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class ContentPublish_Child_Spec
     extends BaseContentSpec
 {
