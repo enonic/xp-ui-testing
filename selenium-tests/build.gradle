@@ -92,6 +92,7 @@ task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, ins
     exclude '**/user/**'
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
+    exclude '**/content/input_types/*Spec.class'
     forkEvery = null
     startServer.shouldRunAfter deleteFolders
 
