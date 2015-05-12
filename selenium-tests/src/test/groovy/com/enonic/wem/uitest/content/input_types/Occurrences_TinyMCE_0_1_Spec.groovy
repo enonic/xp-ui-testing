@@ -7,7 +7,9 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class Occurrences_TinyMCE_0_1_Spec
     extends Base_InputFields_Occurrences
 

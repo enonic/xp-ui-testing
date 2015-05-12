@@ -17,7 +17,7 @@ class InstallSimpleSiteModule
     String SIMPLE_SITE_MODULE_NAME = "com.enonic.xp.ui-testing.simple-page";
 
     @Shared
-    String SIMPLE_SITE_MODULE_URL = "mvn:com.enonic.xp.ui-testing/simple-page/5.1.0-SNAPSHOT"
+    String SIMPLE_SITE_MODULE_URL = "mvn:com.enonic.xp.ui-testing/simple-page/2.0.0-SNAPSHOT"
 
 
     def setup()

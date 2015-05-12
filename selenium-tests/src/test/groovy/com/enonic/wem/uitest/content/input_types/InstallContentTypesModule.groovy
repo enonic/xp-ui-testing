@@ -7,7 +7,9 @@ import com.enonic.autotests.utils.SleepHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class InstallContentTypesModule
     extends BaseGebSpec
 {
@@ -18,7 +20,7 @@ class InstallContentTypesModule
     String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.all-contenttypes";
 
     @Shared
-    String ALL_CONTENT_TYPES_MODULE_URL = "mvn:com.enonic.xp.ui-testing/all-contenttypes/5.1.0-SNAPSHOT";
+    String ALL_CONTENT_TYPES_MODULE_URL = "mvn:com.enonic.xp.ui-testing/all-contenttypes/2.0.0-SNAPSHOT";
 
 
     def setup()
