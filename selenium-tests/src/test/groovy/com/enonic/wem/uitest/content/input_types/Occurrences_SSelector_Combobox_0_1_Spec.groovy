@@ -9,7 +9,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -28,9 +27,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         when: "start to add a content with type 'Single Selector ComboBox 0:1'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() )
+        openWizard( comboBoxContent.getContentTypeName() );
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
 
         then: "option filter input is present and enabled"
@@ -42,9 +39,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         given: "new content with type 'Single Selector ComboBox'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -61,8 +56,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox0_1_Content( option );
         filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -80,9 +74,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         given: "new content with type 'Single Selector ComboBox'"
         String option = "option A";
         content_wit_opt = buildSSelectorComboBox0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+        openWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -116,10 +108,8 @@ class Occurrences_SSelector_Combobox_0_1_Spec
     def "GIVEN creating new Single Selector ComboBox-content (0:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message not appears"()
     {
         given: "start to add a content with type 'Single selector ComboBox-content (0:1)'"
-        Content textLineContent = buildSSelectorComboBox0_1_Content( null );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
+        Content content = buildSSelectorComboBox0_1_Content( null );
+        ContentWizardPanel contentWizardPanel = openWizard( content.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();
@@ -130,8 +120,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         !formViewPanel.isValidationMessagePresent();
 
     }
-    //TODO XP-259 impossible to remove a selected option
-    @Ignore
+
     def "GIVEN a not required Single Selector' Combobox-content' with selected option WHEN option removed and 'close' and 'save' pressed THEN option not selected in form view"()
     {
         given: "new content with type 'Single Selector ComboBox'"

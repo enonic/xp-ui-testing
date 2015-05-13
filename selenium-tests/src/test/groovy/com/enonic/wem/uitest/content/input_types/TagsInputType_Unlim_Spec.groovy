@@ -38,9 +38,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).save().clickOnPublishButton().close( tagContent.getDisplayName() );
@@ -55,11 +53,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 1 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
-
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit the new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
@@ -77,9 +71,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            tagContent.getContentTypeName() ).typeData( tagContent );
+        openWizard( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         int numberOfTagBeforeRemoving = formViewPanel.getNumberOfTags();
 
@@ -94,9 +86,7 @@ class TagsInputType_Unlim_Spec
     {
         when: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            tagContent.getContentTypeName() ).typeData( tagContent );
+        openWizard( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "number of tags reduced"
@@ -109,13 +99,8 @@ class TagsInputType_Unlim_Spec
     def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN six tags added and 'Save' button pressed and just created content opened THEN six Tags with correct name are present in the wizard page "()
     {
         given: "start to add a content with type 'Tag unlimited'"
-
         Content tagContent = buildTag_Unlim_Content( 6 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
-
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );

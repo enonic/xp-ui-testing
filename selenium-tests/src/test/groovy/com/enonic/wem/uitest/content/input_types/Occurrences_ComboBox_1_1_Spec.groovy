@@ -15,9 +15,7 @@ import spock.lang.Stepwise
 @Stepwise
 class Occurrences_ComboBox_1_1_Spec
     extends Base_InputFields_Occurrences
-
 {
-
     @Shared
     Content content_with_opt;
 
@@ -25,9 +23,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "start to add a content with type 'ComboBox 1:1'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() );
+        ContentWizardPanel wizard = openWizard( comboBoxContent.getContentTypeName() );
 
         when: "only the name typed and no option selected"
         wizard.typeDisplayName( comboBoxContent.getDisplayName() );
@@ -47,9 +43,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -71,9 +65,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         content_with_opt = buildComboBox1_1_Content( 1 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
+        openWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
 
         when: "content opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -121,9 +113,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox1_1_Content( 1 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
@@ -135,10 +125,8 @@ class Occurrences_ComboBox_1_1_Spec
     def "GIVEN creating new ComboBox-content (1:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'ComboBox-content (1:1)'"
-        Content textLineContent = buildComboBox1_1_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
+        Content comboBoxContent = buildComboBox1_1_Content( 0 );
+        ContentWizardPanel contentWizardPanel = openWizard( comboBoxContent.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();

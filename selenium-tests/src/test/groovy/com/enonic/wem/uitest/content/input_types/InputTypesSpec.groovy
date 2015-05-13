@@ -41,8 +41,9 @@ class InputTypesSpec
             dateContent.getContentTypeName() ).typeData( dateContent ).save().close( dateContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( dateContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( dateContent.getPath() ).clickToolbarEdit();
+        // filterPanel.typeSearchText( dateContent.getName() );
+        // contentBrowsePanel.clickCheckboxAndSelectRow( dateContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateContent );
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
@@ -59,8 +60,9 @@ class InputTypesSpec
             dateTimeContent.getContentTypeName() ).typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( dateTimeContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( dateTimeContent.getPath() ).clickToolbarEdit();
+        // filterPanel.typeSearchText( dateTimeContent.getName() );
+        // contentBrowsePanel.clickCheckboxAndSelectRow( dateTimeContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateTimeContent )
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
@@ -77,8 +79,9 @@ class InputTypesSpec
             timeContent.getContentTypeName() ).typeData( timeContent ).save().close( timeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( timeContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( timeContent.getPath() ).clickToolbarEdit();
+        // filterPanel.typeSearchText( timeContent.getName() );
+        // contentBrowsePanel.clickCheckboxAndSelectRow( timeContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( timeContent );
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
@@ -95,8 +98,9 @@ class InputTypesSpec
             doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( doubleContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
+        //filterPanel.typeSearchText( doubleContent.getName() );
+        //contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( doubleContent );
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
@@ -113,8 +117,9 @@ class InputTypesSpec
             longContent.getContentTypeName() ).typeData( longContent ).save().close( longContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( longContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( longContent.getPath() ).clickToolbarEdit();
+        // filterPanel.typeSearchText( longContent.getName() );
+        //contentBrowsePanel.clickCheckboxAndSelectRow( longContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( longContent );
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
@@ -125,14 +130,15 @@ class InputTypesSpec
     def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
     {
         given: "add a content with type 'Geo point'"
-        Content doubleContent = buildGeoPointContent();
+        Content geopointContent = buildGeoPointContent();
         filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
+            geopointContent.getContentTypeName() ).typeData( geopointContent ).save().close( geopointContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        filterPanel.typeSearchText( doubleContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
+        //filterPanel.typeSearchText( doubleContent.getName() );
+        //contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( geopointContent );
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"

@@ -21,9 +21,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -34,9 +32,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -47,9 +43,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -60,11 +54,8 @@ class Occurrences_TextLine_0_1_Spec
     {
         given: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() )
+        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
-
 
         when:
         contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
@@ -80,10 +71,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         given: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() )
-
+        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textLineContent ).save().clickOnPublishButton().close( textLineContent.getDisplayName() );
@@ -96,10 +84,8 @@ class Occurrences_TextLine_0_1_Spec
     private Content buildTextLine0_1_Content()
     {
         String name = "textline0_1";
-
         PropertyTree data = new PropertyTree();
         data.addString( TextLine0_1_FormViewPanel.TEXT_INPUT_PROPERTY, TEST_TEXT );
-
 
         Content textLineContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).

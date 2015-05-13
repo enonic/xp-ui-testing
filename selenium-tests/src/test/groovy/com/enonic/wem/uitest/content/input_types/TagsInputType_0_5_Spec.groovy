@@ -34,9 +34,7 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).save().clickOnPublishButton().close( tagContent.getDisplayName() );
@@ -51,17 +49,12 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 1 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        contentBrowsePanel.clickOnClearSelection();
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"
@@ -73,15 +66,10 @@ class TagsInputType_0_5_Spec
     def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()
     {
         given: "start to add a content with type 'Tag 0:5'"
-
         Content tagContent = buildTag_0_5_Content( 5 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
-
 
         when: "five tags added, input text becomes disabled(display: none)"
         contentWizardPanel.typeData( tagContent )
@@ -94,11 +82,8 @@ class TagsInputType_0_5_Spec
     def "GIVEN five tags added in input is disabled WHEN one of the fives tags removed  THEN input text becomes enabled again"()
     {
         given: "start to add a content with type 'Tag 0:5'"
-
         Content tagContent = buildTag_0_5_Content( 5 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            tagContent.getContentTypeName() ).typeData( tagContent );
+        openWizard( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
@@ -114,19 +99,13 @@ class TagsInputType_0_5_Spec
     def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page "()
     {
         given: "start to add a content with type 'Tag 0:5'"
-
         Content tagContent = buildTag_0_5_Content( 5 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
-        contentBrowsePanel.clickOnClearSelection();
-        filterPanel.typeSearchText( tagContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( tagContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "one tag with correct text present on the page"

@@ -23,9 +23,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         when: "start to add a content with type 'ComboBox 0:1'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() )
+        openWizard( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
         then: "option filter input is present and enabled"
@@ -38,9 +36,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -59,9 +55,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         content_with_opt = buildComboBox0_1_Content( 1 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
+        openWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -86,8 +80,6 @@ class Occurrences_ComboBox_0_1_Spec
 
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnPublishButton().close( content_with_opt.getDisplayName() );
-        //TODO remove it when bug for searchInput will be fixed
-        contentBrowsePanel.refreshPanelInBrowser();
         filterPanel.typeSearchText( content_with_opt.getName() );
 
         then: "content has a 'online' status"
@@ -103,8 +95,6 @@ class Occurrences_ComboBox_0_1_Spec
         wizard.save().close( content_with_opt.getDisplayName() );
 
         when: "when content opened for edit again"
-        //TODO remove it's string when bug with searchText will be fixed
-        contentBrowsePanel.refreshPanelInBrowser();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         then: "no options selected on the page "
@@ -120,9 +110,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 

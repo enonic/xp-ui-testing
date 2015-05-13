@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_SingleSelector_Radio_1_1_Spec
@@ -25,8 +24,7 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         when: "start to add a content with type 'Single Selector Radio 1:1'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( radioContent.getContentTypeName() )
+        openWizard( radioContent.getContentTypeName() );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
         then: "radio buttons present on page and no any options selected"
@@ -39,9 +37,7 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
+        openWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( radioContent );
@@ -56,9 +52,7 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
+        openWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
 
         when: "content opened for edit"
         filterPanel.typeSearchText( radioContent.getName() );
@@ -73,9 +67,7 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = "option A";
         content_wit_opt = buildSingleSelectorRadio1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+        openWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -101,15 +93,12 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         formViewPanel.getSelectedOption() == newOption;
 
     }
-    //TODO remove it when sources will be updated on teamcity
-    @Ignore
+
     def "GIVEN creating new Single Selector Radio-content (1:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'single selector Radio-content (1:1)'"
         Content content = buildSingleSelectorRadio1_1_Content( null );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( content.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( content.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();

@@ -19,29 +19,24 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
     @Shared
     Content content_wit_opt;
 
-
     def "WHEN wizard for adding a 'Single Selector Radio-content' opened THEN radio buttons present on page and no any options selected"()
     {
         when: "start to add a content with type 'Single Selector Radio 0:1'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( radioContent.getContentTypeName() )
+        openWizard( radioContent.getContentTypeName() );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
         then: "radio buttons present on page and no any options selected"
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-
     def "GIVEN saving of not required 'Single Selector Radio-content' without selected option WHEN content opened for edit THEN no one selected options present in form view"()
     {
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
+        openWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
 
         when: "content opened for edit"
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "close" ) )
@@ -52,15 +47,12 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-
     def "GIVEN saving of not required 'Single Selector Radio content' without selected option WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
     {
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            radioContent.getContentTypeName() ).typeData( radioContent ).save().clickOnPublishButton().close(
+        openWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().clickOnPublishButton().close(
             radioContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -78,9 +70,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = "option A";
         content_wit_opt = buildSingleSelectorRadio0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+        openWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -96,7 +86,6 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         String newOption = "option B";
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
-
         when: "new option selected"
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
         formViewPanel.selectOption( newOption );
@@ -111,11 +100,8 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
     def "GIVEN creating new Single Selector Radio-content (0:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message not appears"()
     {
         given: "start to add a content with type 'Single selector Radio-content (0:1)'"
-        Content textLineContent = buildSingleSelectorRadio0_1_Content( null );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
-
+        Content radioContent = buildSingleSelectorRadio0_1_Content( null );
+        ContentWizardPanel contentWizardPanel = openWizard( radioContent.getContentTypeName() );
         when:
         contentWizardPanel.clickOnPublishButton();
         TestUtils.saveScreenshot( getSession(), "ss_radio0_1_publish" )
@@ -125,7 +111,6 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         !formViewPanel.isValidationMessagePresent();
 
     }
-
 
     private Content buildSingleSelectorRadio0_1_Content( String option )
     {

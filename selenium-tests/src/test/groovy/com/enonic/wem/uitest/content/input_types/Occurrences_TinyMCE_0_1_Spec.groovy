@@ -26,7 +26,7 @@ class Occurrences_TinyMCE_0_1_Spec
         when: "start to add a content with type 'TinyMCE 0:1'"
         Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
 
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        openWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"

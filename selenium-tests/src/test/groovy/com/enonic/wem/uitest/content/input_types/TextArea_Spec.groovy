@@ -16,9 +16,7 @@ class TextArea_Spec
     {
         when: "wizard opened"
         Content textAreaContent = build_TextArea_Content( "test" );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textAreaContent.getContentTypeName() );
+        openWizard( textAreaContent.getContentTypeName() );
 
         then: "empty text area present"
         TextAreaFormViewPanel areaFormViewPanel = new TextAreaFormViewPanel( getSession() );
@@ -26,14 +24,11 @@ class TextArea_Spec
 
     }
 
-
     def "GIVEN wizard for adding a TextArea-content opened WHEN no any text typed and 'Save' and 'Publish' buttons pressed and wizard closed THEN new content with status 'online' appears "()
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "" );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textAreaContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnPublishButton().close( textAreaContent.getDisplayName() );
@@ -47,9 +42,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textAreaContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnPublishButton().close( textAreaContent.getDisplayName() );
@@ -64,9 +57,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close( textAreaContent.getDisplayName() ); ;
+        openWizard( textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close( textAreaContent.getDisplayName() ); ;
 
         when: "just created content opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textAreaContent );
@@ -83,8 +74,6 @@ class TextArea_Spec
         {
             data.addString( "text", text );
         }
-
-
         Content textLineContent = Content.builder().
             name( NameHelper.uniqueName( "textarea" ) ).
             displayName( "text_area content" ).

@@ -34,9 +34,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 2 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).save().clickOnPublishButton().close( tagContent.getDisplayName() );
@@ -49,10 +47,8 @@ class TagsInputType_2_5_Spec
     def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'Tag 2:5'"
-        Content textLineContent = buildTag_2_5_Content( 1 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() );
+        Content tagContent = buildTag_2_5_Content( 1 );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();
@@ -67,19 +63,13 @@ class TagsInputType_2_5_Spec
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()
     {
         given: "start to add a content with type 'Tag 2:5'"
-
         Content tagContent = buildTag_2_5_Content( 5 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
-
         when: "five tags added, input text becomes disabled(display: none)"
         contentWizardPanel.typeData( tagContent )
-
 
         then: "one tag with correct text present on the page"
         !formViewPanel.isTagsInputDisplayed() && isDisplayedBefore;
@@ -89,16 +79,12 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            tagContent.getContentTypeName() ).typeData( tagContent );
+        openWizard( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
-
         when: "five tags added, input text becomes disabled(display: none)"
         formViewPanel.removeLastTag();
-
 
         then: "one tag with correct text present on the page"
         formViewPanel.isTagsInputDisplayed() && !isDisplayedBefore;
@@ -109,9 +95,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 2 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
@@ -131,11 +115,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel =
-            contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-                tagContent.getContentTypeName() );
-
+        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );

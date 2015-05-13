@@ -24,9 +24,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         when: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view "
@@ -38,9 +36,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         when: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         then: "button 'Add' should be displayed under the text input  in 'form view panel'"
@@ -52,9 +48,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         when: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         then: "the 'remove button' should not be displayed in the form view"
@@ -66,9 +60,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         when:
@@ -84,9 +76,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         when:
@@ -102,9 +92,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            textLineContent.getContentTypeName() )
+        openWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         formViewPanel.clickOnAddButton();
         int numberBeforeRemoving = formViewPanel.getNumberOfTextInputs()
@@ -124,9 +112,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content();
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( textLineContent.getContentTypeName() )
+        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         formViewPanel.clickOnAddButton();
         textLineContent.getData().addProperty( "1", Value.newString( "text for second input" ) );
@@ -150,10 +136,8 @@ class Occurrences_TextLine_1_0_Spec
     private Content buildTextLine1_0_Content()
     {
         String name = "textline1_0";
-
         PropertyTree data = new PropertyTree();
         data.addProperty( "0", Value.newString( FIRST_TEST_STRING ) );
-
 
         Content textLineContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).

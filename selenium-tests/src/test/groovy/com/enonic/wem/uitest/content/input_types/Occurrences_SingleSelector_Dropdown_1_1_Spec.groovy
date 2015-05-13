@@ -23,9 +23,7 @@ class Occurrences_SingleSelector_Dropdown_1_1_Spec
         when: "start to add a content with type 'Single Selector DropDown'"
         String option = null;
         Content comboBoxContent = buildSingleSelectorDropDown1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() )
+        openWizard( comboBoxContent.getContentTypeName() );
         SingleSelectorDropDownFormView formViewPanel = new SingleSelectorDropDownFormView( getSession() );
 
         then: "option filter input is present and enabled"
@@ -37,9 +35,7 @@ class Occurrences_SingleSelector_Dropdown_1_1_Spec
         given: "new content with type 'Single Selector DropDown 1:1'"
         String option = null;
         Content comboBoxContent = buildSingleSelectorDropDown1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -54,9 +50,7 @@ class Occurrences_SingleSelector_Dropdown_1_1_Spec
         when: "content without required option saved"
         String option = null;
         Content comboBoxContent = buildSingleSelectorDropDown1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
 
         then:
         filterPanel.typeSearchText( comboBoxContent.getDisplayName() );
@@ -68,9 +62,7 @@ class Occurrences_SingleSelector_Dropdown_1_1_Spec
         given: "new content with type 'Single Selector DropDown 1:1'"
         String option = "option A";
         Content comboBoxContent = buildSingleSelectorDropDown1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
 
         when: "find the just created content"
@@ -88,9 +80,7 @@ class Occurrences_SingleSelector_Dropdown_1_1_Spec
         given: "saving of content with required Single Selector ComboBox'"
         String option = "option A";
         content_wit_opt = buildSingleSelectorDropDown1_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+        openWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );

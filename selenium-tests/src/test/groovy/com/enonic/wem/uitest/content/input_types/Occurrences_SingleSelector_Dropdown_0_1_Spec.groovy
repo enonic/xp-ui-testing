@@ -24,9 +24,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         when: "start to add a content with type 'Single Selector DropDown 0:1'"
         String option = null;
         Content dropDownContent = buildSingleSelectorDropDown0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            dropDownContent.getContentTypeName() )
+        openWizard( dropDownContent.getContentTypeName() );
         SingleSelectorDropDownFormView formViewPanel = new SingleSelectorDropDownFormView( getSession() );
 
         then: "option filter input is present and enabled"
@@ -38,9 +36,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         given: "new content with type 'Single Selector DropDown'"
         String option = null;
         Content dropDownContent = buildSingleSelectorDropDown0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            dropDownContent.getContentTypeName() ).typeData( dropDownContent ).save().close( dropDownContent.getDisplayName() );
+        openWizard( dropDownContent.getContentTypeName() ).typeData( dropDownContent ).save().close( dropDownContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dropDownContent );
@@ -56,9 +52,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         given: "new content with type 'Single Selector DropDown'"
         String option = null;
         Content dropDownContent = buildSingleSelectorDropDown0_1_Content( option );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            dropDownContent.getContentTypeName() ).typeData( dropDownContent ).save().clickOnPublishButton().close(
+        openWizard( dropDownContent.getContentTypeName() ).typeData( dropDownContent ).save().clickOnPublishButton().close(
             dropDownContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -77,8 +71,7 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         String option = "option A";
         content_wit_opt = buildSingleSelectorDropDown0_1_Content( option );
         filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+        openWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );

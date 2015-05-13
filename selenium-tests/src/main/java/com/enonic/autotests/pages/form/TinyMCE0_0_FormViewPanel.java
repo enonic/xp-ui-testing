@@ -31,12 +31,21 @@ public class TinyMCE0_0_FormViewPanel
         return waitUntilVisibleNoException( By.xpath( STEP_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
-    public String getText()
+
+    public List<String> getTextFromAreas()
     {
+        List<WebElement> frames = findElements( By.xpath( "//iframe[contains(@id,'api.ui.text.TextArea')]" ) );
+        return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
+    }
+
+    private String getTextFromArea( WebElement frame )
+    {
+        String wHandle = getDriver().getWindowHandle();
+        getDriver().switchTo().frame( frame );
         Object obj =
             ( (JavascriptExecutor) getSession().getDriver() ).executeScript( "return document.getElementById('tinymce').innerHTML" );
         String text = obj.toString();
-
+        getDriver().switchTo().window( wHandle );
         return text;
     }
 
