@@ -1,4 +1,4 @@
-package com.enonic.wem.uitest.content.sorting
+package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
