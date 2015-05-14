@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -31,10 +33,45 @@ public class TinyMCE0_0_FormViewPanel
         return waitUntilVisibleNoException( By.xpath( STEP_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
+    @Override
+    public FormViewPanel type( final PropertyTree data )
+    {
+        long numberOfEditors = data.getLong( NUMBER_OF_EDITORS );
+        addEditors( numberOfEditors );
+        List<WebElement> textArea = findElements( By.xpath( TINY_MCE ) );
+        if ( textArea.size() == 0 )
+        {
+            throw new TestFrameworkException( "no one text input was not found" );
+        }
+
+        int i = 0;
+
+        for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )
+        {
+            textArea.get( i ).sendKeys( sourceString );
+            sleep( 300 );
+            i++;
+            if ( i >= numberOfEditors )
+            {
+                break;
+            }
+        }
+        sleep( 300 );
+        return this;
+    }
+
+    private void addEditors( long numberOfEditors )
+    {
+        for ( int i = 1; i < numberOfEditors; i++ )
+        {
+            clickOnAddButton();
+            sleep( 500 );
+        }
+    }
 
     public List<String> getTextFromAreas()
     {
-        List<WebElement> frames = findElements( By.xpath( "//iframe[contains(@id,'api.ui.text.TextArea')]" ) );
+        List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
         return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
     }
 
@@ -42,10 +79,10 @@ public class TinyMCE0_0_FormViewPanel
     {
         String wHandle = getDriver().getWindowHandle();
         getDriver().switchTo().frame( frame );
-        Object obj =
-            ( (JavascriptExecutor) getSession().getDriver() ).executeScript( "return document.getElementById('tinymce').innerHTML" );
+        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
         String text = obj.toString();
         getDriver().switchTo().window( wHandle );
+        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         return text;
     }
 
@@ -54,8 +91,6 @@ public class TinyMCE0_0_FormViewPanel
         return
             findElements( By.xpath( ADD_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size() >
                 0;
-
-
     }
 
     public boolean waitUntilAddButtonNotVisible()
@@ -86,8 +121,6 @@ public class TinyMCE0_0_FormViewPanel
         else
         {
             throw new TestFrameworkException( "no one 'close' button was found!" );
-
-
         }
     }
 }

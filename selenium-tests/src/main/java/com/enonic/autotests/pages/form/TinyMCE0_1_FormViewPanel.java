@@ -16,8 +16,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class TinyMCE0_1_FormViewPanel
     extends BaseTinyMCEFormViewPanel
 {
-    private final String TINY_MCE_INNERHTML = "return document.getElementsByTagName('iframe')[0].contentDocument.body.innerHTML;";
-
     public TinyMCE0_1_FormViewPanel( final TestSession session )
     {
         super( session );
@@ -32,7 +30,6 @@ public class TinyMCE0_1_FormViewPanel
             findElements( By.xpath( TINY_MCE ) ).get( 0 ).sendKeys( text );
             sleep( 300 );
         }
-
         return this;
     }
 
@@ -48,18 +45,16 @@ public class TinyMCE0_1_FormViewPanel
 
     public String getText()
     {
-        List<WebElement> frames = findElements( By.xpath( "//iframe[contains(@id,'api.ui.text.TextArea')]" ) );
+        List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
         getDriver().switchTo().frame( frames.get( 0 ) );
-        Object obj =
-            ( (JavascriptExecutor) getSession().getDriver() ).executeScript( "return document.getElementById('tinymce').innerHTML" );
+        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
         String text = obj.toString();
-
         return text;
     }
 
     public boolean isTextAreaEmpty()
     {
         String actual = getText();
-        return actual.equals( "<p><br data-mce-bogus=\"1\"></p>" );
+        return actual.equals( EMPTY_TEXT_AREA_CONTENT );
     }
 }
