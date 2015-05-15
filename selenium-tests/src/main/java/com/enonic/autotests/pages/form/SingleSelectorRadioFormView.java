@@ -17,7 +17,7 @@ public class SingleSelectorRadioFormView
 {
     private String RADIO_INPUTS = "//div[contains(@class,'radio-group')]//input[@type='radio']";
 
-    public static String VALIDATION_MESSAGE_1_1 = "Min 1 occurrence required";
+    public static String VALIDATION_MESSAGE_1_1 = "This field is required";
 
     public SingleSelectorRadioFormView( final TestSession session )
     {

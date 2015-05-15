@@ -18,7 +18,7 @@ public class ComboBoxFormViewPanel
     extends FormViewPanel
 
 {
-    public static String VALIDATION_MESSAGE_1_1 = "Min 1 occurrence required";
+    public static String VALIDATION_MESSAGE_1_1 = "This field is required";
 
     protected final String COMBO_BOX = "//div[contains(@id,'ComboBox')]";
 
