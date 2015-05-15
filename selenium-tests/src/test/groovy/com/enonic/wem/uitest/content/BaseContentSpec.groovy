@@ -38,4 +38,18 @@ class BaseContentSpec
             build();
         return content;
     }
+
+    public void addContent( Content content )
+    {
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
+    }
+
+    public ContentBrowsePanel findAndSelectContent( Content content )
+    {
+        filterPanel.typeSearchText( content.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() );
+        return contentBrowsePanel;
+    }
 }

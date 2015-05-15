@@ -6,6 +6,10 @@ import com.enonic.autotests.pages.BrowseItemsSelectionPanel;
 public class ContentBrowseItemsSelectionPanel
     extends BrowseItemsSelectionPanel
 {
+    public static final String VERSION_HISTORY = "Version History";
+
+    public static final String PREVIEW = "Preview";
+
     {
         CONTAINER = "//div[contains(@id,'app.browse.ContentBrowsePanel')]";
         ITEMS_SELECTION_PANEL = CONTAINER + "//div[contains(@id,'app.browse.ContentBrowseItemsSelectionPanel')]";

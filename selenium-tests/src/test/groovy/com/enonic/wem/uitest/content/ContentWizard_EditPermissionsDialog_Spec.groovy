@@ -73,7 +73,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' dialog opened WHEN 'inherit permissions' unchecked  THEN options filter input appears "()
     {
         given:
-        filterPanel.typeSearchText( CONTENT_NAME )
+        filterPanel.typeSearchText( CONTENT_NAME );
         EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
             CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 

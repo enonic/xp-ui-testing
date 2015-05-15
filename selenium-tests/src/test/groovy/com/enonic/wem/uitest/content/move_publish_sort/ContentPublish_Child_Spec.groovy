@@ -87,12 +87,6 @@ class ContentPublish_Child_Spec
         !contentBrowsePanel.exists( parentContent.getPath() );
     }
 
-    private void addContent( Content content )
-    {
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
-    }
-
 
     public Content buildFolderContent( String name, String displayName, String parentName )
     {
