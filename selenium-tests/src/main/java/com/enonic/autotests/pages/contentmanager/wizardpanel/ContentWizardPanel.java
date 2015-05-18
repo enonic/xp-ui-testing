@@ -193,8 +193,7 @@ public class ContentWizardPanel
         {
 
             SecurityWizardStepForm securityWizardStepForm = clickOnSecurityTabLink();
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "sec_tab" ) );
-            securityWizardStepForm.clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
+            securityWizardStepForm.waitUntilButtonEditPermissionsClickable().clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
                 content.getAclEntries() ).clickOnApply();
         }
 
@@ -205,7 +204,8 @@ public class ContentWizardPanel
     {
         String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SECURITY_LINK_TEXT );
         findElements( By.xpath( securityTabXpath ) ).get( 0 ).click();
-        sleep( 300 );
+
+        //sleep( 1000 );
         return new SecurityWizardStepForm( getSession() );
     }
 
@@ -234,7 +234,6 @@ public class ContentWizardPanel
         }
         toolbarSaveButton.click();
         boolean isSaveEnabled = isEnabledSaveButton();
-        //TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "save-content" ) );
         if ( !isSaveEnabled )
         {
             throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
@@ -280,7 +279,6 @@ public class ContentWizardPanel
 
         return DIV_CONTENT_WIZARD_PANEL;
     }
-
 
     @Override
     public WebElement getCloseButton()
