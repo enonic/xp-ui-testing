@@ -204,8 +204,7 @@ public class ContentWizardPanel
     {
         String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SECURITY_LINK_TEXT );
         findElements( By.xpath( securityTabXpath ) ).get( 0 ).click();
-
-        //sleep( 1000 );
+        sleep( 1000 );
         return new SecurityWizardStepForm( getSession() );
     }
 

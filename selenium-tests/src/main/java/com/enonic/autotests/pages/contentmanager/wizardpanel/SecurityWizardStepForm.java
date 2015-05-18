@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardStepForm;
 import com.enonic.autotests.utils.WaitHelper;
 
@@ -32,7 +34,12 @@ public class SecurityWizardStepForm
 
     public SecurityWizardStepForm waitUntilButtonEditPermissionsClickable()
     {
-        WaitHelper.waitUntilClickableNoException( getDriver(), By.xpath( CONTAINER_XPATH + EDIT_PERMISSION_BUTTON ), 1 );
+        boolean result = WaitHelper.waitUntilClickableNoException( getDriver(), By.xpath( CONTAINER_XPATH + EDIT_PERMISSION_BUTTON ),
+                                                                   Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "Button 'Edit Permissions' not clickable!" );
+        }
         return this;
     }
 
