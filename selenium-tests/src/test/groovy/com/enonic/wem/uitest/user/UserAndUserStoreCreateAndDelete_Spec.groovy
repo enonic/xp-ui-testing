@@ -68,7 +68,7 @@ class UserAndUserStoreCreateAndDelete_Spec
 
 
     }
-    //this tests ignored because correct behavior for "Save" button not implemented yet
+
     def "GIVEN creating new UserStore WHEN display name typed and 'Save' button pressed THEN 'Save' button becomes disabled"()
     {
         given:
@@ -77,12 +77,11 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         when: "name typed and 'Save' pressed"
         userStoreWizardPanel.typeData( userStore )
-        boolean isSaveEnabledBefore = !userStoreWizardPanel.isSaveButtonEnabled();
+        boolean isSaveEnabledBefore = userStoreWizardPanel.isSaveButtonEnabled();
         userStoreWizardPanel.save();
 
         then: "'Save' button becomes disabled"
-        true;
-        //!userStoreWizardPanel.isSaveButtonEnabled() && isSaveEnabledBefore;
+        !userStoreWizardPanel.isSaveButtonEnabled() && isSaveEnabledBefore;
 
 
     }

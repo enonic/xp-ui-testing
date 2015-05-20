@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -48,6 +49,8 @@ public class TinyMCE0_0_FormViewPanel
 
         for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )
         {
+            Actions builder = new Actions( getDriver() );
+            builder.click( textArea.get( i ) ).build().perform();
             textArea.get( i ).sendKeys( sourceString );
             sleep( 300 );
             i++;

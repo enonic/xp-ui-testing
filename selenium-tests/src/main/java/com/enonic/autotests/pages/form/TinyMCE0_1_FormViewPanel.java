@@ -2,10 +2,12 @@ package com.enonic.autotests.pages.form;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
@@ -27,10 +29,20 @@ public class TinyMCE0_1_FormViewPanel
         String text = data.getString( STRING_PROPERTY );
         if ( text != null )
         {
+            Actions builder = new Actions( getDriver() );
+            builder.click( findElement( By.xpath( TINY_MCE ) ) ).build().perform();
             findElements( By.xpath( TINY_MCE ) ).get( 0 ).sendKeys( text );
             sleep( 300 );
         }
         return this;
+    }
+
+    public boolean isEditorToolbarVisible()
+    {
+        List<WebElement> toolbars = findElements(
+            By.xpath( "//div[contains(@id,'TinyMCE')]//div[contains(@class,'mce-toolbar') and @role='toolbar']" ) ).stream().filter(
+            WebElement::isDisplayed ).collect( Collectors.toList() );
+        return toolbars.size() > 0;
     }
 
     public boolean isEditorPresent()

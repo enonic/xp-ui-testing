@@ -1,23 +1,13 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
-import spock.lang.Shared
+import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.xp.content.ContentPath
+import com.enonic.xp.schema.content.ContentTypeName
 
 class ContentBrowsePanelToolbarSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
-    @Shared
-    ContentBrowsePanel contentBrowsePanel;
 
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-    }
 
     def "GIVEN Content BrowsePanel WHEN no selected content THEN Delete button should be disabled"()
     {
@@ -119,5 +109,22 @@ class ContentBrowsePanelToolbarSpec
 
         then:
         contentBrowsePanel.isNewButtonEnabled();
+    }
+
+    def "GIVEN a content that not allowing children WHEN content selected THEN Sort button is  disabled for content types not allowing children"()
+    {
+        given:
+        Content imageContent = Content.builder().
+            name( "nord.jpg" ).
+            displayName( "nord.jpg" ).
+            contentType( ContentTypeName.imageMedia() ).
+            parent( ContentPath.from( "all-content-types-images" ) ).
+            build();
+
+        when: "image content selected"
+        findAndSelectContent( imageContent );
+
+        then: "sort button is disabled"
+        !contentBrowsePanel.isSortButtonEnabled()
     }
 }

@@ -62,7 +62,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.getContentStatus( childContent2.getPath() ) == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN existing published parent folder with one published child and one 'new' content WHEN  parent folder selected and 'Delete' button pressed  THEN parent folder and one child content have a 'Pending delete' status"()
+    def "GIVEN existing published parent folder with one published child and one 'new' content WHEN  parent folder selected and 'Delete' button pressed  THEN not published child content removed but parent folder and one child content have a 'Pending delete' status"()
     {
         when:
         filterPanel.typeSearchText( parentContent.getName() );

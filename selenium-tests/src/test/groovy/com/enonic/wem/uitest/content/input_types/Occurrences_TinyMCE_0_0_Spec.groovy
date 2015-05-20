@@ -29,7 +29,10 @@ class Occurrences_TinyMCE_0_0_Spec
     @Shared
     String EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
 
-    @Ignore
+    @Shared
+    String EXPECTED_TEXT3 = "<p>" + TEST_TEXT3 + "</p>";
+
+
     def "WHEN wizard for adding a content with TinyMCE(0:0) opened THEN text area is present "()
     {
         when: "start to add a content with type 'TinyMCE 0:0'"
@@ -46,7 +49,6 @@ class Occurrences_TinyMCE_0_0_Spec
 
     }
 
-    @Ignore
     def "GIVEN saving of content with TinyMCE editor  (0:0) and text typed WHEN content opened for edit THEN expected string is present in the editor "()
     {
         given: "new content with type TinyMCE added'"
@@ -66,7 +68,6 @@ class Occurrences_TinyMCE_0_0_Spec
 
     }
 
-    @Ignore
     def "GIVEN saving of content with TinyMCE editor (0:1) and text not typed WHEN content opened for edit THEN  no text present in the editor"()
     {
         given: "new content with type TinyMCE added'"
@@ -85,7 +86,7 @@ class Occurrences_TinyMCE_0_0_Spec
         strings.get( 0 ) == BaseTinyMCEFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
     }
 
-    //TODO remove it when bug "INBOX 16"
+    //TODO remove it when bug "INBOX 16"  and XP-532
     @Ignore
     def "GIVEN saving of content with two TinyMCE editor and two strings typed WHEN content opened for edit THEN  two editors with correct strings are present"()
     {
@@ -107,7 +108,7 @@ class Occurrences_TinyMCE_0_0_Spec
         strings.contains( EXPECTED_TEXT2 );
     }
 
-    //TODO remove it when bug "INBOX 16"  and XP-478
+    //TODO remove it when bug  XP-532
     @Ignore
     def "GIVEN saving of content with tree TinyMCE editor and tree strings typed WHEN content opened for edit THEN  tree editors with correct strings are present"()
     {

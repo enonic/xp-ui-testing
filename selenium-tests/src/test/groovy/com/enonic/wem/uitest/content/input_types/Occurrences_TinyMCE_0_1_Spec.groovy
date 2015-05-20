@@ -36,6 +36,31 @@ class Occurrences_TinyMCE_0_1_Spec
 
     }
 
+    def "WHEN wizard opened AND the editor is not in edit mode THEN TinyMCE toolbar is hidden"()
+    {
+        when: "start to add a content with type 'TinyMCE 0:1'"
+        Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
+        openWizard( tinyMceContent.getContentTypeName() );
+        TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
+
+        then: "wizard with form view opened"
+        !formViewPanel.isEditorToolbarVisible();
+
+    }
+
+    def "WHEN wizard opened AND the editor  in edit mode THEN TinyMCE toolbar is visible"()
+    {
+        when: "start to add a content with type 'TinyMCE 0:1'"
+        Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
+        openWizard( tinyMceContent.getContentTypeName() );
+        TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
+        formViewPanel.type( tinyMceContent.getData() );
+
+        then: "wizard with form view opened"
+        formViewPanel.isEditorToolbarVisible();
+
+    }
+
     def "GIVEN saving of content with TinyMCE editor  (0:1) and text typed WHEN content opened for edit THEN expected string is present in the editor "()
     {
         given: "new content with type TinyMCE added'"
