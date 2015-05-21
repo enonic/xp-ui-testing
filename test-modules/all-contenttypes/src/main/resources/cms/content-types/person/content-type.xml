@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content-type>
+  <display-name>Person</display-name>
+  <content-display-name-script>$('first-name') + ' ' + $('last-name')</content-display-name-script>
+  <super-type>base:structured</super-type>
+  <form>
+    <field-set name="basic">
+      <label>Person info</label>
+      <items>
+        <input type="TextLine" name="first-name">
+          <label>First name</label>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="TextLine" name="middle-name">
+          <label>Middle name</label>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="last-name">
+          <label>Last name</label>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="ImageSelector" name="image">
+          <label>Photo</label>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+          <config/>
+        </input>
+        <input type="TextLine" name="job-title">
+          <label>Job title</label>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="TextArea" name="bio">
+          <label>Bio</label>
+          <indexed>true</indexed>
+          <custom-text/>
+          <help-text/>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+      </items>
+    </field-set>
+  </form>
+</content-type>

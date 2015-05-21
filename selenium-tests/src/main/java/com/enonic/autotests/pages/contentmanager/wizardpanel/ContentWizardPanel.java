@@ -226,10 +226,11 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel save()
     {
-        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
+        boolean isSaveButtonEnabled = waitUntilClickableNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
         {
-            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is disabled!" );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saving" ) );
+            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();
         boolean isSaveEnabled = isEnabledSaveButton();
