@@ -13,7 +13,7 @@ class InputTypesNegative_Spec
     @Shared
     String WRONG_TIME = "191:01";
 
-    def "GIVEN content type with name 'Time' and wrong time WHEN time typed and content published THEN warning message appears "()
+    def "GIVEN saving of content with type 'Time' value of time is wrong WHEN time typed and content published THEN warning message appears"()
     {
         given: "add a content with type 'Time'"
         Content timeContent = buildTimeContent( WRONG_TIME );
