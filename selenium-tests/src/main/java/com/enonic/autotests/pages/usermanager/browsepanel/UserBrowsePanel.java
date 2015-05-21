@@ -132,6 +132,16 @@ public class UserBrowsePanel
         return this;
     }
 
+    public UserBrowsePanel expandStoreAndSelectGroups( String storeName )
+    {
+        clickAndSelectRow( storeName );
+        sleep( 700 );
+        pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        clickAndSelectRow( "groups" );
+        getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
+        return this;
+    }
+
     public UserBrowsePanel expandUsersFolder( String storeName )
     {
         expandStoreAndSelectUsers( storeName );

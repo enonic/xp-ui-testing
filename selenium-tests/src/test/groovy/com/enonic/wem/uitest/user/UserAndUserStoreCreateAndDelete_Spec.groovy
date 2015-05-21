@@ -41,12 +41,6 @@ class UserAndUserStoreCreateAndDelete_Spec
     @Shared
     private String USER_NAME = NameHelper.uniqueName( "user" );
 
-    //1. Create a user store and type Display Name: "Use case user store" - verify that real name is "use-case-user-store".
-    //2. Add permissions for Super user and Authenticated role. - verify that they have a button to remove them.
-    //3. Save the content.  -  Verify that Save button is disabled.
-    //4. Close the User store - Verify that no error messages appear.
-
-
     def setup()
     {
         go "admin"
@@ -65,11 +59,9 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         then: "the real name equals as expected"
         userStoreWizardPanel.getStoreNameInputValue() == GENERATED_USER_STORE_NAME
-
-
     }
 
-    def "GIVEN creating new UserStore WHEN display name typed and 'Save' button pressed THEN 'Save' button becomes disabled"()
+    def "GIVEN creating new UserStore WHEN display name typed and 'Save' button pressed THEN new User Store listed"()
     {
         given:
         UserStore userStore = UserTestUtils.buildUserStoreWithDisplayName( USER_STORE_DISPLAY_NAME );
@@ -77,21 +69,32 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         when: "name typed and 'Save' pressed"
         userStoreWizardPanel.typeData( userStore )
-        boolean isSaveEnabledBefore = userStoreWizardPanel.isSaveButtonEnabled();
-        userStoreWizardPanel.save();
+        String message = userStoreWizardPanel.save().waitNotificationMessage();
+        userStoreWizardPanel.close( userStore.getDisplayName() );
 
-        then: "'Save' button becomes disabled"
-        !userStoreWizardPanel.isSaveButtonEnabled() && isSaveEnabledBefore;
-
+        then: "new User Store listed and verify, that real name is the same as expected"
+        userBrowsePanel.exists( GENERATED_USER_STORE_NAME, false );
+        and:
+        "UserStore was created!" == message;
 
     }
 
-
-    def "WHEN new User Store added  THEN it should be listed in browse panel"()
+    def "WHEN the empty User Store expanded and 'Users' selected THEN 'Delete' button is disabled "()
     {
-        expect: "new User Store listed and verify, that real name is the same as expected"
-        userBrowsePanel.exists( GENERATED_USER_STORE_NAME, false );
+        when:
+        userBrowsePanel.expandStoreAndSelectUsers( USER_STORE_PATH );
 
+        then: "'Delete' button is disabled "
+        !userBrowsePanel.isDeleteButtonEnabled();
+    }
+
+    def "WHEN the empty User Store expanded and 'Groups' selected THEN 'Delete' button is disabled "()
+    {
+        when:
+        userBrowsePanel.expandStoreAndSelectGroups( USER_STORE_PATH );
+
+        then: "'Delete' button is disabled "
+        !userBrowsePanel.isDeleteButtonEnabled();
     }
 
     def "GIVEN existing a User Store WHEN a user added to User Store THEN new user listed beneath a User Store "()
@@ -104,11 +107,9 @@ class UserAndUserStoreCreateAndDelete_Spec
         userWizardPanel.typeData( user ).save().close( user.getDisplayName() );
         userBrowsePanel.expandUsersFolder( USER_STORE_PATH );
 
-
         then: "new user present beneath a store"
         userBrowsePanel.exists( USER_NAME, true );
     }
-
 
     def "GIVEN existing a User Store with a user WHEN the User Store selected THEN  the 'Delete' button on toolbar is disabled "()
     {
@@ -145,7 +146,6 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         then: "new User Store listed and verify, that real name is the same as expected"
         !userBrowsePanel.exists( GENERATED_USER_STORE_NAME, false );
-
     }
 
 

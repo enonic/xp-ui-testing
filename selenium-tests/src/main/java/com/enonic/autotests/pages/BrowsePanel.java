@@ -395,6 +395,10 @@ public abstract class BrowsePanel
     {
         String rowXpath = String.format( DIV_NAMES_VIEW, itemName );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "item was not found:" + itemName );
+        }
         Actions builder = new Actions( getDriver() );
         builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
         sleep( 500 );
