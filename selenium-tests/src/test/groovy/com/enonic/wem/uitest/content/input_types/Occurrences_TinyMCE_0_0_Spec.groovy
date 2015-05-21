@@ -68,7 +68,24 @@ class Occurrences_TinyMCE_0_0_Spec
 
     }
 
-    def "GIVEN saving of content with TinyMCE editor (0:1) and text not typed WHEN content opened for edit THEN  no text present in the editor"()
+    def "GIVEN wizard for adding a content with TinyMCE(0:0) opened WHEN button 'Add' clicked 3 times THEN tree text area are present"()
+    {
+        given: "start to add a content with type 'TinyMCE 0:0'"
+        Content tinyMceContent = buildTinyMce0_0_Content( 1, TEST_TEXT1 );
+        openWizard( tinyMceContent.getContentTypeName() );
+        TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
+
+        when: "button 'Add' clicked 3 times"
+        formViewPanel.addEditors( 3 )
+        then: "tree text area present"
+        formViewPanel.getNumberOfMCE() == 3;
+        and: "button 'add' is present"
+        formViewPanel.isAddButtonPresent();
+
+    }
+
+
+    def "GIVEN saving of content with TinyMCE editor (0:1) and text not typed WHEN content opened for edit THEN no text present in the editor"()
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_0_Content( 1, null );

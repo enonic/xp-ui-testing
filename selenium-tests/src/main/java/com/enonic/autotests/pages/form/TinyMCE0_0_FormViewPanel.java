@@ -63,7 +63,7 @@ public class TinyMCE0_0_FormViewPanel
         return this;
     }
 
-    private void addEditors( long numberOfEditors )
+    public void addEditors( long numberOfEditors )
     {
         for ( int i = 1; i < numberOfEditors; i++ )
         {

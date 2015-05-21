@@ -12,7 +12,10 @@ class ContentPublishDelete_Spec
 
 {
     @Shared
-    String EXPECTED_PUBLISH_MESSAGE = "Content [%s] deleted"
+    String PENDING_DELETE_PUBLISH_MESSAGE = "Content [%s] deleted"
+
+    @Shared
+    String PUBLISH_MESSAGE = "Content [%s] published!"
 
     @Shared
     String DISPLAY_NAME = "publishDisplayName";
@@ -31,6 +34,7 @@ class ContentPublishDelete_Spec
         String message = contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarPublish().waitNotificationMessage();
         then:
         contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.ONLINE.getValue();
+        message == String.format( PUBLISH_MESSAGE, DISPLAY_NAME );
 
     }
 
@@ -47,7 +51,7 @@ class ContentPublishDelete_Spec
 
     }
 
-    def "GIVEN existing root content with 'Modified' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel "()
+    def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel "()
     {
         when:
         filterPanel.typeSearchText( content.getName() )
@@ -56,9 +60,8 @@ class ContentPublishDelete_Spec
 
         then:
         !contentBrowsePanel.exists( content.getPath() );
-        //TODO bug XP-440
-        //and:
-        //message == String.format( EXPECTED_PUBLISH_MESSAGE, DISPLAY_NAME );
+        and:
+        message == String.format( PENDING_DELETE_PUBLISH_MESSAGE, DISPLAY_NAME );
 
     }
 
