@@ -41,7 +41,7 @@ class LoginUserSpec
     private String USER_STORE_PATH = "/user-store" + randomInt;
 
     @Shared
-    private String USER_NAME = "testloginuser";//NameHelper.uniqueName( "user" );
+    private String USER_NAME = NameHelper.uniqueName( "user" );
 
     @Shared
     User user
@@ -100,8 +100,6 @@ class LoginUserSpec
             typeData( content ).save().close( content.getDisplayName() );
 
         then: "content listed in the grid"
-        //TODO remove it when app bug#  XP-204 will be fixed!
-        contentBrowsePanel.refreshPanelInBrowser();
         TestUtils.saveScreenshot( getSession(), "login-content1" );
         contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
@@ -129,7 +127,6 @@ class LoginUserSpec
         contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
     }
 
-
     def "WHEN new created user logged in THEN home page with only one application(CM) loaded "()
     {
         when:
@@ -146,7 +143,6 @@ class LoginUserSpec
 
     }
 
-
     def "WHEN new created user logged and opened a CM app THEN only one content should be present in the grid "()
     {
         when:
@@ -156,11 +152,9 @@ class LoginUserSpec
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         TestUtils.saveScreenshot( getSession(), "logged_cm" );
 
-        then:
+        then: true;
         contentBrowsePanel.getContentNamesFromBrowsePanel().size() == 1
-
     }
-
 
     def "GIVEN opened user for edit WHEN 'change password' button pressed THEN modal dialog appears"()
     {

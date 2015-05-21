@@ -41,8 +41,6 @@ class InputTypesSpec
             dateContent.getContentTypeName() ).typeData( dateContent ).save().close( dateContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        // filterPanel.typeSearchText( dateContent.getName() );
-        // contentBrowsePanel.clickCheckboxAndSelectRow( dateContent.getPath() ).clickToolbarEdit();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateContent );
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
@@ -60,8 +58,6 @@ class InputTypesSpec
             dateTimeContent.getContentTypeName() ).typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        // filterPanel.typeSearchText( dateTimeContent.getName() );
-        // contentBrowsePanel.clickCheckboxAndSelectRow( dateTimeContent.getPath() ).clickToolbarEdit();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateTimeContent )
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
@@ -73,14 +69,12 @@ class InputTypesSpec
     def "GIVEN content type with name 'Time' selected and wizard opened WHEN time typed and content saved THEN new content with correct date listed "()
     {
         given: "add a content with type 'Time'"
-        Content timeContent = buildTimeContent();
+        Content timeContent = buildTimeContent( TEST_TIME );
         filterPanel.typeSearchText( SITE_NAME );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
             timeContent.getContentTypeName() ).typeData( timeContent ).save().close( timeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        // filterPanel.typeSearchText( timeContent.getName() );
-        // contentBrowsePanel.clickCheckboxAndSelectRow( timeContent.getPath() ).clickToolbarEdit();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( timeContent );
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
@@ -98,8 +92,6 @@ class InputTypesSpec
             doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        //filterPanel.typeSearchText( doubleContent.getName() );
-        //contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( doubleContent );
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
@@ -250,23 +242,6 @@ class InputTypesSpec
         return dateContent;
     }
 
-
-    private Content buildTimeContent()
-    {
-        String name = "time";
-
-        PropertyTree data = new PropertyTree();
-        data.addStrings( TimeFormViewPanel.TIME_PROPERTY, TEST_TIME );
-
-
-        Content dateContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "time content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":time" ).data( data ).
-            build();
-        return dateContent;
-    }
 
     private Content buildDateTimeContent()
     {

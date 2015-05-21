@@ -14,6 +14,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry;
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite;
 
@@ -64,7 +65,6 @@ public class EditPermissionsDialog
     public EditPermissionsDialog uncheckInheritCheckbox()
     {
         inheritPermissionsCheckbox.click();
-        //setCheckedForInheritCheckbox( false );
         if ( !waitUntilVisibleNoException( By.xpath( OPTIONS_FILTER_INPUT ), Application.EXPLICIT_NORMAL ) )
         {
             throw new TestFrameworkException( "options filter input not found!" );
@@ -91,7 +91,6 @@ public class EditPermissionsDialog
         {
             selectOperations( entry.getPrincipalName(), entry.getPermissionSuite() );
         }//when operations not specified, CAN_READ will be applied by default
-        // clickOnApply();
         sleep( 500 );
         return this;
     }
@@ -115,6 +114,7 @@ public class EditPermissionsDialog
         {
             throw new TestFrameworkException( "Apply button was not found!" );
         }
+        WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( APPLY_BUTTON_XPATH ) );
         findElements( By.xpath( APPLY_BUTTON_XPATH ) ).get( 0 ).click();
         return this;
     }
@@ -122,12 +122,13 @@ public class EditPermissionsDialog
     private void selectPrincipal( String principalName )
     {
         findElement( By.xpath( OPTIONS_FILTER_INPUT ) ).sendKeys( principalName );
+        sleep( 1000 );
         By principalBy = By.xpath( String.format( PRINCIPAL_PATH, principalName ) );
         if ( !waitUntilVisibleNoException( principalBy, EXPLICIT_QUICK ) )
         {
             throw new TestFrameworkException( "principal was not found! : " + principalName );
         }
-        findElement( principalBy ).click();
+        findElements( principalBy ).get( 0 ).click();
     }
 
     private void selectOperations( String principalName, PermissionSuite suite )

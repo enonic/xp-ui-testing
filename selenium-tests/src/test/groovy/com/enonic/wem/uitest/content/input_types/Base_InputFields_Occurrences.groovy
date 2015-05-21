@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -89,5 +90,22 @@ class Base_InputFields_Occurrences
     {
         filterPanel.typeSearchText( SITE_NAME );
         return contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( contentTypeName );
+    }
+
+    protected Content buildTimeContent( String time )
+    {
+        String name = "time";
+
+        PropertyTree data = new PropertyTree();
+        data.addStrings( TimeFormViewPanel.TIME_PROPERTY, time );
+
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "time content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":time" ).data( data ).
+            build();
+        return dateContent;
     }
 }

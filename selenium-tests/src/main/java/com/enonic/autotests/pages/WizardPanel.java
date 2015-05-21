@@ -236,6 +236,15 @@ public abstract class WizardPanel<T>
         return message;
     }
 
+    public String waitNotificationWarning()
+    {
+        String message =
+            TestUtils.waitNotificationMessage( By.xpath( "//div[@class='notification warning']//div[@class='notification-content']/span" ),
+                                               getDriver(), 4l );
+        getLogger().info( "Notification message " + message );
+        return message;
+    }
+
     /**
      * Verify that red circle and "New Space" message presented on the top of
      * Page.
