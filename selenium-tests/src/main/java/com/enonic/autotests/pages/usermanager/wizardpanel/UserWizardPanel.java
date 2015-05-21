@@ -8,6 +8,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.google.common.base.Strings;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
@@ -21,6 +23,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class UserWizardPanel
     extends WizardPanel<User>
 {
+    public static final String PASSWORD_ERROR_MESSAGE = "Password can not be empty.";
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(@title,'%s')]]";
 
@@ -104,13 +107,15 @@ public class UserWizardPanel
         sleep( 500 );
         clearAndType( emailInput, user.getEmail() );
         sleep( 1000 );
-        clearAndType( passwordInput, user.getPassword() );
+        if ( !Strings.isNullOrEmpty( user.getPassword() ) )
+        {
+            clearAndType( passwordInput, user.getPassword() );
+        }
         sleep( 500 );
         if ( user.getRoles() != null )
         {
             addRoles( user.getRoles() );
         }
-
         TestUtils.saveScreenshot( getSession(), user.getDisplayName() );
         return this;
     }

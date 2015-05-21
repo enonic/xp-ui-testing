@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
@@ -20,7 +21,7 @@ class InputTypesNegative_Spec
         ContentWizardPanel wizard = openWizard( timeContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        String message = wizard.typeData( timeContent ).clickOnPublishButton().waitNotificationWarning();
+        String message = wizard.typeData( timeContent ).clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
         then: "actual value in the form view and expected should be equals"
         message == PUBLISH_NOTIFICATION_MESSAGE;
