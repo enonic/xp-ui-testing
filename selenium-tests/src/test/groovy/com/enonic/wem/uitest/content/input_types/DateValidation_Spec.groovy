@@ -7,7 +7,7 @@ import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
-class InputTypesNegative_Spec
+class DateValidation_Spec
     extends Base_InputFields_Occurrences
 {
 
@@ -15,10 +15,14 @@ class InputTypesNegative_Spec
     String WRONG_TIME = "191:01";
 
     @Shared
+    String TEST_TIME = "16:10";
+
+    @Shared
     String TEST_DATE_TIME1 = "2015-02-28 19:01";
 
     @Shared
     String WRONG_DATE_TIME = "015-02-28 19:01";
+
 
     def "GIVEN saving of content with type 'Time 0:0' and value of time is wrong WHEN time typed and content published THEN warning message appears"()
     {
@@ -26,12 +30,11 @@ class InputTypesNegative_Spec
         Content timeContent = buildTime0_0_Content( WRONG_TIME );
         ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
 
-        when: "site expanded and just created content selected and 'Edit' button clicked"
+        when: "time with wrong format typed and 'Publish' button pressed"
         String message = wizard.typeData( timeContent ).clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
-        then: "actual value in the form view and expected should be equals"
+        then: "notification warning appears"
         message == PUBLISH_NOTIFICATION_WARNING;
-
     }
 
     def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN name typed and dateTime not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
@@ -41,15 +44,31 @@ class InputTypesNegative_Spec
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        when: "only the name typed and dateTime not typed"
+        when: "only the name typed and dateTime not typed and 'Publish' button clicked"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
         String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
-
-        then: "option filter input is present and enabled"
+        then: "notification warning appears"
         warning == PUBLISH_NOTIFICATION_WARNING;
-        and:
+        and: "validation message present as well"
         formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
+    }
+
+    def "GIVEN wizard for adding a required Time(2:4) opened WHEN name typed and dateTime not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
+    {
+        given: "start to add a content with type 'Time(1:1)'"
+        Content timeContent = buildTime2_4_Content( TEST_TIME );
+        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
+        DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
+
+        when: "only the name typed and time not typed and 'Publish' button pressed"
+        wizard.typeDisplayName( timeContent.getDisplayName() );
+        String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+
+        then: "notification warning appears"
+        warning == PUBLISH_NOTIFICATION_WARNING;
+        and: "validation message present as well"
+        formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
     }
 
 }
