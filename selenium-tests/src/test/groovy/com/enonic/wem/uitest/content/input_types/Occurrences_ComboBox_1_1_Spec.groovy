@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
+import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -23,7 +24,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "start to add a content with type 'ComboBox 1:1'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        ContentWizardPanel wizard = openWizard( comboBoxContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
 
         when: "only the name typed and no option selected"
         wizard.typeDisplayName( comboBoxContent.getDisplayName() );
@@ -43,7 +44,8 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+            comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -65,7 +67,8 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         content_with_opt = buildComboBox1_1_Content( 1 );
-        openWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
+        selectSiteOpenWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
+            content_with_opt.getDisplayName() );
 
         when: "content opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -113,7 +116,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox1_1_Content( 1 );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
@@ -126,7 +129,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "start to add a content with type 'ComboBox-content (1:1)'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        ContentWizardPanel contentWizardPanel = openWizard( comboBoxContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();
@@ -136,7 +139,7 @@ class Occurrences_ComboBox_1_1_Spec
         then: "new content listed in the grid and can be opened for edit"
         formViewPanel.isValidationMessagePresent();
         and:
-        formViewPanel.getValidationMessage() == ComboBoxFormViewPanel.VALIDATION_MESSAGE_1_1;
+        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
     }
 
     private Content buildComboBox1_1_Content( int numberOptions )

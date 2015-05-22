@@ -33,11 +33,7 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDateContent( BAD_FORMAT_DATE );
-        filterPanel.typeSearchText( SITE_NAME );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_search" ) );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
-
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
         when: "date typed"
         contentWizardPanel.typeData( dateContent );
@@ -104,7 +100,6 @@ class DateContentValidation_Spec
     private Content buildDateContent( String date )
     {
         String name = "date";
-
         PropertyTree data = new PropertyTree();
         data.addStrings( DateFormViewPanel.DATE_PROPERTY, date );
 

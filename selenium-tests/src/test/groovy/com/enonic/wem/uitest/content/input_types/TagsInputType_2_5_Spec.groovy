@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.exceptions.TestFrameworkException
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -34,7 +35,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 2 );
-        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).save().clickOnPublishButton().close( tagContent.getDisplayName() );
@@ -48,7 +49,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 1 );
-        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();
@@ -57,14 +58,14 @@ class TagsInputType_2_5_Spec
         then: "new content listed in the grid and can be opened for edit"
         formViewPanel.isValidationMessagePresent();
         and:
-        formViewPanel.getValidationMessage() == String.format( TagFormViewPanel.VALIDATION_MESSAGE, 2 );
+        formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
     }
 
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
-        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
@@ -79,7 +80,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
-        openWizard( tagContent.getContentTypeName() ).typeData( tagContent );
+        selectSiteOpenWizard( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
@@ -95,7 +96,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 2 );
-        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
@@ -115,7 +116,7 @@ class TagsInputType_2_5_Spec
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
-        ContentWizardPanel contentWizardPanel = openWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );

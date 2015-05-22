@@ -18,8 +18,6 @@ public class TextLine1_1_FormViewPanel
 
     private final String TEXT_INPUT_XPATH = FORM_VIEW + "//input[contains(@name,'TextLine_1_1')]";
 
-    public static final String VALIDATION_MESSAGE = "This field is required";
-
     public TextLine1_1_FormViewPanel( final TestSession session )
     {
         super( session );

@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -24,7 +25,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         when: "start to add a content with type 'Single Selector ComboBox'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
-        openWizard( comboBoxContent.getContentTypeName() );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
         SingleSelectorComboBoxFormView formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
 
         then: "option filter input is present and enabled"
@@ -36,7 +37,8 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         given: "new content with type 'Single Selector ComboBox 1:1'"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+            comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saveBeforeClose" ) );
@@ -52,7 +54,8 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         when: "content without required option saved"
         String option = null;
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+            comboBoxContent.getDisplayName() );
 
         then:
         filterPanel.typeSearchText( comboBoxContent.getDisplayName() );
@@ -64,7 +67,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         given: "new content with type 'Single Selector ComboBox 1:1'"
         String option = "option A";
         Content comboBoxContent = buildSSelectorComboBox1_1_Content( option );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
 
         when: "find the just created content"
@@ -82,7 +85,8 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         given: "saving of content with required Single Selector ComboBox'"
         String option = "option A";
         content_wit_opt = buildSSelectorComboBox1_1_Content( option );
-        openWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+        selectSiteOpenWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
+            content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -117,7 +121,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
     {
         given: "start to add a content with type 'ComboBox-content (1:1)'"
         Content content = buildSSelectorComboBox1_1_Content( null );
-        ContentWizardPanel contentWizardPanel = openWizard( content.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( content.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();
@@ -127,7 +131,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         then: "new content listed in the grid and can be opened for edit"
         formViewPanel.isValidationMessagePresent();
         and:
-        formViewPanel.getValidationMessage() == SingleSelectorComboBoxFormView.VALIDATION_MESSAGE_1_1;
+        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
     }
 
     def "GIVEN a Single Selector' ComboBox-content' with selected option WHEN option removed and 'close' and 'save' pressed THEN option not selected in form view"()

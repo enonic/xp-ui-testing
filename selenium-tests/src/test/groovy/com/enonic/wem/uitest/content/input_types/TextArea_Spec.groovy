@@ -16,7 +16,7 @@ class TextArea_Spec
     {
         when: "wizard opened"
         Content textAreaContent = build_TextArea_Content( "test" );
-        openWizard( textAreaContent.getContentTypeName() );
+        selectSiteOpenWizard( textAreaContent.getContentTypeName() );
 
         then: "empty text area present"
         TextAreaFormViewPanel areaFormViewPanel = new TextAreaFormViewPanel( getSession() );
@@ -28,7 +28,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "" );
-        ContentWizardPanel contentWizardPanel = openWizard( textAreaContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnPublishButton().close( textAreaContent.getDisplayName() );
@@ -42,7 +42,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
-        ContentWizardPanel contentWizardPanel = openWizard( textAreaContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnPublishButton().close( textAreaContent.getDisplayName() );
@@ -57,7 +57,8 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
-        openWizard( textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close( textAreaContent.getDisplayName() ); ;
+        selectSiteOpenWizard( textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close(
+            textAreaContent.getDisplayName() ); ;
 
         when: "just created content opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textAreaContent );

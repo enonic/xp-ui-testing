@@ -17,8 +17,6 @@ public class SingleSelectorRadioFormView
 {
     private String RADIO_INPUTS = "//div[contains(@class,'radio-group')]//input[@type='radio']";
 
-    public static String VALIDATION_MESSAGE_1_1 = "This field is required";
-
     public SingleSelectorRadioFormView( final TestSession session )
     {
         super( session );
@@ -50,17 +48,6 @@ public class SingleSelectorRadioFormView
         return this;
     }
 
-    public String getValidationMessage()
-    {
-        if ( isValidationMessagePresent() )
-        {
-            return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
-        }
-        else
-        {
-            throw new TestFrameworkException( "validation message was not found!" );
-        }
-    }
     public String getSelectedOption()
     {
         List<WebElement> elements = findElements( By.xpath( FORM_VIEW + RADIO_INPUTS ) );

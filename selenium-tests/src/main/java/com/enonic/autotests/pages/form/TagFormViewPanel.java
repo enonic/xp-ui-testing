@@ -20,8 +20,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class TagFormViewPanel
     extends FormViewPanel
 {
-    public static String VALIDATION_MESSAGE = "Min %s occurrences required";
-
     protected String VALIDATION_VIEWER = FORM_VIEW + "//div[contains(@id, 'ValidationRecordingViewer')]";
 
     private final String TAGS_INPUT_XPATH = FORM_VIEW + "//input[@type='text']";
@@ -49,12 +47,6 @@ public class TagFormViewPanel
             return result.get( 0 ).isDisplayed();
         }
     }
-
-    public String getValidationMessage()
-    {
-        return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
-    }
-
 
     @Override
     public FormViewPanel type( final PropertyTree data )

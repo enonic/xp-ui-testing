@@ -23,6 +23,8 @@ class Base_InputFields_Occurrences
     @Shared
     String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.all-contenttypes";
 
+    @Shared
+    String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
 
     @Shared
     static String SITE_NAME = "inputtypes39507008";//NameHelper.uniqueName( "inputtypes" );
@@ -86,7 +88,7 @@ class Base_InputFields_Occurrences
         return site;
     }
 
-    protected ContentWizardPanel openWizard( String contentTypeName )
+    protected ContentWizardPanel selectSiteOpenWizard( String contentTypeName )
     {
         filterPanel.typeSearchText( SITE_NAME );
         return contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( contentTypeName );

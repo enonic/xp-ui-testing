@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -22,7 +23,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         when: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
-        openWizard( textLineContent.getContentTypeName() );
+        selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -33,7 +34,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         when: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
-        openWizard( textLineContent.getContentTypeName() );
+        selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -44,7 +45,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
-        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         when:
@@ -65,7 +66,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
-        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when:
         contentWizardPanel.typeData( textLineContent ).save().clickOnPublishButton().close( textLineContent.getDisplayName() );
@@ -79,7 +80,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content();
-        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when:
         contentWizardPanel.clickOnPublishButton();
@@ -89,7 +90,7 @@ class Occurrences_TextLine_1_1_Spec
         then: "new content listed in the grid and can be opened for edit"
         formViewPanel.isValidationMessagePresent();
         and:
-        formViewPanel.getValidationMessage() == TextLine1_1_FormViewPanel.VALIDATION_MESSAGE;
+        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
     }
 
 

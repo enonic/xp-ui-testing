@@ -40,12 +40,6 @@ public abstract class BaseTextLineFormViewPanel
         return allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size();
     }
 
-
-    public String getValidationMessage()
-    {
-        return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
-    }
-
     public BaseTextLineFormViewPanel clickOnAddButton( int times )
     {
         for ( int i = 0; i < times; i++ )

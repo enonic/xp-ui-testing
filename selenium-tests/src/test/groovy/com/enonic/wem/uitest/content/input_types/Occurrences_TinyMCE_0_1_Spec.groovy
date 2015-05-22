@@ -26,7 +26,7 @@ class Occurrences_TinyMCE_0_1_Spec
         when: "start to add a content with type 'TinyMCE 0:1'"
         Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
 
-        openWizard( tinyMceContent.getContentTypeName() );
+        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -40,7 +40,7 @@ class Occurrences_TinyMCE_0_1_Spec
     {
         when: "start to add a content with type 'TinyMCE 0:1'"
         Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
-        openWizard( tinyMceContent.getContentTypeName() );
+        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -52,7 +52,7 @@ class Occurrences_TinyMCE_0_1_Spec
     {
         when: "start to add a content with type 'TinyMCE 0:1'"
         Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
-        openWizard( tinyMceContent.getContentTypeName() );
+        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_1_FormViewPanel formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
         formViewPanel.type( tinyMceContent.getData() );
 
@@ -65,7 +65,7 @@ class Occurrences_TinyMCE_0_1_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_1_Content( TEST_TEXT );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -82,7 +82,7 @@ class Occurrences_TinyMCE_0_1_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_1_Content( null );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"

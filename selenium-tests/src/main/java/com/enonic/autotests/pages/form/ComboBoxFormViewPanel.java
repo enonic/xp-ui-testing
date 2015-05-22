@@ -18,8 +18,6 @@ public class ComboBoxFormViewPanel
     extends FormViewPanel
 
 {
-    public static String VALIDATION_MESSAGE_1_1 = "This field is required";
-
     protected final String COMBO_BOX = "//div[contains(@id,'ComboBox')]";
 
     protected final String COMBO_BOX_OPTIONS_INPUT_XPATH = FORM_VIEW + COMBO_BOX + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
@@ -38,20 +36,17 @@ public class ComboBoxFormViewPanel
     {
         for ( final String option : data.getStrings( "options" ) )
         {
-
             clearAndType( optionFilterInput, option );
             sleep( 700 );
             selectOption( option );
             sleep( 300 );
         }
-
         return this;
     }
 
     public ComboBoxFormViewPanel clickOnLastRemoveButton()
     {
         List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[@class='selected-option']//a[@class='remove']" ) );
-
         List<WebElement> list = allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
         if ( list.size() == 0 )
         {
@@ -84,17 +79,5 @@ public class ComboBoxFormViewPanel
     {
         List<WebElement> elements = findElements( By.xpath( FORM_VIEW + "//div[@class='selected-option']//div[@class='option-value']" ) );
         return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
-    }
-
-    public String getValidationMessage()
-    {
-        if ( isValidationMessagePresent() )
-        {
-            return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
-        }
-        else
-        {
-            throw new TestFrameworkException( "validation message was not found!" );
-        }
     }
 }

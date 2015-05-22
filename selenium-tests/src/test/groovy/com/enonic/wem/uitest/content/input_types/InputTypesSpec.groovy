@@ -12,7 +12,6 @@ import spock.lang.Stepwise
 class InputTypesSpec
     extends Base_InputFields_Occurrences
 {
-
     @Shared
     String TEST_DATE = "2015-02-28";
 
@@ -36,9 +35,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Date'"
         Content dateContent = buildDateContent();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            dateContent.getContentTypeName() ).typeData( dateContent ).save().close( dateContent.getDisplayName() );
+        selectSiteOpenWizard( dateContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateContent );
@@ -46,16 +43,13 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         formViewPanel.getDateValue().equals( TEST_DATE )
-
     }
 
     def "GIVEN content type with name 'DateTime' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
     {
         given: "add a content with type 'Date Time'"
         Content dateTimeContent = buildDateTimeContent();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            dateTimeContent.getContentTypeName() ).typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
+        selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateTimeContent )
@@ -63,16 +57,13 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         dateTimeFormViewPanel.getDateTimeValue().equals( TEST_DATE_TIME );
-
     }
 
     def "GIVEN content type with name 'Time' selected and wizard opened WHEN time typed and content saved THEN new content with correct date listed "()
     {
         given: "add a content with type 'Time'"
         Content timeContent = buildTimeContent( TEST_TIME );
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            timeContent.getContentTypeName() ).typeData( timeContent ).save().close( timeContent.getDisplayName() );
+        selectSiteOpenWizard( timeContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( timeContent );
@@ -80,16 +71,13 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         timeFormViewPanel.getTimeValue().equals( TEST_TIME );
-
     }
 
     def "GIVEN content type with name 'Double' selected and wizard opened WHEN double value typed and content saved THEN new content with correct Double value  listed "()
     {
         given: "add a content with type 'Double'"
         Content doubleContent = buildDoubleContent();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            doubleContent.getContentTypeName() ).typeData( doubleContent ).save().close( doubleContent.getDisplayName() );
+        selectSiteOpenWizard( doubleContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( doubleContent );
@@ -97,45 +85,34 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         doubleFormViewPanel.getDoubleValue().equals( TEST_DOUBLE );
-
     }
 
     def "GIVEN content type with name 'Long' selected and wizard opened WHEN long value typed and content saved THEN new content with correct Long value  listed "()
     {
         given: "add a content with type 'Long'"
         Content longContent = buildLongContent();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            longContent.getContentTypeName() ).typeData( longContent ).save().close( longContent.getDisplayName() );
+        selectSiteOpenWizard( longContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        // filterPanel.typeSearchText( longContent.getName() );
-        //contentBrowsePanel.clickCheckboxAndSelectRow( longContent.getPath() ).clickToolbarEdit();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( longContent );
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
         longFormViewPanel.getLongValue().equals( TEST_LONG );
-
     }
 
     def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
     {
         given: "add a content with type 'Geo point'"
         Content geopointContent = buildGeoPointContent();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            geopointContent.getContentTypeName() ).typeData( geopointContent ).save().close( geopointContent.getDisplayName() );
+        selectSiteOpenWizard( geopointContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
-        //filterPanel.typeSearchText( doubleContent.getName() );
-        //contentBrowsePanel.clickCheckboxAndSelectRow( doubleContent.getPath() ).clickToolbarEdit();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( geopointContent );
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
         geoPointFormViewPanel.getGeoPointValue().equals( TEST_GEOLOCATION );
-
     }
 
 
@@ -143,9 +120,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'checkbox'"
         Content checkBoxContent = buildCheckBoxContent();
-        filterPanel.typeSearchText( SITE_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            checkBoxContent.getContentTypeName() ).typeData( checkBoxContent ).save().close( checkBoxContent.getDisplayName() );
+        selectSiteOpenWizard( checkBoxContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( checkBoxContent )
@@ -153,16 +128,13 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         checkBoxFormViewPanel.isChecked();
-
     }
 
     private Content buildCheckBoxContent()
     {
         String name = "checkbox";
-
         PropertyTree data = new PropertyTree();
         data.addBoolean( CheckBoxFormViewPanel.CHECKBOX_PROPERTY, true );
-
 
         Content checkboxContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -173,14 +145,12 @@ class InputTypesSpec
         return checkboxContent;
     }
 
-
     private Content buildDateContent()
     {
         String name = "date";
 
         PropertyTree data = new PropertyTree();
         data.addStrings( DateFormViewPanel.DATE_PROPERTY, TEST_DATE );
-
 
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -194,10 +164,8 @@ class InputTypesSpec
     private Content buildDoubleContent()
     {
         String name = "double";
-
         PropertyTree data = new PropertyTree();
         data.addStrings( DoubleFormViewPanel.DOUBLE_PROPERTY, TEST_DOUBLE );
-
 
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -211,10 +179,8 @@ class InputTypesSpec
     private Content buildLongContent()
     {
         String name = "long";
-
         PropertyTree data = new PropertyTree();
         data.addStrings( LongFormViewPanel.LONG_PROPERTY, TEST_LONG );
-
 
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -228,10 +194,8 @@ class InputTypesSpec
     private Content buildGeoPointContent()
     {
         String name = "geopoint";
-
         PropertyTree data = new PropertyTree();
         data.addStrings( GeoPointFormViewPanel.GEO_POINT_PROPERTY, TEST_GEOLOCATION );
-
 
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -242,14 +206,11 @@ class InputTypesSpec
         return dateContent;
     }
 
-
     private Content buildDateTimeContent()
     {
         String name = "datetime";
-
         PropertyTree contentData = new PropertyTree();
         contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, TEST_DATE_TIME );
-
 
         Content dateTimeContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -259,6 +220,4 @@ class InputTypesSpec
             build();
         return dateTimeContent;
     }
-
-
 }

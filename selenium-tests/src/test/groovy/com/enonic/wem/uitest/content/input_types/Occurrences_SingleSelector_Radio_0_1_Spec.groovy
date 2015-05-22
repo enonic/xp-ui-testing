@@ -24,7 +24,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         when: "start to add a content with type 'Single Selector Radio 0:1'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
-        openWizard( radioContent.getContentTypeName() );
+        selectSiteOpenWizard( radioContent.getContentTypeName() );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
         then: "radio buttons present on page and no any options selected"
@@ -36,7 +36,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
-        openWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
+        selectSiteOpenWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().close( radioContent.getDisplayName() );
 
         when: "content opened for edit"
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "close" ) )
@@ -52,7 +52,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = null;
         Content radioContent = buildSingleSelectorRadio0_1_Content( option );
-        openWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().clickOnPublishButton().close(
+        selectSiteOpenWizard( radioContent.getContentTypeName() ).typeData( radioContent ).save().clickOnPublishButton().close(
             radioContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -70,7 +70,8 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = "option A";
         content_wit_opt = buildSingleSelectorRadio0_1_Content( option );
-        openWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close( content_wit_opt.getDisplayName() );
+        selectSiteOpenWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
+            content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -101,7 +102,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
     {
         given: "start to add a content with type 'Single selector Radio-content (0:1)'"
         Content radioContent = buildSingleSelectorRadio0_1_Content( null );
-        ContentWizardPanel contentWizardPanel = openWizard( radioContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( radioContent.getContentTypeName() );
         when:
         contentWizardPanel.clickOnPublishButton();
         TestUtils.saveScreenshot( getSession(), "ss_radio0_1_publish" )

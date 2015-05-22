@@ -22,7 +22,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "start to add a content with type 'ComboBox 2:4'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
-        ContentWizardPanel wizard = openWizard( comboBoxContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
         when: "only the name typed and no option selected"
@@ -43,7 +43,8 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+            comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -65,7 +66,8 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         content_with_opt = buildComboBox2_4_Content( 2 );
-        openWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close( content_with_opt.getDisplayName() );
+        selectSiteOpenWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
+            content_with_opt.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -109,7 +111,8 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close( comboBoxContent.getDisplayName() );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+            comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -132,7 +135,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
-        openWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
             comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 

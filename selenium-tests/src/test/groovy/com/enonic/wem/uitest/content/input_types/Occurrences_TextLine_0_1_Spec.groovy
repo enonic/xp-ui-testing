@@ -21,7 +21,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        openWizard( textLineContent.getContentTypeName() );
+        selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -32,7 +32,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        openWizard( textLineContent.getContentTypeName() );
+        selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -43,7 +43,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        openWizard( textLineContent.getContentTypeName() );
+        selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -54,7 +54,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         given: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         when:
@@ -71,7 +71,7 @@ class Occurrences_TextLine_0_1_Spec
     {
         given: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content();
-        ContentWizardPanel contentWizardPanel = openWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textLineContent ).save().clickOnPublishButton().close( textLineContent.getDisplayName() );

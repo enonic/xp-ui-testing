@@ -97,7 +97,7 @@ public class ContentWizardPanel
     }
 
     public boolean isContentInvalid( String contentDisplayName )
-    {         //"//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[contains(.,'%s')]]";
+    {
         List<WebElement> elements = findElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) );
         if ( elements.size() == 0 )
         {
@@ -180,8 +180,6 @@ public class ContentWizardPanel
             getLogger().info( "types name: " + content.getName() );
             clearAndType( nameInput, content.getName().trim() );
         }
-
-        //TestUtils.saveScreenshot( getSession(), content.getName() );
         // 2. populate main tab
         if ( content.getData() != null )
         {

@@ -26,7 +26,7 @@ class Occurrences_TinyMCE_0_2_Spec
     {
         when: "start to add a content with type 'TinyMCE 0:2'"
         Content tinyMceContent = buildTinyMce0_2_Content( 1, TEST_TEXT1 );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -45,7 +45,7 @@ class Occurrences_TinyMCE_0_2_Spec
     {
         given: "start to add a content with type 'TinyMCE 0:2'"
         Content tinyMceContent = buildTinyMce0_2_Content( 2, TEST_TEXT1 );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
         wizard.typeName( tinyMceContent.getName() )
 
@@ -69,7 +69,7 @@ class Occurrences_TinyMCE_0_2_Spec
         given: "start to add a content with type 'TinyMCE 0:2'"
         Content tinyMceContent = buildTinyMce0_2_Content( 2, TEST_TEXT1 );
 
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
         wizard.typeName( tinyMceContent.getName() );
         formViewPanel.clickOnAddButton();

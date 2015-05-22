@@ -37,7 +37,7 @@ class Occurrences_TinyMCE_0_0_Spec
     {
         when: "start to add a content with type 'TinyMCE 0:0'"
         Content tinyMceContent = buildTinyMce0_0_Content( 1, TEST_TEXT1 );
-        openWizard( tinyMceContent.getContentTypeName() );
+        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -53,7 +53,7 @@ class Occurrences_TinyMCE_0_0_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_0_Content( 1, TEST_TEXT1 );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -72,7 +72,7 @@ class Occurrences_TinyMCE_0_0_Spec
     {
         given: "start to add a content with type 'TinyMCE 0:0'"
         Content tinyMceContent = buildTinyMce0_0_Content( 1, TEST_TEXT1 );
-        openWizard( tinyMceContent.getContentTypeName() );
+        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
 
         when: "button 'Add' clicked 3 times"
@@ -89,7 +89,7 @@ class Occurrences_TinyMCE_0_0_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_0_Content( 1, null );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -109,7 +109,7 @@ class Occurrences_TinyMCE_0_0_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_0_Content( 2, TEST_TEXT1, TEST_TEXT2 );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -131,7 +131,7 @@ class Occurrences_TinyMCE_0_0_Spec
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_0_Content( 3, TEST_TEXT1, TEST_TEXT2, TEST_TEXT3 );
-        ContentWizardPanel wizard = openWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
