@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -94,13 +95,12 @@ class Base_InputFields_Occurrences
         return contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( contentTypeName );
     }
 
-    protected Content buildTimeContent( String time )
+    protected Content buildTime0_0_Content( String time )
     {
         String name = "time";
 
         PropertyTree data = new PropertyTree();
         data.addStrings( TimeFormViewPanel.TIME_PROPERTY, time );
-
 
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -109,5 +109,20 @@ class Base_InputFields_Occurrences
             contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":time" ).data( data ).
             build();
         return dateContent;
+    }
+
+    protected Content buildDateTime1_1_Content( String dateTime )
+    {
+        String name = "datetime";
+        PropertyTree contentData = new PropertyTree();
+        contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
+
+        Content dateTimeContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "date time content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":datetime1_1" ).data( contentData ).
+            build();
+        return dateTimeContent;
     }
 }

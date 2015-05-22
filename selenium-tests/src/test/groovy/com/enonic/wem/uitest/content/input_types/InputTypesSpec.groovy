@@ -62,7 +62,7 @@ class InputTypesSpec
     def "GIVEN content type with name 'Time' selected and wizard opened WHEN time typed and content saved THEN new content with correct date listed "()
     {
         given: "add a content with type 'Time'"
-        Content timeContent = buildTimeContent( TEST_TIME );
+        Content timeContent = buildTime0_0_Content( TEST_TIME );
         selectSiteOpenWizard( timeContent.getContentTypeName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
