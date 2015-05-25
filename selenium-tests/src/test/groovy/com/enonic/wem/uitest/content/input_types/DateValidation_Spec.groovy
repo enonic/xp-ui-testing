@@ -40,11 +40,11 @@ class DateValidation_Spec
     def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN datetime typed and content published THEN warning message appears"()
     {
         given: "add a content with type 'DateTime 1:1'"
-        Content timeContent = buildDateTime1_1_Content( WRONG_DATE_TIME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
+        Content dateTimeContent = buildDateTime1_1_Content( WRONG_DATE_TIME );
+        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
         when: "time with wrong format typed and 'Publish' button pressed"
-        String message = wizard.typeData( timeContent ).clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        String message = wizard.typeData( dateTimeContent ).clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
         then: "notification warning appears"
         message == PUBLISH_NOTIFICATION_WARNING;
