@@ -153,7 +153,7 @@ class Occurrences_TextLine_2_5_Spec
         then: "new content listed in the grid and can be opened for edit"
         formViewPanel.isValidationMessagePresent();
         and:
-        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
+        formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
     }
 
     private Content buildTextLine2_5_Content()

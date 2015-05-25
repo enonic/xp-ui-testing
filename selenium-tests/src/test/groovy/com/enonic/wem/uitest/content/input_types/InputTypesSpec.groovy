@@ -35,7 +35,9 @@ class InputTypesSpec
     {
         given: "add a content with type 'Date'"
         Content dateContent = buildDateContent();
-        selectSiteOpenWizard( dateContent.getContentTypeName() );
+        selectSiteOpenWizard( dateContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateContent ).save().close(
+            dateContent.getDisplayName() );
+
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateContent );
@@ -49,7 +51,8 @@ class InputTypesSpec
     {
         given: "add a content with type 'Date Time'"
         Content dateTimeContent = buildDateTimeContent();
-        selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateTimeContent ).save().close(
+            dateTimeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateTimeContent )
@@ -63,7 +66,8 @@ class InputTypesSpec
     {
         given: "add a content with type 'Time'"
         Content timeContent = buildTime0_0_Content( TEST_TIME );
-        selectSiteOpenWizard( timeContent.getContentTypeName() );
+        selectSiteOpenWizard( timeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( timeContent ).save().close(
+            timeContent.getDisplayName() ); ;
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( timeContent );
@@ -77,7 +81,8 @@ class InputTypesSpec
     {
         given: "add a content with type 'Double'"
         Content doubleContent = buildDoubleContent();
-        selectSiteOpenWizard( doubleContent.getContentTypeName() );
+        selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData( doubleContent ).save().close(
+            doubleContent.getDisplayName() ); ;
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( doubleContent );
@@ -91,7 +96,8 @@ class InputTypesSpec
     {
         given: "add a content with type 'Long'"
         Content longContent = buildLongContent();
-        selectSiteOpenWizard( longContent.getContentTypeName() );
+        selectSiteOpenWizard( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData( longContent ).save().close(
+            longContent.getDisplayName() ); ;
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( longContent );
@@ -105,7 +111,8 @@ class InputTypesSpec
     {
         given: "add a content with type 'Geo point'"
         Content geopointContent = buildGeoPointContent();
-        selectSiteOpenWizard( geopointContent.getContentTypeName() );
+        selectSiteOpenWizard( geopointContent.getContentTypeName() ).waitUntilWizardOpened().typeData( geopointContent ).save().close(
+            geopointContent.getDisplayName() ); ;
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( geopointContent );
@@ -120,7 +127,8 @@ class InputTypesSpec
     {
         given: "add a content with type 'checkbox'"
         Content checkBoxContent = buildCheckBoxContent();
-        selectSiteOpenWizard( checkBoxContent.getContentTypeName() );
+        selectSiteOpenWizard( checkBoxContent.getContentTypeName() ).waitUntilWizardOpened().typeData( checkBoxContent ).save().close(
+            checkBoxContent.getDisplayName() ); ;
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( checkBoxContent )
