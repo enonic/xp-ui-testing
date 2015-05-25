@@ -127,6 +127,23 @@ class Base_InputFields_Occurrences
         return dateContent;
     }
 
+    protected Content buildDateTime2_4_Content( String... datetime )
+    {
+        String name = "datetime";
+
+        PropertyTree data = new PropertyTree();
+        data.addStrings( TimeFormViewPanel.TIME_PROPERTY, datetime );
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "time content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":datetime2_4" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+
     protected Content buildDateTime1_1_Content( String dateTime )
     {
         String name = "datetime";
