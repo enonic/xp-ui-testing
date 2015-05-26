@@ -15,6 +15,8 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemVersions
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public abstract class BrowseItemsSelectionPanel
     extends Application
 {
@@ -75,6 +77,7 @@ public abstract class BrowseItemsSelectionPanel
             throw new TestFrameworkException( "the 'Version History' menu item was not found!" );
         }
         findElements( By.xpath( itemXpath ) ).get( 0 ).click();
+        sleep( 500 );
     }
 
     public int getSelectedItemCount()

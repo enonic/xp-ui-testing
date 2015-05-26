@@ -212,6 +212,12 @@ public class ContentWizardPanel
         return this;
     }
 
+    public ContentWizardPanel typeDisplayName( String displayName )
+    {
+        clearAndType( displayNameInput, displayName );
+        return this;
+    }
+
     public ContentWizardStepForm clickDataStep()
     {
         clickWizardStep( 1 );
@@ -263,7 +269,6 @@ public class ContentWizardPanel
     public ContentWizardPanel waitUntilWizardOpened()
     {
         boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
-        //TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "contentwizard" ) );
         if ( !result )
         {
             throw new TestFrameworkException( "ContentWizard was not showed!" );

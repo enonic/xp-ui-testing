@@ -1,6 +1,10 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +15,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
+import com.enonic.autotests.vo.contentmanager.ContentVersion;
 
 public class ContentItemVersionsPanel
     extends Application
@@ -27,6 +32,13 @@ public class ContentItemVersionsPanel
 
     protected final String TAB_MENU_BUTTON = "//div[contains(@id,'TabMenuButton') and child::span[@title='Version History']]";
 
+    private final String ALL_CONTENT_VERSION_GRID = "//div[contains(@id,'AllContentVersionsTreeGrid')]";
+
+    private final String ACTIVE_CONTENT_VERSION_GRID = "//div[contains(@id,'ActiveContentVersionsTreeGrid')]";
+
+    private final String CONTENT_VERSION_VIEWER = "//div[contains(@id,'api.content.ContentVersionViewer')]";
+
+
     @FindBy(xpath = ALL_VERSIONS_ITEM)
     private WebElement allVersionsButton;
 
@@ -41,6 +53,51 @@ public class ContentItemVersionsPanel
     public ContentItemVersionsPanel( final TestSession session )
     {
         super( session );
+    }
+
+    public LinkedList<String> getAllContentVersionsInfo()
+    {
+        List<WebElement> elements = findElements(
+            By.xpath( ALL_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER + "//div[contains(@id,'NamesView')]//h6[@class='main-name']" ) );
+        return elements.stream().map( e -> e.getAttribute( "title" ) ).collect( Collectors.toCollection( LinkedList::new ) );
+    }
+
+
+    public LinkedList<String> getActiveContentVersionsInfo()
+    {
+        List<WebElement> elements = findElements(
+            By.xpath( ACTIVE_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER + "//div[contains(@id,'NamesView')]//h6[@class='main-name']" ) );
+        return elements.stream().map( e -> e.getAttribute( "title" ) ).collect( Collectors.toCollection( LinkedList::new ) );
+    }
+
+    public LinkedList<ContentVersion> getActiveContentVersions()
+    {
+        LinkedList<String> info = getActiveContentVersionsInfo();
+        String statusXpath = ACTIVE_CONTENT_VERSION_GRID + "//div[contains(@class,'slick-row')]//div[contains(@class,'status')]";
+        List<String> status = findElements( By.xpath( statusXpath ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return buildContentVersions( info, status );
+    }
+
+    public LinkedList<ContentVersion> getAllContentVersions()
+    {
+        LinkedList<String> info = getAllContentVersionsInfo();
+        String statusXpath = ALL_CONTENT_VERSION_GRID + "//div[contains(@class,'slick-row')]//div[contains(@class,'status')]";
+        List<String> status = findElements( By.xpath( statusXpath ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return buildContentVersions( info, status );
+    }
+
+    private LinkedList<ContentVersion> buildContentVersions( List<String> infoStrings, List<String> statusStrings )
+    {
+
+        ContentVersion contentVersion = null;
+        LinkedList<ContentVersion> list = new LinkedList<>();
+        for ( int i = 0; i < infoStrings.size(); i++ )
+        {
+            contentVersion = ContentVersion.builder().info( infoStrings.get( i ) ).status( statusStrings.get( i ) ).build();
+            list.add( contentVersion );
+        }
+        return list;
+
     }
 
     public ContentItemVersionsPanel waitUntilLoaded()
@@ -90,5 +147,30 @@ public class ContentItemVersionsPanel
     public boolean isActiveVersionsTabBarItemPresent()
     {
         return activeVersionsButton.isDisplayed();
+    }
+
+    public ContentItemVersionsPanel clickOnActiveVersionsButton()
+    {
+        activeVersionsButton.click();
+        boolean result =
+            waitUntilVisibleNoException( By.xpath( ACTIVE_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "Table with active version not showed" );
+        }
+
+        return this;
+    }
+
+    public ContentItemVersionsPanel clickOnAllVersionsButton()
+    {
+        allVersionsButton.click();
+        boolean result = waitUntilVisibleNoException( By.xpath( ALL_CONTENT_VERSION_GRID ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "Table with all versions not showed" );
+        }
+
+        return this;
     }
 }
