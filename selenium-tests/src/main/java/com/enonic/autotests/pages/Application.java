@@ -5,12 +5,17 @@ import org.openqa.selenium.JavascriptExecutor;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 
 public class Application
     extends Page
 {
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
+
+    public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
+
+    public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
 
     public static final int NUMBER_TRIES_TO_CLOSE = 2;
 
@@ -74,7 +79,24 @@ public class Application
 
         String script = String.format( ELEMENT_BY_ID + ".isChecked()", checkboxId );
         return (Boolean) executor.executeScript( script );
+    }
 
+    public String waitNotificationWarning( long timeout )
+    {
+        String message = TestUtils.waitNotificationMessage( By.xpath( NOTIFICATION_WARNING ), getDriver(), timeout );
+        getLogger().info( "Notification warning " + message );
+        return message;
+    }
+
+    public String waitNotificationMessage( long timeout )
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( "//div[@class='notification-content']/span" ), timeout ) )
+        {
+            return null;
+        }
+        String message = findElements( By.xpath( "//div[@class='notification-content']/span" ) ).get( 0 ).getText();
+        getLogger().info( "Notification message " + message );
+        return message;
     }
 
 }

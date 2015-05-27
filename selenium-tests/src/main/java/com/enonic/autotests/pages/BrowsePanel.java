@@ -96,7 +96,6 @@ public abstract class BrowsePanel
             return false;
         }
         String expanderIcon = String.format( BROWSE_PANEL_ITEM_EXPANDER, gridItemName );
-        //waitForClickableAndClick( By.xpath( expanderIcon ) );
         findElements( By.xpath( expanderIcon ) ).get( 0 ).click();
         sleep( 1000 );
         return true;
@@ -574,5 +573,4 @@ public abstract class BrowsePanel
         sleep( 500 );
         return this;
     }
-
 }

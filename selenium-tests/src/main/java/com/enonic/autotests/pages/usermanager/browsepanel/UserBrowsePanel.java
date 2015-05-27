@@ -320,8 +320,5 @@ public class UserBrowsePanel
             default:
                 throw new TestFrameworkException( "unknown type of item!" );
         }
-
-
     }
-
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
@@ -15,7 +14,6 @@ import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
-import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -117,26 +115,6 @@ public class ContentBrowseFilterPanel
         }
     }
 
-    /**
-     * @param text
-     */
-    public ContentBrowseFilterPanel typeSearchText( String text )
-    {
-        boolean isVisible = waitUntilVisibleNoException( By.xpath( SEARCH_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !isVisible )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "filterinput" ) );
-            throw new TestFrameworkException( "browse panel or search input not displayed" );
-        }
-        getLogger().info( "query will be applied : " + text );
-        clearAndType( searchInput, text );
-        //searchInput.sendKeys( text );
-        searchInput.sendKeys( Keys.ENTER );
-        sleep( 1000 );
-        getLogger().info( "Filtered by : " + text );
-        return this;
-    }
-
     public String getSearchText()
     {
         return searchInput.getAttribute( "value" );
@@ -162,23 +140,6 @@ public class ContentBrowseFilterPanel
     }
 
     /**
-     * Clicks on link 'Clear Filter', located on the search panel.
-     */
-    public ContentBrowseFilterPanel clickOnCleanFilter()
-    {
-        boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
-        if ( !isVisible )
-        {
-            // getLogger().info( "The link with name 'Clear Filter' was not found!" );
-            //throw new TestFrameworkException( "The link with name 'Clear Filter' was not found!" );
-            return this;
-        }
-        findElements( By.linkText( CLEAR_FILTER_LINK ) ).get( 0 ).click();
-        sleep( 2000 );
-        return this;
-    }
-
-    /**
      * @return true if there any any selected entries in the ContentBrowseFilterPanel, otherwise false.
      */
     public boolean isAnySelectionPresent()
@@ -187,24 +148,6 @@ public class ContentBrowseFilterPanel
         return (Boolean) executor.executeScript(
             "return window.api.dom.ElementRegistry.getElementById('app.browse.filter.ContentBrowseFilterPanel').hasFilterSet()" );
 
-    }
-
-    /**
-     * Waits until link is visible.
-     *
-     * @return true if 'Clear Filter' link is present and visible, otherwise return false.
-     */
-    public boolean waitForClearFilterLinkVisible()
-    {
-        return waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
-    }
-
-    /**
-     * @return true if 'Clear Filter' link is not visible, otherwise return false.
-     */
-    public boolean waitForClearFilterLinkNotvisible()
-    {
-        return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
     }
 
     /**

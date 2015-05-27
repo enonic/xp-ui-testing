@@ -22,10 +22,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class WizardPanel<T>
     extends Application
 {
-    public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
-
-    public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
-
     public static String TABS_NAVIGATOR_LINK = "//ul[contains(@id,'wizard.WizardStepNavigator')]";
 
     public static String NAVIGATOR_TAB_ITEM_LINK = TABS_NAVIGATOR_LINK + "//li/span[@title='%s']";
@@ -239,31 +235,6 @@ public abstract class WizardPanel<T>
         getLogger().info( "Notification message " + message );
         return message;
     }
-
-//    public String waitNotificationWarning()
-//    {
-//        String message =
-//            TestUtils.waitNotificationMessage( By.xpath( "//div[@class='notification warning']//div[@class='notification-content']/span" ),
-//                                               getDriver(), 4l );
-//        getLogger().info( "Notification message " + message );
-//        return message;
-//    }
-
-    public String waitNotificationWarning( long timeout )
-    {
-        String message = TestUtils.waitNotificationMessage( By.xpath( NOTIFICATION_WARNING ), getDriver(), timeout );
-        getLogger().info( "Notification warning " + message );
-        return message;
-    }
-
-//    public String waitNotificationError()
-//    {
-//        String message =
-//            TestUtils.waitNotificationMessage( By.xpath( "//div[@class='notification error']//div[@class='notification-content']/span" ),
-//                                               getDriver(), 4l );
-//        getLogger().info( "Notification message " + message );
-//        return message;
-//    }
 
     public String waitNotificationError( long timeout )
     {

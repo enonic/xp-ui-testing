@@ -123,4 +123,20 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         and: "previous version has a master badge"
         contentVersions.peek().getStatus().contains( WorkspaceName.MASTER.getValue() )
     }
+
+    def "GIVEN content with the a published version that is later changed WHEN all versions listed THEN two versions are listed. The older one with green 'master' badge and the newer one with a light blue 'draft' badge."()
+    {
+        given: "content with 'online' status was changed and content has a 'Modified' status"
+        findAndSelectContent( folderContent );
+
+        when: "'Active versions'  button clicked and active versions showed"
+        ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
+        versionPanel.clickOnAllVersionsButton();
+        LinkedList<ContentVersion> contentVersions = versionPanel.getAllContentVersions();
+
+        then: "the latest active version has a 'draft' badge"
+        contentVersions.poll().getStatus() == WorkspaceName.DRAFT.getValue();
+        and: "previous version has a master badge"
+        contentVersions.peek().getStatus().contains( WorkspaceName.MASTER.getValue() )
+    }
 }

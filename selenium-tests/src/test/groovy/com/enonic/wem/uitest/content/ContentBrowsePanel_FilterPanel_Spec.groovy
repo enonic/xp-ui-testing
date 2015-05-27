@@ -9,13 +9,13 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
+import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
 class ContentBrowsePanel_FilterPanel_Spec
@@ -67,7 +67,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "CleanFilter1" );
 
         then:
-        filterPanel.waitForClearFilterLinkNotvisible();
+        filterPanel.waitForClearFilterLinkNotVisible();
     }
 
 
