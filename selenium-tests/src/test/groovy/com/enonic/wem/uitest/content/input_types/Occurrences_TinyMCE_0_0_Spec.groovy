@@ -4,10 +4,10 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.BaseTinyMCEFormViewPanel
 import com.enonic.autotests.pages.form.TinyMCE0_0_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_TinyMCE_0_0_Spec
@@ -46,7 +46,6 @@ class Occurrences_TinyMCE_0_0_Spec
         formViewPanel.getNumberOfMCE() == 1;
         and:
         formViewPanel.isAddButtonPresent();
-
     }
 
     def "GIVEN saving of content with TinyMCE editor  (0:0) and text typed WHEN content opened for edit THEN expected string is present in the editor "()
@@ -65,7 +64,6 @@ class Occurrences_TinyMCE_0_0_Spec
         actual.size() == 1;
         and:
         actual.get( 0 ) == EXPECTED_TEXT1;
-
     }
 
     def "GIVEN wizard for adding a content with TinyMCE(0:0) opened WHEN button 'Add' clicked 3 times THEN tree text area are present"()
@@ -81,9 +79,7 @@ class Occurrences_TinyMCE_0_0_Spec
         formViewPanel.getNumberOfMCE() == 3;
         and: "button 'add' is present"
         formViewPanel.isAddButtonPresent();
-
     }
-
 
     def "GIVEN saving of content with TinyMCE editor (0:1) and text not typed WHEN content opened for edit THEN no text present in the editor"()
     {
@@ -103,8 +99,6 @@ class Occurrences_TinyMCE_0_0_Spec
         strings.get( 0 ) == BaseTinyMCEFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
     }
 
-    //TODO remove it when bug "INBOX 16"  and XP-532
-    @Ignore
     def "GIVEN saving of content with two TinyMCE editor and two strings typed WHEN content opened for edit THEN  two editors with correct strings are present"()
     {
         given: "new content with type TinyMCE added'"
@@ -114,6 +108,7 @@ class Occurrences_TinyMCE_0_0_Spec
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
+        TestUtils.saveScreenshot( getTestSession(), "mce_2" )
         TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getTextFromAreas();
 
@@ -125,9 +120,7 @@ class Occurrences_TinyMCE_0_0_Spec
         strings.contains( EXPECTED_TEXT2 );
     }
 
-    //TODO remove it when bug  XP-532
-    @Ignore
-    def "GIVEN saving of content with tree TinyMCE editor and tree strings typed WHEN content opened for edit THEN  tree editors with correct strings are present"()
+    def "GIVEN saving of content with tree TinyMCE editor and tree strings typed WHEN content opened for edit THEN tree editors with correct strings are present"()
     {
         given: "new content with type TinyMCE added'"
         Content tinyMceContent = buildTinyMce0_0_Content( 3, TEST_TEXT1, TEST_TEXT2, TEST_TEXT3 );
@@ -136,6 +129,7 @@ class Occurrences_TinyMCE_0_0_Spec
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
+        TestUtils.saveScreenshot( getTestSession(), "mce_3" );
         TinyMCE0_0_FormViewPanel formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getTextFromAreas();
 

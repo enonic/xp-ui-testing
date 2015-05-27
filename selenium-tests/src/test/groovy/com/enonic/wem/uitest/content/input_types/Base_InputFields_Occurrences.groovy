@@ -49,12 +49,8 @@ class Base_InputFields_Occurrences
 
     def "create a site based on module with all content types"()
     {
-        setup: "add a site, based on test module"
+        when: "add a site, based on test module"
         addSite();
-
-        when:
-        filterPanel.typeSearchText( SITE_NAME );
-        TestUtils.saveScreenshot( getSession(), SITE_NAME )
 
         then: " test site should be listed"
         contentBrowsePanel.exists( ContentPath.from( ContentPath.ROOT, SITE_NAME ) );

@@ -30,11 +30,13 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class NewContentDialog
     extends Application
 {
+    public static String CONTAINER = "//div[contains(@id,'app.create.NewContentDialog')]";
+
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
 
     public static String CONTENT_TYPE_NAME =
-        "//div[contains(@id,'app.create.NewContentDialog')]//li[contains(@class,'content-types-list-item') and descendant::p[text()='%s']]";
+        CONTAINER + "//ul[@class='content-types-list']//li[contains(@class,'content-types-list-item') and descendant::p[text()='%s']]";
 
 
     public static final String ALL_LIST_ITEMS =
@@ -160,14 +162,15 @@ public class NewContentDialog
     {
         String searchString = contentTypeName.substring( contentTypeName.indexOf( ":" ) + 1 );
         clearAndType( searchInput, searchString );
+        sleep( 500 );
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
-        boolean isContentNamePresent = waitUntilVisibleNoException( By.xpath( ctypeXpath ), Application.EXPLICIT_NORMAL );
+        boolean isContentNamePresent = waitUntilVisibleNoException( By.xpath( ctypeXpath ), Application.EXPLICIT_LONG );
         if ( !isContentNamePresent )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "no_type" ) );
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
-        sleep( 500 );
+
         findElements( By.xpath( ctypeXpath ) ).get( 0 ).click();
         waitsForSpinnerNotVisible();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
