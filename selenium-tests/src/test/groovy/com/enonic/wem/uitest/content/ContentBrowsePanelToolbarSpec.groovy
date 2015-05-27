@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
@@ -123,6 +124,7 @@ class ContentBrowsePanelToolbarSpec
 
         when: "image content selected"
         findAndSelectContent( imageContent );
+        TestUtils.saveScreenshot( getSession(), "children_allow" );
 
         then: "sort button is disabled"
         !contentBrowsePanel.isSortButtonEnabled()
