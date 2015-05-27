@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -40,7 +41,7 @@ public class NewContentDialog
 
 
     public static final String ALL_LIST_ITEMS =
-        "//div[contains(@id,'app.create.NewContentDialog') and not(contains(@class,'mock-modal-dialog'))]//ul/li[contains(@class,'content-types-list-item')]";
+        "//div[contains(@id,'app.create.NewContentDialog') and not(contains(@class,'mock-modal-dialog'))]//ul[@class='content-types-list']//li[contains(@class,'content-types-list-item')]";
 
     public static final String LIST_ITEMS_SITES =
         "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[@class='content-types-list-item site']";
@@ -203,7 +204,7 @@ public class NewContentDialog
         {
             getLogger().info( "list of content types is empty" );
         }
-        return findElements( By.xpath( ALL_LIST_ITEMS ) ).size();
+        return findElements( By.xpath( ALL_LIST_ITEMS ) ).stream().map( WebElement::isDisplayed ).collect( Collectors.toList() ).size();
     }
 
     public int getNumberSitesFromList()
