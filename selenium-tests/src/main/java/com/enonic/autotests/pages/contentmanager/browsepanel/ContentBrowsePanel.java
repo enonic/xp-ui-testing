@@ -553,6 +553,7 @@ public class ContentBrowsePanel
         getFilterPanel().clickOnCleanFilter().typeSearchText( path.getName() );
         openContextMenu( path.getName() );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).get( 0 ).click();
+        sleep( 1000 );
         return this;
 
     }
