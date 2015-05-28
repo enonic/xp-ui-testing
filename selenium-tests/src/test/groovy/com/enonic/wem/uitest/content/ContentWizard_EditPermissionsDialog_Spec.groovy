@@ -2,13 +2,10 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 import com.enonic.xp.security.PrincipalKey
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -17,8 +14,6 @@ import spock.lang.Stepwise
 class ContentWizard_EditPermissionsDialog_Spec
     extends BaseContentSpec
 {
-    @Shared
-    String CONTENT_NAME = NameHelper.uniqueName( "folder" );
 
     @Shared
     Content content;
@@ -29,28 +24,19 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "setup: add a test folder"()
     {
         when:
-        content = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( CONTENT_NAME ).
-            displayName( "testPermDialogFolder" ).
-            contentType( ContentTypeName.folder() ).
-            build();
-
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
+        content = buildFolderContent( "folder", "testPermDialog" );
+        addContent( content );
 
         then:
         contentBrowsePanel.exists( content.getPath() );
-
-
     }
 
     def "WHEN 'Edit Permissions' button pressed THEN modal dialog appears "()
     {
         when:
-        filterPanel.typeSearchText( CONTENT_NAME )
+        filterPanel.typeSearchText( content.getName() )
         EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
-            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         then:
         modalDialog.isOpened();
@@ -59,9 +45,9 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "WHEN 'Edit Permissions' dialog opened THEN 'inherit permissions ' checkbox present on dialog and it checked "()
     {
         when:
-        filterPanel.typeSearchText( CONTENT_NAME )
+        filterPanel.typeSearchText( content.getName() )
         EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
-            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         then:
         modalDialog.isInheritPermissionsCheckboxDisplayed();
@@ -73,9 +59,9 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' dialog opened WHEN 'inherit permissions' unchecked  THEN options filter input appears "()
     {
         given:
-        filterPanel.typeSearchText( CONTENT_NAME );
+        filterPanel.typeSearchText( content.getName() );
         EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
-            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         when:
         modalDialog.setCheckedForInheritCheckbox( false );
@@ -89,9 +75,9 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "WHEN 'Edit Permissions' opened THEN two default permissions displayed "()
     {
         when:
-        filterPanel.typeSearchText( CONTENT_NAME )
+        filterPanel.typeSearchText( content.getName() )
         EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
-            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         List<String> principals = modalDialog.getPrincipalNames();
         then:
@@ -103,9 +89,9 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' opened WHEN new role added THEN new ACL entry with new role and 'Can Read' operations appears"()
     {
         given:
-        filterPanel.typeSearchText( CONTENT_NAME )
+        filterPanel.typeSearchText( content.getName() )
         EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
-            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
         when: "new acl-entry added"
@@ -114,16 +100,14 @@ class ContentWizard_EditPermissionsDialog_Spec
         then:
         List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
         aclEntries.size() == ( DEFAULT_NUMBER_OF_ACL_ENTRIES + 1 );
-
-
     }
 
     def "GIVEN 'Edit Permissions' opened WHEN one acl entry deleted THEN not present on dialog"()
     {
         given:
-        filterPanel.typeSearchText( CONTENT_NAME )
+        filterPanel.typeSearchText( content.getName() )
         EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
-            CONTENT_NAME ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
         modalDialog.setCheckedForInheritCheckbox( false ).addPermission( entry );
 
@@ -133,10 +117,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         then:
         List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
         aclEntries.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
-
-
     }
-
 
     private List<ContentAclEntry> getExpected()
     {
