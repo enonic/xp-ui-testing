@@ -1,65 +1,32 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class ContentBrowsePanel_GridPanel_DeleteSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
-
-    @Shared
-    ContentBrowsePanel contentBrowsePanel
-
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-    }
-
 
     def "GIVEN existing two contents, WHEN all content selected and delete button pressed THEN the content should not be listed in the table"()
     {
         given:
-        Content content1 = Content.builder().
-            name( NameHelper.uniqueName( "deletecontent" ) ).
-            displayName( "contenttodelete" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.folder() ).
-            build();
+        Content content1 = buildFolderContent( "deletecontent", "contenttodelete" );
+        addContent( content1 );
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content1.getContentTypeName() ).typeData( content1 ).save().close(
-            content1.getDisplayName() );
-
-        Content content2 = Content.builder().
-            name( NameHelper.uniqueName( "deletecontent" ) ).
-            displayName( "contenttodelete" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-
-        contentBrowsePanel.clickToolbarNew().selectContentType( content2.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            content2 ).save().close( content2.getDisplayName() );
+        Content content2 = buildFolderContent( "deletecontent", "contenttodelete" );
+        addContent( content2 );
 
         List<Content> contentList = new ArrayList<>();
         contentList.add( content1 );
         contentList.add( content2 );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waitUntilPageLoaded( 2 );
-        contentBrowsePanel.clickOnClearSelection();
 
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
-
 
         then:
         !contentBrowsePanel.exists( content1.getPath() ) && !contentBrowsePanel.exists( content2.getPath() );
@@ -67,24 +34,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
     def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
     {
-        given: "folder content added at the root"
-        Content content = Content.builder().
-            name( NameHelper.uniqueName( "deletecontent" ) ).
-            displayName( "contenttodelete" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
-        List<Content> contents = new ArrayList<>();
-        contents.add( content );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.clickOnClearSelection();
+        given: "folder content added on the root"
+        Content content = buildFolderContent( "deletecontent", "deletecontent" );
+        addContent( content );
 
         when: "just created content selected and 'Delete' button on toolbar  pressed and 'Yes' pressed on confirm dialog "
-        contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() );
-        contentBrowsePanel.deleteSelected();
+        contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() ).clickToolbarDelete().doDelete();
 
         then: "deleted content is no longer listed at root"
         !contentBrowsePanel.exists( content.getPath() );
@@ -93,31 +48,17 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN a Content beneath an existing WHEN deleted THEN deleted Content is no longer listed beneath parent"()
     {
         given: "folder content added at the root and added child content to this folder"
-        Content parent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( NameHelper.uniqueName( "parent" ) ).
-            displayName( "parent" ).
-            contentType( ContentTypeName.folder() ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close(
-            parent.getDisplayName() );
-        contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
-        Content contentToDelete = Content.builder().
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "delete content beneath parent" ).
-            parent( ContentPath.from( parent.getName() ) ).
-            contentType( ContentTypeName.folder() ).
-            build();
+        Content parent = buildFolderContent( "parent", "parent" );
+        addContent( parent );
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( contentToDelete.getContentTypeName() ).typeData( contentToDelete ).
-            save().close( contentToDelete.getDisplayName() );
-        contentBrowsePanel.waitUntilPageLoaded( 1 );
-
+        contentBrowsePanel.clickCheckboxAndSelectRow( parent.getPath() );
+        Content contentToDelete = buildFolderContent( "folder", "delete content beneath parent" );
+        addContent( contentToDelete );
         List<Content> contentList = new ArrayList<>()
         contentList.add( contentToDelete );
 
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
-        contentBrowsePanel.expandContent( contentToDelete.getParent() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then: "deleted Content is no longer listed beneath parent"
         !contentBrowsePanel.exists( contentToDelete.getPath(), true );
@@ -126,32 +67,23 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
     def "GIVEN a one and only Content beneath an existing WHEN deleted THEN expand icon of parent is no longer shown "()
     {
-        given: "folder content added at the root and added child content to this folder"
-        Content parent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( NameHelper.uniqueName( "parent" ) ).
-            displayName( "expandicon-test" ).
-            contentType( ContentTypeName.folder() ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( parent.getContentTypeName() ).typeData( parent ).save().close(
-            parent.getDisplayName() );
+        given: "folder content added at the root and added a child content to this folder"
+        Content parent = buildFolderContent( "parent", "expand-icon-test" );
+        addContent( parent );
 
-        contentBrowsePanel.clickOnParentCheckbox( parent.getPath() )
+        contentBrowsePanel.clickCheckboxAndSelectRow( parent.getPath() );
         Content content = Content.builder().
             name( NameHelper.uniqueName( "unstructured" ) ).
             displayName( "unstructured" ).
             contentType( ContentTypeName.unstructured() ).
             parent( ContentPath.from( parent.getName() ) ).
             build();
-
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
-
+        addContent( content );
         List<Content> contentList = new ArrayList<>();
         contentList.add( content );
 
         when: "child content deleted"
-        contentBrowsePanel.expandContent( content.getParent() )
+        contentBrowsePanel.expandContent( parent.getPath() );
         TestUtils.saveScreenshot( getTestSession(), "deletecontentbeneath" )
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
@@ -162,17 +94,11 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN a Content on root WHEN deleted THEN New-button is enabled"()
     {
         given: "folder content added at the root"
-        Content content = Content.builder().
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "folderToDelete" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
+        Content folder = buildFolderContent( "folder", "folder-to-delete" );
+        addContent( folder );
 
         when: "just created content deleted"
-        contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInTable( folder.getPath() ).clickToolbarDelete().doDelete();
 
         then: "New-button is enabled"
         contentBrowsePanel.isNewButtonEnabled();
@@ -181,26 +107,15 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
     {
         given: "two folder added at the root"
-        Content content1 = Content.builder().
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "folderToDelete1" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
+        Content content1 = buildFolderContent( "folder", "folder-to-delete1" );
+        addContent( content1 );
 
-        Content content2 = Content.builder().
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "folderToDelete2" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
+        Content content2 = buildFolderContent( "folder", "folder-to-delete2" );
+        addContent( content2 );
+
         List<Content> contentList = new ArrayList<>();
         contentList.add( content2 );
         contentList.add( content1 );
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content1 ).save().close(
-            content1.getDisplayName() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData( content2 ).save().close(
-            content2.getDisplayName() );
 
         when: "both contents selected in the grid and  deleted"
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();

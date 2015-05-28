@@ -317,13 +317,6 @@ public class ContentBrowsePanel
         return getChildNames( contentPath.toString() );
     }
 
-    /**
-     * Clicks on 'Delete' button in toolbar, confirms deleting when 'Confirm Deleting' dialog appears.
-     */
-    public void deleteSelected()
-    {
-        clickToolbarDelete().doDelete();
-    }
 
     /**
      * Clicks on 'Delete' button on toolbar.

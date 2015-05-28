@@ -10,9 +10,8 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
-/**
- * Page Object for Login page version 5.0
- */
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class LoginPage
     extends Page
 {
@@ -23,9 +22,7 @@ public class LoginPage
 
     private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'userid or e-mail']";
 
-    private final String loginEnabledClass = "login-button";
-
-    private String loginButtonXpath = "//button[contains(@class,'%s')]";
+    private String loginButtonXpath = "//div[@class='password-container']//button[contains(@class,'login-button')]";
 
 
     @FindBy(xpath = EMAIL_INPUT_XPATH)
@@ -55,7 +52,7 @@ public class LoginPage
         boolean isLoginPageLoaded = waitUntilTitleLoad( TITLE, LOGIN_PAGE_TIMEOUT );
         if ( !isLoginPageLoaded )
         {
-            String name = NameHelper.uniqueName( "loginpage" );
+            String name = NameHelper.uniqueName( "login_page_error" );
             TestUtils.saveScreenshot( getSession(), name );
             throw new TestFrameworkException( "Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT );
         }
@@ -68,6 +65,7 @@ public class LoginPage
             throw new TestFrameworkException( " input 'user id or e-mail' was not found on page!" );
         }
         usernameInput.sendKeys( username );
+        sleep( 300 );
 
         passwordInput.sendKeys( password );
 
