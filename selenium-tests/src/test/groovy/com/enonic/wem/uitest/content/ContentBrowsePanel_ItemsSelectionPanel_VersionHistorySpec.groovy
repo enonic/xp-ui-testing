@@ -13,9 +13,6 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     extends BaseContentSpec
 {
     @Shared
-    ContentBrowseItemsSelectionPanel itemsSelectionPanel;
-
-    @Shared
     Content folderContent;
 
     def "WHEN content selected THEN TabMenu button appears"()
