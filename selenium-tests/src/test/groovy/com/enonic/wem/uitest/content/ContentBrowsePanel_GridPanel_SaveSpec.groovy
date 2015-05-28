@@ -1,67 +1,41 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class ContentBrowsePanel_GridPanel_SaveSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
     @Shared
-    String REPO_NAME = NameHelper.uniqueName( "test-folder" );
-
-    @Shared
-    ContentBrowsePanel contentBrowsePanel;
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-    }
+    Content PARENT_FOLDER;
 
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
     {
         given:
-        Content rootContent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( REPO_NAME ).
-            displayName( REPO_NAME ).
-            contentType( ContentTypeName.folder() ).
-            build();
-
+        PARENT_FOLDER = buildFolderContent( "testfolder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
-        wizard.typeData( rootContent );
+        wizard.typeData( PARENT_FOLDER );
 
         when:
-        wizard.save().close( rootContent.getDisplayName() );
+        wizard.save().close( PARENT_FOLDER.getDisplayName() );
 
         then:
-        contentBrowsePanel.exists( rootContent.getPath() );
+        contentBrowsePanel.exists( PARENT_FOLDER.getPath() );
     }
 
     def "GIVEN creating new Content on root WHEN saved and HomeButton clicked THEN new Content should be listed"()
     {
         given:
-        Content rootContent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "folder" ).
-            contentType( ContentTypeName.folder() ).
-            build();
-
+        Content rootContent = buildFolderContent( "folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() ).
             typeData( rootContent );
-
 
         when:
         wizard.save();
@@ -75,7 +49,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content content = Content.builder().
-            parent( ContentPath.from( REPO_NAME ) ).
+            parent( PARENT_FOLDER.getPath() ).
             name( NameHelper.uniqueName( "folder" ) ).
             displayName( "folder" ).
             contentType( ContentTypeName.folder() ).
@@ -96,7 +70,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content content = Content.builder().
-            parent( ContentPath.from( REPO_NAME ) ).
+            parent( PARENT_FOLDER.getPath() ).
             name( NameHelper.uniqueName( "folder" ) ).
             displayName( "folder" ).
             contentType( ContentTypeName.folder() ).
@@ -122,7 +96,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             name( name ).
             displayName( "folder-child" ).
             contentType( ContentTypeName.folder() ).
-            parent( ContentPath.from( REPO_NAME ) ).
+            parent( PARENT_FOLDER.getPath() ).
             build();
 
         contentBrowsePanel.expandContent( content.getParent() );
@@ -146,7 +120,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             name( name ).
             displayName( "folder" ).
             contentType( ContentTypeName.folder() ).
-            parent( ContentPath.from( REPO_NAME ) ).
+            parent( PARENT_FOLDER.getPath() ).
             build()
 
         contentBrowsePanel.expandContent( content.getParent() );
@@ -166,21 +140,19 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content contentToEdit = Content.builder().
-            parent( ContentPath.from( REPO_NAME ) ).
+            parent( PARENT_FOLDER.getPath() ).
             name( "editname" ).
             displayName( "editnametest" ).
             contentType( ContentTypeName.unstructured() ).
             build();
         contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
-
-        ContentWizardPanel contentWizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
-        contentWizard.typeData( contentToEdit ).save().close( contentToEdit.getDisplayName() );
+        addContent( contentToEdit );
 
         Content newContent = cloneContentWithNewName( contentToEdit )
         contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest" );
-        contentBrowsePanel.deSelectContentInTable( ContentPath.from( REPO_NAME ) );
-        contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getPath() );
+        ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
         contentWizard.typeData( newContent );
 
         when:
@@ -191,7 +163,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
         TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
-        contentBrowsePanel.exists( newContent.getPath() );
+        contentBrowsePanel.exists( newContent.getName(), true );
 
     }
 
@@ -199,17 +171,17 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given:
         Content contentToEdit = Content.builder().
-            parent( ContentPath.from( REPO_NAME ) ).
+            parent( PARENT_FOLDER.getPath() ).
             name( "editdisplayname" ).
             displayName( "editdisplayname" ).
             contentType( ContentTypeName.unstructured() ).
             build();
-        contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
+        contentBrowsePanel.clickOnParentCheckbox( PARENT_FOLDER.getPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close( contentToEdit.getDisplayName() );
 
         Content newContent = cloneContentWithNewDisplayName( contentToEdit );
-        contentBrowsePanel.deSelectContentInTable( ContentPath.from( REPO_NAME ) );
+        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getPath() );
         wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getPath() ).
             clickToolbarEdit();
         wizard.typeData( newContent );

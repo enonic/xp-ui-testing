@@ -1,46 +1,21 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemsSelectionPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Shared
 
 class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
-    @Shared
-    ContentBrowsePanel contentBrowsePanel;
-
-    @Shared
-    ContentBrowseItemsSelectionPanel itemsSelectionPanel;
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
-    }
 
     def "GIVEN three selected Content WHEN deleted THEN no SelectionItem-s are displayed"()
     {
-        given:
-
-        Content parent = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( NameHelper.uniqueName( "parent" ) ).
-            displayName( "parent" ).
-            contentType( ContentTypeName.folder() ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() ).typeData( parent ).save().close(
-            parent.getDisplayName() );
-
+        given: "one parent and two child content exist"
+        Content parent = buildFolderContent( "folder", "selection test" )
+        addContent( parent );
         List<Content> contentList = new ArrayList<>()
         Content content1 = Content.builder().
             name( NameHelper.uniqueName( "first" ) ).
@@ -60,8 +35,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             contentType( ContentTypeName.shortcut() ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content2.getContentTypeName() );
-        wizard.typeData( content2 ).save().close( content2.getDisplayName() );
+        addContent( content2 );
         contentList.add( content2 );
         Content content3 = Content.builder().
             parent( ContentPath.from( parent.getName() ) ).
@@ -74,17 +48,13 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         wizard.typeData( content3 ).save().close( content3.getDisplayName() );
         contentList.add( content3 );
 
-
-
-        when:
+        when: "parent and children are selected and 'Delete button' pressed"
         contentBrowsePanel.expandContent( content1.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "delete-three" );
-
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
-        then:
+        then: "no SelectionItem-s are displayed"
         TestUtils.saveScreenshot( getSession(), "item_select_0" )
         itemsSelectionPanel.getSelectedItemCount() == 0;
     }
-
 }

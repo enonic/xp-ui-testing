@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemsSelectionPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -19,12 +20,16 @@ class BaseContentSpec
     @Shared
     ContentBrowseFilterPanel filterPanel;
 
+    @Shared
+    ContentBrowseItemsSelectionPanel itemsSelectionPanel;
+
 
     def setup()
     {
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
+        itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
     }
 
     public Content buildFolderContent( String name, String displayName )
