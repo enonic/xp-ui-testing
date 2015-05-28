@@ -1,14 +1,9 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContentTypeDisplayNames
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
@@ -16,37 +11,16 @@ import spock.lang.Stepwise
 
 @Stepwise
 class ContentBrowsePanel_GridPanel_FilterSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
-
     @Shared
-    ContentBrowsePanel contentBrowsePanel;
-
-    @Shared
-    ContentBrowseFilterPanel filterPanel;
-
-    @Shared
-    String INITIAL_CONTENT_FOLDER_NAME = NameHelper.uniqueName( "initfolder" );
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-        filterPanel = contentBrowsePanel.getFilterPanel();
-    }
+    Content initialFolder;
 
     def "add initial content"()
     {
         when:
-        Content initialFolder = Content.builder().
-            name( INITIAL_CONTENT_FOLDER_NAME ).
-            displayName( "initialFolder" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.folder() ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( initialFolder.getContentTypeName() ).typeData( initialFolder ).save().close(
-            initialFolder.getDisplayName() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        initialFolder = buildFolderContent( "initcontent", "filter tests" );
+        addContent( initialFolder );
 
         then:
         contentBrowsePanel.exists( initialFolder.getPath() );
@@ -80,14 +54,14 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         given:
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        boolean beforeClean = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        boolean beforeClean = contentBrowsePanel.exists( initialFolder.getPath() );
 
         when:
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
-        !beforeClean && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        !beforeClean && contentBrowsePanel.exists( initialFolder.getPath() );
     }
 
     def "GIVEN One selection in ContentTypes-filter WHEN Selecting one additional entry in ContentTypes-filter THEN all existing Content of the both selected types should be listed in gridPanel"()
@@ -113,45 +87,33 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
         TestUtils.saveScreenshot( getTestSession(), "one-selection2" );
-        boolean existsBeforeDeselect = contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        boolean existsBeforeDeselect = contentBrowsePanel.exists( initialFolder.getPath() );
 
         when:
         filterPanel.deselectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "one-selection-deselected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-
         then:
-        !existsBeforeDeselect && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
+        !existsBeforeDeselect && contentBrowsePanel.exists( initialFolder.getPath() );
     }
 
     def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
     {
-
         when:
-        filterPanel.typeSearchText( INITIAL_CONTENT_FOLDER_NAME );
+        filterPanel.typeSearchText( initialFolder.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "text-search1" );
 
         then:
-        contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) ) &&
-            isStringPresentInName( contentBrowsePanel.getContentNamesFromBrowsePanel(), INITIAL_CONTENT_FOLDER_NAME );
+        contentBrowsePanel.exists( initialFolder.getPath() );
     }
 
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
-        String name = NameHelper.uniqueName( "folder" );
-        Content page = Content.builder().
-            name( name ).
-            displayName( "folder" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.folder() ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( page.getContentTypeName() ).typeData( page ).save().close(
-            page.getDisplayName() );
-        contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        filterPanel.typeSearchText( name );
+        Content folder = buildFolderContent( "folder", "filter test" )
+        filterPanel.typeSearchText( folder.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         when:
@@ -160,29 +122,6 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then:
-        contentBrowsePanel.getRowNumber() > 1 && contentBrowsePanel.exists( ContentPath.from( INITIAL_CONTENT_FOLDER_NAME ) );
-    }
-
-    /**
-     *
-     * Checks that a string is present in all names of content
-     * @param allNames
-     * @param name
-     * @return if each name contains a searched text.
-     */
-    private isStringPresentInName( List<String> allNames, String name )
-    {
-        if ( allNames.isEmpty() )
-        {
-            return false;
-        }
-        for ( String uiName : allNames )
-        {
-            if ( uiName.contains( name ) )
-            {
-                return true;
-            }
-        }
-        return false;
+        contentBrowsePanel.getRowNumber() > 1 && contentBrowsePanel.exists( initialFolder.getPath() );
     }
 }

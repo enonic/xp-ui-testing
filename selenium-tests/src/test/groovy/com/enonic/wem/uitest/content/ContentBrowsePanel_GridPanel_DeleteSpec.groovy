@@ -64,7 +64,6 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         !contentBrowsePanel.exists( contentToDelete.getPath(), true );
     }
 
-
     def "GIVEN a one and only Content beneath an existing WHEN deleted THEN expand icon of parent is no longer shown "()
     {
         given: "folder content added at the root and added a child content to this folder"
