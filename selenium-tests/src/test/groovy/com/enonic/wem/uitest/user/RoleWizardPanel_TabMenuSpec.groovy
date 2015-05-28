@@ -3,27 +3,14 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
 class RoleWizardPanel_TabMenuSpec
-    extends BaseGebSpec
+    extends BaseUsersSpec
 {
-
-    @Shared
-    UserBrowsePanel userBrowsePanel;
-
     @Shared
     String TAB_MENU_ITEM = "<Unnamed Role>"
-
-    def setup()
-    {
-        go "admin"
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
-    }
-
 
     def "WHEN started adding a 'Role' and Wizard opened  THEN new tab with  name 'New Role' is present"()
     {
@@ -34,7 +21,6 @@ class RoleWizardPanel_TabMenuSpec
 
         then: "tab with title 'New Role' is present "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
-
     }
 
     def "GIVEN role Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
@@ -49,7 +35,6 @@ class RoleWizardPanel_TabMenuSpec
 
         then: "close dialog should not be showed"
         dialog == null;
-
     }
 
     def "GIVEN role Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
@@ -65,7 +50,5 @@ class RoleWizardPanel_TabMenuSpec
 
         then: "'SaveBeforeClose' dialog showed"
         dialog != null;
-
     }
-
 }

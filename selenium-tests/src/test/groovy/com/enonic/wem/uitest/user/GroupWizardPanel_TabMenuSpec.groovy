@@ -3,27 +3,15 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.WizardPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
 class GroupWizardPanel_TabMenuSpec
-    extends BaseGebSpec
+    extends BaseUsersSpec
 {
 
     @Shared
-    UserBrowsePanel userBrowsePanel;
-
-    @Shared
     String TAB_MENU_ITEM = "<Unnamed Group>"
-
-    def setup()
-    {
-        go "admin"
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
-    }
-
 
     def "WHEN started adding a 'system Group' and Wizard opened  THEN list of items with one name 'New Group' is present"()
     {
@@ -35,7 +23,6 @@ class GroupWizardPanel_TabMenuSpec
 
         then: "item with title 'New Role' is present "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
-
     }
 
     def "GIVEN Group Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
@@ -51,7 +38,6 @@ class GroupWizardPanel_TabMenuSpec
 
         then: "close dialog should not be showed"
         dialog == null;
-
     }
 
     def "GIVEN Group Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
@@ -68,7 +54,5 @@ class GroupWizardPanel_TabMenuSpec
 
         then: "'SaveBeforeClose' dialog showed"
         dialog != null;
-
     }
-
 }

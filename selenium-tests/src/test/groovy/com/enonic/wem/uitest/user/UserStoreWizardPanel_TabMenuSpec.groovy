@@ -3,27 +3,15 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
 class UserStoreWizardPanel_TabMenuSpec
-    extends BaseGebSpec
+    extends BaseUsersSpec
 {
 
     @Shared
-    UserBrowsePanel userBrowsePanel;
-
-    @Shared
     String TAB_MENU_ITEM = "<Unnamed User Store>"
-
-    def setup()
-    {
-        go "admin"
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
-    }
-
 
     def "WHEN started adding a 'User Store' and Wizard opened THEN new tab with name '[New User Store]' is present"()
     {
@@ -33,7 +21,6 @@ class UserStoreWizardPanel_TabMenuSpec
 
         then: "item with title 'New User Store' is present "
         wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
-
     }
 
     def "GIVEN 'user store' Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
@@ -49,7 +36,6 @@ class UserStoreWizardPanel_TabMenuSpec
 
         then: "close dialog should not be showed"
         dialog == null;
-
     }
 
     def "GIVEN 'user store' Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
@@ -65,7 +51,5 @@ class UserStoreWizardPanel_TabMenuSpec
 
         then: "'SaveBeforeClose' dialog showed"
         dialog != null;
-
     }
-
 }

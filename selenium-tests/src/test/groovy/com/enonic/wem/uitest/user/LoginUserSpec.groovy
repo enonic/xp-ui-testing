@@ -32,15 +32,6 @@ class LoginUserSpec
     int randomInt = Math.abs( new Random().nextInt() );
 
     @Shared
-    private String USER_STORE_DISPLAY_NAME = "User Store" + randomInt;
-
-    @Shared
-    private String GENERATED_USER_STORE_NAME = "user-store" + randomInt;
-
-    @Shared
-    private String USER_STORE_PATH = "/user-store" + randomInt;
-
-    @Shared
     private String USER_NAME = NameHelper.uniqueName( "user" );
 
     @Shared
@@ -75,7 +66,6 @@ class LoginUserSpec
         then: "new user present beneath a system store"
         userBrowsePanel.exists( user.getDisplayName(), true );
     }
-
 
     def "WHEN new content with permissions for just created user added THEN Content is listed in BrowsePanel"()
     {
@@ -179,7 +169,6 @@ class LoginUserSpec
 
     }
 
-
     def "changing a password for existing user"()
     {
         given:
@@ -201,7 +190,6 @@ class LoginUserSpec
 
     }
 
-
     def "WHEN password changed for existing user THEN old password should not work for login"()
     {
         when:
@@ -214,7 +202,6 @@ class LoginUserSpec
         then:
         thrown( AuthenticationException )
     }
-
 
     def "WHEN user logged in with the new password THEN home page loaded"()
     {

@@ -29,6 +29,9 @@ public class TinyMCE0_0_FormViewPanel
 
     private final String REMOVE_BUTTON_XPATH = FORM_VIEW + "//div[contains(@id,'InputOccurrenceView')]//a[@class='remove-button']";
 
+    private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";
+
+
     public boolean isOpened()
     {
         return waitUntilVisibleNoException( By.xpath( STEP_XPATH ), Application.EXPLICIT_NORMAL );
@@ -39,8 +42,8 @@ public class TinyMCE0_0_FormViewPanel
     {
         long numberOfEditors = data.getLong( NUMBER_OF_EDITORS );
         addEditors( numberOfEditors );
-        List<WebElement> textArea = findElements( By.xpath( TINY_MCE ) );
-        if ( textArea.size() == 0 )
+        List<WebElement> frames = findElements( By.xpath( TINY_MCE ) );
+        if ( frames.size() == 0 )
         {
             throw new TestFrameworkException( "no one text input was not found" );
         }
@@ -50,8 +53,12 @@ public class TinyMCE0_0_FormViewPanel
         for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )
         {
             Actions builder = new Actions( getDriver() );
-            builder.click( textArea.get( i ) ).build().perform();
-            textArea.get( i ).sendKeys( sourceString );
+            builder.click( frames.get( i ) ).build().perform();
+            sleep( 500 );
+            frames.get( i ).sendKeys( sourceString );
+            //TODO
+            //( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
+            // setText( frames.get( i ).getAttribute( "id" ),sourceString );
             sleep( 300 );
             i++;
             if ( i >= numberOfEditors )
@@ -62,6 +69,12 @@ public class TinyMCE0_0_FormViewPanel
         sleep( 300 );
         return this;
     }
+
+    private void setText( String id, String text )
+    {
+        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SET_TINY_MCE_INNERHTML, id, text );
+    }
+
 
     public void addEditors( long numberOfEditors )
     {
@@ -88,6 +101,11 @@ public class TinyMCE0_0_FormViewPanel
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         return text;
     }
+
+//    private void setText(String text){
+//        private final String SET_TINY_MCE_INNERHTML = "document.getElementsByTagName('iframe')[0].contentDocument.body.innerHTML=arguments[0];";
+//
+//    }
 
     public boolean isAddButtonPresent()
     {

@@ -1,24 +1,12 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.uitest.BaseGebSpec
 import org.openqa.selenium.Keys
-import spock.lang.Shared
 
 class UserBrowsePanel_GridPanel_Spec
-    extends BaseGebSpec
+    extends BaseUsersSpec
 {
-    @Shared
-    UserBrowsePanel userBrowsePanel;
-
-
-    def setup()
-    {
-        go "admin"
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
-    }
 
     def "GIVEN user browse panel opened WHEN no selection THEN all rows are white"()
     {
@@ -27,7 +15,6 @@ class UserBrowsePanel_GridPanel_Spec
 
         expect:
         userBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
-
     }
 
     def "GIVEN user browse panel opened WHEN first is clicked THEN first row is blue"()

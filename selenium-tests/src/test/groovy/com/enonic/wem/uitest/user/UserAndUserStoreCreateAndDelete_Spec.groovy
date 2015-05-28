@@ -1,28 +1,18 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.DeleteUserItemDialog
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowseFilterPanel
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.autotests.vo.usermanager.UserStore
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class UserAndUserStoreCreateAndDelete_Spec
-    extends BaseGebSpec
+    extends BaseUsersSpec
 {
-    @Shared
-    UserBrowsePanel userBrowsePanel;
-
-    @Shared
-    UserBrowseFilterPanel userBrowseFilterPanel;
-
     @Shared
     User user;
 
@@ -40,13 +30,6 @@ class UserAndUserStoreCreateAndDelete_Spec
 
     @Shared
     private String USER_NAME = NameHelper.uniqueName( "user" );
-
-    def setup()
-    {
-        go "admin"
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
-        userBrowseFilterPanel = userBrowsePanel.getUserBrowseFilterPanel();
-    }
 
     def "GIVEN creating new UserStore WHEN display name typed THEN the real name equals as expected"()
     {
