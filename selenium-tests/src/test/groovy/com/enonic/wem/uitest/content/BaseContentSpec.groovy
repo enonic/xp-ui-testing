@@ -26,7 +26,9 @@ class BaseContentSpec
 
     def setup()
     {
-        go "admin"
+        //go "admin"
+        String baseUrl = getTestSession().getBaseUrl();
+        getDriver().navigate().to( baseUrl + "/admin/" );
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
         itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();

@@ -15,7 +15,6 @@ class ContentBrowsePanel_Performance
     def setup()
     {
         go "admin"
-
     }
 
     def "GIVEN admin console WHEN Content app opened THEN grid should appears in 1 second"()

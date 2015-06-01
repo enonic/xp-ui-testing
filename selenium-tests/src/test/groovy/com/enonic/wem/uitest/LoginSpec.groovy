@@ -10,7 +10,6 @@ class LoginSpec
     {
         go "admin"
         getTestSession();
-
     }
 
     def "Given login page When both username and password fields is empty Then Login Button must be disabled"()
@@ -35,7 +34,6 @@ class LoginSpec
         then:
         $( 'button.login-button' ).getAttribute( "style" ).contains( 'display: none' );
     }
-
 
     def "Given login page When only password field have value Then Login Button must be disabled"()
     {

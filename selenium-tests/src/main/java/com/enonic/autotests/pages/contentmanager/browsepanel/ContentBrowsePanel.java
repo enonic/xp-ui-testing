@@ -103,6 +103,16 @@ public class ContentBrowsePanel
         super( session );
     }
 
+    @Override
+    public void waitsForSpinnerNotVisible()
+    {
+        boolean result = waitsElementNotVisible( By.xpath( BASE_PANEL_XPATH + SPINNER_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
+        }
+    }
+
     public String waitNotificationMessage()
     {
         if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE ), Application.EXPLICIT_NORMAL ) )
@@ -219,7 +229,6 @@ public class ContentBrowsePanel
         return allNames;
     }
 
-
     /**
      * @param contentPath
      * @return
@@ -292,7 +301,6 @@ public class ContentBrowsePanel
                         getLogger().info( "content with name " + parentContent + "has no children! " );
                     }
                 }
-
             }
         }
         waitsForSpinnerNotVisible();
@@ -311,12 +319,10 @@ public class ContentBrowsePanel
         return new ContentWizardPanel( getSession() );
     }
 
-
     public List<String> getChildNames( ContentPath contentPath )
     {
         return getChildNames( contentPath.toString() );
     }
-
 
     /**
      * Clicks on 'Delete' button on toolbar.
@@ -511,7 +517,6 @@ public class ContentBrowsePanel
         return wizard;
     }
 
-
     /**
      * Start to delete a content from menu in context menu.
      *
@@ -562,7 +567,6 @@ public class ContentBrowsePanel
         return findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).get( 0 ).isEnabled();
     }
 
-
     /**
      * Start to delete a content from menu in context menu.
      *
@@ -581,7 +585,6 @@ public class ContentBrowsePanel
         wizard.waitUntilWizardOpened();
         return wizard;
     }
-
 
     /**
      * Opens context menu and select 'New' item
@@ -660,6 +663,4 @@ public class ContentBrowsePanel
     {
         return previewButton.isEnabled();
     }
-
-
 }

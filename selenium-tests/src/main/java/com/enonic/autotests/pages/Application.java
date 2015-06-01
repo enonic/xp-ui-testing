@@ -1,12 +1,18 @@
 package com.enonic.autotests.pages;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class Application
     extends Page
@@ -47,6 +53,19 @@ public class Application
 
     public void waitsForSpinnerNotVisible()
     {
+        List<WebElement> list = null;
+        int i = 0;
+        do
+        {
+            list = findElements( By.xpath( SPINNER_XPATH ) ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
+            sleep( 500 );
+            i++;
+            if ( i == 5 )
+            {
+                throw new TestFrameworkException( "timeout exceeded, but the Spinner still displayed" );
+            }
+        }
+        while ( list.size() > 0 );
         waitsForSpinnerNotVisible( EXPLICIT_NORMAL );
     }
 

@@ -28,7 +28,7 @@ class Base_InputFields_Occurrences
     String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
 
     @Shared
-    static String SITE_NAME = "inputtypes39507008";//NameHelper.uniqueName( "inputtypes" );
+    static String SITE_NAME = NameHelper.uniqueName( "inputtypes" );
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types Module";

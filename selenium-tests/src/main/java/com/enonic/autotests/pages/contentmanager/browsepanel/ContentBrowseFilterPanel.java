@@ -167,7 +167,6 @@ public class ContentBrowseFilterPanel
         }
         else
         {
-
             waitsForSpinnerNotVisible();
             if ( !isSelectedEntryInFilter( contentTypeDisplayName ) )
             {
@@ -258,5 +257,4 @@ public class ContentBrowseFilterPanel
         }
         return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
     }
-
 }

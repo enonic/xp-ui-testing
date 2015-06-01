@@ -1,23 +1,11 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
-import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Shared
+import com.enonic.wem.uitest.content.BaseContentSpec
 
 class SortContentDialogSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
-
-    @Shared
-    ContentBrowsePanel contentBrowsePanel;
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-    }
 
     def "GIVEN Content BrowsePanel WHEN one content selected and 'Sort' button clicked THEN 'Sort Content' appears"()
     {

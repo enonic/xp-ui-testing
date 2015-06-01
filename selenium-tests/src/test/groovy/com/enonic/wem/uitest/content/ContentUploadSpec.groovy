@@ -4,8 +4,8 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.xp.content.ContentPath
 import com.enonic.wem.uitest.BaseGebSpec
+import com.enonic.xp.content.ContentPath
 import spock.lang.Ignore
 import spock.lang.Shared
 
@@ -23,7 +23,8 @@ class ContentUploadSpec
 
     def setup()
     {
-        go "admin"
+        String baseUrl = getTestSession().getBaseUrl();
+        getDriver().navigate().to( baseUrl + "/admin/" );
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
 
