@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -11,15 +12,6 @@ class ContentPublishDelete_Spec
     extends BaseContentSpec
 
 {
-    @Shared
-    String PENDING_DELETE_PUBLISH_MESSAGE = "\"%s\" deleted";
-
-    @Shared
-    String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
-
-    @Shared
-    String PUBLISH_MESSAGE = "\"%s\" published"
-
     @Shared
     String DISPLAY_NAME = "publishDisplayName";
 
@@ -37,7 +29,7 @@ class ContentPublishDelete_Spec
         String message = contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarPublish().waitNotificationMessage();
         then:
         contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.ONLINE.getValue();
-        message == String.format( PUBLISH_MESSAGE, DISPLAY_NAME );
+        message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, DISPLAY_NAME );
 
     }
 
@@ -48,9 +40,12 @@ class ContentPublishDelete_Spec
 
         when:
         contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarDelete().doDelete();
+        String message = contentBrowsePanel.waitNotificationMessage();
 
         then:
         contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.PENDING_DELETE.getValue();
+        and:
+        message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
 
     }
 
@@ -64,7 +59,7 @@ class ContentPublishDelete_Spec
         then:
         !contentBrowsePanel.exists( content.getPath() );
         and:
-        message == String.format( PENDING_DELETE_PUBLISH_MESSAGE, DISPLAY_NAME );
+        message == String.format( Application.DELETE_PENDING_MESSAGE, DISPLAY_NAME );
 
     }
 

@@ -17,6 +17,12 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
+    public static String EXPECTED_PUBLISH_MESSAGE = "\"%s\" published";
+
+    public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
+
+    public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
+
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";

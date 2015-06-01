@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -9,10 +10,6 @@ import spock.lang.Shared
 class Content_Online_Modified_Spec
     extends BaseContentSpec
 {
-
-    @Shared
-    String EXPECTED_PUBLISH_MESSAGE = "Content [%s] published!"
-
     @Shared
     String NEW_DISPLAY_NAME = "newDisplayName";
 
@@ -31,7 +28,7 @@ class Content_Online_Modified_Spec
         then:
         contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.ONLINE.getValue();
         and:
-        message == String.format( EXPECTED_PUBLISH_MESSAGE, content.getDisplayName() );
+        message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, content.getDisplayName() );
     }
 
     def "GIVEN existing root content with 'Online' status  WHEN content edited THEN  content has got a 'Modified' status"()
@@ -56,7 +53,7 @@ class Content_Online_Modified_Spec
         then:
         contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.ONLINE.getValue();
         and:
-        message == String.format( EXPECTED_PUBLISH_MESSAGE, NEW_DISPLAY_NAME );
+        message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, NEW_DISPLAY_NAME );
 
     }
 
