@@ -18,8 +18,9 @@ class BaseUsersSpec
 
     def setup()
     {
-        String baseUrl = getTestSession().getBaseUrl();
-        getDriver().navigate().to( baseUrl + "admin/" );
+        go "admin"
+        //String baseUrl = getTestSession().getBaseUrl();
+        //getDriver().navigate().to( baseUrl + "admin/" );
         userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
         userBrowseFilterPanel = userBrowsePanel.getUserBrowseFilterPanel();
     }
