@@ -12,10 +12,13 @@ class ContentPublishDelete_Spec
 
 {
     @Shared
-    String PENDING_DELETE_PUBLISH_MESSAGE = "Content [%s] deleted"
+    String PENDING_DELETE_PUBLISH_MESSAGE = "\"%s\" deleted";
 
     @Shared
-    String PUBLISH_MESSAGE = "Content [%s] published!"
+    String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
+
+    @Shared
+    String PUBLISH_MESSAGE = "\"%s\" published"
 
     @Shared
     String DISPLAY_NAME = "publishDisplayName";
