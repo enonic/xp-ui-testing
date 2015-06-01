@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
@@ -49,7 +48,6 @@ class Occurrences_ComboBox_0_1_Spec
 
         and: "options filter input is enabled"
         formViewPanel.isOptionFilterInputEnabled();
-
     }
 
     def "GIVEN saving of  ComboBox-content (0:1) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
@@ -121,15 +119,16 @@ class Occurrences_ComboBox_0_1_Spec
     }
 
 
-    private Content buildComboBox0_1_Content( int numberOptions )
+    private Content buildComboBox0_1_Content( String imageName )
     {
-        PropertyTree data = ContentUtils.buildComboBoxData( numberOptions );
-        Content textLineContent = Content.builder().
-            name( NameHelper.uniqueName( "cbox0_1_" ) ).
-            displayName( "combobox0_1 content" ).
+        PropertyTree data = new PropertyTree();
+        data.addString( "image_name", imageName );
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "imgselector0_1_" ) ).
+            displayName( "image selector 0_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":combobox0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":imageselector0_1" ).data( data ).
             build();
-        return textLineContent;
+        return imageSelectorContent;
     }
 }

@@ -48,7 +48,7 @@ driver = {
     //FirefoxProfile profile = new FirefoxProfile();
     //profile.setEnableNativeEvents( true );
     // def driver = new FirefoxDriver( profile );
-    // def driver = new FirefoxDriver();
+    //   def driver = new FirefoxDriver();
     driver.manage().window().maximize()
     println "default configuration"
     return driver

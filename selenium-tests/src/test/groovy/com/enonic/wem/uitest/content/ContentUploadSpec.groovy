@@ -24,7 +24,7 @@ class ContentUploadSpec
     def setup()
     {
         String baseUrl = getTestSession().getBaseUrl();
-        getDriver().navigate().to( baseUrl + "/admin/" );
+        getDriver().navigate().to( baseUrl + "admin/" );
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
     }
 

@@ -51,7 +51,6 @@ class Occurrences_ComboBox_0_0_Spec
 
         and: "options filter input is enabled"
         formViewPanel.isOptionFilterInputEnabled();
-
     }
 
     def "GIVEN saving of  Combobox-content (0:0) with one option WHEN content opened for edit THEN one selected option and button 'Remove' present in form view"()

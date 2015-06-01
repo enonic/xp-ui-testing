@@ -55,10 +55,10 @@ public class TinyMCE0_0_FormViewPanel
             Actions builder = new Actions( getDriver() );
             builder.click( frames.get( i ) ).build().perform();
             sleep( 500 );
-            frames.get( i ).sendKeys( sourceString );
+            //frames.get( i ).sendKeys( sourceString );
             //TODO
             //( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
-            // setText( frames.get( i ).getAttribute( "id" ),sourceString );
+            setText( frames.get( i ).getAttribute( "id" ), sourceString );
             sleep( 300 );
             i++;
             if ( i >= numberOfEditors )
@@ -101,11 +101,6 @@ public class TinyMCE0_0_FormViewPanel
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         return text;
     }
-
-//    private void setText(String text){
-//        private final String SET_TINY_MCE_INNERHTML = "document.getElementsByTagName('iframe')[0].contentDocument.body.innerHTML=arguments[0];";
-//
-//    }
 
     public boolean isAddButtonPresent()
     {
