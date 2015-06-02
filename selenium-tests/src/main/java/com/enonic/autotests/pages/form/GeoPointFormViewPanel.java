@@ -16,7 +16,7 @@ public class GeoPointFormViewPanel
 
     @FindBy(xpath = FORM_VIEW +
         "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Geo Location']]//input[contains(@id,'TextInput')]")
-    private WebElement geolocationInput;
+    private WebElement geoLocationInput;
 
 
     public GeoPointFormViewPanel( final TestSession session )
@@ -30,13 +30,13 @@ public class GeoPointFormViewPanel
 
         String geoPointValue = data.getString( GEO_POINT_PROPERTY );
         // type a date
-        geolocationInput.sendKeys( geoPointValue );
+        geoLocationInput.sendKeys( geoPointValue );
         sleep( 300 );
         return this;
     }
 
     public String getGeoPointValue()
     {
-        return geolocationInput.getAttribute( "value" );
+        return geoLocationInput.getAttribute( "value" );
     }
 }

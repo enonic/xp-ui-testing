@@ -30,7 +30,6 @@ public class SingleSelectorRadioFormView
         {
             return this;
         }
-
         selectOption( option );
         sleep( 300 );
         return this;
@@ -64,7 +63,6 @@ public class SingleSelectorRadioFormView
             {
                 return labels.get( i ).getText();
             }
-
         }
         return "";
     }

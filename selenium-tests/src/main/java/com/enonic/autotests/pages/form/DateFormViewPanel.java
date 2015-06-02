@@ -39,7 +39,6 @@ public class DateFormViewPanel
     public boolean isInvalidDate()
     {
         return waitAndCheckAttrValue( dateInput, "class", "invalid", 1 );
-
     }
 
     public String getDateValue()

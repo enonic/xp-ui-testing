@@ -13,6 +13,7 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
 import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
+import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel;
 import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
@@ -139,7 +140,11 @@ public class ContentWizardStepForm
         {
             formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
         }
-
+        else if ( contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_0.getName() ) ||
+            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_1.getName() ) )
+        {
+            formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+        }
         else
         {
             throw new TestFrameworkException( "ContentWizardStepForm: type() not implemented for " + contentTypeName );

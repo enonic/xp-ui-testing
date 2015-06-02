@@ -63,7 +63,6 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         contentBrowsePanel.getContentStatus( dropDownContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
         and:
         !contentBrowsePanel.isInvalidContent( dropDownContent.getPath().toString() );
-
     }
 
     def "GIVEN saving of 'Single Selector DropDown -content' with  selected option WHEN content opened for edit THEN correct selected option and button 'Remove' present in form view"()

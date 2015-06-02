@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilter
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
+import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -153,5 +154,39 @@ class Base_InputFields_Occurrences
             contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":datetime1_1" ).data( contentData ).
             build();
         return dateTimeContent;
+    }
+
+    protected Content buildImageSelector0_1_Content( String... imageNames )
+    {
+        PropertyTree data = null;
+        if ( imageNames != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( ImageSelectorFormViewPanel.IMAGES_PROPERTY, imageNames );
+        }
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "img0_1_" ) ).
+            displayName( "img_sel 0_1" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":imageselector0_1" ).data( data ).
+            build();
+        return imageSelectorContent;
+    }
+
+    protected Content buildImageSelector0_0_Content( String... imageNames )
+    {
+        PropertyTree data = null;
+        if ( imageNames != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( ImageSelectorFormViewPanel.IMAGES_PROPERTY, imageNames );
+        }
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "img0_0_" ) ).
+            displayName( "img_sel 0_1" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":imageselector0_0" ).data( data ).
+            build();
+        return imageSelectorContent;
     }
 }

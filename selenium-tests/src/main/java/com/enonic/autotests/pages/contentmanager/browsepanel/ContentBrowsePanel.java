@@ -161,7 +161,9 @@ public class ContentBrowsePanel
 
         filterPanel.typeSearchText( content.getName() );
         clickCheckboxAndSelectRow( content.getPath() ).clickToolbarEdit();
-        return new ContentWizardPanel( getSession() );
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        return wizard;
     }
 
     public String getContentStatus( ContentPath path )
