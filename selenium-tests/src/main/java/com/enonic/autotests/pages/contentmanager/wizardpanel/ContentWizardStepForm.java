@@ -141,7 +141,8 @@ public class ContentWizardStepForm
             formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
         }
         else if ( contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_0.getName() ) ||
-            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_1.getName() ) )
+            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_1.getName() ) ||
+            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR1_1.getName() ) )
         {
             formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         }

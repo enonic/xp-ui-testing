@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
@@ -98,7 +99,8 @@ public class ContentWizardPanel
 
     public boolean isContentInvalid( String contentDisplayName )
     {
-        List<WebElement> elements = findElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) );
+        List<WebElement> elements = findElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) ).stream().filter(
+            WebElement::isDisplayed ).collect( Collectors.toList() );
         if ( elements.size() == 0 )
         {
             throw new TestFrameworkException( "tab menu item with name: " + contentDisplayName + " was not found" );

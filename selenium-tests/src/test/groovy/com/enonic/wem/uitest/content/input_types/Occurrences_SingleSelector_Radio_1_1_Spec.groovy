@@ -59,7 +59,7 @@ class Occurrences_SingleSelector_Radio_1_1_Spec
         filterPanel.typeSearchText( radioContent.getName() );
 
         then:
-        contentBrowsePanel.isInvalidContent( radioContent.getPath().toString() );
+        contentBrowsePanel.isContentInvalid( radioContent.getPath().toString() );
 
     }
 

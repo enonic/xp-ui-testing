@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -139,12 +140,13 @@ public class ContentBrowsePanel
         }
     }
 
-    public boolean isInvalidContent( String contentPath )
+    public boolean isContentInvalid( String contentPath )
     {
-        List<WebElement> elements = findElements( By.xpath( String.format( CONTENT_SUMMARY_VIEWER, contentPath ) ) );
+        List<WebElement> elements = findElements( By.xpath( String.format( CONTENT_SUMMARY_VIEWER, contentPath ) ) ).stream().filter(
+            WebElement::isDisplayed ).collect( Collectors.toList() );
         if ( elements.size() == 0 )
         {
-            throw new TestFrameworkException( "content with path was not found!" + contentPath );
+            throw new TestFrameworkException( "content with path was not found or browsePanel was not displayed!" + contentPath );
         }
         return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
 

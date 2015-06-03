@@ -66,7 +66,7 @@ class Occurrences_SSelector_Combobox_0_1_Spec
         then:
         contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
         and:
-        !contentBrowsePanel.isInvalidContent( comboBoxContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( comboBoxContent.getPath().toString() );
 
     }
 

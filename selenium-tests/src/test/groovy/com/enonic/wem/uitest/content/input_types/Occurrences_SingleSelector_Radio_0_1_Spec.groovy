@@ -61,7 +61,7 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         then:
         contentBrowsePanel.getContentStatus( radioContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
         and:
-        !contentBrowsePanel.isInvalidContent( radioContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( radioContent.getPath().toString() );
 
     }
 

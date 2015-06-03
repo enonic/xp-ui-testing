@@ -173,6 +173,23 @@ class Base_InputFields_Occurrences
         return imageSelectorContent;
     }
 
+    protected Content buildImageSelector1_1_Content( String imageName )
+    {
+        PropertyTree data = null;
+        if ( imageName != null )
+        {
+            data = new PropertyTree();
+            data.addString( ImageSelectorFormViewPanel.IMAGES_PROPERTY, imageName );
+        }
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "img1_1_" ) ).
+            displayName( "img_sel 1_1" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":imageselector1_1" ).data( data ).
+            build();
+        return imageSelectorContent;
+    }
+
     protected Content buildImageSelector0_0_Content( String... imageNames )
     {
         PropertyTree data = null;
