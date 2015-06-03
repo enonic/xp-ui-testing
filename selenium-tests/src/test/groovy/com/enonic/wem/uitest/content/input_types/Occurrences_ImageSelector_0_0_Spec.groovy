@@ -91,6 +91,18 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.isEditButtonDisplayed();
     }
 
+    def "GIVEN content opened for edit WHEN checkbox for one of the images clicked THEN label for button 'Remove' has a correct number"()
+    {
+        given: "new content with type Image Selector 0_0 added'"
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
+        ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+
+        when: "content opened for edit"
+        formViewPanel.clickOnCheckboxAndSelectImage( TEST_IMG_3 );
+        then: "label for button 'Remove' has a correct number"
+        formViewPanel.getNumberFromRemoveButton() == 1;
+    }
+
     def "GIVEN content with 4 images opened for edit WHEN one of the images selected and 'Remove' button pressed THEN number of images reduced"()
     {
         given: "new content with type Image Selector 0_0 added'"

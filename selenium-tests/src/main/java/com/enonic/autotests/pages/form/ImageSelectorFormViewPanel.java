@@ -26,9 +26,11 @@ public class ImageSelectorFormViewPanel
 
     protected final String SELECTED_IMAGES_VIEW = CONTAINER_DIV + "//div[contains(@id,'ImageSelectorSelectedOptionView')]";
 
+    protected final String SELECTED_IMAGES_CHECKBOX = SELECTED_IMAGES_VIEW + "//div[@class='checkbox form-input']";
+
     private final String SELECTED_IMAGES_NAME = SELECTED_IMAGES_VIEW + "//div[@class='label']";
 
-    private String COMBOBOX_OPTIONS_ITEM = "//div[@class='slick-viewport']//div[contains(@id,'ImageSelectorViewer')]//h6[@title='%s']";
+    private String COMBOBOX_OPTIONS_ITEM = "//div[@class='slick-viewport']//div[contains(@id,'ImageSelectorViewer')]//h6[text()='%s']";
 
     private final String UPLOADER_BUTTON = CONTAINER_DIV + "//a[@class='dropzone']";
 
@@ -106,6 +108,34 @@ public class ImageSelectorFormViewPanel
         return this;
     }
 
+    public ImageSelectorFormViewPanel clickOnCheckboxAndSelectImage( String imageName )
+    {
+
+        List<WebElement> checkboxes = findElements( By.xpath( SELECTED_IMAGES_CHECKBOX ) );
+
+        List<WebElement> elements = findElements( By.xpath( SELECTED_IMAGES_NAME ) );
+        for ( int i = 0; i < elements.size(); i++ )
+        {
+            if ( getImageLabel( elements.get( i ) ).equals( imageName ) )
+            {
+                checkboxes.get( i ).click();
+                break;
+            }
+        }
+        sleep( 500 );
+        return this;
+    }
+
+    public int getNumberFromRemoveButton()
+    {
+        if ( findElements( By.xpath( REMOVE_BUTTON_LABEL ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Remove label was not found!" );
+        }
+        String label = findElements( By.xpath( REMOVE_BUTTON_LABEL ) ).get( 0 ).getText();
+        return Integer.valueOf( label.substring( label.indexOf( "(" ) + 1, label.indexOf( ")" ) ) );
+    }
+
     public boolean isUploaderButtonEnabled()
     {
         return uploaderButton.isEnabled();
@@ -123,21 +153,21 @@ public class ImageSelectorFormViewPanel
 
     private String getImageLabel( WebElement div )
     {
-        String script = "return arguments[0].innerText";
+        String script = "return arguments[0].innerHTML";
         String text = (String) ( (JavascriptExecutor) getDriver() ).executeScript( script, div );
         return text;
     }
 
     protected void selectOption( String option )
     {
-        waitUntilVisibleNoException( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM, option ) ), 2 );
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM, option ) ), 2 );
         List<WebElement> elements = findElements( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM, option ) ) );
         List<WebElement> displayedElements = elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
         if ( displayedElements.size() == 0 )
         {
             throw new TestFrameworkException( "option was not found! " + option );
         }
-        displayedElements.get( 0 ).click();
+        elements.get( 0 ).click();
     }
 
 }
