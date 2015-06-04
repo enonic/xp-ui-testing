@@ -1,9 +1,12 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -125,20 +128,22 @@ class Occurrences_ImageSelector_1_1_Spec
         wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
     }
 
-//    def "GIVEN saving of  'Image Selector' and content without selected image WHEN 'Publish' button pressed THEN validation message appears"()
-//    {
-//        given: "new content with type 'Image Selector'"
-//        Content imageSelectorContent = buildImageSelector0_1_Content( null );
-//        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-//            imageSelectorContent ).save().clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
-//
-//        when: "content was found in the grid"
-//        filterPanel.typeSearchText( imageSelectorContent.getName() );
-//
-//        then:
-//        contentBrowsePanel.getContentStatus( imageSelectorContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
-//        and:
-//        //!contentBrowsePanel.isInvalidContent( imageSelectorContent.getPath().toString() );
-//    }
+    @Ignore
+    def "GIVEN saving of 'Image Selector 1:1' and content without selected image WHEN 'Publish' button pressed THEN validation message appears"()
+    {
+        given: "new content with type 'Image Selector'"
+        Content imageSelectorContent = buildImageSelector1_1_Content( null );
+        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
+        ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+
+        when: "content was found in the grid"
+        String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+
+
+        then: "notification warning appears"
+        warning == PUBLISH_NOTIFICATION_WARNING;
+        and:
+        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
+    }
 
 }
