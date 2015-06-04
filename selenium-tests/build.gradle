@@ -139,8 +139,6 @@ task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServe
     installTestModules.shouldRunAfter startServer
 }
 
-
-
 task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpleSiteModule] ) {
     scanForTestClasses = false
 
@@ -156,7 +154,6 @@ task testUploadContent( type: Test, dependsOn: [buildModules, deleteFolders, sta
     scanForTestClasses = false
     exclude '**/module/**'
     exclude '**/user/**'
-    exclude '**/content/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
     startServer.shouldRunAfter deleteFolders
