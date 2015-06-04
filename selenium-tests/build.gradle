@@ -113,7 +113,6 @@ task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startS
 task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installAllContentTypesModule] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
-    include '**/content/ContentUploadSpec.class'
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
@@ -153,12 +152,15 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpl
 }
 
 
-task testUploadContent( type: Test, dependsOn: ['startServer'] ) {
+task testUploadContent( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installAllContentTypesModule] ) {
     scanForTestClasses = false
     exclude '**/module/**'
     exclude '**/user/**'
+    exclude '**/content/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
+    startServer.shouldRunAfter deleteFolders
+    installAllContentTypesModule.shouldRunAfter startServer
 }
 
 testModule.finalizedBy = ['stopServer']
