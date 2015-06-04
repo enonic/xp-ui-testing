@@ -113,6 +113,7 @@ task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startS
 task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installAllContentTypesModule] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
+    include '**/content/ContentUploadSpec.class'
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
