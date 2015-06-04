@@ -12,66 +12,54 @@ class LoginSpec
         getTestSession();
     }
 
-    def "Given login page When both username and password fields is empty Then Login Button must be disabled"()
+    def "Given login page When both username and password fields is empty Then Login Button must not  be disabled"()
     {
-        when:
-        go "admin"
-
-        then:
-        $( 'button.login-button' ).getAttribute( "style" ).contains( 'display: none' );
+        expect:
+        !$( 'button', class: 'button login-button' ).isDisplayed();
     }
 
-
-    def "Given login page When only username field have value Then Login Button must be disabled"()
+    def "Given login page When only username field have value Then Login Button must not be disabled"()
     {
-        given:
-        go "admin"
-
         when:
-        $( 'input.form-item', 0 ) << 'user';
+        $( 'input', placeholder: 'userid or e-mail' ) << 'user';
         report "login page, username is 'user', password is empty";
         TestUtils.saveScreenshot( getSession(), "pass_empty" );
         then:
-        $( 'button.login-button' ).getAttribute( "style" ).contains( 'display: none' );
+        !$( 'button', class: 'button login-button' ).isDisplayed();
     }
 
-    def "Given login page When only password field have value Then Login Button must be disabled"()
+    def "Given login page When only password field have value Then Login Button must not  be disabled"()
     {
-        given:
-        go "admin"
-
         when:
-        $( 'input.form-item', 1 ) << 'password';
+        $( 'input', placeholder: 'password' ) << 'password';
         report "login page, username is empty, password is 'password'";
         TestUtils.saveScreenshot( getSession(), "login_empty" )
 
         then:
-        $( 'button.login-button' ).getAttribute( "style" ).contains( 'display: none' );
+        !$( 'button', class: 'button login-button' ).isDisplayed();
     }
 
     def "Given login page When both username and password fields have value Then Login Button must be enabled"()
     {
 
         when:
-        $( 'input.input-view', 0 ) << 'admin';
-        $( 'input.input-view', 1 ) << 'password';
+        $( 'input', placeholder: 'userid or e-mail' ) << 'su';
+        $( 'input', placeholder: 'password' ) << 'password';
         TestUtils.saveScreenshot( getSession(), "login_pass" )
 
         then:
-        !$( 'button.login-button' ).getAttribute( "style" ).contains( 'display: none' );
+        $( 'button', class: 'button login-button' ).isDisplayed();
     }
 
     @Ignore
     def "Given login page When wrong username or password typed Then error message appears"()
     {
         when:
-        $( 'input.form-item', 0 ) << 'admin';
-        $( 'input.form-item', 1 ) << 'password';
+        $( 'input', placeholder: 'userid or e-mail' ) << 'su';
+        $( 'input', placeholder: 'password' ) << 'password1';
+        $( 'button', class: 'button login-button' ).click();
 
         then:
         waitFor { $( 'div.message-container' ).text() == 'Login failed!' }
-
     }
-
-
 }
