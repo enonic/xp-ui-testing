@@ -151,6 +151,7 @@ public class ModuleBrowsePanel
         {
             throw new TestFrameworkException( "state was not found in the table ! module name is " + moduleName );
         }
+        getLogger().info( "status of module is : " + findElements( By.xpath( stateCell ) ).get( 0 ).getText() );
         return findElements( By.xpath( stateCell ) ).get( 0 ).getText();
     }
 
