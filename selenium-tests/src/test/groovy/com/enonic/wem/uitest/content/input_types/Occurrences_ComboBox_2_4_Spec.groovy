@@ -35,8 +35,6 @@ class Occurrences_ComboBox_2_4_Spec
 
         and: "content should be invalid, because required field- combobox2:4 not selected"
         wizard.isContentInvalid( comboBoxContent.getDisplayName() );
-
-
     }
 
     def "GIVEN saving of ComboBox-content (2:4) without options WHEN content opened for edit THEN no one selected options present on page "()
@@ -59,7 +57,6 @@ class Occurrences_ComboBox_2_4_Spec
 
         and: "content should be invalid, because required field- combobox2:4 not selected"
         wizard.isContentInvalid( comboBoxContent.getDisplayName() );
-
     }
 
     def "GIVEN saving of ComboBox-content (2:4) with two option WHEN content opened for edit THEN two selected options present on page and options filter input is enabled"()
@@ -83,7 +80,6 @@ class Occurrences_ComboBox_2_4_Spec
 
         and: "options filter input is enabled, because 2 less than 4"
         formViewPanel.isOptionFilterInputEnabled();
-
     }
 
     def "GIVEN ComboBox-content (2:4) with two selected options and one option removed and content saved WHEN content opened for edit THEN one option selected on the page "()

@@ -200,9 +200,26 @@ class Base_InputFields_Occurrences
         }
         Content imageSelectorContent = Content.builder().
             name( NameHelper.uniqueName( "img0_0_" ) ).
-            displayName( "img_sel 0_1" ).
+            displayName( "img_sel 0_0" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":imageselector0_0" ).data( data ).
+            build();
+        return imageSelectorContent;
+    }
+
+    protected Content buildImageSelector2_4_Content( String... imageNames )
+    {
+        PropertyTree data = null;
+        if ( imageNames != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( ImageSelectorFormViewPanel.IMAGES_PROPERTY, imageNames );
+        }
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "img2_4_" ) ).
+            displayName( "img_sel 2_4" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":imageselector2_4" ).data( data ).
             build();
         return imageSelectorContent;
     }

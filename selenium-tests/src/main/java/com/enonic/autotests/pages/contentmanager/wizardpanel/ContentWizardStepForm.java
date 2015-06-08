@@ -142,7 +142,8 @@ public class ContentWizardStepForm
         }
         else if ( contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_0.getName() ) ||
             contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR1_1.getName() ) )
+            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR1_1.getName() ) ||
+            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR2_4.getName() ) )
         {
             formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         }

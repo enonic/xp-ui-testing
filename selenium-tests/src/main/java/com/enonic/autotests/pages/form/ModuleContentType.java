@@ -11,7 +11,7 @@ public enum ModuleContentType
     ":ss_radio0_1" ), SINGLE_SELECTOR_RADIO1_1( ":ss_radio1_1" ), SINGLE_SELECTOR_DROPDOWN0_1(
     ":ss_dropdown0_1" ), SINGLE_SELECTOR_DROPDOWN1_1( ":ss_dropdown1_1" ), TINY_MCE0_1( ":tiny_mce_0_1" ), TINY_MCE0_2(
     ":tiny_mce_0_2" ), TINY_MCE0_0( ":tiny_mce_0_0" ), IMAGE_SELCTOR0_0( ":imageselector0_0" ), IMAGE_SELCTOR0_1(
-    ":imageselector0_1" ), IMAGE_SELCTOR1_1( ":imageselector1_1" );
+    ":imageselector0_1" ), IMAGE_SELCTOR1_1( ":imageselector1_1" ), IMAGE_SELCTOR2_4( ":imageselector2_4" );
 
     private String name;
 

@@ -59,6 +59,7 @@ class BaseGebSpec
                 println " baseUrl from defaultProperties  " + browser.baseUrl;
             }
         }
+
     }
 
 

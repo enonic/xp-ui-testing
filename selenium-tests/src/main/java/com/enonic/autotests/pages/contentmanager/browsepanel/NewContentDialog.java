@@ -31,7 +31,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class NewContentDialog
     extends Application
 {
-    public static String CONTAINER = "//div[contains(@id,'app.create.NewContentDialog')]";
+    public static final String CONTAINER = "//div[contains(@id,'app.create.NewContentDialog')]";
 
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
@@ -50,7 +50,7 @@ public class NewContentDialog
 
     private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
 
-    private final String UPLOAD_FILE_BUTTON = "//a[contains(@id,'uploader-dropzone') and @class='dropzone']";
+    private final String UPLOAD_FILE_BUTTON = CONTAINER + "//a[contains(@id,'uploader-dropzone') and @class='dropzone']";
 
     @FindBy(xpath = UPLOAD_FILE_BUTTON)
     private WebElement uploadButton;
@@ -104,13 +104,22 @@ public class NewContentDialog
     public boolean waitUntilDialogShowed( long timeout )
     {
         return waitUntilVisibleNoException( By.xpath( DIALOG_TITLE_XPATH ), timeout );
-
     }
 
     public NewContentDialog typeSearchText( String text )
     {
         clearAndType( searchInput, text );
         return this;
+    }
+
+    public boolean isUploadButtonEnabled()
+    {
+        return uploadButton.isEnabled();
+    }
+
+    public boolean isSearchInputEnabled()
+    {
+        return searchInput.isEnabled();
     }
 
     public ContentBrowsePanel doUploadFile( String resName )
@@ -153,7 +162,6 @@ public class NewContentDialog
         return new ContentBrowsePanel( getSession() );
     }
 
-
     /**
      * Select content type by name.
      *
@@ -191,7 +199,6 @@ public class NewContentDialog
         return selectContentType( contentTypeName.toString() );
     }
 
-
     /**
      * Gets number of content types from the 'list-items'-view
      *
@@ -216,5 +223,4 @@ public class NewContentDialog
         }
         return findElements( By.xpath( LIST_ITEMS_SITES ) ).size();
     }
-
 }
