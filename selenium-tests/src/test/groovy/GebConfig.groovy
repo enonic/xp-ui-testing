@@ -10,7 +10,6 @@ driver = {
 
     def path = System.getProperty( "webdriver.chrome.driver" )
 
-
     if ( path == null )
     {
         println "specify a path to chrome webdriver:"
@@ -48,7 +47,7 @@ driver = {
     //FirefoxProfile profile = new FirefoxProfile();
     //profile.setEnableNativeEvents( true );
     // def driver = new FirefoxDriver( profile );
-    //   def driver = new FirefoxDriver();
+    // def driver = new FirefoxDriver();
     driver.manage().window().maximize()
     println "default configuration"
     return driver

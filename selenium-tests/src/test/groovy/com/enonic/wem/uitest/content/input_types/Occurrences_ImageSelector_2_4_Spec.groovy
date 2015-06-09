@@ -31,7 +31,7 @@ class Occurrences_ImageSelector_2_4_Spec
     @Shared
     Content IMAGE_SELECTOR_CONTENT_4_IMAGES;
 
-    def "WHEN wizard for adding a 'Image Selector'-content(2:4) opened THEN option filter input is present, there no selected image and upload button is enabled "()
+    def "WHEN wizard for adding a 'Image Selector'-content(2:4) opened THEN option filter input is present, there no selected image and upload button is enabled"()
     {
         when: "start to add a content with type 'Image Selector 2:4'"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );

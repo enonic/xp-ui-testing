@@ -59,4 +59,11 @@ class BaseContentSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() );
         return contentBrowsePanel;
     }
+
+    public ContentBrowsePanel findAndSelectContent( ContentPath contentPath )
+    {
+        filterPanel.typeSearchText( contentPath.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( contentPath );
+        return contentBrowsePanel;
+    }
 }

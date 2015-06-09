@@ -96,7 +96,6 @@ task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, ins
     exclude '**/content/move_publish_sort/*Spec.class'
     forkEvery = null
     startServer.shouldRunAfter deleteFolders
-
 }
 task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installAllContentTypesModule] ) {
     scanForTestClasses = false

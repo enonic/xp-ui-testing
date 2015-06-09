@@ -36,7 +36,7 @@ class InstallContentTypesModule
 
         when: "url typed and 'Install' button "
         moduleBrowsePanel = dialog.typeModuleURL( ALL_CONTENT_TYPES_MODULE_URL ).clickOnInstall();
-        TestUtils.saveScreenshot( getSession(), "inst_module" )
+        TestUtils.saveScreenshot( getSession(), "inst_module" );
 
         then: "new module exists in the browse panel and status is stopped "
         moduleBrowsePanel.exists( ALL_CONTENT_TYPES_MODULE_NAME, true ) &&
