@@ -31,7 +31,7 @@ public abstract class WizardPanel<T>
     public static String APP_BAR_TAB_MENU = "//div[contains(@id,'api.app.bar.AppBarTabMenu')]";
 
     public static String APP_BAR_TAB_MENU_ITEM =
-        APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[@title='%s']]";
+        APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[text()='%s']]";
 
     public static String CLOSE_TAB_BUTTON = APP_BAR_TAB_MENU_ITEM + "/button";
 
