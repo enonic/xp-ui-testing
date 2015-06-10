@@ -25,7 +25,7 @@ public class UserWizardPanel
 {
     public static final String PASSWORD_ERROR_MESSAGE = "Password can not be empty.";
     public static String GRID_ROW =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(@title,'%s')]]";
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
     public static final String DIV_USER_WIZARD_PANEL =
         "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";

@@ -67,7 +67,7 @@ public class MoveContentDialog
 
     private MoveContentDialog selectDestination( String name )
     {
-        String xpath = String.format( "//div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')] ]", name );
+        String xpath = String.format( "//div[contains(@id,'api.app.NamesView') and child::p[contains(.,'%s')] ]", name );
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER + xpath ), Application.EXPLICIT_NORMAL ) )
         {
             throw new TestFrameworkException( "destination folder was not found!" );

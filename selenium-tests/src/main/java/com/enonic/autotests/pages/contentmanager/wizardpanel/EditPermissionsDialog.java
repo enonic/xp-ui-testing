@@ -32,12 +32,12 @@ public class EditPermissionsDialog
 
     private final String OPTIONS_FILTER_INPUT = CONTAINER_XPATH + "//input[contains(@id,'combobox.ComboBoxOptionFilterInput')]";
 
-    private String PRINCIPAL_PATH = "//div[contains(@id,'AccessControlEntryViewer')]//p[contains(@title,'%s')]";
+    private String PRINCIPAL_PATH = "//div[contains(@id,'AccessControlEntryViewer')]//p[contains(.,'%s')]";
 
     private final String APPLY_BUTTON_XPATH = "//button[contains(@id,'dialog.DialogButton') and child::span[text()='Apply']]";
 
     private String ACL_ENTRY_ROW =
-        "//div[contains(@class,'access-control-entry') and descendant::p[@class='sub-name' and contains(@title,'%s')]]";
+        "//div[contains(@class,'access-control-entry') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
     @FindBy(xpath = INHERIT_PERMISSIONS_CHECKBOX_LABEL)
     WebElement inheritPermissionsCheckbox;

@@ -33,7 +33,7 @@ public abstract class BrowseItemsSelectionPanel
     protected final String TAB_MENU_BUTTON =
         "//div[contains(@id,'TabMenuButton') and (child::span[@title='Preview'] or child::span[@title='Version History'])]";
 
-    protected String MENU_ITEM_XPATH = "//ul[@class='menu']//li[contains(@id,'TabMenuItem') and child::span[@title='%s']]";
+    protected String MENU_ITEM_XPATH = "//ul[@class='menu']//li[contains(@id,'TabMenuItem') and child::span[text()='%s']]";
 
     @FindBy(xpath = TAB_MENU_BUTTON)
     WebElement tabMenuButton;
