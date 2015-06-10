@@ -168,7 +168,7 @@ public class ContentWizardPanel
     public ContentWizardPanel typeData( Content content )
     {
         // 1. type a data: 'name' and 'Display Name'.
-        waitElementClickable( By.name( "displayName" ), 2 );
+        waitElementClickable( By.name( "displayName" ), 1 );
         getLogger().info( "types displayName: " + content.getDisplayName() );
         if ( content.getDisplayName() != null )
         {

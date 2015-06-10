@@ -60,7 +60,6 @@ class Occurrences_ComboBox_1_1_Spec
 
         and: "content should be invalid, because required field- combobox1:1 not selected"
         wizard.isContentInvalid( comboBoxContent.getDisplayName() );
-
     }
 
     def "GIVEN saving of  ComboBox-content (1:1) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
@@ -86,7 +85,6 @@ class Occurrences_ComboBox_1_1_Spec
 
         and: "content is valid, because option is selected"
         !wizard.isContentInvalid( content_with_opt.getDisplayName() );
-
     }
 
     def "GIVEN ComboBox-content (1:1) with one selected option and one option removed and content saved WHEN content opened for edit THEN no options selected on the page "()
@@ -109,7 +107,6 @@ class Occurrences_ComboBox_1_1_Spec
 
         and:
         wizard.isContentInvalid( content_with_opt.getDisplayName() );
-
     }
 
     def "WHEN content with one option saved and published THEN it content with status equals 'Online' listed"()

@@ -65,14 +65,11 @@ public abstract class Page
      */
     public void clearAndType( WebElement input, String text )
     {
-        logger.info( "text will be typed: " + text );
         input.clear();
         sleep( 100 );
         input.sendKeys( text );
         sleep( 300 );
-
         logger.info( "text in input: " + text );
-
     }
 
     /**

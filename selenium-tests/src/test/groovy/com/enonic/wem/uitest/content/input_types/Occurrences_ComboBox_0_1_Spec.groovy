@@ -104,7 +104,6 @@ class Occurrences_ComboBox_0_1_Spec
 
         and: "and options filter input enabled again"
         formViewPanel.isOptionFilterInputEnabled();
-
     }
 
     def "WHEN content without option saved and published THEN it content with status equals 'Online' listed"()
