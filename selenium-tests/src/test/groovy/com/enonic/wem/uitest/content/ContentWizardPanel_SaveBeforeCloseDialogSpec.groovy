@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 
@@ -61,7 +60,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then: "Content is listed in BrowsePanel with it's new name"
-        contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
+        contentBrowsePanel.exists( content.getName() );
     }
 
     def "GIVEN changing name of an existing Content and wizard closing WHEN No is chosen THEN Content is listed in BrowsePanel with it's original name"()
