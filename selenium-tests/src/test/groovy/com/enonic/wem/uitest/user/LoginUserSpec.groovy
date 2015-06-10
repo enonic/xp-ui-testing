@@ -91,7 +91,7 @@ class LoginUserSpec
 
         then: "content listed in the grid"
         TestUtils.saveScreenshot( getSession(), "login-content1" );
-        contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
+        contentBrowsePanel.exists( content.getName() );
     }
 
     def "WHEN new content without any permissions for just created user added THEN Content is listed in BrowsePanel"()
@@ -114,7 +114,7 @@ class LoginUserSpec
 
         then: "content listed in the grid"
         TestUtils.saveScreenshot( getSession(), "login-content2" );
-        contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
+        contentBrowsePanel.exists( content.getName() );
     }
 
     def "WHEN new created user logged in THEN home page with only one application(CM) loaded "()

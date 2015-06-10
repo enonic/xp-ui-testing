@@ -137,7 +137,7 @@ public class EditPermissionsDialog
             By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//div[contains(@class,'tab-menu-button')]" ) ).get(
             0 ).click();
         By tabMenuItemBy = By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) +
-                                         String.format( "//li[contains(@id,'TabMenuItem')]/span[@title='%s']", suite.getValue() ) );
+                                         String.format( "//li[contains(@id,'TabMenuItem')]/span[text()='%s']", suite.getValue() ) );
         if ( !waitUntilVisibleNoException( tabMenuItemBy, EXPLICIT_QUICK ) )
         {
             throw new TestFrameworkException( suite.getValue() + "  was not found in the tab menu!" );

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.WizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 
@@ -80,6 +79,6 @@ class ContentWizardPanel_TabMenuSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then: "new content listed in the browse panel"
-        contentBrowsePanel.exists( ContentPath.from( content.getName() ) );
+        contentBrowsePanel.exists( content.getName() );
     }
 }
