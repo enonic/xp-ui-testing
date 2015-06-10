@@ -33,9 +33,9 @@ public abstract class WizardPanel<T>
     public static String APP_BAR_TAB_MENU_ITEM =
         APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[text()='%s']]";
 
-    public static String CLOSE_TAB_BUTTON = APP_BAR_TAB_MENU_ITEM + "/button";
+    //public static String CLOSE_TAB_BUTTON = APP_BAR_TAB_MENU_ITEM + "/button";
 
-    public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'api.app.bar.AppBarTabMenuButton')]//span[@class='label']";
+    //public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'AppBarTabMenuButton')]//span[@class='label']";
 
     public static String TAB_MENU_ITEM =
         "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'AppBarTabMenuItem') and child::span[@class='label' and text() ='%s']]";
@@ -62,11 +62,11 @@ public abstract class WizardPanel<T>
     public SaveBeforeCloseDialog close( String displayName )
     {
         CloseStatus status = null;
-        if ( findElements( By.xpath( String.format( CLOSE_TAB_BUTTON, displayName ) ) ).size() == 0 )
+        if ( findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).size() == 0 )
         {
             throw new TestFrameworkException( "close button for tab with name " + displayName + " was not found!" );
         }
-        findElements( By.xpath( String.format( CLOSE_TAB_BUTTON, displayName ) ) ).get( 0 ).click();
+        findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).get( 0 ).click();
         sleep( 500 );
         for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
         {
@@ -189,19 +189,6 @@ public abstract class WizardPanel<T>
         int end = width.indexOf( "px" );
         int inputWidth = Integer.valueOf( width.substring( start + 1, end ).trim() );
         return inputWidth;
-    }
-
-    public String getAppBarTabMenuTitle()
-    {
-        boolean result = waitUntilVisibleNoException( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( result )
-        {
-            return findElement( By.xpath( APP_BAR_TAB_MENU_TITLE_XPATH ) ).getAttribute( "title" );
-        }
-        else
-        {
-            throw new TestFrameworkException( "title was not found or not visible in AppBarTabMenu!" );
-        }
     }
 
     public boolean isTabMenuItemPresent( String itemText )

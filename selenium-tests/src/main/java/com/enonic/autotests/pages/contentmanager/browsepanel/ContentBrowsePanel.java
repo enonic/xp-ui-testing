@@ -171,7 +171,7 @@ public class ContentBrowsePanel
     public String getContentStatus( ContentPath path )
     {
         String statusXpath = String.format(
-            "//div[contains(@class,'slick-row') and descendant::p[contains(@title,'%s')]]//div[contains(@class,'slick-cell')][4]/span",
+            "//div[contains(@class,'slick-row') and descendant::p[contains(.,'%s')]]//div[contains(@class,'slick-cell')][4]/span",
             path.toString() );
         if ( findElements( By.xpath( statusXpath ) ).size() == 0 )
         {
@@ -524,36 +524,36 @@ public class ContentBrowsePanel
     /**
      * Start to delete a content from menu in context menu.
      *
-     * @param path
+     * @param contentName
      * @return {@link DeleteContentDialog} instance.
      */
-    public DeleteContentDialog selectDeleteFromContextMenu( ContentPath path )
+    public DeleteContentDialog selectDeleteFromContextMenu( String contentName )
     {
-        if ( !doScrollAndFindGridItem( path.toString() ) )
+        if ( !doScrollAndFindGridItem( contentName ) )
         {
-            throw new TestFrameworkException( "content was not found: " + path.toString() );
+            throw new TestFrameworkException( "content was not found: " + contentName );
         }
-        openContextMenu( path.getName() );
+        openContextMenu( contentName );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).get( 0 ).click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
     }
 
-    public ContentBrowsePanel selectPublishFromContextMenu( ContentPath path )
+    public ContentBrowsePanel selectPublishFromContextMenu( String contentName )
     {
-        getFilterPanel().clickOnCleanFilter().typeSearchText( path.getName() );
-        openContextMenu( path.getName() );
+        getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
+        openContextMenu( contentName );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Publish" ) ) ).get( 0 ).click();
-        sleep( 2000 );
+        sleep( 1000 );
         return this;
 
     }
 
-    public ContentBrowsePanel selectDuplicateFromContextMenu( ContentPath path )
+    public ContentBrowsePanel selectDuplicateFromContextMenu( String contentName )
     {
-        getFilterPanel().clickOnCleanFilter().typeSearchText( path.getName() );
-        openContextMenu( path.getName() );
+        getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
+        openContextMenu( contentName );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).get( 0 ).click();
         sleep( 1000 );
         return this;
@@ -574,16 +574,16 @@ public class ContentBrowsePanel
     /**
      * Start to delete a content from menu in context menu.
      *
-     * @param path
+     * @param contentName
      * @return {@link DeleteContentDialog} instance.
      */
-    public ContentWizardPanel selectEditFromContextMenu( ContentPath path )
+    public ContentWizardPanel selectEditFromContextMenu( String contentName )
     {
-        if ( !doScrollAndFindGridItem( path.toString() ) )
+        if ( !doScrollAndFindGridItem( contentName ) )
         {
-            throw new TestFrameworkException( "content was not found: " + path.toString() );
+            throw new TestFrameworkException( "content was not found: " + contentName );
         }
-        openContextMenu( path.getName() );
+        openContextMenu( contentName );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).get( 0 ).click();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
@@ -593,16 +593,13 @@ public class ContentBrowsePanel
     /**
      * Opens context menu and select 'New' item
      *
-     * @param path
+     * @param contentName
      * @return
      */
-    public NewContentDialog selectNewFromContextMenu( ContentPath path )
+    public NewContentDialog selectNewFromContextMenu( String contentName )
     {
-        if ( !doScrollAndFindGridItem( path.toString() ) )
-        {
-            throw new TestFrameworkException( "content was not found: " + path.toString() );
-        }
-        openContextMenu( path.getName() );
+        getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
+        openContextMenu( contentName );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
@@ -611,7 +608,6 @@ public class ContentBrowsePanel
 
     private void openContextMenu( String contentName )
     {
-
         getLogger().info( "opening a context menu, content path of content: " + contentName );
         TestUtils.saveScreenshot( getSession(), "menu_" + contentName );
         String contentDescriptionXpath = String.format( DIV_NAMES_VIEW, contentName );
