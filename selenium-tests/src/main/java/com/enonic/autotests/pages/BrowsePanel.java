@@ -135,7 +135,7 @@ public abstract class BrowsePanel
     /**
      * @return true if row in BrowsePanel is expanded, otherwise false.
      */
-    public boolean isRowExpanded( String itemName )
+    public Boolean isRowExpanded( String itemName )
     {
         if ( !doScrollAndFindGridItem( itemName ) )
         {
@@ -151,6 +151,7 @@ public abstract class BrowsePanel
         {
             //throw new TestFrameworkException(
             getLogger().info( "invalid locator or expander for content with name: " + itemName + " does not exist! xpath =  " );
+            return null;
         }
 
         List<WebElement> elements = findElements( By.xpath( expanderXpath ) );

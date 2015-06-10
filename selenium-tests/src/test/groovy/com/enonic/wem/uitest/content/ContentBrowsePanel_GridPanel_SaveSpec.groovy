@@ -115,9 +115,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
         given:
-        String name = NameHelper.uniqueName( "folder" );
         Content content = Content.builder().
-            name( name ).
+            name( NameHelper.uniqueName( "folder" ) ).
             displayName( "folder" ).
             contentType( ContentTypeName.folder() ).
             parent( PARENT_FOLDER.getPath() ).
@@ -128,12 +127,12 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content );
 
-        when:
+        when: "saved and HomeButton clicked"
         wizard.save();
         contentBrowsePanel.goToAppHome();
 
-        then:
-        contentBrowsePanel.exists( content.getName() ) && contentBrowsePanel.isRowExpanded( content.getName() );
+        then: "new Content should be listed beneath parent"
+        contentBrowsePanel.exists( content.getName() ) && contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
