@@ -59,7 +59,7 @@ class Occurrences_SSelector_Combobox_1_1_Spec
 
         then:
         filterPanel.typeSearchText( comboBoxContent.getDisplayName() );
-        contentBrowsePanel.isContentInvalid( comboBoxContent.getPath().toString() );
+        contentBrowsePanel.isContentInvalid( comboBoxContent.getName() );
     }
 
     def "GIVEN saving of 'Single Selector Combo box-content' with selected options WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
@@ -74,9 +74,9 @@ class Occurrences_SSelector_Combobox_1_1_Spec
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
-        !contentBrowsePanel.isContentInvalid( comboBoxContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( comboBoxContent.getName() );
 
     }
 

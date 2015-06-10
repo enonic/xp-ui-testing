@@ -45,6 +45,6 @@ class Occurrences_DateTime_1_1_Spec
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( dateTimeContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 }

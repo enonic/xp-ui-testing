@@ -78,7 +78,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then: "Content is listed in BrowsePanel with it's original name"
-        contentBrowsePanel.exists( ContentPath.from( content.getName() ) ) && !contentBrowsePanel.exists( ContentPath.from( newName ) );
+        contentBrowsePanel.exists( ContentPath.from( content.getName() ) ) && !contentBrowsePanel.exists( newName );
     }
 
     def "GIVEN changing an existing Content and wizard closing WHEN Cancel is chosen THEN wizard is still open"()

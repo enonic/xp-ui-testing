@@ -31,7 +31,7 @@ class ContentPublish_Child_Spec
 
         and:
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getPath() )
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
         childContent1 = buildFolderContent( "publish", "child-folder1", parentContent.getName() );
         addContent( childContent1 );
 
@@ -39,18 +39,18 @@ class ContentPublish_Child_Spec
         when:
         contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getPath() ).clickToolbarPublish();
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
 
         then:
         filterPanel.typeSearchText( childContent1.getName() );
-        contentBrowsePanel.getContentStatus( childContent1.getPath() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.ONLINE.getValue();
     }
 
     def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN just added child content has a 'New' status"()
     {
         setup:
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getPath() )
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
         childContent2 = buildFolderContent( "publish", "child-folder2", parentContent.getName() );
         addContent( childContent2 );
 
@@ -59,32 +59,32 @@ class ContentPublish_Child_Spec
         filterPanel.typeSearchText( childContent2.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( childContent2.getPath() ) == ContentStatus.NEW.getValue();
+        contentBrowsePanel.getContentStatus( childContent2.getName() ) == ContentStatus.NEW.getValue();
     }
 
     def "GIVEN existing published parent folder with one published child and one 'new' content WHEN  parent folder selected and 'Delete' button pressed  THEN not published child content removed but parent folder and one child content have a 'Pending delete' status"()
     {
         when:
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getPath() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarDelete().doDelete();
         contentBrowsePanel.expandItem( parentContent.getPath().toString() );
 
         then:
-        contentBrowsePanel.getContentStatus( parentContent.getPath() ) == ContentStatus.PENDING_DELETE.getValue();
+        contentBrowsePanel.getContentStatus( parentContent.getName() ) == ContentStatus.PENDING_DELETE.getValue();
         and:
-        contentBrowsePanel.getContentStatus( childContent1.getPath() ) == ContentStatus.PENDING_DELETE.getValue();
+        contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.PENDING_DELETE.getValue();
         and:
-        !contentBrowsePanel.exists( childContent2.getPath() );
+        !contentBrowsePanel.exists( childContent2.getName() );
     }
 
     def "GIVEN existing  parent folder with one child and status of both contents are 'PENDING_DELETE'  WHEN  parent folder selected and 'Publish' button pressed  THEN parent folder not listed"()
     {
         when:
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getPath() ).clickToolbarPublish();
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
 
         then:
-        !contentBrowsePanel.exists( parentContent.getPath() );
+        !contentBrowsePanel.exists( parentContent.getName() );
     }
 
 

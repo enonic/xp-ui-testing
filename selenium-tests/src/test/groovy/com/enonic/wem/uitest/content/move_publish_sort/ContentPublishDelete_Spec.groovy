@@ -26,9 +26,9 @@ class ContentPublishDelete_Spec
             content.getDisplayName() );
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
         then:
-        contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
         message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, DISPLAY_NAME );
 
     }
@@ -39,11 +39,11 @@ class ContentPublishDelete_Spec
         filterPanel.typeSearchText( content.getName() )
 
         when:
-        contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().doDelete();
         String message = contentBrowsePanel.waitNotificationMessage();
 
         then:
-        contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.PENDING_DELETE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.PENDING_DELETE.getValue();
         and:
         message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
 
@@ -53,11 +53,11 @@ class ContentPublishDelete_Spec
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
         filterPanel.typeSearchText( content.getName() );
 
         then:
-        !contentBrowsePanel.exists( content.getPath() );
+        !contentBrowsePanel.exists( content.getName() );
         and:
         message == String.format( Application.DELETE_PENDING_MESSAGE, DISPLAY_NAME );
 

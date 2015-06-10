@@ -28,7 +28,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         addContent( content );
 
         then:
-        contentBrowsePanel.exists( content.getPath() );
+        contentBrowsePanel.exists( content.getName() );
     }
 
     def "WHEN 'Edit Permissions' button pressed THEN modal dialog appears "()

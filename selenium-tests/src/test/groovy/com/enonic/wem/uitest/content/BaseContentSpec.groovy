@@ -56,14 +56,14 @@ class BaseContentSpec
     public ContentBrowsePanel findAndSelectContent( Content content )
     {
         filterPanel.typeSearchText( content.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( content.getName() );
         return contentBrowsePanel;
     }
 
     public ContentBrowsePanel findAndSelectContent( ContentPath contentPath )
     {
         filterPanel.typeSearchText( contentPath.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( contentPath );
+        contentBrowsePanel.clickCheckboxAndSelectRow( contentPath.getName() );
         return contentBrowsePanel;
     }
 }

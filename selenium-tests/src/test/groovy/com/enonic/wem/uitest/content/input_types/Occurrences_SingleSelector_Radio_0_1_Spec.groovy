@@ -59,9 +59,9 @@ class Occurrences_SingleSelector_Radio_0_1_Spec
         filterPanel.typeSearchText( radioContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( radioContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( radioContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
-        !contentBrowsePanel.isContentInvalid( radioContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( radioContent.getName().toString() );
 
     }
 

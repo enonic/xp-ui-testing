@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.BaseGebSpec
-import com.enonic.xp.content.ContentPath
 import spock.lang.Ignore
 import spock.lang.Shared
 
@@ -38,7 +37,7 @@ class ContentUploadSpec
 
         then: "new png file content appears in the browse panel"
         TestUtils.saveScreenshot( getSession(), "upload-png" )
-        contentBrowsePanel.exists( ContentPath.from( "ea.png" ) )
+        contentBrowsePanel.exists( "ea.png" )
     }
 
     @Ignore
@@ -53,6 +52,6 @@ class ContentUploadSpec
 
         then: "new archive content appears in the browse panel"
         TestUtils.saveScreenshot( getSession(), "upload-zip" )
-        contentBrowsePanel.exists( ContentPath.from( "img.zip" ) )
+        contentBrowsePanel.exists( "img.zip" )
     }
 }

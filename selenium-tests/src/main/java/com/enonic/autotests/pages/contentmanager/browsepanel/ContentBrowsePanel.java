@@ -162,20 +162,20 @@ public class ContentBrowsePanel
         }
 
         filterPanel.typeSearchText( content.getName() );
-        clickCheckboxAndSelectRow( content.getPath() ).clickToolbarEdit();
+        clickCheckboxAndSelectRow( content.getName() ).clickToolbarEdit();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
     }
 
-    public String getContentStatus( ContentPath path )
+    public String getContentStatus( String contentName )
     {
         String statusXpath = String.format(
             "//div[contains(@class,'slick-row') and descendant::p[contains(.,'%s')]]//div[contains(@class,'slick-cell')][4]/span",
-            path.toString() );
+            contentName );
         if ( findElements( By.xpath( statusXpath ) ).size() == 0 )
         {
-            throw new TestFrameworkException( "content was not found " + path.getName() );
+            throw new TestFrameworkException( "content was not found " + contentName );
 
         }
         return findElements( By.xpath( statusXpath ) ).get( 0 ).getText();
@@ -234,12 +234,12 @@ public class ContentBrowsePanel
     }
 
     /**
-     * @param contentPath
+     * @param contentName
      * @return
      */
-    public boolean exists( ContentPath contentPath )
+    public boolean exists( String contentName )
     {
-        return exists( contentPath.getName(), false );
+        return exists( contentName, false );
     }
 
     public boolean exists( ContentPath contentPath, boolean saveScreenshot )
@@ -323,11 +323,6 @@ public class ContentBrowsePanel
         return new ContentWizardPanel( getSession() );
     }
 
-    public List<String> getChildNames( ContentPath contentPath )
-    {
-        return getChildNames( contentPath.toString() );
-    }
-
     /**
      * Clicks on 'Delete' button on toolbar.
      *
@@ -362,40 +357,31 @@ public class ContentBrowsePanel
     {
         for ( Content content : contents )
         {
-            selectContentInTable( content.getPath() );
+            selectContentInTable( content.getName() );
         }
         return this;
     }
 
-    public ContentBrowsePanel selectContentInTable( ContentPath contentPath )
+    public ContentBrowsePanel selectContentInTable( String contentName )
     {
-        boolean exist = doScrollAndFindGridItem( contentPath.getName() );
-        if ( !isRowSelected( contentPath.getName() ) )
+        boolean exist = doScrollAndFindGridItem( contentName );
+        if ( !isRowSelected( contentName ) )
         {
-            clickCheckboxAndSelectRow( contentPath );
+            clickCheckboxAndSelectRow( contentName );
         }
         return this;
     }
 
-    public ContentBrowsePanel deSelectContentInTable( ContentPath contentPath )
+    public ContentBrowsePanel deSelectContentInTable( String contentName )
     {
-        boolean exist = doScrollAndFindGridItem( contentPath.getName() );
-        if ( isRowSelected( contentPath.toString() ) )
+        boolean exist = doScrollAndFindGridItem( contentName );
+        if ( isRowSelected( contentName ) )
         {
-            clickCheckboxAndSelectRow( contentPath );
+            clickCheckboxAndSelectRow( contentName );
         }
         return this;
     }
 
-    /**
-     * Clicks on a checkbox, linked with content and selects a row in the table.
-     *
-     * @param path a content path.
-     */
-    public ContentBrowsePanel clickCheckboxAndSelectRow( ContentPath path )
-    {
-        return clickCheckboxAndSelectRow( path.getName() );
-    }
 
     public BrowsePanel pressKeyOnRow( ContentPath path, Keys key )
     {
@@ -483,17 +469,6 @@ public class ContentBrowsePanel
         {
             throw new SaveOrUpdateException( "Impossible to open 'ContentWizardPanel', because the 'New' button is disabled!" );
         }
-        return this;
-    }
-
-    /**
-     * Clicks on row with content(not clicks by a checkbox)
-     *
-     * @param contentPath {@link ContentPath} instance.
-     */
-    public ContentBrowsePanel selectRowByContentPath( String contentPath )
-    {
-        clickAndSelectRow( contentPath );
         return this;
     }
 

@@ -60,9 +60,9 @@ class Occurrences_SingleSelector_Dropdown_0_1_Spec
         filterPanel.typeSearchText( dropDownContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( dropDownContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( dropDownContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
-        !contentBrowsePanel.isContentInvalid( dropDownContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( dropDownContent.getName().toString() );
     }
 
     def "GIVEN saving of 'Single Selector DropDown -content' with  selected option WHEN content opened for edit THEN correct selected option and button 'Remove' present in form view"()

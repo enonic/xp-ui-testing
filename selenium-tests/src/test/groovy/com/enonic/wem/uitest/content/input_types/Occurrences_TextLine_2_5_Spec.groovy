@@ -108,7 +108,7 @@ class Occurrences_TextLine_2_5_Spec
         when:
         contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getName() ).clickToolbarEdit();
 
         then: "actual text in the text line should be equals as expected"
         List<String> valuesFromUI = formViewPanel.getTextLineValues();
@@ -136,7 +136,7 @@ class Occurrences_TextLine_2_5_Spec
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( textLineContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()

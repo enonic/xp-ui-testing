@@ -78,7 +78,7 @@ class Occurrences_ImageSelector_2_4_Spec
 
         then:
         filterPanel.typeSearchText( imageSelectorContent.getDisplayName() );
-        contentBrowsePanel.isContentInvalid( imageSelectorContent.getPath().toString() );
+        contentBrowsePanel.isContentInvalid( imageSelectorContent.getName() );
     }
 
     def "GIVEN saving of Image Selector-content (2:4) and 2 image selected WHEN content opened for edit THEN correct images present on page and option filter displayed"()
@@ -149,7 +149,7 @@ class Occurrences_ImageSelector_2_4_Spec
         filterPanel.typeSearchText( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
     def "WHEN content with 4 selected images opened THEN option filter should not be displayed"()

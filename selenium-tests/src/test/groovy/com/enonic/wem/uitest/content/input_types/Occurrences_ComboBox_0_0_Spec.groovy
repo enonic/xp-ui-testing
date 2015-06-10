@@ -134,7 +134,7 @@ class Occurrences_ComboBox_0_0_Spec
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( content_wit_opt.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( content_wit_opt.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
     def "GIVEN a creating of a new ComboBox 0:0 without options WHEN content saved and 'Publish' on toolbar pressed THEN new content with status equals 'Online' listed"()
@@ -150,7 +150,7 @@ class Occurrences_ComboBox_0_0_Spec
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
 

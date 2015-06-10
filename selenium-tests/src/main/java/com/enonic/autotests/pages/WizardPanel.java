@@ -24,7 +24,7 @@ public abstract class WizardPanel<T>
 {
     public static String TABS_NAVIGATOR_LINK = "//ul[contains(@id,'wizard.WizardStepNavigator')]";
 
-    public static String NAVIGATOR_TAB_ITEM_LINK = TABS_NAVIGATOR_LINK + "//li/span[@title='%s']";
+    public static String NAVIGATOR_TAB_ITEM_LINK = TABS_NAVIGATOR_LINK + "//li/span[text()='%s']";
 
     public static final String SECURITY_LINK_TEXT = "Security";
 

@@ -129,9 +129,9 @@ class Occurrences_ImageSelector_0_0_Spec
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
-        !contentBrowsePanel.isContentInvalid( imageSelectorContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
     }
 
     def "GIVEN saving  'Image Selector 0:0' content with selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
@@ -145,8 +145,8 @@ class Occurrences_ImageSelector_0_0_Spec
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
-        !contentBrowsePanel.isContentInvalid( imageSelectorContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
     }
 }

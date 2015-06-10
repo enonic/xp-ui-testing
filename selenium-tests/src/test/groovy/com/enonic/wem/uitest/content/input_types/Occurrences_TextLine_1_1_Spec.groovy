@@ -53,7 +53,7 @@ class Occurrences_TextLine_1_1_Spec
 
         then: "new content listed in the grid and can be opened for edit"
         filterPanel.typeSearchText( textLineContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getName() ).clickToolbarEdit();
         String valueFromUI = formViewPanel.getTextLineValue();
 
         and: "numbers of inputs is 1"
@@ -73,7 +73,7 @@ class Occurrences_TextLine_1_1_Spec
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( textLineContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()

@@ -27,7 +27,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.save().close( PARENT_FOLDER.getDisplayName() );
 
         then:
-        contentBrowsePanel.exists( PARENT_FOLDER.getPath() );
+        contentBrowsePanel.exists( PARENT_FOLDER.getName() );
     }
 
     def "GIVEN creating new Content on root WHEN saved and HomeButton clicked THEN new Content should be listed"()
@@ -42,7 +42,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.goToAppHome();
 
         then:
-        contentBrowsePanel.exists( rootContent.getPath() );
+        contentBrowsePanel.exists( rootContent.getName() );
     }
 
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and wizard closed THEN parent should still be unexpanded"()
@@ -109,7 +109,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         TestUtils.saveScreenshot( getTestSession(), name );
 
         then:
-        contentBrowsePanel.exists( content.getPath() );
+        contentBrowsePanel.exists( content.getName() );
     }
 
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
@@ -133,7 +133,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.goToAppHome();
 
         then:
-        contentBrowsePanel.exists( content.getPath() ) && contentBrowsePanel.isRowExpanded( content.getParent().toString() );
+        contentBrowsePanel.exists( content.getName() ) && contentBrowsePanel.isRowExpanded( content.getName() );
     }
 
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
@@ -151,8 +151,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         Content newContent = cloneContentWithNewName( contentToEdit )
         contentBrowsePanel.expandContent( contentToEdit.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "editnametest" );
-        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getPath() );
-        ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getName() );
+        ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getName() ).clickToolbarEdit();
         contentWizard.typeData( newContent );
 
         when:
@@ -181,8 +181,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( contentToEdit ).save().close( contentToEdit.getDisplayName() );
 
         Content newContent = cloneContentWithNewDisplayName( contentToEdit );
-        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getPath() );
-        wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getPath() ).
+        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getName() );
+        wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getName() ).
             clickToolbarEdit();
         wizard.typeData( newContent );
 
@@ -193,7 +193,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
         contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
 
-        contentBrowsePanel.exists( newContent.getPath() );
+        contentBrowsePanel.exists( newContent.getName() );
     }
 
     Content cloneContentWithNewDisplayName( Content source )

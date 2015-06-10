@@ -41,7 +41,7 @@ class TagsInputType_0_5_Spec
         filterPanel.typeSearchText( tagContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( tagContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( tagContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
 

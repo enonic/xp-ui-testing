@@ -67,7 +67,7 @@ class Occurrences_ImageSelector_1_1_Spec
 
         then:
         filterPanel.typeSearchText( imageSelectorContent.getDisplayName() );
-        contentBrowsePanel.isContentInvalid( imageSelectorContent.getPath().toString() );
+        contentBrowsePanel.isContentInvalid( imageSelectorContent.getName() );
     }
 
     def "GIVEN saving of Image Selector-content (1:1) and image selected WHEN content opened for edit THEN correct image present on page and option filter not displayed"()

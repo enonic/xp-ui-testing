@@ -42,13 +42,11 @@ public class ContentItemVersionsPanel
     @FindBy(xpath = ALL_VERSIONS_ITEM)
     private WebElement allVersionsButton;
 
-
     @FindBy(xpath = ACTIVE_VERSIONS_ITEM)
     private WebElement activeVersionsButton;
 
     @FindBy(xpath = TAB_MENU_BUTTON)
     WebElement tabMenuButton;
-
 
     public ContentItemVersionsPanel( final TestSession session )
     {
@@ -59,15 +57,14 @@ public class ContentItemVersionsPanel
     {
         List<WebElement> elements = findElements(
             By.xpath( ALL_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER + "//div[contains(@id,'NamesView')]//h6[@class='main-name']" ) );
-        return elements.stream().map( e -> e.getAttribute( "title" ) ).collect( Collectors.toCollection( LinkedList::new ) );
+        return elements.stream().map( WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
     }
-
 
     public LinkedList<String> getActiveContentVersionsInfo()
     {
         List<WebElement> elements = findElements(
             By.xpath( ACTIVE_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER + "//div[contains(@id,'NamesView')]//h6[@class='main-name']" ) );
-        return elements.stream().map( e -> e.getAttribute( "title" ) ).collect( Collectors.toCollection( LinkedList::new ) );
+        return elements.stream().map( WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
     }
 
     public LinkedList<ContentVersion> getActiveContentVersions()
@@ -97,7 +94,6 @@ public class ContentItemVersionsPanel
             list.add( contentVersion );
         }
         return list;
-
     }
 
     public ContentItemVersionsPanel waitUntilLoaded()
@@ -158,7 +154,6 @@ public class ContentItemVersionsPanel
         {
             throw new TestFrameworkException( "Table with active version not showed" );
         }
-
         return this;
     }
 
@@ -170,7 +165,6 @@ public class ContentItemVersionsPanel
         {
             throw new TestFrameworkException( "Table with all versions not showed" );
         }
-
         return this;
     }
 }

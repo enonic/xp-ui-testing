@@ -54,15 +54,14 @@ class Base_InputFields_Occurrences
         addSite();
 
         then: " test site should be listed"
-        contentBrowsePanel.exists( ContentPath.from( ContentPath.ROOT, SITE_NAME ) );
+        contentBrowsePanel.exists( SITE_NAME );
     }
 
     private void addSite()
     {
         Content site;
-        ContentPath sitePath = ContentPath.from( ContentPath.ROOT, SITE_NAME );
         filterPanel.typeSearchText( SITE_NAME );
-        if ( !contentBrowsePanel.exists( sitePath ) )
+        if ( !contentBrowsePanel.exists( SITE_NAME ) )
         {
             site = buildSite();
             contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(

@@ -29,7 +29,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then:
-        !contentBrowsePanel.exists( content1.getPath() ) && !contentBrowsePanel.exists( content2.getPath() );
+        !contentBrowsePanel.exists( content1.getName() ) && !contentBrowsePanel.exists( content2.getName() );
     }
 
     def "GIVEN a Content on root WHEN deleted THEN deleted content is no longer listed at root"()
@@ -39,10 +39,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         addContent( content );
 
         when: "just created content selected and 'Delete' button on toolbar  pressed and 'Yes' pressed on confirm dialog "
-        contentBrowsePanel.clickCheckboxAndSelectRow( content.getPath() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.clickCheckboxAndSelectRow( content.getName() ).clickToolbarDelete().doDelete();
 
         then: "deleted content is no longer listed at root"
-        !contentBrowsePanel.exists( content.getPath() );
+        !contentBrowsePanel.exists( content.getName() );
     }
 
     def "GIVEN a Content beneath an existing WHEN deleted THEN deleted Content is no longer listed beneath parent"()
@@ -51,7 +51,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         Content parent = buildFolderContent( "parent", "parent" );
         addContent( parent );
 
-        contentBrowsePanel.clickCheckboxAndSelectRow( parent.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( parent.getName() );
         Content contentToDelete = buildFolderContent( "folder", "delete content beneath parent" );
         addContent( contentToDelete );
         List<Content> contentList = new ArrayList<>()
@@ -61,7 +61,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then: "deleted Content is no longer listed beneath parent"
-        !contentBrowsePanel.exists( contentToDelete.getPath(), true );
+        !contentBrowsePanel.exists( contentToDelete.getName(), true );
     }
 
     def "GIVEN a one and only Content beneath an existing WHEN deleted THEN expand icon of parent is no longer shown "()
@@ -70,7 +70,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         Content parent = buildFolderContent( "parent", "expand-icon-test" );
         addContent( parent );
 
-        contentBrowsePanel.clickCheckboxAndSelectRow( parent.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( parent.getName() );
         Content content = Content.builder().
             name( NameHelper.uniqueName( "unstructured" ) ).
             displayName( "unstructured" ).
@@ -97,7 +97,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         addContent( folder );
 
         when: "just created content deleted"
-        contentBrowsePanel.selectContentInTable( folder.getPath() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInTable( folder.getName() ).clickToolbarDelete().doDelete();
 
         then: "New-button is enabled"
         contentBrowsePanel.isNewButtonEnabled();

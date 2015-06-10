@@ -60,7 +60,7 @@ class Occurrences_TextLine_0_1_Spec
         when:
         contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getName() ).clickToolbarEdit();
 
         then: "actual text in the text line should be equals as expected"
         String valueFromUI = formViewPanel.getTextLineValue();
@@ -78,7 +78,7 @@ class Occurrences_TextLine_0_1_Spec
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( textLineContent.getPath() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
     private Content buildTextLine0_1_Content()

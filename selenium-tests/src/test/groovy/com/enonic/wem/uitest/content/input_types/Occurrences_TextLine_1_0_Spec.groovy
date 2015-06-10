@@ -122,7 +122,7 @@ class Occurrences_TextLine_1_0_Spec
 
         then: "new content listed in the grid and can be opened for edit"
         filterPanel.typeSearchText( textLineContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getPath() ).clickToolbarEdit();
+        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getName() ).clickToolbarEdit();
         List<String> valuesFromUI = formViewPanel.getTextLineValues();
         and: "numbers of inputs is 2"
         formViewPanel.getNumberOfTextInputs() == 2;

@@ -33,7 +33,7 @@ class MoveContentDialogSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( FIRST_CONTENT.getContentTypeName() ).typeData( FIRST_CONTENT ).save().close(
             FIRST_CONTENT.getDisplayName() );
         then:
-        contentBrowsePanel.exists( FIRST_CONTENT.getPath() );
+        contentBrowsePanel.exists( FIRST_CONTENT.getName() );
     }
 
     def "add second folder content"()
@@ -43,14 +43,14 @@ class MoveContentDialogSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData(
             SECOND_CONTENT ).save().close( SECOND_CONTENT.getDisplayName() );
         then:
-        contentBrowsePanel.exists( SECOND_CONTENT.getPath() );
+        contentBrowsePanel.exists( SECOND_CONTENT.getName() );
     }
 
     def "GIVEN selected folder WHEN 'Move' button on toolbar pressed THEN modal dialog with correct title appears"()
     {
         given:
         filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
         when:
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
         then:
@@ -63,7 +63,7 @@ class MoveContentDialogSpec
     {
         given:
         filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when:
@@ -73,14 +73,14 @@ class MoveContentDialogSpec
         contentBrowsePanel.expandContent( SECOND_CONTENT.getPath() );
 
         and:
-        contentBrowsePanel.exists( FIRST_CONTENT.getPath() );
+        contentBrowsePanel.exists( FIRST_CONTENT.getName() );
     }
 
     def "GIVEN 'move' dialog opened WHEN 'close' button clicked  THEN modal dialog disappears"()
     {
         given:
         filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when:
@@ -94,7 +94,7 @@ class MoveContentDialogSpec
     {
         given:
         filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when:

@@ -26,11 +26,11 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         addContent( FIRST_CONTENT );
         SECOND_CONTENT = buildFolderContent( "folder", "folder2" );
         addContent( SECOND_CONTENT );
-        contentBrowsePanel.selectContentInTable( FIRST_CONTENT.getPath() );
+        contentBrowsePanel.selectContentInTable( FIRST_CONTENT.getName() );
 
         when:
         contentBrowsePanel.waitUntilPageLoaded( 3 );
-        contentBrowsePanel.selectContentInTable( SECOND_CONTENT.getPath() );
+        contentBrowsePanel.selectContentInTable( SECOND_CONTENT.getName() );
 
         then:
         itemsSelectionPanel.getSelectedItemCount() == 2;
@@ -49,7 +49,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         TestUtils.saveScreenshot( getSession(), "select_2_items" )
 
         when:
-        contentBrowsePanel.selectContentInTable( THIRD_CONTENT.getPath() );
+        contentBrowsePanel.selectContentInTable( THIRD_CONTENT.getName() );
 
         then:
         TestUtils.saveScreenshot( getSession(), "select_3_items" )
@@ -69,7 +69,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
 
         when:
         TestUtils.saveScreenshot( getSession(), "deselect_before" );
-        contentBrowsePanel.deSelectContentInTable( SECOND_CONTENT.getPath() );
+        contentBrowsePanel.deSelectContentInTable( SECOND_CONTENT.getName() );
         TestUtils.saveScreenshot( getSession(), "deselect_after" );
 
         then:

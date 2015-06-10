@@ -38,7 +38,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         getTestSession().put( PARENT_ROOT_FOLDER, parentContent );
 
         and: "add new child content beneath the parent"
-        contentBrowsePanel.selectContentInTable( parentContent.getPath() );
+        contentBrowsePanel.selectContentInTable( parentContent.getName() );
         addContent( unstructuredChildContent );
         getTestSession().put( UNSTRUCTURED_CHILD_CONTENT, unstructuredChildContent );
         contentBrowsePanel.waitsForSpinnerNotVisible();
@@ -64,11 +64,11 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
         Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentContent.getPath() );
+        contentBrowsePanel.selectContentInTable( parentContent.getName() );
         filterPanel.typeSearchText( childContent.getName() );
 
         when: "all contents filtered and one more row with content clicked "
-        contentBrowsePanel.selectRowByContentPath( childContent.getPath().toString() );
+        contentBrowsePanel.clickAndSelectRow( childContent.getName() );
 
         then: "no any items should not be present in the selection panel  "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
@@ -80,11 +80,11 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
         Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentContent.getPath() );
+        contentBrowsePanel.selectContentInTable( parentContent.getName() );
         filterPanel.typeSearchText( childContent.getName() );
 
         when: "search text typed and one more checkbox clicked and  content selected "
-        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
 
         then: "two items should be present in selection panel"
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
@@ -96,11 +96,11 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         setup: "select a root content and type search text in filter panel"
         Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
         Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentContent.getPath() );
+        contentBrowsePanel.selectContentInTable( parentContent.getName() );
         filterPanel.typeSearchText( childContent.getName() );
 
         and: "search text typed and one more checkbox clicked and  content selected "
-        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
 
         when: "search text typed and one more checkbox clicked and  content selected "
         filterPanel.clickOnCleanFilter();
@@ -149,13 +149,13 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
         Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
+        contentBrowsePanel.selectContentInTable( parentFolder.getName() )
 
         and: "type a name of child content in the filter panel"
         contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
 
         and: "click on checkbox near the child content, when all content were filtered"
-        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
 
         when: "click on 'Clear filter' link and expand a parent content"
         filterPanel.clickOnCleanFilter();
@@ -172,13 +172,13 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         setup: "select a existing root content, that has a child "
         Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
         Content child = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentFolder.getPath() )
+        contentBrowsePanel.selectContentInTable( parentFolder.getName() )
 
         and: "and type a name of child content in the filter panel"
         filterPanel.typeSearchText( child.getName() );
 
         and: "click on row with the child content"
-        contentBrowsePanel.selectRowByContentPath( child.getPath().toString() );
+        contentBrowsePanel.clickAndSelectRow( child.getName() );
 
         when: "click on 'Clear filter' link and expand a parent content"
         filterPanel.clickOnCleanFilter();

@@ -24,9 +24,9 @@ class Content_Online_Modified_Spec
             content.getDisplayName() );
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
         then:
-        contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
         and:
         message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, content.getDisplayName() );
     }
@@ -35,12 +35,12 @@ class Content_Online_Modified_Spec
     {
         given:
         filterPanel.typeSearchText( content.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarEdit();
         when:
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
 
         then:
-        contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.MODIFIED.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.MODIFIED.getValue();
 
     }
 
@@ -48,10 +48,10 @@ class Content_Online_Modified_Spec
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getPath() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
 
         then:
-        contentBrowsePanel.getContentStatus( content.getPath() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
         and:
         message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, NEW_DISPLAY_NAME );
 

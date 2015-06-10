@@ -37,8 +37,7 @@ class Occurrences_ImageSelector_0_1_Spec
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector0_1_Content( null );
         ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() )
-        wizard.typeData( imageSelectorContent ).save().close(
-            imageSelectorContent.getDisplayName() );
+        wizard.typeData( imageSelectorContent ).save().close( imageSelectorContent.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
@@ -66,9 +65,9 @@ class Occurrences_ImageSelector_0_1_Spec
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
         then: "content has online status in the browse panel"
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and: "content is valid"
-        !contentBrowsePanel.isContentInvalid( imageSelectorContent.getPath().toString() );
+        !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
     }
 
     def "GIVEN saving of Image Selector-content (0:1) and one image selected WHEN content opened for edit THEN correct image present on page and option filter not displayed"()

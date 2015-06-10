@@ -33,7 +33,6 @@ class Occurrences_TinyMCE_0_1_Spec
         formViewPanel.isOpened();
         and: "text area present"
         formViewPanel.isEditorPresent();
-
     }
 
     def "WHEN wizard opened AND the editor is not in edit mode THEN TinyMCE toolbar is hidden"()
@@ -45,7 +44,6 @@ class Occurrences_TinyMCE_0_1_Spec
 
         then: "wizard with form view opened"
         !formViewPanel.isEditorToolbarVisible();
-
     }
 
     def "WHEN wizard opened AND the editor  in edit mode THEN TinyMCE toolbar is visible"()
@@ -58,7 +56,6 @@ class Occurrences_TinyMCE_0_1_Spec
 
         then: "wizard with form view opened"
         formViewPanel.isEditorToolbarVisible();
-
     }
 
     def "GIVEN saving of content with TinyMCE editor  (0:1) and text typed WHEN content opened for edit THEN expected string is present in the editor "()
@@ -75,7 +72,6 @@ class Occurrences_TinyMCE_0_1_Spec
 
         then: "expected text present in the editor"
         text == EXPECTED_TEXT;
-
     }
 
     def "GIVEN saving of content with TinyMCE editor (0:1) and text not typed WHEN content opened for edit THEN  no text present in the editor"()
@@ -91,9 +87,7 @@ class Occurrences_TinyMCE_0_1_Spec
 
         then: "text area is empty"
         formViewPanel.isTextAreaEmpty();
-
     }
-
 
     private Content buildTinyMce0_1_Content( String text )
     {
@@ -102,7 +96,6 @@ class Occurrences_TinyMCE_0_1_Spec
         {
             data.addStrings( TinyMCE0_1_FormViewPanel.STRING_PROPERTY, text );
         }
-
         Content tinyMceContent = Content.builder().
             name( NameHelper.uniqueName( "mce0_1_" ) ).
             displayName( "mce0_1 content" ).
