@@ -15,7 +15,7 @@ public abstract class BaseTinyMCEFormViewPanel
 
     public static String STRINGS_PROPERTY = "strings";
 
-    protected final String STEP_XPATH = "//li[contains(@id,'api.ui.tab.TabBarItem')]//span[@title='Tiny MCE editor']";
+    protected final String STEP_XPATH = "//li[contains(@id,'api.ui.tab.TabBarItem')]//span[text()='Tiny MCE editor']";
 
     protected final String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
 
