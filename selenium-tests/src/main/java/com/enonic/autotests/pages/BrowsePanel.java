@@ -25,7 +25,7 @@ public abstract class BrowsePanel
     extends Application
 {
     public static String GRID_ROW =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and @title='%s']]";
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and text()='%s']]";
 
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
