@@ -32,7 +32,6 @@ public abstract class BrowsePanel
 
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
-    protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
 
     protected String CONTENT_SUMMARY_VIEWER =
         "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[@class='sub-name' and contains(.,'%s')]]";

@@ -158,10 +158,13 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
 
         when: "click on 'Clear filter' link and expand a parent content"
+        contentBrowsePanel.getFilterPanel().typeSearchText( parentFolder.getName() );
+        contentBrowsePanel.expandContent( parentFolder.getPath() );
         filterPanel.clickOnCleanFilter();
         sleep( 2000 );
         TestUtils.saveScreenshot( getSession(), "shopping_cart_issue" )
-        contentBrowsePanel.expandContent( parentFolder.getPath() );
+
+        // contentBrowsePanel.pressKeyOnRow( parentFolder.getName(  ), Keys.ARROW_RIGHT );
 
         then: "two items should be present in the selection panel and two rows are selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
