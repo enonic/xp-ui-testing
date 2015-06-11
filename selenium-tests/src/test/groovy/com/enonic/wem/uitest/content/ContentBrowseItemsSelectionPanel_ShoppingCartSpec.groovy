@@ -164,7 +164,9 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
 
         then: "two items should be present in the selection panel and two rows are selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
-        selectedNames.size() == 2 && contentBrowsePanel.getSelectedRowsNumber();
+        selectedNames.size() == 2
+        and:
+        contentBrowsePanel.getSelectedRowsNumber() == 2;
     }
 
     def "GIVEN a parent content and child beneath a parent AND parent content selected AND name of child typed in the search input AND row with the child was clicked  WHEN filter cleared and parent content expanded  THEN only one child content selected"()

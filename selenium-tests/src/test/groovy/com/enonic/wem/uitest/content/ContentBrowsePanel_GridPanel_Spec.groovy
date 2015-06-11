@@ -22,7 +22,6 @@ class ContentBrowsePanel_GridPanel_Spec
     @Shared
     String CHILD_CONTENT_NAME = "childfolder";
 
-
     def "GIVEN Content listed on root WHEN no selection THEN all rows are white"()
     {
         given:
@@ -136,10 +135,15 @@ class ContentBrowsePanel_GridPanel_Spec
         !contentBrowsePanel.isRowExpanded( parentContent.getName() );
 
         when:
+        filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.expandContent( parentContent.getPath() );
+        List<String> names = contentBrowsePanel.getChildNames()
 
         then:
-        contentBrowsePanel.getChildNames( parentContent.getName() ).size() > 0;
+        names.size() == 1;
+        and:
+        names.get( 0 ) == CHILD_CONTENT_NAME;
+
     }
 
     def "GIVEN a Content with an open expander WHEN closed THEN no children are listed beneath"()
@@ -152,7 +156,7 @@ class ContentBrowsePanel_GridPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "unexpandtest" );
 
         then:
-        contentBrowsePanel.getChildNames( parentContent.getName() ).size() == 0;
+        contentBrowsePanel.getChildNames().size() == 0;
     }
 
     def "GIVEN a selected Content  WHEN arrow down is typed THEN next row is selected"()
@@ -220,7 +224,6 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN selected content and WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
     {
         given: "selected and collapsed folder(content)"
-        // ContentPath path = ContentPath.from( IMPORTED_FOLDER_NAME );
         contentBrowsePanel.selectContentInTable( IMPORTED_FOLDER_NAME );
 
         when: "arrow down typed 3 times"

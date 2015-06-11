@@ -99,7 +99,7 @@ class UserBrowsePanel_GridPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "system-collapsed" );
 
         then:
-        userBrowsePanel.getChildNames( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() ).size() == 0;
+        userBrowsePanel.getChildNames().size() == 0;
     }
 
     def "GIVEN a 'system' folder selected WHEN arrow down is typed THEN next row is selected"()

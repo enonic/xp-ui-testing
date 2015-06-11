@@ -27,6 +27,9 @@ public abstract class BrowsePanel
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and text()='%s']]";
 
+    public static String NAME_OF_CHILD_ROW =
+        "//div[contains(@class,'ui-widget-content slick-row') and descendant::span[contains(@class,'toggle icon') and contains(@style,'margin-left: 16')]]//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
+
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
     protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
@@ -499,21 +502,16 @@ public abstract class BrowsePanel
     }
 
     /**
-     * Gets item names, that are children for parent.
+     * Gets item names, that have a margin-left, that means items are children.
+     * *
      *
-     * @param parentItemName parent item name
      * @return list of item names.
      */
-    public List<String> getChildNames( String parentItemName )
+    public List<String> getChildNames()
     {
-        List<String> listNames = new ArrayList<>();
-        String pElement =
-            String.format( "//div[contains(@id,'api.app.NamesView')and child::p[contains(@title,'%s/')]]/p[@class='sub-name']",
-                           parentItemName );
-        List<WebElement> elements = findElements( By.xpath( String.format( pElement, parentItemName ) ) );
-        return elements.stream().map( element -> {
-            return element.getAttribute( "title" );
-        } ).collect( Collectors.toList() );
+        List<WebElement> elements = findElements( By.xpath( NAME_OF_CHILD_ROW ) );
+        List<String> names = elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return names;
     }
 
 
