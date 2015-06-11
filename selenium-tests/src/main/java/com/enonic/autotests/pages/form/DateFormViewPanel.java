@@ -15,7 +15,7 @@ public class DateFormViewPanel
     public static String DATE_PROPERTY = "date";
 
     private final String DATE_INPUT_XPATH =
-        FORM_VIEW + "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Date']]//input[contains(@id,'TextInput')]";
+        FORM_VIEW + "//div[contains(@id,'api.form.InputView') and descendant::div[text()='Date']]//input[contains(@id,'TextInput')]";
 
     @FindBy(xpath = DATE_INPUT_XPATH)
     private WebElement dateInput;
