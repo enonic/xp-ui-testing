@@ -160,6 +160,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         when: "click on 'Clear filter' link and expand a parent content"
         filterPanel.clickOnCleanFilter();
         sleep( 2000 );
+        TestUtils.saveScreenshot( getSession(), "shopping_cart_issue" )
         contentBrowsePanel.expandContent( parentFolder.getPath() );
 
         then: "two items should be present in the selection panel and two rows are selected in the grid "
