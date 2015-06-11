@@ -158,10 +158,9 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
 
         when: "click on 'Clear filter' link and expand a parent content"
-        contentBrowsePanel.getFilterPanel().typeSearchText( parentFolder.getName() );
-        contentBrowsePanel.expandContent( parentFolder.getPath() );
         filterPanel.clickOnCleanFilter();
-        sleep( 2000 );
+        contentBrowsePanel.expandContent( parentFolder.getPath() );
+        sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "shopping_cart_issue" )
 
         // contentBrowsePanel.pressKeyOnRow( parentFolder.getName(  ), Keys.ARROW_RIGHT );

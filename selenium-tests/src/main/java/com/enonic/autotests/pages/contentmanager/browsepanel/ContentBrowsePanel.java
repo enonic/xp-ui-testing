@@ -279,7 +279,7 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel expandContent( ContentPath contentPath )
     {
-        if ( !doScrollAndFindGridItem( contentPath.toString() ) )
+        if ( !doScrollAndFindGridItem( contentPath.getName() ) )
         {
             throw new TestFrameworkException( "expandContent: content was not found! " + contentPath );
         }
@@ -301,7 +301,7 @@ public class ContentBrowsePanel
                 getLogger().info( "expandContent,  name of folder  path: " + path );
                 if ( !isRowExpanded( path.getName() ) )
                 {
-                    if ( !this.clickOnExpander( path.toString() ) )
+                    if ( !this.clickOnExpander( path.getName() ) )
                     {
                         getLogger().info( "content with name " + parentContent + "has no children! " );
                     }
