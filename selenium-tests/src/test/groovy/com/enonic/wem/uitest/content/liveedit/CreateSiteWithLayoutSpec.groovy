@@ -10,10 +10,11 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
-import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -49,7 +50,7 @@ class CreateSiteWithLayoutSpec
             site.getDisplayName() );
 
         then: " new site should be listed"
-        contentBrowsePanel.exists( site.getPath() );
+        contentBrowsePanel.exists( site.getName() );
 
     }
 
@@ -68,10 +69,10 @@ class CreateSiteWithLayoutSpec
         TestUtils.saveScreenshot( getSession(), "simple_template" );
 
         then: " new template should be listed beneath a 'Templates' folder"
-        contentBrowsePanel.exists( pageTemplate.getPath() );
+        contentBrowsePanel.exists( pageTemplate.getName() );
     }
 
-
+    @Ignore
     def "GIVEN site opened for edit WHEN 'toggle window' button on toolbar clicked  THEN ContextWindow  appears"()
     {
         given: "site opened for edit"
@@ -84,7 +85,7 @@ class CreateSiteWithLayoutSpec
         contextWindow.isContextWindowPresent();
     }
 
-
+    @Ignore
     def "WHEN site opened for edit  AND page template is automatic THEN Live Edit frame should be locked"()
     {
         when: "site opened for edit"
@@ -94,7 +95,7 @@ class CreateSiteWithLayoutSpec
         contentWizard.isLiveEditLocked();
     }
 
-
+    @Ignore
     def "GIVEN site opened for edit  AND page template is automatic WHEN link 'Unlock' clicked on 'Live Edit' frame  THEN Live Edit frame is unlocked"()
     {
         given: "site opened for edit"
@@ -131,6 +132,7 @@ class CreateSiteWithLayoutSpec
 
     }
 
+    @Ignore
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on to left region AND site saved THEN layout with one image present on the live edit frame"()
     {
         given:
@@ -151,6 +153,7 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 1;
     }
 
+    @Ignore
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on center region AND site saved THEN layout with two images present on the live edit frame"()
     {
         given:
@@ -171,6 +174,7 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
 
+    @Ignore
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on right region AND site saved THEN layout with 3 images present on the live edit frame"()
     {
         given:
