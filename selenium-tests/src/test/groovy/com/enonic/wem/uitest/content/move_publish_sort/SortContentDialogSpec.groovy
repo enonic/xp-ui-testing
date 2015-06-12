@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.wem.uitest.content.BaseContentSpec
-import com.enonic.xp.content.ContentPath
 import spock.lang.Shared
 
 class SortContentDialogSpec
@@ -15,7 +14,7 @@ class SortContentDialogSpec
     def "GIVEN Content BrowsePanel WHEN one content selected and 'Sort' button clicked THEN 'Sort Content' appears with correct control elements"()
     {
         given: "one selected content"
-        findAndSelectContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        findAndSelectContent( IMPORTED_FOLDER_NAME )
 
         when:
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
@@ -35,7 +34,7 @@ class SortContentDialogSpec
     def "GIVEN sort dialog opened WHEN 'Save' button clicked THEN dialog disappears"()
     {
         given: "one selected content"
-        findAndSelectContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         when: "'Save' clicked"
@@ -48,7 +47,7 @@ class SortContentDialogSpec
     def "GIVEN sort dialog opened WHEN 'Cancel' button clicked THEN dialog disappears"()
     {
         given: "one selected content"
-        findAndSelectContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         when: "'Cancel' clicked"
@@ -61,7 +60,7 @@ class SortContentDialogSpec
     def "GIVEN sort dialog opened WHEN 'Cancel' on top button clicked THEN dialog disappears"()
     {
         given: "one selected content"
-        findAndSelectContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         when: "'Cancel' on top clicked"
@@ -74,7 +73,7 @@ class SortContentDialogSpec
     def "GIVEN folder selected and 'Sort' button clicked WHEN TabMenuButton clicked THEN five menu items appears"()
     {
         given: "one selected content"
-        findAndSelectContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         when:
@@ -98,7 +97,7 @@ class SortContentDialogSpec
     def "GIVEN sort dialog opened WHEN  'cancel' button on the top clicked THEN dialog disappears"()
     {
         given: "content selected and 'Sort' pressed"
-        findAndSelectContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         when: "'Cancel' on top clicked"
@@ -111,7 +110,7 @@ class SortContentDialogSpec
     def "WHEN sort dialog opened THEN default sorting is present"()
     {
         when:
-        findAndSelectContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         then:
