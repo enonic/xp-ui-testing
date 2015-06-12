@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -29,6 +31,10 @@ public class SortContentDialog
     private final String CANCEL_TOP_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-top') ]";
 
     private final String SORT_CONTENT_MENU_BUTTON = DIALOG_CONTAINER + "//div[contains(@id,'TabMenuButton')]";
+
+    private String GRID_ITEM = DIALOG_CONTAINER +
+        "//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]//div[contains(@class,'drag-icon')]";
+//DIV_NAMES_VIEW;
 
     @FindBy(xpath = SAVE_BUTTON)
     WebElement saveButton;
@@ -93,6 +99,24 @@ public class SortContentDialog
         return this;
     }
 
+    public SortContentDialog dragAndSwapItems( String sourceName, String targetName )
+    {
+        String sourceItem = String.format( GRID_ITEM, sourceName );
+        String targetItem = String.format( GRID_ITEM, targetName );
+        WebElement element = findElements( By.xpath( sourceItem ) ).get( 0 );
+        WebElement target = findElements( By.xpath( targetItem ) ).get( 0 );
+        Actions builder = new Actions( getDriver() );
+        builder.clickAndHold( element ).build().perform();
+        // builder.moveToElement( target, 0, -20 ).build().perform();;
+        Locatable loc = (Locatable) target;
+
+        builder.release( target );
+        builder.build().perform();
+        sleep( 3000 );
+        //( new Actions( getDriver() ) ).dragAndDrop( element, target ).perform();
+        return this;
+    }
+
     public SortContentDialog clickOnCancelButton()
     {
         cancelButton.click();
@@ -130,7 +154,8 @@ public class SortContentDialog
 
     public LinkedList<String> getContentNames()
     {
-        return findElements( By.xpath( "//div[contains(@id,'NamesView')]//h6[contains(@class,'main-name')]" ) ).stream().filter(
+        return findElements(
+            By.xpath( DIALOG_CONTAINER + "//div[contains(@id,'NamesView')]//h6[contains(@class,'main-name')]" ) ).stream().filter(
             WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
     }
 
