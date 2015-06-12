@@ -123,7 +123,7 @@ class ContentBrowsePanelToolbarSpec
             build();
 
         when: "image content selected"
-        findAndSelectContent( imageContent );
+        findAndSelectContent( imageContent.getName() );
         TestUtils.saveScreenshot( getSession(), "children_allow" );
 
         then: "sort button is disabled"
