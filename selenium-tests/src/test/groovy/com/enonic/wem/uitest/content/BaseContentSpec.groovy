@@ -53,17 +53,14 @@ class BaseContentSpec
         contentBrowsePanel.waitsForSpinnerNotVisible();
     }
 
-    public ContentBrowsePanel findAndSelectContent( Content content )
+    public ContentBrowsePanel findAndSelectContent( String name )
     {
-        filterPanel.typeSearchText( content.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( content.getName() );
-        return contentBrowsePanel;
-    }
+        filterPanel.typeSearchText( name );
+        if ( !contentBrowsePanel.isRowSelected( name ) )
+        {
+            contentBrowsePanel.clickCheckboxAndSelectRow( name );
+        }
 
-    public ContentBrowsePanel findAndSelectContent( ContentPath contentPath )
-    {
-        filterPanel.typeSearchText( contentPath.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( contentPath.getName() );
         return contentBrowsePanel;
     }
 }

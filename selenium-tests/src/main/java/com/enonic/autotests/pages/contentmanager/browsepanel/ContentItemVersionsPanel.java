@@ -24,13 +24,13 @@ public class ContentItemVersionsPanel
 
     private final String TAB_BAR = CONTAINER + "//ul[contains(@id,'api.ui.tab.TabBar')]";
 
-    private final String ALL_VERSIONS_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::span[@title='All Versions']]";
+    private final String ALL_VERSIONS_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::span[text()='All Versions']]";
 
-    private final String ACTIVE_VERSIONS_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::span[@title='Active Versions']]";
+    private final String ACTIVE_VERSIONS_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::span[text()='Active Versions']]";
 
-    protected String MENU_ITEM_XPATH = "//ul[@class='menu']//li[contains(@id,'TabMenuItem') and child::span[@title='%s']]";
+    protected String MENU_ITEM_XPATH = "//ul[@class='menu']//li[contains(@id,'TabMenuItem') and child::span[text()='%s']]";
 
-    protected final String TAB_MENU_BUTTON = "//div[contains(@id,'TabMenuButton') and child::span[@title='Version History']]";
+    protected final String TAB_MENU_BUTTON = "//div[contains(@id,'TabMenuButton') and child::span[text()='Version History']]";
 
     private final String ALL_CONTENT_VERSION_GRID = "//div[contains(@id,'AllContentVersionsTreeGrid')]";
 

@@ -31,7 +31,7 @@ public abstract class BrowseItemsSelectionPanel
     protected String SELECTED_ITEM_DISPLAY_NAME = "//h6[@class='main-name']";
 
     protected final String TAB_MENU_BUTTON =
-        "//div[contains(@id,'TabMenuButton') and (child::span[@title='Preview'] or child::span[@title='Version History'])]";
+        "//div[contains(@id,'TabMenuButton') and (child::span[text()='Preview'] or child::span[text()='Version History'])]";
 
     protected String MENU_ITEM_XPATH = "//ul[@class='menu']//li[contains(@id,'TabMenuItem') and child::span[text()='%s']]";
 

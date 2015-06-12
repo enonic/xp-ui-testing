@@ -36,7 +36,7 @@ public abstract class BrowsePanel
     protected String CONTENT_SUMMARY_VIEWER =
         "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
-    protected final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
+    protected final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'NamesView')]/p[@class='sub-name']";
 
     protected String CHECKBOX_ROW_CHECKER =
         DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";

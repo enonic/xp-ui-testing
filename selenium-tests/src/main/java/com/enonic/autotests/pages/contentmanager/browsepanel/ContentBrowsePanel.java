@@ -1,6 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +37,7 @@ public class ContentBrowsePanel
 
     private final String BASE_TOOLBAR_XPATH = "//div[contains(@id,'app.browse.ContentBrowseToolbar')]";
 
-    private final String BASE_PANEL_XPATH = "//div[contains(@id,'app.browse.ContentBrowsePanel')]";
+    private final String BASE_PANEL_XPATH = "//div[contains(@id,'ContentBrowsePanel')]";
 
     protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH = BASE_PANEL_XPATH + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
 
@@ -224,13 +223,17 @@ public class ContentBrowsePanel
      */
     public List<String> getContentNamesFromBrowsePanel()
     {
-        List<String> allNames = new ArrayList<>();
+
         List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH ) );
-        for ( WebElement row : rows )
-        {
-            allNames.add( row.getAttribute( "title" ) );
-        }
-        return allNames;
+        return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    public List<String> getChildContentNamesFromBrowsePanel( String parentName )
+    {
+
+        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH ) );
+        return rows.stream().filter( e -> !e.getText().contains( parentName ) && !e.getText().isEmpty() ).map(
+            WebElement::getText ).collect( Collectors.toList() );
     }
 
     /**

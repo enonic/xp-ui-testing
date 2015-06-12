@@ -23,7 +23,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     def "GIVEN expanded parent content and content beneath the parent, both contents are selected  WHEN parent content is collapsed  THEN only one item is selected in the grid panel but two items present in selection panel"()
     {
         setup: "build a new folder-content and child content"
-        Content parentContent = buildFolderContent( SHOPPING_CART_BASE_NAME, "parentContent" );
+        Content parentContent = buildFolderContent( SHOPPING_CART_BASE_NAME, "folderParent" );
         String childName = NameHelper.uniqueName( "child" );
         Content unstructuredChildContent = Content.builder().
             name( childName ).
@@ -127,7 +127,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
             folder2.getDisplayName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-
         and: "type a part of name common for both contents "
         filterPanel.typeSearchText( SHOPPING_CART_BASE_NAME );
         List<Content> contents = new ArrayList<>();
@@ -152,7 +151,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.selectContentInTable( parentFolder.getName() )
 
         and: "type a name of child content in the filter panel"
-        contentBrowsePanel.getFilterPanel().typeSearchText( childContent.getName() );
+        filterPanel.typeSearchText( childContent.getName() );
 
         and: "click on checkbox near the child content, when all content were filtered"
         contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
@@ -194,7 +193,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         selectedNames.size() == 0 && contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-
     def "GIVEN browse panel opened  WHEN Select All clicked  THEN number of items in the selection panel and number of selected rows in the grid are equals "()
     {
         when: "filter cleared "
@@ -216,5 +214,4 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         then: "there are no any items in the selection panel"
         contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames().size() == 0;
     }
-
 }
