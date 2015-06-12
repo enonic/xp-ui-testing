@@ -14,8 +14,7 @@ public class DoubleFormViewPanel
 {
     public static String DOUBLE_PROPERTY = "double";
 
-    @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Double']]//input[contains(@id,'TextInput')]")
+    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'api.form.InputView')]//input[contains(@id,'TextInput') and contains(@name,'double')]")
     private WebElement doubleInput;
 
 
