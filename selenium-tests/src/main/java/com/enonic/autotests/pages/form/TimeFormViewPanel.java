@@ -16,8 +16,7 @@ public class TimeFormViewPanel
 
     private final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
-    @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView') and descendant::div[contains(@title,'Time')]]//input[contains(@id,'TextInput')]")
+    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'TimePicker')]//input[contains(@id,'TextInput')]")
     private WebElement reqTimeInput;
 
 

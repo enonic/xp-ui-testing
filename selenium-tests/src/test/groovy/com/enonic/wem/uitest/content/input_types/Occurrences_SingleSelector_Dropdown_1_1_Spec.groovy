@@ -71,7 +71,7 @@ class Occurrences_SingleSelector_Dropdown_1_1_Spec
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( comboBoxContent.getPath() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( comboBoxContent.getPath().toString() );
 
