@@ -36,18 +36,16 @@ driver = {
         {
             throw new RuntimeException( "Unsupported operating system [${Platform.current}]" )
         }
-
-        // def pathToDriver = props.getProperty( 'chromedriver.path' )
         System.setProperty( "webdriver.chrome.driver", pathToDriver )
 
     }
 
-    def driver = new ChromeDriver();
+    // def driver = new ChromeDriver();
     //driver.manage().window().maximize()
     //FirefoxProfile profile = new FirefoxProfile();
     //profile.setEnableNativeEvents( true );
     // def driver = new FirefoxDriver( profile );
-    // def driver = new FirefoxDriver();
+    def driver = new FirefoxDriver();
     driver.manage().window().maximize()
     println "default configuration"
     return driver

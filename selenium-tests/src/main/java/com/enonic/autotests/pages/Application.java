@@ -25,7 +25,7 @@ public class Application
 
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
-    protected String DIV_NAMES_VIEW = "//div[contains(@id,'api.app.NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
+    protected String DIV_NAMES_VIEW = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
 
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 

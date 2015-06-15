@@ -358,12 +358,9 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentBrowsePanel selectContentInTable( List<Content> contents )
+    public ContentBrowsePanel selectContentInTable( List<String> contentNames )
     {
-        for ( Content content : contents )
-        {
-            selectContentInTable( content.getName() );
-        }
+        contentNames.stream().forEach( name -> selectContentInTable( name ) );
         return this;
     }
 

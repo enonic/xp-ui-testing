@@ -41,9 +41,9 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         given:
         THIRD_CONTENT = buildFolderContent( "folder", "folder3" );
         addContent( THIRD_CONTENT );
-        List<Content> list = new ArrayList<>();
-        list.add( FIRST_CONTENT );
-        list.add( SECOND_CONTENT );
+        List<String> list = new ArrayList<>();
+        list.add( FIRST_CONTENT.getName() );
+        list.add( SECOND_CONTENT.getName() );
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSelectedItemCount();
         TestUtils.saveScreenshot( getSession(), "select_2_items" )
@@ -59,10 +59,10 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN three selected Content WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
         given:
-        List<Content> list = new ArrayList<>();
-        list.add( FIRST_CONTENT );
-        list.add( SECOND_CONTENT );
-        list.add( THIRD_CONTENT );
+        List<String> list = new ArrayList<>();
+        list.add( FIRST_CONTENT.getName() );
+        list.add( SECOND_CONTENT.getName() );
+        list.add( THIRD_CONTENT.getName() );
 
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSelectedItemCount();

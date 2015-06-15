@@ -107,8 +107,8 @@ class ContentBrowsePanel_FilterPanel_Spec
         TestUtils.saveScreenshot( getSession(), "LastModified_filter1" )
         int beforeRemoving = filterPanel.getNumberFilteredByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
-        List<Content> contentList = new ArrayList();
-        contentList.add( folder );
+        List<String> contentList = new ArrayList();
+        contentList.add( folder.getName() );
 
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();

@@ -16,7 +16,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         given: "one parent and two child content exist"
         Content parent = buildFolderContent( "folder", "selection test" )
         addContent( parent );
-        List<Content> contentList = new ArrayList<>()
+        List<String> contentList = new ArrayList<>()
         Content content1 = Content.builder().
             name( NameHelper.uniqueName( "first" ) ).
             displayName( "first" ).
@@ -27,7 +27,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickOnParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType(
             content1.getContentTypeName() );
         wizard.typeData( content1 ).save().close( content1.getDisplayName() );
-        contentList.add( content1 );
+        contentList.add( content1.getName() );
         Content content2 = Content.builder().
             parent( ContentPath.from( parent.getName() ) ).
             name( NameHelper.uniqueName( "second" ) ).
@@ -36,7 +36,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             build();
 
         addContent( content2 );
-        contentList.add( content2 );
+        contentList.add( content2.getName() );
         Content content3 = Content.builder().
             parent( ContentPath.from( parent.getName() ) ).
             name( NameHelper.uniqueName( "third" ) ).
@@ -46,7 +46,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
 
         contentBrowsePanel.clickToolbarNew().selectContentType( content3.getContentTypeName() );
         wizard.typeData( content3 ).save().close( content3.getDisplayName() );
-        contentList.add( content3 );
+        contentList.add( content3.getName() );
 
         when: "parent and children are selected and 'Delete button' pressed"
         contentBrowsePanel.expandContent( content1.getParent() );

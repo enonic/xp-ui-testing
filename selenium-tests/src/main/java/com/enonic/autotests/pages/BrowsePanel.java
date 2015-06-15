@@ -52,7 +52,7 @@ public abstract class BrowsePanel
     protected String NOT_LOADED_CONTENT_XPATH = "//div[contains(@class,'children-to-load')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
-        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
+        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'toggle icon')]";
 
     @FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
     protected WebElement clearSelectionLink;
@@ -147,15 +147,9 @@ public abstract class BrowsePanel
         boolean result = waitUntilVisibleNoException( By.xpath( expanderXpath ), 3 );
         if ( !result )
         {
-            result = doScrollAndFindGridItem( expanderXpath, 2 );
-        }
-        if ( !result )
-        {
-            //throw new TestFrameworkException(
             getLogger().info( "invalid locator or expander for content with name: " + itemName + " does not exist! xpath =  " );
             return null;
         }
-
         List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
 
         String attributeName = "class";

@@ -22,8 +22,8 @@ class DeleteContentDialogSpec
     def "GIVEN content App BrowsePanel and existing content WHEN content selected and Delete button clicked THEN delete dialog with title 'Delete Content' showed"()
     {
         given:
-        List<Content> contentList = new ArrayList<>();
-        contentList.add( CONTENT );
+        List<String> contentList = new ArrayList<>();
+        contentList.add( CONTENT.getName() );
 
         when: "content selected and Delete button clicked"
         DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete();
@@ -35,8 +35,8 @@ class DeleteContentDialogSpec
     def "GIVEN content BrowsePanel and existing content WHEN one content selected and Delete button clicked THEN delete dialog with one content is displayed"()
     {
         given:
-        List<Content> contentList = new ArrayList<>();
-        contentList.add( CONTENT );
+        List<String> contentList = new ArrayList<>();
+        contentList.add( CONTENT.getName() );
 
         when: "one content selected and Delete button clicked"
         DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete();

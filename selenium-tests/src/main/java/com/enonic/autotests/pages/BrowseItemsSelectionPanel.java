@@ -104,7 +104,8 @@ public abstract class BrowseItemsSelectionPanel
             return Collections.emptyList();
         }
         List<WebElement> h6Elements = getDriver().findElements( By.xpath( ALL_SELECTED_ITEMS + SELECTED_ITEM_DISPLAY_NAME ) );
-        return h6Elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return h6Elements.stream().filter( e -> !e.getText().isEmpty() ).filter( WebElement::isDisplayed ).map(
+            WebElement::getText ).collect( Collectors.toList() );
 
     }
 

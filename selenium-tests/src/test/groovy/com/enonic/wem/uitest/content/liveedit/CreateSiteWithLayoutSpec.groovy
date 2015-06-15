@@ -62,7 +62,7 @@ class CreateSiteWithLayoutSpec
 
         when: "site expanded and 'Templates' folder selected and page-template added"
         contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
-        contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME + "/_templates" ) ).clickToolbarNew().selectContentType(
+        contentBrowsePanel.selectContentInTable( SITE_NAME + "/_templates" ).clickToolbarNew().selectContentType(
             pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
         sleep( 2000 );
         contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME + "/_templates" ) );
@@ -76,7 +76,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'toggle window' button on toolbar clicked  THEN ContextWindow  appears"()
     {
         given: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
 
         when: "button on toolbar clicked"
         ContextWindow contextWindow = contentWizard.showContextWindow();
@@ -89,7 +89,7 @@ class CreateSiteWithLayoutSpec
     def "WHEN site opened for edit  AND page template is automatic THEN Live Edit frame should be locked"()
     {
         when: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
 
         then: " the 'Live Edit' frame should be locked"
         contentWizard.isLiveEditLocked();
@@ -99,7 +99,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit  AND page template is automatic WHEN link 'Unlock' clicked on 'Live Edit' frame  THEN Live Edit frame is unlocked"()
     {
         given: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
 
         when:
         contentWizard.unlockLiveEdit();
@@ -112,7 +112,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'layout item'  dragged AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
         contentWizard.unlockLiveEdit();
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "drag_and_drop" )
@@ -136,7 +136,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on to left region AND site saved THEN layout with one image present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
 
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "insert_left" )
@@ -157,7 +157,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on center region AND site saved THEN layout with two images present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
 
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "insert_images1" )
@@ -178,7 +178,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on right region AND site saved THEN layout with 3 images present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( ContentPath.from( SITE_NAME ) ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
 
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "insert_images1" )

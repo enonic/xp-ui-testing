@@ -21,9 +21,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         Content content2 = buildFolderContent( "deletecontent", "contenttodelete" );
         addContent( content2 );
 
-        List<Content> contentList = new ArrayList<>();
-        contentList.add( content1 );
-        contentList.add( content2 );
+        List<String> contentList = new ArrayList<>();
+        contentList.add( content1.getName() );
+        contentList.add( content2.getName() );
 
         when:
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
@@ -54,8 +54,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( parent.getName() );
         Content contentToDelete = buildFolderContent( "folder", "delete content beneath parent" );
         addContent( contentToDelete );
-        List<Content> contentList = new ArrayList<>()
-        contentList.add( contentToDelete );
+        List<String> contentList = new ArrayList<>()
+        contentList.add( contentToDelete.getName() );
 
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
         contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
@@ -78,8 +78,8 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             parent( ContentPath.from( parent.getName() ) ).
             build();
         addContent( content );
-        List<Content> contentList = new ArrayList<>();
-        contentList.add( content );
+        List<String> contentList = new ArrayList<>();
+        contentList.add( content.getName() );
 
         when: "child content deleted"
         contentBrowsePanel.expandContent( parent.getPath() );
@@ -112,9 +112,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         Content content2 = buildFolderContent( "folder", "folder-to-delete2" );
         addContent( content2 );
 
-        List<Content> contentList = new ArrayList<>();
-        contentList.add( content2 );
-        contentList.add( content1 );
+        List<String> contentList = new ArrayList<>();
+        contentList.add( content2.getName() );
+        contentList.add( content1.getName() );
 
         when: "both contents selected in the grid and  deleted"
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();

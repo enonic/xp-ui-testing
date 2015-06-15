@@ -1,13 +1,9 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Stepwise
-
-import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
 class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
@@ -17,58 +13,41 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
 
     private final UNSTRUCTURED_CHILD_CONTENT = "unstructured_content"
 
-    private final SHOPPING_CART_BASE_NAME = "shoppingcart"
+    private final PARENT_CONTENT_NAME = "all-content-types-images"
+
+    private final CHILD_CONTENT_NAME = "man.jpg"
 
 
     def "GIVEN expanded parent content and content beneath the parent, both contents are selected  WHEN parent content is collapsed  THEN only one item is selected in the grid panel but two items present in selection panel"()
     {
-        setup: "build a new folder-content and child content"
-        Content parentContent = buildFolderContent( SHOPPING_CART_BASE_NAME, "folderParent" );
-        String childName = NameHelper.uniqueName( "child" );
-        Content unstructuredChildContent = Content.builder().
-            name( childName ).
-            displayName( "childContent" ).
-            contentType( ContentTypeName.unstructured() ).
-            parent( ContentPath.from( parentContent.getName() ) ).
-            build();
-
-        and: "add new content: click on 'new' button, populate a wizard and close it"
-        addContent( parentContent );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        getTestSession().put( PARENT_ROOT_FOLDER, parentContent );
-
-        and: "add new child content beneath the parent"
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
-        addContent( unstructuredChildContent );
-        getTestSession().put( UNSTRUCTURED_CHILD_CONTENT, unstructuredChildContent );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-
-
-        contentBrowsePanel.expandContent( parentContent.getPath() );
-        List<Content> contents = new ArrayList<>();
-        contents.add( parentContent );
-        contents.add( unstructuredChildContent );
-        contentBrowsePanel.selectContentInTable( contents );
+        given:
+        contentBrowsePanel.expandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
+        List<String> contentNames = new ArrayList<>();
+        contentNames.add( CHILD_CONTENT_NAME );
+        contentNames.add( PARENT_CONTENT_NAME );
+        contentBrowsePanel.selectContentInTable( contentNames );
 
         when: "un expand a parent content "
-        contentBrowsePanel.unExpandContent( parentContent.getPath() );
+        contentBrowsePanel.unExpandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
 
-        then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items, but only one row is selected in the grid "
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
-        selectedNames.contains( parentContent.getDisplayName() ) && selectedNames.contains( unstructuredChildContent.getDisplayName() ) &&
-            selectedNames.size() == 2 && contentBrowsePanel.getSelectedRowsNumber() == 1;
+        then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items"
+        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemNames();
+        selectedNames.contains( "/" + PARENT_CONTENT_NAME + "/" + CHILD_CONTENT_NAME ) &&
+            selectedNames.contains( "/" + PARENT_CONTENT_NAME )
+        and:
+        selectedNames.size() == 2
+        and: "but only one row is selected in the grid "
+        contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
     def "GIVEN a selected content  WHEN search text typed and one more row with content clicked  THEN selection panel has no any items"()
     {
         setup: "select a root content and type search text in filter panel"
-        Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
-        filterPanel.typeSearchText( childContent.getName() );
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT_NAME );
+        filterPanel.typeSearchText( CHILD_CONTENT_NAME );
 
         when: "all contents filtered and one more row with content clicked "
-        contentBrowsePanel.clickAndSelectRow( childContent.getName() );
+        contentBrowsePanel.clickAndSelectRow( CHILD_CONTENT_NAME );
 
         then: "no any items should not be present in the selection panel  "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
@@ -78,13 +57,11 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     def "GIVEN a selected content AND search text typed WHEN one more checkbox near a content clicked THEN two items should be  present in selection panel"()
     {
         setup: "select a root content and type search text in filter panel"
-        Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
-        filterPanel.typeSearchText( childContent.getName() );
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT_NAME );
+        filterPanel.typeSearchText( CHILD_CONTENT_NAME );
 
         when: "search text typed and one more checkbox clicked and  content selected "
-        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( CHILD_CONTENT_NAME );
 
         then: "two items should be present in selection panel"
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
@@ -94,13 +71,11 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     def "GIVEN a selected content AND search text typed AND one more checkbox near a  content clicked WHEN 'Clear filter' clicked THEN two items should be  present in the selection panel"()
     {
         setup: "select a root content and type search text in filter panel"
-        Content parentContent = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
-        filterPanel.typeSearchText( childContent.getName() );
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT_NAME );
+        filterPanel.typeSearchText( CHILD_CONTENT_NAME );
 
         and: "search text typed and one more checkbox clicked and  content selected "
-        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( CHILD_CONTENT_NAME );
 
         when: "search text typed and one more checkbox clicked and  content selected "
         filterPanel.clickOnCleanFilter();
@@ -113,25 +88,15 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     def "GIVEN two folders in the root AND search text typed AND both folder selected WHEN filter cleared  THEN two contents still selected"()
     {
         setup: "select a root content and type search text in filter panel"
-        Content folder1 = getTestSession().get( PARENT_ROOT_FOLDER );
-        String name = NameHelper.uniqueName( SHOPPING_CART_BASE_NAME );
-        Content folder2 = Content.builder().
-            name( name ).
-            displayName( "parentContent" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.ROOT ).
-            build();
-
+        Content folder = buildFolderContent( PARENT_CONTENT_NAME + "2", "shopingcart" )
         and: "add new content: click on 'new' button, populate a wizard and close it"
-        contentBrowsePanel.clickToolbarNew().selectContentType( folder2.getContentTypeName() ).typeData( folder2 ).save().close(
-            folder2.getDisplayName() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        addContent( folder );
 
         and: "type a part of name common for both contents "
-        filterPanel.typeSearchText( SHOPPING_CART_BASE_NAME );
-        List<Content> contents = new ArrayList<>();
-        contents.add( folder1 );
-        contents.add( folder2 );
+        filterPanel.typeSearchText( PARENT_CONTENT_NAME );
+        List<String> contents = new ArrayList<>();
+        contents.add( folder.getName() );
+        contents.add( PARENT_CONTENT_NAME );
         and: "click on checkbox and select both contents in the grid"
         contentBrowsePanel.selectContentInTable( contents );
 
@@ -146,23 +111,19 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     def "GIVEN a parent content and child beneath a parent AND parent content selected AND name of child typed in the search input AND checkbox selected near the child  WHEN filter cleared and parent content expanded  THEN two contents selected"()
     {
         setup: "select a existing root content, that has a child "
-        Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content childContent = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentFolder.getName() )
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT_NAME )
 
         and: "type a name of child content in the filter panel"
-        filterPanel.typeSearchText( childContent.getName() );
+        filterPanel.typeSearchText( CHILD_CONTENT_NAME );
 
         and: "click on checkbox near the child content, when all content were filtered"
-        contentBrowsePanel.clickCheckboxAndSelectRow( childContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( CHILD_CONTENT_NAME );
 
         when: "click on 'Clear filter' link and expand a parent content"
         filterPanel.clickOnCleanFilter();
-        contentBrowsePanel.expandContent( parentFolder.getPath() );
+        contentBrowsePanel.expandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "shopping_cart_issue" )
-
-        // contentBrowsePanel.pressKeyOnRow( parentFolder.getName(  ), Keys.ARROW_RIGHT );
+        TestUtils.saveScreenshot( getSession(), "shopping_cart_issue" );
 
         then: "two items should be present in the selection panel and two rows are selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
@@ -170,23 +131,21 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         and:
         contentBrowsePanel.getSelectedRowsNumber() == 2;
     }
-
+//
     def "GIVEN a parent content and child beneath a parent AND parent content selected AND name of child typed in the search input AND row with the child was clicked  WHEN filter cleared and parent content expanded  THEN only one child content selected"()
     {
         setup: "select a existing root content, that has a child "
-        Content parentFolder = getTestSession().get( PARENT_ROOT_FOLDER );
-        Content child = getTestSession().get( UNSTRUCTURED_CHILD_CONTENT );
-        contentBrowsePanel.selectContentInTable( parentFolder.getName() )
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT_NAME )
 
         and: "and type a name of child content in the filter panel"
-        filterPanel.typeSearchText( child.getName() );
+        filterPanel.typeSearchText( CHILD_CONTENT_NAME );
 
         and: "click on row with the child content"
-        contentBrowsePanel.clickAndSelectRow( child.getName() );
+        contentBrowsePanel.clickAndSelectRow( CHILD_CONTENT_NAME );
 
         when: "click on 'Clear filter' link and expand a parent content"
         filterPanel.clickOnCleanFilter();
-        contentBrowsePanel.expandContent( parentFolder.getPath() );
+        contentBrowsePanel.expandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
 
         then: "selection panel has no any items and only one row is selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
