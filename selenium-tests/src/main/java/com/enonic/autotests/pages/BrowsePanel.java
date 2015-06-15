@@ -52,7 +52,7 @@ public abstract class BrowsePanel
     protected String NOT_LOADED_CONTENT_XPATH = "//div[contains(@class,'children-to-load')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
-        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'toggle icon')]";
+        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
     @FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
     protected WebElement clearSelectionLink;
