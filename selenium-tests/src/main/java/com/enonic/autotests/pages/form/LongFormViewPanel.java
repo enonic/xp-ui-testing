@@ -14,8 +14,7 @@ public class LongFormViewPanel
 {
     public static String LONG_PROPERTY = "long";
 
-    @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Long']]//input[contains(@id,'TextInput')]")
+    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'api.form.InputView')]//input[contains(@id,'TextInput') and contains(@name,'long')]")
     private WebElement longInput;
 
 
@@ -27,9 +26,9 @@ public class LongFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        String doubleValue = data.getString( LONG_PROPERTY );
+        String longValue = data.getString( LONG_PROPERTY );
         // type a long
-        longInput.sendKeys( doubleValue );
+        longInput.sendKeys( longValue );
         sleep( 300 );
         return this;
     }
