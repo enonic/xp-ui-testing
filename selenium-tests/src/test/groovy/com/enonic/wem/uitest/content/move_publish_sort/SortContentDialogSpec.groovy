@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.utils.TestUtils
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 
@@ -110,12 +111,16 @@ class SortContentDialogSpec
 
     def "WHEN sort dialog opened THEN default sorting is present"()
     {
-        when:
-        findAndSelectContent( IMPORTED_FOLDER_NAME )
+        given: "folder added at root"
+        Content folderContent = buildFolderContent( "folder", "sort_test" );
+        addContent( folderContent );
+
+        when: "content selected and 'Sort' dialog opened"
+        findAndSelectContent( folderContent.getName() );
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
         TestUtils.saveScreenshot( getSession(), "default_sorting" )
 
-        then:
+        then: "default sorting present in the dialog"
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MODIFIED_DESCENDING.getValue();
     }
 
