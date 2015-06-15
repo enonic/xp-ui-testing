@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 
@@ -112,6 +113,7 @@ class SortContentDialogSpec
         when:
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
+        TestUtils.saveScreenshot( getSession(), "default_sorting" )
 
         then:
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MODIFIED_DESCENDING.getValue();

@@ -105,7 +105,7 @@ class Occurrences_ImageSelector_2_4_Spec
         images.get( 1 ) == TEST_IMG_2;
     }
 
-    def "GIVEN ComboBox-content (2:4) with two selected options and one option removed and content saved WHEN content opened for edit THEN one option selected on the page "()
+    def "GIVEN Image Selector-content (2:4) with two selected images and one image removed and content saved WHEN content opened for edit THEN one image present on the page"()
     {
         given: "content with one required option opened for edit' and one option removed"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
@@ -140,7 +140,7 @@ class Occurrences_ImageSelector_2_4_Spec
         formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
     }
 
-    def "WHEN content with 4 selected option saved and published THEN it content with 'Online'-status listed"()
+    def "WHEN content with 4 selected images saved and published THEN it content with 'Online'-status listed"()
     {
         when: "content without option saved and published"
         IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( TEST_IMG_1, TEST_IMG_2, TEST_IMG_3, TEST_IMG_4 );
