@@ -301,7 +301,8 @@ public class ContentBrowsePanel
                 {
                     path = ContentPath.from( path, parentContent );
                 }
-                getLogger().info( "expandContent,  name of folder  path: " + path );
+                getLogger().info( "expandContent,  folder  path: " + path );
+                getLogger().info( "expandContent,  name of folder : " + path.getName() );
                 if ( !isRowExpanded( path.getName() ) )
                 {
                     if ( !this.clickOnExpander( path.getName() ) )
