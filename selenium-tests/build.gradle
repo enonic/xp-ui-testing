@@ -132,14 +132,14 @@ task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
     startServer.shouldRunAfter deleteFolders
 }
 
-task testModule( type: Test, dependsOn: [buildModules, deleteFolders, copyTestModules, startServer] ) {
+task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyTestModules] ) {
     scanForTestClasses = false
     include '**/module/*Spec.class'
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
-    startServer.shouldRunAfter copyTestModules
-    copyTestModules.shouldRunAfter deleteFolders
+    startServer.shouldRunAfter deleteFolders
+    copyTestModules.shouldRunAfter startServer
 }
 
 task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpleSiteModule] ) {
