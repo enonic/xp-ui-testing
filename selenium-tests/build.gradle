@@ -138,6 +138,7 @@ task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServe
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
+    deleteFolders.shouldRunAfter buildModules
     startServer.shouldRunAfter deleteFolders
     copyTestModules.shouldRunAfter startServer
 }
