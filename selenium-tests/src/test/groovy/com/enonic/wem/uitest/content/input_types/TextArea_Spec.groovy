@@ -79,7 +79,7 @@ class TextArea_Spec
             name( NameHelper.uniqueName( "textarea" ) ).
             displayName( "text_area content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textarea" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textarea0_1" ).data( data ).
             build();
         return textLineContent;
     }
