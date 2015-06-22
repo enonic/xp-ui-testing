@@ -49,11 +49,12 @@ public class ContentWizardStepForm
         {
             formViewPanel = new SiteFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.DATE_TIME.getName() ) )
+        else if ( contentTypeName.contains( ModuleContentType.DATE_TIME0_1.getName() ) ||
+            contentTypeName.contains( ModuleContentType.DATE_TIME1_1.getName() ) )
         {
             formViewPanel = new DateTimeFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TIME.getName() ) )
+        else if ( contentTypeName.contains( ModuleContentType.TIME0_0.getName() ) )
         {
             formViewPanel = new TimeFormViewPanel( getSession() );
         }

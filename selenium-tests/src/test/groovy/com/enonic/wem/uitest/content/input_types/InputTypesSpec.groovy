@@ -1,10 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.form.*
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -34,7 +31,7 @@ class InputTypesSpec
     def "GIVEN content type with name 'Date' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
     {
         given: "add a content with type 'Date'"
-        Content dateContent = buildDateContent();
+        Content dateContent = buildDate0_1_Content( TEST_DATE );
         selectSiteOpenWizard( dateContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateContent ).save().close(
             dateContent.getDisplayName() );
 
@@ -50,7 +47,7 @@ class InputTypesSpec
     def "GIVEN content type with name 'DateTime' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
     {
         given: "add a content with type 'Date Time'"
-        Content dateTimeContent = buildDateTimeContent();
+        Content dateTimeContent = buildDateTime0_1_Content( TEST_DATE_TIME );
         selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateTimeContent ).save().close(
             dateTimeContent.getDisplayName() );
 
@@ -80,7 +77,7 @@ class InputTypesSpec
     def "GIVEN content type with name 'Double' selected and wizard opened WHEN double value typed and content saved THEN new content with correct Double value  listed "()
     {
         given: "add a content with type 'Double'"
-        Content doubleContent = buildDoubleContent();
+        Content doubleContent = buildDouble0_1_Content( TEST_DOUBLE );
         selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData( doubleContent ).save().close(
             doubleContent.getDisplayName() ); ;
 
@@ -95,7 +92,7 @@ class InputTypesSpec
     def "GIVEN content type with name 'Long' selected and wizard opened WHEN long value typed and content saved THEN new content with correct Long value  listed "()
     {
         given: "add a content with type 'Long'"
-        Content longContent = buildLongContent();
+        Content longContent = buildLong0_1_Content( TEST_LONG );
         selectSiteOpenWizard( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData( longContent ).save().close(
             longContent.getDisplayName() ); ;
 
@@ -110,7 +107,7 @@ class InputTypesSpec
     def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
     {
         given: "add a content with type 'Geo point'"
-        Content geopointContent = buildGeoPointContent();
+        Content geopointContent = buildGeoPoint0_0_Content( TEST_GEOLOCATION );
         selectSiteOpenWizard( geopointContent.getContentTypeName() ).waitUntilWizardOpened().typeData( geopointContent ).save().close(
             geopointContent.getDisplayName() ); ;
 
@@ -136,96 +133,5 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         checkBoxFormViewPanel.isChecked();
-    }
-
-    private Content buildCheckBoxContent()
-    {
-        String name = "checkbox";
-        PropertyTree data = new PropertyTree();
-        data.addBoolean( CheckBoxFormViewPanel.CHECKBOX_PROPERTY, true );
-
-        Content checkboxContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "checkbox content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":checkbox" ).data( data ).
-            build();
-        return checkboxContent;
-    }
-
-    private Content buildDateContent()
-    {
-        String name = "date";
-
-        PropertyTree data = new PropertyTree();
-        data.addStrings( DateFormViewPanel.DATE_PROPERTY, TEST_DATE );
-
-        Content dateContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "date content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":date" ).data( data ).
-            build();
-        return dateContent;
-    }
-
-    private Content buildDoubleContent()
-    {
-        String name = "double";
-        PropertyTree data = new PropertyTree();
-        data.addStrings( DoubleFormViewPanel.DOUBLE_PROPERTY, TEST_DOUBLE );
-
-        Content dateContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "double content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":double" ).data( data ).
-            build();
-        return dateContent;
-    }
-
-    private Content buildLongContent()
-    {
-        String name = "long";
-        PropertyTree data = new PropertyTree();
-        data.addStrings( LongFormViewPanel.LONG_PROPERTY, TEST_LONG );
-
-        Content dateContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "long content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":long" ).data( data ).
-            build();
-        return dateContent;
-    }
-
-    private Content buildGeoPointContent()
-    {
-        String name = "geopoint";
-        PropertyTree data = new PropertyTree();
-        data.addStrings( GeoPointFormViewPanel.GEO_POINT_PROPERTY, TEST_GEOLOCATION );
-
-        Content dateContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "geo point content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":geopoint" ).data( data ).
-            build();
-        return dateContent;
-    }
-
-    private Content buildDateTimeContent()
-    {
-        String name = "datetime";
-        PropertyTree contentData = new PropertyTree();
-        contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, TEST_DATE_TIME );
-
-        Content dateTimeContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "date time content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":datetime" ).data( contentData ).
-            build();
-        return dateTimeContent;
     }
 }

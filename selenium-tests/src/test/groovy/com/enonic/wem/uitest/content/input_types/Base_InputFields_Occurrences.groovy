@@ -3,9 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.DateTimeFormViewPanel
-import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
-import com.enonic.autotests.pages.form.TimeFormViewPanel
+import com.enonic.autotests.pages.form.*
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -29,7 +27,7 @@ class Base_InputFields_Occurrences
     String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
 
     @Shared
-    static String SITE_NAME = NameHelper.uniqueName( "inputtypes" );
+    static String SITE_NAME = "inputtypes1953782798";//NameHelper.uniqueName( "inputtypes" );
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types Module";
@@ -102,7 +100,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":time" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":time0_0" ).data( data ).
             build();
         return dateContent;
     }
@@ -221,5 +219,96 @@ class Base_InputFields_Occurrences
             contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":imageselector2_4" ).data( data ).
             build();
         return imageSelectorContent;
+    }
+
+    protected Content buildDate0_1_Content( String date )
+    {
+        String name = "date";
+
+        PropertyTree data = new PropertyTree();
+        data.addStrings( DateFormViewPanel.DATE_PROPERTY, date );
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "date content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":date0_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+    protected Content buildDateTime0_1_Content( String dateTime )
+    {
+        String name = "datetime";
+        PropertyTree contentData = new PropertyTree();
+        contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
+
+        Content dateTimeContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "date time content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":datetime0_1" ).data( contentData ).
+            build();
+        return dateTimeContent;
+    }
+
+    protected Content buildDouble0_1_Content( String doubleValue )
+    {
+        String name = "double";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( DoubleFormViewPanel.DOUBLE_PROPERTY, doubleValue );
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "double content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":double0_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+    protected Content buildLong0_1_Content( String longValue )
+    {
+        String name = "long";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( LongFormViewPanel.LONG_PROPERTY, longValue );
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "long content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":long0_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+    protected Content buildGeoPoint0_0_Content( String value )
+    {
+        String name = "geopoint";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( GeoPointFormViewPanel.GEO_POINT_PROPERTY, value );
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "geo point content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":geopoint0_0" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+    protected Content buildCheckBoxContent()
+    {
+        String name = "checkbox";
+        PropertyTree data = new PropertyTree();
+        data.addBoolean( CheckBoxFormViewPanel.CHECKBOX_PROPERTY, true );
+
+        Content checkboxContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "checkbox content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":checkbox" ).data( data ).
+            build();
+        return checkboxContent;
     }
 }

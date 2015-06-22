@@ -12,6 +12,7 @@ ext {
     screenshotsDir = "$buildDir/screenshots"
     reportsDir = "$buildDir/repots"
     distroDir = "$unpackDir/enonic-xp-$xpVersion"
+    deployDir = "$distroDir/home/deploy"
 }
 
 dependencies {
@@ -23,6 +24,21 @@ dependencies {
     compile 'org.gebish:geb-spock:0.10.0'
 
     distro "com.enonic.xp:distro:$xpVersion@zip"
+}
+task copyContentTypes( type: Copy ) {
+    from '../test-modules/all-contenttypes/build/libs/'
+    include '**/*.jar'
+    into deployDir
+}
+
+task copyTestModules( type: Copy ) {
+    from '../test-modules/first-module/build/libs/'
+    from '../test-modules/second-module/build/libs/'
+    from '../test-modules/third-module/build/libs/'
+    from '../test-modules/fourth-module/build/libs/'
+    from '../test-modules/test-module/build/libs/'
+    include '**/*.jar'
+    into deployDir
 }
 task deleteFolders( type: Delete ) {
     delete unpackDir, screenshotsDir, reportsDir
@@ -57,23 +73,10 @@ task stopServer << {
 }
 
 
-task installTestModules( type: Test, dependsOn: ['startServer'] ) {
-    scanForTestClasses = true
-    exclude '**/*Spec.class'
-    include '**/module/InstallTestModules.class'
-}
-
 task installSimpleSiteModule( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
-
     scanForTestClasses = true
     exclude '**/*Spec.class'
     include '**/liveedit/InstallSimpleSiteModule.class'
-}
-
-task installAllContentTypesModule( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
-    scanForTestClasses = true
-    exclude '**/*Spec.class'
-    include '**/input_types/InstallContentTypesModule.class'
 }
 
 tasks.withType( Test ) {
@@ -85,7 +88,7 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, installAllContentTypesModule] ) {
+task testContentManager( type: Test, dependsOn: [deleteFolders, copyContentTypes, startServer] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/module/**'
@@ -95,9 +98,10 @@ task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, ins
     exclude '**/content/input_types/*Spec.class'
     exclude '**/content/move_publish_sort/*Spec.class'
     forkEvery = null
-    startServer.shouldRunAfter deleteFolders
+    copyContentTypes.shouldRunAfter deleteFolders
+    startServer.shouldRunAfter copyContentTypes
 }
-task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installAllContentTypesModule] ) {
+task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, copyContentTypes, startServer] ) {
     scanForTestClasses = false
     include '**/content/input_types/*Spec.class'
     exclude '**/module/**'
@@ -105,18 +109,18 @@ task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startS
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
-    startServer.shouldRunAfter deleteFolders
-    installAllContentTypesModule.shouldRunAfter startServer
+    copyContentTypes.shouldRunAfter deleteFolders
+    startServer.shouldRunAfter copyContentTypes
 }
 
-task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installAllContentTypesModule] ) {
+task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, copyContentTypes, startServer] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
-    startServer.shouldRunAfter deleteFolders
-    installAllContentTypesModule.shouldRunAfter startServer
+    copyContentTypes.shouldRunAfter deleteFolders
+    startServer.shouldRunAfter copyContentTypes
 }
 
 task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
@@ -128,14 +132,14 @@ task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
     startServer.shouldRunAfter deleteFolders
 }
 
-task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installTestModules] ) {
+task testModule( type: Test, dependsOn: [buildModules, deleteFolders, copyTestModules, startServer] ) {
     scanForTestClasses = false
     include '**/module/*Spec.class'
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
-    startServer.shouldRunAfter deleteFolders
-    installTestModules.shouldRunAfter startServer
+    startServer.shouldRunAfter copyTestModules
+    copyTestModules.shouldRunAfter deleteFolders
 }
 
 task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpleSiteModule] ) {
@@ -149,18 +153,19 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpl
 }
 
 
-task testUploadContent( type: Test, dependsOn: [buildModules, deleteFolders, startServer, installAllContentTypesModule] ) {
+task testUploadContent( type: Test, dependsOn: [buildModules, deleteFolders, copyContentTypes, startServer] ) {
     scanForTestClasses = false
     exclude '**/module/**'
     exclude '**/user/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
-    startServer.shouldRunAfter deleteFolders
-    installAllContentTypesModule.shouldRunAfter startServer
+    copyContentTypes.shouldRunAfter deleteFolders
+    startServer.shouldRunAfter copyContentTypes
 }
 
 testModule.finalizedBy = ['stopServer']
 testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
 testUser.finalizedBy = ['stopServer']
 testContentManager.finalizedBy = ['stopServer']
+testInputTypes.finalizedBy = ['stopServer']
 

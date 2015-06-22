@@ -5,6 +5,6 @@ module {
 }
 
 dependencies {
-    compile 'com.enonic.xp:core-api:5.2.0-SNAPSHOT'
+    compile 'com.enonic.xp:core-api:6.0.0-SNAPSHOT'
 }
 

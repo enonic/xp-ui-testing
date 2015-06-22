@@ -128,6 +128,8 @@ class Occurrences_ImageSelector_1_1_Spec
         wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
     }
 
+    //TODO remove it when bug will be fixed
+    //XP-825 content with type 'Image Selector', wrong validation message
     @Ignore
     def "GIVEN saving of 'Image Selector 1:1' and content without selected image WHEN 'Publish' button pressed THEN validation message appears"()
     {

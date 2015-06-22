@@ -5,8 +5,6 @@ import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -32,7 +30,7 @@ class DateContentValidation_Spec
     def "WHEN data with wrong format typed THEN input's border becomes red "()
     {
         given: "date with wrong format"
-        Content dateContent = buildDateContent( BAD_FORMAT_DATE );
+        Content dateContent = buildDate0_1_Content( BAD_FORMAT_DATE );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
         when: "date typed"
@@ -46,7 +44,7 @@ class DateContentValidation_Spec
     def "WHEN data with wrong day of month typed THEN input's border becomes red "()
     {
         given: "date with wrong format"
-        Content dateContent = buildDateContent( WRONG_DAY_DATE );
+        Content dateContent = buildDate0_1_Content( WRONG_DAY_DATE );
         filterPanel.typeSearchText( SITE_NAME );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
@@ -64,7 +62,7 @@ class DateContentValidation_Spec
     def "WHEN data with wrong month typed THEN input's border becomes red "()
     {
         given: "date with wrong format"
-        Content dateContent = buildDateContent( WRONG_MONTH_DATE );
+        Content dateContent = buildDate0_1_Content( WRONG_MONTH_DATE );
         filterPanel.typeSearchText( SITE_NAME );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
@@ -82,7 +80,7 @@ class DateContentValidation_Spec
     def "WHEN data with correct format typed THEN input has a green border"()
     {
         given: "date with correct date format"
-        Content dateContent = buildDateContent( CORRECT_DATE );
+        Content dateContent = buildDate0_1_Content( CORRECT_DATE );
         filterPanel.typeSearchText( SITE_NAME );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
@@ -97,19 +95,19 @@ class DateContentValidation_Spec
         !dateFormViewPanel.isInvalidDate();
     }
 
-    private Content buildDateContent( String date )
-    {
-        String name = "date";
-        PropertyTree data = new PropertyTree();
-        data.addStrings( DateFormViewPanel.DATE_PROPERTY, date );
-
-
-        Content dateContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "date content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":date" ).data( data ).
-            build();
-        return dateContent;
-    }
+//    private Content buildDate0_1_Content( String date )
+//    {
+//        String name = "date";
+//        PropertyTree data = new PropertyTree();
+//        data.addStrings( DateFormViewPanel.DATE_PROPERTY, date );
+//
+//
+//        Content dateContent = Content.builder().
+//            name( NameHelper.uniqueName( name ) ).
+//            displayName( "date content" ).
+//            parent( ContentPath.from( SITE_NAME ) ).
+//            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":date0_1" ).data( data ).
+//            build();
+//        return dateContent;
+//    }
 }
