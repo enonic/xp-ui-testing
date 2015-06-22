@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -43,6 +45,7 @@ public class SiteFormViewPanel
         String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", moduleName );
         if ( getDriver().findElements( By.xpath( moduleGridItem ) ).size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "module_err" ) );
             throw new TestFrameworkException( "module with name: " + moduleName + "  was not found!" );
         }
         getDriver().findElements( By.xpath( moduleGridItem ) ).get( 0 ).click();
