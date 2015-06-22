@@ -100,7 +100,7 @@ class Occurrences_TinyMCE_0_1_Spec
             name( NameHelper.uniqueName( "mce0_1_" ) ).
             displayName( "mce0_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":tiny_mce_0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":tiny_mce0_1" ).data( data ).
             build();
         return tinyMceContent;
     }
