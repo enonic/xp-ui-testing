@@ -511,8 +511,10 @@ public abstract class BrowsePanel
 
     public <T extends BrowsePanel> T clickCheckboxAndSelectRow( String itemName )
     {
+
         if ( !doScrollAndFindGridItem( itemName ) )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_empty" ) );
             throw new TestFrameworkException( "grid item was not found! " + itemName );
         }
         String itemCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, itemName );
