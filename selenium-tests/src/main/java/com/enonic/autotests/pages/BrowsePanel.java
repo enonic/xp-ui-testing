@@ -536,6 +536,7 @@ public abstract class BrowsePanel
         List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
         if ( elements.size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_empty" ) );
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
 
