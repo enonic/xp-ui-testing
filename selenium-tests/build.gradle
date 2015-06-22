@@ -153,13 +153,14 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpl
 }
 
 
-task testUploadContent( type: Test, dependsOn: [buildModules, deleteFolders, copyContentTypes, startServer] ) {
+task testUploadContent( type: Test, dependsOn: [deleteFolders, buildModules, copyContentTypes, startServer] ) {
     scanForTestClasses = false
     exclude '**/module/**'
     exclude '**/user/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
-    copyContentTypes.shouldRunAfter deleteFolders
+    buildModules.shouldRunAfter deleteFolders
+    copyContentTypes.shouldRunAfter buildModules
     startServer.shouldRunAfter copyContentTypes
 }
 
