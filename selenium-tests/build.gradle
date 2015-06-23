@@ -101,7 +101,7 @@ task testContentManager( type: Test, dependsOn: [deleteFolders, copyContentTypes
     copyContentTypes.shouldRunAfter deleteFolders
     startServer.shouldRunAfter copyContentTypes
 }
-task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, copyContentTypes, startServer] ) {
+task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/input_types/*Spec.class'
     exclude '**/module/**'
@@ -109,8 +109,9 @@ task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, copyCo
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
-    copyContentTypes.shouldRunAfter deleteFolders
-    startServer.shouldRunAfter copyContentTypes
+    deleteFolders.shouldRunAfter buildModules
+    startServer.shouldRunAfter deleteFolders
+    copyContentTypes.shouldRunAfter startServer
 }
 
 task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, copyContentTypes, startServer] ) {
