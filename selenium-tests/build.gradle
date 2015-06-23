@@ -88,7 +88,7 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [deleteFolders, copyContentTypes, startServer] ) {
+task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/module/**'
@@ -99,7 +99,7 @@ task testContentManager( type: Test, dependsOn: [deleteFolders, copyContentTypes
     exclude '**/content/move_publish_sort/*Spec.class'
     forkEvery = null
     copyContentTypes.shouldRunAfter deleteFolders
-    startServer.shouldRunAfter copyContentTypes
+    copyContentTypes.shouldRunAfter startServer
 }
 task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
@@ -109,19 +109,16 @@ task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startS
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
-    deleteFolders.shouldRunAfter buildModules
-    startServer.shouldRunAfter deleteFolders
     copyContentTypes.shouldRunAfter startServer
 }
 
-task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, copyContentTypes, startServer] ) {
+task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
-    copyContentTypes.shouldRunAfter deleteFolders
-    startServer.shouldRunAfter copyContentTypes
+    copyContentTypes.shouldRunAfter startServer
 }
 
 task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
@@ -139,9 +136,7 @@ task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServe
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
-    deleteFolders.shouldRunAfter buildModules
-    startServer.shouldRunAfter deleteFolders
-    copyTestModules.shouldRunAfter startServer
+    copyContentTypes.shouldRunAfter startServer
 }
 
 task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpleSiteModule] ) {
@@ -155,15 +150,13 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpl
 }
 
 
-task testUploadContent( type: Test, dependsOn: [deleteFolders, buildModules, copyContentTypes, startServer] ) {
+task testUploadContent( type: Test, dependsOn: [deleteFolders, buildModules, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     exclude '**/module/**'
     exclude '**/user/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
-    buildModules.shouldRunAfter deleteFolders
-    copyContentTypes.shouldRunAfter buildModules
-    startServer.shouldRunAfter copyContentTypes
+    copyContentTypes.shouldRunAfter startServer
 }
 
 testModule.finalizedBy = ['stopServer']
