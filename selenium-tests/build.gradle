@@ -28,7 +28,7 @@ dependencies {
 task copyContentTypes( type: Copy ) {
     from '../test-modules/all-contenttypes/build/libs/'
     include '**/*.jar'
-    into deployDir
+    into file( deployDir )
 }
 
 task copyTestModules( type: Copy ) {
@@ -38,7 +38,7 @@ task copyTestModules( type: Copy ) {
     from '../test-modules/fourth-module/build/libs/'
     from '../test-modules/test-module/build/libs/'
     include '**/*.jar'
-    into deployDir
+    into file( deployDir )
 }
 task deleteFolders( type: Delete ) {
     delete unpackDir, screenshotsDir, reportsDir
