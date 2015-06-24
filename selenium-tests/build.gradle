@@ -2,18 +2,19 @@ import com.enonic.uitest.server.ServerInstance
 
 apply plugin: 'groovy'
 
+
 configurations {
     distro
 }
 
 ext {
     xpVersion = '6.0.0-SNAPSHOT'
-    unpackDir = "$buildDir/install"
-    screenshotsDir = "$buildDir/screenshots"
-    reportsDir = "$buildDir/repots"
-    distroDir = "$unpackDir/enonic-xp-$xpVersion"
-    deployDir = "$distroDir/home/deploy"
-    xpHome = "$distroDir/home/"
+    unpackDir = "$buildDir${File.separator}install"
+    screenshotsDir = "$buildDir${File.separator}screenshots"
+    reportsDir = "$buildDir${File.separator}repots"
+    distroDir = "$unpackDir${File.separator}enonic-xp-$xpVersion"
+    deployDir = "$distroDir${File.separator}home${File.separator}deploy"
+    xpHome = "$distroDir${File.separator}home"
 }
 
 dependencies {
@@ -132,7 +133,13 @@ task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
 }
 
 task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyTestModules] ) {
-    environment 'XP_HOME', xpHome
+    println xpHome
+    // environment "sample" ,xpHome
+
+    println "XP_HOME"
+    println System.getenv( "XP_HOME" );
+
+
     scanForTestClasses = false
     include '**/module/*Spec.class'
     exclude '**/content/**'
