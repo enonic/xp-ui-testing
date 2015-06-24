@@ -13,6 +13,7 @@ ext {
     reportsDir = "$buildDir/repots"
     distroDir = "$unpackDir/enonic-xp-$xpVersion"
     deployDir = "$distroDir/home/deploy"
+    xpHome = "$distroDir/home/"
 }
 
 dependencies {
@@ -130,14 +131,15 @@ task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
     startServer.shouldRunAfter deleteFolders
 }
 
-task testModule( type: Test, dependsOn: [buildModules, startServer, copyTestModules] ) {
+task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyTestModules] ) {
+    environment 'XP_HOME', xpHome
     scanForTestClasses = false
     include '**/module/*Spec.class'
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
-
-    startServer.mustRunAfter buildModules
+    deleteFolders.mustRunAfter buildModules
+    startServer.mustRunAfter deleteFolders
     copyTestModules.mustRunAfter startServer
 }
 
