@@ -136,7 +136,9 @@ task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServe
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
-    copyContentTypes.shouldRunAfter startServer
+    deleteFolders.mustRunAfter buildModules
+    startServer.mustRunAfter deleteFolders
+    copyTestModules.mustRunAfter startServer
 }
 
 task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpleSiteModule] ) {
