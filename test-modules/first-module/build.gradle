@@ -1,6 +1,7 @@
 apply plugin: 'com.enonic.xp.gradle.module'
 
 module {
+    name = 'com.enonic.xp.ui-testing.first-module'
     displayName = 'First Selenium Module'
 }
 

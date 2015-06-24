@@ -1,6 +1,7 @@
 apply plugin: 'com.enonic.xp.gradle.module'
 
 module {
+    name = 'com.enonic.xp.ui-testing.third-module'
     displayName = 'Third Selenium Module'
 }
 
