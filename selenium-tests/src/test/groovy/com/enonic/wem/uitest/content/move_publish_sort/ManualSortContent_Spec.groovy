@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ManualSortContent_Spec
@@ -29,7 +30,7 @@ class ManualSortContent_Spec
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MANUALLY_SORTED.getValue();
     }
 
-
+    @Ignore
     def "GIVEN sort dialog opened and default sorting applied WHEN two contents swapped by drag and drop and 'Save' button pressed THEN content sorted correctly in the dialog-grid"()
     {
         given: "one selected content"

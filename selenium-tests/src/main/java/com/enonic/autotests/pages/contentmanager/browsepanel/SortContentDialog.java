@@ -113,7 +113,6 @@ public class SortContentDialog
         builder.release( target );
         builder.build().perform();
         sleep( 3000 );
-        //( new Actions( getDriver() ) ).dragAndDrop( element, target ).perform();
         return this;
     }
 
@@ -164,7 +163,7 @@ public class SortContentDialog
         findElements( By.xpath(
             DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem')]//span[text()='%s']", itemName ) ) ).get(
             0 ).click();
-        sleep( 400 );
+        sleep( 800 );
         return this;
     }
 }

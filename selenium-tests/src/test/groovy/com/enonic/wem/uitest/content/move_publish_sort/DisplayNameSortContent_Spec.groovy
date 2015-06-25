@@ -19,11 +19,13 @@ class DisplayNameSortContent_Spec
     {
         given: "folder with contents selected and 'Sort' button clicked"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
-        SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
+        SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
+            SortMenuItem.MODIFIED_DESCENDING.getValue() );
         List<String> defaultSortingList = sortContentDialog.getContentNames();
+        sortContentDialog.clickOnSaveButton();
 
         when:
-        List<String> nameAscendingList = sortContentDialog.clickOnTabMenu().selectSortMenuItem(
+        List<String> nameAscendingList = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.DNAME_ASCENDING.getValue() ).getContentNames();
 
         then: "'SortContent' dialog displayed"
