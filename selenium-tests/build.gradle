@@ -122,7 +122,9 @@ task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, s
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
-    copyContentTypes.shouldRunAfter startServer
+    deleteFolders.mustRunAfter buildModules
+    startServer.mustRunAfter deleteFolders
+    copyContentTypes.mustRunAfter startServer
 }
 
 task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
