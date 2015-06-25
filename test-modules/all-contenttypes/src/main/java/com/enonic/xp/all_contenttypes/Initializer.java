@@ -65,7 +65,7 @@ public class Initializer
         throws Exception
     {
         final ContentPath imagesPath = ContentPath.from( "/" + FOLDER_NAME );
-        if ( !hasContent( imagesPath ) )
+        if ( hasContent( imagesPath ) )
         {
             return;
         }
