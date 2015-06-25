@@ -160,7 +160,7 @@ public class Initializer
             name( fileName ).
             parent( parent ).byteSource( ByteSource.wrap( bytes ) );
         contentService.create( params ).getId();
-        System.out.println( "content created!!  " + fileName );
+        LOG.info( "content added :  " + fileName );
 
     }
 
@@ -174,6 +174,8 @@ public class Initializer
         }
         catch ( Exception e )
         {
+            LOG.info( "error  " + e.getMessage() );
+            System.out.println( "error " + e.getMessage() );
             return null;
         }
     }
