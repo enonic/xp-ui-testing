@@ -37,7 +37,7 @@ public class NewContentDialog
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
 
     public static String CONTENT_TYPE_NAME =
-        CONTAINER + "//ul[@class='content-types-list']//li[contains(@class,'content-types-list-item') and descendant::p[text()='%s']]";
+        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[@class='sub-name' and text()='%s')]]";
 
 
     public static final String ALL_LIST_ITEMS =

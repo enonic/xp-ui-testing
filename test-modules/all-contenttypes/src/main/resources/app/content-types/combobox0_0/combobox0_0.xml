@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>Combo box</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input name="combobox_min0_max0" type="ComboBox">
+      <label>combobox 0:0</label>
+      <indexed>true</indexed>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <options>
+          <option>
+            <label>option A</label>
+            <value>o1</value>
+          </option>
+          <option>
+            <label>option B</label>
+            <value>o2</value>
+          </option>
+          <option>
+            <label>option C</label>
+            <value>o3</value>
+          </option>
+        </options>
+      </config>
+    </input>
+  </form>
+</content-type>
