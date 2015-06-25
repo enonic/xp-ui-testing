@@ -21,7 +21,7 @@ class Base_InputFields_Occurrences
 
 {
     @Shared
-    String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.all-contenttypes";
+    String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.contenttypes";
 
     @Shared
     String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
