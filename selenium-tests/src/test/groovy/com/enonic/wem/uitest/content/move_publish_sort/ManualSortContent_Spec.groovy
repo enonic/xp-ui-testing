@@ -29,7 +29,7 @@ class ManualSortContent_Spec
         and:
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MANUALLY_SORTED.getValue();
     }
-
+    //XP-834
     @Ignore
     def "GIVEN sort dialog opened and default sorting applied WHEN two contents swapped by drag and drop and 'Save' button pressed THEN content sorted correctly in the dialog-grid"()
     {
