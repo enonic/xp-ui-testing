@@ -122,7 +122,7 @@ public class Initializer
         throws Exception
     {
         final ContentPath testFolderPath = ContentPath.from( "/" + FOLDER_NAME );
-        if ( hasContent( testFolderPath ) )
+        if ( !hasContent( testFolderPath ) )
         {
             contentService.create( makeFolder().
                 name( FOLDER_NAME ).
