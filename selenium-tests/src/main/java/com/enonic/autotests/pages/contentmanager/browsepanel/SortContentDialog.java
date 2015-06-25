@@ -163,7 +163,7 @@ public class SortContentDialog
         findElements( By.xpath(
             DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem')]//span[text()='%s']", itemName ) ) ).get(
             0 ).click();
-        sleep( 800 );
+        sleep( 1000 );
         return this;
     }
 }

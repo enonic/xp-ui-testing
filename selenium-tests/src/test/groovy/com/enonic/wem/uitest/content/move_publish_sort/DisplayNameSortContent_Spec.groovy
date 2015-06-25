@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import spock.lang.Shared
@@ -22,11 +23,13 @@ class DisplayNameSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.MODIFIED_DESCENDING.getValue() );
         List<String> defaultSortingList = sortContentDialog.getContentNames();
+        TestUtils.saveScreenshot( getSession(), "dn1" );
         sortContentDialog.clickOnSaveButton();
 
         when:
         List<String> nameAscendingList = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.DNAME_ASCENDING.getValue() ).getContentNames();
+        TestUtils.saveScreenshot( getSession(), "dn2" );
 
         then: "'SortContent' dialog displayed"
         Collections.sort( defaultSortingList );
