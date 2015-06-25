@@ -22,7 +22,7 @@ public class SortContentDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SortContentDialog')]";
 
-    public static final String TITLE = "Default sorting";
+    public static final String TITLE = "Sort items";
 
     private final String SAVE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Save']]";
 
