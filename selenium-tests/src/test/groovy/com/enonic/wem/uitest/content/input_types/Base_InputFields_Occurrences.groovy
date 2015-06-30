@@ -26,7 +26,7 @@ class Base_InputFields_Occurrences
     String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.contenttypes";
 
     @Shared
-    static String SITE_NAME = "inputtypes1736544757";//NameHelper.uniqueName( "inputtypes" );
+    static String SITE_NAME = NameHelper.uniqueName( "inputtypes" );
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types Module";
