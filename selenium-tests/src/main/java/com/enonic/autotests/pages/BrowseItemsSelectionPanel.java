@@ -45,6 +45,11 @@ public abstract class BrowseItemsSelectionPanel
 
     public BrowseItemsSelectionPanel clickOnTabMenuButton()
     {
+        boolean result = waitUntilClickableNoException( By.xpath( TAB_MENU_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "Tab menu not clickable!" );
+        }
         tabMenuButton.click();
         return this;
     }
