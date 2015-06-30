@@ -56,7 +56,8 @@ public class Application
 
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
 
-    public final String CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage') and @class,'notification']";
+    public final String CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH =
+        "//div[contains(@id,'NotificationMessage') and @class='notification']//span";
 
     public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";
@@ -130,7 +131,7 @@ public class Application
         }
         String message = findElements( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
         getLogger().info( "Notification message " + message );
-        return message;
+        return message.trim();
     }
 
     public String waitPublishNotificationMessage( long timeout )
