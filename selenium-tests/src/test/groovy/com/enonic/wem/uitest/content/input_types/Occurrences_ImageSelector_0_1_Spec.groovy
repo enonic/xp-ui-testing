@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
@@ -58,8 +59,10 @@ class Occurrences_ImageSelector_0_1_Spec
     {
         given: "new content with type 'Image Selector'"
         Content imageSelectorContent = buildImageSelector0_1_Content( null );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnPublishButton().close( imageSelectorContent.getDisplayName() );
+        String publishedMessage = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
@@ -68,6 +71,8 @@ class Occurrences_ImageSelector_0_1_Spec
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and: "content is valid"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
+        and:
+        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
     def "GIVEN saving of Image Selector-content (0:1) and one image selected WHEN content opened for edit THEN correct image present on page and option filter not displayed"()

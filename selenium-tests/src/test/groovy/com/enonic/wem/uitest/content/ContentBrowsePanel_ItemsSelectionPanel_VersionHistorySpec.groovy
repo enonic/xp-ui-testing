@@ -96,7 +96,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         findAndSelectContent( folderContent.getName() );
 
         when: "content published and 'Active versions'  button clicked"
-        contentBrowsePanel.clickToolbarPublish();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
         versionPanel.clickOnActiveVersionsButton();
         LinkedList<ContentVersion> contentVersions = versionPanel.getActiveContentVersions();

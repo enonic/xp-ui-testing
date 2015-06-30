@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
@@ -41,10 +42,15 @@ class Occurrences_DateTime_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
         when:
-        contentWizardPanel.typeData( dateTimeContent ).save().clickOnPublishButton().close( dateTimeContent.getDisplayName() );
+        String publishMessage = contentWizardPanel.typeData(
+            dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.close( dateTimeContent.getDisplayName() );
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        and:
+        publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateTimeContent.getDisplayName() );
     }
 }

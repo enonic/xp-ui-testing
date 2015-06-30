@@ -1,5 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -111,14 +113,18 @@ class Occurrences_ComboBox_1_1_Spec
 
     def "WHEN content with one option saved and published THEN it content with status equals 'Online' listed"()
     {
-        when: "content without option saved and published"
+        when: "content with selected option saved and published"
         Content comboBoxContent = buildComboBox1_1_Content( 1 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
-            comboBoxContent.getDisplayName() );
+        String publishMessage = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        ContentWizardPanel.getWizard( getSession() ).close( comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        and:
+        publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getDisplayName() );
     }
 
 
@@ -129,7 +135,7 @@ class Occurrences_ComboBox_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
 
         when:
-        contentWizardPanel.clickOnPublishButton();
+        String warning = contentWizardPanel.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "tcbox1_1_publish" )
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
@@ -137,6 +143,11 @@ class Occurrences_ComboBox_1_1_Spec
         formViewPanel.isValidationMessagePresent();
         and:
         formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
+
+        warning == PUBLISH_NOTIFICATION_WARNING;
+        and:
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        !dialog.isOpened();
     }
 
     private Content buildComboBox1_1_Content( int numberOptions )

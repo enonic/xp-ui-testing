@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -128,9 +127,6 @@ class Occurrences_ImageSelector_1_1_Spec
         wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
     }
 
-    //TODO remove it when bug will be fixed
-    //XP-825 content with type 'Image Selector', wrong validation message
-    @Ignore
     def "GIVEN saving of 'Image Selector 1:1' and content without selected image WHEN 'Publish' button pressed THEN validation message appears"()
     {
         given: "new content with type 'Image Selector'"
@@ -138,13 +134,13 @@ class Occurrences_ImageSelector_1_1_Spec
         ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "content was found in the grid"
-        String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        when: "try to publish content without required image"
+        String warning = wizard.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
 
         then: "notification warning appears"
-        warning == PUBLISH_NOTIFICATION_WARNING;
-        and:
+        warning == Application.PUBLISH_NOTIFICATION_WARNING;
+        and: "validation message appears as well"
         formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
     }
 

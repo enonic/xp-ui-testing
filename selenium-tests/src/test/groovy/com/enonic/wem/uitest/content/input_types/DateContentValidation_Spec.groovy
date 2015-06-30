@@ -94,20 +94,4 @@ class DateContentValidation_Spec
         then: "red border appears"
         !dateFormViewPanel.isInvalidDate();
     }
-
-//    private Content buildDate0_1_Content( String date )
-//    {
-//        String name = "date";
-//        PropertyTree data = new PropertyTree();
-//        data.addStrings( DateFormViewPanel.DATE_PROPERTY, date );
-//
-//
-//        Content dateContent = Content.builder().
-//            name( NameHelper.uniqueName( name ) ).
-//            displayName( "date content" ).
-//            parent( ContentPath.from( SITE_NAME ) ).
-//            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":date0_1" ).data( data ).
-//            build();
-//        return dateContent;
-//    }
 }

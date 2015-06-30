@@ -15,7 +15,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class SingleSelectorRadioFormView
     extends FormViewPanel
 {
-    private String RADIO_INPUTS = "//div[contains(@class,'radio-group')]//input[@type='radio']";
+    private String ALL_RADIO_INPUTS = "//div[contains(@id,'api.form.inputtype.radiobuttons.RadioButtons')]//input[@type='radio']";
 
     public SingleSelectorRadioFormView( final TestSession session )
     {
@@ -49,7 +49,7 @@ public class SingleSelectorRadioFormView
 
     public String getSelectedOption()
     {
-        List<WebElement> elements = findElements( By.xpath( FORM_VIEW + RADIO_INPUTS ) );
+        List<WebElement> elements = findElements( By.xpath( FORM_VIEW + ALL_RADIO_INPUTS ) );
         if ( elements.stream().filter( WebElement::isSelected ).count() == 0 )
         {
             //no selected options

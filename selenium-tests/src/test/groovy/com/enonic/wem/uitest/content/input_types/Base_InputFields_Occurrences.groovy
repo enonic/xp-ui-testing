@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -11,6 +12,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import com.enonic.xp.data.Value
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -24,10 +26,7 @@ class Base_InputFields_Occurrences
     String ALL_CONTENT_TYPES_MODULE_NAME = "com.enonic.xp.ui-testing.contenttypes";
 
     @Shared
-    String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
-
-    @Shared
-    static String SITE_NAME = NameHelper.uniqueName( "inputtypes" );
+    static String SITE_NAME = "inputtypes1736544757";//NameHelper.uniqueName( "inputtypes" );
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types Module";
@@ -310,5 +309,62 @@ class Base_InputFields_Occurrences
             contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":checkbox" ).data( data ).
             build();
         return checkboxContent;
+    }
+
+    protected Content buildRadioButtonsContent( String option )
+    {
+        PropertyTree data = ContentUtils.buildSingleSelectionData( option );
+        Content textLineContent = Content.builder().
+            name( NameHelper.uniqueName( "radiobuttons" ) ).
+            displayName( "radiobuttons content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":radiobuttons" ).data( data ).
+            build();
+        return textLineContent;
+    }
+
+    protected Content buildTextLine0_1_Content( String text )
+    {
+        String name = "textline0_1";
+        PropertyTree data = new PropertyTree();
+        data.addString( TextLine0_1_FormViewPanel.TEXT_INPUT_PROPERTY, text );
+
+        Content textLineContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "textline0_1 content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textline0_1" ).data( data ).
+            build();
+        return textLineContent;
+    }
+
+    protected Content buildTextLine1_0_Content( String text )
+    {
+        String name = "textline1_0";
+        PropertyTree data = new PropertyTree();
+        data.addProperty( "0", Value.newString( text ) );
+
+        Content textLineContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "textline1_0 content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textline1_0" ).data( data ).
+            build();
+        return textLineContent;
+    }
+
+    protected Content buildTextLine1_1_Content( String text )
+    {
+        String name = "textline1_1";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( TextLine1_1_FormViewPanel.TEXT_INPUT_PROPERTY, text );
+
+        Content textLineContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "textline1_1 content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textline1_1" ).data( data ).
+            build();
+        return textLineContent;
     }
 }

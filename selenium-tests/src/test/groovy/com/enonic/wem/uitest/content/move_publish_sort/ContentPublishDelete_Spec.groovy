@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -26,10 +27,12 @@ class ContentPublishDelete_Spec
             content.getDisplayName() );
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable(
+            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
         then:
         contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
-        message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, DISPLAY_NAME );
+        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
 
     }
 
@@ -48,12 +51,15 @@ class ContentPublishDelete_Spec
         message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
 
     }
-
+    //TODO remove it, when the XP-65 will be fixed
+    @Ignore
     def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel "()
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable(
+            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
         filterPanel.typeSearchText( content.getName() );
 
         then:

@@ -1,6 +1,8 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -122,8 +124,10 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnPublishButton().close( imageSelectorContent.getDisplayName() );
+        String publishedMessage = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
@@ -132,14 +136,18 @@ class Occurrences_ImageSelector_0_0_Spec
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
+        and:
+        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
     def "GIVEN saving  'Image Selector 0:0' content with selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( TEST_IMG_2 );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnPublishButton().close( imageSelectorContent.getDisplayName() );
+        String publishedMessage = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
@@ -148,5 +156,7 @@ class Occurrences_ImageSelector_0_0_Spec
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
+        and:
+        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 }

@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.exceptions.TestFrameworkException
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.FormViewPanel
@@ -38,7 +39,10 @@ class TagsInputType_2_5_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( tagContent ).save().clickOnPublishButton().close( tagContent.getDisplayName() );
+        contentWizardPanel.typeData(
+            tagContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.close( tagContent.getDisplayName() );
         filterPanel.typeSearchText( tagContent.getName() );
 
         then: "content has a 'online' status"
@@ -52,7 +56,7 @@ class TagsInputType_2_5_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
         when:
-        contentWizardPanel.clickOnPublishButton();
+        contentWizardPanel.clickOnWizardPublishButton( false );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "new content listed in the grid and can be opened for edit"
@@ -107,8 +111,8 @@ class TagsInputType_2_5_Spec
         formViewPanel.getNumberOfTags() == 2;
         and:
         String[] tags = [TAG_1, TAG_2];
-        List<String> ttt = formViewPanel.getTagsText();
-        ttt.containsAll( tags.toList() );
+        List<String> fromUI = formViewPanel.getTagsText();
+        fromUI.containsAll( tags.toList() );
 
     }
 

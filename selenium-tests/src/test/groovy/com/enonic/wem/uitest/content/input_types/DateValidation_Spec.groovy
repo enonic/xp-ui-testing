@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.FormViewPanel
@@ -31,10 +32,14 @@ class DateValidation_Spec
         ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
 
         when: "time with wrong format typed and 'Publish' button pressed"
-        String message = wizard.typeData( timeContent ).clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        String message = wizard.typeData( timeContent ).clickOnWizardPublishButton( false ).waitNotificationWarning(
+            Application.EXPLICIT_NORMAL );
 
         then: "notification warning appears"
-        message == PUBLISH_NOTIFICATION_WARNING;
+        message == Application.PUBLISH_NOTIFICATION_WARNING;
+        and:
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        !dialog.isOpened();
     }
 
     def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN datetime typed and content published THEN warning message appears"()
@@ -44,10 +49,14 @@ class DateValidation_Spec
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
         when: "time with wrong format typed and 'Publish' button pressed"
-        String message = wizard.typeData( dateTimeContent ).clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        String message = wizard.typeData( dateTimeContent ).clickOnWizardPublishButton( false ).waitNotificationWarning(
+            Application.EXPLICIT_NORMAL );
 
         then: "notification warning appears"
-        message == PUBLISH_NOTIFICATION_WARNING;
+        message == Application.PUBLISH_NOTIFICATION_WARNING;
+        and:
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        !dialog.isOpened();
     }
 
     def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN name typed and dateTime not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
@@ -59,10 +68,10 @@ class DateValidation_Spec
 
         when: "only the name typed and dateTime not typed and 'Publish' button clicked"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
-        String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        String warning = wizard.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
         then: "notification-warning message appears"
-        warning == PUBLISH_NOTIFICATION_WARNING;
+        warning == Application.PUBLISH_NOTIFICATION_WARNING;
         and: "validation message present as well"
         formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
     }
@@ -76,10 +85,10 @@ class DateValidation_Spec
 
         when: "only the 'name' typed and datetime not typed and 'Publish' button pressed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
-        String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        String warning = wizard.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
         then: "notification-warning message appears"
-        warning == PUBLISH_NOTIFICATION_WARNING;
+        warning == Application.PUBLISH_NOTIFICATION_WARNING;
         and: "validation message present as well"
         formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
     }
@@ -93,10 +102,10 @@ class DateValidation_Spec
 
         when: "only the 'name' typed and time not typed and 'Publish' button pressed"
         wizard.typeDisplayName( timeContent.getDisplayName() );
-        String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        String warning = wizard.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
         then: "notification-warning message appears"
-        warning == PUBLISH_NOTIFICATION_WARNING;
+        warning == Application.PUBLISH_NOTIFICATION_WARNING;
         and: "validation message present as well"
         formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
     }

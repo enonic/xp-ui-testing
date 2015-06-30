@@ -7,7 +7,6 @@ import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_ImageSelector_2_4_Spec
@@ -123,8 +122,7 @@ class Occurrences_ImageSelector_2_4_Spec
         and: "content is invalid, because only one image present on page"
         wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
     }
-    //TODO remove it when issue INBOX-31, wrong validation message will be fixed
-    @Ignore
+
     def "GIVEN opened 'Image Selector 2:4' with one selected image WHEN 'Publish' button pressed THEN validation message should appears"()
     {
         given: "content with one image selected in the grid and opened for edit"
@@ -132,24 +130,29 @@ class Occurrences_ImageSelector_2_4_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "content was found in the grid"
-        String warning = wizard.clickOnPublishButton().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        String warning = wizard.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
 
         then: "notification warning appears"
-        warning == PUBLISH_NOTIFICATION_WARNING;
+        warning == Application.PUBLISH_NOTIFICATION_WARNING;
         and:
         formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
     }
 
     def "WHEN content with 4 selected images saved and published THEN it content with 'Online'-status listed"()
     {
-        when: "content without option saved and published"
+        when: "content with 4 selected images saved and published"
         IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( TEST_IMG_1, TEST_IMG_2, TEST_IMG_3, TEST_IMG_4 );
-        selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
-            IMAGE_SELECTOR_CONTENT_4_IMAGES ).save().clickOnPublishButton().close( IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
+        String publishMessage = selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
+            IMAGE_SELECTOR_CONTENT_4_IMAGES ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        ContentWizardPanel.getWizard( getSession() ).close( IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
         filterPanel.typeSearchText( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        and: "correct notification message appeared"
+        publishMessage ==
+            String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
     }
 
     def "WHEN content with 4 selected images opened THEN option filter should not be displayed"()

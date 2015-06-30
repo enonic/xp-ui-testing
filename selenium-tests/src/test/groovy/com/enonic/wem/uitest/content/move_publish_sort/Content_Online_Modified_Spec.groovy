@@ -24,11 +24,13 @@ class Content_Online_Modified_Spec
             content.getDisplayName() );
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable(
+            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
         then:
         contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
         and:
-        message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, content.getDisplayName() );
+        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, content.getDisplayName() );
     }
 
     def "GIVEN existing root content with 'Online' status  WHEN content edited THEN  content has got a 'Modified' status"()
@@ -48,12 +50,14 @@ class Content_Online_Modified_Spec
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().waitNotificationMessage();
+        String message = contentBrowsePanel.selectContentInTable(
+            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
 
         then:
         contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
         and:
-        message == String.format( Application.EXPECTED_PUBLISH_MESSAGE, NEW_DISPLAY_NAME );
+        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
 
     }
 

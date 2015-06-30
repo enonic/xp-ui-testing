@@ -37,7 +37,8 @@ class TagsInputType_0_5_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( tagContent ).save().clickOnPublishButton().close( tagContent.getDisplayName() );
+        contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.close( tagContent.getDisplayName() );
         filterPanel.typeSearchText( tagContent.getName() );
 
         then: "content has a 'online' status"

@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -80,7 +81,8 @@ class Occurrences_ComboBox_0_1_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         when: "type a data and 'save' and 'publish'"
-        wizard.clickOnPublishButton().close( content_with_opt.getDisplayName() );
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton().waitForDialogClosed();
+        wizard.close( content_with_opt.getDisplayName() );
         filterPanel.typeSearchText( content_with_opt.getName() );
 
         then: "content has a 'online' status"
@@ -106,12 +108,16 @@ class Occurrences_ComboBox_0_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "WHEN content without option saved and published THEN it content with status equals 'Online' listed"()
+    def "WHEN content without option saved and published THEN just created content with status equals 'Online' listed"()
     {
-        when: "content without option saved and published"
+        given: "content without option saved and published"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
-            comboBoxContent.getDisplayName() );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().clickOnWizardPublishButton().waitUntilDialogShowed(
+            Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+        ContentWizardPanel.getWizard( getSession() ).close( comboBoxContent.getDisplayName() );
+
+        when:
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"

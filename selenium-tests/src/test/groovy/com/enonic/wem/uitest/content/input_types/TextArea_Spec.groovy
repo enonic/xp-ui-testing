@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextAreaFormViewPanel
@@ -31,7 +32,10 @@ class TextArea_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( textAreaContent ).save().clickOnPublishButton().close( textAreaContent.getDisplayName() );
+        contentWizardPanel.typeData(
+            textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.close( textAreaContent.getDisplayName() );
         filterPanel.typeSearchText( textAreaContent.getName() );
 
         then: "content has a 'online' status"
@@ -45,7 +49,10 @@ class TextArea_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( textAreaContent ).save().clickOnPublishButton().close( textAreaContent.getDisplayName() );
+        contentWizardPanel.typeData(
+            textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.close( textAreaContent.getDisplayName() );
         filterPanel.typeSearchText( textAreaContent.getName() );
 
         then: "content has a 'online' status"

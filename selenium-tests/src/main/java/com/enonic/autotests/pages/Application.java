@@ -17,11 +17,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
-    public static String EXPECTED_PUBLISH_MESSAGE = "\"%s\" published";
-
     public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
 
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
+
+    public static final String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
 
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
@@ -30,6 +30,8 @@ public class Application
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
+
+    public static String CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" published";
 
     public static final int NUMBER_TRIES_TO_CLOSE = 2;
 
@@ -53,6 +55,11 @@ public class Application
     public static final String MODULE_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'module-manager')]";
 
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
+
+    public final String CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage') and @class,'notification']";
+
+    public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
+        "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";
 
     public Application( TestSession session )
     {
@@ -117,13 +124,25 @@ public class Application
 
     public String waitNotificationMessage( long timeout )
     {
-        if ( !waitUntilVisibleNoException( By.xpath( "//div[@class='notification-content']/span" ), timeout ) )
+        if ( !waitUntilVisibleNoException( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
         {
             return null;
         }
-        String message = findElements( By.xpath( "//div[@class='notification-content']/span" ) ).get( 0 ).getText();
+        String message = findElements( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
         getLogger().info( "Notification message " + message );
         return message;
     }
+
+    public String waitPublishNotificationMessage( long timeout )
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        {
+            return null;
+        }
+        String message = findElements( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
+        getLogger().info( "Publish Notification message " + message );
+        return message;
+    }
+
 
 }

@@ -14,6 +14,7 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -254,11 +255,23 @@ public class ContentWizardPanel
 
     }
 
-    public ContentWizardPanel clickOnPublishButton()
+    public Application clickOnWizardPublishButton( boolean isValidData )
     {
         toolbarPublishButton.click();
-        sleep( 500 );
+        if ( isValidData )
+        {
+            ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+            dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+            return dialog;
+        }
         return this;
+
+    }
+
+    public ContentPublishDialog clickOnWizardPublishButton()
+    {
+        return (ContentPublishDialog) clickOnWizardPublishButton( true );
+
     }
 
     public boolean isEnabledSaveButton()
@@ -295,6 +308,19 @@ public class ContentWizardPanel
     public WebElement getCloseButton()
     {
         return closeButton;
+    }
+
+    public static ContentWizardPanel getWizard( TestSession session )
+    {
+        ContentWizardPanel wizard = new ContentWizardPanel( session );
+        if ( wizard.isOpened() )
+        {
+            return wizard;
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }

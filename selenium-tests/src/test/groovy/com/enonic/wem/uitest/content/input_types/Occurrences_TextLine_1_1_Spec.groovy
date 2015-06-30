@@ -1,14 +1,12 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 
 class Occurrences_TextLine_1_1_Spec
@@ -22,7 +20,7 @@ class Occurrences_TextLine_1_1_Spec
     def "WHEN wizard for adding a TextLine-content (1:1) opened THEN one text input present "()
     {
         when: "start to add a content with type 'TextLine 1:1'"
-        Content textLineContent = buildTextLine1_1_Content();
+        Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
@@ -33,7 +31,7 @@ class Occurrences_TextLine_1_1_Spec
     def "WHEN wizard for adding a TextLine-content (1:1) opened THEN button 'Add' not present on page "()
     {
         when: "start to add a content with type 'TextLine 1:1'"
-        Content textLineContent = buildTextLine1_1_Content();
+        Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
@@ -44,7 +42,7 @@ class Occurrences_TextLine_1_1_Spec
     def "GIVEN creating new TextLine1:1 on root WHEN saved and wizard closed THEN new text line Content should be listed  AND  saved text showed when content opened for edit "()
     {
         given: "start to add a content with type 'TextLine 1:1'"
-        Content textLineContent = buildTextLine1_1_Content();
+        Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
@@ -65,11 +63,14 @@ class Occurrences_TextLine_1_1_Spec
     def "GIVEN creating new TextLine1:1 on root WHEN data typed and 'Save' and  'Publish' are pressed THEN new content with status equals 'Online' listed"()
     {
         given: "start to add a content with type 'TextLine 1:1'"
-        Content textLineContent = buildTextLine1_1_Content();
+        Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when:
-        contentWizardPanel.typeData( textLineContent ).save().clickOnPublishButton().close( textLineContent.getDisplayName() );
+        contentWizardPanel.typeData(
+            textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL )
+        contentWizardPanel.close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then:
@@ -79,11 +80,12 @@ class Occurrences_TextLine_1_1_Spec
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
     {
         given: "start to add a content with type 'TextLine 1:1'"
-        Content textLineContent = buildTextLine1_1_Content();
+        Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when:
-        contentWizardPanel.clickOnPublishButton();
+        String publishWarning = contentWizardPanel.clickOnWizardPublishButton( false ).waitNotificationWarning(
+            Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "tl_1_1_publish" )
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
@@ -91,22 +93,7 @@ class Occurrences_TextLine_1_1_Spec
         formViewPanel.isValidationMessagePresent();
         and:
         formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
+        and: "notification warning appears"
+        publishWarning == Application.PUBLISH_NOTIFICATION_WARNING;
     }
-
-
-    private Content buildTextLine1_1_Content()
-    {
-        String name = "textline1_1";
-        PropertyTree data = new PropertyTree();
-        data.addStrings( TextLine1_1_FormViewPanel.TEXT_INPUT_PROPERTY, TEST_TEXT );
-
-        Content textLineContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "textline1_1 content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textline1_1" ).data( data ).
-            build();
-        return textLineContent;
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.FormViewPanel
@@ -132,11 +133,16 @@ class Occurrences_TextLine_2_5_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( textLineContent ).save().clickOnPublishButton().close( textLineContent.getDisplayName() );
+        String publishMessage = contentWizardPanel.typeData(
+            textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        and: "correct notification message was shown"
+        publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, textLineContent.getDisplayName() );
     }
 
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
@@ -146,7 +152,7 @@ class Occurrences_TextLine_2_5_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when:
-        contentWizardPanel.clickOnPublishButton();
+        String warning = contentWizardPanel.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "tl_2_5_publish" )
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
 
@@ -154,6 +160,8 @@ class Occurrences_TextLine_2_5_Spec
         formViewPanel.isValidationMessagePresent();
         and:
         formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
+        and: "warning was shown"
+        warning == Application.PUBLISH_NOTIFICATION_WARNING;
     }
 
     private Content buildTextLine2_5_Content()

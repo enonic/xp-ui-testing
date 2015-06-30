@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -131,12 +132,16 @@ class Occurrences_ComboBox_2_4_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().clickOnPublishButton().close(
-            comboBoxContent.getDisplayName() );
+        String publishedMessage = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        ContentWizardPanel.getWizard( getSession() ).close( comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        and:
+        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getDisplayName() );
     }
 
     private Content buildComboBox2_4_Content( int numberOptions )

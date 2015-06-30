@@ -39,7 +39,7 @@ class ContentPublish_Child_Spec
         when:
         contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
         then:
         filterPanel.typeSearchText( childContent1.getName() );
@@ -81,7 +81,7 @@ class ContentPublish_Child_Spec
     {
         when:
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton(); ;
 
         then:
         !contentBrowsePanel.exists( parentContent.getName() );

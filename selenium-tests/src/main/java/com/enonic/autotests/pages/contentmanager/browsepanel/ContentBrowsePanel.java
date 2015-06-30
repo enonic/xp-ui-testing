@@ -15,6 +15,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -346,7 +347,7 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public ContentBrowsePanel clickToolbarPublish()
+    public Application clickToolbarPublish( boolean isValidData )
     {
         boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isEnabled )
@@ -354,8 +355,20 @@ public class ContentBrowsePanel
             throw new SaveOrUpdateException( "Impossible to publish content, because the 'publish' button is disabled!" );
         }
         publishButton.click();
-
+        if ( isValidData )
+        {
+            ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+            dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+            return dialog;
+        }
         return this;
+
+    }
+
+    public ContentPublishDialog clickToolbarPublish()
+    {
+        return (ContentPublishDialog) clickToolbarPublish( true );
+
     }
 
     public ContentBrowsePanel selectContentInTable( List<String> contentNames )
@@ -517,13 +530,15 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public ContentBrowsePanel selectPublishFromContextMenu( String contentName )
+    public ContentPublishDialog selectPublishFromContextMenu( String contentName )
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         openContextMenu( contentName );
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Publish" ) ) ).get( 0 ).click();
-        sleep( 1000 );
-        return this;
+
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        return dialog;
 
     }
 

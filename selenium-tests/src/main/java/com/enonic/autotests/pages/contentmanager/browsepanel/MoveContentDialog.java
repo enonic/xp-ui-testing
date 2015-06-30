@@ -76,16 +76,17 @@ public class MoveContentDialog
         return this;
     }
 
-    public MoveContentDialog clickOnCancelTopButton()
+    public void clickOnCancelTopButton()
     {
         cancelButtonTop.click();
-        return this;
+        sleep( 200 );
+
     }
 
-    public MoveContentDialog clickOnCancelBottomButton()
+    public void clickOnCancelBottomButton()
     {
         cancelButtonBottom.click();
-        return this;
+        sleep( 200 );
     }
 
     public boolean waitForClosed()

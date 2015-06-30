@@ -2,10 +2,7 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.data.Value
 import spock.lang.Shared
 
@@ -17,13 +14,13 @@ class Occurrences_TextLine_1_0_Spec
     String FIRST_TEST_STRING = "text for first input";
 
     @Shared
-    String SECOND_TEST_STRING = "text for first input";
+    String SECOND_TEST_STRING = "text for second input";
 
 
     def "WHEN wizard for adding a content with type TextLine(1:0) opened THEN one text input present"()
     {
         when: "start to add a content with type 'TextLine 1:0'"
-        Content textLineContent = buildTextLine1_0_Content();
+        Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
@@ -35,7 +32,7 @@ class Occurrences_TextLine_1_0_Spec
     def "WHEN wizard for adding a content with type TextLine(1:0) opened THEN 'Add' button under the text input is present  "()
     {
         when: "start to add a content with type 'TextLine 1:0'"
-        Content textLineContent = buildTextLine1_0_Content();
+        Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
@@ -47,7 +44,7 @@ class Occurrences_TextLine_1_0_Spec
     def "WHEN wizard for adding a content with type TextLine(1:0) opened THEN 'remove' button near the text input is not present  "()
     {
         when: "start to add a content with type 'TextLine 1:0'"
-        Content textLineContent = buildTextLine1_0_Content();
+        Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
@@ -59,7 +56,7 @@ class Occurrences_TextLine_1_0_Spec
     def "GIVEN wizard for adding a content with type TextLine(1:0) opened WHEN 'Add' button pressed and 2 inputs now showed THEN two 'remove' button near the both text input are present  "()
     {
         given: "start to add a content with type 'TextLine 1:0'"
-        Content textLineContent = buildTextLine1_0_Content();
+        Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
@@ -75,7 +72,7 @@ class Occurrences_TextLine_1_0_Spec
     def "GIVEN wizard for adding a content with type TextLine(1:0) opened WHEN button 'Add' twice pressed and 3 inputs showed THEN 3 'remove' button near the all text inputs are present"()
     {
         given: "start to add a content with type 'TextLine 1:0'"
-        Content textLineContent = buildTextLine1_0_Content();
+        Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
@@ -91,7 +88,7 @@ class Occurrences_TextLine_1_0_Spec
     def "GIVEN wizard for adding a content with type TextLine(1:0) opened WHEN 'Add' button pressed and 2 inputs showed AND one input was removed THEN no one button 'remove' present and only one text input present"()
     {
         given: "start to add a content with type 'TextLine 1:0'"
-        Content textLineContent = buildTextLine1_0_Content();
+        Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         formViewPanel.clickOnAddButton();
@@ -111,11 +108,11 @@ class Occurrences_TextLine_1_0_Spec
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new text line Content should be listed  and 2 saved values showed when content opened for edit "()
     {
         given: "start to add a content with type 'TextLine 1:0'"
-        Content textLineContent = buildTextLine1_0_Content();
+        Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         formViewPanel.clickOnAddButton();
-        textLineContent.getData().addProperty( "1", Value.newString( "text for second input" ) );
+        textLineContent.getData().addProperty( "1", Value.newString( SECOND_TEST_STRING ) );
 
         when:
         contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
@@ -131,20 +128,5 @@ class Occurrences_TextLine_1_0_Spec
         and:
         valuesFromUI.contains( SECOND_TEST_STRING );
 
-    }
-
-    private Content buildTextLine1_0_Content()
-    {
-        String name = "textline1_0";
-        PropertyTree data = new PropertyTree();
-        data.addProperty( "0", Value.newString( FIRST_TEST_STRING ) );
-
-        Content textLineContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "textline1_0 content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textline1_0" ).data( data ).
-            build();
-        return textLineContent;
     }
 }

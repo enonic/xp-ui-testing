@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -128,7 +129,9 @@ class Occurrences_ComboBox_0_0_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
         when: "type a data and 'save' and 'publish'"
-        wizard.clickOnPublishButton().close( content_wit_opt.getDisplayName() );
+        wizard.clickOnWizardPublishButton().waitUntilDialogShowed(
+            Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+        wizard.close( content_wit_opt.getDisplayName() );
 
         TestUtils.saveScreenshot( getSession(), "occ" )
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
@@ -146,7 +149,9 @@ class Occurrences_ComboBox_0_0_Spec
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
 
         when: "type a data and 'save' and 'publish'"
-        wizard.clickOnPublishButton().close( comboBoxContent.getDisplayName() );
+        wizard.clickOnWizardPublishButton().waitUntilDialogShowed(
+            Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+        wizard.close( comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"

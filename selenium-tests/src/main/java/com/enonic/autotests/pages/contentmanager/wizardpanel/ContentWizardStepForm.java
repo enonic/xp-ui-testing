@@ -18,7 +18,6 @@ import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView;
-import com.enonic.autotests.pages.form.SingleSelectorDropDownFormView;
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
 import com.enonic.autotests.pages.form.TagFormViewPanel;
@@ -118,8 +117,7 @@ public class ContentWizardStepForm
         {
             formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_RADIO0_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_RADIO1_1.getName() ) )
+        else if ( contentTypeName.contains( ModuleContentType.RADIO_BUTTONS.getName() ) )
         {
             formViewPanel = new SingleSelectorRadioFormView( getSession() );
         }
@@ -127,11 +125,7 @@ public class ContentWizardStepForm
         {
             formViewPanel = new TextAreaFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_DROPDOWN0_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_DROPDOWN1_1.getName() ) )
-        {
-            formViewPanel = new SingleSelectorDropDownFormView( getSession() );
-        }
+
         else if ( contentTypeName.contains( ModuleContentType.TINY_MCE0_1.getName() ) )
         {
             formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
