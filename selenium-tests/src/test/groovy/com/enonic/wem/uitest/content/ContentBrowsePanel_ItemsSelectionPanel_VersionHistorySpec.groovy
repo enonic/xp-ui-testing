@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemsSelectionPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemVersionsPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
 import com.enonic.autotests.vo.contentmanager.WorkspaceName
@@ -97,6 +98,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
 
         when: "content published and 'Active versions'  button clicked"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
+        TestUtils.saveScreenshot( getTestSession(), "vh_tab" )
         ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
         versionPanel.clickOnActiveVersionsButton();
         LinkedList<ContentVersion> contentVersions = versionPanel.getActiveContentVersions();
