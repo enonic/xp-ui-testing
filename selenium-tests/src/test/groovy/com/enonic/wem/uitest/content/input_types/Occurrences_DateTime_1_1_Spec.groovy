@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -46,6 +47,7 @@ class Occurrences_DateTime_1_1_Spec
             dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
         contentWizardPanel.close( dateTimeContent.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "close-wizard" )
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
         then:

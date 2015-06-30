@@ -144,7 +144,7 @@ class Occurrences_ComboBox_1_1_Spec
         and:
         formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
 
-        warning == PUBLISH_NOTIFICATION_WARNING;
+        warning == Application.PUBLISH_NOTIFICATION_WARNING;
         and:
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         !dialog.isOpened();
