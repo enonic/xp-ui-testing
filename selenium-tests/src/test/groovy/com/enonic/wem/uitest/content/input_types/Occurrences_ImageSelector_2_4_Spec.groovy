@@ -150,9 +150,6 @@ class Occurrences_ImageSelector_2_4_Spec
 
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equals( ContentStatus.ONLINE.getValue() );
-        and: "correct notification message appeared"
-        publishMessage ==
-            String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
     }
 
     def "WHEN content with 4 selected images opened THEN option filter should not be displayed"()

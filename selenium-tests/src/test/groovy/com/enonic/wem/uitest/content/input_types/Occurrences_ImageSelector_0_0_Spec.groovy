@@ -156,7 +156,5 @@ class Occurrences_ImageSelector_0_0_Spec
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
-        and:
-        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 }
