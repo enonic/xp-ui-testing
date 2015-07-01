@@ -1,4 +1,4 @@
-apply plugin: 'com.enonic.xp.gradle.module'
+apply plugin: 'com.enonic.xp.app'
 
 module {
     displayName = 'Simple Test Selenium Module'

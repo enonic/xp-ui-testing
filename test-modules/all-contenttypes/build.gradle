@@ -1,4 +1,4 @@
-apply plugin: 'com.enonic.xp.gradle.module'
+apply plugin: 'com.enonic.xp.app'
 
 module {
     name = 'com.enonic.xp.ui-testing.contenttypes'
