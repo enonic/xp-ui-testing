@@ -8,6 +8,8 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
+import static com.enonic.autotests.utils.SleepHelper.sleep
+
 class Occurrences_DateTime_1_1_Spec
     extends Base_InputFields_Occurrences
 {
@@ -46,6 +48,7 @@ class Occurrences_DateTime_1_1_Spec
         String publishMessage = contentWizardPanel.typeData(
             dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
+        sleep( 1000 );
         contentWizardPanel.close( dateTimeContent.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), "close-wizard" )
         filterPanel.typeSearchText( dateTimeContent.getName() );
