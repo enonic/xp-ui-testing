@@ -142,7 +142,7 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         when: "content with 4 selected images saved and published"
         IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( TEST_IMG_1, TEST_IMG_2, TEST_IMG_3, TEST_IMG_4 );
-        String publishMessage = selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
+        selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
             IMAGE_SELECTOR_CONTENT_4_IMAGES ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
         ContentWizardPanel.getWizard( getSession() ).close( IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
