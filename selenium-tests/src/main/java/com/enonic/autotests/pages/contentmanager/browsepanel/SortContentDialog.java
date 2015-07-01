@@ -103,8 +103,14 @@ public class SortContentDialog
     {
         String sourceItem = String.format( GRID_ITEM, sourceName );
         String targetItem = String.format( GRID_ITEM, targetName );
+        if ( findElements( By.xpath( sourceItem ) ).size() == 0 || findElements( By.xpath( targetItem ) ).size() == 0 )
+        {
+            throw new TestFrameworkException(
+                "Sort Content Dialog: drag and drop failed. items were not found: " + sourceName + " " + targetName );
+        }
         WebElement element = findElements( By.xpath( sourceItem ) ).get( 0 );
         WebElement target = findElements( By.xpath( targetItem ) ).get( 0 );
+
         Actions builder = new Actions( getDriver() );
         builder.clickAndHold( element ).build().perform();
         // builder.moveToElement( target, 0, -20 ).build().perform();;
