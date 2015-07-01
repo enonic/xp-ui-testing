@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -19,6 +20,7 @@ class ManualSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.MODIFIED_DESCENDING.getValue() );
         LinkedList<String> defaultSortingList = sortContentDialog.getContentNames();
+        TestUtils.saveScreenshot( getSession(), "manual_sort" );
 
         when:
         sortContentDialog.dragAndSwapItems( "nord.jpg", "whale.jpg" )
