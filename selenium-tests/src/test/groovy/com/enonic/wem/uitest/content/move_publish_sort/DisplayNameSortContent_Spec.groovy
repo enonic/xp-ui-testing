@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -15,7 +16,7 @@ class DisplayNameSortContent_Spec
     @Shared
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
-
+    @Ignore
     def "GIVEN sort content dialog opened WHEN the item with name 'DisplayName - Ascending' selected THEN content sorted correctly in the dialog-grid"()
     {
         given: "folder with contents selected and 'Sort' button clicked"
@@ -26,8 +27,7 @@ class DisplayNameSortContent_Spec
         TestUtils.saveScreenshot( getSession(), "dn1" );
         sortContentDialog.clickOnSaveButton();
 
-        when:
-        List<String> nameAscendingList = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
+        when: List<String> nameAscendingList = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.DNAME_ASCENDING.getValue() ).getContentNames();
         TestUtils.saveScreenshot( getSession(), "dn2" );
 
@@ -36,7 +36,7 @@ class DisplayNameSortContent_Spec
         defaultSortingList.equals( nameAscendingList );
     }
 
-
+    @Ignore
     def "GIVEN sort content dialog opened WHEN 'DisplayName - Descending' selected THEN content sorted correctly in the dialog-grid"()
     {
         given: "folder with contents selected and 'Sort' button clicked"
@@ -44,8 +44,7 @@ class DisplayNameSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
         List<String> defaultSortingList = sortContentDialog.getContentNames();
 
-        when:
-        List<String> nameDescendingList = sortContentDialog.clickOnTabMenu().selectSortMenuItem(
+        when: List<String> nameDescendingList = sortContentDialog.clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.DNAME_DESCENDING.getValue() ).getContentNames();
 
         then: "'SortContent' dialog displayed"
@@ -53,6 +52,7 @@ class DisplayNameSortContent_Spec
         defaultSortingList.equals( nameDescendingList );
     }
 
+    @Ignore
     def "GIVEN sort content dialog opened WHEN 'DisplayName - Descending' selected and 'Save' button clicked THEN content sorted correctly in the dialog-grid"()
     {
         given: "folder with contents selected and 'Sort' button clicked"
@@ -73,6 +73,7 @@ class DisplayNameSortContent_Spec
         sortContentDialog.getCurrentSortingName() == SortMenuItem.DNAME_DESCENDING.getValue();
     }
 
+    @Ignore
     def "GIVEN sort content opened WHEN 'DisplayName - Descending' selected and 'Save' button clicked THEN content sorted correctly in the browse panel"()
     {
         given: "folder with content selected"
