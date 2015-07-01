@@ -43,9 +43,9 @@ driver = {
 
     //def driver = new ChromeDriver();
     ChromeOptions options = new ChromeOptions();
-    options.addArguments( "--start-maximized" );
+    options.addArguments( "start-maximized" );
     def driver = new ChromeDriver( options )
-    driver.manage().window().setSize( 1920, 1080 );
+    //driver.manage().window().setSize( 1920, 1080 );
     //driver.manage().window().maximize()
     //FirefoxProfile profile = new FirefoxProfile();
     //profile.setEnableNativeEvents( true );
