@@ -1,4 +1,4 @@
-apply plugin: 'com.enonic.xp.app'
+apply plugin: 'com.enonic.xp.gradle.module'
 
 module {
     name = 'com.enonic.xp.ui-testing.second-module'
