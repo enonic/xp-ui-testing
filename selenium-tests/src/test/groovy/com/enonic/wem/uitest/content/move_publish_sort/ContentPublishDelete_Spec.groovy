@@ -51,7 +51,7 @@ class ContentPublishDelete_Spec
         message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
 
     }
-    //TODO remove it, when the XP-65 will be fixed
+    //TODO remove it, when the XP-933 will be fixed
     @Ignore
     def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel "()
     {

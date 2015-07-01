@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Stepwise
 
 @Stepwise
@@ -21,8 +20,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
 
     def "GIVEN expanded parent content and content beneath the parent, both contents are selected  WHEN parent content is collapsed  THEN only one item is selected in the grid panel but two items present in selection panel"()
     {
-        given:
-        contentBrowsePanel.expandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
+        given: contentBrowsePanel.expandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
         List<String> contentNames = new ArrayList<>();
         contentNames.add( CHILD_CONTENT_NAME );
         contentNames.add( PARENT_CONTENT_NAME );
@@ -35,8 +33,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemNames();
         selectedNames.contains( "/" + PARENT_CONTENT_NAME + "/" + CHILD_CONTENT_NAME ) &&
             selectedNames.contains( "/" + PARENT_CONTENT_NAME )
-        and:
-        selectedNames.size() == 2
+        and: selectedNames.size() == 2
         and: "but only one row is selected in the grid "
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
@@ -129,8 +126,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         then: "two items should be present in the selection panel and two rows are selected in the grid "
         List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
         selectedNames.size() == 2
-        and:
-        contentBrowsePanel.getSelectedRowsNumber() == 2;
+        and: contentBrowsePanel.getSelectedRowsNumber() == 2;
     }
 //
     def "GIVEN a parent content and child beneath a parent AND parent content selected AND name of child typed in the search input AND row with the child was clicked  WHEN filter cleared and parent content expanded  THEN only one child content selected"()
@@ -153,8 +149,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         selectedNames.size() == 0 && contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    //TODO remove it when bug with scroll of Itemsselction panel will be fixed
-    @Ignore
     def "GIVEN browse panel opened  WHEN Select All clicked  THEN number of items in the selection panel and number of selected rows in the grid are equals "()
     {
         when: "filter cleared "
