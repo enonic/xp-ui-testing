@@ -42,6 +42,13 @@ task copyTestModules( type: Copy ) {
     include '**/*.jar'
     into file( deployDir )
 }
+task copySimplePageApp( type: Copy ) {
+    from '../test-modules/simple-page/build/libs/'
+    from '../test-modules/all-contenttypes/build/libs/'
+
+    include '**/*.jar'
+    into file( deployDir )
+}
 task deleteFolders( type: Delete ) {
     delete unpackDir, screenshotsDir, reportsDir
 }
@@ -72,13 +79,6 @@ task startServer( dependsOn: unpackDistro ) {
 
 task stopServer << {
     xpServer.stop()
-}
-
-
-task installSimpleSiteModule( type: Test, dependsOn: ['buildModules', 'startServer'] ) {
-    scanForTestClasses = true
-    exclude '**/*Spec.class'
-    include '**/liveedit/InstallSimpleSiteModule.class'
 }
 
 tasks.withType( Test ) {
@@ -152,14 +152,16 @@ task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServe
     copyTestModules.mustRunAfter startServer
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: [deleteFolders, installSimpleSiteModule] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copySimplePageApp] ) {
     scanForTestClasses = false
 
     include '**/liveedit/CreateSiteWithLayoutSpec.class'
-    include '**/content/ContentUploadSpec.class'
     exclude '**/module/**'
     exclude '**/user/**'
     forkEvery = null
+    deleteFolders.mustRunAfter buildModules
+    startServer.mustRunAfter deleteFolders
+    copySimplePageApp.mustRunAfter startServer
 }
 
 

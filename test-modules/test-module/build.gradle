@@ -1,6 +1,22 @@
-apply plugin: 'com.enonic.xp.gradle.module'
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            url 'http://repo.enonic.net/public'
+        }
+    }
 
-module {
+    dependencies {
+        classpath 'com.enonic.xp:gradle-plugin:6.0.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'com.enonic.xp.app'
+
+app {
+    name = 'com.enonic.xp.testing.simple_app'
     displayName = 'Simple Test Selenium Module'
 }
 
