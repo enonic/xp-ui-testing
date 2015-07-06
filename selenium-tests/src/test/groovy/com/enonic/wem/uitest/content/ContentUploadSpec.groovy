@@ -32,6 +32,7 @@ class ContentUploadSpec
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
 
         when: " click on drop zone and select a archive"
+        TestUtils.saveScreenshot( getSession(), "start-upload-png" )
         dialog.doUploadFile( path );
         sleep( 1000 )
 
