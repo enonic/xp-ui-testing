@@ -63,7 +63,7 @@ class ContentPublish_Child_Spec
         setup: "add one more content into the published folder"
         filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
-        childContent2 = buildFolderContent( "publish", "child-folder2", parentContent.getName() );
+        childContent2 = buildFolderContentWithParent( "publish", "child-folder2", parentContent.getName() );
         addContent( childContent2 );
 
         when:
