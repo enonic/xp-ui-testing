@@ -5,7 +5,9 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class ContentPublishDialog_Spec
     extends BaseContentSpec
 {
@@ -14,6 +16,9 @@ class ContentPublishDialog_Spec
 
     @Shared
     Content childContent1;
+
+    @Shared
+    Content childInvalid;
 
 
     def "GIVEN Content BrowsePanel WHEN one content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()
