@@ -66,7 +66,6 @@ class ContentPublishDelete_Spec
         !contentBrowsePanel.exists( content.getName() );
         and:
         message == String.format( Application.DELETE_PENDING_MESSAGE, DISPLAY_NAME );
-
     }
 
 }
