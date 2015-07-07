@@ -125,13 +125,11 @@ public class MoveContentDialog
         return this;
     }
 
-
     public boolean isOpened()
     {
         List<WebElement> elements = findElements( By.xpath( DIALOG_CONTAINER ) );
         return elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size() > 0;
     }
-
 
     /**
      * Waits until 'MoveContentDialog' is opened.

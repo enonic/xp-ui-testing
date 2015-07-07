@@ -1,11 +1,9 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -23,7 +21,7 @@ class ContentPublish_Child_Spec
     @Shared
     Content childContent2;
 
-    def "GIVEN existing parent folder with child WHEN parent content selected and 'Publish' button on toolbar pressed THEN child content has 'Online' status as well"()
+    def "GIVEN existing parent folder with child WHEN parent content selected but 'Include child' checkbox unchecked and 'Publish' button on toolbar pressed THEN parent content has 'Online' status but child not published"()
     {
         setup:
         parentContent = buildFolderContent( "publish", "parent-folder" );
@@ -32,23 +30,37 @@ class ContentPublish_Child_Spec
         and:
         filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
-        childContent1 = buildFolderContent( "publish", "child-folder1", parentContent.getName() );
+        childContent1 = buildFolderContentWithParent( "publish", "child-folder1", parentContent.getName() );
         addContent( childContent1 );
-
 
         when:
         contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
+        dialog.setIncludeChildCheckbox( false ).clickOnPublishNowButton();
 
         then:
+        filterPanel.typeSearchText( childContent1.getName() );
+        contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.NEW.getValue();
+    }
+
+    def "GIVEN parent folder with not published child WHEN publish dialog opened and 'Include child' set to true and 'Publish now' pressed  THEN child content has 'Online' status as well"()
+    {
+        given:
+        filterPanel.typeSearchText( parentContent.getName() );
+        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
+
+        when: "'Include child' set to true and 'Publish now' pressed"
+        dialog.setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+
+        then: "child content has 'Online' status as well"
         filterPanel.typeSearchText( childContent1.getName() );
         contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.ONLINE.getValue();
     }
 
     def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN just added child content has a 'New' status"()
     {
-        setup:
+        setup: "add one more content into the published folder"
         filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
         childContent2 = buildFolderContent( "publish", "child-folder2", parentContent.getName() );
@@ -58,7 +70,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( childContent2.getName() );
 
-        then:
+        then: "just new added content has a 'New' status"
         contentBrowsePanel.getContentStatus( childContent2.getName() ) == ContentStatus.NEW.getValue();
     }
 
@@ -85,19 +97,6 @@ class ContentPublish_Child_Spec
 
         then:
         !contentBrowsePanel.exists( parentContent.getName() );
-    }
-
-
-    public Content buildFolderContent( String name, String displayName, String parentName )
-    {
-        String generated = NameHelper.uniqueName( name );
-        Content content = Content.builder().
-            name( generated ).
-            displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.from( parentName ) ).
-            build();
-        return content;
     }
 
 }

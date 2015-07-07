@@ -15,6 +15,9 @@ class BaseContentSpec
     extends BaseGebSpec
 {
     @Shared
+    String IMPORTED_FOLDER_NAME = "all-content-types-images";
+
+    @Shared
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
@@ -40,6 +43,18 @@ class BaseContentSpec
             displayName( displayName ).
             contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
+            build();
+        return content;
+    }
+
+    public Content buildFolderContentWithParent( String name, String displayName, String parentName )
+    {
+        String generated = NameHelper.uniqueName( name );
+        Content content = Content.builder().
+            name( generated ).
+            displayName( displayName ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.from( parentName ) ).
             build();
         return content;
     }

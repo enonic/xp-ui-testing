@@ -5,13 +5,11 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Shared
 
 class SortContentDialogSpec
     extends BaseContentSpec
 {
-    @Shared
-    String IMPORTED_FOLDER_NAME = "all-content-types-images";
+
 
     def "GIVEN Content BrowsePanel WHEN one content selected and 'Sort' button clicked THEN 'Sort Content' appears with correct control elements"()
     {
