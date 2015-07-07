@@ -13,8 +13,6 @@ import spock.lang.Stepwise
 class ContentBrowsePanel_GridPanel_Spec
     extends BaseContentSpec
 {
-    @Shared
-    String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     @Shared
     Content parentContent;

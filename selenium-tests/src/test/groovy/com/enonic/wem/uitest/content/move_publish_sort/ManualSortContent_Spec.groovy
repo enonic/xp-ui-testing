@@ -5,13 +5,10 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Ignore
-import spock.lang.Shared
 
 class ManualSortContent_Spec
     extends BaseContentSpec
 {
-    @Shared
-    String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     def "GIVEN sort dialog opened  WHEN two contents swapped by drag and drop THEN content sorted correctly in the dialog-grid and 'Manually Sorted' selected in the sort menu"()
     {
