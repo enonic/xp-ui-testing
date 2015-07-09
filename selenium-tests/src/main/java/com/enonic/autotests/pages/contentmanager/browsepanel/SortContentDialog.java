@@ -1,11 +1,13 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
@@ -34,7 +36,8 @@ public class SortContentDialog
 
     private String GRID_ITEM = DIALOG_CONTAINER +
         "//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]//div[contains(@class,'drag-icon')]";
-//DIV_NAMES_VIEW;
+
+    private String VIEWPORT_XPATH = "//div[contains(@id,'SortContentTreeGrid')]//div[@class='slick-viewport']";
 
     @FindBy(xpath = SAVE_BUTTON)
     WebElement saveButton;
@@ -157,11 +160,63 @@ public class SortContentDialog
         return items;
     }
 
+    public void scrollViewPortToTop( WebElement viewport )
+    {
+        ( (JavascriptExecutor) getDriver() ).executeScript( "return arguments[0].scrollTop=0", viewport );
+        sleep( 1000 );
+    }
+
+    WebElement getViewportElement()
+    {
+        return findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 );
+    }
+
     public LinkedList<String> getContentNames()
     {
-        return findElements(
+        LinkedHashSet<String> set = new LinkedHashSet<>();
+        scrollViewPortToTop( getViewportElement() );
+        set.addAll( getGridItemNames() );
+        long newScrollTop = 400;
+        long scrollTopBefore;
+        long scrollTopAfter;
+        for (; ; )
+        {
+            scrollTopBefore = getViewportScrollTopValue( getViewportElement() );
+            scrollTopAfter = doScrollViewport( newScrollTop );
+            if ( scrollTopBefore == scrollTopAfter )
+            {
+                break;
+            }
+            newScrollTop += newScrollTop;
+            set.addAll( getGridItemNames() );
+        }
+        return new LinkedList<>( set );
+    }
+
+    public Long getViewportScrollTopValue( WebElement viewport )
+    {
+        return (Long) ( (JavascriptExecutor) getDriver() ).executeScript( "return arguments[0].scrollTop", viewport );
+    }
+
+    private LinkedList<String> getGridItemNames()
+    {
+        LinkedList list = findElements(
             By.xpath( DIALOG_CONTAINER + "//div[contains(@id,'NamesView')]//h6[contains(@class,'main-name')]" ) ).stream().filter(
             WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
+        return list;
+    }
+
+
+    public Long doScrollViewport( long step )
+    {
+        if ( findElements( By.xpath( VIEWPORT_XPATH ) ).size() != 0 )
+        {
+            WebElement viewportElement = findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 );
+            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
+        }
+
+        sleep( 1000 );
+        return getViewportScrollTopValue( findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 ) );
     }
 
     public SortContentDialog selectSortMenuItem( String itemName )

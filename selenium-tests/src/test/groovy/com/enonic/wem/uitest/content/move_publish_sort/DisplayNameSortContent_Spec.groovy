@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Stepwise
 
 @Stepwise
@@ -13,7 +12,6 @@ class DisplayNameSortContent_Spec
     extends BaseContentSpec
 {
 
-    @Ignore
     def "GIVEN sort content dialog opened WHEN the item with name 'DisplayName - Ascending' selected THEN content sorted correctly in the dialog-grid"()
     {
         given: "folder with contents selected and 'Sort' button clicked"
@@ -34,7 +32,6 @@ class DisplayNameSortContent_Spec
         defaultSortingList.equals( nameAscendingList );
     }
 
-    @Ignore
     def "GIVEN sort content dialog opened WHEN 'DisplayName - Descending' selected THEN content sorted correctly in the dialog-grid"()
     {
         given: "folder with contents selected and 'Sort' button clicked"
@@ -51,7 +48,6 @@ class DisplayNameSortContent_Spec
         defaultSortingList.equals( nameDescendingList );
     }
 
-    @Ignore
     def "GIVEN sort content dialog opened WHEN 'DisplayName - Descending' selected and 'Save' button clicked THEN content sorted correctly in the dialog-grid"()
     {
         given: "folder with contents selected and 'Sort' button clicked"
@@ -72,7 +68,6 @@ class DisplayNameSortContent_Spec
         sortContentDialog.getCurrentSortingName() == SortMenuItem.DNAME_DESCENDING.getValue();
     }
 
-    @Ignore
     def "GIVEN sort content opened WHEN 'DisplayName - Descending' selected and 'Save' button clicked THEN content sorted correctly in the browse panel"()
     {
         given: "folder with content selected"
