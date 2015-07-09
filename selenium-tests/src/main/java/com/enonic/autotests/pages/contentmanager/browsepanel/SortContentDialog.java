@@ -104,6 +104,7 @@ public class SortContentDialog
 
     public SortContentDialog dragAndSwapItems( String sourceName, String targetName )
     {
+        scrollViewPortToTop( getViewportElement() );
         String sourceItem = String.format( GRID_ITEM, sourceName );
         String targetItem = String.format( GRID_ITEM, targetName );
         if ( findElements( By.xpath( sourceItem ) ).size() == 0 || findElements( By.xpath( targetItem ) ).size() == 0 )
