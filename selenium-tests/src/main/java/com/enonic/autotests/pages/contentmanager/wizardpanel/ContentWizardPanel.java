@@ -31,25 +31,25 @@ public class ContentWizardPanel
     extends WizardPanel<Content>
 {
     public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
-        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
+        "//div[@id='ContentWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
 
     public static final String DIV_CONTENT_WIZARD_PANEL =
         "//div[contains(@id,'app.wizard.ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save draft']]";
 
     public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
     private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        "//div[@id='app.wizard.ContentWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Publish']]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Publish']]";
 
     private static final String TOOLBAR_DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
     private static final String CONTEXT_WINDOW_TOGGLER =
-        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'app.wizard.page.contextwindow.ContextWindowToggler')]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'app.wizard.page.contextwindow.ContextWindowToggler')]";
 
     private final String UNLOCK_LINK = "//div[@class='centered']/a[text()='Unlock']";
 
