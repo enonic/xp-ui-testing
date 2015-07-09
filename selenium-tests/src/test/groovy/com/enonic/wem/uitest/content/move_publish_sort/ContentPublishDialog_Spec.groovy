@@ -49,8 +49,7 @@ class ContentPublishDialog_Spec
         contentPublishDialog.isCancelButtonTopEnabled();
         and: "'Include Child' checkbox not checked"
         !contentPublishDialog.isIncludeChildCheckboxSelected();
-        and: "'Dependency Link' not displayed"
-        !contentPublishDialog.isDependencyLinkDisplayed();
+
     }
 
     def "GIVEN 'Content Publish' dialog shown WHEN the cancel button on the bottom clicked THEN dialog not present"()
@@ -89,7 +88,7 @@ class ContentPublishDialog_Spec
         when: "'Content Publish' dialog opened"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
-        List<String> names = contentPublishDialog.getContentNamesToPublish();
+        List<String> names = contentPublishDialog.getNamesOfContentsToPublish();
 
         then:
         names.size() == 1;
@@ -98,7 +97,7 @@ class ContentPublishDialog_Spec
 
     }
 
-    def "GIVEN a parent content on root selected 'Content publish' dialog opened WHEN 'include child' checkbox set to true THEN 'dependency link' with correct text appears"()
+    def "GIVEN a parent content on root selected 'Content publish' dialog opened WHEN 'include child' checkbox set to true THEN correct text shown in the header of 'dependencies list'"()
     {
         given: "parent content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
@@ -107,31 +106,12 @@ class ContentPublishDialog_Spec
 
         when:
         contentPublishDialog.setIncludeChildCheckbox( true );
-
-        then: "'Dependency Link' displayed"
-        contentPublishDialog.isDependencyLinkDisplayed();
-        and: "'Dependency Link' is not expanded"
-        !contentPublishDialog.isDependencyLinkExpanded();
-        and: "correct text present in the link"
-        contentPublishDialog.getDependencyLinkText() == ContentPublishDialog.SHOW_DEPENDENCY_LINK_TEXT;
-    }
-
-
-    def "GIVEN 'Content publish' dialog opened 'include child' checkbox set to true WHEN dependencies expanded THEN one dependency with correct name shown"()
-    {
-        given: "parent content selected and 'Publish' button pressed, 'include child' checkbox set to true"
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
-            Application.EXPLICIT_NORMAL ).setIncludeChildCheckbox( true );
-
-        when: "the link 'Show dependencies and child items to be published' clicked"
-        contentPublishDialog.showDependency();
         List<String> dependencies = contentPublishDialog.getDependencies();
 
-        then: "'Dependency Link' is expanded"
-        contentPublishDialog.isDependencyLinkExpanded();
-        and: "dependencies link changed to 'Hide dependencies and child items to be published'"
-        contentPublishDialog.getDependencyLinkText() == ContentPublishDialog.HIDE_DEPENDENCY_LINK_TEXT;
+        then: "The header of 'Dependencies list' appears"
+        contentPublishDialog.isDependenciesListHeaderDisplayed();
+        and: "correct text shown in the header"
+        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.DEPENDENCIES_LIST_HEADER_TEXT;
         and: "one correct dependency shown "
         dependencies.size() == 1 && dependencies.get( 0 ).contains( childContent1.getName() );
     }

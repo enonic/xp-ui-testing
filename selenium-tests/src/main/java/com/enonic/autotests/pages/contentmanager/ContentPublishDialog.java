@@ -17,9 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentPublishDialog
     extends Application
 {
-    public static final String SHOW_DEPENDENCY_LINK_TEXT = "Show dependencies and child items to be published";
-
-    public static final String HIDE_DEPENDENCY_LINK_TEXT = "Hide dependencies and child items to be published";
+    public static final String DEPENDENCIES_LIST_HEADER_TEXT = "Other items that will be published";
 
     public static final String DIALOG_TITLE = "Publishing Wizard";
 
@@ -27,7 +25,6 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-    private final String FILTER_INPUT = DIALOG_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
     private final String PUBLISH_NOW_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'Publish Now')]]";
@@ -41,18 +38,15 @@ public class ContentPublishDialog
 
     private final String INCLUDE_CHILD_CHECKBOX_LABEL = DIALOG_CONTAINER + "//div[contains(@class,'include-child-check')]//label";
 
-    private final String DEPENDENCY_LINK =
-        DIALOG_CONTAINER + "//div[contains(@id,'PublishDialogItemList')]//label[contains(@class,'dependencies-toggle-label')]";
+    private final String DEPENDENCIES_LIST = DIALOG_CONTAINER + "//div[contains(@id,'PublishDialogDependantsItemList')]";
 
-    private final String DEPENDENCIES =
-        DIALOG_CONTAINER + "//div[contains(@id,'PublishDialogDependantsItemList')]//span[@class='name-span']";
+    private final String DEPENDENCIES_STRINGS = DEPENDENCIES_LIST + "//span[@class='name-span']";
+
+    private final String DEPENDENCIES_LIST_HEADER = DEPENDENCIES_LIST + "//h6[@class='dependencies-header']";
 
     private final String DISPLAY_NAMES_OF_CONTENTS_TO_PUBLISH = "//div[contains(@id,'PublishDialogItemList')]//h6[@class='main-name']";
 
     private final String NAMES_OF_CONTENTS_TO_PUBLISH = "//div[contains(@id,'PublishDialogItemList')]//p[@class='sub-name']";
-
-    @FindBy(xpath = DEPENDENCY_LINK)
-    private WebElement dependencyLink;
 
     @FindBy(xpath = PUBLISH_NOW_BUTTON)
     private WebElement publishButton;
@@ -62,9 +56,6 @@ public class ContentPublishDialog
 
     @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
     private WebElement cancelButtonBottom;
-
-    @FindBy(xpath = FILTER_INPUT)
-    private WebElement optionFilterInput;
 
     @FindBy(xpath = INCLUDE_CHILD_CHECKBOX)
     private WebElement includeChildCheckbox;
@@ -80,7 +71,7 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
-    public List<String> getContentNamesToPublish()
+    public List<String> getNamesOfContentsToPublish()
     {
         List<String> names = findElements( By.xpath( NAMES_OF_CONTENTS_TO_PUBLISH ) ).stream().filter( WebElement::isDisplayed ).map(
             WebElement::getText ).collect( Collectors.toList() );
@@ -173,44 +164,20 @@ public class ContentPublishDialog
         return includeChildCheckbox.isSelected();
     }
 
-    public boolean isDependencyLinkDisplayed()
+    public String getDependenciesListHeader()
     {
-        return dependencyLink.isDisplayed();
+        return findElements( By.xpath( DEPENDENCIES_LIST_HEADER ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
     }
 
-    public boolean isDependencyLinkExpanded()
+    public boolean isDependenciesListHeaderDisplayed()
     {
-        return waitAndCheckAttrValue( dependencyLink, "class", "expanded", Application.EXPLICIT_NORMAL );
-    }
-
-    public String getDependencyLinkText()
-    {
-        return findElements( By.xpath( DEPENDENCY_LINK ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
-    }
-
-    public ContentPublishDialog showDependency()
-    {
-        if ( getDependencyLinkText().equals( SHOW_DEPENDENCY_LINK_TEXT ) )
-        {
-            findElements( By.xpath( DEPENDENCY_LINK ) ).get( 0 ).click();
-        }
-        return this;
-
-    }
-
-    public ContentPublishDialog hideDependency()
-    {
-        if ( getDependencyLinkText().equals( HIDE_DEPENDENCY_LINK_TEXT ) )
-        {
-            findElements( By.xpath( DEPENDENCY_LINK ) ).get( 0 ).click();
-        }
-        return this;
+        return findElements( By.xpath( DEPENDENCIES_LIST_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
     public List<String> getDependencies()
     {
         List<String> list =
-            findElements( By.xpath( DEPENDENCIES ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            findElements( By.xpath( DEPENDENCIES_STRINGS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
                 Collectors.toList() );
         return list;
     }
