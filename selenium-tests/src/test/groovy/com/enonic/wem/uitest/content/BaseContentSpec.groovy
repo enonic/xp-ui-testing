@@ -47,6 +47,17 @@ class BaseContentSpec
         return content;
     }
 
+    public Content buildFolderWithEmptyDisplayNameContent( String name )
+    {
+        String generated = NameHelper.uniqueName( name );
+        Content content = Content.builder().
+            name( generated ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
+            build();
+        return content;
+    }
+
     public Content buildFolderContentWithParent( String name, String displayName, String parentName )
     {
         String generated = NameHelper.uniqueName( name );

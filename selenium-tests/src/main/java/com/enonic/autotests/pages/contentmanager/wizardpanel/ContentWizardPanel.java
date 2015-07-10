@@ -170,11 +170,12 @@ public class ContentWizardPanel
     {
         // 1. type a data: 'name' and 'Display Name'.
         waitElementClickable( By.name( "displayName" ), 1 );
-        getLogger().info( "types displayName: " + content.getDisplayName() );
         if ( content.getDisplayName() != null )
         {
+            getLogger().info( "types displayName: " + content.getDisplayName() );
+
             clearAndType( displayNameInput, content.getDisplayName() );
-            sleep( 500 );
+            sleep( 100 );
         }
 
         if ( StringUtils.isNotEmpty( content.getName() ) )

@@ -19,6 +19,12 @@ public class ContentPublishDialog
 {
     public static final String DEPENDENCIES_LIST_HEADER_TEXT = "Other items that will be published";
 
+    public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
+
+    public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid content(s) prevent publish";
+
+    public static final String WARNING_PUBLISH_MESSAGE = "Invalid content(s) prevent publish";
+
     public static final String DIALOG_TITLE = "Publishing Wizard";
 
     private final String DIALOG_CONTAINER = "//div[contains(@id,'app.publish.ContentPublishDialog')]";
@@ -48,6 +54,8 @@ public class ContentPublishDialog
 
     private final String NAMES_OF_CONTENTS_TO_PUBLISH = "//div[contains(@id,'PublishDialogItemList')]//p[@class='sub-name']";
 
+    private final String DIALOG_SUBHEADER_XPATH = DIALOG_CONTAINER + "//h6[contains(@class,'publish-dialog-subheader')]";
+
     @FindBy(xpath = PUBLISH_NOW_BUTTON)
     private WebElement publishButton;
 
@@ -69,6 +77,11 @@ public class ContentPublishDialog
     {
         cancelButtonTop.click();
         sleep( 200 );
+    }
+
+    public String getDialogSubHeader()
+    {
+        return findElements( By.xpath( DIALOG_SUBHEADER_XPATH ) ).get( 0 ).getText();
     }
 
     public List<String> getNamesOfContentsToPublish()
@@ -106,6 +119,7 @@ public class ContentPublishDialog
     public ContentPublishDialog clickOnPublishNowButton()
     {
         publishButton.click();
+        sleep( 300 );
         return this;
     }
 

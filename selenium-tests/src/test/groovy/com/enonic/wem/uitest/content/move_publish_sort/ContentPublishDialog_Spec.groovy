@@ -17,9 +17,6 @@ class ContentPublishDialog_Spec
     @Shared
     Content childContent1;
 
-    @Shared
-    Content childInvalid;
-
 
     def "GIVEN Content BrowsePanel WHEN one content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()
     {
@@ -55,6 +52,7 @@ class ContentPublishDialog_Spec
     def "GIVEN 'Content Publish' dialog shown WHEN the cancel button on the bottom clicked THEN dialog not present"()
     {
         given: "parent content selected and 'Publish' button pressed"
+        filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
@@ -69,6 +67,7 @@ class ContentPublishDialog_Spec
     def "GIVEN 'Content Publish' dialog shown WHEN the button cancel on the top clicked THEN dialog not present"()
     {
         given: "parent content selected and 'Publish' button pressed"
+        filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
@@ -83,6 +82,7 @@ class ContentPublishDialog_Spec
     def "GIVEN one parent content on root selected WHEN 'Content Publish' dialog opened THEN correct name of content present in the dialog"()
     {
         given: "one parent content on the root selected"
+        filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
 
         when: "'Content Publish' dialog opened"
@@ -100,6 +100,7 @@ class ContentPublishDialog_Spec
     def "GIVEN a parent content on root selected 'Content publish' dialog opened WHEN 'include child' checkbox set to true THEN correct text shown in the header of 'dependencies list'"()
     {
         given: "parent content selected and 'Publish' button pressed"
+        filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
@@ -114,5 +115,23 @@ class ContentPublishDialog_Spec
         contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.DEPENDENCIES_LIST_HEADER_TEXT;
         and: "one correct dependency shown "
         dependencies.size() == 1 && dependencies.get( 0 ).contains( childContent1.getName() );
+    }
+
+    def "GIVEN a child content WHEN it content selected and 'Publish' button pressed THEN correct text shown in the header of 'dependencies list' and correct dependency shown as well"()
+    {
+        filterPanel.typeSearchText( childContent1.getName() );
+        when: "parent content selected and 'Publish' button pressed"
+        contentBrowsePanel.clickCheckboxAndSelectRow( childContent1.getName() );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+            Application.EXPLICIT_NORMAL );
+        List<String> dependencies = contentPublishDialog.getDependencies();
+
+
+        then: "The header of 'Dependencies list' appears"
+        contentPublishDialog.isDependenciesListHeaderDisplayed();
+        and: "correct text shown in the header"
+        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.DEPENDENCIES_LIST_HEADER_TEXT;
+        and: "one correct dependency shown "
+        dependencies.size() == 1 && dependencies.get( 0 ).contains( parentContent.getName() );
     }
 }
