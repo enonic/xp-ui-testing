@@ -28,7 +28,7 @@ dependencies {
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
 task copyContentTypes( type: Copy ) {
-    from '../test-modules/all-contenttypes/build/libs/'
+    from '../test-modules/contenttypes/build/libs/'
     include '**/*.jar'
     into file( deployDir )
 }
@@ -53,7 +53,7 @@ task deleteFolders( type: Delete ) {
     delete unpackDir, screenshotsDir, reportsDir
 }
 task buildModules(
-    dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:all-contenttypes:install',
+    dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:contenttypes:install',
                 ':test-modules:second-module:install', ':test-modules:third-module:install', ':test-modules:fourth-module:install', ':test-modules:test-module:install'] )
 
 task unpackDistro( type: Copy ) {
@@ -90,7 +90,7 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, copyContentTypes] ) {
+task testContentManager( type: Test, dependsOn: [buildModules,deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/module/**'
@@ -100,6 +100,7 @@ task testContentManager( type: Test, dependsOn: [deleteFolders, startServer, cop
     exclude '**/content/input_types/*Spec.class'
     exclude '**/content/move_publish_sort/*Spec.class'
     forkEvery = null
+    deleteFolders.mustRunAfter buildModules
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
