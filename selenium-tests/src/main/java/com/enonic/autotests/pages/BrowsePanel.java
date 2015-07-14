@@ -16,8 +16,10 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.xp.content.ContentPath;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -101,6 +103,16 @@ public abstract class BrowsePanel
         findElements( By.xpath( expanderIcon ) ).get( 0 ).click();
         sleep( 1000 );
         return true;
+    }
+
+    public void doubleClickOnItem( String itemName )
+    {
+        sleep( 500 );
+        String rowXpath = String.format( DIV_NAMES_VIEW, itemName );
+        boolean result = waitAndFind( By.xpath( rowXpath ) );
+        Actions builder = new Actions( getDriver() );
+        builder.doubleClick( findElement( By.xpath( rowXpath ) ) ).build().perform();
+        sleep( 500 );
     }
 
     public BrowsePanel expandItem( String gritItemName )

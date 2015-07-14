@@ -1,8 +1,11 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import org.openqa.selenium.Keys
+import spock.lang.Ignore
 
 class UserBrowsePanel_GridPanel_Spec
     extends BaseUsersSpec
@@ -171,5 +174,18 @@ class UserBrowsePanel_GridPanel_Spec
 
         then: "n+1 rows are selected in the browse panel"
         userBrowsePanel.getSelectedRowsNumber() == 4
+    }
+
+    def "GIVEN 'anonymous' user shown in the grid WHEN user -'anonymous' double clicked THEN user wizard opened"()
+    {
+        given:
+        userBrowseFilterPanel.typeSearchText( "anonymous" );
+
+        when: "new user present beneath a store"
+        userBrowsePanel.doubleClickOnItem( "anonymous" );
+
+        then: "new user present beneath a system store"
+        UserWizardPanel wizard = new UserWizardPanel(getSession(  ));
+        wizard.waitUntilWizardOpened(  );
     }
 }

@@ -318,17 +318,6 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentWizardPanel doubleClickOnContent( ContentPath contentPath )
-    {
-        sleep( 500 );
-        String rowXpath = String.format( DIV_NAMES_VIEW, contentPath );
-        boolean result = waitAndFind( By.xpath( rowXpath ) );
-        Actions builder = new Actions( getDriver() );
-        builder.doubleClick( findElement( By.xpath( rowXpath ) ) ).build().perform();
-        sleep( 500 );
-        return new ContentWizardPanel( getSession() );
-    }
-
     /**
      * Clicks on 'Delete' button on toolbar.
      *
