@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -186,6 +187,19 @@ class UserBrowsePanel_GridPanel_Spec
 
         then: "new user present beneath a system store"
         UserWizardPanel wizard = new UserWizardPanel(getSession(  ));
+        wizard.waitUntilWizardOpened(  );
+    }
+
+    def "GIVEN a system role WHEN role double clicked in the grid THEN role wizard opened"()
+    {
+        given:
+        userBrowseFilterPanel.typeSearchText( "system.authenticated" );
+
+        when: "new user present beneath a store"
+        userBrowsePanel.doubleClickOnItem( "system.authenticated" );
+
+        then: "new user present beneath a system store"
+        RoleWizardPanel wizard = new RoleWizardPanel(getSession(  ));
         wizard.waitUntilWizardOpened(  );
     }
 }
