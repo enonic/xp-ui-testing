@@ -18,7 +18,28 @@ class ContentPublishDialog_Spec
     Content childContent1;
 
 
-    def "GIVEN Content BrowsePanel WHEN one content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()
+    def "GIVEN Content BrowsePanel WHEN one content without child selected and 'Publish' button clicked THEN 'Content publish' appears without 'Include child' checkbox"()
+    {
+        given:
+        Content folderContent = buildFolderContent( "no_child", "content publish dialog" );
+        addContent( folderContent );
+
+        when: "content selected and 'Publish' button pressed"
+        filterPanel.typeSearchText( folderContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( folderContent.getName() )
+
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+            Application.EXPLICIT_NORMAL );
+
+        then: "'ContentPublishDialog' dialog displayed"
+        contentPublishDialog.isOpened();
+
+        and: "'Include Child' checkbox not displayed"
+        !contentPublishDialog.isIncludeChildCheckboxDisplayed();
+
+    }
+
+    def "GIVEN Content BrowsePanel WHEN one parent content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()
     {
         setup:
         parentContent = buildFolderContent( "publish_dialog", "content publish dialog" );
@@ -44,6 +65,8 @@ class ContentPublishDialog_Spec
         contentPublishDialog.isCancelButtonBottomEnabled();
         and:
         contentPublishDialog.isCancelButtonTopEnabled();
+        and: "'Include Child' checkbox is displayed"
+        contentPublishDialog.isIncludeChildCheckboxDisplayed();
         and: "'Include Child' checkbox not checked"
         !contentPublishDialog.isIncludeChildCheckboxSelected();
 

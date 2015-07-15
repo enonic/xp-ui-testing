@@ -178,6 +178,11 @@ public class ContentPublishDialog
         return includeChildCheckbox.isSelected();
     }
 
+    public boolean isIncludeChildCheckboxDisplayed()
+    {
+        return includeChildCheckbox.isDisplayed();
+    }
+
     public String getDependenciesListHeader()
     {
         return findElements( By.xpath( DEPENDENCIES_LIST_HEADER ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
