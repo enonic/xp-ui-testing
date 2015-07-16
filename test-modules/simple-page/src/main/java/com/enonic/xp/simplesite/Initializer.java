@@ -1,5 +1,7 @@
 package com.enonic.xp.simplesite;
 
+import java.util.concurrent.Callable;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -9,16 +11,24 @@ import org.slf4j.LoggerFactory;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 
+import com.enonic.xp.content.ApplyContentPermissionsParams;
+import com.enonic.xp.content.Content;
 import com.enonic.xp.content.ContentPath;
 import com.enonic.xp.content.ContentService;
 import com.enonic.xp.content.CreateContentParams;
 import com.enonic.xp.content.CreateMediaParams;
+import com.enonic.xp.content.UpdateContentParams;
+import com.enonic.xp.context.ContextAccessor;
+import com.enonic.xp.context.ContextBuilder;
 import com.enonic.xp.data.PropertyTree;
-import com.enonic.xp.form.Form;
-import com.enonic.xp.form.Input;
-import com.enonic.xp.form.inputtype.InputTypes;
 import com.enonic.xp.schema.content.ContentTypeName;
 import com.enonic.xp.security.PrincipalKey;
+import com.enonic.xp.security.RoleKeys;
+import com.enonic.xp.security.User;
+import com.enonic.xp.security.acl.AccessControlEntry;
+import com.enonic.xp.security.acl.AccessControlList;
+import com.enonic.xp.security.acl.Permission;
+import com.enonic.xp.security.auth.AuthenticationInfo;
 
 
 @Component(immediate = true)
@@ -30,10 +40,15 @@ public class Initializer
         {"bro.jpg", "Pop_02.jpg", "Pop_03.jpg", "Pop_04.jpg", "seng.jpg", "foss.jpg", "telk.png", "geek.png", "enterprise.png", "item1.png",
             "item2.png", "team1.png", "team2.png"};
 
+    private static final AccessControlList PERMISSIONS =
+        AccessControlList.of( AccessControlEntry.create().principal( PrincipalKey.ofAnonymous() ).allow( Permission.READ ).build(),
+                              AccessControlEntry.create().principal( RoleKeys.EVERYONE ).allow( Permission.READ ).build(),
+                              AccessControlEntry.create().principal( RoleKeys.AUTHENTICATED ).allowAll().build(),
+                              AccessControlEntry.create().principal( RoleKeys.CONTENT_MANAGER_ADMIN ).allowAll().build() );
 
-    private static final Form MEDIA_IMAGE_FORM = createMediaImageForm();
+    private static final String FOLDER_DISPLAY_NAME = "Images for simple page";
 
-    private static final String IMAGE_ARCHIVE_PATH_ELEMENT = "imagearchive";
+    private static final String FOLDER_NAME = "imagearchive";
 
 
     private ContentService contentService;
@@ -42,7 +57,68 @@ public class Initializer
     public void initialize()
         throws Exception
     {
-        createImages();
+        runAs( RoleKeys.CONTENT_MANAGER_ADMIN, () -> {
+            doInitialize();
+            return null;
+        } );
+    }
+
+    private void doInitialize()
+        throws Exception
+    {
+        final ContentPath imagesPath = ContentPath.from( "/" + FOLDER_NAME );
+        if ( hasContent( imagesPath ) )
+        {
+            return;
+        }
+
+        folderWithImage();
+
+        // set permissions
+        final Content moduleContent = contentService.getByPath( imagesPath );
+        if ( moduleContent != null )
+        {
+            final UpdateContentParams setFeaturesPermissions = new UpdateContentParams().
+                contentId( moduleContent.getId() ).
+                editor( ( content ) -> {
+                    content.permissions = PERMISSIONS;
+                    content.inheritPermissions = false;
+                } );
+            contentService.update( setFeaturesPermissions );
+
+            contentService.applyPermissions( ApplyContentPermissionsParams.create().
+                contentId( moduleContent.getId() ).
+                modifier( PrincipalKey.ofAnonymous() ).
+                build() );
+        }
+    }
+
+    private void folderWithImage()
+        throws Exception
+    {
+        final ContentPath testFolderPath = ContentPath.from( "/" + FOLDER_NAME );
+        if ( !hasContent( testFolderPath ) )
+        {
+            contentService.create( makeFolder().
+                name( FOLDER_NAME ).
+                displayName( FOLDER_DISPLAY_NAME ).
+                parent( ContentPath.ROOT ).
+                permissions( PERMISSIONS ).
+                inheritPermissions( false ).
+                build() );
+
+            for ( final String fileName : FOLDER_IMAGES )
+            {
+                try
+                {
+                    createImageContent( testFolderPath, fileName );
+                }
+                finally
+                {
+                    LOG.info( "Initialized content for 'All content types'" );
+                }
+            }
+        }
     }
 
     private boolean hasContent( final ContentPath path )
@@ -57,42 +133,6 @@ public class Initializer
         }
     }
 
-    private void createImages()
-        throws Exception
-    {
-        final ContentPath imageArchivePath = ContentPath.from( ContentPath.ROOT, IMAGE_ARCHIVE_PATH_ELEMENT );
-        if ( hasContent( imageArchivePath ) )
-        {
-            LOG.info( "Already initialized with data. Skipping." );
-            return;
-        }
-
-        LOG.info( "Initializing demo content..." );
-        final long tm = System.currentTimeMillis();
-
-        try
-        {
-            doCreateImages();
-        }
-        finally
-        {
-            LOG.info( "Initialized demo content in " + ( System.currentTimeMillis() - tm ) + " ms" );
-        }
-
-    }
-
-    private void doCreateImages()
-        throws Exception
-    {
-
-        final ContentPath imageArchivePath = contentService.create( createFolder() ).getPath();
-
-        for ( final String fileName : FOLDER_IMAGES )
-        {
-            createImageContent( imageArchivePath, fileName );
-        }
-
-    }
 
     private void createImageContent( final ContentPath parent, final String fileName )
         throws Exception
@@ -113,7 +153,7 @@ public class Initializer
 
     private byte[] loadImageFileAsBytes( final String fileName )
     {
-        final String filePath = "/cms/images/" + fileName;
+        final String filePath = "/app/images/" + fileName;
 
         try
         {
@@ -121,6 +161,8 @@ public class Initializer
         }
         catch ( Exception e )
         {
+            LOG.info( "error  " + e.getMessage() );
+            System.out.println( "error " + e.getMessage() );
             return null;
         }
     }
@@ -137,19 +179,19 @@ public class Initializer
 
     }
 
-    private static Form createMediaImageForm()
-
+    private CreateContentParams.Builder makeFolder()
     {
-        return Form.newForm().
-            addFormItem( Input.create().name( "image" ).
-                inputType( InputTypes.IMAGE_UPLOADER ).build() ).
-            addFormItem( Input.create().name( "mimeType" ).
-                inputType( InputTypes.TEXT_LINE ).
-                label( "Mime type" ).
-                occurrences( 1, 1 ).
-                build() ).
+        return CreateContentParams.create().
+            owner( PrincipalKey.ofAnonymous() ).
+            contentData( new PropertyTree() ).
+            type( ContentTypeName.folder() ).
+            inheritPermissions( true );
+    }
 
-            build();
+    private <T> T runAs( final PrincipalKey role, final Callable<T> runnable )
+    {
+        final AuthenticationInfo authInfo = AuthenticationInfo.create().principals( role ).user( User.ANONYMOUS ).build();
+        return ContextBuilder.from( ContextAccessor.current() ).authInfo( authInfo ).build().callWith( runnable );
     }
 
     @Reference
