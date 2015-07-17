@@ -49,6 +49,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         contentList.add( content3.getName() );
 
         when: "parent and children are selected and 'Delete button' pressed"
+        filterPanel.typeSearchText( parent.getName() )
         contentBrowsePanel.expandContent( content1.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "delete-three" );
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
