@@ -37,7 +37,7 @@ public class PageTemplateFormViewPanel
     public FormViewPanel type( final PropertyTree data )
     {
         optionFilterInput.sendKeys( "Site" );
-        String siteContentTypeGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/p[@title='%s']", ContentTypeName.site() );
+        String siteContentTypeGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/p[text()='%s']", ContentTypeName.site() );
         if ( getDriver().findElements( By.xpath( siteContentTypeGridItem ) ).size() == 0 )
         {
             throw new TestFrameworkException( "content type with name: " + ContentTypeName.site().toString() + "  was not found!" );
@@ -60,7 +60,7 @@ public class PageTemplateFormViewPanel
         //do filter options:
         findElements( By.xpath( "//input[@id='api.ui.selector.dropdown.DropdownOptionFilterInput']" ) ).get( 0 ).sendKeys( pageName );
         //select a 'page name'
-        String pageItemXpath = String.format( "//div[@id='api.content.page.PageDescriptorDropdown']//h6[@title='%s']", pageName );
+        String pageItemXpath = String.format( "//div[@id='api.content.page.PageDescriptorDropdown']//h6[text()='%s']", pageName );
         findElements( By.xpath( pageItemXpath ) ).get( 0 ).click();
 
         NavigatorHelper.switchToContentManagerFrame( getSession() );

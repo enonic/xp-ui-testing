@@ -123,9 +123,9 @@ class InputTypesSpec
     def "GIVEN content type with name 'checkbox' selected and wizard opened WHEN  the checkbox selected and content saved THEN new content with correct boolean value listed "()
     {
         given: "add a content with type 'checkbox'"
-        Content checkBoxContent = buildCheckBoxContent();
+        Content checkBoxContent = buildCheckBoxContent( true );
         selectSiteOpenWizard( checkBoxContent.getContentTypeName() ).waitUntilWizardOpened().typeData( checkBoxContent ).save().close(
-            checkBoxContent.getDisplayName() ); ;
+            checkBoxContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( checkBoxContent )

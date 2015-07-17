@@ -296,11 +296,11 @@ class Base_InputFields_Occurrences
         return dateContent;
     }
 
-    protected Content buildCheckBoxContent()
+    protected Content buildCheckBoxContent( boolean value )
     {
         String name = "checkbox";
         PropertyTree data = new PropertyTree();
-        data.addBoolean( CheckBoxFormViewPanel.CHECKBOX_PROPERTY, true );
+        data.addBoolean( CheckBoxFormViewPanel.CHECKBOX_PROPERTY, value );
 
         Content checkboxContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).

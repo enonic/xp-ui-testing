@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.liveedit
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
@@ -10,7 +9,7 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.wem.uitest.BaseGebSpec
+import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
@@ -22,35 +21,29 @@ import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
 class CreateSiteWithLayoutSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
 
     @Shared
-    ContentBrowsePanel contentBrowsePanel;
+    Content SITE
 
     @Shared
-    String SITE_NAME;
+    String LIVE_EDIT_FRAME_SITE_HEADER = "//h1[text()='Simple Site']";
 
     @Shared
-    String LIVE_EDIT_FRAME_SITE_HEADER = "//h1[text()='Simple Site, with a view and region!']";
-
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-    }
+    String MAIN_REGION_PAGE_DESCRIPTOR_NAME = "main region";
 
 
     def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be listed"()
     {
         given:
-        Content site = buildSimpleSiteWitLayout();
+        SITE = buildSimpleSiteWitLayout();
         when: "data typed and saved and wizard closed"
-        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-            site.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
+            SITE.getDisplayName() );
 
         then: " new site should be listed"
-        contentBrowsePanel.exists( site.getName() );
+        contentBrowsePanel.exists( SITE.getName() );
 
     }
 
@@ -58,14 +51,16 @@ class CreateSiteWithLayoutSpec
     def "GIVEN exists on root a site, based on 'Simple site' WHEN site expanded and templates folder selected AND page-template added  THEN new template should be listed beneath a 'Templates' folder"()
     {
         given:
-        Content pageTemplate = buildPageTemplate();
+        Content pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME );
+        filterPanel.typeSearchText( SITE.getName() );
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
 
-        when: "site expanded and 'Templates' folder selected and page-template added"
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME ) );
-        contentBrowsePanel.selectContentInTable( SITE_NAME + "/_templates" ).clickToolbarNew().selectContentType(
+        when: "'Templates' folder selected and new page-template added"
+        contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
         sleep( 2000 );
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_NAME + "/_templates" ) );
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
+        contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
         TestUtils.saveScreenshot( getSession(), "simple_template" );
 
         then: " new template should be listed beneath a 'Templates' folder"
@@ -76,7 +71,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'toggle window' button on toolbar clicked  THEN ContextWindow  appears"()
     {
         given: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
 
         when: "button on toolbar clicked"
         ContextWindow contextWindow = contentWizard.showContextWindow();
@@ -89,7 +84,7 @@ class CreateSiteWithLayoutSpec
     def "WHEN site opened for edit  AND page template is automatic THEN Live Edit frame should be locked"()
     {
         when: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
 
         then: " the 'Live Edit' frame should be locked"
         contentWizard.isLiveEditLocked();
@@ -99,7 +94,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit  AND page template is automatic WHEN link 'Unlock' clicked on 'Live Edit' frame  THEN Live Edit frame is unlocked"()
     {
         given: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
 
         when:
         contentWizard.unlockLiveEdit();
@@ -108,11 +103,11 @@ class CreateSiteWithLayoutSpec
         !contentWizard.isLiveEditLocked();
     }
 
-
+    @Ignore
     def "GIVEN site opened for edit WHEN 'layout item'  dragged AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
         contentWizard.unlockLiveEdit();
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "drag_and_drop" )
@@ -136,7 +131,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on to left region AND site saved THEN layout with one image present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
 
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "insert_left" )
@@ -157,7 +152,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on center region AND site saved THEN layout with two images present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
 
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "insert_images1" )
@@ -178,7 +173,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on right region AND site saved THEN layout with 3 images present on the live edit frame"()
     {
         given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
 
         ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
         TestUtils.saveScreenshot( getSession(), "insert_images1" )
@@ -199,13 +194,13 @@ class CreateSiteWithLayoutSpec
 
     private Content buildSimpleSiteWitLayout()
     {
-        SITE_NAME = NameHelper.uniqueName( "site" );
+        String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
         data.addString( "moduleKey", "Simple Site Module" );
         data.addStrings( "description", "simple site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
-            name( SITE_NAME ).
+            name( name ).
             displayName( "simple-site-module-based" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.site() ).data( data ).
@@ -213,18 +208,18 @@ class CreateSiteWithLayoutSpec
         return site;
     }
 
-    private Content buildPageTemplate()
+    private Content buildPageTemplate( String pageDescriptorName )
     {
         String name = "pagetemplate";
 
         PropertyTree data = new PropertyTree();
         data.addStrings( "nameInMenu", "item1" );
-        data.addStrings( "pageController", "Simple page" );
+        data.addStrings( "pageController", pageDescriptorName );
 
         Content pageTemplate = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "simple-page-template" ).
-            parent( ContentPath.from( SITE_NAME ) ).
+            parent( ContentPath.from( SITE.getName() ) ).
             contentType( ContentTypeName.pageTemplate() ).data( data ).
             build();
         return pageTemplate;
