@@ -118,7 +118,7 @@ public class Application
 
     public String waitNotificationWarning( long timeout )
     {
-        String message = TestUtils.waitNotificationMessage( By.xpath( NOTIFICATION_WARNING ), getDriver(), timeout );
+        String message = TestUtils.waitNotification( By.xpath( NOTIFICATION_WARNING ), getDriver(), timeout );
         getLogger().info( "Notification warning " + message );
         return message;
     }

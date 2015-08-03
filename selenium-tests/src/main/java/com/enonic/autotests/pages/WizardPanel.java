@@ -218,7 +218,7 @@ public abstract class WizardPanel<T>
      */
     public String waitNotificationMessage()
     {
-        String message = TestUtils.waitNotificationMessage( By.xpath( "//div[@class='notification-content']/span" ), getDriver(), 4l );
+        String message = TestUtils.waitNotification( By.xpath( "//div[@class='notification-content']/span" ), getDriver(), 4l );
         getLogger().info( "Notification message " + message );
         return message;
     }

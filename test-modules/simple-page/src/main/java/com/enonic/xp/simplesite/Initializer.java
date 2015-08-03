@@ -153,7 +153,7 @@ public class Initializer
 
     private byte[] loadImageFileAsBytes( final String fileName )
     {
-        final String filePath = "/app/images/" + fileName;
+        final String filePath = "/site/images/" + fileName;
 
         try
         {

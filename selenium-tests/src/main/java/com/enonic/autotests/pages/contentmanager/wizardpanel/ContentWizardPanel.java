@@ -43,7 +43,7 @@ public class ContentWizardPanel
         "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
     private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Publish']]";
+        "//div[contains(@id,'ContentWizardToolbar')]//div[contains(@id, 'ContentWizardToolbarPublishControls')]//button[contains(@id,'DialogButton') and child::span[text()='Publish']]";
 
     private static final String TOOLBAR_DELETE_BUTTON_XPATH =
         "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";

@@ -138,7 +138,7 @@ public class TestUtils
         logger.info( "clickByElement time is " + ( endTime - startTime ) );
     }
 
-    public static String waitNotificationMessage( final By locator, final WebDriver driver, long timeout )
+    public static String waitNotification( final By locator, final WebDriver driver, long timeout )
     {
         WebDriverWait wait = new WebDriverWait( driver, timeout );
         WebElement element = wait.until( ExpectedConditions.visibilityOfElementLocated( locator ) );
