@@ -16,7 +16,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class BaseBrowseFilterPanel
     extends Application
 {
-    public static final String CLEAR_FILTER_LINK = "Clear filter";
+    public static final String CLEAR_FILTER_LINK = "Clear"; //ClearFilterButton
 
     public static final String SEARCH_INPUT_XPATH =
         "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";
