@@ -1,14 +1,11 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
-import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -128,26 +125,14 @@ class Occurrences_ComboBox_1_1_Spec
     }
 
 
-    def "GIVEN creating new ComboBox-content (1:1) on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
+    def "GIVEN creating new ComboBox-content (1:1) on root WHEN required text input is empty THEN button 'Publish' is disabled"()
     {
-        given: "start to add a content with type 'ComboBox-content (1:1)'"
+        when: "start to add a content with type 'ComboBox-content (1:1)'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
 
-        when:
-        String warning = contentWizardPanel.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "tcbox1_1_publish" )
-        ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
-
-        then: "new content listed in the grid and can be opened for edit"
-        formViewPanel.isValidationMessagePresent();
-        and:
-        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
-
-        warning == Application.PUBLISH_NOTIFICATION_WARNING;
-        and:
-        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        !dialog.isOpened();
+        then: "button 'Publish' is disabled"
+        !contentWizardPanel.isPublishButtonEnabled();
     }
 
     private Content buildComboBox1_1_Content( int numberOptions )

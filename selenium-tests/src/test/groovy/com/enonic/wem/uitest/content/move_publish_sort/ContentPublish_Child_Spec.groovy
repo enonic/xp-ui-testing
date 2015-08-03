@@ -44,7 +44,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.OFFLINE.getValue();
     }
 
-    def "GIVEN parent folder with not published child WHEN publish dialog opened and 'Include child' set to true and 'Publish now' pressed  THEN child content has 'Online' status as well"()
+    def "GIVEN parent folder with not published child WHEN publish dialog opened and 'Include child' set to true and 'Publish' pressed  THEN child content has 'Online' status as well"()
     {
         given:
         filterPanel.typeSearchText( parentContent.getName() );
@@ -58,7 +58,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.ONLINE.getValue();
     }
 
-    def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN just added child content has a 'New' status"()
+    def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN just added child content has a 'Offline' status"()
     {
         setup: "add one more content into the published folder"
         filterPanel.typeSearchText( parentContent.getName() );
@@ -70,7 +70,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( childContent2.getName() );
 
-        then: "just new added content has a 'New' status"
+        then: "just new added content has a 'Offline' status"
         contentBrowsePanel.getContentStatus( childContent2.getName() ) == ContentStatus.OFFLINE.getValue();
     }
 

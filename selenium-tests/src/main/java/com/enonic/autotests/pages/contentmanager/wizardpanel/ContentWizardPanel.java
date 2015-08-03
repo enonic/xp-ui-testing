@@ -280,6 +280,11 @@ public class ContentWizardPanel
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
+    public boolean isPublishButtonEnabled()
+    {
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
     @Override
     public boolean isOpened()
     {
