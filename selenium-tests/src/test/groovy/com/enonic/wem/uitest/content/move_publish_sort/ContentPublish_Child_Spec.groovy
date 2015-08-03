@@ -41,7 +41,7 @@ class ContentPublish_Child_Spec
 
         then:
         filterPanel.typeSearchText( childContent1.getName() );
-        contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.NEW.getValue();
+        contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.OFFLINE.getValue();
     }
 
     def "GIVEN parent folder with not published child WHEN publish dialog opened and 'Include child' set to true and 'Publish now' pressed  THEN child content has 'Online' status as well"()
@@ -71,7 +71,7 @@ class ContentPublish_Child_Spec
         filterPanel.typeSearchText( childContent2.getName() );
 
         then: "just new added content has a 'New' status"
-        contentBrowsePanel.getContentStatus( childContent2.getName() ) == ContentStatus.NEW.getValue();
+        contentBrowsePanel.getContentStatus( childContent2.getName() ) == ContentStatus.OFFLINE.getValue();
     }
 
     def "GIVEN existing published parent folder with one published child and one 'new' content WHEN  parent folder selected and 'Delete' button pressed  THEN not published child content removed but parent folder and one child content have a 'Pending delete' status"()

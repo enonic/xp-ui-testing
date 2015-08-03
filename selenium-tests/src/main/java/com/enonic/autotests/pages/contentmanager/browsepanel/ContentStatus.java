@@ -3,7 +3,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 public enum ContentStatus
 {
-    NEW( "New" ), ONLINE( "Online" ), MODIFIED( "Modified" ), PENDING_DELETE( "Pending delete" );
+    OFFLINE( "Offline" ), ONLINE( "Online" ), MODIFIED( "Modified" ), PENDING_DELETE( "Pending delete" );
 
     private String value;
 
