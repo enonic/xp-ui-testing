@@ -43,6 +43,8 @@ public class ContentBrowsePanel
     protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH = BASE_PANEL_XPATH + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
 
 
+    private final String SHOW_FILTER_PANEL_BUTTON = BASE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
+
     private final String NEW_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='New']]";
 
     private final String DUPLICATE_BUTTON_XPATH =
@@ -62,6 +64,9 @@ public class ContentBrowsePanel
 
 
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
+
+    @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
+    protected WebElement showFilterPanelButton;
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
@@ -112,6 +117,30 @@ public class ContentBrowsePanel
         {
             throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
         }
+    }
+
+    private ContentBrowsePanel clickOnShowFilterPanelButton()
+    {
+        if ( findElements( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "button 'show filter panel' not displayed or probably bad locator for web element" );
+        }
+        showFilterPanelButton.click();
+        return this;
+    }
+
+    public ContentBrowsePanel doShowFilterPanel()
+    {
+        if ( !getFilterPanel().isFilterPanelDisplayed() )
+        {
+            clickOnShowFilterPanelButton();
+        }
+        return this;
+    }
+
+    public boolean isFilterPanelShown()
+    {
+        return getFilterPanel().isFilterPanelDisplayed();
     }
 
     public String waitNotificationMessage()

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -21,6 +21,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowseFilterPanel
     extends BaseBrowseFilterPanel
 {
+    private String FILTER_PANEL_CONTAINER = "//div[contains(@id,'app.browse.filter.ContentBrowseFilterPanel')]";
 
     private String CONTENT_TYPE_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
@@ -33,7 +34,7 @@ public class ContentBrowseFilterPanel
 
     public enum ContentTypeDisplayNames
     {
-        FOLDER( "Folder" ), DATA( "Data" ), STRUCTURED( "Structured" ), UNSTRUCTURED( "Unstructured" );
+        FOLDER( "Folder" ), SITE( "Site" ), SHORTCUT( "Shortcut" ), STRUCTURED( "Structured" ), UNSTRUCTURED( "Unstructured" );
 
         private String value;
 
@@ -59,28 +60,26 @@ public class ContentBrowseFilterPanel
 
     }
 
+    public boolean isFilterPanelDisplayed()
+    {
+        return findElements( By.xpath( FILTER_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
     public List<String> getAllContentTypesFilterEntries()
     {
-        boolean result =
-            waitUntilVisibleNoException( By.xpath( "//input[@type='checkbox']/label(contains(.,'Folder'))" ), Application.EXPLICIT_NORMAL );
-        // we should wait it because, when BrowsePanel not loaded, all labels on FilterPanel are in lower case.
-        if ( !result )
-        {
-            getLogger().info( "The 'Folder' filter not present in FilterPanel" );
-        }
-        getLogger().info( "The 'Folder' filter not present in FilterPanel" );
+//        boolean result =
+//            waitUntilVisibleNoException( By.xpath( "//input[@type='checkbox']/label(contains(.,'Folder'))" ), Application.EXPLICIT_NORMAL );
+//        // we should wait it because, when BrowsePanel not loaded, all labels on FilterPanel are in lower case.
+//        if ( !result )
+//        {
+//            getLogger().info( "The 'Folder' filter not present in FilterPanel" );
+//        }
+//        getLogger().info( "The 'Folder' filter not present in FilterPanel" );
+        sleep( 500 );
 
         List<WebElement> elements = getDriver().findElements( By.xpath(
             "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and descendant::label]//label" ) );
-        List<String> labels = new ArrayList<>();
-        for ( WebElement el : elements )
-        {
-            if ( el.isDisplayed() )
-            {
-                labels.add( el.getText() );
-            }
-        }
-        return labels;
+        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public List<String> getAllLastModifiedFilterEntries()
@@ -157,6 +156,10 @@ public class ContentBrowseFilterPanel
      */
     public String selectEntryInContentTypesFilter( String contentTypeDisplayName )
     {
+        if ( !isFilterPanelDisplayed() )
+        {
+
+        }
         String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeDisplayName );
         WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
         if ( element == null )

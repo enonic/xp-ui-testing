@@ -28,7 +28,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             contentType( ContentTypeName.unstructured() ).
             build();
         addContent( content );
-
+        contentBrowsePanel.doShowFilterPanel();
         when:
         String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "filter-panel" );
@@ -41,6 +41,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        contentBrowsePanel.doShowFilterPanel();
 
         when:
         filterPanel.clickOnCleanFilter();
@@ -54,6 +55,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should disappear"()
     {
         given: "Selections in any filter"
+        contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
 
         when: "clicking CleanFilter"
@@ -68,13 +70,13 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN creating new Content WHEN saved and HomeButton clicked THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
-        Content content = buildFolderContent( "folder", "last modified test" );
-
+        Content folder = buildFolderContent( "folder", "last modified test" );
+        contentBrowsePanel.doShowFilterPanel();
         int beforeAdding = filterPanel.getNumberFilteredByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
 
         when: "content saved and the HomeButton clicked"
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save();
+        contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData( folder ).save();
         contentBrowsePanel.goToAppHome();
 
         then: "new ContentType-filter and LastModified-filter should be updated with new count"
@@ -85,6 +87,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN creating new Content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given: "opened a content wizard and data typed"
+        contentBrowsePanel.doShowFilterPanel();
         Content content = buildFolderContent( "folder", "last modified test 2" );
         int beforeAdding = filterPanel.getNumberFilteredByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
@@ -104,6 +107,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN a Content WHEN deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
+        contentBrowsePanel.doShowFilterPanel();
         Content folder = buildFolderContent( "folder", "last modified test 3" );
         addContent( folder );
         TestUtils.saveScreenshot( getSession(), "LastModified_filter1" )
@@ -125,43 +129,46 @@ class ContentBrowsePanel_FilterPanel_Spec
 
     def "GIVEN No selections or text-search WHEN adding text-search THEN all filters should be updated to only contain entries with matches in text-search"()
     {
-        given:
+        given: "a folder-content added and No selections or text-search"
+        contentBrowsePanel.doShowFilterPanel();
         Content folder = buildFolderContent( "folder", "filtering test" );
         addContent( folder );
 
-        when:
+        when: "folder's name typed in the text input"
         filterPanel.typeSearchText( folder.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "SearchText" );
 
-        then:
+        then: "all filters should be updated to only contain entries with matches in text-search"
         filterPanel.getNumberFilteredByContentType( "Folder" ) == 1 && filterPanel.getLastModifiedCount( "hour" ) == 1;
     }
 
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN no changes in ContentTypes-filter"()
     {
-        given:
+        given: " No selections in filter and filter panel shown"
+        contentBrowsePanel.doShowFilterPanel();
         List<String> beforeSelect = filterPanel.getAllContentTypesFilterEntries();
 
-        when:
+        when: "Selecting one entry in ContentTypes-filter"
         filterPanel.selectEntryInContentTypesFilter( "Folder" );
 
-        then:
+        then: "no changes in ContentTypes-filter"
         List<String> afterSelect = filterPanel.getAllContentTypesFilterEntries();
         beforeSelect.equals( afterSelect );
     }
 
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN LastModified-filter should be updated with filtered values"()
     {
-        given:
+        given: "No selections in the filter panel"
         Content content = buildFolderContent( "folder", "filter test" );
         addContent( content );
+        contentBrowsePanel.doShowFilterPanel();
         Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
 
-        when:
+        when: "Selecting one entry in ContentTypes-filter"
         String folderCount = filterPanel.selectEntryInContentTypesFilter( "Folder" );
 
-        then:
+        then: "LastModified-filter should be updated with filtered values"
         Integer newLastModifiedNumber = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
         if ( lastModifiedNumberBefore == 0 )
         {
@@ -176,7 +183,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
     def "GIVEN selection in any filter WHEN adding text-search THEN all filters should be updated to only contain entries with selection and new count with match on text-search"()
     {
-        given:
+        given: "added a folder content and selection in any filter(folder)"
         Content content = buildFolderContent( "folder", "filter test" );
         addContent( content );
 
