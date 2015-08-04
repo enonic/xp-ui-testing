@@ -38,6 +38,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             build();
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
             content.getDisplayName() );
+        contentBrowsePanel.doShowFilterPanel();
 
         when:
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
@@ -52,6 +53,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN Selections in any filter WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
+        contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         boolean beforeClean = contentBrowsePanel.exists( initialFolder.getName() );
@@ -67,6 +69,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN One selection in ContentTypes-filter WHEN Selecting one additional entry in ContentTypes-filter THEN all existing Content of the both selected types should be listed in gridPanel"()
     {
         given:
+        contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         Integer numberOfData = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
@@ -84,6 +87,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN One one selection in any filter WHEN deselecting selection THEN initial grid view displayed "()
     {
         given:
+        contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
         TestUtils.saveScreenshot( getTestSession(), "one-selection2" );
@@ -101,6 +105,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
     {
         when:
+        contentBrowsePanel.doShowFilterPanel();
         filterPanel.typeSearchText( initialFolder.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "text-search1" );
@@ -112,6 +117,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
+        contentBrowsePanel.doShowFilterPanel();
         Content folder = buildFolderContent( "folder", "filter test" )
         filterPanel.typeSearchText( folder.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
