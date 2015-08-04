@@ -13,9 +13,11 @@ import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class BaseBrowseFilterPanel
+public abstract class BaseBrowseFilterPanel
     extends Application
 {
+    public static String FILTER_PANEL_CONTAINER = "//div[contains(@id,'FilterPanel') and contains(@class,'filter-panel')]";
+
     public static final String CLEAR_FILTER_LINK = "Clear"; //ClearFilterButton
 
     public static final String SEARCH_INPUT_XPATH =
@@ -27,6 +29,13 @@ public class BaseBrowseFilterPanel
     public BaseBrowseFilterPanel( final TestSession session )
     {
         super( session );
+    }
+
+    public abstract BrowsePanel getBrowsePanel();
+
+    public boolean isFilterPanelDisplayed()
+    {
+        return findElements( By.xpath( FILTER_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
     /**
@@ -51,15 +60,17 @@ public class BaseBrowseFilterPanel
      */
     public BaseBrowseFilterPanel typeSearchText( String text )
     {
+        if ( !isFilterPanelDisplayed() )
+        {
+            getBrowsePanel().doShowFilterPanel();
+        }
         boolean isVisible = waitUntilVisibleNoException( By.xpath( SEARCH_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isVisible )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "filterinput" ) );
-            throw new TestFrameworkException( "browse panel or search input not displayed" );
+            throw new TestFrameworkException( "filter panel or search input not displayed" );
         }
-        getLogger().info( "query will be applied : " + text );
         clearAndType( searchInput, text );
-        //searchInput.sendKeys( text );
         searchInput.sendKeys( Keys.ENTER );
         sleep( 1000 );
         getLogger().info( "Filtered by : " + text );
@@ -83,6 +94,4 @@ public class BaseBrowseFilterPanel
     {
         return waitsElementNotVisible( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
     }
-
-
 }

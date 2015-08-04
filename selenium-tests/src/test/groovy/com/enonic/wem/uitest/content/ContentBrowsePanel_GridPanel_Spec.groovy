@@ -102,12 +102,14 @@ class ContentBrowsePanel_GridPanel_Spec
 
     def "GIVEN a parent folder with child WHEN the name of parent typed in the TextSearchField and folder expanded THEN child content appears "()
     {
-        given:
-        filterPanel.typeSearchText( parentContent.getName() )
+        given: "a parent folder with child and filter panel shown"
+        contentBrowsePanel.doShowFilterPanel();
 
-        when:
+        when: "the name of parent typed in the TextSearchField and folder expanded"
+        filterPanel.typeSearchText( parentContent.getName() )
         contentBrowsePanel.expandContent( parentContent.getPath() );
-        then:
+
+        then: "child content appears"
         contentBrowsePanel.exists( CHILD_CONTENT_NAME );
     }
 

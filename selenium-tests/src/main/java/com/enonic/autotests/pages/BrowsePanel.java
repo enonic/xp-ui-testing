@@ -16,16 +16,18 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.xp.content.ContentPath;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public abstract class BrowsePanel
     extends Application
 {
+    protected final String BASE_TOOLBAR_XPATH = "//div[contains(@id,'BrowseToolbar')]";
+
+    protected final String SHOW_FILTER_PANEL_BUTTON = BASE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
+
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and text()='%s']]";
 
@@ -56,6 +58,9 @@ public abstract class BrowsePanel
     private String BROWSE_PANEL_ITEM_EXPANDER =
         DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
+    @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
+    protected WebElement showFilterPanelButton;
+
     @FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
     protected WebElement clearSelectionLink;
 
@@ -83,6 +88,27 @@ public abstract class BrowsePanel
     public abstract <T extends Application> T clickToolbarNew();
 
     public abstract <T extends BaseDeleteDialog> T clickToolbarDelete();
+
+    public abstract BaseBrowseFilterPanel getFilterPanel();
+
+    private BrowsePanel clickOnShowFilterPanelButton()
+    {
+        if ( findElements( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "button 'show filter panel' not displayed or probably bad locator for web element" );
+        }
+        showFilterPanelButton.click();
+        return this;
+    }
+
+    public BrowsePanel doShowFilterPanel()
+    {
+        if ( !getFilterPanel().isFilterPanelDisplayed() )
+        {
+            clickOnShowFilterPanelButton();
+        }
+        return this;
+    }
 
     /**
      * clicks on 'expand' icon and expands a folder.

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BaseDeleteDialog;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
@@ -17,39 +18,19 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ModuleBrowsePanel
     extends BrowsePanel
 {
+    public final String START_BUTTON =
+        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Start']]";
 
-    public static final String TOOLBAR = "//div[contains(@id,'app.browse.ModuleBrowseToolbar')]";
-
-    public static final String INSTALL_BUTTON =
-        TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Install']]";
-
-    public static final String UPDATE_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Update']]";
-
-    public static final String START_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Start']]";
-
-    public static final String STOP_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Stop']]";
-
-    public static final String UNINSTALL_BUTTON =
-        TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Uninstall']]";
+    public final String STOP_BUTTON = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Stop']]";
 
     private ModuleBrowseItemsSelectionPanel itemsSelectionPanel;
 
-
-    @FindBy(xpath = INSTALL_BUTTON)
-    private WebElement installButton;
-
-    @FindBy(xpath = UPDATE_BUTTON)
-    private WebElement updateButton;
 
     @FindBy(xpath = START_BUTTON)
     private WebElement startButton;
 
     @FindBy(xpath = STOP_BUTTON)
     private WebElement stopButton;
-
-    @FindBy(xpath = UNINSTALL_BUTTON)
-    private WebElement uninstallButton;
-
 
     /**
      * The Constructor
@@ -67,29 +48,16 @@ public class ModuleBrowsePanel
         return null;
     }
 
-    public InstallModuleDialog clickToolbarInstall()
-    {
-        installButton.click();
-        InstallModuleDialog dialog = new InstallModuleDialog( getSession() );
-        return dialog;
-    }
-
     @Override
     public <T extends Application> T clickToolbarNew()
     {
         throw new TestFrameworkException( "method not exists for module app" );
     }
 
-    public ModuleBrowsePanel clickOnToolbarUninstall()
+    @Override
+    public BaseBrowseFilterPanel getFilterPanel()
     {
-
-        if ( !waitAndCheckIsButtonEnabled( UNINSTALL_BUTTON ) )
-        {
-            throw new TestFrameworkException( "impossible to uninstall button, because button disabled!" );
-        }
-        uninstallButton.click();
-
-        return this;
+        return null;
     }
 
     public ModuleBrowsePanel clickOnToolbarStop()
@@ -118,11 +86,6 @@ public class ModuleBrowsePanel
         return waitUntilElementEnabledNoException( By.xpath( buttonXpath ), 2 );
     }
 
-    public boolean isUninstallButtonEnabled()
-    {
-        return uninstallButton.isEnabled();
-    }
-
     public boolean isStartButtonEnabled()
     {
         return startButton.isEnabled();
@@ -132,17 +95,6 @@ public class ModuleBrowsePanel
     {
         return stopButton.isEnabled();
     }
-
-    public boolean isInstallButtonEnabled()
-    {
-        return installButton.isEnabled();
-    }
-
-    public boolean isUpdateButtonEnabled()
-    {
-        return updateButton.isEnabled();
-    }
-
 
     public String getModuleStatus( String moduleName )
     {

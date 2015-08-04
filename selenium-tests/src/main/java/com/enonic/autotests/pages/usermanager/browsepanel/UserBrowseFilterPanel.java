@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
+import com.enonic.autotests.pages.BrowsePanel;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -22,6 +23,12 @@ public class UserBrowseFilterPanel
 
     }
 
+    @Override
+    public BrowsePanel getBrowsePanel()
+    {
+        return new UserBrowsePanel( getSession() );
+    }
+
     /**
      * @param text
      */
@@ -34,5 +41,4 @@ public class UserBrowseFilterPanel
         getLogger().info( "Filtered by : " + text );
         return this;
     }
-
 }

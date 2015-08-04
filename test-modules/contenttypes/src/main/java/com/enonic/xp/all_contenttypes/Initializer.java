@@ -38,6 +38,10 @@ public class Initializer
 
     private static final String FOLDER_NAME = "all-content-types-images";
 
+    private static final String EMPTY_FOLDER_NAME = "selenium-tests-folder";
+
+    private static final String EMPTY_FOLDER_DISPLAY_NAME = "folder for selenium tests";
+
     private static final String FOLDER_DISPLAY_NAME = "All Content types images";
 
     private static final AccessControlList PERMISSIONS =
@@ -70,14 +74,13 @@ public class Initializer
             return;
         }
 
-        folderWithImage();
-
-        // set permissions
-        final Content moduleContent = contentService.getByPath( imagesPath );
-        if ( moduleContent != null )
+        addFolderWithImage();
+        // set permissions  for folder with images
+        final Content imagesFolder = contentService.getByPath( imagesPath );
+        if ( imagesFolder != null )
         {
             final UpdateContentParams setFeaturesPermissions = new UpdateContentParams().
-                contentId( moduleContent.getId() ).
+                contentId( imagesFolder.getId() ).
                 editor( ( content ) -> {
                     content.permissions = PERMISSIONS;
                     content.inheritPermissions = false;
@@ -85,10 +88,38 @@ public class Initializer
             contentService.update( setFeaturesPermissions );
 
             contentService.applyPermissions( ApplyContentPermissionsParams.create().
-                contentId( moduleContent.getId() ).
+                contentId( imagesFolder.getId() ).
                 modifier( PrincipalKey.ofAnonymous() ).
                 build() );
         }
+
+        final ContentPath emptyFolderPath = ContentPath.from( "/" + EMPTY_FOLDER_NAME );
+        if ( hasContent( emptyFolderPath ) )
+        {
+            return;
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        addEmptyFolder();
+        // set permissions  for empty folder
+        final Content emptyFolder = contentService.getByPath( emptyFolderPath );
+        if ( emptyFolder != null )
+        {
+            final UpdateContentParams setFeaturesPermissions = new UpdateContentParams().
+                contentId( emptyFolder.getId() ).
+                editor( ( content ) -> {
+                    content.permissions = PERMISSIONS;
+                    content.inheritPermissions = false;
+                } );
+            contentService.update( setFeaturesPermissions );
+
+            contentService.applyPermissions( ApplyContentPermissionsParams.create().
+                contentId( emptyFolder.getId() ).
+                modifier( PrincipalKey.ofAnonymous() ).
+                build() );
+        }
+
+
     }
 
     private CreateContentParams.Builder makeFolder()
@@ -118,7 +149,7 @@ public class Initializer
         this.contentService = contentService;
     }
 
-    private void folderWithImage()
+    private void addFolderWithImage()
         throws Exception
     {
         final ContentPath testFolderPath = ContentPath.from( "/" + FOLDER_NAME );
@@ -143,6 +174,22 @@ public class Initializer
                     LOG.info( "Initialized content for 'All content types'" );
                 }
             }
+        }
+    }
+
+    private void addEmptyFolder()
+        throws Exception
+    {
+        final ContentPath testFolderPath = ContentPath.from( "/" + EMPTY_FOLDER_NAME );
+        if ( !hasContent( testFolderPath ) )
+        {
+            contentService.create( makeFolder().
+                name( EMPTY_FOLDER_NAME ).
+                displayName( EMPTY_FOLDER_DISPLAY_NAME ).
+                parent( ContentPath.ROOT ).
+                permissions( PERMISSIONS ).
+                inheritPermissions( false ).
+                build() );
         }
     }
 

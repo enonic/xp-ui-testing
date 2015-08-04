@@ -14,6 +14,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
+import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -21,8 +22,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowseFilterPanel
     extends BaseBrowseFilterPanel
 {
-    private String FILTER_PANEL_CONTAINER = "//div[contains(@id,'app.browse.filter.ContentBrowseFilterPanel')]";
-
     private String CONTENT_TYPE_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
 
@@ -60,21 +59,14 @@ public class ContentBrowseFilterPanel
 
     }
 
-    public boolean isFilterPanelDisplayed()
+    @Override
+    public BrowsePanel getBrowsePanel()
     {
-        return findElements( By.xpath( FILTER_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return new ContentBrowsePanel( getSession() );
     }
 
     public List<String> getAllContentTypesFilterEntries()
     {
-//        boolean result =
-//            waitUntilVisibleNoException( By.xpath( "//input[@type='checkbox']/label(contains(.,'Folder'))" ), Application.EXPLICIT_NORMAL );
-//        // we should wait it because, when BrowsePanel not loaded, all labels on FilterPanel are in lower case.
-//        if ( !result )
-//        {
-//            getLogger().info( "The 'Folder' filter not present in FilterPanel" );
-//        }
-//        getLogger().info( "The 'Folder' filter not present in FilterPanel" );
         sleep( 500 );
 
         List<WebElement> elements = getDriver().findElements( By.xpath(
