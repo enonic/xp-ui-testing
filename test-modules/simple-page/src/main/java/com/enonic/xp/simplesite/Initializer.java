@@ -115,7 +115,7 @@ public class Initializer
                 }
                 finally
                 {
-                    LOG.info( "Initialized content for 'All content types'" );
+                    LOG.info( "added image content content for simple page' app: " + fileName );
                 }
             }
         }
@@ -161,7 +161,7 @@ public class Initializer
         }
         catch ( Exception e )
         {
-            LOG.info( "error  " + e.getMessage() );
+            LOG.info( "error when loads  :  " + fileName );
             System.out.println( "error " + e.getMessage() );
             return null;
         }
