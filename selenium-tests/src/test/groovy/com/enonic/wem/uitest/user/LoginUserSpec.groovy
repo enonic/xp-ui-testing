@@ -43,6 +43,12 @@ class LoginUserSpec
     @Shared
     String NEW_USER_PASSWORD = "password1";
 
+    @Shared
+    Content userContent
+
+    @Shared
+    Content contentNoPermissions
+
 
     def "setup: add a test user to the system user store"()
     {
@@ -73,7 +79,7 @@ class LoginUserSpec
         ContentAclEntry entry = ContentAclEntry.builder().principalName( USER_NAME ).suite( PermissionSuite.CAN_READ ).build();
         List<ContentAclEntry> aclEntries = new ArrayList<>()
         aclEntries.add( entry );
-        Content content = Content.builder().
+        userContent = Content.builder().
             name( NameHelper.uniqueName( "folder-login" ) ).
             displayName( "folder" ).
             parent( ContentPath.ROOT ).
@@ -87,17 +93,17 @@ class LoginUserSpec
 
         when: "new content with permissions CAN_READ for user  saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
-            typeData( content ).save().close( content.getDisplayName() );
+            typeData( userContent ).save().close( userContent.getDisplayName() );
 
         then: "content listed in the grid"
         TestUtils.saveScreenshot( getSession(), "login-content1" );
-        contentBrowsePanel.exists( content.getName() );
+        contentBrowsePanel.exists( userContent.getName() );
     }
 
     def "WHEN new content without any permissions for just created user added THEN Content is listed in BrowsePanel"()
     {
         given:
-        Content content = Content.builder().
+        contentNoPermissions = Content.builder().
             name( NameHelper.uniqueName( "folder-login" ) ).
             displayName( "folder" ).
             parent( ContentPath.ROOT ).
@@ -110,11 +116,11 @@ class LoginUserSpec
 
         when: "new content with permissions CAN_READ for user  saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
-            typeData( content ).save().close( content.getDisplayName() );
+            typeData( contentNoPermissions ).save().close( contentNoPermissions.getDisplayName() );
 
         then: "content listed in the grid"
         TestUtils.saveScreenshot( getSession(), "login-content2" );
-        contentBrowsePanel.exists( content.getName() );
+        contentBrowsePanel.exists( contentNoPermissions.getName() );
     }
 
     def "WHEN new created user logged in THEN home page with only one application(CM) loaded "()
@@ -130,20 +136,23 @@ class LoginUserSpec
         home.isLoaded();
         and:
         home.isContentManagerDisplayed();
-
     }
 
     def "WHEN new created user logged and opened a CM app THEN only one content should be present in the grid "()
     {
-        when:
+        when: "content manager opened"
         go "admin"
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         TestUtils.saveScreenshot( getSession(), "logged_cm" );
+        contentBrowsePanel.getFilterPanel().typeSearchText( userContent.getName() );
 
-        then: true;
-        contentBrowsePanel.getContentNamesFromBrowsePanel().size() == 1
+        then: "content with permissions for current user are shown"
+        contentBrowsePanel.exists( userContent.getName() );
+        and:
+        contentBrowsePanel.getFilterPanel().typeSearchText( contentNoPermissions.getName() );
+        !contentBrowsePanel.exists( contentNoPermissions.getName() );
     }
 
     def "GIVEN opened user for edit WHEN 'change password' button pressed THEN modal dialog appears"()
@@ -166,7 +175,6 @@ class LoginUserSpec
         dialog.isCancelButtonDisplayed();
         and:
         dialog.isChangeButtonDisplayed();
-
     }
 
     def "changing a password for existing user"()
@@ -187,7 +195,6 @@ class LoginUserSpec
 
         then:
         userBrowsePanel.waitUntilPageLoaded( 2 );
-
     }
 
     def "WHEN password changed for existing user THEN old password should not work for login"()

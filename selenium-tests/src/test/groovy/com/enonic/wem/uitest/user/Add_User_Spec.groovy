@@ -38,7 +38,6 @@ class Add_User_Spec
     {
         given: "start adding a new user"
         user = UserTestUtils.buildUser( NameHelper.uniqueName( "user" ), "password" );
-
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
@@ -46,9 +45,12 @@ class Add_User_Spec
         when: "data typed and user saved"
         String creatingMessage = userWizardPanel.typeData( user ).save().waitNotificationMessage();
         userWizardPanel.close( user.getDisplayName() );
-        userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
+        def isWizardOpened = userWizardPanel.isOpened();
 
         then: "new user present beneath a store"
+        !isWizardOpened;
+        and: "user present beneath a store"
+        userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
         userBrowsePanel.exists( user.getDisplayName(), true );
 
         and: "new user present beneath a system store"
@@ -70,7 +72,5 @@ class Add_User_Spec
         !userBrowsePanel.exists( user.getDisplayName(), true );
         and:
         message == String.format( DELETING_NOTIFICATION_MESSAGE, user.getDisplayName() );
-
     }
-
 }

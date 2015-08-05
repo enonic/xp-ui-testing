@@ -24,6 +24,7 @@ public class UserWizardPanel
     extends WizardPanel<User>
 {
     public static final String PASSWORD_ERROR_MESSAGE = "Password can not be empty.";
+
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
@@ -176,8 +177,7 @@ public class UserWizardPanel
     @Override
     public boolean isOpened()
     {
-        return toolbarSaveButton.isDisplayed();
-
+        return findElements( By.xpath( TOOLBAR_SAVE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
     @Override
