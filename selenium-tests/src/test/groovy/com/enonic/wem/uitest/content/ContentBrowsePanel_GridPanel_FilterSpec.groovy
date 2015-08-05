@@ -33,7 +33,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         def displayed = filterPanel.isFilterPanelDisplayed();
 
         when: "panel not displayed adn button 'show filter panel' clicked"
-        !displayed || contentBrowsePanel.doShowFilterPanel();
+        displayed || contentBrowsePanel.doShowFilterPanel();
         TestUtils.saveScreenshot( getSession(), "filter_panel_shown" )
 
         then: "filter panel displayed"
