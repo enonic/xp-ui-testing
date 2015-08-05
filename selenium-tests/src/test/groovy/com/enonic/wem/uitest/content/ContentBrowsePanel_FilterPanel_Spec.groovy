@@ -175,6 +175,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     def "GIVEN selection in any filter WHEN adding text-search THEN all filters should be updated to only contain entries with selection and new count with match on text-search"()
     {
         given: "added a folder content and selection in any filter(folder)"
+        contentBrowsePanel.doShowFilterPanel();
         String label = filterPanel.selectEntryInContentTypesFilter( "Folder" );
         Integer folderCountBefore = TestUtils.getNumberFromFilterLabel( label );
 
