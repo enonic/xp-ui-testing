@@ -6,6 +6,7 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -16,6 +17,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     @Shared
     Content initialFolder;
 
+    @Ignore
     def "add initial content"()
     {
         when:
@@ -24,6 +26,19 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then:
         contentBrowsePanel.exists( initialFolder.getName() );
+    }
+
+    def "GIVEN browse panel opened WHEN filter panel not displayed AND button 'show filter' clicked THEN filter panel appears"()
+    {
+        given: 'check for filter panel displayed'
+        def displayed = filterPanel.isFilterPanelDisplayed();
+
+        when: "panel not displayed adn button 'show filter panel' clicked"
+        !displayed || contentBrowsePanel.doShowFilterPanel();
+        TestUtils.saveScreenshot( getSession(), "filter_panel_shown" )
+
+        then: "filter panel displayed"
+        filterPanel.isFilterPanelDisplayed();
     }
 
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN all existing Content of the selected type should be listed in gridPanel"()
