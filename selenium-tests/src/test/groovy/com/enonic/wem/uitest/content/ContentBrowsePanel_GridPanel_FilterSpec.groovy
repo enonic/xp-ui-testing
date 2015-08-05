@@ -6,7 +6,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -17,7 +16,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     @Shared
     Content initialFolder;
 
-    @Ignore
+
     def "add initial content"()
     {
         when:
