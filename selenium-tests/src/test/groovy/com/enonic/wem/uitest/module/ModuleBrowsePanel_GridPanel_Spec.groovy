@@ -11,11 +11,11 @@ class ModuleBrowsePanel_GridPanel_Spec
     def setup()
     {
         go "admin"
-        moduleBrowsePanel = NavigatorHelper.openModules( getTestSession() );
+        moduleBrowsePanel = NavigatorHelper.openApplications( getTestSession() );
     }
 
 
-    def "GIVEN modules listed on root WHEN no selection THEN all rows are white"()
+    def "GIVEN applications listed on root WHEN no selection THEN all rows are white"()
     {
         given:
         int rowNumber = moduleBrowsePanel.getRowNumber();
@@ -25,36 +25,36 @@ class ModuleBrowsePanel_GridPanel_Spec
 
     }
 
-    def "GIVEN modules listed on root WHEN one row is clicked THEN its row is blue"()
+    def "GIVEN applications listed on root WHEN one row is clicked THEN its row is blue"()
     {
         given:
         int before = moduleBrowsePanel.getSelectedRowsNumber();
 
         when:
-        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
         then:
         moduleBrowsePanel.getSelectedRowsNumber() == 1 && before == 0;
     }
 
-    def "GIVEN a selected module  WHEN spacebar is typed THEN row is no longer selected"()
+    def "GIVEN a selected application  WHEN spacebar is typed THEN row is no longer selected"()
     {
         given:
-        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
         TestUtils.saveScreenshot( getTestSession(), "modulespacebartest1" );
 
         when:
-        moduleBrowsePanel.pressKeyOnRow( FIRST_MODULE_NAME, Keys.SPACE );
+        moduleBrowsePanel.pressKeyOnRow( FIRST_APP_NAME, Keys.SPACE );
 
         then:
         TestUtils.saveScreenshot( getTestSession(), "modulespacebartest2" );
         moduleBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN a selected module  WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
+    def "GIVEN a selected application WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
     {
         given:
-        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
         int before = moduleBrowsePanel.getSelectedRowsNumber();
 
         when:
@@ -65,7 +65,7 @@ class ModuleBrowsePanel_GridPanel_Spec
     }
 
 
-    def "GIVEN no Content selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
+    def "GIVEN no applications selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
     {
         given:
         moduleBrowsePanel.clickOnClearSelection();
@@ -79,7 +79,7 @@ class ModuleBrowsePanel_GridPanel_Spec
     }
 
 
-    def "GIVEN a selected module  WHEN arrow down is typed THEN next row is selected"()
+    def "GIVEN a selected application WHEN arrow down is typed THEN next row is selected"()
     {
         given:
 
@@ -96,7 +96,7 @@ class ModuleBrowsePanel_GridPanel_Spec
         moduleBrowsePanel.getSelectedRowsNumber() == 1 && !namesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
     }
 
-    def "GIVEN a selected module  WHEN arrow up is typed THEN previous row is selected"()
+    def "GIVEN a selected application WHEN arrow up is typed THEN previous row is selected"()
     {
         given:
         moduleBrowsePanel.clickCheckboxAndSelectRow( 3 );

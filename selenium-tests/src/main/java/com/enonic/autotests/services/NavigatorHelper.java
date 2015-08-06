@@ -69,7 +69,7 @@ public class NavigatorHelper
 
     }
 
-    public static ModuleBrowsePanel openModules( TestSession testSession )
+    public static ModuleBrowsePanel openApplications( TestSession testSession )
     {
         if ( testSession.isLoggedIn() )
         {
@@ -86,7 +86,7 @@ public class NavigatorHelper
 
             HomePage home = loginAndOpenHomePage( testSession );
             TestUtils.saveScreenshot( testSession, "homepage" );
-            ModuleBrowsePanel userBrowsePanel = home.openModulesApplication();
+            ModuleBrowsePanel userBrowsePanel = home.openApplications();
             return userBrowsePanel;
         }
 

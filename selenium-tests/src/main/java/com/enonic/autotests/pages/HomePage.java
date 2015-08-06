@@ -34,8 +34,8 @@ public class HomePage
     @FindBy(xpath = USER_APP_LINK)
     private WebElement userManager;
 
-    @FindBy(xpath = "//a[contains(@href,'module-manager')]//div[contains(.,'Modules')]")
-    private WebElement modules;
+    @FindBy(xpath = "//a[contains(@href,'applications')]//div[contains(.,'Applications')]")
+    private WebElement applications;
 
 
     /**
@@ -152,10 +152,10 @@ public class HomePage
         return panel;
     }
 
-    public ModuleBrowsePanel openModulesApplication()
+    public ModuleBrowsePanel openApplications()
     {
         TestUtils.saveScreenshot( getSession(), "home_module_1" );
-        modules.click();
+        applications.click();
         SleepHelper.sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "home_module_2" );
         String whandle = getSession().getDriver().getWindowHandle();

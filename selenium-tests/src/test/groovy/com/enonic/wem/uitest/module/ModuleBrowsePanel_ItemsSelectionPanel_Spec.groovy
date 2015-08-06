@@ -16,59 +16,59 @@ class ModuleBrowsePanel_ItemsSelectionPanel_Spec
     def setup()
     {
         go "admin"
-        moduleBrowsePanel = NavigatorHelper.openModules( getTestSession() );
+        moduleBrowsePanel = NavigatorHelper.openApplications( getTestSession() );
         itemsSelectionPanel = moduleBrowsePanel.getItemSelectionPanel();
     }
 
 
-    def "GIVEN one selected module WHEN selecting one more THEN two SelectionItem-s are listed"()
+    def "GIVEN one selected application WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
-        given: " there is a one selected module"
-        moduleBrowsePanel.clickAndSelectRow( FIRST_MODULE_NAME );
+        given: " there is a one selected application"
+        moduleBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
 
-        when: "selected a one more module"
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_MODULE_NAME );
+        when: "selected a one more application"
+        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
         then:
         itemsSelectionPanel.getSelectedItemCount() == 2;
     }
 
-    def "GIVEN two selected module WHEN selecting one more THEN three SelectionItem-s are listed"()
+    def "GIVEN two selected application WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
         given: " there is a two selected module"
-        moduleBrowsePanel.clickAndSelectRow( FIRST_MODULE_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_MODULE_NAME );
+        moduleBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
 
-        when: "selected a one more module"
+        when: "selected a one more application"
 
-        moduleBrowsePanel.clickCheckboxAndSelectRow( THIRD_MODULE_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( THIRD_APP_NAME );
 
         then: "three SelectionItem-s are listed"
         itemsSelectionPanel.getSelectedItemCount() == 3;
     }
 
-    def "GIVEN three selected module WHEN deselecting one THEN two SelectionItem-s are listed"()
+    def "GIVEN three selected application WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
-        given: "there are three selected module in browse panel"
-        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_MODULE_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( THIRD_MODULE_NAME );
+        given: "there are three selected application in browse panel"
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( THIRD_APP_NAME );
 
-        when: "one module was deselected"
-        moduleBrowsePanel.deSelectModuleInTable( THIRD_MODULE_NAME );
+        when: "one application was deselected"
+        moduleBrowsePanel.deSelectModuleInTable( THIRD_APP_NAME );
 
         then: "only two items are listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;
 
     }
 
-    def "WHEN two selected module  THEN two SelectionItem-s with the same name are listed"()
+    def "WHEN two selected application THEN two SelectionItem-s with the same name are listed"()
     {
-        when: "two module are selected"
-        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_MODULE_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_MODULE_NAME );
+        when: "two applications are selected"
+        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
 
         then: "three SelectionItem-s are listed"
         List actualNames = itemsSelectionPanel.getSelectedItemNames();
-        actualNames.size() == 2 && actualNames.contains( FIRST_MODULE_NAME ) && actualNames.contains( SECOND_MODULE_NAME );
+        actualNames.size() == 2 && actualNames.contains( FIRST_APP_NAME ) && actualNames.contains( SECOND_APP_NAME );
     }
 }
