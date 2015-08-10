@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.usermanager.browsepanel.DeleteUserItemDialog
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.autotests.vo.usermanager.UserStore
 import spock.lang.Shared
@@ -66,6 +67,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     {
         when:
         userBrowsePanel.expandStoreAndSelectUsers( USER_STORE_PATH );
+        TestUtils.saveScreenshot( getSession(), "store_expand_users" )
 
         then: "'Delete' button is disabled "
         !userBrowsePanel.isDeleteButtonEnabled();
@@ -75,6 +77,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     {
         when:
         userBrowsePanel.expandStoreAndSelectGroups( USER_STORE_PATH );
+        TestUtils.saveScreenshot( getSession(), "store_expand_roles" )
 
         then: "'Delete' button is disabled "
         !userBrowsePanel.isDeleteButtonEnabled();
