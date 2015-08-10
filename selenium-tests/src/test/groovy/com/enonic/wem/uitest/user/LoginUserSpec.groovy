@@ -67,7 +67,7 @@ class LoginUserSpec
 
         when: "data typed and user saved"
         userWizardPanel.typeData( user ).save().close( user.getDisplayName() );
-        userBrowsePanel.expandUsersFolder( "system" );
+        userBrowsePanel.getFilterPanel().typeSearchText( user.getDisplayName() );
 
         then: "new user present beneath a system store"
         userBrowsePanel.exists( user.getDisplayName(), true );
