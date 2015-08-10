@@ -93,8 +93,9 @@ public abstract class BrowsePanel
 
     private BrowsePanel clickOnShowFilterPanelButton()
     {
-        if ( findElements( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).size() == 0 )
+        if ( findElements( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0 )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_show_filter" ) );
             throw new TestFrameworkException( "button 'show filter panel' not displayed or probably bad locator for web element" );
         }
         showFilterPanelButton.click();
