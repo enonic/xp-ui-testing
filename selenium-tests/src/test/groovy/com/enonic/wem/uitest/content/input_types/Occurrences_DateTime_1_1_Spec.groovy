@@ -1,14 +1,15 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.exceptions.TestFrameworkException
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
-
-import static com.enonic.autotests.utils.SleepHelper.sleep
 
 class Occurrences_DateTime_1_1_Spec
     extends Base_InputFields_Occurrences
@@ -48,9 +49,12 @@ class Occurrences_DateTime_1_1_Spec
         String publishMessage = contentWizardPanel.typeData(
             dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        sleep( 1000 );
-        contentWizardPanel.close( dateTimeContent.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "close-wizard" )
+        SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateTimeContent.getDisplayName() );
+        if ( modalDialog != null )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-close-wizard" ) );
+            throw new TestFrameworkException( "'save before closing' modal dialog present but all changes were saved! " )
+        }
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
         then:
