@@ -432,6 +432,7 @@ public abstract class BrowsePanel
         boolean result = waitAndFind( By.xpath( rowXpath ) );
         if ( !result )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_item" ) );
             throw new TestFrameworkException( "item was not found:" + itemName );
         }
         Actions builder = new Actions( getDriver() );
