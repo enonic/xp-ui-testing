@@ -29,7 +29,7 @@ public abstract class BrowsePanel
     protected final String SHOW_FILTER_PANEL_BUTTON = BASE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
 
     public static String GRID_ROW =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and text()='%s']]";
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
     public static String NAME_OF_CHILD_ROW =
         "//div[contains(@class,'ui-widget-content slick-row') and descendant::span[contains(@class,'toggle icon') and contains(@style,'margin-left: 16')]]//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
@@ -392,7 +392,8 @@ public abstract class BrowsePanel
      */
     public BrowsePanel pressKeyOnRow( String item, Keys key )
     {
-        String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, item );
+        //String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, item );
+        String contentCheckBoxXpath = String.format( GRID_ROW, item );
 
         getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
         boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
@@ -432,7 +433,7 @@ public abstract class BrowsePanel
         boolean result = waitAndFind( By.xpath( rowXpath ) );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_item" ) );
+            TestUtils.saveScreenshot( getSession(), "err_" + itemName );
             throw new TestFrameworkException( "item was not found:" + itemName );
         }
         Actions builder = new Actions( getDriver() );
