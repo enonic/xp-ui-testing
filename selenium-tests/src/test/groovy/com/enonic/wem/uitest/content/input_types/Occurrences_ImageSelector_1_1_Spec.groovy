@@ -1,8 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -127,21 +125,16 @@ class Occurrences_ImageSelector_1_1_Spec
         wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
     }
 
-    def "GIVEN saving of 'Image Selector 1:1' and content without selected image WHEN 'Publish' button pressed THEN validation message appears"()
+    def "GIVEN saving of 'Image Selector 1:1' and content without selected image WHEN data typed AND image not selected THEN 'Publish' button on the wizard-toolbar is disabled"()
     {
         given: "new content with type 'Image Selector'"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
+
+        when: "data typed AND image not selected"
         ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
-        ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "try to publish content without required image"
-        String warning = wizard.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
-
-
-        then: "notification warning appears"
-        warning == Application.PUBLISH_NOTIFICATION_WARNING;
-        and: "validation message appears as well"
-        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_1_1;
+        then: "'Publish' button on the wizard-toolbar is disabled"
+        !wizard.isPublishButtonEnabled();
     }
 
 }

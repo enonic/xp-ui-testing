@@ -28,7 +28,6 @@ class Occurrences_TextLine_1_0_Spec
         formViewPanel.getNumberOfTextInputs() == 1;
     }
 
-
     def "WHEN wizard for adding a content with type TextLine(1:0) opened THEN 'Add' button under the text input is present  "()
     {
         when: "start to add a content with type 'TextLine 1:0'"
@@ -40,7 +39,6 @@ class Occurrences_TextLine_1_0_Spec
         formViewPanel.isAddButtonPresent();
     }
 
-
     def "WHEN wizard for adding a content with type TextLine(1:0) opened THEN 'remove' button near the text input is not present  "()
     {
         when: "start to add a content with type 'TextLine 1:0'"
@@ -51,7 +49,6 @@ class Occurrences_TextLine_1_0_Spec
         then: "the 'remove button' should not be displayed in the form view"
         formViewPanel.getNumberOfDisplayedRemoveButtons() == 0;
     }
-
 
     def "GIVEN wizard for adding a content with type TextLine(1:0) opened WHEN 'Add' button pressed and 2 inputs now showed THEN two 'remove' button near the both text input are present  "()
     {
@@ -68,7 +65,6 @@ class Occurrences_TextLine_1_0_Spec
         formViewPanel.getNumberOfTextInputs() == 2
     }
 
-
     def "GIVEN wizard for adding a content with type TextLine(1:0) opened WHEN button 'Add' twice pressed and 3 inputs showed THEN 3 'remove' button near the all text inputs are present"()
     {
         given: "start to add a content with type 'TextLine 1:0'"
@@ -83,7 +79,6 @@ class Occurrences_TextLine_1_0_Spec
         and:
         formViewPanel.getNumberOfTextInputs() == 3
     }
-
 
     def "GIVEN wizard for adding a content with type TextLine(1:0) opened WHEN 'Add' button pressed and 2 inputs showed AND one input was removed THEN no one button 'remove' present and only one text input present"()
     {
@@ -127,6 +122,5 @@ class Occurrences_TextLine_1_0_Spec
         valuesFromUI.contains( FIRST_TEST_STRING );
         and:
         valuesFromUI.contains( SECOND_TEST_STRING );
-
     }
 }

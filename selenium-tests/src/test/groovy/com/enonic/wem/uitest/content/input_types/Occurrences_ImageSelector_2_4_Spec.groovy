@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -121,21 +120,9 @@ class Occurrences_ImageSelector_2_4_Spec
 
         and: "content is invalid, because only one image present on page"
         wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
-    }
 
-    def "GIVEN opened 'Image Selector 2:4' with one selected image WHEN 'Publish' button pressed THEN validation message should appears"()
-    {
-        given: "content with one image selected in the grid and opened for edit"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
-        ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
-
-        when: "content was found in the grid"
-        String warning = wizard.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
-
-        then: "notification warning appears"
-        warning == Application.PUBLISH_NOTIFICATION_WARNING;
-        and:
-        formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
+        and: "'Publish button' is disabled now"
+        !wizard.isPublishButtonEnabled();
     }
 
     def "WHEN content with 4 selected images saved and published THEN it content with 'Online'-status listed"()

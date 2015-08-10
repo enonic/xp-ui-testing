@@ -34,6 +34,7 @@ class MoveContentDialogSpec
             FIRST_CONTENT.getDisplayName() );
 
         then: "content listed on the root"
+        filterPanel.typeSearchText( FIRST_CONTENT.getName() );
         contentBrowsePanel.exists( FIRST_CONTENT.getName() );
     }
 
@@ -45,6 +46,7 @@ class MoveContentDialogSpec
             SECOND_CONTENT ).save().close( SECOND_CONTENT.getDisplayName() );
 
         then: "content listed on the root"
+        filterPanel.typeSearchText( SECOND_CONTENT.getName() );
         contentBrowsePanel.exists( SECOND_CONTENT.getName() );
     }
 

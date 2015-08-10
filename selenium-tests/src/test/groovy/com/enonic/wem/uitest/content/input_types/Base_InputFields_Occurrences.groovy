@@ -106,11 +106,13 @@ class Base_InputFields_Occurrences
 
     protected Content buildTime2_4_Content( String time )
     {
+        PropertyTree data = null;
         String name = "time";
-
-        PropertyTree data = new PropertyTree();
-        data.addStrings( TimeFormViewPanel.TIME_PROPERTY, time );
-
+        if ( time != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( TimeFormViewPanel.TIME_PROPERTY, time );
+        }
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "time content" ).
@@ -123,9 +125,12 @@ class Base_InputFields_Occurrences
     protected Content buildDateTime2_4_Content( String... datetime )
     {
         String name = "datetime";
-
-        PropertyTree data = new PropertyTree();
-        data.addStrings( TimeFormViewPanel.TIME_PROPERTY, datetime );
+        PropertyTree data = null;
+        if ( datetime != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( TimeFormViewPanel.TIME_PROPERTY, datetime );
+        }
 
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).

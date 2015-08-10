@@ -120,6 +120,18 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.getSelectedImages().size() == 3;
     }
 
+    def "GIVEN saving of 'Image Selector 0:0' and content without selected image WHEN data typed AND image not selected THEN 'Publish' button on the wizard-toolbar is enabled"()
+    {
+        given: "new content with type 'Image Selector'"
+        Content imageSelectorContent = buildImageSelector0_0_Content( null );
+
+        when: "data typed AND image not selected"
+        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
+
+        then: "'Publish' button on the wizard-toolbar is enabled"
+        wizard.isPublishButtonEnabled();
+    }
+
     def "GIVEN saving of not required 'Image Selector 0:0' content without selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
     {
         given: "new content with type 'Image Selector 0:0'"

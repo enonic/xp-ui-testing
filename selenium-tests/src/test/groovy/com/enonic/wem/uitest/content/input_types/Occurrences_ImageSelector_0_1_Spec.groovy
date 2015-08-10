@@ -55,6 +55,18 @@ class Occurrences_ImageSelector_0_1_Spec
         !wizard.isContentInvalid( imageSelectorContent.getDisplayName() );
     }
 
+    def "GIVEN saving of 'Image Selector 0:1' and content without selected image WHEN data typed AND image not selected THEN 'Publish' button on the wizard-toolbar is enabled"()
+    {
+        given: "new content with type 'Image Selector'"
+        Content imageSelectorContent = buildImageSelector0_1_Content( null );
+
+        when: "data typed AND image not selected"
+        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
+
+        then: "'Publish' button on the wizard-toolbar is enabled"
+        wizard.isPublishButtonEnabled();
+    }
+
     def "GIVEN saving of not required 'Image Selector' content without selected option WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
     {
         given: "new content with type 'Image Selector'"

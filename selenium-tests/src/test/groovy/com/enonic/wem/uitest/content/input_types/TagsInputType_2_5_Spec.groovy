@@ -4,7 +4,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -49,20 +48,19 @@ class TagsInputType_2_5_Spec
         contentBrowsePanel.getContentStatus( tagContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
-    def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN validation message appears"()
+    def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN 'Publish button is disabled and content is invalid'"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 1 );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
 
-        when:
-        contentWizardPanel.clickOnWizardPublishButton( false );
-        TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
+        when: "data typed and number of tags less, than required"
+        contentWizardPanel.typeData( tagContent );
 
-        then: "new content listed in the grid and can be opened for edit"
-        formViewPanel.isValidationMessagePresent();
-        and:
-        formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
+        then: "'Publish' button disabled"
+        !contentWizardPanel.isPublishButtonEnabled();
+        and: "content is invalid"
+        contentWizardPanel.isContentInvalid( tagContent.getDisplayName() );
     }
 
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()

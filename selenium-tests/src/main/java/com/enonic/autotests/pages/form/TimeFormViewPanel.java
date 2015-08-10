@@ -17,7 +17,7 @@ public class TimeFormViewPanel
     private final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
     @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'TimePicker')]//input[contains(@id,'TextInput')]")
-    private WebElement reqTimeInput;
+    private WebElement timeInput;
 
 
     public TimeFormViewPanel( final TestSession session )
@@ -30,13 +30,18 @@ public class TimeFormViewPanel
     {
         String time = data.getString( TIME_PROPERTY );
         // type a date time
-        reqTimeInput.sendKeys( time );
+        timeInput.sendKeys( time );
         sleep( 300 );
         return this;
     }
 
+    public boolean isTimeInvalid()
+    {
+        return waitAndCheckAttrValue( timeInput, "class", "invalid", 1l );
+    }
+
     public String getTimeValue()
     {
-        return reqTimeInput.getAttribute( "value" );
+        return timeInput.getAttribute( "value" );
     }
 }

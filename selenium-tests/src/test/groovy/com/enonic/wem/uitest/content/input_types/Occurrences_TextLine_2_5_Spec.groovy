@@ -3,10 +3,8 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -145,23 +143,20 @@ class Occurrences_TextLine_2_5_Spec
         publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, textLineContent.getDisplayName() );
     }
 
-    def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty and button 'Publish' pressed THEN validation message appears"()
+    def "GIVEN creating new TextLine2:5 on root WHEN name typed but required text input is empty THEN content is invalid and the 'Publish' button is disabled"()
     {
         given: "start to add a content with type 'TextLine 2:5'"
         Content textLineContent = buildTextLine2_5_Content();
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when:
-        String warning = contentWizardPanel.clickOnWizardPublishButton( false ).waitNotificationWarning( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "tl_2_5_publish" )
-        TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
+        contentWizardPanel.typeDisplayName( textLineContent.getDisplayName() );
 
-        then: "new content listed in the grid and can be opened for edit"
-        formViewPanel.isValidationMessagePresent();
-        and:
-        formViewPanel.getValidationMessage() == String.format( FormViewPanel.VALIDATION_MESSAGE, 2 );
-        and: "warning was shown"
-        warning == Application.PUBLISH_NOTIFICATION_WARNING;
+        then: "'Publish' button is disabled"
+        !contentWizardPanel.isPublishButtonEnabled();
+
+        and: "content is invalid"
+        contentWizardPanel.isContentInvalid( textLineContent.getDisplayName() );
     }
 
     private Content buildTextLine2_5_Content()

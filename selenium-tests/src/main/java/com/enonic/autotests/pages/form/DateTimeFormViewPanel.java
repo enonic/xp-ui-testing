@@ -48,4 +48,10 @@ public class DateTimeFormViewPanel
     {
         return dateTimeInput.getAttribute( "value" );
     }
+
+    public boolean isDateTimeInvalid()
+    {
+        return waitAndCheckAttrValue( dateTimeInput, "class", "invalid", 1l );
+    }
+
 }

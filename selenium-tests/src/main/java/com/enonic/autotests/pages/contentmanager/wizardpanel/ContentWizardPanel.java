@@ -256,23 +256,12 @@ public class ContentWizardPanel
 
     }
 
-    public Application clickOnWizardPublishButton( boolean isValidData )
-    {
-        toolbarPublishButton.click();
-        if ( isValidData )
-        {
-            ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-            dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
-            return dialog;
-        }
-        return this;
-
-    }
-
     public ContentPublishDialog clickOnWizardPublishButton()
     {
-        return (ContentPublishDialog) clickOnWizardPublishButton( true );
-
+        toolbarPublishButton.click();
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        return dialog;
     }
 
     public boolean isEnabledSaveButton()
