@@ -127,6 +127,7 @@ public class UserBrowsePanel
         clickAndSelectRow( storeName );
         sleep( 700 );
         pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        sleep( 700 );
         clickAndSelectRow( "users" );
         getSession().put( ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
