@@ -6,7 +6,9 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class Publish_InvalidContent_Spec
     extends BaseContentSpec
 {
