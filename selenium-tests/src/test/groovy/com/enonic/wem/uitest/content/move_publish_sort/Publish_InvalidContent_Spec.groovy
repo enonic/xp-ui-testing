@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -21,19 +22,20 @@ class Publish_InvalidContent_Spec
         invalidFolder = buildFolderWithEmptyDisplayNameContent( "not_valid" );
 
         when:
-        ContentWizardPanel wizrad = contentBrowsePanel.clickToolbarNew().selectContentType( invalidFolder.getContentTypeName() ).typeData(
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( invalidFolder.getContentTypeName() ).typeData(
             invalidFolder );
 
         then: "notification warning appears"
-        wizrad.isContentInvalid( invalidFolder.getDisplayName() );
+        wizard.isContentInvalid( invalidFolder.getDisplayName() );
         and: "'Publish' button is disabled"
-        !wizrad.isPublishButtonEnabled();
+        !wizard.isPublishButtonEnabled();
     }
 
     def "GIVEN a content without a displayName WHEN it content selected and 'Publish' button on grid toolbar pressed THEN publish dialog appears AND the 'Publish Now' button is disabled and correct header present on dialog"()
     {
         given:
         filterPanel.typeSearchText( invalidFolder.getName() );
+        TestUtils.saveScreenshot( getSession(), "inv_folder" )
 
         when: "parent content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );
