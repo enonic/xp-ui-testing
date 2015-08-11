@@ -17,6 +17,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
+    public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
+
     public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
 
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";

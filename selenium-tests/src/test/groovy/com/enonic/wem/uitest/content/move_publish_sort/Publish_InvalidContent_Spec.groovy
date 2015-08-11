@@ -23,10 +23,10 @@ class Publish_InvalidContent_Spec
 
         when:
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( invalidFolder.getContentTypeName() ).typeData(
-            invalidFolder );
+            invalidFolder ).save();
 
-        then: "notification warning appears"
-        wizard.isContentInvalid( invalidFolder.getDisplayName() );
+        then: "content is not valid"
+        wizard.isContentInvalid( Application.UNNAMED_FOLDER_TAB_NAME );
         and: "'Publish' button is disabled"
         !wizard.isPublishButtonEnabled();
     }
@@ -72,7 +72,7 @@ class Publish_InvalidContent_Spec
             Application.EXPLICIT_NORMAL );
         contentPublishDialog.setIncludeChildCheckbox( true );
 
-        then: "'Publish Now'  button disabled"
+        then: "modal dialog appears and 'Publish' button on dialog is disabled"
         !contentPublishDialog.isPublishNowButtonEnabled();
         and: "correct subheader present in dialog"
         contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
