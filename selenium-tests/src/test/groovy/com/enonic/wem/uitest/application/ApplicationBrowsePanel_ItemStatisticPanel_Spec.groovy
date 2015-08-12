@@ -1,6 +1,6 @@
-package com.enonic.wem.uitest.module
+package com.enonic.wem.uitest.application
 
-class ModuleBrowsePanel_ItemStatisticPanel_Spec
+class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     extends BaseModuleSpec
 {
     // def WHEN One application is selected THEN The details panel should show Build date, version, key and System requirement

@@ -196,12 +196,12 @@ class CreateSiteWithLayoutSpec
     {
         String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
-        data.addString( "moduleKey", "Simple Site Module" );
+        data.addString( "moduleKey", "Simple Site App" );
         data.addStrings( "description", "simple site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
-            displayName( "simple-site-module-based" ).
+            displayName( "simple-site-application-based" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.site() ).data( data ).
             build();

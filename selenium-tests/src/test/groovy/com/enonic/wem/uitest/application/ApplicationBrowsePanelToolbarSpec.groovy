@@ -1,10 +1,10 @@
-package com.enonic.wem.uitest.module
+package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.services.NavigatorHelper
 import spock.lang.Stepwise
 
 @Stepwise
-class ModuleBrowsePanelToolbarSpec
+class ApplicationBrowsePanelToolbarSpec
     extends BaseModuleSpec
 {
 

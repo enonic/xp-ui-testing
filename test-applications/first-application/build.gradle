@@ -15,21 +15,13 @@ buildscript {
 apply plugin: 'maven'
 apply plugin: 'com.enonic.xp.app'
 
+
 app {
-    name = 'com.enonic.xp.testing.contenttypes'
-    displayName = 'All Content Types Module'
+    name = 'com.enonic.xp.testing.first_app'
+    displayName = 'First Selenium App'
 }
 
 dependencies {
     compile 'com.enonic.xp:core-api:6.0.0-SNAPSHOT'
 }
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository( url: 'http://repo.enonic.com/artifactory/public' )
-        }
-    }
-}
-
 

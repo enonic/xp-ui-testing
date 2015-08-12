@@ -28,23 +28,23 @@ dependencies {
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
 task copyContentTypes( type: Copy ) {
-    from '../test-modules/contenttypes/build/libs/'
+    from '../test-applications/contenttypes/build/libs/'
     include '**/*.jar'
     into file( deployDir )
 }
 
-task copyTestModules( type: Copy ) {
-    from '../test-modules/first-module/build/libs/'
-    from '../test-modules/second-module/build/libs/'
-    from '../test-modules/third-module/build/libs/'
-    from '../test-modules/fourth-module/build/libs/'
-    from '../test-modules/test-module/build/libs/'
+task copyTestApplications( type: Copy ) {
+    from '../test-applications/first-application/build/libs/'
+    from '../test-applications/second-application/build/libs/'
+    from '../test-applications/third-application/build/libs/'
+    from '../test-applications/fourth-application/build/libs/'
+    from '../test-applications/test-application/build/libs/'
     include '**/*.jar'
     into file( deployDir )
 }
 task copySimplePageApp( type: Copy ) {
-    from '../test-modules/simple-page/build/libs/'
-    from '../test-modules/all-contenttypes/build/libs/'
+    from '../test-applications/simple-page/build/libs/'
+    from '../test-applications/all-contenttypes/build/libs/'
 
     include '**/*.jar'
     into file( deployDir )
@@ -52,9 +52,9 @@ task copySimplePageApp( type: Copy ) {
 task deleteFolders( type: Delete ) {
     delete unpackDir, screenshotsDir, reportsDir
 }
-task buildModules(
-    dependsOn: [':test-modules:first-module:install', ':test-modules:simple-page:install', ':test-modules:contenttypes:install',
-                ':test-modules:second-module:install', ':test-modules:third-module:install', ':test-modules:fourth-module:install', ':test-modules:test-module:install'] )
+task buildApplications(
+    dependsOn: [':test-applications:first-application:install', ':test-applications:simple-page:install', ':test-applications:contenttypes:install',
+                ':test-applications:second-application:install', ':test-applications:third-application:install', ':test-applications:fourth-application:install', ':test-applications:test-application:install'] )
 
 task unpackDistro( type: Copy ) {
     from {
@@ -90,40 +90,40 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [buildModules,deleteFolders, startServer, copyContentTypes] ) {
+task testContentManager( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
-    exclude '**/module/**'
+    exclude '**/application/**'
     exclude '**/user/**'
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
     exclude '**/content/move_publish_sort/*Spec.class'
     forkEvery = null
-    deleteFolders.mustRunAfter buildModules
+    deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
-task testInputTypes( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyContentTypes] ) {
+task testInputTypes( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/input_types/*Spec.class'
-    exclude '**/module/**'
+    exclude '**/application/**'
     exclude '**/user/**'
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
-    deleteFolders.mustRunAfter buildModules
+    deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
 
-task testPublishMoveSort( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyContentTypes] ) {
+task testPublishMoveSort( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
-    exclude '**/module/**'
+    exclude '**/application/**'
     exclude '**/user/**'
     forkEvery = null
-    deleteFolders.mustRunAfter buildModules
+    deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
@@ -132,50 +132,49 @@ task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
     scanForTestClasses = false
     include '**/user/*Spec.class'
     exclude '**/content/**'
-    exclude '**/module/**'
+    exclude '**/application/**'
     forkEvery = null
     startServer.shouldRunAfter deleteFolders
 }
 
-task testModule( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copyTestModules] ) {
+task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
     println xpHome
     println "XP_HOME is:"
     println System.getenv( "XP_HOME" );
 
-
     scanForTestClasses = false
-    include '**/module/*Spec.class'
+    include '**/application/*Spec.class'
     exclude '**/content/**'
     exclude '**/user/**'
     forkEvery = null
-    deleteFolders.mustRunAfter buildModules
+    deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
-    copyTestModules.mustRunAfter startServer
+    copyTestApplications.mustRunAfter startServer
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildModules, deleteFolders, startServer, copySimplePageApp] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copySimplePageApp] ) {
     scanForTestClasses = false
 
     include '**/liveedit/CreateSiteWithLayoutSpec.class'
-    exclude '**/module/**'
+    exclude '**/application/**'
     exclude '**/user/**'
     forkEvery = null
-    deleteFolders.mustRunAfter buildModules
+    deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
     copySimplePageApp.mustRunAfter startServer
 }
 
 
-task testUploadContent( type: Test, dependsOn: [deleteFolders, buildModules, startServer, copyContentTypes] ) {
+task testUploadContent( type: Test, dependsOn: [deleteFolders, buildApplications, startServer, copyContentTypes] ) {
     scanForTestClasses = false
-    exclude '**/module/**'
+    exclude '**/application/**'
     exclude '**/user/**'
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
     copyContentTypes.shouldRunAfter startServer
 }
 
-testModule.finalizedBy = ['stopServer']
+testApplication.finalizedBy = ['stopServer']
 testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
 testUser.finalizedBy = ['stopServer']
 testContentManager.finalizedBy = ['stopServer']

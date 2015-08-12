@@ -15,10 +15,9 @@ buildscript {
 apply plugin: 'maven'
 apply plugin: 'com.enonic.xp.app'
 
-
 app {
-    name = 'com.enonic.xp.testing.first_module'
-    displayName = 'First Selenium Module'
+    name = 'com.enonic.xp.testing.second_app'
+    displayName = 'Second Selenium App'
 }
 
 dependencies {

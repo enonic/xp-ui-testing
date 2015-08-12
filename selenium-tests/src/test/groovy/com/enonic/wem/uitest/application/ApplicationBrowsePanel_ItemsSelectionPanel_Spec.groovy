@@ -1,4 +1,4 @@
-package com.enonic.wem.uitest.module
+package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.modules.ModuleBrowseItemsSelectionPanel
 import com.enonic.autotests.services.NavigatorHelper
@@ -6,7 +6,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class ModuleBrowsePanel_ItemsSelectionPanel_Spec
+class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
     extends BaseModuleSpec
 {
 

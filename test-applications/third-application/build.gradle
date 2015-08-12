@@ -16,8 +16,8 @@ apply plugin: 'maven'
 apply plugin: 'com.enonic.xp.app'
 
 app {
-    name = 'com.enonic.xp.testing.fourth_module'
-    displayName = 'Fourth Selenium Module'
+    name = 'com.enonic.xp.testing.third_app'
+    displayName = 'Third Selenium App'
 }
 
 dependencies {

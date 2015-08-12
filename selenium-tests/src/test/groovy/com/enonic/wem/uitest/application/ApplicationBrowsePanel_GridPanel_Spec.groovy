@@ -1,10 +1,10 @@
-package com.enonic.wem.uitest.module
+package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import org.openqa.selenium.Keys
 
-class ModuleBrowsePanel_GridPanel_Spec
+class ApplicationBrowsePanel_GridPanel_Spec
     extends BaseModuleSpec
 {
 
@@ -113,9 +113,9 @@ class ModuleBrowsePanel_GridPanel_Spec
     }
 
 
-    def "GIVEN selected module WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN selected application WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
     {
-        given: "one module is selected"
+        given: "one application is selected"
         moduleBrowsePanel.clickCheckboxAndSelectRow( 0 );
 
         when: "arrow down typed 3 times"
@@ -127,9 +127,9 @@ class ModuleBrowsePanel_GridPanel_Spec
     }
 
 
-    def "GIVEN selected module WHEN hold a shift and arrow up is typed  3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN selected application WHEN hold a shift and arrow up is typed  3-times THEN 4 selected rows appears in the grid "()
     {
-        given: "one module is selected"
+        given: "one application is selected"
         moduleBrowsePanel.clickCheckboxAndSelectRow( 3 );
 
         when: "arrow up typed 3 times"

@@ -16,11 +16,16 @@ apply plugin: 'maven'
 apply plugin: 'com.enonic.xp.app'
 
 app {
-    name = 'com.enonic.xp.testing.simple_app'
-    displayName = 'Simple Test Selenium Module'
+    name = 'com.enonic.xp.testing.simple_page'
+    displayName = 'Simple Site App'
 }
 
 dependencies {
     compile 'com.enonic.xp:core-api:6.0.0-SNAPSHOT'
-}
+    compile 'com.enonic.xp:portal-api:6.0.0-SNAPSHOT'
+    include 'com.enonic.xp:lib-portal:6.0.0-SNAPSHOT'
+    include 'com.enonic.xp:lib-thymeleaf:6.0.0-SNAPSHOT'
+    include 'com.enonic.xp:lib-xslt:6.0.0-SNAPSHOT'
 
+
+}
