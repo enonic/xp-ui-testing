@@ -131,17 +131,19 @@ public class UserBrowsePanel
         // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
         //sleep( 700 );
         clickAndSelectRow( "users" );
-        sleep( 700 );
+        sleep( 500 );
         getSession().put( ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
     }
 
     public UserBrowsePanel expandStoreAndSelectGroups( String storeName )
     {
-        clickAndSelectRow( storeName );
+        //clickAndSelectRow( storeName );
+        clickOnExpander( storeName );
         sleep( 700 );
-        pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
         clickAndSelectRow( "groups" );
+        sleep( 500 );
         getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return this;
     }
