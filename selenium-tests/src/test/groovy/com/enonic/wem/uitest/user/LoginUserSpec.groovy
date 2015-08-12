@@ -161,7 +161,7 @@ class LoginUserSpec
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
-        userBrowsePanel.expandUsersFolder( "system" ).clickOnClearSelection();
+        userBrowsePanel.expandUsersFolder( "system" );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
             user.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
 

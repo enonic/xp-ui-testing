@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -150,8 +149,10 @@ public class UserBrowsePanel
 
     public UserBrowsePanel expandUsersFolder( String storeName )
     {
-        expandStoreAndSelectUsers( storeName );
-        pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        clickOnExpander( storeName );
+        //expandStoreAndSelectUsers( storeName );
+        // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        clickOnExpander( "users" );
         return this;
     }
 
