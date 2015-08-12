@@ -124,11 +124,13 @@ public class UserBrowsePanel
 
     public UserBrowsePanel expandStoreAndSelectUsers( String storeName )
     {
-        clickAndSelectRow( storeName );
+        clickOnExpander( storeName );
+        //clickAndSelectRow( storeName );
         sleep( 700 );
-        pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        clickOnExpander( "users" );
+        // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
         sleep( 700 );
-        clickAndSelectRow( "users" );
+        // clickAndSelectRow( "users" );
         getSession().put( ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
     }

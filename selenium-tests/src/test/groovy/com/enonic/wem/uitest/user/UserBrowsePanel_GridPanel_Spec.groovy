@@ -3,10 +3,8 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import org.openqa.selenium.Keys
-import spock.lang.Ignore
 
 class UserBrowsePanel_GridPanel_Spec
     extends BaseUsersSpec
@@ -129,7 +127,7 @@ class UserBrowsePanel_GridPanel_Spec
 
         when: "arrow up typed"
         userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_up_user" );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_up_roles" );
 
         then: "roles is not selected now, another folder in the root directory is selected"
         !userBrowsePanel.isRowSelected( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() ) &&
@@ -143,7 +141,7 @@ class UserBrowsePanel_GridPanel_Spec
 
         when: "arrow right typed"
         userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_RIGHT );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_right_user" );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_right_roles" );
 
         then: "'roles' folder is expanded"
         userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
@@ -157,7 +155,7 @@ class UserBrowsePanel_GridPanel_Spec
 
         when: "arrow left typed"
         userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_LEFT );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_left_user" );
+        TestUtils.saveScreenshot( getTestSession(), "arrow_left_roles" );
 
         then: "'roles' folder is collapsed"
         !userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
