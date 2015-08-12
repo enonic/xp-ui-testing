@@ -91,7 +91,8 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         when: "name typed and 'Save' pressed"
         userWizardPanel.typeData( user ).save().close( user.getDisplayName() );
-        userBrowsePanel.expandUsersFolder( USER_STORE_PATH );
+        and:
+        userBrowsePanel.clickOnExpander( "users" );
 
         then: "new user present beneath a store"
         userBrowsePanel.exists( USER_NAME, true );

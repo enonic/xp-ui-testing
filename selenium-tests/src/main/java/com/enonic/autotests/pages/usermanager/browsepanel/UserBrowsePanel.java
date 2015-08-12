@@ -127,10 +127,11 @@ public class UserBrowsePanel
         clickOnExpander( storeName );
         //clickAndSelectRow( storeName );
         sleep( 700 );
-        clickOnExpander( "users" );
+        //clickOnExpander( "users" );
         // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
+        //sleep( 700 );
+        clickAndSelectRow( "users" );
         sleep( 700 );
-        // clickAndSelectRow( "users" );
         getSession().put( ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
     }
