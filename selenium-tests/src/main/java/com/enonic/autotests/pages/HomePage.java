@@ -26,7 +26,7 @@ public class HomePage
 {
     private final String CM_LINK = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]";
 
-    private final String USER_APP_LINK = "//a[contains(@href,'user-manager')]//div[contains(.,'User Manager')]";
+    private final String USER_APP_LINK = "//a[contains(@href,'user-manager')]//div[contains(.,'Users')]";
 
     @FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
     private WebElement contentManager;
@@ -128,7 +128,7 @@ public class HomePage
         if ( !waitUntilClickableNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "userManagerLink" ) );
-            throw new TestFrameworkException( "Content Manager link not clickable!" );
+            throw new TestFrameworkException( "Users link not clickable!" );
 
         }
         sleep( 1000 );
