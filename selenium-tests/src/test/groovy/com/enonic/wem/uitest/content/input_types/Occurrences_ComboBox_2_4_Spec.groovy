@@ -151,7 +151,7 @@ class Occurrences_ComboBox_2_4_Spec
             name( NameHelper.uniqueName( "cbox2_4_" ) ).
             displayName( "combobox2_4 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":combobox2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox2_4" ).data( data ).
             build();
         return textLineContent;
     }

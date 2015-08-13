@@ -142,7 +142,7 @@ class Occurrences_ComboBox_1_1_Spec
             name( NameHelper.uniqueName( "cbox1_1_" ) ).
             displayName( "combobox1_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":combobox1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox1_1" ).data( data ).
             build();
         return textLineContent;
     }

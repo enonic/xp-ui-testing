@@ -174,7 +174,7 @@ class Occurrences_TextLine_2_5_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( "textline2_5 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_MODULE_NAME + ":textline2_5" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textline2_5" ).data( data ).
             build();
         return textLineContent;
     }
