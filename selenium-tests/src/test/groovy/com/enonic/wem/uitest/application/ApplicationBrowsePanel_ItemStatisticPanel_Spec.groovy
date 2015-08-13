@@ -32,13 +32,5 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationBrowsePanel.getItemStatisticPanel().isSystemRequiredVisible();
     }
 
-    def "WHEN One application is installed and stopped THEN detail page should not show any content types"()
-    {
-        when:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-        then: ""
-        true;
-
-    }
 
 }
