@@ -15,7 +15,7 @@ import com.enonic.autotests.pages.WizardPanel;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class ModuleBrowsePanel
+public class ApplicationBrowsePanel
     extends BrowsePanel
 {
     public final String START_BUTTON =
@@ -23,7 +23,7 @@ public class ModuleBrowsePanel
 
     public final String STOP_BUTTON = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Stop']]";
 
-    private ModuleBrowseItemsSelectionPanel itemsSelectionPanel;
+    private ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 
 
     @FindBy(xpath = START_BUTTON)
@@ -37,7 +37,7 @@ public class ModuleBrowsePanel
      *
      * @param session
      */
-    public ModuleBrowsePanel( final TestSession session )
+    public ApplicationBrowsePanel( final TestSession session )
     {
         super( session );
     }
@@ -60,7 +60,7 @@ public class ModuleBrowsePanel
         return null;
     }
 
-    public ModuleBrowsePanel clickOnToolbarStop()
+    public ApplicationBrowsePanel clickOnToolbarStop()
     {
         stopButton.click();
         sleep( 1500 );
@@ -68,7 +68,7 @@ public class ModuleBrowsePanel
     }
 
 
-    public ModuleBrowsePanel clickOnToolbarStart()
+    public ApplicationBrowsePanel clickOnToolbarStart()
     {
         startButton.click();
         sleep( 3000 );
@@ -107,16 +107,16 @@ public class ModuleBrowsePanel
         return findElements( By.xpath( stateCell ) ).get( 0 ).getText();
     }
 
-    public ModuleBrowseItemsSelectionPanel getItemSelectionPanel()
+    public ApplicationBrowseItemsSelectionPanel getItemSelectionPanel()
     {
         if ( itemsSelectionPanel == null )
         {
-            itemsSelectionPanel = new ModuleBrowseItemsSelectionPanel( getSession() );
+            itemsSelectionPanel = new ApplicationBrowseItemsSelectionPanel( getSession() );
         }
         return itemsSelectionPanel;
     }
 
-    public ModuleBrowsePanel deSelectModuleInTable( String moduleName )
+    public ApplicationBrowsePanel deSelectModuleInTable( String moduleName )
     {
 
         if ( isRowSelected( moduleName ) )

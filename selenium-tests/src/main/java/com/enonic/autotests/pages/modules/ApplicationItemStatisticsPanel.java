@@ -10,7 +10,7 @@ import com.enonic.autotests.pages.Application;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class ModuleItemStatisticsPanel
+public class ApplicationItemStatisticsPanel
     extends Application
 {
     private final String STATISTIC_PANEL = "//div[contains(@id,'ModuleItemStatisticsPanel')]";
@@ -18,19 +18,19 @@ public class ModuleItemStatisticsPanel
     @FindBy(xpath = STATISTIC_PANEL + "//div[contains(@class,'drop-down-button')]")
     private WebElement actionMenuButton;
 
-    public ModuleItemStatisticsPanel( TestSession session )
+    public ApplicationItemStatisticsPanel( TestSession session )
     {
         super( session );
     }
 
-    public ModuleItemStatisticsPanel showActionMenu()
+    public ApplicationItemStatisticsPanel showActionMenu()
     {
         actionMenuButton.click();
         sleep( 200 );
         return this;
     }
 
-    public ModuleItemStatisticsPanel selectMenuItem( String itemName )
+    public ApplicationItemStatisticsPanel selectMenuItem( String itemName )
     {
         if ( findElements(
             By.xpath( String.format( "//li[contains(@id,'api.ui.menu.ActionMenuItem') and text()='%s']", itemName ) ) ).size() == 0 )

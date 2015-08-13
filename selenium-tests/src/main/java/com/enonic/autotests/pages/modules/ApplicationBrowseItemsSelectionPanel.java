@@ -4,7 +4,7 @@ package com.enonic.autotests.pages.modules;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.BrowseItemsSelectionPanel;
 
-public class ModuleBrowseItemsSelectionPanel
+public class ApplicationBrowseItemsSelectionPanel
     extends BrowseItemsSelectionPanel
 {
 
@@ -16,7 +16,7 @@ public class ModuleBrowseItemsSelectionPanel
     }
 
 
-    public ModuleBrowseItemsSelectionPanel( final TestSession session )
+    public ApplicationBrowseItemsSelectionPanel( final TestSession session )
     {
         super( session );
     }

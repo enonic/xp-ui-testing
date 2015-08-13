@@ -9,7 +9,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.pages.modules.ModuleBrowsePanel;
+import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
@@ -152,7 +152,7 @@ public class HomePage
         return panel;
     }
 
-    public ModuleBrowsePanel openApplications()
+    public ApplicationBrowsePanel openApplications()
     {
         TestUtils.saveScreenshot( getSession(), "home_module_1" );
         applications.click();
@@ -161,7 +161,7 @@ public class HomePage
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.MODULE_MANAGER_FRAME_XPATH );
-        ModuleBrowsePanel panel = new ModuleBrowsePanel( getSession() );
+        ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
         // panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
         getLogger().info( "Module Manger App loaded" );

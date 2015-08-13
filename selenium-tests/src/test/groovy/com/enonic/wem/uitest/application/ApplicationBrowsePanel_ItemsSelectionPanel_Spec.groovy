@@ -1,33 +1,19 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.pages.modules.ModuleBrowseItemsSelectionPanel
-import com.enonic.autotests.services.NavigatorHelper
-import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
-    extends BaseModuleSpec
+    extends BaseApplicationSpec
 {
-
-    @Shared
-    ModuleBrowseItemsSelectionPanel itemsSelectionPanel;
-
-    def setup()
-    {
-        go "admin"
-        moduleBrowsePanel = NavigatorHelper.openApplications( getTestSession() );
-        itemsSelectionPanel = moduleBrowsePanel.getItemSelectionPanel();
-    }
-
 
     def "GIVEN one selected application WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
         given: " there is a one selected application"
-        moduleBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
 
         when: "selected a one more application"
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
         then:
         itemsSelectionPanel.getSelectedItemCount() == 2;
     }
@@ -35,12 +21,11 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN two selected application WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
         given: " there is a two selected module"
-        moduleBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        applicationBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
 
         when: "selected a one more application"
-
-        moduleBrowsePanel.clickCheckboxAndSelectRow( THIRD_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( THIRD_APP_NAME );
 
         then: "three SelectionItem-s are listed"
         itemsSelectionPanel.getSelectedItemCount() == 3;
@@ -49,12 +34,12 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN three selected application WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
         given: "there are three selected application in browse panel"
-        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( THIRD_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( THIRD_APP_NAME );
 
         when: "one application was deselected"
-        moduleBrowsePanel.deSelectModuleInTable( THIRD_APP_NAME );
+        applicationBrowsePanel.deSelectModuleInTable( THIRD_APP_NAME );
 
         then: "only two items are listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;
@@ -64,8 +49,8 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
     def "WHEN two selected application THEN two SelectionItem-s with the same name are listed"()
     {
         when: "two applications are selected"
-        moduleBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-        moduleBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
 
         then: "three SelectionItem-s are listed"
         List actualNames = itemsSelectionPanel.getSelectedItemNames();
