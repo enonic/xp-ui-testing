@@ -33,7 +33,7 @@ class BaseApplicationSpec
     def setup()
     {
         go "admin"
-        applicationBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        applicationBrowsePanel = NavigatorHelper.openApplications( getTestSession() );
         itemsSelectionPanel = applicationBrowsePanel.getItemSelectionPanel();
     }
 

@@ -39,7 +39,7 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
         applicationBrowsePanel.clickCheckboxAndSelectRow( THIRD_APP_NAME );
 
         when: "one application was deselected"
-        applicationBrowsePanel.deSelectModuleInTable( THIRD_APP_NAME );
+        applicationBrowsePanel.deSelectAppInTable( THIRD_APP_NAME );
 
         then: "only two items are listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;

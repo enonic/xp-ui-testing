@@ -17,7 +17,22 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     //12) WHEN One module is installed and started THEN detail page should not show all its parts
     //13)WHEN One module is installed and started THEN detail page should not show all its layouts
 
-    def "WHEN One module is selected THEN The details panel should show Build date, version, key and System requirement"()
+    def "WHEN One application is selected THEN The details panel should show Build date, version, key and System requirement"()
+    {
+        when:
+        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+
+        then: "the Build date shown"
+        applicationBrowsePanel.getItemStatisticPanel().isBuildDateVisible();
+        and: "the version shown"
+        applicationBrowsePanel.getItemStatisticPanel().isVersionVisible();
+        and: "the key shown"
+        applicationBrowsePanel.getItemStatisticPanel().isKeyVisible();
+        and: "the system required shown"
+        applicationBrowsePanel.getItemStatisticPanel().isSystemRequiredVisible();
+    }
+
+    def "WHEN One application is installed and stopped THEN detail page should not show any content types"()
     {
         when:
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );

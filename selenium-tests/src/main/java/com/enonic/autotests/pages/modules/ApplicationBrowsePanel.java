@@ -18,13 +18,13 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ApplicationBrowsePanel
     extends BrowsePanel
 {
-    public final String START_BUTTON =
-        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Start']]";
+    public final String START_BUTTON = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Start']]";
 
-    public final String STOP_BUTTON = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Stop']]";
+    public final String STOP_BUTTON = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Stop']]";
 
     private ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 
+    private ApplicationItemStatisticsPanel itemStatisticsPanel;
 
     @FindBy(xpath = START_BUTTON)
     private WebElement startButton;
@@ -67,7 +67,6 @@ public class ApplicationBrowsePanel
         return this;
     }
 
-
     public ApplicationBrowsePanel clickOnToolbarStart()
     {
         startButton.click();
@@ -78,7 +77,7 @@ public class ApplicationBrowsePanel
     @Override
     public WizardPanel clickToolbarEdit()
     {
-        throw new TestFrameworkException( "not implemented for Modules app" );
+        throw new TestFrameworkException( "not implemented for Application app" );
     }
 
     public boolean waitAndCheckIsButtonEnabled( String buttonXpath )
@@ -96,12 +95,12 @@ public class ApplicationBrowsePanel
         return stopButton.isEnabled();
     }
 
-    public String getModuleStatus( String moduleName )
+    public String getApplicationStatus( String moduleName )
     {
         String stateCell = String.format( GRID_ROW, moduleName ) + "//div[contains(@class,'state')]";
         if ( findElements( By.xpath( stateCell ) ).size() == 0 )
         {
-            throw new TestFrameworkException( "state was not found in the table ! module name is " + moduleName );
+            throw new TestFrameworkException( "state was not found in the table ! application name is " + moduleName );
         }
         getLogger().info( "status of module is : " + findElements( By.xpath( stateCell ) ).get( 0 ).getText() );
         return findElements( By.xpath( stateCell ) ).get( 0 ).getText();
@@ -116,7 +115,16 @@ public class ApplicationBrowsePanel
         return itemsSelectionPanel;
     }
 
-    public ApplicationBrowsePanel deSelectModuleInTable( String moduleName )
+    public ApplicationItemStatisticsPanel getItemStatisticPanel()
+    {
+        if ( itemStatisticsPanel == null )
+        {
+            itemStatisticsPanel = new ApplicationItemStatisticsPanel( getSession() );
+        }
+        return itemStatisticsPanel;
+    }
+
+    public ApplicationBrowsePanel deSelectAppInTable( String moduleName )
     {
 
         if ( isRowSelected( moduleName ) )
@@ -129,6 +137,6 @@ public class ApplicationBrowsePanel
     @Override
     public BaseDeleteDialog clickToolbarDelete()
     {
-        throw new TestFrameworkException( "Delete button not present in Modules!" );
+        throw new TestFrameworkException( "Delete button not present in Application's toolbar!" );
     }
 }
