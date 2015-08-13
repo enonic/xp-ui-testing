@@ -72,7 +72,7 @@ task startServer( dependsOn: unpackDistro ) {
         // logging.captureStandardOutput LogLevel.INFO
         // ext.xpServer = new ServerInstance()
         xpServer.installDir = file( distroDir )
-        xpServer.startupDelay = 30000
+        xpServer.startupDelay = 40000
         xpServer.start()
     }
 }
