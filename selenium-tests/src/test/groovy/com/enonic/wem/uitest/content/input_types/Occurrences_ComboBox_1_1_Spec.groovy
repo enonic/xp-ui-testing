@@ -9,6 +9,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -19,6 +20,7 @@ class Occurrences_ComboBox_1_1_Spec
     @Shared
     Content content_with_opt;
 
+    @Ignore
     def "GIVEN wizard for adding a ComboBox-content(1:1) opened WHEN name typed and no options selected on the page THEN option filter input is present"()
     {
         given: "start to add a content with type 'ComboBox 1:1'"
@@ -39,6 +41,7 @@ class Occurrences_ComboBox_1_1_Spec
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
+    @Ignore
     def "GIVEN saving of ComboBox-content (1:1) without options WHEN content opened for edit THEN no one selected options present on page "()
     {
         given: "new content with type ComboBox1_1 added'"
@@ -61,6 +64,7 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.isContentInvalid( comboBoxContent.getDisplayName() );
     }
 
+    @Ignore
     def "GIVEN saving of  ComboBox-content (1:1) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
     {
         given: "new content with type ComboBox1_1 added'"
@@ -86,6 +90,7 @@ class Occurrences_ComboBox_1_1_Spec
         !wizard.isContentInvalid( content_with_opt.getDisplayName() );
     }
 
+    @Ignore
     def "GIVEN ComboBox-content (1:1) with one selected option and one option removed and content saved WHEN content opened for edit THEN no options selected on the page "()
     {
         given: "content with one required option opened for edit' and one option removed"
@@ -108,6 +113,7 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.isContentInvalid( content_with_opt.getDisplayName() );
     }
 
+    @Ignore
     def "WHEN content with one option saved and published THEN it content with status equals 'Online' listed"()
     {
         when: "content with selected option saved and published"
@@ -124,7 +130,7 @@ class Occurrences_ComboBox_1_1_Spec
         publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getDisplayName() );
     }
 
-
+    @Ignore
     def "GIVEN creating new ComboBox-content (1:1) on root WHEN required text input is empty THEN button 'Publish' is disabled"()
     {
         when: "start to add a content with type 'ComboBox-content (1:1)'"

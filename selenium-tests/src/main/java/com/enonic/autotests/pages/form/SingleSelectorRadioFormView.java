@@ -15,7 +15,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class SingleSelectorRadioFormView
     extends FormViewPanel
 {
-    private String ALL_RADIO_INPUTS = "//div[contains(@id,'api.form.inputtype.radiobuttons.RadioButtons')]//input[@type='radio']";
+    private String ALL_RADIO_INPUTS = "//div[contains(@id,'api.form.inputtype.radiobutton.RadioButton')]//input[@type='radio']";
 
     public SingleSelectorRadioFormView( final TestSession session )
     {

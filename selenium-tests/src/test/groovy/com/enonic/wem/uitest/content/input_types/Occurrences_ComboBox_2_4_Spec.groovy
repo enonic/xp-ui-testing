@@ -10,6 +10,7 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_ComboBox_2_4_Spec
@@ -19,6 +20,7 @@ class Occurrences_ComboBox_2_4_Spec
     @Shared
     Content content_with_opt;
 
+    @Ignore
     def "GIVEN  wizard for adding a ComboBox-content(2:4) opened WHEN name typed and no options selected on the page THEN content is invalid and option filter input is present "()
     {
         given: "start to add a content with type 'ComboBox 2:4'"
@@ -38,6 +40,7 @@ class Occurrences_ComboBox_2_4_Spec
         wizard.isContentInvalid( comboBoxContent.getDisplayName() );
     }
 
+    @Ignore
     def "GIVEN saving of ComboBox-content (2:4) without options WHEN content opened for edit THEN no one selected options present on page "()
     {
         given: "new content with type ComboBox2_4 added'"
@@ -60,6 +63,7 @@ class Occurrences_ComboBox_2_4_Spec
         wizard.isContentInvalid( comboBoxContent.getDisplayName() );
     }
 
+    @Ignore
     def "GIVEN saving of ComboBox-content (2:4) with two option WHEN content opened for edit THEN two selected options present on page and options filter input is enabled"()
     {
         given: "new content with type ComboBox2_4 added'"
@@ -83,6 +87,7 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
+    @Ignore
     def "GIVEN ComboBox-content (2:4) with two selected options and one option removed and content saved WHEN content opened for edit THEN one option selected on the page "()
     {
         given: "content with one required option opened for edit' and one option removed"
@@ -104,6 +109,7 @@ class Occurrences_ComboBox_2_4_Spec
 
     }
 
+    @Ignore
     def "GIVEN saving of  ComboBox-content (2:4) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
     {
         given: "new content with type ComboBox2_4 added'"
@@ -128,6 +134,7 @@ class Occurrences_ComboBox_2_4_Spec
 
     }
 
+    @Ignore
     def "WHEN content with 2 selected option saved and published THEN it content with 'Online'-status listed"()
     {
         when: "content without option saved and published"

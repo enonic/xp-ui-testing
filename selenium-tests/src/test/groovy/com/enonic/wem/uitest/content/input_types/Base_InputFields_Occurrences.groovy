@@ -320,10 +320,10 @@ class Base_InputFields_Occurrences
     {
         PropertyTree data = ContentUtils.buildSingleSelectionData( option );
         Content textLineContent = Content.builder().
-            name( NameHelper.uniqueName( "radiobuttons" ) ).
-            displayName( "radiobuttons content" ).
+            name( NameHelper.uniqueName( "radiobutton" ) ).
+            displayName( "radiobutton content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":radiobuttons" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":radiobutton" ).data( data ).
             build();
         return textLineContent;
     }

@@ -7,6 +7,7 @@ import com.enonic.autotests.pages.form.SingleSelectorRadioFormView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_RadioButtons_Spec
@@ -17,6 +18,7 @@ class Occurrences_RadioButtons_Spec
     @Shared
     Content content_wit_opt;
 
+    @Ignore
     def "WHEN wizard for adding a 'Radio Buttons' opened THEN radio buttons present on page and no any options selected"()
     {
         when: "start to add a content with type 'Radio Buttons'"
@@ -29,6 +31,7 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
+    @Ignore
     def "GIVEN saving of not required 'Radio Buttons' without selected option WHEN content opened for edit THEN no one selected options present in form view"()
     {
         given: "new content with type 'Radio Buttons'"
@@ -46,6 +49,7 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
+    @Ignore
     def "GIVEN saving of not required 'Radio Buttons content' without selected option WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
     {
         given: "new content with type 'Radio Buttons'"
@@ -68,6 +72,7 @@ class Occurrences_RadioButtons_Spec
 
     }
 
+    @Ignore
     def "GIVEN saving of not required 'Single Selector Radio-content' with  selected option WHEN content opened for edit THEN correct selected option  present in form view"()
     {
         given: "new content with type 'Single Selector Radio'"
@@ -84,6 +89,7 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption() == option;
     }
 
+    @Ignore
     def "GIVEN a not required 'Single Selector Radio-content' with selected option WHEN content opened and option changed THEN new option displayed"()
     {
         given: "a content with type 'Single Selector Radio' opened for edit"

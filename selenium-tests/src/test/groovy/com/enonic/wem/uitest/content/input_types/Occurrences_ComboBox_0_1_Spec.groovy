@@ -9,6 +9,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_ComboBox_0_1_Spec
@@ -20,6 +21,7 @@ class Occurrences_ComboBox_0_1_Spec
     @Shared
     Content content_with_opt;
 
+    @Ignore
     def "WHEN wizard for adding a ComboBox-content(0:1) opened THEN option filter input is present "()
     {
         when: "start to add a content with type 'ComboBox 0:1'"
@@ -33,6 +35,7 @@ class Occurrences_ComboBox_0_1_Spec
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
+    @Ignore
     def "GIVEN saving of ComboBox-content (0:1) without options WHEN content opened for edit THEN no one selected options present on page "()
     {
         given: "new content with type ComboBox0_1 added'"
@@ -52,6 +55,7 @@ class Occurrences_ComboBox_0_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
+    @Ignore
     def "GIVEN saving of  ComboBox-content (0:1) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
     {
         given: "new content with type ComboBox0_1 added'"
@@ -75,6 +79,7 @@ class Occurrences_ComboBox_0_1_Spec
 
     }
 
+    @Ignore
     def "GIVEN a existing new ComboBox 0:1 with one option  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()
     {
         given: "existing new ComboBox 0:0 with options'"
@@ -89,6 +94,7 @@ class Occurrences_ComboBox_0_1_Spec
         contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
+    @Ignore
     def "GIVEN ComboBox-content (0:1) with one selected option and one option removed and content saved WHEN content opened for edit THEN no options selected on the page "()
     {
         given: "content with tree options opened for edit' and one option removed"
@@ -108,6 +114,7 @@ class Occurrences_ComboBox_0_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
+    @Ignore
     def "WHEN content without option saved and published THEN just created content with status equals 'Online' listed"()
     {
         given: "content without option saved and published"
