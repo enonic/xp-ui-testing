@@ -8,28 +8,20 @@
       <indexed>true</indexed>
       <occurrences minimum="2" maximum="4"/>
       <config>
-        <options>
-          <option>
-            <label>option A</label>
-            <value>o1</value>
-          </option>
-          <option>
-            <label>option B</label>
-            <value>o2</value>
-          </option>
-          <option>
-            <label>option C</label>
-            <value>o3</value>
-          </option>
-          <option>
-            <label>option D</label>
-            <value>o4</value>
-          </option>
-          <option>
-            <label>option E</label>
-            <value>o5</value>
-          </option>
-        </options>
+        <property name="option.value">o1</property>
+        <property name="option.label">option A</property>
+
+        <property name="option.value">o2</property>
+        <property name="option.label">option B</property>
+
+        <property name="option.value">o3</property>
+        <property name="option.label">option C</property>
+
+        <property name="option.value">o4</property>
+        <property name="option.label">option D</property>
+
+        <property name="option.value">o5</property>
+        <property name="option.label">option E</property>
       </config>
     </input>
   </form>

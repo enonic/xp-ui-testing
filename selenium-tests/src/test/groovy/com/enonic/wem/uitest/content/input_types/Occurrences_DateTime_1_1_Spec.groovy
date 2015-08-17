@@ -8,7 +8,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.autotests.utils.WaitHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -50,7 +49,6 @@ class Occurrences_DateTime_1_1_Spec
         String publishMessage = contentWizardPanel.typeData(
             dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        WaitHelper.sleep( 1000 );
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateTimeContent.getDisplayName() );
         if ( modalDialog != null )
         {

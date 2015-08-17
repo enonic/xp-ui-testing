@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mixin>
+  <display-name>Norwegian counties</display-name>
+  <items>
+    <input type="RadioButton" name="norwegianCounty">
+      <label>Norwegian county</label>
+      <custom-text/>
+      <help-text/>
+      <occurrences minimum="0" maximum="1"/>
+      <config>
+        <property name="option.value">Østfold</property>
+        <property name="option.value">01</property>
+
+        <property name="option.value">Akershus</property>
+        <property name="option.value">02</property>
+
+        <property name="option.value">Oslo</property>
+        <property name="option.value">03</property>
+
+        <property name="option.value">Hedmark</property>
+        <property name="option.value">04</property>
+
+        <property name="option.value">Oppland</property>
+        <property name="option.value">05</property>
+
+        <property name="option.value">Buskerud</property>
+        <property name="option.value">06</property>
+
+        <property name="option.value">Vestfold</property>
+        <property name="option.value">07</property>
+
+        <property name="option.value">Telemark</property>
+        <property name="option.value">08</property>
+
+        <property name="option.value">Øst-Agder</property>
+        <property name="option.value">09</property>
+
+        <property name="option.value">Vest-Agder</property>
+        <property name="option.value">10</property>
+
+        <property name="option.value">Rogaland</property>
+        <property name="option.value">11</property>
+
+        <property name="option.value">Hordaland</property>
+        <property name="option.value">12</property>
+
+        <property name="option.value">Sogn og Fjordane</property>
+        <property name="option.value">14</property>
+
+        <property name="option.value">Møre og Romsdal</property>
+        <property name="option.value">15</property>
+
+        <property name="option.value">Sør-Trøndelag</property>
+        <property name="option.value">16</property>
+
+        <property name="option.value">Nord-Trøndelag</property>
+        <property name="option.value">17</property>
+
+        <property name="option.value">Nordland</property>
+        <property name="option.value">18</property>
+
+        <property name="option.value">Troms</property>
+        <property name="option.value">19</property>
+
+        <property name="option.value">Finnmark</property>
+        <property name="option.value">20</property>
+      </config>
+    </input>
+  </items>
+</mixin>

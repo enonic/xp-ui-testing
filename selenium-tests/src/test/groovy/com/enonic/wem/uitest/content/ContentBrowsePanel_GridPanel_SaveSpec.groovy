@@ -137,7 +137,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
-        given:
+        given: "existing Content"
         Content contentToEdit = Content.builder().
             parent( PARENT_FOLDER.getPath() ).
             name( "editname" ).
@@ -146,22 +146,19 @@ class ContentBrowsePanel_GridPanel_SaveSpec
             build();
         contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
         addContent( contentToEdit );
-
+        contentBrowsePanel.clickOnClearSelection();
         Content newContent = cloneContentWithNewName( contentToEdit )
-        contentBrowsePanel.expandContent( contentToEdit.getParent() );
-        TestUtils.saveScreenshot( getTestSession(), "editnametest" );
-        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getName() );
+        filterPanel.typeSearchText( contentToEdit.getName() )
         ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getName() ).clickToolbarEdit();
         contentWizard.typeData( newContent );
 
-        when:
+        when: "changing name of an existing Content"
         contentWizard.save().close( newContent.getDisplayName() );
-
-        then:
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        filterPanel.typeSearchText( contentToEdit.getName() )
 
-        TestUtils.saveScreenshot( getTestSession(), "editnametest1" );
+        then: "Content is listed with it's new name"
+        TestUtils.saveScreenshot( getTestSession(), "editnametest" );
         contentBrowsePanel.exists( newContent.getName(), true );
 
     }

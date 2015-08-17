@@ -1,5 +1,8 @@
 package com.enonic.autotests.pages.modules;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,6 +29,33 @@ public class ApplicationItemStatisticsPanel
 
     private final String SYSTEM_REQUIRED = DATA_CONTAINER + "//li[text()='System Required']/following-sibling::li";
 
+    private final String LIST_ITEMS = "/following-sibling::li";
+
+    private final String CONTENT_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Content Types']";
+
+    private final String CONTENT_TYPES = CONTENT_TYPES_HEADER + LIST_ITEMS;
+
+    private final String MIXINS_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Mixins']";
+
+    private final String MIXINS = MIXINS_HEADER + LIST_ITEMS;
+
+    private final String RELATIONSHIP_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='RelationshipTypes']";
+
+    private final String PAGE_HEADER = DATA_CONTAINER + "//div[contains(@class,'descriptors')]//li[text()='Page']";
+
+    private final String PAGES = PAGE_HEADER + LIST_ITEMS;
+
+    private final String PART_HEADER = DATA_CONTAINER + "//div[contains(@class,'descriptors')]//li[text()='Part']";
+
+    private final String PARTS = PART_HEADER + LIST_ITEMS;
+
+    private final String LAYOUT_HEADER = DATA_CONTAINER + "//div[contains(@class,'descriptors')]//li[text()='Layout']";
+
+    private final String LAYOUTS = LAYOUT_HEADER + LIST_ITEMS;
+
+
+    private final String RELATIONSHIP_TYPES = RELATIONSHIP_TYPES_HEADER + LIST_ITEMS;
+
     @FindBy(xpath = STATISTIC_PANEL_CONTAINER + "//div[contains(@class,'drop-down-button')]")
     private WebElement actionMenuButton;
 
@@ -41,22 +71,88 @@ public class ApplicationItemStatisticsPanel
         return this;
     }
 
-    public boolean isBuildDateVisible()
+    public boolean isLayoutHeaderPresent()
+    {
+        return findElements( By.xpath( LAYOUT_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public List<String> getLayouts()
+    {
+        return findElements( By.xpath( LAYOUTS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            Collectors.toList() );
+    }
+
+    public boolean isPartHeaderPresent()
+    {
+        return findElements( By.xpath( PART_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public List<String> getParts()
+    {
+        return findElements( By.xpath( PARTS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            Collectors.toList() );
+    }
+
+    public boolean isPageHeaderPresent()
+    {
+        return findElements( By.xpath( PAGE_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public List<String> getPages()
+    {
+        return findElements( By.xpath( PAGES ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            Collectors.toList() );
+    }
+
+    public boolean isContentTypesHeaderPresent()
+    {
+        return findElements( By.xpath( CONTENT_TYPES_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public boolean isRelationShipTypesHeaderPresent()
+    {
+        return findElements( By.xpath( RELATIONSHIP_TYPES_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public List<String> getRelationShipTypes()
+    {
+        return findElements( By.xpath( RELATIONSHIP_TYPES ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            Collectors.toList() );
+    }
+
+    public List<String> getContentTypes()
+    {
+        return findElements( By.xpath( CONTENT_TYPES ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            Collectors.toList() );
+    }
+
+    public boolean isMixinsHeaderPresent()
+    {
+        return findElements( By.xpath( MIXINS_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public List<String> getMixins()
+    {
+        return findElements( By.xpath( MIXINS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            Collectors.toList() );
+    }
+
+    public boolean isBuildDatePresent()
     {
         return findElements( By.xpath( BUILD_DATE ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
-    public boolean isVersionVisible()
+    public boolean isVersionPresent()
     {
         return findElements( By.xpath( VERSION ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
-    public boolean isKeyVisible()
+    public boolean isKeyPresent()
     {
         return findElements( By.xpath( KEY ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
-    public boolean isSystemRequiredVisible()
+    public boolean isSystemRequiredPresent()
     {
         return findElements( By.xpath( SYSTEM_REQUIRED ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
