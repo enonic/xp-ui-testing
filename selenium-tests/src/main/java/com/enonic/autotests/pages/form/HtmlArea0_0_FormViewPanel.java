@@ -16,13 +16,13 @@ import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class TinyMCE0_0_FormViewPanel
-    extends BaseTinyMCEFormViewPanel
+public class HtmlArea0_0_FormViewPanel
+    extends BaseHtmlAreaFormViewPanel
 {
 
     private final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
-    public TinyMCE0_0_FormViewPanel( final TestSession session )
+    public HtmlArea0_0_FormViewPanel( final TestSession session )
     {
         super( session );
     }
@@ -114,7 +114,7 @@ public class TinyMCE0_0_FormViewPanel
         return waitElementNotVisible( By.xpath( ADD_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
-    public TinyMCE0_0_FormViewPanel clickOnAddButton()
+    public HtmlArea0_0_FormViewPanel clickOnAddButton()
     {
         if ( findElements( By.xpath( ADD_BUTTON_XPATH ) ).size() == 0 )
         {
@@ -125,7 +125,7 @@ public class TinyMCE0_0_FormViewPanel
         return this;
     }
 
-    public TinyMCE0_0_FormViewPanel removeLastTextArea()
+    public HtmlArea0_0_FormViewPanel removeLastTextArea()
     {
         List<WebElement> buttons = findElements( By.xpath( REMOVE_BUTTON_XPATH ) );
         if ( buttons.size() != 0 )

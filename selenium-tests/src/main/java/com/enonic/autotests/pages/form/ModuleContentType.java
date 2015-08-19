@@ -8,8 +8,8 @@ public enum ModuleContentType
     ":textline1_1" ), TEXTLINE0_1( ":textline0_1" ), TEXTLINE2_5( ":textline2_5" ), TAG0_5( ":tag0_5" ), TAG2_5( ":tag2_5" ), TAG_UNLIM(
     ":tag_unlim" ), COMBOBOX0_0( ":combobox0_0" ), COMBOBOX0_1( ":combobox0_1" ), COMBOBOX1_1( ":combobox1_1" ), COMBOBOX2_4(
     ":combobox2_4" ), SINGLE_SELECTOR_COMBOBOX0_1( ":ss_combobox0_1" ), SINGLE_SELECTOR_COMBOBOX1_1( ":ss_combobox1_1" ), TEXT_AREA(
-    ":textarea" ), RADIO_BUTTONS( ":radiobutton" ), TINY_MCE0_1( ":tiny_mce0_1" ), TINY_MCE0_2( ":tiny_mce0_2" ), TINY_MCE0_0(
-    ":tiny_mce0_0" ), IMAGE_SELCTOR0_0( ":imageselector0_0" ), IMAGE_SELCTOR0_1( ":imageselector0_1" ), IMAGE_SELCTOR1_1(
+    ":textarea" ), RADIO_BUTTONS( ":radiobutton" ), HTMLAREA0_1( ":htmlarea0_1" ), HTMLAREA0_2( ":htmlarea0_2" ), HTMLAREA0_0(
+    ":htmlarea0_0" ), IMAGE_SELCTOR0_0( ":imageselector0_0" ), IMAGE_SELCTOR0_1( ":imageselector0_1" ), IMAGE_SELCTOR1_1(
     ":imageselector1_1" ), IMAGE_SELCTOR2_4( ":imageselector2_4" );
 
     private String name;

@@ -10,7 +10,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -23,7 +22,6 @@ class Occurrences_ComboBox_0_0_Spec
     @Shared
     Content content_wit_opt;
 
-    @Ignore
     def "WHEN wizard for adding a Combo box-content(0:0) opened THEN option filter input is present "()
     {
         when: "start to add a content with type 'ComboBox 0:0'"
@@ -37,7 +35,6 @@ class Occurrences_ComboBox_0_0_Spec
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
-    @Ignore
     def "GIVEN saving of Combobox-content (0:0) without options WHEN content opened for edit THEN no one selected options present in form view"()
     {
         given: "new content with type Combobbox0_0 added'"
@@ -57,7 +54,6 @@ class Occurrences_ComboBox_0_0_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    @Ignore
     def "GIVEN saving of  Combobox-content (0:0) with one option WHEN content opened for edit THEN one selected option and button 'Remove' present in form view"()
     {
         given: "new content with type ComboBox 0_0 added"
@@ -81,7 +77,6 @@ class Occurrences_ComboBox_0_0_Spec
 
     }
 
-    @Ignore
     def "GIVEN saving of  ComboBox-content (0:0) with three options WHEN content opened for edit THEN three selected options and buttons 'Remove' present on page "()
     {
         given: "new content with type ComboBox0_0 added'"
@@ -106,7 +101,6 @@ class Occurrences_ComboBox_0_0_Spec
 
     }
 
-    @Ignore
     def "GIVEN ComboBox-content (0:0) with three options and one option removed and content saved WHEN content opened for edit THEN two selected options and buttons 'Remove' present on the page "()
     {
         given: "content with tree options opened for edit' and one option removed"
@@ -129,7 +123,6 @@ class Occurrences_ComboBox_0_0_Spec
 
     }
 
-    @Ignore
     def "GIVEN a existing new ComboBox 0:0 with options  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()
     {
         given: "existing new ComboBox 0:0 with options'"
@@ -147,7 +140,7 @@ class Occurrences_ComboBox_0_0_Spec
         contentBrowsePanel.getContentStatus( content_wit_opt.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
 
-    @Ignore
+
     def "GIVEN a creating of a new ComboBox 0:0 without options WHEN content saved and 'Publish' on toolbar pressed THEN new content with status equals 'Online' listed"()
     {
         given: "a creating of a new ComboBox 0:0 without options"
@@ -165,7 +158,6 @@ class Occurrences_ComboBox_0_0_Spec
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
     }
-
 
     private Content buildComboBox0_0_Content( int numberOptions )
     {

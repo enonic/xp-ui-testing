@@ -15,10 +15,10 @@ import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class TinyMCE0_1_FormViewPanel
-    extends BaseTinyMCEFormViewPanel
+public class HtmlArea0_1_FormViewPanel
+    extends BaseHtmlAreaFormViewPanel
 {
-    public TinyMCE0_1_FormViewPanel( final TestSession session )
+    public HtmlArea0_1_FormViewPanel( final TestSession session )
     {
         super( session );
     }
@@ -39,9 +39,9 @@ public class TinyMCE0_1_FormViewPanel
 
     public boolean isEditorToolbarVisible()
     {
-        List<WebElement> toolbars = findElements(
-            By.xpath( "//div[contains(@id,'TinyMCE')]//div[contains(@class,'mce-toolbar') and @role='toolbar']" ) ).stream().filter(
-            WebElement::isDisplayed ).collect( Collectors.toList() );
+        List<WebElement> toolbars =
+            findElements( By.xpath( "//div[contains(@id,'HtmlArea')]//div[contains(@class,'mce-toolbar')]" ) ).stream().filter(
+                WebElement::isDisplayed ).collect( Collectors.toList() );
         return toolbars.size() > 0;
     }
 

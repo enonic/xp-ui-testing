@@ -13,6 +13,8 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
 import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
+import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel;
+import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel;
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel;
 import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.ModuleContentType;
@@ -27,8 +29,6 @@ import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel;
 import com.enonic.autotests.pages.form.TimeFormViewPanel;
-import com.enonic.autotests.pages.form.TinyMCE0_0_FormViewPanel;
-import com.enonic.autotests.pages.form.TinyMCE0_1_FormViewPanel;
 import com.enonic.xp.data.PropertyTree;
 import com.enonic.xp.schema.content.ContentTypeName;
 
@@ -126,14 +126,14 @@ public class ContentWizardStepForm
             formViewPanel = new TextAreaFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.contains( ModuleContentType.TINY_MCE0_1.getName() ) )
+        else if ( contentTypeName.contains( ModuleContentType.HTMLAREA0_1.getName() ) )
         {
-            formViewPanel = new TinyMCE0_1_FormViewPanel( getSession() );
+            formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TINY_MCE0_0.getName() ) ||
-            contentTypeName.contains( ModuleContentType.TINY_MCE0_2.getName() ) )
+        else if ( contentTypeName.contains( ModuleContentType.HTMLAREA0_0.getName() ) ||
+            contentTypeName.contains( ModuleContentType.HTMLAREA0_2.getName() ) )
         {
-            formViewPanel = new TinyMCE0_0_FormViewPanel( getSession() );
+            formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         }
         else if ( contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_0.getName() ) ||
             contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_1.getName() ) ||

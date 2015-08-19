@@ -8,7 +8,7 @@
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
       <occurrences minimum="2" maximum="4"/>
-      <help-text>..that's the question!</help-text>
+      <help-text>time</help-text>
     </input>
   </form>
 </content-type>
