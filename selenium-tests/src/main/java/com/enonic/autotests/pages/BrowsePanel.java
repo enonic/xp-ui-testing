@@ -370,8 +370,16 @@ public abstract class BrowsePanel
     {
         String styleValue = findElements( By.xpath( "//div[@class='grid-canvas']" ) ).get( 0 ).getAttribute( "style" );
         int gridCanvasHeight = getHeightFromStyleString( styleValue );
+        if ( gridCanvasHeight == 0 )
+        {
+            return false;
+        }
         styleValue = findElements( By.xpath( "//div[@class='slick-viewport']" ) ).get( 0 ).getAttribute( "style" );
         int viewportHeight = getHeightFromStyleString( styleValue );
+        if ( viewportHeight == 0 )
+        {
+            return false;
+        }
         return gridCanvasHeight - viewportHeight > 50;
     }
 
@@ -379,7 +387,17 @@ public abstract class BrowsePanel
     {
         int startIndex = styleString.lastIndexOf( "height:" ) + "height:".length();
         int endIndex = styleString.lastIndexOf( "px" );
-        return Integer.valueOf( styleString.substring( startIndex, endIndex ).trim() );
+        int height = 0;
+        try
+        {
+            height = Integer.valueOf( styleString.substring( startIndex, endIndex ).trim() );
+        }
+        catch ( NumberFormatException ex )
+        {
+            getLogger().info( "style does not contain a number value for height" );
+            return 0;
+        }
+        return height;
     }
 
 
@@ -555,7 +573,7 @@ public abstract class BrowsePanel
 
         if ( !doScrollAndFindGridItem( itemName ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_empty" ) );
+            TestUtils.saveScreenshot( getSession(), "err_find_" + itemName );
             throw new TestFrameworkException( "grid item was not found! " + itemName );
         }
         String itemCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, itemName );
@@ -564,6 +582,7 @@ public abstract class BrowsePanel
         boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
         if ( !isPresent )
         {
+            TestUtils.saveScreenshot( getSession(), "err_checkbox_" + itemName );
             throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
         }
         findElement( By.xpath( itemCheckBoxXpath ) ).click();
