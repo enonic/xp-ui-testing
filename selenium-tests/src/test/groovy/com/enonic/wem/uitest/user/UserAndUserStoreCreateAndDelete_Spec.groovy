@@ -91,6 +91,8 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         when: "name typed and 'Save' pressed"
         userWizardPanel.typeData( user ).save().close( user.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "user_added" )
+
         and:
         userBrowsePanel.clickOnExpander( "users" );
 
