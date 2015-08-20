@@ -16,11 +16,12 @@ class ManualSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.MODIFIED_DESCENDING.getValue() );
         LinkedList<String> defaultSortingList = sortContentDialog.getContentNames();
-        TestUtils.saveScreenshot( getSession(), "manual_sort" );
+        TestUtils.saveScreenshot( getSession(), "manual_sort1" );
 
         when:
         sortContentDialog.dragAndSwapItems( "nord.jpg", "whale.jpg" )
         LinkedList<String> manuallySortedList = sortContentDialog.getContentNames();
+        TestUtils.saveScreenshot( getSession(), "manual_sort-drag2" );
 
         then: "'SortContent' dialog displayed"
         defaultSortingList.indexOf( "nord.jpg" ) == manuallySortedList.indexOf( "whale.jpg" );
@@ -43,6 +44,7 @@ class ManualSortContent_Spec
         sortContentDialog.clickOnSaveButton();
         sortContentDialog = contentBrowsePanel.clickToolbarSort();
         LinkedList<String> manuallySortedList = sortContentDialog.getContentNames();
+        TestUtils.saveScreenshot( getSession(), "manual_sort-drag3" );
 
         then: "'SortContent' dialog displayed"
         defaultSortingList.indexOf( "nord.jpg" ) == manuallySortedList.indexOf( "whale.jpg" );
