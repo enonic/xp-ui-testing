@@ -41,6 +41,7 @@ class Base_InputFields_Occurrences
     def setup()
     {
         go "admin"
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "admin" ) );
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
     }
