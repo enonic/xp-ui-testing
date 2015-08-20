@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -103,24 +102,10 @@ public class MoveContentDialog
         return findElements( By.xpath( DIALOG_CONTAINER + "//h2[@class='title']" ) ).get( 0 ).getText();
     }
 
-    public MoveContentDialog clearSearchInput()
-    {
-        String os = System.getProperty( "os.name" ).toLowerCase();
-
-        if ( os.indexOf( "mac" ) >= 0 )
-        {
-            optionFilterInput.sendKeys( Keys.chord( Keys.COMMAND, "a" ), Keys.DELETE );
-        }
-        else
-        {
-            optionFilterInput.sendKeys( Keys.chord( Keys.CONTROL, "a" ), Keys.DELETE );
-        }
-        return this;
-    }
-
     public MoveContentDialog typeSearchText( String text )
     {
-        optionFilterInput.sendKeys( text );
+        clearAndType( optionFilterInput, text );
+        //optionFilterInput.sendKeys( text );
         sleep( 500 );
         return this;
     }

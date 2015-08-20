@@ -27,7 +27,7 @@ class DateContentValidation_Spec
     String WRONG_DAY_DATE = "2015-15-32";
 
 
-    def "WHEN data with wrong format typed THEN input's border becomes red "()
+    def "WHEN date with wrong format typed THEN input's border becomes red "()
     {
         given: "date with wrong format"
         Content dateContent = buildDate0_1_Content( BAD_FORMAT_DATE );
