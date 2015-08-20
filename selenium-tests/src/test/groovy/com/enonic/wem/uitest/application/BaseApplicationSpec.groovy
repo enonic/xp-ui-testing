@@ -11,7 +11,7 @@ class BaseApplicationSpec
     extends BaseGebSpec
 {
     @Shared
-    String SYSTEM_REQUIRED = ">= 5.0 and <=5.1";
+    String SYSTEM_REQUIRED = ">= 6.0.0 and < 7.0.0";
 
     @Shared
     String FIRST_APP_KEY = "com.enonic.xp.testing.first_app";
