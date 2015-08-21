@@ -58,6 +58,19 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.getContentStatus( childContent1.getName() ) == ContentStatus.ONLINE.getValue();
     }
 
+    def "GIVEN parent folder and children are 'published' WHEN publish dialog opened  THEN button 'publish' is disabled"()
+    {
+        given: "parent folder and children are 'published'"
+        filterPanel.typeSearchText( parentContent.getName() );
+
+
+        when: "publish dialog opened"
+        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
+
+        then: "button 'publish' is disabled"
+        !dialog.isPublishNowButtonEnabled();
+    }
+
     def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN just added child content has a 'Offline' status"()
     {
         setup: "add one more content into the published folder"
