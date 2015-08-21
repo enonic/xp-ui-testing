@@ -1,10 +1,7 @@
 import org.openqa.selenium.Platform
-import org.openqa.selenium.UnexpectedAlertBehaviour
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
-import org.openqa.selenium.remote.CapabilityType
-import org.openqa.selenium.remote.DesiredCapabilities
 
 import java.util.logging.Level
 
@@ -46,14 +43,14 @@ driver = {
     //def driver = new ChromeDriver();
     //ChromeOptions options = new ChromeOptions();
     //options.addArguments( "start-maximized" );
-    DesiredCapabilities dc = new DesiredCapabilities();
-    dc.setCapability( CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE );
-    def driver = new ChromeDriver( dc )
+    // DesiredCapabilities dc = new DesiredCapabilities();
+    // dc.setCapability( CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE );
+    // def driver = new ChromeDriver( dc )
 
     //FirefoxProfile profile = new FirefoxProfile();
     //profile.setEnableNativeEvents( true );
     // def driver = new FirefoxDriver( profile );
-    // def driver = new FirefoxDriver();
+    def driver = new FirefoxDriver();
     driver.manage().window().maximize()
     println "default configuration"
     return driver
