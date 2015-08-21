@@ -57,8 +57,7 @@ class Occurrences_TextLine_0_1_Spec
 
         when:
         contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
-        filterPanel.typeSearchText( textLineContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getName() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
 
         then: "actual text in the text line should be equals as expected"
         String valueFromUI = formViewPanel.getTextLineValue();

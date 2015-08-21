@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.data.Value
+import com.enonic.xp.data.ValueFactory
 import spock.lang.Shared
 
 class Occurrences_TextLine_1_0_Spec
@@ -107,14 +107,13 @@ class Occurrences_TextLine_1_0_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         formViewPanel.clickOnAddButton();
-        textLineContent.getData().addProperty( "1", Value.newString( SECOND_TEST_STRING ) );
+        textLineContent.getData().addProperty( "1", ValueFactory.newString( SECOND_TEST_STRING ) );
 
         when:
         contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
 
         then: "new content listed in the grid and can be opened for edit"
-        filterPanel.typeSearchText( textLineContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getName() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
         List<String> valuesFromUI = formViewPanel.getTextLineValues();
         and: "numbers of inputs is 2"
         formViewPanel.getNumberOfTextInputs() == 2;

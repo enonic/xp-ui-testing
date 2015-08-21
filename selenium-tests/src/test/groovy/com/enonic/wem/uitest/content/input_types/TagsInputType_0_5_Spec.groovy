@@ -73,8 +73,7 @@ class TagsInputType_0_5_Spec
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
         when: "five tags added, input text becomes disabled(display: none)"
-        contentWizardPanel.typeData( tagContent )
-
+        contentWizardPanel.typeData( tagContent );
 
         then: "one tag with correct text present on the page"
         !formViewPanel.isTagsInputDisplayed() && isDisplayedBefore;
@@ -88,10 +87,8 @@ class TagsInputType_0_5_Spec
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
-
         when: "five tags added, input text becomes disabled(display: none)"
         formViewPanel.removeLastTag();
-
 
         then: "one tag with correct text present on the page"
         formViewPanel.isTagsInputDisplayed() && !isDisplayedBefore;

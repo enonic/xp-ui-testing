@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -61,8 +60,8 @@ public class HomePage
 
         if ( !getSession().isLoggedIn() )
         {
-            String browser = (String) ( (JavascriptExecutor) getDriver() ).executeScript( "return navigator.userAgent;" );
-            getLogger().info( "BROWSER:" + browser );
+            //String browser = (String) ( (JavascriptExecutor) getDriver() ).executeScript( "return navigator.userAgent;" );
+            // getLogger().info( "BROWSER:" + browser );
             getLogger().info( "try to login with userName:" + username + " password: " + password );
             LoginPage loginPage = new LoginPage( getSession() );
             loginPage.doLogin( username, password );

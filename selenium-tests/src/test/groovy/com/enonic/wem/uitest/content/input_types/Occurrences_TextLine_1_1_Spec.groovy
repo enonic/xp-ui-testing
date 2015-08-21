@@ -48,8 +48,7 @@ class Occurrences_TextLine_1_1_Spec
         contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
 
         then: "new content listed in the grid and can be opened for edit"
-        filterPanel.typeSearchText( textLineContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( textLineContent.getName() ).clickToolbarEdit();
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
         String valueFromUI = formViewPanel.getTextLineValue();
 
         and: "numbers of inputs is 1"
