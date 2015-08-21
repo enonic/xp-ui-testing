@@ -14,6 +14,9 @@ import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.data.Value
 import com.enonic.xp.schema.content.ContentTypeName
+import org.openqa.selenium.Alert
+import org.openqa.selenium.NoAlertPresentException
+import org.openqa.selenium.UnhandledAlertException
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -40,7 +43,24 @@ class Base_InputFields_Occurrences
 
     def setup()
     {
+        try
+        {
         go "admin"
+        }
+        catch ( UnhandledAlertException f )
+        {
+            try
+            {
+                Alert alert = driver.switchTo().alert();
+                String alertText = alert.getText();
+                System.out.println( "Alert data: " + alertText );
+                alert.accept();
+            }
+            catch ( NoAlertPresentException e )
+            {
+                e.printStackTrace();
+            }
+        }
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
     }
