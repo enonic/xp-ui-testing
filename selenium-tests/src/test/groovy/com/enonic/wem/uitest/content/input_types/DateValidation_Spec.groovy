@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class DateValidation_Spec
@@ -23,8 +22,6 @@ class DateValidation_Spec
     @Shared
     String WRONG_DATE_TIME = "015-02-28 19:01";
 
-    // there is a not yet fixed bug XP-1144
-    @Ignore
     def "GIVEN saving of content with type 'Time 0:0' WHEN value of time is wrong THEN 'Publish' button disabled"()
     {
         given: "start to add a content with type 'Time 0:0'"
@@ -42,7 +39,6 @@ class DateValidation_Spec
         formViewPanel.isTimeInvalid();
     }
 
-    @Ignore
     def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN datetime typed and content published THEN warning message appears"()
     {
         given: "add a content with type 'DateTime 1:1'"
@@ -60,7 +56,6 @@ class DateValidation_Spec
         formViewPanel.isDateTimeInvalid();
     }
 
-    @Ignore
     def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN name typed and dateTime not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
     {
         given: "start to add a content with type 'DateTime(1:1)'"
@@ -74,7 +69,6 @@ class DateValidation_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    @Ignore
     def "GIVEN wizard for adding a required DateTime(2:4) opened WHEN name typed and dateTime not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
     {
         given: "start to add a content with type 'DateTime(2:4)'"
@@ -88,7 +82,6 @@ class DateValidation_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    @Ignore
     def "GIVEN wizard for adding a required Time(2:4) opened WHEN name typed and time not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
     {
         given: "start to add a content with type 'Time(2:4)'"

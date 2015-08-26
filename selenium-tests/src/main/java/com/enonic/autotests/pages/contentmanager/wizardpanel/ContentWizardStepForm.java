@@ -17,12 +17,13 @@ import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel;
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel;
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel;
 import com.enonic.autotests.pages.form.LongFormViewPanel;
-import com.enonic.autotests.pages.form.ModuleContentType;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
+import com.enonic.autotests.pages.form.RelationshipFormView;
 import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView;
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
 import com.enonic.autotests.pages.form.TagFormViewPanel;
+import com.enonic.autotests.pages.form.TestAppContentType;
 import com.enonic.autotests.pages.form.TextAreaFormViewPanel;
 import com.enonic.autotests.pages.form.TextLine0_1_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel;
@@ -48,29 +49,29 @@ public class ContentWizardStepForm
         {
             formViewPanel = new SiteFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.DATE_TIME0_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.DATE_TIME1_1.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.DATE_TIME0_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.DATE_TIME1_1.getName() ) )
         {
             formViewPanel = new DateTimeFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TIME0_0.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.TIME0_0.getName() ) )
         {
             formViewPanel = new TimeFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.DOUBLE.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.DOUBLE.getName() ) )
         {
             formViewPanel = new DoubleFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.DATE.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.DATE.getName() ) )
         {
             formViewPanel = new DateFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.contains( ModuleContentType.GEO_POINT.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.GEO_POINT.getName() ) )
         {
             formViewPanel = new GeoPointFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.CHECKBOX.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.CHECKBOX.getName() ) )
         {
             formViewPanel = new CheckBoxFormViewPanel( getSession() );
         }
@@ -79,68 +80,73 @@ public class ContentWizardStepForm
         {
             formViewPanel = new PageTemplateFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.LONG.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.LONG.getName() ) )
         {
             formViewPanel = new LongFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE1_0.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.TEXTLINE1_0.getName() ) )
         {
             formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE1_1.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.TEXTLINE1_1.getName() ) )
         {
             formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE0_1.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.TEXTLINE0_1.getName() ) )
         {
             formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TEXTLINE2_5.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.TEXTLINE2_5.getName() ) )
         {
             formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TAG0_5.getName() ) ||
-            contentTypeName.contains( ModuleContentType.TAG2_5.getName() ) ||
-            contentTypeName.contains( ModuleContentType.TAG_UNLIM.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.TAG0_5.getName() ) ||
+            contentTypeName.contains( TestAppContentType.TAG2_5.getName() ) ||
+            contentTypeName.contains( TestAppContentType.TAG_UNLIM.getName() ) )
         {
             formViewPanel = new TagFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.COMBOBOX0_0.getName() ) ||
-            contentTypeName.contains( ModuleContentType.COMBOBOX0_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.COMBOBOX1_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.COMBOBOX2_4.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.COMBOBOX0_0.getName() ) ||
+            contentTypeName.contains( TestAppContentType.COMBOBOX0_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.COMBOBOX1_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.COMBOBOX2_4.getName() ) )
         {
             formViewPanel = new ComboBoxFormViewPanel( getSession() );
         } //
-        else if ( contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_COMBOBOX0_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.SINGLE_SELECTOR_COMBOBOX1_1.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.SINGLE_SELECTOR_COMBOBOX0_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.SINGLE_SELECTOR_COMBOBOX1_1.getName() ) )
         {
             formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.RADIO_BUTTONS.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.RADIO_BUTTONS.getName() ) )
         {
             formViewPanel = new SingleSelectorRadioFormView( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.TEXT_AREA.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.TEXT_AREA.getName() ) )
         {
             formViewPanel = new TextAreaFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.contains( ModuleContentType.HTMLAREA0_1.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.HTMLAREA0_1.getName() ) )
         {
             formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.HTMLAREA0_0.getName() ) ||
-            contentTypeName.contains( ModuleContentType.HTMLAREA0_2.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.HTMLAREA0_0.getName() ) ||
+            contentTypeName.contains( TestAppContentType.HTMLAREA0_2.getName() ) )
         {
             formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_0.getName() ) ||
-            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR0_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR1_1.getName() ) ||
-            contentTypeName.contains( ModuleContentType.IMAGE_SELCTOR2_4.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.IMAGE_SELCTOR0_0.getName() ) ||
+            contentTypeName.contains( TestAppContentType.IMAGE_SELCTOR0_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.IMAGE_SELCTOR1_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.IMAGE_SELCTOR2_4.getName() ) )
         {
             formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( TestAppContentType.DEFAULT_RELATION0_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.DEFAULT_RELATION2_4.getName() ) )
+        {
+            formViewPanel = new RelationshipFormView( getSession() );
         }
         else
         {

@@ -11,17 +11,6 @@ import spock.lang.Shared
 class Occurrences_ImageSelector_2_4_Spec
     extends Base_InputFields_Occurrences
 {
-    @Shared
-    String TEST_IMG_1 = "nord.jpg";
-
-    @Shared
-    String TEST_IMG_2 = "book.jpg";
-
-    @Shared
-    String TEST_IMG_3 = "man.jpg";
-
-    @Shared
-    String TEST_IMG_4 = "fl.jpg";
 
     @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
@@ -82,7 +71,7 @@ class Occurrences_ImageSelector_2_4_Spec
     def "GIVEN saving of Image Selector-content (2:4) and 2 image selected WHEN content opened for edit THEN correct images present on page and option filter displayed"()
     {
         given: "new content with type 'Image Selector2_4' added"
-        TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( TEST_IMG_1, TEST_IMG_2 );
+        TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME );
         selectSiteOpenWizard( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
             TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
 
@@ -97,10 +86,10 @@ class Occurrences_ImageSelector_2_4_Spec
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "correct image present on the page"
-        images.get( 0 ) == TEST_IMG_1;
+        images.get( 0 ) == NORD_IMAGE_NAME;
 
         and: "correct image present on the page"
-        images.get( 1 ) == TEST_IMG_2;
+        images.get( 1 ) == BOOK_IMAGE_NAME;
     }
 
     def "GIVEN Image Selector-content (2:4) with two selected images and one image removed and content saved WHEN content opened for edit THEN one image present on the page"()
@@ -108,7 +97,7 @@ class Occurrences_ImageSelector_2_4_Spec
         given: "content with one required option opened for edit' and one option removed"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
-        formViewPanel.clickOnImage( TEST_IMG_1 ).clickOnRemoveButton();
+        formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
         wizard.save().close( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
 
         when: "when content selected in the grid and opened for edit again"
@@ -128,7 +117,7 @@ class Occurrences_ImageSelector_2_4_Spec
     def "WHEN content with 4 selected images saved and published THEN it content with 'Online'-status listed"()
     {
         when: "content with 4 selected images saved and published"
-        IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( TEST_IMG_1, TEST_IMG_2, TEST_IMG_3, TEST_IMG_4 );
+        IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME, MAN_IMAGE_NAME, FL_IMAGE_NAME );
         selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
             IMAGE_SELECTOR_CONTENT_4_IMAGES ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
@@ -157,7 +146,7 @@ class Occurrences_ImageSelector_2_4_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when:
-        formViewPanel.clickOnImage( TEST_IMG_1 ).clickOnRemoveButton();
+        formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
         TestUtils.saveScreenshot( getSession(), "img_sel_2_4_remove" )
 
         then: "option filter appears"

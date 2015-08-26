@@ -23,6 +23,19 @@ class Base_InputFields_Occurrences
 
 {
     @Shared
+    String FL_IMAGE_NAME = "fl.jpg";
+
+    @Shared
+    String NORD_IMAGE_NAME = "nord.jpg";
+
+    @Shared
+    String BOOK_IMAGE_NAME = "book.jpg";
+
+
+    @Shared
+    String MAN_IMAGE_NAME = "man.jpg";
+
+    @Shared
     String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
 
     @Shared
