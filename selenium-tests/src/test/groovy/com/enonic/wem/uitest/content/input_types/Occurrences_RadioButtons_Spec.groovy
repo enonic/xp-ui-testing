@@ -18,7 +18,7 @@ class Occurrences_RadioButtons_Spec
     @Shared
     Content content_wit_opt;
 
-    @Ignore
+
     def "WHEN wizard for adding a 'Radio Buttons' opened THEN radio buttons present on page and no any options selected"()
     {
         when: "start to add a content with type 'Radio Buttons'"
@@ -72,7 +72,7 @@ class Occurrences_RadioButtons_Spec
 
     }
 
-    @Ignore
+
     def "GIVEN saving of not required 'Single Selector Radio-content' with  selected option WHEN content opened for edit THEN correct selected option  present in form view"()
     {
         given: "new content with type 'Single Selector Radio'"
@@ -89,7 +89,6 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption() == option;
     }
 
-    @Ignore
     def "GIVEN a not required 'Single Selector Radio-content' with selected option WHEN content opened and option changed THEN new option displayed"()
     {
         given: "a content with type 'Single Selector Radio' opened for edit"
