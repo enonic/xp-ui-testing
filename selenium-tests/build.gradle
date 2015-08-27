@@ -120,6 +120,7 @@ task testInputTypes( type: Test, dependsOn: [buildApplications, deleteFolders, s
 task testPublishMoveSort( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
+    include '**/content/relationship/*Spec.class'
     exclude '**/application/**'
     exclude '**/user/**'
     forkEvery = null

@@ -43,10 +43,7 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDate0_1_Content( WRONG_DAY_DATE );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
-
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
         when: "date typed"
         contentWizardPanel.typeData( dateContent );
@@ -60,10 +57,7 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDate0_1_Content( WRONG_MONTH_DATE );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
-
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
         when: "date typed"
         contentWizardPanel.typeData( dateContent );
@@ -77,10 +71,7 @@ class DateContentValidation_Spec
     {
         given: "date with correct date format"
         Content dateContent = buildDate0_1_Content( CORRECT_DATE );
-        filterPanel.typeSearchText( SITE_NAME );
-        ContentWizardPanel contentWizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow(
-            SITE_NAME ).clickToolbarNew().selectContentType( dateContent.getContentTypeName() );
-
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
         when: "date typed"
         contentWizardPanel.typeData( dateContent );
