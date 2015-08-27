@@ -72,10 +72,10 @@ class Occurrences_ComboBox_2_4_Spec
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "one option value  present in form view"
+        then: "two option value  present in form view"
         optValues.size() == 2;
 
-        and: "option with correct text present"
+        and: "options with correct text present"
         String[] options = ["option A", "option B"];
         optValues.containsAll( options.toList() );
 
@@ -94,7 +94,7 @@ class Occurrences_ComboBox_2_4_Spec
         when: "when content selected in the grid and opened for edit again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
-        then: "no options selected on the page "
+        then: "one option selected in the form "
         TestUtils.saveScreenshot( getSession(), "24remove_opt" )
         List<String> optValues = formViewPanel.getSelectedOptionValues();
         optValues.size() == 1;
@@ -104,7 +104,7 @@ class Occurrences_ComboBox_2_4_Spec
 
     }
 
-    def "GIVEN saving of  ComboBox-content (2:4) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
+    def "GIVEN saving of ComboBox-content (2:4) with four options WHEN content opened for edit THEN four selected options present on page and 'filter input' is disabled"()
     {
         given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
@@ -116,7 +116,7 @@ class Occurrences_ComboBox_2_4_Spec
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "one option value  present in form view"
+        then: "four options present in form view"
         optValues.size() == 4;
 
         and: "and options have a correct text"
