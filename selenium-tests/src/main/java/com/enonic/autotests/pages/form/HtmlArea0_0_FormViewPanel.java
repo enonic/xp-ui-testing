@@ -130,7 +130,10 @@ public class HtmlArea0_0_FormViewPanel
         List<WebElement> buttons = findElements( By.xpath( REMOVE_BUTTON_XPATH ) );
         if ( buttons.size() != 0 )
         {
-            buttons.get( buttons.size() - 1 ).click();
+            Actions builder = new Actions( getDriver() );
+            builder.moveToElement( buttons.get( buttons.size() - 1 ), 0, 5 ).click().build().perform();
+            //builder.click( buttons.get( buttons.size() - 1 ).getLocation(). ) .build().perform();
+            //buttons.get( buttons.size() - 1 ).click();
             sleep( 1000 );
             return this;
         }

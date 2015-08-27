@@ -7,7 +7,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -64,8 +63,7 @@ class Occurrences_HtmlArea_0_2_Spec
         and: "two text area present"
         formViewPanel.getNumberOfAreas() == 2;
     }
-    // issue with the "selenium click action". selenium can not click on the remove button, but it possible manually,
-    @Ignore
+
     def "GIVEN wizard with two text area present WHEN one text area removed THEN one area present and button 'Add' appears "()
     {
         given: "start to add a content with type 'htmlArea 0:2'"
