@@ -7,7 +7,6 @@ import com.enonic.autotests.pages.form.SingleSelectorRadioFormView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_RadioButtons_Spec
@@ -31,7 +30,6 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    @Ignore
     def "GIVEN saving of not required 'Radio Buttons' without selected option WHEN content opened for edit THEN no one selected options present in form view"()
     {
         given: "new content with type 'Radio Buttons'"
@@ -49,7 +47,6 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    @Ignore
     def "GIVEN saving of not required 'Radio Buttons content' without selected option WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
     {
         given: "new content with type 'Radio Buttons'"
@@ -69,9 +66,7 @@ class Occurrences_RadioButtons_Spec
         !contentBrowsePanel.isContentInvalid( radioButtonsContent.getName() );
         and: "correct publish message was present"
         publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, radioButtonsContent.getDisplayName() );
-
     }
-
 
     def "GIVEN saving of not required 'Single Selector Radio-content' with  selected option WHEN content opened for edit THEN correct selected option  present in form view"()
     {
