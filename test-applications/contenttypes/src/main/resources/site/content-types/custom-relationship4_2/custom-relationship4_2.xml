@@ -8,7 +8,7 @@
       <label>Cited In</label>
       <custom-text/>
       <help-text/>
-      <occurrences minimum="0" maximum="0"/>
+      <occurrences minimum="4" maximum="2"/>
       <config>
         <relationship-type>com.enonic.xp.testing.contenttypes:citation</relationship-type>
       </config>

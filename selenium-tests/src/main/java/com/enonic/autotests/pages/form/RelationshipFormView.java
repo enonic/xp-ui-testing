@@ -26,7 +26,7 @@ public class RelationshipFormView
 
     private String COMBOBOX_OPTIONS_ITEM = "//div[@class='slick-viewport']//div[contains(@id,'ContentSummaryViewer')]//h6[text()='%s']";
 
-    protected final String STEP_XPATH = "//li[contains(@id,'api.ui.tab.TabBarItem')]//span[text()='Relationship']";
+    protected final String STEP_XPATH = "//li[contains(@id,'api.ui.tab.TabBarItem')]//span[contains(.,'Relationship')]";
 
     @FindBy(xpath = OPTION_FILTER_INPUT)
     protected WebElement optionFilterInput;

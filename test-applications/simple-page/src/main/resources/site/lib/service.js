@@ -7,7 +7,7 @@ exports.service.serviceUrl = function (service, params, module) {
         url = portal.serviceUrl({
             service: service,
             params: params,
-            module: module
+            application: module
         });
     } else if (params) {
         url = portal.serviceUrl({
@@ -17,7 +17,7 @@ exports.service.serviceUrl = function (service, params, module) {
     } else if (module) {
         url = portal.serviceUrl({
             service: service,
-            module: module
+            application: module
         });
     } else {
         url = portal.serviceUrl({

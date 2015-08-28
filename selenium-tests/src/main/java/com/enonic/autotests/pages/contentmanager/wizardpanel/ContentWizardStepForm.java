@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.WizardStepForm;
+import com.enonic.autotests.pages.form.ArticleFormView;
 import com.enonic.autotests.pages.form.CheckBoxFormViewPanel;
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel;
 import com.enonic.autotests.pages.form.DateFormViewPanel;
@@ -144,9 +145,14 @@ public class ContentWizardStepForm
             formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         }
         else if ( contentTypeName.contains( TestAppContentType.DEFAULT_RELATION0_1.getName() ) ||
-            contentTypeName.contains( TestAppContentType.DEFAULT_RELATION2_4.getName() ) )
+            contentTypeName.contains( TestAppContentType.DEFAULT_RELATION2_4.getName() ) ||
+            contentTypeName.contains( TestAppContentType.CUSTOM_RELATION0_1.getName() ) )
         {
             formViewPanel = new RelationshipFormView( getSession() );
+        }
+        else if ( contentTypeName.contains( TestAppContentType.ARTICLE.getName() ) )
+        {
+            formViewPanel = new ArticleFormView( getSession() );
         }
         else
         {
