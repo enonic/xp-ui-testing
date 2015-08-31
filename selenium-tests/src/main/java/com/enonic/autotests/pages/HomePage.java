@@ -75,6 +75,7 @@ public class HomePage
 
         if ( !isLoaded() )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_homepage" ) );
             throw new AuthenticationException( "Authentication failed, home page was not opened!" );
         }
 

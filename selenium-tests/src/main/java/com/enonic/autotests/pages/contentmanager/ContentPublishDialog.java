@@ -119,7 +119,7 @@ public class ContentPublishDialog
     public ContentPublishDialog clickOnPublishNowButton()
     {
         publishButton.click();
-        sleep( 300 );
+        sleep( 500 );
         return this;
     }
 
