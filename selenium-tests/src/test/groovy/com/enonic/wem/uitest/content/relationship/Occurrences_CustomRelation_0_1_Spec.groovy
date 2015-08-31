@@ -106,7 +106,9 @@ class Occurrences_CustomRelation_0_1_Spec
         then: "citation has a 'online' status"
         contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
         and: "correct notification message appeared"
-        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() );
+        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
+            message.contains( "items were published" );
+
     }
 
     private Content buildCitationRelation0_1_Content( String... names )

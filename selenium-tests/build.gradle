@@ -98,7 +98,7 @@ task testContentManager( type: Test, dependsOn: [buildApplications, deleteFolder
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
-    exclude '**/content/move_publish_sort/*Spec.class'
+    exclude '**/content/move_publish_sort/**Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
@@ -120,7 +120,7 @@ task testInputTypes( type: Test, dependsOn: [buildApplications, deleteFolders, s
 task testPublishMoveSort( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
-    include '**/content/relationship/*Spec.class'
+    include '**/content/relationship/**Spec.class'
     exclude '**/application/**'
     exclude '**/user/**'
     forkEvery = null
