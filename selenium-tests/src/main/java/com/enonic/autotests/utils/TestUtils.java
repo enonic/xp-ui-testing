@@ -8,11 +8,13 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
@@ -180,5 +182,32 @@ public class TestUtils
             }
         }
     }
+
+    public static String getPageSource( TestSession session, String title )
+    {
+        Set<String> allWindows = session.getDriver().getWindowHandles();
+        String source = null;
+        if ( !allWindows.isEmpty() )
+        {
+            for ( String windowId : allWindows )
+            {
+                try
+                {
+                    logger.info( "siteName:" + title );
+                    if ( session.getDriver().switchTo().window( windowId ).getTitle().contains( title ) )
+                    {
+                        source = session.getDriver().getPageSource();
+                        logger.info( "source  :  " + source );
+                    }
+                }
+                catch ( NoSuchWindowException e )
+                {
+                    throw new TestFrameworkException( "NoSuchWindowException- wrong ID" + e.getLocalizedMessage() );
+                }
+            }
+        }
+        return source;
+    }
+
 
 }

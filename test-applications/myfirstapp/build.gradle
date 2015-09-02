@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            url 'http://repo.enonic.com/public'
+        }
+    }
+
+    dependencies {
+        classpath 'com.enonic.xp:gradle-plugin:6.0.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'com.enonic.xp.app'
+
+version = '6.0.0'
+
+app {
+    name = 'com.enonic.myfirstapp'
+    displayName = 'My First App'
+    vendorName = 'Enonic AS'
+    vendorUrl = 'http://enonic.com'
+}
+
+ext {
+    xpVersion = '6.0.0-SNAPSHOT'
+}
+
+dependencies {
+    compile "com.enonic.xp:core-api:${xpVersion}"
+    compile "com.enonic.xp:portal-api:${xpVersion}"
+    include "com.enonic.xp:lib-content:${xpVersion}"
+    include "com.enonic.xp:lib-portal:${xpVersion}"
+    include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
+    include "com.enonic.xp:lib-xslt:${xpVersion}"
+    include "com.enonic.xp:lib-mustache:${xpVersion}"
+    include "com.enonic.xp:lib-i18n:${xpVersion}"
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+    maven {
+        url 'http://repo.enonic.com/public'
+    }
+}

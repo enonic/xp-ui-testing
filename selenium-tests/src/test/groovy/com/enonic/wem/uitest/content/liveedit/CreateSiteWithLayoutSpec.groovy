@@ -33,7 +33,7 @@ class CreateSiteWithLayoutSpec
     @Shared
     String MAIN_REGION_PAGE_DESCRIPTOR_NAME = "main region";
 
-
+    @Ignore
     def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be listed"()
     {
         given:
@@ -47,7 +47,7 @@ class CreateSiteWithLayoutSpec
 
     }
 
-
+    @Ignore
     def "GIVEN exists on root a site, based on 'Simple site' WHEN site expanded and templates folder selected AND page-template added  THEN new template should be listed beneath a 'Templates' folder"()
     {
         given:
@@ -123,7 +123,6 @@ class CreateSiteWithLayoutSpec
         then: "layout component appears in the 'live edit' frame and number of regions is 3"
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         liveFormPanel.isLayoutComponentPresent() && liveFormPanel.getLayoutColumnNumber() == 3;
-
 
     }
 

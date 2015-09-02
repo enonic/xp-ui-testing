@@ -31,22 +31,29 @@ public class ContentWizardPanel
     extends WizardPanel<Content>
 {
     public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
-        "//div[@id='ContentWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
+
+    public static final String TOOLBAR_LIVE_BUTTON_XPATH =
+        "//div[contains(@id,'ContentWizardToolbar')]//div[contains(@id, 'CycleButton') and text()='LIVE']";
+
 
     public static final String DIV_CONTENT_WIZARD_PANEL =
-        "//div[contains(@id,'app.wizard.ContentWizardPanel') and not(contains(@style,'display: none'))]";
+        "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
     public static final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save draft']]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
 
     public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Close']]";
 
     private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
         "//div[contains(@id,'ContentWizardToolbar')]//div[contains(@id, 'ContentWizardToolbarPublishControls')]//button[contains(@id,'DialogButton') and child::span[text()='Publish']]";
 
     private static final String TOOLBAR_DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'app.wizard.ContentWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+
+    private static final String TOOLBAR_PREVIEW_BUTTON_XPATH =
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
     private static final String CONTEXT_WINDOW_TOGGLER =
         "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'app.wizard.page.contextwindow.ContextWindowToggler')]";
@@ -66,6 +73,9 @@ public class ContentWizardPanel
 
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON_XPATH)
     private WebElement toolbarDeleteButton;
+
+    @FindBy(xpath = TOOLBAR_PREVIEW_BUTTON_XPATH)
+    private WebElement toolbarPreviewButton;
 
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
@@ -96,6 +106,13 @@ public class ContentWizardPanel
         }
 
         return cw;
+    }
+
+    public ContentWizardPanel clickToolbarPreview()
+    {
+        toolbarPreviewButton.click();
+        sleep( 1000 );
+        return this;
     }
 
     public boolean isContentInvalid( String contentDisplayName )
@@ -316,6 +333,31 @@ public class ContentWizardPanel
         {
             return null;
         }
+    }
+
+    public ContentWizardPanel clickOnLiveToolbarButton()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL ) )
+        {
+            throw new TestFrameworkException( "The 'Live' button not present!" );
+        }
+        findElements( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).get( 0 ).click();
+        return this;
+    }
+
+    public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
+    {
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        findElements( By.xpath( "//input[contains(@id,'DropdownOptionFilterInput')]" ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
+        String item = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
+        if ( !waitUntilVisibleNoException( By.xpath( item ), Application.EXPLICIT_NORMAL ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + pageDescriptorDisplayName );
+            throw new TestFrameworkException( "drop-down-option-filter: item was not found!" + pageDescriptorDisplayName );
+        }
+        findElements( By.xpath( item ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        return this;
     }
 
 }

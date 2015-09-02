@@ -44,7 +44,14 @@ task copyTestApplications( type: Copy ) {
 }
 task copySimplePageApp( type: Copy ) {
     from '../test-applications/simple-page/build/libs/'
-    from '../test-applications/all-contenttypes/build/libs/'
+    from '../test-applications/contenttypes/build/libs/'
+
+    include '**/*.jar'
+    into file( deployDir )
+}
+task copyMyFirstApp( type: Copy ) {
+    from '../test-applications/myfirstapp/build/libs/'
+    from '../test-applications/contenttypes/build/libs/'
 
     include '**/*.jar'
     into file( deployDir )
@@ -153,16 +160,17 @@ task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, 
     copyTestApplications.mustRunAfter startServer
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copySimplePageApp] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp] ) {
     scanForTestClasses = false
 
-    include '**/liveedit/CreateSiteWithLayoutSpec.class'
+
     exclude '**/application/**'
     exclude '**/user/**'
+    include '**/content/liveedit/MyFirstApp_Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
-    copySimplePageApp.mustRunAfter startServer
+    copyMyFirstApp.mustRunAfter startServer
 }
 
 

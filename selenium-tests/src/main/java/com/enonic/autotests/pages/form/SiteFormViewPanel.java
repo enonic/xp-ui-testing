@@ -41,7 +41,7 @@ public class SiteFormViewPanel
         builder.click( moduleSelectorComboBox ).build().perform();
         sleep( 500 );
         //select a module  and click on it
-        String moduleName = data.getString( "moduleKey" );
+        String moduleName = data.getString( "applicationKey" );
         String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", moduleName );
         if ( getDriver().findElements( By.xpath( moduleGridItem ) ).size() == 0 )
         {

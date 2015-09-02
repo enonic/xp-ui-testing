@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.WizardStepForm;
 import com.enonic.autotests.pages.form.ArticleFormView;
 import com.enonic.autotests.pages.form.CheckBoxFormViewPanel;
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel;
+import com.enonic.autotests.pages.form.CountryFormView;
 import com.enonic.autotests.pages.form.DateFormViewPanel;
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
@@ -153,6 +154,10 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( TestAppContentType.ARTICLE.getName() ) )
         {
             formViewPanel = new ArticleFormView( getSession() );
+        }
+        else if ( contentTypeName.contains( TestAppContentType.COUNTRY.getName() ) )
+        {
+            formViewPanel = new CountryFormView( getSession() );
         }
         else
         {
