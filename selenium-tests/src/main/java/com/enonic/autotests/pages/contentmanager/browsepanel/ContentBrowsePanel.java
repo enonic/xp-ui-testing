@@ -41,22 +41,22 @@ public class ContentBrowsePanel
     protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH = BASE_PANEL_XPATH + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
 
 
-    private final String NEW_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='New']]";
+    private final String NEW_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New']]";
 
     private final String DUPLICATE_BUTTON_XPATH =
-        BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
+        BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
-    private final String PREVIEW_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
+    private final String PREVIEW_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String MOVE_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Move']]";
+    private final String MOVE_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Move']]";
 
-    private final String EDIT_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
+    private final String EDIT_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
 
-    private final String DELETE_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+    private final String DELETE_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
-    private final String SORT_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Sort']]";
+    private final String SORT_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Sort']]";
 
-    private final String PUBLISH_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
+    private final String PUBLISH_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
 
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
