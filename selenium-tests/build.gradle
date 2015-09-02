@@ -61,7 +61,7 @@ task deleteFolders( type: Delete ) {
 }
 task buildApplications(
     dependsOn: [':test-applications:first-application:install', ':test-applications:simple-page:install', ':test-applications:contenttypes:install',
-                ':test-applications:second-application:install', ':test-applications:third-application:install', ':test-applications:fourth-application:install', ':test-applications:test-application:install'] )
+                ':test-applications:second-application:install', ':test-applications:third-application:install', ':test-applications:fourth-application:install', ':test-applications:test-application:install', ':test-applications:myfirstapp:install'] )
 
 task unpackDistro( type: Copy ) {
     from {
