@@ -38,6 +38,7 @@ class MyFirstApp_Spec
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
             MY_FIRST_SITE.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "site_added" );
 
         then: " new site should be listed"
         contentBrowsePanel.exists( MY_FIRST_SITE.getName() );
@@ -52,6 +53,7 @@ class MyFirstApp_Spec
 
         when: "data typed and saved and wizard closed"
         String message = wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
+        TestUtils.saveScreenshot( getSession(), "content_added" );
         wizard.close( USA_CONTENT.getDisplayName() );
 
         then: " new 'country' content should be listed"
@@ -67,6 +69,7 @@ class MyFirstApp_Spec
         wizard.clickOnLiveToolbarButton().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
+        TestUtils.saveScreenshot( getSession(), "region_added" );
         wizard.clickToolbarPreview();
 
         then: "the region page opened in a browser with correct title and correct header"
