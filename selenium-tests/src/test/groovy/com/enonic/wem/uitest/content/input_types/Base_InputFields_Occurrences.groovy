@@ -83,7 +83,7 @@ class Base_InputFields_Occurrences
     private Content buildSite()
     {
         PropertyTree data = new PropertyTree();
-        data.addString( "moduleKey", MODULE_DISPLAY_NAME );
+        data.addString( SiteFormViewPanel.APP_KEY, MODULE_DISPLAY_NAME );
         data.addStrings( "description", "all content types  site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).

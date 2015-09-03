@@ -16,6 +16,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class SiteFormViewPanel
     extends FormViewPanel
 {
+    public static final String APP_KEY = "applicationKey";
+
+    public static final String DESCRIPTION_KEY = "description";
     @FindBy(xpath = "//div[contains(@id,'api.form.FormView')]//textarea[contains(@name,'description')]")
     private WebElement descriptionInput;
 
@@ -32,22 +35,21 @@ public class SiteFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        String description = data.getString( "description" );
-        // type a description
+        String description = data.getString( DESCRIPTION_KEY );
         descriptionInput.sendKeys( description );
-
-        //select a module:
+        //expand the combobox
         Actions builder = new Actions( getDriver() );
         builder.click( moduleSelectorComboBox ).build().perform();
         sleep( 500 );
-        //select a module  and click on it
-        String moduleName = data.getString( "applicationKey" );
-        String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", moduleName );
+        //try to find a application
+        String appName = data.getString( APP_KEY );
+        String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", appName );
         if ( getDriver().findElements( By.xpath( moduleGridItem ) ).size() == 0 )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "module_err" ) );
-            throw new TestFrameworkException( "module with name: " + moduleName + "  was not found!" );
+        {   // if app was not found: save a screenshot
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_" ) );
+            throw new TestFrameworkException( "application with name: " + appName + "  was not found!" );
         }
+        //else select application from the options.
         getDriver().findElements( By.xpath( moduleGridItem ) ).get( 0 ).click();
         sleep( 500 );
         return this;

@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LayoutComponentView
@@ -195,7 +196,7 @@ class CreateSiteWithLayoutSpec
     {
         String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
-        data.addString( "moduleKey", "Simple Site App" );
+        data.addString( SiteFormViewPanel.APP_KEY, "Simple Site App" );
         data.addStrings( "description", "simple site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
