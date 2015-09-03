@@ -63,6 +63,7 @@ class MyFirstApp_Spec
 
         when:
         wizard.clickOnLiveToolbarButton();
+        TestUtils.saveScreenshot( getSession(), "LIVE_clicked" );
         then: "the 'LiveEdit' frame displayed"
         wizard.isLiveEditFrameDisplayed();
         and: "page descriptor option filter displayed"
@@ -78,6 +79,7 @@ class MyFirstApp_Spec
 
         when: "the 'LIVE' button pressed again"
         wizard.clickOnLiveToolbarButton();
+        TestUtils.saveScreenshot( getSession(), "frame_hidden" );
         then: "the 'LiveEdit' frame not displayed"
         !wizard.isLiveEditFrameDisplayed();
     }
