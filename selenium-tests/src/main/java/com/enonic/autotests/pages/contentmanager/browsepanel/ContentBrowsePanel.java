@@ -575,6 +575,19 @@ public class ContentBrowsePanel
         return wizard;
     }
 
+    public SortContentDialog selectSortInContextMenu( String contentName )
+    {
+        openContextMenu( contentName );
+        if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ), Application.EXPLICIT_NORMAL ) )
+        {
+            throw new TestFrameworkException( "Sort item was not found in the context menu" );
+        }
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).get( 0 ).click();
+        SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
+        sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
+        return sortContentDialog;
+    }
+
     /**
      * Opens context menu and select 'New' item
      *
