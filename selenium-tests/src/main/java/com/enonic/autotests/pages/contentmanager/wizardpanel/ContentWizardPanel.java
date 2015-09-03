@@ -356,6 +356,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "drop-down-option-filter: item was not found!" + pageDescriptorDisplayName );
         }
         findElements( By.xpath( item ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        sleep( 1000 );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
     }
