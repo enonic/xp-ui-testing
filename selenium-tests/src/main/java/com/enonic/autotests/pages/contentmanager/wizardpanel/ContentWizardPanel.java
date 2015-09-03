@@ -342,6 +342,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "The 'Live' button not present!" );
         }
         findElements( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).get( 0 ).click();
+        sleep( 500 );
         return this;
     }
 
@@ -359,6 +360,23 @@ public class ContentWizardPanel
         sleep( 1000 );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
+    }
+
+    public boolean isPageDescriptorOptionsFilterDisplayed()
+    {
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        return findElements( By.xpath( "//input[contains(@id,'DropdownOptionFilterInput')]" ) ).stream().filter(
+            WebElement::isDisplayed ).count() > 0;
+    }
+
+    public boolean isLiveEditFrameDisplayed()
+    {
+        return findElements( By.xpath( Application.LIVE_EDIT_FRAME ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public boolean isLiveButtonDisplayed()
+    {
+        return findElements( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
 }
