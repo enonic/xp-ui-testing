@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.User
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -46,6 +47,7 @@ class Add_User_Spec
         String creatingMessage = userWizardPanel.typeData( user ).save().waitNotificationMessage();
         userWizardPanel.close( user.getDisplayName() );
         def isWizardOpened = userWizardPanel.isOpened();
+        TestUtils.saveScreenshot( getSession(), "user_saved" );
 
         then: "new user present beneath a store"
         !isWizardOpened;
