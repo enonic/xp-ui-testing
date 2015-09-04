@@ -103,5 +103,4 @@ class MyFirstApp_Spec
         source.contains( COUNTRY_REGION_HEADER );
     }
 
-
 }

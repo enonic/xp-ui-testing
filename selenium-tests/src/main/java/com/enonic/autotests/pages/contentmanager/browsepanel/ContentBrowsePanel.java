@@ -588,6 +588,33 @@ public class ContentBrowsePanel
         return sortContentDialog;
     }
 
+    public boolean isItemDisabledInContextMenu( String contentName, String menuItem )
+    {
+        openContextMenu( contentName );
+        if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ), Application.EXPLICIT_NORMAL ) )
+        {
+            throw new TestFrameworkException( menuItem + "  item was not found in the context menu" );
+        }
+
+        WebElement previewItem = findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) ).stream().filter(
+            WebElement::isDisplayed ).findFirst().get();
+        return waitAndCheckAttrValue( previewItem, "class", "disabled", 1 );
+    }
+
+    public SortContentDialog selectPreviewInContextMenu( String contentName )
+    {
+        openContextMenu( contentName );
+        if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, "Preview" ) ), Application.EXPLICIT_NORMAL ) )
+        {
+            throw new TestFrameworkException( "Sort item was not found in the context menu" );
+        }
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).get( 0 ).click();
+        SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
+        sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
+        return sortContentDialog;
+    }
+
+
     /**
      * Opens context menu and select 'New' item
      *

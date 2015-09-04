@@ -166,7 +166,7 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFo
 
     exclude '**/application/**'
     exclude '**/user/**'
-    include '**/content/liveedit/MyFirstApp_Spec.class'
+    include '**/content/liveedit/**Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders

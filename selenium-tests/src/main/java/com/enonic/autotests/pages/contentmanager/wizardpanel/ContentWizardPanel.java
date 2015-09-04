@@ -291,6 +291,11 @@ public class ContentWizardPanel
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
+    public boolean isPreviewButtonEnabled()
+    {
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
     @Override
     public boolean isOpened()
     {
