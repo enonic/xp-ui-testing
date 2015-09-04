@@ -31,7 +31,7 @@ class RoleWizardPanel_TabMenuSpec
 
         when: "no any data typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
-        TestUtils.saveScreenshot( getTestSession(), "role_close1" );
+        TestUtils.saveScreenshot( getTestSession(), "role_closed" );
 
         then: "close dialog should not be showed"
         dialog == null;
@@ -46,7 +46,7 @@ class RoleWizardPanel_TabMenuSpec
 
         when: "TabmenuItem(close) clicked"
         SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
-        TestUtils.saveScreenshot( getTestSession(), "role_close2" );
+        TestUtils.saveScreenshot( getTestSession(), "role_not_close" );
 
         then: "'SaveBeforeClose' dialog showed"
         dialog != null;
