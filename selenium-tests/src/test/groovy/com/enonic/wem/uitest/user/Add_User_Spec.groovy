@@ -29,7 +29,8 @@ class Add_User_Spec
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "data typed and user saved"
-        String errorMessage = userWizardPanel.typeData( userEmptyPassword ).save().waitNotificationError( Application.EXPLICIT_NORMAL )
+        String errorMessage = userWizardPanel.typeData( userEmptyPassword ).save().waitNotificationError( Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), "user_error_mess" );
 
         then: "new user present beneath a system store"
         errorMessage == UserWizardPanel.PASSWORD_ERROR_MESSAGE;
@@ -68,7 +69,8 @@ class Add_User_Spec
         userBrowsePanel.clickCheckboxAndSelectRow( user.getDisplayName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( 2l );
         userBrowseFilterPanel.clickOnCleanFilter();
-        userBrowsePanel.expandUsersFolder( "system" )
+        userBrowsePanel.expandUsersFolder( "system" );
+        TestUtils.saveScreenshot( getSession(), "user_removed" );
 
         then: "removed user not present beneath a 'Users' folder"
         !userBrowsePanel.exists( user.getDisplayName(), true );
