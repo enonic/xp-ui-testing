@@ -56,7 +56,7 @@ public class ContentWizardPanel
         "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
     private static final String CONTEXT_WINDOW_TOGGLER =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'app.wizard.page.contextwindow.ContextWindowToggler')]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ContextWindowToggler')]";
 
     private final String UNLOCK_LINK = "//div[@class='centered']/a[text()='Unlock']";
 
@@ -91,7 +91,6 @@ public class ContentWizardPanel
     public ContentWizardPanel( TestSession session )
     {
         super( session );
-
     }
 
     public ContextWindow showContextWindow()
@@ -104,7 +103,6 @@ public class ContentWizardPanel
             cw.waitUntilWindowLoaded( 1l );
             TestUtils.saveScreenshot( getSession(), "show_contwindow2" );
         }
-
         return cw;
     }
 
@@ -143,7 +141,6 @@ public class ContentWizardPanel
         builder.click( link ).build().perform();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
-
     }
 
     public boolean isLiveEditLocked()
@@ -157,7 +154,6 @@ public class ContentWizardPanel
         LiveFormPanel liveEdit = new LiveFormPanel( getSession() );
         boolean result = liveEdit.isShaderDisplayed();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
-
         return result;
     }
 
@@ -190,11 +186,9 @@ public class ContentWizardPanel
         if ( content.getDisplayName() != null )
         {
             getLogger().info( "types displayName: " + content.getDisplayName() );
-
             clearAndType( displayNameInput, content.getDisplayName() );
             sleep( 100 );
         }
-
         if ( StringUtils.isNotEmpty( content.getName() ) )
         {
             waitElementClickable( By.name( "name" ), 2 );
@@ -210,14 +204,12 @@ public class ContentWizardPanel
 
         if ( content.getAclEntries() != null )
         {
-
             SecurityWizardStepForm securityWizardStepForm = clickOnSecurityTabLink();
             securityWizardStepForm.waitUntilButtonEditPermissionsClickable().clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
                 content.getAclEntries() ).clickOnApply();
             sleep( 700 );
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "acl_" + content.getName() ) );
         }
-
         return this;
     }
 
@@ -270,7 +262,6 @@ public class ContentWizardPanel
             throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
         }
         return this;
-
     }
 
     public ContentPublishDialog clickOnWizardPublishButton()

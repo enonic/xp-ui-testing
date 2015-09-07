@@ -37,7 +37,7 @@ class BaseSiteSpec
         return site;
     }
 
-    protected Content buildPageTemplate( String pageDescriptorName )
+    protected Content buildPageTemplate( String pageDescriptorName, String parentName )
     {
         String name = "pagetemplate";
 
@@ -48,13 +48,13 @@ class BaseSiteSpec
         Content pageTemplate = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "simple-page-template" ).
-            parent( ContentPath.from( MY_FIRST_SITE.getName() ) ).
+            parent( ContentPath.from( parentName ) ).
             contentType( ContentTypeName.pageTemplate() ).data( data ).
             build();
         return pageTemplate;
     }
 
-    protected Content buildCountry_Content( String countryName, String description, String population )
+    protected Content buildCountry_Content( String countryName, String description, String population, String parentName )
     {
         PropertyTree data = null;
         if ( population != null )
@@ -67,7 +67,7 @@ class BaseSiteSpec
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( countryName.toLowerCase() ) ).
             displayName( countryName ).
-            parent( ContentPath.from( MY_FIRST_SITE.getName() ) ).
+            parent( ContentPath.from( parentName ) ).
             contentType( MY_FIRST_APP_NAME + ":country" ).data( data ).
             build();
         return dateContent;

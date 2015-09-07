@@ -185,6 +185,7 @@ public class TestUtils
 
     public static String getPageSource( TestSession session, String title )
     {
+        String current = session.getDriver().getWindowHandle();
         Set<String> allWindows = session.getDriver().getWindowHandles();
         String source = null;
         if ( !allWindows.isEmpty() )
@@ -206,6 +207,7 @@ public class TestUtils
                 }
             }
         }
+        session.getDriver().switchTo().window( current );
         return source;
     }
 

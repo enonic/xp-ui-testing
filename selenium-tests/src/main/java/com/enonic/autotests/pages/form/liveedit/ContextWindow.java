@@ -72,7 +72,7 @@ public class ContextWindow
 
     public ContextWindow clickOnInsertLink()
     {
-        String insertButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ @title='Insert']";
+        String insertButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Insert']";
         if ( findElements( By.xpath( insertButtonXpath ) ).size() == 0 )
         {
             throw new TestFrameworkException( "Insert link was not found on the ContextWindow!" );
@@ -115,9 +115,37 @@ public class ContextWindow
 
         TestUtils.saveScreenshot( getSession(), "drag_helperLayout" );
 
-        //moveDragHelperToTargetAndReleaseOnDropZone( dropComponentDiv, LAYOUT_DROPZONE );
         return new LayoutComponentView( getSession() );
     }
+
+    public UIComponent insertPartByDragAndDrop( String... headers )
+    {
+        sleep( 1000 );
+        String gridItem = String.format( GRID_ITEM, "part" );
+        WebElement componentForDrag = findElements( By.xpath( gridItem ) ).get( 0 );
+
+        Actions builder = new Actions( getDriver() );
+        builder.clickAndHold( componentForDrag ).build().perform();
+
+        WebElement liveEditFrame = getDriver().findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
+        int liveEditFrameX = liveEditFrame.getLocation().x;
+        int liveEditFrameY = liveEditFrame.getLocation().y;
+        int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
+
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        WebElement regionDiv = findElement( By.xpath( "//div[contains(@id,'RegionPlaceholder')]" ) );
+
+        showDragHelper( regionDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
+        sleep( 1000 );
+        //RELEASE
+        builder.release( regionDiv );
+        sleep( 1000 );
+        builder.build().perform();
+
+        TestUtils.saveScreenshot( getSession(), "drag_helperLayout" );
+        return new PartComponentView( getSession() );
+    }
+
 
     /**
      * Drags 'image' item from the ContextWindow and drop it on the layout on the 'Live Edit' frame
@@ -154,7 +182,6 @@ public class ContextWindow
         //RELEASE
         builder.release( regionPlaceHolderDiv );
         builder.build().perform();
-
         //moveDragHelperToTargetAndReleaseOnDropZone( regionPlaceHolderDiv, IMAGE_DROPZONE );
         return new ImageComponentView( getSession() );
     }
@@ -176,18 +203,11 @@ public class ContextWindow
         Robot robot = getRobot();
         robot.setAutoWaitForIdle( true );
         int xOffset = calculateOffsetX( liveEditFrameX );
-        robot.mouseMove( mainDivX + xOffset, mainDivY - 10 );
+        robot.mouseMove( mainDivX + xOffset, mainDivY + 20 );
         sleep( 1000 );
         int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
         sleep( 1000 );
-        List<WebElement> elements = findElements( By.xpath( "//div[@id='drag-helper' and not(contains(@style, 'display: none'))]" ) );
-        TestUtils.saveScreenshot( getSession(), "drag_helperShow" );
-        if ( elements.size() == 0 )
-        {
-            throw new TestFrameworkException( "drag helper not showed!" );
-        }
-
     }
 
     /**
@@ -221,7 +241,6 @@ public class ContextWindow
         }
 
         int yOffset = toolbarHeight + height + liveEditFrameY + mainOffsetY;
-
         return yOffset;
     }
 
@@ -230,7 +249,6 @@ public class ContextWindow
         WebElement mainDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) ).get( 0 );
         int mainOffsetX = mainDiv.getSize().getWidth() / 2;
         int xOffset = liveEditFrameX + mainOffsetX;
-
         return xOffset;
     }
 
