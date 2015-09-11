@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_DateTime_1_1_Spec
@@ -37,6 +38,35 @@ class Occurrences_DateTime_1_1_Spec
 
         and: " and no options selected on the page"
         formViewPanel.getDateTimeValue().isEmpty();
+    }
+
+    def "GIVEN opened content wizard WHEN content without required 'date time ' saved THEN wizard has a red icon"()
+    {
+        given: "new content with type date time added'"
+        Content dateTimeContent = buildDateTime1_1_Content( null );
+        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+
+        when: "content opened for edit"
+        wizard.save();
+
+        then: "content should be invalid, because required field not filled"
+        wizard.isContentInvalid( dateTimeContent.getDisplayName() );
+    }
+    //XP-1526
+    @Ignore
+    def "GIVEN opened content wizard WHEN content without required 'date time ' saved and wizard closed THEN grid row with it content has a red icon"()
+    {
+        given: "new content with type date time added'"
+        Content dateTimeContent = buildDateTime1_1_Content( null );
+        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+
+        when: "content opened for edit"
+        wizard.save().close( dateTimeContent.getDisplayName() );
+        filterPanel.typeSearchText( dateTimeContent.getName() );
+        TestUtils.saveScreenshot( getSession(), "date-time-not-valid1" )
+
+        then: "content should be invalid, because required field not filled"
+        contentBrowsePanel.isContentInvalid( dateTimeContent.getName() );
     }
 
     def "GIVEN creating new DateTime1:1 on root WHEN data typed and 'Save' and  'Publish' are pressed THEN new content with status equals 'Online' listed"()

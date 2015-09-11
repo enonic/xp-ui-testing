@@ -4,7 +4,9 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_TextLine_1_1_Spec
@@ -14,6 +16,34 @@ class Occurrences_TextLine_1_1_Spec
     @Shared
     String TEST_TEXT = "test text 1:1";
 
+    def "GIVEN opened content wizard WHEN content without required 'text line ' saved THEN wizard has a red icon"()
+    {
+        given: "new content with type 'text line' added'"
+        Content textLineContent = buildTextLine1_1_Content( null );
+        ContentWizardPanel wizard = selectSiteOpenWizard( textLineContent.getContentTypeName() ).typeData( textLineContent );
+
+        when: "content opened for edit"
+        wizard.save();
+
+        then: "content should be invalid, because required field not filled"
+        wizard.isContentInvalid( textLineContent.getDisplayName() );
+    }
+    //XP-1526
+    @Ignore
+    def "GIVEN opened content wizard WHEN content without required 'text ' saved and wizard closed THEN grid row with it content has a red icon"()
+    {
+        given: "new content with type 'text line' added'"
+        Content textLineContent = buildTextLine1_1_Content( null );
+        ContentWizardPanel wizard = selectSiteOpenWizard( textLineContent.getContentTypeName() ).typeData( textLineContent );
+
+        when: "content opened for edit"
+        wizard.save().close( textLineContent.getDisplayName() );
+        filterPanel.typeSearchText( textLineContent.getName() );
+        TestUtils.saveScreenshot( getSession(), "textline-not-valid1" )
+
+        then: "content should be invalid, because required field not filled"
+        contentBrowsePanel.isContentInvalid( textLineContent.getName() );
+    }
 
     def "WHEN wizard for adding a TextLine-content (1:1) opened THEN one text input present "()
     {

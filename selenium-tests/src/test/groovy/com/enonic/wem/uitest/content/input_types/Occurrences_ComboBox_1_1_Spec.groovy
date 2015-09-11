@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -132,6 +133,21 @@ class Occurrences_ComboBox_1_1_Spec
 
         then: "button 'Publish' is disabled"
         !contentWizardPanel.isPublishButtonEnabled();
+    }
+
+    def "GIVEN opened content wizard WHEN required text input is empty saved and wizard closed THEN grid row with it content has a red icon"()
+    {
+        given: "new content with type date time added'"
+        Content comboBoxContent = buildComboBox1_1_Content( 0 );
+        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent );
+
+        when: "content opened for edit"
+        wizard.save().close( comboBoxContent.getDisplayName() );
+        findAndSelectContent( comboBoxContent.getName() );
+        TestUtils.saveScreenshot( getSession(), "combobox-not-valid" )
+
+        then: "content should be invalid, because required field not filled"
+        contentBrowsePanel.isContentInvalid( comboBoxContent.getName() );
     }
 
     private Content buildComboBox1_1_Content( int numberOptions )
