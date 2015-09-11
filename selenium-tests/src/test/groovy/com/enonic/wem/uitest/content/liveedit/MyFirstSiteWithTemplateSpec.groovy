@@ -126,7 +126,7 @@ class MyFirstSiteWithTemplateSpec
 
         when: "country-content selected in the grid and the 'Preview' button pressed"
         findAndSelectContent( USA_CONTENT.getName() );
-        sleep( 2000 );
+        sleep( 3000 );
         TestUtils.saveScreenshot( getSession(), "USA_City" )
         contentBrowsePanel.clickToolbarPreview();
 
