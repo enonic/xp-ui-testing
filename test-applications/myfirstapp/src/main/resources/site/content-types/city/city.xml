@@ -1,0 +1,14 @@
+<content-type>
+  <display-name>City</display-name>
+  <super-type>base:unstructured</super-type>
+  <form>
+    <input type="GeoPoint" name="location">
+      <label>Location</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="TextLine" name="population">
+      <label>Population</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+  </form>
+</content-type>

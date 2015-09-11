@@ -9,13 +9,18 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.xp.data.PropertyTree;
-import com.enonic.xp.schema.content.ContentTypeName;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class PageTemplateFormViewPanel
     extends FormViewPanel
 {
+    public static final String SUPPORTS = "supports";
+
+    public static final String NAME_IN_MENU = "nameInMenu";
+
+    public static final String PAGE_CONTROLLER = "pageController";
+
     private String MENU_ITEM_CHECKBOX =
         "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Menu item']]//div[contains(@id,'api.ui.Checkbox')]/label";
 
@@ -36,21 +41,22 @@ public class PageTemplateFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        optionFilterInput.sendKeys( "Site" );
-        String siteContentTypeGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/p[text()='%s']", ContentTypeName.site() );
+        String supports = data.getString( SUPPORTS );
+        optionFilterInput.sendKeys( supports );
+        String siteContentTypeGridItem = String.format( "//div[contains(@id,'NamesView')]/p[contains(.,'%s')]", supports );
         if ( getDriver().findElements( By.xpath( siteContentTypeGridItem ) ).size() == 0 )
         {
-            throw new TestFrameworkException( "content type with name: " + ContentTypeName.site().toString() + "  was not found!" );
+            throw new TestFrameworkException( "content type with name: " + supports + "  was not found!" );
         }
         //select supports: system:site
         getDriver().findElements( By.xpath( siteContentTypeGridItem ) ).get( 0 ).click();
         sleep( 500 );
-        String nameInMenu = data.getString( "nameInMenu" );
+        String nameInMenu = data.getString( NAME_IN_MENU );
         if ( nameInMenu != null )
         {
             // typeMenuTab( nameInMenu );
         }
-        selectPageController( data.getString( "pageController" ) );
+        selectPageController( data.getString( PAGE_CONTROLLER ) );
         return this;
     }
 
@@ -60,8 +66,8 @@ public class PageTemplateFormViewPanel
         //do filter options:
         findElements( By.xpath( "//input[@id='api.ui.selector.dropdown.DropdownOptionFilterInput']" ) ).get( 0 ).sendKeys( pageName );
         //select a 'page name'
-        String pageItemXpath = String.format( "//div[@id='api.content.page.PageDescriptorDropdown']//h6[text()='%s']", pageName );
-        findElements( By.xpath( pageItemXpath ) ).get( 0 ).click();
+        String pageItemXpath = String.format( "//div[contains(@id,'PageDescriptorDropdown')]//h6[text()='%s']", pageName );
+        findElements( By.xpath( pageItemXpath ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
 
         NavigatorHelper.switchToContentManagerFrame( getSession() );
 

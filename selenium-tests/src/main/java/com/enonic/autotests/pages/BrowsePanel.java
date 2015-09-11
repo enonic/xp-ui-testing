@@ -281,7 +281,7 @@ public abstract class BrowsePanel
     /**
      * Clicks on 'Clear Selection' link and removes row-selections.
      */
-    public void clickOnClearSelection()
+    public BrowsePanel clickOnClearSelection()
     {
         sleep( 500 );
         boolean isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
@@ -291,6 +291,7 @@ public abstract class BrowsePanel
         }
         clearSelectionLink.click();
         sleep( 1000 );
+        return this;
     }
 
     /**

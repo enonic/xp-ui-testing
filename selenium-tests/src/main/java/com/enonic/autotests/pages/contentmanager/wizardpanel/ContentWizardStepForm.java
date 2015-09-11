@@ -8,6 +8,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.WizardStepForm;
 import com.enonic.autotests.pages.form.ArticleFormView;
 import com.enonic.autotests.pages.form.CheckBoxFormViewPanel;
+import com.enonic.autotests.pages.form.CityFormView;
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel;
 import com.enonic.autotests.pages.form.CountryFormView;
 import com.enonic.autotests.pages.form.DateFormViewPanel;
@@ -158,6 +159,10 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( TestAppContentType.COUNTRY.getName() ) )
         {
             formViewPanel = new CountryFormView( getSession() );
+        }
+        else if ( contentTypeName.contains( TestAppContentType.CITY.getName() ) )
+        {
+            formViewPanel = new CityFormView( getSession() );
         }
         else
         {

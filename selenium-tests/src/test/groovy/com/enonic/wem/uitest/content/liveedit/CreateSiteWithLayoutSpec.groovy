@@ -52,7 +52,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN exists on root a site, based on 'Simple site' WHEN site expanded and templates folder selected AND page-template added  THEN new template should be listed beneath a 'Templates' folder"()
     {
         given:
-        Content pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME );
+        Content pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME, "simple-page-template" );
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
 
@@ -208,9 +208,9 @@ class CreateSiteWithLayoutSpec
         return site;
     }
 
-    private Content buildPageTemplate( String pageDescriptorName )
+    private Content buildPageTemplate( String pageDescriptorName, String displayName )
     {
-        String name = "pagetemplate";
+        String name = "template";
 
         PropertyTree data = new PropertyTree();
         data.addStrings( "nameInMenu", "item1" );
@@ -218,7 +218,7 @@ class CreateSiteWithLayoutSpec
 
         Content pageTemplate = Content.builder().
             name( NameHelper.uniqueName( name ) ).
-            displayName( "simple-page-template" ).
+            displayName( displayName ).
             parent( ContentPath.from( SITE.getName() ) ).
             contentType( ContentTypeName.pageTemplate() ).data( data ).
             build();

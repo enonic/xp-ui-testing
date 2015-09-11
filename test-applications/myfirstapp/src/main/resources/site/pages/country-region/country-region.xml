@@ -1,5 +1,5 @@
 <page>
-  <display-name>First Region</display-name>
+  <display-name>Country Region</display-name>
   <config/>
   <regions>
     <region name="main"/>

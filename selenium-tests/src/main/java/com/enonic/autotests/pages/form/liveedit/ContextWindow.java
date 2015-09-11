@@ -118,7 +118,7 @@ public class ContextWindow
         return new LayoutComponentView( getSession() );
     }
 
-    public UIComponent insertPartByDragAndDrop( String... headers )
+    public UIComponent insertPartByDragAndDrop( String targetDivId, String... headers )
     {
         sleep( 1000 );
         String gridItem = String.format( GRID_ITEM, "part" );
@@ -133,7 +133,8 @@ public class ContextWindow
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        WebElement regionDiv = findElement( By.xpath( "//div[contains(@id,'RegionPlaceholder')]" ) );
+        String divXpath = String.format( "//div[contains(@id,'%s')]", targetDivId );
+        WebElement regionDiv = findElements( By.xpath( divXpath ) ).get( 0 );
 
         showDragHelper( regionDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
         sleep( 1000 );
@@ -141,8 +142,6 @@ public class ContextWindow
         builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
-
-        TestUtils.saveScreenshot( getSession(), "drag_helperLayout" );
         return new PartComponentView( getSession() );
     }
 

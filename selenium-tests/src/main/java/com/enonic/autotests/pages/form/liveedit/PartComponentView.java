@@ -29,13 +29,15 @@ public class PartComponentView
 
     public LiveFormPanel selectItem( String partName )
     {
-        optionFilterInput.sendKeys( partName );
+        findElements( By.xpath( COMPONENT_CONTAINER + OPTION_FILTER ) ).stream().filter(
+            WebElement::isDisplayed ).findFirst().get().sendKeys( partName );
         sleep( 200 );
         if ( !isPartExists( partName ) )
         {
             throw new TestFrameworkException( "The part with name: " + partName + "  was not found!" );
         }
         clickOnOptionsItem( partName );
+        sleep( 1000 );
         return new LiveFormPanel( getSession() );
     }
 
@@ -47,6 +49,7 @@ public class PartComponentView
 
     private void clickOnOptionsItem( String partName )
     {
-        findElements( By.xpath( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, partName ) ) ).get( 0 ).click();
+        findElements( By.xpath( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, partName ) ) ).stream().filter(
+            WebElement::isDisplayed ).findFirst().get().click();
     }
 }

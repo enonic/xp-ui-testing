@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -14,19 +13,10 @@ class MyFirstApp_Spec
     extends BaseSiteSpec
 {
     @Shared
-    Content MY_FIRST_SITE
-
-    @Shared
-    String LIVE_EDIT_FRAME_SITE_HEADER = "//h1[text()='Country']";
-
-    @Shared
-    String DESCRIPTION = "USA country";
+    Content MY_FIRST_SITE;
 
     @Shared
     String PART_NAME = "country";
-
-    @Shared
-    String POPULATION = "300 000 000";
 
     @Shared
     Content USA_CONTENT;
@@ -47,7 +37,7 @@ class MyFirstApp_Spec
     def "GIVEN adding a content with type 'country' WHEN 'save' pressed THEN new added content listed"()
     {
         given:
-        USA_CONTENT = buildCountry_Content( "USA", DESCRIPTION, POPULATION, MY_FIRST_SITE.getName() );
+        USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, MY_FIRST_SITE.getName() );
         ContentWizardPanel wizard = selectSiteOpenWizard( MY_FIRST_SITE.getName(), USA_CONTENT.getContentTypeName() );
 
         when: "data typed and saved and wizard closed"
@@ -125,8 +115,8 @@ class MyFirstApp_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
-        PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
-            LIVE_EDIT_FRAME_SITE_HEADER )
+        PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionPlaceholder",
+                                                                                                                      LIVE_EDIT_FRAME_SITE_HEADER )
         TestUtils.saveScreenshot( getSession(), "part_added" );
         partComponentView.selectItem( PART_NAME )
         TestUtils.saveScreenshot( getSession(), "part_country" );
@@ -136,30 +126,8 @@ class MyFirstApp_Spec
 
         then: "the content opened in a browser and page's sources are correct"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
-        source.contains( "Population: " + POPULATION );
+        source.contains( "Population: " + USA_POPULATION );
         and: "correct description displayed"
-        source.contains( DESCRIPTION );
+        source.contains( USA_DESCRIPTION );
     }
-
-    @Ignore
-    def "GIVEN a site WHEN page template with the region and part added THEN template listed"()
-    {
-        given: "a page descriptor added for existing country-content"
-        filterPanel.typeSearchText( USA_CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnLiveToolbarButton().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
-
-        when: "the 'Preview' button pressed on the wizard-toolbar"
-        TestUtils.saveScreenshot( getSession(), "region_added" );
-        wizard.clickToolbarPreview();
-        TestUtils.saveScreenshot( getSession(), "preview_clicked" );
-
-        then: "the region page opened in a browser with correct title and correct header"
-        String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
-        source.contains( COUNTRY_REGION_TITLE );
-        and: "correct header displayed"
-        source.contains( COUNTRY_REGION_HEADER );
-    }
-
-
 }
