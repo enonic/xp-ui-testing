@@ -13,7 +13,7 @@ import spock.lang.Stepwise
 import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
-class MyFirstSiteWithTemplate
+class MyFirstSiteWithTemplateSpec
     extends BaseSiteSpec
 {
     @Shared
