@@ -122,6 +122,9 @@ class MyFirstSiteWithTemplateSpec
         and: "new City-content added beneath the USA-content"
         findAndSelectContent( USA_CONTENT.getName() ).clickToolbarNew().selectContentType( sanFrancisco.getContentTypeName() ).typeData(
             sanFrancisco ).save().close( sanFrancisco.getDisplayName() );
+        findAndSelectContent( USA_CONTENT.getName() );
+        sleep( 3000 );
+        TestUtils.saveScreenshot( getSession(), "san francisco" )
         contentBrowsePanel.clickOnClearSelection();
 
         when: "country-content selected in the grid and the 'Preview' button pressed"
