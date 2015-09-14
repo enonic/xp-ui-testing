@@ -24,9 +24,6 @@ class InputTypesSpec
     @Shared
     String TEST_DATE_TIME = "2015-02-28 19:01";
 
-    @Shared
-    String TEST_GEOLOCATION = "10,10";
-
 
     def "GIVEN content type with name 'Date' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
     {
@@ -102,21 +99,6 @@ class InputTypesSpec
 
         then: "actual value in the form view and expected should be equals"
         longFormViewPanel.getLongValue().equals( TEST_LONG );
-    }
-
-    def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
-    {
-        given: "add a content with type 'Geo point'"
-        Content geopointContent = buildGeoPoint0_0_Content( TEST_GEOLOCATION );
-        selectSiteOpenWizard( geopointContent.getContentTypeName() ).waitUntilWizardOpened().typeData( geopointContent ).save().close(
-            geopointContent.getDisplayName() ); ;
-
-        when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( geopointContent );
-        GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
-
-        then: "actual value in the form view and expected should be equals"
-        geoPointFormViewPanel.getGeoPointValue().equals( TEST_GEOLOCATION );
     }
 
 

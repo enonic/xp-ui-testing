@@ -21,9 +21,13 @@ public class Application
 
     public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
 
+    public static String CONTENT_ALREADY_IN_USE_WARNING = " Content with path \"%s\" already exists";
+
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
 
     public static final String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
+
+    public static final String LOCATION_NOT_WITHIN_RANGE_WARNING = "is not within range";
 
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
