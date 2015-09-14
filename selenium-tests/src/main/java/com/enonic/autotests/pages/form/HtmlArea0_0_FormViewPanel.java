@@ -40,8 +40,13 @@ public class HtmlArea0_0_FormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        long numberOfEditors = data.getLong( NUMBER_OF_EDITORS );
-        addEditors( numberOfEditors );
+        long numberOfEditors = 1;
+        if ( data.getLong( NUMBER_OF_EDITORS ) != null )
+        {
+            numberOfEditors = data.getLong( NUMBER_OF_EDITORS );
+            addEditors( numberOfEditors );
+        }
+
         List<WebElement> frames = findElements( By.xpath( TINY_MCE ) );
         if ( frames.size() == 0 )
         {
