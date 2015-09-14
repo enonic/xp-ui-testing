@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest
 
 import com.enonic.autotests.utils.TestUtils
-import spock.lang.Ignore
 
 class LoginSpec
     extends BaseGebSpec
@@ -51,7 +50,7 @@ class LoginSpec
         $( 'button', class: 'button login-button' ).isDisplayed();
     }
 
-    @Ignore
+    //there was issue: XP-1432
     def "Given login page When wrong username or password typed Then error message appears"()
     {
         when:
