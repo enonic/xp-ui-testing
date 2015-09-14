@@ -157,10 +157,13 @@ class Base_InputFields_Occurrences
 
     protected Content buildDateTime1_1_Content( String dateTime )
     {
-        String name = "datetime";
-        PropertyTree contentData = new PropertyTree();
-        contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
+        PropertyTree contentData = new PropertyTree(); ;
+        if ( dateTime != null )
+        {
+            contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
 
+        }
+        String name = "datetime";
         Content dateTimeContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "date time content" ).
@@ -373,9 +376,13 @@ class Base_InputFields_Occurrences
 
     protected Content buildTextLine1_1_Content( String text )
     {
-        String name = "textline1_1";
         PropertyTree data = new PropertyTree();
-        data.addStrings( TextLine1_1_FormViewPanel.TEXT_INPUT_PROPERTY, text );
+        String name = "textline1_1";
+        if ( text != null )
+        {
+            data.addStrings( TextLine1_1_FormViewPanel.TEXT_INPUT_PROPERTY, text );
+        }
+
 
         Content textLineContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
@@ -384,5 +391,16 @@ class Base_InputFields_Occurrences
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":textline1_1" ).data( data ).
             build();
         return textLineContent;
+    }
+
+    public ContentBrowsePanel findAndSelectContent( String name )
+    {
+        filterPanel.typeSearchText( name );
+        if ( !contentBrowsePanel.isRowSelected( name ) )
+        {
+            contentBrowsePanel.clickCheckboxAndSelectRow( name );
+        }
+
+        return contentBrowsePanel;
     }
 }

@@ -146,10 +146,9 @@ class Occurrences_HtmlArea_0_0_Spec
 
     private Content buildHtmlArea0_0_Content( long numberOfEditors, String... text )
     {
-        PropertyTree data = null;
+        PropertyTree data = new PropertyTree(); ;
         if ( text != null && text.length != 0 )
         {
-            data = new PropertyTree();
             data.addLong( BaseHtmlAreaFormViewPanel.NUMBER_OF_EDITORS, numberOfEditors );
             data.addStrings( BaseHtmlAreaFormViewPanel.STRINGS_PROPERTY, text );
         }
