@@ -5,7 +5,9 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class SitePreview_Spec
     extends BaseSiteSpec
 {
