@@ -199,6 +199,7 @@ public class TestUtils
                     {
                         source = session.getDriver().getPageSource();
                         logger.info( "source  :  " + source );
+                        session.getDriver().close();
                     }
                 }
                 catch ( NoSuchWindowException e )

@@ -65,6 +65,13 @@ public class ContextWindow
         }
     }
 
+    String getSelectedPageController()
+    {
+        return findElements( By.xpath(
+            "//div[contains(@id,'contextwindow.inspect.page.PageControllerSelector')]//h6[@class='main-name']" ) ).stream().filter(
+            WebElement::isDisplayed ).findFirst().get().getText();
+    }
+
     public boolean isContextWindowPresent()
     {
         return findElements( By.xpath( DIV_CONTEXT_WINDOW ) ).size() > 0;
@@ -81,6 +88,19 @@ public class ContextWindow
         sleep( 1000 );
         return this;
     }
+
+    public ContextWindow clickOnInspectLink()
+    {
+        String inspectButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Inspect']";
+        if ( findElements( By.xpath( inspectButtonXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "'inspect' link was not found on the ContextWindow!" );
+        }
+        findElements( By.xpath( inspectButtonXpath ) ).get( 0 ).click();
+        sleep( 1000 );
+        return this;
+    }
+
 
     /**
      * Drags 'layout' item from the ContextWindow and drop it on the 'Live Edit' frame

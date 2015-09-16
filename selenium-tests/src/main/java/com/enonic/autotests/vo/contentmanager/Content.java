@@ -22,6 +22,8 @@ public class Content
 
     private final List<ContentAclEntry> aclEntries;
 
+    private final ContentSettings contentSettings;
+
     private final PropertyTree data;
 
     protected Content( final Builder builder )
@@ -35,6 +37,7 @@ public class Content
 
         this.data = builder.data;
         this.aclEntries = builder.aclEntries;
+        this.contentSettings = builder.contentSettings;
     }
 
     public static Builder builder()
@@ -67,6 +70,11 @@ public class Content
         return contentTypeName;
     }
 
+    public ContentSettings getContentSettings()
+    {
+        return contentSettings;
+    }
+
     public List<ContentAclEntry> getAclEntries()
     {
         return this.aclEntries;
@@ -89,11 +97,19 @@ public class Content
 
         private PropertyTree data;
 
+        private ContentSettings contentSettings;
+
         private List<ContentAclEntry> aclEntries;
 
         public Builder<BUILDER, C> name( final String name )
         {
             this.name = name;
+            return this;
+        }
+
+        public Builder<BUILDER, C> settings( final ContentSettings settings )
+        {
+            this.contentSettings = settings;
             return this;
         }
 
@@ -109,6 +125,7 @@ public class Content
             this.parent = content.getParent();
             this.contentTypeName = content.getContentTypeName();
             this.aclEntries = content.getAclEntries();
+            this.contentSettings = content.getContentSettings();
         }
 
         public Builder<BUILDER, C> displayName( String displayName )

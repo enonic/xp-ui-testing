@@ -34,7 +34,7 @@ public class ContentWizardPanel
         "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
     public static final String TOOLBAR_LIVE_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]//div[contains(@id, 'CycleButton') and text()='LIVE']";
+        "//div[contains(@id,'ContentWizardToolbar')]//button[contains(@id, 'CycleButton')]";
 
 
     public static final String DIV_CONTENT_WIZARD_PANEL =
@@ -200,6 +200,11 @@ public class ContentWizardPanel
         {
             ContentWizardStepForm stepForm = new ContentWizardStepForm( getSession() );
             stepForm.type( content.getData(), content.getContentTypeName() );
+        }
+        if ( content.getContentSettings() != null )
+        {
+            SettingsWizardStepForm settings = new SettingsWizardStepForm( getSession() );
+            settings.typeSettings( content.getContentSettings() );
         }
 
         if ( content.getAclEntries() != null )

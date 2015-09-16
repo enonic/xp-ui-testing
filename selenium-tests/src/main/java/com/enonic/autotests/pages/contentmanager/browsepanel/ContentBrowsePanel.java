@@ -488,6 +488,7 @@ public class ContentBrowsePanel
     public ItemViewPanelPage clickToolbarPreview()
     {
         previewButton.click();
+        sleep( 1000 );
         return new ItemViewPanelPage( getSession() );
     }
 
