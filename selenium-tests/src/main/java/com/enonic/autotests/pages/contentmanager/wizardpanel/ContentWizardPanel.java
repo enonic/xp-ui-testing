@@ -340,6 +340,7 @@ public class ContentWizardPanel
     {
         if ( !waitUntilVisibleNoException( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err-Live-button" );
             throw new TestFrameworkException( "The 'Live' button not present!" );
         }
         findElements( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).get( 0 ).click();
