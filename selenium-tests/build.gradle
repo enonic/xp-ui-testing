@@ -12,7 +12,7 @@ ext {
     unpackDir = "$buildDir${File.separator}install"
     screenshotsDir = "$buildDir${File.separator}screenshots"
     reportsDir = "$buildDir${File.separator}repots"
-    distroDir = "$unpackDir${File.separator}admin-ui-$xpVersion"
+    distroDir = "$unpackDir${File.separator}enonic-xp-$xpVersion"
     deployDir = "$distroDir${File.separator}home${File.separator}deploy"
     xpHome = "$distroDir${File.separator}home"
 }
