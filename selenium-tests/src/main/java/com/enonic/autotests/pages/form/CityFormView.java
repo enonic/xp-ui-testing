@@ -18,7 +18,7 @@ public class CityFormView
 
     private final String LOCATION_INPUT = FORM_VIEW + "//input[contains(@placeholder,'latitude,longitude')]";
 
-    private final String POPULATION_INPUT = FORM_VIEW + "//input[contains(@name,'population')]";
+    private final String POPULATION_INPUT = FORM_VIEW + "//input[contains(@name,'cityPopulation')]";
 
     @FindBy(xpath = POPULATION_INPUT)
     protected WebElement populationInput;
@@ -40,6 +40,12 @@ public class CityFormView
         sleep( 700 );
         clearAndType( populationInput, population );
         sleep( 500 );
+        return this;
+    }
+
+    public FormViewPanel typePopulation( String population )
+    {
+        clearAndType( populationInput, population );
         return this;
     }
 }

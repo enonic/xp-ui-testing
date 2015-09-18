@@ -29,13 +29,13 @@ exports.get = function (req) {
 
             var city = {};
             city.name = hits[i].displayName;
-            city.location = hits[i].data.location;
-            city.population = hits[i].data.population ? 'Population: ' + hits[i].data.population : null;
+            city.cityLocation = hits[i].data.cityLocation;
+            city.cityPopulation = hits[i].data.cityPopulation ? 'Population: ' + hits[i].data.cityPopulation : null;
             city.mapId = 'googleMap' + i;
 
             cities.push(city);
 
-            googleMaps += 'var center' + i + ' = new google.maps.LatLng(' + city.location + '); '
+            googleMaps += 'var center' + i + ' = new google.maps.LatLng(' + city.cityLocation + '); '
 
             googleMaps += 'var mapProp = {center:center' + i + ', zoom:' + zoom +
                           ', mapTypeId:google.maps.MapTypeId.' + mapType + ', scrollwheel: false };' +
