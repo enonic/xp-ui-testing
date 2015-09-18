@@ -19,7 +19,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     Content content;
 
     @Shared
-    int DEFAULT_NUMBER_OF_ACL_ENTRIES = 2;
+    int DEFAULT_NUMBER_OF_ACL_ENTRIES = 3;
 
     def "setup: add a test folder"()
     {
