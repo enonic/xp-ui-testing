@@ -17,6 +17,7 @@ import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -138,6 +139,7 @@ class LoginUserSpec
         home.isContentManagerDisplayed();
     }
 
+    @Ignore
     def "WHEN new created user logged and opened a CM app THEN only one content should be present in the grid "()
     {
         when: "content manager opened"
