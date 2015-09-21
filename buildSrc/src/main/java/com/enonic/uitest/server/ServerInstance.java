@@ -2,6 +2,7 @@ package com.enonic.uitest.server;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -36,7 +37,15 @@ public final class ServerInstance
 
         final ClassLoader loader = createClassLoader();
         final Constructor constructor = Class.forName( LAUNCHER_CLASS, true, loader ).getConstructor( String[].class );
-        this.instance = constructor.newInstance( new Object[]{LAUNCHER_ARGS} );
+        System.out.println( constructor.toString() );
+        try
+        {
+            this.instance = constructor.newInstance( new Object[]{LAUNCHER_ARGS} );
+        }
+        catch ( InvocationTargetException e )
+        {
+            System.out.println( e.getMessage() );
+        }
         this.instance.getClass().getMethod( "start" ).invoke( this.instance );
 
         Thread.sleep( this.startupDelay );
