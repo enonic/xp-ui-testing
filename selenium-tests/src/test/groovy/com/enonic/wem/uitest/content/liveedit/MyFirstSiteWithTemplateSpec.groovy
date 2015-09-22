@@ -19,19 +19,11 @@ class MyFirstSiteWithTemplateSpec
     extends BaseSiteSpec
 {
     @Shared
-        NEW_SF_POPULATION = "1000000";
+    String NEW_SF_POPULATION = "1000000";
 
     @Shared
     Content SAN_FR_CONTENT;
 
-    @Shared
-    Content MY_FIRST_SITE
-
-    @Shared
-    String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
-
-    @Shared
-    String PART_NAME = "country";
 
     @Shared
     Content USA_CONTENT;
@@ -43,13 +35,10 @@ class MyFirstSiteWithTemplateSpec
     String TEMPLATE_DISPLAY_NAME = "country template";
 
     @Shared
-    String SUPPORTS_TYPE = "country";
-
-    @Shared
     String SF_LOCATION = "37.7833,-122.4167";
 
     @Shared
-        SF_POPULATION = "837,442";
+    String SF_POPULATION = "837,442";
 
     @Shared
     String PAGE_CONTROLLER_NAME = "Country Region";
@@ -61,13 +50,10 @@ class MyFirstSiteWithTemplateSpec
     def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller added and wizard closed THEN new template should be listed"()
     {
         given: "existing Site based on 'My First App'"
-        MY_FIRST_SITE = buildMySite( "site-template" );
-        contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
-            MY_FIRST_SITE.getDisplayName() );
-        filterPanel.typeSearchText( MY_FIRST_SITE.getName() );
-        contentBrowsePanel.expandContent( ContentPath.from( MY_FIRST_SITE.getName() ) );
+        filterPanel.typeSearchText( FIRST_SITE_NAME );
+        contentBrowsePanel.expandContent( ContentPath.from( FIRST_SITE_NAME ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, SUPPORTS_TYPE, TEMPLATE_DISPLAY_NAME,
-                                           MY_FIRST_SITE.getName() );
+                                           FIRST_SITE_NAME );
 
 
         when: "'Templates' folder selected and new page-template added"
@@ -91,7 +77,7 @@ class MyFirstSiteWithTemplateSpec
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
-        partComponentView.selectItem( PART_NAME );
+        partComponentView.selectItem( COUNTRY_PART_NAME );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "country_part_added" );
@@ -142,9 +128,9 @@ class MyFirstSiteWithTemplateSpec
     def "GIVEN new USA-content added and a child city content added into the country WHEN country content selected AND 'Preview' button pressed THEN correct text present in the page-source "()
     {
         given: "new USA- content added"
-        USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, MY_FIRST_SITE.getName() );
+        USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, FIRST_SITE_NAME );
 
-        ContentWizardPanel wizard = selectSiteOpenWizard( MY_FIRST_SITE.getName(), USA_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), FIRST_SITE_NAME );
         wizard.typeData( USA_CONTENT ).save().waitNotificationMessage(); wizard.close( USA_CONTENT.getDisplayName() );
         and: "and it content selected and the 'New' button on the toolbar pressed"
         contentBrowsePanel.clickOnClearSelection();
@@ -174,7 +160,7 @@ class MyFirstSiteWithTemplateSpec
     def "WHEN site not published yet WHEN site opened in 'master', through the portal THEN '404' present in the sources"()
     {
         given: "site not published and opened in the 'master'"
-        openResourceInMaster( MY_FIRST_SITE.getName() + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
         sleep( 2000 );
 
         expect:
@@ -186,7 +172,7 @@ class MyFirstSiteWithTemplateSpec
     def "WHEN site not published yet AND site opened in 'draft', through the portal THEN correct data present in page sources"()
     {
         when: "site not published and opened in the 'master'"
-        openResourceInDraft( MY_FIRST_SITE.getName() + "/" + USA_CONTENT.getName() );
+        openResourceInDraft( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
         sleep( 2000 );
         TestUtils.saveScreenshot( getSession(), "portal-country-preview-draft-offline" );
 
@@ -201,13 +187,13 @@ class MyFirstSiteWithTemplateSpec
     def "GIVEN ite not published yet WHEN site published AND site opened through the portal THEN correct data present in page sources"()
     {
         given: "site with child is 'Published'"
-        filterPanel.typeSearchText( MY_FIRST_SITE.getName() );
-        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( MY_FIRST_SITE.getName() ).clickToolbarPublish();
+        filterPanel.typeSearchText( FIRST_SITE_NAME, );
+        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME, ).clickToolbarPublish();
         dialog.setIncludeChildCheckbox( true ).clickOnPublishNowButton();
         sleep( 3000 );
 
         when: "site opened in master"
-        openResourceInMaster( MY_FIRST_SITE.getName() + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
 
         then: "correct data present in page sources"
         String source = getDriver().getPageSource();
@@ -225,7 +211,7 @@ class MyFirstSiteWithTemplateSpec
         wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
 
         when: "site opened in master"
-        openResourceInMaster( MY_FIRST_SITE.getName() + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
 
         then: "population is not changed"
         String source = getDriver().getPageSource();
@@ -240,20 +226,10 @@ class MyFirstSiteWithTemplateSpec
         wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
 
         when: "site opened in master"
-        openResourceInMaster( MY_FIRST_SITE.getName() + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
 
         then: "population is not changed"
         String source = getDriver().getPageSource();
         source.contains( "Population: " + NEW_SF_POPULATION );
-    }
-
-    private void openResourceInMaster( String resource )
-    {
-        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/master/" + resource );
-    }
-
-    private void openResourceInDraft( String resource )
-    {
-        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/draft/" + resource );
     }
 }

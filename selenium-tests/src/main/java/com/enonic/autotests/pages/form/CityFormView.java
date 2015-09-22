@@ -48,4 +48,14 @@ public class CityFormView
         clearAndType( populationInput, population );
         return this;
     }
+
+    public String getPopulationValue()
+    {
+        return populationInput.getAttribute( "value" );
+    }
+
+    public String getLocationValue()
+    {
+        return locationInput.getAttribute( "value" );
+    }
 }
