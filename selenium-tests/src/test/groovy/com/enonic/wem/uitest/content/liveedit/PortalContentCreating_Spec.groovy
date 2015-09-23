@@ -71,7 +71,7 @@ class PortalContentCreating_Spec
         source.contains( "City Creation/Update" );
     }
 
-    def "GIVEN new country-content added  WHEN a city-content added as child into the country THEN new child content exist beneath a parent"()
+    def "GIVEN new country-content added  WHEN city-creation page opened AND 'SUBMIT' button pressed  AND city-content added as child into the country THEN new child content exist beneath a parent"()
     {
         given: "new country-content added"
         NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", FIRST_SITE_NAME );
@@ -79,12 +79,14 @@ class PortalContentCreating_Spec
         ContentWizardPanel wizard = selectSiteOpenWizard( NOR_CONTENT.getContentTypeName(), FIRST_SITE_NAME );
         wizard.typeData( NOR_CONTENT ).save().waitNotificationMessage(); wizard.close( NOR_CONTENT.getDisplayName() );
 
-        when: "new city-content added as child into the country"
+        when: "the submit button pressed and new city-content added as child into the country"
         contentBrowsePanel.clickOnClearSelection();
         openResourceInDraft( FIRST_SITE_NAME + "/" + NOR_CONTENT.getName() );
         TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
-        cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( "Oslo" ).typeCityPopulation( OSLO_POPULATION ).clickSubmit()
+        cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( "Oslo" ).typeCityPopulation( OSLO_POPULATION );
+        TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
+        cityCreationPage.clickSubmit();
         openHomePage();
         HomePage homePage = new HomePage( getSession() );
         homePage.openContentManagerApplication();
