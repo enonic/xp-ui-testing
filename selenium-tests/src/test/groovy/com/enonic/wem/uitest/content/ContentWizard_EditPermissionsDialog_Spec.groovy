@@ -83,7 +83,8 @@ class ContentWizard_EditPermissionsDialog_Spec
         then:
         principals.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
         and:
-        modalDialog.getAclEntries().equals( getExpected() );
+        List<ContentAclEntry> entriesActual = modalDialog.getAclEntries();
+        entriesActual.equals( getExpected() );
     }
 
     def "GIVEN 'Edit Permissions' opened WHEN new role added THEN new ACL entry with new role and 'Can Read' operations appears"()
@@ -122,11 +123,14 @@ class ContentWizard_EditPermissionsDialog_Spec
     private List<ContentAclEntry> getExpected()
     {
         List<ContentAclEntry> entries = new ArrayList<>();
-        String principalPath1 = PrincipalKey.ofRole( RoleName.SYSTEM_ADMIN.getValue() ).toPath().toString();
-        ContentAclEntry entry = ContentAclEntry.builder().principalName( principalPath1 ).suite( PermissionSuite.FULL_ACCESS ).build();
+        String principalPath1 = PrincipalKey.ofRole( RoleName.CM_APP.getValue() ).toPath().toString();
+        ContentAclEntry entry = ContentAclEntry.builder().principalName( principalPath1 ).suite( PermissionSuite.CAN_READ ).build();
         entries.add( entry );
-        String principalPath2 = PrincipalKey.ofRole( RoleName.CMS_ADMIN.getValue() ).toPath().toString();
+        String principalPath2 = PrincipalKey.ofRole( RoleName.SYSTEM_ADMIN.getValue() ).toPath().toString();
         entry = ContentAclEntry.builder().principalName( principalPath2 ).suite( PermissionSuite.FULL_ACCESS ).build();
+        entries.add( entry );
+        String principalPath3 = PrincipalKey.ofRole( RoleName.CMS_ADMIN.getValue() ).toPath().toString();
+        entry = ContentAclEntry.builder().principalName( principalPath3 ).suite( PermissionSuite.FULL_ACCESS ).build();
         entries.add( entry );
 
         return entries;
