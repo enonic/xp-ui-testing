@@ -91,8 +91,8 @@ class PortalContentCreating_Spec
 
         then: "correct child content exist beneath a parent"
         filterPanel.typeSearchText( "Norway" );
+        contentBrowsePanel.expandContent( NOR_CONTENT.getPath() );
         TestUtils.saveScreenshot( getSession(), "norway-expanded" );
-        contentBrowsePanel.expandContent( NOR_CONTENT.getPath() )
         contentBrowsePanel.exists( "oslo" );
     }
 
