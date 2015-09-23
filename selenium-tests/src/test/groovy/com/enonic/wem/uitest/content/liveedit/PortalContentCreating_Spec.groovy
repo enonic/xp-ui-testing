@@ -82,6 +82,7 @@ class PortalContentCreating_Spec
         when: "new city-content added as child into the country"
         contentBrowsePanel.clickOnClearSelection();
         openResourceInDraft( FIRST_SITE_NAME + "/" + NOR_CONTENT.getName() );
+        TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
         cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( "Oslo" ).typeCityPopulation( OSLO_POPULATION ).clickSubmit()
         openHomePage();
@@ -90,6 +91,7 @@ class PortalContentCreating_Spec
 
         then: "correct child content exist beneath a parent"
         filterPanel.typeSearchText( "Norway" );
+        TestUtils.saveScreenshot( getSession(), "norway-expanded" );
         contentBrowsePanel.expandContent( NOR_CONTENT.getPath() )
         contentBrowsePanel.exists( "oslo" );
     }
@@ -99,6 +101,7 @@ class PortalContentCreating_Spec
         when: "city-content opened for edit"
         findAndSelectContent( "oslo" ).clickToolbarEdit()
         CityFormView cityFormView = new CityFormView( getSession() );
+        TestUtils.saveScreenshot( getSession(), "oslo-city-content-opened" );
 
         then: "correct location displayed"
         cityFormView.getLocationValue() == OSLO_LOCATION;
