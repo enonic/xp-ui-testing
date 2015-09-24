@@ -8,7 +8,15 @@ function handlePost(req) {
     var cityLocation = req.params.cityLocation;
     var cityPopulation = req.params.cityPopulation;
 
-    createCity(cityName, cityLocation, cityPopulation);
+    if (cityName && cityLocation) {
+        var city = getCity(cityName);
+
+        if (city) {
+            modifyCity(city, cityName, cityLocation, cityPopulation)
+        } else {
+            createCity(cityName, cityLocation, cityPopulation);
+        }
+    }
 
 
     function getCity(cityName) {

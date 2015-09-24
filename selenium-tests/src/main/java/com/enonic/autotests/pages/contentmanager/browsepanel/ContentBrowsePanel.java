@@ -308,12 +308,14 @@ public class ContentBrowsePanel
                 }
                 getLogger().info( "expandContent,  folder  path: " + path );
                 getLogger().info( "expandContent,  name of folder : " + path.getName() );
+                if ( isRowExpanded( path.getName() ) == null )
+                {
+                    throw new TestFrameworkException( "Expander for the " + path.getName() + "  was not found! Or content has no child" );
+                }
                 if ( !isRowExpanded( path.getName() ) )
                 {
-                    if ( !this.clickOnExpander( path.getName() ) )
-                    {
-                        getLogger().info( "content with name " + parentContent + "has no children! " );
-                    }
+                    this.clickOnExpander( path.getName() );
+                    getLogger().info( "content with name " + parentContent + "was expanded! " );
                 }
             }
         }

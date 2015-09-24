@@ -10,9 +10,11 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 import static com.enonic.autotests.utils.SleepHelper.sleep
 
+@Stepwise
 class PortalContentCreating_Spec
     extends BaseSiteSpec
 {
@@ -28,6 +30,9 @@ class PortalContentCreating_Spec
 
     @Shared
     String OSLO_POPULATION = "618,683";
+
+    @Shared
+    String NEW_OSLO_POPULATION = "1000000";
 
     @Shared
     String OSLO_LOCATION = "59.95,10.75";
@@ -109,5 +114,27 @@ class PortalContentCreating_Spec
         cityFormView.getLocationValue() == OSLO_LOCATION;
         and: "and correct population displayed"
         cityFormView.getPopulationValue() == OSLO_POPULATION;
+    }
+
+    def "GIVEN existing city content WHEN page for 'creating/updating' content and new population typed THEN the city-content with the new population present in the grid "()
+    {
+        given: "city-content opened for edit and new population typed"
+        openResourceInDraft( FIRST_SITE_NAME + "/" + NOR_CONTENT.getName() );
+        CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
+        cityCreationPage.typeCityName( "oslo" ).typeCityPopulation( NEW_OSLO_POPULATION ).typeCityLocation( OSLO_LOCATION ).clickSubmit();
+
+        when:
+        openHomePage();
+        HomePage homePage = new HomePage( getSession() );
+        homePage.openContentManagerApplication();
+
+        then: "new population displayed"
+        findAndSelectContent( "oslo" ).clickToolbarEdit();
+        sleep( 500 );
+        CityFormView cityFormView = new CityFormView( getSession() );
+        TestUtils.saveScreenshot( getSession(), "oslo-city-content-new-population" );
+        cityFormView.getLocationValue() == OSLO_LOCATION;
+        and: "and correct population displayed"
+        cityFormView.getPopulationValue() == NEW_OSLO_POPULATION;
     }
 }
