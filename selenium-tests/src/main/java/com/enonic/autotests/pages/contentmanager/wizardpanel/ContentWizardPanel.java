@@ -230,6 +230,18 @@ public class ContentWizardPanel
         return new SecurityWizardStepForm( getSession() );
     }
 
+    public SettingsWizardStepForm clickOnSettingsTabLink()
+    {
+        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SETTINGS_LINK_TEXT );
+        if ( findElements( By.xpath( securityTabXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "settings tab was not found!" );
+        }
+        findElements( By.xpath( securityTabXpath ) ).get( 0 ).click();
+        sleep( 1000 );
+        return new SettingsWizardStepForm( getSession() );
+    }
+
     public ContentWizardPanel typeName( String name )
     {
         clearAndType( nameInput, name );

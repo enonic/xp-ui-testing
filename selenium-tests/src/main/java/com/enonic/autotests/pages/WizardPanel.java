@@ -28,6 +28,8 @@ public abstract class WizardPanel<T>
 
     public static final String SECURITY_LINK_TEXT = "Security";
 
+    public static final String SETTINGS_LINK_TEXT = "Settings";
+
     public static String APP_BAR_TAB_MENU = "//div[contains(@id,'api.app.bar.AppBarTabMenu')]";
 
     public static String APP_BAR_TAB_MENU_ITEM =
