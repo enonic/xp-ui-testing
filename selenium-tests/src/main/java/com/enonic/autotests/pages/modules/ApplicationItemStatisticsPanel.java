@@ -116,14 +116,12 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getRelationShipTypes()
     {
-        return findElements( By.xpath( RELATIONSHIP_TYPES ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-            Collectors.toList() );
+        return findElements( By.xpath( RELATIONSHIP_TYPES ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public List<String> getContentTypes()
     {
-        return findElements( By.xpath( CONTENT_TYPES ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-            Collectors.toList() );
+        return findElements( By.xpath( CONTENT_TYPES ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public boolean isMixinsHeaderPresent()
@@ -133,8 +131,7 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getMixins()
     {
-        return findElements( By.xpath( MIXINS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-            Collectors.toList() );
+        return findElements( By.xpath( MIXINS ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public boolean isBuildDatePresent()
