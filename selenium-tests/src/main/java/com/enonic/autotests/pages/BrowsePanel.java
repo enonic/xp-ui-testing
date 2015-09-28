@@ -271,7 +271,7 @@ public abstract class BrowsePanel
             findElements( By.xpath( String.format( ( DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
         if ( rows.size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), "select-error" );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_select_" + name ) );
             throw new TestFrameworkException( "row with content was not found, content name is " + name );
         }
         return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
