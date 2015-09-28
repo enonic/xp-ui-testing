@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel
+import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -155,12 +156,13 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         when:
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
+
         then:
+        TestUtils.saveScreenshot( getSession(), "stopped_started_mixins" )
         List<String> mixins = applicationItemStatisticsPanel.getMixins();
         mixins.size() > 0;
         and:
         mixins.contains( MIXIN_ADDRESS_NAME );
-
     }
 
     def "GIVEN One application is stopped WHEN app started again  THEN detail page should show all its relationship types"()

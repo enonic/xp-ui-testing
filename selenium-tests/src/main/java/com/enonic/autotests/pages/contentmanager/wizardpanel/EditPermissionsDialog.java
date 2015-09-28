@@ -59,7 +59,7 @@ public class EditPermissionsDialog
 
     public boolean isOpened()
     {
-        return findElements( By.xpath( CONTAINER_XPATH ) ).size() > 0;
+        return findElements( By.xpath( CONTAINER_XPATH ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
     public EditPermissionsDialog uncheckInheritCheckbox()
@@ -74,7 +74,6 @@ public class EditPermissionsDialog
 
     public boolean isOptionsFilterDisplayed()
     {
-
         return findElements( By.xpath( OPTIONS_FILTER_INPUT ) ).size() > 0;
     }
 

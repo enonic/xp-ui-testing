@@ -266,7 +266,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel save()
     {
-        boolean isSaveButtonEnabled = waitUntilClickableNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
+        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saving" ) );
