@@ -145,7 +145,9 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         when:
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
         applicationBrowsePanel.clickOnToolbarStart();
+
         then:
+        TestUtils.saveScreenshot( getSession(), "stopped_started_ct" )
         applicationItemStatisticsPanel.getContentTypes().size() > 0;
     }
 
@@ -172,6 +174,8 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         when:
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
+        TestUtils.saveScreenshot( getSession(), "stopped_started_relationships" );
+
         then:
         List<String> relationshipsTypes = applicationItemStatisticsPanel.getRelationShipTypes();
         relationshipsTypes.size() > 0;
@@ -186,6 +190,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         when:
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
+
         then:
         List<String> parts = applicationItemStatisticsPanel.getParts();
         parts.size() > 0;
@@ -200,6 +205,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         when:
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
+
         then:
         List<String> layouts = applicationItemStatisticsPanel.getLayouts();
         layouts.size() > 0;
