@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.xp.schema.content.ContentTypeName
@@ -49,6 +50,7 @@ class ContentWizardPanel_Settings_Spec
 
         when: "when content opened for edit"
         SettingsWizardStepForm form = findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink();
+        TestUtils.saveScreenshot( getSession(), "norsk-lang" )
 
         then: "correct language present in settings"
         form.getLanguage() == NORSK_LANGUAGE;
@@ -79,7 +81,8 @@ class ContentWizardPanel_Settings_Spec
         form.removeOwner( SUPER_USER ).selectOwner( ANONYMOUS_USER );
 
         wizard.save().close( content.getDisplayName() );
-        findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink();
+        findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink()
+        TestUtils.saveScreenshot( getSession(), "norsk-langowner-anonym" )
 
         then: "language not present in settings"
         form.getOwner() == ANONYMOUS_USER;
