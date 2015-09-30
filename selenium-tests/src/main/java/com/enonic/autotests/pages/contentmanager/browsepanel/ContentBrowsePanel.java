@@ -58,6 +58,7 @@ public class ContentBrowsePanel
 
     private final String PUBLISH_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
+    protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'DetailsPanelToggleButton')]";
 
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
 
@@ -88,6 +89,10 @@ public class ContentBrowsePanel
     @FindBy(xpath = PUBLISH_BUTTON_XPATH)
     private WebElement publishButton;
 
+
+    @FindBy(xpath = DETAILS_TOGGLE_BUTTON)
+    WebElement detailsToggleButton;
+
     private ContentBrowseFilterPanel filterPanel;
 
     private ContentBrowseItemsSelectionPanel itemsSelectionPanel;
@@ -112,6 +117,24 @@ public class ContentBrowsePanel
         }
     }
 
+    public ContentBrowsePanel clickOnDetailsToggleButton()
+    {
+        boolean result = waitUntilClickableNoException( By.xpath( DETAILS_TOGGLE_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            throw new TestFrameworkException( "DetailsToggle button is not clickable!" );
+        }
+        detailsToggleButton.click();
+        sleep( 1000 );
+        return this;
+    }
+
+    public boolean isDetailsPanelToggleButtonDisabled()
+    {
+        WebElement element = findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+        String attributeDisabled = getAttribute( element, "disabled", Application.EXPLICIT_NORMAL );
+        return attributeDisabled != null ? true : false;
+    }
 
     public boolean isFilterPanelShown()
     {

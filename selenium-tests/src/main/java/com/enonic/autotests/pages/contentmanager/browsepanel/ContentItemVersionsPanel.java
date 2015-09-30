@@ -17,6 +17,8 @@ import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.ContentVersion;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class ContentItemVersionsPanel
     extends Application
 {
@@ -39,12 +41,6 @@ public class ContentItemVersionsPanel
     private final String CONTENT_VERSION_VIEWER = "//div[contains(@id,'api.content.ContentVersionViewer')]";
 
 
-    @FindBy(xpath = ALL_VERSIONS_ITEM)
-    private WebElement allVersionsButton;
-
-    @FindBy(xpath = ACTIVE_VERSIONS_ITEM)
-    private WebElement activeVersionsButton;
-
     @FindBy(xpath = TAB_MENU_BUTTON)
     WebElement tabMenuButton;
 
@@ -57,7 +53,8 @@ public class ContentItemVersionsPanel
     {
         List<WebElement> elements = findElements(
             By.xpath( ALL_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER + "//div[contains(@id,'NamesView')]//h6[@class='main-name']" ) );
-        return elements.stream().map( WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
+        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
+            Collectors.toCollection( LinkedList::new ) );
     }
 
     public LinkedList<String> getActiveContentVersionsInfo()
@@ -96,9 +93,9 @@ public class ContentItemVersionsPanel
         return list;
     }
 
-    public ContentItemVersionsPanel waitUntilLoaded()
+    public ContentItemVersionsPanel isOpened()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL ) )
+        if ( findElements( By.xpath( CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
         {
             throw new TestFrameworkException( "ContentItemVersionsPanel was not loaded!" );
         }
@@ -137,19 +134,24 @@ public class ContentItemVersionsPanel
 
     public boolean isAllVersionsTabBarItemPresent()
     {
-        return allVersionsButton.isDisplayed();
+        return findElements( By.xpath( ALL_VERSIONS_ITEM ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
     public boolean isActiveVersionsTabBarItemPresent()
     {
-        return activeVersionsButton.isDisplayed();
+        return findElements( By.xpath( ACTIVE_VERSIONS_ITEM ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+
     }
 
     public ContentItemVersionsPanel clickOnActiveVersionsButton()
     {
+        WebElement activeVersionsButton =
+            findElements( By.xpath( ACTIVE_VERSIONS_ITEM ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
         activeVersionsButton.click();
-        boolean result =
-            waitUntilVisibleNoException( By.xpath( ACTIVE_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER ), Application.EXPLICIT_NORMAL );
+        sleep( 500 );
+        boolean result = findElements( By.xpath( ACTIVE_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER ) ).stream().filter(
+            WebElement::isDisplayed ).count() > 0;
+        //waitUntilVisibleNoException( By.xpath( ACTIVE_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
             throw new TestFrameworkException( "Table with active version not showed" );
@@ -159,8 +161,11 @@ public class ContentItemVersionsPanel
 
     public ContentItemVersionsPanel clickOnAllVersionsButton()
     {
+        WebElement allVersionsButton =
+            findElements( By.xpath( ALL_VERSIONS_ITEM ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
         allVersionsButton.click();
-        boolean result = waitUntilVisibleNoException( By.xpath( ALL_CONTENT_VERSION_GRID ), Application.EXPLICIT_NORMAL );
+        sleep( 500 );
+        boolean result = findElements( By.xpath( ALL_CONTENT_VERSION_GRID ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
         if ( !result )
         {
             throw new TestFrameworkException( "Table with all versions not showed" );

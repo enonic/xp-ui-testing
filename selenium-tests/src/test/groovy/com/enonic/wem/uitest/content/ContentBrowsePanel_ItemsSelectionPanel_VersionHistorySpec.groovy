@@ -1,11 +1,12 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemsSelectionPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemVersionsPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
 import com.enonic.autotests.vo.contentmanager.WorkspaceName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -16,20 +17,32 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     @Shared
     Content folderContent;
 
-    def "WHEN content selected THEN TabMenu button appears"()
+    def "WHEN no one content selected THEN 'Details Panel Toggle' button is enabled"()
     {
-        setup:
+        when: "no one content selected"
+        int numberOfSelectedItems = contentBrowsePanel.getNumberFromClearSelectionLink();
+
+        then: "'Details Panel Toggle' button is disabled"
+        !contentBrowsePanel.isDetailsPanelToggleButtonDisabled();
+        and: "number of selected items is 0"
+        numberOfSelectedItems == 0;
+    }
+
+    def "WHEN content selected THEN 'Details Panel Toggle' button is enabled"()
+    {
+        given:
         itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
         folderContent = buildFolderContent( "v_history", "version_history_test" );
-
-        and:
         addContent( folderContent );
 
         when: "when one content selected in the 'Browse Panel'"
         findAndSelectContent( folderContent.getName() );
+        int numberOfSelectedItems = contentBrowsePanel.getNumberFromClearSelectionLink();
 
-        then: "the tab menu button with text equals 'Preview' appears in the 'Items Selection Panel'"
-        itemsSelectionPanel.waitTabMenuButtonVisible();
+        then: "'Details Panel Toggle' button is enabled"
+        !contentBrowsePanel.isDetailsPanelToggleButtonDisabled();
+        and: "number of selected items is 1"
+        numberOfSelectedItems == 1;
     }
 
     def "GIVEN content selected WHEN TabMenu clicked THEN two menu items showed"()
@@ -37,60 +50,67 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
 
-        when: "TabMenu button clicked'"
-        itemsSelectionPanel.clickOnTabMenuButton();
+        when: "'Details Panel Toggle' button clicked'"
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        ContentDetailsPanel contentDetailsPanel = contentBrowseItemPanel.getContentDetailsPanel();
 
-        then: "two menu items:'Preview' and 'Version History' appears"
-        itemsSelectionPanel.isPresentMenuItem( ContentBrowseItemsSelectionPanel.PREVIEW );
-        and:
-        itemsSelectionPanel.isPresentMenuItem( ContentBrowseItemsSelectionPanel.VERSION_HISTORY );
+        then: "Content Details Panel opened"
+        contentDetailsPanel.isOpened();
+        and: "correct content-displayName shown"
+        contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
     }
 
-    def "GIVEN content selected AND TabMenu clicked WHEN 'Version History' menu item clicked THEN the 'ContentItemVersionsPanel' appears"()
+    def "GIVEN content selected AND 'Details Toggle' button clicked WHEN 'Version History' option selected THEN the 'ContentItemVersionsPanel' appears"()
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        ContentDetailsPanel contentDetailsPanel = contentBrowseItemPanel.getContentDetailsPanel();
 
-        when: "'Version History' item selected'"
-        ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
+        when: "'Version History' option selected'"
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
+
 
         then: "version panel for the content is loaded"
-        versionPanel.waitUntilLoaded();
+        contentItemVersionsPanel.isOpened();
         and: "'all versions' button present"
-        versionPanel.isAllVersionsTabBarItemPresent();
+        contentItemVersionsPanel.isAllVersionsTabBarItemPresent();
         and: "'active versions' button present"
-        versionPanel.isActiveVersionsTabBarItemPresent();
+        contentItemVersionsPanel.isActiveVersionsTabBarItemPresent();
     }
 
-    def "GIVEN version history opened WHEN 'preview' menu item clicked THEN the 'ContentItemPreviewPanel' showed"()
+    def "GIVEN 'Content Details Panel' opened WHEN Toggle Content Details button clicked THEN 'Content Details Panel' hidden"()
     {
         given: "content selected and the 'Version History' opened"
         findAndSelectContent( folderContent.getName() );
-        ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        boolean isPanelOpened = contentBrowseItemPanel.getContentDetailsPanel().isOpened();
 
-        when: "the 'Preview' button clicked "
-        versionPanel.openItemsSelectionPanel();
+        when: "'Toggle' button clicked again "
+        contentBrowsePanel.clickOnDetailsToggleButton();
 
-        then: "items-selection panel showed and version panel not displayed"
-        versionPanel.waitUntilPanelNotVisible();
+        then: "'Content Details Panel' not displayed"
+        !contentBrowseItemPanel.getContentDetailsPanel().isOpened();
     }
 
-    def "GIVEN content with two versions AND none are published WHEN All Versions listed THEN the latest version has a light blue 'draft' badge by it."()
+
+    def "GIVEN existing content AND it not published WHEN All Versions opened THEN the latest version has a light blue 'draft' badge by it."()
     {
-        given: "content selected"
+        given: "content selected and the 'Version History' opened"
         findAndSelectContent( folderContent.getName() );
+        ContentItemVersionsPanel contentItemVersionsPanel = openVersionPanel();
 
-        when: "'Active versions'  button clicked"
-        ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
-        versionPanel.clickOnAllVersionsButton()
-        LinkedList<String> versionsInfo = versionPanel.getAllContentVersionsInfo();
+        when: "'All versions'  button clicked"
+        contentItemVersionsPanel.clickOnAllVersionsButton()
+        LinkedList<String> versionsInfo = contentItemVersionsPanel.getAllContentVersionsInfo();
 
-        then: "date time and displayName of content showed"
+        then: "displayName of content showed"
         versionsInfo.getFirst().contains( folderContent.getDisplayName() )
         and: "one active version with 'draft' status showed"
-        versionPanel.getAllContentVersions().getFirst().getStatus().contains( WorkspaceName.DRAFT.getValue() )
+        contentItemVersionsPanel.getAllContentVersions().getFirst().getStatus().contains( WorkspaceName.DRAFT.getValue() )
     }
 
+    @Ignore
     def "GIVEN content with two versions WHEN published AND All Versions listed THEN the latest versions has a green 'master'"()
     {
         given: "content selected"
@@ -99,7 +119,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         when: "content published and 'Active versions'  button clicked"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         TestUtils.saveScreenshot( getTestSession(), "vh_tab" )
-        ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
+        ContentItemVersionsPanel versionPanel = openVersionPanel();
         versionPanel.clickOnActiveVersionsButton();
         LinkedList<ContentVersion> contentVersions = versionPanel.getActiveContentVersions();
 
@@ -107,6 +127,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentVersions.getFirst().getStatus().contains( WorkspaceName.MASTER.getValue() );
     }
 
+    @Ignore
     def "GIVEN content with the a published version that is later changed WHEN Active versions listed THEN two versions are listed. The older one with green 'master' badge and the newer one with a light blue 'draft' badge."()
     {
         given: "content with 'online' status was changed and content has a 'Modified' status"
@@ -114,7 +135,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
             "newDisplayName" );
 
         when: "'Active versions'  button clicked and active versions showed"
-        ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
+        ContentItemVersionsPanel versionPanel = openVersionPanel();
         versionPanel.clickOnActiveVersionsButton();
         LinkedList<ContentVersion> contentVersions = versionPanel.getActiveContentVersions();
 
@@ -124,13 +145,14 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentVersions.peek().getStatus().contains( WorkspaceName.MASTER.getValue() )
     }
 
+    @Ignore
     def "GIVEN content with the a published version that is later changed WHEN all versions listed THEN two versions are listed. The older one with green 'master' badge and the newer one with a light blue 'draft' badge."()
     {
         given: "content with 'online' status was changed and content has a 'Modified' status"
         findAndSelectContent( folderContent.getName() );
 
         when: "'Active versions'  button clicked and active versions showed"
-        ContentItemVersionsPanel versionPanel = itemsSelectionPanel.openVersionHistory();
+        ContentItemVersionsPanel versionPanel = openVersionPanel();
         versionPanel.clickOnAllVersionsButton();
         LinkedList<ContentVersion> contentVersions = versionPanel.getAllContentVersions();
 
@@ -138,5 +160,14 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentVersions.poll().getStatus() == WorkspaceName.DRAFT.getValue();
         and: "previous version has a master badge"
         contentVersions.peek().getStatus().contains( WorkspaceName.MASTER.getValue() )
+    }
+
+    private ContentItemVersionsPanel openVersionPanel()
+    {
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        ContentDetailsPanel contentDetailsPanel = contentBrowseItemPanel.getContentDetailsPanel();
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
+        return contentItemVersionsPanel;
+
     }
 }
