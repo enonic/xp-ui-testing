@@ -64,6 +64,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME ).<ApplicationBrowsePanel> clickOnToolbarStop();
         when: "application stopped"
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "Stopped"
+        TestUtils.saveScreenshot( getSession(), "app-stopped" )
         then: "Content Types headed present"
         applicationItemStatisticsPanel.isContentTypesHeaderPresent();
         and: "page should not show any content types"

@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemsSelectionPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -23,6 +24,9 @@ class BaseContentSpec
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
+    ContentBrowseItemPanel contentBrowseItemPanel;
+
+    @Shared
     ContentBrowseFilterPanel filterPanel;
 
     @Shared
@@ -35,6 +39,7 @@ class BaseContentSpec
         contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
         itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
+        contentBrowseItemPanel = new ContentBrowseItemPanel( getSession() );
     }
 
     public Content buildFolderContent( String name, String displayName )

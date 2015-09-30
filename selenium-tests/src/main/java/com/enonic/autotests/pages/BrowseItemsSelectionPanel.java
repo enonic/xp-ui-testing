@@ -7,15 +7,8 @@ import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemVersionsPanel;
-import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public abstract class BrowseItemsSelectionPanel
     extends Application
@@ -30,59 +23,10 @@ public abstract class BrowseItemsSelectionPanel
 
     protected String SELECTED_ITEM_DISPLAY_NAME = "//h6[@class='main-name']";
 
-    protected final String TAB_MENU_BUTTON =
-        "//div[contains(@id,'TabMenuButton') and (child::span[text()='Preview'] or child::span[text()='Version History'])]";
-
-    protected String MENU_ITEM_XPATH = "//ul[@class='menu']//li[contains(@id,'TabMenuItem') and child::span[text()='%s']]";
-
-    @FindBy(xpath = TAB_MENU_BUTTON)
-    WebElement tabMenuButton;
 
     public BrowseItemsSelectionPanel( final TestSession session )
     {
         super( session );
-    }
-
-    public BrowseItemsSelectionPanel clickOnTabMenuButton()
-    {
-        boolean result = waitUntilClickableNoException( By.xpath( TAB_MENU_BUTTON ), Application.EXPLICIT_NORMAL );
-        if ( !result )
-        {
-            throw new TestFrameworkException( "Tab menu not clickable!" );
-        }
-        tabMenuButton.click();
-        return this;
-    }
-
-    boolean isPresentMenuItem( String itemName )
-    {
-        String itemXpath = String.format( MENU_ITEM_XPATH, itemName );
-        return waitUntilVisibleNoException( By.xpath( itemXpath ), Application.EXPLICIT_NORMAL );
-    }
-
-    public boolean waitTabMenuButtonVisible()
-    {
-        return waitUntilVisibleNoException( By.xpath( TAB_MENU_BUTTON ), Application.EXPLICIT_NORMAL );
-    }
-
-    public ContentItemVersionsPanel openVersionHistory()
-    {
-        clickOnTabMenuButton();
-        selectVersionHistoryMenuItem();
-        return new ContentItemVersionsPanel( getSession() );
-    }
-
-    private void selectVersionHistoryMenuItem()
-    {
-        String itemXpath = String.format( MENU_ITEM_XPATH, "Version History" );
-        boolean result = waitUntilVisibleNoException( By.xpath( itemXpath ), Application.EXPLICIT_NORMAL );
-        if ( !result )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "version_hist" ) );
-            throw new TestFrameworkException( "the 'Version History' menu item was not found!" );
-        }
-        findElements( By.xpath( itemXpath ) ).get( 0 ).click();
-        sleep( 500 );
     }
 
     public int getSelectedItemCount()

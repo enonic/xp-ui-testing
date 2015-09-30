@@ -33,6 +33,10 @@ public class Application
 
     protected String DIV_NAMES_VIEW = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
 
+    protected String DIV_DISPLAY_NAME_VIEW = "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
+
+    protected String H6_DISPLAY_NAME = "//div[contains(@id,'NamesView')]//h6[@class='main-name']";
+
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";

@@ -299,14 +299,20 @@ public abstract class BrowsePanel
      *
      * @return for example : 'Clear selection (2)'
      */
-    public String getClearSelectionText()
+    public Integer getNumberFromClearSelectionLink()
     {
         List<WebElement> elems = findElements( By.xpath( CLEAR_SELECTION_LINK_XPATH ) );
         if ( elems.size() == 0 )
         {
             throw new TestFrameworkException( "the 'Clear selection' Link was not found, probably wrong xpath locator!" );
         }
-        return clearSelectionLink.getText();
+        String text = clearSelectionLink.getText();
+        if ( text.indexOf( "(" ) == -1 )
+        {
+            return 0;
+        }
+        String numberOfSelectedItems = text.substring( text.indexOf( "(" ) + 1, text.indexOf( ")" ) );
+        return Integer.valueOf( numberOfSelectedItems );
     }
 
     /**
