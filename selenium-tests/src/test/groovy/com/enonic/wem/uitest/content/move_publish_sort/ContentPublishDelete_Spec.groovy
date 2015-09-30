@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -50,7 +51,8 @@ class ContentPublishDelete_Spec
         message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
 
     }
-
+    //XP-1731
+    @Ignore
     def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel "()
     {
         when:
