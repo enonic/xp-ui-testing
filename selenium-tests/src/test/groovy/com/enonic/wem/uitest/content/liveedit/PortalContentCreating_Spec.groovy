@@ -37,6 +37,9 @@ class PortalContentCreating_Spec
     @Shared
     String OSLO_LOCATION = "59.95,10.75";
 
+    @Shared
+    String OSLO_CITY_NAME = "oslo";
+
     def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller added and wizard closed THEN new template should be listed"()
     {
         given: "existing Site based on 'My First App'"
@@ -89,7 +92,7 @@ class PortalContentCreating_Spec
         openResourceInDraft( FIRST_SITE_NAME + "/" + NOR_CONTENT.getName() );
         TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
-        cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( "Oslo" ).typeCityPopulation( OSLO_POPULATION );
+        cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( OSLO_CITY_NAME ).typeCityPopulation( OSLO_POPULATION );
         TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
         cityCreationPage.clickSubmit();
         openHomePage();
@@ -100,7 +103,7 @@ class PortalContentCreating_Spec
         filterPanel.typeSearchText( "Norway" );
         contentBrowsePanel.expandContent( NOR_CONTENT.getPath() );
         TestUtils.saveScreenshot( getSession(), "norway-expanded" );
-        contentBrowsePanel.exists( "oslo" );
+        contentBrowsePanel.exists( OSLO_CITY_NAME );
     }
 
     def "GIVEN just created through the portal content WHEN city-content opened for edit THEN correct location and population displayed"()
