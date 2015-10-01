@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.application.ApplicationInfo;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -53,27 +54,21 @@ public class ApplicationItemStatisticsPanel
 
     private final String LAYOUTS = LAYOUT_HEADER + LIST_ITEMS;
 
-
     private final String RELATIONSHIP_TYPES = RELATIONSHIP_TYPES_HEADER + LIST_ITEMS;
-
-    @FindBy(xpath = STATISTIC_PANEL_CONTAINER + "//div[contains(@class,'drop-down-button')]")
-    private WebElement actionMenuButton;
 
     public ApplicationItemStatisticsPanel( TestSession session )
     {
         super( session );
     }
 
-    public ApplicationItemStatisticsPanel showActionMenu()
-    {
-        actionMenuButton.click();
-        sleep( 200 );
-        return this;
-    }
-
     public boolean isLayoutHeaderPresent()
     {
-        return findElements( By.xpath( LAYOUT_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return doScrollAndFindHeader( LAYOUT_HEADER );
+    }
+
+    public boolean isRelationShipTypesHeaderPresent()
+    {
+        return doScrollAndFindHeader( RELATIONSHIP_TYPES_HEADER );
     }
 
     public List<String> getLayouts()
@@ -84,7 +79,7 @@ public class ApplicationItemStatisticsPanel
 
     public boolean isPartHeaderPresent()
     {
-        return findElements( By.xpath( PART_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return doScrollAndFindHeader( PART_HEADER );
     }
 
     public List<String> getParts()
@@ -95,7 +90,17 @@ public class ApplicationItemStatisticsPanel
 
     public boolean isPageHeaderPresent()
     {
-        return findElements( By.xpath( PAGE_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return doScrollAndFindHeader( PAGE_HEADER );
+    }
+
+    public boolean isMixinsHeaderPresent()
+    {
+        return doScrollAndFindHeader( MIXINS_HEADER );
+    }
+
+    public boolean isContentTypesHeaderPresent()
+    {
+        return doScrollAndFindHeader( CONTENT_TYPES_HEADER );
     }
 
     public List<String> getPages()
@@ -104,14 +109,97 @@ public class ApplicationItemStatisticsPanel
             Collectors.toList() );
     }
 
-    public boolean isContentTypesHeaderPresent()
+    public void scrollPanelToTop()
     {
-        return findElements( By.xpath( CONTENT_TYPES_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
+        sleep( 1000 );
     }
 
-    public boolean isRelationShipTypesHeaderPresent()
+    public boolean doScrollAndFindHeader( String itemXpath )
     {
-        return findElements( By.xpath( RELATIONSHIP_TYPES_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        boolean isPresent = findElements( By.xpath( itemXpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        if ( isPresent )
+        {
+            return true;
+        }
+        if ( !isPanelScrollable() )
+        {
+            return false;
+        }
+        scrollPanelToTop();
+        String panelId = getPanelId();
+        int scrollTopValue = getScrollHeight( panelId ) - getClientHeight( panelId );
+        long scrollTopBefore;
+        long scrollTopAfter;
+        for (; ; )
+        {
+            scrollTopBefore = 0;
+            scrollTopAfter = doScrollPanel( scrollTopValue );
+
+            if ( findElements( By.xpath( itemXpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0 )
+            {
+                getLogger().info( "header was found: " + itemXpath );
+                return true;
+            }
+            if ( scrollTopBefore == scrollTopAfter )
+            {
+                break;
+            }
+            scrollTopValue += scrollTopValue;
+        }
+        getLogger().info( "header was not found! " + itemXpath );
+        TestUtils.saveScreenshot( getSession(), "scrolled_" + NameHelper.resolveScreenshotName( "panel" ) );
+        return false;
+    }
+
+    public Long getPanelScrollTopValue( String panelId )
+    {
+        return (Long) ( (JavascriptExecutor) getDriver() ).executeScript(
+            String.format( "return document.getElementById('%s').scrollTop", panelId ) );
+    }
+
+    public long doScrollPanel( int value )
+    {
+        String id = getPanelId();
+        WebElement panel =
+            findElements( By.xpath( STATISTIC_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+        ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", panel, value );
+        return getPanelScrollTopValue( id );
+    }
+
+    private String getPanelId()
+    {
+        WebElement panel =
+            findElements( By.xpath( STATISTIC_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+        return panel.getAttribute( "id" );
+    }
+
+    public boolean isPanelScrollable()
+    {
+        String id = getPanelId();
+        int clientHeight = getClientHeight( id );
+        int scrollHeight = getScrollHeight( id );
+        return scrollHeight > clientHeight;
+    }
+
+    public int getScrollHeight( String applicationItemStatisticsPanelId )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+
+        String script = String.format( "return document.getElementById('%s').scrollHeight", applicationItemStatisticsPanelId );
+        Object obj = executor.executeScript( script );
+        int scrollHeight = Integer.valueOf( obj.toString() );
+        return scrollHeight;
+    }
+
+    public int getClientHeight( String applicationItemStatisticsPanelId )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+
+        String script = String.format( "return document.getElementById('%s').clientHeight", applicationItemStatisticsPanelId );
+        Object obj = executor.executeScript( script );
+        int scrollHeight = Integer.valueOf( obj.toString() );
+        return scrollHeight;
     }
 
     public List<String> getRelationShipTypes()
@@ -122,11 +210,6 @@ public class ApplicationItemStatisticsPanel
     public List<String> getContentTypes()
     {
         return findElements( By.xpath( CONTENT_TYPES ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
-    }
-
-    public boolean isMixinsHeaderPresent()
-    {
-        return findElements( By.xpath( MIXINS_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
     public List<String> getMixins()
@@ -157,19 +240,16 @@ public class ApplicationItemStatisticsPanel
     public String getBuildDate()
     {
         return findElements( By.xpath( BUILD_DATE ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
-
     }
 
     public String getVersion()
     {
         return findElements( By.xpath( VERSION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
-
     }
 
     public String getKey()
     {
         return findElements( By.xpath( KEY ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
-
     }
 
     public String getSystemRequired()
@@ -181,24 +261,5 @@ public class ApplicationItemStatisticsPanel
     public ApplicationInfo getApplicationInfo()
     {
         return ApplicationInfo.builder().buildDate( getBuildDate() ).version( getVersion() ).key( getKey() ).build();
-    }
-
-    public ApplicationItemStatisticsPanel selectMenuItem( String itemName )
-    {
-        if ( findElements(
-            By.xpath( String.format( "//li[contains(@id,'api.ui.menu.ActionMenuItem') and text()='%s']", itemName ) ) ).size() == 0 )
-        {
-            throw new TestFrameworkException( "menu item was not found!" + itemName );
-        }
-        WebElement item =
-            findElement( By.xpath( String.format( "//li[contains(@id,'api.ui.menu.ActionMenuItem') and text()='%s']", itemName ) ) );
-        if ( !item.isDisplayed() )
-        {
-            throw new TestFrameworkException( "menu item is not visible! " + itemName );
-        }
-        item.click();
-        sleep( 500 );
-
-        return this;
     }
 }
