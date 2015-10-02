@@ -17,6 +17,7 @@ class GeoPoint_Spec
     @Shared
     String WRONG_GEO_LOCATION = "1,181";
 
+    @Ignore
     def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
     {
         given: "add a content with type 'Geo point'"
