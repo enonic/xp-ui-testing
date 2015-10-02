@@ -67,9 +67,10 @@ public class ContentItemVersionsPanel
     public LinkedList<ContentVersion> getActiveContentVersions()
     {
         LinkedList<String> info = getActiveContentVersionsInfo();
-        String statusXpath = ACTIVE_CONTENT_VERSION_GRID + "//div[contains(@class,'slick-row')]//div[contains(@class,'status')]";
-        List<String> status = findElements( By.xpath( statusXpath ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
-        return buildContentVersions( info, status );
+        String statusXpath = ACTIVE_CONTENT_VERSION_GRID +
+            "//div[contains(@class,'slick-row')]//div[contains(@class,'status')]//span[contains(@class,'badge')]";
+        List<String> statuses = findElements( By.xpath( statusXpath ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return buildContentVersions( info, statuses );
     }
 
     public LinkedList<ContentVersion> getAllContentVersions()

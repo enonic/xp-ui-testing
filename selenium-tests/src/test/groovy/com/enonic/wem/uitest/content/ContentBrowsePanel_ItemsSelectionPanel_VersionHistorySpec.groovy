@@ -121,13 +121,20 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
 
         when: "content published and 'Active versions'  button clicked"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
-        TestUtils.saveScreenshot( getTestSession(), "vh_tab" )
+
         ContentItemVersionsPanel versionPanel = openVersionPanel();
         versionPanel.clickOnActiveVersionsButton();
+        TestUtils.saveScreenshot( getTestSession(), "vh_active" )
         LinkedList<ContentVersion> contentVersions = versionPanel.getActiveContentVersions();
 
-        then: "version has status 'master'"
+        then: "version has two statuses"
+        contentVersions.size() == 2;
+        and: "version has status 'master'"
         contentVersions.getFirst().getStatus().contains( WorkspaceName.MASTER.getValue() );
+        and: " version has 'draft' as well"
+        contentVersions.getLast().getStatus().contains( WorkspaceName.DRAFT.getValue() );
+
+
     }
 
     @Ignore
