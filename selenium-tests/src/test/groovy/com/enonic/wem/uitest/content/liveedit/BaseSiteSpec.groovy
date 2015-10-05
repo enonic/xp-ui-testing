@@ -49,7 +49,7 @@ class BaseSiteSpec
     @Shared
     static String FIRST_SITE_NAME = NameHelper.uniqueName( "first-site" );
 
-    def "create a site based on the application with all content types"()
+    def "create a site based on the 'My First App' application"()
     {
         when: "add a site, based on the test application"
         addSite();

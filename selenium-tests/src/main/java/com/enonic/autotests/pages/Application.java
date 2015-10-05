@@ -19,6 +19,8 @@ public class Application
 {
     public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
 
+    public static final String TEST_FOLDER_NAME = "selenium-tests-folder";
+
     public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = " Content with path \"%s\" already exists";
