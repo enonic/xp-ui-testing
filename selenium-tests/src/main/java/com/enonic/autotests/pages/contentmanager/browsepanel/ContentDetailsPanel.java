@@ -45,8 +45,9 @@ public class ContentDetailsPanel
         return new ContentItemVersionsPanel( getSession() );
     }
 
-    public boolean isOpened()
+    public boolean isOpened( String contentDisplayName )
     {
-        return findElements( By.xpath( CONTAINER_DIV ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return findElements( By.xpath( CONTAINER_DIV + String.format( DIV_DISPLAY_NAME_VIEW, contentDisplayName ) ) ).stream().filter(
+            WebElement::isDisplayed ).count() > 0;
     }
 }

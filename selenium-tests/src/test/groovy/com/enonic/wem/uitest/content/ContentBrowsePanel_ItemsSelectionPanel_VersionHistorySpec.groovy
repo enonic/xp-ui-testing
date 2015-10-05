@@ -55,7 +55,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         ContentDetailsPanel contentDetailsPanel = contentBrowseItemPanel.getContentDetailsPanel();
 
         then: "Content Details Panel opened"
-        contentDetailsPanel.isOpened();
+        contentDetailsPanel.isOpened( folderContent.getDisplayName() );
         and: "correct content-displayName shown"
         contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
     }
@@ -84,7 +84,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         given: "content selected and the 'Version History' opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
-        boolean isPanelOpened = contentBrowseItemPanel.getContentDetailsPanel().isOpened();
+        boolean isPanelOpened = contentBrowseItemPanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
 
         when: "'Toggle' button clicked again "
@@ -92,7 +92,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         TestUtils.saveScreenshot( getSession(), "detail-panel-closed" );
 
         then: "'Content Details Panel' not displayed"
-        !contentBrowseItemPanel.getContentDetailsPanel().isOpened();
+        !contentBrowseItemPanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
         and: "but it was opened"
         isPanelOpened;
     }
