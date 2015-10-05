@@ -85,10 +85,11 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         boolean isPanelOpened = contentBrowseItemPanel.getContentDetailsPanel().isOpened();
+        TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
 
         when: "'Toggle' button clicked again "
         contentBrowsePanel.clickOnDetailsToggleButton();
-        TestUtils.saveScreenshot( getSession(), "detail-panel-closed" )
+        TestUtils.saveScreenshot( getSession(), "detail-panel-closed" );
 
         then: "'Content Details Panel' not displayed"
         !contentBrowseItemPanel.getContentDetailsPanel().isOpened();
