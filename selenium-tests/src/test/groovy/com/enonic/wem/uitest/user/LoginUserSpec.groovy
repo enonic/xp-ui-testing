@@ -50,7 +50,6 @@ class LoginUserSpec
     @Shared
     Content contentNoPermissions
 
-    @Ignore
     def "setup: add a test user to the system user store"()
     {
         setup: "add a user"
@@ -74,7 +73,6 @@ class LoginUserSpec
         userBrowsePanel.exists( user.getDisplayName(), true );
     }
 
-    @Ignore
     def "WHEN new content with permissions for just created user added THEN Content is listed in BrowsePanel"()
     {
         given:
@@ -102,7 +100,6 @@ class LoginUserSpec
         contentBrowsePanel.exists( userContent.getName() );
     }
 
-    @Ignore
     def "WHEN new content without any permissions for just created user added THEN Content is listed in BrowsePanel"()
     {
         given:
@@ -126,7 +123,6 @@ class LoginUserSpec
         contentBrowsePanel.exists( contentNoPermissions.getName() );
     }
 
-    @Ignore
     def "WHEN new created user logged in THEN home page with only one application(CM) loaded "()
     {
         when:
@@ -160,7 +156,6 @@ class LoginUserSpec
         !contentBrowsePanel.exists( contentNoPermissions.getName() );
     }
 
-    @Ignore
     def "GIVEN opened user for edit WHEN 'change password' button pressed THEN modal dialog appears"()
     {
         given:
@@ -183,7 +178,6 @@ class LoginUserSpec
         dialog.isChangeButtonDisplayed();
     }
 
-    @Ignore
     def "changing a password for existing user"()
     {
         given:
@@ -204,7 +198,6 @@ class LoginUserSpec
         userBrowsePanel.waitUntilPageLoaded( 2 );
     }
 
-    @Ignore
     def "WHEN password changed for existing user THEN old password should not work for login"()
     {
         when:
@@ -218,7 +211,6 @@ class LoginUserSpec
         thrown( AuthenticationException )
     }
 
-    @Ignore
     def "WHEN user logged in with the new password THEN home page loaded"()
     {
         when:

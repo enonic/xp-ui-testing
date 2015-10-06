@@ -16,6 +16,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
+import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
@@ -95,13 +96,13 @@ public class ContentWizardPanel
 
     public ContextWindow showContextWindow()
     {
-        TestUtils.saveScreenshot( getSession(), "show_contwindow1" );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "show_contwindow" ) );
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.isContextWindowPresent() )
         {
             toolbarShowContextWindow.click();
             cw.waitUntilWindowLoaded( 1l );
-            TestUtils.saveScreenshot( getSession(), "show_contwindow2" );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "show_contwindow" ) );
         }
         return cw;
     }
@@ -145,11 +146,6 @@ public class ContentWizardPanel
 
     public boolean isLiveEditLocked()
     {
-        WebElement frame = findElements( By.xpath( Application.LIVE_EDIT_FRAME ) ).get( 0 );
-        Actions builder = new Actions( getDriver() );
-        builder.moveToElement( frame ).build().perform();
-        sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "unlock" ) );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveEdit = new LiveFormPanel( getSession() );
         boolean result = liveEdit.isShaderDisplayed();
@@ -157,9 +153,21 @@ public class ContentWizardPanel
         return result;
     }
 
-    /**
-     * @return
-     */
+    public ItemViewContextMenu showItemViewContextMenu()
+    {
+        clickOnPageView();
+        sleep( 500 );
+        return new ItemViewContextMenu( getSession() );
+    }
+
+    private void clickOnPageView()
+    {
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        WebElement body = findElements( By.xpath( "//body" ) ).get( 0 );
+        Actions builder = new Actions( getDriver() );
+        builder.click( body ).build().perform();
+    }
+
     public String getTitle()
     {
         List<WebElement> elems = getDriver().findElements( By.xpath( "//div[child::span[@class='tabcount']]/span[@class='label']" ) );
