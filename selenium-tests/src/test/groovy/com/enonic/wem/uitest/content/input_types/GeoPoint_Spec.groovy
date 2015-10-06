@@ -1,11 +1,9 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.GeoPointFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class GeoPoint_Spec
@@ -17,7 +15,6 @@ class GeoPoint_Spec
     @Shared
     String WRONG_GEO_LOCATION = "1,181";
 
-    @Ignore
     def "GIVEN content type with name 'Geo Location' selected and wizard opened WHEN geo point value typed and content saved THEN new content with correct value listed "()
     {
         given: "add a content with type 'Geo point'"
@@ -33,42 +30,42 @@ class GeoPoint_Spec
         geoPointFormViewPanel.getGeoPointValue().equals( TEST_GEO_LOCATION );
     }
 
-    // ignored due the application bug: XP-1526
-    @Ignore
-    def "GIVEN wizard for adding a content with type 'Geo Location' opened WHEN value of 'Geo Location' is not within range THEN correct warning-message appears "()
+    def "GIVEN wizard for adding a content with type 'Geo Location' opened WHEN value of 'Geo Location' is not within range and content saved and wizard closed THEN incorrect value not saved "()
     {
         given: "add a content with type 'Geo point'"
         Content notValidContent = buildGeoPoint0_0_Content( WRONG_GEO_LOCATION );
-        ContentWizardPanel wizard = selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            notValidContent )
+        selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData( notValidContent ).save().close(
+            notValidContent.getDisplayName() )
 
         when: "'Save' button on toolbar pressed"
-        String warningMessage = wizard.save().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( notValidContent );
+        GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "correct warning-message appears"
-        warningMessage == Application.LOCATION_NOT_WITHIN_RANGE_WARNING;
+        geoPointFormViewPanel.getGeoPointValue().isEmpty();
     }
-    // ignored due the application bug: XP-1526
-    @Ignore
+
     def "GIVEN wizard for adding a content with type 'Geo Location' opened WHEN value of 'Geo Location' is not within range THEN red icon present in the wizard and content is not valid "()
     {
         given: "add a content with type 'Geo point'"
-        Content notValidContent = buildGeoPoint0_0_Content( WRONG_GEO_LOCATION );
+        Content notValidContent = buildGeoPoint1_1_Content( WRONG_GEO_LOCATION );
         ContentWizardPanel wizard = selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             notValidContent )
 
         when: "'Save' button on toolbar pressed"
         wizard.save();
+        GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "correct warning-message appears"
         wizard.isContentInvalid( notValidContent.getDisplayName() );
+        and: "input is red"
+        !geoPointFormViewPanel.isGeoLocationValid();
     }
-    // ignored due the application bug: XP-1526
-    @Ignore
+
     def "GIVEN wizard for adding a content with type 'Geo Location' opened WHEN value of 'Geo Location' is not within range THEN red icon present in the browse panel and content is not valid "()
     {
         given: "add a content with type 'Geo point'"
-        Content notValidContent = buildGeoPoint0_0_Content( WRONG_GEO_LOCATION );
+        Content notValidContent = buildGeoPoint1_1_Content( WRONG_GEO_LOCATION );
         ContentWizardPanel wizard = selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             notValidContent )
 

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.pages.Application;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -38,5 +39,10 @@ public class GeoPointFormViewPanel
     public String getGeoPointValue()
     {
         return geoLocationInput.getAttribute( "value" );
+    }
+
+    public boolean isGeoLocationValid()
+    {
+        return !waitAndCheckAttrValue( geoLocationInput, "class", "invalid", Application.EXPLICIT_NORMAL );
     }
 }

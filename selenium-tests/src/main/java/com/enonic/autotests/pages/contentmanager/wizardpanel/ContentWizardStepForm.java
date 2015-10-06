@@ -70,7 +70,8 @@ public class ContentWizardStepForm
             formViewPanel = new DateFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.contains( TestAppContentType.GEO_POINT.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.GEO_POINT0_0.getName() ) ||
+            contentTypeName.contains( TestAppContentType.GEO_POINT1_1.getName() ) )
         {
             formViewPanel = new GeoPointFormViewPanel( getSession() );
         }

@@ -317,6 +317,21 @@ class Base_InputFields_Occurrences
         return dateContent;
     }
 
+    protected Content buildGeoPoint1_1_Content( String value )
+    {
+        String name = "geopoint";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( GeoPointFormViewPanel.GEO_POINT_PROPERTY, value );
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "geo point content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":geopoint1_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
     protected Content buildCheckBoxContent( boolean value )
     {
         String name = "checkbox";
