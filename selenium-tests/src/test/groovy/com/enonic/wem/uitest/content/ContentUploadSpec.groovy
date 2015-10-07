@@ -2,14 +2,14 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class ContentUploadSpec
-    extends BaseGebSpec
+    extends BaseContentSpec
 {
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -20,11 +20,9 @@ class ContentUploadSpec
     @Shared
     String pathToZip = "test-data/upload/img.zip";
 
-    def setup()
-    {
-        go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
-    }
+    @Shared
+    String pathToTxt = "test-data/upload/text.txt";
+
 
     def "GIVEN opened a new content dialog WHEN upload button clicked and file selected THEN new content present in browse panel "()
     {
@@ -55,4 +53,33 @@ class ContentUploadSpec
         TestUtils.saveScreenshot( getSession(), "upload-zip" )
         contentBrowsePanel.exists( "img.zip" )
     }
+
+    def "GIVEN opened a new content dialog WHEN upload button clicked and txt-file selected THEN new content present in browse panel  "()
+    {
+        given: "opened a new content dialog"
+        NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
+
+        when: " click on drop zone and select a archive"
+        TestUtils.saveScreenshot( getSession(), "start-upload-txt" )
+        dialog.doUploadFile( pathToTxt );
+        sleep( 1000 )
+
+        then: "new png file content appears in the browse panel"
+        TestUtils.saveScreenshot( getSession(), "upload-txt" )
+        contentBrowsePanel.exists( "text.txt" )
+    }
+
+    //XP-1727
+    @Ignore
+    def "GIVEN text file was uploaded WHEN content opened for edit THEN correct text present on page"()
+    {
+        when: ""
+        filterPanel.typeSearchText( "text.txt" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( "text.txt" ).clickToolbarEdit();
+
+        then: ""
+        true;
+    }
+
+
 }
