@@ -9,7 +9,6 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_DateTime_1_1_Spec
@@ -52,8 +51,7 @@ class Occurrences_DateTime_1_1_Spec
         then: "content should be invalid, because required field not filled"
         wizard.isContentInvalid( dateTimeContent.getDisplayName() );
     }
-    //XP-1526
-    @Ignore
+
     def "GIVEN opened content wizard WHEN content without required 'date time ' saved and wizard closed THEN grid row with it content has a red icon"()
     {
         given: "new content with type date time added'"
