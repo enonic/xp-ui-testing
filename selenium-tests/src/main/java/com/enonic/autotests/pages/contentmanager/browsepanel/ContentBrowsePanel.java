@@ -58,7 +58,7 @@ public class ContentBrowsePanel
 
     private final String PUBLISH_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
-    protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'DetailsPanelToggleButton')]";
+    protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//div[contains(@class,'details-panel-toggle-button')]";
 
     private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
 
@@ -97,6 +97,10 @@ public class ContentBrowsePanel
 
     private ContentBrowseItemsSelectionPanel itemsSelectionPanel;
 
+    private ContentBrowseItemPanel contentBrowseItemPanel;
+
+    private ContentDetailsPanel contentDetailsPanel;
+
     /**
      * The constructor.
      *
@@ -117,6 +121,33 @@ public class ContentBrowsePanel
         }
     }
 
+    public ContentDetailsPanel getContentDetailsPanel()
+    {
+        if ( contentDetailsPanel == null )
+        {
+            contentDetailsPanel = new ContentDetailsPanel( getSession() );
+        }
+        return contentDetailsPanel;
+    }
+
+    public ContentBrowseItemPanel getContentBrowseItemPanel()
+    {
+        if ( contentBrowseItemPanel == null )
+        {
+            contentBrowseItemPanel = new ContentBrowseItemPanel( getSession() );
+        }
+        return contentBrowseItemPanel;
+    }
+
+    public ContentDetailsPanel openContentDetailsPanel()
+    {
+        if ( !getContentDetailsPanel().isDisplayed() )
+        {
+            clickOnDetailsToggleButton();
+        }
+        return contentDetailsPanel;
+    }
+
     public ContentBrowsePanel clickOnDetailsToggleButton()
     {
         boolean result = waitUntilClickableNoException( By.xpath( DETAILS_TOGGLE_BUTTON ), Application.EXPLICIT_NORMAL );
@@ -131,6 +162,11 @@ public class ContentBrowsePanel
 
     public boolean isDetailsPanelToggleButtonDisabled()
     {
+        if ( findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_toggle_button" );
+            throw new TestFrameworkException( "details toggle button is not displayed! " );
+        }
         WebElement element = findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
         String attributeDisabled = getAttribute( element, "disabled", Application.EXPLICIT_NORMAL );
         return attributeDisabled != null ? true : false;

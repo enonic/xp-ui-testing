@@ -45,16 +45,15 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         numberOfSelectedItems == 1;
     }
 
-    def "GIVEN content selected WHEN TabMenu clicked THEN two menu items showed"()
+    def "GIVEN content selected WHEN TabMenu clicked THEN 'Content Details Panel' for selected content is opened"()
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
 
         when: "'Details Panel Toggle' button clicked'"
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentDetailsPanel contentDetailsPanel = contentBrowseItemPanel.getContentDetailsPanel();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.openContentDetailsPanel();
 
-        then: "Content Details Panel opened"
+        then: "Content Details Panel for selected content is opened"
         contentDetailsPanel.isOpened( folderContent.getDisplayName() );
         and: "correct content-displayName shown"
         contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
@@ -64,15 +63,13 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentDetailsPanel contentDetailsPanel = contentBrowseItemPanel.getContentDetailsPanel();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.openContentDetailsPanel();
 
         when: "'Version History' option selected'"
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
 
-
         then: "version panel for the content is loaded"
-        contentItemVersionsPanel.isOpened();
+        contentItemVersionsPanel.isLoaded();
         and: "'all versions' button present"
         contentItemVersionsPanel.isAllVersionsTabBarItemPresent();
         and: "'active versions' button present"
@@ -92,7 +89,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         TestUtils.saveScreenshot( getSession(), "detail-panel-closed" );
 
         then: "'Content Details Panel' not displayed"
-        !contentBrowseItemPanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
+        !contentBrowsePanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
         and: "but it was opened"
         isPanelOpened;
     }
@@ -176,7 +173,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     private ContentItemVersionsPanel openVersionPanel()
     {
         contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentDetailsPanel contentDetailsPanel = contentBrowseItemPanel.getContentDetailsPanel();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
         return contentItemVersionsPanel;
 

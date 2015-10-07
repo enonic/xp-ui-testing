@@ -58,7 +58,7 @@ class GeoPoint_Spec
 
         then: "correct warning-message appears"
         wizard.isContentInvalid( notValidContent.getDisplayName() );
-        and: "input is red"
+        and: "input has a red border"
         !geoPointFormViewPanel.isGeoLocationValid();
     }
 

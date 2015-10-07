@@ -94,7 +94,7 @@ public class ContentItemVersionsPanel
         return list;
     }
 
-    public ContentItemVersionsPanel isOpened()
+    public ContentItemVersionsPanel isLoaded()
     {
         if ( findElements( By.xpath( CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
         {

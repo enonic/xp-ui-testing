@@ -9,7 +9,6 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -185,7 +184,6 @@ class MyFirstSiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    @Ignore
     def "GIVEN ite not published yet WHEN site published AND site opened through the portal THEN correct data present in page sources"()
     {
         given: "site with child is 'Published'"
@@ -203,8 +201,7 @@ class MyFirstSiteWithTemplateSpec
         and: "correct description shown"
         source.contains( USA_DESCRIPTION );
     }
-    //XP-1740
-    @Ignore
+
     def "GIVEN city content changed  and content is not 'Published' WHEN site opened in 'master', through the portal THEN old data for city-content present"()
     {
         given:
@@ -221,7 +218,6 @@ class MyFirstSiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    @Ignore
     def "GIVEN city content changed  and  'Published' WHEN site opened in 'master', through the portal THEN old data for city-content present"()
     {
         given:

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 public class ContentDetailsPanel
     extends Application
@@ -39,6 +41,7 @@ public class ContentDetailsPanel
     {
         if ( findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_history_opt" ) );
             throw new TestFrameworkException( "Version history option was not found!" );
         }
         findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
@@ -49,5 +52,10 @@ public class ContentDetailsPanel
     {
         return findElements( By.xpath( CONTAINER_DIV + String.format( DIV_DISPLAY_NAME_VIEW, contentDisplayName ) ) ).stream().filter(
             WebElement::isDisplayed ).count() > 0;
+    }
+
+    public boolean isDisplayed()
+    {
+        return findElements( By.xpath( CONTAINER_DIV ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
     }
 }
