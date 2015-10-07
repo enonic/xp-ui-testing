@@ -94,8 +94,7 @@ public class SettingsWizardStepForm
 
     public void selectLanguage( String language )
     {
-        String languageSearch = language.substring( 0, language.indexOf( "(" ) - 1 );
-        clearAndType( languageFilterInput, languageSearch );
+        clearAndType( languageFilterInput, language );
         String optionItemXpath = LOCALE_COMBOBOX + "//div[contains(@class,'slick-cell')]" + String.format( NAME_ITEM, language );
         if ( findElements( By.xpath( optionItemXpath ) ).size() == 0 )
         {

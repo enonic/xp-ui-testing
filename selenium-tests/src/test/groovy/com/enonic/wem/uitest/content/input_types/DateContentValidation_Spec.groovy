@@ -77,7 +77,7 @@ class DateContentValidation_Spec
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
-        then: "red border appears"
+        then: "input has a green border"
         !dateFormViewPanel.isInvalidDate();
     }
 }
