@@ -17,71 +17,53 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     @Shared
     Content folderContent;
 
+
     def "WHEN no one content selected THEN 'Details Panel Toggle' button is enabled"()
     {
         when: "no one content selected"
         int numberOfSelectedItems = contentBrowsePanel.getNumberFromClearSelectionLink();
 
         then: "'Details Panel Toggle' button is disabled"
-        !contentBrowsePanel.isDetailsPanelToggleButtonDisabled();
+        contentBrowsePanel.isDetailsPanelToggleButtonDisplayed();
+
         and: "number of selected items is 0"
         numberOfSelectedItems == 0;
+        and:
+        contentDetailsPanel.isPanelEmpty();
     }
 
-    def "WHEN content selected THEN 'Details Panel Toggle' button is enabled"()
+    def "WHEN content selected THEN correct display name shown in the Detail Panel"()
     {
         given:
-        itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
         folderContent = buildFolderContent( "v_history", "version_history_test" );
         addContent( folderContent );
 
         when: "when one content selected in the 'Browse Panel'"
         findAndSelectContent( folderContent.getName() );
-        int numberOfSelectedItems = contentBrowsePanel.getNumberFromClearSelectionLink();
 
-        then: "'Details Panel Toggle' button is enabled"
-        !contentBrowsePanel.isDetailsPanelToggleButtonDisabled();
-        and: "number of selected items is 1"
-        numberOfSelectedItems == 1;
-    }
-
-    def "GIVEN content selected WHEN TabMenu clicked THEN 'Content Details Panel' for selected content is opened"()
-    {
-        given: "content selected"
-        findAndSelectContent( folderContent.getName() );
-
-        when: "'Details Panel Toggle' button clicked'"
-        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.openContentDetailsPanel();
-
-        then: "Content Details Panel for selected content is opened"
-        contentDetailsPanel.isOpened( folderContent.getDisplayName() );
-        and: "correct content-displayName shown"
+        then: "correct display name shown in the Detail Panel"
         contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
     }
 
-    def "GIVEN content selected AND 'Details Toggle' button clicked WHEN 'Version History' option selected THEN the 'ContentItemVersionsPanel' appears"()
+    def "GIVEN content selected  WHEN 'Version History' option selected THEN panel with all versions for the content is loaded"()
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
-        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.openContentDetailsPanel();
 
         when: "'Version History' option selected'"
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
 
-        then: "version panel for the content is loaded"
+        then: "panel with all versions for the content is loaded"
         contentItemVersionsPanel.isLoaded();
-        and: "'all versions' button present"
-        contentItemVersionsPanel.isAllVersionsTabBarItemPresent();
-        and: "'active versions' button present"
-        contentItemVersionsPanel.isActiveVersionsTabBarItemPresent();
     }
 
+    @Ignore
     def "GIVEN 'Content Details Panel' opened WHEN Toggle Content Details button clicked THEN 'Content Details Panel' hidden"()
     {
         given: "content selected and the 'Version History' opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
-        boolean isPanelOpened = contentBrowseItemPanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
+        boolean isPanelOpened = contentDetailsPanel.isOpened( folderContent.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
 
         when: "'Toggle' button clicked again "
@@ -94,7 +76,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         isPanelOpened;
     }
 
-
+    @Ignore
     def "GIVEN existing content AND it not published WHEN All Versions opened THEN the latest version has a light blue 'draft' badge by it."()
     {
         given: "content selected and the 'Version History' opened"

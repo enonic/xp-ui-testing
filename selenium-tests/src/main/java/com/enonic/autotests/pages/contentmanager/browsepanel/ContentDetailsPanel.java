@@ -13,9 +13,11 @@ import com.enonic.autotests.utils.TestUtils;
 public class ContentDetailsPanel
     extends Application
 {
-    public static final String CONTAINER_DIV = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
+    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
 
     private final String VERSION_HISTORY_OPTION = "//div[text()='Version history']";
+
+    private final String DETAILS_CONTAINER = DETAILS_PANEL + "//div[contains(@id,'details-container')]";
 
     public ContentDetailsPanel( final TestSession session )
     {
@@ -25,9 +27,14 @@ public class ContentDetailsPanel
     public String getContentDisplayName()
     {
         String contentDisplayName =
-            findElements( By.xpath( CONTAINER_DIV + H6_DISPLAY_NAME ) ).stream().filter( WebElement::isDisplayed ).map(
+            findElements( By.xpath( DETAILS_PANEL + H6_DISPLAY_NAME ) ).stream().filter( WebElement::isDisplayed ).map(
                 WebElement::getText ).findFirst().get();
         return contentDisplayName;
+    }
+
+    public boolean isPanelEmpty()
+    {
+        return findElements( By.xpath( DETAILS_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0;
     }
 
     public ContentItemVersionsPanel openVersionHistory()
@@ -50,12 +57,12 @@ public class ContentDetailsPanel
 
     public boolean isOpened( String contentDisplayName )
     {
-        return findElements( By.xpath( CONTAINER_DIV + String.format( DIV_DISPLAY_NAME_VIEW, contentDisplayName ) ) ).stream().filter(
+        return findElements( By.xpath( DETAILS_PANEL + String.format( DIV_DISPLAY_NAME_VIEW, contentDisplayName ) ) ).stream().filter(
             WebElement::isDisplayed ).count() > 0;
     }
 
     public boolean isDisplayed()
     {
-        return findElements( By.xpath( CONTAINER_DIV ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
+        return findElements( By.xpath( DETAILS_PANEL ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
     }
 }

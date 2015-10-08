@@ -1,9 +1,6 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemsSelectionPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.*
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -32,6 +29,9 @@ class BaseContentSpec
     @Shared
     ContentBrowseItemsSelectionPanel itemsSelectionPanel;
 
+    @Shared
+    ContentDetailsPanel contentDetailsPanel;
+
 
     def setup()
     {
@@ -40,6 +40,7 @@ class BaseContentSpec
         filterPanel = contentBrowsePanel.getFilterPanel();
         itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
         contentBrowseItemPanel = new ContentBrowseItemPanel( getSession() );
+        contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
     }
 
     public Content buildFolderContent( String name, String displayName )

@@ -162,16 +162,10 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public boolean isDetailsPanelToggleButtonDisabled()
+    public boolean isDetailsPanelToggleButtonDisplayed()
     {
-        if ( findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
-        {
-            TestUtils.saveScreenshot( getSession(), "err_toggle_button" );
-            throw new TestFrameworkException( "details toggle button is not displayed! " );
-        }
-        WebElement element = findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
-        String attributeDisabled = getAttribute( element, "disabled", Application.EXPLICIT_NORMAL );
-        return attributeDisabled != null ? true : false;
+        return findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+
     }
 
     public boolean isFilterPanelShown()
