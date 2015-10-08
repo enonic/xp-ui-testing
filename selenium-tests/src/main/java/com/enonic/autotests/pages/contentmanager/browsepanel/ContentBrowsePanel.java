@@ -56,6 +56,8 @@ public class ContentBrowsePanel
 
     private final String SORT_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Sort']]";
 
+    private final String MORE_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//div[contains(@id,'FoldButton')]";
+
     private final String PUBLISH_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//div[contains(@class,'details-panel-toggle-button')]";
@@ -390,6 +392,10 @@ public class ContentBrowsePanel
      */
     public DeleteContentDialog clickToolbarDelete()
     {
+        if ( !isButtonDisplayed( DELETE_BUTTON_XPATH ) )
+        {
+            clickOnFoldButton();
+        }
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
@@ -401,28 +407,17 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public Application clickToolbarPublish( boolean isValidData )
-    {
-        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !isEnabled )
-        {
-            throw new SaveOrUpdateException( "Impossible to publish content, because the 'publish' button is disabled!" );
-        }
-        publishButton.click();
-        if ( isValidData )
-        {
-            ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-            dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
-            return dialog;
-        }
-        return this;
-
-    }
-
     public ContentPublishDialog clickToolbarPublish()
     {
-        return (ContentPublishDialog) clickToolbarPublish( true );
+        if ( !isButtonDisplayed( PUBLISH_BUTTON_XPATH ) )
+        {
+            clickOnFoldButton();
+        }
+        publishButton.click();
 
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        return dialog;
     }
 
     public ContentBrowsePanel selectContentInTable( List<String> contentNames )
@@ -487,6 +482,10 @@ public class ContentBrowsePanel
 
     public SortContentDialog clickToolbarSort()
     {
+        if ( !isButtonDisplayed( SORT_BUTTON_XPATH ) )
+        {
+            clickOnFoldButton();
+        }
         sortButton.click();
         sleep( 500 );
         SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
@@ -495,8 +494,28 @@ public class ContentBrowsePanel
         return sortContentDialog;
     }
 
+    private boolean isButtonDisplayed( String xpath )
+    {
+        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
+    }
+
+    private void clickOnFoldButton()
+    {
+        if ( findElements( By.xpath( MORE_BUTTON_XPATH ) ).size() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "foldbutton" ) );
+            throw new TestFrameworkException( "'More' button not found on the toolbar" );
+        }
+        findElements( By.xpath( MORE_BUTTON_XPATH ) ).get( 0 ).click();
+        sleep( 500 );
+    }
+
     public MoveContentDialog clickToolbarMove()
     {
+        if ( !isButtonDisplayed( MORE_BUTTON_XPATH ) )
+        {
+            clickOnFoldButton();
+        }
         moveButton.click();
         sleep( 500 );
         MoveContentDialog moveContentDialog = new MoveContentDialog( getSession() );
@@ -548,6 +567,10 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage clickToolbarPreview()
     {
+        if ( !isButtonDisplayed( PREVIEW_BUTTON_XPATH ) )
+        {
+            clickOnFoldButton();
+        }
         previewButton.click();
         sleep( 1000 );
         return new ItemViewPanelPage( getSession() );

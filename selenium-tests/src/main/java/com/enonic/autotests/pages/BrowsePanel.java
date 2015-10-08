@@ -99,6 +99,7 @@ public abstract class BrowsePanel
             throw new TestFrameworkException( "button 'show filter panel' not displayed or probably bad locator for web element" );
         }
         showFilterPanelButton.click();
+        sleep( 700 );
         return this;
     }
 

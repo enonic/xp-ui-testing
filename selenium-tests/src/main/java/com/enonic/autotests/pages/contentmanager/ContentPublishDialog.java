@@ -118,6 +118,7 @@ public class ContentPublishDialog
 
     public ContentPublishDialog clickOnPublishNowButton()
     {
+        sleep( 500 );
         publishButton.click();
         sleep( 500 );
         return this;
