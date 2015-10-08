@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.utils.TestUtils
 import spock.lang.Ignore
@@ -11,9 +10,6 @@ import spock.lang.Stepwise
 class ContentUploadSpec
     extends BaseContentSpec
 {
-    @Shared
-    ContentBrowsePanel contentBrowsePanel;
-
     @Shared
     String path = "test-data/upload/ea.png";
 
