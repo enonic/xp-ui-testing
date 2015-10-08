@@ -19,7 +19,7 @@ class ContentUploadSpec
     @Shared
     String pathToTxt = "test-data/upload/text.txt";
 
-
+    @Ignore
     def "GIVEN opened a new content dialog WHEN upload button clicked and file selected THEN new content present in browse panel "()
     {
         given: "opened a new content dialog"
@@ -73,8 +73,7 @@ class ContentUploadSpec
         filterPanel.typeSearchText( "text.txt" );
         contentBrowsePanel.clickCheckboxAndSelectRow( "text.txt" ).clickToolbarEdit();
 
-        then: ""
-        true;
+        then: true;
     }
 
 
