@@ -254,7 +254,6 @@ public class ContentBrowsePanel
         return this;
     }
 
-
     public ContentBrowseFilterPanel getFilterPanel()
     {
         if ( filterPanel == null )
@@ -302,10 +301,6 @@ public class ContentBrowsePanel
             WebElement::getText ).collect( Collectors.toList() );
     }
 
-    /**
-     * @param contentName
-     * @return
-     */
     public boolean exists( String contentName )
     {
         return exists( contentName, false );
@@ -414,7 +409,6 @@ public class ContentBrowsePanel
             clickOnFoldButton();
         }
         publishButton.click();
-
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         return dialog;
@@ -490,7 +484,6 @@ public class ContentBrowsePanel
         sleep( 500 );
         SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
         sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
-
         return sortContentDialog;
     }
 
@@ -520,7 +513,6 @@ public class ContentBrowsePanel
         sleep( 500 );
         MoveContentDialog moveContentDialog = new MoveContentDialog( getSession() );
         moveContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
-
         return moveContentDialog;
     }
 
@@ -576,11 +568,6 @@ public class ContentBrowsePanel
         return new ItemViewPanelPage( getSession() );
     }
 
-    /**
-     * Clicks on 'Edit' button in toolbar.
-     *
-     * @return {@link ContentWizardPanel} instance.
-     */
     public ContentWizardPanel clickToolbarEdit()
     {
         editButton.click();
@@ -699,7 +686,6 @@ public class ContentBrowsePanel
         return sortContentDialog;
     }
 
-
     /**
      * Opens context menu and select 'New' item
      *
@@ -736,9 +722,6 @@ public class ContentBrowsePanel
         return deleteButton.isEnabled();
     }
 
-    /**
-     * @return true if 'New' button enabled, otherwise false.
-     */
     public boolean isNewButtonEnabled()
     {
         return newButton.isEnabled();
