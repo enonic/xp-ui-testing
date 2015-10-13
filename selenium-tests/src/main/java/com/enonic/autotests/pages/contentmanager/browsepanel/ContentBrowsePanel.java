@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
+import com.enonic.autotests.vo.contentmanager.ContentVersion;
 import com.enonic.xp.content.ContentPath;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -39,7 +41,6 @@ public class ContentBrowsePanel
     private final String BASE_PANEL_XPATH = "//div[contains(@id,'ContentBrowsePanel')]";
 
     protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH = BASE_PANEL_XPATH + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
-
 
     private final String NEW_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New']]";
 
@@ -165,7 +166,6 @@ public class ContentBrowsePanel
     public boolean isDetailsPanelToggleButtonDisplayed()
     {
         return findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
-
     }
 
     public boolean isFilterPanelShown()
@@ -208,7 +208,6 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "content with path was not found or browsePanel was not displayed!" + contentPath );
         }
         return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
-
     }
 
     public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )
@@ -238,13 +237,11 @@ public class ContentBrowsePanel
             if ( !getContentDetailsPanel().isDisplayed() )
             {
                 clickOnDetailsToggleButton();
-
             }
-            return getContentDetailsPanel().selectVersionHistoryOptionItem().getAllContentVersions().getFirst().getStatus();
+            LinkedList<ContentVersion> versions = getContentDetailsPanel().selectVersionHistoryOptionItem().getAllContentVersions();
+            return versions.getFirst().getStatus();
         }
-
         return findElement( By.xpath( statusXpath ) ).getText();
-
     }
 
     public ContentBrowsePanel refreshPanelInBrowser()
@@ -288,14 +285,12 @@ public class ContentBrowsePanel
      */
     public List<String> getContentNamesFromBrowsePanel()
     {
-
         List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH ) );
         return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public List<String> getChildContentNamesFromBrowsePanel( String parentName )
     {
-
         List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH ) );
         return rows.stream().filter( e -> !e.getText().contains( parentName ) && !e.getText().isEmpty() ).map(
             WebElement::getText ).collect( Collectors.toList() );
@@ -317,7 +312,6 @@ public class ContentBrowsePanel
      */
     public ContentBrowsePanel unExpandContent( ContentPath contentPath )
     {
-
         if ( !doScrollAndFindGridItem( contentPath.toString() ) )
         {
             throw new TestFrameworkException( "unExpandContent: content was not found! " + contentPath );
@@ -605,7 +599,6 @@ public class ContentBrowsePanel
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         return dialog;
-
     }
 
     public ContentBrowsePanel selectDuplicateFromContextMenu( String contentName )
@@ -615,7 +608,6 @@ public class ContentBrowsePanel
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).get( 0 ).click();
         sleep( 1000 );
         return this;
-
     }
 
     public boolean isEnableContextMenuItem( String contentName, String action )
@@ -710,7 +702,6 @@ public class ContentBrowsePanel
         String contentDescriptionXpath = String.format( DIV_NAMES_VIEW, contentName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
         Actions action = new Actions( getDriver() );
-
         action.contextClick( element ).build().perform();
         sleep( 100 );
     }
