@@ -18,6 +18,8 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     @Shared
     Content folderContent;
 
+    @Shared
+    Integer FIRST_NUMBER_OF_VERSIONS = 2;
 
     def "WHEN no one content selected THEN 'Details Panel Toggle' button is enabled"()
     {
@@ -29,8 +31,9 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
 
         and: "number of selected items is 0"
         numberOfSelectedItems == 0;
+
         and:
-        contentDetailsPanel.isPanelEmpty();
+        !contentDetailsPanel.isOpened();
     }
 
     def "WHEN content selected THEN correct display name shown in the Detail Panel"()
@@ -38,6 +41,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         given:
         folderContent = buildFolderContent( "v_history", "version_history_test" );
         addContent( folderContent );
+        contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "when one content selected in the 'Browse Panel'"
         findAndSelectContent( folderContent.getName() );
@@ -50,11 +54,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     {
         given: "content selected and the 'Version History' opened"
         findAndSelectContent( folderContent.getName() );
-        boolean isPanelOpened = contentDetailsPanel.isOpened( folderContent.getDisplayName() );
-        if ( !isPanelOpened )
-        {
-            contentBrowsePanel.clickOnDetailsToggleButton();
-        }
+        contentBrowsePanel.clickOnDetailsToggleButton();
         TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
 
         when: "'Toggle' button clicked again "
@@ -67,8 +67,9 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
 
     def "GIVEN content selected  WHEN 'Version History' option selected THEN panel with all versions for the content is loaded"()
     {
-        given: "content selected"
+        given: "content selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
+        contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
@@ -79,15 +80,16 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
 
     def "GIVEN content selected  WHEN 'Version History' option selected THEN three versions are present in the versions panel"()
     {
-        given: "content selected"
+        given: "content selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
+        contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
         LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllContentVersions();
 
         then: "three versions are present in the panel"
-        allVersions.size() == 3
+        allVersions.size() == FIRST_NUMBER_OF_VERSIONS;
 
         and: "first version has a 'offline' status"
         allVersions.getFirst().getStatus() == ContentStatus.OFFLINE.getValue();
@@ -100,10 +102,12 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
 
     }
 
+    @Ignore
     def "GIVEN a existing content  WHEN content  published THEN the latest versions has a 'online' badge"()
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
+        contentBrowsePanel.clickOnDetailsToggleButton();
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
 
 
@@ -113,7 +117,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         LinkedList<ContentVersion> contentVersions = contentItemVersionsPanel.getAllContentVersions();
 
         then: "the number of versions not increased"
-        contentVersions.size() == 3;
+        contentVersions.size() == FIRST_NUMBER_OF_VERSIONS;
         and: "latest version has status 'online'"
         contentVersions.getFirst().getStatus().contains( ContentStatus.ONLINE.getValue() );
 
