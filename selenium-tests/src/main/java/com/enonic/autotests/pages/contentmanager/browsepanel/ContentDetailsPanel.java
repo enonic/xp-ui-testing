@@ -10,6 +10,8 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class ContentDetailsPanel
     extends Application
 {
@@ -52,6 +54,7 @@ public class ContentDetailsPanel
             throw new TestFrameworkException( "Version history option was not found!" );
         }
         findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        sleep( 700 );
         return new ContentItemVersionsPanel( getSession() );
     }
 
