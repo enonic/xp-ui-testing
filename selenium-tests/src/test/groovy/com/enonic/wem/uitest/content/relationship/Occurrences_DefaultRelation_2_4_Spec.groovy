@@ -114,6 +114,7 @@ class Occurrences_DefaultRelation_2_4_Spec
             Application.EXPLICIT_NORMAL );
         when: "'publish' button on modal dialog pressed"
         contentPublishDialog.clickOnPublishNowButton();
+        filterPanel.typeSearchText( TEST_RELATIONSHIP_CONTENT.getName() );
 
         then: "'Publish' button is enabled, because content is valid"
         contentBrowsePanel.getContentStatus( TEST_RELATIONSHIP_CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
