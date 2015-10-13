@@ -295,6 +295,7 @@ public abstract class BrowsePanel
         boolean isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
         if ( !isLeLinkVisible )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_clear_sel" ) );
             throw new TestFrameworkException( "The link 'Clear Selection' was not found on the page, probably wrong xpath locator" );
         }
         clearSelectionLink.click();
