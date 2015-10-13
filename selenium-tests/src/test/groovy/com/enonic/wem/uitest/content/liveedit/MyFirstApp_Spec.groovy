@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
@@ -24,7 +25,7 @@ class MyFirstApp_Spec
     def "GIVEN creating new Site based on 'My First App' WHEN saved and wizard closed THEN new site should be listed"()
     {
         given:
-        MY_FIRST_SITE = buildMySite( "country-site" );
+        MY_FIRST_SITE = buildMySite( NameHelper.uniqueName( "country-site" ) );
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
             MY_FIRST_SITE.getDisplayName() );

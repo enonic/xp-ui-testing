@@ -57,7 +57,7 @@ public class ContentWizardPanel
         "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
     private static final String CONTEXT_WINDOW_TOGGLER =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
 
     private final String UNLOCK_LINK = "//div[@class='centered']/a[text()='Unlock']";
 
