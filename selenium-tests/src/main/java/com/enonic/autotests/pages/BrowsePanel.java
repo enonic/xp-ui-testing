@@ -112,6 +112,15 @@ public abstract class BrowsePanel
         return this;
     }
 
+    public BrowsePanel doHideFilterPanel()
+    {
+        if ( getFilterPanel().isFilterPanelDisplayed() )
+        {
+            clickOnShowFilterPanelButton();
+        }
+        return this;
+    }
+
     /**
      * clicks on 'expand' icon and expands a folder.
      *
@@ -293,6 +302,11 @@ public abstract class BrowsePanel
     {
         sleep( 500 );
         boolean isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
+        if ( !isLeLinkVisible && getFilterPanel().isFilterPanelDisplayed() )
+        {
+            doHideFilterPanel();
+            isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
+        }
         if ( !isLeLinkVisible )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_clear_sel" ) );
