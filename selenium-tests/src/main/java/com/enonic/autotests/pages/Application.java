@@ -23,7 +23,7 @@ public class Application
 
     public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
 
-    public static String CONTENT_ALREADY_IN_USE_WARNING = " Content with path \"%s\" already exists";
+    public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
 
