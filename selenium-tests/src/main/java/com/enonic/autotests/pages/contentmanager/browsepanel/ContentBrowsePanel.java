@@ -388,6 +388,7 @@ public class ContentBrowsePanel
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
+            TestUtils.saveScreenshot( getSession(), "err_delete_button" );
             throw new SaveOrUpdateException( "Impossible to delete content, because the 'Delete' button is disabled!" );
         }
         deleteButton.click();
