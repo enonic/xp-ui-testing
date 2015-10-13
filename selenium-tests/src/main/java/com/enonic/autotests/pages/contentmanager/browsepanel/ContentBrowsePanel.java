@@ -234,11 +234,16 @@ public class ContentBrowsePanel
             contentName );
         if ( findElements( By.xpath( statusXpath ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_status_notfound" ) );
-            throw new TestFrameworkException( "status for content is not displayed " + contentName );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "status_not_found" ) );
+            if ( !getContentDetailsPanel().isDisplayed() )
+            {
+                clickOnDetailsToggleButton();
 
+            }
+            return getContentDetailsPanel().selectVersionHistoryOptionItem().getAllContentVersions().getFirst().getStatus();
         }
-        return findElements( By.xpath( statusXpath ) ).get( 0 ).getText();
+
+        return findElement( By.xpath( statusXpath ) ).getText();
 
     }
 

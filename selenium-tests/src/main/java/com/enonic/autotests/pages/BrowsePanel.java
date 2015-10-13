@@ -28,6 +28,9 @@ public abstract class BrowsePanel
 
     protected final String SHOW_FILTER_PANEL_BUTTON = BASE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
 
+    protected final String HIDE_FILTER_PANEL_BUTTON =
+        "//div[contains(@id,'ContentBrowseFilterPanel')]//span[contains(@class, 'icon-search')]";
+
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
@@ -60,6 +63,9 @@ public abstract class BrowsePanel
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
     protected WebElement showFilterPanelButton;
+
+    @FindBy(xpath = HIDE_FILTER_PANEL_BUTTON)
+    protected WebElement hideFilterPanelButton;
 
     @FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
     protected WebElement clearSelectionLink;
@@ -103,6 +109,18 @@ public abstract class BrowsePanel
         return this;
     }
 
+    private BrowsePanel clickOnHideFilterPanelButton()
+    {
+        if ( findElements( By.xpath( HIDE_FILTER_PANEL_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_hide_filter" ) );
+            throw new TestFrameworkException( "button 'hide filter panel' not displayed or probably bad locator for web element" );
+        }
+        hideFilterPanelButton.click();
+        sleep( 700 );
+        return this;
+    }
+
     public BrowsePanel doShowFilterPanel()
     {
         if ( !getFilterPanel().isFilterPanelDisplayed() )
@@ -116,7 +134,7 @@ public abstract class BrowsePanel
     {
         if ( getFilterPanel().isFilterPanelDisplayed() )
         {
-            clickOnShowFilterPanelButton();
+            clickOnHideFilterPanelButton();
         }
         return this;
     }
