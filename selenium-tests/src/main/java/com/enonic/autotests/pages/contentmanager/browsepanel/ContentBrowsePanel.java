@@ -234,6 +234,7 @@ public class ContentBrowsePanel
             contentName );
         if ( findElements( By.xpath( statusXpath ) ).size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_status_notfound" ) );
             throw new TestFrameworkException( "content was not found " + contentName );
 
         }

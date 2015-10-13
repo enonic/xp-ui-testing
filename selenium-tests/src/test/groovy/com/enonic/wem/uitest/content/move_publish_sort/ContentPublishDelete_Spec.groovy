@@ -29,7 +29,10 @@ class ContentPublishDelete_Spec
         String message = contentBrowsePanel.selectContentInTable(
             content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
+        //filterPanel.clickOnCleanFilter(  );
+
         then:
+        filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
 
