@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemVersionsPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
@@ -45,6 +46,25 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
     }
 
+    def "GIVEN 'Content Details Panel' opened WHEN Toggle Content Details button clicked THEN 'Content Details Panel' hidden"()
+    {
+        given: "content selected and the 'Version History' opened"
+        findAndSelectContent( folderContent.getName() );
+        boolean isPanelOpened = contentDetailsPanel.isOpened( folderContent.getDisplayName() );
+        if ( !isPanelOpened )
+        {
+            contentBrowsePanel.clickOnDetailsToggleButton();
+        }
+        TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
+
+        when: "'Toggle' button clicked again "
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        TestUtils.saveScreenshot( getSession(), "detail-panel-closed" );
+
+        then: "'Content Details Panel' not displayed"
+        !contentBrowsePanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
+    }
+
     def "GIVEN content selected  WHEN 'Version History' option selected THEN panel with all versions for the content is loaded"()
     {
         given: "content selected"
@@ -57,68 +77,50 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentItemVersionsPanel.isLoaded();
     }
 
-    @Ignore
-    def "GIVEN 'Content Details Panel' opened WHEN Toggle Content Details button clicked THEN 'Content Details Panel' hidden"()
-    {
-        given: "content selected and the 'Version History' opened"
-        findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        boolean isPanelOpened = contentDetailsPanel.isOpened( folderContent.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
-
-        when: "'Toggle' button clicked again "
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        TestUtils.saveScreenshot( getSession(), "detail-panel-closed" );
-
-        then: "'Content Details Panel' not displayed"
-        !contentBrowsePanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
-        and: "but it was opened"
-        isPanelOpened;
-    }
-
-    @Ignore
-    def "GIVEN existing content AND it not published WHEN All Versions opened THEN the latest version has a light blue 'draft' badge by it."()
-    {
-        given: "content selected and the 'Version History' opened"
-        findAndSelectContent( folderContent.getName() );
-        ContentItemVersionsPanel contentItemVersionsPanel = openVersionPanel();
-
-        when: "'All versions'  button clicked"
-        contentItemVersionsPanel.clickOnAllVersionsButton()
-        LinkedList<String> versionsInfo = contentItemVersionsPanel.getAllContentVersionsInfo();
-
-        then: "displayName of content showed"
-        versionsInfo.getFirst().contains( folderContent.getDisplayName() )
-        and: "one active version with 'draft' status showed"
-        contentItemVersionsPanel.getAllContentVersions().getFirst().getStatus().contains( WorkspaceName.DRAFT.getValue() )
-    }
-
-    @Ignore
-    def "GIVEN content with two versions WHEN published AND All Versions listed THEN the latest versions has a green 'master'"()
+    def "GIVEN content selected  WHEN 'Version History' option selected THEN three versions are present in the versions panel"()
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
 
+        when: "'Version History' option selected'"
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
+        LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllContentVersions();
+
+        then: "three versions are present in the panel"
+        allVersions.size() == 3
+
+        and: "first version has a 'offline' status"
+        allVersions.getFirst().getStatus() == ContentStatus.OFFLINE.getValue();
+
+        and: "super user is modifier"
+        allVersions.getFirst().getModifier() == "Super User";
+
+        and: "correct time is described"
+        allVersions.getFirst().getModified().contains( "minute ago" );
+
+    }
+
+    def "GIVEN a existing content  WHEN content  published THEN the latest versions has a 'online' badge"()
+    {
+        given: "content selected"
+        findAndSelectContent( folderContent.getName() );
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
+
+
         when: "content published and 'Active versions'  button clicked"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
+        TestUtils.saveScreenshot( getTestSession(), "vh_online" )
+        LinkedList<ContentVersion> contentVersions = contentItemVersionsPanel.getAllContentVersions();
 
-        ContentItemVersionsPanel versionPanel = openVersionPanel();
-        versionPanel.clickOnActiveVersionsButton();
-        TestUtils.saveScreenshot( getTestSession(), "vh_active" )
-        LinkedList<ContentVersion> contentVersions = versionPanel.getActiveContentVersions();
-
-        then: "version has two statuses"
-        contentVersions.size() == 2;
-        and: "version has status 'master'"
-        contentVersions.getFirst().getStatus().contains( WorkspaceName.MASTER.getValue() );
-        and: " version has 'draft' as well"
-        contentVersions.getLast().getStatus().contains( WorkspaceName.DRAFT.getValue() );
-
+        then: "the number of versions not increased"
+        contentVersions.size() == 3;
+        and: "latest version has status 'online'"
+        contentVersions.getFirst().getStatus().contains( ContentStatus.ONLINE.getValue() );
 
     }
 
     @Ignore
-    def "GIVEN content with the a published version that is later changed WHEN Active versions listed THEN two versions are listed. The older one with green 'master' badge and the newer one with a light blue 'draft' badge."()
+    def "GIVEN content with the a published version that is later changed WHEN versions panel opened THEN two versions are listed. The older one with green 'master' badge and the newer one with a light blue 'draft' badge."()
     {
         given: "content with 'online' status was changed and content has a 'Modified' status"
         findAndSelectContent( folderContent.getName() ).clickToolbarEdit().typeDisplayName( "newDisplayName" ).save().close(

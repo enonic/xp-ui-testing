@@ -190,7 +190,7 @@ public abstract class Page
      * @param by
      * @return
      */
-    public WebElement findElement( By by )
+    public WebElement waitAndFindElement( By by )
     {
         FluentWait<By> fluentWait = new FluentWait<By>( by );
         fluentWait.pollingEvery( 500, TimeUnit.MILLISECONDS );
@@ -212,6 +212,11 @@ public abstract class Page
         return getDriver().findElement( by );
     }
 
+    public WebElement findElement( By by )
+    {
+        return getDriver().findElement( by );
+    }
+
     public void waitForClickableAndClick( By by )
     {
         FluentWait<By> fluentWait = new FluentWait<By>( by );
@@ -223,14 +228,12 @@ public abstract class Page
         }
         catch ( WebDriverException e )
         {
-
             try
             {
                 fluentWait.until( new Predicate<By>()
                 {
                     public boolean apply( By by )
                     {
-
                         return getDriver().findElement( by ).isEnabled();
                     }
                 } );
@@ -305,7 +308,6 @@ public abstract class Page
         WebElement we = null;
         for ( int i = 0; i <= tries; i++ )
         {
-
             getLogger().info( "Locating remaining time:  ..." + " seconds." );
             try
             {
@@ -316,12 +318,10 @@ public abstract class Page
             catch ( StaleElementReferenceException ser )
             {
                 getLogger().info( "ERROR: Stale element. " + locator.toString() );
-
             }
             catch ( NoSuchElementException nse )
             {
                 getLogger().info( "ERROR: No such element. " + locator.toString() );
-
             }
             catch ( Exception e )
             {
@@ -335,7 +335,6 @@ public abstract class Page
         getLogger().info( "getDynamicElement is  null: " );
         return we;
     }
-
 
     public WebElement findDynamicElement( final WebDriver driver, final String xpath, long timeout )
     {
@@ -358,12 +357,10 @@ public abstract class Page
         } );
     }
 
-
     public TestSession getSession()
     {
         return session;
     }
-
 
     public void setSession( TestSession session )
     {
@@ -374,6 +371,4 @@ public abstract class Page
     {
         return logger;
     }
-
-
 }

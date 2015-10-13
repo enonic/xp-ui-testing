@@ -3,19 +3,27 @@ package com.enonic.autotests.vo.contentmanager;
 
 public class ContentVersion
 {
-    private String info;
+    private String modifier;
+
+    private String modified;
 
     private String status;
 
     public ContentVersion( Builder builder )
     {
-        this.info = builder.info;
+        this.modifier = builder.modifier;
         this.status = builder.status;
+        this.modified = builder.modified;
     }
 
-    public String getInfo()
+    public String getModifier()
     {
-        return info;
+        return modifier;
+    }
+
+    public String getModified()
+    {
+        return modified;
     }
 
     public String getStatus()
@@ -25,8 +33,9 @@ public class ContentVersion
 
     public static class Builder
     {
-        private String info;
+        private String modifier;
 
+        private String modified;
 
         private String status;
 
@@ -34,16 +43,22 @@ public class ContentVersion
         {
         }
 
-        public Builder( final ContentVersion versionInfo )
+        public Builder( final ContentVersion contentVersion )
         {
-            this.info = versionInfo.getInfo();
-            this.status = versionInfo.getStatus();
-
+            this.modifier = contentVersion.getModifier();
+            this.status = contentVersion.getStatus();
+            this.modified = contentVersion.getModified();
         }
 
-        public Builder info( final String info )
+        public Builder modifier( final String modifier )
         {
-            this.info = info;
+            this.modifier = modifier;
+            return this;
+        }
+
+        public Builder modified( final String modified )
+        {
+            this.modified = modified;
             return this;
         }
 
@@ -64,6 +79,4 @@ public class ContentVersion
     {
         return new Builder();
     }
-
-
 }

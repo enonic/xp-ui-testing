@@ -57,8 +57,9 @@ public class ContentDetailsPanel
 
     public boolean isOpened( String contentDisplayName )
     {
-        return findElements( By.xpath( DETAILS_PANEL + String.format( DIV_DISPLAY_NAME_VIEW, contentDisplayName ) ) ).stream().filter(
-            WebElement::isDisplayed ).count() > 0;
+        return
+            findElements( By.xpath( DETAILS_PANEL + String.format( NAMES_VIEW_WITH_DISPLAY_NAME, contentDisplayName ) ) ).stream().filter(
+                WebElement::isDisplayed ).count() > 0;
     }
 
     public boolean isDisplayed()

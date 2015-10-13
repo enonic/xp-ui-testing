@@ -470,7 +470,7 @@ public abstract class BrowsePanel
             throw new TestFrameworkException( "item was not found:" + itemName );
         }
         Actions builder = new Actions( getDriver() );
-        builder.click( findElement( By.xpath( rowXpath ) ) ).build().perform();
+        builder.click( waitAndFindElement( By.xpath( rowXpath ) ) ).build().perform();
         sleep( 500 );
         return this;
     }
@@ -601,7 +601,7 @@ public abstract class BrowsePanel
             TestUtils.saveScreenshot( getSession(), "err_checkbox_" + itemName );
             throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
         }
-        findElement( By.xpath( itemCheckBoxXpath ) ).click();
+        waitAndFindElement( By.xpath( itemCheckBoxXpath ) ).click();
         sleep( 1000 );
         getLogger().info( "check box was selected, item: " + itemName );
 

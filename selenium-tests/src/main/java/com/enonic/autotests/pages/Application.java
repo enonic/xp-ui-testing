@@ -29,15 +29,20 @@ public class Application
 
     public static final String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
 
-    public static final String LOCATION_NOT_WITHIN_RANGE_WARNING = "is not within range";
-
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
     protected String DIV_NAMES_VIEW = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
 
-    protected String DIV_DISPLAY_NAME_VIEW = "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
+    protected String NAMES_VIEW_WITH_DISPLAY_NAME =
+        "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
 
-    protected String H6_DISPLAY_NAME = "//div[contains(@id,'NamesView')]//h6[@class='main-name']";
+    protected final String GRID_ROW = "//div[contains(@class,'slick-row')]";
+
+    protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
+
+    protected final String H6_DISPLAY_NAME = NAMES_VIEW + "//h6[@class='main-name']";
+
+    protected String SLICK_ROW_WITH_STYLE = "//div[contains(@class,'slick-row') and @style='%s']";
 
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 
@@ -77,6 +82,27 @@ public class Application
     public Application( TestSession session )
     {
         super( session );
+    }
+
+    public List<String> getDisplayedStrings( List<WebElement> elements )
+    {
+        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    public String getDisplayedString( List<WebElement> elements )
+    {
+        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
+    }
+
+    public String getDisplayedString( String xpath )
+    {
+        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
+    }
+
+
+    public boolean isElementDisplayed( String xpath )
+    {
+        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
     public void waitsForSpinnerNotVisible()
