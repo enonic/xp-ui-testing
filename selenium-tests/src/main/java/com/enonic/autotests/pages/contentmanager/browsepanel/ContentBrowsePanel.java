@@ -236,6 +236,7 @@ public class ContentBrowsePanel
             {
                 TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "details_panel" ) );
                 clickOnDetailsToggleButton();
+                selectContentInTable( contentName );
             }
             return getContentDetailsPanel().openInfoWidget().getContentStatus();
         }
