@@ -488,18 +488,18 @@ public class ContentBrowsePanel
 
     private void clickOnFoldButton()
     {
-        if ( findElements( By.xpath( MORE_BUTTON_XPATH ) ).size() == 0 )
+        if ( findElements( By.xpath( MORE_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_foldbutton" ) );
             throw new TestFrameworkException( "'More' button not found on the toolbar" );
         }
-        findElements( By.xpath( MORE_BUTTON_XPATH ) ).get( 0 ).click();
+        findElements( By.xpath( MORE_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
         sleep( 500 );
     }
 
     public MoveContentDialog clickToolbarMove()
     {
-        if ( !isButtonDisplayed( MORE_BUTTON_XPATH ) )
+        if ( !isButtonDisplayed( MOVE_BUTTON_XPATH ) )
         {
             clickOnFoldButton();
         }
