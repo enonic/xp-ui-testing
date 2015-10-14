@@ -164,12 +164,12 @@ class TagsInputType_Unlim_Spec
     {
         PropertyTree data = buildData( numberOfTags );
         String name = "tag_unlim";
-        Content textLineContent = Content.builder().
+        Content tagContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "tag_unlim content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":tag_unlim" ).data( data ).
             build();
-        return textLineContent;
+        return tagContent;
     }
 }

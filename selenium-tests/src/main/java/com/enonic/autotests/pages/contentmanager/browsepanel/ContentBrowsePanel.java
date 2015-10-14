@@ -234,9 +234,9 @@ public class ContentBrowsePanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "status_not_found" ) );
             if ( !getContentDetailsPanel().isDisplayed() )
             {
-                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "details_panel" ) );
                 clickOnDetailsToggleButton();
                 selectContentInTable( contentName );
+                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "details_panel" ) );
             }
             return getContentDetailsPanel().openInfoWidget().getContentStatus();
         }

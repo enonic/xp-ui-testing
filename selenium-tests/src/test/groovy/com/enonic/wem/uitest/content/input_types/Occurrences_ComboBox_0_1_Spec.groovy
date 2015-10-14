@@ -127,12 +127,12 @@ class Occurrences_ComboBox_0_1_Spec
     private Content buildComboBox0_1_Content( int numberOptions )
     {
         PropertyTree data = ContentUtils.buildComboBoxData( numberOptions );
-        Content textLineContent = Content.builder().
+        Content comboboxContent = Content.builder().
             name( NameHelper.uniqueName( "cbox0_1_" ) ).
             displayName( "combobox0_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox0_1" ).data( data ).
             build();
-        return textLineContent;
+        return comboboxContent;
     }
 }

@@ -82,12 +82,12 @@ class TextArea_Spec
         {
             data.addString( "text", text );
         }
-        Content textLineContent = Content.builder().
+        Content textAreaContent = Content.builder().
             name( NameHelper.uniqueName( "textarea" ) ).
             displayName( "text_area content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":textarea0_1" ).data( data ).
             build();
-        return textLineContent;
+        return textAreaContent;
     }
 }

@@ -397,8 +397,6 @@ class Base_InputFields_Occurrences
         {
             data.addStrings( TextLine1_1_FormViewPanel.TEXT_INPUT_PROPERTY, text );
         }
-
-
         Content textLineContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "textline1_1 content" ).
