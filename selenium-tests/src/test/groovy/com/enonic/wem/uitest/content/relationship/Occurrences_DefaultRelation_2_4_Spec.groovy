@@ -117,7 +117,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         filterPanel.typeSearchText( TEST_RELATIONSHIP_CONTENT.getName() );
 
         then: "'Publish' button is enabled, because content is valid"
-        contentBrowsePanel.getContentStatus( TEST_RELATIONSHIP_CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( TEST_RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
     def "GIVEN content with three selected options opened for edit WHEN two selected options removed  THEN 'Publish' button is disabled and content is invalid"()

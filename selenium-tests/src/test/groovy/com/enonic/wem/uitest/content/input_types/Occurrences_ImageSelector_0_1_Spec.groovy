@@ -80,7 +80,7 @@ class Occurrences_ImageSelector_0_1_Spec
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
         then: "content has online status in the browse panel"
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and: "content is valid"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
         and:

@@ -145,7 +145,7 @@ class Occurrences_ImageSelector_0_0_Spec
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
         and:
@@ -165,7 +165,7 @@ class Occurrences_ImageSelector_0_0_Spec
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
     }

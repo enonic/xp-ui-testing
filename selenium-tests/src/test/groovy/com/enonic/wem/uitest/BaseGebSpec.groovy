@@ -2,6 +2,7 @@ package com.enonic.wem.uitest
 
 import com.enonic.autotests.TestSession
 import geb.spock.GebSpec
+import org.openqa.selenium.Dimension
 import spock.lang.Shared
 
 class BaseGebSpec
@@ -39,12 +40,15 @@ class BaseGebSpec
 
                 loadProperties();
                 println "   baseUrl was loaded from the properties file: " + defaultProperties.get( "base.url" );
+                browser.driver.manage().window().setSize( new Dimension( 1080, 800 ) )
             }
             else
             {
                 println "baseUrl was loaded as system property " + baseUrl;
+                browser.driver.manage().window().setSize( new Dimension( 1080, 800 ) )   // new Dimension(1400,1050)
             }
         }
+        browser.driver.manage().window().setSize( new Dimension( 1080, 800 ) )
     }
 
     def setup()

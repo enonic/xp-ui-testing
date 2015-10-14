@@ -125,7 +125,8 @@ class Occurrences_ImageSelector_2_4_Spec
         filterPanel.typeSearchText( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equalsIgnoreCase(
+            ContentStatus.ONLINE.getValue() );
     }
 
     def "WHEN content with 4 selected images opened THEN option filter should not be displayed"()

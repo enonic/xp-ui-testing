@@ -39,7 +39,7 @@ class TextArea_Spec
         filterPanel.typeSearchText( textAreaContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
     }
 
     def "GIVEN wizard for adding a TextArea-content opened WHEN text typed and 'Save' and 'Publish' ,'Close' pressed THEN new content with status 'online' appears "()
@@ -56,7 +56,7 @@ class TextArea_Spec
         filterPanel.typeSearchText( textAreaContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
     }
 
 

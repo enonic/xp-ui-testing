@@ -20,6 +20,8 @@ public class ContentDetailsPanel
 
     private final String VERSION_HISTORY_OPTION = "//div[text()='Version history']";
 
+    private final String CONTENT_INFO_OPTION = DETAILS_PANEL + "//div[contains(@id,'InfoWidgetToggleButton')]";
+
     private final String DETAILS_CONTAINER = DETAILS_PANEL + "//div[contains(@id,'details-container')]";
 
     public ContentDetailsPanel( final TestSession session )
@@ -42,13 +44,6 @@ public class ContentDetailsPanel
 
     public ContentItemVersionsPanel openVersionHistory()
     {
-
-        selectVersionHistoryOptionItem();
-        return new ContentItemVersionsPanel( getSession() );
-    }
-
-    public ContentItemVersionsPanel selectVersionHistoryOptionItem()
-    {
         if ( findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_history_opt" ) );
@@ -57,6 +52,20 @@ public class ContentDetailsPanel
         findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
         sleep( 700 );
         return new ContentItemVersionsPanel( getSession() );
+    }
+
+    public ContentInfoWidget openInfoWidget()
+    {
+        if ( findElements( By.xpath( CONTENT_INFO_OPTION ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_info_opt" ) );
+            throw new TestFrameworkException( "Info widget was not opened!" );
+        }
+        findElements( By.xpath( CONTENT_INFO_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        sleep( 700 );
+        return new ContentInfoWidget( getSession() );
+
+
     }
 
     public boolean isOpened( String contentDisplayName )

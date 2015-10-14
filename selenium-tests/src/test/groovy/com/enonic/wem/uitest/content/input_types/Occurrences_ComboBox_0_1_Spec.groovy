@@ -86,7 +86,7 @@ class Occurrences_ComboBox_0_1_Spec
         filterPanel.typeSearchText( content_with_opt.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
     def "GIVEN ComboBox-content (0:1) with one selected option and one option removed and content saved WHEN content opened for edit THEN no options selected on the page "()
@@ -121,7 +121,7 @@ class Occurrences_ComboBox_0_1_Spec
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
     private Content buildComboBox0_1_Content( int numberOptions )

@@ -114,6 +114,10 @@ class MyFirstApp_Spec
         given: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
+        if ( !wizard.isLiveEditFrameDisplayed() )
+        {
+            wizard.clickOnLiveToolbarButton();
+        }
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
         PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionPlaceholder",

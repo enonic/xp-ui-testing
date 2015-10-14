@@ -86,7 +86,7 @@ class Occurrences_DateTime_1_1_Spec
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateTimeContent.getDisplayName() );
     }

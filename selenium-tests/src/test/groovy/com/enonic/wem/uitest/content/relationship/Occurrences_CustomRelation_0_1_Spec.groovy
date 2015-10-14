@@ -104,7 +104,7 @@ class Occurrences_CustomRelation_0_1_Spec
         String message = contentPublishDialog.clickOnPublishNowButton().waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "citation has a 'online' status"
-        contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and: "correct notification message appeared"
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
             message.contains( "items were published" );

@@ -53,7 +53,8 @@ driver = {
     // def driver = new FirefoxDriver( profile );
     //def driver = new FirefoxDriver();
     driver.manage().window().maximize();
-    driver.setLogLevel( Level.SEVERE )
+    println "screen height is " + driver.manage().window().getSize().height;
+    println "screen width is " + driver.manage().window().getSize().width;
     println "default configuration";
     return driver;
 }

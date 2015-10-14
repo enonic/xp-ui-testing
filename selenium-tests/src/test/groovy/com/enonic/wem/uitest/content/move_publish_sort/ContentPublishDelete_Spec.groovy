@@ -33,7 +33,7 @@ class ContentPublishDelete_Spec
 
         then:
         filterPanel.typeSearchText( content.getName() )
-        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
 
     }
@@ -48,7 +48,7 @@ class ContentPublishDelete_Spec
         String message = contentBrowsePanel.waitNotificationMessage();
 
         then:
-        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.PENDING_DELETE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
         and:
         message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
 

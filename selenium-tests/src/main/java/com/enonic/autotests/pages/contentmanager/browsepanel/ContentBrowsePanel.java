@@ -1,6 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,6 @@ import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
-import com.enonic.autotests.vo.contentmanager.ContentVersion;
 import com.enonic.xp.content.ContentPath;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -236,10 +234,10 @@ public class ContentBrowsePanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "status_not_found" ) );
             if ( !getContentDetailsPanel().isDisplayed() )
             {
+                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "details_panel" ) );
                 clickOnDetailsToggleButton();
             }
-            LinkedList<ContentVersion> versions = getContentDetailsPanel().selectVersionHistoryOptionItem().getAllContentVersions();
-            return versions.getFirst().getStatus();
+            return getContentDetailsPanel().openInfoWidget().getContentStatus();
         }
         return findElement( By.xpath( statusXpath ) ).getText();
     }
@@ -491,7 +489,7 @@ public class ContentBrowsePanel
     {
         if ( findElements( By.xpath( MORE_BUTTON_XPATH ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "foldbutton" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_foldbutton" ) );
             throw new TestFrameworkException( "'More' button not found on the toolbar" );
         }
         findElements( By.xpath( MORE_BUTTON_XPATH ) ).get( 0 ).click();

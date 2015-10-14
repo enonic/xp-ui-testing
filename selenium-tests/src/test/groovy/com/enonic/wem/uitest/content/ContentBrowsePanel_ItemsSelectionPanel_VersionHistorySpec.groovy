@@ -72,7 +72,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
 
         then: "panel with all versions for the content is loaded"
         contentItemVersionsPanel.isLoaded();
@@ -85,7 +85,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllContentVersions();
 
         then: "three versions are present in the panel"
@@ -102,14 +102,12 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
 
     }
 
-    @Ignore
-    def "GIVEN a existing content  WHEN content  published THEN the latest versions has a 'online' badge"()
+    def "GIVEN a existing content WHEN content published THEN the latest versions has a 'online' badge"()
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
-
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
 
         when: "content published and 'Active versions'  button clicked"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
@@ -120,7 +118,6 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         contentVersions.size() == FIRST_NUMBER_OF_VERSIONS;
         and: "latest version has status 'online'"
         contentVersions.getFirst().getStatus().contains( ContentStatus.ONLINE.getValue() );
-
     }
 
     @Ignore
@@ -162,7 +159,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     {
         contentBrowsePanel.clickOnDetailsToggleButton();
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.selectVersionHistoryOptionItem();
+        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
 
     }

@@ -28,7 +28,7 @@ class Content_Online_Modified_Spec
             content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
         then:
-        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, content.getDisplayName() );
     }
@@ -42,7 +42,7 @@ class Content_Online_Modified_Spec
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
 
         then:
-        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.MODIFIED.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
 
     }
 
@@ -55,7 +55,7 @@ class Content_Online_Modified_Spec
             Application.EXPLICIT_NORMAL );
 
         then:
-        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
 

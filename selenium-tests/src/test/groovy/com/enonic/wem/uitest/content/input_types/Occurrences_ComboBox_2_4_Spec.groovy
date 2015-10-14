@@ -139,7 +139,7 @@ class Occurrences_ComboBox_2_4_Spec
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getDisplayName() );
     }

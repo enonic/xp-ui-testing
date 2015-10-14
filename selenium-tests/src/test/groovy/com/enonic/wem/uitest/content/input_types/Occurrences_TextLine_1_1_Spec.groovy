@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_TextLine_1_1_Spec
@@ -28,8 +27,7 @@ class Occurrences_TextLine_1_1_Spec
         then: "content should be invalid, because required field not filled"
         wizard.isContentInvalid( textLineContent.getDisplayName() );
     }
-    //XP-1526
-    @Ignore
+
     def "GIVEN opened content wizard WHEN content without required 'text ' saved and wizard closed THEN grid row with it content has a red icon"()
     {
         given: "new content with type 'text line' added'"
@@ -101,7 +99,7 @@ class Occurrences_TextLine_1_1_Spec
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
     }
 
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty THEN content is invalid and the 'Publish' button is disabled"()

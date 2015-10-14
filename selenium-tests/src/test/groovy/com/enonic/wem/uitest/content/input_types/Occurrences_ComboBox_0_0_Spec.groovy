@@ -137,7 +137,7 @@ class Occurrences_ComboBox_0_0_Spec
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( content_wit_opt.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( content_wit_opt.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
 
@@ -156,7 +156,7 @@ class Occurrences_ComboBox_0_0_Spec
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equals( ContentStatus.ONLINE.getValue() )
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
     private Content buildComboBox0_0_Content( int numberOptions )

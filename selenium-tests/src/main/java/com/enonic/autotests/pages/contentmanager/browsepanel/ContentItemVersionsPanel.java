@@ -2,7 +2,6 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -32,14 +31,6 @@ public class ContentItemVersionsPanel
     public ContentItemVersionsPanel( final TestSession session )
     {
         super( session );
-    }
-
-    public LinkedList<String> getAllContentVersionsInfo()
-    {
-        List<WebElement> elements = findElements(
-            By.xpath( ALL_CONTENT_VERSION_GRID + CONTENT_VERSION_VIEWER + "//div[contains(@id,'NamesView')]//h6[@class='main-name']" ) );
-        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-            Collectors.toCollection( LinkedList::new ) );
     }
 
     public long getRowsNumber()
@@ -77,7 +68,6 @@ public class ContentItemVersionsPanel
         {
             status = findElement( By.xpath( statusXpath ) ).getText();
         }
-
         String whenModified = findElement( By.xpath( whenModifiedXpath ) ).getText();
         return ContentVersion.builder().modifier( modifierName ).status( status ).modified( whenModified ).build();
     }
