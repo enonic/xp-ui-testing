@@ -6,8 +6,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
-import com.enonic.autotests.vo.contentmanager.WorkspaceName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -117,42 +115,27 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         then: "the number of versions not increased"
         contentVersions.size() == FIRST_NUMBER_OF_VERSIONS;
         and: "latest version has status 'online'"
-        contentVersions.getFirst().getStatus().contains( ContentStatus.ONLINE.getValue() );
+        contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
-    @Ignore
-    def "GIVEN content with the a published version that is later changed WHEN versions panel opened THEN two versions are listed. The older one with green 'master' badge and the newer one with a light blue 'draft' badge."()
+    def "GIVEN content with the a published version that is later changed WHEN versions panel opened THEN three versions are listed. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
     {
         given: "content with 'online' status was changed and content has a 'Modified' status"
         findAndSelectContent( folderContent.getName() ).clickToolbarEdit().typeDisplayName( "newDisplayName" ).save().close(
             "newDisplayName" );
 
-        when: "'Active versions'  button clicked and active versions showed"
+        when: "'Version Panel' opened"
         ContentItemVersionsPanel versionPanel = openVersionPanel();
-        versionPanel.clickOnActiveVersionsButton();
-        LinkedList<ContentVersion> contentVersions = versionPanel.getActiveContentVersions();
-
-        then: "the latest active version has a 'draft' badge"
-        contentVersions.poll().getStatus() == WorkspaceName.DRAFT.getValue();
-        and: "previous version has a master badge"
-        contentVersions.peek().getStatus().contains( WorkspaceName.MASTER.getValue() )
-    }
-
-    @Ignore
-    def "GIVEN content with the a published version that is later changed WHEN all versions listed THEN two versions are listed. The older one with green 'master' badge and the newer one with a light blue 'draft' badge."()
-    {
-        given: "content with 'online' status was changed and content has a 'Modified' status"
-        findAndSelectContent( folderContent.getName() );
-
-        when: "'Active versions'  button clicked and active versions showed"
-        ContentItemVersionsPanel versionPanel = openVersionPanel();
-        versionPanel.clickOnAllVersionsButton();
         LinkedList<ContentVersion> contentVersions = versionPanel.getAllContentVersions();
 
-        then: "the latest active version has a 'draft' badge"
-        contentVersions.poll().getStatus() == WorkspaceName.DRAFT.getValue();
-        and: "previous version has a master badge"
-        contentVersions.peek().getStatus().contains( WorkspaceName.MASTER.getValue() )
+        then: "number of versions increased"
+        contentVersions.size() - FIRST_NUMBER_OF_VERSIONS == 1;
+
+        and: "the latest  version has a 'modified' badge"
+        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
+
+        and: "previous version has a 'online' badge"
+        contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
     private ContentItemVersionsPanel openVersionPanel()
