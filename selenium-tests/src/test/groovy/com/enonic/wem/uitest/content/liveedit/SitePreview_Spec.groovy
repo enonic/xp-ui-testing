@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -15,8 +14,6 @@ class SitePreview_Spec
     @Shared
     Content MY_SITE
 
-    @Shared
-    Content USA_CONTENT;
 
     def "GIVEN a existing site without a template WHEN site selected THEN 'Preview' on a BrowseToolbar is disabled"()
     {
@@ -45,8 +42,6 @@ class SitePreview_Spec
         contentBrowsePanel.isItemDisabledInContextMenu( MY_SITE.getName(), "Preview" );
     }
 
-    //XP-1473
-    @Ignore
     def "GIVEN a existing site without a template WHEN site opened THEN 'Preview' in the toolbar wizard  is disabled"()
     {
         when: "site selected"
