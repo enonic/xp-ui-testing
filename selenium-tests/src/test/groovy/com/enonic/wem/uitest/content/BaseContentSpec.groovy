@@ -55,6 +55,18 @@ class BaseContentSpec
         return content;
     }
 
+    public Content buildUnstructuredContent( String name, String displayName )
+    {
+        String generated = NameHelper.uniqueName( name );
+        Content content = Content.builder().
+            name( generated ).
+            displayName( displayName ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.unstructured() ).
+            build();
+        return content;
+    }
+
     public Content buildFolderWithSettingsContent( String name, String displayName, ContentSettings settings )
     {
         String generated = NameHelper.uniqueName( name );

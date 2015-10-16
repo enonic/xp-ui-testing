@@ -1,6 +1,12 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.openqa.selenium.By;
+
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
 
@@ -8,6 +14,12 @@ public class ContentInfoWidget
     extends Application
 {
     private final String STATUS_TEXT = ContentDetailsPanel.DETAILS_PANEL + "//div[contains(@id,'detail.StatusWidgetItemView')]/span";
+
+    private final String PROPERTIES_DL = "//div[contains(@id,'app.view.detail.PropertiesWidgetItemView')]/dl";
+
+    private final String PROPERTIES_DT = PROPERTIES_DL + "//dt";
+
+    private final String PROPERTIES_DD = PROPERTIES_DL + "//dd";
 
     public ContentInfoWidget( final TestSession session )
     {
@@ -17,5 +29,19 @@ public class ContentInfoWidget
     public String getContentStatus()
     {
         return getDisplayedString( STATUS_TEXT );
+    }
+
+    public HashMap<String, String> getContentProperties()
+    {
+        HashMap<String, String> props = new HashMap<>();
+        List<String> terms = findElements( By.xpath( PROPERTIES_DT ) ).stream().map( e -> e.getText() ).filter( e -> !e.isEmpty() ).collect(
+            Collectors.toList() );
+        List<String> descriptions =
+            findElements( By.xpath( PROPERTIES_DD ) ).stream().map( e -> e.getText() ).collect( Collectors.toList() );
+        for ( int i = 0; i < terms.size(); i++ )
+        {
+            props.put( descriptions.get( i ).substring( 0, descriptions.get( i ).indexOf( ":" ) ), terms.get( i ) );
+        }
+        return props;
     }
 }
