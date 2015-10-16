@@ -1,6 +1,5 @@
 import org.openqa.selenium.Platform
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
 
@@ -41,9 +40,9 @@ driver = {
 
     }
 
-    def driver = new ChromeDriver();
-    ChromeOptions options = new ChromeOptions();
-    options.addArguments( "start-maximized" );
+    //def driver = new ChromeDriver();
+    //ChromeOptions options = new ChromeOptions();
+    //options.addArguments( "start-maximized" );
     // DesiredCapabilities dc = new DesiredCapabilities();
     // dc.setCapability( CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE );
     // def driver = new ChromeDriver( dc )
@@ -51,7 +50,7 @@ driver = {
     //FirefoxProfile profile = new FirefoxProfile();
     //profile.setEnableNativeEvents( true );
     // def driver = new FirefoxDriver( profile );
-    //def driver = new FirefoxDriver();
+    def driver = new FirefoxDriver();
     driver.manage().window().maximize();
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
