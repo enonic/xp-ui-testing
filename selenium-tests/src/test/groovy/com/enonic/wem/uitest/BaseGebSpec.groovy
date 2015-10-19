@@ -40,15 +40,15 @@ class BaseGebSpec
 
                 loadProperties();
                 println "   baseUrl was loaded from the properties file: " + defaultProperties.get( "base.url" );
-                browser.driver.manage().window().setSize( new Dimension( 1400, 1050 ) )
+                browser.driver.manage().window().setSize( new Dimension( 1500, 1050 ) )
             }
             else
             {
                 println "baseUrl was loaded as system property " + baseUrl;
-                browser.driver.manage().window().setSize( new Dimension( 1400, 1050 ) )   // new Dimension(1400,1050)
+                browser.driver.manage().window().setSize( new Dimension( 1500, 1050 ) );
             }
         }
-        browser.driver.manage().window().setSize( new Dimension( 1400, 1060 ) )
+        browser.driver.manage().window().setSize( new Dimension( 1500, 1060 ) )
     }
 
     def setup()
