@@ -45,7 +45,7 @@ class LiveEditLockedMode_Spec
 
         when: "test site should be listed"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).clickOnLiveToolbarButton().typeData( template ).save().close( template.getDisplayName() );
+            template.getContentTypeName() ).clickOnPageEditorTogglerButton().typeData( template ).save().close( template.getDisplayName() );
         sleep( 500 );
 
         then: "new page-template listed"

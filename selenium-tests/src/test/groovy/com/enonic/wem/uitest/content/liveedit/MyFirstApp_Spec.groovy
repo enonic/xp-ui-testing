@@ -68,7 +68,7 @@ class MyFirstApp_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
         when:
-        wizard.clickOnLiveToolbarButton();
+        wizard.clickOnPageEditorTogglerButton();
         TestUtils.saveScreenshot( getSession(), "LIVE_clicked" );
         then: "the 'LiveEdit' frame displayed"
         wizard.isLiveEditFrameDisplayed();
@@ -81,10 +81,10 @@ class MyFirstApp_Spec
         given: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnLiveToolbarButton();
+        wizard.clickOnPageEditorTogglerButton();
 
         when: "the 'LIVE' button pressed again"
-        wizard.clickOnLiveToolbarButton();
+        wizard.clickOnPageEditorTogglerButton();
         TestUtils.saveScreenshot( getSession(), "frame_hidden" );
         then: "the 'LiveEdit' frame not displayed"
         !wizard.isLiveEditFrameDisplayed();
@@ -95,7 +95,7 @@ class MyFirstApp_Spec
         given: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnLiveToolbarButton().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
+        wizard.clickOnPageEditorTogglerButton().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
         TestUtils.saveScreenshot( getSession(), "region_added" );
@@ -116,7 +116,7 @@ class MyFirstApp_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
         if ( !wizard.isLiveEditFrameDisplayed() )
         {
-            wizard.clickOnLiveToolbarButton();
+            wizard.clickOnPageEditorTogglerButton();
         }
 
         when: "the 'Preview' button pressed on the wizard-toolbar"

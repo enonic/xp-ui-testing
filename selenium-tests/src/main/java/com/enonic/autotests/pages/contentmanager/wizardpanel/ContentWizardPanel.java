@@ -37,7 +37,6 @@ public class ContentWizardPanel
     public static final String TOOLBAR_LIVE_BUTTON_XPATH =
         "//div[contains(@id,'ContentWizardToolbar')]//button[contains(@id, 'CycleButton')]";
 
-
     public static final String DIV_CONTENT_WIZARD_PANEL =
         "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
@@ -58,6 +57,9 @@ public class ContentWizardPanel
 
     private static final String CONTEXT_WINDOW_TOGGLER =
         "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
+
+    private static final String COMPONENT_VIEW_TOGGLER =
+        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
 
     private final String UNLOCK_LINK = "//div[@class='centered']/a[text()='Unlock']";
 
@@ -317,7 +319,6 @@ public class ContentWizardPanel
     public boolean isOpened()
     {
         return toolbarSaveButton.isDisplayed();
-
     }
 
     @Override
@@ -334,7 +335,6 @@ public class ContentWizardPanel
     @Override
     public String getWizardDivXpath()
     {
-
         return DIV_CONTENT_WIZARD_PANEL;
     }
 
@@ -357,15 +357,28 @@ public class ContentWizardPanel
         }
     }
 
-    public ContentWizardPanel clickOnLiveToolbarButton()
+    public ContentWizardPanel clickOnPageEditorTogglerButton()
     {
         if ( !waitUntilVisibleNoException( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-Live-button" );
-            throw new TestFrameworkException( "The 'Live' button not present!" );
+            throw new TestFrameworkException( "The 'Live' button was not found!" );
         }
-        findElements( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).get( 0 ).click();
+        getDisplayedElement( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).click();
         sleep( 500 );
+        return this;
+    }
+
+    public ContentWizardPanel clickOnComponentViewTogglerButton()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "component-view-button" );
+            throw new TestFrameworkException( "The 'Show Component View' button was not found!" );
+        }
+        getDisplayedElement( By.xpath( COMPONENT_VIEW_TOGGLER ) ).click();
+        PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
+        dialog.waitForOpened();
         return this;
     }
 
@@ -373,13 +386,13 @@ public class ContentWizardPanel
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         findElements( By.xpath( "//input[contains(@id,'DropdownOptionFilterInput')]" ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
-        String item = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
-        if ( !waitUntilVisibleNoException( By.xpath( item ), Application.EXPLICIT_NORMAL ) )
+        String pageDescriptor = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
+        if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_" + pageDescriptorDisplayName );
             throw new TestFrameworkException( "drop-down-option-filter: item was not found!" + pageDescriptorDisplayName );
         }
-        findElements( By.xpath( item ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( pageDescriptor ) ).click();
         sleep( 1000 );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;

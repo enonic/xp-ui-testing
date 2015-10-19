@@ -2,12 +2,14 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.*
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
+import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 
@@ -124,5 +126,36 @@ class BaseContentSpec
     {
         filterPanel.typeSearchText( siteName );
         return contentBrowsePanel.clickCheckboxAndSelectRow( siteName ).clickToolbarNew().selectContentType( contentTypeName );
+    }
+
+    protected Content buildMySite( String siteName )
+    {
+        PropertyTree data = new PropertyTree();
+        data.addString( "applicationKey", "My First App" );
+        data.addStrings( "description", "My first Site " )
+        Content site = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( siteName ).
+            displayName( "my-site" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.site() ).data( data ).
+            build();
+        return site;
+    }
+
+    protected Content buildPageTemplate( String pageDescriptorName, String supports, String displayName, String parentName )
+    {
+        String name = "template";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( PageTemplateFormViewPanel.PAGE_CONTROLLER, pageDescriptorName );
+        data.addStrings( PageTemplateFormViewPanel.SUPPORTS, supports );
+
+        Content pageTemplate = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( displayName ).
+            parent( ContentPath.from( parentName ) ).
+            contentType( ContentTypeName.pageTemplate() ).data( data ).
+            build();
+        return pageTemplate;
     }
 }

@@ -217,6 +217,11 @@ public abstract class Page
         return getDriver().findElement( by );
     }
 
+    public WebElement getDisplayedElement( By by )
+    {
+        return findElements( by ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+    }
+
     public void waitForClickableAndClick( By by )
     {
         FluentWait<By> fluentWait = new FluentWait<By>( by );
