@@ -50,7 +50,6 @@ public class Initializer
 
     private static final String FOLDER_NAME = "imagearchive";
 
-
     private ContentService contentService;
 
     @Activate
@@ -71,9 +70,7 @@ public class Initializer
         {
             return;
         }
-
         folderWithImage();
-
         // set permissions
         final Content moduleContent = contentService.getByPath( imagesPath );
         if ( moduleContent != null )
@@ -88,7 +85,6 @@ public class Initializer
 
             contentService.applyPermissions( ApplyContentPermissionsParams.create().
                 contentId( moduleContent.getId() ).
-                modifier( PrincipalKey.ofAnonymous() ).
                 build() );
         }
     }
@@ -133,7 +129,6 @@ public class Initializer
         }
     }
 
-
     private void createImageContent( final ContentPath parent, final String fileName )
         throws Exception
     {
@@ -143,7 +138,6 @@ public class Initializer
         {
             return;
         }
-
         final CreateMediaParams params = new CreateMediaParams().
             mimeType( "image/jpeg" ).
             name( fileName ).
@@ -154,7 +148,6 @@ public class Initializer
     private byte[] loadImageFileAsBytes( final String fileName )
     {
         final String filePath = "/site/images/" + fileName;
-
         try
         {
             return Resources.toByteArray( getClass().getResource( filePath ) );
@@ -176,7 +169,6 @@ public class Initializer
             requireValid( true ).owner( PrincipalKey.ofAnonymous() ).
             contentData( new PropertyTree() ).type( ContentTypeName.folder() ).
             build();
-
     }
 
     private CreateContentParams.Builder makeFolder()
