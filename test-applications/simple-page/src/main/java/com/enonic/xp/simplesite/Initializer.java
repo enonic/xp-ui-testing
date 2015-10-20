@@ -75,13 +75,13 @@ public class Initializer
         final Content moduleContent = contentService.getByPath( imagesPath );
         if ( moduleContent != null )
         {
-            final UpdateContentParams setFeaturesPermissions = new UpdateContentParams().
+            final UpdateContentParams setAppPermissions = new UpdateContentParams().
                 contentId( moduleContent.getId() ).
                 editor( ( content ) -> {
                     content.permissions = PERMISSIONS;
                     content.inheritPermissions = false;
                 } );
-            contentService.update( setFeaturesPermissions );
+            contentService.update( setAppPermissions );
 
             contentService.applyPermissions( ApplyContentPermissionsParams.create().
                 contentId( moduleContent.getId() ).

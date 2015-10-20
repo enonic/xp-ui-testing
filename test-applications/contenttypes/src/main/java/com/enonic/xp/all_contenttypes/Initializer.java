@@ -79,13 +79,13 @@ public class Initializer
         final Content imagesFolder = contentService.getByPath( imagesPath );
         if ( imagesFolder != null )
         {
-            final UpdateContentParams setFeaturesPermissions = new UpdateContentParams().
+            final UpdateContentParams setAppPermissions = new UpdateContentParams().
                 contentId( imagesFolder.getId() ).
                 editor( ( content ) -> {
                     content.permissions = PERMISSIONS;
                     content.inheritPermissions = false;
                 } );
-            contentService.update( setFeaturesPermissions );
+            contentService.update( setAppPermissions );
 
             contentService.applyPermissions( ApplyContentPermissionsParams.create().
                 contentId( imagesFolder.getId() ).
@@ -105,13 +105,13 @@ public class Initializer
         final Content emptyFolder = contentService.getByPath( emptyFolderPath );
         if ( emptyFolder != null )
         {
-            final UpdateContentParams setFeaturesPermissions = new UpdateContentParams().
+            final UpdateContentParams setAppPermissions = new UpdateContentParams().
                 contentId( emptyFolder.getId() ).
                 editor( ( content ) -> {
                     content.permissions = PERMISSIONS;
                     content.inheritPermissions = false;
                 } );
-            contentService.update( setFeaturesPermissions );
+            contentService.update( setAppPermissions );
 
             contentService.applyPermissions( ApplyContentPermissionsParams.create().
                 contentId( emptyFolder.getId() ).
