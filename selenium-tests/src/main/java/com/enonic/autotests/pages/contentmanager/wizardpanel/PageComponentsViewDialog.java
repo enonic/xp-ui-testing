@@ -1,6 +1,9 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +13,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.contentmanager.PageComponent;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -74,11 +78,18 @@ public class PageComponentsViewDialog
         return waitUntilVisibleNoException( By.xpath( CLOSE_BUTTON ), Application.EXPLICIT_NORMAL );
     }
 
-//    public List<PageComponent> getPageComponents()
-//    {
-//        findElements( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT +
-//                                    "//div[contains(@id,'PageComponentsItemViewer')]//div[contains(@id,'api.app.NamesView')]" ) ).stream().filter(
-//            WebElement::isDisplayed )
-//        return null;
-//    }
+    public List<PageComponent> getPageComponents()
+    {
+        List<PageComponent> result = new ArrayList<>();
+        List<String> names = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT +
+                                                                "//div[contains(@id,'PageComponentsItemViewer')]//h6[@class='main-name']" ) );
+        List<String> types = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT +
+                                                                "//div[contains(@id,'PageComponentsItemViewer')]//p[@class='sub-name']" ) );
+        for ( int i = 0; i < names.size(); i++ )
+        {
+            result.add( PageComponent.builder().name( names.get( i ) ).type( types.get( i ) ).build() );
+        }
+
+        return result;
+    }
 }

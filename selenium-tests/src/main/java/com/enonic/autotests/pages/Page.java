@@ -2,6 +2,7 @@ package com.enonic.autotests.pages;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -220,6 +221,16 @@ public abstract class Page
     public WebElement getDisplayedElement( By by )
     {
         return findElements( by ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+    }
+
+    public List<WebElement> getDisplayedElements( By by )
+    {
+        return findElements( by ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
+    }
+
+    public List<String> getDisplayedStrings( By by )
+    {
+        return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public void waitForClickableAndClick( By by )

@@ -3,11 +3,13 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.CityFormView
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.xp.content.ContentPath
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -46,7 +48,6 @@ class CountrySiteWithTemplateSpec
     @Shared
     String CITY_HEADER = "<h3>San Francisco</h3>";
 
-
     def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller added and wizard closed THEN new template should be listed"()
     {
         given: "existing Site based on 'My First App'"
@@ -54,7 +55,6 @@ class CountrySiteWithTemplateSpec
         contentBrowsePanel.expandContent( ContentPath.from( FIRST_SITE_NAME ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, SUPPORTS_TYPE, TEMPLATE_DISPLAY_NAME,
                                            FIRST_SITE_NAME );
-
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
@@ -66,7 +66,6 @@ class CountrySiteWithTemplateSpec
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
-
 
     def "GIVEN existing page-template WHEN the template opened for edit and the 'country region' controller selected and 'country' part inserted THEN correct page-sources are present in the HTML"()
     {
@@ -88,7 +87,6 @@ class CountrySiteWithTemplateSpec
         and: "correct header displayed"
         source.contains( TEMPLATE_DISPLAY_NAME );
     }
-
 
     def "GIVEN existing page-template with a 'country' part WHEN the template opened for edit and the 'city' part inserted THEN correct page-sources are present in the HTML"()
     {
@@ -121,7 +119,7 @@ class CountrySiteWithTemplateSpec
         String name = contentWizard.showContextWindow().clickOnInspectLink().getSelectedPageController();
         TestUtils.saveScreenshot( getSession(), "city_part_added" );
 
-        then: "correct region's name shown"
+        then: "correct region's name is shown"
         name == PAGE_CONTROLLER_NAME;
     }
 
@@ -176,17 +174,17 @@ class CountrySiteWithTemplateSpec
         sleep( 2000 );
         TestUtils.saveScreenshot( getSession(), "portal-country-preview-draft-offline" );
 
-        then:
         then: "correct data present in page sources"
         String source = getDriver().getPageSource();
         source.contains( "Population: " + SF_POPULATION );
+
         and: "correct description shown"
         source.contains( USA_DESCRIPTION );
     }
 
-    def "GIVEN ite not published yet WHEN site published AND site opened through the portal THEN correct data present in page sources"()
+    def "WHEN site have been published  AND site opened through the portal THEN correct data present in page sources"()
     {
-        given: "site with child is 'Published'"
+        given: "site have been 'published'"
         filterPanel.typeSearchText( FIRST_SITE_NAME, );
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME, ).clickToolbarPublish();
         dialog.setIncludeChildCheckbox( true ).clickOnPublishNowButton();
@@ -198,13 +196,14 @@ class CountrySiteWithTemplateSpec
         then: "correct data present in page sources"
         String source = getDriver().getPageSource();
         source.contains( "Population: " + SF_POPULATION );
+
         and: "correct description shown"
         source.contains( USA_DESCRIPTION );
     }
 
-    def "GIVEN city content changed  and content is not 'Published' WHEN site opened in 'master', through the portal THEN old data for city-content present"()
+    def "GIVEN city content changed and content is not 'Published' WHEN site opened in 'master', through the portal THEN old data for city-content present"()
     {
-        given:
+        given: "city content changed and content is not 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
@@ -218,9 +217,9 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    def "GIVEN city content changed  and  'Published' WHEN site opened in 'master', through the portal THEN old data for city-content present"()
+    def "GIVEN city content changed and 'Published' WHEN site opened in 'master', through the portal THEN old data for city-content present"()
     {
-        given:
+        given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton().waitNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
@@ -231,5 +230,28 @@ class CountrySiteWithTemplateSpec
         then: "population is not changed"
         String source = getDriver().getPageSource();
         source.contains( "Population: " + NEW_SF_POPULATION );
+    }
+
+    def "GIVEN existing country content WHEN content opened for edit and 'Page Component View' shown THEN all components that were added are shown"()
+    {
+        given: "existing country content"
+        ContentWizardPanel wizard = findAndSelectContent( USA_CONTENT.getName() ).clickToolbarEdit();
+
+        when: "content opened for edit and 'Page Component View' shown"
+        wizard.showComponentView();
+        PageComponentsViewDialog view = new PageComponentsViewDialog( getSession() );
+        List<PageComponent> components = view.getPageComponents();
+
+        then: "all components that were added are shown"
+        components.size() == 4;
+
+        and:
+        components.get( 0 ).getType().equals( "page" ) && components.get( 0 ).getName().equals( "USA" );
+        and:
+        components.get( 1 ).getType().equals( "region" ) && components.get( 1 ).getName().equals( "country" );
+        and:
+        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( "country" );
+        and:
+        components.get( 3 ).getType().equals( "part" ) && components.get( 3 ).getName().equals( "City list" );
     }
 }

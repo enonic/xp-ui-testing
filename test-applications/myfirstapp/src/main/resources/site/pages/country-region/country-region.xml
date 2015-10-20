@@ -2,6 +2,6 @@
   <display-name>Country Region</display-name>
   <config/>
   <regions>
-    <region name="main"/>
+    <region name="country"/>
   </regions>
 </page>

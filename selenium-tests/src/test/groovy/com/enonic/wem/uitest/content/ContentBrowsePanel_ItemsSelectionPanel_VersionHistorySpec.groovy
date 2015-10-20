@@ -144,6 +144,5 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
-
     }
 }

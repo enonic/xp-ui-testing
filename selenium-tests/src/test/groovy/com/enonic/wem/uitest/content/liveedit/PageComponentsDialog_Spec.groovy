@@ -28,14 +28,13 @@ class PageComponentsDialog_Spec
 
     def "GIVEN existing site without a template WHEN site opened for edit and 'Show Component View' on wizard-toolbar clicked THEN 'Page Component dialog appears'"()
     {
-
         given: "existing Site based on 'My First App'"
         Content site = buildMySite( FIRST_SITE_NAME );
         addSiteBasedOnFirstApp( site );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit();
 
         when: "site opened for edit and 'Show Component View' button clicked"
-        wizard.clickOnComponentViewTogglerButton();
+        wizard.showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         TestUtils.saveScreenshot( getSession(), "page-comp-dialog" );
 
@@ -52,7 +51,7 @@ class PageComponentsDialog_Spec
     def "GIVEN opened 'Page Components' Dialog WHEN button 'close' clicked THEN dialog not displayed"()
     {
         given: "opened 'Page Components' Dialog"
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit().clickOnComponentViewTogglerButton();
+        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
 
         when: "button 'close' clicked"
@@ -73,7 +72,6 @@ class PageComponentsDialog_Spec
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, "country", "country template",
                                            SITE_WITH_COMPONENTS_NAME );
 
-
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).clickOnPageEditorTogglerButton().typeData( PAGE_TEMPLATE ).save().close(
@@ -87,10 +85,8 @@ class PageComponentsDialog_Spec
 
     private void addSiteBasedOnFirstApp( Content site )
     {
-        // Content site = buildMySite( siteName );
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
             site.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), site.getName() );
-
     }
 }

@@ -270,9 +270,6 @@ public class ContentWizardPanel
         return new ContentWizardStepForm( getSession() );
     }
 
-    /**
-     * Press the button 'Save', which located in the wizard's toolbar.
-     */
     @Override
     public ContentWizardPanel save()
     {
@@ -283,11 +280,6 @@ public class ContentWizardPanel
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();
-//        boolean isSaveEnabled = isEnabledSaveButton();
-//        if ( !isSaveEnabled )
-//        {
-//            throw new SaveOrUpdateException( "the content with  was not correctly saved, button 'Save' still disabled!" );
-//        }
         sleep( 500 );
         return this;
     }
@@ -369,7 +361,7 @@ public class ContentWizardPanel
         return this;
     }
 
-    public ContentWizardPanel clickOnComponentViewTogglerButton()
+    public ContentWizardPanel showComponentView()
     {
         if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
         {
@@ -414,5 +406,4 @@ public class ContentWizardPanel
     {
         return findElements( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
-
 }

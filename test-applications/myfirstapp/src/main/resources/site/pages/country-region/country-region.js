@@ -8,7 +8,7 @@ exports.get = function (req) {
     var content = portal.getContent();
 
     // Extract the main region which contains component parts
-    var mainRegion = content.page.regions.main;
+    var mainRegion = content.page.regions.country;
 
     // Prepare the model that will be passed to the view
     var model = {
