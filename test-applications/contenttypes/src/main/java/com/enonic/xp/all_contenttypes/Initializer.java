@@ -89,7 +89,7 @@ public class Initializer
 
             contentService.applyPermissions( ApplyContentPermissionsParams.create().
                 contentId( imagesFolder.getId() ).
-                modifier( PrincipalKey.ofAnonymous() ).
+
                 build() );
         }
 
@@ -115,7 +115,6 @@ public class Initializer
 
             contentService.applyPermissions( ApplyContentPermissionsParams.create().
                 contentId( emptyFolder.getId() ).
-                modifier( PrincipalKey.ofAnonymous() ).
                 build() );
         }
 
