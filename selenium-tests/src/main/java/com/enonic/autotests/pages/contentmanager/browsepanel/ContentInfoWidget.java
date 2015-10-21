@@ -8,7 +8,10 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 public class ContentInfoWidget
     extends Application
@@ -28,6 +31,11 @@ public class ContentInfoWidget
 
     public String getContentStatus()
     {
+        if ( !isElementDisplayed( STATUS_TEXT ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_status" ) );
+            throw new TestFrameworkException( "content info widget: status was not found!" );
+        }
         return getDisplayedString( STATUS_TEXT );
     }
 
