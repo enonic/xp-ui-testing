@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.enonic.xp:gradle-plugin:6.1.0-SNAPSHOT'
+        classpath 'com.enonic.xp:gradle-plugin:6.2.0-SNAPSHOT'
     }
 }
 

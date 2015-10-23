@@ -3,7 +3,6 @@ package com.enonic.autotests.pages.usermanager.wizardpanel;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -41,7 +40,6 @@ public class GroupWizardPanel
     public GroupWizardPanel( TestSession session )
     {
         super( session );
-
     }
 
     @Override
@@ -52,12 +50,6 @@ public class GroupWizardPanel
 
     @Override
     public WizardPanel<Group> save()
-    {
-        return null;
-    }
-
-    @Override
-    public WebElement getCloseButton()
     {
         return null;
     }
@@ -90,7 +82,6 @@ public class GroupWizardPanel
         }
         TestUtils.saveScreenshot( getSession(), group.getDisplayName() );
         // 2. populate main tab
-
         return this;
     }
 

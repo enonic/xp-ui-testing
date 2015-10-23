@@ -39,7 +39,6 @@ public class UserStoreWizardPanel
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
 
-
     /**
      * The constructor.
      *
@@ -48,7 +47,6 @@ public class UserStoreWizardPanel
     public UserStoreWizardPanel( TestSession session )
     {
         super( session );
-
     }
 
     @Override
@@ -63,12 +61,6 @@ public class UserStoreWizardPanel
         toolbarSaveButton.click();
         sleep( 1000 );
         return this;
-    }
-
-    @Override
-    public WebElement getCloseButton()
-    {
-        return closeButton;
     }
 
     @Override
@@ -124,12 +116,9 @@ public class UserStoreWizardPanel
         return this;
     }
 
-
     public boolean isSaveButtonEnabled()
     {
         return toolbarSaveButton.isEnabled();
     }
-
-
 }
 

@@ -31,7 +31,6 @@ class Base_InputFields_Occurrences
     @Shared
     String BOOK_IMAGE_NAME = "book.jpg";
 
-
     @Shared
     String MAN_IMAGE_NAME = "man.jpg";
 
@@ -49,7 +48,6 @@ class Base_InputFields_Occurrences
 
     @Shared
     ContentBrowseFilterPanel filterPanel;
-
 
     def setup()
     {
@@ -104,7 +102,6 @@ class Base_InputFields_Occurrences
     protected Content buildTime0_0_Content( String time )
     {
         String name = "time";
-
         PropertyTree data = new PropertyTree();
         data.addStrings( TimeFormViewPanel.TIME_PROPERTY, time );
 
@@ -154,14 +151,12 @@ class Base_InputFields_Occurrences
         return dateContent;
     }
 
-
     protected Content buildDateTime1_1_Content( String dateTime )
     {
         PropertyTree contentData = new PropertyTree(); ;
         if ( dateTime != null )
         {
             contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
-
         }
         String name = "datetime";
         Content dateTimeContent = Content.builder().
@@ -244,7 +239,6 @@ class Base_InputFields_Occurrences
     protected Content buildDate0_1_Content( String date )
     {
         String name = "date";
-
         PropertyTree data = new PropertyTree();
         data.addStrings( DateFormViewPanel.DATE_PROPERTY, date );
 
@@ -413,7 +407,6 @@ class Base_InputFields_Occurrences
         {
             contentBrowsePanel.clickCheckboxAndSelectRow( name );
         }
-
         return contentBrowsePanel;
     }
 }

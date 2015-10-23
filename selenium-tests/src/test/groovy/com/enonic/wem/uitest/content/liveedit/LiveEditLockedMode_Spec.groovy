@@ -36,6 +36,24 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( SIT_NAME );
     }
 
+    def "GIVEN existing site WHEN site selected and opened for edit THEN 'Page Editor' is hidden and buttons 'Show Component view'  'Show Inspection panel' are not visible"()
+    {
+        given: "add a site, based on the test application"
+        filterPanel.typeSearchText( SIT_NAME );
+
+        when: "site selected and opened for edit"
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( SIT_NAME ).clickToolbarEdit();
+
+        then: "'Page Editor' hidden"
+        wizard.isShowPageEditorButtonDisplayed();
+
+        and: "'Show Component view' is not visible"
+        !wizard.isShowComponentViewButtonDisplayed()
+
+        and: "'Show Inspection panel' is not visible"
+        !wizard.isShowInspectionPanelButtonDisplayed();
+    }
+
     def "GIVEN existing site WHEN template added THEN it listed beneath the _templates folder"()
     {
         given: "add a site, based on the test application"
@@ -45,7 +63,7 @@ class LiveEditLockedMode_Spec
 
         when: "test site should be listed"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).clickOnPageEditorTogglerButton().typeData( template ).save().close( template.getDisplayName() );
+            template.getContentTypeName() ).showPageEditor().typeData( template ).save().close( template.getDisplayName() );
         sleep( 500 );
 
         then: "new page-template listed"

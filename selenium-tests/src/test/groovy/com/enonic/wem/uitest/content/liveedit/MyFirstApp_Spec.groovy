@@ -51,41 +51,42 @@ class MyFirstApp_Spec
         contentBrowsePanel.exists( USA_CONTENT.getName() );
     }
 
-    def "WHEN content, that is child for site, opened for edit THEN 'LIVE' button should be present on the toolbar"()
+    def "WHEN content, that is child for site, opened for edit THEN 'Show Page Editor' button should be present on the toolbar"()
     {
         when: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
-        then: "'LIVE' button should be present on the toolbar"
-        wizard.isLiveButtonDisplayed();
+        then: "'Show Page Editor' button should be present on the toolbar"
+        wizard.isShowPageEditorButtonDisplayed();
     }
 
-    def "GIVEN content, that is child for site, opened for edit WHEN 'LIVE' button clicked THEN LiveEdit frame displayed AND option filter displayed"()
+    def "GIVEN content, that is child for site, opened for edit WHEN 'Show Page Editor' button clicked THEN LiveEdit frame displayed AND option filter displayed"()
     {
         given: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
-        when:
-        wizard.clickOnPageEditorTogglerButton();
-        TestUtils.saveScreenshot( getSession(), "LIVE_clicked" );
+        when: "'Show Page Editor' button clicked "
+        wizard.showPageEditor();
+        TestUtils.saveScreenshot( getSession(), "page-editor-shown" );
+
         then: "the 'LiveEdit' frame displayed"
         wizard.isLiveEditFrameDisplayed();
         and: "page descriptor option filter displayed"
         wizard.isPageDescriptorOptionsFilterDisplayed();
     }
 
-    def "GIVEN content, that is child for site, opened for edit AND 'LIVE EDIT' is opened WHEN 'LIVE' button pressed THEN 'Live Edit' frame is not displayed"()
+    def "GIVEN content, that is child for site, opened for edit AND 'Page Editor' is displayed WHEN 'Hide Page Editor' button pressed THEN 'Live Edit' frame is not displayed"()
     {
         given: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnPageEditorTogglerButton();
+        wizard.showPageEditor();
 
-        when: "the 'LIVE' button pressed again"
-        wizard.clickOnPageEditorTogglerButton();
-        TestUtils.saveScreenshot( getSession(), "frame_hidden" );
+        when: "the 'Hide Page Editor' button pressed"
+        wizard.hidePageEditor();
+        TestUtils.saveScreenshot( getSession(), "editor_hidden" );
         then: "the 'LiveEdit' frame not displayed"
         !wizard.isLiveEditFrameDisplayed();
     }
@@ -95,7 +96,7 @@ class MyFirstApp_Spec
         given: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnPageEditorTogglerButton().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
+        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
         TestUtils.saveScreenshot( getSession(), "region_added" );
@@ -112,12 +113,10 @@ class MyFirstApp_Spec
     def "GIVEN a country-content with a region  WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
     {
         given: "a page descriptor added for existing country-content"
-        filterPanel.typeSearchText( USA_CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        if ( !wizard.isLiveEditFrameDisplayed() )
-        {
-            wizard.clickOnPageEditorTogglerButton();
-        }
+        filterPanel.typeSearchText( "usa405758493" );
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( "usa405758493" ).clickToolbarEdit();
+        wizard.showPageEditor();
+
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
         PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionPlaceholder",

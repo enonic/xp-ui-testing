@@ -35,10 +35,6 @@ public abstract class WizardPanel<T>
     public static String APP_BAR_TAB_MENU_ITEM =
         APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[text()='%s']]";
 
-    //public static String CLOSE_TAB_BUTTON = APP_BAR_TAB_MENU_ITEM + "/button";
-
-    //public static String APP_BAR_TAB_MENU_TITLE_XPATH = "//div[contains(@id,'AppBarTabMenuButton')]//span[@class='label']";
-
     public static String TAB_MENU_ITEM =
         "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'AppBarTabMenuItem') and child::span[@class='label' and text() ='%s']]";
 
@@ -158,14 +154,11 @@ public abstract class WizardPanel<T>
 
     public abstract WizardPanel<T> save();
 
-    public abstract WebElement getCloseButton();
-
     public abstract boolean isOpened();
 
     public abstract boolean isEnabledSaveButton();
 
     public abstract WizardPanel<T> typeData( T object );
-    // public abstract WizardPanel<T> typeDisplayName( String name );
 
     /**
      * Types a name to the name-input field

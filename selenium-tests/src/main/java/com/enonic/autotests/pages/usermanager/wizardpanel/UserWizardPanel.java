@@ -67,7 +67,6 @@ public class UserWizardPanel
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON)
     private WebElement toolbarDuplicateButton;
 
-
     /**
      * The constructor.
      *
@@ -76,7 +75,6 @@ public class UserWizardPanel
     public UserWizardPanel( TestSession session )
     {
         super( session );
-
     }
 
     @Override
@@ -91,12 +89,6 @@ public class UserWizardPanel
         toolbarSaveButton.click();
         sleep( 1000 );
         return this;
-    }
-
-    @Override
-    public WebElement getCloseButton()
-    {
-        return closeButton;
     }
 
     @Override
@@ -141,7 +133,6 @@ public class UserWizardPanel
             roleOptionsFilter.sendKeys( Keys.ENTER );
             sleep( 300 );
         }
-
     }
 
     private boolean isRoleSelected( String roleName )
@@ -191,6 +182,4 @@ public class UserWizardPanel
         }
         return this;
     }
-
-
 }

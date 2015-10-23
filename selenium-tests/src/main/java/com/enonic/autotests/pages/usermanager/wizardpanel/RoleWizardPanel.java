@@ -2,7 +2,6 @@ package com.enonic.autotests.pages.usermanager.wizardpanel;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -40,7 +39,6 @@ public class RoleWizardPanel
     public RoleWizardPanel( TestSession session )
     {
         super( session );
-
     }
 
     @Override
@@ -51,12 +49,6 @@ public class RoleWizardPanel
 
     @Override
     public WizardPanel<Role> save()
-    {
-        return null;
-    }
-
-    @Override
-    public WebElement getCloseButton()
     {
         return null;
     }
@@ -89,7 +81,6 @@ public class RoleWizardPanel
         }
         TestUtils.saveScreenshot( getSession(), role.getDisplayName() );
         // 2. populate main tab
-
         return this;
     }
 

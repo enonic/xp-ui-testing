@@ -162,8 +162,6 @@ task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, 
 
 task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp] ) {
     scanForTestClasses = false
-
-
     exclude '**/application/**'
     exclude '**/user/**'
     include '**/content/liveedit/**Spec.class'
@@ -181,6 +179,54 @@ task testUploadContent( type: Test, dependsOn: [deleteFolders, buildApplications
     include '**/content/ContentUploadSpec.class'
     forkEvery = null
     copyContentTypes.shouldRunAfter startServer
+}
+
+task testUserLocal( type: Test ) {
+    scanForTestClasses = false
+    include '**/user/*Spec.class'
+    exclude '**/content/**'
+    exclude '**/application/**'
+    forkEvery = null
+}
+
+task testApplicationLocal( type: Test ) {
+    println xpHome
+    println "XP_HOME is:"
+    println System.getenv( "XP_HOME" );
+
+    scanForTestClasses = false
+    include '**/application/*Spec.class'
+    exclude '**/content/**'
+    exclude '**/user/**'
+    forkEvery = null
+}
+task testPublishMoveSortLocal( type: Test ) {
+    scanForTestClasses = false
+    include '**/content/move_publish_sort/*Spec.class'
+    include '**/content/relationship/**Spec.class'
+    exclude '**/application/**'
+    exclude '**/user/**'
+    forkEvery = null
+}
+task testInputTypesLocal( type: Test ) {
+    scanForTestClasses = false
+    include '**/content/input_types/*Spec.class'
+    exclude '**/application/**'
+    exclude '**/user/**'
+    exclude '**/content/ContentUploadSpec.class'
+    exclude '**/content/liveedit/**Spec.class'
+    forkEvery = null
+}
+task testContentManagerLocal( type: Test ) {
+    scanForTestClasses = false
+    include '**/*Spec.class'
+    exclude '**/application/**'
+    exclude '**/user/**'
+    exclude '**/content/ContentUploadSpec.class'
+    exclude '**/content/liveedit/**Spec.class'
+    exclude '**/content/input_types/*Spec.class'
+    exclude '**/content/move_publish_sort/**Spec.class'
+    forkEvery = null
 }
 
 testApplication.finalizedBy = ['stopServer']

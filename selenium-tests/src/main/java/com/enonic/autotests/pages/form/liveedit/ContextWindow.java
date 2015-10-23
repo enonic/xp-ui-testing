@@ -29,7 +29,6 @@ public class ContextWindow
 
     private final String DIV_MOVE = "//div[contains(@id,'api.liveedit.RegionPlaceholder')]//p[text()='Drop components here']";
 
-
     private final String INSERTABLES_GRID = "//div[contains(@id,'InsertablesGrid')]";
 
     private final String GRID_ITEM =
@@ -40,7 +39,6 @@ public class ContextWindow
     private final String IMAGE_DROPZONE = "//div[@class='message' and text()='Drop Image here'] ";
 
     private final String TOOLBAR_DIV = "//div[contains(@id,'app.wizard.ContentWizardToolbar')]";
-
 
     @FindBy(xpath = "//li[contains(@class,'tab-bar-item') and @title= 'Insert']")
     private WebElement insertToolbarItem;
@@ -101,7 +99,6 @@ public class ContextWindow
         return this;
     }
 
-
     /**
      * Drags 'layout' item from the ContextWindow and drop it on the 'Live Edit' frame
      *
@@ -132,9 +129,7 @@ public class ContextWindow
         builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
-
         TestUtils.saveScreenshot( getSession(), "drag_helperLayout" );
-
         return new LayoutComponentView( getSession() );
     }
 
@@ -162,9 +157,10 @@ public class ContextWindow
         builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
+        //WebElement ele = findElements( By.xpath( "//div[@id='drag-helper']" ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+        //builder.click(ele).perform();
         return new PartComponentView( getSession() );
     }
-
 
     /**
      * Drags 'image' item from the ContextWindow and drop it on the layout on the 'Live Edit' frame
@@ -216,7 +212,6 @@ public class ContextWindow
      */
     private void showDragHelper( WebElement targetElement, int liveEditFrameX, int liveEditFrameY, int toolbarHeight, String... headers )
     {
-
         int mainDivY = targetElement.getLocation().y;
         int mainDivX = targetElement.getLocation().x;
         Robot robot = getRobot();

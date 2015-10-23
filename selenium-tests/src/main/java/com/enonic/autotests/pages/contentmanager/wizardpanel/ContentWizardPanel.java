@@ -26,50 +26,42 @@ import com.enonic.autotests.vo.contentmanager.Content;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
- * 'Content Manager' application, Add new Content Wizard page.
+ * 'Content Manager' application, Content Wizard page.
  */
 public class ContentWizardPanel
     extends WizardPanel<Content>
 {
-    public static final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
+    private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
 
-    public static final String TOOLBAR_LIVE_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]//button[contains(@id, 'CycleButton')]";
+    private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
-    public static final String DIV_CONTENT_WIZARD_PANEL =
-        "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
+    private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') and @title='%s']";
 
-    public static final String TOOLBAR_SAVE_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
+    public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
-    public static final String TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Close']]";
+    public static final String HIDE_PAGE_EDITOR_BUTTON_TITLE = "Hide Page Editor";
 
-    private static final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]//div[contains(@id, 'ContentWizardToolbarPublishControls')]//button[contains(@id,'DialogButton') and child::span[text()='Publish']]";
+    public static final String SHOW_INSPECTION_PANEL_TITLE = "Show Inspection Panel";
 
-    private static final String TOOLBAR_DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+    private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
-    private static final String TOOLBAR_PREVIEW_BUTTON_XPATH =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
+    private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
 
-    private static final String CONTEXT_WINDOW_TOGGLER =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
+    private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
+        TOOLBAR + "//button[contains(@id,'DialogButton') and child::span[text()='Publish']]";
 
-    private static final String COMPONENT_VIEW_TOGGLER =
-        "//div[contains(@id,'ContentWizardToolbar')]/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
+    private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+
+    private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
+
+    private final String INSPECTION_PANEL_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
+
+    private String COMPONENT_VIEW_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
 
     private final String UNLOCK_LINK = "//div[@class='centered']/a[text()='Unlock']";
 
-    public static String START_WIZARD_TITLE = "New %s";
-
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
-
-    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON_XPATH)
-    protected WebElement closeButton;
 
     @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
     private WebElement toolbarPublishButton;
@@ -83,7 +75,7 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
 
-    @FindBy(xpath = CONTEXT_WINDOW_TOGGLER)
+    @FindBy(xpath = INSPECTION_PANEL_TOGGLER)
     private WebElement toolbarShowContextWindow;
 
     /**
@@ -330,12 +322,6 @@ public class ContentWizardPanel
         return DIV_CONTENT_WIZARD_PANEL;
     }
 
-    @Override
-    public WebElement getCloseButton()
-    {
-        return closeButton;
-    }
-
     public static ContentWizardPanel getWizard( TestSession session )
     {
         ContentWizardPanel wizard = new ContentWizardPanel( session );
@@ -349,17 +335,32 @@ public class ContentWizardPanel
         }
     }
 
-    public ContentWizardPanel clickOnPageEditorTogglerButton()
+    public ContentWizardPanel showPageEditor()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL ) )
+        String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
+        if ( !waitUntilVisibleNoException( By.xpath( button ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err-Live-button" );
-            throw new TestFrameworkException( "The 'Live' button was not found!" );
+            TestUtils.saveScreenshot( getSession(), "err-show-button" );
+            throw new TestFrameworkException( "The 'Show Page Editor' button was not found!" );
         }
-        getDisplayedElement( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).click();
+        getDisplayedElement( By.xpath( button ) ).click();
         sleep( 500 );
         return this;
     }
+
+    public ContentWizardPanel hidePageEditor()
+    {
+        String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, HIDE_PAGE_EDITOR_BUTTON_TITLE );
+        if ( !waitUntilVisibleNoException( By.xpath( button ), Application.EXPLICIT_NORMAL ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err-hide-button" );
+            throw new TestFrameworkException( "The 'Hide Page Editor' button was not found!" );
+        }
+        getDisplayedElement( By.xpath( button ) ).click();
+        sleep( 500 );
+        return this;
+    }
+
 
     public ContentWizardPanel showComponentView()
     {
@@ -372,6 +373,16 @@ public class ContentWizardPanel
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         dialog.waitForOpened();
         return this;
+    }
+
+    public boolean isShowComponentViewButtonDisplayed()
+    {
+        return isElementDisplayed( COMPONENT_VIEW_TOGGLER );
+    }
+
+    public boolean isShowInspectionPanelButtonDisplayed()
+    {
+        return isElementDisplayed( INSPECTION_PANEL_TOGGLER );
     }
 
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
@@ -393,17 +404,21 @@ public class ContentWizardPanel
     public boolean isPageDescriptorOptionsFilterDisplayed()
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        return findElements( By.xpath( "//input[contains(@id,'DropdownOptionFilterInput')]" ) ).stream().filter(
-            WebElement::isDisplayed ).count() > 0;
+        //return findElements( By.xpath( "//input[contains(@id,'DropdownOptionFilterInput')]" ) ).stream().filter(
+        //    WebElement::isDisplayed ).count() > 0;
+
+        return isElementDisplayed( "//input[contains(@id,'DropdownOptionFilterInput')]" );
     }
 
     public boolean isLiveEditFrameDisplayed()
     {
-        return findElements( By.xpath( Application.LIVE_EDIT_FRAME ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        //return findElements( By.xpath( Application.LIVE_EDIT_FRAME ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( Application.LIVE_EDIT_FRAME );
     }
 
-    public boolean isLiveButtonDisplayed()
+    public boolean isShowPageEditorButtonDisplayed()
     {
-        return findElements( By.xpath( TOOLBAR_LIVE_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
+        return isElementDisplayed( button );
     }
 }

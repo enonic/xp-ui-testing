@@ -106,7 +106,8 @@ class ContentBrowsePanelToolbarSpec
     def "GIVEN Content BrowsePanel WHEN one content selected THEN New button should be enabled"()
     {
         when:
-        contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
+        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME )
 
         then:
         contentBrowsePanel.isNewButtonEnabled();

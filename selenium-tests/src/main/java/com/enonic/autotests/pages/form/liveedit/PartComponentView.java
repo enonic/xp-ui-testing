@@ -1,11 +1,11 @@
 package com.enonic.autotests.pages.form.liveedit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -19,9 +19,6 @@ public class PartComponentView
 
     public static String PART_XPATH = "//div[contains(@id,'PartDescriptorViewer') and descendant::p[contains(.,'%s')]]";
 
-    @FindBy(xpath = COMPONENT_CONTAINER + OPTION_FILTER)
-    private WebElement optionFilterInput;
-
     public PartComponentView( final TestSession session )
     {
         super( session );
@@ -29,11 +26,16 @@ public class PartComponentView
 
     public LiveFormPanel selectItem( String partName )
     {
-        findElements( By.xpath( COMPONENT_CONTAINER + OPTION_FILTER ) ).stream().filter(
-            WebElement::isDisplayed ).findFirst().get().sendKeys( partName );
+        if ( !isElementDisplayed( COMPONENT_CONTAINER + OPTION_FILTER ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_opt_filter" ) );
+            throw new TestFrameworkException( "option filter input was not displayed" );
+        }
+        getDisplayedElement( By.xpath( COMPONENT_CONTAINER + OPTION_FILTER ) ).sendKeys( partName );
         sleep( 200 );
         if ( !isPartExists( partName ) )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" + partName ) );
             throw new TestFrameworkException( "The part with name: " + partName + "  was not found!" );
         }
         clickOnOptionsItem( partName );
@@ -43,13 +45,11 @@ public class PartComponentView
 
     private boolean isPartExists( String partName )
     {
-        return findElements( By.xpath( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, partName ) ) ).stream().filter(
-            WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, partName ) );
     }
 
     private void clickOnOptionsItem( String partName )
     {
-        findElements( By.xpath( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, partName ) ) ).stream().filter(
-            WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( COMPONENT_CONTAINER + String.format( NAMES_ICON_VIEW, partName ) ) ).click();
     }
 }

@@ -74,8 +74,7 @@ class PageComponentsDialog_Spec
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).clickOnPageEditorTogglerButton().typeData( PAGE_TEMPLATE ).save().close(
-            PAGE_TEMPLATE.getDisplayName() );
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
         sleep( 500 );
 
         then: "new page-template listed"

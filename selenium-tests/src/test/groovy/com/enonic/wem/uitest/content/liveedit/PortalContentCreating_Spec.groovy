@@ -50,8 +50,7 @@ class PortalContentCreating_Spec
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).clickOnPageEditorTogglerButton().typeData( PAGE_TEMPLATE ).save().close(
-            PAGE_TEMPLATE.getDisplayName() );
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
         sleep( 500 );
 
         then: "new page-template listed"
@@ -67,7 +66,7 @@ class PortalContentCreating_Spec
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
-        PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
+        PartComponentView partComponentView = contentWizard.showPageEditor().showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City Creation" );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
