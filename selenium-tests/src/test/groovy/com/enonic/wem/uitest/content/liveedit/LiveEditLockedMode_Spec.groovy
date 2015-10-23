@@ -78,17 +78,18 @@ class LiveEditLockedMode_Spec
 
 
         when: "test site should be listed"
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit().showPageEditor();
         then: "shader is applied to entire page and LiveEdit locked"
         wizard.isLiveEditLocked();
 
     }
 
-    def "WHEN site opened for edit AND LiveEdit frame shown AND right button clicked on the frame THEN context menu for page appears"()
+    def "WHEN site opened for edit AND 'Page Editor' is shown AND right button clicked on the frame THEN context menu for page appears"()
     {
         when: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
+        wizard.showPageEditor();
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
         then: "context menu for page appears"
@@ -100,6 +101,7 @@ class LiveEditLockedMode_Spec
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
+        wizard.showPageEditor();
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
         when: "the 'Customize' menu item selected"
