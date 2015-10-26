@@ -94,7 +94,7 @@ public class ContentWizardPanel
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.isContextWindowPresent() )
         {
-            if ( isElementDisplayed( INSPECTION_PANEL_TOGGLER ) )
+            if ( !isElementDisplayed( INSPECTION_PANEL_TOGGLER ) )
             {
                 TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_icon-cog" ) );
                 throw new TestFrameworkException( "button with 'icon-cog' was not found" );
