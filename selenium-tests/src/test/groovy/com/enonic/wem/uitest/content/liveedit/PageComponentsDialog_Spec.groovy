@@ -32,6 +32,7 @@ class PageComponentsDialog_Spec
         Content site = buildMySite( FIRST_SITE_NAME );
         addSiteBasedOnFirstApp( site );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit();
+        wizard.showPageEditor();
 
         when: "site opened for edit and 'Show Component View' button clicked"
         wizard.showComponentView();
@@ -51,7 +52,7 @@ class PageComponentsDialog_Spec
     def "GIVEN opened 'Page Components' Dialog WHEN button 'close' clicked THEN dialog not displayed"()
     {
         given: "opened 'Page Components' Dialog"
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit().showComponentView();
+        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit().showPageEditor().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
 
         when: "button 'close' clicked"

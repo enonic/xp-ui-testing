@@ -113,8 +113,8 @@ class MyFirstApp_Spec
     def "GIVEN a country-content with a region  WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
     {
         given: "a page descriptor added for existing country-content"
-        filterPanel.typeSearchText( "usa405758493" );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( "usa405758493" ).clickToolbarEdit();
+        filterPanel.typeSearchText( USA_CONTENT.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
         wizard.showPageEditor();
 
 
