@@ -90,13 +90,18 @@ public class ContentWizardPanel
 
     public ContextWindow showContextWindow()
     {
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "show_contwindow" ) );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "context_window" ) );
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.isContextWindowPresent() )
         {
-            toolbarShowContextWindow.click();
+            if ( isElementDisplayed( INSPECTION_PANEL_TOGGLER ) )
+            {
+                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_icon-cog" ) );
+                throw new TestFrameworkException( "button with 'icon-cog' was not found" );
+            }
+            getDisplayedElement( By.xpath( INSPECTION_PANEL_TOGGLER ) ).click();
             cw.waitUntilWindowLoaded( 1l );
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "show_contwindow" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "context_window_opened" ) );
         }
         return cw;
     }
