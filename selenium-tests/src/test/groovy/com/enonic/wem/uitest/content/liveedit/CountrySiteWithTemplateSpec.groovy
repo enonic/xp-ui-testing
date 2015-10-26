@@ -71,6 +71,7 @@ class CountrySiteWithTemplateSpec
         given: "existing page-template"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
+        contentWizard.showPageEditor();
 
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
@@ -92,6 +93,7 @@ class CountrySiteWithTemplateSpec
         given: "existing page-template"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
+        contentWizard.showPageEditor();
 
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
@@ -113,6 +115,7 @@ class CountrySiteWithTemplateSpec
         given: "existing page-template"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
+        contentWizard.showPageEditor();
 
         when: "the 'Inspect' link clicked"
         String name = contentWizard.showContextWindow().clickOnInspectLink().getSelectedPageController();
@@ -128,7 +131,8 @@ class CountrySiteWithTemplateSpec
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, FIRST_SITE_NAME );
 
         ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), FIRST_SITE_NAME );
-        wizard.typeData( USA_CONTENT ).save().waitNotificationMessage(); wizard.close( USA_CONTENT.getDisplayName() );
+        wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
+        wizard.close( USA_CONTENT.getDisplayName() );
         and: "and it content selected and the 'New' button on the toolbar pressed"
         contentBrowsePanel.clickOnClearSelection();
         SAN_FR_CONTENT = buildCity_Content( "San Francisco", SF_LOCATION, SF_POPULATION, USA_CONTENT.getName() );
