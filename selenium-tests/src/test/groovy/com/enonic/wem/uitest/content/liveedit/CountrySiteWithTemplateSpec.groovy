@@ -239,7 +239,7 @@ class CountrySiteWithTemplateSpec
     {
         given: "existing country content"
         ContentWizardPanel wizard = findAndSelectContent( USA_CONTENT.getName() ).clickToolbarEdit();
-
+        wizard.showPageEditor();
         when: "content opened for edit and 'Page Component View' shown"
         wizard.showComponentView();
         PageComponentsViewDialog view = new PageComponentsViewDialog( getSession() );
