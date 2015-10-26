@@ -247,6 +247,7 @@ public class ContentBrowsePanel
     {
         getDriver().navigate().refresh();
         NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
+        sleep( 2000 );
         return this;
     }
 

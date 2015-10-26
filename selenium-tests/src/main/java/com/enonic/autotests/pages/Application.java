@@ -17,6 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
+    public static final String OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
     public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
 
     public static final String TEST_FOLDER_NAME = "selenium-tests-folder";

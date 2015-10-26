@@ -20,7 +20,7 @@ public class SingleSelectorDropDownFormView
 
     protected final String DROP_DOWN = "//div[contains(@id,'api.ui.selector.dropdown.Dropdown')]";
 
-    protected final String DROP_DOWN_OPTIONS_INPUT_XPATH = FORM_VIEW + DROP_DOWN + "//input[contains(@id,'DropdownOptionFilterInput')]";
+    protected final String DROP_DOWN_OPTIONS_INPUT_XPATH = FORM_VIEW + DROP_DOWN + OPTION_FILTER_INPUT;
 
     public SingleSelectorDropDownFormView( final TestSession session )
     {

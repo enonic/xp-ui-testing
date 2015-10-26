@@ -35,7 +35,8 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
-    private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') and @title='%s']";
+    //private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') and @title='%s']";
+    private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
 
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
@@ -342,26 +343,25 @@ public class ContentWizardPanel
 
     public ContentWizardPanel showPageEditor()
     {
-        String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
-        if ( !waitUntilVisibleNoException( By.xpath( button ), Application.EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-show-button" );
             throw new TestFrameworkException( "The 'Show Page Editor' button was not found!" );
         }
-        getDisplayedElement( By.xpath( button ) ).click();
-        sleep( 500 );
+        getDisplayedElement( By.xpath( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
+        sleep( 700 );
         return this;
     }
 
     public ContentWizardPanel hidePageEditor()
     {
-        String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, HIDE_PAGE_EDITOR_BUTTON_TITLE );
-        if ( !waitUntilVisibleNoException( By.xpath( button ), Application.EXPLICIT_NORMAL ) )
+        // String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, HIDE_PAGE_EDITOR_BUTTON_TITLE );
+        if ( !isElementDisplayed( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-hide-button" );
             throw new TestFrameworkException( "The 'Hide Page Editor' button was not found!" );
         }
-        getDisplayedElement( By.xpath( button ) ).click();
+        getDisplayedElement( By.xpath( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
         sleep( 500 );
         return this;
     }
@@ -393,7 +393,7 @@ public class ContentWizardPanel
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        findElements( By.xpath( "//input[contains(@id,'DropdownOptionFilterInput')]" ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
+        findElements( By.xpath( OPTION_FILTER_INPUT ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
         String pageDescriptor = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
         if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
         {
@@ -409,15 +409,11 @@ public class ContentWizardPanel
     public boolean isPageDescriptorOptionsFilterDisplayed()
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        //return findElements( By.xpath( "//input[contains(@id,'DropdownOptionFilterInput')]" ) ).stream().filter(
-        //    WebElement::isDisplayed ).count() > 0;
-
-        return isElementDisplayed( "//input[contains(@id,'DropdownOptionFilterInput')]" );
+        return isElementDisplayed( OPTION_FILTER_INPUT );
     }
 
     public boolean isLiveEditFrameDisplayed()
     {
-        //return findElements( By.xpath( Application.LIVE_EDIT_FRAME ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
         return isElementDisplayed( Application.LIVE_EDIT_FRAME );
     }
 
