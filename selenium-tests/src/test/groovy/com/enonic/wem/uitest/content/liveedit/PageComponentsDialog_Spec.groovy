@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewD
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import spock.lang.Ignore
@@ -38,6 +39,7 @@ class PageComponentsDialog_Spec
         wizard.showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         TestUtils.saveScreenshot( getSession(), "page-comp-dialog" );
+        List<PageComponent> components = dialog.getPageComponents();
 
         then: "'Page Components View' dialog appeared on the wizard page"
         dialog.isOpened();
@@ -46,7 +48,9 @@ class PageComponentsDialog_Spec
         dialog.getTextFromHeader().equals( PageComponentsViewDialog.DIALOG_HEADER );
 
         and: "correct displayed name of site shown"
-        dialog.getContentName().equals( site.getDisplayName() );
+        components.size() == 1;
+        and: "'Automatic' component displayed, when there are no controllers"
+        components.get( 0 ).getName().equals( "Automatic" );
     }
 
     def "GIVEN opened 'Page Components' Dialog WHEN button 'close' clicked THEN dialog not displayed"()

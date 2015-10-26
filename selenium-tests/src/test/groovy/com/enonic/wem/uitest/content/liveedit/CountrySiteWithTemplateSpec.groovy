@@ -249,7 +249,7 @@ class CountrySiteWithTemplateSpec
         components.size() == 4;
 
         and:
-        components.get( 0 ).getType().equals( "page" ) && components.get( 0 ).getName().equals( "USA" );
+        components.get( 0 ).getType().equals( "page" ) && components.get( 0 ).getName().equals( TEMPLATE_DISPLAY_NAME );
         and:
         components.get( 1 ).getType().equals( "region" ) && components.get( 1 ).getName().equals( "country" );
         and:
