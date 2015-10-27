@@ -24,6 +24,8 @@ public class PageComponentsViewDialog
 
     public final String DIALOG_CONTAINER = "//div[contains(@id,'PageComponentsView')]";
 
+    public final String COMPONENTS_GRID = "//div[contains(@id,'PageComponentsTreeGrid')]";
+
     public final String CLOSE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'CloseButton')]";
 
     private final String SLICK_VIEW_PORT = "//div[@class='slick-viewport']";
@@ -39,6 +41,21 @@ public class PageComponentsViewDialog
     public boolean isOpened()
     {
         return findElements( By.xpath( DIALOG_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    public PageComponentsViewDialog openMenu( String componentName )
+    {
+        String menuButton = String.format( COMPONENTS_GRID +
+                                               "//div[contains(@class,'slick-row') and descendant::h6[@class='main-name'  and contains(.,'%s')]]//div[@class='menu-icon']",
+                                           componentName );
+
+        if ( !isElementDisplayed( menuButton ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-comp_view_menu" ) );
+            throw new TestFrameworkException( "menu button was not found for  " + componentName );
+        }
+        getDisplayedElement( By.xpath( menuButton ) ).click();
+        return this;
     }
 
     public String getTextFromHeader()
@@ -89,7 +106,6 @@ public class PageComponentsViewDialog
         {
             result.add( PageComponent.builder().name( names.get( i ) ).type( types.get( i ) ).build() );
         }
-
         return result;
     }
 }
