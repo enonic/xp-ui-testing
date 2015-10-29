@@ -6,56 +6,128 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
+import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
     extends BaseContentSpec
 {
+    @Shared
+    Content parentFolder
 
-    def "GIVEN three selected Content WHEN deleted THEN no SelectionItem-s are displayed"()
+    @Shared
+    Content shortcut1
+
+    @Shared
+    Content shortcut2
+
+    @Shared
+    Content shortcut3
+
+    def "setup: add test content"()
     {
-        given: "one parent and two child content exist"
-        Content parent = buildFolderContent( "folder", "selection test" )
-        addContent( parent );
-        List<String> contentList = new ArrayList<>()
-        Content content1 = Content.builder().
+        when: "content added"
+        parentFolder = buildFolderContent( "folder", "selection test" )
+        addContent( parentFolder );
+
+        shortcut1 = Content.builder().
             name( NameHelper.uniqueName( "first" ) ).
             displayName( "first" ).
-            parent( ContentPath.from( parent.getName() ) ).
+            parent( ContentPath.from( parentFolder.getName() ) ).
             contentType( ContentTypeName.shortcut() ).
             build();
 
-        ContentWizardPanel wizard = contentBrowsePanel.clickOnParentCheckbox( parent.getPath() ).clickToolbarNew().selectContentType(
-            content1.getContentTypeName() );
-        wizard.typeData( content1 ).save().close( content1.getDisplayName() );
-        contentList.add( content1.getName() );
-        Content content2 = Content.builder().
-            parent( ContentPath.from( parent.getName() ) ).
+        ContentWizardPanel wizard = contentBrowsePanel.clickOnParentCheckbox( parentFolder.getPath() ).clickToolbarNew().selectContentType(
+            shortcut1.getContentTypeName() );
+        wizard.typeData( shortcut1 ).save().close( shortcut1.getDisplayName() );
+
+        shortcut2 = Content.builder().
+            parent( ContentPath.from( parentFolder.getName() ) ).
             name( NameHelper.uniqueName( "second" ) ).
             displayName( "second" ).
             contentType( ContentTypeName.shortcut() ).
             build();
 
-        addContent( content2 );
-        contentList.add( content2.getName() );
-        Content content3 = Content.builder().
-            parent( ContentPath.from( parent.getName() ) ).
+        addContent( shortcut2 );
+
+        shortcut3 = Content.builder().
+            parent( ContentPath.from( parentFolder.getName() ) ).
             name( NameHelper.uniqueName( "third" ) ).
             displayName( "third" ).
             contentType( ContentTypeName.shortcut() ).
             build();
 
-        contentBrowsePanel.clickToolbarNew().selectContentType( content3.getContentTypeName() );
-        wizard.typeData( content3 ).save().close( content3.getDisplayName() );
-        contentList.add( content3.getName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( shortcut3.getContentTypeName() );
+        wizard.typeData( shortcut3 ).save().close( shortcut3.getDisplayName() );
 
-        when: "parent and children are selected and 'Delete button' pressed"
-        filterPanel.typeSearchText( parent.getName() )
-        contentBrowsePanel.expandContent( content1.getParent() );
+        then:
+        filterPanel.typeSearchText( parentFolder.getName() );
+        contentBrowsePanel.exists( parentFolder.getName() )
+    }
+
+    @Ignore
+    def "GIVEN four selected content WHEN one 'selection item' was removed THEN two selected items are present in a browse panel"()
+    {
+        given: "four contents selected"
+        List<String> contentList = new ArrayList<>();
+        Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(), shortcut3.getName() );
+        filterPanel.typeSearchText( parentFolder.getName() )
+        contentBrowsePanel.expandContent( shortcut1.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "delete-three" );
-        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInTable( contentList );
+        int beforeRemove = itemsSelectionPanel.getSelectedItemCount();
+        int selectedRowsBefore = contentBrowsePanel.getSelectedRowsNumber();
+
+        when: "one selection item was removed"
+        itemsSelectionPanel.removeItem( shortcut1.getName() );
+
+        then: "number of selected items in Selection Panel was reduced"
+        beforeRemove - itemsSelectionPanel.getSelectedItemCount() == 1;
+
+        and: "number of selected rows reduced as well"
+        selectedRowsBefore - contentBrowsePanel.getSelectedRowsNumber() == 1;
+
+    }
+
+    def "GIVEN three selected Content WHEN 'Clear All' clicked THEN no SelectionItem-s are displayed"()
+    {
+        given: "parent and children are selected"
+        List<String> contentList = new ArrayList<>();
+        Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(),
+                            shortcut3.getName() ); filterPanel.typeSearchText( parentFolder.getName() )
+        contentBrowsePanel.expandContent( shortcut1.getParent() );
+        TestUtils.saveScreenshot( getTestSession(), "item_selection_clear1" );
+        contentBrowsePanel.selectContentInTable( contentList )
+        int numberOfSelected = contentBrowsePanel.getNumberFromClearSelectionLink();
+
+        when: "'Clear Selection' clicked"
+        contentBrowsePanel.clickOnClearSelection();
 
         then: "no SelectionItem-s are displayed"
-        TestUtils.saveScreenshot( getSession(), "item_select_0" )
+        TestUtils.saveScreenshot( getSession(), "item_selection_clear2" )
+        itemsSelectionPanel.getSelectedItemCount() == 0;
+
+        and: "number of selected items was correct"
+        numberOfSelected == contentList.size();
+    }
+
+    def "GIVEN three selected Content WHEN all deleted THEN no SelectionItem-s are displayed"()
+    {
+        given: "parent and children are selected"
+        List<String> contentList = new ArrayList<>();
+        Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(),
+                            shortcut3.getName() ); filterPanel.typeSearchText( parentFolder.getName() )
+        contentBrowsePanel.expandContent( shortcut1.getParent() );
+        TestUtils.saveScreenshot( getTestSession(), "item_selection_4" );
+        contentBrowsePanel.selectContentInTable( contentList )
+
+        when: "'Delete button' pressed"
+        contentBrowsePanel.clickToolbarDelete().doDelete();
+
+        then: "no SelectionItem-s are displayed"
+        TestUtils.saveScreenshot( getSession(), "item_selection_0" )
         itemsSelectionPanel.getSelectedItemCount() == 0;
     }
 }
