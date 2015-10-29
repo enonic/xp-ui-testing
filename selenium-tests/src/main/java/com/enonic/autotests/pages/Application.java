@@ -18,6 +18,7 @@ public class Application
     extends Page
 {
     public static final String OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
+
     public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
 
     public static final String TEST_FOLDER_NAME = "selenium-tests-folder";
@@ -37,7 +38,7 @@ public class Application
     protected String NAMES_VIEW_WITH_DISPLAY_NAME =
         "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
 
-    protected final String GRID_ROW = "//div[contains(@class,'slick-row')]";
+    protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
 
     protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
 
@@ -60,7 +61,6 @@ public class Application
     public static final long EXPLICIT_NORMAL = 3;
 
     public static final long EXPLICIT_QUICK = 2;
-
 
     public static final String CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";
 
@@ -99,7 +99,6 @@ public class Application
     {
         return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
     }
-
 
     public boolean isElementDisplayed( String xpath )
     {
@@ -141,7 +140,6 @@ public class Application
     public Application setChecked( String checkboxId, boolean value )
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-
         String script = String.format( ELEMENT_BY_ID + ".setChecked(arguments[0])", checkboxId );
         executor.executeScript( script, value );
         return this;
@@ -150,7 +148,6 @@ public class Application
     public boolean isCheckBoxChecked( String checkboxId )
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-
         String script = String.format( ELEMENT_BY_ID + ".isChecked()", checkboxId );
         return (Boolean) executor.executeScript( script );
     }
@@ -183,6 +180,4 @@ public class Application
         getLogger().info( "Publish Notification message " + message );
         return message;
     }
-
-
 }

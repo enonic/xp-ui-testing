@@ -15,14 +15,12 @@ class UserBrowsePanelToolbarSpec
 
     def "GIVEN user BrowsePanel WHEN no selected content THEN 'New' button should be enabled"()
     {
-
         expect:
         userBrowsePanel.isNewButtonEnabled();
     }
 
     def "GIVEN user BrowsePanel WHEN no selected content THEN 'Edit' button should be disabled"()
     {
-
         expect:
         !userBrowsePanel.isEditButtonEnabled();
     }

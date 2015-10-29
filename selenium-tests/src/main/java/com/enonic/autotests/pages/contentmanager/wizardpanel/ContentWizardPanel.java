@@ -343,6 +343,10 @@ public class ContentWizardPanel
 
     public ContentWizardPanel showPageEditor()
     {
+        if ( isLiveEditFrameDisplayed() )
+        {
+            return this;
+        }
         if ( !waitUntilVisibleNoException( By.xpath( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-show-button" );
@@ -355,7 +359,6 @@ public class ContentWizardPanel
 
     public ContentWizardPanel hidePageEditor()
     {
-        // String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, HIDE_PAGE_EDITOR_BUTTON_TITLE );
         if ( !isElementDisplayed( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-hide-button" );

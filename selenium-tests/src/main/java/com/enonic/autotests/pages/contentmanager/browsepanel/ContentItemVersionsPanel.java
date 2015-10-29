@@ -35,13 +35,13 @@ public class ContentItemVersionsPanel
 
     public long getRowsNumber()
     {
-        return findElements( By.xpath( ALL_CONTENT_VERSION_GRID + GRID_ROW ) ).stream().filter( WebElement::isDisplayed ).count();
+        return findElements( By.xpath( ALL_CONTENT_VERSION_GRID + SLICK_ROW ) ).stream().filter( WebElement::isDisplayed ).count();
     }
 
     public LinkedList<ContentVersion> getAllContentVersions()
     {
         LinkedList<String> rowStyles =
-            findElements( By.xpath( ALL_CONTENT_VERSION_GRID + GRID_ROW ) ).stream().filter( WebElement::isDisplayed ).map(
+            findElements( By.xpath( ALL_CONTENT_VERSION_GRID + SLICK_ROW ) ).stream().filter( WebElement::isDisplayed ).map(
                 e -> e.getAttribute( "style" ) ).map( e -> getTopValue( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
         LinkedList<ContentVersion> contentVersions =
             rowStyles.stream().map( e -> getVersionHistoryInfo( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
@@ -85,5 +85,4 @@ public class ContentItemVersionsPanel
     {
         return WaitHelper.waitsElementNotVisible( getDriver(), By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL );
     }
-
 }

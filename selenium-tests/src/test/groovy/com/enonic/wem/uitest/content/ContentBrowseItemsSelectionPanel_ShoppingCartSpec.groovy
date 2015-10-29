@@ -27,7 +27,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.unExpandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
 
         then: "if parent and child content are selected and parent content collapsed, item selection panel should contains two items"
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemNames();
+        List<String> selectedNames = itemsSelectionPanel.getSelectedItemNames();
         selectedNames.contains( "/" + PARENT_CONTENT_NAME + "/" + CHILD_CONTENT_NAME ) &&
             selectedNames.contains( "/" + PARENT_CONTENT_NAME )
         and:
@@ -46,7 +46,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.clickAndSelectRow( CHILD_CONTENT_NAME );
 
         then: "no any items should not be present in the selection panel  "
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        List<String> selectedNames = itemsSelectionPanel.getSelectedItemDisplayNames();
         selectedNames.size() == 0;
     }
 
@@ -60,7 +60,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( CHILD_CONTENT_NAME );
 
         then: "two items should be present in selection panel"
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        List<String> selectedNames = itemsSelectionPanel.getSelectedItemDisplayNames();
         selectedNames.size() == 2;
     }
 
@@ -77,7 +77,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         filterPanel.clickOnCleanFilter();
 
         then: "two items should be present in selection panel"
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        List<String> selectedNames = itemsSelectionPanel.getSelectedItemDisplayNames();
         selectedNames.size() == 2;
     }
 
@@ -100,7 +100,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         filterPanel.clickOnCleanFilter();
 
         then: "still two items should be present in the selection panel "
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        List<String> selectedNames = itemsSelectionPanel.getSelectedItemDisplayNames();
         selectedNames.size() == 2;
     }
 
@@ -122,12 +122,12 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         TestUtils.saveScreenshot( getSession(), "shopping_cart_issue" );
 
         then: "two items should be present in the selection panel and two rows are selected in the grid "
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        List<String> selectedNames = itemsSelectionPanel.getSelectedItemDisplayNames();
         selectedNames.size() == 2
         and:
         contentBrowsePanel.getSelectedRowsNumber() == 2;
     }
-//
+
     def "GIVEN a parent content and child beneath a parent AND parent content selected AND name of child typed in the search input AND row with the child was clicked  WHEN filter cleared and parent content expanded  THEN only one child content selected"()
     {
         setup: "select a existing root content, that has a child "
@@ -144,7 +144,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.expandContent( ContentPath.from( PARENT_CONTENT_NAME ) );
 
         then: "selection panel has no any items and only one row is selected in the grid "
-        List<String> selectedNames = contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames();
+        List<String> selectedNames = itemsSelectionPanel.getSelectedItemDisplayNames();
         selectedNames.size() == 0 && contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
@@ -155,7 +155,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         TestUtils.saveScreenshot( getSession(), "select_all_clicked" )
 
         then: "number of items in the selection panel and number of of selected rows in the grid are equals"
-        contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames().size() == contentBrowsePanel.getSelectedRowsNumber();
+        itemsSelectionPanel.getSelectedItemDisplayNames().size() == contentBrowsePanel.getSelectedRowsNumber();
     }
 
     def "GIVEN browse panel opened AND 'Select All' clicked  WHEN 'Clear Selection' clicked  THEN there are no any items in the selection panel"()
@@ -167,6 +167,6 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.clickOnClearSelection();
 
         then: "there are no any items in the selection panel"
-        contentBrowsePanel.getItemSelectionPanel().getSelectedItemDisplayNames().size() == 0;
+        itemsSelectionPanel.getSelectedItemDisplayNames().size() == 0;
     }
 }

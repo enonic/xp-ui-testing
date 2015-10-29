@@ -39,7 +39,6 @@ public abstract class BrowsePanel
 
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
-
     protected String CONTENT_SUMMARY_VIEWER =
         "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
@@ -51,12 +50,8 @@ public abstract class BrowsePanel
     protected static final String DIV_WITH_NAME =
         "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]//div[contains(@id,'api.app.NamesView')]";
 
-    protected final String DIV_WITH_SCROLL = "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[contains(@class,'slickgrid')]";
-
     protected final String CLEAR_SELECTION_LINK_XPATH =
         "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[contains(.,'Clear Selection')]";
-
-    protected String NOT_LOADED_CONTENT_XPATH = "//div[contains(@class,'children-to-load')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
         DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
@@ -75,7 +70,6 @@ public abstract class BrowsePanel
 
     @FindBy(xpath = SELECT_ALL_LINK_XPATH)
     protected WebElement selectAllLink;
-
 
     /**
      * The Constructor
@@ -177,7 +171,6 @@ public abstract class BrowsePanel
             clickAndSelectRow( gritItemName );
             sleep( 700 );
         }
-
         pressKeyOnRow( gritItemName, Keys.ARROW_RIGHT );
         return this;
     }
@@ -197,7 +190,6 @@ public abstract class BrowsePanel
             getLogger().info( "expander for folder:" + contentPath + " was not found! " );
             return false;
         }
-
         return true;
     }
 
@@ -223,7 +215,6 @@ public abstract class BrowsePanel
         String attributeValue = "collapse";
         return waitAndCheckAttrValue( elements.get( 0 ), attributeName, attributeValue, 1l );
     }
-
 
     /**
      * Clicks by "Select All" and selects all items from the table.
@@ -310,7 +301,6 @@ public abstract class BrowsePanel
 
         }
         return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
-
     }
 
     /**
@@ -409,7 +399,6 @@ public abstract class BrowsePanel
                 findElements( By.xpath( "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[@class='slick-viewport']" ) ).get( 0 );
             ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
         }
-
         sleep( 1000 );
         return getViewportScrollTopValue();
     }
@@ -458,7 +447,6 @@ public abstract class BrowsePanel
      */
     public BrowsePanel pressKeyOnRow( String item, Keys key )
     {
-        //String contentCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, item );
         String contentCheckBoxXpath = String.format( GRID_ROW, item );
 
         getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
@@ -619,7 +607,6 @@ public abstract class BrowsePanel
 
     public <T extends BrowsePanel> T clickCheckboxAndSelectRow( String itemName )
     {
-
         if ( !doScrollAndFindGridItem( itemName ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_find_" + itemName );
@@ -637,20 +624,17 @@ public abstract class BrowsePanel
         waitAndFindElement( By.xpath( itemCheckBoxXpath ) ).click();
         sleep( 1000 );
         getLogger().info( "check box was selected, item: " + itemName );
-
         return (T) this;
     }
 
     public <T extends BrowsePanel> T clickCheckboxAndSelectRow( int number )
     {
-
-        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
+        List<WebElement> elements = findElements( By.xpath( SLICK_ROW ) );
         if ( elements.size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_empty" ) );
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
-
         findElements( By.xpath(
             "//div[@class='grid-canvas']//div[contains(@class,'slick-row')]//div[contains(@class,'slick-cell-checkboxsel')]/label" ) ).get(
             number ).click();
@@ -661,13 +645,12 @@ public abstract class BrowsePanel
 
     public BrowsePanel pressKeyOnRow( int number, Keys key )
     {
-        List<WebElement> elements = findElements( By.xpath( "//div[contains(@class,'slick-row')]" ) );
+        List<WebElement> elements = findElements( By.xpath( SLICK_ROW ) );
         if ( elements.size() == 0 )
         {
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
-
-        WebElement element = findElements( By.xpath( "//div[@class='grid-canvas']//div[contains(@class,'slick-row')]" ) ).get( number );
+        WebElement element = findElements( By.xpath( "//div[@class='grid-canvas']" + SLICK_ROW ) ).get( number );
 
         // findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
         ////div[contains(@class,'slick-cell-checkboxsel')]/label
