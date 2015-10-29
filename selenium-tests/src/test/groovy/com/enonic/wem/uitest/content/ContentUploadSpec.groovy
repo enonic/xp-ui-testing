@@ -71,6 +71,7 @@ class ContentUploadSpec
         when: "text file was selected and opened"
         filterPanel.typeSearchText( "text.txt" );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( "text.txt" ).clickToolbarEdit();
+        TestUtils.saveScreenshot( getSession(), "txt-content-opened" )
 
         then: "correct name is displayed"
         wizardPanel.getNameInputValue().equalsIgnoreCase( "text.txt" );
