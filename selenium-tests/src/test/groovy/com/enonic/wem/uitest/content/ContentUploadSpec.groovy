@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -65,15 +66,14 @@ class ContentUploadSpec
         contentBrowsePanel.exists( "text.txt" )
     }
 
-    //XP-1727
-    @Ignore
-    def "GIVEN text file was uploaded WHEN content opened for edit THEN correct text present on page"()
+    def "GIVEN text file that have been uploaded WHEN the content opened for edit THEN correct name displayed on wizard-page"()
     {
-        when: ""
+        when: "text file was selected and opened"
         filterPanel.typeSearchText( "text.txt" );
-        contentBrowsePanel.clickCheckboxAndSelectRow( "text.txt" ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( "text.txt" ).clickToolbarEdit();
 
-        then: true;
+        then: "correct name is displayed"
+        wizardPanel.getNameInputValue().equalsIgnoreCase( "text.txt" );
     }
 
 

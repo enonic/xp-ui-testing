@@ -240,15 +240,9 @@ public abstract class WizardPanel<T>
         new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.elementToBeClickable( by ) );
     }
 
-    public WebElement getNameInput()
-    {
-        return nameInput;
-    }
-
     public void clickWizardStep( final int position )
     {
         // TODO: click step with position
-
     }
 
     public WizardPanel<T> typeDisplayName( String displayName )
