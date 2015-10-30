@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -20,9 +19,7 @@ class SitePreview_Spec
         given:
         MY_SITE = buildMySite( "preview" );
         "data typed and saved and wizard closed"
-        contentBrowsePanel.clickToolbarNew().selectContentType( MY_SITE.getContentTypeName() ).typeData( MY_SITE ).save().close(
-            MY_SITE.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "preview_site_added" );
+        addSiteBasedOnFirstApp( MY_SITE );
 
         when: "site selected"
         filterPanel.typeSearchText( MY_SITE.getName() );

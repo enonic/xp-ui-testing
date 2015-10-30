@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -34,9 +35,7 @@ public class ContextWindow
     private final String GRID_ITEM =
         INSERTABLES_GRID + "//div[contains(@class,'grid-row') and descendant::div[@data-portal-component-type ='%s']]";
 
-    private final String LAYOUT_DROPZONE = "//div[@class='message' and text()='Drop Layout here'] ";
-
-    private final String IMAGE_DROPZONE = "//div[@class='message' and text()='Drop Image here'] ";
+    private ContextWindowPageInspectionPanel inspectionPanel;
 
     private final String TOOLBAR_DIV = "//div[contains(@id,'app.wizard.ContentWizardToolbar')]";
 
@@ -63,13 +62,6 @@ public class ContextWindow
         }
     }
 
-    String getSelectedPageController()
-    {
-        return findElements( By.xpath(
-            "//div[contains(@id,'contextwindow.inspect.page.PageControllerSelector')]//h6[@class='main-name']" ) ).stream().filter(
-            WebElement::isDisplayed ).findFirst().get().getText();
-    }
-
     public boolean isContextWindowPresent()
     {
         return findElements( By.xpath( DIV_CONTEXT_WINDOW ) ).size() > 0;
@@ -82,7 +74,7 @@ public class ContextWindow
         {
             throw new TestFrameworkException( "Insert link was not found on the ContextWindow!" );
         }
-        findElements( By.xpath( insertButtonXpath ) ).get( 0 ).click();
+        getDisplayedElement( By.xpath( insertButtonXpath ) ).click();
         sleep( 1000 );
         return this;
     }
@@ -90,11 +82,11 @@ public class ContextWindow
     public ContextWindow clickOnInspectLink()
     {
         String inspectButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Inspect']";
-        if ( findElements( By.xpath( inspectButtonXpath ) ).size() == 0 )
+        if ( !isElementDisplayed( inspectButtonXpath ) )
         {
             throw new TestFrameworkException( "'inspect' link was not found on the ContextWindow!" );
         }
-        findElements( By.xpath( inspectButtonXpath ) ).get( 0 ).click();
+        getDisplayedElement( By.xpath( inspectButtonXpath ) ).click();
         sleep( 1000 );
         return this;
     }
@@ -157,8 +149,6 @@ public class ContextWindow
         builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
-        //WebElement ele = findElements( By.xpath( "//div[@id='drag-helper']" ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
-        //builder.click(ele).perform();
         return new PartComponentView( getSession() );
     }
 
@@ -178,7 +168,7 @@ public class ContextWindow
         Actions builder = new Actions( getDriver() );
         builder.clickAndHold( componentForDrag ).build().perform();
 
-        WebElement liveEditFrame = getDriver().findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
+        WebElement liveEditFrame = findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
         int liveEditFrameX = liveEditFrame.getLocation().x;
         int liveEditFrameY = liveEditFrame.getLocation().y;
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
@@ -197,7 +187,6 @@ public class ContextWindow
         //RELEASE
         builder.release( regionPlaceHolderDiv );
         builder.build().perform();
-        //moveDragHelperToTargetAndReleaseOnDropZone( regionPlaceHolderDiv, IMAGE_DROPZONE );
         return new ImageComponentView( getSession() );
     }
 
@@ -240,13 +229,13 @@ public class ContextWindow
         builder2.moveToElement( targetElement ).build().perform();
         sleep( 500 );
         TestUtils.saveScreenshot( getSession(), "layout_dropzone" );
-        WebElement dropZoneLayout = getDriver().findElement( By.xpath( dropZone ) );
+        WebElement dropZoneLayout = findElement( By.xpath( dropZone ) );
         builder2.release( dropZoneLayout ).build().perform();
     }
 
     private int calculateOffsetY( int toolbarHeight, int liveEditFrameY, String... elements )
     {
-        WebElement mainDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) ).get( 0 );
+        WebElement mainDiv = getDisplayedElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
         int mainOffsetY = mainDiv.getSize().getHeight() / 2;
         int height = 0;
         for ( int i = 0; i < elements.length; i++ )
@@ -260,7 +249,7 @@ public class ContextWindow
 
     private int calculateOffsetX( int liveEditFrameX )
     {
-        WebElement mainDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) ).get( 0 );
+        WebElement mainDiv = getDisplayedElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
         int mainOffsetX = mainDiv.getSize().getWidth() / 2;
         int xOffset = liveEditFrameX + mainOffsetX;
         return xOffset;
@@ -278,5 +267,14 @@ public class ContextWindow
             getLogger().error( "Robot mouseMove failed" );
         }
         return robot;
+    }
+
+    public ContextWindowPageInspectionPanel getInspectionPanel()
+    {
+        if ( inspectionPanel == null )
+        {
+            return new ContextWindowPageInspectionPanel( getSession() );
+        }
+        return inspectionPanel;
     }
 }

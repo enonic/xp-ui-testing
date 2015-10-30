@@ -112,19 +112,4 @@ class BaseSiteSpec
             build();
         return dateContent;
     }
-
-    protected void openResourceInMaster( String resource )
-    {
-        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/master/" + resource );
-    }
-
-    protected void openResourceInDraft( String resource )
-    {
-        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/draft/" + resource );
-    }
-
-    protected void openHomePage()
-    {
-        getDriver().navigate().to( browser.baseUrl + "admin/#/home" );
-    }
 }

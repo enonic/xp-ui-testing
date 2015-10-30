@@ -6,7 +6,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -67,7 +66,6 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         contentBrowsePanel.exists( parentFolder.getName() )
     }
 
-    @Ignore
     def "GIVEN four selected content WHEN one 'selection item' was removed THEN two selected items are present in a browse panel"()
     {
         given: "four contents selected"

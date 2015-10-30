@@ -118,7 +118,7 @@ class CountrySiteWithTemplateSpec
         contentWizard.showPageEditor();
 
         when: "the 'Inspect' link clicked"
-        String name = contentWizard.showContextWindow().clickOnInspectLink().getSelectedPageController();
+        String name = contentWizard.showContextWindow().clickOnInspectLink().getInspectionPanel().getSelectedPageController();
         TestUtils.saveScreenshot( getSession(), "city_part_added" );
 
         then: "correct region's name is shown"

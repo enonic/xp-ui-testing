@@ -7,20 +7,16 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
-import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import spock.lang.Ignore
 import spock.lang.Shared
 
 class PageComponentsDialog_Spec
-    extends BaseContentSpec
+    extends BasePageEditorFeaturesSpec
 {
 
     @Shared
     Content PAGE_TEMPLATE;
-
-    @Shared
-    String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
 
     @Shared
     String SITE_WITH_COMPONENTS_NAME = NameHelper.uniqueName( "page-component" );
@@ -100,8 +96,7 @@ class PageComponentsDialog_Spec
         then: "context menu is not displayed"
         !contextMenu.isDisplayed();
     }
-    //XP-1977
-    @Ignore
+
     def "GIVEN 'Page Component View' shown AND context menu displayed WHEN 'HomeButton' pressed THEN context menu is not displayed "()
     {
         given: "existing site have been opened"
@@ -120,9 +115,9 @@ class PageComponentsDialog_Spec
         !contextMenu.isDisplayed();
     }
 
-    def "GIVEN opened 'Page Components' Dialog WHEN button 'close' clicked THEN dialog not displayed"()
+    def "GIVEN 'Page Components' view opened WHEN button 'close' clicked THEN dialog not displayed"()
     {
-        given: "opened 'Page Components' Dialog"
+        given: "'Page Components' view opened"
         contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit().showPageEditor().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
 
@@ -153,12 +148,5 @@ class PageComponentsDialog_Spec
         then: "new page-template listed"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
-    }
-
-    private void addSiteBasedOnFirstApp( Content site )
-    {
-        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-            site.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), site.getName() );
     }
 }

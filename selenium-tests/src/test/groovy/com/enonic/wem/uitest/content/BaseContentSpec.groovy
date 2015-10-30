@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.wem.uitest.BaseGebSpec
@@ -143,6 +144,13 @@ class BaseContentSpec
         return site;
     }
 
+    protected void addSiteBasedOnFirstApp( Content site )
+    {
+        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
+            site.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), site.getName() );
+    }
+
     protected Content buildPageTemplate( String pageDescriptorName, String supports, String displayName, String parentName )
     {
         String name = "template";
@@ -157,5 +165,20 @@ class BaseContentSpec
             contentType( ContentTypeName.pageTemplate() ).data( data ).
             build();
         return pageTemplate;
+    }
+
+    protected void openResourceInMaster( String resource )
+    {
+        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/master/" + resource );
+    }
+
+    protected void openResourceInDraft( String resource )
+    {
+        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/draft/" + resource );
+    }
+
+    protected void openHomePage()
+    {
+        getDriver().navigate().to( browser.baseUrl + "admin/#/home" );
     }
 }
