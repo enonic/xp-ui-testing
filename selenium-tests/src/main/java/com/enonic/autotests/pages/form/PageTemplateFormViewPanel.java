@@ -74,6 +74,7 @@ public class PageTemplateFormViewPanel
             TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( pageName ) );
             throw new TestFrameworkException( "page controller was not found! " + pageName );
         }
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
 
