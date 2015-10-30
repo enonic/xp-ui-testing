@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -67,8 +69,12 @@ public class PageTemplateFormViewPanel
         findElements( By.xpath( "//input[@id='api.ui.selector.dropdown.DropdownOptionFilterInput']" ) ).get( 0 ).sendKeys( pageName );
         //select a 'page name'
         String pageItemXpath = String.format( "//div[contains(@id,'PageDescriptorDropdown')]//h6[text()='%s']", pageName );
-        findElements( By.xpath( pageItemXpath ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
-
+        if ( !isElementDisplayed( pageItemXpath ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( pageName ) );
+            throw new TestFrameworkException( "page controller was not found! " + pageName );
+        }
+        getDisplayedElement( By.xpath( pageItemXpath ) ).click();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
 
     }
