@@ -29,7 +29,6 @@ class ContentPublishDelete_Spec
         String message = contentBrowsePanel.selectContentInTable(
             content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        //filterPanel.clickOnCleanFilter(  );
 
         then:
         filterPanel.typeSearchText( content.getName() )
@@ -68,5 +67,4 @@ class ContentPublishDelete_Spec
         and:
         message == String.format( Application.DELETE_PENDING_MESSAGE, DISPLAY_NAME );
     }
-
 }

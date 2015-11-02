@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -19,6 +20,9 @@ class Occurrences_ComboBox_1_1_Spec
 {
     @Shared
     Content content_with_opt;
+
+    @Shared
+    Content comboBox1_1
 
     def "GIVEN wizard for adding a ComboBox-content(1:1) opened WHEN name typed and no options selected on the page THEN option filter input is present"()
     {
@@ -112,17 +116,49 @@ class Occurrences_ComboBox_1_1_Spec
     def "WHEN content with one option saved and published THEN it content with status equals 'Online' listed"()
     {
         when: "content with selected option saved and published"
-        Content comboBoxContent = buildComboBox1_1_Content( 1 );
-        String publishMessage = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
-            comboBoxContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
+        comboBox1_1 = buildComboBox1_1_Content( 1 );
+        String publishMessage = selectSiteOpenWizard( comboBox1_1.getContentTypeName() ).typeData(
+            comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        ContentWizardPanel.getWizard( getSession() ).close( comboBoxContent.getDisplayName() );
-        filterPanel.typeSearchText( comboBoxContent.getName() );
+        ContentWizardPanel.getWizard( getSession() ).close( comboBox1_1.getDisplayName() );
+        filterPanel.typeSearchText( comboBox1_1.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
-        publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getDisplayName() );
+        publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBox1_1.getDisplayName() );
+    }
+
+    def "GIVEN not valid content with 'modified' status WHEN content selected and 'Delete' pressed THEN content is 'Pending Delete' "()
+    {
+        given: "content with selected option saved and published"
+        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBox1_1 );
+        ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
+        formViewPanel.clickOnLastRemoveButton();
+        wizard.save().close( comboBox1_1.getDisplayName() );
+
+        when: "content has a 'online' status"
+        filterPanel.typeSearchText( comboBox1_1.getName() );
+        contentBrowsePanel.clickToolbarDelete().doDelete();
+        then:
+        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+        and:
+        contentBrowsePanel.isContentInvalid( comboBox1_1.getName() )
+    }
+
+    def "GIVEN not valid content with status is 'Pending Delete'  WHEN content selected and 'Publish' button pressed THEN content not listed in the grid "()
+    {
+        given: "not valid content with status is 'Pending Delete'"
+        filterPanel.typeSearchText( comboBox1_1.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( comboBox1_1.getName() );
+        ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
+
+        when: "content selected and 'Publish' button pressed"
+        dialog.clickOnPublishNowButton();
+        TestUtils.saveScreenshot( getTestSession(), "invalid_cb_1_1_published" )
+        then: "content not listed in the grid"
+        !contentBrowsePanel.exists( comboBox1_1.getName() )
+
     }
 
     def "GIVEN creating new ComboBox-content (1:1) on root WHEN required text input is empty THEN button 'Publish' is disabled"()

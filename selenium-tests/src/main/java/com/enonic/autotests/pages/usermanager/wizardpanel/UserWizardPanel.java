@@ -160,7 +160,7 @@ public class UserWizardPanel
     }
 
     @Override
-    public boolean isEnabledSaveButton()
+    public boolean isSaveButtonEnabled()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON ), Application.EXPLICIT_NORMAL );
     }

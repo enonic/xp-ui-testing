@@ -290,7 +290,8 @@ public class ContentWizardPanel
         return dialog;
     }
 
-    public boolean isEnabledSaveButton()
+    @Override
+    public boolean isSaveButtonEnabled()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }

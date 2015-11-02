@@ -92,7 +92,7 @@ public class UserStoreWizardPanel
     }
 
     @Override
-    public boolean isEnabledSaveButton()
+    public boolean isSaveButtonEnabled()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON ), Application.EXPLICIT_NORMAL );
     }
@@ -114,11 +114,6 @@ public class UserStoreWizardPanel
             throw new TestFrameworkException( "UserStoreWizard was not showed!" );
         }
         return this;
-    }
-
-    public boolean isSaveButtonEnabled()
-    {
-        return toolbarSaveButton.isEnabled();
     }
 }
 

@@ -61,7 +61,7 @@ public class GroupWizardPanel
     }
 
     @Override
-    public boolean isEnabledSaveButton()
+    public boolean isSaveButtonEnabled()
     {
         return false;
     }

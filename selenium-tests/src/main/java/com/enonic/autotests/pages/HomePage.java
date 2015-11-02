@@ -172,4 +172,9 @@ public class HomePage
     {
         return contentManager.isDisplayed();
     }
+
+    public boolean isUsersDisplayed()
+    {
+        return userManager.isDisplayed();
+    }
 }
