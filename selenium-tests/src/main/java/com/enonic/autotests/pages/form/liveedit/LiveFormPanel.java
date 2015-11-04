@@ -30,6 +30,10 @@ public class LiveFormPanel
 
     public LayoutComponentView getLayoutComponentView()
     {
+        if ( layoutComponentView == null )
+        {
+            layoutComponentView = new LayoutComponentView( getSession() );
+        }
         return layoutComponentView;
     }
 

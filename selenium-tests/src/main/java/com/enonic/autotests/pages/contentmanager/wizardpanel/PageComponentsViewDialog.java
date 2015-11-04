@@ -30,6 +30,8 @@ public class PageComponentsViewDialog
 
     private final String SLICK_VIEW_PORT = "//div[@class='slick-viewport']";
 
+    private String CONTEXT_MENU_ITEM = "//dl[contains(@id,'TreeContextMenu')]//*[contains(@id,'TreeMenuItem') and text()='%s']";
+
     @FindBy(xpath = CLOSE_BUTTON)
     WebElement closeButton;
 
@@ -55,6 +57,21 @@ public class PageComponentsViewDialog
             throw new TestFrameworkException( "menu button was not found for  " + componentName );
         }
         getDisplayedElement( By.xpath( menuButton ) ).click();
+        sleep( 400 );
+        return this;
+    }
+
+    public PageComponentsViewDialog selectMenuItem( String... items )
+    {
+        for ( int i = 0; i < items.length; i++ )
+        {
+            if ( !isElementDisplayed( String.format( CONTEXT_MENU_ITEM, items[i] ) ) )
+            {
+                throw new TestFrameworkException( "" + items[i] );
+            }
+            getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, items[i] ) ) ).click();
+            sleep( 500 );
+        }
         return this;
     }
 

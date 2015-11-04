@@ -2,7 +2,6 @@ package com.enonic.autotests.pages;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -71,7 +70,7 @@ public abstract class BaseBrowseFilterPanel
             throw new TestFrameworkException( "filter panel or search input not displayed" );
         }
         clearAndType( searchInput, text );
-        searchInput.sendKeys( Keys.ENTER );
+        //searchInput.sendKeys( Keys.ENTER );
         sleep( 1000 );
         getLogger().info( "Filtered by : " + text );
         return this;

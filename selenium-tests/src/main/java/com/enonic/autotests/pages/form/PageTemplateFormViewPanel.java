@@ -19,12 +19,7 @@ public class PageTemplateFormViewPanel
 {
     public static final String SUPPORTS = "supports";
 
-    public static final String NAME_IN_MENU = "nameInMenu";
-
     public static final String PAGE_CONTROLLER = "pageController";
-
-    private String MENU_ITEM_CHECKBOX =
-        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='Menu item']]//div[contains(@id,'api.ui.Checkbox')]/label";
 
     private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT =
         "//div[@id='api.content.page.PageDescriptorDropdown']//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
@@ -44,29 +39,30 @@ public class PageTemplateFormViewPanel
     public FormViewPanel type( final PropertyTree data )
     {
         String supports = data.getString( SUPPORTS );
+        selectSupportOption( supports );
+        selectPageController( data.getString( PAGE_CONTROLLER ) );
+        return this;
+    }
+
+    private void selectSupportOption( String supports )
+    {
         optionFilterInput.sendKeys( supports );
+        sleep( 500 );
         String siteContentTypeGridItem = String.format( "//div[contains(@id,'NamesView')]/p[contains(.,'%s')]", supports );
-        if ( getDriver().findElements( By.xpath( siteContentTypeGridItem ) ).size() == 0 )
+        if ( !isElementDisplayed( siteContentTypeGridItem ) )
         {
             throw new TestFrameworkException( "content type with name: " + supports + "  was not found!" );
         }
-        //select supports: system:site
-        getDriver().findElements( By.xpath( siteContentTypeGridItem ) ).get( 0 ).click();
+        //select supports: portal:site
+        getDisplayedElement( By.xpath( siteContentTypeGridItem ) ).click();
         sleep( 500 );
-        String nameInMenu = data.getString( NAME_IN_MENU );
-        if ( nameInMenu != null )
-        {
-            // typeMenuTab( nameInMenu );
-        }
-        selectPageController( data.getString( PAGE_CONTROLLER ) );
-        return this;
     }
 
     private void selectPageController( String pageName )
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        //do filter options:
-        findElements( By.xpath( "//input[@id='api.ui.selector.dropdown.DropdownOptionFilterInput']" ) ).get( 0 ).sendKeys( pageName );
+        getDisplayedElement( By.xpath( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) ).sendKeys( pageName );
+        sleep( 500 );
         //select a 'page name'
         String pageItemXpath = String.format( "//div[contains(@id,'PageDescriptorDropdown')]//h6[text()='%s']", pageName );
         if ( !isElementDisplayed( pageItemXpath ) )
@@ -78,16 +74,5 @@ public class PageTemplateFormViewPanel
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
 
-    }
-
-    private void typeMenuTab( String nameInMenu )
-    {
-        if ( getDriver().findElements( By.xpath( MENU_ITEM_CHECKBOX ) ).size() == 0 )
-        {
-            throw new TestFrameworkException( "MENU TAB: menu item checkbox   was not found!" );
-        }
-        //select supports: system:site
-        getDriver().findElements( By.xpath( MENU_ITEM_CHECKBOX ) ).get( 0 ).click();
-        menuNameInput.sendKeys( nameInMenu );
     }
 }

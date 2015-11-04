@@ -35,7 +35,7 @@ public class ImageComponentView
 
     public LiveFormPanel selectImageItemFromList( String imageName )
     {
-        // clickOnDropDown();
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
         selectOptionsItem( imageName );
         return new LiveFormPanel( getSession() );
     }
@@ -59,8 +59,7 @@ public class ImageComponentView
 
     private void selectOptionsItem( String imageName )
     {
-        if ( findElements( By.xpath( EMPTY_IMAGE_COMPONENT_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]" ) ).size() ==
-            0 )
+        if ( !isElementDisplayed( EMPTY_IMAGE_COMPONENT_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]" ) )
         {
             throw new TestFrameworkException( "ImageComponentView: options filter input was not found!" );
         }

@@ -1,10 +1,9 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.SiteFormViewPanel
-import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
-import com.enonic.autotests.pages.form.liveedit.LayoutComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -14,11 +13,8 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
-
-import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
 class CreateSiteWithLayoutSpec
@@ -29,13 +25,18 @@ class CreateSiteWithLayoutSpec
     Content SITE
 
     @Shared
-    String LIVE_EDIT_FRAME_SITE_HEADER = "//h1[text()='Simple Site']";
-
-    @Shared
     String MAIN_REGION_PAGE_DESCRIPTOR_NAME = "main region";
 
-    @Ignore
-    def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be listed"()
+    @Shared
+    Content pageTemplate
+
+    @Shared
+    String SITE_DISPLAY_NAME = "layout-page-template";
+
+    @Shared
+    String SUPPORTS = ContentTypeName.site().toString();
+
+    def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be present"()
     {
         given:
         SITE = buildSimpleSiteWitLayout();
@@ -43,151 +44,113 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
             SITE.getDisplayName() );
 
-        then: " new site should be listed"
+        then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );
-
     }
 
-    @Ignore
-    def "GIVEN exists on root a site, based on 'Simple site' WHEN site expanded and templates folder selected AND page-template added  THEN new template should be listed beneath a 'Templates' folder"()
+    def "GIVEN existing site, based on 'Simple site' app WHEN site expanded and templates folder selected AND page-template added  THEN new template should be present in a 'Templates' folder"()
     {
         given:
-        Content pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME, "simple-page-template" );
+        pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME, SUPPORTS, SITE_DISPLAY_NAME, SITE.getName() );
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
-        sleep( 2000 );
+            pageTemplate.getContentTypeName() ).showPageEditor().typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
+
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
         TestUtils.saveScreenshot( getSession(), "simple_template" );
 
-        then: " new template should be listed beneath a 'Templates' folder"
+        then: "new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getName() );
     }
 
-    @Ignore
-    def "GIVEN site opened for edit WHEN 'toggle window' button on toolbar clicked  THEN ContextWindow  appears"()
+    def "GIVEN 'Page Components' opened WHEN menu for 'main region' clicked and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout present on the live edit frame"()
     {
-        given: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
-        when: "button on toolbar clicked"
-        ContextWindow contextWindow = contentWizard.showContextWindow();
-
-        then: "context window appears"
-        contextWindow.isContextWindowPresent();
-    }
-
-    @Ignore
-    def "WHEN site opened for edit  AND page template is automatic THEN Live Edit frame should be locked"()
-    {
-        when: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
-
-        then: " the 'Live Edit' frame should be locked"
-        contentWizard.isLiveEditLocked();
-    }
-
-    @Ignore
-    def "GIVEN site opened for edit  AND page template is automatic WHEN link 'Unlock' clicked on 'Live Edit' frame  THEN Live Edit frame is unlocked"()
-    {
-        given: "site opened for edit"
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
-
-        when:
-        contentWizard.unlockLiveEdit();
-
-        then: "the 'Live Edit' frame should be locked"
-        !contentWizard.isLiveEditLocked();
-    }
-
-    @Ignore
-    def "GIVEN site opened for edit WHEN 'layout item'  dragged AND 3 column layout added AND site saved THEN new layout present on the live edit frame"()
-    {
-        given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
-        contentWizard.unlockLiveEdit();
-        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
-        TestUtils.saveScreenshot( getSession(), "drag_and_drop" )
-
-        when: "3 column layout dragged into 'live edit' frame and site saved"
-        LayoutComponentView layoutComponentView = contextWindow.addLayoutByDragAndDrop( LIVE_EDIT_FRAME_SITE_HEADER );
-        TestUtils.saveScreenshot( getSession(), "simple_layoutcomponent" );
-        LiveFormPanel liveFormPanel = layoutComponentView.selectLayout( "3-col" );
-        TestUtils.saveScreenshot( getSession(), "layout_3col" );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
-        contentWizard.save();
-
-        then: "layout component appears in the 'live edit' frame and number of regions is 3"
+        when: "'Insert/Layout' menu items clicked and layout with 3 columns selected"
+        pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
-        liveFormPanel.isLayoutComponentPresent() && liveFormPanel.getLayoutColumnNumber() == 3;
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        liveFormPanel.getLayoutComponentView().selectLayout( "3-col" );
+        TestUtils.saveScreenshot( getSession(), "layout_selected" );
 
+        then: "layout-component appears in the 'live edit' frame and number of regions is 3"
+        liveFormPanel.isLayoutComponentPresent();
+        and: "tree column present in layout"
+        liveFormPanel.getLayoutColumnNumber() == 3;
     }
 
-    @Ignore
-    def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on to left region AND site saved THEN layout with one image present on the live edit frame"()
+    def "'Page Components' opened WHEN menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image in the left region inserted"()
     {
-        given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
-        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
-        TestUtils.saveScreenshot( getSession(), "insert_left" )
+        when: "menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
+        pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
+        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
+        imageComponentView.selectImageItemFromList( "telk.png" )
 
-        when: "3 images dragged into 'live edit' frame and site saved"
-        ImageComponentView imageComponentView = contextWindow.insertImageByDragAndDrop( "left", LIVE_EDIT_FRAME_SITE_HEADER );
-        LiveFormPanel liveFormPanel = imageComponentView.selectImageItemFromList( "bro.jpg" );
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        wizard.save();
         TestUtils.saveScreenshot( getSession(), "left_inserted" );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
-        contentWizard.save();
 
-        then: "new image present in the 'live edit' frame"
+        then: "new image inserted in the left-region "
         NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 1;
     }
 
-    @Ignore
-    def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on center region AND site saved THEN layout with two images present on the live edit frame"()
+    def "GIVEN 'Page Components' opened WHEN menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the center-region "()
     {
-        given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
-        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
-        TestUtils.saveScreenshot( getSession(), "insert_images1" )
-
-        when: "3 images dragged into 'live edit' frame and site saved"
-        ImageComponentView imageComponentView = contextWindow.insertImageByDragAndDrop( "center", LIVE_EDIT_FRAME_SITE_HEADER );
-        LiveFormPanel liveFormPanel = imageComponentView.selectImageItemFromList( "telk.png" );
-        TestUtils.saveScreenshot( getSession(), "center_iserted" );
+        when: "menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
+        pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
+        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
+        imageComponentView.selectImageItemFromList( "geek.png" )
         NavigatorHelper.switchToContentManagerFrame( getSession() );
-        contentWizard.save();
+        wizard.save();
+        TestUtils.saveScreenshot( getSession(), "center_inserted" );
 
-        then: "new image present in the 'live edit' frame"
+        then: "new image inserted in the center-region "
         NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
 
-    @Ignore
-    def "GIVEN site opened for edit WHEN 'image' item dragged and dropped on right region AND site saved THEN layout with 3 images present on the live edit frame"()
+    def "GIVEN 'Page Components' opened WHEN menu for 'right region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the right-region "()
     {
-        given:
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
-        ContextWindow contextWindow = contentWizard.showContextWindow().clickOnInsertLink();
-        TestUtils.saveScreenshot( getSession(), "insert_images1" )
-
-        when: "3 images dragged into 'live edit' frame and site saved"
-        ImageComponentView imageComponentView = contextWindow.insertImageByDragAndDrop( "right", LIVE_EDIT_FRAME_SITE_HEADER );
-        TestUtils.saveScreenshot( getSession(), "simple_layoutcomponent" );
-        LiveFormPanel liveFormPanel = imageComponentView.selectImageItemFromList( "geek.png" );
-        TestUtils.saveScreenshot( getSession(), "right_inserted" );
+        when: "menu for right region clicked and 'insert' menu-item selected AND 'image'-item clicked"
+        pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
+        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
+        imageComponentView.selectImageItemFromList( "foss.jpg" )
         NavigatorHelper.switchToContentManagerFrame( getSession() );
-        contentWizard.save();
+        wizard.save();
+        TestUtils.saveScreenshot( getSession(), "right_inserted" );
 
-        then: "new image present in the 'live edit' frame"
+        then: "new image inserted to the right-region"
         NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 3;
     }
 
@@ -201,27 +164,10 @@ class CreateSiteWithLayoutSpec
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
-            displayName( "simple-site-application-based" ).
+            displayName( "site with layout" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
-    }
-
-    private Content buildPageTemplate( String pageDescriptorName, String displayName )
-    {
-        String name = "template";
-
-        PropertyTree data = new PropertyTree();
-        data.addStrings( "nameInMenu", "item1" );
-        data.addStrings( "pageController", pageDescriptorName );
-
-        Content pageTemplate = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( displayName ).
-            parent( ContentPath.from( SITE.getName() ) ).
-            contentType( ContentTypeName.pageTemplate() ).data( data ).
-            build();
-        return pageTemplate;
     }
 }

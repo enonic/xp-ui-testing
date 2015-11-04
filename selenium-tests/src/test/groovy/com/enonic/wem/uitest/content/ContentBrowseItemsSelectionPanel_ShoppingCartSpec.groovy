@@ -36,7 +36,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN a selected content  WHEN search text typed and one more row with content clicked  THEN selection panel has no any items"()
+    def "GIVEN a selected content WHEN search text typed and one more row with content clicked  THEN selection panel has no any items"()
     {
         setup: "select a root content and type search text in filter panel"
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT_NAME );
