@@ -154,6 +154,28 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 3;
     }
 
+    def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'reset' menu-item selected THEN removed image not present in layout"()
+    {
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+
+        when: "menu for image clicked and 'reset' menu-item selected"
+        pageComponentsView.openMenu( "telk.png" ).selectMenuItem( "Reset" );
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "reset_image" );
+
+        then: "number of images in layout reduced"
+        liveFormPanel.getNumberImagesInLayout() == 2;
+
+        and: "but number of components not changed"
+        liveFormPanel.getNumberImageComponentsInLayout() == 3;
+        and: "image with the required name no longer present on LiveEdit"
+        !liveFormPanel.isImagePresent( "telk.png" );
+    }
+
 
     private Content buildSimpleSiteWitLayout()
     {

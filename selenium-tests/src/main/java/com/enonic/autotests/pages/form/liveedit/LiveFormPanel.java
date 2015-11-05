@@ -15,9 +15,11 @@ public class LiveFormPanel
 {
     private final String PANEL_DIV = "//div[contains(@id,'app.wizard.page.LiveFormPanel')]";
 
+    private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'api.liveedit.image.ImageComponentView')]";
+
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
 
-    public final String IMAGE_COMPONENT_VIEW = "//figure[contains(@id,'api.liveedit.image.ImageComponentView')]";
+    public final String FIGURE = "//figure[contains(@id,'api.liveedit.image.ImageComponentView')]";
 
     public final String SHADER_PAGE = "//div[@class='shader page']";
 
@@ -65,7 +67,6 @@ public class LiveFormPanel
     public int getLayoutColumnNumber()
     {
         return findElements( By.xpath( LAYOUT_COMPONENT + "//div[contains(@id,'liveedit.RegionView')]" ) ).size();
-
     }
 
     public boolean isShaderDisplayed()
@@ -81,7 +82,17 @@ public class LiveFormPanel
 
     public int getNumberImagesInLayout()
     {
-        return findElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) ).size();
+        return findElements( By.xpath( LAYOUT_COMPONENT + FIGURE ) ).size();
     }
 
+    public long getNumberImageComponentsInLayout()
+    {
+        return findElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) ).stream().filter( WebElement::isDisplayed ).count();
+    }
+
+    public boolean isImagePresent( String imageName )
+    {
+        String img = String.format( "//img[contains(@src,'%s')]", imageName );
+        return isElementDisplayed( LAYOUT_COMPONENT + FIGURE + img );
+    }
 }

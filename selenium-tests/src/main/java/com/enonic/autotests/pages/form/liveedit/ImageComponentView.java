@@ -1,15 +1,6 @@
 package com.enonic.autotests.pages.form.liveedit;
 
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
@@ -40,23 +31,6 @@ public class ImageComponentView
         return new LiveFormPanel( getSession() );
     }
 
-    public void clickOnDropDown()
-    {
-        String dropDownButtonXpath = EMPTY_IMAGE_COMPONENT_CONTAINER + "//div[@class='dropdown-handle']";
-        if ( findElements( By.xpath( dropDownButtonXpath ) ).size() == 0 )
-        {
-            throw new TestFrameworkException( "element not exists or wrong xpath" );
-        }
-        findElements( By.xpath( dropDownButtonXpath ) ).get( 0 ).click();
-        sleep( 1000 );
-    }
-
-    private void clickOnUploadButtonAndShowDropZone()
-    {
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
-        findElements( By.xpath( "//div[contains(@id,'ImageUploadDialog') and @style]//a[@class='dropzone']" ) ).get( 0 ).click();
-    }
-
     private void selectOptionsItem( String imageName )
     {
         if ( !isElementDisplayed( EMPTY_IMAGE_COMPONENT_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]" ) )
@@ -67,59 +41,10 @@ public class ImageComponentView
             0 ).sendKeys( imageName );
         sleep( 300 );
         String optionXpath = String.format( NAMES_ICON_VIEW, imageName );
-        if ( findElements( By.xpath( optionXpath ) ).size() == 0 )
+        if ( !isElementDisplayed( optionXpath ) )
         {
             throw new TestFrameworkException( "Image with name:  " + imageName + "  was not found!" );
         }
-        findElements( By.xpath( optionXpath ) ).get( 0 ).click();
+        getDisplayedElement( By.xpath( optionXpath ) ).click();
     }
-
-
-    private void saveInSystemClipboard( String filePath )
-    {
-        URL dirURL = ImageComponentView.class.getClassLoader().getResource( filePath );
-        if ( dirURL == null )
-        {
-            throw new TestFrameworkException( "tests resource for upload tests was not found:" + filePath );
-        }
-        File file = null;
-        try
-        {
-            getLogger().info( "path to resource  is###: " + dirURL.toURI() );
-            file = new File( dirURL.toURI() );
-
-        }
-        catch ( URISyntaxException e )
-        {
-            getLogger().error( "wrong uri for file " + filePath );
-        }
-
-        StringSelection ss = new StringSelection( file.getAbsolutePath() );
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents( ss, null );
-    }
-
-    public LiveFormPanel doUploadImage( String imagePath )
-        throws AWTException
-    {
-        //click upload button
-        findElements( By.xpath( UPLOAD_BUTTON ) ).get( 0 ).click();
-        sleep( 500 );
-        clickOnUploadButtonAndShowDropZone();
-
-        saveInSystemClipboard( imagePath );
-        sleep( 1000 );
-        Robot robot = new Robot();
-
-        robot.keyPress( KeyEvent.VK_CONTROL );
-        robot.keyPress( KeyEvent.VK_V );
-        robot.keyRelease( KeyEvent.VK_V );
-        robot.keyRelease( KeyEvent.VK_CONTROL );
-        sleep( 3000 );
-        robot.keyPress( KeyEvent.VK_ENTER );
-        robot.keyRelease( KeyEvent.VK_ENTER );
-        sleep( 2000 );
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
-        return new LiveFormPanel( getSession() );
-    }
-
 }
