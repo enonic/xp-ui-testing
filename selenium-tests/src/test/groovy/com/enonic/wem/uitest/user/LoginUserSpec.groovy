@@ -146,7 +146,7 @@ class LoginUserSpec
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         TestUtils.saveScreenshot( getSession(), "logged_" + USER_NAME );
 
-        when: ""
+        when: "user opened a content with CAN_WRITE permission and typed new 'display name'"
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentCanWrite.getName() ).clickToolbarEdit();
         wizard.typeDisplayName( "content updated" );
         TestUtils.saveScreenshot( getSession(), "save_enabled" );

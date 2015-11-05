@@ -44,7 +44,6 @@ task copyTestApplications( type: Copy ) {
 }
 task copySimplePageApp( type: Copy ) {
     from '../test-applications/simple-page/build/libs/'
-    from '../test-applications/contenttypes/build/libs/'
 
     include '**/*.jar'
     into file( deployDir )
@@ -160,7 +159,7 @@ task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, 
     copyTestApplications.mustRunAfter startServer
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp] ) {
+task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp, copySimplePageApp] ) {
     scanForTestClasses = false
     exclude '**/application/**'
     exclude '**/user/**'
@@ -169,6 +168,7 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFo
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
     copyMyFirstApp.mustRunAfter startServer
+    copySimplePageApp.mustRunAfter startServer
 }
 
 
