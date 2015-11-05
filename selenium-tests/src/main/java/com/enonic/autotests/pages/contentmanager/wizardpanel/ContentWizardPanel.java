@@ -318,6 +318,7 @@ public class ContentWizardPanel
         boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_wizard" ) );
             throw new TestFrameworkException( "ContentWizard was not showed!" );
         }
         return this;
