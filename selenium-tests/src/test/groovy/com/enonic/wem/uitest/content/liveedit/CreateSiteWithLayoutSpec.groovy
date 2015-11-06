@@ -176,6 +176,50 @@ class CreateSiteWithLayoutSpec
         !liveFormPanel.isImagePresent( "telk.png" );
     }
 
+    def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'duplicate' menu-item selected THEN two images with the same name present in layout"()
+    {
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+
+        when: "menu for image clicked and 'reset' menu-item selected"
+        pageComponentsView.openMenu( "telk.png" ).selectMenuItem( "Duplicate" );
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "duplicate_image" );
+
+        then: "number of images in layout reduced"
+        liveFormPanel.getNumberImagesInLayout() == 4;
+
+        and: "but number of components not changed"
+        liveFormPanel.getNumberImageComponentsInLayout() == 4;
+        and: "image with the required name no longer present on LiveEdit"
+        liveFormPanel.getNumberOfImagesByName( "telk.png" ) == 2;
+    }
+
+    def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'remove' menu-item selected THEN two images with the same name present in layout"()
+    {
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+
+        when: "menu for image clicked and 'reset' menu-item selected"
+        pageComponentsView.openMenu( "telk.png" ).selectMenuItem( "Remove" );
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "remove_image" );
+
+        then: "number of images in layout reduced"
+        liveFormPanel.getNumberImagesInLayout() == 3;
+
+        and: "but number of components not changed"
+        liveFormPanel.getNumberImageComponentsInLayout() == 3;
+        and: "image with the required name no longer present on LiveEdit"
+        liveFormPanel.getNumberOfImagesByName( "telk.png" ) == 1;
+    }
+
 
     private Content buildSimpleSiteWitLayout()
     {

@@ -95,4 +95,10 @@ public class LiveFormPanel
         String img = String.format( "//img[contains(@src,'%s')]", imageName );
         return isElementDisplayed( LAYOUT_COMPONENT + FIGURE + img );
     }
+
+    public int getNumberOfImagesByName( String imageName )
+    {
+        String img = String.format( "//img[contains(@src,'%s')]", imageName );
+        return getDisplayedElements( By.xpath( LAYOUT_COMPONENT + FIGURE + img ) ).size();
+    }
 }
