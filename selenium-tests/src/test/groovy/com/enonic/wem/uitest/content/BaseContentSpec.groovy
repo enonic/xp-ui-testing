@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.*
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
+import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -129,15 +130,31 @@ class BaseContentSpec
         return contentBrowsePanel.clickCheckboxAndSelectRow( siteName ).clickToolbarNew().selectContentType( contentTypeName );
     }
 
-    protected Content buildMySite( String siteName )
+    protected Content buildMyFirstAppSite( String siteName )
     {
         PropertyTree data = new PropertyTree();
-        data.addString( "applicationKey", "My First App" );
+        data.addString( SiteFormViewPanel.APP_KEY, "My First App" );
         data.addStrings( "description", "My first Site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( siteName ).
             displayName( "my-site" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.site() ).data( data ).
+            build();
+        return site;
+    }
+
+    protected Content buildSimpleSiteApp()
+    {
+        String name = NameHelper.uniqueName( "site" );
+        PropertyTree data = new PropertyTree();
+        data.addString( SiteFormViewPanel.APP_KEY, "Simple Site App" );
+        data.addStrings( "description", "simple site " )
+        Content site = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( name ).
+            displayName( "site with layout" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.site() ).data( data ).
             build();

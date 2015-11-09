@@ -42,7 +42,7 @@ public class PageComponentsViewDialog
 
     public boolean isOpened()
     {
-        return findElements( By.xpath( DIALOG_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( DIALOG_CONTAINER );
     }
 
     public PageComponentsViewDialog openMenu( String componentName )
@@ -100,7 +100,7 @@ public class PageComponentsViewDialog
         boolean result = waitUntilVisibleNoException( By.xpath( CLOSE_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_close-button" );
+            TestUtils.saveScreenshot( getSession(), "err_close-components-view" );
             throw new TestFrameworkException( "close button was not found!" );
         }
         closeButton.click();

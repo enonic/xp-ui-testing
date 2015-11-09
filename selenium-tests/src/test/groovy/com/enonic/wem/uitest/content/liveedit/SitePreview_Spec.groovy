@@ -17,7 +17,7 @@ class SitePreview_Spec
     def "GIVEN a existing site without a template WHEN site selected THEN 'Preview' on a BrowseToolbar is disabled"()
     {
         given:
-        MY_SITE = buildMySite( "preview" );
+        MY_SITE = buildMyFirstAppSite( "preview" );
         "data typed and saved and wizard closed"
         addSiteBasedOnFirstApp( MY_SITE );
 

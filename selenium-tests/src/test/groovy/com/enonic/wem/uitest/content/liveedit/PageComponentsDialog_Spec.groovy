@@ -30,7 +30,7 @@ class PageComponentsDialog_Spec
     def "GIVEN existing site without a template WHEN site opened for edit and 'Show Component View' on wizard-toolbar clicked THEN 'Page Component dialog appears'"()
     {
         given: "existing Site based on 'My First App'"
-        SITE = buildMySite( FIRST_SITE_NAME );
+        SITE = buildMyFirstAppSite( FIRST_SITE_NAME );
         addSiteBasedOnFirstApp( SITE );
 
         and: "site opened for edit"
@@ -134,7 +134,7 @@ class PageComponentsDialog_Spec
     def "test"()
     {
         given: "existing Site based on 'My First App'"
-        Content site = buildMySite( SITE_WITH_COMPONENTS_NAME );
+        Content site = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
         addSiteBasedOnFirstApp( site );
         contentBrowsePanel.expandContent( ContentPath.from( SITE_WITH_COMPONENTS_NAME ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, "country", "country template",

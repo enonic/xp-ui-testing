@@ -2,16 +2,13 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
-import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -36,10 +33,22 @@ class CreateSiteWithLayoutSpec
     @Shared
     String SUPPORTS = ContentTypeName.site().toString();
 
+    @Shared
+    String TEST_IMAGE_COMPONENT_NAME = "telk.png";
+
+    @Shared
+    String SECOND_TEST_IMAGE_COMPONENT_NAME = "geek.png";
+
+    @Shared
+    String THIRD_TEST_IMAGE_COMPONENT_NAME = "foss.jpg";
+
+    @Shared
+    String LAYOUT_NAME = "3-col";
+
     def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be present"()
     {
         given:
-        SITE = buildSimpleSiteWitLayout();
+        SITE = buildSimpleSiteApp();
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
             SITE.getDisplayName() );
@@ -78,7 +87,7 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        liveFormPanel.getLayoutComponentView().selectLayout( "3-col" );
+        liveFormPanel.getLayoutComponentView().selectLayout( LAYOUT_NAME );
         TestUtils.saveScreenshot( getSession(), "layout_selected" );
 
         then: "layout-component appears in the 'live edit' frame and number of regions is 3"
@@ -98,7 +107,7 @@ class CreateSiteWithLayoutSpec
         when: "menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( "telk.png" )
+        imageComponentView.selectImageItemFromList( TEST_IMAGE_COMPONENT_NAME )
 
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         wizard.save();
@@ -121,7 +130,7 @@ class CreateSiteWithLayoutSpec
         when: "menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( "geek.png" )
+        imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME )
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "center_inserted" );
@@ -143,7 +152,7 @@ class CreateSiteWithLayoutSpec
         when: "menu for right region clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( "foss.jpg" )
+        imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "right_inserted" );
@@ -162,7 +171,7 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
         when: "menu for image clicked and 'reset' menu-item selected"
-        pageComponentsView.openMenu( "telk.png" ).selectMenuItem( "Reset" );
+        pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Reset" );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "reset_image" );
@@ -173,7 +182,7 @@ class CreateSiteWithLayoutSpec
         and: "but number of components not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 3;
         and: "image with the required name no longer present on LiveEdit"
-        !liveFormPanel.isImagePresent( "telk.png" );
+        !liveFormPanel.isImagePresent( TEST_IMAGE_COMPONENT_NAME );
     }
 
     def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'duplicate' menu-item selected THEN two images with the same name present in layout"()
@@ -184,7 +193,7 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
         when: "menu for image clicked and 'reset' menu-item selected"
-        pageComponentsView.openMenu( "telk.png" ).selectMenuItem( "Duplicate" );
+        pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Duplicate" );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "duplicate_image" );
@@ -195,7 +204,7 @@ class CreateSiteWithLayoutSpec
         and: "but number of components not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 4;
         and: "image with the required name no longer present on LiveEdit"
-        liveFormPanel.getNumberOfImagesByName( "telk.png" ) == 2;
+        liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_COMPONENT_NAME ) == 2;
     }
 
     def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'remove' menu-item selected THEN two images with the same name present in layout"()
@@ -206,7 +215,7 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
         when: "menu for image clicked and 'reset' menu-item selected"
-        pageComponentsView.openMenu( "telk.png" ).selectMenuItem( "Remove" );
+        pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Remove" );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "remove_image" );
@@ -217,23 +226,6 @@ class CreateSiteWithLayoutSpec
         and: "but number of components not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 3;
         and: "image with the required name no longer present on LiveEdit"
-        liveFormPanel.getNumberOfImagesByName( "telk.png" ) == 1;
-    }
-
-
-    private Content buildSimpleSiteWitLayout()
-    {
-        String name = NameHelper.uniqueName( "site" );
-        PropertyTree data = new PropertyTree();
-        data.addString( SiteFormViewPanel.APP_KEY, "Simple Site App" );
-        data.addStrings( "description", "simple site " )
-        Content site = Content.builder().
-            parent( ContentPath.ROOT ).
-            name( name ).
-            displayName( "site with layout" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
-            build();
-        return site;
+        liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_COMPONENT_NAME ) == 1;
     }
 }

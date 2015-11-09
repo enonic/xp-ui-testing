@@ -25,7 +25,7 @@ class MyFirstApp_Spec
     def "GIVEN creating new Site based on 'My First App' WHEN saved and wizard closed THEN new site should be listed"()
     {
         given:
-        MY_FIRST_SITE = buildMySite( NameHelper.uniqueName( "country-site" ) );
+        MY_FIRST_SITE = buildMyFirstAppSite( NameHelper.uniqueName( "country-site" ) );
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
             MY_FIRST_SITE.getDisplayName() );

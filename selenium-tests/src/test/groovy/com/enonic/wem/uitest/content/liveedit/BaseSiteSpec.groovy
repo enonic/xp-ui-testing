@@ -62,7 +62,7 @@ class BaseSiteSpec
         filterPanel.typeSearchText( FIRST_SITE_NAME );
         if ( !contentBrowsePanel.exists( FIRST_SITE_NAME ) )
         {
-            site = buildMySite( FIRST_SITE_NAME );
+            site = buildMyFirstAppSite( FIRST_SITE_NAME );
             contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
                 site.getDisplayName() );
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "first_site_saved" ) );

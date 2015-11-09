@@ -21,7 +21,7 @@ class ContextWindow_InspectionPanel_Spec
     def "setup: add a site"()
     {
         when: "site based on 'My First App'"
-        SITE = buildMySite( SITE_NAME );
+        SITE = buildMyFirstAppSite( SITE_NAME );
         addSiteBasedOnFirstApp( SITE );
         then: "it present in browse panel"
         contentBrowsePanel.exists( SITE_NAME );
