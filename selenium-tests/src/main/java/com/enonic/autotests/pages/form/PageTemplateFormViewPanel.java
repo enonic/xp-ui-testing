@@ -22,7 +22,7 @@ public class PageTemplateFormViewPanel
     public static final String PAGE_CONTROLLER = "pageController";
 
     private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT =
-        "//div[@id='api.content.page.PageDescriptorDropdown']//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
+        "//div[@id='PageDescriptorDropdown']//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
 
     @FindBy(xpath = "//div[contains(@id,'api.form.FormView')]//input[contains(@class,'option-filter-input')]")
     private WebElement optionFilterInput;
@@ -51,6 +51,7 @@ public class PageTemplateFormViewPanel
         String siteContentTypeGridItem = String.format( "//div[contains(@id,'NamesView')]/p[contains(.,'%s')]", supports );
         if ( !isElementDisplayed( siteContentTypeGridItem ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_" + supports );
             throw new TestFrameworkException( "content type with name: " + supports + "  was not found!" );
         }
         //select supports: portal:site
@@ -61,6 +62,11 @@ public class PageTemplateFormViewPanel
     private void selectPageController( String pageName )
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );
+        if ( !isElementDisplayed( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_page_controller" );
+            throw new TestFrameworkException( "page controller: DropdownOptionFilterInput was not found" );
+        }
         getDisplayedElement( By.xpath( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) ).sendKeys( pageName );
         sleep( 500 );
         //select a 'page name'

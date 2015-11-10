@@ -69,7 +69,7 @@ public abstract class BrowseItemsSelectionPanel
         return h6Elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
-    public List<String> getSelectedItemDisplayNames()
+    public List<String> getDisplayNameOfSelectedItems()
     {
         if ( !isVisible() )
         {
@@ -78,7 +78,6 @@ public abstract class BrowseItemsSelectionPanel
         List<WebElement> h6Elements = getDriver().findElements( By.xpath( ALL_SELECTED_ITEMS + H6_DISPLAY_NAME ) );
         return h6Elements.stream().filter( e -> !e.getText().isEmpty() ).filter( WebElement::isDisplayed ).map(
             WebElement::getText ).collect( Collectors.toList() );
-
     }
 
     public boolean isVisible()

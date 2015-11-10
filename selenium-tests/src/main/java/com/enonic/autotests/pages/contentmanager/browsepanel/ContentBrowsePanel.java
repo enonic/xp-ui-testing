@@ -339,6 +339,7 @@ public class ContentBrowsePanel
     {
         if ( !doScrollAndFindGridItem( contentPath.getName() ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_" + contentPath.getName() );
             throw new TestFrameworkException( "expandContent: content was not found! " + contentPath );
         }
 

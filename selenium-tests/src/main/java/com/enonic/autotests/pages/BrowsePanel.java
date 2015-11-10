@@ -93,7 +93,7 @@ public abstract class BrowsePanel
 
     private BrowsePanel clickOnShowFilterPanelButton()
     {
-        if ( findElements( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        if ( !isElementDisplayed( SHOW_FILTER_PANEL_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_show_filter" ) );
             throw new TestFrameworkException( "button 'show filter panel' not displayed or probably bad locator for web element" );
@@ -105,7 +105,7 @@ public abstract class BrowsePanel
 
     private BrowsePanel clickOnHideFilterPanelButton()
     {
-        if ( findElements( By.xpath( HIDE_FILTER_PANEL_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        if ( !isElementDisplayed( HIDE_FILTER_PANEL_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_hide_filter" ) );
             throw new TestFrameworkException( "button 'hide filter panel' not displayed or probably bad locator for web element" );
@@ -232,7 +232,6 @@ public abstract class BrowsePanel
         sleep( 2000 );
     }
 
-
     /**
      * Gets a number of selected items in the table.
      *
@@ -357,7 +356,6 @@ public abstract class BrowsePanel
         if ( !isGridLoaded )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_bug" ) );
-            // throw new TestFrameworkException( "BrowsePanel:  grid was not loaded!" );
         }
     }
 
@@ -651,9 +649,6 @@ public abstract class BrowsePanel
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
         WebElement element = findElements( By.xpath( "//div[@class='grid-canvas']" + SLICK_ROW ) ).get( number );
-
-        // findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
-        ////div[contains(@class,'slick-cell-checkboxsel')]/label
         Actions actions = new Actions( getDriver() );
         actions.moveToElement( element );
         actions.sendKeys( key );

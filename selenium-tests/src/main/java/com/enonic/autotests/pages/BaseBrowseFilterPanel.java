@@ -17,7 +17,7 @@ public abstract class BaseBrowseFilterPanel
 {
     public static String FILTER_PANEL_CONTAINER = "//div[contains(@id,'FilterPanel') and contains(@class,'filter-panel')]";
 
-    public static final String CLEAR_FILTER_LINK = "Clear"; //ClearFilterButton
+    public static final String CLEAR_FILTER_LINK = "Clear";
 
     public static final String SEARCH_INPUT_XPATH =
         "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";
@@ -34,7 +34,7 @@ public abstract class BaseBrowseFilterPanel
 
     public boolean isFilterPanelDisplayed()
     {
-        return findElements( By.xpath( FILTER_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( FILTER_PANEL_CONTAINER );
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class BaseBrowseFilterPanel
             //throw new TestFrameworkException( "The link with name 'Clear Filter' was not found!" );
             return this;
         }
-        findElements( By.linkText( CLEAR_FILTER_LINK ) ).get( 0 ).click();
+        findElement( By.linkText( CLEAR_FILTER_LINK ) ).click();
         sleep( 2000 );
         return this;
     }

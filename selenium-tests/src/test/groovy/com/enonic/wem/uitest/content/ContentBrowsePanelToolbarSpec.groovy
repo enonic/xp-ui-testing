@@ -70,7 +70,8 @@ class ContentBrowsePanelToolbarSpec
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Sort button should be enabled"()
     {
         when:
-        contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
+        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
 
         then:
         contentBrowsePanel.isSortButtonEnabled();
@@ -79,7 +80,8 @@ class ContentBrowsePanelToolbarSpec
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Move button should be enabled"()
     {
         when:
-        contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
+        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
 
         then:
         contentBrowsePanel.isMoveButtonEnabled();
@@ -88,7 +90,8 @@ class ContentBrowsePanelToolbarSpec
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Edit button should be enabled"()
     {
         when:
-        contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
+        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
 
         then:
         contentBrowsePanel.isEditButtonEnabled();
@@ -97,7 +100,8 @@ class ContentBrowsePanelToolbarSpec
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Duplicate button should be enabled"()
     {
         when:
-        contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
+        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
 
         then:
         contentBrowsePanel.isDuplicateButtonEnabled();
@@ -107,7 +111,7 @@ class ContentBrowsePanelToolbarSpec
     {
         when:
         filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME )
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
 
         then:
         contentBrowsePanel.isNewButtonEnabled();

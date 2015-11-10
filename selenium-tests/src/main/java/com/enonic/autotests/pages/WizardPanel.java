@@ -46,7 +46,6 @@ public abstract class WizardPanel<T>
     @FindBy(name = "name")
     protected WebElement nameInput;
 
-
     /**
      * The constructor
      *
@@ -64,7 +63,7 @@ public abstract class WizardPanel<T>
         {
             throw new TestFrameworkException( "close button for tab with name " + displayName + " was not found!" );
         }
-        findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).get( 0 ).click();
+        findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).click();
         sleep( 500 );
         for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
         {
@@ -93,7 +92,6 @@ public abstract class WizardPanel<T>
 
     public SaveBeforeCloseDialog closeTabMenuItem( String title )
     {
-
         CloseStatus status = null;
         if ( findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) ).size() == 0 )
         {
@@ -112,7 +110,6 @@ public abstract class WizardPanel<T>
         if ( status == null )
         {
             throw new WizardPanelNotClosingException( "ContentWizard was not closed and Modal dialog not present!" );
-
         }
         else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
         {
@@ -122,7 +119,6 @@ public abstract class WizardPanel<T>
         {
             return null;
         }
-
     }
 
     public abstract String getWizardDivXpath();

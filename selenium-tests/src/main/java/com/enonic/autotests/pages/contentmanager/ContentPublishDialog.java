@@ -135,7 +135,7 @@ public class ContentPublishDialog
         {
             throw new TestFrameworkException( "dialog's title was not found!" );
         }
-        return findElements( By.xpath( DIALOG_CONTAINER + "//h2[@class='title']" ) ).get( 0 ).getText();
+        return findElement( By.xpath( DIALOG_CONTAINER + "//h2[@class='title']" ) ).getText();
     }
 
     public boolean isOpened()
@@ -143,7 +143,6 @@ public class ContentPublishDialog
         List<WebElement> elements = findElements( By.xpath( DIALOG_CONTAINER ) );
         return elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size() > 0;
     }
-
 
     /**
      * Waits until 'ContentPublishDialog' is opened.
@@ -186,12 +185,12 @@ public class ContentPublishDialog
 
     public String getDependenciesListHeader()
     {
-        return findElements( By.xpath( DEPENDENCIES_LIST_HEADER ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
+        return getDisplayedElement( By.xpath( DEPENDENCIES_LIST_HEADER ) ).getText();
     }
 
     public boolean isDependenciesListHeaderDisplayed()
     {
-        return findElements( By.xpath( DEPENDENCIES_LIST_HEADER ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( DEPENDENCIES_LIST_HEADER );
     }
 
     public List<String> getDependencies()
