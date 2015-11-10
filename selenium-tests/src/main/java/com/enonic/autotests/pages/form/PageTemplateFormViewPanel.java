@@ -22,7 +22,7 @@ public class PageTemplateFormViewPanel
     public static final String PAGE_CONTROLLER = "pageController";
 
     private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT =
-        "//div[@id='PageDescriptorDropdown']//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
+        "//div[contains(@id,'PageDescriptorDropdown')]//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
 
     @FindBy(xpath = "//div[contains(@id,'api.form.FormView')]//input[contains(@class,'option-filter-input')]")
     private WebElement optionFilterInput;
