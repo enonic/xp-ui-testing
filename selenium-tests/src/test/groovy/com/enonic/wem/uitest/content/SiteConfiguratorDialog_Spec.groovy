@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class SiteConfiguratorDialog_Spec
@@ -9,6 +10,7 @@ class SiteConfiguratorDialog_Spec
     @Shared
     Content SITE;
 
+    @Ignore
     def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be present"()
     {
         given:
