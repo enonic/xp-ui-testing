@@ -145,6 +145,14 @@ public class Application
         return this;
     }
 
+    public Application setCheckboxChecked( String checkboxId, boolean value )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        String script = String.format( "document.getElementById('%s').checked=arguments[0]", checkboxId );
+        executor.executeScript( script, value );
+        return this;
+    }
+
     public boolean isCheckBoxChecked( String checkboxId )
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();

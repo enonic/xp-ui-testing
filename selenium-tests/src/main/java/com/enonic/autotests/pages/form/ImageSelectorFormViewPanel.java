@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -24,11 +25,21 @@ public class ImageSelectorFormViewPanel
 
     protected final String OPTION_FILTER_INPUT = CONTAINER_DIV + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
-    protected final String SELECTED_IMAGES_VIEW = CONTAINER_DIV + "//div[contains(@id,'ImageSelectorSelectedOptionView')]";
+    protected final String SELECTED_IMAGE_VIEW = CONTAINER_DIV + "//div[contains(@id,'ImageSelectorSelectedOptionView')]";
 
-    protected final String SELECTED_IMAGES_CHECKBOX = SELECTED_IMAGES_VIEW + "//div[@class='checkbox form-input']";
+    protected String SELECTED_IMAGE_VIEW_BY_NAME =
+        CONTAINER_DIV + "//div[contains(@id,'ImageSelectorSelectedOptionView') and descendant::div[@class='label' and text()='%s']]";
 
-    private final String SELECTED_IMAGES_NAME = SELECTED_IMAGES_VIEW + "//div[@class='label']";
+    protected final String SELECTED_IMAGES_CHECKBOXES =
+        SELECTED_IMAGE_VIEW + "//div[@class='checkbox form-input']//input[@type='checkbox']";
+
+    protected String CHECKBOX_OF_SELECTED_BY_NAME_IMAGE =
+        SELECTED_IMAGE_VIEW_BY_NAME + "//div[@class='checkbox form-input']//input[@type='checkbox']";
+
+    protected String DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE = SELECTED_IMAGE_VIEW_BY_NAME + "//div[@class='checkbox form-input']";
+
+
+    private final String SELECTED_IMAGES_NAMES = SELECTED_IMAGE_VIEW + "//div[@class='label']";
 
     private String COMBOBOX_OPTIONS_ITEM = "//div[@class='slick-viewport']//div[contains(@id,'ImageSelectorViewer')]//h6[text()='%s']";
 
@@ -79,7 +90,6 @@ public class ImageSelectorFormViewPanel
         return findElements( By.xpath( EDIT_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }
 
-
     public ImageSelectorFormViewPanel clickOnRemoveButton()
     {
         if ( findElements( By.xpath( REMOVE_BUTTON ) ).size() == 0 )
@@ -91,11 +101,19 @@ public class ImageSelectorFormViewPanel
         return this;
     }
 
+    private void setCheckedForCheckbox( String imageName, boolean value )
+    {
+        String checkboxXpath = String.format( CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName );
+        WebElement checkbox = getDisplayedElement( By.xpath( checkboxXpath ) );
+        setCheckboxChecked( checkbox.getAttribute( "id" ), value );
+        // setChecked( checkbox.getAttribute( "id" ), value );
+    }
+
     public ImageSelectorFormViewPanel clickOnImage( String name )
     {
-        List<WebElement> views = findElements( By.xpath( SELECTED_IMAGES_VIEW ) );
+        List<WebElement> views = findElements( By.xpath( SELECTED_IMAGE_VIEW ) );
 
-        List<WebElement> elements = findElements( By.xpath( SELECTED_IMAGES_NAME ) );
+        List<WebElement> elements = findElements( By.xpath( SELECTED_IMAGES_NAMES ) );
         for ( int i = 0; i < elements.size(); i++ )
         {
             if ( getImageLabel( elements.get( i ) ).equals( name ) )
@@ -110,18 +128,9 @@ public class ImageSelectorFormViewPanel
 
     public ImageSelectorFormViewPanel clickOnCheckboxAndSelectImage( String imageName )
     {
-
-        List<WebElement> checkboxes = findElements( By.xpath( SELECTED_IMAGES_CHECKBOX ) );
-
-        List<WebElement> elements = findElements( By.xpath( SELECTED_IMAGES_NAME ) );
-        for ( int i = 0; i < elements.size(); i++ )
-        {
-            if ( getImageLabel( elements.get( i ) ).equals( imageName ) )
-            {
-                checkboxes.get( i ).click();
-                break;
-            }
-        }
+        WebElement ch = getDisplayedElement( By.xpath( String.format( DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName ) ) );
+        Actions builder = new Actions( getDriver() );
+        builder.click( ch ).build().perform();
         sleep( 500 );
         return this;
     }
@@ -143,12 +152,12 @@ public class ImageSelectorFormViewPanel
 
     public List<String> getSelectedImages()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( SELECTED_IMAGES_VIEW ), 2 );
+        boolean result = waitUntilVisibleNoException( By.xpath( SELECTED_IMAGE_VIEW ), 2 );
         if ( !result )
         {
             return Collections.emptyList();
         }
-        return findElements( By.xpath( SELECTED_IMAGES_NAME ) ).stream().map( e -> getImageLabel( e ) ).collect( Collectors.toList() );
+        return findElements( By.xpath( SELECTED_IMAGES_NAMES ) ).stream().map( e -> getImageLabel( e ) ).collect( Collectors.toList() );
     }
 
     private String getImageLabel( WebElement div )
