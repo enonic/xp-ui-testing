@@ -11,13 +11,14 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.ContentVersion;
 
 public class ContentItemVersionsPanel
     extends Application
 {
-    private final String CONTAINER = "//div[contains(@id,'ContentItemVersionsPanel')]";
+    private final String CONTAINER = "//div[contains(@id,'VersionsWidgetItemView')]";
 
     private final String ALL_CONTENT_VERSION_GRID = "//div[contains(@id,'AllContentVersionsTreeGrid')]";
 
@@ -76,6 +77,7 @@ public class ContentItemVersionsPanel
     {
         if ( findElements( By.xpath( CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), "err_version_panel" );
             throw new TestFrameworkException( "ContentItemVersionsPanel was not loaded!" );
         }
         return this;
