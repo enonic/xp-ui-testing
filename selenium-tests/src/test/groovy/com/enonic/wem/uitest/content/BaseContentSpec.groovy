@@ -161,6 +161,22 @@ class BaseContentSpec
         return site;
     }
 
+    protected Content buildSiteWithApps( String... appNames )
+    {
+        String name = NameHelper.uniqueName( "site" );
+        PropertyTree data = new PropertyTree();
+        data.addStrings( SiteFormViewPanel.APP_KEY, appNames );
+        data.addStrings( "description", "simple site " )
+        Content site = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( name ).
+            displayName( "test site " ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.site() ).data( data ).
+            build();
+        return site;
+    }
+
     protected void addSiteBasedOnFirstApp( Content site )
     {
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(

@@ -2,7 +2,6 @@ package com.enonic.autotests.pages.form;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -19,8 +18,12 @@ public class SiteFormViewPanel
     public static final String APP_KEY = "applicationKey";
 
     public static final String DESCRIPTION_KEY = "description";
-    @FindBy(xpath = "//div[contains(@id,'api.form.FormView')]//textarea[contains(@name,'description')]")
+
+    @FindBy(xpath = FORM_VIEW + "//textarea[contains(@name,'description')]")
     private WebElement descriptionInput;
+
+    @FindBy(xpath = FORM_VIEW + "//input[contains(@id,'ComboBoxOptionFilterInput')]")
+    private WebElement optionFilterInput;
 
     @FindBy(
         xpath = "//div[contains(@id,'SiteConfiguratorComboBox' ) and contains(@class,'form-input composite-input rich-combobox')]//div[@class='dropdown-handle']")
@@ -38,8 +41,9 @@ public class SiteFormViewPanel
         String description = data.getString( DESCRIPTION_KEY );
         descriptionInput.sendKeys( description );
         //expand the combobox
-        Actions builder = new Actions( getDriver() );
-        builder.click( moduleSelectorComboBox ).build().perform();
+        //Actions builder = new Actions( getDriver() );
+        //builder.click( moduleSelectorComboBox ).build().perform();
+
         sleep( 500 );
         Iterable<String> appNames = data.getStrings( APP_KEY );
         appNames.forEach( name -> selectApp( name ) );
@@ -48,6 +52,7 @@ public class SiteFormViewPanel
 
     private void selectApp( String appName )
     {
+        clearAndType( optionFilterInput, appName );
         String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", appName );
         if ( getDriver().findElements( By.xpath( moduleGridItem ) ).size() == 0 )
         {
