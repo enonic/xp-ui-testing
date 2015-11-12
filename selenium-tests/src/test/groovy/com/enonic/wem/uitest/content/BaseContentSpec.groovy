@@ -133,7 +133,7 @@ class BaseContentSpec
     protected Content buildMyFirstAppSite( String siteName )
     {
         PropertyTree data = new PropertyTree();
-        data.addString( SiteFormViewPanel.APP_KEY, "My First App" );
+        data.addStrings( SiteFormViewPanel.APP_KEY, "My First App" );
         data.addStrings( "description", "My first Site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
@@ -149,7 +149,7 @@ class BaseContentSpec
     {
         String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
-        data.addString( SiteFormViewPanel.APP_KEY, "Simple Site App" );
+        data.addStrings( SiteFormViewPanel.APP_KEY, "Simple Site App" );
         data.addStrings( "description", "simple site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).

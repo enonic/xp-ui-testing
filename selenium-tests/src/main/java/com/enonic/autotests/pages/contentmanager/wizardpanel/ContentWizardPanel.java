@@ -35,7 +35,6 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
-    //private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') and @title='%s']";
     private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
 
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
@@ -58,8 +57,6 @@ public class ContentWizardPanel
     private final String INSPECTION_PANEL_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
 
     private String COMPONENT_VIEW_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
-
-    private final String UNLOCK_LINK = "//div[@class='centered']/a[text()='Unlock']";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
@@ -125,25 +122,6 @@ public class ContentWizardPanel
         return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
     }
 
-    public ContentWizardPanel unlockLiveEdit()
-    {
-
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
-        if ( findElements( By.xpath( UNLOCK_LINK ) ).size() == 0 )
-        {
-            TestUtils.saveScreenshot( getSession(), "unlock_not_present" );
-            NavigatorHelper.switchToContentManagerFrame( getSession() );
-            return this;
-        }
-        WebElement link = findElements( By.xpath( UNLOCK_LINK ) ).get( 0 );
-        Actions builder = new Actions( getDriver() );
-        builder.moveToElement( link ).perform();
-        sleep( 1000 );
-        builder.click( link ).build().perform();
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
-        return this;
-    }
-
     public boolean isLiveEditLocked()
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );
@@ -166,19 +144,6 @@ public class ContentWizardPanel
         WebElement body = findElements( By.xpath( "//body" ) ).get( 0 );
         Actions builder = new Actions( getDriver() );
         builder.click( body ).build().perform();
-    }
-
-    public String getTitle()
-    {
-        List<WebElement> elems = getDriver().findElements( By.xpath( "//div[child::span[@class='tabcount']]/span[@class='label']" ) );
-        if ( elems.size() > 0 )
-        {
-            return elems.get( 0 ).getText();
-        }
-        else
-        {
-            return null;
-        }
     }
 
     /**
@@ -260,12 +225,6 @@ public class ContentWizardPanel
     {
         clearAndType( displayNameInput, displayName );
         return this;
-    }
-
-    public ContentWizardStepForm clickDataStep()
-    {
-        clickWizardStep( 1 );
-        return new ContentWizardStepForm( getSession() );
     }
 
     @Override
@@ -370,7 +329,6 @@ public class ContentWizardPanel
         sleep( 500 );
         return this;
     }
-
 
     public ContentWizardPanel showComponentView()
     {

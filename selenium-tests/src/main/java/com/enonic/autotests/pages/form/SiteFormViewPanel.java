@@ -41,17 +41,21 @@ public class SiteFormViewPanel
         Actions builder = new Actions( getDriver() );
         builder.click( moduleSelectorComboBox ).build().perform();
         sleep( 500 );
-        //try to find a application
-        String appName = data.getString( APP_KEY );
+        Iterable<String> appNames = data.getStrings( APP_KEY );
+        appNames.forEach( name -> selectApp( name ) );
+        return this;
+    }
+
+    private void selectApp( String appName )
+    {
         String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", appName );
         if ( getDriver().findElements( By.xpath( moduleGridItem ) ).size() == 0 )
-        {   // if app was not found: save a screenshot
+        {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_" ) );
             throw new TestFrameworkException( "application with name: " + appName + "  was not found!" );
         }
         //else select application from the options.
-        getDriver().findElements( By.xpath( moduleGridItem ) ).get( 0 ).click();
+        findElement( By.xpath( moduleGridItem ) ).click();
         sleep( 500 );
-        return this;
     }
 }

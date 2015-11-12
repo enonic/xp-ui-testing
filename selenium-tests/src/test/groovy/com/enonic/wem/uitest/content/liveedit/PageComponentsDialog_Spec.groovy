@@ -10,7 +10,9 @@ import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.xp.content.ContentPath
 import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class PageComponentsDialog_Spec
     extends BasePageEditorFeaturesSpec
 {
