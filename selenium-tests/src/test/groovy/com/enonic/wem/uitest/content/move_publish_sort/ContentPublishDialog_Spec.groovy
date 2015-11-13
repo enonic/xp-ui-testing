@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -112,6 +113,7 @@ class ContentPublishDialog_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
         List<String> names = contentPublishDialog.getNamesOfContentsToPublish();
+        TestUtils.saveScreenshot( getSession(), "publish-dialog-opened" );
 
         then:
         names.size() == 1;
@@ -131,6 +133,7 @@ class ContentPublishDialog_Spec
         when:
         contentPublishDialog.setIncludeChildCheckbox( true );
         List<String> dependencies = contentPublishDialog.getDependencies();
+        TestUtils.saveScreenshot( getSession(), "publish-dialog-dependencies" );
 
         then: "The header of 'Dependencies list' appears"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
@@ -143,11 +146,12 @@ class ContentPublishDialog_Spec
     def "GIVEN a child content WHEN it content selected and 'Publish' button pressed THEN correct text shown in the header of 'dependencies list' and correct dependency shown as well"()
     {
         filterPanel.typeSearchText( childContent1.getName() );
-        when: "parent content selected and 'Publish' button pressed"
+        when: "child content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( childContent1.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
         List<String> dependencies = contentPublishDialog.getDependencies();
+        TestUtils.saveScreenshot( getSession(), "publish-dialog-dependencies-child" );
 
 
         then: "The header of 'Dependencies list' appears"
