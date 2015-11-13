@@ -46,7 +46,8 @@ public class ContentPublishDialog
 
     private final String DEPENDENCIES_LIST = DIALOG_CONTAINER + "//div[contains(@id,'PublishDialogDependantsItemList')]";
 
-    private final String DEPENDENCIES_STRINGS = DEPENDENCIES_LIST + "//span[@class='name-span']";
+    private final String DEPENDENCIES_STRINGS = DEPENDENCIES_LIST + "//div[contains(@id,'SelectionPublishItem')]//h6[@class='main-name']";
+////span[@class='name-span']";
 
     private final String DEPENDENCIES_LIST_HEADER = DEPENDENCIES_LIST + "//h6[@class='dependencies-header']";
 
