@@ -90,4 +90,9 @@ public class SiteConfiguratorDialog
         }
         return this;
     }
+
+    public String getTitle()
+    {
+        return getDisplayedString( DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='main-name']" );
+    }
 }
