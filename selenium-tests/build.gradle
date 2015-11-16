@@ -29,6 +29,7 @@ dependencies {
 }
 task copyContentTypes( type: Copy ) {
     from '../test-applications/contenttypes/build/libs/'
+    from '../test-applications/simple-page/build/libs/'
     include '**/*.jar'
     into file( deployDir )
 }
