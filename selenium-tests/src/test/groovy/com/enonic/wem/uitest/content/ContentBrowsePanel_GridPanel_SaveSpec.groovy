@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -19,7 +18,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
     {
         given:
-        PARENT_FOLDER = buildFolderContent( "testfolder", "test folder" );
+        PARENT_FOLDER = buildFolderContent( "parent-folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         wizard.typeData( PARENT_FOLDER );
 
@@ -32,186 +31,130 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
     def "GIVEN creating new Content on root WHEN saved and HomeButton clicked THEN new Content should be listed"()
     {
-        given:
+        given: "creating new Content on root"
         Content rootContent = buildFolderContent( "folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() ).
             typeData( rootContent );
 
-        when:
+        when: "content saved and HomeButton clicked"
         wizard.save();
         contentBrowsePanel.goToAppHome();
 
-        then:
+        then: "new Content should be listed"
         contentBrowsePanel.exists( rootContent.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and wizard closed THEN parent should still be unexpanded"()
+    def "GIVEN creating new Content beneath an existing unexpanded folder WHEN saved and wizard closed THEN parent should still be unexpanded"()
     {
-        given:
-        Content content = Content.builder().
-            parent( PARENT_FOLDER.getPath() ).
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "folder" ).
-            contentType( ContentTypeName.folder() ).
-            build();
+        given: "creating new Content beneath an existing unexpanded folder"
+        Content childContent = buildFolderContentWithParent( NameHelper.uniqueName( "folder" ), "child-folder1", PARENT_FOLDER.getName() );
 
-        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
-        wizard.typeData( content );
+        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
+        wizard.typeData( childContent );
 
-        when:
-        wizard.save().close( content.getDisplayName() );
+        when: "content saved and wizard closed"
+        wizard.save().close( childContent.getDisplayName() );
 
-        then:
-        !contentBrowsePanel.isRowExpanded( content.getParent().toString() );
+        then: "parent should still be unexpanded"
+        !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and HomeButton clicked THEN parent should still be unexpanded"()
     {
-        given:
-        Content content = Content.builder().
-            parent( PARENT_FOLDER.getPath() ).
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "folder" ).
-            contentType( ContentTypeName.folder() ).
-            build();
+        given: "creating new Content beneath an existing unexpanded folder"
+        Content childContent = buildFolderContentWithParent( NameHelper.uniqueName( "folder" ), "child-folder2", PARENT_FOLDER.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).
+            typeData( childContent );
 
-        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).
-            typeData( content );
-
-        when:
+        when: "child content saved and HomeButton clicked"
         wizard.save();
         contentBrowsePanel.goToAppHome();
 
-        then:
-        !contentBrowsePanel.isRowExpanded( content.getParent().toString() );
+        then: "parent should still be unexpanded"
+        !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
     {
-        given:
+        given: "creating new Content beneath an existing expanded content"
         String name = NameHelper.uniqueName( "folder" );
-        Content content = Content.builder().
-            name( name ).
-            displayName( "folder-child" ).
-            contentType( ContentTypeName.folder() ).
-            parent( PARENT_FOLDER.getPath() ).
-            build();
+        Content childContent = buildFolderContentWithParent( name, "child-folder3", PARENT_FOLDER.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
+        contentBrowsePanel.expandContent( PARENT_FOLDER.getPath() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
+        wizard.typeData( childContent );
 
-        contentBrowsePanel.expandContent( content.getParent() );
-        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
-        wizard.typeData( content );
-
-        when:
-        wizard.save().close( content.getDisplayName() );
+        when: "child content saved and wizard closed"
+        wizard.save().close( childContent.getDisplayName() );
         TestUtils.saveScreenshot( getTestSession(), name );
 
-        then:
-        contentBrowsePanel.exists( content.getName() );
+        then: "new Content should be listed beneath parent"
+        contentBrowsePanel.exists( childContent.getName() );
+        and: "parent folder is expanded"
+        contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
-        given:
-        Content content = Content.builder().
-            name( NameHelper.uniqueName( "folder" ) ).
-            displayName( "folder" ).
-            contentType( ContentTypeName.folder() ).
-            parent( PARENT_FOLDER.getPath() ).
-            build()
-
-        contentBrowsePanel.expandContent( content.getParent() );
-        contentBrowsePanel.clickOnParentCheckbox( content.getPath().getParentPath() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
-        wizard.typeData( content );
+        given: "creating new Content beneath an existing expanded folder"
+        String name = NameHelper.uniqueName( "folder" );
+        Content childContent = buildFolderContentWithParent( name, "child-folder4", PARENT_FOLDER.getName() );
+        contentBrowsePanel.expandContent( PARENT_FOLDER.getPath() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
+        wizard.typeData( childContent );
 
         when: "saved and HomeButton clicked"
         wizard.save();
         contentBrowsePanel.goToAppHome();
 
         then: "new Content should be listed beneath parent"
-        contentBrowsePanel.exists( content.getName() ) && contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
+        contentBrowsePanel.exists( childContent.getName() )
+        and: "and parent folder is expanded"
+        contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
     def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
     {
-        given: "existing Content"
-        Content contentToEdit = Content.builder().
-            parent( PARENT_FOLDER.getPath() ).
-            name( "editname" ).
-            displayName( "editnametest" ).
-            contentType( ContentTypeName.unstructured() ).
-            build();
-        contentBrowsePanel.clickOnParentCheckbox( contentToEdit.getPath().getParentPath() );
+        given: "changing name of an existing Content"
+        Content contentToEdit = buildFolderContentWithParent( "edit-name", "child-folder5", PARENT_FOLDER.getName() );
+        findAndSelectContent( PARENT_FOLDER.getName() );
         addContent( contentToEdit );
         contentBrowsePanel.clickOnClearSelection();
-        Content newContent = cloneContentWithNewName( contentToEdit )
         filterPanel.typeSearchText( contentToEdit.getName() )
         ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getName() ).clickToolbarEdit();
-        contentWizard.typeData( newContent );
+        String newName = NameHelper.uniqueName( "newname" );
 
-        when: "changing name of an existing Content"
-        contentWizard.save().close( newContent.getDisplayName() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        filterPanel.typeSearchText( contentToEdit.getName() )
+        when: "new name saved and wizard closed"
+        contentWizard.typeName( newName ).save().close( contentToEdit.getDisplayName() );
+        filterPanel.typeSearchText( newName )
 
         then: "Content is listed with it's new name"
         TestUtils.saveScreenshot( getTestSession(), "editnametest" );
-        contentBrowsePanel.exists( newContent.getName(), true );
-
+        contentBrowsePanel.exists( newName, true );
     }
 
     def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new displayName"()
     {
-        given:
-        Content contentToEdit = Content.builder().
-            parent( PARENT_FOLDER.getPath() ).
-            name( "editdisplayname" ).
-            displayName( "editdisplayname" ).
-            contentType( ContentTypeName.unstructured() ).
-            build();
-        contentBrowsePanel.clickOnParentCheckbox( PARENT_FOLDER.getPath() );
+        given: "changing of displayName of an existing Content"
+        Content contentToEdit = buildFolderContentWithParent( "edit-displayname", "child-folder6", PARENT_FOLDER.getName() );
+        findAndSelectContent( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().close( contentToEdit.getDisplayName() );
 
-        Content newContent = cloneContentWithNewDisplayName( contentToEdit );
-        contentBrowsePanel.deSelectContentInTable( PARENT_FOLDER.getName() );
-        wizard = contentBrowsePanel.expandContent( contentToEdit.getParent() ).clickCheckboxAndSelectRow( contentToEdit.getName() ).
-            clickToolbarEdit();
-        wizard.typeData( newContent );
+        contentBrowsePanel.clickOnClearSelection();
+        filterPanel.typeSearchText( contentToEdit.getName() );
+        String newDisplayName = NameHelper.uniqueName( "display-name" );
+        wizard =
+            contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getName() ).clickToolbarEdit().typeDisplayName( newDisplayName );
 
-        when:
-        wizard.save().close( newContent.getDisplayName() );
+        when: "new display-name saved and wizard closed"
+        wizard.save().close( newDisplayName );
 
-        then:
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        contentBrowsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-
-        contentBrowsePanel.exists( newContent.getName() );
-    }
-
-    Content cloneContentWithNewDisplayName( Content source )
-    {
-        String newDisplayName = NameHelper.uniqueName( "displaynamechanged" );
-        return Content.builder().
-            name( source.getName() ).
-            displayName( newDisplayName ).
-            parent( source.getParent() ).
-            contentType( source.getContentTypeName() ).
-            build();
-    }
-
-    Content cloneContentWithNewName( Content source )
-    {
-        String newName = NameHelper.uniqueName( "newname" );
-        return Content.builder().
-            name( newName ).
-            displayName( source.getDisplayName() ).
-            parent( source.getParent() ).
-            contentType( source.getContentTypeName() ).
-            build();
-
+        then: "content is listed with it's new displayName"
+        filterPanel.typeSearchText( newDisplayName );
+        contentBrowsePanel.exists( contentToEdit.getName() );
     }
 }
