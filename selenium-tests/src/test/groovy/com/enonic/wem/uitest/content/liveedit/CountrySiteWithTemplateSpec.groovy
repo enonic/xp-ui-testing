@@ -244,6 +244,7 @@ class CountrySiteWithTemplateSpec
         wizard.showComponentView();
         PageComponentsViewDialog view = new PageComponentsViewDialog( getSession() );
         List<PageComponent> components = view.getPageComponents();
+        TestUtils.saveScreenshot( getSession(), "order-components" )
 
         then: "all components that were added are shown"
         components.size() == 4;
