@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -24,7 +25,7 @@ public class SiteFormViewPanel
 
     public static final String DESCRIPTION_KEY = "description";
 
-    private String SITE_CONFIGURATOR_OPTION_BY_NAME =
+    private String SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME =
         "//div[contains(@id,'SiteConfiguratorSelectedOptionView') and descendant::h6[@class='main-name' and text()='%s']]";
 
     private String SITE_CONFIGURATOR_OPTIONS = "//div[contains(@id,'SiteConfiguratorSelectedOptionView')]//h6[@class='main-name']";
@@ -56,11 +57,46 @@ public class SiteFormViewPanel
         return this;
     }
 
+    public FormViewPanel selectCheckBoxAndApply( String appName )
+    {
+        clearAndType( optionFilterInput, appName );
+        sleep( 300 );
+        String checkboxXpath = FORM_VIEW + String.format( SLICK_ROW_BY_DISPLAY_NAME, appName ) + "//div[contains(@class,'checkboxsel')]";
+        if ( !isElementDisplayed( checkboxXpath ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_checkbox" ) );
+            throw new TestFrameworkException( "checkbox for application with name: " + appName + "  was not found!" );
+        }
+        findElement( By.xpath( checkboxXpath ) ).click();
+        String applyButtonXpath = FORM_VIEW + "//div[contains(@class,'combobox')]//button[contains(@class,'apply-button')]";
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( applyButtonXpath ), Application.EXPLICIT_NORMAL );
+        if ( !isVisible )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_apply" ) );
+            throw new TestFrameworkException( "'apply' button for application with name: " + appName + "  was not found!" );
+        }
+        findElement( By.xpath( applyButtonXpath ) ).click();
+        return this;
+    }
+
+    public FormViewPanel removeApp( String appName )
+    {
+        String removeButtonXpath =
+            FORM_VIEW + String.format( SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME, appName ) + "//a[contains(@class,'remove-button')]";
+        if ( !isElementDisplayed( removeButtonXpath ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_remove_btn" ) );
+            throw new TestFrameworkException( "remove button for application with name: " + appName + "  was not found!" );
+        }
+        findElement( By.xpath( removeButtonXpath ) ).click();
+        return this;
+    }
+
     private void selectApp( String appName )
     {
         clearAndType( optionFilterInput, appName );
         String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", appName );
-        if ( getDriver().findElements( By.xpath( moduleGridItem ) ).size() == 0 )
+        if ( !isElementDisplayed( moduleGridItem ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_" ) );
             throw new TestFrameworkException( "application with name: " + appName + "  was not found!" );
@@ -91,8 +127,8 @@ public class SiteFormViewPanel
 
     public SiteFormViewPanel swapApplications( String sourceApp, String targetApp )
     {
-        String sourceItem = String.format( SITE_CONFIGURATOR_OPTION_BY_NAME, sourceApp );
-        String targetItem = String.format( SITE_CONFIGURATOR_OPTION_BY_NAME, targetApp );
+        String sourceItem = String.format( SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME, sourceApp );
+        String targetItem = String.format( SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME, targetApp );
         if ( findElements( By.xpath( sourceItem ) ).size() == 0 || findElements( By.xpath( targetItem ) ).size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), "err_swap_app" );

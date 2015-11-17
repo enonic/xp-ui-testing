@@ -31,9 +31,6 @@ public abstract class BrowsePanel
     protected final String HIDE_FILTER_PANEL_BUTTON =
         "//div[contains(@id,'ContentBrowseFilterPanel')]//span[contains(@class, 'icon-search')]";
 
-    public static String GRID_ROW =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
-
     public static String NAME_OF_CHILD_ROW =
         "//div[contains(@class,'ui-widget-content slick-row') and descendant::span[contains(@class,'toggle icon') and contains(@style,'margin-left: 16')]]//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
 
@@ -445,7 +442,7 @@ public abstract class BrowsePanel
      */
     public BrowsePanel pressKeyOnRow( String item, Keys key )
     {
-        String contentCheckBoxXpath = String.format( GRID_ROW, item );
+        String contentCheckBoxXpath = String.format( SLICK_ROW_BY_NAME, item );
 
         getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
         boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );

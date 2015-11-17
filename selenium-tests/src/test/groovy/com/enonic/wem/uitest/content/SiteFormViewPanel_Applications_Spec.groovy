@@ -13,11 +13,10 @@ class SiteFormViewPanel_Applications_Spec
     @Shared
     Content SITE;
 
-
     def "GIVEN creating new Site with two configurations  WHEN site saved and wizard closed THEN new site should be present"()
     {
         given:
-        SITE = buildSiteWithApps( APP_NAME_1, APP_NAME_2 );
+        SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
         when: "data saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
             SITE.getDisplayName() );
@@ -28,19 +27,59 @@ class SiteFormViewPanel_Applications_Spec
 
     def "GIVEN site with two applications WHEN reordering of applications applied AND site saved THEN new order of applications present in form-panel"()
     {
-        given: "site opened opened "
+        given: "site with two applications opened"
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
 
         when: "reordering of applications applied, site saved and opened again"
-        formViewPanel.swapApplications( APP_NAME_1, APP_NAME_2 );
+        formViewPanel.swapApplications( SIMPLE_SITE_APP, MY_FIRST_APP );
         wizard.save().close( SITE.getDisplayName() );
         contentBrowsePanel.clickToolbarEdit();
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
 
         then: "new order of applications present in form-panel"
         namesBefore.getFirst() == namesAfter.getLast();
+    }
+
+    def "GIVEN site with two applications WHEN one application removed THEN only one application present in form-panel"()
+    {
+        given: "site with two application opened "
+        filterPanel.typeSearchText( SITE.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
+
+        when: "one application removed"
+        formViewPanel.removeApp( MY_FIRST_APP )
+        wizard.save().close( SITE.getDisplayName() );
+        contentBrowsePanel.clickToolbarEdit();
+        LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
+
+        then: "only one application present in form-panel"
+        namesAfter.getLast() == SIMPLE_SITE_APP;
+        and: "number of applications is reduced"
+        namesBefore.size() - namesAfter.size() == 1;
+    }
+
+    def "GIVEN site with application WHEN checkbox clicked and 'Apply' button pressed THEN two application present in form-panel"()
+    {
+        given: "site with one application opened "
+        filterPanel.typeSearchText( SITE.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
+
+        when: "checkbox for application clicked and 'Apply' button pressed"
+        formViewPanel.selectCheckBoxAndApply( MY_FIRST_APP )
+        wizard.save().close( SITE.getDisplayName() );
+        contentBrowsePanel.clickToolbarEdit();
+        LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
+
+        then: "new application present in form"
+        namesAfter.getLast() == MY_FIRST_APP;
+        and: "number of application increased"
+        namesAfter.size() - namesBefore.size() == 1;
     }
 }

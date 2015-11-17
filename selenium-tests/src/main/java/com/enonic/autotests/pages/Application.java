@@ -40,6 +40,12 @@ public class Application
 
     protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
 
+    public String SLICK_ROW_BY_NAME =
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
+
+    public String SLICK_ROW_BY_DISPLAY_NAME =
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
+
     protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
 
     protected final String H6_DISPLAY_NAME = NAMES_VIEW + "//h6[@class='main-name']";

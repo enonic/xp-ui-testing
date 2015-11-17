@@ -97,7 +97,7 @@ public class ApplicationBrowsePanel
 
     public String getApplicationStatus( String moduleName )
     {
-        String stateCell = String.format( GRID_ROW, moduleName ) + "//div[contains(@class,'state')]";
+        String stateCell = String.format( SLICK_ROW_BY_NAME, moduleName ) + "//div[contains(@class,'state')]";
         if ( findElements( By.xpath( stateCell ) ).size() == 0 )
         {
             throw new TestFrameworkException( "state was not found in the table ! application name is " + moduleName );

@@ -22,10 +22,10 @@ class BaseContentSpec
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     @Shared
-    String APP_NAME_1 = "Simple Site App";
+    String SIMPLE_SITE_APP = "Simple Site App";
 
     @Shared
-    String APP_NAME_2 = "My First App";
+    String MY_FIRST_APP = "My First App";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;

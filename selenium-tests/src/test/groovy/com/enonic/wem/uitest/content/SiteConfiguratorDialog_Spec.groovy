@@ -14,7 +14,7 @@ class SiteConfiguratorDialog_Spec
     def "GIVEN creating new Site with configuration  WHEN site saved and wizard closed THEN new site should be present"()
     {
         given:
-        SITE = buildSiteWithApps( APP_NAME_1, APP_NAME_2 );
+        SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
         when: "data saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
             SITE.getDisplayName() );
@@ -31,7 +31,7 @@ class SiteConfiguratorDialog_Spec
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
 
         when: "edit button clicked"
-        SiteConfiguratorDialog dialog = formViewPanel.openSiteConfiguration( APP_NAME_1 );
+        SiteConfiguratorDialog dialog = formViewPanel.openSiteConfiguration( SIMPLE_SITE_APP );
 
         then: "dialog is not null"
         dialog != null;
@@ -40,6 +40,6 @@ class SiteConfiguratorDialog_Spec
         dialog.isOpened();
 
         and: "correct title is displayed"
-        dialog.getTitle() == APP_NAME_1;
+        dialog.getTitle() == SIMPLE_SITE_APP;
     }
 }
