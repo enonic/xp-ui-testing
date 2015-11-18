@@ -10,7 +10,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
+class ContentBrowsePanel_ContentDetails_VersionHistorySpec
     extends BaseContentSpec
 {
     @Shared
@@ -19,53 +19,13 @@ class ContentBrowsePanel_ItemsSelectionPanel_VersionHistorySpec
     @Shared
     Integer FIRST_NUMBER_OF_VERSIONS = 2;
 
-    def "WHEN no one content selected THEN 'Details Panel Toggle' button is enabled"()
-    {
-        when: "no one content selected"
-        int numberOfSelectedItems = contentBrowsePanel.getNumberFromClearSelectionLink();
-
-        then: "'Details Panel Toggle' button is disabled"
-        contentBrowsePanel.isDetailsPanelToggleButtonDisplayed();
-
-        and: "number of selected items is 0"
-        numberOfSelectedItems == 0;
-
-        and:
-        !contentDetailsPanel.isOpened();
-    }
-
-    def "WHEN content selected THEN correct display name shown in the Detail Panel"()
-    {
-        given:
-        folderContent = buildFolderContent( "v_history", "version_history_test" );
-        addContent( folderContent );
-        contentBrowsePanel.clickOnDetailsToggleButton();
-
-        when: "when one content selected in the 'Browse Panel'"
-        findAndSelectContent( folderContent.getName() );
-
-        then: "correct display name shown in the Detail Panel"
-        contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
-    }
-
-    def "GIVEN 'Content Details Panel' opened WHEN Toggle Content Details button clicked THEN 'Content Details Panel' hidden"()
-    {
-        given: "content selected and the 'Version History' opened"
-        findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
-
-        when: "'Toggle' button clicked again "
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        TestUtils.saveScreenshot( getSession(), "detail-panel-closed" );
-
-        then: "'Content Details Panel' not displayed"
-        !contentBrowsePanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
-    }
 
     def "GIVEN content selected  WHEN 'Version History' option selected THEN panel with all versions for the content is loaded"()
     {
         given: "content selected and details panel opened"
+        folderContent = buildFolderContent( "version_h_", "version_history_test" );
+        addContent( folderContent );
+        and: "'Content Details Panel' is shown"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
 

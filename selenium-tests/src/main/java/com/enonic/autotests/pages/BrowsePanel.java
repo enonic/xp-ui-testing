@@ -24,6 +24,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BrowsePanel
     extends Application
 {
+    protected final String TREE_GREED = "//div[contains(@id,'app.browse.ContentTreeGrid')]";
+
     protected final String BASE_TOOLBAR_XPATH = "//div[contains(@id,'BrowseToolbar')]";
 
     protected final String SHOW_FILTER_PANEL_BUTTON = BASE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
@@ -42,7 +44,7 @@ public abstract class BrowsePanel
     protected final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'NamesView')]/p[@class='sub-name']";
 
     protected String CHECKBOX_ROW_CHECKER =
-        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
+        NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
 
     protected static final String DIV_WITH_NAME =
         "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]//div[contains(@id,'api.app.NamesView')]";
@@ -51,7 +53,7 @@ public abstract class BrowsePanel
         "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[contains(.,'Clear Selection')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
-        DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
+        NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
     protected WebElement showFilterPanelButton;
@@ -154,7 +156,7 @@ public abstract class BrowsePanel
     public void doubleClickOnItem( String itemName )
     {
         sleep( 500 );
-        String rowXpath = String.format( DIV_NAMES_VIEW, itemName );
+        String rowXpath = String.format( NAMES_VIEW_BY_NAME, itemName );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
         Actions builder = new Actions( getDriver() );
         builder.doubleClick( findElement( By.xpath( rowXpath ) ) ).build().perform();
@@ -165,7 +167,7 @@ public abstract class BrowsePanel
     {
         if ( !isRowSelected( gritItemName ) )
         {
-            clickAndSelectRow( gritItemName );
+            selectRowByName( gritItemName );
             sleep( 700 );
         }
         pressKeyOnRow( gritItemName, Keys.ARROW_RIGHT );
@@ -283,11 +285,12 @@ public abstract class BrowsePanel
     public boolean isRowSelected( String name )
     {
         List<WebElement> rows =
-            findElements( By.xpath( String.format( ( DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
+            findElements( By.xpath( String.format( ( NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
         if ( rows.size() == 0 )
         {
             getFilterPanel().typeSearchText( name );
-            rows = findElements( By.xpath( String.format( ( DIV_NAMES_VIEW + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
+            rows =
+                findElements( By.xpath( String.format( ( NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
             if ( rows.size() == 0 )
             {
                 TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_select_" + name ) );
@@ -388,10 +391,9 @@ public abstract class BrowsePanel
 
     public Long doScrollViewport( long step )
     {
-        if ( findElements( By.xpath( "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[@class='slick-viewport']" ) ).size() != 0 )
+        if ( findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).size() != 0 )
         {
-            WebElement viewportElement =
-                findElements( By.xpath( "//div[contains(@id,'app.browse.ContentTreeGrid')]//div[@class='slick-viewport']" ) ).get( 0 );
+            WebElement viewportElement = findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).get( 0 );
             ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
         }
         sleep( 1000 );
@@ -475,10 +477,25 @@ public abstract class BrowsePanel
         return this;
     }
 
-
-    public BrowsePanel clickAndSelectRow( String itemName )
+    public BrowsePanel selectRowByDisplayName( String displayName )
     {
-        String rowXpath = String.format( DIV_NAMES_VIEW, itemName );
+        // getFilterPanel().typeSearchText( displayName );
+        String rowXpath = String.format( NAMES_VIEW_BY_DISPLAY_NAME, displayName );
+        boolean result = waitAndFind( By.xpath( rowXpath ) );
+        if ( !result )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + displayName );
+            throw new TestFrameworkException( "item was not found:" + displayName );
+        }
+        Actions builder = new Actions( getDriver() );
+        builder.click( waitAndFindElement( By.xpath( rowXpath ) ) ).build().perform();
+        sleep( 500 );
+        return this;
+    }
+
+    public BrowsePanel selectRowByName( String itemName )
+    {
+        String rowXpath = String.format( NAMES_VIEW_BY_NAME, itemName );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
         if ( !result )
         {
@@ -521,7 +538,7 @@ public abstract class BrowsePanel
     {
         getLogger().info( "doScrollAndFindGridItem :  Item Name:" + gridItemName );
         scrollViewPortToTop();
-        String contentNameXpath = String.format( DIV_NAMES_VIEW, gridItemName );
+        String contentNameXpath = String.format( NAMES_VIEW_BY_NAME, gridItemName );
         boolean loaded = waitUntilVisibleNoException( By.xpath( contentNameXpath ), timeout );
         if ( loaded )
         {

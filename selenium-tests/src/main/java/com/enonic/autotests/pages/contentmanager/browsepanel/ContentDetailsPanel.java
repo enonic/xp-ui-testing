@@ -15,8 +15,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    public static final String DETAILS_PANEL =
-        "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'app.view.detail.DetailsPanel')]";
+    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
 
     private final String VERSION_HISTORY_OPTION = "//div[text()='Version history']";
 
@@ -29,14 +28,6 @@ public class ContentDetailsPanel
         super( session );
     }
 
-    public String getContentDisplayName()
-    {
-        String contentDisplayName =
-            findElements( By.xpath( DETAILS_PANEL + H6_DISPLAY_NAME ) ).stream().filter( WebElement::isDisplayed ).map(
-                WebElement::getText ).findFirst().get();
-        return contentDisplayName;
-    }
-
     public boolean isPanelEmpty()
     {
         return findElements( By.xpath( DETAILS_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0;
@@ -44,12 +35,13 @@ public class ContentDetailsPanel
 
     public ContentItemVersionsPanel openVersionHistory()
     {
-        if ( findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_history_opt" ) );
             throw new TestFrameworkException( "Version history option was not found!" );
         }
-        findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION ) ).click();
+        //findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
         sleep( 700 );
         return new ContentItemVersionsPanel( getSession() );
     }
@@ -61,22 +53,26 @@ public class ContentDetailsPanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_info_opt" ) );
             throw new TestFrameworkException( "Info widget was not opened!" );
         }
-        findElements( By.xpath( CONTENT_INFO_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( CONTENT_INFO_OPTION ) ).click();
+        //findElements( By.xpath( CONTENT_INFO_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
         sleep( 700 );
         return new ContentInfoWidget( getSession() );
-
-
     }
 
     public boolean isOpened( String contentDisplayName )
     {
-        return
-            findElements( By.xpath( DETAILS_PANEL + String.format( NAMES_VIEW_WITH_DISPLAY_NAME, contentDisplayName ) ) ).stream().filter(
-                WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( DETAILS_PANEL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, contentDisplayName ) );
+        //findElements( By.xpath( DETAILS_PANEL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, contentDisplayName ) ) ).stream().filter(
+        // WebElement::isDisplayed ).count() > 0;
     }
 
     public boolean isDisplayed()
     {
         return findElements( By.xpath( DETAILS_PANEL ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
+    }
+
+    public String getContentDisplayName()
+    {
+        return getDisplayedString( DETAILS_PANEL + H6_DISPLAY_NAME );
     }
 }

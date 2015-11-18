@@ -44,7 +44,7 @@ public abstract class BrowseItemsSelectionPanel
     public BrowseItemsSelectionPanel removeItem( String itemName )
     {
         String removeButton =
-            CONTAINER + SELECTED_ITEM + String.format( DIV_NAMES_VIEW, itemName ) + "/../../..//div[@class='icon remove']";
+            CONTAINER + SELECTED_ITEM + String.format( NAMES_VIEW_BY_NAME, itemName ) + "/../../..//div[@class='icon remove']";
         if ( !isElementDisplayed( removeButton ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_" + "icon_" + itemName );

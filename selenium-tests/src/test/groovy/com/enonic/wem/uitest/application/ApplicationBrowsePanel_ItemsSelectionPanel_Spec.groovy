@@ -10,7 +10,7 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN one selected application WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
         given: " there is a one selected application"
-        applicationBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.selectRowByName( FIRST_APP_NAME );
 
         when: "selected a one more application"
         applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
@@ -21,7 +21,7 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
     def "GIVEN two selected application WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
         given: " there is a two selected module"
-        applicationBrowsePanel.clickAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.selectRowByName( FIRST_APP_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
 
         when: "selected a one more application"

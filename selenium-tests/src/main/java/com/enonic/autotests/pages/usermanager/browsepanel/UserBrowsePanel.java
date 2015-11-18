@@ -124,12 +124,8 @@ public class UserBrowsePanel
     public UserBrowsePanel expandStoreAndSelectUsers( String storeName )
     {
         clickOnExpander( storeName );
-        //clickAndSelectRow( storeName );
         sleep( 700 );
-        //clickOnExpander( "users" );
-        // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
-        //sleep( 700 );
-        clickAndSelectRow( "users" );
+        selectRowByName( "users" );
         sleep( 500 );
         getSession().put( ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
@@ -137,11 +133,10 @@ public class UserBrowsePanel
 
     public UserBrowsePanel expandStoreAndSelectGroups( String storeName )
     {
-        //clickAndSelectRow( storeName );
         clickOnExpander( storeName );
         sleep( 700 );
         // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
-        clickAndSelectRow( "groups" );
+        selectRowByName( "groups" );
         sleep( 500 );
         getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return this;
@@ -150,8 +145,6 @@ public class UserBrowsePanel
     public UserBrowsePanel expandUsersFolder( String storeName )
     {
         clickOnExpander( storeName );
-        //expandStoreAndSelectUsers( storeName );
-        // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
         clickOnExpander( "users" );
         return this;
     }
@@ -210,7 +203,7 @@ public class UserBrowsePanel
 
     public UserBrowsePanel clickOnRowAndSelectGroupInUserStore( String userStoreName )
     {
-        String GROUP_ROW = String.format( DIV_NAMES_VIEW, userStoreName ) + "/ancestor::div[contains(@class,'slick-row')] " +
+        String GROUP_ROW = String.format( NAMES_VIEW_BY_NAME, userStoreName ) + "/ancestor::div[contains(@class,'slick-row')] " +
             "//following-sibling::div//" +
             String.format( "div[contains(@id,'api.app.NamesView') and child::p[contains(@title,'%s')]]", "groups" );
         Actions builder = new Actions( getDriver() );
@@ -315,7 +308,6 @@ public class UserBrowsePanel
         {
             return new UserStoreWizardPanel( getSession() );
         }
-
         switch ( selectedItem )
         {
             case ROLE:

@@ -35,7 +35,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+        EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         then:
@@ -46,7 +46,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+        EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         then:
@@ -60,7 +60,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given:
         filterPanel.typeSearchText( content.getName() );
-        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+        EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         when:
@@ -76,7 +76,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+        EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         List<String> principals = modalDialog.getPrincipalNames();
@@ -91,7 +91,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given:
         filterPanel.typeSearchText( content.getName() )
-        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+        EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
@@ -107,7 +107,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given:
         filterPanel.typeSearchText( content.getName() )
-        EditPermissionsDialog modalDialog = contentBrowsePanel.clickAndSelectRow(
+        EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
         modalDialog.setCheckedForInheritCheckbox( false ).addPermission( entry );

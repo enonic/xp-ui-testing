@@ -21,6 +21,8 @@ public class Application
 
     public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
 
+    public static String UNNAMED_SITE_DISPLAY_NAME = "<Unnamed Site>";
+
     public static final String TEST_FOLDER_NAME = "selenium-tests-folder";
 
     public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
@@ -33,9 +35,9 @@ public class Application
 
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
-    protected String DIV_NAMES_VIEW = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
+    protected String NAMES_VIEW_BY_NAME = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
 
-    protected String NAMES_VIEW_WITH_DISPLAY_NAME =
+    protected String NAMES_VIEW_BY_DISPLAY_NAME =
         "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
 
     protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
@@ -48,6 +50,7 @@ public class Application
 
     protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
 
+    //protected final String H6_DISPLAY_NAME = "//h6[@class='main-name']";
     protected final String H6_DISPLAY_NAME = NAMES_VIEW + "//h6[@class='main-name']";
 
     protected String SLICK_ROW_WITH_STYLE = "//div[contains(@class,'slick-row') and @style='%s']";

@@ -41,7 +41,7 @@ public class ContextWindowPageInspectionPanel
         getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
         sleep( 300 );
         String optionItemXpath =
-            RENDERER_SELECTOR + "//div[contains(@class,'slick-cell')]" + String.format( NAMES_VIEW_WITH_DISPLAY_NAME, templateName );
+            RENDERER_SELECTOR + "//div[contains(@class,'slick-cell')]" + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_renderer" );
@@ -57,7 +57,7 @@ public class ContextWindowPageInspectionPanel
         getDisplayedElement( By.xpath( PAGE_CONTROLLER_DROPDOWN_HANDLER ) ).click();
         sleep( 300 );
         String optionItemXpath = PAGE_CONTROLLER_SELECTOR + "//div[contains(@class,'slick-cell')]" +
-            String.format( NAMES_VIEW_WITH_DISPLAY_NAME, controllerName );
+            String.format( NAMES_VIEW_BY_DISPLAY_NAME, controllerName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_controller" );
