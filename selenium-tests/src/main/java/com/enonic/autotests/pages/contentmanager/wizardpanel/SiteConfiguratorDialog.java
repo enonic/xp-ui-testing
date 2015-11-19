@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -20,7 +21,7 @@ public class SiteConfiguratorDialog
 
     public final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']";
 
-    public final String APPLY_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Apply']";
+    public final String APPLY_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Apply']]";
 
     public final String CANCEL_BUTTON_TOP =
         DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and contains(@calss,'cancel-button-top')]";
@@ -66,7 +67,7 @@ public class SiteConfiguratorDialog
             throw new TestFrameworkException( "button 'apply' on 'site-config-dialog' was not found!" );
         }
         applyButton.click();
-        sleep( 500 );
+        sleep( 1500 );
     }
 
     public void doClose()
@@ -94,5 +95,14 @@ public class SiteConfiguratorDialog
     public String getTitle()
     {
         return getDisplayedString( DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='main-name']" );
+    }
+
+    public SiteConfiguratorDialog selectBackgroundColor( String color )
+    {
+        String radioButton = String.format( DIALOG_CONTAINER + "//input[@name='backgroundColor' and @value='%s']", color.toLowerCase() );
+        Actions builder = new Actions( getDriver() );
+        builder.click( findElement( By.xpath( radioButton ) ) ).build().perform();
+        sleep( 500 );
+        return this;
     }
 }

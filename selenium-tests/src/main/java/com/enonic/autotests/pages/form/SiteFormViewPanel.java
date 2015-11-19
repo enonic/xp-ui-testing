@@ -121,6 +121,7 @@ public class SiteFormViewPanel
             getDisplayedElement( By.xpath( editButton ) ).click();
             dialog = new SiteConfiguratorDialog( getSession() );
             dialog.waitForOpened();
+            sleep( 300 );
         }
         return dialog;
     }

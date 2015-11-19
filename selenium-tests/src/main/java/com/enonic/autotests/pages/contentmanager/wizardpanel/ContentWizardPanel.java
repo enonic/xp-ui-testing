@@ -33,6 +33,8 @@ public class ContentWizardPanel
 {
     private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
 
+    private final String CONTENT_STATUS = "//span[@class='content-status']/span";
+
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
     private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
@@ -384,5 +386,10 @@ public class ContentWizardPanel
     {
         String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
         return isElementDisplayed( button );
+    }
+
+    public String getStatus()
+    {
+        return getDisplayedString( CONTENT_STATUS );
     }
 }

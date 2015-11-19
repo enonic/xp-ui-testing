@@ -64,19 +64,10 @@ public class LoginPage
         {
             throw new TestFrameworkException( " input 'user id or e-mail' was not found on page!" );
         }
-        usernameInput.sendKeys( username );
+        clearAndType( usernameInput, username );
         sleep( 300 );
-
-        passwordInput.sendKeys( password );
-
-//        boolean isEnabledButton = waitAndFind( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );
-//        if ( !isEnabledButton )
-//        {
-//            logError( "The button 'Log in' is disabled" );
-//            throw new AuthenticationException( "wrong password or username" );
-//        }
-//        WebElement loginButton = findElement( By.xpath( String.format( loginButtonXpath, loginEnabledClass ) ) );
-//        loginButton.click();
+        clearAndType( passwordInput, password );
+        sleep( 300 );
         passwordInput.sendKeys( Keys.ENTER );
 
     }

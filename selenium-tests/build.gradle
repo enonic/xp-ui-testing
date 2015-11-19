@@ -229,6 +229,7 @@ task testContentManagerLocal( type: Test ) {
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
     exclude '**/content/move_publish_sort/**Spec.class'
+    exclude '**/content/relationship/**Spec.class'
     forkEvery = null
 }
 

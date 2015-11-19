@@ -101,4 +101,10 @@ public class LiveFormPanel
         String img = String.format( "//img[contains(@src,'%s')]", imageName );
         return getDisplayedElements( By.xpath( LAYOUT_COMPONENT + FIGURE + img ) ).size();
     }
+
+    public String getBackgroundColor()
+    {
+        WebElement element = getDisplayedElement( By.xpath( "//body" ) );
+        return element.getCssValue( "background-color" );
+    }
 }
