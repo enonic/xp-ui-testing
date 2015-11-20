@@ -37,8 +37,7 @@ public class Application
 
     protected String NAMES_VIEW_BY_NAME = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
 
-    protected String NAMES_VIEW_BY_DISPLAY_NAME =
-        "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
+    protected String NAMES_VIEW_BY_DISPLAY_NAME = "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
 
     protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
 
@@ -92,16 +91,6 @@ public class Application
     public Application( TestSession session )
     {
         super( session );
-    }
-
-    public List<String> getDisplayedStrings( List<WebElement> elements )
-    {
-        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
-    }
-
-    public String getDisplayedString( List<WebElement> elements )
-    {
-        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
     }
 
     public String getDisplayedString( String xpath )
