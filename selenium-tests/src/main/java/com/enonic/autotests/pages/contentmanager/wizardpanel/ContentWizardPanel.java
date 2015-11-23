@@ -113,6 +113,13 @@ public class ContentWizardPanel
         return this;
     }
 
+    public ContentWizardPanel clickToolbarDelete()
+    {
+        toolbarDeleteButton.click();
+        sleep( 1000 );
+        return this;
+    }
+
     public boolean isContentInvalid( String contentDisplayName )
     {
         List<WebElement> elements = findElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) ).stream().filter(

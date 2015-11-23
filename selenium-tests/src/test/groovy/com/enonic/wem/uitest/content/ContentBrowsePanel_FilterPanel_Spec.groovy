@@ -92,6 +92,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         given: "opened a content wizard and data typed"
         contentBrowsePanel.doShowFilterPanel();
         TEST_FOLDER = buildFolderContent( "folder", "last modified test 2" );
+        TestUtils.saveScreenshot( getSession(), "last-mod-hour-before" );
         int beforeAdding = filterPanel.getNumberFilteredByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).
@@ -99,7 +100,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "content saved and wizard closed"
         wizard.save().close( TEST_FOLDER.getDisplayName() );
-        sleep( 700 );
+        sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "last-mod-hour" );
 
         then: "new ContentType-filter and LastModified-filter should be updated with new count"
