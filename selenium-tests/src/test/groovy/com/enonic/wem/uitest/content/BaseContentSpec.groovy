@@ -185,8 +185,10 @@ class BaseContentSpec
 
     protected void addSiteBasedOnFirstApp( Content site )
     {
-        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-            site.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
+            site ).save();
+        TestUtils.saveScreenshot( getSession(), "site-wizard_" + site.getName() );
+        wizard.close( site.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), site.getName() );
     }
 
