@@ -3,6 +3,8 @@ package com.enonic.autotests.pages.usermanager.wizardpanel;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -31,6 +33,9 @@ public class GroupWizardPanel
 
     private static final String TOOLBAR_DELETE_BUTTON =
         "//div[contains(@id,'app.wizard.GroupWizardPanel')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+
+    @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
+    private WebElement toolbarDeleteButton;
 
     /**
      * The constructor.
@@ -95,5 +100,11 @@ public class GroupWizardPanel
             throw new TestFrameworkException( "UserWizard was not showed!" );
         }
         return this;
+    }
+
+    @Override
+    public boolean isDeleteButtonEnabled()
+    {
+        return toolbarDeleteButton.isEnabled();
     }
 }

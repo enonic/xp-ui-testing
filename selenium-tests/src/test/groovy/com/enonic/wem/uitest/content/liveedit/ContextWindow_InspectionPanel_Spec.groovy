@@ -23,6 +23,8 @@ class ContextWindow_InspectionPanel_Spec
         when: "site based on 'My First App'"
         SITE = buildMyFirstAppSite( SITE_NAME );
         addSiteBasedOnFirstApp( SITE );
+
+        TestUtils.saveScreenshot( getSession(), "inspection-site" );
         then: "it present in browse panel"
         contentBrowsePanel.exists( SITE_NAME );
 

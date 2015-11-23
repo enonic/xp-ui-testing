@@ -388,6 +388,17 @@ public class ContentWizardPanel
         return isElementDisplayed( button );
     }
 
+    @Override
+    public boolean isDeleteButtonEnabled()
+    {
+        return toolbarDeleteButton.isEnabled();
+    }
+
+    public boolean isDuplicateButtonEnabled()
+    {
+        return toolbarDuplicateButton.isEnabled();
+    }
+
     public String getStatus()
     {
         return getDisplayedString( CONTENT_STATUS );

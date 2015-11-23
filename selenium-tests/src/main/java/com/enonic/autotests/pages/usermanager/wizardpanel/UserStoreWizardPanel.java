@@ -115,5 +115,11 @@ public class UserStoreWizardPanel
         }
         return this;
     }
+
+    @Override
+    public boolean isDeleteButtonEnabled()
+    {
+        return toolbarDeleteButton.isEnabled();
+    }
 }
 

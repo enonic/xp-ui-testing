@@ -9,7 +9,6 @@ class ContentBrowsePanelToolbarSpec
     extends BaseContentSpec
 {
 
-
     def "GIVEN Content BrowsePanel WHEN no selected content THEN Delete button should be disabled"()
     {
         expect:

@@ -154,6 +154,8 @@ public abstract class WizardPanel<T>
 
     public abstract boolean isSaveButtonEnabled();
 
+    public abstract boolean isDeleteButtonEnabled();
+
     public abstract WizardPanel<T> typeData( T object );
 
     /**
