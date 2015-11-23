@@ -114,13 +114,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         TestUtils.saveScreenshot( getSession(), "LastModified_filter1" )
         int beforeRemoving = filterPanel.getNumberFilteredByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
-        List<String> contentList = new ArrayList();
-        contentList.add( TEST_FOLDER.getName() );
 
         when:
-        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
-        contentBrowsePanel.waitUntilPageLoaded( 3 );
-        sleep( 1000 );
+        contentBrowsePanel.selectContentInTable( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
+        sleep( 2000 );
         TestUtils.saveScreenshot( getSession(), "LastModified_filter2" )
 
         then:
