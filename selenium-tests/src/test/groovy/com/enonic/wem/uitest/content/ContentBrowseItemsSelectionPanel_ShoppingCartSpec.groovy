@@ -155,7 +155,8 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         TestUtils.saveScreenshot( getSession(), "select_all_clicked" )
 
         then: "number of items in the selection panel and number of of selected rows in the grid are equals"
-        itemsSelectionPanel.getDisplayNameOfSelectedItems().size() == contentBrowsePanel.getSelectedRowsNumber();
+        itemsSelectionPanel.getDisplayNameOfSelectedItems().size() ==
+            contentBrowsePanel.getNumberFromClearSelectionLink();//contentBrowsePanel.getSelectedRowsNumber();
     }
 
     def "GIVEN browse panel opened AND 'Select All' clicked  WHEN 'Clear Selection' clicked  THEN there are no any items in the selection panel"()
