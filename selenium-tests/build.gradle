@@ -103,7 +103,7 @@ task testContentManager( type: Test, dependsOn: [buildApplications, deleteFolder
     include '**/*Spec.class'
     exclude '**/application/**'
     exclude '**/user/**'
-    exclude '**/content/ContentUploadSpec.class'
+    exclude '**/content/upload/**Spec.class'
     exclude '**/content/relationship/**Spec.class'
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
@@ -119,7 +119,7 @@ task testInputTypes( type: Test, dependsOn: [buildApplications, deleteFolders, s
     include '**/content/relationship/**Spec.class'
     exclude '**/application/**'
     exclude '**/user/**'
-    exclude '**/content/ContentUploadSpec.class'
+    exclude '**/content/upload/**Spec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
@@ -179,7 +179,7 @@ task testUploadContent( type: Test, dependsOn: [deleteFolders, buildApplications
     scanForTestClasses = false
     exclude '**/application/**'
     exclude '**/user/**'
-    include '**/content/ContentUploadSpec.class'
+    include '**/content/upload/**Spec.class'
     forkEvery = null
     copyContentTypes.shouldRunAfter startServer
 }
