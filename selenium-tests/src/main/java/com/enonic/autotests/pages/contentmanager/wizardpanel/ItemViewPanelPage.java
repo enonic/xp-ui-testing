@@ -5,20 +5,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 
 public class ItemViewPanelPage
     extends Application
 {
-
-    public static String RED_CIRCLE_XPATH = "//span[@class='tabcount' and contains(.,'%s')]";
-
     public static String VERIFY_TITLE_SPAN_XPATH = "//span[@class='label' and @title='%s']";
 
     public static String TITLE_SPAN_XPATH = "//span[@class='label' and @title]";
-
-    public static final String HOME_BUTTON_XPATH = "//div[contains(@class,'x-btn start-button')]";
 
     private static final String TOOLBAR_EDIT_BUTTON_XPATH =
         "//div[contains(@id,'app.view.ContentItemViewToolbar')]//button[child::span[text()='Edit']]";
@@ -51,9 +45,7 @@ public class ItemViewPanelPage
      */
     public void waitUntilOpened( String displayName )
     {
-        // String circleXpath = String.format( RED_CIRCLE_XPATH, numberPage.toString() );
         String titleXpath = String.format( VERIFY_TITLE_SPAN_XPATH, displayName );
-        //waitUntilVisible( By.xpath( circleXpath ) );
         waitUntilVisible( By.xpath( titleXpath ) );
     }
 
@@ -73,21 +65,6 @@ public class ItemViewPanelPage
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
-    }
-
-    /**
-     * @return {@link ConfirmationDialog}
-     */
-    public ConfirmationDialog openDeleteConfirmationDialog()
-    {
-        deleteButtonToolbar.click();
-        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
-        boolean isOpened = dialog.verifyIsOpened();
-        if ( !isOpened )
-        {
-            throw new TestFrameworkException( "Confirm 'delete content' dialog was not opened!" );
-        }
-        return dialog;
     }
 
     /**

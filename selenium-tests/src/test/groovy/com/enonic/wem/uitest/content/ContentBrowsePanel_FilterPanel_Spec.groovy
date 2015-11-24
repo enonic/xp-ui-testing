@@ -81,6 +81,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "content saved and the HomeButton clicked"
         contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData( folder ).save();
         contentBrowsePanel.goToAppHome();
+        sleep( 1000 );
 
         then: "new ContentType-filter and LastModified-filter should be updated with new count"
         filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
@@ -132,6 +133,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.doShowFilterPanel();
         TEST_FOLDER = buildFolderContent( "folder", "filtering test" );
         addContent( TEST_FOLDER );
+        sleep( 1000 );
 
         when: "folder's name typed in the text input"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );

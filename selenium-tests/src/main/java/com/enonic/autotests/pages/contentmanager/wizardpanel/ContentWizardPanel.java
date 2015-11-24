@@ -246,7 +246,7 @@ public class ContentWizardPanel
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();
-        sleep( 500 );
+        sleep( 700 );
         return this;
     }
 
@@ -277,7 +277,7 @@ public class ContentWizardPanel
     @Override
     public boolean isOpened()
     {
-        return toolbarSaveButton.isDisplayed();
+        return isElementDisplayed( TOOLBAR );
     }
 
     @Override
