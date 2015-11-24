@@ -21,7 +21,7 @@ class BaseGebSpec
         {
             session.setLoggedIn( false )
         }
-        getDriver().manage().getCookies().clear();
+        getDriver().manage().deleteAllCookies();
         resetBrowser();
     }
     // run before the first feature method
