@@ -159,8 +159,6 @@ public class NewContentDialog
         robot.keyPress( KeyEvent.VK_ENTER );
         robot.keyRelease( KeyEvent.VK_ENTER );
         sleep( 2000 );
-        StringSelection stringSelection = new StringSelection( "" );
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents( stringSelection, null );
         return new ContentBrowsePanel( getSession() );
     }
 
