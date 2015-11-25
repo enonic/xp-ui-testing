@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.schema.content.ContentTypeName
 
 class ContentWizardPanel_Toolbar_Spec
@@ -83,10 +84,9 @@ class ContentWizardPanel_Toolbar_Spec
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
 
         when: "display name typed and Delete button pressed"
-        wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).clickToolbarDelete();
+        ConfirmationDialog confirmationDialog = wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).clickToolbarDelete();
 
         then: "confirmation dialog appears"
-        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
         confirmationDialog.isOpened();
 
         and: "correct title displayed"
@@ -103,8 +103,7 @@ class ContentWizardPanel_Toolbar_Spec
         String displayName = NameHelper.uniqueName( "toolbar" );
 
         when: "display name typed and Delete button pressed"
-        wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
-        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+        ConfirmationDialog confirmationDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
         confirmationDialog.pressYesButton();
 
         then: "wizard closed"
@@ -122,8 +121,7 @@ class ContentWizardPanel_Toolbar_Spec
         String displayName = NameHelper.uniqueName( "toolbar" );
 
         when: "display name typed and Delete button pressed"
-        wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
-        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+        ConfirmationDialog confirmationDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
         confirmationDialog.pressNoButton();
 
         then: "wizard still opened"
@@ -131,5 +129,21 @@ class ContentWizardPanel_Toolbar_Spec
 
         and: "confirmation dialog closed"
         !confirmationDialog.isOpened();
+    }
+
+    def "GIVEN existing content opened  WHEN delete button pressed and deleting confirmed THEN wizard closed and content not present in a grid"()
+    {
+        given: "existing content opened"
+        Content folderContent = buildFolderContent( "folder", "wizard_toolbar" );
+        addContent( folderContent );
+
+        when: "delete button pressed and deleting confirmed"
+        filterPanel.typeSearchText( folderContent.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( folderContent.getName() ).clickToolbarEdit();
+        wizard.clickToolbarDelete().pressYesButton();
+
+        then: "content not present in a grid"
+        filterPanel.typeSearchText( folderContent.getName() );
+        !contentBrowsePanel.exists( folderContent.getName() )
     }
 }

@@ -113,11 +113,12 @@ public class ContentWizardPanel
         return this;
     }
 
-    public ContentWizardPanel clickToolbarDelete()
+    public ConfirmationDialog clickToolbarDelete()
     {
         toolbarDeleteButton.click();
         sleep( 1000 );
-        return this;
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+        return confirmationDialog;
     }
 
     public boolean isContentInvalid( String contentDisplayName )
