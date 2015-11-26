@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.upload
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ZipUpload_Spec
@@ -14,7 +15,7 @@ class ZipUpload_Spec
     @Shared
     String FILE_NAME = "img.zip";
 
-
+    @Ignore
     def "GIVEN opened a new content dialog WHEN upload button clicked and zip archive selected THEN new content appears in browse panel "()
     {
         given: "opened a new content dialog"
