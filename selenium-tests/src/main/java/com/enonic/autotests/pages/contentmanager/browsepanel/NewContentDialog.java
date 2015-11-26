@@ -6,14 +6,18 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import com.google.common.io.Files;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -122,30 +126,20 @@ public class NewContentDialog
         return searchInput.isEnabled();
     }
 
-    public ContentBrowsePanel doUploadFile( String resName )
+    public ContentBrowsePanel doUploadFile( String path, String fileName )
         throws AWTException
     {
         uploadButton.click();
         sleep( 1000 );
+        File file = createFileInTmp( path, fileName );
+        insertPathToFileToSystemDialog( file.getAbsolutePath() );
+        return new ContentBrowsePanel( getSession() );
+    }
 
-        URL dirURL = NewContentDialog.class.getClassLoader().getResource( resName );
-        if ( dirURL == null )
-        {
-            throw new TestFrameworkException( "tests resource for upload tests was not found:" + resName );
-        }
-        File file = null;
-        try
-        {
-            getLogger().info( "path to resource  is###: " + dirURL.toURI() );
-            file = new File( dirURL.toURI() );
-
-        }
-        catch ( URISyntaxException e )
-        {
-            getLogger().error( "wrong uri for file " + resName );
-        }
-
-        StringSelection ss = new StringSelection( file.getAbsolutePath() );
+    private void insertPathToFileToSystemDialog( String absolutePath )
+        throws AWTException
+    {
+        StringSelection ss = new StringSelection( absolutePath );
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents( ss, null );
         sleep( 1500 );
         Robot robot = new Robot();
@@ -158,9 +152,48 @@ public class NewContentDialog
         sleep( 2000 );
         robot.keyPress( KeyEvent.VK_ENTER );
         robot.keyRelease( KeyEvent.VK_ENTER );
-        sleep( 2000 );
-        return new ContentBrowsePanel( getSession() );
+        sleep( 1000 );
     }
+
+    public static File createFileInTmp( String resName, final String fileName )
+    {
+        OutputStream outStream = null;
+        File file = null;
+        InputStream inputStream = NewContentDialog.class.getClassLoader().getResourceAsStream( resName );
+        if ( inputStream == null )
+        {
+            throw new TestFrameworkException( resName + " not found" );
+        }
+        try
+        {
+            file = new File( Files.createTempDir(), fileName );
+            outStream = new FileOutputStream( file );
+            file.deleteOnExit();
+            byte[] buf = new byte[1024];
+            for ( int len; ( len = inputStream.read( buf ) ) != -1; )
+            {
+                outStream.write( buf, 0, len );
+            }
+            outStream.close();
+        }
+        catch ( IOException e )
+        {
+            throw new TestFrameworkException( resName + " " + e.getMessage() );
+        }
+        finally
+        {
+            try
+            {
+                inputStream.close();
+            }
+            catch ( IOException e1 )
+            {
+                throw new TestFrameworkException( resName + " " + e1.getMessage() );
+            }
+        }
+        return file;
+    }
+
 
     /**
      * Select content type by name.
