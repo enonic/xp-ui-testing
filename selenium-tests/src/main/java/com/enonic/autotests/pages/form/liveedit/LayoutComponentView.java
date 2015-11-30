@@ -31,7 +31,8 @@ public class LayoutComponentView
     public LiveFormPanel selectLayout( String layoutName )
     {
         optionFilterInput.sendKeys( layoutName );
-        sleep( 700 );
+        sleep( 900 );
+        TestUtils.saveScreenshot( getSession(), "try_find" + layoutName );
         if ( !isLayoutExists( layoutName ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_" + layoutName );
