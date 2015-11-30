@@ -86,6 +86,7 @@ class CreateSiteWithLayoutSpec
         when: "'Insert/Layout' menu items clicked and layout with 3 columns selected"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
         TestUtils.saveScreenshot( getSession(), "select_insert_layout" );
+        pageComponentsView.doCloseDialog();
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getLayoutComponentView().selectLayout( LAYOUT_NAME );
@@ -107,6 +108,7 @@ class CreateSiteWithLayoutSpec
 
         when: "menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.doCloseDialog();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE_COMPONENT_NAME )
 
@@ -130,6 +132,7 @@ class CreateSiteWithLayoutSpec
 
         when: "menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.doCloseDialog();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME )
         NavigatorHelper.switchToContentManagerFrame( getSession() );
@@ -152,6 +155,7 @@ class CreateSiteWithLayoutSpec
 
         when: "menu for right region clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.doCloseDialog();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
