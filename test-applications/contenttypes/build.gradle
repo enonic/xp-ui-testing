@@ -19,11 +19,21 @@ app {
     name = 'com.enonic.xp.testing.contenttypes'
     displayName = 'All Content Types App'
 }
-
-dependencies {
-    compile 'com.enonic.xp:core-api:6.3.0-SNAPSHOT'
+ext {
+    xpVersion = '6.3.0-SNAPSHOT'
 }
 
+
+dependencies {
+    compile "com.enonic.xp:core-api:${xpVersion}"
+    compile "com.enonic.xp:portal-api:${xpVersion}"
+    include "com.enonic.xp:lib-content:${xpVersion}"
+    include "com.enonic.xp:lib-portal:${xpVersion}"
+    include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
+    include "com.enonic.xp:lib-xslt:${xpVersion}"
+    include "com.enonic.xp:lib-mustache:${xpVersion}"
+    include "com.enonic.xp:lib-i18n:${xpVersion}"
+}
 uploadArchives {
     repositories {
         mavenDeployer {

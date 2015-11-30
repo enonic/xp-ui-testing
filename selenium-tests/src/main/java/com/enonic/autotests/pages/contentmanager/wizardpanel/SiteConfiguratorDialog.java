@@ -19,6 +19,10 @@ public class SiteConfiguratorDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SiteConfiguratorDialog')]";
 
+    private final String SPEC_CHARS_BUTTON = "";
+
+    private final String INSERT_LINK_BUTTON = "//div[@aria-label='Insert/edit link']";
+
     public final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']";
 
     public final String APPLY_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Apply']]";
@@ -104,5 +108,15 @@ public class SiteConfiguratorDialog
         builder.click( findElement( By.xpath( radioButton ) ) ).build().perform();
         sleep( 500 );
         return this;
+    }
+
+    public InsertLinkModalDialog clickOnHtmlAreaInsertLinkButton()
+    {
+        Actions builder = new Actions( getDriver() );
+        String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
+        WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
+        builder.moveToElement( textArea ).click( textArea ).build().perform();
+        getDisplayedElement( By.xpath( INSERT_LINK_BUTTON ) ).click();
+        return new InsertLinkModalDialog( getSession() );
     }
 }

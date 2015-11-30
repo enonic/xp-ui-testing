@@ -85,6 +85,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'Insert/Layout' menu items clicked and layout with 3 columns selected"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
+        TestUtils.saveScreenshot( getSession(), "select_insert_layout" );
         NavigatorHelper.switchToLiveEditFrame( getSession() );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getLayoutComponentView().selectLayout( LAYOUT_NAME );
