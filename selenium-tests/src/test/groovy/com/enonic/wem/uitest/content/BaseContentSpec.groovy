@@ -28,7 +28,7 @@ class BaseContentSpec
     String MY_FIRST_APP = "My First App";
 
     @Shared
-    String CONTENT_TYPES__NAME = "All Content Types App";
+    String CONTENT_TYPES_NAME_APP = "All Content Types App";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;

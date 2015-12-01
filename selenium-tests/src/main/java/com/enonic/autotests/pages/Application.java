@@ -19,6 +19,11 @@ public class Application
 {
     public static final String OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
+    public static final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
+
+    public static String COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME =
+        "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
+
     public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
 
     public static String UNNAMED_SITE_DISPLAY_NAME = "<Unnamed Site>";

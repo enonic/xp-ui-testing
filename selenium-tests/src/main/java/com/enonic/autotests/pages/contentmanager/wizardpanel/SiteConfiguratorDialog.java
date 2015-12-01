@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -118,5 +120,19 @@ public class SiteConfiguratorDialog
         builder.moveToElement( textArea ).click( textArea ).build().perform();
         getDisplayedElement( By.xpath( INSERT_LINK_BUTTON ) ).click();
         return new InsertLinkModalDialog( getSession() );
+    }
+
+    public String getTextFromArea()
+    {
+        String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
+        WebElement frame = findElement( By.xpath( TEXT_AREA ) );
+        String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
+        String wHandle = getDriver().getWindowHandle();
+        getDriver().switchTo().frame( frame );
+        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
+        String text = obj.toString();
+        getDriver().switchTo().window( wHandle );
+        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
+        return text;
     }
 }
