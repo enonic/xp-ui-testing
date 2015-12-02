@@ -26,7 +26,16 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     String CONTENT_TEXT = "content-text";
 
     @Shared
+    String DOWNLOAD_TEXT = "download-text";
+
+    @Shared
+    String EMAIL_TEXT = "email-text";
+
+    @Shared
     String PAGE_CONTROLLER = "Page"
+
+    @Shared
+    String EMAIL = "user1@gmail.com";
 
     def "GIVEN creating new Site with configuration and a page-controller WHEN site saved and wizard closed THEN new site should be present"()
     {
@@ -50,7 +59,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         when: "URL inserted, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
-        sleep( 1000 );
+        sleep( 700 );
         linkModalDialog.clickURLBarItem().typeURL( URL ).typeText( LINK_TEXT ).pressInsertButton();
         configurationDialog.doApply();
         and: "and configurationDialog opened again"
@@ -88,7 +97,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
-        sleep( 1000 );
+        sleep( 700 );
         linkModalDialog.clickContentBarItem().selectOption( "nord.jpg" ).typeText( CONTENT_TEXT ).pressInsertButton();
         configurationDialog.doApply();
         and: "and configurationDialog opened again"
@@ -96,5 +105,45 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( CONTENT_TEXT );
+    }
+
+    def "GIVEN site configurator dialog opened WHEN Download-resource selected, and changes applied THEN correct text present in HtmlArea"()
+    {
+        given: "site opened"
+        filterPanel.typeSearchText( SITE.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+
+        when: "Content selected, and changes applied"
+        InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
+        sleep( 700 );
+        linkModalDialog.clickDownloadBarItem().selectOption( "nord.jpg" ).typeText( DOWNLOAD_TEXT ).pressInsertButton();
+        configurationDialog.doApply();
+        and: "and configurationDialog opened again"
+        configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+
+        then: "correct text present in HtmlArea"
+        configurationDialog.getTextFromArea().contains( DOWNLOAD_TEXT );
+    }
+
+    def "GIVEN site configurator dialog opened WHEN Email-link inserted, and changes applied THEN correct text present in HtmlArea"()
+    {
+        given: "site opened"
+        filterPanel.typeSearchText( SITE.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+
+        when: "Content selected, and changes applied"
+        InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
+        sleep( 700 );
+        linkModalDialog.clickEmailBarItem().typeEmail( EMAIL ).typeSubject( EMAIL_TEXT ).pressInsertButton();
+        configurationDialog.doApply();
+        and: "and configurationDialog opened again"
+        configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+
+        then: "correct text present in HtmlArea"
+        configurationDialog.getTextFromArea().contains( EMAIL_TEXT );
     }
 }

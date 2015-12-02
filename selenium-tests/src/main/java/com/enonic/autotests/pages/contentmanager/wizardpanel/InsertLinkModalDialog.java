@@ -15,11 +15,19 @@ public class InsertLinkModalDialog
 
     private final String URL_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Url']]//input[@type='text']";
 
+    private final String EMAIL_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Email']]//input[@type='text']";
+
+    private final String EMAIL_SUBJECT_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Subject']]//input[@type='text']";
+
     private final String LINK_TEXT_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Text']]//input[@type='text']";
 
     private final String BAR_ITEM_URL = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='URL']";
 
     private final String BAR_ITEM_CONTENT = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='Content']";
+
+    private final String BAR_ITEM_DOWNLOAD = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='Download']";
+
+    private final String BAR_ITEM_EMAIL = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='Email']";
 
     private final String INSERT_OR_UPDATE_BUTTON =
         CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Insert' or text()='Update']]";
@@ -42,9 +50,27 @@ public class InsertLinkModalDialog
         return this;
     }
 
+    public InsertLinkModalDialog clickDownloadBarItem()
+    {
+        getDisplayedElement( By.xpath( BAR_ITEM_DOWNLOAD ) ).click();
+        return this;
+    }
+
+    public InsertLinkModalDialog clickEmailBarItem()
+    {
+        getDisplayedElement( By.xpath( BAR_ITEM_EMAIL ) ).click();
+        return this;
+    }
+
     public InsertLinkModalDialog typeURL( String url )
     {
         getDisplayedElement( By.xpath( URL_INPUT ) ).sendKeys( url );
+        return this;
+    }
+
+    public InsertLinkModalDialog typeEmail( String email )
+    {
+        getDisplayedElement( By.xpath( EMAIL_INPUT ) ).sendKeys( email );
         return this;
     }
 
@@ -62,6 +88,13 @@ public class InsertLinkModalDialog
     {
         WebElement textInput = getDisplayedElement( By.xpath( LINK_TEXT_INPUT ) );
         clearAndType( textInput, text );
+        return this;
+    }
+
+    public InsertLinkModalDialog typeSubject( String subject )
+    {
+        WebElement textInput = getDisplayedElement( By.xpath( EMAIL_SUBJECT_INPUT ) );
+        clearAndType( textInput, subject );
         return this;
     }
 
