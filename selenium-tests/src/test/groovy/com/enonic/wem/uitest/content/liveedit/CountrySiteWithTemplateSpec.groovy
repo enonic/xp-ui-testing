@@ -34,7 +34,7 @@ class CountrySiteWithTemplateSpec
     Content PAGE_TEMPLATE;
 
     @Shared
-    String TEMPLATE_DISPLAY_NAME = "country template";
+    String COUNTRY_TEMPLATE_DISPLAY_NAME = "country template";
 
     @Shared
     String SF_LOCATION = "37.7833,-122.4167";
@@ -53,7 +53,7 @@ class CountrySiteWithTemplateSpec
         given: "existing Site based on 'My First App'"
         filterPanel.typeSearchText( FIRST_SITE_NAME );
         contentBrowsePanel.expandContent( ContentPath.from( FIRST_SITE_NAME ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, SUPPORTS_TYPE, TEMPLATE_DISPLAY_NAME,
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, SUPPORTS_TYPE, COUNTRY_TEMPLATE_DISPLAY_NAME,
                                            FIRST_SITE_NAME );
 
         when: "'Templates' folder selected and new page-template added"
@@ -76,7 +76,7 @@ class CountrySiteWithTemplateSpec
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
-        partComponentView.selectItem( COUNTRY_PART_NAME );
+        partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "country_part_added" );
@@ -85,7 +85,7 @@ class CountrySiteWithTemplateSpec
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source.contains( COUNTRY_REGION_TITLE );
         and: "correct header displayed"
-        source.contains( TEMPLATE_DISPLAY_NAME );
+        source.contains( COUNTRY_TEMPLATE_DISPLAY_NAME );
     }
 
     def "GIVEN existing page-template with a 'country' part WHEN the template opened for edit and the 'city' part inserted THEN correct page-sources are present in the HTML"()
@@ -107,7 +107,7 @@ class CountrySiteWithTemplateSpec
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source.contains( COUNTRY_REGION_TITLE );
         and: "correct header displayed"
-        source.contains( TEMPLATE_DISPLAY_NAME );
+        source.contains( COUNTRY_TEMPLATE_DISPLAY_NAME );
     }
 
     def "GIVEN existing page template WHEN the template opened for edit and ''"()
@@ -250,11 +250,11 @@ class CountrySiteWithTemplateSpec
         components.size() == 4;
 
         and:
-        components.get( 0 ).getType().equals( "page" ) && components.get( 0 ).getName().equals( TEMPLATE_DISPLAY_NAME );
+        components.get( 0 ).getType().equals( "page" ) && components.get( 0 ).getName().equals( COUNTRY_TEMPLATE_DISPLAY_NAME );
         and:
         components.get( 1 ).getType().equals( "region" ) && components.get( 1 ).getName().equals( "country" );
         and:
-        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( COUNTRY_PART_NAME );
+        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( COUNTRY_PART_DEFAULT_NAME );
         and:
         components.get( 3 ).getType().equals( "part" ) && components.get( 3 ).getName().equals( "City list" );
     }

@@ -119,7 +119,7 @@ class MyFirstApp_Spec
         PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionPlaceholder",
                                                                                                                       LIVE_EDIT_FRAME_SITE_HEADER )
         TestUtils.saveScreenshot( getSession(), "part_added" );
-        partComponentView.selectItem( COUNTRY_PART_NAME )
+        partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME )
         TestUtils.saveScreenshot( getSession(), "part_country" );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         wizard.save();

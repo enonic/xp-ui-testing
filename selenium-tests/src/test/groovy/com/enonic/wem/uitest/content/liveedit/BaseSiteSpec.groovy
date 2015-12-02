@@ -24,6 +24,9 @@ class BaseSiteSpec
     String COUNTRY_PART_NAME = "Country part";
 
     @Shared
+    String COUNTRY_PART_DEFAULT_NAME = "country";
+
+    @Shared
     String LIVE_EDIT_FRAME_SITE_HEADER = "//h1[text()='Country']";
 
     @Shared
