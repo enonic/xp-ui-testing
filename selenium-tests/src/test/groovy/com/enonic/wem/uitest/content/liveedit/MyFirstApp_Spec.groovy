@@ -17,9 +17,6 @@ class MyFirstApp_Spec
     Content MY_FIRST_SITE;
 
     @Shared
-    String PART_NAME = "country";
-
-    @Shared
     Content USA_CONTENT;
 
     def "GIVEN creating new Site based on 'My First App' WHEN saved and wizard closed THEN new site should be listed"()
@@ -122,7 +119,7 @@ class MyFirstApp_Spec
         PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionPlaceholder",
                                                                                                                       LIVE_EDIT_FRAME_SITE_HEADER )
         TestUtils.saveScreenshot( getSession(), "part_added" );
-        partComponentView.selectItem( PART_NAME )
+        partComponentView.selectItem( COUNTRY_PART_NAME )
         TestUtils.saveScreenshot( getSession(), "part_country" );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         wizard.save();
