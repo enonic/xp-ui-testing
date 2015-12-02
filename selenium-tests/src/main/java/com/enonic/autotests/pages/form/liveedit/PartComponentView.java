@@ -32,7 +32,7 @@ public class PartComponentView
             throw new TestFrameworkException( "option filter input was not displayed" );
         }
         getDisplayedElement( By.xpath( COMPONENT_CONTAINER + OPTION_FILTER ) ).sendKeys( partName );
-        sleep( 200 );
+        sleep( 400 );
         if ( !isPartExists( partName ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" + partName ) );
