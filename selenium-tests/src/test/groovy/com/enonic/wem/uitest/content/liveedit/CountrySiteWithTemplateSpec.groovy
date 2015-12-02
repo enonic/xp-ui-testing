@@ -254,7 +254,7 @@ class CountrySiteWithTemplateSpec
         and:
         components.get( 1 ).getType().equals( "region" ) && components.get( 1 ).getName().equals( "country" );
         and:
-        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( "country" );
+        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( COUNTRY_PART_NAME );
         and:
         components.get( 3 ).getType().equals( "part" ) && components.get( 3 ).getName().equals( "City list" );
     }
