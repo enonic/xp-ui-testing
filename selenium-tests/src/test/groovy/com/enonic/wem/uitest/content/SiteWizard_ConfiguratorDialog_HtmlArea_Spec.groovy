@@ -60,10 +60,13 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "URL inserted, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
+        TestUtils.saveScreenshot( getSession(), "insert-link-dialog" );
         linkModalDialog.clickURLBarItem().typeURL( URL ).typeText( LINK_TEXT ).pressInsertButton();
         configurationDialog.doApply();
+
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+        TestUtils.saveScreenshot( getSession(), "conf-dialog-with-url" );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( URL );
@@ -99,9 +102,12 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         linkModalDialog.clickContentBarItem().selectOption( "nord.jpg" ).typeText( CONTENT_TEXT ).pressInsertButton();
+        TestUtils.saveScreenshot( getSession(), "conf-dialog-content" );
         configurationDialog.doApply();
+
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+        TestUtils.saveScreenshot( getSession(), "conf-dialog-with-content" );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( CONTENT_TEXT );
@@ -119,6 +125,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         linkModalDialog.clickDownloadBarItem().selectOption( "nord.jpg" ).typeText( DOWNLOAD_TEXT ).pressInsertButton();
+        TestUtils.saveScreenshot( getSession(), "conf-dialog-download" );
         configurationDialog.doApply();
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
@@ -138,10 +145,12 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
+        TestUtils.saveScreenshot( getSession(), "conf-dialog-email" );
         linkModalDialog.clickEmailBarItem().typeEmail( EMAIL ).typeSubject( EMAIL_TEXT ).pressInsertButton();
         configurationDialog.doApply();
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+        TestUtils.saveScreenshot( getSession(), "conf-dialog-email-inserted" );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( EMAIL_TEXT );
