@@ -37,6 +37,12 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     @Shared
     String EMAIL = "user1@gmail.com";
 
+    @Shared
+    String backgroundPart = "man2.jpg.jpeg"
+
+    @Shared
+    String IMAGE_NAME = "man2.jpg";
+
     def "GIVEN creating new Site with configuration and a page-controller WHEN site saved and wizard closed THEN new site should be present"()
     {
         given:
@@ -127,6 +133,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         linkModalDialog.clickDownloadBarItem().selectOption( "nord.jpg" ).typeText( DOWNLOAD_TEXT ).pressInsertButton();
         TestUtils.saveScreenshot( getSession(), "conf-dialog-download" );
         configurationDialog.doApply();
+
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
 
@@ -148,11 +155,30 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         TestUtils.saveScreenshot( getSession(), "conf-dialog-email" );
         linkModalDialog.clickEmailBarItem().typeEmail( EMAIL ).typeSubject( EMAIL_TEXT ).pressInsertButton();
         configurationDialog.doApply();
+
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
         TestUtils.saveScreenshot( getSession(), "conf-dialog-email-inserted" );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( EMAIL_TEXT );
+    }
+
+    def "GIVEN site configurator dialog opened WHEN Background image selected THEN correct image file present in a page-source"()
+    {
+        given: "site opened"
+        filterPanel.typeSearchText( SITE.getName() );
+        ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+
+        when: "background selected and changes applied"
+        configurationDialog.selectBackGroundImage( IMAGE_NAME ).doApply();
+        sleep( 700 );
+        contentWizard.clickToolbarPreview();
+        String source = TestUtils.getPageSource( getSession(), "Superhero theme" );
+
+        then: "correct background present in a page-source"
+        source.contains( backgroundPart );
     }
 }

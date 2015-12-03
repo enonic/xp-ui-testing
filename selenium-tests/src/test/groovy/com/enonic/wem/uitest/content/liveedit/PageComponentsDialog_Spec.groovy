@@ -7,8 +7,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
-import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -19,9 +17,6 @@ class PageComponentsDialog_Spec
 
     @Shared
     Content PAGE_TEMPLATE;
-
-    @Shared
-    String SITE_WITH_COMPONENTS_NAME = NameHelper.uniqueName( "page-component" );
 
     @Shared
     String FIRST_SITE_NAME = NameHelper.uniqueName( "my-site" );
@@ -129,26 +124,5 @@ class PageComponentsDialog_Spec
 
         then: "'page component view' is not displayed"
         !dialog.isOpened()
-    }
-
-    //it is not finished yet
-    @Ignore
-    def "test"()
-    {
-        given: "existing Site based on 'My First App'"
-        Content site = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
-        addSiteBasedOnFirstApp( site );
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_WITH_COMPONENTS_NAME ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, "country", "country template",
-                                           SITE_WITH_COMPONENTS_NAME );
-
-        when: "'Templates' folder selected and new page-template added"
-        contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
-        sleep( 500 );
-
-        then: "new page-template listed"
-        filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
-        contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 }

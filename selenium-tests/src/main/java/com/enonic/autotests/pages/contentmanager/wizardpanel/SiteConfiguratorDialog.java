@@ -112,6 +112,21 @@ public class SiteConfiguratorDialog
         return this;
     }
 
+    public SiteConfiguratorDialog selectBackGroundImage( String imageName )
+    {
+        String optionFilter =
+            DIALOG_CONTAINER + "//div[contains(@id,'ImageContentComboBox')]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+        if ( !isElementDisplayed( optionFilter ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( "optionFilter" ) );
+            throw new TestFrameworkException( "ImageContentComboBox option filter was not found!" );
+        }
+        getDisplayedElement( By.xpath( optionFilter ) ).sendKeys( imageName );
+        String imageXpath = DIALOG_CONTAINER + String.format( NAMES_VIEW_BY_DISPLAY_NAME, imageName );
+        getDisplayedElement( By.xpath( imageXpath ) ).click();
+        return this;
+    }
+
     public InsertLinkModalDialog clickOnHtmlAreaInsertLinkButton()
     {
         Actions builder = new Actions( getDriver() );

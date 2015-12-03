@@ -40,6 +40,7 @@ public class PageTemplateFormViewPanel
     {
         String supports = data.getString( SUPPORTS );
         selectSupportOption( supports );
+        sleep( 3000 );
         selectPageController( data.getString( PAGE_CONTROLLER ) );
         return this;
     }
@@ -68,7 +69,7 @@ public class PageTemplateFormViewPanel
             throw new TestFrameworkException( "page controller: DropdownOptionFilterInput was not found" );
         }
         getDisplayedElement( By.xpath( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) ).sendKeys( pageName );
-        sleep( 500 );
+        sleep( 700 );
         //select a 'page name'
         String pageItemXpath = String.format( "//div[contains(@id,'PageDescriptorDropdown')]//h6[text()='%s']", pageName );
         if ( !isElementDisplayed( pageItemXpath ) )
@@ -76,6 +77,7 @@ public class PageTemplateFormViewPanel
             TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( pageName ) );
             throw new TestFrameworkException( "page controller was not found! " + pageName );
         }
+
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
