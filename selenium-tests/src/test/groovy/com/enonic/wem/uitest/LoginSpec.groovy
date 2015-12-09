@@ -14,7 +14,7 @@ class LoginSpec
     def "Given login page When both username and password fields is empty Then Login Button must not  be disabled"()
     {
         expect:
-        !$( 'button', class: 'button login-button' ).isDisplayed();
+        !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
     }
 
     def "Given login page When only username field have value Then Login Button must not be disabled"()
@@ -24,7 +24,7 @@ class LoginSpec
         report "login page, username is 'user', password is empty";
         TestUtils.saveScreenshot( getSession(), "pass_empty" );
         then:
-        !$( 'button', class: 'button login-button' ).isDisplayed();
+        !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
     }
 
     def "Given login page When only password field have value Then Login Button must not  be disabled"()
@@ -35,7 +35,7 @@ class LoginSpec
         TestUtils.saveScreenshot( getSession(), "login_empty" )
 
         then:
-        !$( 'button', class: 'button login-button' ).isDisplayed();
+        !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
     }
 
     def "Given login page When both username and password fields have value Then Login Button must be enabled"()
@@ -47,16 +47,15 @@ class LoginSpec
         TestUtils.saveScreenshot( getSession(), "login_pass" )
 
         then:
-        $( 'button', class: 'button login-button' ).isDisplayed();
+        waitFor { $( 'button', class: contains( 'login-button' ) ).isDisplayed() };
     }
 
-    //there was issue: XP-1432
     def "Given login page When wrong username or password typed Then error message appears"()
     {
         when:
         $( 'input', placeholder: 'userid or e-mail' ) << 'su';
         $( 'input', placeholder: 'password' ) << 'password1';
-        $( 'button', class: 'button login-button' ).click();
+        $( 'button', class: contains( 'login-button' ) ).click();
 
         then:
         waitFor { $( 'div.message-container' ).text() == 'Login failed!' }
