@@ -86,6 +86,7 @@ class ContentBrowsePanel_ContentDetails_VersionHistorySpec
 
         when: "'Version Panel' opened"
         ContentItemVersionsPanel versionPanel = openVersionPanel();
+        TestUtils.saveScreenshot( getSession(), "online-modified" )
         LinkedList<ContentVersion> contentVersions = versionPanel.getAllContentVersions();
 
         then: "number of versions increased"
