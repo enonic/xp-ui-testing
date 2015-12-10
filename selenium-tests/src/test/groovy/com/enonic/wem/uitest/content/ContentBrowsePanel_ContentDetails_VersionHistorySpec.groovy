@@ -45,6 +45,7 @@ class ContentBrowsePanel_ContentDetails_VersionHistorySpec
         when: "'Version History' option selected'"
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllContentVersions();
+        TestUtils.saveScreenshot( getSession(), "three-versions" )
 
         then: "three versions are present in the panel"
         allVersions.size() == FIRST_NUMBER_OF_VERSIONS;
