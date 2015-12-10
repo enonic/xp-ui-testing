@@ -10,7 +10,7 @@ import java.util.List;
 
 public final class ServerInstance
 {
-    private final static String LAUNCHER_CLASS = "com.enonic.xp.launcher.Launcher";
+    private final static String LAUNCHER_CLASS = "com.enonic.xp.launcher.impl.LauncherImpl";
 
     private final static String[] LAUNCHER_ARGS = {"clean"};
 
