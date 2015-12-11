@@ -30,6 +30,7 @@ class ContentInfoWidget_Spec
         filterPanel.typeSearchText( FOLDER.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        TestUtils.saveScreenshot( getSession(), "info-opened1" );
         HashMap<String, String> props = contentInfo.getContentProperties();
 
         then: "Offline status displayed"
@@ -68,6 +69,7 @@ class ContentInfoWidget_Spec
         contentBrowsePanel.selectContentInTable( content.getName() ).clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
         HashMap<String, String> props = contentInfo.getContentProperties();
+        TestUtils.saveScreenshot( getSession(), "info-opened" );
 
         then: "Offline status displayed"
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
@@ -104,6 +106,7 @@ class ContentInfoWidget_Spec
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         contentBrowsePanel.clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        TestUtils.saveScreenshot( getSession(), "changed-to-publish" );
         then:
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
@@ -118,6 +121,7 @@ class ContentInfoWidget_Spec
         wizard.typeDisplayName( "new display name" ).save().close( "new display name" );
         contentBrowsePanel.clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        TestUtils.saveScreenshot( getSession(), "changed-to-modified" );
 
         then:
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
