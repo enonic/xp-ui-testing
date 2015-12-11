@@ -206,17 +206,14 @@ public class NewContentDialog
         clearAndType( searchInput, searchString );
         sleep( 700 );
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
-        // boolean isContentNamePresent = waitUntilVisibleNoException( By.xpath( ctypeXpath ), Application.EXPLICIT_LONG );
-        boolean isContentNamePresent =
-            !findElements( By.xpath( ctypeXpath ) ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).isEmpty();
-        if ( !isContentNamePresent )
+        boolean isContentTypePresent = isElementDisplayed( ctypeXpath );
+        if ( !isContentTypePresent )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "no_type" ) );
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
-
-        findElements( By.xpath( ctypeXpath ) ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).get( 0 ).click();
-        waitsForSpinnerNotVisible();
+        getDisplayedElement( By.xpath( ctypeXpath ) ).click();
+        waitsForSpinnerNotVisible( Application.EXPLICIT_NORMAL );
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;

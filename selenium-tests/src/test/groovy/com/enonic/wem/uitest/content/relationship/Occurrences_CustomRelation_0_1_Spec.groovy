@@ -7,6 +7,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ArticleFormView
 import com.enonic.autotests.pages.form.RelationshipFormView
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.input_types.Base_InputFields_Occurrences
 import com.enonic.xp.content.ContentPath
@@ -47,8 +48,10 @@ class Occurrences_CustomRelation_0_1_Spec
 
         then: "wizard with form view opened"
         formViewPanel.isOpened();
+
         and: "option filter is displayed"
         formViewPanel.isOptionFilterDisplayed();
+
         and: "there are no selected files"
         formViewPanel.getNumberOfSelectedFiles() == 0;
     }
@@ -61,9 +64,12 @@ class Occurrences_CustomRelation_0_1_Spec
 
         when: "wizard with form view opened"
         wizard.typeData( citation ).save().close( citation.getDisplayName() );
+
         then: "new content listed"
         filterPanel.typeSearchText( citation.getName() );
         contentBrowsePanel.exists( citation.getName() );
+        TestUtils.saveScreenshot( getSession(), "citation-added" );
+
         and: "content is valid"
         !contentBrowsePanel.isContentInvalid( citation.getName() );
     }
@@ -85,6 +91,7 @@ class Occurrences_CustomRelation_0_1_Spec
     {
         when: "citation content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( RELATIONSHIP_CONTENT );
+        TestUtils.saveScreenshot( getSession(), "citation-with-article" );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         then: "correct article shown in the selected options"
@@ -102,9 +109,11 @@ class Occurrences_CustomRelation_0_1_Spec
 
         when:
         String message = contentPublishDialog.clickOnPublishNowButton().waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), "citation-published" );
 
         then: "citation has a 'online' status"
         contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+
         and: "correct notification message appeared"
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
             message.contains( "items were published" );

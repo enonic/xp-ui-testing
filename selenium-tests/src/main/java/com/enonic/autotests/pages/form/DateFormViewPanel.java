@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages.form;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -31,14 +32,15 @@ public class DateFormViewPanel
     {
         String date = data.getString( DATE_PROPERTY );
         // type a date
-        dateInput.sendKeys( date );
+        clearAndType( dateInput, date );
         sleep( 300 );
         return this;
     }
 
     public boolean isInvalidDate()
     {
-        return waitAndCheckAttrValue( dateInput, "class", "invalid", 1 );
+        WebElement input = getDisplayedElement( By.xpath( DATE_INPUT_XPATH ) );
+        return waitAndCheckAttrValue( input, "class", "invalid", 1 );
     }
 
     public String getDateValue()

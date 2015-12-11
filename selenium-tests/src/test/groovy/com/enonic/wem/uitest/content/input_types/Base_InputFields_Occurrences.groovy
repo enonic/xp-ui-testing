@@ -114,6 +114,24 @@ class Base_InputFields_Occurrences
         return dateContent;
     }
 
+    protected Content buildTime1_1_Content( String time )
+    {
+        PropertyTree data = null;
+        String name = "time";
+        if ( time != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( TimeFormViewPanel.TIME_PROPERTY, time );
+        }
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "reqired time content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":time1_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
     protected Content buildTime2_4_Content( String time )
     {
         PropertyTree data = null;

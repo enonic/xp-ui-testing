@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -14,10 +15,10 @@ class DateValidation_Spec
     String WRONG_TIME = "191:01";
 
     @Shared
-    String TEST_TIME = "16:10";
+    String CORRECT_TIME = "16:10";
 
     @Shared
-    String TEST_DATE_TIME1 = "2015-02-28 19:01";
+    String CORRECT_DATE_TIME = "2015-02-28 19:01";
 
     @Shared
     String WRONG_DATE_TIME = "015-02-28 19:01";
@@ -39,15 +40,47 @@ class DateValidation_Spec
         formViewPanel.isTimeInvalid();
     }
 
-    def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN datetime typed and content published THEN warning message appears"()
+    def "GIVEN saving of content with type 'Time 0:0' WHEN value of time is correct THEN 'Publish' button enabled"()
     {
-        given: "add a content with type 'DateTime 1:1'"
+        given: "start to add a content with type 'Time 0:0'"
+        Content timeContent = buildTime0_0_Content( CORRECT_TIME );
+        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
+        TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
+
+        when: "correct time typed "
+        wizard.typeData( timeContent );
+
+        then: "'Publish' button enabled"
+        wizard.isPublishButtonEnabled();
+
+        and: "time input is not red"
+        !formViewPanel.isTimeInvalid();
+    }
+
+    def "GIVEN saving of content with type 'Time 1:1' WHEN time not typed THEN 'Publish' button disabled"()
+    {
+        given: "start to add a content with type 'Time 1:1'"
+        Content timeContent = buildTime1_1_Content( null );
+        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
+
+        when: "correct time typed "
+        wizard.typeDisplayName( timeContent.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "required-time-publish-disabled" );
+
+        then: "'Publish' button disabled"
+        !wizard.isPublishButtonEnabled();
+    }
+
+    def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN datetime typed and content published THEN 'Publish' button disabled AND time input is red"()
+    {
+        given: "saving of content with type 'DateTime 1:1'"
         Content dateTimeContent = buildDateTime1_1_Content( WRONG_DATE_TIME );
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         when: "date time with wrong format typed "
         wizard.typeData( dateTimeContent );
+        TestUtils.saveScreenshot( getSession(), "wrong-date-time" );
 
         then: "'Publish' button disabled"
         !wizard.isPublishButtonEnabled();
@@ -56,20 +89,25 @@ class DateValidation_Spec
         formViewPanel.isDateTimeInvalid();
     }
 
-    def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN name typed and dateTime not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
+    def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN correct date-time typed THEN 'Publish' button is enabled"()
     {
         given: "start to add a content with type 'DateTime(1:1)'"
-        Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
+        Content dateTimeContent = buildDateTime1_1_Content( CORRECT_DATE_TIME );
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         when: "only the name typed and dateTime not typed and 'Publish' button clicked"
-        wizard.typeDisplayName( dateTimeContent.getDisplayName() );
+        wizard.typeData( dateTimeContent );
+        TestUtils.saveScreenshot( getSession(), "correct-date-time" );
 
-        then: "'Publish' button disabled"
-        !wizard.isPublishButtonEnabled();
+        then: "'Publish' button is enabled"
+        wizard.isPublishButtonEnabled();
+
+        and: "time input is not red"
+        !formViewPanel.isDateTimeInvalid();
     }
 
-    def "GIVEN wizard for adding a required DateTime(2:4) opened WHEN name typed and dateTime not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
+    def "GIVEN wizard for adding a required DateTime(2:4) opened WHEN name typed but dateTime not typed  THEN 'Publish' button is disabled"()
     {
         given: "start to add a content with type 'DateTime(2:4)'"
         Content dateTimeContent = buildDateTime2_4_Content( null );
@@ -77,19 +115,7 @@ class DateValidation_Spec
 
         when: "only the 'name' typed and datetime not typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
-
-        then: "'Publish' button disabled"
-        !wizard.isPublishButtonEnabled();
-    }
-
-    def "GIVEN wizard for adding a required Time(2:4) opened WHEN name typed and time not typed AND 'Publish' button pressed THEN validation message and warning message appears"()
-    {
-        given: "start to add a content with type 'Time(2:4)'"
-        Content timeContent = buildTime2_4_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
-
-        when: "only the 'name' typed and time not typed"
-        wizard.typeDisplayName( timeContent.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "required-date-time" );
 
         then: "'Publish' button disabled"
         !wizard.isPublishButtonEnabled();

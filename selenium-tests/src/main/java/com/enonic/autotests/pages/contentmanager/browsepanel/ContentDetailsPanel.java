@@ -15,7 +15,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
+    public static final String DETAILS_PANEL =
+        "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'app.view.detail.DetailsPanel')]";
 
     private final String VERSION_HISTORY_OPTION = "//div[text()='Version history']";
 
@@ -48,13 +49,12 @@ public class ContentDetailsPanel
 
     public ContentInfoWidget openInfoWidget()
     {
-        if ( findElements( By.xpath( CONTENT_INFO_OPTION ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        if ( !isElementDisplayed( CONTENT_INFO_OPTION ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_info_opt" ) );
             throw new TestFrameworkException( "Info widget was not opened!" );
         }
         getDisplayedElement( By.xpath( CONTENT_INFO_OPTION ) ).click();
-        //findElements( By.xpath( CONTENT_INFO_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
         sleep( 700 );
         return new ContentInfoWidget( getSession() );
     }
@@ -68,7 +68,7 @@ public class ContentDetailsPanel
 
     public boolean isDisplayed()
     {
-        return findElements( By.xpath( DETAILS_PANEL ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
+        return isElementDisplayed( DETAILS_PANEL );
     }
 
     public String getContentDisplayName()

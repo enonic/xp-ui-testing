@@ -74,7 +74,7 @@ class Occurrences_HtmlArea_0_1_Spec
         text == EXPECTED_TEXT;
     }
 
-    def "GIVEN saving of content with HtmlArea editor (0:1) and text not typed WHEN content opened for edit THEN  no text present in the editor"()
+    def "GIVEN saving of content with HtmlArea editor (0:1) and text not typed WHEN content opened for edit THEN no text present in the editor"()
     {
         given: "new content with type HtmlArea added'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );

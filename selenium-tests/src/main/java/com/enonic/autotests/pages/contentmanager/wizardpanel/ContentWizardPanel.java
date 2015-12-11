@@ -148,6 +148,17 @@ public class ContentWizardPanel
         return new ItemViewContextMenu( getSession() );
     }
 
+    public ContentWizardPanel unlockPageEditor()
+    {
+        ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
+        // NavigatorHelper.switchToLiveEditFrame( getSession() );
+        // ItemViewContextMenu itemViewContextMenu = this.showItemViewContextMenu();
+        itemViewContextMenu.clickOnCustomizeMenuItem();
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        return this;
+    }
+
+
     private void clickOnPageView()
     {
         NavigatorHelper.switchToLiveEditFrame( getSession() );

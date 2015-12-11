@@ -12,6 +12,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -46,24 +47,18 @@ public class HtmlArea0_0_FormViewPanel
             numberOfEditors = data.getLong( NUMBER_OF_EDITORS );
             addEditors( numberOfEditors );
         }
-
         List<WebElement> frames = findElements( By.xpath( TINY_MCE ) );
         if ( frames.size() == 0 )
         {
             throw new TestFrameworkException( "no one text input was not found" );
         }
-
         int i = 0;
-
         for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )
         {
             Actions builder = new Actions( getDriver() );
             builder.click( frames.get( i ) ).build().perform();
             sleep( 500 );
-            //frames.get( i ).sendKeys( sourceString );
-            //TODO
-            //( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
-            setText( frames.get( i ).getAttribute( "id" ), sourceString );
+            setTextIntoArea( frames.get( i ).getAttribute( "id" ), sourceString );
             sleep( 300 );
             i++;
             if ( i >= numberOfEditors )
@@ -75,7 +70,7 @@ public class HtmlArea0_0_FormViewPanel
         return this;
     }
 
-    private void setText( String id, String text )
+    private void setTextIntoArea( String id, String text )
     {
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SET_TINY_MCE_INNERHTML, id, text );
     }
@@ -109,9 +104,7 @@ public class HtmlArea0_0_FormViewPanel
 
     public boolean isAddButtonPresent()
     {
-        return
-            findElements( By.xpath( ADD_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size() >
-                0;
+        return isElementDisplayed( ADD_BUTTON_XPATH );
     }
 
     public boolean waitUntilAddButtonNotVisible()
@@ -123,9 +116,10 @@ public class HtmlArea0_0_FormViewPanel
     {
         if ( findElements( By.xpath( ADD_BUTTON_XPATH ) ).size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), "Add button was not found!" );
             throw new TestFrameworkException( "Add button not present in Form View Panel!" );
         }
-        findElements( By.xpath( ADD_BUTTON_XPATH ) ).get( 0 ).click();
+        findElement( By.xpath( ADD_BUTTON_XPATH ) ).click();
         sleep( 500 );
         return this;
     }

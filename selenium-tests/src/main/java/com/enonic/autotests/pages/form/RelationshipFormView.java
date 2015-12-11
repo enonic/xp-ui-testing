@@ -20,7 +20,7 @@ public class RelationshipFormView
 {
     public static final String RELATIONSHIPS_PROPERTY = "relationships";
 
-    protected final String CONTAINER_DIV = FORM_VIEW + "//div[contains(@id,'relationship.ContentSelector')]";
+    protected final String CONTAINER_DIV = FORM_VIEW + "//div[contains(@id,'ContentSelector')]";
 
     protected final String OPTION_FILTER_INPUT = CONTAINER_DIV + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 

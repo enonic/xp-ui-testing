@@ -48,7 +48,7 @@ public class PageComponentsViewDialog
     public PageComponentsViewDialog openMenu( String componentName )
     {
         String menuButton = String.format( COMPONENTS_GRID +
-                                               "//div[contains(@class,'slick-row') and descendant::h6[@class='main-name'  and contains(.,'%s')]]//div[@class='menu-icon']",
+                                               "//div[contains(@class,'slick-row') and descendant::h6[@class='main-name'  and text()='%s']]//div[@class='menu-icon']",
                                            componentName );
 
         if ( !isElementDisplayed( menuButton ) )
