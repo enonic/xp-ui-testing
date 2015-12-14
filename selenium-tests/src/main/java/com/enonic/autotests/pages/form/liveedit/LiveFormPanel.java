@@ -90,10 +90,16 @@ public class LiveFormPanel
         return findElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) ).stream().filter( WebElement::isDisplayed ).count();
     }
 
-    public boolean isImagePresent( String imageName )
+    public boolean isImagePresentInLayout( String imageName )
     {
         String img = String.format( "//img[contains(@src,'%s')]", imageName );
         return isElementDisplayed( LAYOUT_COMPONENT + FIGURE + img );
+    }
+
+    public boolean isImagePresent( String imageName )
+    {
+        String img = String.format( "//img[contains(@src,'%s')]", imageName );
+        return isElementDisplayed( FIGURE + img );
     }
 
     public int getNumberOfImagesByName( String imageName )

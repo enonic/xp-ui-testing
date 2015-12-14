@@ -187,7 +187,7 @@ class CreateSiteWithLayoutSpec
         and: "but number of components not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 3;
         and: "image with the required name no longer present on LiveEdit"
-        !liveFormPanel.isImagePresent( TEST_IMAGE_COMPONENT_NAME );
+        !liveFormPanel.isImagePresentInLayout( TEST_IMAGE_COMPONENT_NAME );
     }
 
     def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'duplicate' menu-item selected THEN two images with the same name present in layout"()
