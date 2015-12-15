@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import spock.lang.Shared
@@ -55,6 +56,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
         wizard.unlockPageEditor().showComponentView();
+        TestUtils.saveScreenshot( getSession(), "image-from-template" );
 
         and: "and one component was replaced"
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
@@ -64,16 +66,18 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         pageComponentsView.doCloseDialog();
         and: "new image inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( TEST_IMAGE )
+        imageComponentView.selectImageItemFromList( TEST_IMAGE );
 
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         and: "wizard saved"
         wizard.save();
+        TestUtils.saveScreenshot( getSession(), "new-image-set" );
 
         when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
         wizard.showComponentView();
         pageComponentsView.openMenu( "country template" ).selectMenuItem( "Reset" );
-        sleep( 5000 )
+        sleep( 5000 );
+        TestUtils.saveScreenshot( getSession(), "image-reset-to-template" );
 
         then: "site has been reset to default template, image from template appeared in the page editor"
         NavigatorHelper.switchToLiveEditFrame( getSession() );
