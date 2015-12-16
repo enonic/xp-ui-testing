@@ -3,6 +3,7 @@ package com.enonic.autotests.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -107,7 +108,6 @@ public class Application
 
     public void waitsForSpinnerNotVisible()
     {
-        //List<WebElement> list = null;
         boolean isDisplayed = true;
         int i = 0;
         do
@@ -188,5 +188,13 @@ public class Application
         String message = findElements( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
         getLogger().info( "Publish Notification message " + message );
         return message;
+    }
+
+    public void dragAndDrop( WebElement source, WebElement target )
+    {
+        Actions builder = new Actions( getDriver() );
+        builder.clickAndHold( source ).build().perform();
+        builder.release( target );
+        builder.build().perform();
     }
 }

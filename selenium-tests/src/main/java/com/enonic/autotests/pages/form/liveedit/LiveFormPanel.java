@@ -1,6 +1,9 @@
 package com.enonic.autotests.pages.form.liveedit;
 
 
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -16,6 +19,8 @@ public class LiveFormPanel
     private final String PANEL_DIV = "//div[contains(@id,'app.wizard.page.LiveFormPanel')]";
 
     private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'api.liveedit.image.ImageComponentView')]";
+
+    private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
 
@@ -39,6 +44,13 @@ public class LiveFormPanel
         return layoutComponentView;
     }
 
+    public LiveFormPanel typeTextInTextComponent( String text )
+    {
+        String input = TEXT_COMPONENT_VIEW + "//section";
+        clearAndType( getDisplayedElement( By.xpath( input ) ), text );
+        return this;
+    }
+
     public void setLayoutComponentView( LayoutComponentView layoutComponentView )
     {
         this.layoutComponentView = layoutComponentView;
@@ -57,6 +69,21 @@ public class LiveFormPanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "LiveFormPanel_bug" ) );
             throw new TestFrameworkException( "LIVE EDIT:  LiveFormPanel was not loaded!" );
         }
+    }
+
+    public boolean isTextComponentPresent()
+    {
+        return isElementDisplayed( TEXT_COMPONENT_VIEW );
+    }
+
+    public String getTextFromTextComponent()
+    {
+        if ( !isElementDisplayed( TEXT_COMPONENT_VIEW + "//section/p" ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_text_component" );
+            throw new TestFrameworkException( "text in the component was not found!" );
+        }
+        return getDisplayedString( TEXT_COMPONENT_VIEW + "//section/p" );
     }
 
     public boolean isLayoutComponentPresent()
@@ -100,6 +127,20 @@ public class LiveFormPanel
     {
         String img = String.format( "//img[contains(@src,'%s')]", imageName );
         return isElementDisplayed( FIGURE + img );
+    }
+
+    public LinkedList<String> getImageNames()
+    {
+        LinkedList<String> names = getDisplayedElements( By.xpath( "//figure//img" ) ).stream().map( e -> e.getAttribute( "src" ) ).map(
+            s -> getImageNameFromSRC( s ) ).collect( Collectors.toCollection( LinkedList::new ) );
+
+        return names;
+    }
+
+    private String getImageNameFromSRC( String src )
+    {
+        String name = src.substring( src.lastIndexOf( "/" ) + 1 );
+        return name;
     }
 
     public int getNumberOfImagesByName( String imageName )

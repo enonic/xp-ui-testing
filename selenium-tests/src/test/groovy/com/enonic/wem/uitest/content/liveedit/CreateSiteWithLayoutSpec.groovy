@@ -45,6 +45,9 @@ class CreateSiteWithLayoutSpec
     @Shared
     String LAYOUT_NAME = "3-col";
 
+    @Shared
+    String TEXT_COMPONENT_TEXT = "test text";
+
     def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be present"()
     {
         given:
@@ -74,6 +77,33 @@ class CreateSiteWithLayoutSpec
 
         then: "new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getName() );
+    }
+
+    def "GIVEN 'Page Components' opened WHEN menu for 'main region' clicked and 'insert' menu-item selected AND 'Text'-item clicked THEN new text present on the live edit frame"()
+    {
+        given: "'Page Components' opened"
+        filterPanel.typeSearchText( pageTemplate.getName() )
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+
+        when: "'Insert/Text' menu items clicked and text typed"
+        pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
+        TestUtils.saveScreenshot( getSession(), "select_insert_text" );
+        pageComponentsView.doCloseDialog();
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        liveFormPanel.typeTextInTextComponent( TEXT_COMPONENT_TEXT );
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        wizard.save();
+        TestUtils.saveScreenshot( getSession(), "text-typed" );
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+
+        then: "text-component appears in the 'live edit' frame"
+        liveFormPanel.isTextComponentPresent();
+
+        and: "correct text shown"
+        liveFormPanel.getTextFromTextComponent().equals( TEXT_COMPONENT_TEXT );
     }
 
     def "GIVEN 'Page Components' opened WHEN menu for 'main region' clicked and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout present on the live edit frame"()
