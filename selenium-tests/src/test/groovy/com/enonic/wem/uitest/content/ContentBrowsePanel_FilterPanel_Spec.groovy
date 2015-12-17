@@ -101,7 +101,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "content saved and wizard closed"
         wizard.save().close( TEST_FOLDER.getDisplayName() );
-        sleep( 2000 );
+        sleep( 4000 );
         TestUtils.saveScreenshot( getSession(), "last-mod-hour" );
 
         then: "new ContentType-filter and LastModified-filter should be updated with new count"
