@@ -76,7 +76,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         Content folder = buildFolderContent( "folder", "last modified test" );
         contentBrowsePanel.doShowFilterPanel();
         int beforeAdding = filterPanel.getNumberFilteredByContentType( "Folder" );
-        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
+        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
 
         when: "content saved and the HomeButton clicked"
         contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData( folder ).save();
@@ -84,7 +84,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         sleep( 2000 );
 
         then: "new ContentType-filter and LastModified-filter should be updated with new count"
-        filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
+        filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "day" ) -
             lastModifiedBeforeAdding == 1;
     }
 
@@ -93,19 +93,19 @@ class ContentBrowsePanel_FilterPanel_Spec
         given: "opened a content wizard and data typed"
         contentBrowsePanel.doShowFilterPanel();
         TEST_FOLDER = buildFolderContent( "folder", "last modified test 2" );
-        TestUtils.saveScreenshot( getSession(), "last-mod-hour-before" );
+        TestUtils.saveScreenshot( getSession(), "last-mod-day-before" );
         int beforeAdding = filterPanel.getNumberFilteredByContentType( "Folder" );
-        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "hour" );
+        int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).
             typeData( TEST_FOLDER );
 
         when: "content saved and wizard closed"
         wizard.save().close( TEST_FOLDER.getDisplayName() );
         sleep( 4000 );
-        TestUtils.saveScreenshot( getSession(), "last-mod-hour" );
+        TestUtils.saveScreenshot( getSession(), "last-mod-day" );
 
         then: "new ContentType-filter and LastModified-filter should be updated with new count"
-        filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "hour" ) -
+        filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1 && filterPanel.getLastModifiedCount( "day" ) -
             lastModifiedBeforeAdding == 1;
     }
 
@@ -113,23 +113,23 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given:
         contentBrowsePanel.doShowFilterPanel();
-        TestUtils.saveScreenshot( getSession(), "LastModified_filter1" )
+        TestUtils.saveScreenshot( getSession(), "LastModified_filter_before_remove" )
         int beforeRemoving = filterPanel.getNumberFilteredByContentType( "Folder" );
-        int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "hour" );
+        int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "day" );
 
         when:
         contentBrowsePanel.selectContentInTable( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
         sleep( 2000 );
-        TestUtils.saveScreenshot( getSession(), "LastModified_filter2" )
+        TestUtils.saveScreenshot( getSession(), "LastModified_filter-remove" )
 
         then:
         beforeRemoving - filterPanel.getNumberFilteredByContentType( "Folder" ) == 1 && lastModifiedBeforeRemoving -
-            filterPanel.getLastModifiedCount( "hour" ) == 1;
+            filterPanel.getLastModifiedCount( "day" ) == 1;
     }
 
     def "GIVEN No selections or text-search WHEN adding text-search THEN all filters should be updated to only contain entries with matches in text-search"()
     {
-        given: "a folder-content added and No selections or text-search"
+        given: "folder-content added and No selections or text-search"
         contentBrowsePanel.doShowFilterPanel();
         TEST_FOLDER = buildFolderContent( "folder", "filtering test" );
         addContent( TEST_FOLDER );
@@ -138,7 +138,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "folder's name typed in the text input"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "SearchText" );
+        TestUtils.saveScreenshot( getTestSession(), "SearchText-" + TEST_FOLDER.getName() );
 
         then: "all filters should be updated to only contain entries with matches in text-search"
         filterPanel.getNumberFilteredByContentType( "Folder" ) == 1 && filterPanel.getLastModifiedCount( "hour" ) == 1;
@@ -162,14 +162,18 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given: "No selections in the filter panel"
         contentBrowsePanel.doShowFilterPanel();
-        Integer lastModifiedNumberBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
+        Integer lastModifiedHourBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
+        Integer lastModifiedDayBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.DAY );
 
-        when: "Selecting one entry in ContentTypes-filter (Folder)"
-        filterPanel.selectEntryInContentTypesFilter( "Folder" );
-        Integer newLastModifiedNumber = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
+        when: "Selecting one entry in ContentTypes-filter (Image)"
+        filterPanel.selectEntryInContentTypesFilter( "Image" );
+        Integer newLastModifiedHour = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
+        Integer newLastModifiedDay = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.DAY );
 
         then: "LastModified-filter should be updated with filtered values"
-        newLastModifiedNumber != lastModifiedNumberBefore;
+        newLastModifiedHour != lastModifiedHourBefore;
+        and:
+        newLastModifiedDay != lastModifiedDayBefore;
     }
 
     def "GIVEN selection in any filter WHEN adding text-search THEN all filters should be updated to only contain entries with selection and new count with match on text-search"()
