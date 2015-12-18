@@ -26,6 +26,9 @@ public class PageComponentsViewDialog
 
     public final String COMPONENTS_GRID = "//div[contains(@id,'PageComponentsTreeGrid')]";
 
+    private String COMPONENT_ITEM =
+        DIALOG_CONTAINER + "//div[contains(@class,'slick-row') and descendant::h6[@class='main-name'  and text()='%s']]";
+
     public final String CLOSE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'CloseButton')]";
 
     private final String SLICK_VIEW_PORT = "//div[@class='slick-viewport']";
@@ -124,5 +127,21 @@ public class PageComponentsViewDialog
             result.add( PageComponent.builder().name( names.get( i ) ).type( types.get( i ) ).build() );
         }
         return result;
+    }
+
+    public PageComponentsViewDialog swapComponents( String sourceName, String targetName )
+    {
+        String sourceItem = String.format( COMPONENT_ITEM, sourceName );
+        String targetItem = String.format( COMPONENT_ITEM, targetName );
+        if ( !isElementDisplayed( sourceItem ) || !isElementDisplayed( targetItem ) )
+        {
+            throw new TestFrameworkException(
+                "PageComponentsViewDialog: drag and drop failed. items were not found: " + sourceName + " " + targetName );
+        }
+        WebElement source = findElement( By.xpath( sourceItem ) );
+        WebElement target = findElement( By.xpath( targetItem ) );
+        dragAndDrop( source, target );
+        sleep( 1000 );
+        return this;
     }
 }

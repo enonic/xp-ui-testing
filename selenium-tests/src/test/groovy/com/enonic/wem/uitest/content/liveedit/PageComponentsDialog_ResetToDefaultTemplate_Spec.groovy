@@ -31,6 +31,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     @Shared
     String TEST_IMAGE = "man2.jpg";
 
+    @Shared
+    String TEST_IMAGE_SWAP = "whale.jpg";
+
 
     def "setup:add site with a template"()
     {
@@ -85,15 +88,49 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         liveFormPanel.isImagePresent( IMAGE_FOR_TEMPLATE );
     }
 
-    private void addTemplateWithImage( Content template, String imageName )
+
+    def "GIVEN site with 2 image-components WHEN swapping components by DnD THEN components shown correctly"()
     {
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).showPageEditor().typeData( template ).showComponentView();
+        given: "site with 2 image-components"
+        filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
+        wizard.unlockPageEditor().showComponentView();
+        LiveFormPanel liveFormPanel = addImageComponent( TEST_IMAGE_SWAP );
+        TestUtils.saveScreenshot( getSession(), "two-images-in-view" );
+        LinkedList<String> before = liveFormPanel.getImageNames();
+
+        when: "swapping components by DnD"
+        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        wizard.showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        pageComponentsView.swapComponents( IMAGE_FOR_TEMPLATE, TEST_IMAGE_SWAP );
+        wizard.save();
+        sleep( 2000 );
+        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        LinkedList<String> after = liveFormPanel.getImageNames();
+
+        then: "images swapped"
+        before.getFirst() == TEST_IMAGE_SWAP;
+        and:
+        after.getFirst() == IMAGE_FOR_TEMPLATE;
+
+    }
+
+    private LiveFormPanel addImageComponent( String imageName )
+    {
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( imageName );
+        return new LiveFormPanel( getSession() );
+    }
+
+    private void addTemplateWithImage( Content template, String imageName )
+    {
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+            template.getContentTypeName() ).showPageEditor().typeData( template ).showComponentView();
+        addImageComponent( imageName );
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         wizard.save().close( template.getDisplayName() );
     }
