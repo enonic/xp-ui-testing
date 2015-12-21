@@ -53,7 +53,7 @@ class SiteConfiguratorDialog_Spec
         dialog.getTitle() == SIMPLE_SITE_APP;
     }
 
-    def "GIVEN configurator dialog opened WHEN red color for background selected THEN correct background color present in the page-editor"()
+    def "GIVEN configurator dialog opened WHEN red color selected for background THEN correct background color present in the page-editor"()
     {
         given: "site opened and configurator dialog opened"
         filterPanel.typeSearchText( SITE.getName() );
@@ -62,7 +62,7 @@ class SiteConfiguratorDialog_Spec
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfiguration( SIMPLE_SITE_APP );
 
-        when: "ed color for background selected"
+        when: "red color selected for background"
         dialog.selectBackgroundColor( BACKGROUND_COLOR )
         TestUtils.saveScreenshot( getSession(), "page-background-selected" );
         dialog.doApply();

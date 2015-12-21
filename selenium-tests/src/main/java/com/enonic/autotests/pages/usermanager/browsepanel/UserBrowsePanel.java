@@ -201,6 +201,11 @@ public class UserBrowsePanel
 
     }
 
+    public boolean exists( String name )
+    {
+        return exists( name, false );
+    }
+
     public UserBrowsePanel clickOnRowAndSelectGroupInUserStore( String userStoreName )
     {
         String GROUP_ROW = String.format( NAMES_VIEW_BY_NAME, userStoreName ) + "/ancestor::div[contains(@class,'slick-row')] " +

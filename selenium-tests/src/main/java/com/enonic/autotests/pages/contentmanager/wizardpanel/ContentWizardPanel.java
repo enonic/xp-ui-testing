@@ -151,8 +151,6 @@ public class ContentWizardPanel
     public ContentWizardPanel unlockPageEditor()
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
-        // NavigatorHelper.switchToLiveEditFrame( getSession() );
-        // ItemViewContextMenu itemViewContextMenu = this.showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
@@ -254,7 +252,7 @@ public class ContentWizardPanel
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saving" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_save_button" ) );
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();

@@ -72,8 +72,10 @@ public class SiteConfiguratorDialog
             TestUtils.saveScreenshot( getSession(), "err_apply-site-config" );
             throw new TestFrameworkException( "button 'apply' on 'site-config-dialog' was not found!" );
         }
-        applyButton.click();
-        sleep( 1500 );
+        Actions builder = new Actions( getDriver() );
+        builder.moveToElement( applyButton ).click().build().perform();
+        //applyButton.click();
+        sleep( 1100 );
     }
 
     public void doClose()
@@ -105,8 +107,14 @@ public class SiteConfiguratorDialog
 
     public SiteConfiguratorDialog selectBackgroundColor( String color )
     {
-        String radioButton = String.format( DIALOG_CONTAINER + "//input[@name='backgroundColor' and @value='%s']", color.toLowerCase() );
+        String radioButton =
+            String.format( DIALOG_CONTAINER + "//input[contains(@name,'backgroundColor') and @value='%s']", color.toLowerCase() );
         Actions builder = new Actions( getDriver() );
+        if ( !isElementDisplayed( radioButton ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( "radioBtn" ) );
+            throw new TestFrameworkException( "radio button was not found!" );
+        }
         builder.click( findElement( By.xpath( radioButton ) ) ).build().perform();
         sleep( 500 );
         return this;
