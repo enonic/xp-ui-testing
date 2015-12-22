@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class SaveBeforeCloseDialog
     extends Application
 {
@@ -40,6 +42,7 @@ public class SaveBeforeCloseDialog
             throw new TestFrameworkException( "'Yes' button was not found on modal dialog!" );
         }
         findElement( By.xpath( YES_BUTTON_XPATH ) ).click();
+        sleep( 500 );
     }
 
     public void clickCancelButton()
@@ -50,6 +53,8 @@ public class SaveBeforeCloseDialog
             throw new TestFrameworkException( "'Cancel' button was not found on modal dialog!" );
         }
         findElement( By.xpath( CANCEL_BUTTON_XPATH ) ).click();
+        sleep( 500 );
+
     }
 
     public void clickNoButton()
@@ -81,7 +86,6 @@ public class SaveBeforeCloseDialog
      */
     public void waituntilPageLoaded( long timeout )
     {
-
         new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TITLE_XPATH ) ) );
     }
 
@@ -100,5 +104,4 @@ public class SaveBeforeCloseDialog
     {
         return waitForPresent( Application.EXPLICIT_NORMAL );
     }
-
 }

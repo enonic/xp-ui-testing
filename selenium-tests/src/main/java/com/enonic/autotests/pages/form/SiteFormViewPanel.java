@@ -51,7 +51,7 @@ public class SiteFormViewPanel
     {
         String description = data.getString( DESCRIPTION_KEY );
         descriptionInput.sendKeys( description );
-        sleep( 100 );
+        sleep( 500 );
         Iterable<String> appNames = data.getStrings( APP_KEY );
         appNames.forEach( name -> selectApp( name ) );
         return this;

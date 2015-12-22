@@ -25,7 +25,6 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
 
         then: "correct display name is shown"
         contentDetailsPanel.getContentDisplayName() == Application.UNNAMED_SITE_DISPLAY_NAME;
-
     }
 
     def "WHEN no one content selected THEN 'Details Panel Toggle' button is displayed AND details panel not displayed"()

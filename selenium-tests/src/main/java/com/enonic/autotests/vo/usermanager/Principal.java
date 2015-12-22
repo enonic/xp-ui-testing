@@ -8,20 +8,18 @@ public abstract class Principal
 
     private final String displayName;
 
+    private final String name;
+
     private final Instant modifiedTime;
 
-    Principal( final String principalKey, final String displayName, final Instant modifiedTime )
-    {
-        this.key = principalKey;
-        this.displayName = displayName;
-        this.modifiedTime = modifiedTime;
-    }
 
-    Principal( final Builder builder )
+    protected Principal( final Builder builder )
     {
-        key = builder.key;
-        displayName = builder.displayName;
-        modifiedTime = builder.modifiedTime;
+        this.key = builder.key;
+        this.displayName = builder.displayName;
+        this.modifiedTime = builder.modifiedTime;
+        this.name = builder.name;
+
     }
 
     public String getKey()
@@ -32,6 +30,11 @@ public abstract class Principal
     public String getDisplayName()
     {
         return displayName;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     public Instant getModifiedTime()
@@ -47,6 +50,8 @@ public abstract class Principal
 
         Instant modifiedTime;
 
+        String name;
+
         Builder()
         {
         }
@@ -56,6 +61,7 @@ public abstract class Principal
             this.displayName = principal.displayName;
             this.key = principal.key;
             this.modifiedTime = principal.getModifiedTime();
+            this.name = principal.getName();
         }
 
         @SuppressWarnings("unchecked")
@@ -72,6 +78,14 @@ public abstract class Principal
             this.displayName = displayName;
             return (B) this;
         }
+
+        @SuppressWarnings("unchecked")
+        public B name( final String name )
+        {
+            this.name = name;
+            return (B) this;
+        }
+
 
         public B modifiedTime( final Instant modifiedTime )
         {

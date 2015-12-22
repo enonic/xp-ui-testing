@@ -64,7 +64,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         numberOfFilteredContent == contentBrowsePanel.getRowNumber();
     }
 
-    def "GIVEN Selections in any filter WHEN clicking clean filter THEN initial grid view displayed"()
+    def "GIVEN selections in any filter WHEN clicking clean filter THEN initial grid view displayed"()
     {
         given:
         contentBrowsePanel.doShowFilterPanel();
@@ -80,7 +80,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         !beforeClean && contentBrowsePanel.exists( initialFolder.getName() );
     }
 
-    def "GIVEN One selection in ContentTypes-filter WHEN Selecting one additional entry in ContentTypes-filter THEN all existing Content of the both selected types should be listed in gridPanel"()
+    def "GIVEN one selection in ContentTypes-filter WHEN selecting one additional entry in ContentTypes-filter THEN all existing content of the both selected types should be listed in gridPanel"()
     {
         given:
         contentBrowsePanel.doShowFilterPanel();
@@ -98,7 +98,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowNumber();
     }
 
-    def "GIVEN One one selection in any filter WHEN deselecting selection THEN initial grid view displayed "()
+    def "GIVEN one selection in any filter WHEN deselecting selection THEN initial grid view displayed "()
     {
         given:
         contentBrowsePanel.doShowFilterPanel();

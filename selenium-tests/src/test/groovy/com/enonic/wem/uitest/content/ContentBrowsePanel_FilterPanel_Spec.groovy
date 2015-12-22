@@ -20,7 +20,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     @Shared
     Content TEST_FOLDER
 
-    def "GIVEN No selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
+    def "GIVEN no selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
     {
         given:
         String name = NameHelper.uniqueName( "unstructured" );
@@ -40,7 +40,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.getRowNumber() == TestUtils.getNumberFromFilterLabel( label );
     }
 
-    def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappear"()
+    def "GIVEN selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappear"()
     {
         given:
         contentBrowsePanel.doShowFilterPanel();
@@ -55,7 +55,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         filterPanel.waitForClearFilterLinkNotVisible();
     }
 
-    def "GIVEN Selections in any filter WHEN clicking CleanFilter THEN all selections should disappear"()
+    def "GIVEN selections in any filter WHEN clicking 'CleanFilter' THEN all selections should disappear"()
     {
         given: "Selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
@@ -70,7 +70,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         !contentBrowsePanel.getFilterPanel().isAnySelectionPresent();
     }
 
-    def "GIVEN creating new Content WHEN saved and HomeButton clicked THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN creating new content WHEN saved and HomeButton clicked THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
         Content folder = buildFolderContent( "folder", "last modified test" );
@@ -88,7 +88,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             lastModifiedBeforeAdding == 1;
     }
 
-    def "GIVEN creating new Content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN creating new content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given: "opened a content wizard and data typed"
         contentBrowsePanel.doShowFilterPanel();
@@ -109,7 +109,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             lastModifiedBeforeAdding == 1;
     }
 
-    def "GIVEN a Content WHEN deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN a content WHEN it deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
         given:
         contentBrowsePanel.doShowFilterPanel();
@@ -127,7 +127,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             filterPanel.getLastModifiedCount( "day" ) == 1;
     }
 
-    def "GIVEN No selections or text-search WHEN adding text-search THEN all filters should be updated to only contain entries with matches in text-search"()
+    def "GIVEN no selections or text-search WHEN adding text-search THEN all filters should be updated to only contain entries with matches in text-search"()
     {
         given: "folder-content added and No selections or text-search"
         contentBrowsePanel.doShowFilterPanel();
@@ -144,7 +144,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         filterPanel.getNumberFilteredByContentType( "Folder" ) == 1 && filterPanel.getLastModifiedCount( "hour" ) == 1;
     }
 
-    def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN no changes in ContentTypes-filter"()
+    def "GIVEN no selections in filter WHEN Selecting one entry in ContentTypes-filter THEN no changes in ContentTypes-filter"()
     {
         given: " No selections in filter and filter panel shown"
         contentBrowsePanel.doShowFilterPanel();
@@ -158,7 +158,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         beforeSelect.equals( afterSelect );
     }
 
-    def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN LastModified-filter should be updated with filtered values"()
+    def "GIVEN no selections in filter WHEN Selecting one entry in ContentTypes-filter THEN LastModified-filter should be updated with filtered values"()
     {
         given: "No selections in the filter panel"
         contentBrowsePanel.doShowFilterPanel();

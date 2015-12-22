@@ -46,7 +46,7 @@ public class UserBrowsePanel
 
     }
 
-    public static final String USER_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' and text()='User Manager']";
+    public final String USERS_BUTTON = "//button[contains(@id,'api.app.bar.HomeButton') and child::span[text()='Users']]";
 
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";
@@ -63,7 +63,7 @@ public class UserBrowsePanel
     protected final String SYNCH_BUTTON_XPATH =
         "//div[contains(@id,'app.browse.UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Synch']]";
 
-    @FindBy(xpath = USER_MANAGER_BUTTON)
+    @FindBy(xpath = USERS_BUTTON)
     private WebElement userManagerButton;
 
     @FindBy(xpath = NEW_BUTTON_XPATH)
@@ -188,6 +188,13 @@ public class UserBrowsePanel
 
     }
 
+    public UserBrowsePanel clickCheckboxAndSelectGroup( String groupName )
+    {
+        getSession().put( ITEM_TYPE, BrowseItemType.GROUP );
+        return clickCheckboxAndSelectRow( groupName );
+
+    }
+
     public UserBrowsePanel selectGroupsFolderInUserStore( String userStoreName )
     {
         //1.expand a userStore:
@@ -195,7 +202,6 @@ public class UserBrowsePanel
         {
             clickOnExpander( userStoreName );
         }
-
         getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return clickOnRowAndSelectGroupInUserStore( userStoreName );
 

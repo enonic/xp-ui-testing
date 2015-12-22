@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -16,11 +16,9 @@ public class ConfirmationDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'api.ui.dialog.ConfirmationDialog')]";
 
-    public static final String YES_BUTTON_XPATH =
-        "//div[contains(@id,'api.ui.dialog.ConfirmationDialog')]//div[@class='dialog-buttons']//button/span[text()='Yes']";
+    public final String YES_BUTTON_XPATH = DIALOG_CONTAINER + "//div[@class='dialog-buttons']//button/span[text()='Yes']";
 
-    public static final String NO_BUTTON_XPATH =
-        "//div[contains(@id,'api.ui.dialog.ConfirmationDialog')]//div[@class='dialog-buttons']//button/span[text()='No']";
+    public final String NO_BUTTON_XPATH = DIALOG_CONTAINER + "//div[@class='dialog-buttons']//button/span[text()='No']";
 
 
     private final String TITLE_TEXT = DIALOG_CONTAINER + "//div[@class='dialog-header']//h2";
@@ -65,31 +63,27 @@ public class ConfirmationDialog
         return waitElementNotVisible( By.xpath( DIALOG_CONTAINER ), 2 );
     }
 
-    public ContentBrowsePanel pressYesButton()
+    public void pressYesButton()
     {
         yesButton.click();
         boolean isClosed = waitForClosed();
         if ( !isClosed )
         {
-            throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
+            TestUtils.saveScreenshot( getSession(), "err_confirm_dialog" );
+            throw new TestFrameworkException( "Confirmation dialog was not closed!" );
         }
-        ContentBrowsePanel table = new ContentBrowsePanel( getSession() );
-        table.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        sleep( 500 );
-        return table;
+        sleep( 1000 );
     }
 
-    public ContentBrowsePanel pressNoButton()
+    public void pressNoButton()
     {
         noButton.click();
         boolean isClosed = waitForClosed();
         if ( !isClosed )
         {
-            throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
+            TestUtils.saveScreenshot( getSession(), "err_confirm_dialog" );
+            throw new TestFrameworkException( "Confirmation dialog was not closed!" );
         }
-        ContentBrowsePanel browsePanel = new ContentBrowsePanel( getSession() );
-        browsePanel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        sleep( 500 );
-        return browsePanel;
+        sleep( 1000 );
     }
 }
