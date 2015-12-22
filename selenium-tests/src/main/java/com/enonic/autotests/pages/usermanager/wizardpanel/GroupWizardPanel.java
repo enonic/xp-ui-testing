@@ -125,6 +125,12 @@ public class GroupWizardPanel
         return this;
     }
 
+    public GroupWizardPanel typeName( String name )
+    {
+        clearAndType( nameInput, name );
+        return this;
+    }
+
     @Override
     public WizardPanel<Group> waitUntilWizardOpened()
     {
