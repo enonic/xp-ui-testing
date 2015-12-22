@@ -32,6 +32,8 @@ public class Application
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
+    public static String GROUP_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
+
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
 
     public static final String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
@@ -87,6 +89,9 @@ public class Application
 
     public final String CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage') and @class='notification']//span";
+
+    public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
+        "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
 
     public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";
@@ -175,6 +180,17 @@ public class Application
             return null;
         }
         String message = findElements( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
+        getLogger().info( "Notification message " + message );
+        return message.trim();
+    }
+
+    public String waitErrorNotificationMessage( long timeout )
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        {
+            return null;
+        }
+        String message = findElements( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
         getLogger().info( "Notification message " + message );
         return message.trim();
     }

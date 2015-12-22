@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.user
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
@@ -33,8 +34,21 @@ class Group_Save_Delete_Spec
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
 
         then: "new Group should be listed"
-        TestUtils.saveScreenshot( getSession(), TEST_GROUP.getName() );
+        TestUtils.saveScreenshot( getSession(), "group-added" );
         userBrowsePanel.exists( TEST_GROUP.getName() );
+    }
+    //app bug
+    @Ignore
+    def "GIVEN a existing group  WHEN creating new group with the same name THEN correct notification message appears"()
+    {
+        given: "creating new Group in System User Store"
+        GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
+
+        when: " saved and wizard closed"
+        String message = groupWizardPanel.typeData( TEST_GROUP ).save().waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
+
+        then: "message that group with it  name already exists"
+        message == String.format( Application.GROUP_ALREADY_IN_USE_WARNING, TEST_GROUP.getName() );
     }
 
     def "GIVEN existing group in System User Store WHEN display name changed THEN  group with new display name should be listed"()
@@ -48,7 +62,7 @@ class Group_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( NEW_DISPLAY_NAME );
 
         then: "group with new display name should be listed"
-        TestUtils.saveScreenshot( getSession(), TEST_GROUP.getName() );
+        TestUtils.saveScreenshot( getSession(), "d-name-changed" );
         userBrowsePanel.exists( TEST_GROUP.getName() );
     }
 
@@ -70,6 +84,7 @@ class Group_Save_Delete_Spec
         !userBrowsePanel.exists( group.getName() );
     }
 
+    //app bug
     @Ignore
     def "GIVEN existing group in System User Store WHEN name changed THEN  group with new  name should be listed"()
     {
@@ -82,7 +97,7 @@ class Group_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( NEW_NAME );
 
         then: "group with new display name should be listed"
-        TestUtils.saveScreenshot( getSession(), NEW_NAME );
+        TestUtils.saveScreenshot( getSession(), "name-changed" );
         userBrowsePanel.exists( NEW_NAME );
     }
 
@@ -99,7 +114,7 @@ class Group_Save_Delete_Spec
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
 
         then: "wizard closed and group not displayed in grid"
-        TestUtils.saveScreenshot( getSession(), group.getName() );
+        TestUtils.saveScreenshot( getSession(), "group-deleted-from-wizard" );
         !userBrowsePanel.exists( group.getName() );
     }
 
@@ -115,6 +130,7 @@ class Group_Save_Delete_Spec
 
         then: "new group displayed in grid"
         userBrowseFilterPanel.typeSearchText( testGroup.getName() );
+        TestUtils.saveScreenshot( getSession(), "app-home-clicked" );
         userBrowsePanel.exists( testGroup.getName() );
     }
 }
