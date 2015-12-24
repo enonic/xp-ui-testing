@@ -12,6 +12,8 @@ public class User
 
     private List<String> roles;
 
+    private List<String> groups;
+
     public void addRole( String role )
     {
         if ( roles == null )
@@ -21,9 +23,24 @@ public class User
         roles.add( role );
     }
 
+    public void addGroup( String group )
+    {
+        if ( groups == null )
+        {
+            groups = new ArrayList<>();
+        }
+        groups.add( group );
+    }
+
+
     public List<String> getRoles()
     {
         return roles;
+    }
+
+    public List<String> getGroups()
+    {
+        return groups;
     }
 
     public static Builder create( final User user )
@@ -42,6 +59,7 @@ public class User
         this.email = builder.email;
         this.password = builder.password;
         this.roles = builder.roles;
+        this.groups = builder.groups;
     }
 
     public String getEmail()
@@ -64,6 +82,8 @@ public class User
 
         private List<String> roles;
 
+        private List<String> groups;
+
         private Builder()
         {
             super();
@@ -81,6 +101,12 @@ public class User
             return this;
         }
 
+        public Builder groups( List<String> groups )
+        {
+            this.groups = groups;
+            return this;
+        }
+
         public Builder password( String password )
         {
             this.password = password;
@@ -92,6 +118,8 @@ public class User
             super( user );
             this.email = user.getEmail();
             this.password = user.getPassword();
+            this.groups = user.getGroups();
+            this.roles = user.getRoles();
         }
 
 

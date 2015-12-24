@@ -70,6 +70,13 @@ class BaseUsersSpec
         return User.builder().displayName( generated ).email( generated + "@gmail.com" ).password( password ).build();
     }
 
+    protected User buildUserWithRolesAndGroups( String userName, String password, List<String> roles, List<String> groups )
+    {
+        String generated = NameHelper.uniqueName( userName );
+        return User.builder().displayName( generated ).email( generated + "@gmail.com" ).password( password ).roles( roles ).groups(
+            groups ).build();
+    }
+
     protected UserStore buildUserStore( String displayName )
     {
         return UserStore.builder().displayName( displayName ).build();

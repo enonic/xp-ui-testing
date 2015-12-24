@@ -25,29 +25,33 @@ public class UserWizardPanel
 {
     public static final String PASSWORD_ERROR_MESSAGE = "Password can not be empty.";
 
+    private final String TOOLBAR = "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]";
+
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
     public static final String DIV_USER_WIZARD_PANEL =
         "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";
 
-    public static final String TOOLBAR_SAVE_BUTTON =
-        "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
+    public final String TOOLBAR_SAVE_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
 
-    public static final String TOOLBAR_CLOSE_WIZARD_BUTTON =
-        "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
+    public final String TOOLBAR_CLOSE_WIZARD_BUTTON =
+        TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
-    private static final String TOOLBAR_DUPLICATE_BUTTON =
-        "//div[@id='app.wizard.PrincipalWizardToolbar']/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
-
-    private static final String TOOLBAR_DELETE_BUTTON =
-        "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+    private final String TOOLBAR_DELETE_BUTTON =
+        TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
     private final String ROLE_OPTIONS_FILTER_INPUT =
         "//div[contains(@id,'FormItem') and child::label[text()='Roles']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
+    private final String GROUP_OPTIONS_FILTER_INPUT =
+        "//div[contains(@id,'FormItem') and child::label[text()='Groups']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+
     @FindBy(xpath = DIV_USER_WIZARD_PANEL + ROLE_OPTIONS_FILTER_INPUT)
     protected WebElement roleOptionsFilter;
+
+    @FindBy(xpath = DIV_USER_WIZARD_PANEL + GROUP_OPTIONS_FILTER_INPUT)
+    protected WebElement groupOptionsFilter;
 
     @FindBy(xpath = "//input[@type = 'email']")
     protected WebElement emailInput;
@@ -64,8 +68,6 @@ public class UserWizardPanel
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
 
-    @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON)
-    private WebElement toolbarDuplicateButton;
 
     /**
      * The constructor.
@@ -99,7 +101,11 @@ public class UserWizardPanel
         clearAndType( displayNameInput, user.getDisplayName() );
         sleep( 500 );
         clearAndType( emailInput, user.getEmail() );
-        sleep( 1000 );
+        sleep( 300 );
+        if ( !Strings.isNullOrEmpty( user.getName() ) )
+        {
+            clearAndType( nameInput, user.getName() );
+        }
         if ( !Strings.isNullOrEmpty( user.getPassword() ) )
         {
             clearAndType( passwordInput, user.getPassword() );
@@ -109,6 +115,10 @@ public class UserWizardPanel
         {
             addRoles( user.getRoles() );
         }
+        if ( user.getGroups() != null )
+        {
+            addGroups( user.getGroups() );
+        }
         TestUtils.saveScreenshot( getSession(), user.getDisplayName() );
         return this;
     }
@@ -116,6 +126,28 @@ public class UserWizardPanel
     private void addRoles( List<String> names )
     {
         names.stream().forEach( roleName -> addRole( roleName ) );
+    }
+
+    private void addGroups( List<String> groupNames )
+    {
+        groupNames.stream().forEach( name -> addGroup( name ) );
+    }
+
+    private void addGroup( String groupName )
+    {
+        groupOptionsFilter.sendKeys( groupName );
+        sleep( 1000 );
+        String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", groupName );
+        if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Group was not found!" );
+        }
+        if ( isRoleSelected( groupName ) )
+        {
+            getDisplayedElement( By.xpath( rowCheckboxXpath ) ).click();
+            groupOptionsFilter.sendKeys( Keys.ENTER );
+            sleep( 300 );
+        }
     }
 
     private void addRole( String roleName )
