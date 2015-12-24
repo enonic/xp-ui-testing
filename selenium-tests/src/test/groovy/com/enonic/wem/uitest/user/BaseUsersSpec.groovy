@@ -67,7 +67,7 @@ class BaseUsersSpec
     protected User buildUser( String userName, String password )
     {
         String generated = NameHelper.uniqueName( userName );
-        return User.builder().displayName( generated ).email( userName + "@gmail.com" ).password( password ).build();
+        return User.builder().displayName( generated ).email( generated + "@gmail.com" ).password( password ).build();
     }
 
     protected UserStore buildUserStore( String displayName )
