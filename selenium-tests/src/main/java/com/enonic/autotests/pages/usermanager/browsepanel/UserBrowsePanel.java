@@ -178,21 +178,24 @@ public class UserBrowsePanel
     {
         getSession().put( ITEM_TYPE, itemType );
         return clickCheckboxAndSelectRow( itemType.getValue() );
-
     }
 
     public UserBrowsePanel clickCheckboxAndSelectUser( String userAppItemName )
     {
         getSession().put( ITEM_TYPE, BrowseItemType.USER );
         return clickCheckboxAndSelectRow( userAppItemName );
-
     }
 
     public UserBrowsePanel clickCheckboxAndSelectGroup( String groupName )
     {
         getSession().put( ITEM_TYPE, BrowseItemType.GROUP );
         return clickCheckboxAndSelectRow( groupName );
+    }
 
+    public UserBrowsePanel clickCheckboxAndSelectRole( String roleName )
+    {
+        getSession().put( ITEM_TYPE, BrowseItemType.ROLE );
+        return clickCheckboxAndSelectRow( roleName );
     }
 
     public UserBrowsePanel selectGroupsFolderInUserStore( String userStoreName )
@@ -222,7 +225,6 @@ public class UserBrowsePanel
         sleep( 500 );
         return this;
     }
-
 
     /**
      * @param session
@@ -268,7 +270,6 @@ public class UserBrowsePanel
             default:
                 throw new TestFrameworkException( "unknown type of principal!" );
         }
-
     }
 
     public UserStoreWizardPanel openUserStoreWizard()

@@ -86,7 +86,7 @@ class Group_Save_Delete_Spec
 
     //app bug
     @Ignore
-    def "GIVEN existing group in System User Store WHEN name changed THEN  group with new  name should be listed"()
+    def "GIVEN existing group in System User Store WHEN name changed THEN group with new name should be listed"()
     {
         given: "existing group opened"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );

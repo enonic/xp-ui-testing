@@ -35,7 +35,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "GIVEN creating new UserStore WHEN display name typed THEN the real name equals as expected"()
     {
         given:
-        UserStore userStore = UserTestUtils.buildUserStoreWithDisplayName( USER_STORE_DISPLAY_NAME );
+        UserStore userStore = buildUserStore( USER_STORE_DISPLAY_NAME );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "name typed"
@@ -48,7 +48,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "GIVEN creating new UserStore WHEN display name typed and 'Save' button pressed THEN new User Store listed"()
     {
         given:
-        UserStore userStore = UserTestUtils.buildUserStoreWithDisplayName( USER_STORE_DISPLAY_NAME );
+        UserStore userStore = buildUserStore( USER_STORE_DISPLAY_NAME );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "name typed and 'Save' pressed"

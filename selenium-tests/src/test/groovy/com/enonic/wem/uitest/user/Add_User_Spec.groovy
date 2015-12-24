@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.User
 import spock.lang.Shared
@@ -22,8 +21,7 @@ class Add_User_Spec
     def "GIVEN start adding a new user WHEN data typed and password is empty and 'Save' button pressed THEN error notification message appears"()
     {
         given: "start adding a new user"
-        User userEmptyPassword = UserTestUtils.buildUser( NameHelper.uniqueName( "user" ), null );
-
+        User userEmptyPassword = buildUser( "user", null );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
@@ -39,7 +37,7 @@ class Add_User_Spec
     def "GIVEN start adding a new user WHEN data typed  and 'Save' button pressed THEN notification message appears and user listed in the grid"()
     {
         given: "start adding a new user"
-        user = UserTestUtils.buildUser( NameHelper.uniqueName( "user" ), "password" );
+        user = buildUser( "user", "password" );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();

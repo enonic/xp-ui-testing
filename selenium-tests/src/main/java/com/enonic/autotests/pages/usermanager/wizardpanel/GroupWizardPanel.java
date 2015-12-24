@@ -21,19 +21,20 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class GroupWizardPanel
     extends WizardPanel<Group>
 {
-    private final String CONTAINER = "//div[contains(@id,'app.wizard.GroupWizardPanel')]";
+    private final String WIZARD_PANEL = "//div[contains(@id,'app.wizard.GroupWizardPanel')]";
 
     private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
 
     public static final String DIV_ROLE_WIZARD_PANEL =
         "//div[contains(@id,'app.wizard.GroupWizardPanel') and not(contains(@style,'display: none'))]";
 
-    public final String TOOLBAR_SAVE_BUTTON = CONTAINER + TOOLBAR +
+    public final String TOOLBAR_SAVE_BUTTON = WIZARD_PANEL + TOOLBAR +
         "//*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
 
-    private final String TOOLBAR_DELETE_BUTTON = CONTAINER + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+    private final String TOOLBAR_DELETE_BUTTON =
+        WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
-    private final String DESCRIPTION_INPUT = CONTAINER + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
+    private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
 
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
@@ -85,7 +86,7 @@ public class GroupWizardPanel
     @Override
     public boolean isOpened()
     {
-        return isElementDisplayed( CONTAINER );
+        return isElementDisplayed( WIZARD_PANEL );
     }
 
     @Override
