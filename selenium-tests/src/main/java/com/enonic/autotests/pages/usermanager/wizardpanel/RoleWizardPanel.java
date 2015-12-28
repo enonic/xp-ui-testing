@@ -79,7 +79,7 @@ public class RoleWizardPanel
     @Override
     public boolean isSaveButtonEnabled()
     {
-        return false;
+        return toolbarSaveButton.isEnabled();
     }
 
     @Override
@@ -88,15 +88,15 @@ public class RoleWizardPanel
         waitElementClickable( By.name( "displayName" ), 2 );
         getLogger().info( "types displayName: " + role.getDisplayName() );
         sleep( 500 );
-        if ( StringUtils.isNotEmpty( role.getName() ) )
-        {
-            getLogger().info( "types name: " + role.getName() );
-            clearAndType( nameInput, role.getName().trim() );
-        }
         if ( StringUtils.isNotEmpty( role.getDisplayName() ) )
         {
             getLogger().info( "types display name: " + role.getDisplayName() );
             clearAndType( displayNameInput, role.getDisplayName() );
+        }
+        if ( StringUtils.isNotEmpty( role.getName() ) )
+        {
+            getLogger().info( "types name: " + role.getName() );
+            clearAndType( nameInput, role.getName().trim() );
         }
         if ( StringUtils.isNotEmpty( role.getDescription() ) )
         {
@@ -116,6 +116,13 @@ public class RoleWizardPanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_role" ) );
             throw new TestFrameworkException( "RoleWizard was not opened!" );
         }
+        return this;
+    }
+
+    @Override
+    public RoleWizardPanel typeDisplayName( String displayName )
+    {
+        clearAndType( displayNameInput, displayName );
         return this;
     }
 

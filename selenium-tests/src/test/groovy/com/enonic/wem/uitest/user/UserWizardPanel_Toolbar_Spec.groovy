@@ -6,9 +6,9 @@ import com.enonic.autotests.vo.usermanager.User
 class UserWizardPanel_Toolbar_Spec
     extends BaseUsersSpec
 {
-    def "WHEN user wizard opened  THEN all buttons on toolbar have correct state"()
+    def "WHEN user wizard opened THEN all buttons on toolbar have correct state"()
     {
-        when: "content wizard opened"
+        when: "user wizard opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
 
         then: "'Delete' button enabled"
@@ -18,9 +18,9 @@ class UserWizardPanel_Toolbar_Spec
         !wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN user wizard opened  WHEN name typed THEN save button is enabled AND delete button is disabled"()
+    def "GIVEN user wizard opened WHEN name typed THEN save button is enabled AND delete button is disabled"()
     {
-        given: "content wizard opened"
+        given: "user wizard opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
 
         when: "name typed"
@@ -33,9 +33,9 @@ class UserWizardPanel_Toolbar_Spec
         wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN user wizard opened  WHEN all data typed THEN save button is enabled AND delete button is disabled"()
+    def "GIVEN user wizard opened WHEN all data typed THEN save button is enabled AND delete button is disabled"()
     {
-        given: "content wizard opened"
+        given: "user wizard opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
         User validUser = buildUser( "valid-user", "password" );
 
@@ -49,9 +49,9 @@ class UserWizardPanel_Toolbar_Spec
         wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN  user wizard opened WHEN data typed and saved THEN button delete is enabled"()
+    def "GIVEN user wizard opened WHEN data typed and saved THEN button delete is enabled"()
     {
-        given: "content wizard opened"
+        given: "user wizard opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
         User validUser = buildUser( "valid-user", "password" );
 

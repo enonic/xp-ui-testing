@@ -14,6 +14,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.User;
 
@@ -30,13 +31,9 @@ public class UserWizardPanel
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
-    public static final String DIV_USER_WIZARD_PANEL =
-        "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";
+    public final String USER_WIZARD_PANEL = "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";
 
     public final String TOOLBAR_SAVE_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
-
-    public final String TOOLBAR_CLOSE_WIZARD_BUTTON =
-        TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
 
     private final String TOOLBAR_DELETE_BUTTON =
         TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
@@ -47,10 +44,10 @@ public class UserWizardPanel
     private final String GROUP_OPTIONS_FILTER_INPUT =
         "//div[contains(@id,'FormItem') and child::label[text()='Groups']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
-    @FindBy(xpath = DIV_USER_WIZARD_PANEL + ROLE_OPTIONS_FILTER_INPUT)
+    @FindBy(xpath = USER_WIZARD_PANEL + ROLE_OPTIONS_FILTER_INPUT)
     protected WebElement roleOptionsFilter;
 
-    @FindBy(xpath = DIV_USER_WIZARD_PANEL + GROUP_OPTIONS_FILTER_INPUT)
+    @FindBy(xpath = USER_WIZARD_PANEL + GROUP_OPTIONS_FILTER_INPUT)
     protected WebElement groupOptionsFilter;
 
     @FindBy(xpath = "//input[@type = 'email']")
@@ -62,8 +59,6 @@ public class UserWizardPanel
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
 
-    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON)
-    protected WebElement closeButton;
 
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
@@ -82,7 +77,7 @@ public class UserWizardPanel
     @Override
     public String getWizardDivXpath()
     {
-        return DIV_USER_WIZARD_PANEL;
+        return USER_WIZARD_PANEL;
     }
 
     @Override
@@ -135,14 +130,14 @@ public class UserWizardPanel
 
     private void addGroup( String groupName )
     {
-        groupOptionsFilter.sendKeys( groupName );
+        clearAndType( groupOptionsFilter, groupName );
         sleep( 1000 );
         String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", groupName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
             throw new TestFrameworkException( "Group was not found!" );
         }
-        if ( isRoleSelected( groupName ) )
+        if ( !isRoleOrGroupSelected( groupName ) )
         {
             getDisplayedElement( By.xpath( rowCheckboxXpath ) ).click();
             groupOptionsFilter.sendKeys( Keys.ENTER );
@@ -152,14 +147,14 @@ public class UserWizardPanel
 
     private void addRole( String roleName )
     {
-        roleOptionsFilter.sendKeys( roleName );
+        clearAndType( roleOptionsFilter, roleName );
         sleep( 1000 );
         String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", roleName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
             throw new TestFrameworkException( "Role was not found!" );
         }
-        if ( isRoleSelected( roleName ) )
+        if ( !isRoleOrGroupSelected( roleName ) )
         {
             findElements( By.xpath( rowCheckboxXpath ) ).get( 0 ).click();
             roleOptionsFilter.sendKeys( Keys.ENTER );
@@ -167,10 +162,15 @@ public class UserWizardPanel
         }
     }
 
-    private boolean isRoleSelected( String roleName )
+    private boolean isRoleOrGroupSelected( String name )
     {
-        return findElements( By.xpath( String.format( GRID_ROW + "//input[@type='checkbox']", roleName ) ) ).get( 0 ).getAttribute(
-            "value" ) != "on";
+        String rowXpath = String.format( GRID_ROW + "//input[@type='checkbox']", name );
+        if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" ) );
+            throw new TestFrameworkException( "role or group was not found: " + name );
+        }
+        return findElements( By.xpath( rowXpath ) ).get( 0 ).getAttribute( "checked" ) != null;
     }
 
     public UserWizardPanel typeDisplayName( String displayName )
@@ -206,11 +206,11 @@ public class UserWizardPanel
     @Override
     public UserWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_USER_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
-        findElements( By.xpath( DIV_USER_WIZARD_PANEL ) );
+        boolean result = waitUntilVisibleNoException( By.xpath( USER_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            throw new TestFrameworkException( "UserWizard was not showed!" );
+            TestUtils.saveScreenshot( getSession(), "err_user_wizard" );
+            throw new TestFrameworkException( "UserWizard was not shown!" );
         }
         return this;
     }

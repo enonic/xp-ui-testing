@@ -1,6 +1,8 @@
 package com.enonic.autotests.pages.usermanager.wizardpanel;
 
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -22,6 +24,8 @@ public class GroupWizardPanel
     extends WizardPanel<Group>
 {
     private final String WIZARD_PANEL = "//div[contains(@id,'app.wizard.GroupWizardPanel')]";
+
+    private final String MEMBERS_FORM = WIZARD_PANEL + "//div[contains(@id,'GroupMembersWizardStepForm')]";
 
     private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
 
@@ -130,6 +134,11 @@ public class GroupWizardPanel
     {
         clearAndType( nameInput, name );
         return this;
+    }
+
+    public List<String> getMembersDisplayNames()
+    {
+        return getDisplayedStrings( By.xpath( MEMBERS_FORM + H6_DISPLAY_NAME ) );
     }
 
     @Override
