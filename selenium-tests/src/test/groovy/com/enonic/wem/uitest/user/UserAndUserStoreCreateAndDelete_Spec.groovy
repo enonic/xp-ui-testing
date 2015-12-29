@@ -18,56 +18,47 @@ class UserAndUserStoreCreateAndDelete_Spec
     User user;
 
     @Shared
-    int randomInt = Math.abs( new Random().nextInt() );
-
-    @Shared
-    private String USER_STORE_DISPLAY_NAME = "User Store" + randomInt;
-
-    @Shared
-    private String USER_STORE_PATH = "/user-store" + randomInt;
-
-    @Shared
-    private String GENERATED_USER_STORE_NAME = "user-store" + randomInt;
-
-    @Shared
     private String USER_NAME = NameHelper.uniqueName( "user" );
+
+    @Shared
+    UserStore TEST_USER_STORE
 
     def "GIVEN creating new UserStore WHEN display name typed THEN the real name equals as expected"()
     {
-        given:
-        UserStore userStore = buildUserStore( USER_STORE_DISPLAY_NAME );
+        given: "creating new UserStore"
+        UserStore userStore = buildUserStore( "us", "test-user-store", "test user store" );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "name typed"
         userStoreWizardPanel.typeData( userStore );
 
         then: "the real name equals as expected"
-        userStoreWizardPanel.getStoreNameInputValue() == GENERATED_USER_STORE_NAME
+        userStoreWizardPanel.getStoreNameInputValue() == userStore.getName();
     }
 
-    def "GIVEN creating new UserStore WHEN display name typed and 'Save' button pressed THEN new User Store listed"()
+    def "GIVEN creating new UserStore WHEN data typed and 'Save' button pressed THEN new User Store listed"()
     {
         given:
-        UserStore userStore = buildUserStore( USER_STORE_DISPLAY_NAME );
+        TEST_USER_STORE = buildUserStore( "us", "test-user-store", "test user store" );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "name typed and 'Save' pressed"
-        userStoreWizardPanel.typeData( userStore )
+        userStoreWizardPanel.typeData( TEST_USER_STORE )
         String message = userStoreWizardPanel.save().waitNotificationMessage();
-        userStoreWizardPanel.close( userStore.getDisplayName() );
+        userStoreWizardPanel.close( TEST_USER_STORE.getDisplayName() );
 
-        then: "new User Store listed and verify, that real name is the same as expected"
-        userBrowsePanel.exists( GENERATED_USER_STORE_NAME, false );
-        and:
-        "UserStore was created!" == message;
+        then: "new User Store listed, actual name is the same as expected"
+        userBrowsePanel.exists( TEST_USER_STORE.getName() );
+        and: "correct notification appears"
+        USERSTORE_CREATED_MESSAGE == message;
 
     }
 
     def "WHEN the empty User Store expanded and 'Users' selected THEN 'Delete' button is disabled "()
     {
         when:
-        userBrowsePanel.expandStoreAndSelectUsers( USER_STORE_PATH );
-        TestUtils.saveScreenshot( getSession(), "store_expand_users" )
+        userBrowsePanel.expandStoreAndSelectUsers( TEST_USER_STORE.getName() );
+        TestUtils.saveScreenshot( getSession(), "store_expanded_users" )
 
         then: "'Delete' button is disabled "
         !userBrowsePanel.isDeleteButtonEnabled();
@@ -76,7 +67,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "WHEN the empty User Store expanded and 'Groups' selected THEN 'Delete' button is disabled "()
     {
         when:
-        userBrowsePanel.expandStoreAndSelectGroups( USER_STORE_PATH );
+        userBrowsePanel.expandStoreAndSelectGroups( TEST_USER_STORE.getName() );
         TestUtils.saveScreenshot( getSession(), "store_expand_roles" )
 
         then: "'Delete' button is disabled "
@@ -87,11 +78,11 @@ class UserAndUserStoreCreateAndDelete_Spec
     {
         given:
         user = buildTestUser( USER_NAME );
-        UserWizardPanel userWizardPanel = userBrowsePanel.expandStoreAndSelectUsers( USER_STORE_PATH ).clickToolbarNew();
+        UserWizardPanel userWizardPanel = userBrowsePanel.expandStoreAndSelectUsers( TEST_USER_STORE.getName() ).clickToolbarNew();
 
         when: "name typed and 'Save' pressed"
         userWizardPanel.typeData( user ).save().close( user.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "store_user_added" )
+        TestUtils.saveScreenshot( getSession(), "user_added_to_store" )
 
         and:
         userBrowsePanel.clickOnExpander( "users" );
@@ -103,7 +94,7 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "GIVEN existing a User Store with a user WHEN the User Store selected THEN  the 'Delete' button on toolbar is disabled "()
     {
         when: "select a existing 'User Store' with a user "
-        userBrowsePanel.clickCheckboxAndSelectRow( USER_STORE_PATH );
+        userBrowsePanel.clickCheckboxAndSelectRow( TEST_USER_STORE.getName() );
 
         then: "button 'Delete' on toolbar is disabled"
         !userBrowsePanel.isDeleteButtonEnabled();
@@ -127,20 +118,20 @@ class UserAndUserStoreCreateAndDelete_Spec
     def "GIVEN existing 'User Store', WHEN 'User Store' selected and 'Delete' button pressed THEN  deleted User Store is no longer listed at root"()
     {
         given: "select a existing 'User Store' "
-        userBrowsePanel.clickCheckboxAndSelectRow( USER_STORE_PATH );
+        userBrowsePanel.clickCheckboxAndSelectRow( TEST_USER_STORE.getName() );
 
         when: "'Delete' button pressed"
         DeleteUserItemDialog deleteDialog = userBrowsePanel.clickToolbarDelete();
         deleteDialog.doDelete();
 
         then: "new User Store listed and verify, that real name is the same as expected"
-        !userBrowsePanel.exists( GENERATED_USER_STORE_NAME, false );
+        !userBrowsePanel.exists( TEST_USER_STORE.getName() );
     }
 
 
     private User buildTestUser( String userName )
     {
-        return User.builder().displayName( userName ).email( USER_NAME + "@gmail.com" ).password( "password" ).build();
+        return User.builder().displayName( userName ).email( userName + "@gmail.com" ).password( "password" ).build();
 
     }
 }

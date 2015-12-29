@@ -117,7 +117,6 @@ public class Application
         int i = 0;
         do
         {
-            //list = findElements( By.xpath( SPINNER_XPATH ) ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
             isDisplayed = isElementDisplayed( SPINNER_XPATH );
             sleep( 100 );
             i++;
@@ -179,7 +178,7 @@ public class Application
         {
             return null;
         }
-        String message = findElements( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
+        String message = findElement( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Notification message " + message );
         return message.trim();
     }
@@ -190,7 +189,7 @@ public class Application
         {
             return null;
         }
-        String message = findElements( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
+        String message = findElement( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Notification message " + message );
         return message.trim();
     }
@@ -201,7 +200,7 @@ public class Application
         {
             return null;
         }
-        String message = findElements( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).get( 0 ).getText();
+        String message = findElement( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Publish Notification message " + message );
         return message;
     }

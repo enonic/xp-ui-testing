@@ -29,13 +29,17 @@ class Group_Save_Delete_Spec
         TEST_GROUP = buildGroup( "group", "test-group", "description" );
 
         when: " saved and wizard closed"
-        groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
+        String groupCreatingMessage = groupWizardPanel.typeData( TEST_GROUP ).save().waitNotificationMessage();
+        groupWizardPanel.close( TEST_GROUP.getDisplayName() );
         sleep( 500 );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUPS_FOLDER.getValue() );
 
         then: "new Group should be listed"
         TestUtils.saveScreenshot( getSession(), "group-added" );
         userBrowsePanel.exists( TEST_GROUP.getName() );
+
+        and: "correct notification message appears"
+        groupCreatingMessage == GROUP_CREATED_MESSAGE;
     }
     //app bug
     @Ignore
@@ -77,11 +81,14 @@ class Group_Save_Delete_Spec
         userBrowsePanel.clickOnClearSelection();
         userBrowseFilterPanel.typeSearchText( group.getName() );
         userBrowsePanel.clickCheckboxAndSelectGroup( group.getName() ).clickToolbarDelete().doDelete();
+        String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "group-deleted" );
 
         then: "group not displayed in grid"
         TestUtils.saveScreenshot( getSession(), group.getName() );
         !userBrowsePanel.exists( group.getName() );
+        and: "correct notification message appears"
+        message == String.format( GROUP_DELETING_NOTIFICATION_MESSAGE, group.getName() );
     }
 
     //app bug

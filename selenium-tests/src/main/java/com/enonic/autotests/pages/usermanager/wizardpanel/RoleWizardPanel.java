@@ -10,6 +10,7 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.Role;
@@ -126,9 +127,23 @@ public class RoleWizardPanel
         return this;
     }
 
+    public RoleWizardPanel typeName( String name )
+    {
+        clearAndType( nameInput, name );
+        return this;
+    }
+
     @Override
     public boolean isDeleteButtonEnabled()
     {
         return toolbarDeleteButton.isEnabled();
+    }
+
+    public ConfirmationDialog clickToolbarDelete()
+    {
+        toolbarDeleteButton.click();
+        sleep( 1000 );
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+        return confirmationDialog;
     }
 }

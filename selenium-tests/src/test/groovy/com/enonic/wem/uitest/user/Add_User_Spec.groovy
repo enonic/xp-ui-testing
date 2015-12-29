@@ -15,8 +15,6 @@ class Add_User_Spec
     @Shared
     User user;
 
-    @Shared
-    String DELETING_NOTIFICATION_MESSAGE = "Principal [user:system:%s] deleted!"
 
     def "GIVEN start adding a new user WHEN data typed and password is empty and 'Save' button pressed THEN error notification message appears"()
     {
@@ -54,8 +52,8 @@ class Add_User_Spec
         userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
         userBrowsePanel.exists( user.getDisplayName(), true );
 
-        and: "new user present beneath a system store"
-        creatingMessage == "User was created!";
+        and: "correct notification message appears"
+        creatingMessage == USER_CREATED_MESSAGE;
     }
 
     def "GIVEN a existing user WHEN user filtered and selected and deleted THEN correct notification message appears and user not listed"()
@@ -72,7 +70,7 @@ class Add_User_Spec
 
         then: "removed user not present beneath a 'Users' folder"
         !userBrowsePanel.exists( user.getDisplayName(), true );
-        and:
-        message == String.format( DELETING_NOTIFICATION_MESSAGE, user.getDisplayName() );
+        and: "correct notification message appears"
+        message == String.format( USER_DELETING_NOTIFICATION_MESSAGE, user.getDisplayName() );
     }
 }

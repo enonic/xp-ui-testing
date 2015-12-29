@@ -10,6 +10,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.UserStore;
 
@@ -18,26 +19,25 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class UserStoreWizardPanel
     extends WizardPanel<UserStore>
 {
-    public static final String DIV_USER_STORE_WIZARD_PANEL =
-        "//div[contains(@id,'app.wizard.UserStoreWizardPanel') and not(contains(@style,'display: none'))]";
+    public final String WIZARD_PANEL = "//div[contains(@id,'app.wizard.UserStoreWizardPanel')]";
 
-    public static final String TOOLBAR_SAVE_BUTTON =
-        "//div[contains(@id,'app.wizard.UserStoreWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
+    private final String TOOLBAR = "//div[contains(@id,'UserStoreWizardToolbar')]";
 
-    public static final String TOOLBAR_CLOSE_WIZARD_BUTTON =
-        "//div[contains(@id,'app.wizard.UserStoreWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Close']]";
+    public final String TOOLBAR_SAVE_BUTTON = WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
-    private static final String TOOLBAR_DELETE_BUTTON =
-        "//div[contains(@id,'app.wizard.UserStoreWizardToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+    private final String TOOLBAR_DELETE_BUTTON =
+        WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+
+    private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
 
-    @FindBy(xpath = TOOLBAR_CLOSE_WIZARD_BUTTON)
-    protected WebElement closeButton;
-
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
+
+    @FindBy(xpath = DESCRIPTION_INPUT)
+    private WebElement descriptionInput;
 
     /**
      * The constructor.
@@ -52,7 +52,7 @@ public class UserStoreWizardPanel
     @Override
     public String getWizardDivXpath()
     {
-        return DIV_USER_STORE_WIZARD_PANEL;
+        return WIZARD_PANEL;
     }
 
     @Override
@@ -66,7 +66,6 @@ public class UserStoreWizardPanel
     @Override
     public WizardPanel<UserStore> typeData( final UserStore userStore )
     {
-        // 1. type a data: 'name' and 'Display Name'.
         waitElementClickable( By.name( "displayName" ), 2 );
         clearAndType( displayNameInput, userStore.getDisplayName() );
         sleep( 500 );
@@ -74,6 +73,11 @@ public class UserStoreWizardPanel
         {
             waitElementClickable( By.name( "name" ), 2 );
             clearAndType( nameInput, userStore.getName() );
+        }
+        if ( StringUtils.isNotEmpty( userStore.getDescription() ) )
+        {
+            getLogger().info( "types the description: " + userStore.getDescription() );
+            clearAndType( descriptionInput, userStore.getDescription() );
         }
         TestUtils.saveScreenshot( getSession(), userStore.getDisplayName() );
         return this;
@@ -107,10 +111,10 @@ public class UserStoreWizardPanel
     @Override
     public UserStoreWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_USER_STORE_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
-        findElements( By.xpath( DIV_USER_STORE_WIZARD_PANEL ) );
+        boolean result = waitUntilVisibleNoException( By.xpath( WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_us_wizard" ) );
             throw new TestFrameworkException( "UserStoreWizard was not showed!" );
         }
         return this;

@@ -9,7 +9,6 @@ public class UserStore
 
     private final String description;
 
-
     public UserStore( final Builder builder )
     {
         this.name = builder.name;
@@ -19,12 +18,17 @@ public class UserStore
 
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
     public String getDisplayName()
     {
-        return displayName;
+        return this.displayName;
+    }
+
+    public String getDescription()
+    {
+        return this.description;
     }
 
     public static Builder builder()
@@ -52,13 +56,11 @@ public class UserStore
 
         }
 
-
         public Builder name( final String name )
         {
             this.name = name;
             return this;
         }
-
 
         public Builder displayName( final String displayName )
         {

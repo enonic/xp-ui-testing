@@ -18,10 +18,37 @@ class BaseUsersSpec
     extends BaseGebSpec
 {
     @Shared
+    String USER_DELETING_NOTIFICATION_MESSAGE = "Principal [user:system:%s] deleted!";
+
+    @Shared
+    String GROUP_DELETING_NOTIFICATION_MESSAGE = "Principal [group:system:%s] deleted!";
+
+    @Shared
+    String ROLE_DELETED_MESSAGE = "Principal [role:%s] deleted!";
+
+    @Shared
+    String USER_CREATED_MESSAGE = "User was created!";
+
+    @Shared
+    String GROUP_CREATED_MESSAGE = "Group was created!"
+
+    @Shared
+    String ROLE_CREATED_MESSAGE = "Role was created!";
+
+    @Shared
+    String USERSTORE_CREATED_MESSAGE = "UserStore was created!";
+
+    @Shared
     UserBrowsePanel userBrowsePanel;
 
     @Shared
     UserBrowseFilterPanel userBrowseFilterPanel;
+
+    @Shared
+    String ROLE_EXISTS = "A role with name %s already exists";
+
+    @Shared
+    String GROUP_EXISTS = "A group with that name already exists";
 
 
     def setup()
@@ -77,9 +104,10 @@ class BaseUsersSpec
             groups ).build();
     }
 
-    protected UserStore buildUserStore( String displayName )
+    protected UserStore buildUserStore( String name, String displayName, String description )
     {
-        return UserStore.builder().displayName( displayName ).build();
+        String generated = NameHelper.uniqueName( name );
+        return UserStore.builder().displayName( displayName ).name( generated ).description( description ).build();
 
     }
 }
