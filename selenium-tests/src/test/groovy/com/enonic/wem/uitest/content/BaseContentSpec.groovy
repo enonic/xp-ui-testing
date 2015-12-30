@@ -22,6 +22,9 @@ class BaseContentSpec
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     @Shared
+    String IMPORTED_BOOK_IMAGE = "book.jpg";
+
+    @Shared
     String SUPPORTS_SITE_TYPE = "site";
 
     @Shared

@@ -12,7 +12,6 @@ import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.SleepHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -60,12 +59,9 @@ public class HomePage
 
         if ( !getSession().isLoggedIn() )
         {
-            //String browser = (String) ( (JavascriptExecutor) getDriver() ).executeScript( "return navigator.userAgent;" );
-            // getLogger().info( "BROWSER:" + browser );
             getLogger().info( "try to login with userName:" + username + " password: " + password );
             LoginPage loginPage = new LoginPage( getSession() );
             loginPage.doLogin( username, password );
-
             getSession().setLoggedIn( true );
         }
         else
@@ -78,7 +74,6 @@ public class HomePage
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_homepage" ) );
             throw new AuthenticationException( "Authentication failed, home page was not opened!" );
         }
-
     }
 
     boolean isLoaded()
@@ -127,11 +122,10 @@ public class HomePage
     {
         if ( !waitUntilClickableNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "userManagerLink" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_usersLink" ) );
             throw new TestFrameworkException( "Users link not clickable!" );
-
         }
-        sleep( 1000 );
+        sleep( 700 );
         userManager.click();
         boolean isFrameLoaded =
             waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_NORMAL );
@@ -156,13 +150,12 @@ public class HomePage
     {
         TestUtils.saveScreenshot( getSession(), "home_module_1" );
         applications.click();
-        SleepHelper.sleep( 1000 );
+        sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "home_module_2" );
         String whandle = getSession().getDriver().getWindowHandle();
         getSession().setWindowHandle( whandle );
         NavigatorHelper.switchToIframe( getSession(), Application.MODULE_MANAGER_FRAME_XPATH );
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
-        // panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
         getLogger().info( "Module Manger App loaded" );
         return panel;

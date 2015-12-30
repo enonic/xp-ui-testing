@@ -272,9 +272,8 @@ public class ContentBrowsePanel
     public ContentBrowsePanel goToAppHome()
     {
         contentManagerButton.click();
-        sleep( 1000 );
+        sleep( 500 );
         waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "gotoapphome" ) );
         return this;
     }
 
@@ -585,7 +584,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "content was not found: " + contentName );
         }
         openContextMenu( contentName );
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).get( 0 ).click();
+        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
@@ -595,7 +594,7 @@ public class ContentBrowsePanel
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         openContextMenu( contentName );
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Publish" ) ) ).get( 0 ).click();
+        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Publish" ) ) ).click();
 
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
@@ -606,20 +605,19 @@ public class ContentBrowsePanel
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         openContextMenu( contentName );
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).get( 0 ).click();
+        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).click();
         sleep( 1000 );
         return this;
     }
 
-    public boolean isEnableContextMenuItem( String contentName, String action )
+    public boolean isEnabledContextMenuItem( String action )
     {
-        getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
-        openContextMenu( contentName );
         if ( findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).size() == 0 )
         {
             throw new TestFrameworkException( "menu item was not found!  " + action );
         }
-        return findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).get( 0 ).isEnabled();
+        String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
+        return !styleClass.contains( "disabled" );
     }
 
     /**
@@ -659,11 +657,10 @@ public class ContentBrowsePanel
         openContextMenu( contentName );
         if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ), Application.EXPLICIT_NORMAL ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_" + menuItem );
             throw new TestFrameworkException( menuItem + "  item was not found in the context menu" );
         }
-
-        WebElement previewItem = findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) ).stream().filter(
-            WebElement::isDisplayed ).findFirst().get();
+        WebElement previewItem = getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) );
         return waitAndCheckAttrValue( previewItem, "class", "disabled", 1 );
     }
 
@@ -696,7 +693,7 @@ public class ContentBrowsePanel
         return newContentDialog;
     }
 
-    private void openContextMenu( String contentName )
+    public void openContextMenu( String contentName )
     {
         getLogger().info( "opening a context menu, content path of content: " + contentName );
         TestUtils.saveScreenshot( getSession(), "menu_" + contentName );
