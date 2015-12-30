@@ -139,6 +139,7 @@ public class RoleWizardPanel
         return toolbarDeleteButton.isEnabled();
     }
 
+    @Override
     public ConfirmationDialog clickToolbarDelete()
     {
         toolbarDeleteButton.click();

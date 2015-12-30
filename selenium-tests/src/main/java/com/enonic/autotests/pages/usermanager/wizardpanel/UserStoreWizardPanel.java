@@ -10,6 +10,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.UserStore;
@@ -86,12 +87,17 @@ public class UserStoreWizardPanel
     public String getStoreNameInputValue()
     {
         return nameInput.getAttribute( "value" );
-
     }
 
     public UserStoreWizardPanel typeDisplayName( String displayName )
     {
         clearAndType( displayNameInput, displayName );
+        return this;
+    }
+
+    public UserStoreWizardPanel typeName( String name )
+    {
+        clearAndType( nameInput, name );
         return this;
     }
 
@@ -124,6 +130,15 @@ public class UserStoreWizardPanel
     public boolean isDeleteButtonEnabled()
     {
         return toolbarDeleteButton.isEnabled();
+    }
+
+    @Override
+    public ConfirmationDialog clickToolbarDelete()
+    {
+        toolbarDeleteButton.click();
+        sleep( 500 );
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+        return confirmationDialog;
     }
 }
 

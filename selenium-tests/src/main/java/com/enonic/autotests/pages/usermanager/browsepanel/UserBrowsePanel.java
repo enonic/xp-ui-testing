@@ -43,7 +43,6 @@ public class UserBrowsePanel
         {
             return this.value;
         }
-
     }
 
     public final String USERS_BUTTON = "//button[contains(@id,'api.app.bar.HomeButton') and child::span[text()='Users']]";
@@ -207,7 +206,6 @@ public class UserBrowsePanel
         }
         getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return clickOnRowAndSelectGroupInUserStore( userStoreName );
-
     }
 
     public boolean exists( String name )
@@ -258,7 +256,6 @@ public class UserBrowsePanel
         {
             return new UserStoreWizardPanel( getSession() );
         }
-
         switch ( selectedItem )
         {
             case ROLES_FOLDER:
@@ -275,7 +272,7 @@ public class UserBrowsePanel
     public UserStoreWizardPanel openUserStoreWizard()
     {
         newButton.click();
-        sleep( 1000 );
+        sleep( 500 );
         return new UserStoreWizardPanel( getSession() );
     }
 

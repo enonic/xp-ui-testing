@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.exceptions.WizardPanelNotClosingException;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -76,8 +77,8 @@ public abstract class WizardPanel<T>
 
         if ( status == null )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_close" ) );
             throw new WizardPanelNotClosingException( "ContentWizard was not closed and Modal dialog not present!" );
-
         }
         else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
         {
@@ -156,18 +157,9 @@ public abstract class WizardPanel<T>
 
     public abstract boolean isDeleteButtonEnabled();
 
-    public abstract WizardPanel<T> typeData( T object );
+    public abstract ConfirmationDialog clickToolbarDelete();
 
-    /**
-     * Types a name to the name-input field
-     *
-     * @param name
-     */
-    public WizardPanel<T> doTypeName( String name )
-    {
-        clearAndType( nameInput, name );
-        return this;
-    }
+    public abstract WizardPanel<T> typeData( T object );
 
     /**
      * calculates a width of input field.
@@ -228,10 +220,6 @@ public abstract class WizardPanel<T>
         return message;
     }
 
-    /**
-     * Verify that red circle and "New Space" message presented on the top of
-     * Page.
-     */
     public abstract WizardPanel<T> waitUntilWizardOpened();
 
     public void waitElementClickable( By by, long timeout )

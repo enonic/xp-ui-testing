@@ -113,6 +113,7 @@ public class ContentWizardPanel
         return this;
     }
 
+    @Override
     public ConfirmationDialog clickToolbarDelete()
     {
         toolbarDeleteButton.click();

@@ -50,7 +50,7 @@ class UserAndUserStoreCreateAndDelete_Spec
         then: "new User Store listed, actual name is the same as expected"
         userBrowsePanel.exists( TEST_USER_STORE.getName() );
         and: "correct notification appears"
-        USERSTORE_CREATED_MESSAGE == message;
+        USER_STORE_CREATED_MESSAGE == message;
 
     }
 
@@ -132,6 +132,5 @@ class UserAndUserStoreCreateAndDelete_Spec
     private User buildTestUser( String userName )
     {
         return User.builder().displayName( userName ).email( userName + "@gmail.com" ).password( "password" ).build();
-
     }
 }

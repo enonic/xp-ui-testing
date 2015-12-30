@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowseFilterPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
+import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -36,7 +37,10 @@ class BaseUsersSpec
     String ROLE_CREATED_MESSAGE = "Role was created!";
 
     @Shared
-    String USERSTORE_CREATED_MESSAGE = "UserStore was created!";
+    String USER_STORE_CREATED_MESSAGE = "UserStore was created!";
+
+    @Shared
+    String USER_STORE_DELETED_MESSAGE = "UserStore [%s] deleted!";
 
     @Shared
     UserBrowsePanel userBrowsePanel;
@@ -65,6 +69,13 @@ class BaseUsersSpec
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
     }
 
+    protected GroupWizardPanel openUserStore( String userStoreName )
+    {
+        UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.clickCheckboxAndSelectRow( userStoreName ).clickToolbarEdit();
+        userStoreWizardPanel.waitUntilWizardOpened();
+        return userStoreWizardPanel;
+    }
+
     protected UserWizardPanel openSystemUserWizard()
     {
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
@@ -74,7 +85,6 @@ class BaseUsersSpec
 
     protected RoleWizardPanel openRoleWizard()
     {
-
         return userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.ROLES_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
     }
@@ -108,6 +118,5 @@ class BaseUsersSpec
     {
         String generated = NameHelper.uniqueName( name );
         return UserStore.builder().displayName( displayName ).name( generated ).description( description ).build();
-
     }
 }

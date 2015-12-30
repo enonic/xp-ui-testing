@@ -77,6 +77,7 @@ public class GroupWizardPanel
         return this;
     }
 
+    @Override
     public ConfirmationDialog clickToolbarDelete()
     {
         toolbarDeleteButton.click();

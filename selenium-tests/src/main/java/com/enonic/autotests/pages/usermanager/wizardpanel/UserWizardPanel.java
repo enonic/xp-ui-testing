@@ -14,6 +14,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.User;
@@ -219,5 +220,15 @@ public class UserWizardPanel
     public boolean isDeleteButtonEnabled()
     {
         return toolbarDeleteButton.isEnabled();
+    }
+
+    @Override
+    public ConfirmationDialog clickToolbarDelete()
+    {
+        toolbarDeleteButton.click();
+        sleep( 500 );
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+        return confirmationDialog;
+
     }
 }
