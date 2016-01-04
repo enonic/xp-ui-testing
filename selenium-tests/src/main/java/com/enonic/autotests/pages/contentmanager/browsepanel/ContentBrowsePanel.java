@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -60,8 +59,6 @@ public class ContentBrowsePanel
     private final String PUBLISH_BUTTON_XPATH = BASE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//div[contains(@class,'details-panel-toggle-button')]";
-
-    private String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
@@ -610,16 +607,6 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public boolean isEnabledContextMenuItem( String action )
-    {
-        if ( findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).size() == 0 )
-        {
-            throw new TestFrameworkException( "menu item was not found!  " + action );
-        }
-        String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
-        return !styleClass.contains( "disabled" );
-    }
-
     /**
      * Start to delete a content from menu in context menu.
      *
@@ -693,16 +680,6 @@ public class ContentBrowsePanel
         return newContentDialog;
     }
 
-    public void openContextMenu( String contentName )
-    {
-        getLogger().info( "opening a context menu, content path of content: " + contentName );
-        TestUtils.saveScreenshot( getSession(), "menu_" + contentName );
-        String contentDescriptionXpath = String.format( NAMES_VIEW_BY_NAME, contentName );
-        WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
-        Actions action = new Actions( getDriver() );
-        action.contextClick( element ).build().perform();
-        sleep( 100 );
-    }
 
     /**
      * @return true if 'Delete' button enabled, otherwise false.

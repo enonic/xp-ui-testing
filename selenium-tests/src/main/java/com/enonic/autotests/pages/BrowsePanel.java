@@ -55,6 +55,8 @@ public abstract class BrowsePanel
     private String BROWSE_PANEL_ITEM_EXPANDER =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
+    protected String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
+
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
     protected WebElement showFilterPanelButton;
 
@@ -669,5 +671,25 @@ public abstract class BrowsePanel
         actions.build().perform();
         sleep( 500 );
         return this;
+    }
+
+    public void openContextMenu( String gridItemName )
+    {
+        getLogger().info( "opening a context menu, content path of content: " + gridItemName );
+        String contentDescriptionXpath = String.format( NAMES_VIEW_BY_NAME, gridItemName );
+        WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
+        Actions action = new Actions( getDriver() );
+        action.contextClick( element ).build().perform();
+        sleep( 100 );
+    }
+
+    public boolean isEnabledContextMenuItem( String action )
+    {
+        if ( findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "menu item was not found!  " + action );
+        }
+        String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
+        return !styleClass.contains( "disabled" );
     }
 }
