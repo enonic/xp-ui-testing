@@ -42,7 +42,6 @@ public class ContentDetailsPanel
             throw new TestFrameworkException( "Version history option was not found!" );
         }
         getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION ) ).click();
-        //findElements( By.xpath( VERSION_HISTORY_OPTION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
         sleep( 700 );
         return new ContentItemVersionsPanel( getSession() );
     }
@@ -62,8 +61,6 @@ public class ContentDetailsPanel
     public boolean isOpened( String contentDisplayName )
     {
         return isElementDisplayed( DETAILS_PANEL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, contentDisplayName ) );
-        //findElements( By.xpath( DETAILS_PANEL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, contentDisplayName ) ) ).stream().filter(
-        // WebElement::isDisplayed ).count() > 0;
     }
 
     public boolean isDisplayed()

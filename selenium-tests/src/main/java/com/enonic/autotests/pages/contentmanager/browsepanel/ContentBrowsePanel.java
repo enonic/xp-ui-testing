@@ -160,7 +160,7 @@ public class ContentBrowsePanel
 
     public boolean isDetailsPanelToggleButtonDisplayed()
     {
-        return findElements( By.xpath( DETAILS_TOGGLE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( DETAILS_TOGGLE_BUTTON );
     }
 
     public boolean isFilterPanelShown()
@@ -302,10 +302,7 @@ public class ContentBrowsePanel
         return exists( contentPath.toString(), saveScreenshot );
     }
 
-    /**
-     * @param contentPath
-     * @return {@link ContentBrowsePanel} instance
-     */
+
     public ContentBrowsePanel unExpandContent( ContentPath contentPath )
     {
         if ( !doScrollAndFindGridItem( contentPath.toString() ) )
@@ -486,12 +483,12 @@ public class ContentBrowsePanel
 
     private void clickOnFoldButton()
     {
-        if ( findElements( By.xpath( MORE_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        if ( !isElementDisplayed( MORE_BUTTON_XPATH ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_foldbutton" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_fold_button" ) );
             throw new TestFrameworkException( "'More' button not found on the toolbar" );
         }
-        findElements( By.xpath( MORE_BUTTON_XPATH ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( MORE_BUTTON_XPATH ) ).click();
         sleep( 500 );
     }
 

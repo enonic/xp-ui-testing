@@ -39,7 +39,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         numberOfSelectedItems == 0;
 
         and: "details panel not displayed"
-        !contentDetailsPanel.isOpened();
+        !contentDetailsPanel.isDisplayed();
     }
 
     def "WHEN content selected THEN correct display name shown in the Detail Panel"()

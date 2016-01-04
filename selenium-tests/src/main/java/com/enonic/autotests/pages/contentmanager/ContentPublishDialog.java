@@ -31,7 +31,6 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-
     private final String PUBLISH_NOW_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish')]]";
 
@@ -47,7 +46,6 @@ public class ContentPublishDialog
     private final String DEPENDENCIES_LIST = DIALOG_CONTAINER + "//div[contains(@id,'PublishDialogDependantsItemList')]";
 
     private final String DEPENDENCIES_STRINGS = DEPENDENCIES_LIST + "//div[contains(@id,'SelectionPublishItem')]//h6[@class='main-name']";
-////span[@class='name-span']";
 
     private final String DEPENDENCIES_LIST_HEADER = DEPENDENCIES_LIST + "//h6[@class='dependencies-header']";
 
@@ -141,8 +139,7 @@ public class ContentPublishDialog
 
     public boolean isOpened()
     {
-        List<WebElement> elements = findElements( By.xpath( DIALOG_CONTAINER ) );
-        return elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size() > 0;
+        return isElementDisplayed( DIALOG_CONTAINER );
     }
 
     /**

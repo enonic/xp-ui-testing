@@ -124,6 +124,12 @@ public class UserWizardPanel
         names.stream().forEach( roleName -> addRole( roleName ) );
     }
 
+    public UserWizardPanel removeRole( String roleName )
+    {
+
+        return this;
+    }
+
     private void addGroups( List<String> groupNames )
     {
         groupNames.stream().forEach( name -> addGroup( name ) );
