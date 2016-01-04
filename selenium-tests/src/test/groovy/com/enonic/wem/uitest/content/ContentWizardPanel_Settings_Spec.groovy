@@ -82,7 +82,7 @@ class ContentWizardPanel_Settings_Spec
 
         wizard.save().close( content.getDisplayName() );
         findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink()
-        TestUtils.saveScreenshot( getSession(), "norsk-langowner-anonym" )
+        TestUtils.saveScreenshot( getSession(), "norsk-lang-owner-anonym" )
 
         then: "language not present in settings"
         form.getOwner() == ANONYMOUS_USER;

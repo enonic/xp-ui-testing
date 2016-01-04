@@ -66,28 +66,25 @@ public class SettingsWizardStepForm
 
     public SettingsWizardStepForm removeLanguage( String language )
     {
-        if ( findElements( By.xpath( String.format( REMOVE_LANG_BUTTON, language ) ) ).stream().filter( WebElement::isDisplayed ).count() ==
-            0 )
+        String removeButtonXpath = String.format( REMOVE_LANG_BUTTON, language );
+        if ( !isElementDisplayed( removeButtonXpath ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_" + language );
             throw new TestFrameworkException( "language was not found in settings-form:  " + language );
         }
-        findElements( By.xpath( String.format( REMOVE_LANG_BUTTON, language ) ) ).stream().filter(
-            WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( removeButtonXpath ) ).click();
         return this;
     }
 
     public SettingsWizardStepForm removeOwner( String owner )
     {
-        if ( findElements( By.xpath( String.format( REMOVE_OWNER_BUTTON, owner ) ) ).stream().filter( WebElement::isDisplayed ).count() ==
-            0 )
+        String removeButtonXpath = String.format( REMOVE_OWNER_BUTTON, owner );
+        if ( !isElementDisplayed( removeButtonXpath ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_" + owner );
             throw new TestFrameworkException( "Owner was not found in settings-form:  " + owner );
         }
-
-        findElements( By.xpath( String.format( REMOVE_OWNER_BUTTON, owner ) ) ).stream().filter(
-            WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( removeButtonXpath ) ).click();
         sleep( 500 );
         return this;
     }
@@ -100,21 +97,20 @@ public class SettingsWizardStepForm
         {
             throw new TestFrameworkException( "locale was not found!  " + language );
         }
-        findElements( By.xpath( optionItemXpath ) ).get( 0 ).click();
+        findElement( By.xpath( optionItemXpath ) ).click();
     }
 
     public void selectOwner( String owner )
     {
         clearAndType( ownerFilterInput, owner );
         sleep( 700 );
-        if ( findElements( By.xpath( PRINCIPAL_COMBOBOX + String.format( NAME_ITEM, owner ) ) ).stream().filter(
-            WebElement::isDisplayed ).count() == 0 )
+        String checkboxXpath = PRINCIPAL_COMBOBOX + String.format( NAME_ITEM, owner );
+        if ( !isElementDisplayed( checkboxXpath ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_select_" + owner );
             throw new TestFrameworkException( "owner was not found!  " + owner );
         }
-        findElements( By.xpath( PRINCIPAL_COMBOBOX + String.format( NAME_ITEM, owner ) ) ).stream().filter(
-            WebElement::isDisplayed ).findFirst().get().click();
+        getDisplayedElement( By.xpath( checkboxXpath ) ).click();
         sleep( 500 );
     }
 
@@ -144,7 +140,7 @@ public class SettingsWizardStepForm
 
     public boolean isLanguageInputFilterPresent()
     {
-        return findElements( By.xpath( LANGUAGE_FILTER_INPUT ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( LANGUAGE_FILTER_INPUT );
     }
 
 }
