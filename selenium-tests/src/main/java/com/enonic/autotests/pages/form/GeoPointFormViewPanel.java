@@ -16,7 +16,7 @@ public class GeoPointFormViewPanel
     public static String GEO_POINT_PROPERTY = "geo_location";
 
     @FindBy(xpath = FORM_VIEW +
-        "//div[contains(@id,'api.form.InputView')]//input[contains(@id,'TextInput') and @placeholder='latitude,longitude']")
+        "//div[contains(@id,'api.form.InputView')]//input[contains(@id,'api.ui.geo.GeoPoint') and @placeholder='latitude,longitude']")
     private WebElement geoLocationInput;
 
 
