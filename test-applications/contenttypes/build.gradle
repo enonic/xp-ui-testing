@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.enonic.xp:gradle-plugin:6.3.0-SNAPSHOT'
+        classpath 'com.enonic.xp:gradle-plugin:6.4.0-SNAPSHOT'
     }
 }
 
@@ -20,7 +20,7 @@ app {
     displayName = 'All Content Types App'
 }
 ext {
-    xpVersion = '6.3.0-SNAPSHOT'
+    xpVersion = '6.4.0-SNAPSHOT'
 }
 
 

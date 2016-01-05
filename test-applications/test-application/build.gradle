@@ -21,6 +21,6 @@ app {
 }
 
 dependencies {
-    compile 'com.enonic.xp:core-api:6.3.0-SNAPSHOT'
+    compile 'com.enonic.xp:core-api:6.4.0-SNAPSHOT'
 }
 
