@@ -45,8 +45,6 @@ public abstract class BaseBrowseFilterPanel
         boolean isVisible = waitUntilVisibleNoException( By.linkText( CLEAR_FILTER_LINK ), Application.EXPLICIT_QUICK );
         if ( !isVisible )
         {
-            // getLogger().info( "The link with name 'Clear Filter' was not found!" );
-            //throw new TestFrameworkException( "The link with name 'Clear Filter' was not found!" );
             return this;
         }
         findElement( By.linkText( CLEAR_FILTER_LINK ) ).click();
@@ -66,7 +64,7 @@ public abstract class BaseBrowseFilterPanel
         boolean isVisible = waitUntilVisibleNoException( By.xpath( SEARCH_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isVisible )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_filterinput" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_filter" ) );
             throw new TestFrameworkException( "filter panel or search input not displayed" );
         }
         clearAndType( searchInput, text );

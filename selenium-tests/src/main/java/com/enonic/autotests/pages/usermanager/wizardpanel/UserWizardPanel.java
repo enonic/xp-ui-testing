@@ -45,6 +45,11 @@ public class UserWizardPanel
     private final String GROUP_OPTIONS_FILTER_INPUT =
         "//div[contains(@id,'FormItem') and child::label[text()='Groups']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
+    private final String ROLE_COMBOBOX = "//div[contains(@id,'PrincipalComboBox')]";
+
+    private String REMOVE_ROLE_BUTTON = ROLE_COMBOBOX +
+        "//div[contains(@class,'principal-selected-option-view') and descendant::p[contains(.,'%s')]]//a[@class='icon-close']";
+
     @FindBy(xpath = USER_WIZARD_PANEL + ROLE_OPTIONS_FILTER_INPUT)
     protected WebElement roleOptionsFilter;
 
@@ -124,9 +129,16 @@ public class UserWizardPanel
         names.stream().forEach( roleName -> addRole( roleName ) );
     }
 
-    public UserWizardPanel removeRole( String roleName )
+    public UserWizardPanel removeRoleByName( String roleName )
     {
 
+        String removeButtonXpath = String.format( REMOVE_ROLE_BUTTON, roleName );
+        if ( !isElementDisplayed( removeButtonXpath ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + roleName );
+            throw new TestFrameworkException( "role was not found in membership-step-form:  " + roleName );
+        }
+        getDisplayedElement( By.xpath( removeButtonXpath ) ).click();
         return this;
     }
 

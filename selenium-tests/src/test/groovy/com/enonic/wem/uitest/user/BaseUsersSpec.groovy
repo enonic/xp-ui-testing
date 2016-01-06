@@ -101,10 +101,21 @@ class BaseUsersSpec
         return Role.builder().displayName( displayName ).name( generated ).description( description ).build();
     }
 
-    protected User buildUser( String userName, String password )
+    protected User buildUser( String userDisplayName, String password )
     {
-        String generated = NameHelper.uniqueName( userName );
+        String generated = NameHelper.uniqueName( userDisplayName );
         return User.builder().displayName( generated ).email( generated + "@gmail.com" ).password( password ).build();
+    }
+
+    protected User buildUser( String userDisplayName, String password, String email )
+    {
+        String generated = NameHelper.uniqueName( userDisplayName );
+        return User.builder().displayName( generated ).email( email ).password( password ).build();
+    }
+
+    protected String generateEmail( String userName )
+    {
+        return NameHelper.uniqueName( userName ) + "@gmail.com";
     }
 
     protected User buildUserWithRolesAndGroups( String userName, String password, List<String> roles, List<String> groups )
@@ -114,9 +125,23 @@ class BaseUsersSpec
             groups ).build();
     }
 
+    protected User buildUserWithRolesAndGroups( String userName, String password, String email, List<String> roles, List<String> groups )
+    {
+        String generated = NameHelper.uniqueName( userName );
+        return User.builder().name( generated ).displayName( generated ).email( email ).password( password ).roles( roles ).groups(
+            groups ).build();
+    }
+
     protected UserStore buildUserStore( String name, String displayName, String description )
     {
         String generated = NameHelper.uniqueName( name );
         return UserStore.builder().displayName( displayName ).name( generated ).description( description ).build();
+    }
+
+    protected void addUser( User user )
+    {
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().typeData(
+            user ).save().close( user.getDisplayName() );
     }
 }
