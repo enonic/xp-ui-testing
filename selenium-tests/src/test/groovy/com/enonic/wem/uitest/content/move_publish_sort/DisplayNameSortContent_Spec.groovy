@@ -12,7 +12,7 @@ class DisplayNameSortContent_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN sort content dialog opened WHEN the item with name 'DisplayName - Ascending' selected THEN content sorted correctly in the dialog-grid"()
+    def "GIVEN sort content dialog opened with default sorting WHEN 'DisplayName - Ascending' selected THEN content sorted correctly in the dialog-grid"()
     {
         given: "folder with contents selected and 'Sort' button clicked"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
@@ -27,7 +27,7 @@ class DisplayNameSortContent_Spec
             SortMenuItem.DNAME_ASCENDING.getValue() ).getContentNames();
         TestUtils.saveScreenshot( getSession(), "dn2" );
 
-        then: "'SortContent' dialog displayed"
+        then: "content sorted correctly in the dialog-grid"
         Collections.sort( defaultSortingList );
         defaultSortingList.equals( nameAscendingList );
     }
@@ -39,11 +39,11 @@ class DisplayNameSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
         List<String> defaultSortingList = sortContentDialog.getContentNames();
 
-        when:
+        when: "'DisplayName - Descending' selected "
         List<String> nameDescendingList = sortContentDialog.clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.DNAME_DESCENDING.getValue() ).getContentNames();
 
-        then: "'SortContent' dialog displayed"
+        then: "content sorted correctly in the dialog-grid"
         Collections.sort( defaultSortingList, Collections.reverseOrder() );
         defaultSortingList.equals( nameDescendingList );
     }
@@ -55,20 +55,20 @@ class DisplayNameSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
         List<String> defaultSortingList = sortContentDialog.getContentNames();
 
-        when: "order saved and dialog opened again"
+        when: "DisplayName - Descending' selected and 'Save' button clicked"
         sortContentDialog.clickOnTabMenu().selectSortMenuItem( SortMenuItem.DNAME_DESCENDING.getValue() ).clickOnSaveButton();
-        findAndSelectContent( IMPORTED_FOLDER_NAME );
         sortContentDialog = contentBrowsePanel.clickToolbarSort();
         List<String> newList = sortContentDialog.getContentNames();
 
-        then: "'SortContent' dialog displayed"
+        then: "content sorted correctly in the dialog-grid"
         Collections.sort( defaultSortingList, Collections.reverseOrder() );
         defaultSortingList.equals( newList );
+
         and: "'DisplayName - Descending' shown in the menu"
         sortContentDialog.getCurrentSortingName() == SortMenuItem.DNAME_DESCENDING.getValue();
     }
 
-    def "GIVEN sort content opened WHEN 'DisplayName - Descending' selected and 'Save' button clicked THEN content sorted correctly in the browse panel"()
+    def "GIVEN sort content opened WHEN 'DisplayName - Ascending' selected and 'Save' button clicked THEN content sorted correctly in the browse panel"()
     {
         given: "folder with content selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
