@@ -34,8 +34,8 @@ public class SortContentDialog
 
     private final String SORT_CONTENT_MENU_BUTTON = DIALOG_CONTAINER + "//div[contains(@id,'TabMenuButton')]";
 
-    private String GRID_ITEM = DIALOG_CONTAINER +
-        "//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
+    private String GRID_ITEM =
+        DIALOG_CONTAINER + "//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
     private String VIEWPORT_XPATH = "//div[contains(@id,'SortContentTreeGrid')]//div[@class='slick-viewport']";
 
@@ -150,6 +150,7 @@ public class SortContentDialog
     {
         saveButton.click();
         waitElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        sleep( 1000 );
         return this;
     }
 

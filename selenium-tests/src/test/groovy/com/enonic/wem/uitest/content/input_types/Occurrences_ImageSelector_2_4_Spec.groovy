@@ -18,7 +18,7 @@ class Occurrences_ImageSelector_2_4_Spec
     @Shared
     Content IMAGE_SELECTOR_CONTENT_4_IMAGES;
 
-    def "WHEN wizard for adding a 'Image Selector'-content(2:4) opened THEN option filter input is present, there no selected image and upload button is enabled"()
+    def "WHEN wizard for a 'Image Selector'-content(2:4) opened THEN option filter input is present, there no selected image and upload button is enabled"()
     {
         when: "start to add a content with type 'Image Selector 2:4'"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
@@ -33,7 +33,7 @@ class Occurrences_ImageSelector_2_4_Spec
         formViewPanel.isUploaderButtonEnabled();
     }
 
-    def "GIVEN saving of 'Image Selector-content' (2:4) without selected image WHEN content opened for edit THEN selected image not present on page and content is invalid"()
+    def "GIVEN saving of 'Image Selector-content' (2:4) without a selected image WHEN content opened for edit THEN selected image not present on page and content is invalid"()
     {
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
@@ -77,19 +77,21 @@ class Occurrences_ImageSelector_2_4_Spec
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
+        sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "image-selector-2-img" )
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
-        List<String> images = formViewPanel.getSelectedImages();
+        List<String> imagesActual = formViewPanel.getSelectedImages();
 
         then: "two images present on the page"
-        images.size() == 2;
+        imagesActual.size() == 2;
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "correct image present on the page"
-        images.get( 0 ) == NORD_IMAGE_NAME;
+        imagesActual.get( 0 ) == NORD_IMAGE_NAME;
 
         and: "correct image present on the page"
-        images.get( 1 ) == BOOK_IMAGE_NAME;
+        imagesActual.get( 1 ) == BOOK_IMAGE_NAME;
     }
 
     def "GIVEN Image Selector-content (2:4) with two selected images and one image removed and content saved WHEN content opened for edit THEN one image present on the page"()
