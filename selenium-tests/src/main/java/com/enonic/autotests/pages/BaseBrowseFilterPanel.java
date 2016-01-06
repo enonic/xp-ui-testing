@@ -68,8 +68,7 @@ public abstract class BaseBrowseFilterPanel
             throw new TestFrameworkException( "filter panel or search input not displayed" );
         }
         clearAndType( searchInput, text );
-
-        sleep( 1000 );
+        sleep( 1500 );
         getLogger().info( "Filtered by : " + text );
         return this;
     }
