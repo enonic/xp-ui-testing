@@ -96,6 +96,7 @@ class Base_InputFields_Occurrences
     protected ContentWizardPanel selectSiteOpenWizard( String contentTypeName )
     {
         filterPanel.typeSearchText( SITE_NAME );
+        sleep( 1000 );
         return contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( contentTypeName );
     }
 
