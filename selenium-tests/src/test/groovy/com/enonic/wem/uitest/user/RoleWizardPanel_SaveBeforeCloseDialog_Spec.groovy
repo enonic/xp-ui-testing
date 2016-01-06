@@ -62,6 +62,7 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
 
         then: "Content is listed in BrowsePanel with it's new name"
         userBrowseFilterPanel.typeSearchText( newDisplayName );
+        TestUtils.saveScreenshot( getSession(), "saving-role-display-name-changed" );
         userBrowsePanel.exists( TEST_ROLE.getName() );
     }
 
@@ -79,6 +80,7 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
 
         then: "new display name not saved"
         userBrowseFilterPanel.typeSearchText( NO_BUTTON_PRESSED );
+        TestUtils.saveScreenshot( getSession(), "no-saving-role-display-name-changed" );
         !userBrowsePanel.exists( TEST_ROLE.getName() );
     }
 
