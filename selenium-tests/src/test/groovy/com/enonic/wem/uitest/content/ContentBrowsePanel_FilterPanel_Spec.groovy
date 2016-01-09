@@ -185,6 +185,8 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "adding text-search"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
+        //TODO this is a tem workaround for issue with performance when search-text typed
+        sleep( 1000 )
         TestUtils.saveScreenshot( getTestSession(), "typed_name" );
 
         then:
