@@ -671,7 +671,8 @@ public class ContentBrowsePanel
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         openContextMenu( contentName );
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).get( 0 ).click();
+        sleep( 500 );
+        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         return newContentDialog;
