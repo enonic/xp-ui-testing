@@ -137,6 +137,8 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "folder's name typed in the text input"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
+        //TODO this is a temporary workaround for issue with filtering
+        sleep( 1000 );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "SearchText-" + TEST_FOLDER.getName() );
 
