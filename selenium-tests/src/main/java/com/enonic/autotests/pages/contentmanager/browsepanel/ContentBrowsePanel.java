@@ -196,13 +196,14 @@ public class ContentBrowsePanel
 
     public boolean isContentInvalid( String contentPath )
     {
-        List<WebElement> elements = findElements( By.xpath( String.format( CONTENT_SUMMARY_VIEWER, contentPath ) ) ).stream().filter(
-            WebElement::isDisplayed ).collect( Collectors.toList() );
-        if ( elements.size() == 0 )
+        String contentInGrid = String.format( CONTENT_SUMMARY_VIEWER, contentPath );
+        if ( !isElementDisplayed( contentInGrid ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_" + contentPath );
             throw new TestFrameworkException( "content with path was not found or browsePanel was not displayed!" + contentPath );
         }
-        return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
+        WebElement element = getDisplayedElement( By.xpath( contentInGrid ) );
+        return waitAndCheckAttrValue( element, "class", "invalid", Application.EXPLICIT_NORMAL );
     }
 
     public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )

@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.GeoPointFormViewPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -77,5 +78,36 @@ class GeoPoint_Spec
         and: "correct warning-message appears"
         filterPanel.typeSearchText( notValidContent.getName() );
         contentBrowsePanel.isContentInvalid( notValidContent.getName() );
+    }
+
+    def "GIVEN all valid data typed WHEN saved and HomeButton clicked THEN the content displayed as valid "()
+    {
+        given: "add a content with type 'Geo point'"
+        Content validContent = buildGeoPoint1_1_Content( TEST_GEO_LOCATION );
+        ContentWizardPanel wizard = selectSiteOpenWizard( validContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+            validContent );
+
+        when: "content saved and HomeButton clicked"
+        wizard.save();
+        contentBrowsePanel.goToAppHome();
+        filterPanel.typeSearchText( validContent.getName() );
+        sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "geo-location-grid-valid" );
+
+        then: "the content displayed as valid"
+        !contentBrowsePanel.isContentInvalid( validContent.getName() );
+    }
+
+    def "GIVEN wizard for adding a content with type 'Geo Location' opened WHEN all data typed THEN red icon not present in the wizard "()
+    {
+        when: "add a content with type 'Geo point'"
+        Content validContent = buildGeoPoint1_1_Content( TEST_GEO_LOCATION );
+        ContentWizardPanel wizard = selectSiteOpenWizard( validContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+            validContent );
+        TestUtils.saveScreenshot( getSession(), "geo-location-wizard-valid" )
+
+        then: "red icon not present in the wizard, because content is valid"
+        !wizard.isContentInvalid( validContent.getDisplayName() );
+
     }
 }
