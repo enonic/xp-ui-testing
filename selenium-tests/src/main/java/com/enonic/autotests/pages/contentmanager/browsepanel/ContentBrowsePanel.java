@@ -669,6 +669,7 @@ public class ContentBrowsePanel
     public NewContentDialog selectNewFromContextMenu( String contentName )
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
+        sleep( 1000 );
         openContextMenu( contentName );
         sleep( 500 );
         findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).click();
