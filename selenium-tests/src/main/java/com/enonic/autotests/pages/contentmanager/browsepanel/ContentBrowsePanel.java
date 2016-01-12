@@ -585,6 +585,7 @@ public class ContentBrowsePanel
     public ContentPublishDialog selectPublishFromContextMenu( String contentName )
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
+        sleep( 1000 );
         openContextMenu( contentName );
         findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Publish" ) ) ).click();
 
@@ -597,6 +598,7 @@ public class ContentBrowsePanel
     public ContentBrowsePanel selectDuplicateFromContextMenu( String contentName )
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
+        sleep( 1000 );
         openContextMenu( contentName );
         findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).click();
         sleep( 1000 );
@@ -616,7 +618,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "content was not found: " + contentName );
         }
         openContextMenu( contentName );
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).get( 0 ).click();
+        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).click();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
@@ -629,7 +631,7 @@ public class ContentBrowsePanel
         {
             throw new TestFrameworkException( "Sort item was not found in the context menu" );
         }
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).get( 0 ).click();
+        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).click();
         SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
         sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
         return sortContentDialog;
