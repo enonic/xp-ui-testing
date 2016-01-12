@@ -310,7 +310,6 @@ public class ContentBrowsePanel
         {
             throw new TestFrameworkException( "unExpandContent: content was not found! " + contentPath );
         }
-
         if ( isRowExpanded( contentPath.toString() ) )
         {
             this.clickOnExpander( contentPath.toString() );
@@ -517,7 +516,6 @@ public class ContentBrowsePanel
         {
             return this;
         }
-
         if ( !doScrollAndFindGridItem( contentPath.toString() ) )
         {
             throw new TestFrameworkException( "content was not found: " + contentPath.toString() );
@@ -528,9 +526,8 @@ public class ContentBrowsePanel
         if ( !isPresentCheckbox )
         {
             TestUtils.saveScreenshot( getSession(), "checkbox" + contentPath.getName() );
-            throw new TestFrameworkException(
-                "Time: " + TestUtils.timeNow() + "  wrong xpath:" + checkBoxXpath + " or item with name " + contentPath.toString() +
-                    " was not found!" );
+            throw new TestFrameworkException( "wrong xpath:" + checkBoxXpath + " or item with name " + contentPath.getName() +
+                                                  " was not found!" );
         }
         getDriver().findElement( By.xpath( checkBoxXpath ) ).click();
         sleep( 200 );

@@ -21,10 +21,11 @@ class SiteConfiguratorDialog_Spec
     @Shared
     String BACKGROUND_RED_COLOR_VALUE = "213, 147, 146"
 
-    def "GIVEN creating new Site with configuration  WHEN site saved and wizard closed THEN new site should be present"()
+    def "GIVEN creating new Site with a configuration WHEN site saved and wizard closed THEN new site should be present"()
     {
-        given:
+        given: "creating new Site with a configuration"
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
+
         when: "data saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
             SITE.getDisplayName() );

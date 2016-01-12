@@ -187,6 +187,23 @@ class Base_InputFields_Occurrences
         return dateTimeContent;
     }
 
+    protected Content buildDate1_1_Content( String date )
+    {
+        PropertyTree contentData = new PropertyTree(); ;
+        if ( date != null )
+        {
+            contentData.addStrings( DateFormViewPanel.DATE_PROPERTY, date );
+        }
+        String name = "date";
+        Content dateTimeContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "date content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":date1_1" ).data( contentData ).
+            build();
+        return dateTimeContent;
+    }
+
     protected Content buildImageSelector0_1_Content( String... imageNames )
     {
         PropertyTree data = null;

@@ -15,10 +15,10 @@ class ContentBrowsePanel_GridPanel_Spec
 {
 
     @Shared
-    Content parentContent;
+    Content PARENT_CONTENT;
 
     @Shared
-    String CHILD_CONTENT_NAME = "childfolder";
+    Content CHILD_CONTENT;
 
     def "GIVEN Content listed on root WHEN no selection THEN all rows are white"()
     {
@@ -85,19 +85,14 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content on root having a child WHEN listed THEN expander is shown"()
     {
         given:
-        parentContent = buildFolderContent( "parentfolder", "folder-test" );
-        Content child = Content.builder().
-            name( CHILD_CONTENT_NAME ).
-            displayName( "child_folder" ).
-            contentType( ContentTypeName.folder() ).
-            parent( ContentPath.from( parentContent.getName() ) ).
-            build();
-        addContent( parentContent );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
-        addContent( child );
+        PARENT_CONTENT = buildFolderContent( "parentfolder", "folder-test" );
+        CHILD_CONTENT = buildFolderContentWithParent( "child-content", "child folder", PARENT_CONTENT.getName() );
+        addContent( PARENT_CONTENT );
+        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_CONTENT.getName() );
+        addContent( CHILD_CONTENT );
 
         expect:
-        contentBrowsePanel.exists( parentContent.getName() ) && contentBrowsePanel.isExpanderPresent( parentContent.getName() )
+        contentBrowsePanel.exists( PARENT_CONTENT.getName() ) && contentBrowsePanel.isExpanderPresent( PARENT_CONTENT.getName() )
     }
 
     def "GIVEN a parent folder with child WHEN the name of parent typed in the TextSearchField and folder expanded THEN child content appears "()
@@ -106,11 +101,11 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.doShowFilterPanel();
 
         when: "the name of parent typed in the TextSearchField and folder expanded"
-        filterPanel.typeSearchText( parentContent.getName() )
-        contentBrowsePanel.expandContent( parentContent.getPath() );
+        filterPanel.typeSearchText( PARENT_CONTENT.getName() )
+        contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
         then: "child content appears"
-        contentBrowsePanel.exists( CHILD_CONTENT_NAME );
+        contentBrowsePanel.exists( CHILD_CONTENT.getName() );
     }
 
     def "GIVEN a Content on root having no children WHEN listed THEN expander is not shown"()
@@ -132,27 +127,27 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content with a closed expander WHEN expanded THEN one or more children is listed beneath"()
     {
         expect:
-        !contentBrowsePanel.isRowExpanded( parentContent.getName() );
+        !contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
 
         when:
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.expandContent( parentContent.getPath() );
+        filterPanel.typeSearchText( PARENT_CONTENT.getName() );
+        contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
         List<String> names = contentBrowsePanel.getChildNames()
 
         then:
         names.size() == 1;
         and:
-        names.get( 0 ) == CHILD_CONTENT_NAME;
+        names.get( 0 ) == CHILD_CONTENT.getName();
 
     }
 
     def "GIVEN a Content with an open expander WHEN closed THEN no children are listed beneath"()
     {
         given:
-        contentBrowsePanel.expandContent( parentContent.getPath() );
+        contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
         when:
-        contentBrowsePanel.unExpandContent( parentContent.getPath() );
+        contentBrowsePanel.unExpandContent( PARENT_CONTENT.getPath() );
         TestUtils.saveScreenshot( getTestSession(), "unexpandtest" );
 
         then:
@@ -162,14 +157,14 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a selected Content  WHEN arrow down is typed THEN next row is selected"()
     {
         given:
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( parentContent.getPath(), Keys.ARROW_DOWN );
+        contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_DOWN );
         TestUtils.saveScreenshot( getTestSession(), "arrow_down" );
         then:
-        !contentBrowsePanel.isRowSelected( parentContent.getName() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
+        !contentBrowsePanel.isRowSelected( PARENT_CONTENT.getName() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
     def "GIVEN a selected content WHEN arrow up is typed THEN previous row is selected"()
@@ -183,42 +178,42 @@ class ContentBrowsePanel_GridPanel_Spec
             contentType( ContentTypeName.unstructured() ).
             build();
         addContent( content );
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
 
         when:
-        contentBrowsePanel.pressKeyOnRow( parentContent.getPath(), Keys.ARROW_UP );
+        contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_UP );
         TestUtils.saveScreenshot( getTestSession(), "arrow_up" );
 
         then:
-        !contentBrowsePanel.isRowSelected( parentContent.getPath().toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
+        !contentBrowsePanel.isRowSelected( PARENT_CONTENT.getPath().toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
     def "GIVEN a selected and expanded content and  WHEN arrow left is typed THEN folder becomes collapsed"()
     {
         given: "a selected and expanded folder(content)"
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
-        contentBrowsePanel.expandContent( parentContent.getPath() )
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
+        contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() )
 
         when: "arrow left typed"
-        contentBrowsePanel.pressKeyOnRow( parentContent.getPath(), Keys.ARROW_LEFT );
+        contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_LEFT );
         TestUtils.saveScreenshot( getTestSession(), "content_arrow_left" );
 
         then: "folder is collapsed"
-        !contentBrowsePanel.isRowExpanded( parentContent.getName() );
+        !contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
     }
 
     def "GIVEN a selected and collapsed content and  WHEN arrow right is typed THEN folder becomes expanded"()
     {
         given: "a selected and collapsed folder"
-        contentBrowsePanel.selectContentInTable( parentContent.getName() );
+        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
 
         when: "arrow left typed"
-        contentBrowsePanel.pressKeyOnRow( parentContent.getPath(), Keys.ARROW_RIGHT );
+        contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_RIGHT );
         TestUtils.saveScreenshot( getTestSession(), "content_arrow_right" );
 
         then: "folder is expanded"
-        contentBrowsePanel.isRowExpanded( parentContent.getName() );
+        contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
     }
 
     def "GIVEN selected content and WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()

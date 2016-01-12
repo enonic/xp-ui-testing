@@ -42,7 +42,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
     def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN all existing Content of the selected type should be listed in gridPanel"()
     {
-        given:
+        given: "No selections in filter"
         String name = NameHelper.uniqueName( "unstructured" );
         Content content = Content.builder().
             name( name ).
@@ -54,94 +54,94 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             content.getDisplayName() );
         contentBrowsePanel.doShowFilterPanel();
 
-        when:
+        when: "Selecting one entry in ContentTypes-filter"
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getSession(), "filter_unstructured" )
 
-        then:
+        then: "all existing Content of the selected type should be listed in gridPanel"
         Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         numberOfFilteredContent == contentBrowsePanel.getRowNumber();
     }
 
     def "GIVEN selections in any filter WHEN clicking clean filter THEN initial grid view displayed"()
     {
-        given:
+        given: "selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         boolean beforeClean = contentBrowsePanel.exists( initialFolder.getName() );
 
-        when:
+        when: "clicking clean filter "
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-        then:
+        then: "initial grid view displayed"
         !beforeClean && contentBrowsePanel.exists( initialFolder.getName() );
     }
 
     def "GIVEN one selection in ContentTypes-filter WHEN selecting one additional entry in ContentTypes-filter THEN all existing content of the both selected types should be listed in gridPanel"()
     {
-        given:
+        given: "one selection in ContentTypes-filter"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         Integer numberOfData = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
 
-        when:
+        when: "selecting one additional entry in ContentTypes-filter"
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.FOLDER.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
         TestUtils.saveScreenshot( getTestSession(), "one-selection1" );
 
-        then:
+        then: "all existing content of the both selected types should be listed in gridPanel"
         Integer numberOfFolder = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
         ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowNumber();
     }
 
-    def "GIVEN one selection in any filter WHEN deselecting selection THEN initial grid view displayed "()
+    def "GIVEN one selection in any filter WHEN deselecting selection THEN initial grid view displayed"()
     {
-        given:
+        given: "one selection in any filter"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
         TestUtils.saveScreenshot( getTestSession(), "one-selection2" );
         boolean existsBeforeDeselect = contentBrowsePanel.exists( initialFolder.getName() );
 
-        when:
+        when: "deselecting selection"
         filterPanel.deselectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "one-selection-deselected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-        then:
+        then: "initial grid view displayed"
         !existsBeforeDeselect && contentBrowsePanel.exists( initialFolder.getName() );
     }
 
     def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
     {
-        when:
+        when: "adding text-search in filter panel"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.typeSearchText( initialFolder.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "text-search1" );
 
-        then:
+        then: "all Content matching the text-search should be listed in gridPanel"
         contentBrowsePanel.exists( initialFolder.getName() );
     }
 
     def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
     {
-        given:
+        given: "any value in text-search"
         contentBrowsePanel.doShowFilterPanel();
         Content folder = buildFolderContent( "folder", "filter test" )
         filterPanel.typeSearchText( folder.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-        when:
+        when: "clicking clean filter"
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
-        then:
+        then: "initial grid view displayed"
         contentBrowsePanel.getRowNumber() > 1 && contentBrowsePanel.exists( initialFolder.getName() );
     }
 }

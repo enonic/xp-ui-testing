@@ -25,25 +25,25 @@ class ContentWizardPanel_Settings_Spec
     @Shared
     Content content;
 
-    def "WHEN content wizard opened THEN no selected languages displayed AND option input filter is present"()
+    def "WHEN content wizard opened THEN language not selected AND option input filter is present"()
     {
-
         when: "content wizard opened"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
 
-        then: "option input filter is present"
+        then: "language 'option filter' is present"
         form.isLanguageInputFilterPresent();
-        and: "no selected languages displayed"
+
+        and: "language not selected"
         form.getLanguage() == null;
 
         and:
         form.getOwner() == SUPER_USER;
     }
 
-    def "GIVEN saving a content with language WHEN content selected and 'Edit' pressed in toolbar  THEN correct language present in settings"()
+    def "GIVEN saving a content with a language WHEN content selected and 'Edit' pressed in toolbar  THEN correct language present in settings"()
     {
-        given:
+        given: "saving a content with a language"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
         content = buildFolderWithSettingsContent( "folder", "content settings", settings );
         addContent( content );
@@ -77,14 +77,13 @@ class ContentWizardPanel_Settings_Spec
         SettingsWizardStepForm form = findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
 
-        when: "language removed AND content saved"
+        when: "owner changed AND content saved"
         form.removeOwner( SUPER_USER ).selectOwner( ANONYMOUS_USER );
-
         wizard.save().close( content.getDisplayName() );
         findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink()
         TestUtils.saveScreenshot( getSession(), "norsk-lang-owner-anonym" )
 
-        then: "language not present in settings"
+        then: "new owner shown in settings"
         form.getOwner() == ANONYMOUS_USER;
     }
 }

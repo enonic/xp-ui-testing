@@ -65,7 +65,8 @@ public class ContentWizardStepForm
         {
             formViewPanel = new DoubleFormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( TestAppContentType.DATE.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.DATE0_1.getName() ) ||
+            contentTypeName.contains( TestAppContentType.DATE1_1.getName() ) )
         {
             formViewPanel = new DateFormViewPanel( getSession() );
         }

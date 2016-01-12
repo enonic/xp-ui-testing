@@ -17,15 +17,15 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
     def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
     {
-        given:
+        given: "creating new Content on root"
         PARENT_FOLDER = buildFolderContent( "parent-folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         wizard.typeData( PARENT_FOLDER );
 
-        when:
+        when: "saved and wizard closed"
         wizard.save().close( PARENT_FOLDER.getDisplayName() );
 
-        then:
+        then: "new Content should be listed"
         contentBrowsePanel.exists( PARENT_FOLDER.getName() );
     }
 
@@ -47,7 +47,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing unexpanded folder WHEN saved and wizard closed THEN parent should still be unexpanded"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
-        Content childContent = buildFolderContentWithParent( NameHelper.uniqueName( "folder" ), "child-folder1", PARENT_FOLDER.getName() );
+        Content childContent = buildFolderContentWithParent( "folder", "child-folder1", PARENT_FOLDER.getName() );
 
         contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
@@ -63,7 +63,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and HomeButton clicked THEN parent should still be unexpanded"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
-        Content childContent = buildFolderContentWithParent( NameHelper.uniqueName( "folder" ), "child-folder2", PARENT_FOLDER.getName() );
+        Content childContent = buildFolderContentWithParent( "folder", "child-folder2", PARENT_FOLDER.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).
             typeData( childContent );

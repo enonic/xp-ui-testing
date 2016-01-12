@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.user
 
+import com.enonic.autotests.pages.usermanager.browsepanel.GroupStatisticsPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
@@ -60,6 +61,20 @@ class Group_And_Member_Spec
         then: "correct display name of user is shown on members-form"
         List<String> members = groupWizardPanel.getMembersDisplayNames();
         members.get( 0 ) == TEST_USER.getDisplayName();
+    }
+
+    def "GIVEN existing group with a user WHEN group selected in browse panel THEN correct member displayed in statistics panel "()
+    {
+        given: "existing group with a user"
+        userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
+
+        when: "group selected in browse panel"
+        userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() );
+        GroupStatisticsPanel groupStatisticsPanel = new GroupStatisticsPanel( getSession() );
+
+        then: "correct member displayed in statistics panel "
+        groupStatisticsPanel.getMemberDisplayNames().contains( TEST_USER.getDisplayName() );
+
     }
 
     def "GIVEN a group with a member WHEN this group opened AND member was removed AND group saved THEN member not displayed in form"()

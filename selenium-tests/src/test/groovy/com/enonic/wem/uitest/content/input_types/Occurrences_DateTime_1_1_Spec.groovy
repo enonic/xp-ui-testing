@@ -19,27 +19,27 @@ class Occurrences_DateTime_1_1_Spec
     String TEST_DATE_TIME1 = "2015-02-28 19:01";
 
 
-    def "GIVEN wizard for adding a DateTime(1:1) opened WHEN name typed and dateTime not typed THEN dateTime input is empty and content has a invalid status"()
+    def "GIVEN wizard for adding a DateTime(1:1) opened WHEN name typed and dateTime was not typed THEN dateTime input is empty and content has a invalid status"()
     {
         given: "start to add a content with type 'DateTime(1:1)'"
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
-        when: "only the name typed and dateTime not typed"
+        when: "only a name typed and dateTime was not typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        then: "option filter input is present and enabled"
+        then: "date time input is present and enabled"
         formViewPanel.isDateTimeInputDisplayed();
 
         and: "content should be invalid, because required field- datetime1:1 not typed"
         wizard.isContentInvalid( dateTimeContent.getDisplayName() );
 
-        and: " and no options selected on the page"
+        and: "and date time input is empty"
         formViewPanel.getDateTimeValue().isEmpty();
     }
 
-    def "GIVEN opened content wizard WHEN content without required 'date time ' saved THEN wizard has a red icon"()
+    def "GIVEN opened content wizard WHEN content without required 'date time' saved THEN wizard has a red icon"()
     {
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime1_1_Content( null );

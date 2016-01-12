@@ -14,10 +14,11 @@ class SiteFormViewPanel_Applications_Spec
     @Shared
     Content SITE;
 
-    def "GIVEN creating new Site with two configurations  WHEN site saved and wizard closed THEN new site should be present"()
+    def "GIVEN creating new Site with two configurations WHEN site saved and wizard closed THEN new site should be present"()
     {
-        given:
+        given: "creating new Site with two configurations"
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
+
         when: "data saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
             SITE.getDisplayName() );
@@ -67,7 +68,7 @@ class SiteFormViewPanel_Applications_Spec
 
     def "GIVEN site with application WHEN checkbox clicked and 'Apply' button pressed THEN two application present in form-panel"()
     {
-        given: "site with one application opened "
+        given: "site with one application opened"
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
@@ -81,6 +82,7 @@ class SiteFormViewPanel_Applications_Spec
 
         then: "new application present in form"
         namesAfter.getLast() == MY_FIRST_APP;
+
         and: "number of application increased"
         namesAfter.size() - namesBefore.size() == 1;
     }
