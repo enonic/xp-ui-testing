@@ -593,6 +593,7 @@ public class ContentBrowsePanel
 
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        sleep( 700 );
         return dialog;
     }
 
