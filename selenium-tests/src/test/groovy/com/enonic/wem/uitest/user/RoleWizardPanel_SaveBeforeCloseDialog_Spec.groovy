@@ -62,6 +62,7 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
 
         then: "Content is listed in BrowsePanel with it's new name"
         userBrowseFilterPanel.typeSearchText( newDisplayName );
+        sleep( 700 );
         TestUtils.saveScreenshot( getSession(), "saving-role-display-name-changed" );
         userBrowsePanel.exists( TEST_ROLE.getName() );
     }
