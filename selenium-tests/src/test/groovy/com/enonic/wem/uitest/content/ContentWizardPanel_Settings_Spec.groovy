@@ -59,13 +59,15 @@ class ContentWizardPanel_Settings_Spec
     def "GIVEN existing content with language opened WHEN language removed AND content saved  THEN no one language present in settings"()
     {
         given: "when content opened for edit"
-        SettingsWizardStepForm form = findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink();
-        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        filterPanel.typeSearchText( content.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( content.getName() ).clickToolbarEdit();
+        SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
         when: "language removed AND content saved"
         form.removeLanguage( NORSK_LANGUAGE );
         wizard.save().close( content.getDisplayName() );
-        findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink();
+        sleep( 1000 );
+        contentBrowsePanel.clickToolbarEdit().clickOnSettingsTabLink();
 
         then: "language not present in settings"
         form.getLanguage() == null;
