@@ -1,7 +1,10 @@
 package com.enonic.autotests.pages.usermanager.wizardpanel;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -22,6 +25,8 @@ public class RoleWizardPanel
 {
     private final String WIZARD_PANEL = "//div[contains(@id,'app.wizard.RoleWizardPanel')]";
 
+    private final String MEMBERS_FORM = WIZARD_PANEL + "//div[contains(@id,'RoleMembersWizardStepForm')]";
+
     private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
 
     public final String TOOLBAR_SAVE_BUTTON = WIZARD_PANEL + TOOLBAR +
@@ -32,6 +37,9 @@ public class RoleWizardPanel
 
     private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
 
+    private final String ROLE_OPTIONS_FILTER_INPUT =
+        "//div[contains(@id,'FormItem') and child::label[text()='Has Role']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     private WebElement toolbarSaveButton;
 
@@ -40,6 +48,9 @@ public class RoleWizardPanel
 
     @FindBy(xpath = DESCRIPTION_INPUT)
     private WebElement descriptionInput;
+
+    @FindBy(xpath = WIZARD_PANEL + ROLE_OPTIONS_FILTER_INPUT)
+    protected WebElement roleOptionsFilter;
 
     /**
      * The constructor.
@@ -104,8 +115,62 @@ public class RoleWizardPanel
             getLogger().info( "types the description: " + role.getDescription() );
             clearAndType( descriptionInput, role.getDescription() );
         }
+        if ( role.getMemberDisplayNames() != null )
+        {
+            addMembers( role.getMemberDisplayNames() );
+        }
         TestUtils.saveScreenshot( getSession(), role.getDisplayName() );
         return this;
+    }
+
+    public RoleWizardPanel addMembers( List<String> displayNames )
+    {
+        displayNames.stream().forEach( memberDisplayName -> addMember( memberDisplayName ) );
+        return this;
+    }
+
+    public RoleWizardPanel removeMember( String displayName )
+    {
+        String removeButton = String.format( MEMBERS_FORM +
+                                                 "//div[contains(@class,'principal-selected-options-view') and descendant::h6[@class='main-name' and text()='%s']]//a[@class='icon-close']",
+                                             displayName );
+
+        if ( !isElementDisplayed( removeButton ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_member" + displayName ) );
+            throw new TestFrameworkException( "member was not found! " + displayName );
+        }
+        getDisplayedElement( By.xpath( removeButton ) ).click();
+        sleep( 300 );
+        return this;
+    }
+
+    public void addMember( String memberDisplayName )
+    {
+        clearAndType( roleOptionsFilter, memberDisplayName );
+        sleep( 1000 );
+        String rowCheckboxXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//label[child::input[@type='checkbox']]", "Super User" );
+        if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Role was not found!" );
+        }
+        if ( !isMemberAlreadyAdded( memberDisplayName ) )
+        {
+            findElement( By.xpath( rowCheckboxXpath ) ).click();
+            roleOptionsFilter.sendKeys( Keys.ENTER );
+            sleep( 300 );
+        }
+    }
+
+    private boolean isMemberAlreadyAdded( String memberDisplayName )
+    {
+        String rowXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//input[@type='checkbox']", memberDisplayName );
+        if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_member" ) );
+            throw new TestFrameworkException( "checkbox for option was not found: " + memberDisplayName );
+        }
+        return findElement( By.xpath( rowXpath ) ).getAttribute( "checked" ) != null;
     }
 
     @Override

@@ -156,7 +156,7 @@ public class UserWizardPanel
         {
             throw new TestFrameworkException( "Group was not found!" );
         }
-        if ( !isRoleOrGroupSelected( groupName ) )
+        if ( !isRoleOrGroupAlreadySelected( groupName ) )
         {
             getDisplayedElement( By.xpath( rowCheckboxXpath ) ).click();
             groupOptionsFilter.sendKeys( Keys.ENTER );
@@ -171,25 +171,26 @@ public class UserWizardPanel
         String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", roleName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_role" ) );
             throw new TestFrameworkException( "Role was not found!" );
         }
-        if ( !isRoleOrGroupSelected( roleName ) )
+        if ( !isRoleOrGroupAlreadySelected( roleName ) )
         {
-            findElements( By.xpath( rowCheckboxXpath ) ).get( 0 ).click();
+            findElement( By.xpath( rowCheckboxXpath ) ).click();
             roleOptionsFilter.sendKeys( Keys.ENTER );
             sleep( 300 );
         }
     }
 
-    private boolean isRoleOrGroupSelected( String name )
+    private boolean isRoleOrGroupAlreadySelected( String name )
     {
         String rowXpath = String.format( GRID_ROW + "//input[@type='checkbox']", name );
         if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" ) );
-            throw new TestFrameworkException( "role or group was not found: " + name );
+            throw new TestFrameworkException( "checkbox for role or group was not found: " + name );
         }
-        return findElements( By.xpath( rowXpath ) ).get( 0 ).getAttribute( "checked" ) != null;
+        return findElement( By.xpath( rowXpath ) ).getAttribute( "checked" ) != null;
     }
 
     public UserWizardPanel typeDisplayName( String displayName )
@@ -247,6 +248,5 @@ public class UserWizardPanel
         sleep( 500 );
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
         return confirmationDialog;
-
     }
 }

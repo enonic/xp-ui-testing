@@ -43,6 +43,18 @@ class BaseUsersSpec
     String USER_STORE_DELETED_MESSAGE = "UserStore [%s] deleted!";
 
     @Shared
+    String SUPER_USER_DISPLAY_NAME = "Super User";
+
+    @Shared
+    String ADMIN_CONSOLE_LOGIN_ROLE_DISPLAY_NAME = "Administration Console Login";
+
+    @Shared
+    String EVERYONE_ROLE_DISPLAY_NAME = "Everyone";
+
+    @Shared
+    String ROLES_FOLDER = "Roles";
+
+    @Shared
     UserBrowsePanel userBrowsePanel;
 
     @Shared
@@ -101,6 +113,12 @@ class BaseUsersSpec
         return Role.builder().displayName( displayName ).name( generated ).description( description ).build();
     }
 
+    protected Role buildRoleWithMembers( String name, String displayName, String description, List<String> roles )
+    {
+        String generated = NameHelper.uniqueName( name );
+        return Role.builder().displayName( displayName ).name( generated ).description( description ).roles( roles ).build();
+    }
+
     protected User buildUser( String userDisplayName, String password )
     {
         String generated = NameHelper.uniqueName( userDisplayName );
@@ -133,6 +151,12 @@ class BaseUsersSpec
     }
 
     protected UserStore buildUserStore( String name, String displayName, String description )
+    {
+        String generated = NameHelper.uniqueName( name );
+        return UserStore.builder().displayName( displayName ).name( generated ).description( description ).build();
+    }
+
+    protected UserStore buildUserStoreWithPermissions( String name, String displayName, String description )
     {
         String generated = NameHelper.uniqueName( name );
         return UserStore.builder().displayName( displayName ).name( generated ).description( description ).build();
