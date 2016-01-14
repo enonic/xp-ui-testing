@@ -34,7 +34,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "WHEN 'Edit Permissions' button pressed THEN modal dialog appears "()
     {
         when:
-        filterPanel.typeSearchText( content.getName() )
+        filterPanel.typeSearchText( content.getName() );
         EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
@@ -45,7 +45,8 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "WHEN 'Edit Permissions' dialog opened THEN 'inherit permissions ' checkbox present on dialog and it checked "()
     {
         when:
-        filterPanel.typeSearchText( content.getName() )
+        filterPanel.typeSearchText( content.getName() );
+        sleep( 1000 );
         EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
@@ -60,6 +61,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given:
         filterPanel.typeSearchText( content.getName() );
+        sleep( 1000 );
         EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
@@ -75,7 +77,8 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "WHEN 'Edit Permissions' opened THEN two default permissions displayed "()
     {
         when:
-        filterPanel.typeSearchText( content.getName() )
+        filterPanel.typeSearchText( content.getName() );
+        sleep( 1000 );
         EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
@@ -90,7 +93,8 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' opened WHEN new role added THEN new ACL entry with new role and 'Can Read' operations appears"()
     {
         given:
-        filterPanel.typeSearchText( content.getName() )
+        filterPanel.typeSearchText( content.getName() );
+        sleep( 1000 );
         EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
@@ -106,7 +110,8 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' opened WHEN one acl entry deleted THEN not present on dialog"()
     {
         given:
-        filterPanel.typeSearchText( content.getName() )
+        filterPanel.typeSearchText( content.getName() );
+        sleep( 1000 );
         EditPermissionsDialog modalDialog = contentBrowsePanel.selectRowByName(
             content.getName() ).<ContentWizardPanel> clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
