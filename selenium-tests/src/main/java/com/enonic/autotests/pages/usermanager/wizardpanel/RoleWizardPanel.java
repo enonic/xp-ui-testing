@@ -38,7 +38,7 @@ public class RoleWizardPanel
     private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
 
     private final String ROLE_OPTIONS_FILTER_INPUT =
-        "//div[contains(@id,'FormItem') and child::label[text()='Has Role']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+        "//div[contains(@id,'FormItem') and child::label[text()='Members']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     private WebElement toolbarSaveButton;
