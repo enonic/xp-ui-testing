@@ -7,6 +7,7 @@ buildscript {
         }
     }
     dependencies {
+        compile 'org.dm.gradle:gradle-bundle-plugin:0.6.3'
         classpath 'com.enonic.xp:gradle-plugin:6.1.0-SNAPSHOT'
     }
 }
@@ -30,7 +31,7 @@ allprojects {
             mavenDeployer {
                 repository( url: 'http://repo.enonic.com/artifactory/public' )
             }
-    }
+        }
     }
 }
 
