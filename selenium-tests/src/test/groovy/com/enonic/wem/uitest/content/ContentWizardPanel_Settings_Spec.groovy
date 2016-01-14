@@ -60,6 +60,7 @@ class ContentWizardPanel_Settings_Spec
     {
         given: "when content opened for edit"
         filterPanel.typeSearchText( content.getName() );
+        sleep( 1000 );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( content.getName() ).clickToolbarEdit();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
@@ -76,8 +77,10 @@ class ContentWizardPanel_Settings_Spec
     def "GIVEN existing content with owner opened WHEN owner changed AND content saved  THEN new owner shown in settings"()
     {
         given: "when content opened for edit"
-        SettingsWizardStepForm form = findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSettingsTabLink();
-        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        filterPanel.typeSearchText( content.getName() );
+        sleep( 1000 );
+        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEdit();
+        SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
         when: "owner changed AND content saved"
         form.removeOwner( SUPER_USER ).selectOwner( ANONYMOUS_USER );
