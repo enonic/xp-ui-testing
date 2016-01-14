@@ -13,6 +13,7 @@ buildscript {
 }
 
 apply plugin: 'maven'
+apply plugin: 'com.enonic.xp.app'
 
 app {
     name = 'com.enonic.xp.testing.contenttypes'
@@ -26,7 +27,6 @@ ext {
 dependencies {
     compile "com.enonic.xp:core-api:${xpVersion}"
     compile "com.enonic.xp:portal-api:${xpVersion}"
-    compile 'org.dm.gradle:gradle-bundle-plugin:0.6.3'
     include "com.enonic.xp:lib-content:${xpVersion}"
     include "com.enonic.xp:lib-portal:${xpVersion}"
     include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
