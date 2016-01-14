@@ -25,6 +25,7 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.1.8'
     compile 'org.spockframework:spock-core:0.7-groovy-2.0'
     compile 'org.gebish:geb-spock:0.10.0'
+    compile 'org.dm.gradle:gradle-bundle-plugin:0.6.3'
 
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
