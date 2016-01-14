@@ -1,5 +1,5 @@
 apply plugin: 'groovy'
-apply plugin: 'org.dm.bundle'
+
 
 
 repositories {
