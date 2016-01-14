@@ -19,7 +19,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         contentBrowsePanel.goToAppHome();
 
         when: "unnamed content selected in greed"
-        filterPanel.typeSearchText( "<unnamed" )
+        filterPanel.typeSearchText( "unnamed" )
         contentBrowsePanel.selectRowByDisplayName( Application.UNNAMED_SITE_DISPLAY_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
 

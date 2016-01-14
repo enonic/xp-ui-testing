@@ -185,6 +185,12 @@ public class UserBrowsePanel
         return clickCheckboxAndSelectRow( userAppItemName );
     }
 
+    public UserBrowsePanel clickCheckboxAndSelectUserStore( String userAppItemName )
+    {
+        getSession().put( ITEM_TYPE, BrowseItemType.USER_STORE );
+        return clickCheckboxAndSelectRow( userAppItemName );
+    }
+
     public UserBrowsePanel clickCheckboxAndSelectGroup( String groupName )
     {
         getSession().put( ITEM_TYPE, BrowseItemType.GROUP );
@@ -199,7 +205,6 @@ public class UserBrowsePanel
 
     public UserBrowsePanel selectGroupsFolderInUserStore( String userStoreName )
     {
-        //1.expand a userStore:
         if ( isRowExpanded( userStoreName ) )
         {
             clickOnExpander( userStoreName );
@@ -325,6 +330,8 @@ public class UserBrowsePanel
                 return new GroupWizardPanel( getSession() );
             case USER:
                 return new UserWizardPanel( getSession() );
+            case USER_STORE:
+                return new UserStoreWizardPanel( getSession() );
             default:
                 throw new TestFrameworkException( "unknown type of item!" );
         }

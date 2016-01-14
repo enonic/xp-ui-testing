@@ -55,6 +55,12 @@ class BaseUsersSpec
     String ROLES_FOLDER = "Roles";
 
     @Shared
+    String SYSTEM_USER_STORE_DISPLAY_NAME = "System User Store";
+
+    @Shared
+    String SYSTEM_USER_STORE_NAME = "/system"
+
+    @Shared
     UserBrowsePanel userBrowsePanel;
 
     @Shared
