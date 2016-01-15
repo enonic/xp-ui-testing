@@ -1,6 +1,8 @@
 package com.enonic.autotests.vo.usermanager;
 
 
+import java.util.List;
+
 public class UserStore
 {
     private final String name;
@@ -8,6 +10,8 @@ public class UserStore
     private final String displayName;
 
     private final String description;
+
+    private List<String> aclEntryDisplayNames;
 
     public UserStore( final Builder builder )
     {

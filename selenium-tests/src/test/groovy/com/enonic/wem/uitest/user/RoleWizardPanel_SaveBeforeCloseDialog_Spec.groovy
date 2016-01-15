@@ -57,7 +57,7 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
         dialog.waitForPresent();
 
-        when: "Yes is chosen"
+        when: "Yes was chosen"
         dialog.clickYesButton();
 
         then: "Content is listed in BrowsePanel with it's new name"
@@ -76,7 +76,7 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
         dialog.waitForPresent();
 
-        when: "No is chosen"
+        when: "No was chosen"
         dialog.clickNoButton();
 
         then: "new display name not saved"
@@ -85,18 +85,18 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
         !userBrowsePanel.exists( TEST_ROLE.getName() );
     }
 
-    def "GIVEN changing an existing group and wizard closing WHEN 'Cancel' is chosen THEN wizard is still open"()
+    def "GIVEN changing an existing role and wizard closing WHEN 'Cancel' is chosen THEN wizard is still open"()
     {
-        given:
+        given: "changing an existing role and wizard closing"
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
         RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
         SaveBeforeCloseDialog dialog = roleWizardPanel.typeDisplayName( "cancel test" ).close( "cancel test" );
 
-        when:
+        when: "'Cancel' is chosen"
         dialog.clickCancelButton();
         TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-cancel-role" );
 
-        then:
+        then: "wizard is still open"
         roleWizardPanel.isOpened();
     }
 }
