@@ -26,9 +26,11 @@ public abstract class BrowsePanel
 {
     protected final String TREE_GREED = "//div[contains(@id,'app.browse.ContentTreeGrid')]";
 
-    protected final String BASE_TOOLBAR_XPATH = "//div[contains(@id,'BrowseToolbar')]";
+    protected final String BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'BrowseToolbar')]";
 
-    protected final String SHOW_FILTER_PANEL_BUTTON = BASE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
+    protected final String TREEGRID_TOOLBAR_XPATH = "//div[contains(@id,'TreeGridToolbar')]";
+
+    protected final String SHOW_FILTER_PANEL_BUTTON = BROWSE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
 
     protected final String HIDE_FILTER_PANEL_BUTTON =
         "//div[contains(@id,'ContentBrowseFilterPanel')]//span[contains(@class, 'icon-search')]";
@@ -49,8 +51,7 @@ public abstract class BrowsePanel
     protected static final String DIV_WITH_NAME =
         "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]//div[contains(@id,'api.app.NamesView')]";
 
-    protected final String CLEAR_SELECTION_LINK_XPATH =
-        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[contains(.,'Clear Selection')]";
+    protected final String CLEAR_SELECTION_LINK_XPATH = TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Clear Selection')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
@@ -67,10 +68,16 @@ public abstract class BrowsePanel
     protected WebElement clearSelectionLink;
 
     private final String SELECT_ALL_LINK_XPATH =
-        "//div[contains(@id,'api.ui.treegrid.TreeGridToolbar')]/button/span[contains(.,'Select All') or contains(.,'Select all')]";
+        TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Select All') or contains(.,'Select all')]";
+
+    protected final String LAUNCHER_BUTTON_XPATH = "//button[contains(@class,'launcher-button') and child::span[@class='lines']";
 
     @FindBy(xpath = SELECT_ALL_LINK_XPATH)
     protected WebElement selectAllLink;
+
+    @FindBy(xpath = SELECT_ALL_LINK_XPATH)
+    protected WebElement launcherButton;
+
 
     /**
      * The Constructor
@@ -101,6 +108,21 @@ public abstract class BrowsePanel
         }
         showFilterPanelButton.click();
         sleep( 700 );
+        return this;
+    }
+
+    public boolean isLauncherButtonDisplayed()
+    {
+        return isElementDisplayed( LAUNCHER_BUTTON_XPATH );
+    }
+
+    public BrowsePanel doShowLauncherPanel()
+    {
+        if ( isLauncherButtonDisplayed() )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_launcher_button" );
+            throw new TestFrameworkException( "launcher button was not found!" );
+        }
         return this;
     }
 
@@ -347,6 +369,16 @@ public abstract class BrowsePanel
         return Integer.valueOf( numberOfSelectedItems );
     }
 
+
+    public void isGridEmpty( long timeout )
+    {
+        boolean isGridLoaded = waitAndFind( By.xpath( DIV_WITH_NAME ), timeout );
+        if ( !isGridLoaded )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_bug" ) );
+        }
+    }
+
     /**
      * Waits until page loaded.
      *
@@ -354,10 +386,11 @@ public abstract class BrowsePanel
      */
     public void waitUntilPageLoaded( long timeout )
     {
-        boolean isGridLoaded = waitAndFind( By.xpath( DIV_WITH_NAME ), timeout );
-        if ( !isGridLoaded )
+        boolean isLoaded = waitAndFind( By.xpath( TREEGRID_TOOLBAR_XPATH ), timeout );
+        if ( !isLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_bug" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_browse_panel" ) );
+            throw new TestFrameworkException( "browse panel not loaded" );
         }
     }
 

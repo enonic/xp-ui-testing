@@ -1,39 +1,27 @@
 package com.enonic.autotests.pages;
 
+import java.util.Set;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.NoSuchWindowException;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
- * Page Object for 'Home' page. Version 5.0
+ * Page Object for 'Home' page.
  */
 public class HomePage
     extends Page
 {
-    private final String CM_LINK = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]";
-
-    private final String USER_APP_LINK = "//a[contains(@href,'user-manager')]//div[contains(.,'Users')]";
-
-    @FindBy(xpath = "//a[contains(@href,'content-manager')]//div[contains(.,'Content Manager')]")
-    private WebElement contentManager;
-
-    @FindBy(xpath = USER_APP_LINK)
-    private WebElement userManager;
-
-    @FindBy(xpath = "//a[contains(@href,'applications')]//div[contains(.,'Applications')]")
-    private WebElement applications;
+    private final String HOME_MAIN_CONTAINER = "//div[@class='home-main-container']";
 
 
     /**
@@ -44,73 +32,28 @@ public class HomePage
         super( session );
     }
 
-    public void open( String username, String password )
+    boolean waitUntilLoaded()
     {
-        String wh = getSession().getWindowHandle();
-        if ( wh == null )
+        boolean result = waitUntilVisibleNoException( By.xpath( HOME_MAIN_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !result )
         {
-            getSession().setWindowHandle( getDriver().getWindowHandle() );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_home_load" ) );
+            throw new TestFrameworkException( "home page was not loaded" );
         }
-        // open page via the driver.get(BASE_URL)
-        if ( getSession().getBaseUrl() != null )
-        {
-            getDriver().get( getSession().getBaseUrl() );
-        }
-
-        if ( !getSession().isLoggedIn() )
-        {
-            getLogger().info( "try to login with userName:" + username + " password: " + password );
-            LoginPage loginPage = new LoginPage( getSession() );
-            loginPage.doLogin( username, password );
-            getSession().setLoggedIn( true );
-        }
-        else
-        {
-            getDriver().switchTo().window( wh );
-        }
-
-        if ( !isLoaded() )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_homepage" ) );
-            throw new AuthenticationException( "Authentication failed, home page was not opened!" );
-        }
-    }
-
-    boolean isLoaded()
-    {
-        boolean result =
-            waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'app.launcher.AppSelector')]" ), Application.EXPLICIT_NORMAL );
         return result;
-    }
-
-
-    public void waitUntilContentManagerLoaded()
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( CM_LINK ), Application.EXPLICIT_NORMAL ) )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm_link" ) );
-            throw new TestFrameworkException( "Content Manager link not present on the home Page!!" );
-        }
     }
 
     public ContentBrowsePanel openContentManagerApplication()
     {
-        if ( !waitUntilClickableNoException( By.xpath( CM_LINK ), Application.EXPLICIT_NORMAL ) )
+        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
+        if ( !launcherPanel.isDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "ContentManagerLink" ) );
-            throw new TestFrameworkException( "Content Manager link not clickable !" );
+            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
+            throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
-        contentManager.click();
-        boolean isFrameLoaded =
-            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.CONTENT_MANAGER_FRAME_XPATH ), Application.EXPLICIT_LONG );
-        if ( !isFrameLoaded )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "cm-app" ) );
-            throw new TestFrameworkException( "CM app not loaded or is loading too long!" );
-
-        }
-
-        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
+        sleep( 200 );
+        launcherPanel.clickOnContentManager();
+        switchToApp( "content-manager" );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
@@ -120,25 +63,15 @@ public class HomePage
 
     public UserBrowsePanel openUserManagerApplication()
     {
-        if ( !waitUntilClickableNoException( By.xpath( USER_APP_LINK ), Application.EXPLICIT_NORMAL ) )
+        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
+        if ( !launcherPanel.isDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_usersLink" ) );
-            throw new TestFrameworkException( "Users link not clickable!" );
+            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
+            throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
-        sleep( 700 );
-        userManager.click();
-        boolean isFrameLoaded =
-            waitUntilVisibleNoException( By.xpath( UserBrowsePanel.USER_MANAGER_FRAME_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !isFrameLoaded )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "user-app" ) );
-            throw new TestFrameworkException( "User app not loaded or is loading too long!" );
-
-        }
-
-        String whandle = getSession().getDriver().getWindowHandle();
-        getSession().setWindowHandle( whandle );
-        NavigatorHelper.switchToIframe( getSession(), Application.USER_MANAGER_FRAME_XPATH );
+        sleep( 200 );
+        launcherPanel.clickOnUsers();
+        switchToApp( "user-manager" );
         UserBrowsePanel panel = new UserBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
@@ -148,26 +81,44 @@ public class HomePage
 
     public ApplicationBrowsePanel openApplications()
     {
-        TestUtils.saveScreenshot( getSession(), "home_module_1" );
-        applications.click();
-        sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "home_module_2" );
-        String whandle = getSession().getDriver().getWindowHandle();
-        getSession().setWindowHandle( whandle );
-        NavigatorHelper.switchToIframe( getSession(), Application.MODULE_MANAGER_FRAME_XPATH );
+        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
+        if ( !launcherPanel.isDisplayed() )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
+            throw new TestFrameworkException( "launcher panel should be displayed by default" );
+        }
+        sleep( 200 );
+        launcherPanel.clickOnApplications();
+        switchToApp( "applications" );
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
         panel.waitsForSpinnerNotVisible();
-        getLogger().info( "Module Manger App loaded" );
+        panel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
+        getLogger().info( "Applications App opened" );
         return panel;
     }
 
-    public boolean isContentManagerDisplayed()
+    public void switchToApp( String appName )
     {
-        return contentManager.isDisplayed();
-    }
+        String current = getDriver().getWindowHandle();
+        Set<String> allWindows = getDriver().getWindowHandles();
 
-    public boolean isUsersDisplayed()
-    {
-        return userManager.isDisplayed();
+        if ( !allWindows.isEmpty() )
+        {
+            for ( String windowId : allWindows )
+            {
+                try
+                {
+                    if ( getDriver().switchTo().window( windowId ).getCurrentUrl().contains( appName ) )
+                    {
+                        return;
+                    }
+                }
+                catch ( NoSuchWindowException e )
+                {
+                    throw new TestFrameworkException( "NoSuchWindowException- wrong ID" + e.getLocalizedMessage() );
+                }
+            }
+        }
+        getDriver().switchTo().window( current );
     }
 }

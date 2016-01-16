@@ -51,7 +51,7 @@ class LoginUserSpec
     {
         setup: "add a user"
         go "admin"
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
 
         and: "start adding a new user"
         String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CM_APP.getValue()];
@@ -178,7 +178,7 @@ class LoginUserSpec
         given: "administrator opened a user"
         go "admin"
         getTestSession().setUser( null );
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
         userBrowsePanel.expandUsersFolder( "system" );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
             user.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
@@ -202,7 +202,7 @@ class LoginUserSpec
         given: "administrator opened a user"
         go "admin"
         getTestSession().setUser( null );
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
         userBrowsePanel.expandUsersFolder( "system" ).clickOnClearSelection();
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
             user.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();

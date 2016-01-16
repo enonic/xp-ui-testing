@@ -24,9 +24,20 @@ public class ContentDetailsPanel
 
     private final String DETAILS_CONTAINER = DETAILS_PANEL + "//div[contains(@id,'details-container')]";
 
+    private UserAccessWidgetItemView userAccessWidgetItemView;
+
     public ContentDetailsPanel( final TestSession session )
     {
         super( session );
+    }
+
+    public UserAccessWidgetItemView getUserAccessWidgetItemView()
+    {
+        if ( userAccessWidgetItemView == null )
+        {
+            return new UserAccessWidgetItemView( getSession() );
+        }
+        return userAccessWidgetItemView;
     }
 
     public boolean isPanelEmpty()

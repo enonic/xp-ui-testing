@@ -18,9 +18,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ApplicationBrowsePanel
     extends BrowsePanel
 {
-    public final String START_BUTTON = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Start']]";
+    public final String START_BUTTON = BROWSE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Start']]";
 
-    public final String STOP_BUTTON = BASE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Stop']]";
+    public final String STOP_BUTTON = BROWSE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Stop']]";
 
     private ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 

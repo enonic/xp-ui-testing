@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -41,13 +42,42 @@ public class LoginPage
         super( session );
     }
 
+    public HomePage doLogin( String username, String password )
+    {
+//        String wh = getSession().getWindowHandle();
+//        if ( wh == null )
+//        {
+//            getSession().setWindowHandle( getDriver().getWindowHandle() );
+//        }
+
+        if ( !getSession().isLoggedIn() )
+        {
+            getLogger().info( "try to login with userName:" + username + " password: " + password );
+            LoginPage loginPage = new LoginPage( getSession() );
+            loginPage.typeNameAndPassword( username, password );
+            getSession().setLoggedIn( true );
+        }
+//        else
+//        {
+//            getDriver().switchTo().window( wh );
+//        }
+        HomePage homePage = new HomePage( getSession() );
+        if ( !homePage.waitUntilLoaded() )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_homepage" ) );
+            throw new AuthenticationException( "Authentication failed, home page was not opened!" );
+        }
+        return homePage;
+    }
+
+
     /**
      * Types the user name and password and press the 'login' button.
      *
      * @param username
      * @param password
      */
-    public void doLogin( String username, String password )
+    public void typeNameAndPassword( String username, String password )
     {
         boolean isLoginPageLoaded = waitUntilTitleLoad( TITLE, LOGIN_PAGE_TIMEOUT );
         if ( !isLoginPageLoaded )
@@ -56,7 +86,6 @@ public class LoginPage
             TestUtils.saveScreenshot( getSession(), name );
             throw new TestFrameworkException( "Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT );
         }
-        getLogger().info( "Login page title: " + getDriver().getTitle() );
         getLogger().info( "Login action started. Username: " + username + " Password:" + password );
 
         boolean isEmailInputPresent = waitAndFind( By.xpath( EMAIL_INPUT_XPATH ) );

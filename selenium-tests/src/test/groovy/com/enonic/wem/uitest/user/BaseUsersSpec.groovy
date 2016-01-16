@@ -76,7 +76,7 @@ class BaseUsersSpec
     def setup()
     {
         go "admin"
-        userBrowsePanel = NavigatorHelper.openUserManager( getTestSession() );
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
         userBrowseFilterPanel = userBrowsePanel.getUserBrowseFilterPanel();
     }
 

@@ -14,7 +14,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel;
@@ -231,19 +230,11 @@ public class UserBrowsePanel
 
     /**
      * @param session
-     * @return true if 'Content Manager' opened and CMSpacesPage showed, otherwise false.
+     * @return true if 'Users app' opened, otherwise false.
      */
-    public static boolean isOpened( TestSession session )
+    public boolean isOpened( TestSession session )
     {
-        List<WebElement> searchInput = session.getDriver().findElements( By.xpath( ContentBrowseFilterPanel.SEARCH_INPUT_XPATH ) );
-        if ( searchInput.size() > 0 && searchInput.get( 0 ).isDisplayed() )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return isElementDisplayed( USERS_BUTTON );
     }
 
     /**

@@ -10,10 +10,10 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
+import com.enonic.autotests.pages.LoginPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.User;
 
 public class NavigatorHelper
@@ -27,71 +27,24 @@ public class NavigatorHelper
      */
     public static ContentBrowsePanel openContentApp( TestSession testSession )
     {
-        if ( testSession.isLoggedIn() )
-        {
-            if ( ContentBrowsePanel.isOpened( testSession ) )
-            {
-                return new ContentBrowsePanel( testSession );
-            }
-            //TODO navigate to Content Manager Application
-            return new ContentBrowsePanel( testSession );
-        }
-        // if user not logged in:
-        else
-        {
-
-            HomePage home = loginAndOpenHomePage( testSession );
-            ContentBrowsePanel cmPage = home.openContentManagerApplication();
-            return cmPage;
-        }
-
+        HomePage home = loginAndOpenHomePage( testSession );
+        ContentBrowsePanel cmPage = home.openContentManagerApplication();
+        return cmPage;
     }
 
-    public static UserBrowsePanel openUserManager( TestSession testSession )
+    public static UserBrowsePanel openUsersApp( TestSession testSession )
     {
-        if ( testSession.isLoggedIn() )
-        {
-            if ( UserBrowsePanel.isOpened( testSession ) )
-            {
-                return new UserBrowsePanel( testSession );
-            }
-            //TODO navigate to User Manager Application
-            return new UserBrowsePanel( testSession );
-        }
-        // if user not logged in:
-        else
-        {
-
-            HomePage home = loginAndOpenHomePage( testSession );
-            UserBrowsePanel userBrowsePanel = home.openUserManagerApplication();
-            return userBrowsePanel;
-        }
-
+        HomePage home = loginAndOpenHomePage( testSession );
+        UserBrowsePanel userBrowsePanel = home.openUserManagerApplication();
+        return userBrowsePanel;
     }
 
     public static ApplicationBrowsePanel openApplications( TestSession testSession )
     {
-        if ( testSession.isLoggedIn() )
-        {
-            if ( UserBrowsePanel.isOpened( testSession ) )
-            {
-                return new ApplicationBrowsePanel( testSession );
-            }
-            //TODO navigate to Modules Manager Application
-            return new ApplicationBrowsePanel( testSession );
-        }
-        // if user not logged in:
-        else
-        {
-
-            HomePage home = loginAndOpenHomePage( testSession );
-            TestUtils.saveScreenshot( testSession, "homepage" );
-            ApplicationBrowsePanel userBrowsePanel = home.openApplications();
-            return userBrowsePanel;
-        }
-
+        HomePage home = loginAndOpenHomePage( testSession );
+        ApplicationBrowsePanel userBrowsePanel = home.openApplications();
+        return userBrowsePanel;
     }
-
 
     /**
      * @param testSession {@link TestSession} instance.
@@ -132,26 +85,17 @@ public class NavigatorHelper
         driver.switchTo().frame( cm.get( 0 ) );
     }
 
-    /**
-     * 'Login' to cms and opens the 'Home' page that contains links to all
-     * applications.
-     *
-     * @param testSession {@link TestSession} instance.
-     * @return {@link HomePage} instance.
-     */
     public static HomePage loginAndOpenHomePage( TestSession testSession )
     {
         User user = testSession.getCurrentUser();
-        HomePage home = new HomePage( testSession );
+        LoginPage loginPage = new LoginPage( testSession );
         if ( user != null )
         {
-            home.open( user.getDisplayName(), user.getPassword() );
+            return loginPage.doLogin( user.getDisplayName(), user.getPassword() );
         }
         else
         {
-            home.open( "su", "password" );
+            return loginPage.doLogin( "su", "password" );
         }
-        return home;
     }
-
 }

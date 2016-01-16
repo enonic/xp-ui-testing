@@ -84,7 +84,7 @@ public class Application
 
     public static final String USER_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'user-manager')]";
 
-    public static final String MODULE_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'applications')]";
+    public static final String APPLICATIONS_FRAME_XPATH = "//iframe[contains(@src,'applications')]";
 
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
 
