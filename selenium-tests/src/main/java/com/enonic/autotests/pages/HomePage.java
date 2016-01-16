@@ -87,7 +87,7 @@ public class HomePage
             TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
-        sleep( 200 );
+        sleep( 400 );
         launcherPanel.clickOnApplications();
         switchToApp( "applications" );
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
