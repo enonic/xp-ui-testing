@@ -240,6 +240,6 @@ class LoginUserSpec
         TestUtils.saveScreenshot( getSession(), "login-new-pass" );
 
         then: "home page successfully loaded"
-        home.isLoaded();
+        home.isDisplayed();
     }
 }

@@ -19,7 +19,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
  * Page Object for 'Home' page.
  */
 public class HomePage
-    extends Page
+    extends Application
 {
     private final String HOME_MAIN_CONTAINER = "//div[@class='home-main-container']";
 
@@ -120,5 +120,10 @@ public class HomePage
             }
         }
         getDriver().switchTo().window( current );
+    }
+
+    public boolean isDisplayed()
+    {
+        return isElementDisplayed( HOME_MAIN_CONTAINER );
     }
 }
