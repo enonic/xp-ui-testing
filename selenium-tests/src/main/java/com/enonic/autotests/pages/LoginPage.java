@@ -44,23 +44,10 @@ public class LoginPage
 
     public HomePage doLogin( String username, String password )
     {
-//        String wh = getSession().getWindowHandle();
-//        if ( wh == null )
-//        {
-//            getSession().setWindowHandle( getDriver().getWindowHandle() );
-//        }
-
-        if ( !getSession().isLoggedIn() )
-        {
-            getLogger().info( "try to login with userName:" + username + " password: " + password );
-            LoginPage loginPage = new LoginPage( getSession() );
-            loginPage.typeNameAndPassword( username, password );
-            getSession().setLoggedIn( true );
-        }
-//        else
-//        {
-//            getDriver().switchTo().window( wh );
-//        }
+        getLogger().info( "try to login with userName:" + username + " password: " + password );
+        LoginPage loginPage = new LoginPage( getSession() );
+        loginPage.typeNameAndPassword( username, password );
+        getSession().setLoggedIn( true );
         HomePage homePage = new HomePage( getSession() );
         if ( !homePage.waitUntilLoaded() )
         {
@@ -69,7 +56,6 @@ public class LoginPage
         }
         return homePage;
     }
-
 
     /**
      * Types the user name and password and press the 'login' button.
@@ -98,7 +84,5 @@ public class LoginPage
         clearAndType( passwordInput, password );
         sleep( 300 );
         passwordInput.sendKeys( Keys.ENTER );
-
     }
-
 }
