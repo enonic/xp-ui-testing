@@ -118,24 +118,6 @@ class LoginUserSpec
         contentBrowsePanel.exists( contentCanNotWrite.getName() );
     }
 
-    def "WHEN just created user logged in THEN home page with 'Content Manager' application loaded "()
-    {
-        when:
-        go "admin"
-        User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
-        getTestSession().setUser( user );
-        HomePage home = NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "home-page_" + USER_NAME );
-
-        then: "home page loaded"
-        home.isLoaded();
-
-        and: "Content Manager application present on the home page"
-        home.isContentManagerDisplayed();
-
-        and: "Users application not present on the home page"
-        !home.isUsersDisplayed()
-    }
 
     def "GIVEN just created user 'logged in' WHEN user opened a content with CAN_WRITE permission and typed new 'display name' THEN 'save draft' button is enabled"()
     {
