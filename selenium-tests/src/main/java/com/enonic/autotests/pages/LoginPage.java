@@ -49,6 +49,7 @@ public class LoginPage
         loginPage.typeNameAndPassword( username, password );
         getSession().setLoggedIn( true );
         HomePage homePage = new HomePage( getSession() );
+        sleep(1000);
         if ( !homePage.waitUntilLoaded() )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_homepage" ) );
