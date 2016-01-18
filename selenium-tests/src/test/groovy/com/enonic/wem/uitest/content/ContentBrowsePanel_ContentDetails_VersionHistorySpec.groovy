@@ -36,7 +36,7 @@ class ContentBrowsePanel_ContentDetails_VersionHistorySpec
         contentItemVersionsPanel.isLoaded();
     }
 
-    def "GIVEN content selected  WHEN 'Version History' option selected THEN three versions are present in the versions panel"()
+    def "GIVEN content selected  WHEN 'Version History' option selected THEN two versions are present in the versions panel"()
     {
         given: "content selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
@@ -45,7 +45,7 @@ class ContentBrowsePanel_ContentDetails_VersionHistorySpec
         when: "'Version History' option selected'"
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllContentVersions();
-        TestUtils.saveScreenshot( getSession(), "three-versions" )
+        TestUtils.saveScreenshot( getSession(), "two-versions" )
 
         then: "three versions are present in the panel"
         allVersions.size() == FIRST_NUMBER_OF_VERSIONS;
