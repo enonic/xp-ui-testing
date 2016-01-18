@@ -19,113 +19,95 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
  * Page Object for 'Home' page.
  */
 public class HomePage
-    extends Application
-{
+        extends Application {
     private final String HOME_MAIN_CONTAINER = "//div[@class='home-main-container']";
 
 
     /**
      * @param session
      */
-    public HomePage( TestSession session )
-    {
-        super( session );
+    public HomePage(TestSession session) {
+        super(session);
     }
 
-    boolean waitUntilLoaded()
-    {
-        boolean result = waitUntilVisibleNoException( By.xpath( HOME_MAIN_CONTAINER ), Application.EXPLICIT_NORMAL );
-        if ( !result )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_home_load" ) );
-            throw new TestFrameworkException( "home page was not loaded" );
+    boolean waitUntilLoaded() {
+        boolean result = waitUntilVisibleNoException(By.xpath(HOME_MAIN_CONTAINER), Application.EXPLICIT_NORMAL);
+        if (!result) {
+            TestUtils.saveScreenshot(getSession(), NameHelper.uniqueName("err_home_load"));
+            throw new TestFrameworkException("home page was not loaded");
         }
         return result;
     }
 
-    public ContentBrowsePanel openContentManagerApplication()
-    {
-        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        if ( !launcherPanel.isDisplayed() )
-        {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
-            throw new TestFrameworkException( "launcher panel should be displayed by default" );
+    public ContentBrowsePanel openContentManagerApplication() {
+        LauncherPanel launcherPanel = new LauncherPanel(getSession());
+        if (!launcherPanel.isDisplayed()) {
+            TestUtils.saveScreenshot(getSession(), "err_launcher_display");
+            throw new TestFrameworkException("launcher panel should be displayed by default");
         }
-        sleep( 200 );
+        sleep(200);
         launcherPanel.clickOnContentManager();
-        switchToAppWindow( "content-manager" );
-        ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
-        panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        switchToAppWindow("content-manager");
+        ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
+        panel.waitUntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
         panel.waitsForSpinnerNotVisible();
-        getLogger().info( "Content App loaded" );
+        getLogger().info("Content App loaded");
         return panel;
     }
 
-    public UserBrowsePanel openUserManagerApplication()
-    {
-        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        if ( !launcherPanel.isDisplayed() )
-        {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
-            throw new TestFrameworkException( "launcher panel should be displayed by default" );
+    public UserBrowsePanel openUserManagerApplication() {
+        LauncherPanel launcherPanel = new LauncherPanel(getSession());
+        if (!launcherPanel.isDisplayed()) {
+            TestUtils.saveScreenshot(getSession(), "err_launcher_display");
+            throw new TestFrameworkException("launcher panel should be displayed by default");
         }
-        sleep( 200 );
+        sleep(200);
         launcherPanel.clickOnUsers();
-        switchToAppWindow( "user-manager" );
-        UserBrowsePanel panel = new UserBrowsePanel( getSession() );
-        panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
+        switchToAppWindow("user-manager");
+        UserBrowsePanel panel = new UserBrowsePanel(getSession());
+        panel.waitUntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
         panel.waitsForSpinnerNotVisible();
-        getLogger().info( "User Manger App loaded" );
+        getLogger().info("User Manger App loaded");
         return panel;
     }
 
-    public ApplicationBrowsePanel openApplications()
-    {
-        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        if ( !launcherPanel.isDisplayed() )
-        {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
-            throw new TestFrameworkException( "launcher panel should be displayed by default" );
+    public ApplicationBrowsePanel openApplications() {
+        LauncherPanel launcherPanel = new LauncherPanel(getSession());
+        if (!launcherPanel.isDisplayed()) {
+            TestUtils.saveScreenshot(getSession(), "err_launcher_display");
+            throw new TestFrameworkException("launcher panel should be displayed by default");
         }
-        sleep( 1000 );
+        sleep(1000);
         launcherPanel.clickOnApplications();
-        switchToAppWindow( "applications" );
-        ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
+        switchToAppWindow("applications");
+        ApplicationBrowsePanel panel = new ApplicationBrowsePanel(getSession());
         panel.waitsForSpinnerNotVisible();
-        panel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
-        getLogger().info( "Applications App opened" );
+        panel.waitUntilPageLoaded(Application.EXPLICIT_NORMAL);
+        getLogger().info("Applications App opened");
         return panel;
     }
 
-    public void switchToAppWindow( String appName )
-    {
+    public void switchToAppWindow(String appName) {
         String current = getDriver().getWindowHandle();
         Set<String> allWindows = getDriver().getWindowHandles();
 
-        if ( !allWindows.isEmpty() )
-        {
-            for ( String windowId : allWindows )
-            {
-                try
-                {
-                    if ( getDriver().switchTo().window( windowId ).getCurrentUrl().contains( appName ) )
-                    {
-                        getSession().put(APP_WINDOW_ID,windowId);
-                        getSession().put(HOME_WINDOW_ID,current);
+        if (!allWindows.isEmpty()) {
+            for (String windowId : allWindows) {
+                try {
+                    if (getDriver().switchTo().window(windowId).getCurrentUrl().contains(appName)) {
+                        getSession().put(APP_WINDOW_ID, windowId);
+                        getSession().put(HOME_WINDOW_ID, current);
                         return;
                     }
-                }
-                catch ( NoSuchWindowException e )
-                {
-                    throw new TestFrameworkException( "NoSuchWindowException- wrong ID" + e.getLocalizedMessage() );
+                } catch (NoSuchWindowException e) {
+                    throw new TestFrameworkException("NoSuchWindowException- wrong ID" + e.getLocalizedMessage());
                 }
             }
         }
-        getDriver().switchTo().window( current );
+        getDriver().switchTo().window(current);
     }
 
-    public boolean isDisplayed()
-    {
-        return isElementDisplayed( HOME_MAIN_CONTAINER );
+    public boolean isDisplayed() {
+        return isElementDisplayed(HOME_MAIN_CONTAINER);
     }
 }
