@@ -13,14 +13,16 @@ import com.enonic.autotests.utils.WaitHelper;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class Application
-    extends Page
-{
+        extends Page {
+    public static final String APP_WINDOW_ID = "app_window_id_key";
+    public static final String HOME_WINDOW_ID = "home_window_id_key";
+
     public static final String OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
     public static final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
     public static String COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
+            "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
 
     public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
 
@@ -47,10 +49,10 @@ public class Application
     protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
 
     public String SLICK_ROW_BY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
+            "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
     public String SLICK_ROW_BY_DISPLAY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
+            "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
 
     protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
 
@@ -89,128 +91,108 @@ public class Application
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
 
     public final String CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and @class='notification']//span";
+            "//div[contains(@id,'NotificationMessage') and @class='notification']//span";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
+            "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
 
     public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";
+            "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";
 
-    public Application( TestSession session )
-    {
-        super( session );
+    public Application(TestSession session) {
+        super(session);
     }
 
-    public String getDisplayedString( String xpath )
-    {
-        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
+    public String getDisplayedString(String xpath) {
+        return findElements(By.xpath(xpath)).stream().filter(WebElement::isDisplayed).map(WebElement::getText).findFirst().get();
     }
 
-    public boolean isElementDisplayed( String xpath )
-    {
-        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    public boolean isElementDisplayed(String xpath) {
+        return findElements(By.xpath(xpath)).stream().filter(WebElement::isDisplayed).count() > 0;
     }
 
-    public void waitsForSpinnerNotVisible()
-    {
+    public void waitsForSpinnerNotVisible() {
         boolean isDisplayed = true;
         int i = 0;
-        do
-        {
-            isDisplayed = isElementDisplayed( SPINNER_XPATH );
-            sleep( 100 );
+        do {
+            isDisplayed = isElementDisplayed(SPINNER_XPATH);
+            sleep(100);
             i++;
-            if ( i == 5 )
-            {
-                throw new TestFrameworkException( "timeout exceeded, but the Spinner still displayed" );
+            if (i == 5) {
+                throw new TestFrameworkException("timeout exceeded, but the Spinner still displayed");
             }
         }
-        while ( isDisplayed );
+        while (isDisplayed);
     }
 
-    public void waitsForSpinnerNotVisible( long timeout )
-    {
-        boolean result = waitsElementNotVisible( By.xpath( SPINNER_XPATH ), timeout );
-        if ( !result )
-        {
-            throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
+    public void waitsForSpinnerNotVisible(long timeout) {
+        boolean result = waitsElementNotVisible(By.xpath(SPINNER_XPATH), timeout);
+        if (!result) {
+            throw new TestFrameworkException("after " + EXPLICIT_NORMAL + " second, spinner still present");
         }
     }
 
-    public boolean waitElementNotVisible( By by, long timeout )
-    {
-        return WaitHelper.waitsElementNotVisible( getDriver(), by, timeout );
+    public boolean waitElementNotVisible(By by, long timeout) {
+        return WaitHelper.waitsElementNotVisible(getDriver(), by, timeout);
     }
 
-    public Application setChecked( String checkboxId, boolean value )
-    {
+    public Application setChecked(String checkboxId, boolean value) {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String script = String.format( ELEMENT_BY_ID + ".setChecked(arguments[0])", checkboxId );
-        executor.executeScript( script, value );
+        String script = String.format(ELEMENT_BY_ID + ".setChecked(arguments[0])", checkboxId);
+        executor.executeScript(script, value);
         return this;
     }
 
-    public Application setCheckboxChecked( String checkboxId, boolean value )
-    {
+    public Application setCheckboxChecked(String checkboxId, boolean value) {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String script = String.format( "document.getElementById('%s').checked=arguments[0]", checkboxId );
-        executor.executeScript( script, value );
+        String script = String.format("document.getElementById('%s').checked=arguments[0]", checkboxId);
+        executor.executeScript(script, value);
         return this;
     }
 
-    public boolean isCheckBoxChecked( String checkboxId )
-    {
+    public boolean isCheckBoxChecked(String checkboxId) {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String script = String.format( ELEMENT_BY_ID + ".isChecked()", checkboxId );
-        return (Boolean) executor.executeScript( script );
+        String script = String.format(ELEMENT_BY_ID + ".isChecked()", checkboxId);
+        return (Boolean) executor.executeScript(script);
     }
 
-    public String waitNotificationWarning( long timeout )
-    {
-        String message = TestUtils.waitNotification( By.xpath( NOTIFICATION_WARNING ), getDriver(), timeout );
-        getLogger().info( "Notification warning " + message );
+    public String waitNotificationWarning(long timeout) {
+        String message = TestUtils.waitNotification(By.xpath(NOTIFICATION_WARNING), getDriver(), timeout);
+        getLogger().info("Notification warning " + message);
         return message;
     }
 
-    public String waitNotificationMessage( long timeout )
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
-        {
+    public String waitNotificationMessage(long timeout) {
+        if (!waitUntilVisibleNoException(By.xpath(CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH), timeout)) {
             return null;
         }
-        String message = findElement( By.xpath( CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH ) ).getText();
-        getLogger().info( "Notification message " + message );
+        String message = findElement(By.xpath(CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH)).getText();
+        getLogger().info("Notification message " + message);
         return message.trim();
     }
 
-    public String waitErrorNotificationMessage( long timeout )
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
-        {
+    public String waitErrorNotificationMessage(long timeout) {
+        if (!waitUntilVisibleNoException(By.xpath(ERROR_NOTIFICATION_MESSAGE_XPATH), timeout)) {
             return null;
         }
-        String message = findElement( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ) ).getText();
-        getLogger().info( "Notification message " + message );
+        String message = findElement(By.xpath(ERROR_NOTIFICATION_MESSAGE_XPATH)).getText();
+        getLogger().info("Notification message " + message);
         return message.trim();
     }
 
-    public String waitPublishNotificationMessage( long timeout )
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
-        {
+    public String waitPublishNotificationMessage(long timeout) {
+        if (!waitUntilVisibleNoException(By.xpath(PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH), timeout)) {
             return null;
         }
-        String message = findElement( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).getText();
-        getLogger().info( "Publish Notification message " + message );
+        String message = findElement(By.xpath(PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH)).getText();
+        getLogger().info("Publish Notification message " + message);
         return message;
     }
 
-    public void dragAndDrop( WebElement source, WebElement target )
-    {
-        Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( source ).build().perform();
-        builder.release( target );
+    public void dragAndDrop(WebElement source, WebElement target) {
+        Actions builder = new Actions(getDriver());
+        builder.clickAndHold(source).build().perform();
+        builder.release(target);
         builder.build().perform();
     }
 }

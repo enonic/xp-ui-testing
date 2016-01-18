@@ -53,7 +53,7 @@ public class HomePage
         }
         sleep( 200 );
         launcherPanel.clickOnContentManager();
-        switchToApp( "content-manager" );
+        switchToAppWindow( "content-manager" );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
@@ -71,7 +71,7 @@ public class HomePage
         }
         sleep( 200 );
         launcherPanel.clickOnUsers();
-        switchToApp( "user-manager" );
+        switchToAppWindow( "user-manager" );
         UserBrowsePanel panel = new UserBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitsForSpinnerNotVisible();
@@ -89,7 +89,7 @@ public class HomePage
         }
         sleep( 400 );
         launcherPanel.clickOnApplications();
-        switchToApp( "applications" );
+        switchToAppWindow( "applications" );
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
         panel.waitsForSpinnerNotVisible();
         panel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
@@ -97,7 +97,7 @@ public class HomePage
         return panel;
     }
 
-    public void switchToApp( String appName )
+    public void switchToAppWindow( String appName )
     {
         String current = getDriver().getWindowHandle();
         Set<String> allWindows = getDriver().getWindowHandles();
@@ -110,6 +110,8 @@ public class HomePage
                 {
                     if ( getDriver().switchTo().window( windowId ).getCurrentUrl().contains( appName ) )
                     {
+                        getSession().put(APP_WINDOW_ID,windowId);
+                        getSession().put(HOME_WINDOW_ID,current);
                         return;
                     }
                 }
