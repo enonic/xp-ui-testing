@@ -45,8 +45,8 @@ public class HomePage
             TestUtils.saveScreenshot(getSession(), "err_launcher_display");
             throw new TestFrameworkException("launcher panel should be displayed by default");
         }
-        sleep(1000);
         launcherPanel.clickOnContentManager();
+        sleep(1000);
         switchToAppWindow("content-manager");
         ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
         panel.waitUntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
@@ -61,8 +61,8 @@ public class HomePage
             TestUtils.saveScreenshot(getSession(), "err_launcher_display");
             throw new TestFrameworkException("launcher panel should be displayed by default");
         }
-        sleep(1000);
         launcherPanel.clickOnUsers();
+        sleep(1000);
         switchToAppWindow("user-manager");
         UserBrowsePanel panel = new UserBrowsePanel(getSession());
         panel.waitUntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
@@ -77,8 +77,8 @@ public class HomePage
             TestUtils.saveScreenshot(getSession(), "err_launcher_display");
             throw new TestFrameworkException("launcher panel should be displayed by default");
         }
-        sleep(1000);
         launcherPanel.clickOnApplications();
+        sleep(1000);
         switchToAppWindow("applications");
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel(getSession());
         panel.waitsForSpinnerNotVisible();
