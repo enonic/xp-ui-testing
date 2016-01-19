@@ -2,6 +2,8 @@ package com.enonic.autotests.pages.form;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 
@@ -34,4 +36,13 @@ public abstract class BaseHtmlAreaFormViewPanel
         return findElements( By.xpath( TINY_MCE ) ).size();
     }
 
+    public String getTextFromArea( WebElement htmlAreaFrame )
+    {
+        String wHandle = getDriver().getWindowHandle();
+        getDriver().switchTo().frame( htmlAreaFrame );
+        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
+        String text = obj.toString();
+        getDriver().switchTo().window( wHandle );
+        return text;
+    }
 }

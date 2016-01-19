@@ -74,7 +74,6 @@ public class HtmlArea0_0_FormViewPanel
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SET_TINY_MCE_INNERHTML, id, text );
     }
 
-
     public void addEditors( long numberOfEditors )
     {
         for ( int i = 1; i < numberOfEditors; i++ )
@@ -88,16 +87,6 @@ public class HtmlArea0_0_FormViewPanel
     {
         List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
         return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
-    }
-
-    private String getTextFromArea( WebElement htmlAreaFrame )
-    {
-        String wHandle = getDriver().getWindowHandle();
-        getDriver().switchTo().frame( htmlAreaFrame );
-        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
-        String text = obj.toString();
-        getDriver().switchTo().window( wHandle );
-        return text;
     }
 
     public boolean isAddButtonPresent()

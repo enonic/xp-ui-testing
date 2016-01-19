@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -57,16 +56,12 @@ public class HtmlArea0_1_FormViewPanel
 
     public String getText()
     {
-        List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
-        getDriver().switchTo().frame( frames.get( 0 ) );
-        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
-        String text = obj.toString();
-        return text;
+        return getTextFromArea( findElement( By.xpath( TEXT_AREA ) ) );
     }
 
     public boolean isTextAreaEmpty()
     {
-        String actual = getText();
+        String actual = getTextFromArea( findElement( By.xpath( TEXT_AREA ) ) );
         return actual.equals( EMPTY_TEXT_AREA_CONTENT );
     }
 }

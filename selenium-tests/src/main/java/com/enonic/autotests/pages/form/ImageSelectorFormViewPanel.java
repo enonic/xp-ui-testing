@@ -106,7 +106,6 @@ public class ImageSelectorFormViewPanel
         String checkboxXpath = String.format( CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName );
         WebElement checkbox = getDisplayedElement( By.xpath( checkboxXpath ) );
         setCheckboxChecked( checkbox.getAttribute( "id" ), value );
-        // setChecked( checkbox.getAttribute( "id" ), value );
     }
 
     public ImageSelectorFormViewPanel clickOnImage( String name )
@@ -178,5 +177,4 @@ public class ImageSelectorFormViewPanel
         }
         elements.get( 0 ).click();
     }
-
 }
