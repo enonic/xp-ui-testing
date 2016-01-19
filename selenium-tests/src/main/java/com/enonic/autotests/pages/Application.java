@@ -17,6 +17,8 @@ public class Application
 
     public static final String HOME_WINDOW_ID = "home_window_id_key";
 
+    public static final String LIVE_EDIT_FRAME_ID = "live_edit_id_key";
+
     public static final String OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
     public static final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
