@@ -84,7 +84,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
     def "GIVEN two folders in the root AND search text typed AND both folder selected WHEN filter cleared  THEN two contents still selected"()
     {
         setup: "select a root content and type search text in filter panel"
-        Content folder = buildFolderContent( PARENT_CONTENT_NAME + "2", "shopingcart" )
+        Content folder = buildFolderContent( PARENT_CONTENT_NAME, "shopingcart" )
         and: "add new content: click on 'new' button, populate a wizard and close it"
         addContent( folder );
 
@@ -155,8 +155,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         TestUtils.saveScreenshot( getSession(), "select_all_clicked" )
 
         then: "number of items in the selection panel and number of of selected rows in the grid are equals"
-        itemsSelectionPanel.getDisplayNameOfSelectedItems().size() ==
-            contentBrowsePanel.getNumberFromClearSelectionLink();//contentBrowsePanel.getSelectedRowsNumber();
+        itemsSelectionPanel.getDisplayNameOfSelectedItems().size() == contentBrowsePanel.getNumberFromClearSelectionLink();
     }
 
     def "GIVEN browse panel opened AND 'Select All' clicked  WHEN 'Clear Selection' clicked  THEN there are no any items in the selection panel"()

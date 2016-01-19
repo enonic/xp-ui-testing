@@ -33,7 +33,7 @@ public class ContentBrowsePanel
 {
     public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
 
-    public static final String CONTENT_STUDIO_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='CONTENT STUDIO']";
+    public static final String CONTENT_STUDIO_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='Content Studio']";
 
     private final String BASE_PANEL_XPATH = "//div[contains(@id,'ContentBrowsePanel')]";
 
