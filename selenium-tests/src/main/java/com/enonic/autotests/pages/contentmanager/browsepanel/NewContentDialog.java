@@ -120,9 +120,6 @@ public class NewContentDialog
         {
             searchInput.sendKeys( Keys.chord( Keys.CONTROL, "a" ), Keys.DELETE );
         }
-        // String id = getDriver().findElement( By.xpath( SEARCH_INPUT ) ).getAttribute( "id" );
-        //String js = String.format( SEARCH_INPUT_SCRIPT, id );
-        //( (JavascriptExecutor) getSession().getDriver() ).executeScript( js, "" );
         return this;
     }
 
