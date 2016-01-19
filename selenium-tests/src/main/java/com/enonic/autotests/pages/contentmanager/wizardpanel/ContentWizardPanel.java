@@ -31,19 +31,17 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentWizardPanel
     extends WizardPanel<Content>
 {
-    private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
-
-    private final String CONTENT_STATUS = "//span[@class='content-status']/span";
-
-    private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
-
-    private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
-
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
     public static final String HIDE_PAGE_EDITOR_BUTTON_TITLE = "Hide Page Editor";
 
     public static final String SHOW_INSPECTION_PANEL_TITLE = "Show Inspection Panel";
+
+    private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
+
+    private final String CONTENT_STATUS = "//span[@class='content-status']/span";
+
+    private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
     private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
@@ -58,10 +56,12 @@ public class ContentWizardPanel
 
     private final String INSPECTION_PANEL_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
 
-    private String COMPONENT_VIEW_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
-
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
+
+    private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
+
+    private String COMPONENT_VIEW_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
 
     @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
     private WebElement toolbarPublishButton;
@@ -86,6 +86,19 @@ public class ContentWizardPanel
     public ContentWizardPanel( TestSession session )
     {
         super( session );
+    }
+
+    public static ContentWizardPanel getWizard( TestSession session )
+    {
+        ContentWizardPanel wizard = new ContentWizardPanel( session );
+        if ( wizard.isOpened() )
+        {
+            return wizard;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public ContextWindow showContextWindow()
@@ -135,7 +148,7 @@ public class ContentWizardPanel
 
     public boolean isLiveEditLocked()
     {
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        switchToLiveEditFrame();
         LiveFormPanel liveEdit = new LiveFormPanel( getSession() );
         boolean result = liveEdit.isShaderDisplayed();
         NavigatorHelper.switchToContentManagerFrame( getSession() );
@@ -157,10 +170,9 @@ public class ContentWizardPanel
         return this;
     }
 
-
     private void clickOnPageView()
     {
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        switchToLiveEditFrame();
         WebElement body = findElements( By.xpath( "//body" ) ).get( 0 );
         Actions builder = new Actions( getDriver() );
         builder.click( body ).build().perform();
@@ -309,19 +321,6 @@ public class ContentWizardPanel
         return DIV_CONTENT_WIZARD_PANEL;
     }
 
-    public static ContentWizardPanel getWizard( TestSession session )
-    {
-        ContentWizardPanel wizard = new ContentWizardPanel( session );
-        if ( wizard.isOpened() )
-        {
-            return wizard;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
     public ContentWizardPanel showPageEditor()
     {
         if ( isLiveEditFrameDisplayed() )
@@ -375,7 +374,7 @@ public class ContentWizardPanel
 
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
     {
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        switchToLiveEditFrame();
         findElements( By.xpath( OPTION_FILTER_INPUT ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
         String pageDescriptor = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
         if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
@@ -385,13 +384,13 @@ public class ContentWizardPanel
         }
         getDisplayedElement( By.xpath( pageDescriptor ) ).click();
         sleep( 1000 );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        //NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
     }
 
     public boolean isPageDescriptorOptionsFilterDisplayed()
     {
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        switchToLiveEditFrame();
         return isElementDisplayed( OPTION_FILTER_INPUT );
     }
 
@@ -420,5 +419,16 @@ public class ContentWizardPanel
     public String getStatus()
     {
         return getDisplayedString( CONTENT_STATUS );
+    }
+
+    public void switchToLiveEditFrame()
+    {
+        List<WebElement> liveEditFrames = getDriver().findElements( By.xpath( Application.LIVE_EDIT_FRAME ) );
+        if ( liveEditFrames.size() == 0 )
+        {
+            throw new TestFrameworkException( "Unable to switch to the live=edit iframe " );
+        }
+        //switch to 'live edit' frame
+        getDriver().switchTo().frame( liveEditFrames.get( 0 ) );
     }
 }

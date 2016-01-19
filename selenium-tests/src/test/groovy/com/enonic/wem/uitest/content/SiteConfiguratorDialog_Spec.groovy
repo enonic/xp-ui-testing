@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDialog
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
@@ -70,7 +69,7 @@ class SiteConfiguratorDialog_Spec
         TestUtils.saveScreenshot( getSession(), "page-background-applied" );
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame(  );
 
         then: "correct background color present in the page-editor"
         liveFormPanel.getBackgroundColor().contains( BACKGROUND_RED_COLOR_VALUE );

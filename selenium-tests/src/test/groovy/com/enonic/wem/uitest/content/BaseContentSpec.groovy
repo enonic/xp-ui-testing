@@ -139,6 +139,11 @@ class BaseContentSpec
         return contentBrowsePanel;
     }
 
+    protected void switchToApplicationWindow( String appName )
+    {
+        NavigatorHelper.switchToAppWindow( getSession(), appName );
+    }
+
     protected ContentWizardPanel selectSiteOpenWizard( String siteName, String contentTypeName )
     {
         filterPanel.typeSearchText( siteName );

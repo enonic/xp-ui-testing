@@ -7,7 +7,8 @@ import org.openqa.selenium.Dimension
 import spock.lang.Shared
 
 class BaseGebSpec
-        extends GebSpec {
+    extends GebSpec
+{
     @Shared
     Properties defaultProperties;
 
@@ -15,58 +16,69 @@ class BaseGebSpec
     TestSession session;
 
     @Override
-    def cleanup() {
-        if (session != null) {
-            session.setLoggedIn(false)
+    def cleanup()
+    {
+        if ( session != null )
+        {
+            session.setLoggedIn( false )
         }
 
-        if (session.get(Application.APP_WINDOW_ID) != null) {
-            //close current tab
-            //getDriver().close();
-            //getDriver().switchTo().window( session.get(Application.HOME_WINDOW_ID) )
-            //session.put(Application.APP_WINDOW_ID,null);
-            closeAllApp(session.get(Application.HOME_WINDOW_ID));
+        if ( session.get( Application.APP_WINDOW_ID ) != null )
+        {
+            closeAllApp( session.get( Application.HOME_WINDOW_ID ) );
         }
         resetBrowser();
     }
     // run before the first feature method
-    def setupSpec() {
+    def setupSpec()
+    {
         initializeBaseUrl();
     }
 
-    def closeAllApp(String homeHandle) {
-        for (String handle : driver.getWindowHandles()) {
-            if (!handle.equals(homeHandle)) {
-                getDriver().switchTo().window(handle);
+    def closeAllApp( String homeHandle )
+    {
+        for ( String handle : driver.getWindowHandles() )
+        {
+            if ( !handle.equals( homeHandle ) )
+            {
+                getDriver().switchTo().window( handle );
                 getDriver().close();
             }
         }
-        session.put(Application.APP_WINDOW_ID, null);
-        getDriver().switchTo().window(homeHandle);
+        session.put( Application.APP_WINDOW_ID, null );
+        getDriver().switchTo().window( homeHandle );
     }
 
-    protected initializeBaseUrl() {
-        if (browser.baseUrl == null) {
-            String baseUrl = System.getProperty("geb.build.baseUrl");
-            if (baseUrl == null) {
+    protected initializeBaseUrl()
+    {
+        if ( browser.baseUrl == null )
+        {
+            String baseUrl = System.getProperty( "geb.build.baseUrl" );
+            if ( baseUrl == null )
+            {
 
                 loadProperties();
-                println "   baseUrl was loaded from the properties file: " + defaultProperties.get("base.url");
-                browser.driver.manage().window().setSize(new Dimension(1500, 1050))
-            } else {
+                println "   baseUrl was loaded from the properties file: " + defaultProperties.get( "base.url" );
+                browser.driver.manage().window().setSize( new Dimension( 1500, 1050 ) )
+            }
+            else
+            {
                 println "baseUrl was loaded as system property " + baseUrl;
-                browser.driver.manage().window().setSize(new Dimension(1500, 1050));
+                browser.driver.manage().window().setSize( new Dimension( 1500, 1050 ) );
             }
         }
-        browser.driver.manage().window().setSize(new Dimension(1500, 1060))
+        browser.driver.manage().window().setSize( new Dimension( 1500, 1060 ) )
     }
 
-    def setup() {
-        if (browser.baseUrl == null) {
-            String baseUrl = System.getProperty("geb.build.baseUrl");
+    def setup()
+    {
+        if ( browser.baseUrl == null )
+        {
+            String baseUrl = System.getProperty( "geb.build.baseUrl" );
 
-            if (baseUrl == null) {
-                browser.baseUrl = defaultProperties.get("base.url");
+            if ( baseUrl == null )
+            {
+                browser.baseUrl = defaultProperties.get( "base.url" );
                 println " baseUrl from defaultProperties  " + browser.baseUrl;
             }
         }
@@ -74,42 +86,52 @@ class BaseGebSpec
     }
 
 
-    TestSession getTestSession() {
-        if (session == null) {
+    TestSession getTestSession()
+    {
+        if ( session == null )
+        {
             session = new TestSession()
-            session.setDriver(browser.driver)
-            session.setIsRemote(false)
+            session.setDriver( browser.driver )
+            session.setIsRemote( false )
         }
         return session
     }
 
-    void setSessionBaseUrl(String navigationPath) {
+    void setSessionBaseUrl( String navigationPath )
+    {
         StringBuilder sb = new StringBuilder()
-        sb.append(browser.baseUrl).append(navigationPath)
+        sb.append( browser.baseUrl ).append( navigationPath )
         println "  buildUrl changed  now url is:  " + sb.toString()
-        getTestSession().setBaseUrl(sb.toString())
+        getTestSession().setBaseUrl( sb.toString() )
     }
 
-    void loadProperties() {
+    void loadProperties()
+    {
         defaultProperties = new Properties()
         InputStream input = null
 
-        try {
-            input = new FileInputStream("tests.properties")
+        try
+        {
+            input = new FileInputStream( "tests.properties" )
             // load a properties file
-            defaultProperties.load(input);
-            println defaultProperties.getProperty("base.url")
+            defaultProperties.load( input );
+            println defaultProperties.getProperty( "base.url" )
 
         }
-        catch (IOException ex) {
+        catch ( IOException ex )
+        {
             ex.printStackTrace();
         }
-        finally {
-            if (input != null) {
-                try {
+        finally
+        {
+            if ( input != null )
+            {
+                try
+                {
                     input.close()
                 }
-                catch (IOException e) {
+                catch ( IOException e )
+                {
                     e.printStackTrace()
                 }
             }

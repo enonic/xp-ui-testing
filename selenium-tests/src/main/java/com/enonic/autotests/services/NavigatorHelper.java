@@ -1,8 +1,10 @@
 package com.enonic.autotests.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -20,7 +22,7 @@ public class NavigatorHelper
 {
 
     /**
-     * Opens 'Content Manager' application.
+     * Opens 'Content Studio' application.
      *
      * @param testSession {@link TestSession} instance.
      * @return {@link ContentBrowsePanel} instance.
@@ -62,19 +64,31 @@ public class NavigatorHelper
         testSession.getDriver().switchTo().frame( frames.get( 0 ) );
     }
 
-    public static void switchToLiveEditFrame( TestSession testSession )
+
+    public static void switchToAppWindow( TestSession session, String appName )
     {
-        WebDriver driver = testSession.getDriver();
-        driver.switchTo().window( driver.getWindowHandle() );
-        //switch from content manager frame to 'main' frame
-        driver.switchTo().frame( 0 );
-        List<WebElement> liveEditFrames = driver.findElements( By.xpath( Application.LIVE_EDIT_FRAME ) );
-        if ( liveEditFrames.size() == 0 )
+        WebDriver driver = session.getDriver();
+        Set<String> allWindows = driver.getWindowHandles();
+
+        if ( !allWindows.isEmpty() )
         {
-            throw new TestFrameworkException( "Unable to switch to the iframe " );
+            for ( String windowId : allWindows )
+            {
+                try
+                {
+                    if ( driver.switchTo().window( windowId ).getCurrentUrl().contains( appName ) )
+                    {
+                        session.put( Application.APP_WINDOW_ID, windowId );
+                        return;
+                    }
+                }
+                catch ( NoSuchWindowException e )
+                {
+                    throw new TestFrameworkException( "NoSuchWindowException- wrong ID" + e.getLocalizedMessage() );
+                }
+            }
         }
-        //switch to 'live edit' frame
-        driver.switchTo().frame( liveEditFrames.get( 0 ) );
+        throw new TestFrameworkException( "application was not found!" + appName );
     }
 
     public static void switchToContentManagerFrame( TestSession testSession )

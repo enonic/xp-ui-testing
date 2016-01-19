@@ -53,7 +53,9 @@ class SitePreview_Spec
     {
         given:
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( MY_SITE.getName() ).clickToolbarEdit();
-        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).save().close( MY_SITE.getDisplayName() );
+        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE )
+        switchToApplicationWindow( "content-studio" );
+        wizard.save().close( MY_SITE.getDisplayName() );
 
         when:
         filterPanel.typeSearchText( MY_SITE.getName() );

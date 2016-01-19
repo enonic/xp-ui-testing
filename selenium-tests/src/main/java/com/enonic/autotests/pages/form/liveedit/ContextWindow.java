@@ -13,8 +13,8 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -37,6 +37,8 @@ public class ContextWindow
 
     private ContextWindowPageInspectionPanel inspectionPanel;
 
+    ContentWizardPanel contentWizardPanel;
+
     private final String TOOLBAR_DIV = "//div[contains(@id,'app.wizard.ContentWizardToolbar')]";
 
     @FindBy(xpath = "//li[contains(@class,'tab-bar-item') and @title= 'Insert']")
@@ -45,6 +47,7 @@ public class ContextWindow
     public ContextWindow( final TestSession session )
     {
         super( session );
+        contentWizardPanel = new ContentWizardPanel( session );
     }
 
     /**
@@ -112,12 +115,10 @@ public class ContextWindow
         int liveEditFrameY = liveEditFrame.getLocation().y;
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
         WebElement regionDiv = findElement( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) );
 
         showDragHelper( regionDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
         sleep( 1000 );
-        //RELEASE
         builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
@@ -139,13 +140,12 @@ public class ContextWindow
         int liveEditFrameY = liveEditFrame.getLocation().y;
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        contentWizardPanel.switchToLiveEditFrame();
         String divXpath = String.format( "//div[contains(@id,'%s')]", targetDivId );
         WebElement regionDiv = findElements( By.xpath( divXpath ) ).get( 0 );
 
         showDragHelper( regionDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
         sleep( 1000 );
-        //RELEASE
         builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
@@ -173,7 +173,7 @@ public class ContextWindow
         int liveEditFrameY = liveEditFrame.getLocation().y;
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
 
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        contentWizardPanel.switchToLiveEditFrame();
         String regionXpath = String.format( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]/p[contains(.,'%s')]", regionName );
         if ( findElements( By.xpath( regionXpath ) ).size() == 0 )
         {
@@ -184,7 +184,6 @@ public class ContextWindow
         showDragHelper( regionPlaceHolderDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
 
         TestUtils.saveScreenshot( getSession(), "drag_helperImage" );
-        //RELEASE
         builder.release( regionPlaceHolderDiv );
         builder.build().perform();
         return new ImageComponentView( getSession() );

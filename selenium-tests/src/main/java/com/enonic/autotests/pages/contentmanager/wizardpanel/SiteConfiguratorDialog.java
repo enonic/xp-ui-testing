@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -150,12 +149,12 @@ public class SiteConfiguratorDialog
         String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
         WebElement frame = findElement( By.xpath( TEXT_AREA ) );
         String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
-        String wHandle = getDriver().getWindowHandle();
+        String contentStudioWHandle = getDriver().getWindowHandle();
         getDriver().switchTo().frame( frame );
         Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
         String text = obj.toString();
-        getDriver().switchTo().window( wHandle );
-        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
+        getDriver().switchTo().window( contentStudioWHandle );
+        // NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         return text;
     }
 }

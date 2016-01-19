@@ -57,8 +57,10 @@ class CountrySiteWithTemplateSpec
                                            FIRST_SITE_NAME );
 
         when: "'Templates' folder selected and new page-template added"
-        contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
+        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        wizard.save().close( PAGE_TEMPLATE.getDisplayName() );
         sleep( 500 );
 
         then: "new page-template listed"
@@ -77,7 +79,7 @@ class CountrySiteWithTemplateSpec
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "country_part_added" );
 
@@ -99,7 +101,7 @@ class CountrySiteWithTemplateSpec
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "PartComponentView", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City list" );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "city_part_added" );
 

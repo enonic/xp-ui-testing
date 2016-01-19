@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.services.NavigatorHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -26,7 +25,8 @@ public class ImageComponentView
 
     public LiveFormPanel selectImageItemFromList( String imageName )
     {
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        //NavigatorHelper.switchToLiveEditFrame( getSession() );
+        getContentWizardPanel().switchToLiveEditFrame();
         selectOptionsItem( imageName );
         return new LiveFormPanel( getSession() );
     }

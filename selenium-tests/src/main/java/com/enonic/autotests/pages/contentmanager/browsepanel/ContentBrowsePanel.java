@@ -17,7 +17,6 @@ import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
@@ -246,7 +245,6 @@ public class ContentBrowsePanel
     public ContentBrowsePanel refreshPanelInBrowser()
     {
         getDriver().navigate().refresh();
-        NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         sleep( 2000 );
         return this;
     }

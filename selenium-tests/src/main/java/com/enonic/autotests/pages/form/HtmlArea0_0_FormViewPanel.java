@@ -90,10 +90,10 @@ public class HtmlArea0_0_FormViewPanel
         return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
     }
 
-    private String getTextFromArea( WebElement frame )
+    private String getTextFromArea( WebElement htmlAreaFrame )
     {
         String wHandle = getDriver().getWindowHandle();
-        getDriver().switchTo().frame( frame );
+        getDriver().switchTo().frame( htmlAreaFrame );
         Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
         String text = obj.toString();
         getDriver().switchTo().window( wHandle );

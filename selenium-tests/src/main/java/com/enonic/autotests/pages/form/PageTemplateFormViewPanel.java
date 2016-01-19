@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.services.NavigatorHelper;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
@@ -22,6 +22,8 @@ public class PageTemplateFormViewPanel
 
     public static final String PAGE_CONTROLLER = "pageController";
 
+    ContentWizardPanel contentWizardPanel;
+
     private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT =
         "//div[contains(@id,'PageDescriptorDropdown')]//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
 
@@ -34,6 +36,7 @@ public class PageTemplateFormViewPanel
     public PageTemplateFormViewPanel( final TestSession session )
     {
         super( session );
+        this.contentWizardPanel = new ContentWizardPanel( session );
     }
 
     @Override
@@ -41,7 +44,7 @@ public class PageTemplateFormViewPanel
     {
         String supports = data.getString( SUPPORTS );
         selectSupportOption( supports );
-        sleep( 3000 );
+        sleep( 2000 );
         selectPageController( data.getString( PAGE_CONTROLLER ) );
         return this;
     }
@@ -63,7 +66,7 @@ public class PageTemplateFormViewPanel
 
     private void selectPageController( String pageName )
     {
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        contentWizardPanel.switchToLiveEditFrame();
         if ( !isElementDisplayed( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_page_controller" );
@@ -79,10 +82,7 @@ public class PageTemplateFormViewPanel
             TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( pageName ) );
             throw new TestFrameworkException( "page controller was not found or not clickable ! " + pageName );
         }
-
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
-
     }
 }

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -91,13 +90,13 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         TestUtils.saveScreenshot( getSession(), "select_insert_text" );
         pageComponentsView.doCloseDialog();
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEXT_COMPONENT_TEXT );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        switchToApplicationWindow( "content-studio" );
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "text-typed" );
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame();
 
         then: "text-component appears in the 'live edit' frame"
         liveFormPanel.isTextComponentPresent();
@@ -110,14 +109,15 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
         when: "'Insert/Layout' menu items clicked and layout with 3 columns selected"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
         TestUtils.saveScreenshot( getSession(), "select_insert_layout" );
         pageComponentsView.doCloseDialog();
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getLayoutComponentView().selectLayout( LAYOUT_NAME );
         TestUtils.saveScreenshot( getSession(), "layout_selected" );
@@ -142,12 +142,12 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE_COMPONENT_NAME )
 
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        switchToApplicationWindow( "content-studio" );
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "left_inserted" );
 
         then: "new image inserted in the left-region "
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 1;
     }
@@ -164,13 +164,13 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME )
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME );
+        switchToApplicationWindow( "content-studio" );
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "center_inserted" );
 
         then: "new image inserted in the center-region "
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
@@ -188,12 +188,12 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.doCloseDialog();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        switchToApplicationWindow( "content-studio" );
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "right_inserted" );
 
         then: "new image inserted to the right-region"
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 3;
     }
@@ -202,12 +202,14 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
         when: "menu for image clicked and 'reset' menu-item selected"
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Reset" );
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizardPanel.switchToLiveEditFrame();
+
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "reset_image" );
 
@@ -224,12 +226,13 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
         when: "menu for image clicked and 'reset' menu-item selected"
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Duplicate" );
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "duplicate_image" );
 
@@ -246,12 +249,13 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit().showComponentView();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
+            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
         when: "menu for image clicked and 'reset' menu-item selected"
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Remove" );
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "remove_image" );
 
