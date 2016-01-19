@@ -18,7 +18,6 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
@@ -151,7 +150,6 @@ public class ContentWizardPanel
         switchToLiveEditFrame();
         LiveFormPanel liveEdit = new LiveFormPanel( getSession() );
         boolean result = liveEdit.isShaderDisplayed();
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
         return result;
     }
 
@@ -166,7 +164,7 @@ public class ContentWizardPanel
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        // NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
     }
 
@@ -426,7 +424,7 @@ public class ContentWizardPanel
         List<WebElement> liveEditFrames = getDriver().findElements( By.xpath( Application.LIVE_EDIT_FRAME ) );
         if ( liveEditFrames.size() == 0 )
         {
-            throw new TestFrameworkException( "Unable to switch to the live=edit iframe " );
+            throw new TestFrameworkException( "Unable to switch to the live-edit iframe " );
         }
         //switch to 'live edit' frame
         getDriver().switchTo().frame( liveEditFrames.get( 0 ) );

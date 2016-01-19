@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -123,7 +122,7 @@ class MyFirstApp_Spec
         TestUtils.saveScreenshot( getSession(), "part_added" );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME )
         TestUtils.saveScreenshot( getSession(), "part_country" );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        switchToApplicationWindow( "content-studio" );
         wizard.save();
         wizard.clickToolbarPreview();
 

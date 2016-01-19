@@ -101,7 +101,7 @@ class CountrySiteWithTemplateSpec
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "PartComponentView", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City list" );
-        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        switchToApplicationWindow( "content-studio" );
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "city_part_added" );
 

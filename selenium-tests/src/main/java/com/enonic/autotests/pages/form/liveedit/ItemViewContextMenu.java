@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -38,7 +37,6 @@ public class ItemViewContextMenu
             throw new TestFrameworkException( "Unlock LiveEdit: Customize menu-item not displayed!" );
         }
         getDisplayedElement( By.xpath( CUSTOMIZE_MENU_ITEM ) ).click();
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
 
     }
 }
