@@ -19,7 +19,7 @@ public class LauncherPanel
 
     private final String USERS_LINK = PANEL_DIV + "//a[contains(@href,'user-manager')]";
 
-    private final String CM_LINK = PANEL_DIV + "//a[contains(@href,'content-manager')]";
+    private final String CM_LINK = PANEL_DIV + "//a[contains(@href,'content-studio')]";
 
 
     @FindBy(xpath = APPLICATIONS_LINK)
