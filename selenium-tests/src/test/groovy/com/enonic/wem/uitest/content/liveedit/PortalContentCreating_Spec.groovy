@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.CityCreationPage
 import com.enonic.autotests.pages.form.CityFormView
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
@@ -49,8 +48,10 @@ class PortalContentCreating_Spec
                                            FIRST_SITE_NAME );
 
         when: "'Templates' folder selected and new page-template added"
-        contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
+        switchToApplicationWindow( "content-studio" );
+        wizard.save().close( PAGE_TEMPLATE.getDisplayName() );
         sleep( 500 );
 
         then: "new page-template listed"
@@ -69,7 +70,7 @@ class PortalContentCreating_Spec
         PartComponentView partComponentView = contentWizard.showPageEditor().showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City Creation" );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        switchToApplicationWindow( "content-studio" );
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "country_part_added2" );
 
@@ -84,7 +85,8 @@ class PortalContentCreating_Spec
         NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", FIRST_SITE_NAME );
 
         ContentWizardPanel wizard = selectSiteOpenWizard( NOR_CONTENT.getContentTypeName(), FIRST_SITE_NAME );
-        wizard.typeData( NOR_CONTENT ).save().waitNotificationMessage(); wizard.close( NOR_CONTENT.getDisplayName() );
+        wizard.typeData( NOR_CONTENT ).save().waitNotificationMessage();
+        wizard.close( NOR_CONTENT.getDisplayName() );
 
         when: "the submit button pressed and new city-content added as child into the country"
         contentBrowsePanel.clickOnClearSelection();
