@@ -98,7 +98,7 @@ class LoginUserSpec
 
     def "WHEN new content without any permissions for just created user added THEN Content is listed in BrowsePanel"()
     {
-        given:
+        given: "new content without any permissions for just created user added"
         contentCanNotWrite = Content.builder().
             name( NameHelper.uniqueName( "folder-login" ) ).
             displayName( "folder" ).
@@ -121,7 +121,7 @@ class LoginUserSpec
 
     def "GIVEN just created user 'logged in' WHEN user opened a content with CAN_WRITE permission and typed new 'display name' THEN 'save draft' button is enabled"()
     {
-        given: "content manager opened"
+        given: "user manager opened"
         go "admin"
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
@@ -139,7 +139,7 @@ class LoginUserSpec
 
     def "GIVEN just created user 'logged in' WHEN user opened a content without 'CAN_WRITE' permission and typed new 'display name' THEN 'save draft' button is disabled"()
     {
-        given: "content manager opened"
+        given: "user manager opened"
         go "admin"
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
@@ -155,9 +155,9 @@ class LoginUserSpec
         !wizard.isSaveButtonEnabled()
     }
 
-    def "GIVEN administrator opened a user WHEN 'change password' button pressed THEN modal dialog appears"()
+    def "GIVEN user-wizard opened WHEN 'change password' button pressed THEN modal dialog appears"()
     {
-        given: "administrator opened a user"
+        given: "user-wizard opened"
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -179,9 +179,9 @@ class LoginUserSpec
         dialog.isChangeButtonDisplayed();
     }
 
-    def "changing a password for existing user"()
+    def "GIVEN user-wizard opened WHEN changing a password for existing user AND wizard closed THEN user browse panel shown "()
     {
-        given: "administrator opened a user"
+        given: "user-wizard opened"
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -195,7 +195,7 @@ class LoginUserSpec
         TestUtils.saveScreenshot( getSession(), "password_changed" )
         userWizardPanel.save().close( user.getDisplayName() );
 
-        then:
+        then: "user-browse panel shown"
         userBrowsePanel.waitUntilPageLoaded( 2 );
     }
 

@@ -29,20 +29,11 @@ import com.enonic.xp.schema.content.ContentTypeName;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-/**
- * Content Manager application/add new content/select content type
- */
+
 public class NewContentDialog
     extends Application
 {
     public static final String CONTAINER = "//div[contains(@id,'app.create.NewContentDialog')]";
-
-    private final static String DIALOG_TITLE_XPATH =
-        "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
-
-    public static String CONTENT_TYPE_NAME =
-        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[@class='sub-name' and text()='%s']]";
-
 
     public static final String ALL_LIST_ITEMS =
         "//div[contains(@id,'app.create.NewContentDialog') and not(contains(@class,'mock-modal-dialog'))]//ul[@class='content-types-list']//li[contains(@class,'content-types-list-item')]";
@@ -51,6 +42,12 @@ public class NewContentDialog
         "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[@class='content-types-list-item site']";
 
     public static final String SEARCH_INPUT = "//div[contains(@id,'api.ui.text.FileInput')]/input";
+
+    private final static String DIALOG_TITLE_XPATH =
+        "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
+
+    public static String CONTENT_TYPE_NAME =
+        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[@class='sub-name' and text()='%s']]";
 
     private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
 
@@ -70,6 +67,45 @@ public class NewContentDialog
     public NewContentDialog( TestSession session )
     {
         super( session );
+    }
+
+    public static File createFileInTmp( String resName, final String fileName )
+    {
+        OutputStream outStream = null;
+        File file = null;
+        InputStream inputStream = NewContentDialog.class.getClassLoader().getResourceAsStream( resName );
+        if ( inputStream == null )
+        {
+            throw new TestFrameworkException( resName + " not found" );
+        }
+        try
+        {
+            file = new File( Files.createTempDir(), fileName );
+            outStream = new FileOutputStream( file );
+            file.deleteOnExit();
+            byte[] buf = new byte[1024];
+            for ( int len; ( len = inputStream.read( buf ) ) != -1; )
+            {
+                outStream.write( buf, 0, len );
+            }
+            outStream.close();
+        }
+        catch ( IOException e )
+        {
+            throw new TestFrameworkException( resName + " " + e.getMessage() );
+        }
+        finally
+        {
+            try
+            {
+                inputStream.close();
+            }
+            catch ( IOException e1 )
+            {
+                throw new TestFrameworkException( resName + " " + e1.getMessage() );
+            }
+        }
+        return file;
     }
 
     public NewContentDialog clearSearchInput()
@@ -154,46 +190,6 @@ public class NewContentDialog
         robot.keyRelease( KeyEvent.VK_ENTER );
         sleep( 1000 );
     }
-
-    public static File createFileInTmp( String resName, final String fileName )
-    {
-        OutputStream outStream = null;
-        File file = null;
-        InputStream inputStream = NewContentDialog.class.getClassLoader().getResourceAsStream( resName );
-        if ( inputStream == null )
-        {
-            throw new TestFrameworkException( resName + " not found" );
-        }
-        try
-        {
-            file = new File( Files.createTempDir(), fileName );
-            outStream = new FileOutputStream( file );
-            file.deleteOnExit();
-            byte[] buf = new byte[1024];
-            for ( int len; ( len = inputStream.read( buf ) ) != -1; )
-            {
-                outStream.write( buf, 0, len );
-            }
-            outStream.close();
-        }
-        catch ( IOException e )
-        {
-            throw new TestFrameworkException( resName + " " + e.getMessage() );
-        }
-        finally
-        {
-            try
-            {
-                inputStream.close();
-            }
-            catch ( IOException e1 )
-            {
-                throw new TestFrameworkException( resName + " " + e1.getMessage() );
-            }
-        }
-        return file;
-    }
-
 
     /**
      * Select content type by name.

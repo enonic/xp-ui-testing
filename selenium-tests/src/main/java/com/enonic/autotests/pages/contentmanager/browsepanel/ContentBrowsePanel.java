@@ -26,14 +26,14 @@ import com.enonic.xp.content.ContentPath;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
- * 'Content Manager' application, the Browse Panel page.
+ * 'Content Studio' application, the Browse Panel page.
  */
 public class ContentBrowsePanel
     extends BrowsePanel
 {
     public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
 
-    public static final String CONTENT_MANAGER_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='Content Manager']";
+    public static final String CONTENT_STUDIO_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='CONTENT STUDIO']";
 
     private final String BASE_PANEL_XPATH = "//div[contains(@id,'ContentBrowsePanel')]";
 
@@ -74,7 +74,7 @@ public class ContentBrowsePanel
     @FindBy(xpath = DUPLICATE_BUTTON_XPATH)
     private WebElement duplicateButton;
 
-    @FindBy(xpath = CONTENT_MANAGER_BUTTON)
+    @FindBy(xpath = CONTENT_STUDIO_BUTTON)
     private WebElement contentManagerButton;
 
     @FindBy(xpath = PREVIEW_BUTTON_XPATH)
@@ -181,7 +181,7 @@ public class ContentBrowsePanel
 
     /**
      * @param session {@link TestSession} instance
-     * @return true if 'Content Manager' opened and CMSpacesPage showed, otherwise false.
+     * @return true if 'Content Studio' opened, otherwise false.
      */
     public static boolean isOpened( TestSession session )
     {

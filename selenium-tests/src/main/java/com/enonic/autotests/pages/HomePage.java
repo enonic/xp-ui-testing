@@ -47,7 +47,7 @@ public class HomePage
         }
         launcherPanel.clickOnContentManager();
         sleep(1000);
-        switchToAppWindow("content-manager");
+        switchToAppWindow( "content-studio" );
         ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
         panel.waitUntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
         panel.waitsForSpinnerNotVisible();
@@ -104,7 +104,7 @@ public class HomePage
                 }
             }
         }
-        getDriver().switchTo().window(current);
+        throw new TestFrameworkException( "application was not found!" + appName );
     }
 
     public boolean isDisplayed() {

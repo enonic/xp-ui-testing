@@ -26,7 +26,7 @@ import com.enonic.autotests.vo.contentmanager.Content;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
- * 'Content Manager' application, Content Wizard page.
+ * 'Content Studio' application, Content Wizard page.
  */
 public class ContentWizardPanel
     extends WizardPanel<Content>
