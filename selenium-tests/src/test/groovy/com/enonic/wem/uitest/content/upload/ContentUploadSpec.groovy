@@ -18,6 +18,27 @@ class ContentUploadSpec
     @Shared
     String FILE_NAME = "text.txt";
 
+    @Shared
+    String path = "test-data/upload/ea.png";
+
+    @Shared
+    String IMAGE_FILE_NAME = "ea.png";
+
+
+    def "GIVEN opened a new content dialog WHEN upload button clicked and file selected THEN new content present in browse panel "()
+    {
+        given: "opened a new content dialog"
+        NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
+
+        when: " click on drop zone and select a archive"
+        TestUtils.saveScreenshot( getSession(), "start-upload-png" )
+        dialog.doUploadFile( path, IMAGE_FILE_NAME );
+        sleep( 1000 )
+
+        then: "new png file content appears in the browse panel"
+        TestUtils.saveScreenshot( getSession(), "upload-png" )
+        contentBrowsePanel.exists( IMAGE_FILE_NAME )
+    }
 
     def "GIVEN opened a new content dialog WHEN upload button clicked and txt-file selected THEN new content present in browse panel  "()
     {
