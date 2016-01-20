@@ -1,13 +1,14 @@
 package com.enonic.autotests.pages;
 
-import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.utils.WaitHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+
+import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.WaitHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -92,8 +93,7 @@ public class Application
 
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
 
-    public final String CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH =
-            "//div[contains(@id,'NotificationMessage') and @class='notification']//span";
+    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage') and @class='notification-content']/span";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
             "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
@@ -165,10 +165,11 @@ public class Application
     }
 
     public String waitNotificationMessage(long timeout) {
-        if (!waitUntilVisibleNoException(By.xpath(CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH), timeout)) {
+        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        {
             return null;
         }
-        String message = findElement(By.xpath(CONTENT_SAVE_NOTIFICATION_MESSAGE_XPATH)).getText();
+        String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info("Notification message " + message);
         return message.trim();
     }
