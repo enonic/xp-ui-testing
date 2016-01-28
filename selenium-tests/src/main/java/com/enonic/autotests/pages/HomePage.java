@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchWindowException;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.XP_Windows;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
@@ -48,6 +49,7 @@ public class HomePage
         launcherPanel.clickOnContentManager();
         sleep(1000);
         switchToAppWindow( "content-studio" );
+        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         ContentBrowsePanel panel = new ContentBrowsePanel(getSession());
         panel.waitUntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
         panel.waitsForSpinnerNotVisible();
@@ -64,6 +66,7 @@ public class HomePage
         launcherPanel.clickOnUsers();
         sleep(1000);
         switchToAppWindow("user-manager");
+        getSession().setCurrentWindow( XP_Windows.USER_MANAGER );
         UserBrowsePanel panel = new UserBrowsePanel(getSession());
         panel.waitUntilPageLoaded(Application.PAGE_LOAD_TIMEOUT);
         panel.waitsForSpinnerNotVisible();
@@ -80,6 +83,7 @@ public class HomePage
         launcherPanel.clickOnApplications();
         sleep(1000);
         switchToAppWindow("applications");
+        getSession().setCurrentWindow( XP_Windows.APPLICATIONS );
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel(getSession());
         panel.waitsForSpinnerNotVisible();
         panel.waitUntilPageLoaded(Application.EXPLICIT_NORMAL);

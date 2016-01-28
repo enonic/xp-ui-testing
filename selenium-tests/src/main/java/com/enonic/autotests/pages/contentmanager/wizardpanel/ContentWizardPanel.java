@@ -262,7 +262,8 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel save()
     {
-        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        XP_Windows currentW = getSession().getCurrentWindow();
+        if ( currentW != null && !currentW.equals( XP_Windows.CONTENT_STUDIO ) )
         {
             NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
         }

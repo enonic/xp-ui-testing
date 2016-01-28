@@ -3,7 +3,7 @@ package com.enonic.autotests;
 
 public enum XP_Windows
 {
-    CONTENT_STUDIO( "content-studio" ), USER_MANAGER( "user-manager" ), LIVE_EDIT( "live-edit" );
+    CONTENT_STUDIO( "content-studio" ), USER_MANAGER( "user-manager" ), LIVE_EDIT( "live-edit" ), APPLICATIONS( "applications" );
 
     private String windowName;
 

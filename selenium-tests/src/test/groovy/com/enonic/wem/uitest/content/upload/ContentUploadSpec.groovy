@@ -4,7 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
-import jdk.nashorn.internal.ir.annotations.Ignore
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 

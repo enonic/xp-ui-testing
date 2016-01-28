@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.utils.TestUtils
-import jdk.nashorn.internal.ir.annotations.Ignore
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentBrowsePanel_SpecialChars_Spec

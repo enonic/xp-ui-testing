@@ -23,7 +23,7 @@ public class TestSession
 
     public final String CURRENT_USER = "current_user";
 
-    public final String CURRENT_WINDOW_NAME = "current_user";
+    public final String CURRENT_WINDOW_NAME = "current_window";
 
     private String windowHandle;
 
