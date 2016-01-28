@@ -8,6 +8,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -33,7 +34,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     @Shared
     String TEST_IMAGE_SWAP = "whale.jpg";
 
-
+    @Ignore
     def "setup:add site with a template"()
     {
         given: "existing Site based on 'My First App'"
@@ -52,6 +53,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
+    @Ignore
     def "GIVEN opened a site in wizard AND one component was replaced WHEN root element in page component dialog was selected and 'Reset' menu item selected THEN site should be reset to default template"()
     {
         given: "site opened for edit  and site saved"
@@ -89,7 +91,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         liveFormPanel.isImagePresent( IMAGE_FOR_TEMPLATE );
     }
 
-
+    @Ignore
     def "GIVEN site with 2 image-components WHEN swapping components by DnD THEN components shown correctly"()
     {
         given: "site with 2 image-components"

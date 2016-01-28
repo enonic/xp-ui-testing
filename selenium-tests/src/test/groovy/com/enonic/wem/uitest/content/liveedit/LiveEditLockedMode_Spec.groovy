@@ -10,6 +10,7 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -36,6 +37,7 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( SIT_NAME );
     }
 
+    @Ignore
     def "GIVEN existing site WHEN site selected and opened for edit THEN 'Page Editor' is hidden and buttons 'Show Component view'  'Show Inspection panel' are not visible"()
     {
         given: "add a site, based on the test application"
@@ -54,6 +56,7 @@ class LiveEditLockedMode_Spec
         !wizard.isShowInspectionPanelButtonDisplayed();
     }
 
+    @Ignore
     def "GIVEN existing site WHEN template added THEN it listed beneath the _templates folder"()
     {
         given: "add a site, based on the test application"
@@ -74,6 +77,7 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( template.getName() );
     }
 
+    @Ignore
     def "WHEN site opened for edit AND LiveEdit frame shown  THEN shader is applied to entire page"()
     {
         given: "add a site, based on the test application"
@@ -87,6 +91,7 @@ class LiveEditLockedMode_Spec
 
     }
 
+    @Ignore
     def "WHEN site opened for edit AND 'Page Editor' is shown AND right button clicked on the frame THEN context menu for page appears"()
     {
         when: "site opened for edit"
@@ -99,6 +104,7 @@ class LiveEditLockedMode_Spec
         itemViewContextMenu.isOpened();
     }
 
+    @Ignore
     def "GIVEN site opened for edit WHEN the 'Customize' menu item selected THEN LiveEdit not locked"()
     {
         given: "site opened for edit"

@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -108,6 +109,7 @@ class MyFirstApp_Spec
         source.contains( COUNTRY_REGION_HEADER );
     }
 
+    @Ignore
     def "GIVEN a country-content with a region  WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
     {
         given: "a page descriptor added for existing country-content"
