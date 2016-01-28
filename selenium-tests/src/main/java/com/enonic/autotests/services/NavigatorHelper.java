@@ -91,13 +91,6 @@ public class NavigatorHelper
         throw new TestFrameworkException( "application was not found!" + appName );
     }
 
-    public static void switchToContentManagerFrame( TestSession testSession )
-    {
-        WebDriver driver = testSession.getDriver();
-        driver.switchTo().window( driver.getWindowHandle() );
-        List<WebElement> cm = driver.findElements( By.xpath( Application.CONTENT_MANAGER_FRAME_XPATH ) );
-        driver.switchTo().frame( cm.get( 0 ) );
-    }
 
     public static HomePage loginAndOpenHomePage( TestSession testSession )
     {

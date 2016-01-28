@@ -25,8 +25,6 @@ public class ImageComponentView
 
     public LiveFormPanel selectImageItemFromList( String imageName )
     {
-        //NavigatorHelper.switchToLiveEditFrame( getSession() );
-        getContentWizardPanel().switchToLiveEditFrame();
         selectOptionsItem( imageName );
         return new LiveFormPanel( getSession() );
     }

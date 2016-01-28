@@ -139,6 +139,7 @@ class CreateSiteWithLayoutSpec
         when: "menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
+        wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE_COMPONENT_NAME )
 
@@ -186,6 +187,7 @@ class CreateSiteWithLayoutSpec
         when: "menu for right region clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
+        wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
         switchToApplicationWindow( "content-studio" );

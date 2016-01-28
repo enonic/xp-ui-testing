@@ -10,6 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.XP_Windows;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
@@ -18,6 +19,7 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
@@ -260,6 +262,10 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel save()
     {
+        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        {
+            NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
+        }
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
         {
@@ -372,7 +378,10 @@ public class ContentWizardPanel
 
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
     {
-        switchToLiveEditFrame();
+        if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
+        {
+            switchToLiveEditFrame();
+        }
         findElements( By.xpath( OPTION_FILTER_INPUT ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
         String pageDescriptor = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
         if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
@@ -382,7 +391,6 @@ public class ContentWizardPanel
         }
         getDisplayedElement( By.xpath( pageDescriptor ) ).click();
         sleep( 1000 );
-        //NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
     }
 
@@ -419,14 +427,20 @@ public class ContentWizardPanel
         return getDisplayedString( CONTENT_STATUS );
     }
 
-    public void switchToLiveEditFrame()
+    public LiveFormPanel switchToLiveEditFrame()
     {
-        List<WebElement> liveEditFrames = getDriver().findElements( By.xpath( Application.LIVE_EDIT_FRAME ) );
-        if ( liveEditFrames.size() == 0 )
+        if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
         {
-            throw new TestFrameworkException( "Unable to switch to the live-edit iframe " );
+            List<WebElement> liveEditFrames = getDriver().findElements( By.xpath( Application.LIVE_EDIT_FRAME ) );
+            if ( liveEditFrames.size() == 0 )
+            {
+                throw new TestFrameworkException( "Unable to switch to the live-edit iframe " );
+            }
+            //switch to 'live edit' frame
+            getDriver().switchTo().frame( liveEditFrames.get( 0 ) );
+            getSession().setCurrentWindow( XP_Windows.LIVE_EDIT );
         }
-        //switch to 'live edit' frame
-        getDriver().switchTo().frame( liveEditFrames.get( 0 ) );
+
+        return new LiveFormPanel( getSession() );
     }
 }

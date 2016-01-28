@@ -64,6 +64,7 @@ class Add_User_Spec
         when: "data typed and user saved"
         userBrowsePanel.clickCheckboxAndSelectRow( user.getDisplayName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( 2l );
+        TestUtils.saveScreenshot( getSession(), "user_removed_message" );
         userBrowseFilterPanel.clickOnCleanFilter();
         userBrowsePanel.expandUsersFolder( "system" );
         TestUtils.saveScreenshot( getSession(), "user_removed" );

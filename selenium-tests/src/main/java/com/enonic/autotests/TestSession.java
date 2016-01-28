@@ -15,17 +15,15 @@ public class TestSession
 
     public final static String START_URL = "bas_url";
 
-    public final static String HUB_URL = "hub_url";
-
     public final static String BROWSER_NAME = CapabilityType.BROWSER_NAME;
 
     public final static String BROWSER_VERSION = "browser_version";
 
     public final static String PLATFORM = "platform";
 
-    public final static String IS_REMOTE = "isRemote";
+    public final String CURRENT_USER = "current_user";
 
-    public final static String CURRENT_USER = "current_user";
+    public final String CURRENT_WINDOW_NAME = "current_user";
 
     private String windowHandle;
 
@@ -78,16 +76,6 @@ public class TestSession
         return (String) session.get( TestSession.BROWSER_VERSION );
     }
 
-    public Boolean getIsRemote()
-    {
-        return (Boolean) session.get( TestSession.IS_REMOTE );
-    }
-
-    public void setIsRemote( boolean isRemote )
-    {
-        session.put( TestSession.IS_REMOTE, isRemote );
-    }
-
     public WebDriver getDriver()
     {
         return (WebDriver) session.get( TestSession.WEBDRIVER );
@@ -108,12 +96,22 @@ public class TestSession
 
     public void setUser( User user )
     {
-        session.put( TestSession.CURRENT_USER, user );
+        session.put( CURRENT_USER, user );
     }
 
     public User getCurrentUser()
     {
-        return (User) session.get( TestSession.CURRENT_USER );
+        return (User) session.get( CURRENT_USER );
+    }
+
+    public XP_Windows getCurrentWindow()
+    {
+        return (XP_Windows) session.get( CURRENT_WINDOW_NAME );
+    }
+
+    public void setCurrentWindow( XP_Windows currentWindow )
+    {
+        session.put( CURRENT_WINDOW_NAME, currentWindow );
     }
 
     public String getWindowHandle()

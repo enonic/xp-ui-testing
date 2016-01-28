@@ -10,23 +10,25 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 public class LiveFormPanel
     extends Application
 {
-    private final String PANEL_DIV = "//div[contains(@id,'app.wizard.page.LiveFormPanel')]";
-
-    private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'api.liveedit.image.ImageComponentView')]";
-
-    private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
-
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
 
     public final String FIGURE = "//figure[contains(@id,'api.liveedit.image.ImageComponentView')]";
 
     public final String SHADER_PAGE = "//div[@class='xp-page-editor-shader xp-page-editor-page']";
+
+    private final String PANEL_DIV = "//div[contains(@id,'app.wizard.page.LiveFormPanel')]";
+
+    private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'api.liveedit.image.ImageComponentView')]";
+
+    private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
     private LayoutComponentView layoutComponentView;
 
@@ -44,16 +46,22 @@ public class LiveFormPanel
         return layoutComponentView;
     }
 
+    public void setLayoutComponentView( LayoutComponentView layoutComponentView )
+    {
+        this.layoutComponentView = layoutComponentView;
+    }
+
+    public ContentWizardPanel switchToContentWizardPanel()
+    {
+        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        return new ContentWizardPanel( getSession() );
+    }
+
     public LiveFormPanel typeTextInTextComponent( String text )
     {
         String input = TEXT_COMPONENT_VIEW + "//section";
         clearAndType( getDisplayedElement( By.xpath( input ) ), text );
         return this;
-    }
-
-    public void setLayoutComponentView( LayoutComponentView layoutComponentView )
-    {
-        this.layoutComponentView = layoutComponentView;
     }
 
     /**

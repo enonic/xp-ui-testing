@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -67,11 +66,13 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
+        wizard.switchToLiveEditFrame(  );
+
         and: "new image inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE );
+        switchToApplicationWindow( "content-studio" );
 
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
         and: "wizard saved"
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "new-image-set" );
@@ -83,7 +84,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         TestUtils.saveScreenshot( getSession(), "image-reset-to-template" );
 
         then: "site has been reset to default template, image from template appeared in the page editor"
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.isImagePresent( IMAGE_FOR_TEMPLATE );
     }
@@ -100,13 +101,13 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         LinkedList<String> before = liveFormPanel.getImageNames();
 
         when: "swapping components by DnD"
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        switchToApplicationWindow( "content-studio" );
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
         pageComponentsView.swapComponents( IMAGE_FOR_TEMPLATE, TEST_IMAGE_SWAP );
         wizard.save();
         sleep( 2000 );
-        NavigatorHelper.switchToLiveEditFrame( getSession() );
+        wizard.switchToLiveEditFrame();
         LinkedList<String> after = liveFormPanel.getImageNames();
 
         then: "images swapped"
@@ -121,6 +122,8 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
+        ContentWizardPanel wizard = new ContentWizardPanel(getSession(  ));
+        wizard.switchToLiveEditFrame(  );
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( imageName );
         return new LiveFormPanel( getSession() );
@@ -131,7 +134,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template ).showComponentView();
         addImageComponent( imageName );
-        NavigatorHelper.switchToContentManagerFrame( getSession() );
+        switchToApplicationWindow( "content-studio" );
         wizard.save().close( template.getDisplayName() );
     }
 }

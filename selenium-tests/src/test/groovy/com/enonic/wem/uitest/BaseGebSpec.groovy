@@ -90,11 +90,10 @@ class BaseGebSpec
     {
         if ( session == null )
         {
-            session = new TestSession()
-            session.setDriver( browser.driver )
-            session.setIsRemote( false )
+            session = new TestSession();
+            session.setDriver( browser.driver );
         }
-        return session
+        return session;
     }
 
     void setSessionBaseUrl( String navigationPath )

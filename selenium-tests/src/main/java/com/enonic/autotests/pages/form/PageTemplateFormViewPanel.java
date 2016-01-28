@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.XP_Windows;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
@@ -66,7 +67,11 @@ public class PageTemplateFormViewPanel
 
     private void selectPageController( String pageName )
     {
-        contentWizardPanel.switchToLiveEditFrame();
+        if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
+        {
+            contentWizardPanel.switchToLiveEditFrame();
+
+        }
         if ( !isElementDisplayed( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_page_controller" );
