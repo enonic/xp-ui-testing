@@ -93,7 +93,7 @@ public class Application
 
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
 
-    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage') and @class='notification-content']/span";
+    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']/span";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
             "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
