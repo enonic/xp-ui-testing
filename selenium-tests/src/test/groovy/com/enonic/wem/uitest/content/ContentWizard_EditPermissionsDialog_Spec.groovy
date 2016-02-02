@@ -129,13 +129,17 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         List<ContentAclEntry> entries = new ArrayList<>();
         String principalPath1 = PrincipalKey.ofRole( RoleName.CM_APP.getValue() ).toPath().toString();
-        ContentAclEntry entry = ContentAclEntry.builder().principalName( principalPath1 ).suite( PermissionSuite.CAN_READ ).build();
+        String path = principalPath1.substring( principalPath1.indexOf( "/roles" ) );
+        ContentAclEntry entry = ContentAclEntry.builder().principalName( path ).suite( PermissionSuite.CAN_READ ).build();
         entries.add( entry );
+
         String principalPath2 = PrincipalKey.ofRole( RoleName.SYSTEM_ADMIN.getValue() ).toPath().toString();
-        entry = ContentAclEntry.builder().principalName( principalPath2 ).suite( PermissionSuite.FULL_ACCESS ).build();
+        path = principalPath2.substring( principalPath2.indexOf( "/roles" ) );
+        entry = ContentAclEntry.builder().principalName( path ).suite( PermissionSuite.FULL_ACCESS ).build();
         entries.add( entry );
         String principalPath3 = PrincipalKey.ofRole( RoleName.CMS_ADMIN.getValue() ).toPath().toString();
-        entry = ContentAclEntry.builder().principalName( principalPath3 ).suite( PermissionSuite.FULL_ACCESS ).build();
+        path = principalPath3.substring( principalPath3.indexOf( "/roles" ) );
+        entry = ContentAclEntry.builder().principalName( path ).suite( PermissionSuite.FULL_ACCESS ).build();
         entries.add( entry );
 
         return entries;
