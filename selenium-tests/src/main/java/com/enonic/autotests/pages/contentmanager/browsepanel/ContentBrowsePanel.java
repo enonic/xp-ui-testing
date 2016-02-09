@@ -564,7 +564,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * Start to delete a content from menu in context menu.
+     * Selects 'Delete' in a context menu.
      *
      * @param contentName
      * @return {@link DeleteContentDialog} instance.
@@ -573,11 +573,17 @@ public class ContentBrowsePanel
     {
         if ( !doScrollAndFindGridItem( contentName ) )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" + contentName ) );
             throw new TestFrameworkException( "content was not found: " + contentName );
         }
         openContextMenu( contentName );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "context-delete" ) );
-        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).click();
+        String deleteMenuItem = String.format( CONTEXT_MENU_ITEM, "Delete" );
+        if ( !isElementDisplayed( deleteMenuItem ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-delete" ) );
+            throw new TestFrameworkException( "Delete context-menu item is not visible!" );
+        }
+        getDisplayedElement( By.xpath( deleteMenuItem ) ).click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
@@ -588,11 +594,16 @@ public class ContentBrowsePanel
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         sleep( 1000 );
         openContextMenu( contentName );
-        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Publish" ) ) ).click();
-
+        String publishMenuItem = String.format( CONTEXT_MENU_ITEM, "Publish" );
+        if ( !isElementDisplayed( publishMenuItem ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            throw new TestFrameworkException( "publish context-menu item is not visible!" );
+        }
+        getDisplayedElement( By.xpath( publishMenuItem ) ).click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
-        sleep( 700 );
+        sleep( 500 );
         return dialog;
     }
 
@@ -601,25 +612,33 @@ public class ContentBrowsePanel
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         sleep( 1000 );
         openContextMenu( contentName );
-        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Duplicate" ) ) ).click();
+        String duplicateMenuItem = String.format( CONTEXT_MENU_ITEM, "Duplicate" );
+        if ( !isElementDisplayed( duplicateMenuItem ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-duplicate" ) );
+            throw new TestFrameworkException( "duplicate context-menu item is not visible!" );
+        }
+        getDisplayedElement( By.xpath( duplicateMenuItem ) ).click();
         sleep( 1000 );
         return this;
     }
 
     /**
-     * Start to delete a content from menu in context menu.
+     * Selects 'Edit' in a context menu.
      *
      * @param contentName
-     * @return {@link DeleteContentDialog} instance.
+     * @return {@link ContentWizardPanel} instance.
      */
     public ContentWizardPanel selectEditFromContextMenu( String contentName )
     {
-        if ( !doScrollAndFindGridItem( contentName ) )
-        {
-            throw new TestFrameworkException( "content was not found: " + contentName );
-        }
         openContextMenu( contentName );
-        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Edit" ) ) ).click();
+        String editMenuItem = String.format( CONTEXT_MENU_ITEM, "Edit" );
+        if ( !isElementDisplayed( editMenuItem ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-edit" ) );
+            throw new TestFrameworkException( "'edit' context-menu item is not visible!" );
+        }
+        getDisplayedElement( By.xpath( editMenuItem ) ).click();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
@@ -650,24 +669,23 @@ public class ContentBrowsePanel
         return waitAndCheckAttrValue( previewItem, "class", "disabled", 1 );
     }
 
-    public SortContentDialog selectPreviewInContextMenu( String contentName )
+    public ContentBrowsePanel selectPreviewInContextMenu( String contentName )
     {
         openContextMenu( contentName );
         if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, "Preview" ) ), Application.EXPLICIT_NORMAL ) )
         {
-            throw new TestFrameworkException( "Sort item was not found in the context menu" );
+            TestUtils.saveScreenshot( getSession(), "err_" + "preview" );
+            throw new TestFrameworkException( "'Preview' menu item is not visible" );
         }
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).get( 0 ).click();
-        SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
-        sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
-        return sortContentDialog;
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Preview" ) ) ).get( 0 ).click();
+        return this;
     }
 
     /**
-     * Opens context menu and select 'New' item
+     * Opens context menu and select a 'New' item
      *
      * @param contentName
-     * @return
+     * @return  {@link NewContentDialog} instance.
      */
     public NewContentDialog selectNewFromContextMenu( String contentName )
     {
@@ -675,7 +693,13 @@ public class ContentBrowsePanel
         sleep( 1000 );
         openContextMenu( contentName );
         sleep( 500 );
-        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "New" ) ) ).click();
+        String newMenuItem = String.format( CONTEXT_MENU_ITEM, "New" );
+        if ( !isElementDisplayed( newMenuItem ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-edit" ) );
+            throw new TestFrameworkException( "'New' context-menu item is not visible!" );
+        }
+        getDisplayedElement( By.xpath( newMenuItem ) ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         return newContentDialog;
