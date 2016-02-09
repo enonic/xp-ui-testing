@@ -576,6 +576,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "content was not found: " + contentName );
         }
         openContextMenu( contentName );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "context-delete" ) );
         findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Delete" ) ) ).click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
