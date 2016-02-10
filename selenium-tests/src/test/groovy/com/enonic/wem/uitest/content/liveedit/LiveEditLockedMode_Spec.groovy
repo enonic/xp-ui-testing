@@ -32,11 +32,10 @@ class LiveEditLockedMode_Spec
         when: "add a site, based on the test application"
         addSite( SIT_NAME );
 
-        then: " test site should be listed"
+        then: "test site should be listed"
         filterPanel.typeSearchText( SIT_NAME );
         contentBrowsePanel.exists( SIT_NAME );
     }
-
     @Ignore
     def "GIVEN existing site WHEN site selected and opened for edit THEN 'Page Editor' is hidden and buttons 'Show Component view'  'Show Inspection panel' are not visible"()
     {
@@ -56,7 +55,6 @@ class LiveEditLockedMode_Spec
         !wizard.isShowInspectionPanelButtonDisplayed();
     }
 
-    @Ignore
     def "GIVEN existing site WHEN template added THEN it listed beneath the _templates folder"()
     {
         given: "add a site, based on the test application"
@@ -77,7 +75,6 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( template.getName() );
     }
 
-    @Ignore
     def "WHEN site opened for edit AND LiveEdit frame shown  THEN shader is applied to entire page"()
     {
         given: "add a site, based on the test application"
@@ -88,10 +85,8 @@ class LiveEditLockedMode_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit().showPageEditor();
         then: "shader is applied to entire page and LiveEdit locked"
         wizard.isLiveEditLocked();
-
     }
 
-    @Ignore
     def "WHEN site opened for edit AND 'Page Editor' is shown AND right button clicked on the frame THEN context menu for page appears"()
     {
         when: "site opened for edit"
@@ -104,7 +99,6 @@ class LiveEditLockedMode_Spec
         itemViewContextMenu.isOpened();
     }
 
-    @Ignore
     def "GIVEN site opened for edit WHEN the 'Customize' menu item selected THEN LiveEdit not locked"()
     {
         given: "site opened for edit"
