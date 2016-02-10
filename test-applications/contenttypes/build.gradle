@@ -24,6 +24,7 @@ app {
 }
 
 dependencies {
+    compile 'com.google.guava:guava:18.0'
     compile "com.enonic.xp:core-api:${xpVersion}"
     compile "com.enonic.xp:portal-api:${xpVersion}"
     include "com.enonic.xp:lib-content:${xpVersion}"
