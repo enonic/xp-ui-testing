@@ -10,7 +10,6 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -36,7 +35,7 @@ class LiveEditLockedMode_Spec
         filterPanel.typeSearchText( SIT_NAME );
         contentBrowsePanel.exists( SIT_NAME );
     }
-    @Ignore
+
     def "GIVEN existing site WHEN site selected and opened for edit THEN 'Page Editor' is hidden and buttons 'Show Component view'  'Show Inspection panel' are not visible"()
     {
         given: "add a site, based on the test application"
