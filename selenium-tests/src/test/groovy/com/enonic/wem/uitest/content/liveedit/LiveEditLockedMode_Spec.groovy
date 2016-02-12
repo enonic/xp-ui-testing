@@ -22,9 +22,6 @@ class LiveEditLockedMode_Spec
     @Shared
     String SIT_NAME = NameHelper.uniqueName( "lockedmode" );
 
-    @Shared
-    String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
-
 
     def "create a site based on the 'My First App' application"()
     {
@@ -65,7 +62,7 @@ class LiveEditLockedMode_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() )
         wizard.showPageEditor().typeData( template );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save().close( template.getDisplayName() );
         sleep( 500 );
 
@@ -108,7 +105,8 @@ class LiveEditLockedMode_Spec
 
         when: "the 'Customize' menu item selected"
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
+
         then: "LiveEdit not locked"
         !wizard.isLiveEditLocked();
     }

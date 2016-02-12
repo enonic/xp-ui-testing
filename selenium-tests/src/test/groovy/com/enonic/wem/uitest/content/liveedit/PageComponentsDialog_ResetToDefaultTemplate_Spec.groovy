@@ -7,6 +7,7 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -14,7 +15,7 @@ import spock.lang.Stepwise
 
 @Stepwise
 class PageComponentsDialog_ResetToDefaultTemplate_Spec
-    extends BasePageEditorFeaturesSpec
+    extends BaseContentSpec
 {
     @Shared
     String SITE_WITH_COMPONENTS_NAME = NameHelper.uniqueName( "page-component-reset" );
@@ -41,7 +42,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         Content site = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
         addSiteBasedOnFirstApp( site );
         contentBrowsePanel.expandContent( ContentPath.from( SITE_WITH_COMPONENTS_NAME ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, SUPPORTS_SITE_TYPE, TEMPLATE_DISPLAY_NAME,
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, TEMPLATE_DISPLAY_NAME,
                                            SITE_WITH_COMPONENTS_NAME );
 
         when: "'Templates' folder selected and new page-template added"
@@ -73,7 +74,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         and: "new image inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
 
         and: "wizard saved"
         wizard.save();
@@ -103,7 +104,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         LinkedList<String> before = liveFormPanel.getImageNames();
 
         when: "swapping components by DnD"
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
         pageComponentsView.swapComponents( IMAGE_FOR_TEMPLATE, TEST_IMAGE_SWAP );
@@ -136,7 +137,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template ).showComponentView();
         addImageComponent( imageName );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save().close( template.getDisplayName() );
     }
 }

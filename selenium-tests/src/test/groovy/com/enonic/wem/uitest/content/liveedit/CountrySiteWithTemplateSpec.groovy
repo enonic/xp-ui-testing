@@ -53,7 +53,7 @@ class CountrySiteWithTemplateSpec
         given: "existing Site based on 'My First App'"
         filterPanel.typeSearchText( FIRST_SITE_NAME );
         contentBrowsePanel.expandContent( ContentPath.from( FIRST_SITE_NAME ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, SUPPORTS_TYPE, COUNTRY_TEMPLATE_DISPLAY_NAME,
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_COUNTRY, COUNTRY_TEMPLATE_DISPLAY_NAME,
                                            FIRST_SITE_NAME );
 
         when: "'Templates' folder selected and new page-template added"
@@ -101,7 +101,7 @@ class CountrySiteWithTemplateSpec
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "PartComponentView", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City list" );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "city_part_added" );
 

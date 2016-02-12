@@ -84,7 +84,7 @@ public class SaveBeforeCloseDialog
     /**
      * @param timeout
      */
-    public void waituntilPageLoaded( long timeout )
+    public void waitUntilPageLoaded( long timeout )
     {
         new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TITLE_XPATH ) ) );
     }
@@ -103,5 +103,10 @@ public class SaveBeforeCloseDialog
     public boolean waitForPresent()
     {
         return waitForPresent( Application.EXPLICIT_NORMAL );
+    }
+
+    public boolean isDisplayed()
+    {
+        return isElementDisplayed( TITLE_XPATH );
     }
 }

@@ -162,11 +162,18 @@ public class ContentWizardPanel
         return new ItemViewContextMenu( getSession() );
     }
 
+    public ContentWizardPanel unlockPageEditorAndSwitchToContentStudio()
+    {
+        ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
+        itemViewContextMenu.clickOnCustomizeMenuItem();
+        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        return this;
+    }
+
     public ContentWizardPanel unlockPageEditor()
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        // NavigatorHelper.switchToContentManagerFrame( getSession() );
         return this;
     }
 

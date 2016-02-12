@@ -7,31 +7,31 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
+import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class PageComponentsDialog_Spec
-    extends BasePageEditorFeaturesSpec
+class Site_Without_PageTemplate_PageComponentsDialog_Spec
+    extends BaseContentSpec
 {
 
     @Shared
-    Content PAGE_TEMPLATE;
-
-    @Shared
-    String FIRST_SITE_NAME = NameHelper.uniqueName( "my-site" );
+    String SITE_NAME = NameHelper.uniqueName( "my-site" );
 
     @Shared
     Content SITE;
 
+
     def "GIVEN existing site without a template WHEN site opened for edit and 'Show Component View' on wizard-toolbar clicked THEN 'Page Component dialog appears'"()
     {
-        given: "existing Site based on 'My First App'"
-        SITE = buildMyFirstAppSite( FIRST_SITE_NAME );
+        given: "existing Site without a template"
+        SITE = buildMyFirstAppSite( SITE_NAME );
         addSiteBasedOnFirstApp( SITE );
 
         and: "site opened for edit"
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit();
         and: "'Show Page Editor' button pressed"
         wizard.showPageEditor();
 
@@ -54,11 +54,12 @@ class PageComponentsDialog_Spec
         components.get( 0 ).getName().equals( "Automatic" );
     }
 
+    @Ignore
     def "GIVEN opened a existing site WHEN 'Page Component View' shown AND menu-button clicked THEN context menu should be present"()
     {
         given: "opened a existing site"
-        filterPanel.typeSearchText( FIRST_SITE_NAME )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit();
+        filterPanel.typeSearchText( SITE_NAME )
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit();
 
         and: "'Page Components View' shown"
         wizard.showPageEditor().showComponentView();
@@ -72,11 +73,12 @@ class PageComponentsDialog_Spec
         contextMenu.isDisplayed();
     }
 
+    @Ignore
     def "GIVEN 'Page Component View' shown AND context menu displayed WHEN wizard closed THEN context menu closed as well "()
     {
         given: "existing site is opened"
-        filterPanel.typeSearchText( FIRST_SITE_NAME )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit();
+        filterPanel.typeSearchText( SITE_NAME )
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit();
 
         and: "page components view shown "
         wizard.showPageEditor().showComponentView();
@@ -94,11 +96,12 @@ class PageComponentsDialog_Spec
         !contextMenu.isDisplayed();
     }
 
+    @Ignore
     def "GIVEN 'Page Component View' shown AND context menu displayed WHEN 'HomeButton' pressed THEN context menu is not displayed "()
     {
         given: "existing site have been opened"
-        filterPanel.typeSearchText( FIRST_SITE_NAME )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit();
+        filterPanel.typeSearchText( SITE_NAME )
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit();
         wizard.showPageEditor().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         dialog.openMenu( "Automatic" );
@@ -115,7 +118,7 @@ class PageComponentsDialog_Spec
     def "GIVEN 'Page Components' view opened WHEN button 'close' clicked THEN dialog not displayed"()
     {
         given: "'Page Components' view opened"
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME ).clickToolbarEdit().showPageEditor().showComponentView();
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit().showPageEditor().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
 
         when: "button 'close' clicked"

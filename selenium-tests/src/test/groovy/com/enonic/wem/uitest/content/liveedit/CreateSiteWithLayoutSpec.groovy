@@ -95,7 +95,7 @@ class CreateSiteWithLayoutSpec
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEXT_COMPONENT_TEXT );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "text-typed" );
         wizard.switchToLiveEditFrame();
@@ -147,7 +147,7 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE_COMPONENT_NAME )
 
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "left_inserted" );
 
@@ -171,7 +171,7 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.doCloseDialog();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "center_inserted" );
 
@@ -196,7 +196,7 @@ class CreateSiteWithLayoutSpec
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "right_inserted" );
 

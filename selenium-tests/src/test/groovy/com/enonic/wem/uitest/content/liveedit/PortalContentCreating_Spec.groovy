@@ -44,13 +44,13 @@ class PortalContentCreating_Spec
         given: "existing Site based on 'My First App'"
         filterPanel.typeSearchText( FIRST_SITE_NAME );
         contentBrowsePanel.expandContent( ContentPath.from( FIRST_SITE_NAME ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, SUPPORTS_TYPE, TEMPLATE_DISPLAY_NAME,
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_COUNTRY, TEMPLATE_DISPLAY_NAME,
                                            FIRST_SITE_NAME );
 
         when: "'Templates' folder selected and new page-template added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save().close( PAGE_TEMPLATE.getDisplayName() );
         sleep( 500 );
 
@@ -70,7 +70,7 @@ class PortalContentCreating_Spec
         PartComponentView partComponentView = contentWizard.showPageEditor().showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City Creation" );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "country_part_added2" );
 

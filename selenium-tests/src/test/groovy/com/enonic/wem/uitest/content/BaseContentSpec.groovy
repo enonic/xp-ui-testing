@@ -19,13 +19,22 @@ class BaseContentSpec
     extends BaseGebSpec
 {
     @Shared
+    String TEMPLATE_SUPPORTS_COUNTRY = "country";
+
+    @Shared
+    String TEMPLATE_SUPPORTS_SITE = "site";
+
+    @Shared
+    String CONTENT_STUDIO_URL_PART = "content-studio";
+
+    @Shared
+    String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
+
+    @Shared
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     @Shared
     String IMPORTED_BOOK_IMAGE = "book.jpg";
-
-    @Shared
-    String SUPPORTS_SITE_TYPE = "site";
 
     @Shared
     String SIMPLE_SITE_APP = "Simple Site App";
@@ -35,6 +44,9 @@ class BaseContentSpec
 
     @Shared
     String CONTENT_TYPES_NAME_APP = "All Content Types App";
+
+    @Shared
+    String COUNTRY_SITE_HTML_HEADER = "<title>Country Region</title>";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -142,6 +154,11 @@ class BaseContentSpec
     protected void switchToApplicationWindow( String appName )
     {
         NavigatorHelper.switchToAppWindow( getSession(), appName );
+    }
+
+    protected void switchToContentStudioWindow()
+    {
+        NavigatorHelper.switchToAppWindow( getSession(), CONTENT_STUDIO_URL_PART );
     }
 
     protected ContentWizardPanel selectSiteOpenWizard( String siteName, String contentTypeName )

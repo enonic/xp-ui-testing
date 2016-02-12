@@ -5,12 +5,13 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageIn
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class ContextWindow_InspectionPanel_Spec
-    extends BasePageEditorFeaturesSpec
+    extends BaseContentSpec
 {
     @Shared
     String SITE_NAME = NameHelper.uniqueName( "inspection" );
@@ -27,7 +28,6 @@ class ContextWindow_InspectionPanel_Spec
         TestUtils.saveScreenshot( getSession(), "inspection-site" );
         then: "it present in browse panel"
         contentBrowsePanel.exists( SITE_NAME );
-
     }
 
     def "GIVEN 'Page Editor' opened WHEN 'Inspect' link clicked THEN inspection panel is displayed"()
@@ -69,11 +69,11 @@ class ContextWindow_InspectionPanel_Spec
         inspectPanel.selectRenderer( "Custom" )
 
         when: "'Country' page controller selected"
-        inspectPanel.selectPageController( COUNTRY_REGION );
+        inspectPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
         TestUtils.saveScreenshot( getSession(), "controller-is-country" );
 
         then: "correct page controller displayed in the selector"
-        inspectPanel.getSelectedPageController() == COUNTRY_REGION;
+        inspectPanel.getSelectedPageController() == COUNTRY_REGION_PAGE_CONTROLLER;
     }
 
     def "GIVEN the site with 'page controller' selected  WHEN 'Preview' button pressed THEN page-sources are correct and correct header present as well"()
@@ -85,7 +85,7 @@ class ContextWindow_InspectionPanel_Spec
         wizardPanel.clickToolbarPreview();
 
         then: "page-sources are correct and correct html-header present as well"
-        String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION );
+        String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_PAGE_CONTROLLER );
         source.contains( COUNTRY_SITE_HTML_HEADER );
     }
 }

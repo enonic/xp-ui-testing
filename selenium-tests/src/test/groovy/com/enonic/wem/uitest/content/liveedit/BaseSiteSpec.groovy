@@ -14,11 +14,6 @@ import spock.lang.Shared
 class BaseSiteSpec
     extends BaseContentSpec
 {
-    @Shared
-    String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
-
-    @Shared
-    String SUPPORTS_TYPE = "country";
 
     @Shared
     String COUNTRY_PART_NAME = "Country part";

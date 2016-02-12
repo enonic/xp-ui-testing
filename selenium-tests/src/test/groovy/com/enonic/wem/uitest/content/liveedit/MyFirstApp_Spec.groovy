@@ -93,7 +93,7 @@ class MyFirstApp_Spec
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
         wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
@@ -122,7 +122,7 @@ class MyFirstApp_Spec
         TestUtils.saveScreenshot( getSession(), "part_added" );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME )
         TestUtils.saveScreenshot( getSession(), "part_country" );
-        switchToApplicationWindow( "content-studio" );
+        switchToContentStudioWindow();
         wizard.save();
         wizard.clickToolbarPreview();
 
