@@ -9,7 +9,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -79,7 +78,6 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.exists( pageTemplate.getName() );
     }
 
-    @Ignore
     def "GIVEN 'Page Components' opened WHEN menu for 'main region' clicked and 'insert' menu-item selected AND 'Text'-item clicked THEN new text present on the live edit frame"()
     {
         given: "'Page Components' opened"
@@ -107,7 +105,6 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getTextFromTextComponent().equals( TEXT_COMPONENT_TEXT );
     }
 
-    @Ignore
     def "GIVEN 'Page Components' opened WHEN menu for 'main region' clicked and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout present on the live edit frame"()
     {
         given: "'Page Components' opened"
@@ -131,7 +128,6 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getLayoutColumnNumber() == 3;
     }
 
-    @Ignore
     def "'Page Components' opened WHEN menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image in the left region inserted"()
     {
         given: "'Page Components' opened"
@@ -157,7 +153,6 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 1;
     }
 
-    @Ignore
     def "GIVEN 'Page Components' opened WHEN menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the center-region "()
     {
         given: "'Page Components' opened"
@@ -169,6 +164,7 @@ class CreateSiteWithLayoutSpec
         when: "menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
+        wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME );
         switchToContentStudioWindow();
@@ -181,7 +177,6 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
 
-    @Ignore
     def "GIVEN 'Page Components' opened WHEN menu for 'right region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the right-region "()
     {
         given: "'Page Components' opened"
@@ -206,7 +201,6 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 3;
     }
 
-    @Ignore
     def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'reset' menu-item selected THEN removed image not present in layout"()
     {
         given: "'Page Components' opened"
@@ -231,7 +225,6 @@ class CreateSiteWithLayoutSpec
         !liveFormPanel.isImagePresentInLayout( TEST_IMAGE_COMPONENT_NAME );
     }
 
-    @Ignore
     def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'duplicate' menu-item selected THEN two images with the same name present in layout"()
     {
         given: "'Page Components' opened"
@@ -255,7 +248,6 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_COMPONENT_NAME ) == 2;
     }
 
-    @Ignore
     def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'remove' menu-item selected THEN two images with the same name present in layout"()
     {
         given: "'Page Components' opened"

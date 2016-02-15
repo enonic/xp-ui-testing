@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -59,6 +60,7 @@ class SitePreview_Spec
 
         when:
         filterPanel.typeSearchText( MY_SITE.getName() );
+        TestUtils.saveScreenshot( getSession(), "site-template-preview" )
 
         then: "'Preview' on the BrowseToolbar is enabled"
         contentBrowsePanel.isPreviewButtonEnabled();

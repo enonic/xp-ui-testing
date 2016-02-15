@@ -273,6 +273,7 @@ public class ContentWizardPanel
         if ( currentW != null && !currentW.equals( XP_Windows.CONTENT_STUDIO ) )
         {
             NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
+            getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         }
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )

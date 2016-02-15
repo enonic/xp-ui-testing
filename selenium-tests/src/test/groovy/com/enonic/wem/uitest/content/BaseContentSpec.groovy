@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.XP_Windows
 import com.enonic.autotests.pages.contentmanager.browsepanel.*
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
@@ -159,6 +160,7 @@ class BaseContentSpec
     protected void switchToContentStudioWindow()
     {
         NavigatorHelper.switchToAppWindow( getSession(), CONTENT_STUDIO_URL_PART );
+        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
     protected ContentWizardPanel selectSiteOpenWizard( String siteName, String contentTypeName )
