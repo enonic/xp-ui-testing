@@ -167,6 +167,7 @@ public class ContentWizardPanel
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
         NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         return this;
     }
 

@@ -46,7 +46,7 @@ public class HomePage
             TestUtils.saveScreenshot(getSession(), "err_launcher_display");
             throw new TestFrameworkException("launcher panel should be displayed by default");
         }
-        launcherPanel.clickOnContentManager();
+        launcherPanel.clickOnContentStudio();
         sleep(1000);
         switchToAppWindow( "content-studio" );
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );

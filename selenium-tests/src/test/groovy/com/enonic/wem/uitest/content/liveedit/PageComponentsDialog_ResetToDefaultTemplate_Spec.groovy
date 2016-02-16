@@ -9,7 +9,6 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -35,7 +34,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     @Shared
     String TEST_IMAGE_SWAP = "whale.jpg";
 
-    @Ignore
+
     def "setup:add site with a template"()
     {
         given: "existing Site based on 'My First App'"
@@ -54,13 +53,13 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    @Ignore
+
     def "GIVEN opened a site in wizard AND one component was replaced WHEN root element in page component dialog was selected and 'Reset' menu item selected THEN site should be reset to default template"()
     {
         given: "site opened for edit  and site saved"
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
-        wizard.unlockPageEditor().showComponentView();
+        wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
         TestUtils.saveScreenshot( getSession(), "image-from-template" );
 
         and: "and one component was replaced"
@@ -92,13 +91,12 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         liveFormPanel.isImagePresent( IMAGE_FOR_TEMPLATE );
     }
 
-    @Ignore
     def "GIVEN site with 2 image-components WHEN swapping components by DnD THEN components shown correctly"()
     {
         given: "site with 2 image-components"
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
-        wizard.unlockPageEditor().showComponentView();
+        wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
         LiveFormPanel liveFormPanel = addImageComponent( TEST_IMAGE_SWAP );
         TestUtils.saveScreenshot( getSession(), "two-images-in-view" );
         LinkedList<String> before = liveFormPanel.getImageNames();
@@ -135,7 +133,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     private void addTemplateWithImage( Content template, String imageName )
     {
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).showPageEditor().typeData( template ).showComponentView();
+            template.getContentTypeName() ).showPageEditor().typeData( template );
+        switchToContentStudioWindow();
+        wizard.showComponentView();
         addImageComponent( imageName );
         switchToContentStudioWindow();
         wizard.save().close( template.getDisplayName() );

@@ -86,5 +86,6 @@ public class LoginPage
         clearAndType( passwordInput, password );
         sleep( 300 );
         passwordInput.sendKeys( Keys.ENTER );
+        sleep( 200 );
     }
 }
