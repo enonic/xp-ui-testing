@@ -17,9 +17,7 @@ public class LoginPage
     extends Page
 {
 
-    private String TITLE = "Enonic XP Admin";
-
-    private long LOGIN_PAGE_TIMEOUT = 10;
+    public static final String TITLE = "Login - Enonic XP Admin";
 
     private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'userid or e-mail']";
 
@@ -67,12 +65,11 @@ public class LoginPage
      */
     public void typeNameAndPassword( String username, String password )
     {
-        boolean isLoginPageLoaded = waitUntilTitleLoad( TITLE, LOGIN_PAGE_TIMEOUT );
-        if ( !isLoginPageLoaded )
+        if ( !isPageLoaded() )
         {
             String name = NameHelper.uniqueName( "login_page_error" );
             TestUtils.saveScreenshot( getSession(), name );
-            throw new TestFrameworkException( "Login page was not loaded, timeout sec:" + LOGIN_PAGE_TIMEOUT );
+            throw new TestFrameworkException( "Login page was not loaded, timeout sec:" + Application.EXPLICIT_NORMAL );
         }
         getLogger().info( "Login action started. Username: " + username + " Password:" + password );
 
@@ -87,5 +84,21 @@ public class LoginPage
         sleep( 300 );
         passwordInput.sendKeys( Keys.ENTER );
         sleep( 200 );
+    }
+
+    public boolean isPageLoaded()
+    {
+        boolean isLoginPageLoaded = waitUntilVisibleNoException( By.xpath( EMAIL_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isLoginPageLoaded )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_login_page" ) );
+            throw new TestFrameworkException( "login page not loaded!" );
+        }
+        return isLoginPageLoaded;
+    }
+
+    public String getTitle()
+    {
+        return getDriver().getTitle();
     }
 }

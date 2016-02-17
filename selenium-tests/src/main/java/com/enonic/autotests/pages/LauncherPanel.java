@@ -10,12 +10,16 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class LauncherPanel
     extends Application
 {
     public static final String PANEL_DIV = "//div[contains(@class,'launcher-panel')]";
 
     public static final String CLOSE_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button toggled')]";
+
+    private final String ACTIVE_ROW_TEXT = PANEL_DIV + "//div[@class='app-row active']//p[@class='app-name']";
 
     public static final String OPEN_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button')]/span[@class='lines']";
 
@@ -95,6 +99,11 @@ public class LauncherPanel
         return this;
     }
 
+    public String getActiveLink()
+    {
+        return getDisplayedString( ACTIVE_ROW_TEXT );
+    }
+
     public LauncherPanel clickOnContentStudio()
     {
         boolean isClickable = waitUntilClickableNoException( By.xpath( CONTENT_STUDIO_LINK ), Application.EXPLICIT_NORMAL );
@@ -104,6 +113,18 @@ public class LauncherPanel
             throw new TestFrameworkException( "content-studio link is not displayed" );
         }
         contentStudioLink.click();
+        return this;
+    }
+
+    public LauncherPanel clickOnLogout()
+    {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( LOGOUT_LINK ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_logout_link" ) );
+            throw new TestFrameworkException( "logout link is not displayed" );
+        }
+        logoutLink.click();
         return this;
     }
 
@@ -152,5 +173,24 @@ public class LauncherPanel
     public boolean isOpenLauncherButtonPresent()
     {
         return isElementDisplayed( OPEN_LAUNCHER_BUTTON );
+    }
+
+    public LauncherPanel openPanel()
+    {
+        getDisplayedElement( By.xpath( OPEN_LAUNCHER_BUTTON ) ).click();
+
+        return this;
+    }
+
+    public void waitUntilPanelLoaded()
+    {
+        WebElement launcherPanel = getDisplayedElement( By.xpath( PANEL_DIV ) );
+        boolean isLoaded = waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_NORMAL );
+        if ( !isLoaded )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_load" ) );
+            throw new TestFrameworkException( "launcher panel was not loaded!" );
+        }
+        sleep( 500 );
     }
 }

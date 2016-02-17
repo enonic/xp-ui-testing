@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.exceptions.AuthenticationException
 import com.enonic.autotests.pages.HomePage
+import com.enonic.autotests.pages.LauncherPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
@@ -118,6 +119,28 @@ class LoginUserSpec
         contentBrowsePanel.exists( contentCanNotWrite.getName() );
     }
 
+    def "GIVEN existing user with role 'Content Manager App' WHEN user logged in THEN correct user's display name shown AND 'Applications' and 'Users' links are not present on the launcher"()
+    {
+        given:
+        go "admin"
+        User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
+        getTestSession().setUser( user );
+
+        when:
+        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        TestUtils.saveScreenshot( getSession(), "logged_home" + USER_NAME );
+        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
+
+        then: "'Applications' link not displayed"
+        !launcherPanel.isApplicationsLinkDisplayed();
+
+        and: "'Users' link not displayed"
+        !launcherPanel.isUsersLinkDisplayed();
+
+        and: "'Home' link is displayed"
+        launcherPanel.isHomeLinkDisplayed();
+
+    }
 
     def "GIVEN just created user 'logged in' WHEN user opened a content with CAN_WRITE permission and typed new 'display name' THEN 'save draft' button is enabled"()
     {

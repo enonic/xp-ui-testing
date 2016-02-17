@@ -132,7 +132,7 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean waitUntilTitleLoad( final String title, long timeout )
+    public boolean waitUntilTitleLoaded( final String title, long timeout )
     {
         return WaitHelper.waitUntilTitleLoad( getDriver(), title, timeout );
     }
