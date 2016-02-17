@@ -283,7 +283,7 @@ public class ContentWizardPanel
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();
-        sleep( 700 );
+        sleep( 1000 );
         return this;
     }
 
