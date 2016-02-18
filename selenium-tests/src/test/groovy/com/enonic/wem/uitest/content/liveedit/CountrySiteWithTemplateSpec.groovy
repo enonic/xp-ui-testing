@@ -58,7 +58,7 @@ class CountrySiteWithTemplateSpec
 
         when: "'Templates' folder selected and new page-template added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
+            PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
         NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
         wizard.save().close( PAGE_TEMPLATE.getDisplayName() );
         sleep( 500 );
@@ -73,7 +73,6 @@ class CountrySiteWithTemplateSpec
         given: "existing page-template"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
-        contentWizard.showPageEditor();
 
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
@@ -95,7 +94,6 @@ class CountrySiteWithTemplateSpec
         given: "existing page-template"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
-        contentWizard.showPageEditor();
 
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
@@ -117,7 +115,6 @@ class CountrySiteWithTemplateSpec
         given: "existing page-template"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
-        contentWizard.showPageEditor();
 
         when: "the 'Inspect' link clicked"
         String name = contentWizard.showContextWindow().clickOnInspectLink().getInspectionPanel().getSelectedPageController();
@@ -129,7 +126,7 @@ class CountrySiteWithTemplateSpec
 
     def "GIVEN new USA-content added and a child city content added into the country WHEN country content selected AND 'Preview' button pressed THEN correct text present in the page-source "()
     {
-        given: "new USA- content added"
+        given: "new USA-content added"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, FIRST_SITE_NAME );
 
         ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), FIRST_SITE_NAME );

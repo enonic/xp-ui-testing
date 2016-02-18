@@ -68,7 +68,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            pageTemplate.getContentTypeName() ).showPageEditor().typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
+            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
 
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
@@ -248,7 +248,7 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_COMPONENT_NAME ) == 2;
     }
 
-    def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'remove' menu-item selected THEN two images with the same name present in layout"()
+    def "GIVEN a layout with 4 images AND 'Page Components' view opened WHEN menu for one of them images selected AND 'remove' menu-item selected THEN number of images reduced in the layout"()
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
@@ -262,12 +262,12 @@ class CreateSiteWithLayoutSpec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "remove_image" );
 
-        then: "number of images in layout reduced"
+        then: "number of images reduced in the layout"
         liveFormPanel.getNumberImagesInLayout() == 3;
 
         and: "but number of components not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 3;
-        and: "image with the required name no longer present on LiveEdit"
+        and: "image with the required name no longer present in the layout"
         liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_COMPONENT_NAME ) == 1;
     }
 }
