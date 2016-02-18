@@ -58,7 +58,6 @@ class SiteConfiguratorDialog_Spec
         given: "site opened and configurator dialog opened"
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
-        wizard.showPageEditor();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfiguration( SIMPLE_SITE_APP );
 
@@ -69,7 +68,7 @@ class SiteConfiguratorDialog_Spec
         TestUtils.saveScreenshot( getSession(), "page-background-applied" );
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        wizard.switchToLiveEditFrame(  );
+        wizard.switchToLiveEditFrame();
 
         then: "correct background color present in the page-editor"
         liveFormPanel.getBackgroundColor().contains( BACKGROUND_RED_COLOR_VALUE );

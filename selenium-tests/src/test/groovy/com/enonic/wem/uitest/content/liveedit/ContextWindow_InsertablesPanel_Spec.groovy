@@ -13,7 +13,6 @@ class ContextWindow_InsertablesPanel_Spec
     {
         given: "'Page Editor' for the existing site opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.site() );
-        wizardPanel.showPageEditor();
 
         when: "'Inspect' link clicked"
         ContextWindowPageInsertablesPanel insertablesPanel = new ContextWindowPageInsertablesPanel( getSession() );

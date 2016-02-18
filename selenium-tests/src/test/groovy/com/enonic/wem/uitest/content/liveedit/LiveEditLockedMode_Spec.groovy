@@ -33,7 +33,7 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( SIT_NAME );
     }
 
-    def "GIVEN existing site WHEN site selected and opened for edit THEN 'Page Editor' is hidden and buttons 'Show Component view'  'Show Inspection panel' are not visible"()
+    def "GIVEN existing site WHEN site selected and opened for edit THEN 'Page Editor' shown and buttons 'Show Component view'  'Show Inspection panel' are not visible"()
     {
         given: "add a site, based on the test application"
         filterPanel.typeSearchText( SIT_NAME );
@@ -41,14 +41,16 @@ class LiveEditLockedMode_Spec
         when: "site selected and opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( SIT_NAME ).clickToolbarEdit();
 
-        then: "'Page Editor' hidden"
+        then: "Page Editor is shown by default"
+        wizard.isLiveEditFrameDisplayed();
+        and: "button show-hide the 'Page Editor' is displayed"
         wizard.isShowPageEditorButtonDisplayed();
 
-        and: "'Show Component view' is not visible"
-        !wizard.isShowComponentViewButtonDisplayed()
+        and: "'Show Component view' displayed on toolbar"
+        wizard.isShowComponentViewButtonDisplayed()
 
-        and: "'Show Inspection panel' is not visible"
-        !wizard.isShowInspectionPanelButtonDisplayed();
+        and: "'Show Inspection panel' displayed on toolbar"
+        wizard.isShowInspectionPanelButtonDisplayed();
     }
 
     def "GIVEN existing site WHEN template added THEN it listed beneath the _templates folder"()
@@ -60,8 +62,7 @@ class LiveEditLockedMode_Spec
 
         when: "test site should be listed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() )
-        wizard.showPageEditor().typeData( template );
+            template.getContentTypeName() ).typeData( template );
         switchToContentStudioWindow();
         wizard.save().close( template.getDisplayName() );
         sleep( 500 );
@@ -88,7 +89,6 @@ class LiveEditLockedMode_Spec
         when: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
-        wizard.showPageEditor();
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
         then: "context menu for page appears"
@@ -100,7 +100,6 @@ class LiveEditLockedMode_Spec
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
-        wizard.showPageEditor();
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
         when: "the 'Customize' menu item selected"

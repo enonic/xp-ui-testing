@@ -49,7 +49,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         SITE = buildSiteWithApps( CONTENT_TYPES_NAME_APP );
         when: "data saved and wizard closed"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
-        wizardPanel.typeData( SITE ).showPageEditor().selectPageDescriptor( PAGE_CONTROLLER );
+        wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER );
         switchToContentStudioWindow();
         wizardPanel.save().close( SITE.getDisplayName() );
 

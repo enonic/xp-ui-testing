@@ -33,8 +33,7 @@ class ContextWindow_InspectionPanel_Spec
     def "GIVEN 'Page Editor' opened WHEN 'Inspect' link clicked THEN inspection panel is displayed"()
     {
         given: "'Page Editor' for the existing site opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit()
-        wizardPanel.showPageEditor();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit();
 
         when: "'Inspect' link clicked"
         ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
@@ -49,7 +48,7 @@ class ContextWindow_InspectionPanel_Spec
     {
         given: "'Inspect' panel opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit()
-        wizardPanel.showPageEditor().showContextWindow().clickOnInspectLink();
+        wizardPanel.showContextWindow().clickOnInspectLink();
 
         when: "'Custom' renderer selected"
         ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
@@ -64,7 +63,7 @@ class ContextWindow_InspectionPanel_Spec
     {
         given: "'Inspect' panel opened ana 'Custom' renderer selected"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit()
-        wizardPanel.showPageEditor().showContextWindow().clickOnInspectLink();
+        wizardPanel.showContextWindow().clickOnInspectLink();
         ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
         inspectPanel.selectRenderer( "Custom" )
 

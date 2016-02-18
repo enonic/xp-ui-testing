@@ -353,6 +353,10 @@ public class ContentWizardPanel
 
     public ContentWizardPanel hidePageEditor()
     {
+        if ( !isLiveEditFrameDisplayed() )
+        {
+            return this;
+        }
         if ( !isElementDisplayed( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-hide-button" );

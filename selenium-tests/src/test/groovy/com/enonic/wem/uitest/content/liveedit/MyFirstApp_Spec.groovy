@@ -27,7 +27,7 @@ class MyFirstApp_Spec
             MY_FIRST_SITE.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), "site_added" );
 
-        then: " new site should be listed"
+        then: "new site should be listed"
         contentBrowsePanel.exists( MY_FIRST_SITE.getName() );
     }
 
@@ -42,14 +42,14 @@ class MyFirstApp_Spec
         TestUtils.saveScreenshot( getSession(), "content_added" );
         wizard.close( USA_CONTENT.getDisplayName() );
 
-        then: " new 'country' content should be listed"
+        then: "new 'country' content should be listed"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         contentBrowsePanel.exists( USA_CONTENT.getName() );
     }
 
-    def "WHEN content, that is child for site, opened for edit THEN 'Show Page Editor' button should be present on the toolbar"()
+    def "WHEN a child country-content of the site is opened for edit THEN 'Show Page Editor' button should be present on the toolbar"()
     {
-        when: "a page descriptor added for existing country-content"
+        when: "a child country-content of the site is opened for edit"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
@@ -57,39 +57,42 @@ class MyFirstApp_Spec
         wizard.isShowPageEditorButtonDisplayed();
     }
 
-    def "GIVEN content, that is child for site, opened for edit WHEN 'Show Page Editor' button clicked THEN LiveEdit frame displayed AND option filter displayed"()
+    def "GIVEN country-content is opened for edit WHEN  'Show Page Editor' button clicked  THEN LiveEdit frame displayed AND option filter displayed"()
     {
-        given: "a page descriptor added for existing country-content"
+        given: "a child country-content of the site is opened for edit"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
+        ContentWizardPanel countryContentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
-        when: "'Show Page Editor' button clicked "
-        wizard.showPageEditor();
-        TestUtils.saveScreenshot( getSession(), "page-editor-shown" );
+        when: "'Show Page Editor' button clicked"
+        countryContentWizard.showPageEditor();
 
         then: "the 'LiveEdit' frame displayed"
-        wizard.isLiveEditFrameDisplayed();
+        countryContentWizard.isLiveEditFrameDisplayed();
+
         and: "page descriptor option filter displayed"
-        wizard.isPageDescriptorOptionsFilterDisplayed();
+        countryContentWizard.isPageDescriptorOptionsFilterDisplayed();
     }
 
-    def "GIVEN content, that is child for site, opened for edit AND 'Page Editor' is displayed WHEN 'Hide Page Editor' button pressed THEN 'Live Edit' frame is not displayed"()
+    def "GIVEN a child country-content of the site is opened for edit AND 'Page Editor' have been opened WHEN 'Hide Page Editor' button pressed THEN 'Live Edit' frame is not displayed"()
     {
-        given: "a page descriptor added for existing country-content"
+        given: "a child country-content of the site is opened for edit"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
+
+        and: "'Page Editor' have been opened"
         wizard.showPageEditor();
 
         when: "the 'Hide Page Editor' button pressed"
         wizard.hidePageEditor();
         TestUtils.saveScreenshot( getSession(), "editor_hidden" );
+
         then: "the 'LiveEdit' frame not displayed"
         !wizard.isLiveEditFrameDisplayed();
     }
 
     def "GIVEN the 'country' content opened for edit WHEN region selected and 'Preview' button pressed THEN region component correctly shown in the new browser window"()
     {
-        given: "a page descriptor added for existing country-content"
+        given: "the 'country' content opened for edit"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
         wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE );
@@ -108,13 +111,11 @@ class MyFirstApp_Spec
         source.contains( COUNTRY_REGION_HEADER );
     }
 
-    def "GIVEN a country-content with a region  WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
+    def "GIVEN a country-content with a controller  WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
     {
         given: "a page descriptor added for existing country-content"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.showPageEditor();
-
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
         PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionPlaceholder",
