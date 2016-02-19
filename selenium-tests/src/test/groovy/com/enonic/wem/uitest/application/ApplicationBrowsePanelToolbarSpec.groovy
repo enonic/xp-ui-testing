@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.application
 
+import com.enonic.autotests.utils.TestUtils
 import spock.lang.Stepwise
 
 @Stepwise
@@ -7,20 +8,41 @@ class ApplicationBrowsePanelToolbarSpec
     extends BaseApplicationSpec
 {
 
-    def "GIVEN Module BrowsePanel WHEN no selected module THEN Start button should be disabled"()
+    def "GIVEN Applications BrowsePanel WHEN no selected module THEN 'Uninstall' button should be disabled"()
+    {
+        expect:
+        !applicationBrowsePanel.isUninstallButtonEnabled();
+    }
+
+    def "GIVEN Applications BrowsePanel WHEN no selected module THEN 'Install' button should be enabled"()
+    {
+        expect:
+        applicationBrowsePanel.isInstallButtonEnabled();
+    }
+
+    def "WHEN one application selected  THEN 'Uninstall' button should be enabled"()
+    {
+        when: " one application selected in the table"
+        applicationBrowsePanel.clickCheckboxAndSelectRow( SIMPLE_APP_NAME );
+        TestUtils.saveScreenshot( getSession(), "uninstall-enabled" )
+
+        then: "'Uninstall' button is enabled"
+        applicationBrowsePanel.isUninstallButtonEnabled();
+    }
+
+    def "GIVEN Applications BrowsePanel WHEN no selected module THEN Start button should be disabled"()
     {
         expect:
         !applicationBrowsePanel.isStartButtonEnabled();
     }
 
-    def "GIVEN application BrowsePanel WHEN no selected application THEN 'Stop' button should be disabled"()
+    def "GIVEN Applications BrowsePanel WHEN no selected application THEN 'Stop' button should be disabled"()
     {
         expect:
         !applicationBrowsePanel.isStopButtonEnabled();
     }
 
-
-    def "GIVEN a started application WHEN one selected started application THEN 'Stop' button should be enabled AND 'Start' button is disabled"()
+    def "GIVEN a started application WHEN one started application selected  THEN 'Stop' button should be enabled AND 'Start' button is disabled"()
     {
         when: " one application selected in the table"
         applicationBrowsePanel.clickCheckboxAndSelectRow( SIMPLE_APP_NAME );

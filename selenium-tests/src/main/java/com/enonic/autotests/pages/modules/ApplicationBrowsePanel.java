@@ -22,6 +22,10 @@ public class ApplicationBrowsePanel
 
     public final String STOP_BUTTON = BROWSE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Stop']]";
 
+    public final String INSTALL_BUTTON = BROWSE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Install']]";
+
+    public final String UNINSTALL_BUTTON = BROWSE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Uninstall']]";
+
     private ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 
     private ApplicationItemStatisticsPanel itemStatisticsPanel;
@@ -31,6 +35,12 @@ public class ApplicationBrowsePanel
 
     @FindBy(xpath = STOP_BUTTON)
     private WebElement stopButton;
+
+    @FindBy(xpath = INSTALL_BUTTON)
+    private WebElement installButton;
+
+    @FindBy(xpath = UNINSTALL_BUTTON)
+    private WebElement uninstallButton;
 
     /**
      * The Constructor
@@ -67,6 +77,20 @@ public class ApplicationBrowsePanel
         return this;
     }
 
+    public ApplicationBrowsePanel clickOnToolbarInstall()
+    {
+        installButton.click();
+        sleep( 300 );
+        return this;
+    }
+
+    public ApplicationBrowsePanel clickOnToolbarUninstall()
+    {
+        uninstallButton.click();
+        sleep( 300 );
+        return this;
+    }
+
     public ApplicationBrowsePanel clickOnToolbarStart()
     {
         startButton.click();
@@ -88,6 +112,16 @@ public class ApplicationBrowsePanel
     public boolean isStartButtonEnabled()
     {
         return startButton.isEnabled();
+    }
+
+    public boolean isUninstallButtonEnabled()
+    {
+        return uninstallButton.isEnabled();
+    }
+
+    public boolean isInstallButtonEnabled()
+    {
+        return installButton.isEnabled();
     }
 
     public boolean isStopButtonEnabled()

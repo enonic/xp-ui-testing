@@ -437,7 +437,7 @@ public abstract class BrowsePanel
 
     public boolean isViewportScrollable()
     {
-        String styleValue = findElements( By.xpath( "//div[@class='grid-canvas']" ) ).get( 0 ).getAttribute( "style" );
+        String styleValue = findElements( By.xpath( GRID_CANVAS ) ).get( 0 ).getAttribute( "style" );
         int gridCanvasHeight = getHeightFromStyleString( styleValue );
         if ( gridCanvasHeight == 0 )
         {
@@ -682,8 +682,8 @@ public abstract class BrowsePanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_empty" ) );
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
-        findElements( By.xpath(
-            "//div[@class='grid-canvas']//div[contains(@class,'slick-row')]//div[contains(@class,'slick-cell-checkboxsel')]/label" ) ).get(
+        findElements(
+            By.xpath( GRID_CANVAS + "//div[contains(@class,'slick-row')]//div[contains(@class,'slick-cell-checkboxsel')]/label" ) ).get(
             number ).click();
         sleep( 200 );
 
@@ -697,7 +697,7 @@ public abstract class BrowsePanel
         {
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
-        WebElement element = findElements( By.xpath( "//div[@class='grid-canvas']" + SLICK_ROW ) ).get( number );
+        WebElement element = findElements( By.xpath( GRID_CANVAS + SLICK_ROW ) ).get( number );
         Actions actions = new Actions( getDriver() );
         actions.moveToElement( element );
         actions.sendKeys( key );

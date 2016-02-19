@@ -45,6 +45,8 @@ public class Application
 
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
+    protected final String GRID_CANVAS = "//div[@class='grid-canvas']";
+
     protected String NAMES_VIEW_BY_NAME = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
 
     protected String NAMES_VIEW_BY_DISPLAY_NAME = "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
