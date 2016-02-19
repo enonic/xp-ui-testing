@@ -34,6 +34,8 @@ public class EditPermissionsDialog
 
     private String PRINCIPAL_PATH = "//div[contains(@id,'AccessControlEntryViewer')]//p[contains(.,'%s')]";
 
+    private String PRINCIPAL_CHECKBOX_PATH = SLICK_ROW_BY_NAME + "//div[contains(@class,'checkboxsel')]";
+
     private final String APPLY_BUTTON_XPATH = "//button[contains(@id,'dialog.DialogButton') and child::span[text()='Apply']]";
 
     private String ACL_ENTRY_ROW =
@@ -94,6 +96,18 @@ public class EditPermissionsDialog
         return this;
     }
 
+    public EditPermissionsDialog addPermissionByClickingCheckbox( ContentAclEntry entry )
+    {
+        selectPrincipalAndApply( entry.getPrincipalName() );
+        if ( entry.getPermissionSuite() != null )
+        {
+            //when operations not specified, CAN_READ will be applied by default
+            selectOperations( entry.getPrincipalName(), entry.getPermissionSuite() );
+        }
+        sleep( 500 );
+        return this;
+    }
+
     public EditPermissionsDialog removeAclEntry( String principalName )
     {
         if ( findElements(
@@ -120,7 +134,8 @@ public class EditPermissionsDialog
 
     private void selectPrincipal( String principalName )
     {
-        findElement( By.xpath( OPTIONS_FILTER_INPUT ) ).sendKeys( principalName );
+        WebElement input = findElement( By.xpath( OPTIONS_FILTER_INPUT ) );
+        clearAndType( input, principalName );
         sleep( 1000 );
         By principalBy = By.xpath( String.format( PRINCIPAL_PATH, principalName ) );
         if ( !waitUntilVisibleNoException( principalBy, EXPLICIT_QUICK ) )
@@ -130,11 +145,26 @@ public class EditPermissionsDialog
         findElements( principalBy ).get( 0 ).click();
     }
 
+    private void selectPrincipalAndApply( String principalName )
+    {
+        WebElement input = findElement( By.xpath( OPTIONS_FILTER_INPUT ) );
+        clearAndType( input, principalName );
+        sleep( 1000 );
+        By principalCheckbox = By.xpath( String.format( PRINCIPAL_CHECKBOX_PATH, principalName ) );
+        if ( !waitUntilVisibleNoException( principalCheckbox, EXPLICIT_QUICK ) )
+        {
+            throw new TestFrameworkException( "principal was not found! : " + principalName );
+        }
+        findElement( principalCheckbox ).click();
+        //click on apply button, that appears in principal-selector
+        findElement( By.xpath( "//div[@name='principalSelector']//button/span[text()='Apply']" ) ).click();
+        sleep( 500 );
+    }
+
     private void selectOperations( String principalName, PermissionSuite suite )
     {
-        findElements(
-            By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//div[contains(@class,'tab-menu-button')]" ) ).get(
-            0 ).click();
+        findElement( By.xpath(
+            CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//div[contains(@class,'tab-menu-button')]" ) ).click();
         By tabMenuItemBy = By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) +
                                          String.format( "//li[contains(@id,'TabMenuItem')]/span[text()='%s']", suite.getValue() ) );
         if ( !waitUntilVisibleNoException( tabMenuItemBy, EXPLICIT_QUICK ) )
