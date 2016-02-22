@@ -13,14 +13,17 @@ import com.google.common.io.Resources;
 
 import com.enonic.xp.content.ApplyContentPermissionsParams;
 import com.enonic.xp.content.Content;
+import com.enonic.xp.content.ContentConstants;
 import com.enonic.xp.content.ContentPath;
 import com.enonic.xp.content.ContentService;
 import com.enonic.xp.content.CreateContentParams;
 import com.enonic.xp.content.CreateMediaParams;
 import com.enonic.xp.content.UpdateContentParams;
+import com.enonic.xp.context.Context;
 import com.enonic.xp.context.ContextAccessor;
 import com.enonic.xp.context.ContextBuilder;
 import com.enonic.xp.data.PropertyTree;
+import com.enonic.xp.index.IndexService;
 import com.enonic.xp.schema.content.ContentTypeName;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.RoleKeys;
@@ -52,6 +55,8 @@ public class Initializer
 
     private ContentService contentService;
 
+    private IndexService indexService;
+
 
     private final Logger LOG = LoggerFactory.getLogger( Initializer.class );
 
@@ -59,10 +64,22 @@ public class Initializer
     public void initialize()
         throws Exception
     {
-        runAs( RoleKeys.CONTENT_MANAGER_ADMIN, () -> {
-            doInitialize();
-            return null;
-        } );
+        if ( this.indexService.isMaster() )
+        {
+            runAs( createInitContext(), () -> {
+                doInitialize();
+                return null;
+            } );
+        }
+    }
+
+    private Context createInitContext()
+    {
+        return ContextBuilder.from( ContextAccessor.current() ).
+            authInfo( AuthenticationInfo.create().principals( RoleKeys.CONTENT_MANAGER_ADMIN ).user( User.ANONYMOUS ).build() ).
+            branch( ContentConstants.BRANCH_DRAFT ).
+            repositoryId( ContentConstants.CONTENT_REPO.getId() ).
+            build();
     }
 
     private void doInitialize()
@@ -148,6 +165,12 @@ public class Initializer
         this.contentService = contentService;
     }
 
+    @Reference
+    public void setIndexService( final IndexService indexService )
+    {
+        this.indexService = indexService;
+    }
+
     private void addFolderWithImage()
         throws Exception
     {
@@ -226,9 +249,8 @@ public class Initializer
         }
     }
 
-    private <T> T runAs( final PrincipalKey role, final Callable<T> runnable )
+    private <T> T runAs( final Context context, final Callable<T> runnable )
     {
-        final AuthenticationInfo authInfo = AuthenticationInfo.create().principals( role ).user( User.ANONYMOUS ).build();
-        return ContextBuilder.from( ContextAccessor.current() ).authInfo( authInfo ).build().callWith( runnable );
+        return context.callWith( runnable );
     }
 }
