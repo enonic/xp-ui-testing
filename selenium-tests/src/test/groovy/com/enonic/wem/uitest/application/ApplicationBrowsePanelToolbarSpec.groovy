@@ -20,14 +20,14 @@ class ApplicationBrowsePanelToolbarSpec
         applicationBrowsePanel.isInstallButtonEnabled();
     }
 
-    def "WHEN one application selected  THEN 'Uninstall' button should be enabled"()
+    def "WHEN one local application is selected  THEN 'Uninstall' button should be disabled"()
     {
-        when: " one application selected in the table"
+        when: "one local application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( SIMPLE_APP_NAME );
-        TestUtils.saveScreenshot( getSession(), "uninstall-enabled" )
+        TestUtils.saveScreenshot( getSession(), "uninstall-local-disabled" )
 
-        then: "'Uninstall' button is enabled"
-        applicationBrowsePanel.isUninstallButtonEnabled();
+        then: "'Uninstall' button is disabled"
+        !applicationBrowsePanel.isUninstallButtonEnabled();
     }
 
     def "GIVEN Applications BrowsePanel WHEN no selected module THEN Start button should be disabled"()
