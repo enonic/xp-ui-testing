@@ -29,7 +29,7 @@ public class LauncherPanel
 
     private final String CONTENT_STUDIO_LINK = PANEL_DIV + "//a[contains(@href,'content-studio')]";
 
-    private final String HOME_LINK = PANEL_DIV + "//a[contains(@href,'home')]";
+    private final String HOME_LINK = PANEL_DIV + "//a[@href='/admin/tool')]";
 
     private final String LOGOUT_LINK = PANEL_DIV + "//a[contains(@href,'logout')]";
 
