@@ -40,7 +40,7 @@ driver = {
 
     }
 
-    //def driver = new ChromeDriver();
+    def driver = new ChromeDriver();
     //ChromeOptions options = new ChromeOptions();
     //options.addArguments( "start-maximized" );
 
@@ -51,7 +51,7 @@ driver = {
     //FirefoxProfile profile = new FirefoxProfile();
     //profile.setEnableNativeEvents( true );
     //def driver = new FirefoxDriver( profile );
-    def driver = new FirefoxDriver();
+    //def driver = new FirefoxDriver();
     // driver.manage().window().maximize();
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
