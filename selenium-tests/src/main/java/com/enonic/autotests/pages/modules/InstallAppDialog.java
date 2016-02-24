@@ -1,6 +1,10 @@
 package com.enonic.autotests.pages.modules;
 
 
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +14,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.TextTransfer;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -30,6 +35,8 @@ public class InstallAppDialog
 
     private final String APPLICATION_INPUT = DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
 
+    private final String APPLICATION_UPLOADER = DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
+
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
 
@@ -40,7 +47,10 @@ public class InstallAppDialog
     private WebElement enonicMarketTab;
 
     @FindBy(xpath = APPLICATION_INPUT)
-    private WebElement applicationInput;
+    private WebElement applicationURLInput;
+
+    @FindBy(xpath = APPLICATION_UPLOADER)
+    private WebElement applicationUploaderButton;
 
     /**
      * The Constructor
@@ -56,6 +66,34 @@ public class InstallAppDialog
     {
         return getDisplayedString( HEADER_XPATH );
     }
+
+    public InstallAppDialog typeApplicationURL( String url )
+    {
+        clearAndType( applicationURLInput, url );
+        sleep( 3000 );
+        return this;
+    }
+
+    public InstallAppDialog duUploadApplication( String pathToApp )
+    {
+        String absolutePath = null;
+        URL resource = InstallAppDialog.class.getResource( pathToApp );
+        try
+        {
+            absolutePath = Paths.get( resource.toURI() ).toString();
+        }
+        catch ( URISyntaxException e )
+        {
+            e.printStackTrace();
+        }
+        applicationUploaderButton.click();
+        sleep( 300 );
+        TextTransfer transfer = new TextTransfer();
+        transfer.typePathToFileToSystemDialog( absolutePath );
+        sleep( 3000 );
+        return this;
+    }
+
 
     public void waitUntilDialogLoaded()
     {
@@ -115,11 +153,6 @@ public class InstallAppDialog
         return isElementDisplayed( ENONIC_MARKET_TAB );
     }
 
-    public InstallAppDialog typePathToApplication( String path )
-    {
-        clearAndType( applicationInput, path );
-        return this;
-    }
 
     public boolean isApplicationInputDisplayed( String path )
     {

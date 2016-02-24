@@ -98,6 +98,14 @@ public class ApplicationBrowsePanel
         return this;
     }
 
+    public boolean isApplicationLocal( String appName )
+    {
+        boolean result;
+        String iconLocal = String.format( SLICK_ROW_BY_NAME, appName ) + "//div[@title='Local application']";
+        result = isElementDisplayed( iconLocal );
+        return result;
+    }
+
     @Override
     public WizardPanel clickToolbarEdit()
     {

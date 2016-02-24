@@ -152,6 +152,7 @@ public class ContentBrowsePanel
         boolean result = waitUntilClickableNoException( By.xpath( DETAILS_TOGGLE_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
+            TestUtils.saveScreenshot( getSession(), "err_toggle_button" );
             throw new TestFrameworkException( "DetailsToggle button is not clickable!" );
         }
         detailsToggleButton.click();
@@ -685,7 +686,7 @@ public class ContentBrowsePanel
      * Opens context menu and select a 'New' item
      *
      * @param contentName
-     * @return  {@link NewContentDialog} instance.
+     * @return {@link NewContentDialog} instance.
      */
     public NewContentDialog selectNewFromContextMenu( String contentName )
     {
