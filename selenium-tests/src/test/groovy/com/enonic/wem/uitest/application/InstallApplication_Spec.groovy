@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.application
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
 import com.enonic.autotests.utils.TestUtils
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -22,8 +23,7 @@ class InstallApplication_Spec
     @Shared
     String LOCAL_APP_NAME = "first_app";
 
-
-    def "GIVEN 'install app' dialog opened WHEN path to jar specified THEN new application successfully installed"()
+    def "GIVEN 'install app' dialog opened WHEN an application uploaded THEN new application successfully installed"()
     {
         given:
         applicationBrowsePanel.clickOnToolbarInstall();
@@ -31,7 +31,7 @@ class InstallApplication_Spec
         appDialog.waitUntilDialogLoaded();
 
 
-        when: "path to jar specified"
+        when: "an application uploaded"
         appDialog.duUploadApplication( LOCAL_PATH_TO_FILE );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_install" )
@@ -40,9 +40,8 @@ class InstallApplication_Spec
         applicationBrowsePanel.exists( APP_NAME );
 
         and: "actual notification message and expected are identical"
-        notificationMessage == String.format( Application.APP_INSTALLED, APP_DISPLAY_NAME )
+        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, APP_DISPLAY_NAME )
     }
-
 
     def "GIVEN existing not local application EXPECTED icon for local application not displayed"()
     {
@@ -61,7 +60,6 @@ class InstallApplication_Spec
         then:
         !applicationBrowsePanel.isUninstallButtonEnabled();
     }
-
 
     def "WHEN existing not local application selected THEN 'uninstall' button is enabled"()
     {
@@ -88,4 +86,25 @@ class InstallApplication_Spec
         message == String.format( Application.APP_UNINSTALLED, APP_DISPLAY_NAME );
     }
 
+    @Ignore
+    def "GIVEN 'install app' dialog opened and 'Enonic Market' selected WHEN an application from the 'Enonic Market' installed THEN new application listed in the browse panel "()
+    {
+        given:
+        applicationBrowsePanel.clickOnToolbarInstall();
+        InstallAppDialog appDialog = new InstallAppDialog( getSession() );
+        appDialog.waitUntilDialogLoaded();
+        appDialog.clickOnEnonicMarketTab();
+
+        when: "an application from the 'Enonic Market' installed"
+        appDialog.doInstallAppFromEnonicMarket( "Content viewer" );
+        String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+
+        then: "correct notification message appears"
+        TestUtils.saveScreenshot( getSession(), "app_from_market" );
+        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, "Content Viewer App" );
+
+        and: "new application listed in the browse panel"
+        applicationBrowsePanel.exists( "contentviewer" );
+
+    }
 }

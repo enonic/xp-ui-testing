@@ -42,7 +42,7 @@ public class Application
 
     public static String APP_UNINSTALLED = "Application '%s' uninstalled successfully";
 
-    public static String APP_INSTALLED = "Application '%s' installed successfully";
+    public static String APP_INSTALLED_MESSAGE = "Application '%s' installed successfully";
 
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
 

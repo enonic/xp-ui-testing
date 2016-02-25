@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -36,6 +38,16 @@ public class InstallAppDialog
     private final String APPLICATION_INPUT = DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
 
     private final String APPLICATION_UPLOADER = DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
+
+    private final String VALIDATION_VIEWER = DIALOG_DIV + "//div[contains(@id,'ValidationRecordingViewer')]";
+
+    private final String VALIDATION_VIEWER_TEXT = VALIDATION_VIEWER + "//li";
+
+    private final String APP_GRID = DIALOG_DIV + "//div[contains(@id,'MarketAppsTreeGrid')]";
+
+    private String APP_ROW_BY_DISPLAY_NAME = APP_GRID + SLICK_ROW_BY_DISPLAY_NAME;
+
+    private String INSTALL_APP_BUTTON = APP_ROW_BY_DISPLAY_NAME + "//div[@class='install']";
 
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
@@ -72,6 +84,18 @@ public class InstallAppDialog
         clearAndType( applicationURLInput, url );
         sleep( 3000 );
         return this;
+    }
+
+    public String waitValidationViewerText( long timeout )
+    {
+        WebDriverWait wait = new WebDriverWait( getDriver(), timeout );
+        WebElement element = wait.until( ExpectedConditions.visibilityOfElementLocated( By.xpath( VALIDATION_VIEWER_TEXT ) ) );
+        return element.getText();
+    }
+
+    public boolean waitUntilValidationViewerAppears( long timeout )
+    {
+        return waitUntilVisibleNoException( By.xpath( VALIDATION_VIEWER ), timeout );
     }
 
     public InstallAppDialog duUploadApplication( String pathToApp )
@@ -120,6 +144,13 @@ public class InstallAppDialog
         enonicMarketTab.click();
         sleep( 500 );
         return this;
+    }
+
+    public void doInstallAppFromEnonicMarket( String appDisplayName )
+    {
+        String installButton = String.format( INSTALL_APP_BUTTON, appDisplayName );
+        getDisplayedElement( By.xpath( installButton ) ).click();
+        sleep( 5000 );
     }
 
     public InstallAppDialog clickOnCancelButton()
