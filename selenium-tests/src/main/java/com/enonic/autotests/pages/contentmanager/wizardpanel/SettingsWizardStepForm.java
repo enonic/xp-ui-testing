@@ -92,9 +92,11 @@ public class SettingsWizardStepForm
     public void selectLanguage( String language )
     {
         clearAndType( languageFilterInput, language );
+        TestUtils.saveScreenshot( getSession(), "language_typed" );
         String optionItemXpath = LOCALE_COMBOBOX + "//div[contains(@class,'slick-cell')]" + String.format( NAME_ITEM, language );
         if ( findElements( By.xpath( optionItemXpath ) ).size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), "err_language" );
             throw new TestFrameworkException( "locale was not found!  " + language );
         }
         findElement( By.xpath( optionItemXpath ) ).click();
