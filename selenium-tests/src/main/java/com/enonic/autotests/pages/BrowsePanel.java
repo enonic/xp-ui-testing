@@ -638,6 +638,11 @@ public abstract class BrowsePanel
         return result;
     }
 
+    public boolean exists( String itemName )
+    {
+        return exists( itemName, false );
+    }
+
     /**
      * Gets item names, that have a margin-left, that means items are children.
      * *

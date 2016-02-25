@@ -294,11 +294,6 @@ public class ContentBrowsePanel
             WebElement::getText ).collect( Collectors.toList() );
     }
 
-    public boolean exists( String contentName )
-    {
-        return exists( contentName, false );
-    }
-
     public boolean exists( ContentPath contentPath, boolean saveScreenshot )
     {
         return exists( contentPath.toString(), saveScreenshot );

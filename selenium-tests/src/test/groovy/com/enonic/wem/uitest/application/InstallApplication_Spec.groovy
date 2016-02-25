@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
+import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -33,9 +34,10 @@ class InstallApplication_Spec
         when: "path to jar specified"
         appDialog.duUploadApplication( LOCAL_PATH_TO_FILE );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), "app_install" )
 
         then: "new application listed in the grid"
-        applicationBrowsePanel.exists( APP_NAME, true );
+        applicationBrowsePanel.exists( APP_NAME );
 
         and: "actual notification message and expected are identical"
         notificationMessage == String.format( Application.APP_INSTALLED, APP_DISPLAY_NAME )
@@ -77,9 +79,10 @@ class InstallApplication_Spec
 
         when: "'uninstall' button pressed"
         String message = applicationBrowsePanel.clickOnToolbarUninstall().waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), "app_uninstall" );
 
         then: "application not listed"
-        !applicationBrowsePanel.exists( APP_NAME, true );
+        !applicationBrowsePanel.exists( APP_NAME );
 
         and: "correct notification appears"
         message == String.format( Application.APP_UNINSTALLED, APP_DISPLAY_NAME );
