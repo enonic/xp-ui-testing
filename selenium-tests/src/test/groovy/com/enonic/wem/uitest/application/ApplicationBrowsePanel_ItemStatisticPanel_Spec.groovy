@@ -60,7 +60,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     }
 
 
-    def "GIVEN an application is started WHEN the application have been stopped THEN detail page should not show any content types"()
+    def "GIVEN Application is 'started' WHEN the application have been stopped THEN detail page should not show any content types"()
     {
         given:
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
@@ -79,7 +79,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationItemStatisticsPanel.getContentTypes().size() == 0;
     }
 
-    def "WHEN application, that is stopped, selected  THEN detail page should not show any mixins, but header for mixins should be displayed"()
+    def "WHEN application that just stopped and selected  THEN detail page should not show any mixins, but header for mixins should be displayed"()
     {
         when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
@@ -94,7 +94,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
     }
 
-    def "WHEN One module is installed and stopped THEN detail page should not show any relationship types"()
+    def "WHEN application that just stopped and selected THEN detail page should not show any relationship types"()
     {
         when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
@@ -109,7 +109,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
     }
 
-    def "WHEN stopped application have been selected THEN detail page should not show any pages"()
+    def "WHEN application that just stopped and selected THEN detail page should not show any pages"()
     {
         when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
