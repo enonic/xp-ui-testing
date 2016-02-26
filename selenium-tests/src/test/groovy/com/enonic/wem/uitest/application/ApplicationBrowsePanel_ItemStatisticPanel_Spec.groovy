@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.pages.modules.ApplicationBrowsePanel
 import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -13,16 +12,10 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     String MIXIN_ADDRESS_NAME = "address";
 
     @Shared
-    String PAGE_NAME = "main"
-
-    @Shared
     String PART_NAME = "cities-list"
 
     @Shared
     String LAYOUT_NAME = "centered";
-
-    @Shared
-    String CHECKBOX_CONTENT_TYPE_NAME = "checkbox";
 
     @Shared
     String RELATIONSHIP_TYPE_NAME = "citation";
@@ -30,17 +23,20 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     @Shared
     String VERSION_OF_TEST_APPLICATION = "2.0.0.SNAPSHOT";
 
-    def "WHEN One application is selected THEN The details panel should show Build date, version, key and System requirement"()
+    def "WHEN One application is selected THEN The details panel should show 'Build'-date, version, key and 'System requirements'"()
     {
         when: "application started and it selected in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
         then: "the Build date shown"
         applicationItemStatisticsPanel.isBuildDatePresent();
+
         and: "the version shown"
         applicationItemStatisticsPanel.isVersionPresent();
+
         and: "the key shown"
         applicationItemStatisticsPanel.isKeyPresent();
+
         and: "the system required shown"
         applicationItemStatisticsPanel.isSystemRequiredPresent();
     }
@@ -52,168 +48,186 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         then: "the Build date as a correct value"
         applicationItemStatisticsPanel.getBuildDate() == "TBA";
+
         and: "the version as a correct value"
         applicationItemStatisticsPanel.getVersion() == VERSION_OF_TEST_APPLICATION;
+
         and: "the key as a correct value"
         applicationItemStatisticsPanel.getKey() == FIRST_APP_KEY;
+
         and: "the system required has a correct value"
         applicationItemStatisticsPanel.getSystemRequired() == SYSTEM_REQUIRED;
     }
 
 
-    def "WHEN One application is installed and stopped THEN detail page should not show any content types"()
+    def "GIVEN an application is started WHEN the application have been stopped THEN detail page should not show any content types"()
     {
-        setup:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME ).<ApplicationBrowsePanel> clickOnToolbarStop();
+        given:
+        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+
         when: "application stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "Stopped"
-        TestUtils.saveScreenshot( getSession(), "app-stopped" )
-        then: "Content Types headed present"
+        applicationBrowsePanel.clickOnToolbarStop();
+        TestUtils.saveScreenshot( getSession(), "app-stopped" );
+
+        then: "the application has status is stopped"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
+
+        and: "'Content Types' - header present"
         applicationItemStatisticsPanel.isContentTypesHeaderPresent();
+
         and: "page should not show any content types"
         applicationItemStatisticsPanel.getContentTypes().size() == 0;
     }
 
-    def "GIVEN application selected in the BrowsePanel WHEN One module is installed and stopped THEN detail page should not show any mixins"()
+    def "WHEN application, that is stopped, selected  THEN detail page should not show any mixins, but header for mixins should be displayed"()
     {
-        given:
+        when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        when: "application stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "Stopped";
 
         then: "Mixin header present"
         applicationItemStatisticsPanel.isMixinsHeaderPresent();
+
         and: "detail page should not show any mixins"
         applicationItemStatisticsPanel.getMixins().size() == 0;
+
+        and: "application is stopped"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
     }
 
     def "WHEN One module is installed and stopped THEN detail page should not show any relationship types"()
     {
-        given:
+        when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        when: "application stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "Stopped";
 
         then: "RelationshipTypes header present"
         applicationItemStatisticsPanel.isRelationShipTypesHeaderPresent();
+
         and: "detail page should not show any relationship types"
         applicationItemStatisticsPanel.getRelationShipTypes().size() == 0;
+
+        and: "application is stopped"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
     }
 
-    def " WHEN One module is installed and stopped THEN detail page should not show any pages"()
+    def "WHEN stopped application have been selected THEN detail page should not show any pages"()
     {
-        given:
+        when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        when: "application stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "Stopped";
 
         then: "Page header present"
         applicationItemStatisticsPanel.isPageHeaderPresent();
+
         and: "detail page should not show any pages"
         applicationItemStatisticsPanel.getPages().size() == 0;
+
+        and: "application is stopped"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
     }
 
-    def " WHEN One module is installed and stopped THEN detail page should not show any parts"()
+    def "WHEN stopped application have been selected THEN detail page should not show any parts"()
     {
-        given:
+        when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        when: "application stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "Stopped";
 
         then: "Part header present"
         applicationItemStatisticsPanel.isPartHeaderPresent();
+
         and: "detail page should not show any parts"
         applicationItemStatisticsPanel.getParts().size() == 0;
+
+        and: "application is stopped"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
     }
 
-    def "WHEN One module is installed and stopped THEN detail page should not show any layout"()
-    {
-        given:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        when: "application stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "Stopped";
-
-        then: "Layout header present"
-        applicationItemStatisticsPanel.isLayoutHeaderPresent();
-        and: "detail page should not show any layout"
-        applicationItemStatisticsPanel.getLayouts().size() == 0;
-    }
-
-    def "GIVEN One application is stopped WHEN app started again  THEN detail page should show all its content types"()
+    def "WHEN stopped application have been selected THEN detail page should not show any layout"()
     {
         when:
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+
+        then: "Layout - header present"
+        applicationItemStatisticsPanel.isLayoutHeaderPresent();
+
+        and: "detail page should not show any layout"
+        applicationItemStatisticsPanel.getLayouts().size() == 0;
+
+        and: "application is stopped"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
+    }
+
+    def "GIVEN Application is stopped WHEN the application started again THEN detail page should show all its content types"()
+    {
+        when: "the application started again"
+        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
         applicationBrowsePanel.clickOnToolbarStart();
 
-        then:
+        then: "detail page should show all its content types"
         TestUtils.saveScreenshot( getSession(), "stopped_started_ct" )
         applicationItemStatisticsPanel.getContentTypes().size() > 0;
     }
 
-    def "GIVEN One application is stopped WHEN app started again  THEN detail page should show all its mixins"()
+    def "GIVEN Application that was stopped and started again WHEN the application have been selected THEN detail page should show all its mixins"()
     {
-        given:
+        when: "stopped and started again application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        when:
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
-
-        then:
         TestUtils.saveScreenshot( getSession(), "stopped_started_mixins" )
         List<String> mixins = applicationItemStatisticsPanel.getMixins();
+
+        then: "detail page should show all its mixins"
         mixins.size() > 0;
-        and:
+
+        and: "required mixin is present"
         mixins.contains( MIXIN_ADDRESS_NAME );
+
+        and: "application is started"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STARTED_STATE;
     }
 
-    def "GIVEN One application is stopped WHEN app started again  THEN detail page should show all its relationship types"()
+    def "GIVEN Application that was stopped and started again WHEN the application selected THEN detail page should show all its relationship types"()
     {
-        given:
+        when: "Application that was stopped and started again"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        when:
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
         TestUtils.saveScreenshot( getSession(), "stopped_started_relationships" );
 
-        then:
+        then: "detail page should show all its relationship types"
         List<String> relationshipsTypes = applicationItemStatisticsPanel.getRelationShipTypes();
         relationshipsTypes.size() > 0;
-        and:
+
+        and: "required relationship is present"
         relationshipsTypes.contains( RELATIONSHIP_TYPE_NAME );
+
+        and: "application is started"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STARTED_STATE;
     }
 
-    def "GIVEN One application is stopped WHEN app started again  THEN detail page should show all its parts"()
+    def "GIVEN Application that was stopped and started again WHEN the application selected  THEN detail page should show all its parts"()
     {
-        given:
+        when: "the application selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
-        when:
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
-
-        then:
+        then: "detail page should show all its parts"
         List<String> parts = applicationItemStatisticsPanel.getParts();
         parts.size() > 0;
-        and:
+
+        and: "parts contains the required part"
         parts.contains( PART_NAME );
+
+        and: "application is started"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STARTED_STATE;
     }
 
-    def "GIVEN One application is stopped WHEN app started again  THEN detail page should show all its layouts"()
+    def "GIVEN Application that was stopped and started again WHEN the application selected  THEN detail page should show all its layouts"()
     {
-        given:
+        when: "the application selected "
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
-        when:
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == "started";
-
-        then:
+        then: "detail page should show all its layouts"
         List<String> layouts = applicationItemStatisticsPanel.getLayouts();
         layouts.size() > 0;
-        and:
+
+        and: "layouts contains the required layout"
         layouts.contains( LAYOUT_NAME );
+
+        and: "application is started"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STARTED_STATE;
     }
 }
