@@ -27,6 +27,9 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     @Shared
     String RELATIONSHIP_TYPE_NAME = "citation";
 
+    @Shared
+    String VERSION_OF_TEST_APPLICATION = "2.0.0.SNAPSHOT";
+
     def "WHEN One application is selected THEN The details panel should show Build date, version, key and System requirement"()
     {
         when: "application started and it selected in browse panel"
@@ -50,7 +53,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         then: "the Build date as a correct value"
         applicationItemStatisticsPanel.getBuildDate() == "TBA";
         and: "the version as a correct value"
-        applicationItemStatisticsPanel.getVersion() == "2.0.0.SNAPSHOT";
+        applicationItemStatisticsPanel.getVersion() == VERSION_OF_TEST_APPLICATION;
         and: "the key as a correct value"
         applicationItemStatisticsPanel.getKey() == FIRST_APP_KEY;
         and: "the system required has a correct value"

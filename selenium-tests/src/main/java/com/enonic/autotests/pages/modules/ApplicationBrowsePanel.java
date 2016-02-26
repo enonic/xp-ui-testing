@@ -137,12 +137,12 @@ public class ApplicationBrowsePanel
         return stopButton.isEnabled();
     }
 
-    public String getApplicationStatus( String moduleName )
+    public String getApplicationStatus( String appName )
     {
-        String stateCell = String.format( SLICK_ROW_BY_NAME, moduleName ) + "//div[contains(@class,'state')]";
+        String stateCell = String.format( SLICK_ROW_BY_NAME, appName ) + "//div[contains(@class,'state')]";
         if ( findElements( By.xpath( stateCell ) ).size() == 0 )
         {
-            throw new TestFrameworkException( "state was not found in the table ! application name is " + moduleName );
+            throw new TestFrameworkException( "state was not found in the table ! application name is " + appName );
         }
         getLogger().info( "status of module is : " + findElements( By.xpath( stateCell ) ).get( 0 ).getText() );
         return findElements( By.xpath( stateCell ) ).get( 0 ).getText();

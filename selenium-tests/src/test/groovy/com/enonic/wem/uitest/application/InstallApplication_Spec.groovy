@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.application
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
 import com.enonic.autotests.utils.TestUtils
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -22,6 +21,15 @@ class InstallApplication_Spec
 
     @Shared
     String LOCAL_APP_NAME = "first_app";
+
+    @Shared
+    String CONTENT_VIEWER_APP_NAME = "Content viewer";
+
+    @Shared
+    String CONTENT_VIEWER_APP_DISPLAY_NAME = "Content Viewer App";
+
+    @Shared
+    String CONTENT_VIEWER_APP_INSTALLED_NAME = "contentviewer";
 
     def "GIVEN 'install app' dialog opened WHEN an application uploaded THEN new application successfully installed"()
     {
@@ -86,7 +94,6 @@ class InstallApplication_Spec
         message == String.format( Application.APP_UNINSTALLED, APP_DISPLAY_NAME );
     }
 
-    @Ignore
     def "GIVEN 'install app' dialog opened and 'Enonic Market' selected WHEN an application from the 'Enonic Market' installed THEN new application listed in the browse panel "()
     {
         given:
@@ -96,15 +103,22 @@ class InstallApplication_Spec
         appDialog.clickOnEnonicMarketTab();
 
         when: "an application from the 'Enonic Market' installed"
-        appDialog.doInstallAppFromEnonicMarket( "Content viewer" );
+        appDialog.doInstallAppFromEnonicMarket( CONTENT_VIEWER_APP_NAME );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        appDialog.clickOnCancelButton();
 
         then: "correct notification message appears"
         TestUtils.saveScreenshot( getSession(), "app_from_market" );
-        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, "Content Viewer App" );
+        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP_DISPLAY_NAME );
 
         and: "new application listed in the browse panel"
-        applicationBrowsePanel.exists( "contentviewer" );
+        applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );
+
+        and: "icon for local applications not present"
+        !applicationBrowsePanel.isApplicationLocal( CONTENT_VIEWER_APP_INSTALLED_NAME );
+
+        and: "application status is 'started'"
+        applicationBrowsePanel.getApplicationStatus( CONTENT_VIEWER_APP_INSTALLED_NAME ) == "started";
 
     }
 }
