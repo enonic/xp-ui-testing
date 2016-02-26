@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.application
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
 import com.enonic.autotests.utils.TestUtils
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -56,7 +57,7 @@ class InstallApplication_Spec
         expect:
         !applicationBrowsePanel.isApplicationLocal( APP_NAME );
 
-        and:
+        and: "but an application, that is 'local' has a required icon"
         applicationBrowsePanel.isApplicationLocal( LOCAL_APP_NAME );
     }
 
@@ -67,6 +68,27 @@ class InstallApplication_Spec
 
         then:
         !applicationBrowsePanel.isUninstallButtonEnabled();
+    }
+
+    //TODO remove Ignore, when the 'updating' message will bew added in XP
+    @Ignore
+    def "GIVEN 'install app' dialog opened WHEN an application, that already installed, uploaded again THEN correct notification message appears "()
+    {
+        given:
+        applicationBrowsePanel.clickOnToolbarInstall();
+        InstallAppDialog appDialog = new InstallAppDialog( getSession() );
+        appDialog.waitUntilDialogLoaded();
+
+        when: "an application uploaded"
+        appDialog.duUploadApplication( LOCAL_PATH_TO_FILE );
+        String appUpdatedMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), "app_install" )
+
+        then: "updated application listed in the grid"
+        applicationBrowsePanel.exists( APP_NAME );
+
+        and: "actual notification message and expected are identical"
+        appUpdatedMessage == String.format( Application.APP_UPDATED_MESSAGE, APP_DISPLAY_NAME )
     }
 
     def "WHEN existing not local application selected THEN 'uninstall' button is enabled"()

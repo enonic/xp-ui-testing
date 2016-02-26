@@ -44,6 +44,8 @@ public class Application
 
     public static String APP_INSTALLED_MESSAGE = "Application '%s' installed successfully";
 
+    public static String APP_UPDATED_MESSAGE = "Application '%s' updated successfully";
+
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
 
     public static final String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
