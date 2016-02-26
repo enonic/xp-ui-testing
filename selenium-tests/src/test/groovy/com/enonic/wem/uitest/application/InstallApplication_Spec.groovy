@@ -106,7 +106,8 @@ class InstallApplication_Spec
         applicationBrowsePanel.selectRowByName( APP_NAME )
 
         when: "'uninstall' button pressed"
-        String message = applicationBrowsePanel.clickOnToolbarUninstall().waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(
+            Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_uninstall" );
 
         then: "application not listed"
@@ -140,7 +141,39 @@ class InstallApplication_Spec
         !applicationBrowsePanel.isApplicationLocal( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         and: "application status is 'started'"
-        applicationBrowsePanel.getApplicationStatus( CONTENT_VIEWER_APP_INSTALLED_NAME ) == "started";
+        applicationBrowsePanel.getApplicationStatus( CONTENT_VIEWER_APP_INSTALLED_NAME ) == STARTED_STATE;
+    }
 
+    def "GIVEN installed from 'Enonic Market' application WHEN the application selected and context-menu shown THEN all menu-items have correct state"()
+    {
+        when: "context menu opened"
+        applicationBrowsePanel.openContextMenu( CONTENT_VIEWER_APP_INSTALLED_NAME );
+        TestUtils.saveScreenshot( getSession(), "not-local-app-context-menu" );
+
+        then: "Delete menu item is enabled"
+        applicationBrowsePanel.isEnabledContextMenuItem( "Stop" );
+
+        and: "Edit menu item is enabled"
+        !applicationBrowsePanel.isEnabledContextMenuItem( "Start" );
+
+        and: "New menu item is enabled"
+        applicationBrowsePanel.isEnabledContextMenuItem( "Uninstall" );
+    }
+
+    def "GIVEN installed application from 'Enonic Market' WHEN application uninstalled THEN it not listed in the grid AND correct notification message appears"()
+    {
+        given: "existing application from 'Enonic Market' selected"
+        applicationBrowsePanel.selectRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME );
+
+        when: "'uninstall' button pressed"
+        String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(
+            Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), "enonic_app_uninstall" );
+
+        then: "application not listed"
+        !applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );
+
+        and: "correct notification appears"
+        message == String.format( Application.APP_UNINSTALLED, APP_DISPLAY_NAME );
     }
 }

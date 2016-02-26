@@ -84,11 +84,11 @@ public class ApplicationBrowsePanel
         return this;
     }
 
-    public ApplicationBrowsePanel clickOnToolbarUninstall()
+    public UninstallApplicationDialog clickOnToolbarUninstall()
     {
         uninstallButton.click();
         sleep( 300 );
-        return this;
+        return new UninstallApplicationDialog( getSession() );
     }
 
     public ApplicationBrowsePanel clickOnToolbarStart()

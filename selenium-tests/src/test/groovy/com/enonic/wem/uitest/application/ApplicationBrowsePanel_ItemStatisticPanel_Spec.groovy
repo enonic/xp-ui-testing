@@ -59,7 +59,6 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationItemStatisticsPanel.getSystemRequired() == SYSTEM_REQUIRED;
     }
 
-
     def "GIVEN Application is 'started' WHEN the application have been stopped THEN detail page should not show any content types"()
     {
         given:
