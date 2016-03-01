@@ -174,6 +174,6 @@ class InstallApplication_Spec
         !applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         and: "correct notification appears"
-        message == String.format( Application.APP_UNINSTALLED, APP_DISPLAY_NAME );
+        message == String.format( Application.APP_UNINSTALLED, CONTENT_VIEWER_APP_DISPLAY_NAME );
     }
 }
