@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
+import com.enonic.autotests.pages.modules.InstallAppDialog_MarketAppPanel
 import com.enonic.autotests.utils.TestUtils
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -123,10 +124,10 @@ class InstallApplication_Spec
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
-        appDialog.clickOnEnonicMarketTab();
+        InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab();
 
         when: "an application from the 'Enonic Market' installed"
-        appDialog.doInstallAppFromEnonicMarket( CONTENT_VIEWER_APP_NAME );
+        marketPanel.doInstallApp( CONTENT_VIEWER_APP_NAME );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         appDialog.clickOnCancelButton();
 
@@ -141,7 +142,22 @@ class InstallApplication_Spec
         !applicationBrowsePanel.isApplicationLocal( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         and: "application status is 'started'"
-        applicationBrowsePanel.getApplicationStatus( CONTENT_VIEWER_APP_INSTALLED_NAME ) == STARTED_STATE;
+        applicationBrowsePanel.waitApplicationStatus( CONTENT_VIEWER_APP_INSTALLED_NAME, STARTED_STATE );
+    }
+
+    def "GIVEN existing installed from the market application WHEN Install App Dialog opened THEN the application is disabled in the 'market'"()
+    {
+        when:
+        applicationBrowsePanel.clickOnToolbarInstall();
+        InstallAppDialog appDialog = new InstallAppDialog( getSession() );
+        appDialog.waitUntilDialogLoaded();
+        InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab()
+
+        then: "install button disabled for application that was already installed"
+        marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_APP_NAME );
+
+        and: "install button enabled for another application"
+        !marketPanel.isApplicationAlreadyInstalled( "Disqus" );
     }
 
     def "GIVEN installed from 'Enonic Market' application WHEN the application selected and context-menu shown THEN all menu-items have correct state"()

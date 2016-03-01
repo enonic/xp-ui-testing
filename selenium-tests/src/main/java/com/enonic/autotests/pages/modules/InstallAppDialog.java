@@ -25,29 +25,24 @@ public class InstallAppDialog
 {
     public static final String HEADER = "Install Application";
 
-    private final String DIALOG_DIV = "//div[contains(@id,'InstallAppDialog')]";
+    public static final String INSTALL_DIALOG_DIV = "//div[contains(@id,'InstallAppDialog')]";
 
-    private final String HEADER_XPATH = DIALOG_DIV + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
+    private final String HEADER_XPATH = INSTALL_DIALOG_DIV + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
-    private final String CANCEL_BUTTON = DIALOG_DIV + "//button[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + "//button[contains(@class,'cancel-button-top')]";
 
-    private final String UPLOAD_TAB = DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::span[text()='Upload']]";
+    private final String UPLOAD_TAB = INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::span[text()='Upload']]";
 
-    private final String ENONIC_MARKET_TAB = DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::span[text()='Enonic Market']]";
+    private final String ENONIC_MARKET_TAB =
+        INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::span[text()='Enonic Market']]";
 
-    private final String APPLICATION_INPUT = DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
+    private final String APPLICATION_INPUT = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
 
-    private final String APPLICATION_UPLOADER = DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
+    private final String APPLICATION_UPLOADER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
 
-    private final String VALIDATION_VIEWER = DIALOG_DIV + "//div[contains(@id,'ValidationRecordingViewer')]";
+    private final String VALIDATION_VIEWER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ValidationRecordingViewer')]";
 
     private final String VALIDATION_VIEWER_TEXT = VALIDATION_VIEWER + "//li";
-
-    private final String APP_GRID = DIALOG_DIV + "//div[contains(@id,'MarketAppsTreeGrid')]";
-
-    private String APP_ROW_BY_DISPLAY_NAME = APP_GRID + SLICK_ROW_BY_DISPLAY_NAME;
-
-    private String INSTALL_APP_BUTTON = APP_ROW_BY_DISPLAY_NAME + "//div[@class='install']";
 
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
@@ -63,6 +58,17 @@ public class InstallAppDialog
 
     @FindBy(xpath = APPLICATION_UPLOADER)
     private WebElement applicationUploaderButton;
+
+    private InstallAppDialog_MarketAppPanel marketAppPanel;
+
+    public InstallAppDialog_MarketAppPanel getMarketAppPanel()
+    {
+        if ( marketAppPanel == null )
+        {
+            marketAppPanel = new InstallAppDialog_MarketAppPanel( getSession() );
+        }
+        return marketAppPanel;
+    }
 
     /**
      * The Constructor
@@ -139,18 +145,11 @@ public class InstallAppDialog
         }
     }
 
-    public InstallAppDialog clickOnEnonicMarketTab()
+    public InstallAppDialog_MarketAppPanel clickOnEnonicMarketTab()
     {
         enonicMarketTab.click();
         sleep( 500 );
-        return this;
-    }
-
-    public void doInstallAppFromEnonicMarket( String appDisplayName )
-    {
-        String installButton = String.format( INSTALL_APP_BUTTON, appDisplayName );
-        getDisplayedElement( By.xpath( installButton ) ).click();
-        sleep( 5000 );
+        return getMarketAppPanel();
     }
 
     public InstallAppDialog clickOnCancelButton()
@@ -197,6 +196,6 @@ public class InstallAppDialog
 
     public boolean isEnonicMarketTableDisplayed()
     {
-        return isElementDisplayed( DIALOG_DIV + GRID_CANVAS );
+        return isElementDisplayed( INSTALL_DIALOG_DIV + GRID_CANVAS );
     }
 }

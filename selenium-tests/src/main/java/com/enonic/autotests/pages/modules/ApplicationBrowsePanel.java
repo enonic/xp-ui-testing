@@ -12,6 +12,8 @@ import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BaseDeleteDialog;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -91,6 +93,7 @@ public class ApplicationBrowsePanel
         return new UninstallApplicationDialog( getSession() );
     }
 
+
     public ApplicationBrowsePanel clickOnToolbarStart()
     {
         startButton.click();
@@ -146,6 +149,22 @@ public class ApplicationBrowsePanel
         }
         getLogger().info( "status of module is : " + findElements( By.xpath( stateCell ) ).get( 0 ).getText() );
         return findElements( By.xpath( stateCell ) ).get( 0 ).getText();
+    }
+
+    public boolean waitApplicationStatus( String appName, String state )
+    {
+        String stateCell = String.format( SLICK_ROW_BY_NAME, appName ) + "//div[contains(@class,'state')]";
+        if ( !isElementDisplayed( stateCell ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_status" ) );
+            throw new TestFrameworkException( "state was not found in the table ! application name is " + appName );
+        }
+        String expectedState =
+            String.format( SLICK_ROW_BY_NAME, appName ) + String.format( "//div[contains(@class,'state')]//div[ text()='%s']", state );
+
+        boolean result = waitUntilVisibleNoException( By.xpath( expectedState ), Application.EXPLICIT_NORMAL );
+        getLogger().info( "status of module is : " + findElement( By.xpath( stateCell ) ).getText() );
+        return result;
     }
 
     public ApplicationBrowseItemsSelectionPanel getItemSelectionPanel()
