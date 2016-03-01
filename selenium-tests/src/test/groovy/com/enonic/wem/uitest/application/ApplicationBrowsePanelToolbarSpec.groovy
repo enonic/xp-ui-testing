@@ -84,4 +84,33 @@ class ApplicationBrowsePanelToolbarSpec
         applicationBrowsePanel.isStartButtonEnabled()
     }
 
+    def "GIVEN two started applications are selected WHEN 'stop' button on toolbar pressed THEN both applications are 'stopped'"()
+    {
+        given: " started and stopped are selected"
+        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+
+        when: "Stop button pressed"
+        applicationBrowsePanel.clickOnToolbarStop();
+        TestUtils.saveScreenshot( getSession(), "multiple_select_stop" )
+
+        then: "both applications are 'stopped'"
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
+        and:
+        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
+    }
+
+    def "GIVEN two started applications are selected WHEN 'stop' button on toolbar pressed THEN 'Stop' button is disabled and 'Start' button is enabled"()
+    {
+        when: " started and stopped are selected"
+        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+
+        then: "Stop button is disabled"
+        !applicationBrowsePanel.isStopButtonEnabled();
+
+        and: "'Start' button is enabled"
+        applicationBrowsePanel.isStartButtonEnabled()
+    }
+
 }
