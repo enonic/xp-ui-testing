@@ -46,6 +46,7 @@ task copyTestApplications( type: Copy ) {
     include '**/*.jar'
     into file( deployDir )
 }
+
 task copySimplePageApp( type: Copy ) {
     from '../test-applications/simple-page/build/libs/'
 
@@ -153,6 +154,25 @@ task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, 
     println xpHome
     println "XP_HOME is:"
     println System.getenv( "XP_HOME" );
+
+    scanForTestClasses = false
+    include '**/application/*Spec.class'
+    exclude '**/content/**'
+    exclude '**/user/**'
+    forkEvery = null
+    deleteFolders.mustRunAfter buildApplications
+    startServer.mustRunAfter deleteFolders
+    copyTestApplications.mustRunAfter startServer
+}
+
+task testApplicationWithFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+    println "XP_HOME is:"
+    println System.getenv( "XP_HOME" );
+
+    //set system property
+    System.setProperty 'geb.env', 'firefox';
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' );
 
     scanForTestClasses = false
     include '**/application/*Spec.class'
