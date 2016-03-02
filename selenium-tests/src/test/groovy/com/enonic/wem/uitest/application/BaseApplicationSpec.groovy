@@ -70,6 +70,7 @@ class BaseApplicationSpec
             marketPanel.doInstallApp( displayName );
             appDialog.clickOnCancelButton();
             sleep( 3000 );
+            applicationBrowsePanel.waitApplicationStatus( name, "started" )
         }
     }
 }
