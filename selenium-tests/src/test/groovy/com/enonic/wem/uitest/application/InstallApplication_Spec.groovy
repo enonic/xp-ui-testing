@@ -176,9 +176,9 @@ class InstallApplication_Spec
         applicationBrowsePanel.isEnabledContextMenuItem( "Uninstall" );
     }
 
-    def "GIVEN installed application from 'Enonic Market' WHEN application uninstalled THEN it not listed in the grid AND correct notification message appears"()
+    def "GIVEN existing installed application from 'Enonic Market' WHEN application uninstalled THEN it not listed in the grid AND correct notification message appears"()
     {
-        given: "existing application from 'Enonic Market' selected"
+        given: "existing application from 'Enonic Market' is selected"
         applicationBrowsePanel.selectRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         when: "'uninstall' button pressed"

@@ -147,8 +147,8 @@ public class ApplicationBrowsePanel
         {
             throw new TestFrameworkException( "state was not found in the table ! application name is " + appName );
         }
-        getLogger().info( "status of module is : " + findElements( By.xpath( stateCell ) ).get( 0 ).getText() );
-        return findElements( By.xpath( stateCell ) ).get( 0 ).getText();
+        getLogger().info( "status of module is : " + findElement( By.xpath( stateCell ) ).getText() );
+        return findElement( By.xpath( stateCell ) ).getText();
     }
 
     public boolean waitApplicationStatus( String appName, String state )

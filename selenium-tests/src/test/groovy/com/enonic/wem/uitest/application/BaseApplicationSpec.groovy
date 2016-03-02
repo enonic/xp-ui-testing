@@ -1,8 +1,6 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.pages.modules.ApplicationBrowseItemsSelectionPanel
-import com.enonic.autotests.pages.modules.ApplicationBrowsePanel
-import com.enonic.autotests.pages.modules.ApplicationItemStatisticsPanel
+import com.enonic.autotests.pages.modules.*
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
@@ -38,6 +36,9 @@ class BaseApplicationSpec
     String STOPPED_STATE = "stopped";
 
     @Shared
+    String GOOGLE_ANALYTICS_APP_NAME = "com.enonic.app.ga";
+
+    @Shared
     ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 
     @Shared
@@ -55,4 +56,17 @@ class BaseApplicationSpec
         applicationItemStatisticsPanel = applicationBrowsePanel.getItemStatisticPanel();
     }
 
+    protected installGoogleAnalytics( String name, String displayName )
+    {
+        if ( !applicationBrowsePanel.exists( name ) )
+        {
+            applicationBrowsePanel.clickOnToolbarInstall();
+            InstallAppDialog appDialog = new InstallAppDialog( getSession() );
+            appDialog.waitUntilDialogLoaded();
+            InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab();
+            marketPanel.doInstallApp( displayName );
+            appDialog.clickOnCancelButton();
+            sleep( 3000 );
+        }
+    }
 }
