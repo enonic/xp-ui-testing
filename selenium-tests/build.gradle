@@ -195,10 +195,20 @@ task testUserLocal( type: Test ) {
 }
 
 task testApplicationLocal( type: Test ) {
-    println xpHome
     println "XP_HOME is:"
     println System.getenv( "XP_HOME" );
+    scanForTestClasses = false
+    include '**/application/*Spec.class'
+    exclude '**/content/**'
+    exclude '**/user/**'
+    forkEvery = null
+}
 
+task testApplicationBrowserStack( type: Test ) {
+    //set system property
+    System.setProperty 'geb.env', 'browserstack';
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' );
     scanForTestClasses = false
     include '**/application/*Spec.class'
     exclude '**/content/**'

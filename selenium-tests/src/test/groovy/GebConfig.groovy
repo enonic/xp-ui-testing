@@ -1,11 +1,14 @@
 import org.openqa.selenium.Platform
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
+import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.remote.RemoteWebDriver
 
 import java.util.logging.Level
 
-// Use firefox by default
+// chrome driver by default
 driver = {
 
     def path = System.getProperty( "webdriver.chrome.driver" )
@@ -41,18 +44,6 @@ driver = {
     }
 
     def driver = new ChromeDriver();
-    //ChromeOptions options = new ChromeOptions();
-    //options.addArguments( "start-maximized" );
-
-    // DesiredCapabilities dc = new DesiredCapabilities();
-    // dc.setCapability( CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE );
-    // def driver = new ChromeDriver( dc )
-
-    //FirefoxProfile profile = new FirefoxProfile();
-    //profile.setEnableNativeEvents( true );
-    //def driver = new FirefoxDriver( profile );
-    //def driver = new FirefoxDriver();
-    // driver.manage().window().maximize();
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
     println "default configuration";
@@ -63,7 +54,23 @@ reportsDir = 'build/reports'
 reportOnTestFailureOnly = false
 
 environments {
-
+    // TODO read capabilities from a property-file
+    browserstack {
+        //TODO change the baseUrl to actual
+        baseUrl = 'http://google.com'
+        driver = {
+            baseUrl = 'http://google.com'
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setCapability( "browser", "Firefox" );
+            caps.setCapability( "browser_version", "44.0" );
+            caps.setCapability( "os", "Windows" );
+            caps.setCapability( "os_version", "7" );
+            caps.setCapability( "resolution", "1024x768" );
+            URL url = new URL( "http://alexrodriguez2:ZxWiqCXgYq5NJfmyy1ms@hub.browserstack.com/wd/hub" )
+            WebDriver driver = new RemoteWebDriver( url, caps );
+            return driver;
+        }
+    }
     firefox {
         driver = {
             FirefoxProfile profile = new FirefoxProfile();
@@ -95,6 +102,4 @@ environments {
             return driver
         }
     }
-
-
 }
