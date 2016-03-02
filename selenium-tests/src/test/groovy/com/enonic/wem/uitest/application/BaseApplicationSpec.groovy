@@ -39,6 +39,9 @@ class BaseApplicationSpec
     String GOOGLE_ANALYTICS_APP_NAME = "com.enonic.app.ga";
 
     @Shared
+    String GOOGLE_ANALYTICS_DISPLAY_NAME = "Google Analytics";
+
+    @Shared
     ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 
     @Shared
@@ -56,7 +59,7 @@ class BaseApplicationSpec
         applicationItemStatisticsPanel = applicationBrowsePanel.getItemStatisticPanel();
     }
 
-    protected installGoogleAnalytics( String name, String displayName )
+    protected installApp( String name, String displayName )
     {
         if ( !applicationBrowsePanel.exists( name ) )
         {
