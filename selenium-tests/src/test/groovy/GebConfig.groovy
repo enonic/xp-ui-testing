@@ -82,24 +82,4 @@ environments {
             return driver
         }
     }
-
-    chrome {
-        driver = {
-            def path = System.getProperty( "webdriver.chrome.driver" )
-            if ( path == null )
-            {
-                println "specify a path to chrome webdriver"
-                Properties props = new Properties()
-                File propsFile = new File( 'tests.properties' )
-                props.load( propsFile.newDataInputStream() )
-
-                def pathToDriver = props.getProperty( 'chromedriver.path' )
-                System.setProperty( "webdriver.chrome.driver", pathToDriver )
-            }
-            def driver = new ChromeDriver()
-            driver.manage().window().maximize()
-            println "chrome configuration"
-            return driver
-        }
-    }
 }
