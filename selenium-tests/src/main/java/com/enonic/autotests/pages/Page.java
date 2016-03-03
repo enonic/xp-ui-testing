@@ -12,9 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Predicate;
 
@@ -320,7 +318,6 @@ public abstract class Page
     {
         getLogger().info( "Get element by locator: " + locator.toString() );
         long startTime = System.currentTimeMillis();
-        getDriver().manage().timeouts().implicitlyWait( 5, TimeUnit.SECONDS );
         WebElement we = null;
         for ( int i = 0; i <= tries; i++ )
         {
@@ -347,30 +344,7 @@ public abstract class Page
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         getLogger().info( "Finished click after waiting for " + totalTime + " milliseconds." );
-        getDriver().manage().timeouts().implicitlyWait( Application.EXPLICIT_NORMAL, TimeUnit.SECONDS );
-        getLogger().info( "getDynamicElement is  null: " );
         return we;
-    }
-
-    public WebElement findDynamicElement( final WebDriver driver, final String xpath, long timeout )
-    {
-        WebDriverWait wait = new WebDriverWait( driver, timeout );
-        return wait.until( new ExpectedCondition<WebElement>()
-        {
-            @Override
-            public WebElement apply( WebDriver webDriver )
-            {
-                try
-                {
-                    return driver.findElement( By.xpath( xpath ) );
-
-                }
-                catch ( StaleElementReferenceException e )
-                {
-                    return null;
-                }
-            }
-        } );
     }
 
     public TestSession getSession()

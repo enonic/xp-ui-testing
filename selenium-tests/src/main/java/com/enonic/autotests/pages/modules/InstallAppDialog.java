@@ -148,7 +148,7 @@ public class InstallAppDialog
     public InstallAppDialog_MarketAppPanel clickOnEnonicMarketTab()
     {
         enonicMarketTab.click();
-        sleep( 500 );
+        sleep( 1000 );
         return getMarketAppPanel();
     }
 

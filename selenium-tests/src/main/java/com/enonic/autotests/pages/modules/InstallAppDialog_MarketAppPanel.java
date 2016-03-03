@@ -30,7 +30,8 @@ public class InstallAppDialog_MarketAppPanel
     public void doInstallApp( String appDisplayName )
     {
         String installButton = String.format( INSTALL_APP_BUTTON, appDisplayName );
-        getDisplayedElement( By.xpath( installButton ) ).click();
+        getDynamicElement( By.xpath( installButton ), 3 ).click();
+        //getDisplayedElement( By.xpath( installButton ) ).click();
         sleep( 5000 );
     }
 

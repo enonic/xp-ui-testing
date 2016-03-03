@@ -125,6 +125,7 @@ class InstallApplication_Spec
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
         InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab();
+        sleep( 1000 );
 
         when: "an application from the 'Enonic Market' installed"
         marketPanel.doInstallApp( CONTENT_VIEWER_APP_NAME );
