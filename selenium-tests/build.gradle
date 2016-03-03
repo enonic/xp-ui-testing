@@ -184,6 +184,26 @@ task testApplicationWithFirefox( type: Test, dependsOn: [buildApplications, dele
     copyTestApplications.mustRunAfter startServer
 }
 
+task testInputTypesWithFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+    //set system property
+    System.setProperty 'geb.env', 'firefox';
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' );
+
+    scanForTestClasses = false
+    include '**/content/input_types/*Spec.class'
+    include '**/content/relationship/**Spec.class'
+    exclude '**/application/**'
+    exclude '**/user/**'
+    exclude '**/content/upload/**Spec.class'
+    exclude '**/content/liveedit/**Spec.class'
+    forkEvery = null
+    deleteFolders.mustRunAfter buildApplications
+    startServer.mustRunAfter deleteFolders
+    copyContentTypes.mustRunAfter startServer
+}
+
+
 task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp, copySimplePageApp] ) {
     scanForTestClasses = false
     exclude '**/application/**'
