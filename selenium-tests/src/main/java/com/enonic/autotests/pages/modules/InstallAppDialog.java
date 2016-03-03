@@ -155,6 +155,7 @@ public class InstallAppDialog
     public InstallAppDialog clickOnCancelButton()
     {
         cancelButton.click();
+        sleep( 400 );
         return this;
     }
 

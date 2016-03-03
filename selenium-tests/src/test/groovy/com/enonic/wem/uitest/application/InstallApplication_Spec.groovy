@@ -132,8 +132,8 @@ class InstallApplication_Spec
         appDialog.clickOnCancelButton();
 
         then: "correct notification message appears"
-        TestUtils.saveScreenshot( getSession(), "app_from_market" );
         notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP_DISPLAY_NAME );
+        TestUtils.saveScreenshot( getSession(), "app_from_market" );
 
         and: "new application listed in the browse panel"
         applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );
