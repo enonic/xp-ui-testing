@@ -320,7 +320,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_LONG );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), 5 );
         if ( !result )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_wizard" ) );
