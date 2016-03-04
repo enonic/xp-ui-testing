@@ -31,6 +31,9 @@ class UninstallApplicationDialog_Spec
 
         and: "button 'Cancel' displayed"
         dialog.isCancelButtonDisplayed();
+
+        and: "correct message present in the dialog"
+        dialog.getContentString() == UninstallApplicationDialog.CONTENT_TEXT;
     }
 
     def "GIVEN 'UnInstallDialog' is opened WHEN 'cancel' button pressed THEN 'UnInstallDialog' not displayed"()

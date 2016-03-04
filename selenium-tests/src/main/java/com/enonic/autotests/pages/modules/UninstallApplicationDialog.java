@@ -20,11 +20,15 @@ public class UninstallApplicationDialog
 
     public static final String HEADER_TEXT = "Uninstall Applications";
 
+    public static final String CONTENT_TEXT = "Are you sure you want to uninstall selected application(s)?";
+
     private final String YES_BUTTON = DIV_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Yes']";
 
     private final String NO_BUTTON = DIV_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='No']";
 
     private final String CANCEL_BUTTON = DIV_CONTAINER + "//button[contains(@class,'cancel-button-top')]";
+
+    private final String DIALOG_CONTENT = DIV_CONTAINER + "//div[contains(@id,'ModalDialogContentPanel')]/h6";
 
     @FindBy(xpath = YES_BUTTON)
     private WebElement yesButton;
@@ -50,6 +54,11 @@ public class UninstallApplicationDialog
         yesButton.click();
         waitUntilDialogClosed();
         return new ApplicationBrowsePanel( getSession() );
+    }
+
+    public String getContentString()
+    {
+        return getDisplayedString( DIALOG_CONTENT );
     }
 
     public void waitUntilDialogLoaded()
