@@ -101,6 +101,16 @@ class InstallApplication_Spec
         applicationBrowsePanel.isUninstallButtonEnabled();
     }
 
+    def "WHEN one local application and one not local application are selected THEN 'uninstall' button is disabled"()
+    {
+        when:
+        applicationBrowsePanel.clickCheckboxAndSelectRow( APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRow( LOCAL_APP_NAME );
+
+        then:
+        !applicationBrowsePanel.isUninstallButtonEnabled();
+    }
+
     def "GIVEN existing not local application selected WHEN 'uninstall' button pressed THEN application not listed AND correct notification appears"()
     {
         given: "existing not local application selected"
@@ -125,7 +135,7 @@ class InstallApplication_Spec
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
         InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab();
-        sleep( 1000 );
+        sleep( 2000 );
 
         when: "an application from the 'Enonic Market' installed"
         marketPanel.doInstallApp( CONTENT_VIEWER_APP_NAME );
