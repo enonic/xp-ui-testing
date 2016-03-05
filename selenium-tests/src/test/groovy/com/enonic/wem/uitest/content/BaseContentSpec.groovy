@@ -23,6 +23,9 @@ class BaseContentSpec
     String TEMPLATE_SUPPORTS_COUNTRY = "country";
 
     @Shared
+    String NORSK_LANGUAGE = "norsk (no)";
+
+    @Shared
     String TEMPLATE_SUPPORTS_SITE = "site";
 
     @Shared
@@ -150,11 +153,6 @@ class BaseContentSpec
         }
 
         return contentBrowsePanel;
-    }
-
-    protected void switchToApplicationWindow( String appName )
-    {
-        NavigatorHelper.switchToAppWindow( getSession(), appName );
     }
 
     protected void switchToContentStudioWindow()

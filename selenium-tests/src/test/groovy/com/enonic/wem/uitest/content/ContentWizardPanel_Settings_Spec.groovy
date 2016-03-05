@@ -13,8 +13,7 @@ import spock.lang.Stepwise
 class ContentWizardPanel_Settings_Spec
     extends BaseContentSpec
 {
-    @Shared
-    String NORSK_LANGUAGE = "norsk (no)";
+
 
     @Shared
     String SUPER_USER = "Super User";
@@ -59,9 +58,7 @@ class ContentWizardPanel_Settings_Spec
     def "GIVEN existing content with language opened WHEN language removed AND content saved  THEN no one language present in settings"()
     {
         given: "when content opened for edit"
-        filterPanel.typeSearchText( content.getName() );
-        sleep( 1000 );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( content.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEdit();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
         when: "language removed AND content saved"
@@ -76,9 +73,7 @@ class ContentWizardPanel_Settings_Spec
 
     def "GIVEN existing content with owner opened WHEN owner changed AND content saved  THEN new owner shown in settings"()
     {
-        given: "when content opened for edit"
-        filterPanel.typeSearchText( content.getName() );
-        sleep( 1000 );
+        given: "when existing content opened for edit"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEdit();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
