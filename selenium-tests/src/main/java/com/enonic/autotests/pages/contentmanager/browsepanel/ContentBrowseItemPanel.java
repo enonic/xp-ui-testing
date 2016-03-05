@@ -16,4 +16,13 @@ public class ContentBrowseItemPanel
 
     private ContentDetailsPanel contentDetailsPanel;
 
+    public ContentDetailsPanel getContentDetailsPanel()
+    {
+        if ( contentDetailsPanel == null )
+        {
+            contentDetailsPanel = new ContentDetailsPanel( getSession() );
+        }
+        return contentDetailsPanel;
+    }
+
 }

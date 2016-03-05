@@ -26,6 +26,10 @@ public class ContentDetailsPanel
 
     private UserAccessWidgetItemView userAccessWidgetItemView;
 
+    private AttachmentsWidgetItemView attachmentsWidgetItemView;
+
+    private PropertiesWidgetItemView propertiesWidgetItemView;
+
     public ContentDetailsPanel( final TestSession session )
     {
         super( session );
@@ -38,6 +42,24 @@ public class ContentDetailsPanel
             return new UserAccessWidgetItemView( getSession() );
         }
         return userAccessWidgetItemView;
+    }
+
+    public PropertiesWidgetItemView getPropertiesWidgetItemView()
+    {
+        if ( propertiesWidgetItemView == null )
+        {
+            return new PropertiesWidgetItemView( getSession() );
+        }
+        return propertiesWidgetItemView;
+    }
+
+    public AttachmentsWidgetItemView getAttachmentsWidgetItemView()
+    {
+        if ( attachmentsWidgetItemView == null )
+        {
+            return new AttachmentsWidgetItemView( getSession() );
+        }
+        return attachmentsWidgetItemView;
     }
 
     public boolean isPanelEmpty()
