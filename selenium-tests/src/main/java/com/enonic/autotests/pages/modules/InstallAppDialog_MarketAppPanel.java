@@ -32,7 +32,7 @@ public class InstallAppDialog_MarketAppPanel
         String installButton = String.format( INSTALL_APP_BUTTON, appDisplayName );
         getDynamicElement( By.xpath( installButton ), 3 ).click();
         //getDisplayedElement( By.xpath( installButton ) ).click();
-        sleep( 5000 );
+        sleep( 7000 );
     }
 
     public boolean isApplicationAlreadyInstalled( String appDisplayName )
