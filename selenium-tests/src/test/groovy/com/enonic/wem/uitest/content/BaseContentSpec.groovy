@@ -53,6 +53,12 @@ class BaseContentSpec
     String COUNTRY_SITE_HTML_HEADER = "<title>Country Region</title>";
 
     @Shared
+    String SUPER_USER = "Super User";
+
+    @Shared
+    String ANONYMOUS_USER = "Anonymous User";
+
+    @Shared
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared

@@ -147,6 +147,13 @@ public class ContentBrowsePanel
         return contentDetailsPanel;
     }
 
+    public boolean doTypeSearchTextAndFindGridItem( String gridItemName, long timeout )
+    {
+        getFilterPanel().typeSearchText( gridItemName );
+        String gridItemXpath = String.format( NAMES_VIEW_BY_NAME, gridItemName );
+        return waitUntilVisibleNoException( By.xpath( gridItemXpath ), timeout );
+    }
+
     public ContentBrowsePanel clickOnDetailsToggleButton()
     {
         boolean result = waitUntilClickableNoException( By.xpath( DETAILS_TOGGLE_BUTTON ), Application.EXPLICIT_NORMAL );

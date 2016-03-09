@@ -118,7 +118,7 @@ public class SettingsWizardStepForm
 
     public String getLanguage()
     {
-        if ( findElements( By.xpath( LOCALE_TEXT ) ).stream().map( WebElement::getText ).count() > 0 )
+        if ( isElementDisplayed( LOCALE_TEXT ) )
         {
             return findElements( By.xpath( LOCALE_TEXT ) ).stream().map( WebElement::getText ).findFirst().get();
         }
@@ -127,7 +127,7 @@ public class SettingsWizardStepForm
 
     public String getOwner()
     {
-        if ( findElements( By.xpath( OWNER_TEXT ) ).stream().map( WebElement::getText ).count() > 0 )
+        if ( isElementDisplayed( OWNER_TEXT ) )
         {
             return findElements( By.xpath( OWNER_TEXT ) ).stream().map( WebElement::getText ).findFirst().get();
         }

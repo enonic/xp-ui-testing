@@ -14,13 +14,6 @@ class ContentWizardPanel_Settings_Spec
     extends BaseContentSpec
 {
 
-
-    @Shared
-    String SUPER_USER = "Super User";
-
-    @Shared
-    String ANONYMOUS_USER = "Anonymous User";
-
     @Shared
     Content content;
 
