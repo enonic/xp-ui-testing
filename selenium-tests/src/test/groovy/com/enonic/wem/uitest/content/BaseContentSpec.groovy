@@ -220,6 +220,61 @@ class BaseContentSpec
         return site;
     }
 
+    protected Content buildSite( String name, String displayName, String description )
+    {
+        String siteName = NameHelper.uniqueName( name );
+        PropertyTree data = new PropertyTree();
+        data.addStrings( "description", description )
+        Content site = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( siteName ).
+            displayName( displayName ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.site() ).data( data ).
+            build();
+        return site;
+    }
+
+    protected Content buildUnstructured( String name, String parentName, String displayName )
+    {
+        ContentPath parent = null;
+        if ( parentName != null )
+        {
+            parent = ContentPath.from( parentName )
+        }
+        else
+        {
+            parent = ContentPath.ROOT;
+        }
+        Content unstructured = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( displayName ).
+            parent( parent ).
+            contentType( ContentTypeName.unstructured() ).
+            build();
+        return unstructured;
+    }
+
+    protected Content buildShortcut( String name, String parentName, String displayName )
+    {
+        ContentPath parent = null;
+        if ( parentName != null )
+        {
+            parent = ContentPath.from( parentName )
+        }
+        else
+        {
+            parent = ContentPath.ROOT;
+        }
+        Content shortcut = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( displayName ).
+            parent( parent ).
+            contentType( ContentTypeName.shortcut() ).
+            build();
+        return shortcut;
+    }
+
     protected void addSiteBasedOnFirstApp( Content site )
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(

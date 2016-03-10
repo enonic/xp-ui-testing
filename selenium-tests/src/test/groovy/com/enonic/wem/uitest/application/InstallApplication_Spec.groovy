@@ -40,8 +40,7 @@ class InstallApplication_Spec
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
 
-
-        when: "an application uploaded"
+        when: "the application uploaded"
         appDialog.duUploadApplication( LOCAL_PATH_TO_FILE );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_install" )

@@ -10,6 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -25,6 +28,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.TextTransfer;
 import com.enonic.xp.schema.content.ContentTypeName;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -166,6 +170,25 @@ public class NewContentDialog
         sleep( 1000 );
         File file = createFileInTmp( path, fileName );
         insertPathToFileToSystemDialog( file.getAbsolutePath() );
+        return new ContentBrowsePanel( getSession() );
+    }
+
+    public ContentBrowsePanel doUploadFile( String pathToFile )
+    {
+        String absolutePath = null;
+        URL resource = NewContentDialog.class.getResource( pathToFile );
+        try
+        {
+            absolutePath = Paths.get( resource.toURI() ).toString();
+        }
+        catch ( URISyntaxException e )
+        {
+            e.printStackTrace();
+        }
+        uploadButton.click();
+        sleep( 1000 );
+        TextTransfer transfer = new TextTransfer();
+        transfer.typePathToFileToSystemDialog( absolutePath );
         return new ContentBrowsePanel( getSession() );
     }
 

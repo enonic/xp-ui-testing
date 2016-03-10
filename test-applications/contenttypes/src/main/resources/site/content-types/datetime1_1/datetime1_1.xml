@@ -5,7 +5,7 @@
   <form>
     <input name="requiredDatetime" type="DateTime">
       <config>
-        <with-timezone>true</with-timezone>
+        <timezone>true</timezone>
       </config>
       <label>Required DateTime (with tz)</label>
       <indexed>true</indexed>
