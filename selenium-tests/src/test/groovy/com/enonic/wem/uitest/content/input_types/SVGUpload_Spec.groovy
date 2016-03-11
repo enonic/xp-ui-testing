@@ -10,7 +10,7 @@ class SVGUpload_Spec
     extends BaseContentSpec
 {
     @Shared
-    String path = "test-data/upload/cirkles.svg";
+    String path = "/test-data/upload/cirkles.svg";
 
     @Shared
     String FILE_NAME = "cirkles.svg";
@@ -23,7 +23,7 @@ class SVGUpload_Spec
 
         when: " click on drop zone and select a svg-file"
         TestUtils.saveScreenshot( getSession(), "start-upload-svg" )
-        dialog.doUploadFile( path, FILE_NAME );
+        dialog.doUploadFile( path );
         sleep( 1000 )
 
         then: "new svg file content appears in the browse panel"

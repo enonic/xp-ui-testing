@@ -9,7 +9,7 @@ class ContentBrowsePanel_SpecialChars_Spec
 {
 
     @Shared
-    String path = "test-data/upload/ea[1].png";
+    String path = "/test-data/upload/ea[1].png";
 
     @Shared
     String FILE_NAME = "ea[1].png";

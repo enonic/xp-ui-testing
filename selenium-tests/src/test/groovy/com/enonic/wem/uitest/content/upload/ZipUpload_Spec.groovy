@@ -10,7 +10,7 @@ class ZipUpload_Spec
     extends BaseContentSpec
 {
     @Shared
-    String pathToZip = "test-data/upload/img.zip";
+    String pathToZip = "/test-data/upload/img.zip";
 
     @Shared
     String FILE_NAME = "img.zip";

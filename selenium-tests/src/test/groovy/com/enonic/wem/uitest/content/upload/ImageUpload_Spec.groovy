@@ -10,7 +10,7 @@ class ImageUpload_Spec
     extends BaseContentSpec
 {
     @Shared
-    String path = "test-data/upload/ea.png";
+    String path = "/test-data/upload/ea.png";
 
     @Shared
     String FILE_NAME = "ea.png";
