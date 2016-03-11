@@ -37,13 +37,14 @@ import com.enonic.xp.security.auth.AuthenticationInfo;
 public class Initializer
 {
     private static final String[] FOLDER_IMAGES = {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "hand.jpg"};
-    //, "elephant.png", "dollar.png"
+
+    private static final String[] BAT_FILES = {"server.bat", "start.bat"};
 
     private static final String FOLDER_NAME = "all-content-types-images";
 
-    private static final String EMPTY_FOLDER_NAME = "selenium-tests-folder";
+    private static final String TEST_FOLDER_NAME = "selenium-tests-folder";
 
-    private static final String EMPTY_FOLDER_DISPLAY_NAME = "folder for selenium tests";
+    private static final String TEST_FOLDER_DISPLAY_NAME = "folder for selenium tests";
 
     private static final String FOLDER_DISPLAY_NAME = "All Content types images";
 
@@ -110,14 +111,14 @@ public class Initializer
                 build() );
         }
 
-        final ContentPath emptyFolderPath = ContentPath.from( "/" + EMPTY_FOLDER_NAME );
+        final ContentPath emptyFolderPath = ContentPath.from( "/" + TEST_FOLDER_NAME );
         if ( hasContent( emptyFolderPath ) )
         {
             return;
         }
 
         ///////////////////////////////////////////////////////////////////////
-        addEmptyFolder();
+        addTestFolder();
         // set permissions  for empty folder
         final Content emptyFolder = contentService.getByPath( emptyFolderPath );
         if ( emptyFolder != null )
@@ -199,22 +200,55 @@ public class Initializer
         }
     }
 
-    private void addEmptyFolder()
+    private void addTestFolder()
         throws Exception
     {
-        final ContentPath testFolderPath = ContentPath.from( "/" + EMPTY_FOLDER_NAME );
+        final ContentPath testFolderPath = ContentPath.from( "/" + TEST_FOLDER_NAME );
         if ( !hasContent( testFolderPath ) )
         {
             contentService.create( makeFolder().
-                name( EMPTY_FOLDER_NAME ).
-                displayName( EMPTY_FOLDER_DISPLAY_NAME ).
+                name( TEST_FOLDER_NAME ).
+                displayName( TEST_FOLDER_DISPLAY_NAME ).
                 parent( ContentPath.ROOT ).
                 permissions( PERMISSIONS ).
                 inheritPermissions( false ).
                 build() );
+
+            for ( final String fileName : BAT_FILES )
+            {
+                try
+                {
+                    createBatContent( testFolderPath, fileName );
+                }
+                finally
+                {
+                    LOG.info( "Initialized content for 'All content types'" );
+                }
+            }
+            addSHContent( testFolderPath );
+
+            addEXEContent( testFolderPath );
         }
+
     }
 
+    private void addEXEContent( final ContentPath parent )
+    {
+        String fileName = "Notepad2.exe";
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "application/exe" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
+
+    }
     private void createImageContent( final ContentPath parent, final String fileName )
         throws Exception
     {
@@ -233,9 +267,61 @@ public class Initializer
 
     }
 
+    private void createBatContent( final ContentPath parent, final String fileName )
+        throws Exception
+    {
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "application/x-bat" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
+    }
+
+    private void addSHContent( final ContentPath parent )
+        throws Exception
+    {
+        String fileName = "server.sh";
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "application/x-sh" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
+    }
+
+
     private byte[] loadImageFileAsBytes( final String fileName )
     {
         final String filePath = "/site/images/" + fileName;
+
+        try
+        {
+            return Resources.toByteArray( getClass().getResource( filePath ) );
+        }
+        catch ( Exception e )
+        {
+            LOG.info( "error  " + e.getMessage() );
+            System.out.println( "error " + e.getMessage() );
+            return null;
+        }
+    }
+
+    private byte[] loadFileAsBytes( final String fileName )
+    {
+        final String filePath = "/site/files/" + fileName;
 
         try
         {

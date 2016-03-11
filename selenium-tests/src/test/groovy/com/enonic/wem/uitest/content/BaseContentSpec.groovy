@@ -59,6 +59,15 @@ class BaseContentSpec
     String ANONYMOUS_USER = "Anonymous User";
 
     @Shared
+    String EXECUTABLE_BAT = "server.bat";
+
+    @Shared
+    String EXECUTABLE_SH = "server.sh";
+
+    @Shared
+    String EXECUTABLE_EXE = "Notepad2.exe";
+
+    @Shared
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared

@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.PropertiesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
@@ -20,12 +19,6 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     Content FOLDER_CONTENT;
 
     @Shared
-    String EXECUTABLE_FILE_EXE = "/test-data/upload/server.bat";
-
-    @Shared
-    String EXECUTABLE_FILE_SH = "/test-data/upload/server.sh";
-
-    @Shared
     String MEDIA_APP_NAME = "media";
 
     @Shared
@@ -35,15 +28,10 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     String EXECUTABLE_APP_NAME = "executable";
 
 
-    def "GIVEN opened a new content dialog WHEN upload button clicked and '.bat' file selected THEN correct info displayed in the widget"()
+    def "GIVEN existing '*.bat' WHEN  file selected THEN correct info displayed in the widget"()
     {
-        given: "existing executable file"
-        NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
-        dialog.doUploadFile( EXECUTABLE_FILE_EXE );
-        sleep( 1000 );
-
         when: "executable file selected"
-        findAndSelectContent( "server.bat" );
+        findAndSelectContent( EXECUTABLE_BAT );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         TestUtils.saveScreenshot( getSession(), "executable_bat" );
@@ -55,18 +43,29 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
-    def "GIVEN opened a new content dialog WHEN upload button clicked and '.sh' selected THEN correct info displayed in the widget"()
+    def "GIVEN existing '*.sh' WHEN file selected THEN correct info displayed in the widget"()
     {
-        given: "existing executable file"
-        NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
-        dialog.doUploadFile( EXECUTABLE_FILE_SH );
-        sleep( 1000 );
-
         when: "executable file selected"
-        findAndSelectContent( "server.sh" );
+        findAndSelectContent( EXECUTABLE_SH );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         TestUtils.saveScreenshot( getSession(), "executable_sh" );
+
+        then: "'media' is application's name"
+        view.getApplicationName() == MEDIA_APP_NAME;
+
+        and: "'executable' type is displayed"
+        view.getType() == EXECUTABLE_APP_NAME;
+    }
+
+
+    def "GIVEN existing '*.exe' WHEN file selected THEN correct info displayed in the widget"()
+    {
+        when: "executable file selected"
+        findAndSelectContent( EXECUTABLE_EXE );
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "executable_exe" );
 
         then: "'media' is application's name"
         view.getApplicationName() == MEDIA_APP_NAME;
