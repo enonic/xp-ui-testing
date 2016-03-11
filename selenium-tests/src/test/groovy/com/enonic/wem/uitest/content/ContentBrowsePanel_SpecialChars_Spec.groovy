@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.NewContentDialog
 import com.enonic.autotests.utils.TestUtils
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentBrowsePanel_SpecialChars_Spec
@@ -15,14 +14,13 @@ class ContentBrowsePanel_SpecialChars_Spec
     @Shared
     String FILE_NAME = "ea[1].png";
 
-    @Ignore
     def "GIVEN opened a new content dialog WHEN upload button clicked and file selected THEN new content present in browse panel "()
     {
         given: "opened a new content dialog"
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
 
         when: "click on drop zone and select a file"
-        dialog.doUploadFile( path, FILE_NAME );
+        dialog.doUploadFile( path );
         sleep( 1000 )
 
         then: "new png file content appears in the browse panel"

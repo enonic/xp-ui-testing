@@ -46,6 +46,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( "server.bat" );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "executable_bat" );
 
         then: "'media' is application's name"
         view.getApplicationName() == MEDIA_APP_NAME;
@@ -65,6 +66,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( "server.sh" );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "executable_sh" );
 
         then: "'media' is application's name"
         view.getApplicationName() == MEDIA_APP_NAME;
@@ -115,6 +117,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         when: "PropertiesWidgetItemView is shown"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "folder_properties" );
 
         then: "correct 'created' date displayed"
         view.getCreated() == LocalDate.now().toString();
@@ -141,6 +144,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( IMPORTED_BOOK_IMAGE );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "image_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();
@@ -177,6 +181,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( shortcut.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "shortcut_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();
@@ -196,6 +201,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( unstructured.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "unstructured_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();
@@ -215,6 +221,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( site.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        TestUtils.saveScreenshot( getSession(), "site_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();

@@ -23,7 +23,7 @@ class ImageUpload_Spec
 
         when: " click on drop zone and select a archive"
         TestUtils.saveScreenshot( getSession(), "start-upload-png" )
-        dialog.doUploadFile( path, FILE_NAME );
+        dialog.doUploadFile( path );
         sleep( 1000 )
 
         then: "new png file content appears in the browse panel"

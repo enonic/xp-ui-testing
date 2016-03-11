@@ -22,7 +22,7 @@ class ZipUpload_Spec
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
 
         when: "click 'New' button and open the 'New Content Dialog' and click on drop zone and select a archive"
-        dialog.doUploadFile( pathToZip, FILE_NAME );
+        dialog.doUploadFile( pathToZip );
         sleep( 1000 )
 
         then: "new archive content appears in the browse panel"
