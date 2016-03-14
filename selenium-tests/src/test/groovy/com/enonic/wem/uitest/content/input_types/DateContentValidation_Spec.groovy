@@ -2,11 +2,10 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateFormViewPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
-import spock.lang.Stepwise
 
-@Stepwise
 class DateContentValidation_Spec
     extends Base_InputFields_Occurrences
 
@@ -34,6 +33,7 @@ class DateContentValidation_Spec
         when: "date typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "wrong_date_format" )
 
         then: "red border appears"
         dateFormViewPanel.isInvalidDate();
@@ -48,6 +48,7 @@ class DateContentValidation_Spec
         when: "date typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "wrong_day" );
 
         then: "red border appears"
         dateFormViewPanel.isInvalidDate();
@@ -62,6 +63,7 @@ class DateContentValidation_Spec
         when: "date typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "wrong_month" );
 
         then: "red border appears"
         dateFormViewPanel.isInvalidDate();
