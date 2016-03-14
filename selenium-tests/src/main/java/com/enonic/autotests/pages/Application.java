@@ -48,6 +48,10 @@ public class Application
 
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
 
+    public static final String FULL_ACCESS = "Full Access";
+
+    public static final String CAN_READ = "Can Read";
+
     public static final String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
 
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";

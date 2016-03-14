@@ -13,7 +13,6 @@ public enum RoleName
     private RoleName( String role )
     {
         this.role = role;
-
     }
 
     public String getValue()
