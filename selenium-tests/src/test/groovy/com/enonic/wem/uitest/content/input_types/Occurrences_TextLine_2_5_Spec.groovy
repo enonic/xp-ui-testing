@@ -60,7 +60,7 @@ class Occurrences_TextLine_2_5_Spec
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
 
-        then: "one text input should be displayed on the form view"
+        then: "button 'Add' present on page"
         formViewPanel.isAddButtonPresent();
     }
 

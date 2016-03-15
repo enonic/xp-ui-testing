@@ -123,7 +123,7 @@ class Occurrences_ComboBox_0_0_Spec
 
     }
 
-    def "GIVEN a existing new ComboBox 0:0 with options  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()
+    def "GIVEN a existing ComboBox 0:0 with options  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()
     {
         given: "existing new ComboBox 0:0 with options'"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );

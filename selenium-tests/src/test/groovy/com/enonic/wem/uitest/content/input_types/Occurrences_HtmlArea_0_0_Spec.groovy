@@ -42,7 +42,7 @@ class Occurrences_HtmlArea_0_0_Spec
 
         then: "wizard with form view opened"
         formViewPanel.isOpened();
-        and: "text area present"
+        and: "one text area present"
         formViewPanel.getNumberOfAreas() == 1;
         and:
         formViewPanel.isAddButtonPresent();
@@ -93,13 +93,13 @@ class Occurrences_HtmlArea_0_0_Spec
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getTextFromAreas();
 
-        then: "text area is empty"
+        then: "one empty area present"
         strings.size() == 1;
         and:
         strings.get( 0 ) == BaseHtmlAreaFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
     }
 
-    def "GIVEN saving of content with two HtmlArea editor and two strings typed WHEN content opened for edit THEN  two editors with correct strings are present"()
+    def "GIVEN saving of content with two HtmlArea editor and two strings typed WHEN content opened for edit THEN two editors with correct strings are present"()
     {
         given: "new content with type HtmlArea added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 2, TEST_TEXT1, TEST_TEXT2 );
@@ -112,7 +112,7 @@ class Occurrences_HtmlArea_0_0_Spec
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getTextFromAreas();
 
-        then: "text area is empty"
+        then: "two areas with correct text are present"
         strings.size() == 2;
         and:
         strings.contains( EXPECTED_TEXT1 );
@@ -133,7 +133,7 @@ class Occurrences_HtmlArea_0_0_Spec
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getTextFromAreas();
 
-        then: "text area is empty"
+        then: "three areas with correct text are present"
         strings.size() == 3;
         and:
         strings.contains( EXPECTED_TEXT1 );

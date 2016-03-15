@@ -75,7 +75,7 @@ class TagsInputType_0_5_Spec
         when: "five tags added, input text becomes disabled(display: none)"
         contentWizardPanel.typeData( tagContent );
 
-        then: "one tag with correct text present on the page"
+        then: "input text becomes disabled and impossible to add one more tag"
         !formViewPanel.isTagsInputDisplayed() && isDisplayedBefore;
     }
 
@@ -87,14 +87,14 @@ class TagsInputType_0_5_Spec
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
-        when: "five tags added, input text becomes disabled(display: none)"
+        when: "one of the fives tags has been removed"
         formViewPanel.removeLastTag();
 
-        then: "one tag with correct text present on the page"
+        then: "input text becomes enabled again"
         formViewPanel.isTagsInputDisplayed() && !isDisplayedBefore;
     }
 
-    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page "()
+    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page"()
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 5 );
@@ -106,7 +106,7 @@ class TagsInputType_0_5_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
-        then: "one tag with correct text present on the page"
+        then: "five Tags with correct name are present in the wizard page"
         formViewPanel.getNumberOfTags() == 5;
         and:
         String[] tags = [TAG_1, TAG_2, TAG_3, TAG_4, TAG_5];

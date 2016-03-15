@@ -15,7 +15,7 @@ class Occurrences_TextLine_0_1_Spec
     String TEST_TEXT = "test text 0:1";
 
 
-    def "WHEN wizard for adding a TextLine-content (0:1) opened THEN one text input present "()
+    def "WHEN wizard for adding a TextLine-content (0:1) opened THEN one text input present"()
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
@@ -26,14 +26,14 @@ class Occurrences_TextLine_0_1_Spec
         formViewPanel.getNumberOfTextInputs() == 1;
     }
 
-    def "WHEN wizard for adding a TextLine-content (0:1) opened THEN button 'Remove' not present on page "()
+    def "WHEN wizard for adding a TextLine-content (0:1) opened THEN button 'Remove' not present on the page "()
     {
         when: "start to add a content with type 'TextLine 0:1'"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
-        then: "one text input should be displayed in the form view"
+        then: "button 'Remove' not present on the page "
         formViewPanel.getNumberOfDisplayedRemoveButtons() == 0;
     }
 
@@ -44,7 +44,7 @@ class Occurrences_TextLine_0_1_Spec
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
-        then: "one text input should be displayed in the form view"
+        then: "button 'Add' not present on page"
         !formViewPanel.isAddButtonPresent();
     }
 

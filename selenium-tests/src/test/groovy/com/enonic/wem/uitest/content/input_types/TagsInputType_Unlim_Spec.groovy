@@ -86,21 +86,22 @@ class TagsInputType_Unlim_Spec
         ( numberOfTagBeforeRemoving - formViewPanel.getNumberOfTags() ) == 1;
     }
 
-    def "WHEN wizard for adding a tag opened and 6 tags have been added THEN tags input enabled"()
+    def "WHEN wizard for adding a tag opened and 6 tags have been added THEN tags input enabled, because this is unlimited type"()
     {
         when: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
         selectSiteOpenWizard( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
-        then: "number of tags reduced"
+        then: "tags input enabled, because this is unlimited type"
         formViewPanel.getNumberOfTags() == 6;
+
         and: "tags input is enabled and there ia ability to add new tags"
         formViewPanel.isTagsInputDisplayed();
     }
 
 
-    def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN six tags added and 'Save' button pressed and just created content opened THEN six Tags with correct name are present in the wizard page "()
+    def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN six tags added and 'Save' button pressed and just created content opened THEN six Tags with correct name are present in the wizard page"()
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
@@ -113,7 +114,7 @@ class TagsInputType_Unlim_Spec
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         TestUtils.saveScreenshot( getSession(), "tags-unlim_bug" )
 
-        then: "one tag with correct text present on the page"
+        then: "six Tags with correct name are present in the wizard page"
         formViewPanel.getNumberOfTags() == 6;
         and:
         String[] tags = [TAG_1, TAG_2, TAG_3, TAG_4, TAG_5, TAG_6];

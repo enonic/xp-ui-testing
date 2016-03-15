@@ -63,7 +63,7 @@ class Occurrences_ImageSelector_2_4_Spec
         selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
             imageSelectorContent.getDisplayName() );
 
-        then:
+        then: "invalid content listed"
         filterPanel.typeSearchText( imageSelectorContent.getDisplayName() );
         contentBrowsePanel.isContentInvalid( imageSelectorContent.getName() );
     }

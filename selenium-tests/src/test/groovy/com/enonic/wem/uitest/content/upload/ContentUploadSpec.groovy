@@ -60,7 +60,7 @@ class ContentUploadSpec
     def "GIVEN text file that have been uploaded WHEN the content opened for edit THEN correct name displayed on wizard-page"()
     {
         when: "text file was selected and opened"
-        filterPanel.typeSearchText( "text.txt" );
+        filterPanel.typeSearchText( FILE_NAME );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( FILE_NAME ).clickToolbarEdit();
         TestUtils.saveScreenshot( getSession(), "txt-content-opened" )
 

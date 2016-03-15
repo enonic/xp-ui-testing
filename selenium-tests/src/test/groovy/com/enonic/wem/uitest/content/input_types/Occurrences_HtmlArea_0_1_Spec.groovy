@@ -21,7 +21,7 @@ class Occurrences_HtmlArea_0_1_Spec
     String EXPECTED_TEXT = "<p>" + TEST_TEXT + "</p>";
 
 
-    def "WHEN wizard for adding a content with HtmlArea(0:1) opened THEN text area is present "()
+    def "WHEN wizard for adding a content with HtmlArea(0:1) opened THEN text area is present"()
     {
         when: "start to add a content with type 'HtmlArea 0:1'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
@@ -42,7 +42,7 @@ class Occurrences_HtmlArea_0_1_Spec
         selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        then: "wizard with form view opened"
+        then: "HtmlArea-toolbar is hidden"
         !formViewPanel.isEditorToolbarVisible();
     }
 
@@ -54,7 +54,7 @@ class Occurrences_HtmlArea_0_1_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         formViewPanel.type( tinyMceContent.getData() );
 
-        then: "wizard with form view opened"
+        then: "HtmlArea-toolbar is visible"
         formViewPanel.isEditorToolbarVisible();
     }
 

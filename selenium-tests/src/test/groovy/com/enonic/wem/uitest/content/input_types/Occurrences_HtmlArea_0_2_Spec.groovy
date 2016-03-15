@@ -37,7 +37,7 @@ class Occurrences_HtmlArea_0_2_Spec
         then: "wizard with form view opened"
         formViewPanel.isOpened();
 
-        and: "text area present"
+        and: "one text area present"
         formViewPanel.getNumberOfAreas() == 1;
 
         and: "'Add' button is present"

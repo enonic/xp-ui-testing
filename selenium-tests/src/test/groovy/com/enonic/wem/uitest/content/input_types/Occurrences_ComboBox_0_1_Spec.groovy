@@ -20,7 +20,7 @@ class Occurrences_ComboBox_0_1_Spec
     @Shared
     Content content_with_opt;
 
-    def "WHEN wizard for adding a ComboBox-content(0:1) opened THEN option filter input is present "()
+    def "WHEN wizard for adding a ComboBox-content(0:1) opened THEN option filter input is present"()
     {
         when: "start to add a content with type 'ComboBox 0:1'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
@@ -33,7 +33,7 @@ class Occurrences_ComboBox_0_1_Spec
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
-    def "GIVEN saving of ComboBox-content (0:1) without options WHEN content opened for edit THEN no one selected options present on page "()
+    def "GIVEN saving of ComboBox-content (0:1) without options WHEN content opened for edit THEN no one selected options present on page"()
     {
         given: "new content with type ComboBox0_1 added'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );

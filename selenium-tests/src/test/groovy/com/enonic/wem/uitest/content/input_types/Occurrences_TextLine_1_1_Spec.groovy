@@ -61,8 +61,11 @@ class Occurrences_TextLine_1_1_Spec
         selectSiteOpenWizard( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
-        then: "one text input should be displayed in the form view"
+        then: "'Remove' button should not be displayed"
         formViewPanel.getNumberOfDisplayedRemoveButtons() == 0;
+
+        then: "button 'Add' not present on page"
+        !formViewPanel.isAddButtonPresent();
     }
 
     def "GIVEN creating new TextLine1:1 on root WHEN saved and wizard closed THEN new text line Content should be listed  AND  saved text showed when content opened for edit "()
