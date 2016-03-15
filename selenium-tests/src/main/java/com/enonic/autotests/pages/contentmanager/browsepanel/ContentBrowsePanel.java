@@ -561,6 +561,7 @@ public class ContentBrowsePanel
     public ContentWizardPanel clickToolbarEdit()
     {
         editButton.click();
+        sleep( 1000 );
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
