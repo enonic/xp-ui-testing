@@ -101,6 +101,12 @@ public class ImageSelectorFormViewPanel
         return this;
     }
 
+    @Override
+    public void clickOnAddButton()
+    {
+        throw new TestFrameworkException( "Add button should not be present on this Form!" );
+    }
+
     private void setCheckedForCheckbox( String imageName, boolean value )
     {
         String checkboxXpath = String.format( CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName );

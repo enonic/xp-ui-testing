@@ -25,7 +25,6 @@ public class ComboBoxFormViewPanel
     @FindBy(xpath = COMBO_BOX_OPTIONS_INPUT_XPATH)
     protected WebElement optionFilterInput;
 
-
     public ComboBoxFormViewPanel( final TestSession session )
     {
         super( session );
@@ -44,6 +43,12 @@ public class ComboBoxFormViewPanel
         return this;
     }
 
+    @Override
+    public void clickOnAddButton()
+    {
+        throw new TestFrameworkException( "Add button should not be present on this Form!" );
+    }
+
     public ComboBoxFormViewPanel clickOnLastRemoveButton()
     {
         List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[@class='selected-option']//a[@class='remove']" ) );
@@ -55,7 +60,6 @@ public class ComboBoxFormViewPanel
         list.get( list.size() - 1 ).click();
         sleep( 500 );
         return this;
-
     }
 
     protected void selectOption( String option )
