@@ -11,7 +11,7 @@ class ContentWizardPanel_TabMenuSpec
     extends BaseContentSpec
 {
     @Shared
-    String FOLDER_TAB_MENU_ITEM = "<Unnamed Folder>";
+    String FOLDER_TAB_TITLE = "<Unnamed Folder>";
 
     @Shared
     String UNSTRUCTURED_TAB_MENU_ITEM = "<Unnamed Unstructured>";
@@ -23,7 +23,7 @@ class ContentWizardPanel_TabMenuSpec
             waitUntilWizardOpened();
 
         then: "item menu with title should appears"
-        wizard.isTabMenuItemPresent( FOLDER_TAB_MENU_ITEM );
+        wizard.isTabMenuItemPresent( FOLDER_TAB_TITLE );
     }
 
     def "WHEN started adding a 'Unstructured' and 'Folder' two Wizards is opened  THEN two tabs with are present"()
@@ -36,7 +36,7 @@ class ContentWizardPanel_TabMenuSpec
             waitUntilWizardOpened();
 
         then:
-        wizard.isTabMenuItemPresent( UNSTRUCTURED_TAB_MENU_ITEM ) && wizard.isTabMenuItemPresent( FOLDER_TAB_MENU_ITEM );
+        wizard.isTabMenuItemPresent( UNSTRUCTURED_TAB_MENU_ITEM ) && wizard.isTabMenuItemPresent( FOLDER_TAB_TITLE );
     }
 
     def "GIVEN content Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
@@ -46,7 +46,7 @@ class ContentWizardPanel_TabMenuSpec
             waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( FOLDER_TAB_MENU_ITEM );
+        SaveBeforeCloseDialog dialog = wizard.close( FOLDER_TAB_TITLE );
 
         then: "close dialog should not showed"
         dialog == null;
@@ -60,7 +60,7 @@ class ContentWizardPanel_TabMenuSpec
             waitUntilWizardOpened().typeDisplayName( displayName );
 
         when:
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
+        SaveBeforeCloseDialog dialog = wizard.close( displayName );
 
         then:
         dialog != null;
@@ -74,7 +74,7 @@ class ContentWizardPanel_TabMenuSpec
             waitUntilWizardOpened().typeData( content );
 
         when: "'close' button in the tabMenu pressed and 'Yes' button on confirm dialog chosen "
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( content.getDisplayName() );
+        SaveBeforeCloseDialog dialog = wizard.close( content.getDisplayName() );
         dialog.clickYesButton();
         contentBrowsePanel.waitsForSpinnerNotVisible();
 

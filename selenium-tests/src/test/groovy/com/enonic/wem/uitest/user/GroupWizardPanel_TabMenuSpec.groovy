@@ -11,7 +11,7 @@ class GroupWizardPanel_TabMenuSpec
 {
 
     @Shared
-    String TAB_MENU_ITEM = "<Unnamed Group>"
+    String GROUP_TAB_TITLE = "<Unnamed Group>"
 
     def "WHEN started adding a 'system Group' and Wizard opened  THEN list of items with one name 'New Group' is present"()
     {
@@ -22,7 +22,7 @@ class GroupWizardPanel_TabMenuSpec
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New Role' is present "
-        wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
+        wizard.isTabMenuItemPresent( GROUP_TAB_TITLE );
     }
 
     def "GIVEN Group Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
@@ -33,7 +33,7 @@ class GroupWizardPanel_TabMenuSpec
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
+        SaveBeforeCloseDialog dialog = wizard.close( GROUP_TAB_TITLE );
         TestUtils.saveScreenshot( getTestSession(), "grw_close1" );
 
         then: "close dialog should not be showed"
@@ -48,8 +48,8 @@ class GroupWizardPanel_TabMenuSpec
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
-        when: "TabmenuItem(close) clicked"
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
+        when: "'Close' button clicked"
+        SaveBeforeCloseDialog dialog = wizard.close( displayName );
         TestUtils.saveScreenshot( getTestSession(), "grw_close2" );
 
         then: "'SaveBeforeClose' dialog showed"

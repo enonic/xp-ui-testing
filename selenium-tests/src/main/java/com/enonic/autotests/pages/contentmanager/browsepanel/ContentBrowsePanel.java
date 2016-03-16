@@ -32,6 +32,8 @@ public class ContentBrowsePanel
 {
     public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
 
+    protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
+
     public static final String CONTENT_STUDIO_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='Content Studio']";
 
     private final String BASE_PANEL_XPATH = "//div[contains(@id,'ContentBrowsePanel')]";
@@ -48,7 +50,8 @@ public class ContentBrowsePanel
 
     private final String MOVE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Move']]";
 
-    private final String EDIT_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
+    private final String EDIT_BUTTON_XPATH =
+        CONTENT_BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
 
     private final String DELETE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 

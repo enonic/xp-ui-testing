@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.date.TimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.utils.TestUtils
@@ -22,6 +23,24 @@ class DateValidation_Spec
 
     @Shared
     String WRONG_DATE_TIME = "015-02-28 19:01";
+
+    def "GIVEN wizard for adding a Time opened WHEN time input was clicked THEN 'time picker popup' dialog is displayed"()
+    {
+        given: "wizard for adding a Time opened"
+        Content dateContent = buildTime0_0_Content( CORRECT_TIME );
+        selectSiteOpenWizard( dateContent.getContentTypeName() );
+
+        when: "Time input has been clicked"
+        TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
+        TimePickerPopup picker = formViewPanel.showPicker();
+        TestUtils.saveScreenshot( getSession(), "time-picker-popup" );
+
+        then: "'time picker' popup dialog is displayed"
+        picker.isDisplayed();
+
+        and: "time zone not displayed"
+        !picker.isTimeZoneDisplayed();
+    }
 
     def "GIVEN saving of content with type 'Time 0:0' WHEN value of time is wrong THEN 'Publish' button disabled"()
     {

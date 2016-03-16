@@ -22,6 +22,8 @@ public abstract class FormViewPanel
     protected static String VALUE_INPUT =
         "//div[contains(@id,'api.form.InputView') and descendant::div[@title='%s']]//input[contains(@id,'TextInput')]";
 
+    protected final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
+
     public FormViewPanel( final TestSession session )
     {
         super( session );
@@ -33,6 +35,11 @@ public abstract class FormViewPanel
     {
         return waitUntilVisibleNoException( By.xpath( VALIDATION_VIEWER ), Application.EXPLICIT_NORMAL );
 
+    }
+
+    public boolean isAddButtonPresent()
+    {
+        return isElementDisplayed( ADD_BUTTON_XPATH );
     }
 
     public String getValidationMessage()

@@ -1,11 +1,13 @@
 package com.enonic.autotests.pages.form;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.google.common.base.Strings;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -23,6 +25,20 @@ public class DateTimeFormViewPanel
     public DateTimeFormViewPanel( final TestSession session )
     {
         super( session );
+    }
+
+    public DateTimePickerPopup showPicker()
+    {
+        Actions builder = new Actions( getDriver() );
+        builder.click( dateTimeInput ).build().perform();
+        DateTimePickerPopup popup = new DateTimePickerPopup( getSession() );
+        popup.waitUntilDialogLoaded();
+        return popup;
+    }
+
+    public boolean isAddButtonPresent()
+    {
+        return isElementDisplayed( ADD_BUTTON_XPATH );
     }
 
     @Override
@@ -53,5 +69,4 @@ public class DateTimeFormViewPanel
     {
         return waitAndCheckAttrValue( dateTimeInput, "class", "invalid", 1l );
     }
-
 }

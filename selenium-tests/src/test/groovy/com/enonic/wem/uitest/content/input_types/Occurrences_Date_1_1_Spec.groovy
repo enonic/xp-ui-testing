@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DatePickerPopup
 import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -17,6 +18,21 @@ class Occurrences_Date_1_1_Spec
 
     @Shared
     String TEST_DATE = "2016-01-11";
+
+    def "GIVEN wizard for adding a Date opened WHEN date input was clicked THEN 'date picker popup' dialog is displayed"()
+    {
+        given: "wizard for adding a Date opened"
+        Content dateContent = buildDate1_1_Content( TEST_DATE );
+        selectSiteOpenWizard( dateContent.getContentTypeName() );
+
+        when: "Date input has been clicked"
+        DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
+        DatePickerPopup picker = formViewPanel.showPicker();
+        TestUtils.saveScreenshot( getSession(), "date-picker-popup" );
+
+        then: "'date picker' popup dialog is displayed"
+        picker.isDisplayed();
+    }
 
     def "GIVEN wizard for adding a Date(1:1) opened WHEN name typed and date was not typed THEN date input is empty and content has a invalid status"()
     {

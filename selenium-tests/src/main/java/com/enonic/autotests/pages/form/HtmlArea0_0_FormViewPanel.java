@@ -19,9 +19,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class HtmlArea0_0_FormViewPanel
     extends BaseHtmlAreaFormViewPanel
 {
-
-    private final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
-
     public HtmlArea0_0_FormViewPanel( final TestSession session )
     {
         super( session );
@@ -87,11 +84,6 @@ public class HtmlArea0_0_FormViewPanel
     {
         List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
         return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
-    }
-
-    public boolean isAddButtonPresent()
-    {
-        return isElementDisplayed( ADD_BUTTON_XPATH );
     }
 
     public boolean waitUntilAddButtonNotVisible()

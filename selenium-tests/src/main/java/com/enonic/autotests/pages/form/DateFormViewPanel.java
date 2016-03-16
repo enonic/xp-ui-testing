@@ -3,11 +3,13 @@ package com.enonic.autotests.pages.form;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.google.common.base.Strings;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DatePickerPopup;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -27,6 +29,15 @@ public class DateFormViewPanel
     public DateFormViewPanel( final TestSession session )
     {
         super( session );
+    }
+
+    public DatePickerPopup showPicker()
+    {
+        Actions builder = new Actions( getDriver() );
+        builder.click( dateInput ).build().perform();
+        DatePickerPopup popup = new DatePickerPopup( getSession() );
+        popup.waitUntilDialogLoaded();
+        return popup;
     }
 
     @Override

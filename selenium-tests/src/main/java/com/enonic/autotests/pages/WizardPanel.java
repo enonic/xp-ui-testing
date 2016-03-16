@@ -66,15 +66,7 @@ public abstract class WizardPanel<T>
         }
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).click();
         sleep( 500 );
-        for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
-        {
-            status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );
-            if ( status.equals( CloseStatus.CLOSED ) || status.equals( CloseStatus.MODAL_DIALOG ) )
-            {
-                break;
-            }
-        }
-
+        status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );
         if ( status == null )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_close" ) );
@@ -87,40 +79,11 @@ public abstract class WizardPanel<T>
         }
         else
         {
+            //wizard closed successfully
             return null;
         }
     }
 
-    public SaveBeforeCloseDialog closeTabMenuItem( String title )
-    {
-        CloseStatus status = null;
-        if ( findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) ).size() == 0 )
-        {
-            throw new TestFrameworkException( "tab menu item :" + title + "  was not found!!" );
-        }
-        findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, title ) ) ).click();
-        for ( int i = 0; i < NUMBER_TRIES_TO_CLOSE; i++ )
-        {
-            status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );
-            if ( status.equals( CloseStatus.CLOSED ) || status.equals( CloseStatus.MODAL_DIALOG ) )
-            {
-                break;
-            }
-        }
-
-        if ( status == null )
-        {
-            throw new WizardPanelNotClosingException( "ContentWizard was not closed and Modal dialog not present!" );
-        }
-        else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
-        {
-            return new SaveBeforeCloseDialog( getSession() );
-        }
-        else
-        {
-            return null;
-        }
-    }
 
     public abstract String getWizardDivXpath();
 

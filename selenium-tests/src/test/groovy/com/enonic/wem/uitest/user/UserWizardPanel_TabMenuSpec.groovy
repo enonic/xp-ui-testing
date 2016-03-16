@@ -11,7 +11,7 @@ class UserWizardPanel_TabMenuSpec
 {
 
     @Shared
-    String TAB_MENU_ITEM = "<Unnamed User>"
+    String USER_TAB_TITLE = "<Unnamed User>"
 
     def "GIVEN started adding a 'User' and Wizard opened WHEN tab-menu button clicked THEN list of items with one name 'New User' is present"()
     {
@@ -21,7 +21,7 @@ class UserWizardPanel_TabMenuSpec
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New User' is present on the tab menu "
-        wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
+        wizard.isTabMenuItemPresent( USER_TAB_TITLE );
 
     }
 
@@ -33,7 +33,7 @@ class UserWizardPanel_TabMenuSpec
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
+        SaveBeforeCloseDialog dialog = wizard.close( USER_TAB_TITLE );
         TestUtils.saveScreenshot( getTestSession(), "user_tab_closed" );
 
         then: "close dialog should not be showed"
@@ -50,7 +50,7 @@ class UserWizardPanel_TabMenuSpec
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
         when: "TabmenuItem(close) clicked"
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
+        SaveBeforeCloseDialog dialog = wizard.close( displayName );
         TestUtils.saveScreenshot( getTestSession(), "user_save_before_close" );
 
         then: "'SaveBeforeClose' dialog showed"

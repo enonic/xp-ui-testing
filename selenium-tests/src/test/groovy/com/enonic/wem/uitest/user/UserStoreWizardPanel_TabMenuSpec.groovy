@@ -11,7 +11,7 @@ class UserStoreWizardPanel_TabMenuSpec
 {
 
     @Shared
-    String TAB_MENU_ITEM = "<Unnamed User Store>"
+    String USERSTORE_TAB_TITLE = "<Unnamed User Store>"
 
     def "WHEN started adding a 'User Store' and Wizard opened THEN new tab with name '[New User Store]' is present"()
     {
@@ -20,7 +20,7 @@ class UserStoreWizardPanel_TabMenuSpec
         UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New User Store' is present "
-        wizard.isTabMenuItemPresent( TAB_MENU_ITEM );
+        wizard.isTabMenuItemPresent( USERSTORE_TAB_TITLE );
     }
 
     def "GIVEN 'user store' Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
@@ -30,7 +30,7 @@ class UserStoreWizardPanel_TabMenuSpec
         UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( TAB_MENU_ITEM );
+        SaveBeforeCloseDialog dialog = wizard.close( USERSTORE_TAB_TITLE );
         TestUtils.saveScreenshot( getTestSession(), "user_store_closed" );
 
 
@@ -38,15 +38,15 @@ class UserStoreWizardPanel_TabMenuSpec
         dialog == null;
     }
 
-    def "GIVEN 'user store' Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
+    def "GIVEN 'user store' Wizard opened and name is typed WHEN 'Close' on the tab clicked THEN 'SaveBeforeClose' dialog showed"()
     {
         given: "'user store' Wizard opened and name is typed"
         String displayName = "testname";
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
-        when: "TabmenuItem(close) clicked"
-        SaveBeforeCloseDialog dialog = wizard.closeTabMenuItem( displayName );
+        when: "'Close' clicked"
+        SaveBeforeCloseDialog dialog = wizard.close( displayName );
         TestUtils.saveScreenshot( getTestSession(), "user_store_not_closed" );
 
         then: "'SaveBeforeClose' dialog showed"

@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -18,10 +19,26 @@ class Occurrences_DateTime_1_1_Spec
     @Shared
     String TEST_DATE_TIME1 = "2015-02-28 19:01";
 
+    def "GIVEN wizard for adding a DateTime with timezone opened WHEN date time input was clicked THEN date time picker popup dialog with timezone is displayed"()
+    {
+        given: "wizard for adding a DateTime with timezone opened"
+        Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
+        selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+
+        when: "DateTime input has been clicked"
+        DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
+        DateTimePickerPopup picker = formViewPanel.showPicker();
+        TestUtils.saveScreenshot( getSession(), "date-time-picker-with-timezone" );
+
+        then: "'date time picker' popup dialog is displayed"
+        picker.isDisplayed();
+        and: "time zone is displayed"
+        picker.getTimePickerPopup().isTimeZoneDisplayed();
+    }
 
     def "GIVEN wizard for adding a DateTime(1:1) opened WHEN name typed and dateTime was not typed THEN dateTime input is empty and content has a invalid status"()
     {
-        given: "start to add a content with type 'DateTime(1:1)'"
+        given: "start to adding a content with type 'DateTime(1:1)'"
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
@@ -39,7 +56,7 @@ class Occurrences_DateTime_1_1_Spec
         formViewPanel.getDateTimeValue().isEmpty();
     }
 
-    def "GIVEN opened content wizard WHEN content without required 'date time' saved THEN wizard has a red icon"()
+    def "GIVEN 'date time'-wizard opened WHEN content without required 'date time' saved THEN wizard has a red icon"()
     {
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime1_1_Content( null );
@@ -52,7 +69,7 @@ class Occurrences_DateTime_1_1_Spec
         wizard.isContentInvalid( dateTimeContent.getDisplayName() );
     }
 
-    def "GIVEN opened content wizard WHEN content without required 'date time ' saved and wizard closed THEN grid row with it content has a red icon"()
+    def "WHEN content without required 'date time ' saved and wizard closed THEN grid row with it content has a red icon"()
     {
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime1_1_Content( null );
@@ -61,7 +78,7 @@ class Occurrences_DateTime_1_1_Spec
         when: "content opened for edit"
         wizard.save().close( dateTimeContent.getDisplayName() );
         filterPanel.typeSearchText( dateTimeContent.getName() );
-        TestUtils.saveScreenshot( getSession(), "date-time-not-valid1" )
+        TestUtils.saveScreenshot( getSession(), "date-time-not-valid-grid" )
 
         then: "content should be invalid, because required field not filled"
         contentBrowsePanel.isContentInvalid( dateTimeContent.getName() );
