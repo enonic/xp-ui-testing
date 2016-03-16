@@ -13,7 +13,7 @@ import com.enonic.autotests.utils.TestUtils;
 public class TimePickerPopup
     extends Application
 {
-    private final String DIV_CONTAINER = "//div[contains(@id,'TimePickerPopup')]";
+    private final String DIV_CONTAINER = "//ul[contains(@id,'TimePickerPopup')]";
 
     private final String TIMEZONE = DIV_CONTAINER + "//li[@class='timezone']";
 
@@ -33,7 +33,7 @@ public class TimePickerPopup
         if ( !isLoaded )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_time-picker-popup" ) );
-            throw new TestFrameworkException( "DateTimePickerPopup  dialog not loaded!" );
+            throw new TestFrameworkException( "TimePickerPopup  dialog not loaded!" );
         }
     }
 
