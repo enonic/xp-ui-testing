@@ -15,10 +15,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BaseTextLineFormViewPanel
     extends FormViewPanel
 {
-
-    protected String ADD_BUTTON_XPATH = FORM_VIEW +
-        "//button[contains(@id,'api.ui.button.Button') and child::span[text()='Add'] and not(contains(@style,'display: none'))]";
-
     public BaseTextLineFormViewPanel( final TestSession session )
     {
         super( session );
@@ -27,11 +23,6 @@ public abstract class BaseTextLineFormViewPanel
     public int getNumberOfTextInputs()
     {
         return findElements( By.xpath( FORM_VIEW + "//div[contains(@id,'TextLine')]//input[contains(@id,'TextInput')]" ) ).size();
-    }
-
-    public boolean isAddButtonPresent()
-    {
-        return findElements( By.xpath( ADD_BUTTON_XPATH ) ).size() > 0;
     }
 
     public int getNumberOfDisplayedRemoveButtons()
@@ -74,7 +65,6 @@ public abstract class BaseTextLineFormViewPanel
         return this;
 
     }
-
 
 }
 

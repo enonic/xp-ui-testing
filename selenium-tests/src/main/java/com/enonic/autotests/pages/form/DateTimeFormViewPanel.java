@@ -36,11 +36,6 @@ public class DateTimeFormViewPanel
         return popup;
     }
 
-    public boolean isAddButtonPresent()
-    {
-        return isElementDisplayed( ADD_BUTTON_XPATH );
-    }
-
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
