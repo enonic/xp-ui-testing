@@ -291,7 +291,10 @@ class Base_InputFields_Occurrences
     {
         String name = "datetime";
         PropertyTree contentData = new PropertyTree();
-        contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
+        if ( dateTime != null )
+        {
+            contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
+        }
 
         Content dateTimeContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
