@@ -40,17 +40,6 @@ public abstract class BaseTextLineFormViewPanel
         return this;
     }
 
-    public BaseTextLineFormViewPanel clickOnAddButton()
-    {
-        if ( findElements( By.xpath( ADD_BUTTON_XPATH ) ).size() == 0 )
-        {
-            throw new TestFrameworkException( "Add button not present in Form View Panel!" );
-        }
-        findElements( By.xpath( ADD_BUTTON_XPATH ) ).get( 0 ).click();
-        sleep( 500 );
-        return this;
-    }
-
     public BaseTextLineFormViewPanel clickOnLastRemoveButton()
     {
         List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[contains(@id,'TextLine')]//a[@class='remove-button']" ) );

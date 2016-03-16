@@ -11,7 +11,6 @@ import org.openqa.selenium.interactions.Actions;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -19,15 +18,15 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class HtmlArea0_0_FormViewPanel
     extends BaseHtmlAreaFormViewPanel
 {
-    public HtmlArea0_0_FormViewPanel( final TestSession session )
-    {
-        super( session );
-    }
 
     private final String REMOVE_BUTTON_XPATH = FORM_VIEW + "//div[contains(@id,'InputOccurrenceView')]//a[@class='remove-button']";
 
     private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";
 
+    public HtmlArea0_0_FormViewPanel( final TestSession session )
+    {
+        super( session );
+    }
 
     public boolean isOpened()
     {
@@ -89,18 +88,6 @@ public class HtmlArea0_0_FormViewPanel
     public boolean waitUntilAddButtonNotVisible()
     {
         return waitElementNotVisible( By.xpath( ADD_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-    }
-
-    public HtmlArea0_0_FormViewPanel clickOnAddButton()
-    {
-        if ( findElements( By.xpath( ADD_BUTTON_XPATH ) ).size() == 0 )
-        {
-            TestUtils.saveScreenshot( getSession(), "Add button was not found!" );
-            throw new TestFrameworkException( "Add button not present in Form View Panel!" );
-        }
-        findElement( By.xpath( ADD_BUTTON_XPATH ) ).click();
-        sleep( 500 );
-        return this;
     }
 
     public HtmlArea0_0_FormViewPanel removeLastTextArea()
