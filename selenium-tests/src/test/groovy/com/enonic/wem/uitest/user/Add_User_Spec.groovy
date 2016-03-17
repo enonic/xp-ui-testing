@@ -13,7 +13,7 @@ class Add_User_Spec
     extends BaseUsersSpec
 {
     @Shared
-    User user;
+    User USER;
 
 
     def "GIVEN start adding a new user WHEN data typed and password is empty and 'Save' button pressed THEN error notification message appears"()
@@ -35,22 +35,22 @@ class Add_User_Spec
     def "GIVEN start adding a new user WHEN data typed  and 'Save' button pressed THEN notification message appears and user listed in the grid"()
     {
         given: "start adding a new user"
-        user = buildUser( "user", "password" );
+        USER = buildUser( "user", "password" );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "data typed and user saved"
-        String creatingMessage = userWizardPanel.typeData( user ).save().waitNotificationMessage();
-        userWizardPanel.close( user.getDisplayName() );
+        String creatingMessage = userWizardPanel.typeData( USER ).save().waitNotificationMessage();
+        userWizardPanel.close( USER.getDisplayName() );
         def isWizardOpened = userWizardPanel.isOpened();
         TestUtils.saveScreenshot( getSession(), "user_saved" );
 
         then: "new user present beneath a store"
         !isWizardOpened;
         and: "user present beneath a store"
-        userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
-        userBrowsePanel.exists( user.getDisplayName(), true );
+        userBrowseFilterPanel.typeSearchText( USER.getDisplayName() );
+        userBrowsePanel.exists( USER.getDisplayName(), true );
 
         and: "correct notification message appears"
         creatingMessage == USER_CREATED_MESSAGE;
@@ -59,10 +59,10 @@ class Add_User_Spec
     def "GIVEN a existing user WHEN user filtered and selected and deleted THEN correct notification message appears and user not listed"()
     {
         given: "user filtered"
-        userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
+        userBrowseFilterPanel.typeSearchText( USER.getDisplayName() );
 
         when: "data typed and user saved"
-        userBrowsePanel.clickCheckboxAndSelectRow( user.getDisplayName() ).clickToolbarDelete().doDelete();
+        userBrowsePanel.clickCheckboxAndSelectRow( USER.getDisplayName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( 2l );
         TestUtils.saveScreenshot( getSession(), "user_removed_message" );
         userBrowseFilterPanel.clickOnCleanFilter();
@@ -70,8 +70,28 @@ class Add_User_Spec
         TestUtils.saveScreenshot( getSession(), "user_removed" );
 
         then: "removed user not present beneath a 'Users' folder"
-        !userBrowsePanel.exists( user.getDisplayName(), true );
+        !userBrowsePanel.exists( USER.getDisplayName(), true );
         and: "correct notification message appears"
-        message == String.format( USER_DELETING_NOTIFICATION_MESSAGE, user.getDisplayName() );
+        message == String.format( USER_DELETING_NOTIFICATION_MESSAGE, USER.getDisplayName() );
+    }
+
+    def "GIVEN adding of a new user WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
+    {
+        given: "start adding a new user"
+        User refreshWizardUser = buildUser( "user", "password" );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
+            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+
+        when: "data typed and user saved"
+        userWizardPanel.typeData( refreshWizardUser ).save().waitNotificationMessage();
+        userBrowsePanel.refreshPanelInBrowser();
+        TestUtils.saveScreenshot( getSession(), "user_wizard_refreshed" );
+
+        then: "wizard is opened"
+        userWizardPanel.isOpened();
+
+        and: "correct display name displayed"
+        userWizardPanel.getNameInputValue() == refreshWizardUser.getDisplayName();
     }
 }

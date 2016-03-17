@@ -24,6 +24,24 @@ class Role_Save_Delete_Spec
     @Shared
     String NEW_NAME = "new_name";
 
+    def "GIVEN adding of a new role WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
+    {
+        given: "creating new role "
+        RoleWizardPanel roleWizardPanel = openRoleWizard();
+        Role refreshWizardRole = buildRole( "role", "test-wizard-role", "refresh wizard page" );
+
+        when: "data typed and role saved"
+        roleWizardPanel.typeData( refreshWizardRole ).save().waitNotificationMessage();
+        userBrowsePanel.refreshPanelInBrowser();
+        TestUtils.saveScreenshot( getSession(), "role_wizard_refreshed" );
+
+        then: "wizard is opened"
+        roleWizardPanel.isOpened();
+
+        and: "correct display name displayed"
+        roleWizardPanel.getNameInputValue() == refreshWizardRole.getName();
+    }
+
     def "GIVEN creating new role WHEN role saved and wizard closed THEN new role should be listed"()
     {
         given: "creating new role "

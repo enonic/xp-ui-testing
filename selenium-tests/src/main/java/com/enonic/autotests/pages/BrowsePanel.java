@@ -730,4 +730,12 @@ public abstract class BrowsePanel
         String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
         return !styleClass.contains( "disabled" );
     }
+
+    public BrowsePanel refreshPanelInBrowser()
+    {
+        getDriver().navigate().refresh();
+        sleep( 2000 );
+        return this;
+    }
+
 }

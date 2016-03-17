@@ -22,6 +22,24 @@ class Group_Save_Delete_Spec
     @Shared
     String NEW_NAME = "new_name";
 
+    def "GIVEN adding of a new group WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
+    {
+        given: "creating new role "
+        GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
+        Group refreshGroupRole = buildGroup( "group", "test-wizard-group", "refresh wizard page" );
+
+        when: "data typed and group saved"
+        groupWizardPanel.typeData( refreshGroupRole ).save().waitNotificationMessage();
+        userBrowsePanel.refreshPanelInBrowser();
+        TestUtils.saveScreenshot( getSession(), "role_wizard_refreshed" );
+
+        then: "wizard is opened"
+        groupWizardPanel.isOpened();
+
+        and: "correct display name displayed"
+        groupWizardPanel.getNameInputValue() == refreshGroupRole.getName();
+    }
+
     def "GIVEN creating new group in System User Store WHEN saved and wizard closed THEN new group should be listed"()
     {
         given: "creating new Group in System User Store"

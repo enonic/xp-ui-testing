@@ -253,13 +253,6 @@ public class ContentBrowsePanel
         return findElement( By.xpath( statusXpath ) ).getText();
     }
 
-    public ContentBrowsePanel refreshPanelInBrowser()
-    {
-        getDriver().navigate().refresh();
-        sleep( 2000 );
-        return this;
-    }
-
     public ContentBrowseFilterPanel getFilterPanel()
     {
         if ( filterPanel == null )
