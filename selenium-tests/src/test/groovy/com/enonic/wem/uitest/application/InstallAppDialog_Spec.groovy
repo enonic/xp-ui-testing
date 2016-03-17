@@ -26,21 +26,21 @@ class InstallAppDialog_Spec
         and:
         appDialog.isUploadTabPresent();
 
-        and: "Enonic Market tab is not activated "
-        !appDialog.isEnonicMarketTabActivated();
+        and: "'Enonic Market' tab is activated by default "
+        appDialog.isEnonicMarketTabActivated();
 
-        and: "Upload tab is activated by default "
-        appDialog.isUploadTabActivated();
+        and: "'Upload' tab is not activated by default "
+        !appDialog.isUploadTabActivated();
 
-        and: "Application Input displayed by default"
-        appDialog.isApplicationInputDisplayed();
+        and: "Application Input not displayed by default"
+        !appDialog.isApplicationInputDisplayed();
 
         and: "'cancel' button present on the dialog"
         appDialog.isCancelButtonDisplayed();
 
     }
 
-    def "GIVEN 'Install App Dialog' opened WHEN 'Enonic Market' tab clicked THEN this tab activated"()
+    def "GIVEN 'Install App Dialog' opened WHEN 'Upload' tab clicked THEN this tab activated"()
     {
         given:
         applicationBrowsePanel.clickOnToolbarInstall();
@@ -48,14 +48,17 @@ class InstallAppDialog_Spec
         appDialog.waitUntilDialogLoaded();
 
         when:
-        appDialog.clickOnEnonicMarketTab();
-        TestUtils.saveScreenshot( getSession(), "enonic-market-activated" );
+        appDialog.clickOnUploadTab();
+        TestUtils.saveScreenshot( getSession(), "upload-activated" );
 
-        then: "'Upload' tab is not activated"
-        !appDialog.isUploadTabActivated();
+        then: "'Upload' tab is activated"
+        appDialog.isUploadTabActivated();
 
-        and: "Enonic Market tab is activated "
-        appDialog.isEnonicMarketTabActivated();
+        and: "Application Input displayed"
+        appDialog.isApplicationInputDisplayed();
+
+        and: "Enonic Market tab is not activated "
+        !appDialog.isEnonicMarketTabActivated();
     }
 
     def "GIVEN 'Install App Dialog' opened WHEN 'cancel' button clicked THEN dialog not present"()
@@ -74,15 +77,12 @@ class InstallAppDialog_Spec
         !appDialog.isDisplayed();
     }
 
-    def "GIVEN 'Install App Dialog' opened WHEN 'Enonic Market' link clicked THEN table with applications appears"()
+    def "WHEN 'Install App Dialog' opened  THEN table with applications appears"()
     {
-        given:
+        when:
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
-
-        when: "'Enonic Market' link clicked"
-        appDialog.clickOnEnonicMarketTab();
         TestUtils.saveScreenshot( getSession(), "enonic-market" );
 
         then: "table with applications appears"

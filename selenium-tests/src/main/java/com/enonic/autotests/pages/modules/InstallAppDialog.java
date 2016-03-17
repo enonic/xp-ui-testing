@@ -106,6 +106,11 @@ public class InstallAppDialog
 
     public InstallAppDialog duUploadApplication( String pathToApp )
     {
+        if ( !isUploadTabActivated() )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_upload_tab" );
+            throw new TestFrameworkException( "Upload-tab is not activated!" );
+        }
         String absolutePath = null;
         URL resource = InstallAppDialog.class.getResource( pathToApp );
         try
@@ -151,6 +156,14 @@ public class InstallAppDialog
         sleep( 1000 );
         return getMarketAppPanel();
     }
+
+    public InstallAppDialog_MarketAppPanel clickOnUploadTab()
+    {
+        uploadTab.click();
+        sleep( 1000 );
+        return getMarketAppPanel();
+    }
+
 
     public InstallAppDialog clickOnCancelButton()
     {

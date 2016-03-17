@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.exceptions.WizardPanelNotClosingException;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -60,9 +59,9 @@ public abstract class WizardPanel<T>
     public SaveBeforeCloseDialog close( String displayName )
     {
         CloseStatus status = null;
-        if ( findElements( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).size() == 0 )
+        if ( !isElementDisplayed( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) )
         {
-            throw new TestFrameworkException( "close button for tab with name " + displayName + " was not found!" );
+            throw new TestFrameworkException( "'close' button for tab with name " + displayName + " was not found!" );
         }
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).click();
         sleep( 500 );
@@ -70,7 +69,7 @@ public abstract class WizardPanel<T>
         if ( status == null )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_close" ) );
-            throw new WizardPanelNotClosingException( "ContentWizard was not closed and Modal dialog not present!" );
+            throw new TestFrameworkException( "ContentWizard was not closed and Modal dialog not present!" );
         }
         else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
         {

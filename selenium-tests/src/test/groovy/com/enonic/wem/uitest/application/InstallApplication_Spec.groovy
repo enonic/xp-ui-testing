@@ -13,7 +13,7 @@ class InstallApplication_Spec
     extends BaseApplicationSpec
 {
     @Shared
-    String LOCAL_PATH_TO_FILE = "/test-data/app/install-app.jar";
+    String LOCAL_PATH_TO_APP = "/test-data/app/install-app.jar";
 
     @Shared
     String APP_DISPLAY_NAME = "application for installing";
@@ -33,15 +33,16 @@ class InstallApplication_Spec
     @Shared
     String CONTENT_VIEWER_APP_INSTALLED_NAME = "contentviewer";
 
-    def "GIVEN 'install app' dialog opened WHEN an application uploaded THEN new application successfully installed"()
+    def "GIVEN 'install app' dialog opened AND 'upload' tab activated WHEN an application uploaded THEN new application successfully installed"()
     {
-        given:
+        given: "'install app' dialog opened AND 'upload' tab activated"
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
+        appDialog.clickOnUploadTab();
 
         when: "the application uploaded"
-        appDialog.duUploadApplication( LOCAL_PATH_TO_FILE );
+        appDialog.duUploadApplication( LOCAL_PATH_TO_APP );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_install" )
 
@@ -80,7 +81,7 @@ class InstallApplication_Spec
         appDialog.waitUntilDialogLoaded();
 
         when: "an application uploaded"
-        appDialog.duUploadApplication( LOCAL_PATH_TO_FILE );
+        appDialog.duUploadApplication( LOCAL_PATH_TO_APP );
         String appUpdatedMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_install" )
 
@@ -133,7 +134,7 @@ class InstallApplication_Spec
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
-        InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab();
+        InstallAppDialog_MarketAppPanel marketPanel = new InstallAppDialog_MarketAppPanel( getSession() );
         sleep( 2000 );
 
         when: "an application from the 'Enonic Market' installed"
@@ -161,7 +162,7 @@ class InstallApplication_Spec
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
-        InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab()
+        InstallAppDialog_MarketAppPanel marketPanel = new InstallAppDialog_MarketAppPanel( getSession() );
 
         then: "install button disabled for application that was already installed"
         marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_APP_NAME );

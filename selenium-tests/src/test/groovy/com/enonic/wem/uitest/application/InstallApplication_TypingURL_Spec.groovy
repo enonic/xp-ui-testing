@@ -17,12 +17,13 @@ class InstallApplication_TypingURL_Spec
     @Shared
     String WARNING = "Failed to process application %s"
 
-    def "GIVEN 'install app' dialog opened WHEN wrong URL to an application typed THEN correct validation message appears in the dialog"()
+    def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN wrong URL to an application typed THEN correct validation message appears in the dialog"()
     {
-        given:
+        given: "'install app' dialog opened AND 'Upload' tab activated"
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
+        appDialog.clickOnUploadTab();
 
         when: "wrong URL to an application typed"
         appDialog.typeApplicationURL( WRONG_APP_URL );
@@ -33,12 +34,13 @@ class InstallApplication_TypingURL_Spec
         validationMessage == String.format( WARNING, WRONG_APP_URL );
     }
 
-    def "GIVEN 'install app' dialog opened WHEN incorrect protocol typed THEN validation message not displayed"()
+    def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN incorrect protocol typed THEN validation message not displayed"()
     {
-        given:
+        given: "'install app' dialog opened AND 'Upload' tab activated"
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
+        appDialog.clickOnUploadTab();
 
         when: "wrong protocol typed"
         appDialog.typeApplicationURL( WRONG_PROTOCOL_URL );
