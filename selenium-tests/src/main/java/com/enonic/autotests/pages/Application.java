@@ -46,6 +46,8 @@ public class Application
 
     public static String APP_UPDATED_MESSAGE = "Application '%s' updated successfully";
 
+    public static String CONTENT_SAVED = "\"%s\" saved";
+
     public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
 
     public static final String FULL_ACCESS = "Full Access";
@@ -107,6 +109,9 @@ public class Application
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
 
     public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']/span";
+
+    public String EXPECTED_NOTIFICATION_MESSAGE_XPATH =
+        "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']/span[text()='%s']";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
@@ -199,6 +204,12 @@ public class Application
         String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Notification message " + message );
         return message.trim();
+    }
+
+    public boolean waitExpectedNotificationMessage( String message, long timeout )
+    {
+        String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
+        return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
 
     public String waitErrorNotificationMessage( long timeout )

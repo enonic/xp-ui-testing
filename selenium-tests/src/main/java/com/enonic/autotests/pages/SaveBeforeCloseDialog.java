@@ -1,6 +1,10 @@
 package com.enonic.autotests.pages;
 
+import java.awt.AWTException;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -55,6 +59,26 @@ public class SaveBeforeCloseDialog
         findElement( By.xpath( CANCEL_BUTTON_XPATH ) ).click();
         sleep( 500 );
 
+    }
+
+    public void press_Y_key()
+        throws AWTException
+    {
+        Actions actions = new Actions( getDriver() );
+        String y = Keys.chord( "y" );
+        actions.sendKeys( y );
+        actions.build().perform();
+        sleep( 500 );
+    }
+
+    public void press_N_key()
+        throws AWTException
+    {
+        Actions actions = new Actions( getDriver() );
+        String y = Keys.chord( "n" );
+        actions.sendKeys( y );
+        actions.build().perform();
+        sleep( 500 );
     }
 
     public void clickNoButton()

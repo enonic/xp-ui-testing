@@ -55,9 +55,6 @@ function handleGet(req) {
 
         var footerText = siteConfig.footerText ? portal.processHtml({value: siteConfig.footerText}) : 'Configure footer text.';
 
-        /*'<a href="https://enonic.com/" title="Fastest way from idea to ' +
-         'digital experience." rel="generator">Proudly powered by Enonic XP</a> <span class="sep"> | </span> Theme: Superhero by ' +
-         '<a href="https://wordpress.com/themes/" rel="designer">WordPress.com</a>.';*/
 
         var model = {
             site: site,

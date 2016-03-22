@@ -20,6 +20,25 @@ class UserStore_Save_Delete_Spec
     @Shared
     String NEW_NAME = "new_name";
 
+    @Ignore
+    def "GIVEN adding of a new user-store WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
+    {
+        given: "start adding a new user"
+        UserStore refreshWizardUserStore = buildUserStore( "store", "test-refresh-wizard", "description" );
+        UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
+
+        when: "data typed and user saved"
+        userStoreWizardPanel.typeData( refreshWizardUserStore ).save().waitNotificationMessage();
+        userBrowsePanel.refreshPanelInBrowser();
+        TestUtils.saveScreenshot( getSession(), "user_store_wizard_refreshed" );
+
+        then: "wizard is opened"
+        userStoreWizardPanel.isOpened();
+
+        and: "correct display name displayed"
+        userStoreWizardPanel.getNameInputValue() == refreshWizardUserStore.getDisplayName();
+    }
+
     def "GIVEN creating new user store WHEN user store saved and wizard closed THEN new user store should be listed"()
     {
         given: "creating new UserStore"
