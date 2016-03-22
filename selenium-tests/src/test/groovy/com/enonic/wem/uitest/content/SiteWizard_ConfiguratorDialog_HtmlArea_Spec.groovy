@@ -43,6 +43,9 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     @Shared
     String IMAGE_NAME = "man2.jpg";
 
+    @Shared
+    String PAGE_TITLE = "Home Page";
+
     def "GIVEN creating new Site with configuration and a page-controller WHEN site saved and wizard closed THEN new site should be present"()
     {
         given:
@@ -90,7 +93,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         contentWizard.clickToolbarPreview();
 
         then: "correct links present in a page-source"
-        String source = TestUtils.getPageSource( getSession(), "Superhero theme" );
+        String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
 
         and: "correct text for URL present"
         source.contains( LINK_TEXT );
@@ -178,7 +181,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.selectBackGroundImage( IMAGE_NAME ).doApply();
         sleep( 700 );
         contentWizard.clickToolbarPreview();
-        String source = TestUtils.getPageSource( getSession(), "Superhero theme" );
+        String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
 
         then: "correct background present in a page-source"
         source.contains( backgroundPart );

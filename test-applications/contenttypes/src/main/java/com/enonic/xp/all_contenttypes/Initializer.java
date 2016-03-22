@@ -228,8 +228,28 @@ public class Initializer
             addSHContent( testFolderPath );
 
             addEXEContent( testFolderPath );
+
+            createSVG_Content( testFolderPath );
         }
 
+    }
+
+    private void createSVG_Content( final ContentPath parent )
+        throws Exception
+    {
+        String fileName = "circles.svg";
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "image/svg+xml" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
     }
 
     private void addEXEContent( final ContentPath parent )
@@ -249,6 +269,7 @@ public class Initializer
         LOG.info( "content added :  " + fileName );
 
     }
+
     private void createImageContent( final ContentPath parent, final String fileName )
         throws Exception
     {
@@ -283,6 +304,7 @@ public class Initializer
         contentService.create( params ).getId();
         LOG.info( "content added :  " + fileName );
     }
+
 
     private void addSHContent( final ContentPath parent )
         throws Exception
