@@ -24,15 +24,23 @@ class ContextWindow_InsertablesPanel_Spec
         List<String> components = insertablesPanel.getAvailableComponents();
 
         and: "correct number of components are shown"
-        components.size() == 4;
-        and: "correct names of component are present"
+        components.size() == 5
+
+        and: "'Image' component are present"
         components.contains( "Image" );
-        and: "correct names of component are present"
+
+        and: "'Part' component are present"
         components.contains( "Part" );
-        and: "correct names of component are present"
+
+        and: "'Layout' component are present"
         components.contains( "Layout" );
-        and: "correct names of component are present"
+
+        and: "'Text' component are present"
         components.contains( "Text" );
+
+        and: "'Fragment' component are present"
+        components.contains( "Fragment" );
+
         and: "correct description displayed"
         insertablesPanel.getTitle() == ContextWindowPageInsertablesPanel.TITLE
 
