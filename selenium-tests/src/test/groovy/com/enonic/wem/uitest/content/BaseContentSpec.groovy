@@ -41,6 +41,9 @@ class BaseContentSpec
     String IMPORTED_BOOK_IMAGE = "book.jpg";
 
     @Shared
+    String CIRCLES = "circles.svg"
+
+    @Shared
     String SIMPLE_SITE_APP = "Simple Site App";
 
     @Shared
@@ -82,6 +85,9 @@ class BaseContentSpec
     @Shared
     ContentDetailsPanel contentDetailsPanel;
 
+    @Shared
+    ContentItemPreviewPanel contentItemPreviewPanel;
+
 
     def setup()
     {
@@ -90,6 +96,7 @@ class BaseContentSpec
         filterPanel = contentBrowsePanel.getFilterPanel();
         itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
         contentBrowseItemPanel = new ContentBrowseItemPanel( getSession() );
+        contentItemPreviewPanel = contentBrowseItemPanel.getContentItemStatisticsPanel().getContentItemPreviewPanel();
         contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
     }
 

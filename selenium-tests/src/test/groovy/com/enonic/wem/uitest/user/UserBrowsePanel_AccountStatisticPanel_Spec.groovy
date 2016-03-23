@@ -38,7 +38,6 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         then: "test group listed"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         userBrowsePanel.exists( TEST_GROUP.getName() );
-
     }
 
     def "WHEN 'super user' selected THEN correct info have been shown "()

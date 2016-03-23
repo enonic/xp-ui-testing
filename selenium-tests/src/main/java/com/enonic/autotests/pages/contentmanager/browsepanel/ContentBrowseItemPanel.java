@@ -9,6 +9,8 @@ public class ContentBrowseItemPanel
 {
     public static final String CONTAINER_DIV = "//div[contains(@id,'ContentBrowseItemPanel')]";
 
+    private ContentItemStatisticsPanel contentItemStatisticsPanel;
+
     public ContentBrowseItemPanel( final TestSession session )
     {
         super( session );
@@ -23,6 +25,15 @@ public class ContentBrowseItemPanel
             contentDetailsPanel = new ContentDetailsPanel( getSession() );
         }
         return contentDetailsPanel;
+    }
+
+    public ContentItemStatisticsPanel getContentItemStatisticsPanel()
+    {
+        if ( contentItemStatisticsPanel == null )
+        {
+            contentItemStatisticsPanel = new ContentItemStatisticsPanel( getSession() );
+        }
+        return contentItemStatisticsPanel;
     }
 
 }
