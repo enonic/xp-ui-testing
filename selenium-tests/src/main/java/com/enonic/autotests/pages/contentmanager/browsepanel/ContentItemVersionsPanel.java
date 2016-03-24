@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -18,9 +19,9 @@ import com.enonic.autotests.vo.contentmanager.ContentVersion;
 public class ContentItemVersionsPanel
     extends Application
 {
-    private final String CONTAINER = "//div[contains(@id,'VersionsWidgetItemView')]";
+    private final String CONTAINER_WIDGET = "//div[contains(@id,'VersionsWidgetItemView')]";
 
-    private final String ALL_CONTENT_VERSION_GRID = "//div[contains(@id,'AllContentVersionsTreeGrid')]";
+    private final String ALL_CONTENT_VERSION_UL = "//ul[contains(@id,'AllContentVersionsView')]";
 
     protected final String TAB_MENU_BUTTON = "//div[contains(@id,'TabMenuButton') and child::span[text()='Version History']]";
 
@@ -34,48 +35,44 @@ public class ContentItemVersionsPanel
         super( session );
     }
 
-    public long getRowsNumber()
+
+    public LinkedList<ContentVersion> getAllVersions()
     {
-        return findElements( By.xpath( ALL_CONTENT_VERSION_GRID + SLICK_ROW ) ).stream().filter( WebElement::isDisplayed ).count();
+        List<WebElement> liElements =
+            getDisplayedElements( By.xpath( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item')]" ) );
+        return liElements.stream().map( e -> buildContentVersion( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
     }
 
-    public LinkedList<ContentVersion> getAllContentVersions()
+    private ContentVersion buildContentVersion( WebElement li )
     {
-        LinkedList<String> rowStyles =
-            findElements( By.xpath( ALL_CONTENT_VERSION_GRID + SLICK_ROW ) ).stream().filter( WebElement::isDisplayed ).map(
-                e -> e.getAttribute( "style" ) ).map( e -> getTopValue( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
-        LinkedList<ContentVersion> contentVersions =
-            rowStyles.stream().map( e -> getVersionHistoryInfo( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
-        return contentVersions;
-    }
-
-    String getTopValue( String style )
-    {
-        String result =
-            style.substring( 0, style.indexOf( ":" ) + 1 ) + style.substring( style.indexOf( ":" ) + 1, style.indexOf( ";" ) ).trim();
-        return result;
-    }
-
-    private ContentVersion getVersionHistoryInfo( String rowStyle )
-    {
-        String modifierNameXpath = String.format( ALL_CONTENT_VERSION_GRID + SLICK_ROW_WITH_STYLE + H6_DISPLAY_NAME, rowStyle );
-        String statusXpath = String.format( ALL_CONTENT_VERSION_GRID + SLICK_ROW_WITH_STYLE + "//p[contains(@class,'badge ')]", rowStyle );
-        String whenModifiedXpath =
-            String.format( ALL_CONTENT_VERSION_GRID + SLICK_ROW_WITH_STYLE + "//p[@class='sub-name']//span", rowStyle );
-
-        String modifierName = findElement( By.xpath( modifierNameXpath ) ).getText();
-        String status = "";
-        if ( isElementDisplayed( statusXpath ) )
+        String statusInElement = ".//div[contains(@class,'status')]";
+        String modifierName = li.findElements( By.xpath( "." + H6_DISPLAY_NAME ) ).get( 0 ).getText();
+        String status = null;
+        if ( li.findElements( By.xpath( statusInElement ) ).size() > 0 )
         {
-            status = findElement( By.xpath( statusXpath ) ).getText();
+            status = li.findElements( By.xpath( statusInElement ) ).get( 0 ).getText();
         }
-        String whenModified = findElement( By.xpath( whenModifiedXpath ) ).getText();
+
+        String whenModified = li.findElements( By.xpath( "." + P_NAME ) ).get( 0 ).getText();
         return ContentVersion.builder().modifier( modifierName ).status( status ).modified( whenModified ).build();
+    }
+
+    ///
+    public ContentVersion getActiveVersion()
+    {
+        if ( !isElementDisplayed( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item active')]" ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_active_version" );
+            throw new TestFrameworkException( "active version was not found in the version history panel! " );
+        }
+        WebElement element =
+            getDisplayedElement( By.xpath( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item active')]" ) );
+        return buildContentVersion( element );
     }
 
     public ContentItemVersionsPanel isLoaded()
     {
-        if ( findElements( By.xpath( CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0 )
+        if ( !isElementDisplayed( CONTAINER_WIDGET ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_version_panel" );
             throw new TestFrameworkException( "ContentItemVersionsPanel was not loaded!" );
@@ -85,6 +82,6 @@ public class ContentItemVersionsPanel
 
     public boolean waitUntilPanelNotVisible()
     {
-        return WaitHelper.waitsElementNotVisible( getDriver(), By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL );
+        return WaitHelper.waitsElementNotVisible( getDriver(), By.xpath( CONTAINER_WIDGET ), Application.EXPLICIT_NORMAL );
     }
 }

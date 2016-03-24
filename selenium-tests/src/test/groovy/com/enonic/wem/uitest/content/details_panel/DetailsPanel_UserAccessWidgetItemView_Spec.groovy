@@ -1,4 +1,4 @@
-package com.enonic.wem.uitest.content
+package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.UserAccessWidgetItemView
@@ -7,6 +7,7 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.usermanager.SystemUserName
+import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 
 class DetailsPanel_UserAccessWidgetItemView_Spec

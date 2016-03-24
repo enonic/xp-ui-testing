@@ -1,4 +1,4 @@
-package com.enonic.wem.uitest.content
+package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemVersionsPanel
@@ -6,19 +6,19 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
+import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class ContentBrowsePanel_ContentDetails_VersionHistorySpec
+class DetailPanels_VersionHistory_Spec
     extends BaseContentSpec
 {
     @Shared
     Content folderContent;
 
     @Shared
-    Integer FIRST_NUMBER_OF_VERSIONS = 2;
-
+    Integer INITIAL_NUMBER_OF_VERSIONS = 2;
 
     def "GIVEN content selected  WHEN 'Version History' option selected THEN panel with all versions for the content is loaded"()
     {
@@ -36,7 +36,7 @@ class ContentBrowsePanel_ContentDetails_VersionHistorySpec
         contentItemVersionsPanel.isLoaded();
     }
 
-    def "GIVEN content selected  WHEN 'Version History' option selected THEN two versions are present in the versions panel"()
+    def "GIVEN just added content selected WHEN 'Version History' option selected THEN two versions are present in the versions panel"()
     {
         given: "content selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
@@ -44,11 +44,11 @@ class ContentBrowsePanel_ContentDetails_VersionHistorySpec
 
         when: "'Version History' option selected'"
         ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
-        LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllContentVersions();
+        LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllVersions();
         TestUtils.saveScreenshot( getSession(), "two-versions" )
 
-        then: "three versions are present in the panel"
-        allVersions.size() == FIRST_NUMBER_OF_VERSIONS;
+        then: "two versions are present in the panel"
+        allVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
 
         and: "first version has a 'offline' status"
         allVersions.getFirst().getStatus() == ContentStatus.OFFLINE.getValue();
@@ -71,33 +71,47 @@ class ContentBrowsePanel_ContentDetails_VersionHistorySpec
         when: "content published and 'Active versions'  button clicked"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         TestUtils.saveScreenshot( getTestSession(), "vh_online" )
-        LinkedList<ContentVersion> contentVersions = contentItemVersionsPanel.getAllContentVersions();
+        LinkedList<ContentVersion> contentVersions = contentItemVersionsPanel.getAllVersions();
 
         then: "the number of versions not increased"
-        contentVersions.size() == FIRST_NUMBER_OF_VERSIONS;
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
         and: "latest version has status 'online'"
         contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
-    def "GIVEN content with the a published version that is later changed WHEN versions panel opened THEN three versions are listed. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
+    def "GIVEN 'published'-content WHEN content's display name changed AND versions panel opened THEN three versions are listed. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
     {
-        given: "content with 'online' status was changed and content has a 'Modified' status"
+        given: "content with 'online' status was changed and content has got a 'Modified' status"
         findAndSelectContent( folderContent.getName() ).clickToolbarEdit().typeDisplayName( "newDisplayName" ).save().close(
             "newDisplayName" );
 
         when: "'Version Panel' opened"
         ContentItemVersionsPanel versionPanel = openVersionPanel();
         TestUtils.saveScreenshot( getSession(), "online-modified" )
-        LinkedList<ContentVersion> contentVersions = versionPanel.getAllContentVersions();
+        LinkedList<ContentVersion> contentVersions = versionPanel.getAllVersions();
 
-        then: "number of versions increased"
-        contentVersions.size() - FIRST_NUMBER_OF_VERSIONS == 1;
+        then: "number of versions increased to 3"
+        contentVersions.size() - INITIAL_NUMBER_OF_VERSIONS == 1;
 
-        and: "the latest  version has a 'modified' badge"
+        and: "the latest version has a 'modified' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
 
         and: "previous version has a 'online' badge"
         contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+    }
+
+    def "GIVEN 'modified'-content selected WHEN 'Delete' button on the toolbar pressed THEN the newer one with a gray 'Pending delete' badge."()
+    {
+        given: "'modified' content selected "
+        findAndSelectContent( folderContent.getName() ).clickToolbarDelete().doDelete();
+
+        when: "'Delete' button on the toolbar pressed"
+        ContentItemVersionsPanel versionPanel = openVersionPanel();
+        TestUtils.saveScreenshot( getSession(), "online-modified" )
+        LinkedList<ContentVersion> contentVersions = versionPanel.getAllVersions();
+
+        then: "the latest version has a 'pending delete' badge"
+        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
     }
 
     private ContentItemVersionsPanel openVersionPanel()
