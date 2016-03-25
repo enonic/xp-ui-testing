@@ -68,7 +68,7 @@ class PortalContentCreating_Spec
 
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
         PartComponentView partComponentView = contentWizard.showPageEditor().showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
-            "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
+            "RegionView", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City Creation" );
         switchToContentStudioWindow();
         contentWizard.save().clickToolbarPreview();
