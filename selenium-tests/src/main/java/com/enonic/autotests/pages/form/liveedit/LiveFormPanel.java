@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
@@ -15,9 +16,13 @@ import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class LiveFormPanel
     extends Application
 {
+    private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).innerHTML=arguments[1];";
+
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
 
     public final String FIGURE = "//figure[contains(@id,'api.liveedit.image.ImageComponentView')]";
@@ -59,9 +64,17 @@ public class LiveFormPanel
 
     public LiveFormPanel typeTextInTextComponent( String text )
     {
-        String input = TEXT_COMPONENT_VIEW + "//section";
-        clearAndType( getDisplayedElement( By.xpath( input ) ), text );
+        String input = TEXT_COMPONENT_VIEW + "//div[@class='tiny-mce-here mce-content-body mce-edit-focus']";
+        String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
+        setTextIntoArea( id, text );
+        TestUtils.saveScreenshot( getSession(), "text_typed_in_component" );
+        sleep( 500 );
         return this;
+    }
+
+    private void setTextIntoArea( String id, String text )
+    {
+        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SET_TINY_MCE_INNERHTML, id, text );
     }
 
     /**

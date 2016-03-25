@@ -75,8 +75,8 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
-        PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
-            "RegionPlaceholder", LIVE_EDIT_FRAME_SITE_HEADER );
+        PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionView",
+                                                                                                                             LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
         NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
         contentWizard.save().clickToolbarPreview();

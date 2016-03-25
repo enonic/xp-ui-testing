@@ -89,11 +89,11 @@ class CreateSiteWithLayoutSpec
         when: "'Insert/Text' menu items clicked and text typed"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         TestUtils.saveScreenshot( getSession(), "select_insert_text" );
-        pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEXT_COMPONENT_TEXT );
         switchToContentStudioWindow();
+        pageComponentsView.doCloseDialog();
         wizard.save();
         TestUtils.saveScreenshot( getSession(), "text-typed" );
         wizard.switchToLiveEditFrame();

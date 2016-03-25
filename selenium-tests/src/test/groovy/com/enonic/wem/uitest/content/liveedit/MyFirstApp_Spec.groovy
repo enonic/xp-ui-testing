@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -100,31 +101,35 @@ class MyFirstApp_Spec
         wizard.save();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
-        TestUtils.saveScreenshot( getSession(), "region_added" );
+        TestUtils.saveScreenshot( getSession(), "page_descriptor_added_in_country_content" );
         wizard.clickToolbarPreview();
-        TestUtils.saveScreenshot( getSession(), "preview_clicked" );
+        TestUtils.saveScreenshot( getSession(), "country_preview_clicked" );
 
         then: "the region page opened in a browser with correct title and correct header"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source.contains( COUNTRY_REGION_TITLE );
+
         and: "correct header displayed"
         source.contains( COUNTRY_REGION_HEADER );
     }
 
-    def "GIVEN a country-content with a controller  WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
+    def "GIVEN country-content with a controller WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
     {
-        given: "a page descriptor added for existing country-content"
+        given: "country-content with a controller"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
+        wizard.showComponentView();
+        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
-        when: "the 'Preview' button pressed on the wizard-toolbar"
-        PartComponentView partComponentView = wizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionPlaceholder",
-                                                                                                                      LIVE_EDIT_FRAME_SITE_HEADER )
-        TestUtils.saveScreenshot( getSession(), "part_added" );
+        when: "new part inserted into the region"
+        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Part" );
+        pageComponentsView.doCloseDialog();
+        wizard.switchToLiveEditFrame();
+        PartComponentView partComponentView = new PartComponentView( getSession() );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME )
-        TestUtils.saveScreenshot( getSession(), "part_country" );
-        switchToContentStudioWindow();
+        TestUtils.saveScreenshot( getSession(), "part_country_added" );
         wizard.save();
+        and: "'Preview' button pressed on the wizard-toolbar"
         wizard.clickToolbarPreview();
 
         then: "the content opened in a browser and page's sources are correct"
