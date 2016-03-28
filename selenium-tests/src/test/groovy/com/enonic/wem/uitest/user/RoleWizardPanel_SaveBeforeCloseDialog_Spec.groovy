@@ -27,6 +27,7 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
 
         when:
         SaveBeforeCloseDialog dialog = roleWizardPanel.close( TEST_ROLE.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "role-saved-closed" );
 
         then:
         dialog == null;
