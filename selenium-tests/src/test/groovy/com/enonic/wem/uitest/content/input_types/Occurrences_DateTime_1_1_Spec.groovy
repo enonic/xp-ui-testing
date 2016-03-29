@@ -96,6 +96,7 @@ class Occurrences_DateTime_1_1_Spec
             Application.EXPLICIT_NORMAL );
         sleep( 1000 );
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateTimeContent.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "datetime1_1_close" ) );
         if ( modalDialog != null )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-close-wizard" ) );
