@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentDetailsPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemVersionsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -11,7 +11,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class DetailPanels_VersionHistory_Spec
+class DetailsPanels_VersionHistory_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -30,10 +30,10 @@ class DetailPanels_VersionHistory_Spec
         contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
+        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
 
         then: "panel with all versions for the content is loaded"
-        contentItemVersionsPanel.isLoaded();
+        allContentVersionsView.isLoaded();
     }
 
     def "GIVEN just added content selected WHEN 'Version History' option selected THEN two versions are present in the versions panel"()
@@ -43,8 +43,8 @@ class DetailPanels_VersionHistory_Spec
         contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
-        LinkedList<ContentVersion> allVersions = contentItemVersionsPanel.getAllVersions();
+        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        LinkedList<ContentVersion> allVersions = allContentVersionsView.getAllVersions();
         TestUtils.saveScreenshot( getSession(), "two-versions" )
 
         then: "two versions are present in the panel"
@@ -66,12 +66,12 @@ class DetailPanels_VersionHistory_Spec
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
+        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
 
         when: "content published and 'Active versions'  button clicked"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         TestUtils.saveScreenshot( getTestSession(), "vh_online" )
-        LinkedList<ContentVersion> contentVersions = contentItemVersionsPanel.getAllVersions();
+        LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the number of versions not increased"
         contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
@@ -86,9 +86,9 @@ class DetailPanels_VersionHistory_Spec
             "newDisplayName" );
 
         when: "'Version Panel' opened"
-        ContentItemVersionsPanel versionPanel = openVersionPanel();
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
         TestUtils.saveScreenshot( getSession(), "online-modified" )
-        LinkedList<ContentVersion> contentVersions = versionPanel.getAllVersions();
+        LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "number of versions increased to 3"
         contentVersions.size() - INITIAL_NUMBER_OF_VERSIONS == 1;
@@ -106,19 +106,19 @@ class DetailPanels_VersionHistory_Spec
         findAndSelectContent( folderContent.getName() ).clickToolbarDelete().doDelete();
 
         when: "'Delete' button on the toolbar pressed"
-        ContentItemVersionsPanel versionPanel = openVersionPanel();
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
         TestUtils.saveScreenshot( getSession(), "online-modified" )
-        LinkedList<ContentVersion> contentVersions = versionPanel.getAllVersions();
+        LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the latest version has a 'pending delete' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
     }
 
-    private ContentItemVersionsPanel openVersionPanel()
+    private AllContentVersionsView openVersionPanel()
     {
         contentBrowsePanel.clickOnDetailsToggleButton();
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
-        ContentItemVersionsPanel contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
+        AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
     }
 }

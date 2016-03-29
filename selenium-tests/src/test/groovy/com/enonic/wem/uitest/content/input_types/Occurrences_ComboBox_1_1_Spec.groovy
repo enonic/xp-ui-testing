@@ -155,7 +155,8 @@ class Occurrences_ComboBox_1_1_Spec
 
         when: "content selected and 'Publish' button pressed"
         dialog.clickOnPublishNowButton();
-        TestUtils.saveScreenshot( getTestSession(), "invalid_cb_1_1_published" )
+        TestUtils.saveScreenshot( getTestSession(), "invalid_cb_1_1_published" );
+
         then: "content not listed in the grid"
         !contentBrowsePanel.exists( comboBox1_1.getName() )
 

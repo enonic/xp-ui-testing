@@ -59,10 +59,13 @@ public abstract class WizardPanel<T>
     public SaveBeforeCloseDialog close( String displayName )
     {
         CloseStatus status = null;
-        if ( !isElementDisplayed( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) )
+        String closeButtonXpath = String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName );
+        if ( !waitUntilClickableNoException( By.xpath( closeButtonXpath ), Application.EXPLICIT_NORMAL ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_close_wizard_button" );
             throw new TestFrameworkException( "'close' button for tab with name " + displayName + " was not found!" );
         }
+        TestUtils.saveScreenshot( getSession(), "close_wizard_button_issue" );
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).click();
         sleep( 500 );
         status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );

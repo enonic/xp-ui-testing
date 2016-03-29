@@ -67,7 +67,7 @@ public class ContentDetailsPanel
         return findElements( By.xpath( DETAILS_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0;
     }
 
-    public ContentItemVersionsPanel openVersionHistory()
+    public AllContentVersionsView openVersionHistory()
     {
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
         {
@@ -76,7 +76,7 @@ public class ContentDetailsPanel
         }
         getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION ) ).click();
         sleep( 700 );
-        return new ContentItemVersionsPanel( getSession() );
+        return new AllContentVersionsView( getSession() );
     }
 
     public ContentInfoWidget openInfoWidget()

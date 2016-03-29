@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -16,7 +17,7 @@ import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.ContentVersion;
 
-public class ContentItemVersionsPanel
+public class AllContentVersionsView
     extends Application
 {
     private final String CONTAINER_WIDGET = "//div[contains(@id,'VersionsWidgetItemView')]";
@@ -30,7 +31,7 @@ public class ContentItemVersionsPanel
     @FindBy(xpath = TAB_MENU_BUTTON)
     WebElement tabMenuButton;
 
-    public ContentItemVersionsPanel( final TestSession session )
+    public AllContentVersionsView( final TestSession session )
     {
         super( session );
     }
@@ -57,7 +58,6 @@ public class ContentItemVersionsPanel
         return ContentVersion.builder().modifier( modifierName ).status( status ).modified( whenModified ).build();
     }
 
-    ///
     public ContentVersion getActiveVersion()
     {
         if ( !isElementDisplayed( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item active')]" ) )
@@ -70,7 +70,17 @@ public class ContentItemVersionsPanel
         return buildContentVersion( element );
     }
 
-    public ContentItemVersionsPanel isLoaded()
+    public ContentVersionInfoView clickOnVersionAndExpand( int index )
+    {
+        List<WebElement> liElements =
+            getDisplayedElements( By.xpath( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item')]" ) );
+        WebElement version = liElements.get( index );
+        Actions builder = new Actions( getDriver() );
+        builder.moveToElement( version ).click().build().perform();
+        return new ContentVersionInfoView( getSession() );
+    }
+
+    public AllContentVersionsView isLoaded()
     {
         if ( !isElementDisplayed( CONTAINER_WIDGET ) )
         {
