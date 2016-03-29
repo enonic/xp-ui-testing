@@ -68,13 +68,14 @@ class DetailsPanels_VersionHistory_Spec
         contentBrowsePanel.clickOnDetailsToggleButton();
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
 
-        when: "content published and 'Active versions'  button clicked"
+        when: "content published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         TestUtils.saveScreenshot( getTestSession(), "vh_online" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the number of versions not increased"
         contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
+
         and: "latest version has status 'online'"
         contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }

@@ -67,10 +67,10 @@ class ContentWizardPanel_Toolbar_Spec
         and: "'Save draft' button enabled"
         wizardPanel.isSaveButtonEnabled();
 
-        and: "'Publish' button disabled"
+        and: "'Publish' button enabled"
         wizardPanel.isPublishButtonEnabled();
 
-        and: "'Duplicate' button disabled"
+        and: "'Duplicate' button enabled"
         wizardPanel.isDuplicateButtonEnabled();
 
         and: "content status is offline"
