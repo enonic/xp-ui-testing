@@ -86,7 +86,7 @@ class ContentWizardPanel_Toolbar_Spec
         when: "delete button pressed and deleting confirmed"
         filterPanel.typeSearchText( folderContent.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( folderContent.getName() ).clickToolbarEdit();
-        wizard.clickToolbarDelete().pressYesButton();
+        wizard.clickToolbarDelete().doDelete();
 
         then: "content not present in a grid"
         filterPanel.typeSearchText( folderContent.getName() );
