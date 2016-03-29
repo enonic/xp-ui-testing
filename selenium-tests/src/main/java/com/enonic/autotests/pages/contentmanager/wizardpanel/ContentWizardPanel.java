@@ -16,6 +16,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
+import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
@@ -128,12 +129,13 @@ public class ContentWizardPanel
     }
 
     @Override
-    public ConfirmationDialog clickToolbarDelete()
+    public DeleteContentDialog clickToolbarDelete()
     {
         toolbarDeleteButton.click();
         sleep( 1000 );
-        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
-        return confirmationDialog;
+        DeleteContentDialog deleteContentDialog = new DeleteContentDialog( getSession() );
+        deleteContentDialog.waitForOpened();
+        return deleteContentDialog;
     }
 
     public boolean isContentInvalid( String contentDisplayName )
@@ -454,7 +456,6 @@ public class ContentWizardPanel
             getDriver().switchTo().frame( liveEditFrames.get( 0 ) );
             getSession().setCurrentWindow( XP_Windows.LIVE_EDIT );
         }
-
         return new LiveFormPanel( getSession() );
     }
 }

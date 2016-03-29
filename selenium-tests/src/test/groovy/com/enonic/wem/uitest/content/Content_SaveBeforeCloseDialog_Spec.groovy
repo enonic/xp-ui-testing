@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
+import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.xp.schema.content.ContentTypeName
@@ -11,15 +11,15 @@ class Content_SaveBeforeCloseDialog_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN content-wizard opened AND data typed and content not saved WHEN confirmation dialog opened AND 'Yes' pressed THEN wizard closed and content not present in grid"()
+    def "GIVEN content-wizard opened AND data typed and content not saved WHEN 'delete content' dialog opened AND 'Delete' pressed THEN wizard closed and content not present in grid"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
-        String displayName = NameHelper.uniqueName( "confirmation" );
+        String displayName = NameHelper.uniqueName( "delete-dialog" );
 
         when: "display name typed and Delete button pressed"
-        ConfirmationDialog confirmationDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
-        confirmationDialog.pressYesButton();
+        DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
+        deleteContentDialog.doDelete();
 
         then: "wizard closed"
         !wizardPanel.isOpened();
@@ -29,39 +29,36 @@ class Content_SaveBeforeCloseDialog_Spec
         !contentBrowsePanel.exists( displayName );
     }
 
-    def "GIVEN content-wizard opened AND data typed and content not saved WHEN confirmation dialog opened AND 'No' pressed THEN wizard still present AND 'confirmation dialog' closed"()
+    def "GIVEN content-wizard opened AND data typed and content not saved WHEN 'delete content' dialog opened AND 'Cancel' pressed THEN wizard still present AND modal dialog closed"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
-        String displayName = NameHelper.uniqueName( "confirmation" );
+        String displayName = NameHelper.uniqueName( "delete-dialog" );
 
         when: "display name typed and Delete button pressed"
-        ConfirmationDialog confirmationDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
-        confirmationDialog.pressNoButton();
+        DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
+        deleteContentDialog.pressCancelButton();
 
         then: "wizard still opened"
         wizardPanel.isOpened();
 
-        and: "confirmation dialog closed"
-        !confirmationDialog.isOpened();
+        and: "'delete content' dialog closed"
+        !deleteContentDialog.isOpened();
     }
 
-    def "GIVEN content-wizard opened AND data typed and content not saved WHEN delete button pressed THEN 'confirmation dialog' appears"()
+    def "GIVEN content-wizard opened AND data typed and content not saved WHEN delete button pressed THEN 'delete content dialog' appears"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
 
         when: "display name typed and Delete button pressed"
-        ConfirmationDialog confirmationDialog = wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).clickToolbarDelete();
+        DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).clickToolbarDelete();
 
         then: "confirmation dialog appears"
-        confirmationDialog.isOpened();
+        deleteContentDialog.isOpened();
 
         and: "correct title displayed"
-        confirmationDialog.getTitle() == "Confirmation"
-
-        and: "correct question displayed"
-        confirmationDialog.getQuestion() == ConfirmationDialog.QUESTION;
+        deleteContentDialog.getTitle() == "Delete item"
     }
 
     def "GIVEN closing of not saved content WHEN 'Y' key pressed THEN new content listed in the grid"()

@@ -9,7 +9,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
-import com.enonic.autotests.pages.BaseDeleteDialog;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.NameHelper;
@@ -196,7 +195,7 @@ public class ApplicationBrowsePanel
     }
 
     @Override
-    public BaseDeleteDialog clickToolbarDelete()
+    public Application clickToolbarDelete()
     {
         throw new TestFrameworkException( "Delete button not present in Application's toolbar!" );
     }

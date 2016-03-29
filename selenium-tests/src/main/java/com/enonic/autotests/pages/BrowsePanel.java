@@ -95,7 +95,7 @@ public abstract class BrowsePanel
 
     public abstract <T extends Application> T clickToolbarNew();
 
-    public abstract <T extends BaseDeleteDialog> T clickToolbarDelete();
+    public abstract <T extends Application> T clickToolbarDelete();
 
     public abstract BaseBrowseFilterPanel getFilterPanel();
 

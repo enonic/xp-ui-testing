@@ -1,20 +1,21 @@
 package com.enonic.autotests.pages.usermanager.browsepanel;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.BaseDeleteDialog;
+import com.enonic.autotests.pages.Application;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class DeleteUserItemDialog
-    extends BaseDeleteDialog
+    extends Application
 {
     private final String TITLE_XPATH =
-        "//div[contains(@id,'ConfirmationDialog')]//div[contains(@id,'api.ui.dialog.ModalDialogHeader') and child::h2[text()='Confirmation']]";
+        "//div[contains(@id,'ConfirmationDialog')]//div[contains(@id,'ModalDialogHeader') and child::h2[text()='Confirmation']]";
 
     private final String YES_BUTTON_XPATH =
         "//div[contains(@id,'ModalDialogButtonRow')]//button[contains(@id,'DialogButton') and child::span[text()='Yes']]";
@@ -39,15 +40,24 @@ public class DeleteUserItemDialog
         boolean isClosed = waitForClosed();
         if ( !isClosed )
         {
-            throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
+            throw new TestFrameworkException( "'delete user item' dialog was not closed!" );
         }
         sleep( 1000 );
     }
 
-    @Override
-    public String getTitleXpath()
+    public boolean waitForClosed()
     {
-        return TITLE_XPATH;
+        return waitElementNotVisible( By.xpath( TITLE_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
+    public boolean waitForOpened()
+    {
+        return waitUntilVisibleNoException( By.xpath( TITLE_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
+    public boolean isOpened()
+    {
+        return isElementDisplayed( TITLE_XPATH );
     }
 
 }

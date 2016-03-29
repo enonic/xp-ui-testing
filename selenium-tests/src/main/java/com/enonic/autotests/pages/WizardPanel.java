@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -122,7 +121,7 @@ public abstract class WizardPanel<T>
 
     public abstract boolean isDeleteButtonEnabled();
 
-    public abstract ConfirmationDialog clickToolbarDelete();
+    public abstract Application clickToolbarDelete();
 
     public abstract WizardPanel<T> typeData( T object );
 
