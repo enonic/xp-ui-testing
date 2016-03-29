@@ -111,6 +111,7 @@ task testContentManager( type: Test, dependsOn: [buildApplications, deleteFolder
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
     exclude '**/content/move_publish_sort/**Spec.class'
+    exclude '**/content/details_panel/**Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
@@ -130,9 +131,10 @@ task testInputTypes( type: Test, dependsOn: [buildApplications, deleteFolders, s
     copyContentTypes.mustRunAfter startServer
 }
 
-task testPublishMoveSort( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+task testPublishMoveSortDeatailsPanel( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
+    include '**/content/details_panel/*Spec.class'
     exclude '**/application/**'
     exclude '**/user/**'
     forkEvery = null
@@ -255,10 +257,11 @@ task testApplicationBrowserStack( type: Test ) {
     exclude '**/user/**'
     forkEvery = null
 }
-task testPublishMoveSortLocal( type: Test ) {
+task testPublishMoveSortDeatailsPanelLocal( type: Test ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/*Spec.class'
     include '**/content/relationship/**Spec.class'
+    include '**/content/details_panel/*Spec.class'
     exclude '**/application/**'
     exclude '**/user/**'
     forkEvery = null
@@ -282,6 +285,7 @@ task testContentManagerLocal( type: Test ) {
     exclude '**/content/input_types/*Spec.class'
     exclude '**/content/move_publish_sort/**Spec.class'
     exclude '**/content/relationship/**Spec.class'
+    exclude '**/content/details_panel/**Spec.class'
     forkEvery = null
 }
 
