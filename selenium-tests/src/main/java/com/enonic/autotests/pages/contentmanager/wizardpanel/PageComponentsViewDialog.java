@@ -20,7 +20,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class PageComponentsViewDialog
     extends Application
 {
-    public static final String DIALOG_HEADER = "Page Components";
+    public static final String DIALOG_HEADER = "Components";
 
     public final String DIALOG_CONTAINER = "//div[contains(@id,'PageComponentsView')]";
 
