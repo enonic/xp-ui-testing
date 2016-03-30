@@ -110,6 +110,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         sleep( 2000 );
         wizard.switchToLiveEditFrame();
         LinkedList<String> after = liveFormPanel.getImageNames();
+        TestUtils.saveScreenshot( getSession(), "images-swapped" );
 
         then: "images swapped"
         before.getFirst() == TEST_IMAGE_SWAP;
