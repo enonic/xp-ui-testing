@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.PageComponent;
@@ -46,6 +48,14 @@ public class PageComponentsViewDialog
     public boolean isOpened()
     {
         return isElementDisplayed( DIALOG_CONTAINER );
+    }
+
+    public ItemViewContextMenu showItemViewContextMenu()
+    {
+        Actions builder = new Actions( getDriver() );
+        builder.click( getDisplayedElement( By.xpath( COMPONENTS_GRID ) ) ).build().perform();
+        sleep( 500 );
+        return new ItemViewContextMenu( getSession() );
     }
 
     public PageComponentsViewDialog openMenu( String componentName )

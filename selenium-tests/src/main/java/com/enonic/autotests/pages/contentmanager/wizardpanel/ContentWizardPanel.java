@@ -369,7 +369,7 @@ public class ContentWizardPanel
         return this;
     }
 
-    public ContentWizardPanel showComponentView()
+    public PageComponentsViewDialog showComponentView()
     {
         if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
         {
@@ -379,7 +379,7 @@ public class ContentWizardPanel
         getDisplayedElement( By.xpath( COMPONENT_VIEW_TOGGLER ) ).click();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         dialog.waitForOpened();
-        return this;
+        return dialog;
     }
 
     public boolean isShowComponentViewButtonDisplayed()

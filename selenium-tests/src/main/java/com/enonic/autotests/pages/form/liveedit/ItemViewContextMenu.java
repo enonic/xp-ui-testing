@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.form.liveedit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -24,9 +23,7 @@ public class ItemViewContextMenu
 
     public boolean isOpened()
     {
-        //return findElements( By.xpath( CONTAINER_DIV ) ).stream().filter(
-        //  e -> !e.getAttribute( "style" ).contains( "display: block" ) ).count() == 1;
-        return findElements( By.xpath( CONTAINER_DIV ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
+        return isElementDisplayed( CONTAINER_DIV );
     }
 
     public void clickOnCustomizeMenuItem()

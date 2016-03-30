@@ -2,15 +2,14 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewContextMenu
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
+import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Site_With_TemplatePageComponentDialog_Spec
@@ -75,7 +74,6 @@ class Site_With_TemplatePageComponentDialog_Spec
         components.get( 1 ).getName().equals( "country" )
     }
 
-
     def "GIVEN opened a existing site WHEN 'Page Component View' shown AND menu-button clicked THEN context menu should be present"()
     {
         given: "opened a existing site"
@@ -91,7 +89,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         ItemViewContextMenu contextMenu = new ItemViewContextMenu( getSession() );
 
         then: "context menu is displayed"
-        contextMenu.isDisplayed();
+        contextMenu.isOpened();
     }
 
     def "GIVEN opened a existing site and 'customize' menu item selected WHEN wizard closed THEN 'save before close dialog' displayed, because renderer was changed"()
@@ -111,7 +109,6 @@ class Site_With_TemplatePageComponentDialog_Spec
         dialog != null;
     }
 
-    @Ignore
     def "GIVEN 'Page Component View' shown AND context menu displayed WHEN wizard closed THEN context menu closed as well "()
     {
         given: "existing site is opened"
@@ -127,11 +124,11 @@ class Site_With_TemplatePageComponentDialog_Spec
         ItemViewContextMenu contextMenu = new ItemViewContextMenu( getSession() );
 
         when: "site-wizard have been closed"
-        wizard.close( SITE.getDisplayName() );
+        wizard.save().close( SITE.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), "context-menu-closed-templ" );
 
         then: "context menu is not displayed"
-        !contextMenu.isDisplayed();
+        !contextMenu.isOpened();
     }
 
     def "GIVEN 'Page Component View' shown AND context menu displayed WHEN 'HomeButton' pressed THEN context menu is not displayed "()
@@ -149,7 +146,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         TestUtils.saveScreenshot( getSession(), "context-menu-home-template" );
 
         then: "context menu is not displayed"
-        !contextMenu.isDisplayed();
+        !contextMenu.isOpened();
     }
 
     def "GIVEN 'Page Components' view opened WHEN button 'close' clicked THEN dialog not displayed"()
@@ -165,5 +162,4 @@ class Site_With_TemplatePageComponentDialog_Spec
         then: "'page component view' is not displayed"
         !dialog.isOpened()
     }
-
 }
