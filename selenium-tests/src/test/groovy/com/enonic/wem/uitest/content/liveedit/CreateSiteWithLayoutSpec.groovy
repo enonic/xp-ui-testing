@@ -82,9 +82,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "'Insert/Text' menu items clicked and text typed"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
@@ -109,9 +108,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "'Insert/Layout' menu items clicked and layout with 3 columns selected"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
@@ -132,9 +130,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
@@ -157,9 +154,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
@@ -181,9 +177,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "menu for right region clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
@@ -205,9 +200,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "menu for image clicked and 'reset' menu-item selected"
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Reset" );
@@ -229,9 +223,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "menu for image clicked and 'reset' menu-item selected"
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Duplicate" );
@@ -252,10 +245,8 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable(
-            pageTemplate.getName() ).clickToolbarEdit().showComponentView();
-        PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
         when: "menu for image clicked and 'reset' menu-item selected"
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Remove" );
         wizardPanel.switchToLiveEditFrame();
