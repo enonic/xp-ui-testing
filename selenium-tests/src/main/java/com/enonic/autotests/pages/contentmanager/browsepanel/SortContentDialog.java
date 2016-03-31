@@ -30,7 +30,7 @@ public class SortContentDialog
 
     private final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']]";
 
-    private final String CANCEL_TOP_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-top') ]";
+    private final String CANCEL_TOP_BUTTON = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top') ]";
 
     private final String SORT_CONTENT_MENU_BUTTON = DIALOG_CONTAINER + "//div[contains(@id,'TabMenuButton')]";
 

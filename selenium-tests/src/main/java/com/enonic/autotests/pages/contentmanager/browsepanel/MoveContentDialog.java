@@ -28,7 +28,7 @@ public class MoveContentDialog
     private final String MOVE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[text()='Move']]";
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-top dialog-button')]";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 
