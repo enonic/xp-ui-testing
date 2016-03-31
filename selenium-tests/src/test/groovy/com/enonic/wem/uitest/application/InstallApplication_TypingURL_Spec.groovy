@@ -15,7 +15,7 @@ class InstallApplication_TypingURL_Spec
     String WRONG_PROTOCOL_URL = "file:c:/";
 
     @Shared
-    String WARNING = "Failed to process application %s"
+    String WARNING = "Failed to process application from %s"
 
     def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN wrong URL to an application typed THEN correct validation message appears in the dialog"()
     {
