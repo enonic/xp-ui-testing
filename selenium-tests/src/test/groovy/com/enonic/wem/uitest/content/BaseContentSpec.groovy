@@ -26,6 +26,9 @@ class BaseContentSpec
     String NORSK_LANGUAGE = "norsk (no)";
 
     @Shared
+    String ENGLISH_LANGUAGE = "English (en)";
+
+    @Shared
     String TEMPLATE_SUPPORTS_SITE = "site";
 
     @Shared

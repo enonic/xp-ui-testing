@@ -1,18 +1,16 @@
 package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
-import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class DetailsPanels_VersionHistory_Spec
-    extends BaseContentSpec
+    extends BaseVersionHistorySpec
 {
     @Shared
     Content folderContent;
@@ -22,15 +20,14 @@ class DetailsPanels_VersionHistory_Spec
 
     def "GIVEN content selected  WHEN 'Version History' option selected THEN panel with all versions for the content is loaded"()
     {
-        given: "content selected and details panel opened"
+        given: "content added"
         folderContent = buildFolderContent( "version_h_", "version_history_test" );
         addContent( folderContent );
-        and: "'Content Details Panel' is shown"
+        and: "the content selected"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         then: "panel with all versions for the content is loaded"
         allContentVersionsView.isLoaded();
@@ -40,10 +37,10 @@ class DetailsPanels_VersionHistory_Spec
     {
         given: "content selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        //contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
         LinkedList<ContentVersion> allVersions = allContentVersionsView.getAllVersions();
         TestUtils.saveScreenshot( getSession(), "two-versions" )
 
@@ -65,8 +62,7 @@ class DetailsPanels_VersionHistory_Spec
     {
         given: "content selected"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        AllContentVersionsView allContentVersionsView = openVersionPanel()
 
         when: "content published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
@@ -113,13 +109,5 @@ class DetailsPanels_VersionHistory_Spec
 
         then: "the latest version has a 'pending delete' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
-    }
-
-    private AllContentVersionsView openVersionPanel()
-    {
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
-        AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
-        return contentItemVersionsPanel;
     }
 }

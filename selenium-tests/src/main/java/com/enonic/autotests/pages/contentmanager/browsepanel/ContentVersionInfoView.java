@@ -50,6 +50,12 @@ public class ContentVersionInfoView
         sleep( 200 );
     }
 
+    public void doRestoreVersion( String versionId )
+    {
+        getDisplayedElement( By.xpath( String.format( RESTORE_BUTTON, versionId ) ) ).click();
+        sleep( 700 );
+    }
+
     public void isVersionInfoExpanded( String versionId )
     {
         String itemXpath = String.format( ITEM_BY_ID, versionId );
@@ -74,7 +80,6 @@ public class ContentVersionInfoView
         {
             return "";
         }
-
     }
 
     public String getTimeStamp( String versionId )

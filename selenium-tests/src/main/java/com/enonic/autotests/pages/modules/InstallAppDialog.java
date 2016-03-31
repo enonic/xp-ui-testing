@@ -29,7 +29,7 @@ public class InstallAppDialog
 
     private final String HEADER_XPATH = INSTALL_DIALOG_DIV + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
-    private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + "//button[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + "//div[contains(@class,'cancel-button-top')]";
 
     private final String UPLOAD_TAB = INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::span[text()='Upload']]";
 
