@@ -140,6 +140,11 @@ public class SiteConfiguratorDialog
         String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
         WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
         builder.moveToElement( textArea ).click( textArea ).build().perform();
+        if ( !isElementDisplayed( INSERT_LINK_BUTTON ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_insert_link" );
+            throw new TestFrameworkException( "insert-link menu item not present!" );
+        }
         getDisplayedElement( By.xpath( INSERT_LINK_BUTTON ) ).click();
         return new InsertLinkModalDialog( getSession() );
     }
@@ -154,7 +159,6 @@ public class SiteConfiguratorDialog
         Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
         String text = obj.toString();
         getDriver().switchTo().window( contentStudioWHandle );
-        // NavigatorHelper.switchToIframe( getSession(), Application.CONTENT_MANAGER_FRAME_XPATH );
         return text;
     }
 }
