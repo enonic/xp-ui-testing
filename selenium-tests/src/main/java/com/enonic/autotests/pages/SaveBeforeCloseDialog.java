@@ -5,8 +5,6 @@ import java.awt.AWTException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -16,17 +14,17 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class SaveBeforeCloseDialog
     extends Application
 {
+    private final String DIALOG_DIV = "//div[contains(@id,'wizard.SaveBeforeCloseDialog')]";
+
     private final String YES_BUTTON_XPATH =
-        "//div[contains(@id,'api.app.wizard.SaveBeforeCloseDialog')]//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'es')]]";
+        DIALOG_DIV + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'es')]]";
 
     private final String NO_BUTTON_XPATH =
-        "//div[contains(@id,'api.app.wizard.SaveBeforeCloseDialog')]//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'o')]]";
+        DIALOG_DIV + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'o')]]";
 
-    private final String CANCEL_BUTTON_XPATH =
-        "//div[contains(@id,'api.app.wizard.SaveBeforeCloseDialog')]//button[contains(@class, 'cancel-button')]";
+    private final String CANCEL_BUTTON_XPATH = DIALOG_DIV + "//div[contains(@class,'cancel-button')]";
 
-
-    public final String TITLE_XPATH = "//h2[text()='Close wizard']";
+    public final String TITLE_XPATH = DIALOG_DIV + "//h2[text()='Close wizard']";
 
     /**
      * The constructor
@@ -89,28 +87,6 @@ public class SaveBeforeCloseDialog
             throw new TestFrameworkException( "'No' button was not found on modal dialog!" );
         }
         findElement( By.xpath( NO_BUTTON_XPATH ) ).click();
-    }
-
-    /**
-     *
-     */
-    public void doCloseNoSave()
-    {
-        boolean isPresent = waitAndFind( By.xpath( NO_BUTTON_XPATH ) );
-        if ( !isPresent )
-        {
-            throw new TestFrameworkException( "'No' button was not found on modal dialog!" );
-        }
-        findElement( By.xpath( NO_BUTTON_XPATH ) ).click();
-    }
-
-
-    /**
-     * @param timeout
-     */
-    public void waitUntilPageLoaded( long timeout )
-    {
-        new WebDriverWait( getDriver(), timeout ).until( ExpectedConditions.visibilityOfElementLocated( By.xpath( TITLE_XPATH ) ) );
     }
 
     /**
