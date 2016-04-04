@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -21,6 +23,7 @@ public class SecurityWizardStepForm
     private final String EDIT_PERMISSION_BUTTON =
         "//button[contains(@class,'edit-permissions') and child::span[text()='Edit Permissions']]";
 
+    private final String ACL_ENTRIES_DISPLAY_NAME = CONTAINER_XPATH + "//ul[contains(@id,'AccessControlListView')]" + H6_DISPLAY_NAME;
 
     @FindBy(xpath = CONTAINER_XPATH + EDIT_PERMISSION_BUTTON)
     WebElement editPermissionsButton;
@@ -62,5 +65,10 @@ public class SecurityWizardStepForm
         String id = editPermissionsButton.getAttribute( "id" );
         String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s').getHTMLElement().click()", id );
         executor.executeScript( script );
+    }
+
+    public List<String> getAllDisplayNamesOfAclEntries()
+    {
+        return getDisplayedStrings( By.xpath( ACL_ENTRIES_DISPLAY_NAME ) );
     }
 }

@@ -128,7 +128,8 @@ public class EditPermissionsDialog
             throw new TestFrameworkException( "Apply button was not found!" );
         }
         WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( APPLY_BUTTON_XPATH ) );
-        findElements( By.xpath( APPLY_BUTTON_XPATH ) ).get( 0 ).click();
+        findElement( By.xpath( APPLY_BUTTON_XPATH ) ).click();
+        sleep( 500 );
         return this;
     }
 

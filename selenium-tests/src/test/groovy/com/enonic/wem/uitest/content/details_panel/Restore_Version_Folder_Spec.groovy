@@ -3,11 +3,15 @@ package com.enonic.wem.uitest.content.details_panel
 import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
+import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
+import com.enonic.autotests.vo.usermanager.SystemUserName
 import spock.lang.Shared
 
 class Restore_Version_Folder_Spec
@@ -85,4 +89,44 @@ class Restore_Version_Folder_Spec
         then: "language is restored on the wizard page"
         form.getLanguage() == NORSK_LANGUAGE;
     }
+
+    def "GIVEN new acl-entry added for the folder WHEN previous version restored THEN acl entry not present in the content wizard"()
+    {
+        given: "new acl entry added and folder saved"
+        ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
+        findAndSelectContent( FOLDER_CONTENT.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
+        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
+        modalDialog.setCheckedForInheritCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
+        sleep( 1000 );
+        List<String> beforeRestoring = securityForm.getAllDisplayNamesOfAclEntries();
+        wizard.save().close( NEW_DISPLAY_NAME );
+
+        when: "the previous version is restored"
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        versionItem.doRestoreVersion( versionItem.getId() );
+
+        then: "and this role not present after restoring of version without this role"
+        !contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getAllDisplayNamesOfAclEntries().contains( "Anonymous User" );
+
+        and: "required role was present before restoring"
+        beforeRestoring.contains( "Anonymous User" );
+    }
+
+    def "GIVEN version panel opened for the folder WHEN version with the acl-entry restored THEN acl-entry present again in the content wizard"()
+    {
+        given: "new acl entry added and folder saved"
+        findAndSelectContent( FOLDER_CONTENT.getName() );
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+
+        when: "the latest version is restored"
+        versionItem.doRestoreVersion( versionItem.getId() );
+
+        then: "new role present after restoring of the latest version"
+        contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getAllDisplayNamesOfAclEntries().contains( "Anonymous User" );
+    }
+
 }
