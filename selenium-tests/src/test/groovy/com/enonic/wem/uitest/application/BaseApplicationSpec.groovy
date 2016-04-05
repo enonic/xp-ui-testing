@@ -59,7 +59,7 @@ class BaseApplicationSpec
         applicationItemStatisticsPanel = applicationBrowsePanel.getItemStatisticPanel();
     }
 
-    protected installApp( String name, String displayName )
+    protected installAppAndCloseDialog( String name, String displayName )
     {
         if ( !applicationBrowsePanel.exists( name ) )
         {
@@ -70,6 +70,7 @@ class BaseApplicationSpec
             marketPanel.doInstallApp( displayName );
             appDialog.clickOnCancelButton();
             sleep( 3000 );
+            applicationBrowsePanel.waitNewInstalledApplicationAppears( name, 10 );
             applicationBrowsePanel.waitApplicationStatus( name, "started" )
         }
     }

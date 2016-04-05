@@ -45,7 +45,7 @@ class AppBrowsePanel_ContextMenu_Spec
     def "GIVEN existing not local application WHEN the application selected and context menu opened THEN all menu-items have correct state"()
     {
         given:
-        installApp( GOOGLE_ANALYTICS_APP_NAME, GOOGLE_ANALYTICS_DISPLAY_NAME );
+        installAppAndCloseDialog( GOOGLE_ANALYTICS_APP_NAME, GOOGLE_ANALYTICS_DISPLAY_NAME );
 
         when: "context menu opened"
         applicationBrowsePanel.openContextMenu( GOOGLE_ANALYTICS_APP_NAME );

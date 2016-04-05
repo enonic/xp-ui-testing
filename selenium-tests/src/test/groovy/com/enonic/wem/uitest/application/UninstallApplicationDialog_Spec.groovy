@@ -10,7 +10,7 @@ class UninstallApplicationDialog_Spec
     def "GIVEN installed from 'Enonic Market' application WHEN app selected and 'uninstall' button pressed THEN 'UnInstallDialog' appears"()
     {
         given: "installed from 'Enonic Market' application"
-        installApp( GOOGLE_ANALYTICS_APP_NAME, GOOGLE_ANALYTICS_DISPLAY_NAME );
+        installAppAndCloseDialog( GOOGLE_ANALYTICS_APP_NAME, GOOGLE_ANALYTICS_DISPLAY_NAME );
 
         when: "app selected and 'uninstall' button pressed"
         applicationBrowsePanel.selectRowByName( GOOGLE_ANALYTICS_APP_NAME );
@@ -83,5 +83,4 @@ class UninstallApplicationDialog_Spec
         and: "the application listed in the grid"
         !applicationBrowsePanel.exists( GOOGLE_ANALYTICS_APP_NAME );
     }
-
 }

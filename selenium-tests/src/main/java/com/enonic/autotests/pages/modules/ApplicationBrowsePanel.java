@@ -166,6 +166,17 @@ public class ApplicationBrowsePanel
         return result;
     }
 
+    public void waitNewInstalledApplicationAppears( String appName, long timeout )
+    {
+        String appXpath = String.format( SLICK_ROW_BY_NAME, appName );
+        boolean result = waitUntilVisibleNoException( By.xpath( appXpath ), timeout );
+        if ( !result )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + appName );
+            throw new TestFrameworkException( "application has not appeared in the grid after " + timeout + "seconds" + "app: " + appName );
+        }
+    }
+
     public ApplicationBrowseItemsSelectionPanel getItemSelectionPanel()
     {
         if ( itemsSelectionPanel == null )
