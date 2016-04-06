@@ -142,7 +142,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         ItemViewContextMenu contextMenu = new ItemViewContextMenu( getSession() );
 
         when: "HomeButton clicked"
-        contentBrowsePanel.goToAppHome();
+        contentBrowsePanel.pressAppHomeButton();
         TestUtils.saveScreenshot( getSession(), "context-menu-home-template" );
 
         then: "context menu is not displayed"

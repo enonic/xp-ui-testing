@@ -54,7 +54,7 @@ public class ApplicationBrowsePanel
     }
 
     @Override
-    public BrowsePanel goToAppHome()
+    public BrowsePanel pressAppHomeButton()
     {
         return null;
     }

@@ -89,7 +89,7 @@ class GeoPoint_Spec
 
         when: "content saved and HomeButton clicked"
         wizard.save();
-        contentBrowsePanel.goToAppHome();
+        contentBrowsePanel.pressAppHomeButton();
         filterPanel.typeSearchText( validContent.getName() );
         sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "geo-location-grid-valid" );

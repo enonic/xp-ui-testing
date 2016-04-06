@@ -20,7 +20,7 @@ class UserStoreWizardPanel_TabMenuSpec
         UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New User Store' is present "
-        wizard.isTabMenuItemPresent( USERSTORE_TAB_TITLE );
+        userBrowsePanel.isTabMenuItemPresent( USERSTORE_TAB_TITLE );
     }
 
     def "GIVEN 'user store' Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()

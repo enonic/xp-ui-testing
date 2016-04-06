@@ -38,7 +38,7 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
 
         when: "user store saved and HomeButton clicked"
         userStoreWizardPanel.save();
-        userBrowsePanel.goToAppHome();
+        userBrowsePanel.pressAppHomeButton();
 
         then: "correct display name shown in a statistics panel"
         userBrowsePanel.clickCheckboxAndSelectUserStore( TEST_USER_STORE.getName() );

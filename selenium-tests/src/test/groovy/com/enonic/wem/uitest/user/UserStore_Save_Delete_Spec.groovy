@@ -148,7 +148,7 @@ class UserStore_Save_Delete_Spec
         userStoreWizardPanel.typeData( userStore ).save();
 
         when: "HomeButton pressed"
-        userBrowsePanel.goToAppHome();
+        userBrowsePanel.pressAppHomeButton();
 
         then: "new 'user store' displayed in grid"
         TestUtils.saveScreenshot( getSession(), "user-store-home-clicked" );

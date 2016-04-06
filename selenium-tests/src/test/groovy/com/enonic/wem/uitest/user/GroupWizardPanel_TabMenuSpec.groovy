@@ -22,7 +22,7 @@ class GroupWizardPanel_TabMenuSpec
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New Role' is present "
-        wizard.isTabMenuItemPresent( GROUP_TAB_TITLE );
+        userBrowsePanel.isTabMenuItemPresent( GROUP_TAB_TITLE );
     }
 
     def "GIVEN Group Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()

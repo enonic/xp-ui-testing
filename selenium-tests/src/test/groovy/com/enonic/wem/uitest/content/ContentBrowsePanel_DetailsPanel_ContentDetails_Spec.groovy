@@ -16,7 +16,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     {
         given: "site wizard opened AND and HomeButton clicked"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.site() );
-        contentBrowsePanel.goToAppHome();
+        contentBrowsePanel.pressAppHomeButton();
 
         when: "unnamed content selected in greed"
         filterPanel.typeSearchText( "unnamed" )

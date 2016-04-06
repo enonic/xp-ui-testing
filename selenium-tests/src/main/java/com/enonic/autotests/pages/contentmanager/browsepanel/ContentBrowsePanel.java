@@ -271,7 +271,7 @@ public class ContentBrowsePanel
         return itemsSelectionPanel;
     }
 
-    public ContentBrowsePanel goToAppHome()
+    public ContentBrowsePanel pressAppHomeButton()
     {
         contentManagerButton.click();
         sleep( 500 );

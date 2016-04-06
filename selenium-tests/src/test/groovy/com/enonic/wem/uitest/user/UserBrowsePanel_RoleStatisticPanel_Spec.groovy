@@ -115,7 +115,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
 
         when: "role saved and HomeButton clicked"
         roleWizardPanel.save();
-        userBrowsePanel.goToAppHome();
+        userBrowsePanel.pressAppHomeButton();
         userBrowsePanel.clickOnClearSelection();
 
         then: "correct display name shown in a statistics panel"

@@ -151,7 +151,7 @@ class Group_Save_Delete_Spec
         groupWizardPanel.typeData( testGroup ).save();
 
         when: "HomeButton pressed"
-        userBrowsePanel.goToAppHome();
+        userBrowsePanel.pressAppHomeButton();
 
         then: "new group displayed in grid"
         userBrowseFilterPanel.typeSearchText( testGroup.getName() );

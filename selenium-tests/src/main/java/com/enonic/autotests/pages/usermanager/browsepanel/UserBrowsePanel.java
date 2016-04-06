@@ -111,7 +111,7 @@ public class UserBrowsePanel
 
 
     @Override
-    public UserBrowsePanel goToAppHome()
+    public UserBrowsePanel pressAppHomeButton()
     {
         userManagerButton.click();
         sleep( 1000 );

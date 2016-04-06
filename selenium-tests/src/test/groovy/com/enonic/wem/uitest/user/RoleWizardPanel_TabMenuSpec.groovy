@@ -20,7 +20,7 @@ class RoleWizardPanel_TabMenuSpec
         TestUtils.saveScreenshot( getTestSession(), "tab_role" );
 
         then: "tab with title 'New Role' is present "
-        wizard.isTabMenuItemPresent( ROLE_TAB_TITLE );
+        userBrowsePanel.isTabMenuItemPresent( ROLE_TAB_TITLE );
     }
 
     def "GIVEN role Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()

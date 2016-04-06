@@ -152,7 +152,7 @@ class Role_Save_Delete_Spec
         roleWizardPanel.typeData( testRole ).save();
 
         when: "HomeButton pressed"
-        userBrowsePanel.goToAppHome();
+        userBrowsePanel.pressAppHomeButton();
 
         then: "new role displayed in grid"
         userBrowseFilterPanel.typeSearchText( testRole.getName() );

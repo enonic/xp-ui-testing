@@ -56,6 +56,12 @@ public abstract class BrowsePanel
     private String BROWSE_PANEL_ITEM_EXPANDER =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
+    public final String APP_BAR_TAB_MENU = "//div[contains(@id,'AppBarTabMenu')]";
+
+    public String APP_BAR_TAB_MENU_ITEM =
+        APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem') and descendant::span[contains(.,'%s')]]";
+
+
     protected String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
@@ -89,7 +95,7 @@ public abstract class BrowsePanel
         super( session );
     }
 
-    public abstract BrowsePanel goToAppHome();
+    public abstract BrowsePanel pressAppHomeButton();
 
     public abstract <T extends WizardPanel> T clickToolbarEdit();
 
@@ -109,6 +115,20 @@ public abstract class BrowsePanel
         showFilterPanelButton.click();
         sleep( 700 );
         return this;
+    }
+
+    public boolean isTabMenuItemPresent( String itemText )
+    {
+        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]//span" ) );
+
+        for ( WebElement element : elems )
+        {
+            if ( element.getText().contains( itemText ) )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isLauncherButtonDisplayed()
@@ -144,6 +164,18 @@ public abstract class BrowsePanel
         {
             clickOnShowFilterPanelButton();
         }
+        return this;
+    }
+
+    public BrowsePanel clickOnTab( String displayName )
+    {
+        String tabXpath = String.format( APP_BAR_TAB_MENU_ITEM, displayName );
+        if ( !isElementDisplayed( tabXpath ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_tab_" + displayName ) );
+            throw new TestFrameworkException( "tab menu item was not found: " + displayName );
+        }
+        getDisplayedElement( By.xpath( tabXpath ) ).click();
         return this;
     }
 

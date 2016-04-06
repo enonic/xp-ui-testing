@@ -21,7 +21,7 @@ class UserWizardPanel_TabMenuSpec
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         then: "item with title 'New User' is present on the tab menu "
-        wizard.isTabMenuItemPresent( USER_TAB_TITLE );
+        userBrowsePanel.isTabMenuItemPresent( USER_TAB_TITLE );
 
     }
 

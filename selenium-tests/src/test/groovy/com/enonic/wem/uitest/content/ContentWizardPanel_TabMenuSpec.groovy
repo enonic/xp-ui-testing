@@ -23,7 +23,7 @@ class ContentWizardPanel_TabMenuSpec
             waitUntilWizardOpened();
 
         then: "item menu with title should appears"
-        wizard.isTabMenuItemPresent( FOLDER_TAB_TITLE );
+        contentBrowsePanel.isTabMenuItemPresent( FOLDER_TAB_TITLE );
     }
 
     def "WHEN started adding a 'Unstructured' and 'Folder' two Wizards is opened  THEN two tabs with are present"()
@@ -31,12 +31,13 @@ class ContentWizardPanel_TabMenuSpec
         when:
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.unstructured().toString() ).
             waitUntilWizardOpened();
-        contentBrowsePanel.goToAppHome();
+        contentBrowsePanel.pressAppHomeButton();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened();
 
         then:
-        wizard.isTabMenuItemPresent( UNSTRUCTURED_TAB_MENU_ITEM ) && wizard.isTabMenuItemPresent( FOLDER_TAB_TITLE );
+        contentBrowsePanel.isTabMenuItemPresent( UNSTRUCTURED_TAB_MENU_ITEM ) &&
+            contentBrowsePanel.isTabMenuItemPresent( FOLDER_TAB_TITLE );
     }
 
     def "GIVEN content Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()

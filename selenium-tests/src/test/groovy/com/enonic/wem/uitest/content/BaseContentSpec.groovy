@@ -4,6 +4,7 @@ import com.enonic.autotests.XP_Windows
 import com.enonic.autotests.pages.contentmanager.browsepanel.*
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
+import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
@@ -126,6 +127,53 @@ class BaseContentSpec
             build();
         return content;
     }
+
+    protected Content buildShortcut( String name, String parentName, String displayName )
+    {
+        ContentPath parent = null;
+        if ( parentName != null )
+        {
+            parent = ContentPath.from( parentName )
+        }
+        else
+        {
+            parent = ContentPath.ROOT;
+        }
+        Content shortcut = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( displayName ).
+            parent( parent ).
+            contentType( ContentTypeName.shortcut() ).
+            build();
+        return shortcut;
+    }
+
+    protected Content buildShortcutWithSettingsAndTarget( String name, String parentName, String displayName, String target,
+                                                          ContentSettings settings )
+    {
+        PropertyTree data = null;
+        ContentPath parent = null;
+        if ( target != null )
+        {
+            data = new PropertyTree();
+            data.addString( ShortcutFormViewPanel.SHORTCUT_PROPERTY, target );
+        }
+        if ( parentName != null )
+        {
+            parent = ContentPath.from( parentName )
+        }
+        else
+        {
+            parent = ContentPath.ROOT;
+        }
+        Content shortcut = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( displayName ).
+            parent( parent ).
+            contentType( ContentTypeName.shortcut() ).settings( settings ).data( data ).build();
+        return shortcut;
+    }
+
 
     public Content buildFolderWithSettingsContent( String name, String displayName, ContentSettings settings )
     {
@@ -272,26 +320,6 @@ class BaseContentSpec
             contentType( ContentTypeName.unstructured() ).
             build();
         return unstructured;
-    }
-
-    protected Content buildShortcut( String name, String parentName, String displayName )
-    {
-        ContentPath parent = null;
-        if ( parentName != null )
-        {
-            parent = ContentPath.from( parentName )
-        }
-        else
-        {
-            parent = ContentPath.ROOT;
-        }
-        Content shortcut = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( displayName ).
-            parent( parent ).
-            contentType( ContentTypeName.shortcut() ).
-            build();
-        return shortcut;
     }
 
     protected void addSiteBasedOnFirstApp( Content site )

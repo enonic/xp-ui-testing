@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,11 +26,6 @@ public abstract class WizardPanel<T>
     public static final String SECURITY_LINK_TEXT = "Security";
 
     public static final String SETTINGS_LINK_TEXT = "Settings";
-
-    public static String APP_BAR_TAB_MENU = "//div[contains(@id,'api.app.bar.AppBarTabMenu')]";
-
-    public static String APP_BAR_TAB_MENU_ITEM =
-        APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem') and child::span[text()='%s']]";
 
     public static String TAB_MENU_ITEM =
         "//div[contains(@id,'api.app.bar.AppBar')]//li[contains(@id,'AppBarTabMenuItem') and child::span[@class='label' and text() ='%s']]";
@@ -140,19 +133,19 @@ public abstract class WizardPanel<T>
         return inputWidth;
     }
 
-    public boolean isTabMenuItemPresent( String itemText )
-    {
-        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]//span" ) );
-
-        for ( WebElement element : elems )
-        {
-            if ( element.getText().contains( itemText ) )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean isTabMenuItemPresent( String itemText )
+//    {
+//        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]//span" ) );
+//
+//        for ( WebElement element : elems )
+//        {
+//            if ( element.getText().contains( itemText ) )
+//            {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public String getNameInputValue()
     {

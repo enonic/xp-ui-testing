@@ -22,6 +22,7 @@ import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel;
 import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.RelationshipFormView;
+import com.enonic.autotests.pages.form.ShortcutFormViewPanel;
 import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView;
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
@@ -153,6 +154,11 @@ public class ContentWizardStepForm
             contentTypeName.contains( TestAppContentType.CUSTOM_RELATION0_1.getName() ) )
         {
             formViewPanel = new RelationshipFormView( getSession() );
+        }
+
+        else if ( contentTypeName.contains( "base:shortcut" ) )
+        {
+            formViewPanel = new ShortcutFormViewPanel( getSession() );
         }
         else if ( contentTypeName.contains( TestAppContentType.ARTICLE.getName() ) )
         {
