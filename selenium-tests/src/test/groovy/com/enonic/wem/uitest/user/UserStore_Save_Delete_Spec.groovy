@@ -20,7 +20,6 @@ class UserStore_Save_Delete_Spec
     @Shared
     String NEW_NAME = "new_name";
 
-    @Ignore
     def "GIVEN adding of a new user-store WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
     {
         given: "start adding a new user"
@@ -29,6 +28,8 @@ class UserStore_Save_Delete_Spec
 
         when: "data typed and user saved"
         userStoreWizardPanel.typeData( refreshWizardUserStore ).save().waitNotificationMessage();
+
+        and: "page refreshed"
         userBrowsePanel.refreshPanelInBrowser();
         TestUtils.saveScreenshot( getSession(), "user_store_wizard_refreshed" );
 
@@ -36,7 +37,7 @@ class UserStore_Save_Delete_Spec
         userStoreWizardPanel.isOpened();
 
         and: "correct display name displayed"
-        userStoreWizardPanel.getNameInputValue() == refreshWizardUserStore.getDisplayName();
+        userStoreWizardPanel.getNameInputValue() == refreshWizardUserStore.getName();
     }
 
     def "GIVEN creating new user store WHEN user store saved and wizard closed THEN new user store should be listed"()
@@ -57,7 +58,7 @@ class UserStore_Save_Delete_Spec
         and: "correct notification message appears"
         creatingMessage == USER_STORE_CREATED_MESSAGE;
     }
-    //app bug    INBOX-279
+    //app bug?    INBOX-279
     @Ignore
     def "GIVEN a existing 'user store' WHEN creating new role with the same name THEN correct notification message appears"()
     {
@@ -106,7 +107,7 @@ class UserStore_Save_Delete_Spec
         userBrowsePanel.exists( TEST_USER_STORE.getName() );
     }
 
-    //app bug
+    //app bug? currently impossible to change the UserStore's name, input is disabled now
     @Ignore
     def "GIVEN existing 'user store' WHEN name changed THEN 'user store' with new name should be listed"()
     {
