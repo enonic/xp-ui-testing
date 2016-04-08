@@ -41,7 +41,13 @@ class ContextWindow_InspectionPanel_Spec
         TestUtils.saveScreenshot( getSession(), "inspect-opened" );
 
         then: "'inspect panel' is displayed"
-        inspectPanel.isDisplayed()
+        inspectPanel.isDisplayed();
+
+        and: "template selector displayed "
+        inspectPanel.isPageTemplateSelectorDisplayed();
+
+        and: "page controller not displayed, when template not selected yet"
+        !inspectPanel.isPageControllerSelectorDisplayed()
     }
 
     def "GIVEN 'Inspect' panel opened WHEN 'Custom' renderer selected THEN 'Page Controller' selector appears"()

@@ -2,6 +2,8 @@ package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -15,9 +17,11 @@ public class ContextWindowPageInspectionPanel
 {
     private final String CONTAINER = "//div[contains(@id,'PageInspectionPanel')]";
 
-    private final String OPTION_FILTER_INPUT = CONTAINER + "//input[contains(@id,'DropdownOptionFilterInput')]";
-
     private final String PAGE_CONTROLLER_SELECTOR = CONTAINER + "//div[contains(@id,'PageControllerSelector')]";
+
+    private final String PAGE_CONTROLLER_OPTION_FILTER_INPUT =
+        PAGE_CONTROLLER_SELECTOR + "//input[contains(@id,'DropdownOptionFilterInput')]";
+
 
     private final String RENDERER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateSelector')]";
 
@@ -25,14 +29,18 @@ public class ContextWindowPageInspectionPanel
 
     private final String RENDERER_DROPDOWN_HANDLER = RENDERER_SELECTOR + "//div[contains(@id,'DropdownHandle')]";
 
+
+    @FindBy(xpath = PAGE_CONTROLLER_OPTION_FILTER_INPUT)
+    protected WebElement pageControllerOptionFilterInput;
+
     public ContextWindowPageInspectionPanel( final TestSession session )
     {
         super( session );
     }
 
-    public boolean isOptionFilterDisplayed()
+    public boolean isPageTemplateSelectorDisplayed()
     {
-        return isElementDisplayed( OPTION_FILTER_INPUT );
+        return isElementDisplayed( RENDERER_SELECTOR );
     }
 
     public ContextWindowPageInspectionPanel selectRenderer( String templateName )
@@ -54,7 +62,7 @@ public class ContextWindowPageInspectionPanel
 
     public ContextWindowPageInspectionPanel selectPageController( String controllerName )
     {
-        getDisplayedElement( By.xpath( PAGE_CONTROLLER_DROPDOWN_HANDLER ) ).click();
+        clearAndType( pageControllerOptionFilterInput, controllerName );
         sleep( 300 );
         String optionItemXpath = PAGE_CONTROLLER_SELECTOR + "//div[contains(@class,'slick-cell')]" +
             String.format( NAMES_VIEW_BY_DISPLAY_NAME, controllerName );
