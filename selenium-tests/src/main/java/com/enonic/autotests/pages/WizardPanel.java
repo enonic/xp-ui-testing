@@ -194,4 +194,11 @@ public abstract class WizardPanel<T>
         clearAndType( displayNameInput, displayName );
         return this;
     }
+
+    public WizardPanel refreshInBrowser()
+    {
+        getDriver().navigate().refresh();
+        sleep( 3000 );
+        return this;
+    }
 }

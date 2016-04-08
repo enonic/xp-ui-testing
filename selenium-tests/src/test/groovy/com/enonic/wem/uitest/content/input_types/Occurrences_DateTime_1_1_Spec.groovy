@@ -94,7 +94,7 @@ class Occurrences_DateTime_1_1_Spec
         String publishMessage = contentWizardPanel.typeData(
             dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        sleep( 2000 );
+        contentWizardPanel.refreshInBrowser();
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateTimeContent.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "datetime1_1_close" ) );
         if ( modalDialog != null )
