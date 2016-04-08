@@ -140,6 +140,7 @@ class InstallApplication_Spec
         when: "an application from the 'Enonic Market' installed"
         marketPanel.doInstallApp( CONTENT_VIEWER_APP_NAME );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        TestUtils.saveScreenshot( getSession(), "app_notification_message" );
         appDialog.clickOnCancelButton();
 
         then: "correct notification message appears"

@@ -96,6 +96,8 @@ public class Application
 
     public static final long EXPLICIT_QUICK = 2;
 
+    public static final long APP_INSTALL_TIMEOUT = 10;
+
     public static final String CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";
 
     public static final String LIVE_EDIT_MAIN_REGION = "//div[@id='main' and @data-live-edit-id]";

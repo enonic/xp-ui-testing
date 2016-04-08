@@ -5,8 +5,7 @@ import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
+import com.enonic.autotests.utils.TestUtils;
 
 public class InstallAppDialog_MarketAppPanel
     extends Application
@@ -30,9 +29,13 @@ public class InstallAppDialog_MarketAppPanel
     public void doInstallApp( String appDisplayName )
     {
         String installButton = String.format( INSTALL_APP_BUTTON, appDisplayName );
+        String installedButton = String.format( INSTALLED_APP_BUTTON, appDisplayName );
         getDynamicElement( By.xpath( installButton ), 3 ).click();
-        //TODO wait for progress bar  disappears
-        sleep( 10000 );
+        boolean result = waitUntilVisibleNoException( By.xpath( installedButton ), APP_INSTALL_TIMEOUT );
+        if ( !result )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_install_timeout" );
+        }
     }
 
     public boolean isApplicationAlreadyInstalled( String appDisplayName )
