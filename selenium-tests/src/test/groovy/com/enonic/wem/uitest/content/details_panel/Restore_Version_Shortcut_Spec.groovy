@@ -7,7 +7,6 @@ import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Restore_Version_Shortcut_Spec
@@ -88,8 +87,6 @@ class Restore_Version_Shortcut_Spec
 
     }
 
-    //XP-3125
-    @Ignore
     def "GIVEN existing shortcut with two versions for target AND wizard opened WHEN version of shortcut changed THEN correct target present on the wizard"()
     {
         given: "existing folder with updated 'display name'"
