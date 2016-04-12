@@ -65,7 +65,7 @@ public class PageTemplateFormViewPanel
         sleep( 500 );
     }
 
-    private void selectPageController( String pageName )
+    public void selectPageController( String pageName )
     {
         if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
         {

@@ -45,10 +45,10 @@ class AppBrowsePanel_ContextMenu_Spec
     def "GIVEN existing not local application WHEN the application selected and context menu opened THEN all menu-items have correct state"()
     {
         given:
-        installAppAndCloseDialog( GOOGLE_ANALYTICS_APP_NAME, GOOGLE_ANALYTICS_DISPLAY_NAME );
+        installAppAndCloseDialog( CONTENT_VIEWER_APP_NAME, CONTENT_VIEWER_DISPLAY_NAME );
 
         when: "context menu opened"
-        applicationBrowsePanel.openContextMenu( GOOGLE_ANALYTICS_APP_NAME );
+        applicationBrowsePanel.openContextMenu( CONTENT_VIEWER_APP_NAME );
         TestUtils.saveScreenshot( getSession(), "app-market-context-menu" );
 
         then: "Delete menu item is enabled"

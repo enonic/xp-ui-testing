@@ -42,6 +42,12 @@ class BaseApplicationSpec
     String GOOGLE_ANALYTICS_DISPLAY_NAME = "Google Analytics";
 
     @Shared
+    String CONTENT_VIEWER_APP_NAME = "com.enonic.app.contentviewer";
+
+    @Shared
+    String CONTENT_VIEWER_DISPLAY_NAME = "Content viewer";
+
+    @Shared
     ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 
     @Shared

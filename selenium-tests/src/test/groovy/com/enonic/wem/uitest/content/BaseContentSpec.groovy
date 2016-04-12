@@ -287,6 +287,22 @@ class BaseContentSpec
         return site;
     }
 
+    protected Content buildSiteWithAppsAndSettings( String displayName, ContentSettings settings, String... appNames )
+    {
+        String name = NameHelper.uniqueName( "site" );
+        PropertyTree data = new PropertyTree();
+        data.addStrings( SiteFormViewPanel.APP_KEY, appNames );
+        data.addStrings( "description", "simple site " )
+        Content site = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( name ).
+            displayName( displayName ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.site() ).data( data ).settings( settings ).
+            build();
+        return site;
+    }
+
     protected Content buildSite( String name, String displayName, String description )
     {
         String siteName = NameHelper.uniqueName( name );
