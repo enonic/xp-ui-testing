@@ -25,10 +25,7 @@ class InstallApplication_Spec
     String LOCAL_APP_NAME = "first_app";
 
     @Shared
-    String CONTENT_VIEWER_APP_NAME = "Content viewer";
-
-    @Shared
-    String CONTENT_VIEWER_APP_DISPLAY_NAME = "Content Viewer App";
+    String CONTENT_VIEWER_APP = "Content Viewer App";
 
     @Shared
     String CONTENT_VIEWER_APP_INSTALLED_NAME = "contentviewer";
@@ -138,13 +135,13 @@ class InstallApplication_Spec
         sleep( 2000 );
 
         when: "an application from the 'Enonic Market' installed"
-        marketPanel.doInstallApp( CONTENT_VIEWER_APP_NAME );
+        marketPanel.doInstallApp( CONTENT_VIEWER_DIALOG_DISPLAY_NAME );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_notification_message" );
         appDialog.clickOnCancelButton();
 
         then: "correct notification message appears"
-        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP_DISPLAY_NAME );
+        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP );
         TestUtils.saveScreenshot( getSession(), "app_from_market" );
 
         and: "new application listed in the browse panel"
@@ -166,7 +163,7 @@ class InstallApplication_Spec
         InstallAppDialog_MarketAppPanel marketPanel = new InstallAppDialog_MarketAppPanel( getSession() );
 
         then: "install button disabled for application that was already installed"
-        marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_APP_NAME );
+        marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_DIALOG_DISPLAY_NAME );
 
         and: "install button enabled for another application"
         !marketPanel.isApplicationAlreadyInstalled( "Disqus" );
@@ -202,6 +199,6 @@ class InstallApplication_Spec
         !applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         and: "correct notification appears"
-        message == String.format( Application.APP_UNINSTALLED, CONTENT_VIEWER_APP_DISPLAY_NAME );
+        message == String.format( Application.APP_UNINSTALLED, CONTENT_VIEWER_APP );
     }
 }

@@ -45,7 +45,7 @@ class BaseApplicationSpec
     String CONTENT_VIEWER_APP_NAME = "com.enonic.app.contentviewer";
 
     @Shared
-    String CONTENT_VIEWER_DISPLAY_NAME = "Content viewer";
+    String CONTENT_VIEWER_DIALOG_DISPLAY_NAME = "Content viewer";
 
     @Shared
     ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;

@@ -45,7 +45,7 @@ class AppBrowsePanel_ContextMenu_Spec
     def "GIVEN existing not local application WHEN the application selected and context menu opened THEN all menu-items have correct state"()
     {
         given:
-        installAppAndCloseDialog( CONTENT_VIEWER_APP_NAME, CONTENT_VIEWER_DISPLAY_NAME );
+        installAppAndCloseDialog( CONTENT_VIEWER_APP_NAME, CONTENT_VIEWER_DIALOG_DISPLAY_NAME );
 
         when: "context menu opened"
         applicationBrowsePanel.openContextMenu( CONTENT_VIEWER_APP_NAME );
