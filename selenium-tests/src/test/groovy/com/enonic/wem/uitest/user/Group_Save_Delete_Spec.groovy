@@ -59,6 +59,18 @@ class Group_Save_Delete_Spec
         and: "correct notification message appears"
         groupCreatingMessage == GROUP_CREATED_MESSAGE;
     }
+
+    def "GIVEN existing group WHEN group opened THEN correct description displayed"()
+    {
+        given: "existing group"
+        userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
+
+        when: "group opened"
+        GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
+
+        then: "correct description displayed"
+        groupWizardPanel.getDescription() == TEST_GROUP.getDescription();
+    }
     //app bug
     @Ignore
     def "GIVEN a existing group  WHEN creating new group with the same name THEN correct notification message appears"()

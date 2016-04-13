@@ -212,4 +212,9 @@ public class RoleWizardPanel
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
         return confirmationDialog;
     }
+
+    public String getDescription()
+    {
+        return descriptionInput.getAttribute( "value" );
+    }
 }

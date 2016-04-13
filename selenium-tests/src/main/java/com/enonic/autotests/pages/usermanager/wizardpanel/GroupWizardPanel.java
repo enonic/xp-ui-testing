@@ -36,7 +36,8 @@ public class GroupWizardPanel
     private final String TOOLBAR_DELETE_BUTTON =
         GROUP_WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
-    private final String DESCRIPTION_INPUT = GROUP_WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
+    private final String DESCRIPTION_INPUT =
+        GROUP_WIZARD_PANEL + "//div[contains(@id,'PrincipalDescriptionWizardStepForm')]//input[contains(@id,'TextInput')]";
 
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
@@ -170,5 +171,10 @@ public class GroupWizardPanel
     public boolean isDeleteButtonEnabled()
     {
         return toolbarDeleteButton.isEnabled();
+    }
+
+    public String getDescription()
+    {
+        return descriptionInput.getAttribute( "value" );
     }
 }

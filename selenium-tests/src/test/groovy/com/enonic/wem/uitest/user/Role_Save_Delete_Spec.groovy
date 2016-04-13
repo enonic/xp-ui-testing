@@ -60,6 +60,19 @@ class Role_Save_Delete_Spec
         and: "correct notification message appears"
         roleCreatingMessage == ROLE_CREATED_MESSAGE;
     }
+
+    def "GIVEN existing role WHEN role opened THEN correct description displayed"()
+    {
+        given: "existing role"
+        userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
+
+        when: "role opened"
+        RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
+
+        then: "correct description displayed"
+        TestUtils.saveScreenshot( getSession(), "check-role-description" );
+        roleWizardPanel.getDescription() == TEST_ROLE.getDescription();
+    }
     //app bug    INBOX-279
     @Ignore
     def "GIVEN a existing role WHEN creating new role with the same name THEN correct notification message appears"()
