@@ -186,6 +186,21 @@ task testApplicationWithFirefox( type: Test, dependsOn: [buildApplications, dele
     copyTestApplications.mustRunAfter startServer
 }
 
+task testUserWithFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
+    //set system property
+    System.setProperty 'geb.env', 'firefox';
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' );
+
+    scanForTestClasses = false
+    include '**/user/*Spec.class'
+    exclude '**/content/**'
+    exclude '**/application/**'
+    forkEvery = null
+    startServer.shouldRunAfter deleteFolders
+}
+
+
 task testInputTypesWithFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
