@@ -158,7 +158,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         TestUtils.saveScreenshot( getSession(), "conf-dialog-email" );
-        linkModalDialog.clickEmailBarItem().typeEmail( EMAIL ).typeSubject( EMAIL_TEXT ).pressInsertButton();
+        linkModalDialog.clickEmailBarItem().typeEmail( EMAIL ).typeSubject( EMAIL_TEXT ).typeText( "send to" ).pressInsertButton();
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"

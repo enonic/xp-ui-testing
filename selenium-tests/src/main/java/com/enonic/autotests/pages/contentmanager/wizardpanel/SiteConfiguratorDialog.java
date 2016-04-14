@@ -140,6 +140,7 @@ public class SiteConfiguratorDialog
         String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
         WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
         builder.moveToElement( textArea ).click( textArea ).build().perform();
+        textArea.sendKeys( "  " );
         if ( !isElementDisplayed( INSERT_LINK_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_insert_link" );
