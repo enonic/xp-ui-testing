@@ -186,6 +186,22 @@ task testApplicationWithFirefox( type: Test, dependsOn: [buildApplications, dele
     copyTestApplications.mustRunAfter startServer
 }
 
+task testPublishMoveSortDeatailsPanelWithFirefox( type: Test,
+                                                  dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+    //set system property
+    System.setProperty 'geb.env', 'firefox';
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' );
+    scanForTestClasses = false
+    include '**/content/move_publish_sort/*Spec.class'
+    include '**/content/details_panel/*Spec.class'
+    exclude '**/application/**'
+    exclude '**/user/**'
+    forkEvery = null
+    deleteFolders.mustRunAfter buildApplications
+    startServer.mustRunAfter deleteFolders
+    copyContentTypes.mustRunAfter startServer
+}
 task testUserWithFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
