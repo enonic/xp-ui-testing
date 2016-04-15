@@ -35,8 +35,8 @@ class BaseGebSpec
     {
         initializeBaseUrl();
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String useragent = (String) js.executeScript( "return navigator.userAgent;" );
-        println "user agent is : " + useragent;
+        String userAgent = (String) js.executeScript( "return navigator.userAgent;" );
+        println "user agent is : " + userAgent;
     }
 
     def closeAllApp( String homeHandle )
