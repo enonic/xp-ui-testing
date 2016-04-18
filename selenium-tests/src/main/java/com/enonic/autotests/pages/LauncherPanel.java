@@ -60,7 +60,12 @@ public class LauncherPanel
 
     public boolean isDisplayed()
     {
-        WebElement launcherPanel = getDisplayedElement( By.xpath( PANEL_DIV ) );
+        if ( findElements( By.xpath( PANEL_DIV ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "Launcher was not found!" );
+
+        }
+        WebElement launcherPanel = findElement( By.xpath( PANEL_DIV ) );
         return waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_NORMAL );
     }
 
