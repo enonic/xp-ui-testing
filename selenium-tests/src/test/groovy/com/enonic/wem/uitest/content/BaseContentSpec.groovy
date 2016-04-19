@@ -75,6 +75,9 @@ class BaseContentSpec
     String EXECUTABLE_EXE = "Notepad2.exe";
 
     @Shared
+    String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
+
+    @Shared
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared
@@ -371,6 +374,12 @@ class BaseContentSpec
     protected void openResourceInDraft( String resource )
     {
         getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/draft/" + resource );
+    }
+
+    protected void getService( String serviceName, String appName )
+    {
+        getDriver().navigate().to( browser.baseUrl + "portal/draft/_/service/" + appName + "/" + serviceName );
+        //"http://localhost:8080/portal/draft/_/service/com.enonic.xp.testing.contenttypes/cookies"
     }
 
     protected void openHomePage()
