@@ -16,7 +16,7 @@ class Cookies_Service_Spec
     @Shared
     String APPLICATION_NAME = ALL_CONTENT_TYPES_APP_NAME;
 
-    def "GIVEN existing app-service that returns a cookie WHEN request to service was sent THEN correct cookie present in the response"()
+    def "GIVEN existing app-service that returns a cookie WHEN request was sent to service THEN correct cookie present in the response"()
     {
         when: "request to service was sent"
         getService( COOKIES_SERVICE, APPLICATION_NAME );
