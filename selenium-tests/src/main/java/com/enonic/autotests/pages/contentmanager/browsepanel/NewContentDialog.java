@@ -40,10 +40,9 @@ public class NewContentDialog
     public static final String CONTAINER = "//div[contains(@id,'NewContentDialog')]";
 
     public static final String ALL_LIST_ITEMS =
-        "//div[contains(@id,'app.create.NewContentDialog') and not(contains(@class,'mock-modal-dialog'))]//ul[@class='content-types-list']//li[contains(@class,'content-types-list-item')]";
+        "//div[contains(@id,'NewContentDialog') and not(contains(@class,'mock-modal-dialog'))]//ul[@class='content-types-list']//li[contains(@class,'content-types-list-item')]";
 
-    public static final String LIST_ITEMS_SITES =
-        "//div[contains(@id,'app.create.NewContentDialog')]//ul/li[@class='content-types-list-item site']";
+    public static final String LIST_ITEMS_SITES = "//div[contains(@id,'NewContentDialog')]//ul/li[@class='content-types-list-item site']";
 
     public static final String SEARCH_INPUT = "//div[contains(@id,'api.ui.text.FileInput')]/input";
 
