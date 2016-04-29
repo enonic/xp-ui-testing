@@ -11,9 +11,9 @@ public class ContentBrowseItemsSelectionPanel
     public static final String PREVIEW = "Preview";
 
     {
-        CONTAINER = "//div[contains(@id,'app.browse.ContentBrowsePanel')]";
-        ITEMS_SELECTION_PANEL = CONTAINER + "//div[contains(@id,'app.browse.ContentBrowseItemsSelectionPanel')]";
-        ALL_SELECTED_ITEMS = ITEMS_SELECTION_PANEL + "//div[contains(@id,'api.app.browse.SelectionItem')]";
+        CONTAINER = "//div[contains(@id,'ContentBrowsePanel')]";
+        ITEMS_SELECTION_PANEL = CONTAINER + "//div[contains(@id,'ContentBrowseItemsSelectionPanel')]";
+        ALL_SELECTED_ITEMS = ITEMS_SELECTION_PANEL + "//div[contains(@id,'SelectionItem')]";
 
     }
 

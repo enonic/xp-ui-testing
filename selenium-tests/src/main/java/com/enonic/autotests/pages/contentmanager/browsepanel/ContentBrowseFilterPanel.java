@@ -137,7 +137,7 @@ public class ContentBrowseFilterPanel
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         return (Boolean) executor.executeScript(
-            "return window.api.dom.ElementRegistry.getElementById('app.browse.filter.ContentBrowseFilterPanel').hasFilterSet()" );
+            "return window.api.dom.ElementRegistry.getElementById('ContentBrowseFilterPanel').hasFilterSet()" );
 
     }
 
@@ -221,7 +221,7 @@ public class ContentBrowseFilterPanel
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         List list = (ArrayList) executor.executeScript(
-            "return window.api.dom.ElementRegistry.getElementById('app.browse.filter.ContentBrowseFilterPanel').getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')" );
+            "return window.api.dom.ElementRegistry.getElementById('ContentBrowseFilterPanel').getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')" );
         Iterator it = list.iterator();
         String value = null;
         ArrayList<String> result = new ArrayList<>();
