@@ -23,7 +23,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class GroupWizardPanel
     extends WizardPanel<Group>
 {
-    private final String GROUP_WIZARD_PANEL = "//div[contains(@id,'app.wizard.GroupWizardPanel')]";
+    private final String GROUP_WIZARD_PANEL = "//div[contains(@id,'GroupWizardPanel')]";
 
     private final String MEMBERS_FORM = GROUP_WIZARD_PANEL + "//div[contains(@id,'GroupMembersWizardStepForm')]";
 

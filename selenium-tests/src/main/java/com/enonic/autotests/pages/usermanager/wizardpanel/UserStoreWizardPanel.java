@@ -20,7 +20,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class UserStoreWizardPanel
     extends WizardPanel<UserStore>
 {
-    public final String WIZARD_PANEL = "//div[contains(@id,'app.wizard.UserStoreWizardPanel')]";
+    public final String WIZARD_PANEL = "//div[contains(@id,'UserStoreWizardPanel')]";
 
     private final String TOOLBAR = "//div[contains(@id,'UserStoreWizardToolbar')]";
 

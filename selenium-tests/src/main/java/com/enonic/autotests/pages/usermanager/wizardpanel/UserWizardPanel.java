@@ -27,12 +27,12 @@ public class UserWizardPanel
 {
     public static final String PASSWORD_ERROR_MESSAGE = "Password can not be empty.";
 
-    private final String TOOLBAR = "//div[contains(@id,'app.wizard.PrincipalWizardToolbar')]";
+    private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
 
     public static String GRID_ROW =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 
-    public final String USER_WIZARD_PANEL = "//div[contains(@id,'app.wizard.UserWizardPanel') and not(contains(@style,'display: none'))]";
+    public final String USER_WIZARD_PANEL = "//div[contains(@id,'UserWizardPanel') and not(contains(@style,'display: none'))]";
 
     public final String TOOLBAR_SAVE_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
 

@@ -14,7 +14,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ChangeUserPasswordDialog
     extends Application
 {
-    private final String DIALOG_CONTAINER = "//div[contains(@id,'app.wizard.ChangeUserPasswordDialog')]";
+    private final String DIALOG_CONTAINER = "//div[contains(@id,'ChangeUserPasswordDialog')]";
 
     private final String PASSWORD_INPUT = "//input[contains(@id,'PasswordInput')]";
 

@@ -23,7 +23,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class RoleWizardPanel
     extends WizardPanel<Role>
 {
-    private final String WIZARD_PANEL = "//div[contains(@id,'app.wizard.RoleWizardPanel')]";
+    private final String WIZARD_PANEL = "//div[contains(@id,'RoleWizardPanel')]";
 
     private final String MEMBERS_FORM = WIZARD_PANEL + "//div[contains(@id,'RoleMembersWizardStepForm')]";
 
