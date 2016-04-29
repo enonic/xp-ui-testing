@@ -19,9 +19,9 @@ public class ContentVersionInfoView
 
     private String ITEM_BY_ID = "//li[contains(@class,'content-version-item') and descendant::span[text()='%s']]";
 
-    private final String CONTAINER_DIV = "//div[@class='version-info']";
+    private final String VERSION_INFO_DIV = "//div[contains(@class,'version-info')]";
 
-    private final String CLOSE_INFO_VIEW_BUTTON = ITEM_BY_ID + "//div[@class='close-version-info-button']";
+    private final String CLOSE_INFO_VIEW_BUTTON = ITEM_BY_ID + "//div[contains(@class,'close-version-info-button')]";
 
     private final String VERSION_INFO_DISPLAY_NAME = "//div[@class='version-info-display-name']/span[2]";
 
@@ -94,7 +94,7 @@ public class ContentVersionInfoView
 
     public boolean isVersionInfoDisplayed()
     {
-        return isElementDisplayed( CONTAINER_DIV );
+        return isElementDisplayed( VERSION_INFO_DIV );
     }
 
     public boolean isCloseButtonDisplayed( String versionId )

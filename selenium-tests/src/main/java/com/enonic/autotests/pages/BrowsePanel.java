@@ -24,7 +24,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BrowsePanel
     extends Application
 {
-    protected final String TREE_GREED = "//div[contains(@id,'app.browse.ContentTreeGrid')]";
+    protected final String TREE_GREED = "//div[contains(@id,'ContentTreeGrid')]";
 
     protected final String BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'BrowseToolbar')]";
 
@@ -119,7 +119,7 @@ public abstract class BrowsePanel
 
     public boolean isTabMenuItemPresent( String itemText )
     {
-        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]//span" ) );
+        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem')]//span" ) );
 
         for ( WebElement element : elems )
         {

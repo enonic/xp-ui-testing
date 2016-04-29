@@ -15,8 +15,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    public static final String DETAILS_PANEL =
-        "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'app.view.detail.DetailsPanel')]";
+    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
 
     private final String VERSION_HISTORY_OPTION = "//div[text()='Version history']";
 

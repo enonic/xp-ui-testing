@@ -78,6 +78,13 @@ class Base_InputFields_Occurrences
         }
     }
 
+    public void addContent( Content content )
+    {
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
+            content.getDisplayName() );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
+    }
+
     private Content buildSite()
     {
         PropertyTree data = new PropertyTree();

@@ -16,9 +16,9 @@ import com.enonic.autotests.utils.TestUtils;
 public class ContentInfoWidget
     extends Application
 {
-    private final String STATUS_TEXT = ContentDetailsPanel.DETAILS_PANEL + "//div[contains(@id,'detail.StatusWidgetItemView')]/span";
+    private final String STATUS_TEXT = ContentDetailsPanel.DETAILS_PANEL + "//div[contains(@id,'StatusWidgetItemView')]/span";
 
-    private final String PROPERTIES_DL = "//div[contains(@id,'app.view.detail.PropertiesWidgetItemView')]/dl";
+    private final String PROPERTIES_DL = "//div[contains(@id,'PropertiesWidgetItemView')]/dl";
 
     private final String PROPERTIES_DT = PROPERTIES_DL + "//dt";
 

@@ -37,7 +37,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class NewContentDialog
     extends Application
 {
-    public static final String CONTAINER = "//div[contains(@id,'app.create.NewContentDialog')]";
+    public static final String CONTAINER = "//div[contains(@id,'NewContentDialog')]";
 
     public static final String ALL_LIST_ITEMS =
         "//div[contains(@id,'app.create.NewContentDialog') and not(contains(@class,'mock-modal-dialog'))]//ul[@class='content-types-list']//li[contains(@class,'content-types-list-item')]";

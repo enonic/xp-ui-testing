@@ -19,7 +19,7 @@ public class MoveContentDialog
 {
     public static String DIALOG_TITLE = "Move item with children";
 
-    private final String DIALOG_CONTAINER = "//div[contains(@id,'app.browse.MoveContentDialog')]";
+    private final String DIALOG_CONTAINER = "//div[contains(@id,'MoveContentDialog')]";
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 

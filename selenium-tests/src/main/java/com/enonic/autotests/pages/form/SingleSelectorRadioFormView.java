@@ -15,7 +15,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class SingleSelectorRadioFormView
     extends FormViewPanel
 {
-    private String ALL_RADIO_INPUTS = "//div[contains(@id,'api.form.inputtype.radiobutton.RadioButton')]//input[@type='radio']";
+    public static String RADIO_OPTION = "radio-option";
+
+    private String ALL_RADIO_INPUTS = "//div[contains(@id,'radiobutton.RadioButton')]//input[@type='radio']";
 
     public SingleSelectorRadioFormView( final TestSession session )
     {
@@ -25,7 +27,7 @@ public class SingleSelectorRadioFormView
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        String option = data.getString( "option" );
+        String option = data.getString( RADIO_OPTION );
         if ( option == null )
         {
             return this;

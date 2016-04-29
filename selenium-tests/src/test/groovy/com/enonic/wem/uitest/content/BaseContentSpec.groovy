@@ -379,7 +379,6 @@ class BaseContentSpec
     protected void getService( String serviceName, String appName )
     {
         getDriver().navigate().to( browser.baseUrl + "portal/draft/_/service/" + appName + "/" + serviceName );
-        //"http://localhost:8080/portal/draft/_/service/com.enonic.xp.testing.contenttypes/cookies"
     }
 
     protected void openHomePage()

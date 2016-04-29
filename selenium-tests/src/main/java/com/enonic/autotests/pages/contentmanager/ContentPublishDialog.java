@@ -27,7 +27,7 @@ public class ContentPublishDialog
 
     public static final String DIALOG_TITLE = "Publishing Wizard";
 
-    private final String DIALOG_CONTAINER = "//div[contains(@id,'app.publish.ContentPublishDialog')]";
+    private final String DIALOG_CONTAINER = "//div[contains(@id,'ContentPublishDialog')]";
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 

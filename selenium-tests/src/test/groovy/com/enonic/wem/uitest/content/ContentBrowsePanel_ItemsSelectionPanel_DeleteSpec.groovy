@@ -73,13 +73,14 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(), shortcut3.getName() );
         filterPanel.typeSearchText( parentFolder.getName() )
         contentBrowsePanel.expandContent( shortcut1.getParent() );
-        TestUtils.saveScreenshot( getTestSession(), "delete-three" );
+        TestUtils.saveScreenshot( getTestSession(), "three-items-selected" );
         contentBrowsePanel.selectContentInTable( contentList );
         int beforeRemove = itemsSelectionPanel.getSelectedItemCount();
         int selectedRowsBefore = contentBrowsePanel.getSelectedRowsNumber();
 
         when: "one selection item was removed"
         itemsSelectionPanel.removeItem( shortcut1.getName() );
+        TestUtils.saveScreenshot( getTestSession(), "one-selected-item-removed" );
 
         then: "number of selected items in Selection Panel was reduced"
         beforeRemove - itemsSelectionPanel.getSelectedItemCount() == 1;

@@ -14,6 +14,7 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
 
         when: "selected a one more application"
         applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+
         then:
         itemsSelectionPanel.getSelectedItemCount() == 2;
     }

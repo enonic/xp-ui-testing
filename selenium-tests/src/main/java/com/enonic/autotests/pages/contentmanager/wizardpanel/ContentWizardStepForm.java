@@ -19,6 +19,7 @@ import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
 import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel;
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel;
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel;
+import com.enonic.autotests.pages.form.InputsFormViewPanel;
 import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.RelationshipFormView;
@@ -172,6 +173,11 @@ public class ContentWizardStepForm
         {
             formViewPanel = new CityFormView( getSession() );
         }
+        else if ( contentTypeName.contains( TestAppContentType.ALL_INPUTS.getName() ) )
+        {
+            formViewPanel = new InputsFormViewPanel( getSession() );
+        }
+
         else
         {
             throw new TestFrameworkException( "ContentWizardStepForm: type() not implemented for " + contentTypeName );

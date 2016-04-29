@@ -50,7 +50,7 @@ public class CheckBoxFormViewPanel
         return this;
     }
 
-    private CheckBoxFormViewPanel setChecked( boolean checked )
+    public CheckBoxFormViewPanel setChecked( boolean checked )
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         String id = checkBox.getAttribute( "id" );

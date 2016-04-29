@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.contentmanager;
 
 
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.form.SingleSelectorRadioFormView;
 import com.enonic.xp.data.PropertyTree;
 
 public class ContentUtils
@@ -45,7 +46,7 @@ public class ContentUtils
         PropertyTree data = new PropertyTree();
         if ( option != null )
         {
-            data.addStrings( "option", option );
+            data.addStrings( SingleSelectorRadioFormView.RADIO_OPTION, option );
         }
         return data;
     }

@@ -23,7 +23,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class EditPermissionsDialog
     extends Application
 {
-    private final String CONTAINER_XPATH = "//div[contains(@id,'app.wizard.EditPermissionsDialog')]";
+    private final String CONTAINER_XPATH = "//div[contains(@id,'EditPermissionsDialog')]";
 
     private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]";
 

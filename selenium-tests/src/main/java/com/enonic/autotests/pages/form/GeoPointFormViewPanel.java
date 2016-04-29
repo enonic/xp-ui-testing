@@ -31,7 +31,7 @@ public class GeoPointFormViewPanel
 
         String geoPointValue = data.getString( GEO_POINT_PROPERTY );
         // type a date
-        geoLocationInput.sendKeys( geoPointValue );
+        typeGeoPoint( geoPointValue );
         sleep( 300 );
         return this;
     }
@@ -44,5 +44,11 @@ public class GeoPointFormViewPanel
     public boolean isGeoLocationValid()
     {
         return !waitAndCheckAttrValue( geoLocationInput, "class", "invalid", Application.EXPLICIT_NORMAL );
+    }
+
+    public GeoPointFormViewPanel typeGeoPoint( String value )
+    {
+        clearAndType( geoLocationInput, value );
+        return this;
     }
 }

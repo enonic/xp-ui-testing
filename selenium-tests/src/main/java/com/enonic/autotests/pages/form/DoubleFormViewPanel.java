@@ -28,7 +28,7 @@ public class DoubleFormViewPanel
     {
         String doubleValue = data.getString( DOUBLE_PROPERTY );
         // type a double
-        doubleInput.sendKeys( doubleValue );
+        typeDouble( doubleValue );
         sleep( 300 );
         return this;
     }
@@ -36,5 +36,11 @@ public class DoubleFormViewPanel
     public String getDoubleValue()
     {
         return doubleInput.getAttribute( "value" );
+    }
+
+    public DoubleFormViewPanel typeDouble( String value )
+    {
+        clearAndType( doubleInput, value );
+        return this;
     }
 }

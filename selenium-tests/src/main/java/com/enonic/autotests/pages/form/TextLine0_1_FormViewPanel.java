@@ -43,7 +43,6 @@ public class TextLine0_1_FormViewPanel
         {
             getLogger().info( "TextLine1:1 - there are no ane text data for typing in the TexTline" );
         }
-
         return this;
     }
 
@@ -51,6 +50,12 @@ public class TextLine0_1_FormViewPanel
 
     {
         return textInput.getAttribute( "value" );
+    }
+
+    public TextLine0_1_FormViewPanel typeText( String text )
+    {
+        clearAndType( textInput, text );
+        return this;
     }
 }
 
