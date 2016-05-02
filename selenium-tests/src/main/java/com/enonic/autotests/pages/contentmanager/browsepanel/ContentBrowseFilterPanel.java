@@ -22,6 +22,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowseFilterPanel
     extends BaseBrowseFilterPanel
 {
+    private String FILTER_PANEL_DIV = "//div[contains(@class,'filter-panel')]";
+
     private String CONTENT_TYPE_FILTER_ITEM =
         "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
 
@@ -136,9 +138,9 @@ public class ContentBrowseFilterPanel
     public boolean isAnySelectionPresent()
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        return (Boolean) executor.executeScript(
-            "return window.api.dom.ElementRegistry.getElementById('ContentBrowseFilterPanel').hasFilterSet()" );
-
+        WebElement filterPanel = getDisplayedElement( By.xpath( FILTER_PANEL_DIV ) );
+        return (Boolean) executor.executeScript( "return window.api.dom.ElementRegistry.getElementById(arguments[0]).hasFilterSet()",
+                                                 filterPanel.getAttribute( "id" ) );
     }
 
     /**
@@ -165,7 +167,7 @@ public class ContentBrowseFilterPanel
             waitsForSpinnerNotVisible();
             if ( !isSelectedEntryInFilter( contentTypeDisplayName ) )
             {
-                element.click();
+                getDynamicElement( By.xpath( itemXpath ), 2 ).click();
                 waitsForSpinnerNotVisible();
             }
         }
@@ -220,8 +222,10 @@ public class ContentBrowseFilterPanel
     public List<String> getSelectedValuesForContentTypesFilter()
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        WebElement filterPanel = getDisplayedElement( By.xpath( FILTER_PANEL_DIV ) );
         List list = (ArrayList) executor.executeScript(
-            "return window.api.dom.ElementRegistry.getElementById('ContentBrowseFilterPanel').getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')" );
+            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')",
+            filterPanel.getAttribute( "id" ) );
         Iterator it = list.iterator();
         String value = null;
         ArrayList<String> result = new ArrayList<>();
