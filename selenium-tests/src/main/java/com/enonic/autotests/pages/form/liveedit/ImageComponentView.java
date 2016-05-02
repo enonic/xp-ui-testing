@@ -11,10 +11,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ImageComponentView
     extends UIComponent
 {
-    private final String EMPTY_IMAGE_COMPONENT_CONTAINER =
-        "//div[contains(@id,'api.liveedit.image.ImageComponentView') and contains(@class,'empty')]";
+    private final String EMPTY_IMAGE_COMPONENT_CONTAINER = "//div[contains(@id,'ImageComponentView') and contains(@class,'empty')]";
 
-    private final String IMAGE_COMPONENT_CONTAINER = "//div[contains(@id,'api.liveedit.image.ImageComponentView')]";
+    private final String IMAGE_COMPONENT_CONTAINER = "//div[contains(@id,'ImageComponentView')]";
 
     private final String UPLOAD_BUTTON = "//button[@class='button upload-button']";
 

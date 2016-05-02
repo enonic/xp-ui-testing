@@ -13,9 +13,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class PartComponentView
     extends UIComponent
 {
-    private final String COMPONENT_CONTAINER = "//div[contains(@id,'api.liveedit.part.PartComponentView')]";
+    private final String COMPONENT_CONTAINER = "//div[contains(@id,'PartComponentView')]";
 
-    private final String OPTION_FILTER = "//input[contains(@id,'selector.combobox.ComboBoxOptionFilterInput')]";
+    private final String OPTION_FILTER = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
     public static String PART_XPATH = "//div[contains(@id,'PartDescriptorViewer') and descendant::p[contains(.,'%s')]]";
 

@@ -23,15 +23,15 @@ public class LiveFormPanel
 {
     private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).innerHTML=arguments[1];";
 
-    public final String LAYOUT_COMPONENT = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
+    public final String LAYOUT_COMPONENT = "//div[contains(@id,'LayoutComponentView')]";
 
-    public final String FIGURE = "//figure[contains(@id,'api.liveedit.image.ImageComponentView')]";
+    public final String FIGURE = "//figure[contains(@id,'ImageComponentView')]";
 
     public final String SHADER_PAGE = "//div[@class='xp-page-editor-shader xp-page-editor-page']";
 
     private final String PANEL_DIV = "//div[contains(@id,'app.wizard.page.LiveFormPanel')]";
 
-    private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'api.liveedit.image.ImageComponentView')]";
+    private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'ImageComponentView')]";
 
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 

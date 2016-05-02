@@ -77,8 +77,7 @@ public class ContextWindowPageInspectionPanel
 
     public String getSelectedPageController()
     {
-        return getDisplayedElement(
-            By.xpath( "//div[contains(@id,'contextwindow.inspect.page.PageControllerSelector')]//h6[@class='main-name']" ) ).getText();
+        return getDisplayedElement( By.xpath( "//div[contains(@id,'PageControllerSelector')]//h6[@class='main-name']" ) ).getText();
     }
 
     public boolean isPageControllerSelectorDisplayed()

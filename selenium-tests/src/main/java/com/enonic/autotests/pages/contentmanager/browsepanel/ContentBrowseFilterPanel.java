@@ -58,7 +58,6 @@ public class ContentBrowseFilterPanel
     public ContentBrowseFilterPanel( TestSession session )
     {
         super( session );
-
     }
 
     @Override
@@ -171,7 +170,6 @@ public class ContentBrowseFilterPanel
                 waitsForSpinnerNotVisible();
             }
         }
-
         return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();
     }
 
@@ -186,10 +184,7 @@ public class ContentBrowseFilterPanel
         }
         else
         {
-
             element.click();
-
-
         }
         waitsForSpinnerNotVisible();
         return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();

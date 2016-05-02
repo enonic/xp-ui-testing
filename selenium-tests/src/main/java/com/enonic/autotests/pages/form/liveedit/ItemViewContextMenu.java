@@ -12,7 +12,7 @@ import com.enonic.autotests.utils.TestUtils;
 public class ItemViewContextMenu
     extends Application
 {
-    public final String CONTAINER_DIV = "//div[contains(@id,'api.liveedit.ItemViewContextMenu')]";
+    public final String CONTAINER_DIV = "//div[contains(@id,'ItemViewContextMenu')]";
 
     private final String CUSTOMIZE_MENU_ITEM = CONTAINER_DIV + "//dl//dt[text()='Customize']";
 

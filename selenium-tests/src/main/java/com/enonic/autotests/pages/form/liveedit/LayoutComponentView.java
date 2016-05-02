@@ -14,11 +14,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class LayoutComponentView
     extends UIComponent
 {
-    private final String COMPONENT_CONTAINER = "//div[contains(@id,'api.liveedit.layout.LayoutComponentView')]";
+    private final String COMPONENT_CONTAINER = "//div[contains(@id,'LayoutComponentView')]";
 
-    private final String OPTION_FILTER = "//input[contains(@id,'selector.combobox.ComboBoxOptionFilterInput')]";
+    private final String OPTION_FILTER = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
-    public static String REGION_XPATH = "//div[contains(@id,'api.liveedit.RegionView') and descendant::p[contains(.,'%s')]]";
+    public static String REGION_XPATH = "//div[contains(@id,'RegionView') and descendant::p[contains(.,'%s')]]";
 
     @FindBy(xpath = COMPONENT_CONTAINER + OPTION_FILTER)
     private WebElement optionFilterInput;

@@ -23,12 +23,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContextWindow
     extends Application
 {
-    private final String DIV_CONTEXT_WINDOW =
-        "//div[contains(@id,'app.wizard.page.contextwindow.ContextWindow') and not(contains(@class,'hidden'))]";
+    private final String DIV_CONTEXT_WINDOW = "//div[contains(@id,'ContextWindow') and not(contains(@class,'hidden'))]";
 
     private final String DIV_DROP = "//div[@class='live-edit-drop-target-placeholder']";
 
-    private final String DIV_MOVE = "//div[contains(@id,'api.liveedit.RegionPlaceholder')]//p[text()='Drop components here']";
+    private final String DIV_MOVE = "//div[contains(@id,'RegionPlaceholder')]//p[text()='Drop components here']";
 
     private final String INSERTABLES_GRID = "//div[contains(@id,'InsertablesGrid')]";
 
@@ -39,7 +38,7 @@ public class ContextWindow
 
     ContentWizardPanel contentWizardPanel;
 
-    private final String TOOLBAR_DIV = "//div[contains(@id,'app.wizard.ContentWizardToolbar')]";
+    private final String TOOLBAR_DIV = "//div[contains(@id,'ContentWizardToolbar')]";
 
     @FindBy(xpath = "//li[contains(@class,'tab-bar-item') and @title= 'Insert']")
     private WebElement insertToolbarItem;
