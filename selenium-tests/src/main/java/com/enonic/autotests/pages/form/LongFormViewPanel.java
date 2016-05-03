@@ -37,7 +37,7 @@ public class LongFormViewPanel
         return longInput.getAttribute( "value" );
     }
 
-    LongFormViewPanel typeLong( String longValue )
+    public LongFormViewPanel typeLong( String longValue )
     {
         clearAndType( longInput, longValue );
         return this;

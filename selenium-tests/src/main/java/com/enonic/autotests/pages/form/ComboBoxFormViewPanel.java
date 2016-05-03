@@ -43,6 +43,15 @@ public class ComboBoxFormViewPanel
         return this;
     }
 
+    public ComboBoxFormViewPanel typeNameOfOptionAndSelectOption( String option )
+    {
+        clearAndType( optionFilterInput, option );
+        sleep( 700 );
+        selectOption( option );
+        sleep( 300 );
+        return this;
+    }
+
     @Override
     public void clickOnAddButton()
     {
@@ -51,8 +60,8 @@ public class ComboBoxFormViewPanel
 
     public ComboBoxFormViewPanel clickOnLastRemoveButton()
     {
-        List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[@class='selected-option']//a[@class='remove']" ) );
-        List<WebElement> list = allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
+        List<WebElement> list =
+            getDisplayedElements( By.xpath( FORM_VIEW + "//div[contains(@id,'combobox.BaseSelectedOptionView')]//a[@class='remove']" ) );
         if ( list.size() == 0 )
         {
             throw new TestFrameworkException( "Remove button was not found" );

@@ -114,7 +114,7 @@ class Occurrences_ComboBox_0_0_Spec
 
         then: "only two options are present in the form view"
         List<String> optValues = formViewPanel.getSelectedOptionValues();
-        TestUtils.saveScreenshot( getSession(), "00remove_opt" )
+        TestUtils.saveScreenshot( getSession(), "combo_removed_option" )
         optValues.size() == 2;
 
         and: "and options have a correct text"
