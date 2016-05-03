@@ -197,7 +197,7 @@ task testPublishMoveSortDeatailsPanelWithFirefox( type: Test,
     include '**/content/details_panel/*Spec.class'
     exclude '**/application/**'
     exclude '**/user/**'
-    exclude '**/content/move_publish_sort/ ManualSortContent_Spec.class'
+    exclude '**/content/move_publish_sort/ManualSortContent_Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
