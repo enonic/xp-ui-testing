@@ -37,7 +37,7 @@ class Content_SaveBeforeCloseDialog_Spec
 
         when: "display name typed and Delete button pressed"
         DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
-        deleteContentDialog.pressCancelButton();
+        deleteContentDialog.clickOnCancelButton();
 
         then: "wizard still opened"
         wizardPanel.isOpened();

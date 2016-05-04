@@ -276,7 +276,7 @@ public abstract class BrowsePanel
      *
      * @return the number of selected rows.
      */
-    public void clickOnSelectAll()
+    public BrowsePanel clickOnSelectAll()
     {
         boolean isVisibleLink = waitUntilVisibleNoException( By.xpath( SELECT_ALL_LINK_XPATH ), 2l );
         if ( !isVisibleLink )
@@ -285,6 +285,7 @@ public abstract class BrowsePanel
         }
         selectAllLink.click();
         sleep( 2000 );
+        return this;
     }
 
     /**

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -20,11 +21,22 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class DeleteContentDialog
     extends Application
 {
+    public static final String CHECKBOX_LABEL_TEXT = "Instantly delete published items";
+
     private final String CONTAINER_DIV = "//div[contains(@id,'ContentDeleteDialog')]";
+
+    private String CONTENT_STATUS = CONTAINER_DIV +
+        "//div[contains(@id,'ContentDeleteSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]//div[contains(@class,'status')][2]";
+
+    private final String CHECKBOX_DELETE_PUBLISHED_ITEMS =
+        CONTAINER_DIV + "//div[contains(@id,'Checkbox') and contains(@class,'instant-delete-check')]";
+
+    private final String CHECKBOX_LABEL = CHECKBOX_DELETE_PUBLISHED_ITEMS + "//label";
 
     protected Logger logger = Logger.getLogger( this.getClass() );
 
-    private final String ITEMS_TO_DELETE = CONTAINER_DIV + "//div[@class='item-list']//h6";
+    private final String ITEMS_TO_DELETE_BY_DISPLAY_NAME =
+        CONTAINER_DIV + "//div[contains(@id,'ContentDeleteSelectionItem')]" + H6_DISPLAY_NAME; //"//div[@class='item-list']//h6";
 
     private final String TITLE_HEADER_XPATH =
         CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader') and child::h2[text()='Delete item']]";
@@ -35,11 +47,19 @@ public class DeleteContentDialog
 
     protected final String CANCEL_BUTTON = CONTAINER_DIV + "//button/span[text()='Cancel']";
 
+    private final String CANCEL_BUTTON_TOP = CONTAINER_DIV + "//div[@class='cancel-button-top']";
+
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     private WebElement deleteButton;
 
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
+
+    @FindBy(xpath = CHECKBOX_DELETE_PUBLISHED_ITEMS)
+    private WebElement checkBox;
+
+    @FindBy(xpath = CANCEL_BUTTON_TOP)
+    private WebElement cancelButtonTop;
 
     /**
      * The constructor.
@@ -49,7 +69,26 @@ public class DeleteContentDialog
     public DeleteContentDialog( TestSession session )
     {
         super( session );
+    }
 
+    public boolean isDeleteButtonPresent()
+    {
+        return deleteButton.isDisplayed();
+    }
+
+    public boolean isCancelButtonPresent()
+    {
+        return cancelButton.isDisplayed();
+    }
+
+    public boolean isCheckboxForDeletePublishedItemsDisplayed()
+    {
+        return checkBox.isDisplayed();
+    }
+
+    public String getCheckboxLabelText()
+    {
+        return getDisplayedString( CHECKBOX_LABEL );
     }
 
     public void doDelete()
@@ -63,9 +102,21 @@ public class DeleteContentDialog
         sleep( 1000 );
     }
 
-    public void pressCancelButton()
+    public DeleteContentDialog clickOnInstantlyCheckbox()
+    {
+        checkBox.click();
+        return this;
+    }
+
+    public void clickOnCancelButton()
     {
         cancelButton.click();
+        waitForClosed();
+    }
+
+    public void clickOnCancelTop()
+    {
+        cancelButtonTop.click();
         waitForClosed();
     }
 
@@ -84,10 +135,10 @@ public class DeleteContentDialog
         return isElementDisplayed( TITLE_HEADER_XPATH );
     }
 
-    public List<String> getContentNameToDelete()
+    public List<String> getDisplayNamesToDelete()
     {
         List<String> names = new ArrayList<>();
-        List<WebElement> itemsToDelete = getDriver().findElements( By.xpath( ITEMS_TO_DELETE ) );
+        List<WebElement> itemsToDelete = getDriver().findElements( By.xpath( ITEMS_TO_DELETE_BY_DISPLAY_NAME ) );
 
         for ( WebElement el : itemsToDelete )
         {
@@ -95,6 +146,17 @@ public class DeleteContentDialog
             logger.info( "this item present in the confirm-delete dialog and will be deleted:" + el.getText() );
         }
         return names;
+    }
+
+    public String getContentStatus( String displayName )
+    {
+        String status = String.format( CONTENT_STATUS, displayName );
+        if ( !isElementDisplayed( status ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_status_" + displayName );
+            throw new TestFrameworkException( "status was not found! " + displayName );
+        }
+        return getDisplayedString( status );
     }
 
     public String getTitle()
