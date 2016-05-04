@@ -24,7 +24,6 @@ public class SingleSelectorComboBoxFormView
     public ComboBoxFormViewPanel clickOnRemoveOptionButton()
     {
         return clickOnLastRemoveButton();
-
     }
 
     @Override
@@ -43,7 +42,6 @@ public class SingleSelectorComboBoxFormView
             throw new TestFrameworkException( "options filter input was not found" );
         }
         WebElement optionsInput = elements.get( 0 );
-
         clearAndType( optionsInput, option );
         sleep( 700 );
         selectOption( option );
@@ -81,7 +79,6 @@ public class SingleSelectorComboBoxFormView
             findElements( By.xpath( COMBO_BOX_OPTIONS_INPUT_XPATH ) ).stream().filter( WebElement::isDisplayed ).collect(
                 Collectors.toList() );
         return elements.size() > 0;
-
     }
 }
 

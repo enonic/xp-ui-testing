@@ -107,7 +107,6 @@ class Restore_Version_All_Inputs_Spec
 
     def "GIVEN values in all inputs were updated WHEN previous version of content has been restored THEN correct values are present in the wizard"()
     {
-
         given: "content with updated values"
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -128,19 +127,17 @@ class Restore_Version_All_Inputs_Spec
         and: "checkbox is checked"
         formView.getCheckBoxFormViewPanel().isChecked();
 
-        and: "the first radio button selected"
+        and: "data for 'radio buttons' restored correctly"
         formView.getSingleSelectorRadioFormView().getSelectedOption() == COMBOBOX_OPTION_V1;
 
-        and: "double input has correct value"
+        and: "data for 'double input' restored correctly"
         formView.getDoubleFormViewPanel().getDoubleValue() == DOUBLE_V1;
 
-        and: "long input has correct value"
+        and: "data for 'long input' restored correctly"
         formView.getLongFormViewPanel().getLongValue() == LONG_V1;
 
-        and: "text line input has correct text"
+        and: "data for 'text line input' restored correctly"
         formView.getTextLineFormViewPanel().getTextLineValue() == TEXT_LINE_V1;
-
-
     }
 
     private Content buildContent( String name, String displayName )
