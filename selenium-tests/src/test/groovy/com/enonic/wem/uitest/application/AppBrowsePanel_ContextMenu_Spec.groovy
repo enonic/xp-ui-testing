@@ -49,7 +49,7 @@ class AppBrowsePanel_ContextMenu_Spec
 
         when: "context menu opened"
         applicationBrowsePanel.openContextMenu( DISQUS_APP_NAME );
-        TestUtils.saveScreenshot( getSession(), "app-market-context-menu" );
+        TestUtils.saveScreenshot( getSession(), "disqus-context-menu" );
 
         then: "Delete menu item is enabled"
         applicationBrowsePanel.isEnabledContextMenuItem( "Stop" );
