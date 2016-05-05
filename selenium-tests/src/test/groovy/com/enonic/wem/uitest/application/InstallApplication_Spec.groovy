@@ -164,9 +164,6 @@ class InstallApplication_Spec
 
         then: "install button disabled for application that was already installed"
         marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_DIALOG_DISPLAY_NAME );
-
-        and: "install button enabled for another application"
-        !marketPanel.isApplicationAlreadyInstalled( "Disqus" );
     }
 
     def "GIVEN installed from 'Enonic Market' application WHEN the application selected and context-menu shown THEN all menu-items have correct state"()
