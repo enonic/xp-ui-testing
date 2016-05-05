@@ -48,6 +48,13 @@ class BaseApplicationSpec
     String CONTENT_VIEWER_DIALOG_DISPLAY_NAME = "Content viewer";
 
     @Shared
+    String DISQUS_APP_DISPLAY_NAME = "Disqus";
+
+    @Shared
+    String DISQUS_APP_NAME = "com.enonic.app.disqus";
+
+
+    @Shared
     ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
 
     @Shared
