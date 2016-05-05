@@ -58,16 +58,22 @@ class ContentPublishDialog_Spec
 
         then: "'ContentPublishDialog' dialog displayed"
         contentPublishDialog.isOpened();
+
         and: "dialog has a correct title"
-        contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE;
+        contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
+
         and: "dialog has 'Publish Now' and 'Cancel' buttons"
         contentPublishDialog.isPublishNowButtonEnabled();
+
         and:
         contentPublishDialog.isCancelButtonBottomEnabled();
+
         and:
         contentPublishDialog.isCancelButtonTopEnabled();
+
         and: "'Include Child' checkbox is displayed"
         contentPublishDialog.isIncludeChildCheckboxDisplayed();
+
         and: "'Include Child' checkbox not checked"
         !contentPublishDialog.isIncludeChildCheckboxSelected();
 
@@ -76,8 +82,7 @@ class ContentPublishDialog_Spec
     def "GIVEN 'Content Publish' dialog shown WHEN the cancel button on the bottom clicked THEN dialog not present"()
     {
         given: "parent content selected and 'Publish' button pressed"
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
+        findAndSelectContent( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
 
@@ -91,8 +96,7 @@ class ContentPublishDialog_Spec
     def "GIVEN 'Content Publish' dialog shown WHEN the button cancel on the top clicked THEN dialog not present"()
     {
         given: "parent content selected and 'Publish' button pressed"
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
+        findAndSelectContent( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
 
@@ -105,9 +109,8 @@ class ContentPublishDialog_Spec
 
     def "GIVEN one parent content on root selected WHEN 'Content Publish' dialog opened THEN correct name of content present in the dialog"()
     {
-        given: "one parent content on the root selected"
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
+        given: "one parent content in the root selected"
+        findAndSelectContent( parentContent.getName() );
 
         when: "'Content Publish' dialog opened"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
@@ -115,8 +118,9 @@ class ContentPublishDialog_Spec
         List<String> names = contentPublishDialog.getNamesOfContentsToPublish();
         TestUtils.saveScreenshot( getSession(), "publish-dialog-opened" );
 
-        then:
+        then: "only one name of content displayed"
         names.size() == 1;
+
         and: "correct name of content present in the dialog"
         names.get( 0 ).contains( parentContent.getName() );
 
@@ -125,8 +129,7 @@ class ContentPublishDialog_Spec
     def "GIVEN a parent content on root selected 'Content publish' dialog opened WHEN 'include child' checkbox set to true THEN correct text shown in the header of 'dependencies list'"()
     {
         given: "parent content selected and 'Publish' button pressed"
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() );
+        findAndSelectContent( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
             Application.EXPLICIT_NORMAL );
 
@@ -137,15 +140,22 @@ class ContentPublishDialog_Spec
 
         then: "The header of 'Dependencies list' appears"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
+
         and: "correct text shown in the header"
         contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.DEPENDENCIES_LIST_HEADER_TEXT;
+
         and: "one correct dependency shown "
-        dependencies.size() == 1 && dependencies.get( 0 ).contains( childContent1.getName() );
+        dependencies.size() == 1;
+
+        and: "correct name of the dependency is displayed"
+        dependencies.get( 0 ).contains( childContent1.getName() );
     }
 
-    def "GIVEN a child content WHEN it content selected and 'Publish' button pressed THEN correct text shown in the header of 'dependencies list' and correct dependency shown as well"()
+    def "GIVEN existing child content WHEN it content selected and 'Publish' button pressed THEN correct text shown in the header of 'dependencies list' and correct dependency shown as well"()
     {
+        given: "existing child content"
         filterPanel.typeSearchText( childContent1.getName() );
+
         when: "child content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( childContent1.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
@@ -153,12 +163,16 @@ class ContentPublishDialog_Spec
         List<String> dependencies = contentPublishDialog.getDependencies();
         TestUtils.saveScreenshot( getSession(), "publish-dialog-dependencies-child" );
 
-
         then: "The header of 'Dependencies list' appears"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
+
         and: "correct text shown in the header"
         contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.DEPENDENCIES_LIST_HEADER_TEXT;
+
         and: "one correct dependency shown "
-        dependencies.size() == 1 && dependencies.get( 0 ).contains( parentContent.getName() );
+        dependencies.size() == 1;
+
+        and: "correct name of the dependency is displayed"
+        dependencies.get( 0 ).contains( parentContent.getName() );
     }
 }

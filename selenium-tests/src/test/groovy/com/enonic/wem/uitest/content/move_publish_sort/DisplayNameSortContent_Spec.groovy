@@ -19,13 +19,13 @@ class DisplayNameSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.MODIFIED_DESCENDING.getValue() );
         List<String> defaultSortingList = sortContentDialog.getContentNames();
-        TestUtils.saveScreenshot( getSession(), "dn1" );
+        TestUtils.saveScreenshot( getSession(), "modified_descending" );
         sortContentDialog.clickOnSaveButton();
 
         when:
         List<String> nameAscendingList = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.DNAME_ASCENDING.getValue() ).getContentNames();
-        TestUtils.saveScreenshot( getSession(), "dn2" );
+        TestUtils.saveScreenshot( getSession(), "dname_ascending" );
 
         then: "content sorted correctly in the dialog-grid"
         Collections.sort( defaultSortingList );

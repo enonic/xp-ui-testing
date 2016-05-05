@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.contentmanager.browsepanel.MoveContentDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -11,7 +10,6 @@ import spock.lang.Stepwise
 class MoveContentDialogSpec
     extends BaseContentSpec
 {
-
 
     @Shared
     String FIRST_DISPLAY_CONTENT_NAME = "first";
@@ -26,24 +24,22 @@ class MoveContentDialogSpec
     Content SECOND_CONTENT;
 
 
-    def "add first folder content"()
+    def "adding of the first folder"()
     {
-        when: "content saved"
+        when: "new content added in root"
         FIRST_CONTENT = buildFolderContent( "movetest", FIRST_DISPLAY_CONTENT_NAME );
-        contentBrowsePanel.clickToolbarNew().selectContentType( FIRST_CONTENT.getContentTypeName() ).typeData( FIRST_CONTENT ).save().close(
-            FIRST_CONTENT.getDisplayName() );
+        addContent( FIRST_CONTENT );
 
         then: "content listed on the root"
         filterPanel.typeSearchText( FIRST_CONTENT.getName() );
         contentBrowsePanel.exists( FIRST_CONTENT.getName() );
     }
 
-    def "add second folder content"()
+    def "adding of the second folder"()
     {
-        when: "content saved"
+        when: "second content added"
         SECOND_CONTENT = buildFolderContent( "movetest", SECOND_DISPLAY_CONTENT_NAME );
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).typeData(
-            SECOND_CONTENT ).save().close( SECOND_CONTENT.getDisplayName() );
+        addContent( SECOND_CONTENT );
 
         then: "content listed on the root"
         filterPanel.typeSearchText( SECOND_CONTENT.getName() );
@@ -53,8 +49,7 @@ class MoveContentDialogSpec
     def "GIVEN selected folder WHEN 'Move' button on toolbar pressed THEN modal dialog with correct title appears"()
     {
         given: "one content selected"
-        filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
+        findAndSelectContent( FIRST_CONTENT.getName() );
 
         when: "button 'Move' pressed"
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
@@ -68,8 +63,7 @@ class MoveContentDialogSpec
     def "GIVEN selected content and 'Move' button on toolbar pressed WHEN content moved to another location  THEN content listed beneath the content that was destination for moving"()
     {
         given:
-        filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
+        findAndSelectContent( FIRST_CONTENT.getName() )
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when: "content moved to another location"
@@ -86,8 +80,7 @@ class MoveContentDialogSpec
     def "GIVEN 'move' dialog opened WHEN 'close' button clicked  THEN modal dialog disappears"()
     {
         given: "'move' dialog opened"
-        filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
+        findAndSelectContent( FIRST_CONTENT.getName() );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when: "the 'cancel' button on the bottom of dialog pressed"
@@ -95,14 +88,12 @@ class MoveContentDialogSpec
 
         then: "dialog not present"
         !dialog.isOpened()
-
     }
 
     def "GIVEN 'move' dialog opened WHEN 'cancel' button clicked  THEN modal dialog disappears"()
     {
         given:
-        filterPanel.typeSearchText( FIRST_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_CONTENT.getName() );
+        findAndSelectContent( FIRST_CONTENT.getName() );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when: "the 'cancel' button on the top of dialog pressed"
@@ -111,6 +102,4 @@ class MoveContentDialogSpec
         then: "dialog not present"
         !dialog.isOpened()
     }
-
-
 }

@@ -22,8 +22,8 @@ class ContentPublishDelete_Spec
     {
         given:
         content = buildFolderContent( "publish", DISPLAY_NAME );
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
+        addContent( content );
+
         when:
         filterPanel.typeSearchText( content.getName() )
         String message = contentBrowsePanel.selectContentInTable(
@@ -34,7 +34,6 @@ class ContentPublishDelete_Spec
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
-
     }
 
     def "GIVEN existing root content with 'Online' status  WHEN content selected and 'Delete' button pressed THEN  content with a 'Pending delete' status present"()

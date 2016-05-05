@@ -43,7 +43,6 @@ class ContextWindow_InsertablesPanel_Spec
 
         and: "correct description displayed"
         insertablesPanel.getTitle() == ContextWindowPageInsertablesPanel.TITLE
-
     }
 
 }

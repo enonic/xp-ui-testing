@@ -108,6 +108,5 @@ class GeoPoint_Spec
 
         then: "red icon not present in the wizard, because content is valid"
         !wizard.isContentInvalid( validContent.getDisplayName() );
-
     }
 }

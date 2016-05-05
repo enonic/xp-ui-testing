@@ -23,30 +23,29 @@ class ContentPublish_Child_Spec
 
     def "GIVEN existing parent folder with child WHEN parent content selected but 'Include child' checkbox unchecked and 'Publish' button on toolbar pressed THEN parent content has 'Online' status but child not published"()
     {
-        setup:
+        setup: "parent folder added"
         parentContent = buildFolderContent( "publish", "parent-folder" );
         addContent( parentContent );
 
-        and:
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
+        and: "new child content added"
+        findAndSelectContent( parentContent.getName() );
         childContent1 = buildFolderContentWithParent( "publish", "child-folder1", parentContent.getName() );
         addContent( childContent1 );
 
-        when:
+        when: " 'publish' dialog opened and parent content have been published without the child "
         contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( parentContent.getName() );
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
         dialog.setIncludeChildCheckbox( false ).clickOnPublishNowButton();
 
-        then:
+        then: "child content has 'offline' status"
         filterPanel.typeSearchText( childContent1.getName() );
         contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
     }
 
     def "GIVEN parent folder with not published child WHEN publish dialog opened and 'Include child' set to true and 'Publish' pressed  THEN child content has 'Online' status as well"()
     {
-        given:
+        given: "parent folder with a not published child"
         filterPanel.typeSearchText( parentContent.getName() );
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
 
@@ -62,7 +61,6 @@ class ContentPublish_Child_Spec
     {
         given: "parent folder and children are 'published'"
         filterPanel.typeSearchText( parentContent.getName() );
-
 
         when: "publish dialog opened"
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
@@ -96,8 +94,10 @@ class ContentPublish_Child_Spec
 
         then:
         contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+
         and:
         contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+
         and:
         !contentBrowsePanel.exists( childContent2.getName() );
     }

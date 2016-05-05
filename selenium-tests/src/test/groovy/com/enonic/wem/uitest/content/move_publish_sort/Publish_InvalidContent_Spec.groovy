@@ -27,6 +27,7 @@ class Publish_InvalidContent_Spec
 
         then: "content is not valid"
         wizard.isContentInvalid( Application.UNNAMED_FOLDER_TAB_NAME );
+
         and: "'Publish' button is disabled"
         !wizard.isPublishButtonEnabled();
     }
@@ -35,7 +36,7 @@ class Publish_InvalidContent_Spec
     {
         given:
         filterPanel.typeSearchText( invalidFolder.getName() );
-        TestUtils.saveScreenshot( getSession(), "inv_folder" )
+        TestUtils.saveScreenshot( getSession(), "invalid_folder" )
 
         when: "parent content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );
@@ -50,6 +51,7 @@ class Publish_InvalidContent_Spec
 
         and: "dependency list not present"
         !contentPublishDialog.isDependenciesListHeaderDisplayed();
+
         and: "correct name of content shown"
         contentPublishDialog.getNamesOfContentsToPublish().get( 0 ) == invalidFolder.getPath().toString();
     }
@@ -61,8 +63,7 @@ class Publish_InvalidContent_Spec
         addContent( parentFolder );
 
         and: "add a not valid child folder"
-        filterPanel.typeSearchText( parentFolder.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentFolder.getName() )
+        findAndSelectContent( parentFolder.getName() );
         Content childContent = buildFolderContentWithParent( "not_valid", null, parentFolder.getName() );
         contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent ).save().close(
             "<Unnamed Folder>" );
@@ -74,6 +75,7 @@ class Publish_InvalidContent_Spec
 
         then: "modal dialog appears and 'Publish' button on dialog is disabled"
         !contentPublishDialog.isPublishNowButtonEnabled();
+
         and: "correct subheader present in dialog"
         contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
     }

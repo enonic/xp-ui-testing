@@ -18,45 +18,49 @@ class Content_Online_Modified_Spec
 
     def "GIVEN existing root content WHEN content selected and 'Publish' button on toolbar pressed THEN notification message appears and  content have got a 'Online' status"()
     {
-        given:
+        given: "existing content in root"
         content = buildFolderContent( "publish", "folder-content" );
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
-        when:
+        addContent( content );
+
+        when: "the content have been published"
         filterPanel.typeSearchText( content.getName() )
         String message = contentBrowsePanel.selectContentInTable(
             content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        then:
+
+        then: "status of content is 'online'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
-        and:
+
+        and: "correct notification message appears"
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, content.getDisplayName() );
     }
 
     def "GIVEN existing root content with 'Online' status  WHEN content edited THEN  content has got a 'Modified' status"()
     {
-        given:
+        given: "existing root content with 'Online' status opened for edit"
         filterPanel.typeSearchText( content.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarEdit();
-        when:
+
+        when: "new display name typed"
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
 
-        then:
+        then: "status of content is 'modified'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
 
     }
 
     def "GIVEN existing root content with 'Modified' status  WHEN content selected and 'Publish' button pressed THEN content has got a 'Online' status"()
     {
-        when:
+        when: "modified content has been published again"
         filterPanel.typeSearchText( content.getName() )
         String message = contentBrowsePanel.selectContentInTable(
             content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
             Application.EXPLICIT_NORMAL );
 
-        then:
+        then: "status of content is 'online'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
-        and:
+
+        and: "correct notification message appears"
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
 
     }
