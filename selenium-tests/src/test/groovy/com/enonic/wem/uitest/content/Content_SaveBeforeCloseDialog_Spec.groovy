@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.xp.schema.content.ContentTypeName
 
 class Content_SaveBeforeCloseDialog_Spec
@@ -37,6 +38,7 @@ class Content_SaveBeforeCloseDialog_Spec
 
         when: "display name typed and Delete button pressed"
         DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
+        TestUtils.saveScreenshot( getSession(), "save_before_close_delete" )
         deleteContentDialog.clickOnCancelButton();
 
         then: "wizard still opened"

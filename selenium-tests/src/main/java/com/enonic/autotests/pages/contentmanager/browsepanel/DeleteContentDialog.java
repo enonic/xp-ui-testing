@@ -83,7 +83,7 @@ public class DeleteContentDialog
 
     public boolean isCheckboxForDeletePublishedItemsDisplayed()
     {
-        return checkBox.isDisplayed();
+        return isElementDisplayed( CHECKBOX_DELETE_PUBLISHED_ITEMS );
     }
 
     public String getCheckboxLabelText()

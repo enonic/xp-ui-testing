@@ -32,6 +32,7 @@ class DeleteContentDialogSpec
 
         then: "delete dialog opened"
         dialog.waitForOpened();
+        TestUtils.saveScreenshot( getSession(), "delete_content_dialog_elements" );
 
         and: "'Cancel' button is present on the dialog"
         dialog.isCancelButtonPresent();
