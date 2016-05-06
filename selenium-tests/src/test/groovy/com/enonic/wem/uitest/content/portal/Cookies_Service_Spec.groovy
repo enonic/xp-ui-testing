@@ -24,8 +24,5 @@ class Cookies_Service_Spec
 
         then: "correct cookie present in the response"
         driver.manage().getCookieNamed( COOKIE_NAME ) != null;
-
-        and:
-        driver.manage().getCookies().size() == 1;
     }
 }
