@@ -84,7 +84,6 @@ class Restore_Version_Shortcut_Spec
 
         then:
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
-
     }
 
     def "GIVEN existing shortcut with two versions for target AND wizard opened WHEN version of shortcut changed THEN correct target present on the wizard"()
@@ -106,6 +105,5 @@ class Restore_Version_Shortcut_Spec
 
         then: "correct target displayed in the wizard"
         formViewPanel.getTargetDisplayName() == TARGET_1
-
     }
 }

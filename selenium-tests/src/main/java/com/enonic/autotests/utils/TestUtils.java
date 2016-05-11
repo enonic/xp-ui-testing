@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -42,6 +43,20 @@ public class TestUtils
     private TestUtils()
     {
 
+    }
+
+    public static void setCheckboxChecked( TestSession session, String checkboxId, boolean value )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) session.getDriver();
+        String script = String.format( "document.getElementById('%s').checked=arguments[0]", checkboxId );
+        executor.executeScript( script, value );
+    }
+
+    public static boolean isCheckBoxChecked( TestSession session, String checkboxId )
+    {
+        JavascriptExecutor executor = (JavascriptExecutor) session.getDriver();
+        String script = String.format( Application.ELEMENT_BY_ID + ".isChecked()", checkboxId );
+        return (Boolean) executor.executeScript( script );
     }
 
     public static String saveScreenshot( final TestSession testSession, String screenshotName )

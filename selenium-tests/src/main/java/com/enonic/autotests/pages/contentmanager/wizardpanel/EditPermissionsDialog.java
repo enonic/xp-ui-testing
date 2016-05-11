@@ -184,7 +184,7 @@ public class EditPermissionsDialog
     public boolean isInheritCheckBoxChecked()
     {
         WebElement checkbox = findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]" ) ).get( 0 );
-        return isCheckBoxChecked( checkbox.getAttribute( "id" ) );
+        return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
     }
 
     public EditPermissionsDialog setCheckedForInheritCheckbox( boolean value )

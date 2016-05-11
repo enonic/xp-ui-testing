@@ -224,7 +224,7 @@ public class NewContentDialog
         boolean isContentTypePresent = isElementDisplayed( ctypeXpath );
         if ( !isContentTypePresent )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "no_type" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_type" ) );
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
         getDisplayedElement( By.xpath( ctypeXpath ) ).click();

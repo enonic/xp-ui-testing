@@ -80,6 +80,7 @@ public class PageComponentsViewDialog
         {
             if ( !isElementDisplayed( String.format( CONTEXT_MENU_ITEM, items[i] ) ) )
             {
+                TestUtils.saveScreenshot( getSession(), "err_" + items[i] );
                 throw new TestFrameworkException( "" + items[i] );
             }
             getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, items[i] ) ) ).click();

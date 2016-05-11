@@ -52,6 +52,10 @@ class Publish_InvalidContent_Spec
         and: "dependency list not present"
         !contentPublishDialog.isDependenciesListHeaderDisplayed();
 
+        and: "one item present in the list"
+        List<String> itemList = contentPublishDialog.getNamesOfContentsToPublish();
+        itemList.size() == 1;
+
         and: "correct name of content shown"
         contentPublishDialog.getNamesOfContentsToPublish().get( 0 ) == invalidFolder.getPath().toString();
     }

@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.*
@@ -205,13 +204,5 @@ class Restore_Version_All_Inputs_Spec
     private addGeoPointData( PropertyTree data, String geopoint )
     {
         data.addString( GeoPointFormViewPanel.GEO_POINT_PROPERTY, geopoint );
-    }
-
-    protected AllContentVersionsView openVersionPanel()
-    {
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
-        AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
-        return contentItemVersionsPanel;
     }
 }

@@ -18,7 +18,7 @@ class ContentPublishDelete_Spec
     @Shared
     Content content;
 
-    def "GIVEN existing root content WHEN content selected and 'Publish' button on toolbar pressed THEN notification message appears and  content have got a 'Online' status"()
+    def "GIVEN existing root content WHEN content selected and 'Publish' button on toolbar pressed THEN notification message appears and content have got 'Online' status"()
     {
         given:
         content = buildFolderContent( "publish", DISPLAY_NAME );
@@ -36,7 +36,7 @@ class ContentPublishDelete_Spec
         message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
     }
 
-    def "GIVEN existing root content with 'Online' status  WHEN content selected and 'Delete' button pressed THEN  content with a 'Pending delete' status present"()
+    def "GIVEN existing root content with 'Online' status WHEN content selected and 'Delete' button pressed THEN content with a 'Pending delete' status present"()
     {
         given:
         filterPanel.typeSearchText( content.getName() )
@@ -49,10 +49,9 @@ class ContentPublishDelete_Spec
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
         and:
         message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
-
     }
 
-    def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel "()
+    def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel"()
     {
         when:
         filterPanel.typeSearchText( content.getName() )

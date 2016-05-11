@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -18,8 +17,6 @@ public class Application
     public static final String APP_WINDOW_ID = "app_window_id_key";
 
     public static final String HOME_WINDOW_ID = "home_window_id_key";
-
-    public static final String LIVE_EDIT_FRAME_ID = "live_edit_id_key";
 
     public static final String OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
@@ -54,8 +51,6 @@ public class Application
 
     public static final String CAN_READ = "Can Read";
 
-    public static final String PUBLISH_NOTIFICATION_WARNING = "The content cannot be published yet. One or more form values are not valid.";
-
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
     protected final String GRID_CANVAS = "//div[@class='grid-canvas']";
@@ -86,8 +81,6 @@ public class Application
 
     public static String CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" published";
 
-    public static final int NUMBER_TRIES_TO_CLOSE = 2;
-
     public static final long PAGE_LOAD_TIMEOUT = 15l;
 
     public static final long EXPLICIT_LONG = 4l;
@@ -98,15 +91,7 @@ public class Application
 
     public static final long APP_INSTALL_TIMEOUT = 10;
 
-    public static final String CONTENT_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'content-manager')]";
-
-    public static final String LIVE_EDIT_MAIN_REGION = "//div[@id='main' and @data-live-edit-id]";
-
     public static final String LIVE_EDIT_FRAME = "//iframe[@class='live-edit-frame']";
-
-    public static final String USER_MANAGER_FRAME_XPATH = "//iframe[contains(@src,'user-manager')]";
-
-    public static final String APPLICATIONS_FRAME_XPATH = "//iframe[contains(@src,'applications')]";
 
     public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
 
@@ -165,29 +150,6 @@ public class Application
     public boolean waitElementNotVisible( By by, long timeout )
     {
         return WaitHelper.waitsElementNotVisible( getDriver(), by, timeout );
-    }
-
-    public Application setChecked( String checkboxId, boolean value )
-    {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String script = String.format( ELEMENT_BY_ID + ".setChecked(arguments[0])", checkboxId );
-        executor.executeScript( script, value );
-        return this;
-    }
-
-    public Application setCheckboxChecked( String checkboxId, boolean value )
-    {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String script = String.format( "document.getElementById('%s').checked=arguments[0]", checkboxId );
-        executor.executeScript( script, value );
-        return this;
-    }
-
-    public boolean isCheckBoxChecked( String checkboxId )
-    {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String script = String.format( ELEMENT_BY_ID + ".isChecked()", checkboxId );
-        return (Boolean) executor.executeScript( script );
     }
 
     public String waitNotificationWarning( long timeout )

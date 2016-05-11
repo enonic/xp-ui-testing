@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -111,7 +112,7 @@ public class ImageSelectorFormViewPanel
     {
         String checkboxXpath = String.format( CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName );
         WebElement checkbox = getDisplayedElement( By.xpath( checkboxXpath ) );
-        setCheckboxChecked( checkbox.getAttribute( "id" ), value );
+        TestUtils.setCheckboxChecked( getSession(), checkbox.getAttribute( "id" ), value );
     }
 
     public ImageSelectorFormViewPanel clickOnImage( String name )

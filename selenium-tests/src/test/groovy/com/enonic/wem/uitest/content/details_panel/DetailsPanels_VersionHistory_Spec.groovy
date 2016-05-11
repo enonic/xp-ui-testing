@@ -37,7 +37,6 @@ class DetailsPanels_VersionHistory_Spec
     {
         given: "content selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
-        //contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "'Version History' option selected'"
         AllContentVersionsView allContentVersionsView = openVersionPanel();

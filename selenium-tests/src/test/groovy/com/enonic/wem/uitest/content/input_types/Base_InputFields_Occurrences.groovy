@@ -1,8 +1,10 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.ContentUtils
+import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.*
 import com.enonic.autotests.services.NavigatorHelper
@@ -454,5 +456,13 @@ class Base_InputFields_Occurrences
             contentBrowsePanel.clickCheckboxAndSelectRow( name );
         }
         return contentBrowsePanel;
+    }
+
+    protected AllContentVersionsView openVersionPanel()
+    {
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
+        AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
+        return contentItemVersionsPanel;
     }
 }

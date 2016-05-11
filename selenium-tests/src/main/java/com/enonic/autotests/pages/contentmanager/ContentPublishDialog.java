@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -22,8 +23,6 @@ public class ContentPublishDialog
     public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
 
     public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid content(s) prevent publish";
-
-    public static final String WARNING_PUBLISH_MESSAGE = "Invalid content(s) prevent publish";
 
     public static final String DIALOG_TITLE = "Publishing Wizard";
 
@@ -49,11 +48,14 @@ public class ContentPublishDialog
 
     private final String DEPENDENCIES_LIST_HEADER = DEPENDENCIES_LIST + "//h6[@class='dependencies-header']";
 
-    private final String DISPLAY_NAMES_OF_CONTENTS_TO_PUBLISH = "//div[contains(@id,'PublishDialogItemList')]//h6[@class='main-name']";
+    private final String ITEM_LIST = "//ul[contains(@id,'DialogItemList')]";
 
-    private final String NAMES_OF_CONTENTS_TO_PUBLISH = "//div[contains(@id,'PublishDialogItemList')]//p[@class='sub-name']";
+    private final String DISPLAY_NAMES_OF_CONTENTS_TO_PUBLISH = DIALOG_CONTAINER + ITEM_LIST + H6_DISPLAY_NAME;
 
-    private final String DIALOG_SUBHEADER_XPATH = DIALOG_CONTAINER + "//h6[contains(@class,'publish-dialog-subheader')]";
+    private final String NAMES_OF_CONTENTS_TO_PUBLISH = DIALOG_CONTAINER + ITEM_LIST + P_NAME;
+
+    private final String DIALOG_INVALID_SUB_HEADER_XPATH =
+        DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='sub-title']";
 
     @FindBy(xpath = PUBLISH_NOW_BUTTON)
     private WebElement publishButton;
@@ -80,22 +82,24 @@ public class ContentPublishDialog
 
     public String getDialogSubHeader()
     {
-        return findElements( By.xpath( DIALOG_SUBHEADER_XPATH ) ).get( 0 ).getText();
+        if ( !isElementDisplayed( DIALOG_INVALID_SUB_HEADER_XPATH ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_subheader_not_displayed" );
+            throw new TestFrameworkException( "Publish dialog: error-subheader not shown!" );
+        }
+        return getDisplayedString( DIALOG_INVALID_SUB_HEADER_XPATH );
     }
 
     public List<String> getNamesOfContentsToPublish()
     {
-        List<String> names = findElements( By.xpath( NAMES_OF_CONTENTS_TO_PUBLISH ) ).stream().filter( WebElement::isDisplayed ).map(
-            WebElement::getText ).collect( Collectors.toList() );
+        List<String> names = getDisplayedStrings( By.xpath( NAMES_OF_CONTENTS_TO_PUBLISH ) );
         return names;
     }
 
     public List<String> getContentDisplayNamesToPublish()
     {
-        List<String> names =
-            findElements( By.xpath( DISPLAY_NAMES_OF_CONTENTS_TO_PUBLISH ) ).stream().filter( WebElement::isDisplayed ).map(
-                WebElement::getText ).collect( Collectors.toList() );
-        return names;
+        List<String> displayNames = getDisplayedStrings( By.xpath( DISPLAY_NAMES_OF_CONTENTS_TO_PUBLISH ) );
+        return displayNames;
     }
 
     public ContentPublishDialog setIncludeChildCheckbox( boolean value )
