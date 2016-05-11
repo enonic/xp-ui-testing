@@ -42,11 +42,11 @@ public class ContentPublishDialog
 
     private final String INCLUDE_CHILD_CHECKBOX_LABEL = DIALOG_CONTAINER + "//div[contains(@class,'include-child-check')]//label";
 
-    private final String DEPENDENCIES_LIST = DIALOG_CONTAINER + "//div[contains(@id,'PublishDialogDependantsItemList')]";
+    private final String DEPENDENCIES_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
 
-    private final String DEPENDENCIES_STRINGS = DEPENDENCIES_LIST + "//div[contains(@id,'SelectionPublishItem')]//h6[@class='main-name']";
+    private final String DEPENDENCIES_STRINGS = DEPENDENCIES_LIST + "//div[contains(@id,'DependantItemViewer')]//h6[@class='main-name']";
 
-    private final String DEPENDENCIES_LIST_HEADER = DEPENDENCIES_LIST + "//h6[@class='dependencies-header']";
+    private final String DEPENDENCIES_LIST_HEADER = DIALOG_CONTAINER + "//h6[@class='dependants-header']";
 
     private final String ITEM_LIST = "//ul[contains(@id,'DialogItemList')]";
 
