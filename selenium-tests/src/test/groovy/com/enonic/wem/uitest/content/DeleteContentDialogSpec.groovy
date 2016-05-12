@@ -20,7 +20,7 @@ class DeleteContentDialogSpec
     @Shared
     String NAME_PART = "deletecontentdialog";
 
-    def "GIVEN an existing content WHEN content selected and Delete button clicked THEN delete dialog with title 'Delete Content' shown"()
+    def "GIVEN an existing content WHEN content selected and 'Delete' button clicked THEN delete dialog with title 'Delete Content' shown"()
     {
         given: "new folder added"
         CONTENT1 = buildFolderContent( NAME_PART, "folder-delete-dialog1" );
@@ -111,6 +111,7 @@ class DeleteContentDialogSpec
 
         then:
         dialog.waitForOpened();
+        sleep( 300 );
         TestUtils.saveScreenshot( getSession(), "delete_dialog_online_status" );
 
         and: "checkbox appeared in the modal dialog"
@@ -133,7 +134,7 @@ class DeleteContentDialogSpec
         when: "two folders are selected and 'Delete' button pressed"
         DeleteContentDialog dialog = contentBrowsePanel.clickOnSelectAll().clickToolbarDelete();
         List<String> displayNames = dialog.getDisplayNamesToDelete();
-        TestUtils.saveScreenshot( getSession(), "two_content_in_dialog" );
+        TestUtils.saveScreenshot( getSession(), "two_contents_in_dialog" );
 
         then: "two correct display names are shown"
         displayNames.contains( CONTENT1.getDisplayName() );
@@ -152,12 +153,18 @@ class DeleteContentDialogSpec
 
         when: "'Instantly delete published items'  selected"
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();
+        String status = dialog.getContentStatus( CONTENT1.getDisplayName() );//
         dialog.clickOnInstantlyCheckbox();
+
+        and: "Delete button was clicked "
         dialog.doDelete();
         TestUtils.saveScreenshot( getSession(), "delete_dialog_content_deleted" );
 
         then: "dialog closed"
         !dialog.isOpened();
+
+        and: "the content was with 'online' status"
+        status == ContentStatus.ONLINE.getValue();
 
         and: "content deleted from the grid"
         !contentBrowsePanel.exists( CONTENT1.getName() );

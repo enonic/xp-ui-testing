@@ -26,7 +26,7 @@ public class DeleteContentDialog
     private final String CONTAINER_DIV = "//div[contains(@id,'ContentDeleteDialog')]";
 
     private String CONTENT_STATUS = CONTAINER_DIV +
-        "//div[contains(@id,'ContentDeleteSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]//div[contains(@class,'status')][2]";
+        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]//div[contains(@class,'status')][2]";
 
     private final String CHECKBOX_DELETE_PUBLISHED_ITEMS =
         CONTAINER_DIV + "//div[contains(@id,'Checkbox') and contains(@class,'instant-delete-check')]";
@@ -35,11 +35,10 @@ public class DeleteContentDialog
 
     protected Logger logger = Logger.getLogger( this.getClass() );
 
-    private final String ITEMS_TO_DELETE_BY_DISPLAY_NAME =
-        CONTAINER_DIV + "//div[contains(@id,'ContentDeleteSelectionItem')]" + H6_DISPLAY_NAME; //"//div[@class='item-list']//h6";
+    private final String ITEMS_TO_DELETE_BY_DISPLAY_NAME = CONTAINER_DIV + "//ul[contains(@id,'DialogItemList')]" + H6_DISPLAY_NAME;
 
     private final String TITLE_HEADER_XPATH =
-        CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader') and child::h2[text()='Delete item']]";
+        CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader') and child::h2[contains(.,'Delete item')]]";
 
     private final String TITLE_TEXT = CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
