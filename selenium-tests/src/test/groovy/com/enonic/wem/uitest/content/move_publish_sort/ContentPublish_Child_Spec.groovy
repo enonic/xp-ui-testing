@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -43,30 +44,36 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
     }
 
-    def "GIVEN parent folder with not published child WHEN publish dialog opened and 'Include child' set to true and 'Publish' pressed  THEN child content has 'Online' status as well"()
+    def "GIVEN parent 'online' folder with not published child WHEN the parent folder is selected THEN 'Publish' button on toolbar is disabled"()
     {
         given: "parent folder with a not published child"
         filterPanel.typeSearchText( parentContent.getName() );
-        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
 
-        when: "'Include child' set to true and 'Publish now' pressed"
-        dialog.setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        when: "the parent folder is selected"
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
 
-        then: "child content has 'Online' status as well"
-        filterPanel.typeSearchText( childContent1.getName() );
-        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "'Publish' button on toolbar is disabled"
+        !contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    def "GIVEN parent folder and children are 'published' WHEN publish dialog opened  THEN button 'publish' is disabled"()
+    def "GIVEN parent 'online' folder with not published child WHEN 'publish' menu expanded AND 'Publish Tree' selected THEN 'Publish Dialog' appears and correct name of child is displayed"()
     {
-        given: "parent folder and children are 'published'"
+        given: "parent folder with a not published child"
         filterPanel.typeSearchText( parentContent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
 
-        when: "publish dialog opened"
-        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
+        when: "modal dialog has been opened"
+        ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeInMenu();
+        List<String> dependantList = modalDialog.getDependantList();
 
-        then: "button 'publish' is disabled"
-        !dialog.isPublishNowButtonEnabled();
+        then: "checkbox 'Include child 'is checked"
+        modalDialog.isIncludeChildCheckboxSelected();
+
+        and: "one content present in the dependant list"
+        dependantList.size() == 1;
+
+        and: "correct name of content displayed in the dependant list"
+        dependantList.get( 0 ).contains( childContent1.getName() );
     }
 
     def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN just added child content has a 'Offline' status"()
@@ -85,6 +92,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.getContentStatus( childContent2.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
     }
 
+    @Ignore
     def "GIVEN existing published parent folder with one published child and one 'new' content WHEN  parent folder selected and 'Delete' button pressed  THEN not published child content removed but parent folder and one child content have a 'Pending delete' status"()
     {
         when:
@@ -102,6 +110,7 @@ class ContentPublish_Child_Spec
         !contentBrowsePanel.exists( childContent2.getName() );
     }
 
+    @Ignore
     def "GIVEN existing  parent folder with one child and status of both contents are 'PENDING_DELETE'  WHEN  parent folder selected and 'Publish' button pressed  THEN parent folder not listed"()
     {
         when:

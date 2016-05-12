@@ -2,7 +2,6 @@ package com.enonic.autotests.pages.contentmanager;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,7 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentPublishDialog
     extends Application
 {
-    public static final String DEPENDENCIES_LIST_HEADER_TEXT = "Other items that will be published";
+    public static final String OTHER_ITEMS_WILL_BE_PUBLISHED = "Other items that will be published";
 
     public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
 
@@ -151,10 +150,11 @@ public class ContentPublishDialog
      *
      * @return {@link ContentPublishDialog} instance.
      */
-    public ContentPublishDialog waitUntilDialogShowed( long timeout )
+    public ContentPublishDialog waitUntilDialogShown( long timeout )
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_publish_dialog_open" );
             throw new TestFrameworkException( "Content publish dialog was not shown!" );
         }
         return this;
@@ -195,11 +195,8 @@ public class ContentPublishDialog
         return isElementDisplayed( DEPENDENCIES_LIST_HEADER );
     }
 
-    public List<String> getDependencies()
+    public List<String> getDependantList()
     {
-        List<String> list =
-            findElements( By.xpath( DEPENDENCIES_STRINGS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-                Collectors.toList() );
-        return list;
+        return getDisplayedStrings( By.xpath( DEPENDENCIES_STRINGS ) );
     }
 }

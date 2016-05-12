@@ -129,7 +129,7 @@ class Occurrences_ComboBox_0_0_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
         when: "type a data and 'save' and 'publish'"
-        wizard.clickOnWizardPublishButton().waitUntilDialogShowed(
+        wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
         wizard.close( content_wit_opt.getDisplayName() );
 
@@ -150,7 +150,7 @@ class Occurrences_ComboBox_0_0_Spec
             comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
 
         when: "type a data and 'save' and 'publish'"
-        wizard.clickOnWizardPublishButton().waitUntilDialogShowed(
+        wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
         wizard.close( comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );

@@ -40,7 +40,7 @@ class Publish_InvalidContent_Spec
 
         when: "parent content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         then: "'invalid' subheader shown"
@@ -73,7 +73,7 @@ class Publish_InvalidContent_Spec
             "<Unnamed Folder>" );
 
         when: "parent content selected and 'Publish' button pressed"
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         contentPublishDialog.setIncludeChildCheckbox( true );
 

@@ -62,7 +62,12 @@ public class ContentBrowsePanel
     private final String PUBLISH_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
+    private final String PUBLISH_MENU_BUTTON_XPATH =
+        BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]//div[contains(@id,'DropdownHandle')]";
+
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//div[contains(@class,'details-panel-toggle-button')]";
+
+    private final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree']";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
@@ -90,6 +95,9 @@ public class ContentBrowsePanel
 
     @FindBy(xpath = PUBLISH_BUTTON_XPATH)
     private WebElement publishButton;
+
+    @FindBy(xpath = PUBLISH_MENU_BUTTON_XPATH)
+    private WebElement publishMenuDropDownHandler;
 
 
     @FindBy(xpath = DETAILS_TOGGLE_BUTTON)
@@ -121,6 +129,27 @@ public class ContentBrowsePanel
         {
             throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
         }
+    }
+
+    public ContentBrowsePanel showPublishMenu()
+    {
+        publishMenuDropDownHandler.click();
+        sleep( 400 );
+        return this;
+    }
+
+    public ContentPublishDialog selectPublishTreeInMenu()
+    {
+        showPublishMenu();
+        if ( !isElementDisplayed( PUBLISH_TREE_MENU_ITEM ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_publish_menu_item" );
+            throw new TestFrameworkException( "menu item was not found!" + "Publish Tree" );
+        }
+        getDisplayedElement( By.xpath( PUBLISH_TREE_MENU_ITEM ) ).click();
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
     }
 
     public ContentDetailsPanel getContentDetailsPanel()
@@ -398,7 +427,7 @@ public class ContentBrowsePanel
         }
         publishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
     }
 
@@ -602,7 +631,7 @@ public class ContentBrowsePanel
         }
         getDisplayedElement( By.xpath( publishMenuItem ) ).click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         sleep( 500 );
         return dialog;
     }

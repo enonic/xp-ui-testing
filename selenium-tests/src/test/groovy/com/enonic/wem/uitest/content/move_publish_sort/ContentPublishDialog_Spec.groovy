@@ -29,7 +29,7 @@ class ContentPublishDialog_Spec
         filterPanel.typeSearchText( folderContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( folderContent.getName() )
 
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         then: "'ContentPublishDialog' dialog displayed"
@@ -53,7 +53,7 @@ class ContentPublishDialog_Spec
         addContent( childContent1 );
 
         when: "parent content selected and 'Publish' button pressed"
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         then: "'ContentPublishDialog' dialog displayed"
@@ -83,7 +83,7 @@ class ContentPublishDialog_Spec
     {
         given: "parent content selected and 'Publish' button pressed"
         findAndSelectContent( parentContent.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         when: "button 'Cancel' on the bottom of dialog pressed"
@@ -97,7 +97,7 @@ class ContentPublishDialog_Spec
     {
         given: "parent content selected and 'Publish' button pressed"
         findAndSelectContent( parentContent.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         when: "button 'Cancel' on the top of dialog pressed"
@@ -113,7 +113,7 @@ class ContentPublishDialog_Spec
         findAndSelectContent( parentContent.getName() );
 
         when: "'Content Publish' dialog opened"
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         List<String> names = contentPublishDialog.getNamesOfContentsToPublish();
         TestUtils.saveScreenshot( getSession(), "publish-dialog-opened" );
@@ -123,56 +123,55 @@ class ContentPublishDialog_Spec
 
         and: "correct name of content present in the dialog"
         names.get( 0 ).contains( parentContent.getName() );
-
     }
 
-    def "GIVEN a parent content on root selected 'Content publish' dialog opened WHEN 'include child' checkbox set to true THEN correct text shown in the header of 'dependencies list'"()
+    def "GIVEN a parent content on root selected 'Content publish' dialog opened WHEN 'include child' checkbox set to true THEN correct text shown in the header of 'dependant list' and one dependant item is displayed"()
     {
         given: "parent content selected and 'Publish' button pressed"
         findAndSelectContent( parentContent.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         when:
         contentPublishDialog.setIncludeChildCheckbox( true );
-        List<String> dependencies = contentPublishDialog.getDependencies();
+        List<String> dependant = contentPublishDialog.getDependantList();
         TestUtils.saveScreenshot( getSession(), "publish-dialog-dependencies" );
 
         then: "The header of 'Dependencies list' appears"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
 
         and: "correct text shown in the header"
-        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.DEPENDENCIES_LIST_HEADER_TEXT;
+        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
 
-        and: "one correct dependency shown "
-        dependencies.size() == 1;
+        and: "one correct dependant is shown "
+        dependant.size() == 1;
 
         and: "correct name of the dependency is displayed"
-        dependencies.get( 0 ).contains( childContent1.getName() );
+        dependant.get( 0 ).contains( childContent1.getName() );
     }
 
-    def "GIVEN existing child content WHEN it content selected and 'Publish' button pressed THEN correct text shown in the header of 'dependencies list' and correct dependency shown as well"()
+    def "GIVEN existing child content WHEN it content selected and 'Publish' button pressed THEN correct text shown in the header of 'dependencies list' and name of the parent folder is displayed"()
     {
         given: "existing child content"
         filterPanel.typeSearchText( childContent1.getName() );
 
         when: "child content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( childContent1.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
-        List<String> dependencies = contentPublishDialog.getDependencies();
+        List<String> dependant = contentPublishDialog.getDependantList();
         TestUtils.saveScreenshot( getSession(), "publish-dialog-dependencies-child" );
 
         then: "The header of 'Dependencies list' appears"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
 
         and: "correct text shown in the header"
-        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.DEPENDENCIES_LIST_HEADER_TEXT;
+        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
 
         and: "one correct dependency shown "
-        dependencies.size() == 1;
+        dependant.size() == 1;
 
-        and: "correct name of the dependency is displayed"
-        dependencies.get( 0 ).contains( parentContent.getName() );
+        and: "name of the parent folder is displayed"
+        dependant.get( 0 ).contains( parentContent.getName() );
     }
 }

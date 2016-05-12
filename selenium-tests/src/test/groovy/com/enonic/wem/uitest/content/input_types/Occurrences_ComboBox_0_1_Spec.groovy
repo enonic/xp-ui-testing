@@ -113,7 +113,7 @@ class Occurrences_ComboBox_0_1_Spec
         given: "content without option saved and published"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
         selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
-            comboBoxContent ).save().clickOnWizardPublishButton().waitUntilDialogShowed(
+            comboBoxContent ).save().clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
         ContentWizardPanel.getWizard( getSession() ).close( comboBoxContent.getDisplayName() );
 

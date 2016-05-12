@@ -110,7 +110,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         given: "content selected in the grid and opened"
         filterPanel.typeSearchText( TEST_RELATIONSHIP_CONTENT.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( TEST_RELATIONSHIP_CONTENT.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         when: "'publish' button on modal dialog pressed"
         contentPublishDialog.clickOnPublishNowButton();

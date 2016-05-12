@@ -104,7 +104,7 @@ class Occurrences_CustomRelation_0_1_Spec
         given: "citation content opened for edit"
         filterPanel.typeSearchText( RELATIONSHIP_CONTENT.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( RELATIONSHIP_CONTENT.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShowed(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         when:

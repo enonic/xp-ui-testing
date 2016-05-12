@@ -293,7 +293,7 @@ public class ContentWizardPanel
     {
         toolbarPublishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
     }
 
