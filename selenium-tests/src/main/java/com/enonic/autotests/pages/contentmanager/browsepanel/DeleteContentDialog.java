@@ -16,7 +16,7 @@ import com.enonic.autotests.utils.TestUtils;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
- * This Dialog appears, when customer try to delete a content.
+ * This Dialog appears, when user tries to delete a content.
  */
 public class DeleteContentDialog
     extends Application
@@ -55,7 +55,7 @@ public class DeleteContentDialog
     private WebElement cancelButton;
 
     @FindBy(xpath = CHECKBOX_DELETE_PUBLISHED_ITEMS)
-    private WebElement checkBox;
+    private WebElement checkBoxDiv;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
@@ -103,8 +103,14 @@ public class DeleteContentDialog
 
     public DeleteContentDialog clickOnInstantlyCheckbox()
     {
-        checkBox.click();
+        checkBoxDiv.click();
         return this;
+    }
+
+    public boolean isInstantlyDeleteCheckboxChecked()
+    {
+        String id = checkBoxDiv.getAttribute( "id" );
+        return TestUtils.isCheckBoxChecked( getSession(), id );
     }
 
     public void clickOnCancelButton()

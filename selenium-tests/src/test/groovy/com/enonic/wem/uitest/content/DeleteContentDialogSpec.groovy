@@ -100,7 +100,7 @@ class DeleteContentDialogSpec
     }
 
 
-    def "GIVEN existing published content WHEN content selected and Delete button clicked THEN modal dialog with the checkbox appears"()
+    def "GIVEN existing published content WHEN content selected and Delete button clicked THEN modal dialog with the checkbox appears AND the checkbox is not checked"()
     {
         given: "content published"
         findAndSelectContent( CONTENT1.getName() );
@@ -122,6 +122,9 @@ class DeleteContentDialogSpec
 
         and: "the content has 'online' status"
         dialog.getContentStatus( CONTENT1.getDisplayName() ) == ContentStatus.ONLINE.getValue();
+
+        and: "'Instantly delete published items' checkbox is unchecked"
+        !dialog.isInstantlyDeleteCheckboxChecked();
     }
 
     def "GIVEN two existing content WHEN delete dialog opened THEN two contents are present in the modal dialog"()
@@ -130,6 +133,7 @@ class DeleteContentDialogSpec
         CONTENT2 = buildFolderContent( NAME_PART, "folder-delete-dialog2" );
         addContent( CONTENT2 );
         filterPanel.typeSearchText( NAME_PART );
+        sleep( 1000 );
 
         when: "two folders are selected and 'Delete' button pressed"
         DeleteContentDialog dialog = contentBrowsePanel.clickOnSelectAll().clickToolbarDelete();
