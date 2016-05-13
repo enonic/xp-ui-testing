@@ -150,7 +150,7 @@ class DeleteContentDialogSpec
         displayNames.size() == 2;
     }
 
-    def "GIVEN existing published content WHEN content deleting AND check box selected THEN content instantly deleted"()
+    def "GIVEN existing published content WHEN content deleting AND 'instantly delete published items' checked THEN published content not listed in the grid"()
     {
         given: "existing published content"
         findAndSelectContent( CONTENT1.getName() );
@@ -170,7 +170,7 @@ class DeleteContentDialogSpec
         and: "the content was with 'online' status"
         status == ContentStatus.ONLINE.getValue();
 
-        and: "content deleted from the grid"
+        and: "content not listed in the grid"
         !contentBrowsePanel.exists( CONTENT1.getName() );
     }
 }
