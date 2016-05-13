@@ -15,13 +15,13 @@ class UserBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "system-user-store-context-menu" );
 
         then: "Delete menu item is enabled"
-        !userBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        userBrowsePanel.isContextMenuItemEnabled( "Edit" );
 
         and: "New menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "New" );
+        userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
     def "WHEN 'system/groups' folder selected and context menu opened THEN all menu-items have correct state"()
@@ -32,13 +32,13 @@ class UserBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "system-groups-context-menu" );
 
         then: "Delete menu item is disabled"
-        !userBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item is disabled"
-        !userBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        !userBrowsePanel.isContextMenuItemEnabled( "Edit" );
 
         and: "New menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "New" );
+        userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
 
@@ -49,13 +49,13 @@ class UserBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "roles-context-menu" );
 
         then: "Delete menu item is disabled"
-        !userBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item is disabled"
-        !userBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        !userBrowsePanel.isContextMenuItemEnabled( "Edit" );
 
         and: "New menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "New" );
+        userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
     def "WHEN 'system/users' folder selected and context menu opened THEN all menu-items have correct state"()
@@ -66,12 +66,12 @@ class UserBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "system-users-context-menu" );
 
         then: "Delete menu item is disabled"
-        !userBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item is disabled"
-        !userBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        !userBrowsePanel.isContextMenuItemEnabled( "Edit" );
         and: "New menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "New" );
+        userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
     def "GIVEN a system 'super user' WHEN 'su' selected and context menu opened  THEN all menu-items have correct state"()
@@ -82,13 +82,13 @@ class UserBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "system-su-context-menu" );
 
         then: "Delete menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        userBrowsePanel.isContextMenuItemEnabled( "Edit" );
 
         and: "New menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "New" );
+        userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
     def "WHEN a role selected and context menu opened THEN all menu-items have correct state"()
@@ -99,13 +99,13 @@ class UserBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "role-context-menu" );
 
         then: "Delete menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        userBrowsePanel.isContextMenuItemEnabled( "Edit" );
 
         and: "New menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "New" );
+        userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
     def "GIVEN new 'user store' added WHEN this store selected and context menu opened THEN all menu-items have correct state"()
@@ -118,12 +118,12 @@ class UserBrowsePanel_ContextMenu_Spec
         userBrowsePanel.openContextMenu( us.getName() );
 
         then: "Delete menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        userBrowsePanel.isContextMenuItemEnabled( "Edit" );
 
         and: "New menu item is enabled"
-        userBrowsePanel.isEnabledContextMenuItem( "New" );
+        userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 }

@@ -754,7 +754,7 @@ public abstract class BrowsePanel
         sleep( 100 );
     }
 
-    public boolean isEnabledContextMenuItem( String action )
+    public boolean isContextMenuItemEnabled( String action )
     {
         if ( findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).size() == 0 )
         {
@@ -762,6 +762,11 @@ public abstract class BrowsePanel
         }
         String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
         return !styleClass.contains( "disabled" );
+    }
+
+    public boolean isContextMenuItemDisplayed( String menuItem )
+    {
+        return isElementDisplayed( String.format( CONTEXT_MENU_ITEM, menuItem ) );
     }
 
     public BrowsePanel refreshPanelInBrowser()

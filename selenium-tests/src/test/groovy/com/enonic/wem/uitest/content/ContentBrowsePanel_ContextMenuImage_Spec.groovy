@@ -13,20 +13,23 @@ class ContentBrowsePanel_ContextMenuImage_Spec
         TestUtils.saveScreenshot( getSession(), "image-context-menu" );
 
         then: "Delete menu item is enabled"
-        contentBrowsePanel.isEnabledContextMenuItem( "Delete" );
+        contentBrowsePanel.isContextMenuItemEnabled( "Delete" );
         and: "Preview menu item is disabled"
-        !contentBrowsePanel.isEnabledContextMenuItem( "Preview" );
+        !contentBrowsePanel.isContextMenuItemEnabled( "Preview" );
         and: "Edit menu item is enabled"
-        contentBrowsePanel.isEnabledContextMenuItem( "Edit" );
+        contentBrowsePanel.isContextMenuItemEnabled( "Edit" );
         and: "New menu item is enabled"
-        !contentBrowsePanel.isEnabledContextMenuItem( "New" );
+        !contentBrowsePanel.isContextMenuItemEnabled( "New" );
         and: "Sort menu item is enabled"
-        !contentBrowsePanel.isEnabledContextMenuItem( "Sort" );
+        !contentBrowsePanel.isContextMenuItemEnabled( "Sort" );
         and: "New menu item is enabled"
-        contentBrowsePanel.isEnabledContextMenuItem( "Duplicate" );
+        contentBrowsePanel.isContextMenuItemEnabled( "Duplicate" );
         and: "Move menu item is enabled"
-        contentBrowsePanel.isEnabledContextMenuItem( "Move" );
+        contentBrowsePanel.isContextMenuItemEnabled( "Move" );
         and: "Publish menu item is enabled"
-        contentBrowsePanel.isEnabledContextMenuItem( "Publish" );
+        contentBrowsePanel.isContextMenuItemEnabled( "Publish" );
+
+        // and: "'unpublish'-item not present in the context menu, because content is 'offline'"
+        // !contentBrowsePanel.isContextMenuItemDisplayed( "Unpublish" );
     }
 }

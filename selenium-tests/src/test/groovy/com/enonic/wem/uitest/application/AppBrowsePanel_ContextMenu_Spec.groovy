@@ -12,13 +12,13 @@ class AppBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "local-app-context-menu" );
 
         then: "Delete menu item is enabled"
-        applicationBrowsePanel.isEnabledContextMenuItem( "Stop" );
+        applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );
 
         and: "Edit menu item is enabled"
-        !applicationBrowsePanel.isEnabledContextMenuItem( "Start" );
+        !applicationBrowsePanel.isContextMenuItemEnabled( "Start" );
 
         and: "New menu item is enabled"
-        !applicationBrowsePanel.isEnabledContextMenuItem( "Uninstall" );
+        !applicationBrowsePanel.isContextMenuItemEnabled( "Uninstall" );
     }
 
     def "GIVEN a local 'stopped' application WHEN the application selected and context menu opened THEN all menu-items have correct state"()
@@ -33,13 +33,13 @@ class AppBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "local-app-context-menu" );
 
         then: "Delete menu item is enabled"
-        !applicationBrowsePanel.isEnabledContextMenuItem( "Stop" );
+        !applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );
 
         and: "Edit menu item is enabled"
-        applicationBrowsePanel.isEnabledContextMenuItem( "Start" );
+        applicationBrowsePanel.isContextMenuItemEnabled( "Start" );
 
         and: "New menu item is enabled"
-        !applicationBrowsePanel.isEnabledContextMenuItem( "Uninstall" );
+        !applicationBrowsePanel.isContextMenuItemEnabled( "Uninstall" );
     }
 
     def "GIVEN existing not local application WHEN the application selected and context menu opened THEN all menu-items have correct state"()
@@ -52,12 +52,12 @@ class AppBrowsePanel_ContextMenu_Spec
         TestUtils.saveScreenshot( getSession(), "disqus-context-menu" );
 
         then: "Delete menu item is enabled"
-        applicationBrowsePanel.isEnabledContextMenuItem( "Stop" );
+        applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );
 
         and: "Edit menu item is enabled"
-        !applicationBrowsePanel.isEnabledContextMenuItem( "Start" );
+        !applicationBrowsePanel.isContextMenuItemEnabled( "Start" );
 
         and: "New menu item is enabled"
-        applicationBrowsePanel.isEnabledContextMenuItem( "Uninstall" );
+        applicationBrowsePanel.isContextMenuItemEnabled( "Uninstall" );
     }
 }
