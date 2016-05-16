@@ -50,6 +50,12 @@ public class DateTimeFormViewPanel
         return this;
     }
 
+    public void typeDateTime( String datetime )
+    {
+        clearAndType( dateTimeInput, datetime );
+        sleep( 500 );
+    }
+
     public boolean isDateTimeInputDisplayed()
     {
         return dateTimeInput.isDisplayed();

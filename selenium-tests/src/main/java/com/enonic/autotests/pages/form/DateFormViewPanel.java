@@ -52,6 +52,12 @@ public class DateFormViewPanel
         return this;
     }
 
+    public void typeDate( String date )
+    {
+        clearAndType( dateInput, date );
+        sleep( 500 );
+    }
+
     public boolean isInvalidDate()
     {
         WebElement input = getDisplayedElement( By.xpath( DATE_INPUT_XPATH ) );
