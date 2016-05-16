@@ -135,7 +135,7 @@ class InstallApplication_Spec
         sleep( 2000 );
 
         when: "an application from the 'Enonic Market' installed"
-        marketPanel.doInstallApp( CONTENT_VIEWER_DIALOG_DISPLAY_NAME );
+        marketPanel.doInstallApp( CONTENT_VIEWER_APP_DISPLAY_NAME );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_notification_message" );
         appDialog.clickOnCancelButton();
@@ -161,9 +161,10 @@ class InstallApplication_Spec
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
         InstallAppDialog_MarketAppPanel marketPanel = new InstallAppDialog_MarketAppPanel( getSession() );
+        sleep( 1000 );
 
         then: "install button disabled for application that was already installed"
-        marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_DIALOG_DISPLAY_NAME );
+        marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_APP_DISPLAY_NAME );
     }
 
     def "GIVEN installed from 'Enonic Market' application WHEN the application selected and context-menu shown THEN all menu-items have correct state"()
@@ -173,13 +174,13 @@ class InstallApplication_Spec
         TestUtils.saveScreenshot( getSession(), "not-local-app-context-menu" );
 
         then: "Delete menu item is enabled"
-        applicationBrowsePanel.isEnabledContextMenuItem( "Stop" );
+        applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );
 
         and: "Edit menu item is enabled"
-        !applicationBrowsePanel.isEnabledContextMenuItem( "Start" );
+        !applicationBrowsePanel.isContextMenuItemEnabled( "Start" );
 
         and: "New menu item is enabled"
-        applicationBrowsePanel.isEnabledContextMenuItem( "Uninstall" );
+        applicationBrowsePanel.isContextMenuItemEnabled( "Uninstall" );
     }
 
     def "GIVEN existing installed application from 'Enonic Market' WHEN application uninstalled THEN it not listed in the grid AND correct notification message appears"()
