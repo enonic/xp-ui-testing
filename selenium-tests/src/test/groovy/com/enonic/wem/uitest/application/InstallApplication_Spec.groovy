@@ -139,6 +139,7 @@ class InstallApplication_Spec
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "app_notification_message" );
         appDialog.clickOnCancelButton();
+        sleep( 1000 );
 
         then: "correct notification message appears"
         notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP );
