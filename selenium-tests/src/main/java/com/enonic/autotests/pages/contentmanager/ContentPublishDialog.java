@@ -41,9 +41,9 @@ public class ContentPublishDialog
 
     private final String INCLUDE_CHILD_CHECKBOX_LABEL = DIALOG_CONTAINER + "//div[contains(@class,'include-child-check')]//label";
 
-    private final String DEPENDENCIES_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
+    private final String DEPENDANT_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
 
-    private final String DEPENDENCIES_STRINGS = DEPENDENCIES_LIST + "//div[contains(@id,'DependantItemViewer')]//h6[@class='main-name']";
+    private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]//h6[@class='main-name']";
 
     private final String DEPENDENCIES_LIST_HEADER = DIALOG_CONTAINER + "//h6[@class='dependants-header']";
 
@@ -197,6 +197,6 @@ public class ContentPublishDialog
 
     public List<String> getDependantList()
     {
-        return getDisplayedStrings( By.xpath( DEPENDENCIES_STRINGS ) );
+        return getDisplayedStrings( By.xpath( DEPENDANT_NAMES ) );
     }
 }

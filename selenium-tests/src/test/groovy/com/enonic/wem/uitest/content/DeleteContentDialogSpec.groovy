@@ -157,7 +157,7 @@ class DeleteContentDialogSpec
 
         when: "'Instantly delete published items'  selected"
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();
-        String status = dialog.getContentStatus( CONTENT1.getDisplayName() );//
+        String status = dialog.getContentStatus( CONTENT1.getDisplayName() );
         dialog.clickOnInstantlyCheckbox();
 
         and: "Delete button was clicked "

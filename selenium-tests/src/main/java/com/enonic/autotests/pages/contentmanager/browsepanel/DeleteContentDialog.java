@@ -23,10 +23,20 @@ public class DeleteContentDialog
 {
     public static final String CHECKBOX_LABEL_TEXT = "Instantly delete published items";
 
+    public static final String OTHER_ITEMS_WILL_BE_DELETED_TEXT = "Other items that will be deleted";
+
+    public static final String DELETE_ITEM_WITH_CHILD_TITLE = "Delete selected items and its child content";
+
     private final String CONTAINER_DIV = "//div[contains(@id,'ContentDeleteDialog')]";
 
     private String CONTENT_STATUS = CONTAINER_DIV +
         "//div[contains(@id,'StatusSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]//div[contains(@class,'status')][2]";
+
+    private final String DEPENDANT_LIST = CONTAINER_DIV + "//ul[contains(@id,'DialogDependantList')]";
+
+    private final String DEPENDANT_HEADER_TEXT = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header']";
+
+    private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]//h6[@class='main-name']";
 
     private final String CHECKBOX_DELETE_PUBLISHED_ITEMS =
         CONTAINER_DIV + "//div[contains(@id,'Checkbox') and contains(@class,'instant-delete-check')]";
@@ -164,8 +174,23 @@ public class DeleteContentDialog
         return getDisplayedString( status );
     }
 
+    public String getDependantHeader()
+    {
+        if ( !isElementDisplayed( DEPENDANT_HEADER_TEXT ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_delete_dialog_subheader" );
+            throw new TestFrameworkException( "Header element was not found!" );
+        }
+        return getDisplayedString( DEPENDANT_HEADER_TEXT );
+    }
+
     public String getTitle()
     {
         return getDisplayedString( TITLE_TEXT );
+    }
+
+    public List<String> getDependantList()
+    {
+        return getDisplayedStrings( By.xpath( DEPENDANT_NAMES ) );
     }
 }
