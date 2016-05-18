@@ -10,30 +10,11 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Shared
 
 class TagsInputType_Unlim_Spec
     extends Base_InputFields_Occurrences
 
 {
-    @Shared
-    String TAG_1 = "tag1"
-
-    @Shared
-    String TAG_2 = "tag2"
-
-    @Shared
-    String TAG_3 = "tag3"
-
-    @Shared
-    String TAG_4 = "tag4"
-
-    @Shared
-    String TAG_5 = "tag5"
-
-    @Shared
-    String TAG_6 = "tag6"
-
 
     def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN no one tag added and 'Save' and 'Publish' buttons pressed and wizard closed THEN new content with status 'online' appears "()
     {
@@ -122,7 +103,7 @@ class TagsInputType_Unlim_Spec
     }
 
 
-    private PropertyTree buildData( int numberOfTags )
+    private PropertyTree buildUnlimTagData( int numberOfTags )
     {
         PropertyTree data = new PropertyTree();
         data.setLong( "min", 0 );
@@ -163,7 +144,7 @@ class TagsInputType_Unlim_Spec
 
     private Content buildTag_Unlim_Content( int numberOfTags )
     {
-        PropertyTree data = buildData( numberOfTags );
+        PropertyTree data = buildUnlimTagData( numberOfTags );
         String name = "tag_unlim";
         Content tagContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).

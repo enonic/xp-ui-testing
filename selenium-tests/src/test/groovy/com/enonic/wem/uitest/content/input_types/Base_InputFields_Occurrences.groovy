@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.exceptions.TestFrameworkException
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
@@ -44,6 +45,24 @@ class Base_InputFields_Occurrences
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types App";
+
+    @Shared
+    String TAG_1 = "tag1";
+
+    @Shared
+    String TAG_2 = "tag2";
+
+    @Shared
+    String TAG_3 = "tag3";
+
+    @Shared
+    String TAG_4 = "tag4";
+
+    @Shared
+    String TAG_5 = "tag5";
+
+    @Shared
+    String TAG_6 = "tag6";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -464,5 +483,50 @@ class Base_InputFields_Occurrences
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
+    }
+
+    protected PropertyTree buildTag2_5_Data( int numberOfTags )
+    {
+        PropertyTree data = new PropertyTree();
+        data.setLong( "min", 2 );
+        data.setLong( "max", 5 );
+        switch ( numberOfTags )
+        {
+            case 0:
+                break;
+            case 1:
+                data.addString( "tags", TAG_1 );
+                break;
+            case 2:
+                data.addString( "tags", TAG_1 );
+                data.addString( "tags", TAG_2 );
+                break;
+            case 5:
+                data.addString( "tags", TAG_1 );
+                data.addString( "tags", TAG_2 );
+                data.addString( "tags", TAG_3 );
+                data.addString( "tags", TAG_4 );
+                data.addString( "tags", TAG_5 );
+                break;
+            default:
+                throw new TestFrameworkException( "data not implemented" );
+
+
+        }
+        return data;
+    }
+
+    protected Content buildTag_2_5_Content( int numberOfTags )
+    {
+        PropertyTree data = buildTag2_5_Data( numberOfTags );
+        String name = "tag2_5";
+        Content tagContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "tag2_5 content" ).
+
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":tag2_5" ).data( data ).
+            build();
+        return tagContent;
     }
 }

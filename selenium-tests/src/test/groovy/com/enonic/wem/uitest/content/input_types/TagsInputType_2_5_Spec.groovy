@@ -1,35 +1,15 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.exceptions.TestFrameworkException
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
-import spock.lang.Shared
 
 class TagsInputType_2_5_Spec
     extends Base_InputFields_Occurrences
 
 {
-    @Shared
-    String TAG_1 = "tag1"
-
-    @Shared
-    String TAG_2 = "tag2"
-
-    @Shared
-    String TAG_3 = "tag3"
-
-    @Shared
-    String TAG_4 = "tag4"
-
-    @Shared
-    String TAG_5 = "tag5"
-
 
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN no one tag added and  'Save' and 'Publish' buttons pressed THEN new content with status 'online' appears "()
     {
@@ -133,48 +113,4 @@ class TagsInputType_2_5_Spec
         formViewPanel.getTagsText().containsAll( tags.toList() );
     }
 
-
-    private PropertyTree buildData( int numberOfTags )
-    {
-        PropertyTree data = new PropertyTree();
-        data.setLong( "min", 2 );
-        data.setLong( "max", 5 );
-        switch ( numberOfTags )
-        {
-            case 0:
-                break;
-            case 1:
-                data.addString( "tags", TAG_1 );
-                break;
-            case 2:
-                data.addString( "tags", TAG_1 );
-                data.addString( "tags", TAG_2 );
-                break;
-            case 5:
-                data.addString( "tags", TAG_1 );
-                data.addString( "tags", TAG_2 );
-                data.addString( "tags", TAG_3 );
-                data.addString( "tags", TAG_4 );
-                data.addString( "tags", TAG_5 );
-                break;
-            default:
-                throw new TestFrameworkException( "data not implemented" );
-
-
-        }
-        return data;
-    }
-
-    private Content buildTag_2_5_Content( int numberOfTags )
-    {
-        PropertyTree data = buildData( numberOfTags );
-        String name = "tag2_5";
-        Content tagContent = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( "tag2_5 content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":tag2_5" ).data( data ).
-            build();
-        return tagContent;
-    }
 }

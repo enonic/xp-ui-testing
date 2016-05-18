@@ -154,6 +154,7 @@ public class UserWizardPanel
         String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", groupName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), "err_group_not_found" );
             throw new TestFrameworkException( "Group was not found!" );
         }
         if ( !isRoleOrGroupAlreadySelected( groupName ) )

@@ -8,27 +8,11 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Shared
 
 class TagsInputType_0_5_Spec
     extends Base_InputFields_Occurrences
 
 {
-    @Shared
-    String TAG_1 = "tag1"
-
-    @Shared
-    String TAG_2 = "tag2"
-
-    @Shared
-    String TAG_3 = "tag3"
-
-    @Shared
-    String TAG_4 = "tag4"
-
-    @Shared
-    String TAG_5 = "tag5"
-
 
     def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN no one tag added and  'Save' and 'Publish' buttons pressed THEN new content with status 'online' appears "()
     {
