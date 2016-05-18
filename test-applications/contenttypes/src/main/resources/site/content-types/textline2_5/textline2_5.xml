@@ -5,6 +5,7 @@
   <form>
     <input name="TextLine_2_5" type="TextLine">
       <label>Text Line 2:5</label>
+      <default>default text</default>
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
       <occurrences minimum="2" maximum="5"/>

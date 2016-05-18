@@ -49,7 +49,7 @@ public class TextLine2_5_FormViewPanel
             {
                 break;
             }
-            inputs.get( i ).sendKeys( sourceProperty.getValue().toString() );
+            clearAndType( inputs.get( i ), sourceProperty.getString() );
             sleep( 300 );
             i++;
         }
@@ -65,6 +65,24 @@ public class TextLine2_5_FormViewPanel
         } ).collect( Collectors.toList() );
 
         return result;
+    }
+
+    public void clearAllInputs()
+    {
+        List<WebElement> inputs = findElements( By.xpath( TEXT_INPUTS_XPATH ) );
+        if ( inputs.size() == 0 )
+        {
+            throw new TestFrameworkException( "no one text input was not found" );
+        }
+        if ( inputs.size() > 5 )
+        {
+            throw new TestFrameworkException( "number of text inputs can not be more than 5" );
+        }
+
+        for ( final WebElement input : inputs )
+        {
+            input.clear();
+        }
     }
 }
 

@@ -50,7 +50,7 @@ public class ContentWizardPanel
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
 
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        TOOLBAR + "//button[contains(@id,'DialogButton') and child::span[text()='Publish']]";
+        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish']]";
 
     private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 

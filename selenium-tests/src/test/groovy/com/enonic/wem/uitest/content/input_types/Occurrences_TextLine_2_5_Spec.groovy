@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -78,6 +79,29 @@ class Occurrences_TextLine_2_5_Spec
         !formViewPanel.isAddButtonPresent();
     }
 
+    def "GIVEN TextLine 2:5 wizard opened WHEN three text inputs added  THEN default values are present in all inputs"()
+    {
+        when: "start to add a content with type 'TextLine 2:5'"
+        Content textLineContent = buildTextLine2_5_Content();
+        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
+        formViewPanel.clickOnAddButton();
+        formViewPanel.clickOnAddButton();
+        formViewPanel.clickOnAddButton();
+        List<String> values = formViewPanel.getTextLineValues();
+        TestUtils.saveScreenshot( getSession(), "text_line_default_values" );
+
+        then: "button 'Add' not present on the page "
+        !formViewPanel.isAddButtonPresent();
+
+        and:
+        values.size() == 5;
+        and:
+        values.get( 0 ) == "default text";
+        and:
+        values.get( 4 ) == "default text";
+    }
+
     def "GIVEN TextLine 2:5 wizard opened and 5 inputs showed on the page WHEN one input removed THEN button 'Add' appears on the page"()
     {
         given: "start to add a content with type 'TextLine 2:5' and add 3 text inputs"
@@ -146,10 +170,13 @@ class Occurrences_TextLine_2_5_Spec
     {
         given: "start to add a content with type 'TextLine 2:5'"
         Content textLineContent = buildTextLine2_5_Content();
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard(
+            textLineContent.getContentTypeName() ); contentWizardPanel.typeDisplayName( textLineContent.getDisplayName() );
+        TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
 
         when:
-        contentWizardPanel.typeDisplayName( textLineContent.getDisplayName() );
+        formViewPanel.clearAllInputs();
+        TestUtils.saveScreenshot( getSession(), "text_lines_cleared" );
 
         then: "'Publish' button is disabled"
         !contentWizardPanel.isPublishButtonEnabled();
