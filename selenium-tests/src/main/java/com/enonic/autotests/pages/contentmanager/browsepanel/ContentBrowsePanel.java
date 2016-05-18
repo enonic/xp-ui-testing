@@ -63,7 +63,7 @@ public class ContentBrowsePanel
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
     private final String PUBLISH_MENU_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]//div[contains(@id,'DropdownHandle')]";
+        BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]//button[contains(@id,'DropdownHandle')]";
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//div[contains(@class,'details-panel-toggle-button')]";
 
