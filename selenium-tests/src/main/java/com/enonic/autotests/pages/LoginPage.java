@@ -17,7 +17,7 @@ public class LoginPage
     extends Page
 {
 
-    public static final String TITLE = "Login - Enonic XP Admin";
+    public static final String TITLE = "Enonic XP - Login";
 
     private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'userid or e-mail']";
 
