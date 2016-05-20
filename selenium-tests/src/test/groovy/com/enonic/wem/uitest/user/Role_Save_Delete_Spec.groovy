@@ -81,8 +81,8 @@ class Role_Save_Delete_Spec
         RoleWizardPanel roleWizardPanel = openRoleWizard();
 
         when: "role saved and wizard closed"
-        String errorMessage = roleWizardPanel.typeData( TEST_ROLE ).save().waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
-
+        roleWizardPanel.typeData( TEST_ROLE ).save();
+        String errorMessage = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
         then: "message, that role with it name already exists"
         errorMessage == String.format( ROLE_EXISTS, TEST_ROLE.getName() );
     }

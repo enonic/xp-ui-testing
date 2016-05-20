@@ -27,7 +27,6 @@ class Site_With_TemplatePageComponentDialog_Spec
 
     def "add a site with a page template"()
     {
-
         given: "site based on test application added"
         SITE = buildMyFirstAppSite( SITE_NAME );
         addSiteBasedOnFirstApp( SITE );
@@ -42,7 +41,6 @@ class Site_With_TemplatePageComponentDialog_Spec
 
         then: "template listed in a grid"
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
-
     }
 
     def "GIVEN existing site with a template WHEN site opened for edit and 'Show Component View' on wizard-toolbar clicked THEN 'Page Component dialog appears'"()

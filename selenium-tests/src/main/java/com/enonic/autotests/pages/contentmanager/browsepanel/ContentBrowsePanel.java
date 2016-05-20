@@ -62,10 +62,12 @@ public class ContentBrowsePanel
     private final String PUBLISH_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
 
-    private final String PUBLISH_MENU_BUTTON_XPATH =
+    private final String PUBLISH_MENU_DROPDOWN_HANDLER =
         BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]//button[contains(@id,'DropdownHandle')]";
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//div[contains(@class,'details-panel-toggle-button')]";
+
+    private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree']";
 
     private final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree']";
 
@@ -96,7 +98,7 @@ public class ContentBrowsePanel
     @FindBy(xpath = PUBLISH_BUTTON_XPATH)
     private WebElement publishButton;
 
-    @FindBy(xpath = PUBLISH_MENU_BUTTON_XPATH)
+    @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
     private WebElement publishMenuDropDownHandler;
 
 
@@ -138,7 +140,7 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentPublishDialog selectPublishTreeInMenu()
+    public ContentPublishDialog selectPublishTreeMenuItem()
     {
         showPublishMenu();
         if ( !isElementDisplayed( PUBLISH_TREE_MENU_ITEM ) )
@@ -150,6 +152,58 @@ public class ContentBrowsePanel
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
+    }
+
+    public ContentPublishDialog selectUnPublishMenuItem()
+    {
+        showPublishMenu();
+        if ( !isUnPublishMenuItemEnabled() )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item" );
+            throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
+        }
+        getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
+
+    public boolean isMenuItemEnabled( WebElement menuItem )
+    {
+        return !getAttribute( menuItem, "class", Application.EXPLICIT_NORMAL ).contains( "disabled" );
+    }
+
+    public boolean isPublishMenuAvailable()
+    {
+        if ( !isElementDisplayed( PUBLISH_MENU_DROPDOWN_HANDLER ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_publish_dropdown_handler" );
+            throw new TestFrameworkException( "dropdown handler for publish menu is not displayed" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( PUBLISH_MENU_DROPDOWN_HANDLER ) ), "class",
+                              Application.EXPLICIT_NORMAL ).contains( "disabled" );
+    }
+
+    public boolean isPublishTreeMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( PUBLISH_TREE_MENU_ITEM ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_publish_tree_menu_item_not_visible " );
+            throw new TestFrameworkException( "'publish tree' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( PUBLISH_TREE_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
+    }
+
+    public boolean isUnPublishMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( PUBLISH_TREE_MENU_ITEM ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item_not_visible " );
+            throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
     }
 
     public ContentDetailsPanel getContentDetailsPanel()
@@ -732,6 +786,23 @@ public class ContentBrowsePanel
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
         return newContentDialog;
+    }
+
+    public String waitPublishNotificationMessage( long timeout )
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        {
+            return null;
+        }
+        String message = findElement( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).getText();
+        getLogger().info( "Publish Notification message " + message );
+        return message;
+    }
+
+    public boolean waitExpectedNotificationMessage( String message, long timeout )
+    {
+        String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
+        return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
 
     /**

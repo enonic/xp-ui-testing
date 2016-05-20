@@ -1,9 +1,6 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.utils.TestUtils
-import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 
 class ContentBrowsePanelToolbarSpec
     extends BaseContentSpec
@@ -13,125 +10,74 @@ class ContentBrowsePanelToolbarSpec
     {
         expect:
         !contentBrowsePanel.isDeleteButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN New button should be enabled"()
-    {
-        expect:
+        and: "New button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Preview button should be disabled"()
-    {
-        expect:
+        and: "Preview button should be disabled"
         !contentBrowsePanel.isPreviewButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Edit button should be disabled"()
-    {
-        expect:
+        and: "Edit button should be disabled"
         !contentBrowsePanel.isEditButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Duplicate button should be disabled"()
-    {
-        expect:
+        and: "Duplicate button should be disabled"
         !contentBrowsePanel.isDuplicateButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Sort button should be disabled"()
-    {
-        expect:
+        and: "Sort button should be disabled"
         !contentBrowsePanel.isSortButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Move button should be disabled"()
-    {
-        expect:
-        !contentBrowsePanel.isMoveButtonEnabled();
-    }
-
-    def "GIVEN Content BrowsePanel WHEN no selected content THEN Publish button should be disabled"()
-    {
-        expect:
+        and: "Publish button should be disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
+
+        and: "Move button should be disabled"
+        !contentBrowsePanel.isMoveButtonEnabled();
     }
 
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Publish button should be enabled"()
     {
-        when:
-        contentBrowsePanel.clickCheckboxAndSelectRow( 0 )
+        when: "one content selected"
+        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
 
-        then:
+        then: "Publish button should be enabled"
         contentBrowsePanel.isPublishButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN one content selected THEN Sort button should be enabled"()
-    {
-        when:
-        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
-
-        then:
+        and: "Sort button should be enabled"
         contentBrowsePanel.isSortButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN one content selected THEN Move button should be enabled"()
-    {
-        when:
-        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
-
-        then:
+        and: "Move button is enabled"
         contentBrowsePanel.isMoveButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN one content selected THEN Edit button should be enabled"()
-    {
-        when:
-        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
-
-        then:
+        and: "Edit button should be enabled"
         contentBrowsePanel.isEditButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN one content selected THEN Duplicate button should be enabled"()
-    {
-        when:
-        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
-
-        then:
+        and: "Duplicate button should be enabled"
         contentBrowsePanel.isDuplicateButtonEnabled();
-    }
 
-    def "GIVEN Content BrowsePanel WHEN one content selected THEN New button should be enabled"()
-    {
-        when:
-        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
-        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
-
-        then:
+        and: "New button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
+
+        and: "Delete button should be enabled"
+        contentBrowsePanel.isDeleteButtonEnabled();
+
+        and: "Preview button should be disabled, because the content is folder "
+        !contentBrowsePanel.isPreviewButtonEnabled();
     }
 
     def "GIVEN a content that not allowing children WHEN content selected THEN Sort button is  disabled for content types not allowing children"()
     {
-        given:
-        Content imageContent = Content.builder().
-            name( "nord.jpg" ).
-            displayName( "nord.jpg" ).
-            contentType( ContentTypeName.imageMedia() ).
-            parent( ContentPath.from( "all-content-types-images" ) ).
-            build();
-
         when: "image content selected"
-        findAndSelectContent( imageContent.getName() );
+        findAndSelectContent( IMPORTED_BOOK_IMAGE );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "children_allow" );
+        TestUtils.saveScreenshot( getSession(), "children_not_allow" );
 
         then: "sort button is disabled"
-        !contentBrowsePanel.isSortButtonEnabled()
+        !contentBrowsePanel.isSortButtonEnabled();
+
+        and: "New button is disabled"
+        !contentBrowsePanel.isNewButtonEnabled();
+
+        and: "Delete button should be enabled"
+        contentBrowsePanel.isDeleteButtonEnabled();
     }
 }

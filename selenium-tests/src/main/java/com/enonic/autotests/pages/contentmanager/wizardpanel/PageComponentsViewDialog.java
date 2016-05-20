@@ -151,7 +151,7 @@ public class PageComponentsViewDialog
         }
         WebElement source = findElement( By.xpath( sourceItem ) );
         WebElement target = findElement( By.xpath( targetItem ) );
-        dragAndDrop( source, target );
+        TestUtils.dragAndDrop( getDriver(), source, target );
         sleep( 1000 );
         return this;
     }

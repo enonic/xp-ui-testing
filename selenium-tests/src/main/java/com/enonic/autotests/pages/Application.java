@@ -2,7 +2,6 @@ package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -72,8 +71,6 @@ public class Application
     protected final String H6_DISPLAY_NAME = NAMES_VIEW + "//h6[@class='main-name']";
 
     protected final String P_NAME = NAMES_VIEW + "//p[@class='sub-name']";
-
-    protected String SLICK_ROW_WITH_STYLE = "//div[contains(@class,'slick-row') and @style='%s']";
 
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 
@@ -157,52 +154,5 @@ public class Application
         String message = TestUtils.waitNotification( By.xpath( NOTIFICATION_WARNING ), getDriver(), timeout );
         getLogger().info( "Notification warning " + message );
         return message;
-    }
-
-    public String waitNotificationMessage( long timeout )
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), timeout ) )
-        {
-            return null;
-        }
-        String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
-        getLogger().info( "Notification message " + message );
-        return message.trim();
-    }
-
-    public boolean waitExpectedNotificationMessage( String message, long timeout )
-    {
-        String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
-        return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
-    }
-
-    public String waitErrorNotificationMessage( long timeout )
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
-        {
-            return null;
-        }
-        String message = findElement( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ) ).getText();
-        getLogger().info( "Notification message " + message );
-        return message.trim();
-    }
-
-    public String waitPublishNotificationMessage( long timeout )
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
-        {
-            return null;
-        }
-        String message = findElement( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).getText();
-        getLogger().info( "Publish Notification message " + message );
-        return message;
-    }
-
-    public void dragAndDrop( WebElement source, WebElement target )
-    {
-        Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( source ).build().perform();
-        builder.release( target );
-        builder.build().perform();
     }
 }

@@ -79,7 +79,8 @@ class Group_Save_Delete_Spec
         GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
 
         when: " saved and wizard closed"
-        String message = groupWizardPanel.typeData( TEST_GROUP ).save().waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
+        groupWizardPanel.typeData( TEST_GROUP ).save();
+        String message = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "message that group with it  name already exists"
         message == String.format( Application.GROUP_ALREADY_IN_USE_WARNING, TEST_GROUP.getName() );

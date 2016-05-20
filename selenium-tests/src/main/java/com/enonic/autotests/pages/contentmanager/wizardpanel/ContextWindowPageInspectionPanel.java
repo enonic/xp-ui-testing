@@ -22,13 +22,9 @@ public class ContextWindowPageInspectionPanel
     private final String PAGE_CONTROLLER_OPTION_FILTER_INPUT =
         PAGE_CONTROLLER_SELECTOR + "//input[contains(@id,'DropdownOptionFilterInput')]";
 
-
     private final String RENDERER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateSelector')]";
 
-    private final String PAGE_CONTROLLER_DROPDOWN_HANDLER = PAGE_CONTROLLER_SELECTOR + "//div[contains(@id,'DropdownHandle')]";
-
-    private final String RENDERER_DROPDOWN_HANDLER = RENDERER_SELECTOR + "//div[contains(@id,'DropdownHandle')]";
-
+    private final String RENDERER_DROPDOWN_HANDLER = RENDERER_SELECTOR + "//button[contains(@id,'DropdownHandle')]";
 
     @FindBy(xpath = PAGE_CONTROLLER_OPTION_FILTER_INPUT)
     protected WebElement pageControllerOptionFilterInput;
@@ -46,6 +42,11 @@ public class ContextWindowPageInspectionPanel
     public ContextWindowPageInspectionPanel selectRenderer( String templateName )
     {
         //click on handler
+        if ( !isElementDisplayed( RENDERER_DROPDOWN_HANDLER ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_dropdown_renderer" );
+            throw new TestFrameworkException( "dropdown handler was not found!  " + templateName );
+        }
         getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
         sleep( 300 );
         String optionItemXpath =
@@ -55,7 +56,6 @@ public class ContextWindowPageInspectionPanel
             TestUtils.saveScreenshot( getSession(), "err_renderer" );
             throw new TestFrameworkException( "option was not found!  " + templateName );
         }
-        //select a option
         getDisplayedElement( By.xpath( optionItemXpath ) ).click();
         return this;
     }

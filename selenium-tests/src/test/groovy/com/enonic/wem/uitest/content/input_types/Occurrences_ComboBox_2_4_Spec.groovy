@@ -132,9 +132,9 @@ class Occurrences_ComboBox_2_4_Spec
     {
         when: "content without option saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
-        String publishedMessage = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
-            comboBoxContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         ContentWizardPanel.getWizard( getSession() ).close( comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 

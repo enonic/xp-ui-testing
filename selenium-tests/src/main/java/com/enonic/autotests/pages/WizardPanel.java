@@ -57,7 +57,6 @@ public abstract class WizardPanel<T>
             TestUtils.saveScreenshot( getSession(), "err_close_wizard_button" );
             throw new TestFrameworkException( "'close' button for tab with name " + displayName + " was not found!" );
         }
-        //TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "close_issue" ) );
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).click();
         sleep( 500 );
         status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );

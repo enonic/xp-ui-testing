@@ -63,7 +63,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
 
         when: "modal dialog has been opened"
-        ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeInMenu();
+        ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeMenuItem();
         List<String> dependantList = modalDialog.getDependantList();
 
         then: "checkbox 'Include child 'is checked"

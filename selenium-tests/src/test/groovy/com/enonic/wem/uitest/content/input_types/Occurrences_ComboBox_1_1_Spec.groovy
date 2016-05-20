@@ -117,10 +117,10 @@ class Occurrences_ComboBox_1_1_Spec
     {
         when: "content with selected option saved and published"
         comboBox1_1 = buildComboBox1_1_Content( 1 );
-        String publishMessage = selectSiteOpenWizard( comboBox1_1.getContentTypeName() ).typeData(
-            comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
-        ContentWizardPanel.getWizard( getSession() ).close( comboBox1_1.getDisplayName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( comboBox1_1.getContentTypeName() ).typeData(
+            comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        wizard.close( comboBox1_1.getDisplayName() );
         filterPanel.typeSearchText( comboBox1_1.getName() );
 
         then: "content has a 'online' status"

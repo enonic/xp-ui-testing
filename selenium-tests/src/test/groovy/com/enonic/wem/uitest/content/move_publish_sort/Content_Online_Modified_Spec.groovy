@@ -23,10 +23,8 @@ class Content_Online_Modified_Spec
         addContent( content );
 
         when: "the content have been published"
-        filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable(
-            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        String message = findAndSelectContent( content.getName() ).
+            clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "status of content is 'online'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
@@ -38,8 +36,7 @@ class Content_Online_Modified_Spec
     def "GIVEN existing root content with 'Online' status  WHEN content edited THEN  content has got a 'Modified' status"()
     {
         given: "existing root content with 'Online' status opened for edit"
-        filterPanel.typeSearchText( content.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEdit(); ;
 
         when: "new display name typed"
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
@@ -52,10 +49,8 @@ class Content_Online_Modified_Spec
     def "GIVEN existing root content with 'Modified' status  WHEN content selected and 'Publish' button pressed THEN content has got a 'Online' status"()
     {
         when: "modified content has been published again"
-        filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable(
-            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        String message = findAndSelectContent( content.getName() ).
+            clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "status of content is 'online'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );

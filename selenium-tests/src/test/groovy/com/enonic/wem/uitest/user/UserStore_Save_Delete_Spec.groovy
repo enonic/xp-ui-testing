@@ -58,7 +58,7 @@ class UserStore_Save_Delete_Spec
         and: "correct notification message appears"
         creatingMessage == USER_STORE_CREATED_MESSAGE;
     }
-    //app bug?    INBOX-279
+    //  INBOX-279
     @Ignore
     def "GIVEN a existing 'user store' WHEN creating new role with the same name THEN correct notification message appears"()
     {
@@ -66,8 +66,8 @@ class UserStore_Save_Delete_Spec
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "saved and wizard closed"
-        String errorMessage = userStoreWizardPanel.typeData( TEST_USER_STORE ).save().waitErrorNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        userStoreWizardPanel.typeData( TEST_USER_STORE ).save();
+        String errorMessage = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "message that role with it  name already exists"
         errorMessage == String.format( ROLE_EXISTS, TEST_USER_STORE.getName() );

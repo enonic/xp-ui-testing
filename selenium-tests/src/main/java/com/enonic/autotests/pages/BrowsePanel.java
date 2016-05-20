@@ -776,4 +776,26 @@ public abstract class BrowsePanel
         return this;
     }
 
+    public String waitNotificationMessage( long timeout )
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        {
+            return null;
+        }
+        String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
+        getLogger().info( "Notification message " + message );
+        return message.trim();
+    }
+
+    public String waitErrorNotificationMessage( long timeout )
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        {
+            return null;
+        }
+        String message = findElement( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ) ).getText();
+        getLogger().info( "Notification message " + message );
+        return message.trim();
+    }
+
 }
