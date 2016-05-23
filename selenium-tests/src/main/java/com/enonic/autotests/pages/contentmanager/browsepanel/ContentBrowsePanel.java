@@ -690,6 +690,23 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public ContentUnpublishDialog selectUnPublishFromContextMenu( String contentName )
+    {
+        openContextMenu( contentName );
+        String publishMenuItem = String.format( CONTEXT_MENU_ITEM, "Unpublish" );
+        if ( !isElementDisplayed( publishMenuItem ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-unpublish" ) );
+            throw new TestFrameworkException( "unpublish context-menu item is not visible!" );
+        }
+        getDisplayedElement( By.xpath( publishMenuItem ) ).click();
+        ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        sleep( 500 );
+        return dialog;
+    }
+
+
     public ContentBrowsePanel selectDuplicateFromContextMenu( String contentName )
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );

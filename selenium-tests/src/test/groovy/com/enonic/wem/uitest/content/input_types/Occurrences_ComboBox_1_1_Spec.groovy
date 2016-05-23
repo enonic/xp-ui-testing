@@ -117,8 +117,8 @@ class Occurrences_ComboBox_1_1_Spec
     {
         when: "content with selected option saved and published"
         comboBox1_1 = buildComboBox1_1_Content( 1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( comboBox1_1.getContentTypeName() ).typeData(
-            comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        ContentWizardPanel wizard = selectSiteOpenWizard( comboBox1_1.getContentTypeName() );
+        wizard.typeData( comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( comboBox1_1.getDisplayName() );
         filterPanel.typeSearchText( comboBox1_1.getName() );
