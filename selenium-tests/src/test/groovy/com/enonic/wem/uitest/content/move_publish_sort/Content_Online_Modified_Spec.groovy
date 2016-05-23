@@ -43,7 +43,6 @@ class Content_Online_Modified_Spec
 
         then: "status of content is 'modified'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
-
     }
 
     def "GIVEN existing root content with 'Modified' status  WHEN content selected and 'Publish' button pressed THEN content has got a 'Online' status"()
