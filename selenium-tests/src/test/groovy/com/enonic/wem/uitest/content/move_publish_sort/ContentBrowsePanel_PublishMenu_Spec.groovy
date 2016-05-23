@@ -7,23 +7,25 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class ContentBrowsePanel_PublishMenu_Spec
     extends BaseContentSpec
 {
     @Shared
     Content FOLDER_CONTENT;
 
-    def "GIVEN existing not published root content WHEN content selected and 'Publish'-menu  THEN and 'Publish'-menu is disabled"()
+    def "GIVEN existing not published root content WHEN content selected THEN 'Publish'-menu is disabled"()
     {
         given: "existing content in root"
         FOLDER_CONTENT = buildFolderContent( "publish", "publish menu test" );
         addContent( FOLDER_CONTENT );
 
-        when: "the content have been published"
+        when: "the content selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
-        then: "status of content is 'online'"
+        then: "and 'Publish'-menu is disabled"
         !contentBrowsePanel.isPublishMenuAvailable();
     }
 
@@ -32,30 +34,35 @@ class ContentBrowsePanel_PublishMenu_Spec
         when: "the folder has been published"
         findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
-        then: "status of content is 'online'"
+        then: " 'Publish'-menu is available "
         contentBrowsePanel.isPublishMenuAvailable();
 
-        and:
+        and: "AND 'Unpablish' menu-item is enabled"
         contentBrowsePanel.showPublishMenu();
-        TestUtils.saveScreenshot( getSession(), "publish_menu_online" );
+        TestUtils.saveScreenshot( getSession(), "publish_menu_online_content" );
         contentBrowsePanel.isUnPublishMenuItemEnabled();
     }
 
     def "GIVEN existing published folder WHEN the folder selected AND 'Unpublish' clicked in the menu THEN 'the folder becomes is 'offline' "()
     {
-        given: "the folder has been published"
+        given: "existing published folder"
         findAndSelectContent( FOLDER_CONTENT.getName() )
 
-        when: "status of content is 'online'"
+        when: "the folder selected AND 'Unpublish' clicked"
         ContentUnpublishDialog modalDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
+
+        and: "'unpublish' button on the modal dialog pressed"
         modalDialog.clickOnUnpublishButton();
         String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then:
+        then: "content has 'offline' status"
         TestUtils.saveScreenshot( getSession(), "content_unpublished" );
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
 
         and: "correct notification message appears"
         message == String.format( Application.UNPUBLISHED_NOTIFICATION_MESSAGE, FOLDER_CONTENT.getDisplayName() );
+
+        and: "'Publish' on the toolbar is enabled now"
+        contentBrowsePanel.isPublishButtonEnabled();
     }
 }
