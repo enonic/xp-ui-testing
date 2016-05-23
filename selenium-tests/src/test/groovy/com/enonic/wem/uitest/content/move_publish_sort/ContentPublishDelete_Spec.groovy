@@ -26,9 +26,8 @@ class ContentPublishDelete_Spec
 
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable(
-            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then:
         filterPanel.typeSearchText( content.getName() )
@@ -55,9 +54,8 @@ class ContentPublishDelete_Spec
     {
         when:
         filterPanel.typeSearchText( content.getName() )
-        String message = contentBrowsePanel.selectContentInTable(
-            content.getName() ).clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         filterPanel.typeSearchText( content.getName() );
 
         then:

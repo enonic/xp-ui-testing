@@ -108,7 +108,8 @@ class Occurrences_CustomRelation_0_1_Spec
             Application.EXPLICIT_NORMAL );
 
         when:
-        String message = contentPublishDialog.clickOnPublishNowButton().waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        contentPublishDialog.clickOnPublishNowButton();
+        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         TestUtils.saveScreenshot( getSession(), "citation-published" );
 
         then: "citation has a 'online' status"

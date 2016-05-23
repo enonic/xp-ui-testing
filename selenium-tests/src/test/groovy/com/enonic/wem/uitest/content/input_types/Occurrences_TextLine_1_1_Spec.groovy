@@ -95,9 +95,8 @@ class Occurrences_TextLine_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when:
-        contentWizardPanel.typeData(
-            textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL )
+        contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL )
         contentWizardPanel.close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
 

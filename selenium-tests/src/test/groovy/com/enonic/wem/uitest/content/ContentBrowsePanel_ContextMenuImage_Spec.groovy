@@ -29,7 +29,7 @@ class ContentBrowsePanel_ContextMenuImage_Spec
         and: "Publish menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( "Publish" );
 
-        // and: "'unpublish'-item not present in the context menu, because content is 'offline'"
-        // !contentBrowsePanel.isContextMenuItemDisplayed( "Unpublish" );
+        and: "'unpublish'-item not present in the context menu, because content is 'offline'"
+        !contentBrowsePanel.isContextMenuItemDisplayed( "Unpublish" );
     }
 }

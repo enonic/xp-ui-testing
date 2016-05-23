@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -119,12 +118,12 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
-    public ContentBrowsePanel clickOnPublishNowButton()
+    public ContentPublishDialog clickOnPublishNowButton()
     {
         sleep( 500 );
         publishButton.click();
         sleep( 1000 );
-        return new ContentBrowsePanel( getSession() );
+        return this;
     }
 
     public boolean waitForDialogClosed()

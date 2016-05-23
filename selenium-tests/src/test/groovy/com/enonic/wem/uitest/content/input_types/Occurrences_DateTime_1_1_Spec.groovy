@@ -91,9 +91,8 @@ class Occurrences_DateTime_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
         when:
-        String publishMessage = contentWizardPanel.typeData(
-            dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.typeData( dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.refreshInBrowser();
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateTimeContent.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "datetime1_1_close" ) );

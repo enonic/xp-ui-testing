@@ -15,6 +15,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
+import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.NameHelper;
@@ -67,7 +68,7 @@ public class ContentBrowsePanel
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//div[contains(@class,'details-panel-toggle-button')]";
 
-    private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree']";
+    private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
     private final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree']";
 
@@ -154,16 +155,15 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public ContentPublishDialog selectUnPublishMenuItem()
+    public ContentUnpublishDialog selectUnPublishMenuItem()
     {
-        showPublishMenu();
         if ( !isUnPublishMenuItemEnabled() )
         {
             TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item" );
             throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
         }
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
-        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
     }
@@ -197,7 +197,7 @@ public class ContentBrowsePanel
 
     public boolean isUnPublishMenuItemEnabled()
     {
-        if ( !isElementDisplayed( PUBLISH_TREE_MENU_ITEM ) )
+        if ( !isElementDisplayed( UNPUBLISH_MENU_ITEM ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item_not_visible " );
             throw new TestFrameworkException( "'unpublish' menu item is not visible!" );

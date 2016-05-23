@@ -136,9 +136,9 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
-        String publishedMessage = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"
@@ -152,13 +152,13 @@ class Occurrences_ImageSelector_0_0_Spec
         publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
-    def "GIVEN saving  'Image Selector 0:0' content with selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
+    def "GIVEN saving 'Image Selector 0:0' content with selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( TEST_IMG_2 );
-        String publishedMessage = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"

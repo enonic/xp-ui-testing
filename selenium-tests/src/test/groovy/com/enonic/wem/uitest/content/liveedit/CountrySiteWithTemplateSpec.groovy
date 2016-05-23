@@ -223,7 +223,8 @@ class CountrySiteWithTemplateSpec
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton().waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
 
         when: "site opened in master"

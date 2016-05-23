@@ -36,6 +36,8 @@ public class Application
 
     public static String GROUP_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
+    public static String UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" was unpublished";
+
     public static String APP_UNINSTALLED = "Application '%s' uninstalled successfully";
 
     public static String APP_INSTALLED_MESSAGE = "Application '%s' installed successfully";

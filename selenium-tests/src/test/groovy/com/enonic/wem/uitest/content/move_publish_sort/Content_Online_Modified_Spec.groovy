@@ -49,8 +49,9 @@ class Content_Online_Modified_Spec
     def "GIVEN existing root content with 'Modified' status  WHEN content selected and 'Publish' button pressed THEN content has got a 'Online' status"()
     {
         when: "modified content has been published again"
-        String message = findAndSelectContent( content.getName() ).
-            clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        findAndSelectContent( content.getName() ).
+            clickToolbarPublish().clickOnPublishNowButton();
+        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "status of content is 'online'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );

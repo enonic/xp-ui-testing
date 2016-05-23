@@ -49,9 +49,8 @@ class TextArea_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData(
-            textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.close( textAreaContent.getDisplayName() );
         filterPanel.typeSearchText( textAreaContent.getName() );
 

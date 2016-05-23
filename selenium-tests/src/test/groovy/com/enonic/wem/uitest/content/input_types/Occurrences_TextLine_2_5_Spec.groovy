@@ -154,9 +154,8 @@ class Occurrences_TextLine_2_5_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        String publishMessage = contentWizardPanel.typeData(
-            textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
 

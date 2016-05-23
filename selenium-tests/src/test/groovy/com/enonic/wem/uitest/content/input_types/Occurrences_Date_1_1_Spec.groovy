@@ -89,9 +89,8 @@ class Occurrences_Date_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
         when:
-        String publishMessage = contentWizardPanel.typeData(
-            dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateContent.getDisplayName() );
         if ( modalDialog != null )
         {

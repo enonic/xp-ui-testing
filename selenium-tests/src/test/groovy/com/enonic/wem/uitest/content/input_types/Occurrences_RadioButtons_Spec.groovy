@@ -53,8 +53,8 @@ class Occurrences_RadioButtons_Spec
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
         ContentWizardPanel wizard = selectSiteOpenWizard( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent )
-        String publishedMessage = wizard.save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
+        wizard.save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( radioButtonsContent.getDisplayName() );
 
         when: "content opened for edit"

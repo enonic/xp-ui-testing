@@ -71,10 +71,10 @@ class Occurrences_ImageSelector_0_1_Spec
     {
         given: "new content with type 'Image Selector'"
         Content imageSelectorContent = buildImageSelector0_1_Content( null );
-        String publishedMessage = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton().waitPublishNotificationMessage(
-            Application.EXPLICIT_NORMAL );
-        ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
+        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        wizard.close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
