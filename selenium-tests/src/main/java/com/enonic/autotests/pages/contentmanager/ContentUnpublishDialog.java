@@ -53,9 +53,19 @@ public class ContentUnpublishDialog
         return this;
     }
 
-    public boolean isUnPublishNowButtonEnabled()
+    public boolean isUnPublishButtonEnabled()
     {
         return unPublishButton.isEnabled();
+    }
+
+    public boolean isCancelButtonTopEnabled()
+    {
+        return cancelButtonTop.isEnabled();
+    }
+
+    public boolean isCancelButtonBottomEnabled()
+    {
+        return cancelButtonBottom.isEnabled();
     }
 
     public void clickOnUnpublishButton()
@@ -70,7 +80,7 @@ public class ContentUnpublishDialog
         sleep( 200 );
     }
 
-    public void clickOnCanceltopButton()
+    public void clickOnCancelTopButton()
     {
         cancelButtonTop.click();
         sleep( 200 );

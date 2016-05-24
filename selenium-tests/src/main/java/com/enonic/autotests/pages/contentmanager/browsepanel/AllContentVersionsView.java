@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.ContentVersion;
@@ -74,6 +75,11 @@ public class AllContentVersionsView
     {
         List<WebElement> liElements =
             getDisplayedElements( By.xpath( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item')]" ) );
+        if ( liElements.size() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_list_versions" ) );
+            throw new TestFrameworkException( "list of versions was not found!" );
+        }
         WebElement version = liElements.get( index );
         Actions builder = new Actions( getDriver() );
         builder.moveToElement( version ).click().build().perform();
