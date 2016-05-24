@@ -26,16 +26,11 @@ class ContentPublishDialog_Spec
         addContent( folderContent );
 
         when: "content selected and 'Publish' button pressed"
-        filterPanel.typeSearchText( folderContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( folderContent.getName() )
-
+        findAndSelectContent( folderContent.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        then: "'ContentPublishDialog' dialog displayed"
-        contentPublishDialog.isOpened();
-
-        and: "'Include Child' checkbox not displayed"
+        then: "'ContentPublishDialog' dialog displayed but 'Include Child' checkbox not displayed"
         !contentPublishDialog.isIncludeChildCheckboxDisplayed();
 
     }

@@ -54,7 +54,7 @@ public abstract class WizardPanel<T>
         String closeButtonXpath = String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName );
         if ( !waitUntilClickableNoException( By.xpath( closeButtonXpath ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_close_wizard_button" );
+            TestUtils.saveScreenshot( getSession(), "err_close_wizard" );
             throw new TestFrameworkException( "'close' button for tab with name " + displayName + " was not found!" );
         }
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).click();

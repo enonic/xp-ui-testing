@@ -23,8 +23,8 @@ class Content_Online_Modified_Spec
         addContent( content );
 
         when: "the content have been published"
-        String message = findAndSelectContent( content.getName() ).
-            clickToolbarPublish().clickOnPublishNowButton().waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        findAndSelectContent( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "status of content is 'online'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
