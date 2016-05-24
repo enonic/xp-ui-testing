@@ -42,6 +42,15 @@ class ContentUnpublishDialog_Spec
 
         and: "'Cancel' button on the bottom is displayed and enabled"
         contentUnPublishDialog.isCancelButtonBottomEnabled();
+
+        and: "correct header present in the dialog"
+        contentUnPublishDialog.getHeader() == ContentUnpublishDialog.HEADER_TEXT;
+
+        and: "correct sub header present in the dialog"
+        contentUnPublishDialog.getSubHeader().contains( ContentUnpublishDialog.SUBHEADER_PART_TEXT );
+
+        and: "status of the content in the dialog is 'online'"
+        contentUnPublishDialog.getContentStatus( PARENT_CONTENT.getDisplayName() ) == ContentStatus.ONLINE.getValue();
     }
 
     def "GIVEN 'online' content selected AND ContentUnpublishDialog opened WHEN cancel button on the top pressed THEN dialog closed AND status of the content not changed"()
@@ -63,7 +72,7 @@ class ContentUnpublishDialog_Spec
         !contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    def "GIVEN 'online' content selected AND ContentUnpublishDialog opened WHEN cancel button on the bottom pressed THEN dialog closed AND status of the content not changed"()
+    def "GIVEN 'online' content selected AND 'ContentUnpublishDialog' opened WHEN cancel button on the bottom pressed THEN dialog closed AND status of the content not changed"()
     {
         given:
         findAndSelectContent( PARENT_CONTENT.getName() );
@@ -128,6 +137,7 @@ class ContentUnpublishDialog_Spec
         isMessageAppeared;
     }
 
+    //TODO :
     //'pending-delete' content selected
     // 'out-of-date' content selected
     // getStatus from the dialog

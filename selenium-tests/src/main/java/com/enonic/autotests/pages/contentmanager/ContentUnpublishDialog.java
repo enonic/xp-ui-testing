@@ -14,7 +14,15 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentUnpublishDialog
     extends Application
 {
+    public static final String HEADER_TEXT = "Unpublish item";
+
+    public static final String SUBHEADER_PART_TEXT = "Unpublishing selected item(s) will set status back to offline";
+
     private final String DIALOG_CONTAINER = "//div[contains(@id,'ContentUnpublishDialog')]";
+
+    private final String DIALOG_HEADER_H2 = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
+
+    private final String DIALOG_HEADER_H6 = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='sub-title']";
 
     private final String UNPUBLISH_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and descendant::span[contains(.,'Unpublish')]]";
@@ -22,6 +30,9 @@ public class ContentUnpublishDialog
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
+
+    private String CONTENT_STATUS_BY_DISPLAY_NAME =
+        DIALOG_CONTAINER + "//div[@class='browse-selection-item' and descendant::h6[text()='%s']]//div[contains(@class,'status equal')]";
 
     @FindBy(xpath = UNPUBLISH_BUTTON)
     private WebElement unPublishButton;
@@ -86,5 +97,23 @@ public class ContentUnpublishDialog
         sleep( 200 );
     }
 
+    public String getHeader()
+    {
+        return getDisplayedString( DIALOG_HEADER_H2 );
+    }
 
+    public String getSubHeader()
+    {
+        return getDisplayedString( DIALOG_HEADER_H6 );
+    }
+
+    public String getContentStatus( String displayName )
+    {
+        String status = String.format( CONTENT_STATUS_BY_DISPLAY_NAME, displayName );
+        if ( !isElementDisplayed( status ) )
+        {
+            throw new TestFrameworkException( "status was not found! " + displayName );
+        }
+        return getDisplayedString( status );
+    }
 }
