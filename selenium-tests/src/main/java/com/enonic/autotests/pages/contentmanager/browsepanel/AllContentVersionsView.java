@@ -23,7 +23,7 @@ public class AllContentVersionsView
 {
     private final String CONTAINER_WIDGET = "//div[contains(@id,'VersionsWidgetItemView')]";
 
-    private final String ALL_CONTENT_VERSION_UL = "//ul[contains(@id,'AllContentVersionsView')]";
+    private final String VERSIONS_VIEW_UL = "//ul[contains(@id,'VersionsView')]";
 
     protected final String TAB_MENU_BUTTON = "//div[contains(@id,'TabMenuButton') and child::span[text()='Version History']]";
 
@@ -40,8 +40,7 @@ public class AllContentVersionsView
 
     public LinkedList<ContentVersion> getAllVersions()
     {
-        List<WebElement> liElements =
-            getDisplayedElements( By.xpath( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item')]" ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
         return liElements.stream().map( e -> buildContentVersion( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
     }
 
@@ -61,20 +60,18 @@ public class AllContentVersionsView
 
     public ContentVersion getActiveVersion()
     {
-        if ( !isElementDisplayed( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item active')]" ) )
+        if ( !isElementDisplayed( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item active')]" ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_active_version" );
             throw new TestFrameworkException( "active version was not found in the version history panel! " );
         }
-        WebElement element =
-            getDisplayedElement( By.xpath( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item active')]" ) );
+        WebElement element = getDisplayedElement( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item active')]" ) );
         return buildContentVersion( element );
     }
 
     public ContentVersionInfoView clickOnVersionAndExpand( int index )
     {
-        List<WebElement> liElements =
-            getDisplayedElements( By.xpath( ALL_CONTENT_VERSION_UL + "/li[contains(@class,'content-version-item')]" ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
         if ( liElements.size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_list_versions" ) );
