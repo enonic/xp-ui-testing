@@ -92,8 +92,9 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "preview button pressed"
         contentWizard.clickToolbarPreview();
 
-        then: "correct links present in a page-source"
+        then: "page source of new opened tab in a browser is not empty"
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
+        source != null;
 
         and: "correct text for URL present"
         source.contains( LINK_TEXT );

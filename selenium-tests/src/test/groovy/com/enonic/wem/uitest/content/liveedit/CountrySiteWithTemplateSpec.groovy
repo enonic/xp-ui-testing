@@ -82,8 +82,11 @@ class CountrySiteWithTemplateSpec
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "country_part_added" );
 
-        then: "correct page-sources are present in the HTML"
+        then: "page source of new opened tab in a browser is not empty"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
+        source != null;
+
+        and: "correct page-sources are present in the HTML"
         source.contains( COUNTRY_REGION_TITLE );
         and: "correct header displayed"
         source.contains( COUNTRY_TEMPLATE_DISPLAY_NAME );
@@ -103,9 +106,13 @@ class CountrySiteWithTemplateSpec
         contentWizard.save().clickToolbarPreview();
         TestUtils.saveScreenshot( getSession(), "city_part_added" );
 
-        then: "correct page-sources are present in the HTML"
+        then: "page source of new opened tab in a browser is not empty"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
+        source != null;
+
+        and: "correct page-sources are present in the HTML"
         source.contains( COUNTRY_REGION_TITLE );
+
         and: "correct header displayed"
         source.contains( COUNTRY_TEMPLATE_DISPLAY_NAME );
     }

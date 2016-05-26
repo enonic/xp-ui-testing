@@ -89,8 +89,11 @@ class ContextWindow_InspectionPanel_Spec
         when: "'Preview' button pressed"
         wizardPanel.clickToolbarPreview();
 
-        then: "page-sources are correct and correct html-header present as well"
+        then: "page source of new opened tab in a browser is not empty"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_PAGE_CONTROLLER );
+        source != null;
+
+        and: "page-sources are correct and correct html-header present as well"
         source.contains( COUNTRY_SITE_HTML_HEADER );
     }
 }
