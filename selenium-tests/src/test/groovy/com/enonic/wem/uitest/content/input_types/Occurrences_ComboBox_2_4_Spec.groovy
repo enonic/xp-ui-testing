@@ -1,15 +1,11 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 
 class Occurrences_ComboBox_2_4_Spec
@@ -102,6 +98,8 @@ class Occurrences_ComboBox_2_4_Spec
         and: "content is invalid, because required fields- combobox2:4 not selected"
         wizard.isContentInvalid( content_with_opt.getDisplayName() );
 
+        and: "the content is invalid in the grid as well"
+        contentBrowsePanel.isContentInvalid( content_with_opt.getName() );
     }
 
     def "GIVEN saving of ComboBox-content (2:4) with four options WHEN content opened for edit THEN four selected options present on page and 'filter input' is disabled"()
@@ -125,7 +123,6 @@ class Occurrences_ComboBox_2_4_Spec
 
         and: "options filter input is disabled, because this content have a maximum options"
         !formViewPanel.isOptionFilterInputEnabled();
-
     }
 
     def "WHEN content with 2 selected option saved and published THEN it content with 'Online'-status listed"()
@@ -142,17 +139,5 @@ class Occurrences_ComboBox_2_4_Spec
         contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getDisplayName() );
-    }
-
-    private Content buildComboBox2_4_Content( int numberOptions )
-    {
-        PropertyTree data = ContentUtils.buildComboBoxData( numberOptions );
-        Content comboboxContent = Content.builder().
-            name( NameHelper.uniqueName( "cbox2_4_" ) ).
-            displayName( "combobox2_4 content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox2_4" ).data( data ).
-            build();
-        return comboboxContent;
     }
 }
