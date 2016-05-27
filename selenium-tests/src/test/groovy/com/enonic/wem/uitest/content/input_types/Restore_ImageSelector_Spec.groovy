@@ -52,6 +52,12 @@ class Restore_ImageSelector_Spec
 
         then: "red icon is not present on the wizard"
         !wizard.isContentInvalid( IMAGE_SELECTOR_CONTENT.getDisplayName() );
+
+        and: "the content is valid in the grid as well"
+        !contentBrowsePanel.isContentInvalid( IMAGE_SELECTOR_CONTENT.getName() );
+
+        and: "'publish' button on the toolbar is enabled"
+        contentBrowsePanel.isPublishButtonEnabled();
     }
 
     def "GIVEN version of content with two images is restored WHEN content opened THEN two images are displayed on the wizard"()
@@ -79,8 +85,10 @@ class Restore_ImageSelector_Spec
 
         then: "red icon appears on the wizard tab"
         wizard.isContentInvalid( IMAGE_SELECTOR_CONTENT.getDisplayName() );
-    }
 
+        and: "the content is invalid in the grid as well"
+        contentBrowsePanel.isContentInvalid( IMAGE_SELECTOR_CONTENT.getName() );
+    }
 
     def "GIVEN version of content with one images is restored WHEN content opened THEN one image is displayed on the wizard"()
     {

@@ -19,23 +19,22 @@ class ContentPublishDialog_Spec
     Content childContent1;
 
 
-    def "GIVEN Content BrowsePanel WHEN one content without child selected and 'Publish' button clicked THEN 'Content publish' appears without 'Include child' checkbox"()
+    def "GIVEN existing folder in root WHEN one content without child selected and 'Publish' button clicked THEN 'Content publish' appears without 'Include child' checkbox"()
     {
-        given:
+        given: "existing folder in root"
         Content folderContent = buildFolderContent( "no_child", "content publish dialog" );
         addContent( folderContent );
 
-        when: "content selected and 'Publish' button pressed"
+        when: "the folder selected and 'Publish' button pressed"
         findAndSelectContent( folderContent.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
         then: "'ContentPublishDialog' dialog displayed but 'Include Child' checkbox not displayed"
         !contentPublishDialog.isIncludeChildCheckboxDisplayed();
-
     }
 
-    def "GIVEN Content BrowsePanel WHEN one parent content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()
+    def "GIVEN parent content with a child WHEN the parent content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()
     {
         setup:
         parentContent = buildFolderContent( "publish_dialog", "content publish dialog" );
