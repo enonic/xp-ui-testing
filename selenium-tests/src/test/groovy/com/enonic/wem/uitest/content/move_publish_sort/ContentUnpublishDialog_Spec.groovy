@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentUnpublishDialog_Spec
@@ -136,10 +137,22 @@ class ContentUnpublishDialog_Spec
         and:
         isMessageAppeared;
     }
+    // unpublishing of 'pending delete' contents not implemented in the XP
+    @Ignore
+    def "GIVEN existing 'pending delete' content WHEN the content has been 'unpublished' THEN 'offline' status for this content is displayed in the grid"()
+    {
+        given:
+        Content content = buildFolderContent( "folder", "unpublish of pending delete content" );
+        addContent( content );
+        findAndSelectContent( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarDelete().doDelete();
 
-    //TODO :
-    //'pending-delete' content selected
-    // 'out-of-date' content selected
-    // getStatus from the dialog
-    // unpublish from the wizard
+        when:
+        ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
+        contentUnPublishDialog.clickOnUnpublishButton();
+
+        then:
+        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.OFFLINE.getValue();
+
+    }
 }

@@ -135,17 +135,27 @@ public class ContentWizardPanel
 
     public ContentUnpublishDialog selectUnPublishMenuItem()
     {
-//        if ( !isUnPublishMenuItemEnabled() )
-//        {
-//            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item" );
-//            throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
-//        }
+        if ( !isUnPublishMenuItemEnabled() )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item" );
+            throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
+        }
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
         ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
     }
 
+    public boolean isUnPublishMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( UNPUBLISH_MENU_ITEM ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item_not_visible " );
+            throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
+    }
 
     public ContextWindow showContextWindow()
     {

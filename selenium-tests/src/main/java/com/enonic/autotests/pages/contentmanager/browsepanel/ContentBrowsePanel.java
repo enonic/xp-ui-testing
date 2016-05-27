@@ -289,13 +289,13 @@ public class ContentBrowsePanel
         }
     }
 
-    public boolean isContentInvalid( String contentPath )
+    public boolean isContentInvalid( String contentName )
     {
-        String contentInGrid = String.format( CONTENT_SUMMARY_VIEWER, contentPath );
+        String contentInGrid = String.format( CONTENT_SUMMARY_VIEWER, contentName );
         if ( !isElementDisplayed( contentInGrid ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + contentPath );
-            throw new TestFrameworkException( "content with path was not found or browsePanel was not displayed!" + contentPath );
+            TestUtils.saveScreenshot( getSession(), "err_" + contentName );
+            throw new TestFrameworkException( "content with path was not found or browsePanel was not displayed!" + contentName );
         }
         WebElement element = getDisplayedElement( By.xpath( contentInGrid ) );
         return waitAndCheckAttrValue( element, "class", "invalid", Application.EXPLICIT_NORMAL );
