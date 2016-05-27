@@ -16,6 +16,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
+import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
@@ -49,6 +50,13 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
 
+    private final String TOOLBAR_PUBLISH = "//div[contains(@id,'ContentWizardToolbarPublishControls')]";
+
+    private final String TOOLBAR_PUBLISH_DROPDOWN_HANDLER = TOOLBAR_PUBLISH + "//button[contains(@id,'DropdownHandle')]";
+
+    private final String UNPUBLISH_MENU_ITEM =
+        TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
+
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
         TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish']]";
 
@@ -80,6 +88,10 @@ public class ContentWizardPanel
     @FindBy(xpath = INSPECTION_PANEL_TOGGLER)
     private WebElement toolbarShowContextWindow;
 
+    @FindBy(xpath = TOOLBAR_PUBLISH_DROPDOWN_HANDLER)
+    private WebElement publishMenuDropDownHandler;
+
+
     /**
      * The constructor.
      *
@@ -102,6 +114,38 @@ public class ContentWizardPanel
             return null;
         }
     }
+
+    public ContentWizardPanel showPublishMenu()
+    {
+        publishMenuDropDownHandler.click();
+        sleep( 400 );
+        return this;
+    }
+
+    public boolean isPublishMenuAvailable()
+    {
+        if ( !isElementDisplayed( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_publish_dropdown_handler_wizard" );
+            throw new TestFrameworkException( "dropdown handler for publish menu is not displayed" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ) ), "class",
+                              Application.EXPLICIT_NORMAL ).contains( "disabled" );
+    }
+
+    public ContentUnpublishDialog selectUnPublishMenuItem()
+    {
+//        if ( !isUnPublishMenuItemEnabled() )
+//        {
+//            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item" );
+//            throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
+//        }
+        getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
+        ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
+
 
     public ContextWindow showContextWindow()
     {

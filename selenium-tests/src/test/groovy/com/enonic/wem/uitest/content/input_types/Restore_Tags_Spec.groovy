@@ -33,14 +33,13 @@ class Restore_Tags_Spec
         and:
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "number of versions is increased"
+        then: "number of versions increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
     }
-    //INBOX-419
     @Ignore
-    def "GIVEN existing content with already changed date WHEN valid version of content is restored THEN content has no red icon on the wizard"()
+    def "GIVEN tag- content with missed required value WHEN valid version of content is restored THEN content has no red icon on the wizard"()
     {
-        given: "content with a changed date"
+        given: "content with missed required value"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         contentBrowsePanel.pressAppHomeButton();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -51,12 +50,11 @@ class Restore_Tags_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         TestUtils.saveScreenshot( getSession(), "tag_valid_version" );
 
-        then: "content has a red icon on the wizard"
+        then: "content has no a red icon on the wizard-tab"
         !wizard.isContentInvalid( TAG_CONTENT.getDisplayName() )
     }
-    //INBOX-419
     @Ignore
-    def "GIVEN existing content with already changed date WHEN not valid version of content is restored THEN content has no red icon on the wizard"()
+    def "GIVEN content with current valid version AND wizard opened WHEN 'AppHomeButton' clicked and not valid version of content is restored THEN red icon appears on the wizard tab"()
     {
         given: "content with a changed date"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
@@ -69,7 +67,7 @@ class Restore_Tags_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         TestUtils.saveScreenshot( getSession(), "tag_not_valid_restored" );
 
-        then: "content has no a red icon on the wizard"
+        then: "red icon appears on the wizard tab"
         wizard.isContentInvalid( TAG_CONTENT.getDisplayName() )
     }
 }
