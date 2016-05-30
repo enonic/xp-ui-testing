@@ -97,9 +97,6 @@ class Occurrences_ComboBox_2_4_Spec
 
         and: "content is invalid, because required fields- combobox2:4 not selected"
         wizard.isContentInvalid( content_with_opt.getDisplayName() );
-
-        and: "the content is invalid in the grid as well"
-        contentBrowsePanel.isContentInvalid( content_with_opt.getName() );
     }
 
     def "GIVEN saving of ComboBox-content (2:4) with four options WHEN content opened for edit THEN four selected options present on page and 'filter input' is disabled"()
