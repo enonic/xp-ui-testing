@@ -40,7 +40,7 @@ class Restore_Date_Spec
         and:
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "number of versions is increased"
+        then: "number of versions increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
     }
 

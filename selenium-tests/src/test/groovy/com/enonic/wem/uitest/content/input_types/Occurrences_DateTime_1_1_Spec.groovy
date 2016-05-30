@@ -62,10 +62,10 @@ class Occurrences_DateTime_1_1_Spec
         Content dateTimeContent = buildDateTime1_1_Content( null );
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
-        when: "content opened for edit"
+        when: "content without required 'date time' saved"
         wizard.save();
 
-        then: "content should be invalid, because required field not filled"
+        then: "content should be invalid, because required field is empty"
         wizard.isContentInvalid( dateTimeContent.getDisplayName() );
     }
 
@@ -75,7 +75,7 @@ class Occurrences_DateTime_1_1_Spec
         Content dateTimeContent = buildDateTime1_1_Content( null );
         ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
-        when: "content opened for edit"
+        when: "content saved and the wizard has been closed"
         wizard.save().close( dateTimeContent.getDisplayName() );
         filterPanel.typeSearchText( dateTimeContent.getName() );
         TestUtils.saveScreenshot( getSession(), "date-time-not-valid-grid" )
@@ -90,7 +90,7 @@ class Occurrences_DateTime_1_1_Spec
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
 
-        when:
+        when: "data typed and 'Save' and  'Publish' are pressed"
         contentWizardPanel.typeData( dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.refreshInBrowser();
@@ -103,9 +103,10 @@ class Occurrences_DateTime_1_1_Spec
         }
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
-        then:
+        then: "status of content is 'online' now"
         contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
-        and:
+
+        and: "correct notification was shown"
         publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateTimeContent.getDisplayName() );
     }
 }

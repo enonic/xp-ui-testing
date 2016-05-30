@@ -131,13 +131,13 @@ class Occurrences_ComboBox_1_1_Spec
 
     def "GIVEN not valid content with 'modified' status WHEN content selected and 'Delete' pressed THEN content is 'Pending Delete' "()
     {
-        given: "content with selected option saved and published"
+        given: "not valid content with 'modified' status"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBox1_1 );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
         wizard.save().close( comboBox1_1.getDisplayName() );
 
-        when: "content has a 'online' status"
+        when: "content selected and 'Delete' pressed"
         filterPanel.typeSearchText( comboBox1_1.getName() );
         contentBrowsePanel.clickToolbarDelete().doDelete();
         then:

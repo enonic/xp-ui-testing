@@ -88,7 +88,7 @@ class Occurrences_Date_1_1_Spec
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
-        when:
+        when: "data typed and 'Save' and  'Publish' are pressed"
         contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateContent.getDisplayName() );
@@ -99,10 +99,10 @@ class Occurrences_Date_1_1_Spec
         }
         filterPanel.typeSearchText( dateContent.getName() );
 
-        then:
+        then: "content is 'online now'"
         contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
-        and:
+        and: "correct notification message was shown "
         publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateContent.getDisplayName() );
     }
 }
