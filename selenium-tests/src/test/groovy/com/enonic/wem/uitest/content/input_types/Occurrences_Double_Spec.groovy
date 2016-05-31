@@ -103,7 +103,6 @@ class Occurrences_Double_Spec
         Content doubleContent = buildDouble2_4_Content( TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened()
 
-
         when: "three values typed"
         wizard.typeData( doubleContent );
 
@@ -140,6 +139,5 @@ class Occurrences_Double_Spec
 
         then: "red icon not displayed in the wizard tab"
         wizard.isContentInvalid( doubleContent.getDisplayName() );
-
     }
 }
