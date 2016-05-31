@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DoubleFormViewPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -71,6 +72,7 @@ class Occurrences_Double_Spec
 
         when: "content saved"
         wizard.save();
+        TestUtils.saveScreenshot( getSession(), "test_double_save_confirm1" );
 
         then: "red icon displayed on the wizard tab"
         wizard.isContentInvalid( doubleContent.getDisplayName() );
@@ -89,6 +91,7 @@ class Occurrences_Double_Spec
 
         when: "content saved"
         wizard.save();
+        TestUtils.saveScreenshot( getSession(), "test_double_save_confirm2" );
 
         then: "confirmation dialog should not appears"
         !dialog.isOpened();

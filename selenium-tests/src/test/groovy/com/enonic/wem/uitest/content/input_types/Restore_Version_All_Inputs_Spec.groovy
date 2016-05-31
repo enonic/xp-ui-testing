@@ -162,7 +162,7 @@ class Restore_Version_All_Inputs_Spec
 
     private addDoubleData( PropertyTree data, String doubleValue )
     {
-        data.addString( DoubleFormViewPanel.DOUBLE_PROPERTY, doubleValue );
+        data.addString( DoubleFormViewPanel.DOUBLE_VALUES, doubleValue );
     }
 
     private addRelationshipData( PropertyTree data, String... names )

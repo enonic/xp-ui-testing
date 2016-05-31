@@ -91,7 +91,6 @@ class Restore_ComboBox_Spec
         contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
     }
 
-
     def "GIVEN version of content with one images is restored WHEN content opened THEN one image is displayed on the wizard"()
     {
         when: "version of content with one option has been restored and content was opened "
