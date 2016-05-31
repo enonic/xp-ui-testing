@@ -335,15 +335,55 @@ class Base_InputFields_Occurrences
 
     protected Content buildDouble0_1_Content( String doubleValue )
     {
-        String name = "double";
         PropertyTree data = new PropertyTree();
-        data.addStrings( DoubleFormViewPanel.DOUBLE_PROPERTY, doubleValue );
+        String name = "double";
+        if ( doubleValue != null )
+        {
+            data.addStrings( DoubleFormViewPanel.DOUBLE_VALUES, doubleValue );
+        }
 
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":double0_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+    protected Content buildDouble1_1_Content( String doubleValue )
+    {
+        PropertyTree data = new PropertyTree();
+        String name = "double";
+        if ( doubleValue != null )
+        {
+            data.addStrings( DoubleFormViewPanel.DOUBLE_VALUES, doubleValue );
+        }
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "double content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double1_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+
+    protected Content buildDouble2_4_Content( String... doubleValues )
+    {
+        PropertyTree data = new PropertyTree();
+        String name = "double";
+        if ( doubleValues != null )
+        {
+            data.addStrings( DoubleFormViewPanel.DOUBLE_VALUES, doubleValues );
+        }
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "double content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double2_4" ).data( data ).
             build();
         return dateContent;
     }

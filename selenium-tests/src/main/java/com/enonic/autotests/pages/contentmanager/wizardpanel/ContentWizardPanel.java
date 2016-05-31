@@ -36,10 +36,6 @@ public class ContentWizardPanel
 {
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
-    public static final String HIDE_PAGE_EDITOR_BUTTON_TITLE = "Hide Page Editor";
-
-    public static final String SHOW_INSPECTION_PANEL_TITLE = "Show Inspection Panel";
-
     private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
 
     private final String CONTENT_STATUS = "//span[@class='content-status']/span";

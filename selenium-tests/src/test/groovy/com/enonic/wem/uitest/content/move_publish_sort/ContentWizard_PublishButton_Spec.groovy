@@ -28,6 +28,12 @@ class ContentWizard_PublishButton_Spec
 
         then: "folder is 'online' now"
         wizard.getStatus() == ContentStatus.ONLINE.getValue();
+
+        and: "publish button is disabled now"
+        !wizard.isPublishButtonEnabled();
+
+        and: "'publish-menu' becomes available now "
+        wizard.isPublishMenuAvailable();
     }
 
     def "GIVEN existing 'online' content WHEN the content opened AND display name changed THEN 'modified' status for this content is displayed on the wizard"()
@@ -41,6 +47,12 @@ class ContentWizard_PublishButton_Spec
 
         then: "folder is 'modified' now"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+
+        and: "'Publish' menu becomes enabled"
+        wizard.isPublishButtonEnabled();
+
+        and: "'publish-menu' is available"
+        wizard.isPublishMenuAvailable();
     }
 
     def "GIVEN existing 'modified' content WHEN the content opened AND 'unpublish' button was pressed THEN 'offline' status for this content is displayed on the wizard"()

@@ -14,6 +14,7 @@ import com.enonic.autotests.pages.form.CountryFormView;
 import com.enonic.autotests.pages.form.DateFormViewPanel;
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
+import com.enonic.autotests.pages.form.FieldSetFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
 import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
 import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel;
@@ -24,7 +25,6 @@ import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.RelationshipFormView;
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel;
-import com.enonic.autotests.pages.form.SingleSelectorComboBoxFormView;
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
 import com.enonic.autotests.pages.form.TagFormViewPanel;
@@ -120,11 +120,6 @@ public class ContentWizardStepForm
         {
             formViewPanel = new ComboBoxFormViewPanel( getSession() );
         } //
-        else if ( contentTypeName.contains( TestAppContentType.SINGLE_SELECTOR_COMBOBOX0_1.getName() ) ||
-            contentTypeName.contains( TestAppContentType.SINGLE_SELECTOR_COMBOBOX1_1.getName() ) )
-        {
-            formViewPanel = new SingleSelectorComboBoxFormView( getSession() );
-        }
         else if ( contentTypeName.contains( TestAppContentType.RADIO_BUTTONS.getName() ) )
         {
             formViewPanel = new SingleSelectorRadioFormView( getSession() );
@@ -133,7 +128,10 @@ public class ContentWizardStepForm
         {
             formViewPanel = new TextAreaFormViewPanel( getSession() );
         }
-
+        else if ( contentTypeName.contains( TestAppContentType.FIELD_SET.getName() ) )
+        {
+            formViewPanel = new FieldSetFormViewPanel( getSession() );
+        }
         else if ( contentTypeName.contains( TestAppContentType.HTMLAREA0_1.getName() ) )
         {
             formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );

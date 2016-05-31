@@ -226,6 +226,11 @@ public abstract class Page
         return findElements( by ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
     }
 
+    public long getNumberOfElements( By by )
+    {
+        return findElements( by ).stream().filter( WebElement::isDisplayed ).count();
+    }
+
     public List<String> getDisplayedStrings( By by )
     {
         return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );

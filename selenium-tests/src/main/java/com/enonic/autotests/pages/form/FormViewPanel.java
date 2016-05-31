@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -46,8 +47,9 @@ public abstract class FormViewPanel
 
     public void clickOnAddButton()
     {
-        if ( findElements( By.xpath( ADD_BUTTON_XPATH ) ).size() == 0 )
+        if ( !isElementDisplayed( ADD_BUTTON_XPATH ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_add_button" );
             throw new TestFrameworkException( "Add button not present in Form View Panel!" );
         }
         findElements( By.xpath( ADD_BUTTON_XPATH ) ).get( 0 ).click();

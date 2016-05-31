@@ -1,11 +1,7 @@
 package com.enonic.autotests.pages.form;
 
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
@@ -38,10 +34,7 @@ public class HtmlArea0_1_FormViewPanel
 
     public boolean isEditorToolbarVisible()
     {
-        List<WebElement> toolbars =
-            findElements( By.xpath( "//div[contains(@id,'HtmlArea')]//div[contains(@class,'mce-toolbar')]" ) ).stream().filter(
-                WebElement::isDisplayed ).collect( Collectors.toList() );
-        return toolbars.size() > 0;
+        return isElementDisplayed( "//div[contains(@id,'HtmlArea')]//div[contains(@class,'mce-toolbar')]" );
     }
 
     public boolean isEditorPresent()

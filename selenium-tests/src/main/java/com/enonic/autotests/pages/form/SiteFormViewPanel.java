@@ -95,7 +95,7 @@ public class SiteFormViewPanel
     private void selectApp( String appName )
     {
         clearAndType( optionFilterInput, appName );
-        String moduleGridItem = String.format( "//div[contains(@id,'api.app.NamesView')]/h6[text()='%s']", appName );
+        String moduleGridItem = String.format( NAMES_VIEW_BY_DISPLAY_NAME, appName );
         if ( !isElementDisplayed( moduleGridItem ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_" ) );

@@ -17,8 +17,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class TextLine2_5_FormViewPanel
     extends BaseTextLineFormViewPanel
 {
-    public static final String VALIDATION_MESSAGE = "Min 2 occurrences required";
-
     private final String TEXT_INPUTS_XPATH = FORM_VIEW + "//input[contains(@name,'TextLine_2_5')]";
 
     public TextLine2_5_FormViewPanel( final TestSession session )

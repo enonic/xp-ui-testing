@@ -16,9 +16,6 @@ class InputTypesSpec
     String TEST_TIME = "19:01";
 
     @Shared
-    String TEST_DOUBLE = "123.4";
-
-    @Shared
     String TEST_LONG = "1234567890123456";
 
     @Shared
@@ -71,20 +68,6 @@ class InputTypesSpec
         timeFormViewPanel.getTimeValue().equals( TEST_TIME );
     }
 
-    def "GIVEN content type with name 'Double' selected and wizard opened WHEN double value typed and content saved THEN new content with correct Double value  listed "()
-    {
-        given: "add a content with type 'Double'"
-        Content doubleContent = buildDouble0_1_Content( TEST_DOUBLE );
-        selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData( doubleContent ).save().close(
-            doubleContent.getDisplayName() ); ;
-
-        when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( doubleContent );
-        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
-
-        then: "actual value in the form view and expected should be equals"
-        doubleFormViewPanel.getDoubleValue().equals( TEST_DOUBLE );
-    }
 
     def "GIVEN content type with name 'Long' selected and wizard opened WHEN long value typed and content saved THEN new content with correct Long value  listed "()
     {
