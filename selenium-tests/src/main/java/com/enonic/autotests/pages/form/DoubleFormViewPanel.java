@@ -56,10 +56,23 @@ public class DoubleFormViewPanel
         return input.getAttribute( "value" );
     }
 
+    private String getFirstDoubleInputValue()
+    {
+        List<WebElement> inputs = getDisplayedElements( By.xpath( DOUBLE_INPUT ) );
+        return inputs.get( 0 ).getAttribute( "value" );
+    }
+
     public DoubleFormViewPanel typeDoubleValue( WebElement doubleInput, String value )
     {
         clearAndType( doubleInput, value );
         sleep( 300 );
+        return this;
+    }
+
+    public DoubleFormViewPanel typeDoubleValue( String value )
+    {
+        List<WebElement> actualInputs = getDisplayedElements( By.xpath( DOUBLE_INPUT ) );
+        typeDoubleValue( actualInputs.get( 0 ), value );
         return this;
     }
 

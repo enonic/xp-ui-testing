@@ -130,7 +130,7 @@ class Restore_Version_All_Inputs_Spec
         formView.getSingleSelectorRadioFormView().getSelectedOption() == COMBOBOX_OPTION_V1;
 
         and: "data for 'double input' restored correctly"
-        formView.getDoubleFormViewPanel().getDoubleValue() == DOUBLE_V1;
+        formView.getDoubleFormViewPanel().getFirstDoubleInputValue() == DOUBLE_V1;
 
         and: "data for 'long input' restored correctly"
         formView.getLongFormViewPanel().getLongValue() == LONG_V1;
