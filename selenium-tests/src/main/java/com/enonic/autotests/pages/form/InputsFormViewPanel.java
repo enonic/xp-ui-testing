@@ -126,22 +126,4 @@ public class InputsFormViewPanel
         }
         return geoPointFormViewPanel;
     }
-
-    public InputsFormViewPanel typeLong( String value )
-    {
-        longFormViewPanel.typeLong( value );
-        return this;
-    }
-
-    public InputsFormViewPanel typeInTextLine( String text )
-    {
-        textLineFormViewPanel.typeText( text );
-        return this;
-    }
-
-    public InputsFormViewPanel typeGeoPoint( String geopoint )
-    {
-        geoPointFormViewPanel.typeGeoPoint( geopoint );
-        return this;
-    }
 }
