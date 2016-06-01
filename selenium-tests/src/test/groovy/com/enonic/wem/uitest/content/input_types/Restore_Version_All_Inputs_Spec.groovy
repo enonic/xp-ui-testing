@@ -92,8 +92,8 @@ class Restore_Version_All_Inputs_Spec
         when:
         formView.getComboBoxFormViewPanel().clickOnLastRemoveButton().typeNameOfOptionAndSelectOption( COMBOBOX_OPTION_V2 );
         formView.getCheckBoxFormViewPanel().setChecked( false );
-        formView.getLongFormViewPanel().typeLong( LONG_V2 );
-        formView.getDoubleFormViewPanel().typeDouble( DOUBLE_V2 );
+        formView.getLongFormViewPanel().typeLongValue( LONG_V2 );
+        formView.getDoubleFormViewPanel().typeDoubleValue( DOUBLE_V2 );
         formView.getGeoPointFormViewPanel().typeGeoPoint( GEO_POINT_V2 );
         formView.getSingleSelectorRadioFormView().selectOption( RADIO_OPTION_V2 );
         formView.getTextLineFormViewPanel().typeText( TEXT_LINE_V2 );

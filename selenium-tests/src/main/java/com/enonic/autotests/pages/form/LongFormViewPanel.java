@@ -27,7 +27,7 @@ public class LongFormViewPanel
     public FormViewPanel type( final PropertyTree data )
     {
         String longValue = data.getString( LONG_PROPERTY );
-        typeLong( longValue );
+        typeLongValue( longValue );
         sleep( 300 );
         return this;
     }
@@ -37,7 +37,7 @@ public class LongFormViewPanel
         return longInput.getAttribute( "value" );
     }
 
-    public LongFormViewPanel typeLong( String longValue )
+    public LongFormViewPanel typeLongValue( String longValue )
     {
         clearAndType( longInput, longValue );
         return this;
