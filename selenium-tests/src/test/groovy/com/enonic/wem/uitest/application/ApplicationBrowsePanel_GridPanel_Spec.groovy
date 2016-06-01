@@ -15,6 +15,9 @@ class ApplicationBrowsePanel_GridPanel_Spec
         expect:
         applicationBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
 
+        and: "refresh button is present on the tree grid toolbar"
+        applicationBrowsePanel.isRefreshButtonDisplayed();
+
     }
 
     def "GIVEN applications listed on root WHEN one row is clicked THEN its row is blue"()
@@ -59,9 +62,6 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
     def "GIVEN no applications selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
     {
-        given:
-        applicationBrowsePanel.clickOnClearSelection();
-
         when:
         applicationBrowsePanel.clickOnSelectAll();
         TestUtils.saveScreenshot( getTestSession(), "select-all-apps" );

@@ -53,6 +53,8 @@ public abstract class BrowsePanel
 
     protected final String CLEAR_SELECTION_LINK_XPATH = TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Clear Selection')]";
 
+    protected final String REFRESH_BUTTON = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-loop2')]";
+
     private String BROWSE_PANEL_ITEM_EXPANDER =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
@@ -76,13 +78,11 @@ public abstract class BrowsePanel
     private final String SELECT_ALL_LINK_XPATH =
         TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Select All') or contains(.,'Select all')]";
 
-    protected final String LAUNCHER_BUTTON_XPATH = "//button[contains(@class,'launcher-button') and child::span[@class='lines']";
-
     @FindBy(xpath = SELECT_ALL_LINK_XPATH)
     protected WebElement selectAllLink;
 
-    @FindBy(xpath = SELECT_ALL_LINK_XPATH)
-    protected WebElement launcherButton;
+    @FindBy(xpath = REFRESH_BUTTON)
+    protected WebElement refreshButton;
 
 
     /**
@@ -131,18 +131,20 @@ public abstract class BrowsePanel
         return false;
     }
 
-    public boolean isLauncherButtonDisplayed()
+    public boolean isRefreshButtonDisplayed()
     {
-        return isElementDisplayed( LAUNCHER_BUTTON_XPATH );
+        return isElementDisplayed( REFRESH_BUTTON );
     }
 
-    public BrowsePanel doShowLauncherPanel()
+    public BrowsePanel clickOnRefreshButton()
     {
-        if ( isLauncherButtonDisplayed() )
+        if ( !isRefreshButtonDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_button" );
-            throw new TestFrameworkException( "launcher button was not found!" );
+            TestUtils.saveScreenshot( getSession(), "err_refresh_button" );
+            throw new TestFrameworkException( "refresh button was not found!" );
         }
+        refreshButton.click();
+        sleep( 2000 );
         return this;
     }
 
@@ -520,7 +522,6 @@ public abstract class BrowsePanel
         {
             throw new SaveOrUpdateException( "checkbox for item: " + item + "was not found" );
         }
-        // findElement( By.xpath( contentCheckBoxXpath ) ).sendKeys( key );
         Actions actions = new Actions( getDriver() );
         actions.moveToElement( findElement( By.xpath( contentCheckBoxXpath ) ) );
         actions.sendKeys( key );
@@ -547,7 +548,6 @@ public abstract class BrowsePanel
 
     public BrowsePanel selectRowByDisplayName( String displayName )
     {
-        // getFilterPanel().typeSearchText( displayName );
         String rowXpath = String.format( NAMES_VIEW_BY_DISPLAY_NAME, displayName );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
         if ( !result )

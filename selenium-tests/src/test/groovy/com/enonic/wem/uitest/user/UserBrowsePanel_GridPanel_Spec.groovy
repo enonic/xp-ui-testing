@@ -17,6 +17,9 @@ class UserBrowsePanel_GridPanel_Spec
 
         expect:
         userBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
+
+        and: "refresh button is present on the tree grid toolbar"
+        userBrowsePanel.isRefreshButtonDisplayed();
     }
 
     def "GIVEN user browse panel opened WHEN first is clicked THEN first row is blue"()
@@ -166,10 +169,11 @@ class UserBrowsePanel_GridPanel_Spec
         given: "selected and expanded 'System' folder"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
+        TestUtils.saveScreenshot( getTestSession(), "test_user_arrow_down_shift_before" );
 
         when: "arrow down typed 3 times"
         userBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "user_arrow_down_shift" );
+        TestUtils.saveScreenshot( getTestSession(), "test_user_arrow_down_shift_after" );
 
         then: "n+1 rows are selected in the browse panel"
         userBrowsePanel.getSelectedRowsNumber() == 4
