@@ -47,19 +47,19 @@ public class UserBrowsePanel
     public final String USERS_BUTTON = "//button[contains(@id,'api.app.bar.HomeButton') and child::span[text()='Users']]";
 
     public final String NEW_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='New']]";
+        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='New']]";
 
     public final String DUPLICATE_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Duplicate']]";
+        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
     protected final String EDIT_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Edit']]";
+        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
 
     protected final String DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
     protected final String SYNCH_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Synch']]";
+        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Sync']]";
 
     @FindBy(xpath = USERS_BUTTON)
     private WebElement userManagerButton;
