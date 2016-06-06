@@ -16,7 +16,7 @@ class ContentBrowsePanel_PublishMenu_Spec
     @Shared
     Content FOLDER_CONTENT;
 
-    def "GIVEN existing not published root content WHEN content selected THEN 'Publish'-menu is disabled"()
+    def "GIVEN existing 'offline' root content WHEN content selected THEN 'Publish'-menu is disabled AND Publish button is enabled"()
     {
         given: "existing content in root"
         FOLDER_CONTENT = buildFolderContent( "publish", "publish menu test" );
@@ -24,9 +24,13 @@ class ContentBrowsePanel_PublishMenu_Spec
 
         when: "the content selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
+        TestUtils.saveScreenshot( getSession(), "test_publish_menu_offline_content" );
 
         then: "and 'Publish'-menu is disabled"
         !contentBrowsePanel.isPublishMenuAvailable();
+
+        and: "Publish button is enabled"
+        contentBrowsePanel.isPublishButtonEnabled();
     }
 
     def "GIVEN existing not published root folder WHEN the folder has been published THEN 'Publish'-menu is available AND 'Unpablish' menu item enabled"()
@@ -34,16 +38,16 @@ class ContentBrowsePanel_PublishMenu_Spec
         when: "the folder has been published"
         findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
-        then: " 'Publish'-menu is available "
+        then: "'Publish'-menu is available "
         contentBrowsePanel.isPublishMenuAvailable();
 
-        and: "AND 'Unpablish' menu-item is enabled"
+        and: "AND 'Unpublish' menu-item is enabled"
         contentBrowsePanel.showPublishMenu();
-        TestUtils.saveScreenshot( getSession(), "publish_menu_online_content" );
+        TestUtils.saveScreenshot( getSession(), "test_publish_menu_online_content" );
         contentBrowsePanel.isUnPublishMenuItemEnabled();
     }
 
-    def "GIVEN existing published folder WHEN the folder selected AND 'Unpublish' clicked in the menu THEN 'the folder becomes is 'offline' "()
+    def "GIVEN existing 'online' folder WHEN the folder selected AND 'Unpublish' clicked in the menu THEN 'the folder becomes is 'offline' "()
     {
         given: "existing published folder"
         findAndSelectContent( FOLDER_CONTENT.getName() )
@@ -56,7 +60,7 @@ class ContentBrowsePanel_PublishMenu_Spec
         String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "content has 'offline' status"
-        TestUtils.saveScreenshot( getSession(), "content_unpublished" );
+        TestUtils.saveScreenshot( getSession(), "test_content_unpublished" );
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
 
         and: "correct notification message appears"
@@ -64,5 +68,8 @@ class ContentBrowsePanel_PublishMenu_Spec
 
         and: "'Publish' on the toolbar is enabled now"
         contentBrowsePanel.isPublishButtonEnabled();
+
+        and: "'Publish-menu' on the toolbar becomes disabled"
+        !contentBrowsePanel.isPublishMenuAvailable();
     }
 }

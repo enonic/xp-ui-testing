@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentUnpublishDialog_Spec
@@ -116,43 +115,48 @@ class ContentUnpublishDialog_Spec
 
     def "GIVEN parent and child content are 'online' WHEN parent content selected and 'Unpublish' menu item selected THEN parent and child contents are 'offline'"()
     {
-        given:
+        given: "parent and child content are 'online'"
         CHILD_CONTENT = buildFolderContentWithParent( "child", "child for unpublishing", PARENT_CONTENT.getName() );
         findAndSelectContent( PARENT_CONTENT.getName() );
         addContent( CHILD_CONTENT );
         contentBrowsePanel.clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
 
-        when:
+        when: "parent content selected and 'Unpublish' menu item selected"
         contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
         boolean isMessageAppeared = contentBrowsePanel.waitExpectedNotificationMessage( "2 items were unpublished",
                                                                                         Application.EXPLICIT_NORMAL );
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
-        then:
+        then: "parent content becomes 'offline'"
         contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
 
-        and:
+        and: "child content becomes 'offline'"
         contentBrowsePanel.getContentStatus( CHILD_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
 
-        and:
+        and: "correct notification message was shown"
         isMessageAppeared;
+
+        and: "Publish button becomes enabled for the parent content"
+        contentBrowsePanel.isPublishButtonEnabled();
+
+        and: "Publish-menu is enabled for the parent content"
+        contentBrowsePanel.isPublishMenuAvailable();
     }
-    // unpublishing of 'pending delete' contents not implemented in the XP
-    @Ignore
-    def "GIVEN existing 'pending delete' content WHEN the content has been 'unpublished' THEN 'offline' status for this content is displayed in the grid"()
+
+    def "GIVEN existing 'pending delete' content WHEN the content has been 'unpublished' THEN content not listed in the grid"()
     {
-        given:
+        given: "existing 'pending delete' content"
         Content content = buildFolderContent( "folder", "unpublish of pending delete content" );
         addContent( content );
         findAndSelectContent( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         contentBrowsePanel.clickToolbarDelete().doDelete();
 
-        when:
+        when: "the content has been 'unpublished'"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
         contentUnPublishDialog.clickOnUnpublishButton();
 
-        then:
-        contentBrowsePanel.getContentStatus( content.getName() ) == ContentStatus.OFFLINE.getValue();
+        then: "content not listed in the grid"
+        !contentBrowsePanel.exists( content.getName() );
 
     }
 }

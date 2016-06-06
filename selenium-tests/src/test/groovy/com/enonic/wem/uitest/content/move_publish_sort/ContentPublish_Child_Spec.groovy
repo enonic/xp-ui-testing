@@ -33,7 +33,7 @@ class ContentPublish_Child_Spec
         childContent1 = buildFolderContentWithParent( "publish", "child-folder1", parentContent.getName() );
         addContent( childContent1 );
 
-        when: " 'publish' dialog opened and parent content have been published without the child "
+        when: " 'publish' dialog opened and parent content has been published without a child "
         contentBrowsePanel.clickOnClearSelection();
         filterPanel.typeSearchText( parentContent.getName() );
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
@@ -54,6 +54,9 @@ class ContentPublish_Child_Spec
 
         then: "'Publish' button on toolbar is disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
+
+        and: "Publish-menu becomes enabled now"
+        contentBrowsePanel.isPublishMenuAvailable();
     }
 
     def "GIVEN parent 'online' folder with not published child WHEN 'publish' menu expanded AND 'Publish Tree' selected THEN 'Publish Dialog' appears and correct name of child is displayed"()

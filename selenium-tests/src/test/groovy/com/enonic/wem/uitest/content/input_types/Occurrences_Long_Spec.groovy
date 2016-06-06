@@ -128,7 +128,7 @@ class Occurrences_Long_Spec
         longFormViewPanel.isValueValid( 0 );
     }
 
-    @Ignore
+
     def "GIVEN creating of long content WHEN value is more than MAX_SAFE THEN red icon appears in the wizard tab"()
     {
         given: "creating of long content"

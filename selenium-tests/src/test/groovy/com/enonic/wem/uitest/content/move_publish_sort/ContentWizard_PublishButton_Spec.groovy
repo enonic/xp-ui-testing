@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -69,5 +70,50 @@ class ContentWizard_PublishButton_Spec
 
         then: "folder is 'offline' now"
         wizard.getStatus() == ContentStatus.OFFLINE.getValue();
+
+        and: "'Publish' menu becomes enabled"
+        wizard.isPublishButtonEnabled();
+
+        and: "'publish-menu' becomes disabled"
+        !wizard.isPublishMenuAvailable();
+    }
+
+    def "GIVEN existing 'online' content WHEN 'Delete' button on the wizard-toolbar pressed AND content deleted THEN 'pending delete' status for this content is displayed on the wizard"()
+    {
+        given: "existing 'online' content"
+        findAndSelectContent( CONTENT.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+
+
+        when: "'Delete' button on the wizard-toolbar pressed AND content deleted"
+        wizard.clickToolbarDelete().doDelete();
+
+        then: "'pending delete' status for this content is displayed on the wizard"
+        wizard.getStatus() == ContentStatus.PENDING_DELETE.getValue();
+
+        and: "'Publish' menu becomes enabled"
+        wizard.isPublishButtonEnabled();
+
+        and: "'publish-menu' is enabled"
+        wizard.isPublishMenuAvailable();
+    }
+
+    def "GIVEN existing 'pending delete' content WHEN opened and 'Unpublish' menu item selected THEN the wizard closes AND the content not listed in the grid"()
+    {
+        given: "existing 'pending delete' content opened"
+        findAndSelectContent( CONTENT.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+
+        when: "'Unpublish' menu item selected"
+        wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
+        sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "test_wizard_unpublish_selected" );
+
+        then: "the wizard closes"
+        !wizard.isOpened();
+
+        and: "the content not listed in the grid"
+        !contentBrowsePanel.exists( CONTENT.getName() );
     }
 }

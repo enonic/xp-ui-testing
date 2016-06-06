@@ -47,7 +47,7 @@ class ContentPublishDelete_Spec
         then:
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
         and:
-        message == String.format( Application.ONLINE_DELETED_MESSAGE, DISPLAY_NAME );
+        message == String.format( Application.MARKED_FOR_DELETION_MESSAGE, DISPLAY_NAME );
     }
 
     def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel"()
@@ -61,6 +61,6 @@ class ContentPublishDelete_Spec
         then:
         !contentBrowsePanel.exists( content.getName() );
         and:
-        message == String.format( Application.DELETE_PENDING_MESSAGE, DISPLAY_NAME );
+        message == String.format( Application.CONTENT_DELETED_MESSAGE, DISPLAY_NAME );
     }
 }
