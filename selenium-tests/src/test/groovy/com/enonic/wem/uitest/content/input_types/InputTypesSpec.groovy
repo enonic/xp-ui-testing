@@ -1,6 +1,9 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.form.*
+import com.enonic.autotests.pages.form.CheckBoxFormViewPanel
+import com.enonic.autotests.pages.form.DateFormViewPanel
+import com.enonic.autotests.pages.form.DateTimeFormViewPanel
+import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -14,9 +17,6 @@ class InputTypesSpec
 
     @Shared
     String TEST_TIME = "19:01";
-
-    @Shared
-    String TEST_LONG = "1234567890123456";
 
     @Shared
     String TEST_DATE_TIME = "2015-02-28 19:01";
@@ -67,23 +67,6 @@ class InputTypesSpec
         then: "actual value in the form view and expected should be equals"
         timeFormViewPanel.getTimeValue().equals( TEST_TIME );
     }
-
-
-    def "GIVEN content type with name 'Long' selected and wizard opened WHEN long value typed and content saved THEN new content with correct Long value  listed "()
-    {
-        given: "add a content with type 'Long'"
-        Content longContent = buildLong0_1_Content( TEST_LONG );
-        selectSiteOpenWizard( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData( longContent ).save().close(
-            longContent.getDisplayName() ); ;
-
-        when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( longContent );
-        LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
-
-        then: "actual value in the form view and expected should be equals"
-        longFormViewPanel.getLongValue().equals( TEST_LONG );
-    }
-
 
     def "GIVEN content type with name 'checkbox' selected and wizard opened WHEN  the checkbox selected and content saved THEN new content with correct boolean value listed "()
     {

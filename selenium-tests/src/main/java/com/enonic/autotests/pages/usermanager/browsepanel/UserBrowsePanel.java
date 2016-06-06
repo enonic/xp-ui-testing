@@ -58,7 +58,7 @@ public class UserBrowsePanel
     protected final String DELETE_BUTTON_XPATH =
         "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
-    protected final String SYNCH_BUTTON_XPATH =
+    protected final String SYNC_BUTTON_XPATH =
         "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Sync']]";
 
     @FindBy(xpath = USERS_BUTTON)
@@ -76,8 +76,8 @@ public class UserBrowsePanel
     @FindBy(xpath = DUPLICATE_BUTTON_XPATH)
     private WebElement duplicateButton;
 
-    @FindBy(xpath = SYNCH_BUTTON_XPATH)
-    private WebElement synchButton;
+    @FindBy(xpath = SYNC_BUTTON_XPATH)
+    private WebElement syncButton;
 
     private UserBrowseFilterPanel userBrowseFilterPanel;
 
@@ -298,9 +298,9 @@ public class UserBrowsePanel
         return duplicateButton.isEnabled();
     }
 
-    public boolean isSynchEnabled()
+    public boolean isSyncEnabled()
     {
-        return synchButton.isEnabled();
+        return syncButton.isEnabled();
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Application
 
     public static final String TEST_FOLDER_NAME = "selenium-tests-folder";
 
-    public static String ONLINE_DELETED_MESSAGE = "\"%s\" marked for deletion";
+    public static String MARKED_FOR_DELETION_MESSAGE = "\"%s\" marked for deletion";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
@@ -46,7 +46,7 @@ public class Application
 
     public static String CONTENT_SAVED = "\"%s\" saved";
 
-    public static String DELETE_PENDING_MESSAGE = "\"%s\" deleted";
+    public static String CONTENT_DELETED_MESSAGE = "\"%s\" deleted";
 
     public static final String FULL_ACCESS = "Full Access";
 

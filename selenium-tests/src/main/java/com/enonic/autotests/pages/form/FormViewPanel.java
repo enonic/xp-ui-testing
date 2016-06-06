@@ -52,7 +52,7 @@ public abstract class FormViewPanel
             TestUtils.saveScreenshot( getSession(), "err_add_button" );
             throw new TestFrameworkException( "Add button not present in Form View Panel!" );
         }
-        findElements( By.xpath( ADD_BUTTON_XPATH ) ).get( 0 ).click();
+        getDisplayedElement( By.xpath( ADD_BUTTON_XPATH ) ).click();
         sleep( 500 );
     }
 

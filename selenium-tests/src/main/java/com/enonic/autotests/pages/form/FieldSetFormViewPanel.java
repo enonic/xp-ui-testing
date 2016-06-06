@@ -7,7 +7,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.pages.Application;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -32,6 +31,7 @@ public class FieldSetFormViewPanel
     @FindBy(xpath = TEXT_LINE)
     private WebElement textLineInput;
 
+    private DoubleFormViewPanel doubleFormViewPanel;
 
     public FieldSetFormViewPanel( final TestSession session )
     {
@@ -43,6 +43,8 @@ public class FieldSetFormViewPanel
     {
         typeTextLine( data.getString( TEXT_LINE_VALUE ) );
         typeTextInHtmlArea( data.getString( HTML_AREA_VALUE ) );
+        doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
+        doubleFormViewPanel.type( data );
         return this;
     }
 
@@ -73,10 +75,5 @@ public class FieldSetFormViewPanel
     public String getTextLineValue()
     {
         return textLineInput.getAttribute( "value" );
-    }
-
-    public boolean isDoubleInputValid( WebElement doubleInput )
-    {
-        return !waitAndCheckAttrValue( doubleInput, "class", "invalid", Application.EXPLICIT_NORMAL );
     }
 }

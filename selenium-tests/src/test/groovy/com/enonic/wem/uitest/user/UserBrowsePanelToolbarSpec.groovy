@@ -32,10 +32,10 @@ class UserBrowsePanelToolbarSpec
         !userBrowsePanel.isDuplicateEnabled();
     }
 
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Synch' button should be disabled"()
+    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Sync' button should be disabled"()
     {
         expect:
-        !userBrowsePanel.isSynchEnabled();
+        !userBrowsePanel.isSyncEnabled();
     }
 
     def "GIVEN user BrowsePanel WHEN 'System' folder selected THEN 'Edit' button should be enabled"()

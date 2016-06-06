@@ -41,7 +41,7 @@ class Base_InputFields_Occurrences
     String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
 
     @Shared
-    static String SITE_NAME = NameHelper.uniqueName( "inputtypes" );
+    static String SITE_NAME = "inputtypes199357987";//NameHelper.uniqueName( "inputtypes" );
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types App";
@@ -63,6 +63,15 @@ class Base_InputFields_Occurrences
 
     @Shared
     String TAG_6 = "tag6";
+
+    @Shared
+    String MAX_SAFE_INTEGER = "9007199254740991";
+
+    @Shared
+    String MIN_SAFE_INTEGER = "-9007199254740991";
+
+    @Shared
+    String MORE_MAX_SAFE_INTEGER = "9007199254740992";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -392,13 +401,32 @@ class Base_InputFields_Occurrences
     {
         String name = "long";
         PropertyTree data = new PropertyTree();
-        data.addStrings( LongFormViewPanel.LONG_PROPERTY, longValue );
-
+        if ( longValue != null )
+        {
+            data.addStrings( LongFormViewPanel.LONG_VALUE, longValue );
+        }
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "long content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":long0_1" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+    protected Content buildLong1_1_Content( String longValue )
+    {
+        String name = "long";
+        PropertyTree data = new PropertyTree();
+        if ( longValue != null )
+        {
+            data.addStrings( LongFormViewPanel.LONG_VALUE, longValue );
+        }
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "long content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":long1_1" ).data( data ).
             build();
         return dateContent;
     }

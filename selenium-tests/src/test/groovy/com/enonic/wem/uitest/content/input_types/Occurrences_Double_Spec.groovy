@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DoubleFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_Double_Spec
@@ -14,13 +13,8 @@ class Occurrences_Double_Spec
     @Shared
     String TEST_DOUBLE = "123.4";
 
-    @Shared
-    String DOUBLE_MAX = "1.7976931348623157e+308";
 
-    @Shared
-    String DOUBLE_INVALID = "1.7976931348623159e+308";
-
-    def "GIVEN content type with type 'Double' selected and wizard opened WHEN double value typed and content saved THEN new content with correct Double value  listed "()
+    def "GIVEN creating of 'Double' content WHEN the content opened THEN correct Double value present in the wizard AND content is valid"()
     {
         given: "add a content with type 'Double'"
         Content doubleContent = buildDouble0_1_Content( TEST_DOUBLE );
@@ -41,8 +35,10 @@ class Occurrences_Double_Spec
 
         and: "red icon not present on the wizard tab"
         !wizard.isContentInvalid( doubleContent.getDisplayName() );
-    }
 
+        and: "double input has no a red border"
+        doubleFormViewPanel.isValueValid( 0 );
+    }
     //verifies the XP-3499  (ConfirmationDialog issue)
     def "GIVEN creating a double content WHEN name typed AND save button pressed THEN 'confirmation' dialog should not appears"()
     {
@@ -64,7 +60,7 @@ class Occurrences_Double_Spec
 
     def "GIVEN creating a double content with a required value WHEN name typed AND save button pressed THEN 'confirmation' dialog should not appears"()
     {
-        given: "adding of double content without with empty value"
+        given: "adding of double content with empty value"
         Content doubleContent = buildDouble1_1_Content( null );
         ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
@@ -105,42 +101,46 @@ class Occurrences_Double_Spec
         given: "adding of double content(min2 max4)"
         Content doubleContent = buildDouble2_4_Content( TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened()
-
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
         when: "three values typed"
         wizard.typeData( doubleContent );
 
-        then: "confirmation dialog should not appears"
-        wizard
+        then: "'add' button displayed in form"
+        doubleFormViewPanel.isAddButtonPresent();
 
         and: "red icon not displayed on the wizard tab"
         !wizard.isContentInvalid( doubleContent.getDisplayName() );
     }
 
-    @Ignore
-    def "GIVEN creating of double content  WHEN MAX value typed THEN red icon not displayed in the wizard tab"()
+    def "GIVEN creating of double content WHEN MAX value typed THEN red icon not displayed in the wizard tab"()
     {
-        given:
-        Content doubleContent = buildDouble1_1_Content( DOUBLE_MAX );
+        given: "creating of double content"
+        Content doubleContent = buildDouble1_1_Content( MAX_SAFE_INTEGER );
         ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
 
         when: "MAX value typed"
         wizard.typeData( doubleContent ).save();
+        TestUtils.saveScreenshot( getSession(), "test_max_double" );
 
         then: "red icon not displayed in the wizard tab"
         !wizard.isContentInvalid( doubleContent.getDisplayName() );
     }
 
-    @Ignore
-    def "GIVEN creating of double content  WHEN more than MAX value typed THEN red icon should appears in the wizard tab"()
+    def "GIVEN creating of double content WHEN value more than MAX typedd THEN red icon should appears in the wizard tab"()
     {
         given:
-        Content doubleContent = buildDouble1_1_Content( DOUBLE_INVALID );
+        Content doubleContent = buildDouble1_1_Content( MORE_MAX_SAFE_INTEGER );
         ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "MAX value typed"
+        when: "value more than MAX typed"
         wizard.typeData( doubleContent ).save();
+        TestUtils.saveScreenshot( getSession(), "test_more_max_double" );
 
         then: "red icon not displayed in the wizard tab"
         wizard.isContentInvalid( doubleContent.getDisplayName() );
+
+        and:
+        !doubleFormViewPanel.isValueValid( 0 );
     }
 }

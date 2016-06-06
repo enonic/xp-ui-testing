@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.form;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import com.google.common.collect.Iterators;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.pages.Application;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -29,7 +31,6 @@ public class DoubleFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-
         Iterable<String> doubleValues = data.getStrings( DOUBLE_VALUES );
         int requiredNumber = Iterators.size( doubleValues.iterator() );
         if ( requiredNumber == 0 )
@@ -37,11 +38,9 @@ public class DoubleFormViewPanel
             return this;
         }
         List<WebElement> actualInputs = getDisplayedElements( By.xpath( DOUBLE_INPUT ) );
-
         addDoubleInputs( requiredNumber - actualInputs.size() );
-
-        List<WebElement> inputsActual = getDisplayedElements( By.xpath( DOUBLE_INPUT ) );
-        inputsActual.stream().forEach( e -> typeDoubleValue( e, doubleValues.iterator().next() ) );
+        Iterator<String> iterator = doubleValues.iterator();
+        actualInputs.stream().forEach( e -> typeDoubleValue( e, iterator.next() ) );
         return this;
     }
 
@@ -82,5 +81,11 @@ public class DoubleFormViewPanel
         {
             clickOnAddButton();
         }
+    }
+
+    public boolean isValueValid( int index )
+    {
+        List<WebElement> actualInputs = getDisplayedElements( By.xpath( DOUBLE_INPUT ) );
+        return !waitAndCheckAttrValue( actualInputs.get( index ), "class", "invalid", Application.EXPLICIT_NORMAL );
     }
 }
