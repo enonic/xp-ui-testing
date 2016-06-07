@@ -193,7 +193,7 @@ class Restore_Version_All_Inputs_Spec
 
     private addLongData( PropertyTree data, String longValue )
     {
-        data.addString( LongFormViewPanel.LONG_PROPERTY, longValue );
+        data.addString( LongFormViewPanel.LONG_VALUE, longValue );
     }
 
     private addTextLineData( PropertyTree data, String text )

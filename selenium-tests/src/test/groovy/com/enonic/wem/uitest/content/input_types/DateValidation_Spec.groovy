@@ -51,6 +51,7 @@ class DateValidation_Spec
 
         when: "time with wrong format typed "
         wizard.typeData( timeContent );
+        TestUtils.saveScreenshot( getSession(), "test_wrong_time" );
 
         then: "'Publish' button disabled"
         !wizard.isPublishButtonEnabled();

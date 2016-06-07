@@ -36,7 +36,7 @@ class Restore_Tags_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN tag- content with missed required value WHEN valid version of content is restored THEN content has no red icon on the wizard"()
+    def "GIVEN version of tag-content with missed required value is current WHEN valid version of content is restored THEN content has no red icon on the wizard"()
     {
         given: "content with missed required value"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
@@ -53,9 +53,9 @@ class Restore_Tags_Spec
         !wizard.isContentInvalid( TAG_CONTENT.getDisplayName() )
     }
 
-    def "GIVEN content with current valid version AND wizard opened WHEN 'AppHomeButton' clicked and not valid version of content is restored THEN red icon appears on the wizard tab"()
+    def "GIVEN current version of content is valid AND wizard opened WHEN 'AppHomeButton' clicked and not valid version of content is restored THEN red icon appears on the wizard tab"()
     {
-        given: "content with a changed date"
+        given: "current version of content is valid"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         contentBrowsePanel.pressAppHomeButton();
         AllContentVersionsView allContentVersionsView = openVersionPanel();

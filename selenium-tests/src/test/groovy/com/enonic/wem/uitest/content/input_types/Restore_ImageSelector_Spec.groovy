@@ -37,10 +37,11 @@ class Restore_ImageSelector_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN existing content with 3 versions WHEN valid version of content with two images is restored THEN content has no red icon on the wizard"()
+    def "GIVEN version of the content with one missed required image is current WHEN valid version of content with two images has been restored THEN content has no red icon on the wizard"()
     {
-        given: "content with a changed date"
+        given: "version of the content with one missed required image is current"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
+        and: "AppHome button has been pressed"
         contentBrowsePanel.pressAppHomeButton();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
@@ -70,14 +71,14 @@ class Restore_ImageSelector_Spec
         formViewPanel.getSelectedImages().size() == 2;
     }
 
-    def "GIVEN existing content with 3 versions WHEN version of content with one images is restored THEN redi icon appears on the wizard tab"()
+    def "GIVEN versions of content with two images is current WHEN version of content with one images is restored THEN red icon appears on the wizard tab"()
     {
-        given: "existing content with 3 versions opened"
+        given: "versions of content with two images is current"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         contentBrowsePanel.pressAppHomeButton();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "not valid version of content is restored, one required image is missed"
+        when: "version of content with one images is restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
@@ -90,9 +91,9 @@ class Restore_ImageSelector_Spec
         contentBrowsePanel.isContentInvalid( IMAGE_SELECTOR_CONTENT.getName() );
     }
 
-    def "GIVEN version of content with one images is restored WHEN content opened THEN one image is displayed on the wizard"()
+    def "GIVEN version of content with one images was restored WHEN content opened THEN one image is displayed on the wizard"()
     {
-        when: "version of content with one image is restored"
+        when: "version of content with one image was restored"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
