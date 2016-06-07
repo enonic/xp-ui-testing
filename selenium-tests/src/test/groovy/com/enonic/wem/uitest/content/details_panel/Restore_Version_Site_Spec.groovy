@@ -185,7 +185,6 @@ class Restore_Version_Site_Spec
         given: "existing site with selected application opened"
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        int before = allContentVersionsView.getAllVersions().size();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         contentBrowsePanel.pressAppHomeButton();
 
@@ -193,16 +192,12 @@ class Restore_Version_Site_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 2 );
         versionItem.doRestoreVersion( versionItem.getId() );
         sleep( 1000 );
-        int after = allContentVersionsView.getAllVersions().size();
         contentBrowsePanel.clickOnTab( INITIAL_DISPLAY_NAME );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "version_site_controller_removed" );
+        TestUtils.saveScreenshot( getSession(), "test_version_without_selected_controller" );
 
         then: "page controller not selected in the page editor, but option filter input displayed"
         wizard.isPageDescriptorOptionsFilterDisplayed();
-
-        and: "number of site-versions increased by 1 "
-        after - before == 1;
     }
 
 }
