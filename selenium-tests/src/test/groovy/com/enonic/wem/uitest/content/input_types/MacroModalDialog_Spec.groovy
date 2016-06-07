@@ -43,18 +43,18 @@ class MacroModalDialog_Spec
         dialog.getHeader() == MacroModalDialog.DIALOG_HEADER_TEXT;
     }
 
-    def "GIVEN MacroModalDialog opened WHEN option selected THEN"()
+    def "GIVEN MacroModalDialog opened WHEN twitter macro selected THEN correct macro is displayed on the dialog"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
-        when:
+        when: "twitter-macro selected from the options"
         dialog.selectOption( MacroType.TWITTER.getValue() );
         TestUtils.saveScreenshot( getSession(), "test_twitter_macro" );
 
-        then:
+        then: "correct macro is displayed on the dialog"
         dialog.getSelectedMacroDisplayName() == MacroType.TWITTER.getValue();
     }
 }
