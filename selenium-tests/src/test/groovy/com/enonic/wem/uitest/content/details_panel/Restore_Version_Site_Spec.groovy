@@ -81,7 +81,7 @@ class Restore_Version_Site_Spec
         List<String> beforeRestoring = securityForm.getAllDisplayNamesOfAclEntries();
         wizard.save().close( SITE.getDisplayName() );
 
-        when: "the previous version is restored"
+        when: "the previous version was restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
@@ -131,7 +131,7 @@ class Restore_Version_Site_Spec
         allContentVersionsView.getAllVersions().size() - before == 1;
     }
 
-    def "GIVEN existing site without an application opened WHEN version of site with an application restored THEN application present in the 'application selector'"()
+    def "GIVEN existing site without an application opened WHEN version of site with the application was restored THEN application present in the 'application selector'"()
     {
         given: "existing site without an application opened"
         findAndSelectContent( SITE.getName() );
@@ -165,9 +165,10 @@ class Restore_Version_Site_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         PageTemplateFormViewPanel pageTemplateFormViewPanel = new PageTemplateFormViewPanel( getSession() );
 
-        when: "application removed"
+        when: "page controller selected from the combobox-options"
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
         TestUtils.saveScreenshot( getSession(), "site_version_controller_added_wizard" );
+
         and: "the site saved"
         wizard.save();
         sleep( 1000 );
@@ -188,7 +189,7 @@ class Restore_Version_Site_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         contentBrowsePanel.pressAppHomeButton();
 
-        when: "version without controller restored"
+        when: "version without a selected controller was restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 2 );
         versionItem.doRestoreVersion( versionItem.getId() );
         sleep( 1000 );
@@ -196,7 +197,7 @@ class Restore_Version_Site_Spec
         sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "test_version_without_selected_controller" );
 
-        then: "page controller not selected in the page editor, but option filter input displayed"
+        then: "page controller not selected in the page editor and option filter input should be displayed"
         wizard.isPageDescriptorOptionsFilterDisplayed();
     }
 
