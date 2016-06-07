@@ -1,9 +1,6 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -23,10 +21,9 @@ public class MoveContentDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-    private final String FILTER_INPUT = DIALOG_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
+    private final String FILTER_INPUT = DIALOG_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT;
 
-    private final String MOVE_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[text()='Move']]";
+    private final String MOVE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Move']]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
@@ -66,12 +63,13 @@ public class MoveContentDialog
 
     private MoveContentDialog selectDestination( String name )
     {
-        String xpath = String.format( "//div[contains(@id,'api.app.NamesView') and child::p[contains(.,'%s')] ]", name );
-        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER + xpath ), Application.EXPLICIT_NORMAL ) )
+        String destinationXpath = DIALOG_CONTAINER + String.format( NAMES_VIEW_BY_NAME, name );
+        if ( !waitUntilVisibleNoException( By.xpath( destinationXpath ), Application.EXPLICIT_NORMAL ) )
         {
-            throw new TestFrameworkException( "destination folder was not found!" );
+            TestUtils.saveScreenshot( getSession(), "err_move" );
+            throw new TestFrameworkException( "destination folder was not found! " + name );
         }
-        findElements( By.xpath( xpath ) ).get( 0 ).click();
+        getDisplayedElement( By.xpath( destinationXpath ) ).click();
         return this;
     }
 
@@ -79,7 +77,6 @@ public class MoveContentDialog
     {
         cancelButtonTop.click();
         sleep( 200 );
-
     }
 
     public void clickOnCancelBottomButton()
@@ -105,15 +102,13 @@ public class MoveContentDialog
     public MoveContentDialog typeSearchText( String text )
     {
         clearAndType( optionFilterInput, text );
-        //optionFilterInput.sendKeys( text );
         sleep( 500 );
         return this;
     }
 
     public boolean isOpened()
     {
-        List<WebElement> elements = findElements( By.xpath( DIALOG_CONTAINER ) );
-        return elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size() > 0;
+        return isElementDisplayed( DIALOG_CONTAINER );
     }
 
     /**
@@ -121,10 +116,8 @@ public class MoveContentDialog
      *
      * @return true if dialog opened, otherwise false.
      */
-    public boolean waitUntilDialogShowed( long timeout )
+    public boolean waitUntilDialogShown( long timeout )
     {
         return waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout );
-
     }
-
 }

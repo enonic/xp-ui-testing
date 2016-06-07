@@ -157,6 +157,5 @@ class ContentUnpublishDialog_Spec
 
         then: "content not listed in the grid"
         !contentBrowsePanel.exists( content.getName() );
-
     }
 }

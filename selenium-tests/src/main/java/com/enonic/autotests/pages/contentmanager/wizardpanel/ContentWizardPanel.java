@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
@@ -190,10 +189,10 @@ public class ContentWizardPanel
 
     public boolean isContentInvalid( String contentDisplayName )
     {
-        List<WebElement> elements = findElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) ).stream().filter(
-            WebElement::isDisplayed ).collect( Collectors.toList() );
+        List<WebElement> elements = getDisplayedElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) );
         if ( elements.size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_tab_item)" ) );
             throw new TestFrameworkException( "tab menu item with name: " + contentDisplayName + " was not found" );
         }
         return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
@@ -448,7 +447,7 @@ public class ContentWizardPanel
         {
             switchToLiveEditFrame();
         }
-        findElements( By.xpath( OPTION_FILTER_INPUT ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
+        findElements( By.xpath( DROPDOWN_OPTION_FILTER_INPUT ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
         String pageDescriptor = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
         if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
         {
@@ -463,7 +462,7 @@ public class ContentWizardPanel
     public boolean isPageDescriptorOptionsFilterDisplayed()
     {
         switchToLiveEditFrame();
-        return isElementDisplayed( OPTION_FILTER_INPUT );
+        return isElementDisplayed( DROPDOWN_OPTION_FILTER_INPUT );
     }
 
     public boolean isLiveEditFrameDisplayed()

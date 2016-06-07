@@ -18,8 +18,15 @@ public class TimeFormViewPanel
 
     private final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
-    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'TimePicker')]//input[contains(@id,'TextInput')]")
+    private final String TIME_PICKER = "//div[contains(@id,'TimePicker')]";
+
+    private final String ICON_CLOCK = TIME_PICKER + "//button[contains(@class,'icon-clock')]";
+
+    @FindBy(xpath = FORM_VIEW + TIME_PICKER + "//input[contains(@id,'TextInput')]")
     private WebElement timeInput;
+
+    @FindBy(xpath = FORM_VIEW + ICON_CLOCK)
+    private WebElement iconClockButton;
 
     public TimeFormViewPanel( final TestSession session )
     {
@@ -36,10 +43,18 @@ public class TimeFormViewPanel
         return this;
     }
 
-    public TimePickerPopup showPicker()
+    public TimePickerPopup clickOnInputAndShowPicker()
     {
         Actions builder = new Actions( getDriver() );
         builder.click( timeInput ).build().perform();
+        TimePickerPopup popup = new TimePickerPopup( getSession() );
+        popup.waitUntilDialogLoaded();
+        return popup;
+    }
+
+    public TimePickerPopup clickOnClockIconAndShowPicker()
+    {
+        iconClockButton.click();
         TimePickerPopup popup = new TimePickerPopup( getSession() );
         popup.waitUntilDialogLoaded();
         return popup;

@@ -41,7 +41,7 @@ class Base_InputFields_Occurrences
     String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
 
     @Shared
-    static String SITE_NAME = "inputtypes199357987";//NameHelper.uniqueName( "inputtypes" );
+    static String SITE_NAME = NameHelper.uniqueName( "inputtypes" );
 
     @Shared
     String MODULE_DISPLAY_NAME = "All Content Types App";
@@ -608,5 +608,21 @@ class Base_InputFields_Occurrences
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox2_4" ).data( data ).
             build();
         return comboboxContent;
+    }
+
+    protected Content buildHtmlArea0_1_Content( String text )
+    {
+        PropertyTree data = new PropertyTree();
+        if ( text != null )
+        {
+            data.addStrings( HtmlArea0_1_FormViewPanel.STRING_PROPERTY, text );
+        }
+        Content tinyMceContent = Content.builder().
+            name( NameHelper.uniqueName( "html0_1_" ) ).
+            displayName( "html0_1 content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":htmlarea0_1" ).data( data ).
+            build();
+        return tinyMceContent;
     }
 }

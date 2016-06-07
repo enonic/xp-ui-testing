@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class DateValidation_Spec
@@ -32,7 +33,7 @@ class DateValidation_Spec
 
         when: "Time input has been clicked"
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
-        TimePickerPopup picker = formViewPanel.showPicker();
+        TimePickerPopup picker = formViewPanel.clickOnInputAndShowPicker();
         TestUtils.saveScreenshot( getSession(), "time-picker-popup" );
 
         then: "'time picker' popup dialog is displayed"
@@ -42,7 +43,26 @@ class DateValidation_Spec
         !picker.isTimeZoneDisplayed();
     }
 
-    def "GIVEN saving of content with type 'Time 0:0' WHEN value of time is wrong THEN 'Publish' button disabled"()
+    @Ignore
+    def "GIVEN wizard for adding a Time opened WHEN icon-clock has been clicked THEN 'time picker popup' dialog is displayed"()
+    {
+        given: "wizard for adding a Time opened"
+        Content dateContent = buildTime0_0_Content( CORRECT_TIME );
+        selectSiteOpenWizard( dateContent.getContentTypeName() );
+
+        when: "icon-clock has been clicked"
+        TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
+        TimePickerPopup picker = formViewPanel.clickOnClockIconAndShowPicker();
+        TestUtils.saveScreenshot( getSession(), "test_time_picker_icon" );
+
+        then: "'time picker' popup dialog is displayed"
+        picker.isDisplayed();
+
+        and: "time zone not displayed"
+        !picker.isTimeZoneDisplayed();
+    }
+
+    def "GIVEN saving of content with type 'Time 0:0' WHEN value of time is wrong THEN 'Publish' button should be enabled, because input is not required"()
     {
         given: "start to add a content with type 'Time 0:0'"
         Content timeContent = buildTime0_0_Content( WRONG_TIME );
@@ -53,10 +73,10 @@ class DateValidation_Spec
         wizard.typeData( timeContent );
         TestUtils.saveScreenshot( getSession(), "test_wrong_time" );
 
-        then: "'Publish' button disabled"
-        !wizard.isPublishButtonEnabled();
+        then: "'Publish' button enabled, because input is not required"
+        wizard.isPublishButtonEnabled();
 
-        and: "time input is red"
+        and: "time input has a red border"
         formViewPanel.isTimeInvalid();
     }
 
@@ -87,11 +107,11 @@ class DateValidation_Spec
         wizard.typeDisplayName( timeContent.getDisplayName() );
         TestUtils.saveScreenshot( getSession(), "required-time-publish-disabled" );
 
-        then: "'Publish' button disabled"
+        then: "'Publish' button disabled, because required input not filled"
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN datetime typed and content published THEN 'Publish' button disabled AND time input is red"()
+    def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN invalid datetime THEN 'Publish' button should be disabled, because wrong datetime typed in the required input"()
     {
         given: "saving of content with type 'DateTime 1:1'"
         Content dateTimeContent = buildDateTime1_1_Content( WRONG_DATE_TIME );
@@ -102,7 +122,7 @@ class DateValidation_Spec
         wizard.typeData( dateTimeContent );
         TestUtils.saveScreenshot( getSession(), "wrong-date-time" );
 
-        then: "'Publish' button disabled"
+        then: "'Publish' button should be disabled, because wrong datetime typed in the required input"
         !wizard.isPublishButtonEnabled();
 
         and: "time input is red"

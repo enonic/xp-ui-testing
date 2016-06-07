@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.LongFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_Long_Spec
@@ -47,7 +46,6 @@ class Occurrences_Long_Spec
         longFormViewPanel.isValueValid( 0 );
     }
 
-    @Ignore
     def "GIVEN creating of content with type 'long'(not required) WHEN invalid value for long typed THEN input with a red border AND red icon not shown on the wizard tab"()
     {
         given: "creating of  content with type 'Long'"
@@ -69,7 +67,6 @@ class Occurrences_Long_Spec
         wizard.isPublishButtonEnabled();
     }
 
-    @Ignore
     def "GIVEN creating of content with type 'long'(required) WHEN invalid value for long typed THEN input with a red border AND red icon shown on the wizard tab"()
     {
         given: "creating of  content with type 'Long'"

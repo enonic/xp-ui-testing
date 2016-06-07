@@ -3,10 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -24,10 +21,10 @@ class Occurrences_HtmlArea_0_1_Spec
     @Shared
     String NORWEGIAN_TEXT = "Hej og hå så kan det gå"
 
-    def "GIVEN creating of content WHEN link with norwegian text typed THEN correct string is present in the text area "()
+    def "GIVEN creating of content with html-area WHEN link with norwegian text typed THEN correct string is present in the text area "()
     {
 
-        given: ""
+        given: "creating of content with html-area"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
         ContentWizardPanel wizard = selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent );
@@ -111,21 +108,5 @@ class Occurrences_HtmlArea_0_1_Spec
 
         then: "text area is empty"
         formViewPanel.isTextAreaEmpty();
-    }
-
-    private Content buildHtmlArea0_1_Content( String text )
-    {
-        PropertyTree data = new PropertyTree();
-        if ( text != null )
-        {
-            data.addStrings( HtmlArea0_1_FormViewPanel.STRING_PROPERTY, text );
-        }
-        Content tinyMceContent = Content.builder().
-            name( NameHelper.uniqueName( "html0_1_" ) ).
-            displayName( "html0_1 content" ).
-            parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":htmlarea0_1" ).data( data ).
-            build();
-        return tinyMceContent;
     }
 }

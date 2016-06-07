@@ -168,11 +168,6 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public boolean isMenuItemEnabled( WebElement menuItem )
-    {
-        return !getAttribute( menuItem, "class", Application.EXPLICIT_NORMAL ).contains( "disabled" );
-    }
-
     public boolean isPublishMenuAvailable()
     {
         if ( !isElementDisplayed( PUBLISH_MENU_DROPDOWN_HANDLER ) )
@@ -233,13 +228,6 @@ public class ContentBrowsePanel
         return contentDetailsPanel;
     }
 
-    public boolean doTypeSearchTextAndFindGridItem( String gridItemName, long timeout )
-    {
-        getFilterPanel().typeSearchText( gridItemName );
-        String gridItemXpath = String.format( NAMES_VIEW_BY_NAME, gridItemName );
-        return waitUntilVisibleNoException( By.xpath( gridItemXpath ), timeout );
-    }
-
     public ContentBrowsePanel clickOnDetailsToggleButton()
     {
         boolean result = waitUntilClickableNoException( By.xpath( DETAILS_TOGGLE_BUTTON ), Application.EXPLICIT_NORMAL );
@@ -270,23 +258,6 @@ public class ContentBrowsePanel
             return null;
         }
         return findElements( By.xpath( NOTIFICATION_MESSAGE ) ).get( 0 ).getText();
-    }
-
-    /**
-     * @param session {@link TestSession} instance
-     * @return true if 'Content Studio' opened, otherwise false.
-     */
-    public static boolean isOpened( TestSession session )
-    {
-        List<WebElement> searchInput = session.getDriver().findElements( By.xpath( ContentBrowseFilterPanel.SEARCH_INPUT_XPATH ) );
-        if ( searchInput.size() > 0 && searchInput.get( 0 ).isDisplayed() )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     public boolean isContentInvalid( String contentName )
@@ -583,7 +554,7 @@ public class ContentBrowsePanel
         moveButton.click();
         sleep( 500 );
         MoveContentDialog moveContentDialog = new MoveContentDialog( getSession() );
-        moveContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        moveContentDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return moveContentDialog;
     }
 

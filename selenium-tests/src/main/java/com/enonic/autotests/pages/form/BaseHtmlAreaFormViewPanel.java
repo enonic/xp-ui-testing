@@ -9,12 +9,16 @@ import org.openqa.selenium.interactions.Actions;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 public abstract class BaseHtmlAreaFormViewPanel
     extends FormViewPanel
 {
-    private final String TOOLBAR_INSERT_LINK_BUTTON = "//div[@aria-label='Insert/edit link']";
+    private final String TOOLBAR_INSERT_LINK_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert/edit link']";
+
+    private final String TOOLBAR_INSERT_MACRO_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert macro']";
 
     public static final String EMPTY_TEXT_AREA_CONTENT = "<p><br data-mce-bogus=\"1\"></p>";
 
@@ -54,17 +58,29 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     public InsertLinkModalDialog showToolbarAndClickOnInsertLinkButton()
     {
+        showToolbar();
+        getDisplayedElement( By.xpath( TOOLBAR_INSERT_LINK_BUTTON ) ).click();
+        return new InsertLinkModalDialog( getSession() );
+    }
+
+    public MacroModalDialog showToolbarAndClickOnInsertMacroButton()
+    {
+        showToolbar();
+        getDisplayedElement( By.xpath( TOOLBAR_INSERT_MACRO_BUTTON ) ).click();
+        return new MacroModalDialog( getSession() );
+    }
+
+    private void showToolbar()
+    {
         Actions builder = new Actions( getDriver() );
         String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
         WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
         builder.moveToElement( textArea ).click( textArea ).build().perform();
-        textArea.sendKeys( "  " );
+        textArea.sendKeys( " " );
         if ( !isElementDisplayed( TOOLBAR_INSERT_LINK_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_insert_link" );
-            throw new TestFrameworkException( "insert-link menu item not present!" );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_html_toolbar" ) );
+            throw new TestFrameworkException( "toolbar button was not found!" );
         }
-        getDisplayedElement( By.xpath( TOOLBAR_INSERT_LINK_BUTTON ) ).click();
-        return new InsertLinkModalDialog( getSession() );
     }
 }

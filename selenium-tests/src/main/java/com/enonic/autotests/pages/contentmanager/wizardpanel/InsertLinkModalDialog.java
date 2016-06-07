@@ -4,7 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -102,5 +104,14 @@ public class InsertLinkModalDialog
     {
         getDisplayedElement( By.xpath( INSERT_OR_UPDATE_BUTTON ) ).click();
         sleep( 400 );
+    }
+
+    public void waitForOpened()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_insert_link_dialog" );
+            throw new TestFrameworkException( "InsertLink dialog was not opened!" );
+        }
     }
 }
