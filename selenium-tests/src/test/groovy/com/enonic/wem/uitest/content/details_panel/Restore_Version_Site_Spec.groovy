@@ -12,7 +12,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.usermanager.SystemUserName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -180,9 +179,8 @@ class Restore_Version_Site_Spec
         then: "number of versions increased after adding of controller in the wizard"
         allContentVersionsView.getAllVersions().size() - before == 1;
     }
-    //APP bug
-    @Ignore
-    def "GIVEN existing site with controller WHEN version without controller restored THEN page controller not selected in the page editor"()
+
+    def "GIVEN existing site with controller WHEN version without selected controller restored THEN page controller not selected in the page editor"()
     {
         given: "existing site with selected application opened"
         findAndSelectContent( SITE.getName() );
@@ -192,7 +190,7 @@ class Restore_Version_Site_Spec
         contentBrowsePanel.pressAppHomeButton();
 
         when: "version without controller restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 2 );
         versionItem.doRestoreVersion( versionItem.getId() );
         sleep( 1000 );
         int after = allContentVersionsView.getAllVersions().size();
