@@ -124,7 +124,12 @@ public class HomePage
                 }
             }
         }
-        throw new TestFrameworkException( "application was not found!" + appName );
+        else
+        {
+            TestUtils.saveScreenshot( getSession(), "new tab was not opened!" );
+            throw new TestFrameworkException( "error during switching to   " + appName );
+        }
+
     }
 
     public boolean isDisplayed()
