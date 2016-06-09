@@ -12,7 +12,7 @@ public class YoutubeConfigPanel
 {
     public static final String URL_VALUE = "url_value";
 
-    private final String URL_INPUT = CONFIG_PANEL + "//input[contains(@name,'url)']";
+    private final String URL_INPUT = CONFIG_PANEL + "//input[contains(@name,'url')]";
 
     @FindBy(xpath = URL_INPUT)
     private WebElement urlInput;
