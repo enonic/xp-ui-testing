@@ -19,7 +19,7 @@ class MacroModalDialog_Twitter_Spec
     @Shared
     String TEST_TWIT = "https://twitter.com/lashkov_74/status/740477223136813056";
 
-    def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND content saved THEN correct macro is displayed on the dialog"()
+    def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND content saved THEN correct macro is displayed in the htmlarea"()
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
@@ -35,7 +35,7 @@ class MacroModalDialog_Twitter_Spec
         dialog.clickInsertButton();
         wizard.save();
 
-        then: "correct macro is displayed on the dialog"
+        then: "correct macro is displayed in the htmlarea"
         formViewPanel.getText().contains( TEST_TWIT );
     }
 
