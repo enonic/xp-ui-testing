@@ -156,7 +156,9 @@ task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, 
     println xpHome
     println "XP_HOME is:"
     println System.getenv( "XP_HOME" );
-
+    System.setProperty 'geb.env', 'firefox';
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' );
     scanForTestClasses = false
     include '**/application/*Spec.class'
     exclude '**/content/**'
@@ -168,9 +170,6 @@ task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, 
 }
 
 task testApplicationWithFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    println "XP_HOME is:"
-    println System.getenv( "XP_HOME" );
-
     //set system property
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
