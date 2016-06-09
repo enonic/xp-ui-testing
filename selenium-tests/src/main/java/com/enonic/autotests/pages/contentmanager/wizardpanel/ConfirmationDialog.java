@@ -60,7 +60,7 @@ public class ConfirmationDialog
 
     public boolean waitForClosed()
     {
-        return waitElementNotVisible( By.xpath( DIALOG_CONTAINER ), 2 );
+        return waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), 2 );
     }
 
     public void pressYesButton()

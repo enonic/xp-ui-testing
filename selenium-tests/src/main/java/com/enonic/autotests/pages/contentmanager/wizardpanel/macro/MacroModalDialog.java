@@ -15,13 +15,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class MacroModalDialog
     extends Application
 {
-    private final String DIALOG_CONTAINER = "//div[contains(@id,'MacroModalDialog')]";
+    public static final String DIALOG_CONTAINER = "//div[contains(@id,'MacroModalDialog')]";
 
     public static String DIALOG_HEADER_TEXT = "Insert Macro";
 
     private final String DIALOG_HEADER = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]/h2";
-
-    private final String URL_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Url']]//input[@type='text']";
 
     private final String FILTER_INPUT = DIALOG_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT;
 
@@ -31,7 +29,18 @@ public class MacroModalDialog
 
     private final String MACRO_SELECTED_VIEW = DIALOG_CONTAINER + "//div[contains(@id,'MacroSelectedOptionsView')]";
 
+    private final String TAB_BAR = DIALOG_CONTAINER + "//ul[contains(@id,'TabBar')]";
+
+    private final String CONFIG_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem')]//span[@title='Configuration']";
+
+    private final String PREVIEW_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem')]//span[@title='Preview']";
+
+
     private final String MACRO_SELECTED_DISPLAY_NAME = MACRO_SELECTED_VIEW + H6_DISPLAY_NAME;
+
+    private final String REMOVE_SELECTED_MACRO = MACRO_SELECTED_VIEW + "//a[@class='remove']";
+
+    private MacroConfigPanel macroConfigPanel;
 
     @FindBy(xpath = FILTER_INPUT)
     private WebElement optionFilterInput;
@@ -42,6 +51,15 @@ public class MacroModalDialog
     @FindBy(xpath = INSERT_BUTTON)
     private WebElement insertButton;
 
+    @FindBy(xpath = CONFIG_TAB_BAR_ITEM)
+    private WebElement configurationTabLink;
+
+    @FindBy(xpath = PREVIEW_TAB_BAR_ITEM)
+    private WebElement previewTabLink;
+
+    @FindBy(xpath = REMOVE_SELECTED_MACRO)
+    private WebElement removeMacroButton;
+
 
     public MacroModalDialog( TestSession session )
     {
@@ -51,6 +69,33 @@ public class MacroModalDialog
     public String getHeader()
     {
         return getDisplayedString( DIALOG_HEADER );
+    }
+
+    public boolean isConfigurationTabLinkPresent()
+    {
+        return configurationTabLink.isDisplayed();
+    }
+
+    public boolean isPreviewTabLinkPresent()
+    {
+        return configurationTabLink.isDisplayed();
+    }
+
+    public boolean isRemoveMacroButtonPresent()
+    {
+        return removeMacroButton.isDisplayed();
+    }
+
+    public MacroModalDialog clickOnRemoveMacroButton()
+    {
+        if ( !isRemoveMacroButtonPresent() )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_remove_macro" );
+            throw new TestFrameworkException( "'remove macro' button was not found! " );
+        }
+        removeMacroButton.click();
+        sleep( 300 );
+        return this;
     }
 
     public boolean isCancelButtonDisplayed()
@@ -69,6 +114,11 @@ public class MacroModalDialog
 
     }
 
+    public boolean waitForClosed()
+    {
+        return waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_QUICK );
+    }
+
     public MacroModalDialog typeSearchText()
     {
         cancelButton.click();
@@ -82,7 +132,7 @@ public class MacroModalDialog
 
     public void clickOnCancel()
     {
-        getDisplayedElement( By.xpath( URL_INPUT ) );
+        cancelButton.click();
     }
 
     public boolean isOptionFilterDisplayed()
@@ -90,17 +140,33 @@ public class MacroModalDialog
         return isElementDisplayed( COMBOBOX_OPTION_FILTER_INPUT );
     }
 
-    public MacroModalDialog selectOption( String name )
+    public MacroModalDialog selectOption( MacroType macroName )
     {
         WebElement optionsInput = getDisplayedElement( By.xpath( DIALOG_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) );
-        clearAndType( optionsInput, name );
+        clearAndType( optionsInput, macroName.getValue() );
         sleep( 500 );
 
-        getDisplayedElement( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, name ) ) ).click();
+        getDisplayedElement( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, macroName.getValue() ) ) ).click();
+        switch ( macroName )
+        {
+            case TWITTER:
+                macroConfigPanel = new TwitterConfigPanel( getSession() );
+                break;
+            case YOUTUBE:
+                macroConfigPanel = new YoutubeConfigPanel( getSession() );
+                break;
+            default:
+                macroConfigPanel = new TextAreaConfigPanel( getSession() );
+        }
         return this;
     }
 
-    public void pressInsertButton()
+    public MacroConfigPanel getMacroConfigPanel()
+    {
+        return macroConfigPanel;
+    }
+
+    public void clickInsertButton()
     {
         getDisplayedElement( By.xpath( INSERT_BUTTON ) ).click();
         sleep( 400 );

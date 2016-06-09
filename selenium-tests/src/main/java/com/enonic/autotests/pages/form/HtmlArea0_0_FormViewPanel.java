@@ -87,7 +87,7 @@ public class HtmlArea0_0_FormViewPanel
 
     public boolean waitUntilAddButtonNotVisible()
     {
-        return waitElementNotVisible( By.xpath( ADD_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        return waitsElementNotVisible( By.xpath( ADD_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
     public HtmlArea0_0_FormViewPanel removeLastTextArea()

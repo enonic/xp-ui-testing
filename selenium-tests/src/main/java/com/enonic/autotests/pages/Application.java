@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.TestUtils;
-import com.enonic.autotests.utils.WaitHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -144,11 +143,6 @@ public class Application
         {
             throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
         }
-    }
-
-    public boolean waitElementNotVisible( By by, long timeout )
-    {
-        return WaitHelper.waitsElementNotVisible( getDriver(), by, timeout );
     }
 
     public String waitNotificationWarning( long timeout )

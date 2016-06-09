@@ -215,6 +215,7 @@ public class TestUtils
                     {
                         source = session.getDriver().getPageSource();
                         logger.info( "source  :  " + source );
+                        TestUtils.saveScreenshot( session, NameHelper.uniqueName( "preview-site" ) );
                         session.getDriver().close();
                     }
                 }

@@ -20,6 +20,7 @@ class MacroModalDialog_Spec
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
+        and: "MacroDialog opened"
         selectSiteOpenWizard( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
@@ -47,14 +48,133 @@ class MacroModalDialog_Spec
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        and: "MacroDialog opened"
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
         when: "twitter-macro selected from the options"
-        dialog.selectOption( MacroType.TWITTER.getValue() );
+        dialog.selectOption( MacroType.TWITTER );
         TestUtils.saveScreenshot( getSession(), "test_twitter_macro" );
 
         then: "correct macro is displayed on the dialog"
         dialog.getSelectedMacroDisplayName() == MacroType.TWITTER.getValue();
+
+        and: "'configuration' tab link appears"
+        dialog.isConfigurationTabLinkPresent();
+
+        and: "'preview' tab link appears"
+        dialog.isPreviewTabLinkPresent();
+
+        and: "remove button appears on the dialog"
+        dialog.isRemoveMacroButtonPresent();
+    }
+
+    def "GIVEN MacroModalDialog opened WHEN YouTube macro selected THEN correct macro is displayed on the dialog"()
+    {
+        given: "existing content with html-area is opened"
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        and: "MacroDialog opened"
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
+
+        when: "youtube-macro selected from the options"
+        dialog.selectOption( MacroType.YOUTUBE );
+        TestUtils.saveScreenshot( getSession(), "test_youtube_macro" );
+
+        then: "correct macro is displayed on the dialog"
+        dialog.getSelectedMacroDisplayName() == MacroType.YOUTUBE.getValue();
+
+        and: "'configuration' tab link displayed"
+        dialog.isConfigurationTabLinkPresent();
+
+        and: "'preview' tab link displayed"
+        dialog.isPreviewTabLinkPresent();
+
+        and: "remove button appears on the dialog"
+        dialog.isRemoveMacroButtonPresent();
+    }
+
+    def "GIVEN MacroModalDialog opened WHEN 'embedded code' macro selected THEN correct macro is displayed on the dialog"()
+    {
+        given: "existing content with html-area is opened"
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        and: "MacroDialog opened"
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
+
+        when: "'embedded code'-macro selected from the options"
+        dialog.selectOption( MacroType.EMBEDDED_CODE );
+        TestUtils.saveScreenshot( getSession(), "test_embedded_macro" );
+
+        then: "correct macro is displayed on the dialog"
+        dialog.getSelectedMacroDisplayName() == MacroType.EMBEDDED_CODE.getValue();
+
+        and: "'configuration' tab link appears"
+        dialog.isConfigurationTabLinkPresent();
+
+        and: "'preview' tab link appears"
+        dialog.isPreviewTabLinkPresent();
+
+        and: "remove button appears on the dialog"
+        dialog.isRemoveMacroButtonPresent()
+    }
+
+    def "GIVEN MacroModalDialog opened WHEN 'No Format macro' macro selected THEN correct macro is displayed on the dialog"()
+    {
+        given: "existing content with html-area is opened"
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        and: "MacroDialog opened"
+        MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
+
+        when: "'no format'-macro selected from the options"
+        dialog.selectOption( MacroType.NO_FORMAT );
+        TestUtils.saveScreenshot( getSession(), "test_no_format_macro" );
+
+        then: "correct macro is displayed on the dialog"
+        dialog.getSelectedMacroDisplayName() == MacroType.NO_FORMAT.getValue();
+
+        and: "'configuration' tab link appears"
+        dialog.isConfigurationTabLinkPresent();
+
+        and: "'preview' tab link appears"
+        dialog.isPreviewTabLinkPresent();
+
+        and: "remove button appears on the dialog"
+        dialog.isRemoveMacroButtonPresent();
+    }
+
+    def "GIVEN MacroModalDialog opened WHEN 'Cancel' button has been pressed THEN the modal dialog is closed"()
+    {
+        given: "existing content with html-area is opened"
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        and: "MacroDialog opened"
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
+
+        when: "'Cancel'-button has been pressed"
+        dialog.clickOnCancel();
+
+        then: "the modal dialog is closed"
+        dialog.waitForClosed();
+    }
+
+    def "GIVEN MacroModalDialog opened AND YouTube macro selected WHEN 'remove macro' button has been pressed THEN macro-view removed"()
+    {
+        given: "existing content with html-area is opened"
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        and: "MacroDialog opened"
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        and: "youtube macro selected"
+        MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
+        dialog.selectOption( MacroType.YOUTUBE );
+        TestUtils.saveScreenshot( getSession(), "test_youtube_macro_added" );
+
+        when: "youtube-macro removed"
+        dialog.clickOnRemoveMacroButton();
+        TestUtils.saveScreenshot( getSession(), "test_youtube_macro_removed" );
+
+        then: "the filter-options appears again"
+        dialog.isOptionFilterDisplayed();
     }
 }

@@ -3,9 +3,13 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroType
+import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.TwitterConfigPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -45,6 +49,9 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
     @Shared
     String PAGE_TITLE = "Home Page";
+
+    @Shared
+    String TEST_TWIT = "https://twitter.com/lashkov_74/status/740477223136813056";
 
     def "GIVEN creating new Site with configuration and a page-controller WHEN site saved and wizard closed THEN new site should be present"()
     {
@@ -186,5 +193,35 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         then: "correct background present in a page-source"
         source.contains( backgroundPart );
+    }
+
+    def "GIVEN site configurator dialog opened WHEN twitter macro inserted, and changes applied THEN correct text present in page sources"()
+    {
+        given: "site opened"
+        filterPanel.typeSearchText( SITE.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
+
+        and: "twitter macro inserted, and changes applied"
+        MacroModalDialog macroModalDialog = configurationDialog.showToolbarAndClickOnInsertMacroButton();
+        sleep( 500 );
+        TestUtils.saveScreenshot( getSession(), "conf-dialog-macro" );
+        PropertyTree data = new PropertyTree();
+        data.addString( TwitterConfigPanel.URL_VALUE, TEST_TWIT );
+        macroModalDialog.selectOption( MacroType.TWITTER ).getMacroConfigPanel().typeData( data );
+        macroModalDialog.clickInsertButton();
+        configurationDialog.doApply();
+
+        when: "preview button pressed"
+        wizard.clickToolbarPreview();
+        String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
+        TestUtils.saveScreenshot( getSession(), "preview" );
+
+        then: "page source of new opened tab in a browser is not empty"
+        source != null;
+
+        and: "twitter text is present in the sources"
+        source.contains( "twitter-tweet" );
     }
 }

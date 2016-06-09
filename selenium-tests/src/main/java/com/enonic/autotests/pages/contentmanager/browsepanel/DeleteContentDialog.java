@@ -137,7 +137,7 @@ public class DeleteContentDialog
 
     public boolean waitForClosed()
     {
-        return waitElementNotVisible( By.xpath( TITLE_HEADER_XPATH ), Application.EXPLICIT_NORMAL );
+        return waitsElementNotVisible( By.xpath( TITLE_HEADER_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean waitForOpened()

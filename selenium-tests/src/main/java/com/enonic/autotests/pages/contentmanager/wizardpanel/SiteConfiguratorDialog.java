@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
@@ -23,6 +24,8 @@ public class SiteConfiguratorDialog
     private final String SPEC_CHARS_BUTTON = "";
 
     private final String INSERT_LINK_BUTTON = "//div[@aria-label='Insert/edit link']";
+
+    private final String TOOLBAR_INSERT_MACRO_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert macro']";
 
     public final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']";
 
@@ -150,6 +153,21 @@ public class SiteConfiguratorDialog
         return new InsertLinkModalDialog( getSession() );
     }
 
+    public MacroModalDialog showToolbarAndClickOnInsertMacroButton()
+    {
+        showToolbar();
+        getDisplayedElement( By.xpath( TOOLBAR_INSERT_MACRO_BUTTON ) ).click();
+        return new MacroModalDialog( getSession() );
+    }
+
+    private void showToolbar()
+    {
+        Actions builder = new Actions( getDriver() );
+        String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
+        WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
+        builder.moveToElement( textArea ).click( textArea ).build().perform();
+        textArea.sendKeys( "  " );
+    }
     public String getTextFromArea()
     {
         String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
@@ -161,5 +179,11 @@ public class SiteConfiguratorDialog
         String text = obj.toString();
         getDriver().switchTo().window( contentStudioWHandle );
         return text;
+    }
+
+    public void setTextIntoArea( String text )
+    {
+        String script = "document.getElementById('tinymce').contentDocument.body.innerHTML=arguments[0];";
+        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( script, text );
     }
 }

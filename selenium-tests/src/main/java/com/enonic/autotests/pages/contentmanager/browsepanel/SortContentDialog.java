@@ -129,14 +129,14 @@ public class SortContentDialog
     public SortContentDialog clickOnCancelButton()
     {
         cancelButton.click();
-        waitElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
         return this;
     }
 
     public SortContentDialog clickOnCancelOnTop()
     {
         cancelTopButton.click();
-        waitElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
         return this;
     }
 
@@ -149,7 +149,7 @@ public class SortContentDialog
     public SortContentDialog clickOnSaveButton()
     {
         saveButton.click();
-        waitElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
         sleep( 1000 );
         return this;
     }
