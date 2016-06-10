@@ -12,22 +12,12 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
-    public static final String APP_WINDOW_ID = "app_window_id_key";
-
-    public static final String HOME_WINDOW_ID = "home_window_id_key";
-
     public static final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
     public static final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
     public static String COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME =
         "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
-
-    public static String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
-
-    public static String UNNAMED_SITE_DISPLAY_NAME = "<Unnamed Site>";
-
-    public static final String TEST_FOLDER_NAME = "selenium-tests-folder";
 
     public static String MARKED_FOR_DELETION_MESSAGE = "\"%s\" marked for deletion";
 
@@ -36,12 +26,6 @@ public class Application
     public static String GROUP_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
     public static String UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" was unpublished";
-
-    public static String APP_UNINSTALLED = "Application '%s' uninstalled successfully";
-
-    public static String APP_INSTALLED_MESSAGE = "Application '%s' installed successfully";
-
-    public static String APP_UPDATED_MESSAGE = "Application '%s' updated successfully";
 
     public static String CONTENT_SAVED = "\"%s\" saved";
 

@@ -53,6 +53,15 @@ class BaseApplicationSpec
     @Shared
     String DISQUS_APP_NAME = "com.enonic.app.disqus";
 
+    @Shared
+    String APP_UNINSTALLED = "Application '%s' uninstalled successfully";
+
+    @Shared
+    String APP_INSTALLED_MESSAGE = "Application '%s' installed successfully";
+
+    @Shared
+    String APP_UPDATED_MESSAGE = "Application '%s' updated successfully";
+
 
     @Shared
     ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;

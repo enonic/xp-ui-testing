@@ -129,7 +129,7 @@ public class EditPermissionsDialog
         }
         WaitHelper.waitUntilElementEnabled( getSession(), By.xpath( APPLY_BUTTON_XPATH ) );
         findElement( By.xpath( APPLY_BUTTON_XPATH ) ).click();
-        sleep( 500 );
+        sleep( 700 );
         return this;
     }
 

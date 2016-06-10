@@ -21,24 +21,24 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
 
     def "GIVEN one selected Content WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
-        given:
+        given: "one selected Content "
         FIRST_CONTENT = buildFolderContent( "folder", "folder1" );
         addContent( FIRST_CONTENT );
         SECOND_CONTENT = buildFolderContent( "folder", "folder2" );
         addContent( SECOND_CONTENT );
         contentBrowsePanel.selectContentInTable( FIRST_CONTENT.getName() );
 
-        when:
+        when: "selecting one more"
         contentBrowsePanel.waitUntilPageLoaded( 3 );
         contentBrowsePanel.selectContentInTable( SECOND_CONTENT.getName() );
 
-        then:
+        then: "two SelectionItem-s are listed"
         itemsSelectionPanel.getSelectedItemCount() == 2;
     }
 
     def "GIVEN two selected Content WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
-        given:
+        given: "two selected Content"
         THIRD_CONTENT = buildFolderContent( "folder", "folder3" );
         addContent( THIRD_CONTENT );
         List<String> list = new ArrayList<>();
@@ -48,17 +48,17 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         int before = itemsSelectionPanel.getSelectedItemCount();
         TestUtils.saveScreenshot( getSession(), "select_2_items" )
 
-        when:
+        when: "selecting one more"
         contentBrowsePanel.selectContentInTable( THIRD_CONTENT.getName() );
 
-        then:
+        then: "three SelectionItem-s are listed"
         TestUtils.saveScreenshot( getSession(), "select_3_items" )
         itemsSelectionPanel.getSelectedItemCount() == before + 1;
     }
 
     def "GIVEN three selected Content WHEN deselecting one THEN two SelectionItem-s are listed"()
     {
-        given:
+        given: "three selected Content"
         List<String> list = new ArrayList<>();
         list.add( FIRST_CONTENT.getName() );
         list.add( SECOND_CONTENT.getName() );
@@ -67,12 +67,12 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSelectedItemCount();
 
-        when:
+        when: " deselecting one"
         TestUtils.saveScreenshot( getSession(), "deselect_before" );
         contentBrowsePanel.deSelectContentInTable( SECOND_CONTENT.getName() );
         TestUtils.saveScreenshot( getSession(), "deselect_after" );
 
-        then:
+        then: "two SelectionItem-s are listed"
         itemsSelectionPanel.getSelectedItemCount() == before - 1;
     }
 }

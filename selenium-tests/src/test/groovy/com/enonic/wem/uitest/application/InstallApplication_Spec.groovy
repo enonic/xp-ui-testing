@@ -47,7 +47,7 @@ class InstallApplication_Spec
         applicationBrowsePanel.exists( APP_NAME );
 
         and: "actual notification message and expected are identical"
-        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, APP_DISPLAY_NAME )
+        notificationMessage == String.format( APP_INSTALLED_MESSAGE, APP_DISPLAY_NAME )
     }
 
     def "GIVEN existing not local application EXPECTED icon for local application not displayed"()
@@ -86,7 +86,7 @@ class InstallApplication_Spec
         applicationBrowsePanel.exists( APP_NAME );
 
         and: "actual notification message and expected are identical"
-        appUpdatedMessage == String.format( Application.APP_UPDATED_MESSAGE, APP_DISPLAY_NAME )
+        appUpdatedMessage == String.format( APP_UPDATED_MESSAGE, APP_DISPLAY_NAME )
     }
 
     def "WHEN existing not local application selected THEN 'uninstall' button is enabled"()
@@ -122,7 +122,7 @@ class InstallApplication_Spec
         !applicationBrowsePanel.exists( APP_NAME );
 
         and: "correct notification appears"
-        message == String.format( Application.APP_UNINSTALLED, APP_DISPLAY_NAME );
+        message == String.format( APP_UNINSTALLED, APP_DISPLAY_NAME );
     }
 
     def "GIVEN 'install app' dialog opened and 'Enonic Market' selected WHEN an application from the 'Enonic Market' installed THEN new application listed in the browse panel "()
@@ -142,7 +142,7 @@ class InstallApplication_Spec
         sleep( 1000 );
 
         then: "correct notification message appears"
-        notificationMessage == String.format( Application.APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP );
+        notificationMessage == String.format( APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP );
         TestUtils.saveScreenshot( getSession(), "app_from_market" );
 
         and: "new application listed in the browse panel"
@@ -198,6 +198,6 @@ class InstallApplication_Spec
         !applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         and: "correct notification appears"
-        message == String.format( Application.APP_UNINSTALLED, CONTENT_VIEWER_APP );
+        message == String.format( APP_UNINSTALLED, CONTENT_VIEWER_APP );
     }
 }

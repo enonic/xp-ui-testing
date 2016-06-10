@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.LoginPage;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
@@ -78,7 +77,7 @@ public class NavigatorHelper
                 {
                     if ( driver.switchTo().window( windowId ).getCurrentUrl().contains( appName ) )
                     {
-                        session.put( Application.APP_WINDOW_ID, windowId );
+                        session.put( HomePage.APP_WINDOW_ID, windowId );
                         return;
                     }
                 }

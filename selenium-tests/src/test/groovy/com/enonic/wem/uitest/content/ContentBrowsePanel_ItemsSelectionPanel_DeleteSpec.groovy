@@ -71,7 +71,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         given: "four contents selected"
         List<String> contentList = new ArrayList<>();
         Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(), shortcut3.getName() );
-        filterPanel.typeSearchText( parentFolder.getName() )
+        filterPanel.typeSearchText( parentFolder.getName() );
         contentBrowsePanel.expandContent( shortcut1.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "three-items-selected" );
         contentBrowsePanel.selectContentInTable( contentList );
@@ -95,7 +95,8 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         given: "parent and children are selected"
         List<String> contentList = new ArrayList<>();
         Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(),
-                            shortcut3.getName() ); filterPanel.typeSearchText( parentFolder.getName() )
+                            shortcut3.getName() );
+        filterPanel.typeSearchText( parentFolder.getName() );
         contentBrowsePanel.expandContent( shortcut1.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "item_selection_clear1" );
         contentBrowsePanel.selectContentInTable( contentList )
@@ -117,7 +118,8 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         given: "parent and children are selected"
         List<String> contentList = new ArrayList<>();
         Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(),
-                            shortcut3.getName() ); filterPanel.typeSearchText( parentFolder.getName() )
+                            shortcut3.getName() );
+        filterPanel.typeSearchText( parentFolder.getName() )
         contentBrowsePanel.expandContent( shortcut1.getParent() );
         TestUtils.saveScreenshot( getTestSession(), "item_selection_4" );
         contentBrowsePanel.selectContentInTable( contentList )

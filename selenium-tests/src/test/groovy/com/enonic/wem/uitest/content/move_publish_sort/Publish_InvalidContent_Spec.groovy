@@ -16,6 +16,9 @@ class Publish_InvalidContent_Spec
     @Shared
     Content invalidFolder;
 
+    @Shared
+    String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
+
     def "GIVEN creating a not valid content WHEN data typed and 'Publish' button on the wizard toolbar pressed THEN notification warning appears and content not published"()
     {
         given:
@@ -26,7 +29,7 @@ class Publish_InvalidContent_Spec
             invalidFolder ).save();
 
         then: "content is not valid"
-        wizard.isContentInvalid( Application.UNNAMED_FOLDER_TAB_NAME );
+        wizard.isContentInvalid( UNNAMED_FOLDER_TAB_NAME );
 
         and: "'Publish' button is disabled"
         !wizard.isPublishButtonEnabled();

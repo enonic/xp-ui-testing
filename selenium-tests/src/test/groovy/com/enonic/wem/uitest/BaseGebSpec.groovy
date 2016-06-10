@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest
 
 import com.enonic.autotests.TestSession
-import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.HomePage
 import geb.spock.GebSpec
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.JavascriptExecutor
@@ -24,9 +24,9 @@ class BaseGebSpec
             session.setLoggedIn( false )
         }
 
-        if ( session.get( Application.APP_WINDOW_ID ) != null )
+        if ( session.get( HomePage.APP_WINDOW_ID ) != null )
         {
-            closeAllApp( session.get( Application.HOME_WINDOW_ID ) );
+            closeAllApp( session.get( HomePage.HOME_WINDOW_ID ) );
         }
         resetBrowser();
     }
@@ -49,7 +49,7 @@ class BaseGebSpec
                 getDriver().close();
             }
         }
-        session.put( Application.APP_WINDOW_ID, null );
+        session.put( HomePage.APP_WINDOW_ID, null );
         getDriver().switchTo().window( homeHandle );
     }
 

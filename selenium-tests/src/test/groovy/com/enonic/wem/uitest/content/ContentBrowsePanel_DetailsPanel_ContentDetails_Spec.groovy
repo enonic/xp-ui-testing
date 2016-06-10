@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.schema.content.ContentTypeName
@@ -12,6 +11,9 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     @Shared
     Content folderContent;
 
+    @Shared
+    String UNNAMED_SITE_DISPLAY_NAME = "<Unnamed Site>";
+
     def "GIVEN site wizard opened AND and HomeButton clicked WHEN unnamed content selected in greed THEN correct display name is shown"()
     {
         given: "site wizard opened AND and HomeButton clicked"
@@ -20,11 +22,11 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
 
         when: "unnamed content selected in greed"
         filterPanel.typeSearchText( "unnamed" )
-        contentBrowsePanel.selectRowByDisplayName( Application.UNNAMED_SITE_DISPLAY_NAME );
+        contentBrowsePanel.selectRowByDisplayName( UNNAMED_SITE_DISPLAY_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
         then: "correct display name is shown"
-        contentDetailsPanel.getContentDisplayName() == Application.UNNAMED_SITE_DISPLAY_NAME;
+        contentDetailsPanel.getContentDisplayName() == UNNAMED_SITE_DISPLAY_NAME;
     }
 
     def "WHEN no one content selected THEN 'Details Panel Toggle' button is displayed AND details panel not displayed"()

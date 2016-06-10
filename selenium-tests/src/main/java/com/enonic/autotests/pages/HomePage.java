@@ -22,6 +22,10 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class HomePage
     extends Application
 {
+    public static final String APP_WINDOW_ID = "app_window_id_key";
+
+    public static final String HOME_WINDOW_ID = "home_window_id_key";
+
     private final String HOME_MAIN_CONTAINER = "//div[@class='home-main-container']";
 
 
@@ -129,7 +133,6 @@ public class HomePage
             TestUtils.saveScreenshot( getSession(), "new tab was not opened!" );
             throw new TestFrameworkException( "error during switching to   " + appName );
         }
-
     }
 
     public boolean isDisplayed()
