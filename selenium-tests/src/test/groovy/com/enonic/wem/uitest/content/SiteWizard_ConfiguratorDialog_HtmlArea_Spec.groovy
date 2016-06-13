@@ -5,7 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDial
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroType
-import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.TwitterConfigPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.TextAreaConfigPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -51,7 +51,10 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     String PAGE_TITLE = "Home Page";
 
     @Shared
-    String TEST_TWIT = "https://twitter.com/lashkov_74/status/740477223136813056";
+    String MACRO_TEXT = "test text";
+
+    @Shared
+    String EMBEDDED_IFRAME_CODE_RESULT = "[embed]" + MACRO_TEXT + "[/embed]";
 
     def "GIVEN creating new Site with configuration and a page-controller WHEN site saved and wizard closed THEN new site should be present"()
     {
@@ -195,7 +198,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         source.contains( backgroundPart );
     }
 
-    def "GIVEN site configurator dialog opened WHEN twitter macro inserted, and changes applied THEN correct text present in page sources"()
+    def "GIVEN site configurator dialog opened WHEN 'embedded iframe' macro inserted, and changes applied THEN correct text present in page sources"()
     {
         given: "site opened"
         filterPanel.typeSearchText( SITE.getName() );
@@ -203,25 +206,25 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfiguration( CONTENT_TYPES_NAME_APP );
 
-        and: "twitter macro inserted, and changes applied"
+        and: "'embedded iframe' macro inserted, and changes applied"
         MacroModalDialog macroModalDialog = configurationDialog.showToolbarAndClickOnInsertMacroButton();
         sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "conf-dialog-macro" );
+        TestUtils.saveScreenshot( getSession(), "site_conf_dialog_macro" );
         PropertyTree data = new PropertyTree();
-        data.addString( TwitterConfigPanel.URL_VALUE, TEST_TWIT );
-        macroModalDialog.selectOption( MacroType.TWITTER ).getMacroConfigPanel().typeData( data );
+        data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, EMBEDDED_IFRAME_CODE_RESULT );
+        macroModalDialog.selectOption( MacroType.EMBEDDED_IFRAME ).getMacroConfigPanel().typeData( data );
         macroModalDialog.clickInsertButton();
         configurationDialog.doApply();
 
         when: "preview button pressed"
         wizard.clickToolbarPreview();
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
-        TestUtils.saveScreenshot( getSession(), "preview" );
+        TestUtils.saveScreenshot( getSession(), "site_config_preview" );
 
         then: "page source of new opened tab in a browser is not empty"
         source != null;
 
-        and: "twitter text is present in the sources"
-        source.contains( "twitter-tweet" );
+        and: "iframe text is present in the sources"
+        source.contains( "iframe" );
     }
 }

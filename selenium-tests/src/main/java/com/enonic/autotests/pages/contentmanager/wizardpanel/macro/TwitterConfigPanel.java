@@ -61,6 +61,15 @@ public class TwitterConfigPanel
 
     public String getValidationMessage()
     {
-        return getDisplayedString( VALIDATION_MESSAGE );
+        if ( isValidationMessagePresent() )
+        {
+            return getDisplayedString( VALIDATION_MESSAGE );
+        }
+        return null;
+    }
+
+    public boolean isValidationMessagePresent()
+    {
+        return isElementDisplayed( VALIDATION_MESSAGE );
     }
 }

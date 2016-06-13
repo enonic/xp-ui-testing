@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroType
-import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.TwitterConfigPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.YoutubeConfigPanel
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -11,44 +11,36 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Ignore
 import spock.lang.Shared
 
-class MacroModalDialog_Twitter_Spec
+class MacroModalDialog_Youtube_Spec
     extends Base_InputFields_Occurrences
-
 {
     @Shared
     Content HTML_AREA_CONTENT;
 
     @Shared
-    String TEST_TWIT = "https://twitter.com/lashkov_74/status/740477223136813056";
-
-    @Shared
-    String LANGUAGE_STRING = "en";
+    String ENONIC_INTRO_URL = "https://www.youtube.com/watch?v=cFfxuWUgcvI";
 
     //this is macro was removed into the 'social applications'
     @Ignore
-    def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND data saved THEN correct macro is displayed in the htmlarea"()
+    def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND content saved THEN correct macro is displayed in the htmlarea"()
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
+
         and: "MacroDialog opened"
         ContentWizardPanel wizard = selectSiteOpenWizard( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        when: "twitter-macro selected from the options"
+        when: "youtube-macro selected from the options"
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
         PropertyTree data = new PropertyTree();
-        data.addString( TwitterConfigPanel.URL_VALUE, TEST_TWIT );
-        data.addString( TwitterConfigPanel.LANG_VALUE, LANGUAGE_STRING );
-        dialog.selectOption( MacroType.TWITTER ).getMacroConfigPanel().typeData( data );
+        data.addString( YoutubeConfigPanel.URL_VALUE, ENONIC_INTRO_URL );
+        dialog.selectOption( MacroType.YOUTUBE ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "test_macro_twit_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
-        formViewPanel.getText().contains( TEST_TWIT );
-
-        and:
-        formViewPanel.getText().contains( LANGUAGE_STRING );
+        formViewPanel.getText().contains( ENONIC_INTRO_URL );
     }
     //this is macro was removed into the 'social applications'
     @Ignore
@@ -56,28 +48,29 @@ class MacroModalDialog_Twitter_Spec
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
-        and: "MacroDialog opened"
+        and: "MacroModalDialog opened"
         selectSiteOpenWizard( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         when: "twitter-macro selected from the options"
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
         PropertyTree data = new PropertyTree();
-        data.addString( TwitterConfigPanel.URL_VALUE, " " );
-        dialog.selectOption( MacroType.TWITTER ).getMacroConfigPanel().typeData( data );
+        data.addString( YoutubeConfigPanel.URL_VALUE, " " );
+        dialog.selectOption( MacroType.YOUTUBE ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
-        TestUtils.saveScreenshot( getSession(), "test_macro_twit_not_valid" );
+        TestUtils.saveScreenshot( getSession(), "test_macro_youtube_url_empty" );
 
         then: "modal dialog is not closed"
         dialog.isOpened();
 
         and: "URL input has a red border"
-        ( (TwitterConfigPanel) dialog.getMacroConfigPanel() ).isUrlInputInvalid();
+        ( (YoutubeConfigPanel) dialog.getMacroConfigPanel() ).isUrlInputInvalid();
 
         and:
-        ( (TwitterConfigPanel) dialog.getMacroConfigPanel() ).isValidationMessagePresent();
+        ( (YoutubeConfigPanel) dialog.getMacroConfigPanel() ).isValidationMessagePresent();
 
+        and:
         and: "correct validation message appears"
-        ( (TwitterConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
+        ( (YoutubeConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
     }
 }

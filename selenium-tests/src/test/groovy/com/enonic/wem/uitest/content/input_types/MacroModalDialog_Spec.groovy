@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroType
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -44,7 +45,7 @@ class MacroModalDialog_Spec
         dialog.getHeader() == MacroModalDialog.DIALOG_HEADER_TEXT;
     }
 
-    def "GIVEN MacroModalDialog opened WHEN twitter macro selected THEN correct macro is displayed on the dialog"()
+    def "GIVEN MacroModalDialog opened WHEN 'embedded iframe' macro selected THEN correct macro is displayed on the dialog"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
@@ -52,12 +53,12 @@ class MacroModalDialog_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
-        when: "twitter-macro selected from the options"
-        dialog.selectOption( MacroType.TWITTER );
-        TestUtils.saveScreenshot( getSession(), "test_twitter_macro" );
+        when: "'embedded iframe'-macro selected from the options"
+        dialog.selectOption( MacroType.EMBEDDED_IFRAME );
+        TestUtils.saveScreenshot( getSession(), "test_embedded_iframe_macro" );
 
         then: "correct macro is displayed on the dialog"
-        dialog.getSelectedMacroDisplayName() == MacroType.TWITTER.getValue();
+        dialog.getSelectedMacroDisplayName() == MacroType.EMBEDDED_IFRAME.getValue();
 
         and: "'configuration' tab link appears"
         dialog.isConfigurationTabLinkPresent();
@@ -69,7 +70,7 @@ class MacroModalDialog_Spec
         dialog.isRemoveMacroButtonPresent();
     }
 
-    def "GIVEN MacroModalDialog opened WHEN YouTube macro selected THEN correct macro is displayed on the dialog"()
+    def "GIVEN MacroModalDialog opened WHEN 'disable macro' selected THEN correct macro is displayed on the dialog"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
@@ -77,12 +78,12 @@ class MacroModalDialog_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
-        when: "youtube-macro selected from the options"
-        dialog.selectOption( MacroType.YOUTUBE );
-        TestUtils.saveScreenshot( getSession(), "test_youtube_macro" );
+        when: "'Disable macros' selected from the options"
+        dialog.selectOption( MacroType.DISABLE_MACROS );
+        TestUtils.saveScreenshot( getSession(), "test_disable_macro" );
 
         then: "correct macro is displayed on the dialog"
-        dialog.getSelectedMacroDisplayName() == MacroType.YOUTUBE.getValue();
+        dialog.getSelectedMacroDisplayName() == MacroType.DISABLE_MACROS.getValue();
 
         and: "'configuration' tab link displayed"
         dialog.isConfigurationTabLinkPresent();
@@ -94,6 +95,7 @@ class MacroModalDialog_Spec
         dialog.isRemoveMacroButtonPresent();
     }
 
+    @Ignore
     def "GIVEN MacroModalDialog opened WHEN 'embedded code' macro selected THEN correct macro is displayed on the dialog"()
     {
         given: "existing content with html-area is opened"
@@ -119,6 +121,7 @@ class MacroModalDialog_Spec
         dialog.isRemoveMacroButtonPresent()
     }
 
+    @Ignore
     def "GIVEN MacroModalDialog opened WHEN 'No Format macro' macro selected THEN correct macro is displayed on the dialog"()
     {
         given: "existing content with html-area is opened"
@@ -159,6 +162,7 @@ class MacroModalDialog_Spec
         dialog.waitForClosed();
     }
 
+    @Ignore
     def "GIVEN MacroModalDialog opened AND YouTube macro selected WHEN 'remove macro' button has been pressed THEN macro-view removed"()
     {
         given: "existing content with html-area is opened"
