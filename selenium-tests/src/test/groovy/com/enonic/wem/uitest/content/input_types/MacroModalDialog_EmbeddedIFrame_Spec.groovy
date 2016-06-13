@@ -31,7 +31,7 @@ class MacroModalDialog_EmbeddedIFrame_Spec
         ContentWizardPanel wizard = selectSiteOpenWizard( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        when: "youtube-macro selected from the options"
+        when: "'embedded code' selected from the options"
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, TEST_TEXT );
@@ -45,7 +45,7 @@ class MacroModalDialog_EmbeddedIFrame_Spec
     }
 
 
-    def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND URL not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
+    def "GIVEN MacroModalDialog opened WHEN 'embedded code' macro selected AND text not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
@@ -53,7 +53,7 @@ class MacroModalDialog_EmbeddedIFrame_Spec
         selectSiteOpenWizard( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        when: "twitter-macro selected from the options"
+        when: "'embedded code' selected from the options"
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, " " );
@@ -64,7 +64,7 @@ class MacroModalDialog_EmbeddedIFrame_Spec
         then: "modal dialog is not closed"
         dialog.isOpened();
 
-        and: "URL input has a red border"
+        and: "text area has a red border"
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).isTextAreaInvalid();
 
         and:
