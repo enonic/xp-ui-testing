@@ -43,6 +43,8 @@ public class MacroModalDialog
 
     private MacroConfigPanel macroConfigPanel;
 
+    private MacroPreviewPanel macroPreviewPanel;
+
     @FindBy(xpath = FILTER_INPUT)
     private WebElement optionFilterInput;
 
@@ -97,6 +99,20 @@ public class MacroModalDialog
         removeMacroButton.click();
         sleep( 300 );
         return this;
+    }
+
+    public MacroPreviewPanel clickOnPreviewTabLink()
+    {
+        previewTabLink.click();
+        sleep( 200 );
+        return new MacroPreviewPanel( getSession() );
+    }
+
+    public MacroConfigPanel clickOnConfigurationTabLink()
+    {
+        configurationTabLink.click();
+        sleep( 200 );
+        return macroConfigPanel;
     }
 
     public boolean isCancelButtonDisplayed()

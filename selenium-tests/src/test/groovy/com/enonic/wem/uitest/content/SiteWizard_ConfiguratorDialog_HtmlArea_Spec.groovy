@@ -212,7 +212,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         TestUtils.saveScreenshot( getSession(), "site_conf_dialog_macro" );
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, EMBEDDED_IFRAME_CODE_RESULT );
-        macroModalDialog.selectOption( MacroType.EMBEDDED_IFRAME ).getMacroConfigPanel().typeData( data );
+        macroModalDialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
         macroModalDialog.clickInsertButton();
         configurationDialog.doApply();
 

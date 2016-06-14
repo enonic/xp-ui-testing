@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -462,9 +463,19 @@ public class ContentBrowsePanel
         return this;
     }
 
+    public ContentBrowsePanel selectContentInTable( String... contentNames )
+    {
+        Arrays.asList( contentNames ).forEach( name -> selectContentInTable( name ) );
+        return this;
+    }
+
     public ContentBrowsePanel selectContentInTable( String contentName )
     {
         boolean exist = doScrollAndFindGridItem( contentName );
+        if ( !exist )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_content_not_found" + contentName );
+        }
         if ( !isRowSelected( contentName ) )
         {
             clickCheckboxAndSelectRow( contentName );

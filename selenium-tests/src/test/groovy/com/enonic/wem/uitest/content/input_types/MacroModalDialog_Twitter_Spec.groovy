@@ -24,7 +24,7 @@ class MacroModalDialog_Twitter_Spec
     @Shared
     String LANGUAGE_STRING = "en";
 
-    //this is macro was removed into the 'social applications'
+    //this is macro was moved into the 'social applications'
     @Ignore
     def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND data saved THEN correct macro is displayed in the htmlarea"()
     {
@@ -50,7 +50,7 @@ class MacroModalDialog_Twitter_Spec
         and:
         formViewPanel.getText().contains( LANGUAGE_STRING );
     }
-    //this is macro was removed into the 'social applications'
+    //this is macro was moved into the 'social applications'
     @Ignore
     def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND URL not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
     {

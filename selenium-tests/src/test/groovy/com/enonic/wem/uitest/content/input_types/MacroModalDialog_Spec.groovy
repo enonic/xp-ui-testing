@@ -54,11 +54,11 @@ class MacroModalDialog_Spec
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
         when: "'embedded iframe'-macro selected from the options"
-        dialog.selectOption( MacroType.EMBEDDED_IFRAME );
+        dialog.selectOption( MacroType.EMBED_IFRAME );
         TestUtils.saveScreenshot( getSession(), "test_embedded_iframe_macro" );
 
         then: "correct macro is displayed on the dialog"
-        dialog.getSelectedMacroDisplayName() == MacroType.EMBEDDED_IFRAME.getValue();
+        dialog.getSelectedMacroDisplayName() == MacroType.EMBED_IFRAME.getValue();
 
         and: "'configuration' tab link appears"
         dialog.isConfigurationTabLinkPresent();

@@ -111,6 +111,12 @@ public class DeleteContentDialog
         sleep( 1000 );
     }
 
+    public DeleteContentDialog clickOnDeleteButton()
+    {
+        deleteButton.click();
+        return this;
+    }
+
     public DeleteContentDialog clickOnInstantlyCheckbox()
     {
         checkBoxDiv.click();
