@@ -10,8 +10,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
-
 public class LauncherPanel
     extends Application
 {
@@ -189,13 +187,19 @@ public class LauncherPanel
 
     public void waitUntilPanelLoaded()
     {
-        WebElement launcherPanel = getDisplayedElement( By.xpath( PANEL_DIV ) );
-        boolean isLoaded = waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_NORMAL );
-        if ( !isLoaded )
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( PANEL_DIV ), Application.EXPLICIT_NORMAL );
+        if ( !isVisible )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_load" ) );
             throw new TestFrameworkException( "launcher panel was not loaded!" );
         }
-        sleep( 500 );
+//        WebElement launcherPanel = getDisplayedElement( By.xpath( PANEL_DIV ));
+//        boolean isLoaded = waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_NORMAL );
+//        if ( !isLoaded )
+//        {
+//            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_load" ) );
+//            throw new TestFrameworkException( "launcher panel was not loaded!" );
+//        }
+//        sleep( 500 );
     }
 }

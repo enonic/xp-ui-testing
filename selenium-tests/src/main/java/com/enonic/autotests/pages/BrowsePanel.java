@@ -751,7 +751,7 @@ public abstract class BrowsePanel
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
         Actions action = new Actions( getDriver() );
         action.contextClick( element ).build().perform();
-        sleep( 100 );
+        sleep( 300 );
     }
 
     public boolean isContextMenuItemEnabled( String action )

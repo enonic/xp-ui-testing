@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
@@ -14,6 +15,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     @Shared
     String UNNAMED_SITE_DISPLAY_NAME = "<Unnamed Site>";
 
+    @Ignore
     def "GIVEN site wizard opened AND and HomeButton clicked WHEN unnamed content selected in greed THEN correct display name is shown"()
     {
         given: "site wizard opened AND and HomeButton clicked"

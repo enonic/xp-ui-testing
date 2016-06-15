@@ -25,6 +25,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.doShowFilterPanel();
 
         when:
+        TestUtils.saveScreenshot( getTestSession(), "filter_panel_unstructured_before_selecting" );
         String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "filter_panel_unstructured_selected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
