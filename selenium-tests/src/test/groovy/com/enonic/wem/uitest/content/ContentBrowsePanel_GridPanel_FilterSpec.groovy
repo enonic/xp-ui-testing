@@ -55,12 +55,12 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.doShowFilterPanel();
 
         when: "Selecting one entry in ContentTypes-filter"
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         TestUtils.saveScreenshot( getSession(), "filter_unstructured" )
 
         then: "all existing Content of the selected type should be listed in gridPanel"
-        Integer numberOfFilteredContent = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        Integer numberOfFilteredContent = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         numberOfFilteredContent == contentBrowsePanel.getRowNumber();
     }
 
@@ -68,7 +68,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given: "selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         boolean beforeClean = contentBrowsePanel.exists( initialFolder.getName() );
 
@@ -84,17 +84,17 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given: "one selection in ContentTypes-filter"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        Integer numberOfData = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        Integer numberOfData = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
 
         when: "selecting one additional entry in ContentTypes-filter"
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.FOLDER.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.FOLDER.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
         TestUtils.saveScreenshot( getTestSession(), "one-selection1" );
 
         then: "all existing content of the both selected types should be listed in gridPanel"
-        Integer numberOfFolder = filterPanel.getNumberFilteredByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
+        Integer numberOfFolder = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
         ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowNumber();
     }
 
@@ -102,13 +102,13 @@ class ContentBrowsePanel_GridPanel_FilterSpec
     {
         given: "one selection in any filter"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
         TestUtils.saveScreenshot( getTestSession(), "one-selection2" );
         boolean existsBeforeDeselect = contentBrowsePanel.exists( initialFolder.getName() );
 
         when: "deselecting selection"
-        filterPanel.deselectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.deselectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "one-selection-deselected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 

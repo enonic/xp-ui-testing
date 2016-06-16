@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -24,13 +23,14 @@ public class ContentBrowseFilterPanel
 {
     private String FILTER_PANEL_DIV = "//div[contains(@class,'filter-panel')]";
 
-    private String CONTENT_TYPE_FILTER_ITEM =
-        "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
+    private final String CONTENT_TYPE_AGGREGATION_VIEW = "//div[contains(@id,'ContentTypeAggregationGroupView')]";
 
-    private String LAST_MODIFIED_FILTER_ITEM =
-        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
+    private String CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME =
+        CONTENT_TYPE_AGGREGATION_VIEW + "//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
 
-    private String LAST_MODIFIED_FILTER_ENTRY =
+    private String CONTENT_TYPE_AGGREGATION_ITEMS = CONTENT_TYPE_AGGREGATION_VIEW + "//div[@class='checkbox form-input']//label";
+
+    private String LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME =
         "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='checkbox form-input' and child::label]//label[contains(.,'%s')]";
 
     public enum ContentTypeDisplayNames
@@ -66,35 +66,38 @@ public class ContentBrowseFilterPanel
         return new ContentBrowsePanel( getSession() );
     }
 
-    public List<String> getAllContentTypesFilterEntries()
+    public List<String> getContentTypesAggregationValues()
     {
         sleep( 500 );
-
-        List<WebElement> elements = getDriver().findElements( By.xpath(
-            "//div[@class='aggregation-group-view']/h2[text()='Content Types']/..//div[@class='aggregation-bucket-view' and descendant::label]//label" ) );
-        return elements.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+        return getDisplayedStrings( By.xpath( CONTENT_TYPE_AGGREGATION_ITEMS ) );
     }
 
-    public List<String> getAllLastModifiedFilterEntries()
+    /**
+     * @param contentTypeName
+     * @return
+     */
+    public Integer getNumberAggregatedByContentType( String contentTypeName )
     {
-        List<WebElement> elements = getDriver().findElements( By.xpath(
-            "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='aggregation-bucket-view' and child::label]//label" ) );
-        List<String> labels = new ArrayList<>();
-        for ( WebElement el : elements )
+        String itemXpath = String.format( CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME, contentTypeName );
+        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
+        if ( elems.size() == 0 )
         {
-            labels.add( el.getText() );
+            return 0;
         }
-        return labels;
+        if ( !elems.get( 0 ).isDisplayed() )
+        {
+            return 0;
+        }
+        return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
     }
 
-    public Integer getContentNumberFilteredByLastModified( FilterPanelLastModified entry )
+    public Integer getNumberAggregatedByLastModified( FilterPanelLastModified aggregation )
     {
-        TestUtils.saveScreenshot( getSession(), "lastmodified" );
-        String xpath = String.format( LAST_MODIFIED_FILTER_ENTRY, entry.getValue() );
-        List<WebElement> elements = getDriver().findElements( By.xpath( xpath ) );
+        String xpath = String.format( LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME, aggregation.getValue() );
+        List<WebElement> elements = findElements( By.xpath( xpath ) );
         if ( elements.size() == 0 )
         {
-            getLogger().info( "entry was not found:: " + entry.getValue() );
+            getLogger().info( "entry was not found:: " + aggregation.getValue() );
             return null;
         }
         if ( !elements.get( 0 ).isDisplayed() )
@@ -119,7 +122,7 @@ public class ContentBrowseFilterPanel
      */
     public void selectEntryInLastModifiedFilter( FilterPanelLastModified date )
     {
-        String rangeXpath = String.format( LAST_MODIFIED_FILTER_ITEM, date.getValue() );
+        String rangeXpath = String.format( LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME, date.getValue() );
         boolean isVisible = waitUntilVisibleNoException( By.xpath( rangeXpath ), 1l );
         if ( !isVisible )
         {
@@ -147,13 +150,14 @@ public class ContentBrowseFilterPanel
      *
      * @param contentTypeDisplayName
      */
-    public String selectEntryInContentTypesFilter( String contentTypeDisplayName )
+    public String selectContentTypeInAggregationView( String contentTypeDisplayName )
     {
         if ( !isFilterPanelDisplayed() )
         {
-
+            TestUtils.saveScreenshot( getSession(), "err_show_filter_panel" );
+            throw new TestFrameworkException( "FilterPanel not shown!" );
         }
-        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeDisplayName );
+        String itemXpath = String.format( CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME, contentTypeDisplayName );
         WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
         if ( element == null )
         {
@@ -164,7 +168,7 @@ public class ContentBrowseFilterPanel
         else
         {
             waitsForSpinnerNotVisible();
-            if ( !isSelectedEntryInFilter( contentTypeDisplayName ) )
+            if ( !isEntrySelected( contentTypeDisplayName ) )
             {
                 getDynamicElement( By.xpath( itemXpath ), 2 ).click();
                 waitsForSpinnerNotVisible();
@@ -173,9 +177,9 @@ public class ContentBrowseFilterPanel
         return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();
     }
 
-    public String deselectEntryInContentTypesFilter( String contentTypeDisplayName )
+    public String deselectContentTypeInAggregationView( String contentTypeDisplayName )
     {
-        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeDisplayName );
+        String itemXpath = String.format( CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME, contentTypeDisplayName );
         WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
         if ( element == null )
         {
@@ -190,31 +194,13 @@ public class ContentBrowseFilterPanel
         return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();
     }
 
-    /**
-     * @param contentTypeName
-     * @return
-     */
-    public Integer getNumberFilteredByContentType( String contentTypeName )
+
+    boolean isEntrySelected( String contentTypeDisplayName )
     {
-        String itemXpath = String.format( CONTENT_TYPE_FILTER_ITEM, contentTypeName );
-        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
-        if ( elems.size() == 0 )
-        {
-            return 0;
-        }
-        if ( !elems.get( 0 ).isDisplayed() )
-        {
-            return 0;
-        }
-        return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
+        return getSelectedValuesFromContentTypesAggregationView().contains( contentTypeDisplayName.toLowerCase() );
     }
 
-    boolean isSelectedEntryInFilter( String contentTypeDisplayName )
-    {
-        return getSelectedValuesForContentTypesFilter().contains( contentTypeDisplayName.toLowerCase() );
-    }
-
-    public List<String> getSelectedValuesForContentTypesFilter()
+    public List<String> getSelectedValuesFromContentTypesAggregationView()
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         WebElement filterPanel = getDisplayedElement( By.xpath( FILTER_PANEL_DIV ) );
@@ -239,7 +225,7 @@ public class ContentBrowseFilterPanel
      */
     public Integer getLastModifiedCount( String filterItem )
     {
-        String itemXpath = String.format( LAST_MODIFIED_FILTER_ITEM, filterItem );
+        String itemXpath = String.format( LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME, filterItem );
         List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
         {

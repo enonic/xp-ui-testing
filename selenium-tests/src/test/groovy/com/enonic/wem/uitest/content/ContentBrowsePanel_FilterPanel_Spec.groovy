@@ -26,7 +26,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when:
         TestUtils.saveScreenshot( getTestSession(), "filter_panel_unstructured_before_selecting" );
-        String label = filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        String label = filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "filter_panel_unstructured_selected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
@@ -38,7 +38,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given: "selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         boolean visibleBefore = filterPanel.waitForClearFilterLinkVisible();
 
         when: "clicking CleanFilter"
@@ -57,12 +57,12 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given: "Selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectEntryInContentTypesFilter( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        TestUtils.saveScreenshot( getTestSession(), "test_cleanFilter_entry_selected" );
         when: "clicking CleanFilter"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "CleanFilter_clicked" );
+        TestUtils.saveScreenshot( getTestSession(), "test_cleanFilter_cleared" );
 
         then: "all selections should disappear"
         !contentBrowsePanel.getFilterPanel().isAnySelectionPresent();
@@ -73,7 +73,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         given:
         Content folder = buildFolderContent( "folder", "last modified test" );
         contentBrowsePanel.doShowFilterPanel();
-        int beforeAdding = filterPanel.getNumberFilteredByContentType( "Folder" );
+        int beforeAdding = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
 
         when: "content saved and the HomeButton clicked"
@@ -82,7 +82,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         sleep( 1000 );
 
         then: "new ContentType-filter should be updated with new count"
-        filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1
+        filterPanel.getNumberAggregatedByContentType( "Folder" ) - beforeAdding == 1
 
         and: "LastModified-filter should be updated with new count"
         filterPanel.getLastModifiedCount( "day" ) - lastModifiedBeforeAdding == 1;
@@ -94,7 +94,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.doShowFilterPanel();
         TEST_FOLDER = buildFolderContent( "folder", "last modified test 2" );
         TestUtils.saveScreenshot( getSession(), "last-mod-day-before-adding" );
-        int beforeAdding = filterPanel.getNumberFilteredByContentType( "Folder" );
+        int beforeAdding = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).
             typeData( TEST_FOLDER );
@@ -105,7 +105,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         TestUtils.saveScreenshot( getSession(), "last-mod-day-increased" );
 
         then: "folders count increased by 1"
-        filterPanel.getNumberFilteredByContentType( "Folder" ) - beforeAdding == 1
+        filterPanel.getNumberAggregatedByContentType( "Folder" ) - beforeAdding == 1
 
         and: "last modified count increased by 1"
         filterPanel.getLastModifiedCount( "day" ) - lastModifiedBeforeAdding == 1;
@@ -113,19 +113,20 @@ class ContentBrowsePanel_FilterPanel_Spec
 
     def "GIVEN a content WHEN it deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
-        given:
+        given: "existing folder"
         contentBrowsePanel.doShowFilterPanel();
-        TestUtils.saveScreenshot( getSession(), "LastModified_filter_before_folder_deleting" )
-        int beforeRemoving = filterPanel.getNumberFilteredByContentType( "Folder" );
+        TestUtils.saveScreenshot( getSession(), "LastModified_filter_before_folder_deleting" );
+        int beforeRemoving = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "day" );
+        TestUtils.saveScreenshot( getSession(), "test_LastModified_aggregation_before_deleting" );
 
-        when:
+        when: "the folder deleted"
         contentBrowsePanel.selectContentInTable( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
         sleep( 2000 );
-        TestUtils.saveScreenshot( getSession(), "LastModified_filter-folder-deleted" )
+        TestUtils.saveScreenshot( getSession(), "test_LastModified_aggregation_folder_deleted" )
 
         then: "folders count reduced by 1"
-        beforeRemoving - filterPanel.getNumberFilteredByContentType( "Folder" ) == 1
+        beforeRemoving - filterPanel.getNumberAggregatedByContentType( "Folder" ) == 1
 
         and: "last modified count reduced by 1"
         lastModifiedBeforeRemoving - filterPanel.getLastModifiedCount( "day" ) == 1;
@@ -141,42 +142,43 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "folder's name typed in the text input"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "searchText-" + TEST_FOLDER.getName() );
+        TestUtils.saveScreenshot( getTestSession(), "test_aggregation_searchText_typed" );
 
         then: "all filters should be updated to only contain entries with matches in text-search"
-        filterPanel.getNumberFilteredByContentType( "Folder" ) == 1;
+        filterPanel.getNumberAggregatedByContentType( "Folder" ) == 1;
 
         and:
         filterPanel.getLastModifiedCount( "hour" ) == 1;
     }
 
-    def "GIVEN no selections in filter WHEN selecting one entry in ContentTypes-filter THEN no changes in ContentTypes-filter"()
+    def "GIVEN no selections in filter WHEN selecting one entry in ContentTypes-aggregation THEN no changes in ContentTypes-aggregation"()
     {
         given: "no selections in filter and filter panel shown"
         contentBrowsePanel.doShowFilterPanel();
-        List<String> beforeSelect = filterPanel.getAllContentTypesFilterEntries();
+        List<String> beforeSelect = filterPanel.getContentTypesAggregationValues();
 
         when: "selecting one entry in ContentTypes-filter"
-        filterPanel.selectEntryInContentTypesFilter( "Folder" );
+        filterPanel.selectContentTypeInAggregationView( "Folder" );
 
         then: "no changes in ContentTypes-filter"
-        List<String> afterSelect = filterPanel.getAllContentTypesFilterEntries();
+        List<String> afterSelect = filterPanel.getContentTypesAggregationValues();
         beforeSelect.equals( afterSelect );
     }
 
-    def "GIVEN no selections in filter WHEN Selecting one entry in ContentTypes-filter THEN LastModified-filter should be updated with filtered values"()
+    def "GIVEN no selections in filter WHEN Selecting one entry in ContentTypes-aggregation THEN LastModified-aggregation should be updated with filtered values"()
     {
         given: "no selections in the filter panel"
         contentBrowsePanel.doShowFilterPanel();
-        Integer lastModifiedHourBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
-        Integer lastModifiedDayBefore = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.DAY );
+        Integer lastModifiedHourBefore = filterPanel.getNumberAggregatedByLastModified( FilterPanelLastModified.HOUR );
+        Integer lastModifiedDayBefore = filterPanel.getNumberAggregatedByLastModified( FilterPanelLastModified.DAY );
 
-        when: "selecting one entry in ContentTypes-filter (Image)"
-        filterPanel.selectEntryInContentTypesFilter( "Image" );
-        Integer newLastModifiedHour = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.HOUR );
-        Integer newLastModifiedDay = filterPanel.getContentNumberFilteredByLastModified( FilterPanelLastModified.DAY );
+        when: "selecting one entry in ContentTypes-aggregation (Image)"
+        filterPanel.selectContentTypeInAggregationView( "Image" );
+        TestUtils.saveScreenshot( getSession(), "test_filter_panel_image_selected" );
+        Integer newLastModifiedHour = filterPanel.getNumberAggregatedByLastModified( FilterPanelLastModified.HOUR );
+        Integer newLastModifiedDay = filterPanel.getNumberAggregatedByLastModified( FilterPanelLastModified.DAY );
 
-        then: "LastModified-filter should be updated with filtered values"
+        then: "LastModified-aggregation should be updated with filtered values"
         newLastModifiedHour != lastModifiedHourBefore;
         and:
         newLastModifiedDay != lastModifiedDayBefore;
@@ -186,21 +188,21 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given: "added a folder content and selection in any filter(folder)"
         contentBrowsePanel.doShowFilterPanel();
-        String label = filterPanel.selectEntryInContentTypesFilter( "Folder" );
+        String label = filterPanel.selectContentTypeInAggregationView( "Folder" );
         Integer numberOfFoldersBefore = TestUtils.getNumberFromFilterLabel( label );
 
         when: "adding text-search"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
-        TestUtils.saveScreenshot( getTestSession(), "typed_name" );
+        TestUtils.saveScreenshot( getTestSession(), "test_aggregation_selected_content_name_typed" );
 
         then: "all filters should be updated to only contain entries with selection"
-        Integer newNumberOfFolders = filterPanel.getNumberFilteredByContentType( "Folder" );
+        Integer newNumberOfFolders = filterPanel.getNumberAggregatedByContentType( "Folder" );
         newNumberOfFolders == 1;
 
         and:
         newNumberOfFolders != numberOfFoldersBefore;
 
         and: "number of checkbox in aggregation view is 1"
-        filterPanel.getAllContentTypesFilterEntries().size() == 1
+        filterPanel.getContentTypesAggregationValues().size() == 1
     }
 }
