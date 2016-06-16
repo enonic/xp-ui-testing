@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModi
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -31,7 +32,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then:
-        contentBrowsePanel.getRowNumber() == TestUtils.getNumberFromFilterLabel( label );
+        contentBrowsePanel.getRowsCount() == TestUtils.getNumberFromFilterLabel( label );
     }
 
     def "GIVEN selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappears"()
@@ -149,6 +150,24 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         and:
         filterPanel.getLastModifiedCount( "hour" ) == 1;
+    }
+    //XP-3586 Content not correctly filtered, when filter panel has been hidden
+    @Ignore
+    def "GIVEN existing folder WHEN name of folder typed in the filter panel AND filter panel has been hidden AND new folder has been added THEN only one folder with matches in text-search is displayed"()
+    {
+
+        given: "the name of existing folder typed"
+        filterPanel.typeSearchText( TEST_FOLDER.getName() );
+
+        when: "filter panel has been hidden"
+        contentBrowsePanel.doHideFilterPanel();
+
+        and: "new folder has been added"
+        Content newFolder = buildFolderContent( "folder", "test for  hidden filter panel" );
+        addContent( newFolder );
+
+        then: "only one folder with matches in text-search is displayed"
+        contentBrowsePanel.getRowsCount() == 1; ;
     }
 
     def "GIVEN no selections in filter WHEN selecting one entry in ContentTypes-aggregation THEN no changes in ContentTypes-aggregation"()

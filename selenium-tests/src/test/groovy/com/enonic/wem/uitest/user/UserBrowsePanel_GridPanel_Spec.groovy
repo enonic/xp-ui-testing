@@ -13,7 +13,7 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN user browse panel opened WHEN no selection THEN all rows are white"()
     {
         given:
-        int rowNumber = userBrowsePanel.getRowNumber();
+        int rowNumber = userBrowsePanel.getRowsCount();
 
         expect:
         userBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
@@ -67,7 +67,7 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.clickOnSelectAll();
 
         then: "the number of rows in the grid the same as number in the 'Select All' link"
-        userBrowsePanel.getRowNumber() == userBrowsePanel.getSelectedRowsNumber();
+        userBrowsePanel.getRowsCount() == userBrowsePanel.getSelectedRowsNumber();
     }
 
     def "GIVEN a 'system' folder on root having a child WHEN listed THEN expander is shown"()

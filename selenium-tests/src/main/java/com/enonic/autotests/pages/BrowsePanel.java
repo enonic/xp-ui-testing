@@ -432,7 +432,7 @@ public abstract class BrowsePanel
     /**
      * scrolls and count number of rows in browse panel.
      */
-    public int getRowNumber()
+    public int getRowsCount()
     {
         scrollViewPortToTop();
         Set<String> set = new HashSet<>();

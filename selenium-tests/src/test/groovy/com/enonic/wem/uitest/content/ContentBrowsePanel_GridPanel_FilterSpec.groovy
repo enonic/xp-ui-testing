@@ -61,7 +61,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then: "all existing Content of the selected type should be listed in gridPanel"
         Integer numberOfFilteredContent = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        numberOfFilteredContent == contentBrowsePanel.getRowNumber();
+        numberOfFilteredContent == contentBrowsePanel.getRowsCount();
     }
 
     def "GIVEN selections in any filter WHEN clicking clean filter THEN initial grid view displayed"()
@@ -95,7 +95,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then: "all existing content of the both selected types should be listed in gridPanel"
         Integer numberOfFolder = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
-        ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowNumber();
+        ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowsCount();
     }
 
     def "GIVEN one selection in any filter WHEN deselecting selection THEN initial grid view displayed"()
@@ -142,6 +142,6 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         TestUtils.saveScreenshot( getTestSession(), "text-search2" );
 
         then: "initial grid view displayed"
-        contentBrowsePanel.getRowNumber() > 1 && contentBrowsePanel.exists( initialFolder.getName() );
+        contentBrowsePanel.getRowsCount() > 1 && contentBrowsePanel.exists( initialFolder.getName() );
     }
 }

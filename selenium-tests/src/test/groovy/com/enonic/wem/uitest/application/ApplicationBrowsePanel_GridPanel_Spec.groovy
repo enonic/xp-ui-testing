@@ -10,7 +10,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
     def "GIVEN applications listed on root WHEN no selection THEN all rows are white"()
     {
         given:
-        int rowNumber = applicationBrowsePanel.getRowNumber();
+        int rowNumber = applicationBrowsePanel.getRowsCount();
 
         expect:
         applicationBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
