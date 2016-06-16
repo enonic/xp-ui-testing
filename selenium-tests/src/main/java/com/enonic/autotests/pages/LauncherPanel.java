@@ -180,6 +180,12 @@ public class LauncherPanel
 
     public LauncherPanel openPanel()
     {
+        boolean isLoaded = waitUntilVisibleNoException( By.xpath( OPEN_LAUNCHER_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isLoaded )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_button_load" ) );
+            throw new TestFrameworkException( "launcher button was not loaded!" );
+        }
         getDisplayedElement( By.xpath( OPEN_LAUNCHER_BUTTON ) ).click();
 
         return this;
@@ -193,13 +199,5 @@ public class LauncherPanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_load" ) );
             throw new TestFrameworkException( "launcher panel was not loaded!" );
         }
-//        WebElement launcherPanel = getDisplayedElement( By.xpath( PANEL_DIV ));
-//        boolean isLoaded = waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_NORMAL );
-//        if ( !isLoaded )
-//        {
-//            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_load" ) );
-//            throw new TestFrameworkException( "launcher panel was not loaded!" );
-//        }
-//        sleep( 500 );
     }
 }
