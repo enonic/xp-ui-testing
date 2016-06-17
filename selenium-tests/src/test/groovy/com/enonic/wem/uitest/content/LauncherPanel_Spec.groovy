@@ -90,6 +90,7 @@ class LauncherPanel_Spec
         NavigatorHelper.openUsersApp( getTestSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
+        TestUtils.saveScreenshot( getSession(), "test_launcher_application" );
 
         then:
         launcherPanel.getActiveLink() == "Users";
@@ -110,7 +111,7 @@ class LauncherPanel_Spec
 
         and: "button with 'lines' appears"
         launcherPanel.isOpenLauncherButtonPresent();
-        TestUtils.saveScreenshot( getSession(), "launcher-closed" );
+        TestUtils.saveScreenshot( getSession(), "launcher-closed-home-page" );
 
         and: "button 'close' not displayed now"
         !launcherPanel.isCloseButtonDisplayed();

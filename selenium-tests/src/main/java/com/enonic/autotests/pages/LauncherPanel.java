@@ -104,6 +104,11 @@ public class LauncherPanel
 
     public String getActiveLink()
     {
+        if ( !waitUntilVisibleNoException( By.xpath( ACTIVE_ROW_TEXT ), Application.EXPLICIT_NORMAL ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_launcher_active_link" );
+            throw new TestFrameworkException( "link was not found!" );
+        }
         return getDisplayedString( ACTIVE_ROW_TEXT );
     }
 
