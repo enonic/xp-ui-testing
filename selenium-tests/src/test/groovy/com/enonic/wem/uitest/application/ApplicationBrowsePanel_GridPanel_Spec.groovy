@@ -67,7 +67,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "select-all-apps" );
 
         then:
-        applicationBrowsePanel.getRowNumber() == applicationBrowsePanel.getSelectedRowsNumber();
+        applicationBrowsePanel.getRowsCount() == applicationBrowsePanel.getSelectedRowsNumber();
     }
 
 
