@@ -165,6 +165,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         and: "new folder has been added"
         Content newFolder = buildFolderContent( "folder", "test for  hidden filter panel" );
         addContent( newFolder );
+        TestUtils.saveScreenshot( getSession(), "test_text_typed_filter_panel_hidden" )
 
         then: "only one folder with matches in text-search is displayed"
         contentBrowsePanel.getRowsCount() == 1; ;

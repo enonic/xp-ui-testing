@@ -52,6 +52,7 @@ class Role_Save_Delete_Spec
         String roleCreatingMessage = roleWizardPanel.typeData( TEST_ROLE ).save().waitNotificationMessage();
         roleWizardPanel.close( TEST_ROLE.getDisplayName() );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
 
         then: "new role should be listed"
         TestUtils.saveScreenshot( getSession(), "role-added" );
