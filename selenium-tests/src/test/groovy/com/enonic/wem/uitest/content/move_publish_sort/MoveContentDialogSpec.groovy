@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.MoveContentDialog
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -98,6 +99,21 @@ class MoveContentDialogSpec
 
         when: "the 'cancel' button on the top of dialog pressed"
         dialog.clickOnCancelTopButton();
+
+        then: "dialog not present"
+        !dialog.isOpened()
+    }
+
+    def "GIVEN 'move' dialog opened WHEN 'Esc' button clicked  THEN modal dialog disappears"()
+    {
+        given:
+        findAndSelectContent( FIRST_CONTENT.getName() );
+        MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
+        TestUtils.saveScreenshot( getSession(), "test_move_dialog_esc_before" );
+
+        when: "the 'Esc' key pressed"
+        dialog.closeByClickingOnEsc();
+        TestUtils.saveScreenshot( getSession(), "test_move_dialog_esc_after" );
 
         then: "dialog not present"
         !dialog.isOpened()

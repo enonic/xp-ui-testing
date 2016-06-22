@@ -230,8 +230,48 @@ public class Initializer
             addEXEContent( testFolderPath );
 
             createSVG_Content( testFolderPath );
+
+            createPPTX_Content( testFolderPath );
+
+            createTXT_Content( testFolderPath );
         }
 
+    }
+
+    private void createCODE_Content( final ContentPath parent )
+        throws Exception
+    {
+        String fileName = "test.js";
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "text/javascript" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
+    }
+
+    private void createTXT_Content( final ContentPath parent )
+        throws Exception
+    {
+        String fileName = "test-text.txt";
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "text/plain" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
     }
 
     private void createSVG_Content( final ContentPath parent )
@@ -246,6 +286,24 @@ public class Initializer
 
         final CreateMediaParams params = new CreateMediaParams().
             mimeType( "image/svg+xml" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
+    }
+
+    private void createPPTX_Content( final ContentPath parent )
+        throws Exception
+    {
+        String fileName = "presentation.pptx";
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "application/vnd.ms-powerpoint" ).
             name( fileName ).
             parent( parent ).byteSource( ByteSource.wrap( bytes ) );
         contentService.create( params ).getId();

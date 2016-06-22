@@ -2,7 +2,9 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -76,6 +78,14 @@ public class MoveContentDialog
     public void clickOnCancelTopButton()
     {
         cancelButtonTop.click();
+        sleep( 200 );
+    }
+
+    public void closeByClickingOnEsc()
+    {
+        Actions actions = new Actions( getDriver() );
+        actions.sendKeys( Keys.ESCAPE );
+        actions.build().perform();
         sleep( 200 );
     }
 
