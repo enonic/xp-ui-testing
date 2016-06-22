@@ -33,6 +33,8 @@ public class ContentVersionInfoView
 
     private String TIMESTAMP_VALUE = ITEM_BY_ID + "//div[@class='version-info-timestamp']/span[2]";
 
+    private String OWNER_NAME_VALUE = ITEM_BY_ID + "//div[@class='viewer description']//h6[@class='main-name']";
+
     public ContentVersionInfoView( final TestSession session )
     {
         super( session );
@@ -80,6 +82,16 @@ public class ContentVersionInfoView
         {
             return "";
         }
+    }
+
+    public String getOwnerName( String versionId )
+    {
+        String ownerName = String.format( OWNER_NAME_VALUE, versionId );
+        if ( !isElementDisplayed( ownerName ) )
+        {
+            throw new TestFrameworkException( "owner name was not found! " + versionId );
+        }
+        return getDisplayedString( ownerName );
     }
 
     public String getTimeStamp( String versionId )

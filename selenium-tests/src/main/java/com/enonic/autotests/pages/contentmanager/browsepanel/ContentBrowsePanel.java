@@ -527,6 +527,13 @@ public class ContentBrowsePanel
         return newContentDialog;
     }
 
+    public ContentBrowsePanel clickToolbarDuplicate()
+    {
+        duplicateButton.click();
+        sleep( 1000 );
+        return this;
+    }
+
     public SortContentDialog clickToolbarSort()
     {
         if ( !isButtonDisplayed( SORT_BUTTON_XPATH ) )

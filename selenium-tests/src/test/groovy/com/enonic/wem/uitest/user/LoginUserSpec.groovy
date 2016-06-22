@@ -34,7 +34,7 @@ class LoginUserSpec
     private String USER_NAME = NameHelper.uniqueName( "user" );
 
     @Shared
-    User user
+    User USER_ADMIN_CONSOLE
 
     @Shared
     String USER_PASSWORD = "1q2w3e";
@@ -56,7 +56,7 @@ class LoginUserSpec
 
         and: "start adding a new user"
         String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CM_APP.getValue()];
-        user = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( USER_PASSWORD ).roles(
+        USER_ADMIN_CONSOLE = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( USER_PASSWORD ).roles(
             roles.toList() ).build();
 
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
@@ -64,11 +64,11 @@ class LoginUserSpec
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "data typed and user saved"
-        userWizardPanel.typeData( user ).save().close( user.getDisplayName() );
-        userBrowsePanel.getFilterPanel().typeSearchText( user.getDisplayName() );
+        userWizardPanel.typeData( USER_ADMIN_CONSOLE ).save().close( USER_ADMIN_CONSOLE.getDisplayName() );
+        userBrowsePanel.getFilterPanel().typeSearchText( USER_ADMIN_CONSOLE.getDisplayName() );
 
         then: "new user present beneath a system store"
-        userBrowsePanel.exists( user.getDisplayName(), true );
+        userBrowsePanel.exists( USER_ADMIN_CONSOLE.getDisplayName(), true );
     }
 
     def "WHEN new content with permissions for just created user added THEN Content is listed in BrowsePanel"()
@@ -146,8 +146,7 @@ class LoginUserSpec
     {
         given: "user manager opened"
         go "admin"
-        User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
-        getTestSession().setUser( user );
+        getTestSession().setUser( USER_ADMIN_CONSOLE );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         TestUtils.saveScreenshot( getSession(), "logged_" + USER_NAME );
 
@@ -162,17 +161,16 @@ class LoginUserSpec
 
     def "GIVEN just created user 'logged in' WHEN user opened a content without 'CAN_WRITE' permission and typed new 'display name' THEN 'save draft' button is disabled"()
     {
-        given: "user manager opened"
+        given: "just created user is 'logged in'"
         go "admin"
-        User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
-        getTestSession().setUser( user );
+        getTestSession().setUser( USER_ADMIN_CONSOLE );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
         TestUtils.saveScreenshot( getSession(), "logged_" + USER_NAME );
 
         when: "user opened a content without 'CAN_WRITE' permission and typed new display name"
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentCanNotWrite.getName() ).clickToolbarEdit();
         wizard.typeDisplayName( "content updated" );
-        TestUtils.saveScreenshot( getSession(), "save_disabled" );
+        TestUtils.saveScreenshot( getSession(), "test_perm_save_disabled" );
 
         then: "'save draft' button is disabled"
         !wizard.isSaveButtonEnabled()
@@ -180,17 +178,17 @@ class LoginUserSpec
 
     def "GIVEN user-wizard opened WHEN 'change password' button pressed THEN modal dialog appears"()
     {
-        given: "user-wizard opened"
+        given: "admin opens a user in the wizard"
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
         userBrowsePanel.expandUsersFolder( "system" );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
-            user.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
+            USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
 
         when: "'change password' button pressed"
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
-        TestUtils.saveScreenshot( getSession(), "change-pass-dialog" );
+        TestUtils.saveScreenshot( getSession(), "test_open_change_password_dialog" );
 
         then: "modal dialog appears"
         dialog.isOpened();
@@ -210,13 +208,13 @@ class LoginUserSpec
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
         userBrowsePanel.expandUsersFolder( "system" ).clickOnClearSelection();
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
-            user.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
+            USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
 
         when: "user's password was changed by administrator"
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
         dialog.doChangePassword( NEW_USER_PASSWORD );
-        TestUtils.saveScreenshot( getSession(), "password_changed" )
-        userWizardPanel.save().close( user.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "test_password_for_user_changed" )
+        userWizardPanel.save().close( USER_ADMIN_CONSOLE.getDisplayName() );
 
         then: "user-browse panel shown"
         userBrowsePanel.waitUntilPageLoaded( 2 );
@@ -229,20 +227,20 @@ class LoginUserSpec
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "old-password" );
+        TestUtils.saveScreenshot( getSession(), "test_login_old_password" );
 
         then: "old password should not work for login"
         thrown( AuthenticationException )
     }
 
-    def "WHEN user logged in with the new password THEN home page loaded"()
+    def "WHEN user 'logged in' with the new password THEN home page loaded"()
     {
         when: "login page opened and new password typed"
         go "admin"
         User user = User.builder().displayName( USER_NAME ).password( NEW_USER_PASSWORD ).build();
         getTestSession().setUser( user );
         HomePage home = NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "login-new-pass" );
+        TestUtils.saveScreenshot( getSession(), "test_login_with_new_pass" );
 
         then: "home page successfully loaded"
         home.isDisplayed();
