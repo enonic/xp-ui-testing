@@ -129,7 +129,7 @@ public class SettingsWizardStepForm
     {
         if ( isElementDisplayed( OWNER_TEXT ) )
         {
-            return findElements( By.xpath( OWNER_TEXT ) ).stream().map( WebElement::getText ).findFirst().get();
+            return getDisplayedString( OWNER_TEXT );
         }
         return null;
     }

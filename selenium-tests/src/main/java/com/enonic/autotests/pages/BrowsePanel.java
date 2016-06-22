@@ -45,7 +45,7 @@ public abstract class BrowsePanel
 
     protected final String ALL_NAMES_FROM_BROWSE_PANEL_XPATH = "//div[contains(@id,'NamesView')]/p[@class='sub-name']";
 
-    protected String CHECKBOX_ROW_CHECKER =
+    protected String ROW_CHECKBOX_BY_NAME =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
 
     protected static final String DIV_WITH_NAME =
@@ -689,7 +689,6 @@ public abstract class BrowsePanel
         return names;
     }
 
-
     public <T extends BrowsePanel> T clickCheckboxAndSelectRow( String itemName )
     {
         if ( !doScrollAndFindGridItem( itemName ) )
@@ -697,7 +696,7 @@ public abstract class BrowsePanel
             TestUtils.saveScreenshot( getSession(), "err_find_" + itemName );
             throw new TestFrameworkException( "grid item was not found! " + itemName );
         }
-        String itemCheckBoxXpath = String.format( CHECKBOX_ROW_CHECKER, itemName );
+        String itemCheckBoxXpath = String.format( ROW_CHECKBOX_BY_NAME, itemName );
 
         getLogger().info( "Xpath of checkbox for item is :" + itemCheckBoxXpath );
         boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
@@ -720,8 +719,7 @@ public abstract class BrowsePanel
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_empty" ) );
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
-        findElements(
-            By.xpath( GRID_CANVAS + "//div[contains(@class,'slick-row')]//div[contains(@class,'slick-cell-checkboxsel')]/label" ) ).get(
+        findElements( By.xpath( GRID_CANVAS + SLICK_ROW + "//div[contains(@class,'slick-cell-checkboxsel')]/label" ) ).get(
             number ).click();
         sleep( 200 );
 

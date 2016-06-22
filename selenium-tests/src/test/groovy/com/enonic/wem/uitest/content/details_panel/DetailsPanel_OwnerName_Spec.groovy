@@ -4,6 +4,8 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsV
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.browsepanel.PropertiesWidgetItemView
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
@@ -133,6 +135,22 @@ class DetailsPanel_OwnerName_Spec
         then:
         TestUtils.saveScreenshot( getSession(), "test_owner_version-history_user_name" );
         versionItem.getOwnerName( versionId ) == TEST_USER.getDisplayName();
+    }
+
+    def "WHEN the copy of existing folder opened THEN correct owner shown in settings"()
+    {
+        setup: "user is  'logged in'"
+        getTestSession().setUser( TEST_USER );
+        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+
+        when: "when existing content opened for edit"
+        contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" ).clickToolbarEdit();
+        SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
+        TestUtils.saveScreenshot( getSession(), "test_owner_wizard" )
+
+        then: "correct owner shown in settings"
+        form.getOwner() == TEST_USER.getDisplayName();
     }
 
     public Content buildFolderContent( String name, String displayName )

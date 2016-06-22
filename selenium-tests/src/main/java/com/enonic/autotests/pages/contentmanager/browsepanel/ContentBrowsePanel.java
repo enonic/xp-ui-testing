@@ -592,7 +592,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "content was not found: " + contentPath.toString() );
         }
 
-        String checkBoxXpath = String.format( CHECKBOX_ROW_CHECKER, contentPath.toString() );
+        String checkBoxXpath = String.format( ROW_CHECKBOX_BY_NAME, contentPath.toString() );
         boolean isPresentCheckbox = isDynamicElementPresent( By.xpath( checkBoxXpath ), 3 );
         if ( !isPresentCheckbox )
         {
