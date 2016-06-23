@@ -25,14 +25,13 @@ public class PageTemplateFormViewPanel
 
     ContentWizardPanel contentWizardPanel;
 
+    private final String SUPPORT_OPTION_FILTER_INPUT = FORM_VIEW + "//input[contains(@class,'option-filter-input')]";
+
     private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT =
         "//div[contains(@id,'PageDescriptorDropdown')]//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
 
-    @FindBy(xpath = "//div[contains(@id,'api.form.FormView')]//input[contains(@class,'option-filter-input')]")
+    @FindBy(xpath = SUPPORT_OPTION_FILTER_INPUT)
     private WebElement optionFilterInput;
-
-    @FindBy(xpath = "//div[contains(@id,'api.form.FormView')]//input[contains(@name,'menuName')]")
-    private WebElement menuNameInput;
 
     public PageTemplateFormViewPanel( final TestSession session )
     {

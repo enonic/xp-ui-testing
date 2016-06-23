@@ -30,7 +30,7 @@ public class GeoPointFormViewPanel
     {
 
         String geoPointValue = data.getString( GEO_POINT_PROPERTY );
-        // type a date
+        // type a latitude, longitude
         typeGeoPoint( geoPointValue );
         sleep( 300 );
         return this;

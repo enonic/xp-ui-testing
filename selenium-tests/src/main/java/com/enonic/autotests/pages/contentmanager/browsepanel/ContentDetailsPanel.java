@@ -24,8 +24,6 @@ public class ContentDetailsPanel
 
     private final String CONTENT_INFO_OPTION = DETAILS_PANEL + "//div[contains(@id,'InfoWidgetToggleButton')]";
 
-    private final String DETAILS_CONTAINER = DETAILS_PANEL + "//div[contains(@id,'details-container')]";
-
     private UserAccessWidgetItemView userAccessWidgetItemView;
 
     private AttachmentsWidgetItemView attachmentsWidgetItemView;
@@ -62,11 +60,6 @@ public class ContentDetailsPanel
             return new AttachmentsWidgetItemView( getSession() );
         }
         return attachmentsWidgetItemView;
-    }
-
-    public boolean isPanelEmpty()
-    {
-        return findElements( By.xpath( DETAILS_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).count() == 0;
     }
 
     public AllContentVersionsView openVersionHistory()

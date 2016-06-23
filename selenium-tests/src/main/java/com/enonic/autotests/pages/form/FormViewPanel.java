@@ -16,15 +16,6 @@ public abstract class FormViewPanel
 {
     protected static final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
-    public static String VALIDATION_MESSAGE_1_1 = "This field is required";
-
-    public static String VALIDATION_MESSAGE = "Min %s occurrences required";
-
-    protected String VALIDATION_VIEWER = FORM_VIEW + "//div[contains(@id, 'ValidationRecordingViewer')]";
-
-    protected static String VALUE_INPUT =
-        "//div[contains(@id,'api.form.InputView') and descendant::div[@title='%s']]//input[contains(@id,'TextInput')]";
-
     protected final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
     public FormViewPanel( final TestSession session )
@@ -33,12 +24,6 @@ public abstract class FormViewPanel
     }
 
     public abstract FormViewPanel type( final PropertyTree data );
-
-    public boolean isValidationMessagePresent()
-    {
-        return waitUntilVisibleNoException( By.xpath( VALIDATION_VIEWER ), Application.EXPLICIT_NORMAL );
-
-    }
 
     public boolean isAddButtonPresent()
     {
@@ -54,17 +39,5 @@ public abstract class FormViewPanel
         }
         getDisplayedElement( By.xpath( ADD_BUTTON_XPATH ) ).click();
         sleep( 500 );
-    }
-
-    public String getValidationMessage()
-    {
-        if ( isValidationMessagePresent() )
-        {
-            return findElements( By.xpath( VALIDATION_VIEWER + "//li" ) ).get( 0 ).getText();
-        }
-        else
-        {
-            throw new TestFrameworkException( "validation message was not found!" );
-        }
     }
 }

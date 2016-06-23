@@ -1,1 +1,3 @@
-test text.
+test text
+Minsk
+Belarus

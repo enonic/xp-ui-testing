@@ -276,7 +276,6 @@ public class ContentBrowsePanel
     public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )
     {
         clickOnClearSelection();
-
         if ( findElements( By.linkText( BaseBrowseFilterPanel.CLEAR_FILTER_LINK ) ).size() > 0 )
         {
             findElements( By.linkText( BaseBrowseFilterPanel.CLEAR_FILTER_LINK ) ).get( 0 ).click();
@@ -389,7 +388,6 @@ public class ContentBrowsePanel
             TestUtils.saveScreenshot( getSession(), "err_" + contentPath.getName() );
             throw new TestFrameworkException( "expandContent: content was not found! " + contentPath );
         }
-
         ContentPath path = null;
         if ( contentPath != null )
         {
@@ -404,7 +402,6 @@ public class ContentBrowsePanel
                 {
                     path = ContentPath.from( path, parentContent );
                 }
-                getLogger().info( "expandContent,  folder  path: " + path );
                 getLogger().info( "expandContent,  name of folder : " + path.getName() );
                 if ( isRowExpanded( path.getName() ) == null )
                 {
