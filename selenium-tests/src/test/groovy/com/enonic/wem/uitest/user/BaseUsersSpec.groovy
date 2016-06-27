@@ -87,7 +87,7 @@ class BaseUsersSpec
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
     }
 
-    protected GroupWizardPanel openUserStore( String userStoreName )
+    protected UserStoreWizardPanel openUserStore( String userStoreName )
     {
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.clickCheckboxAndSelectRow( userStoreName ).clickToolbarEdit();
         userStoreWizardPanel.waitUntilWizardOpened();

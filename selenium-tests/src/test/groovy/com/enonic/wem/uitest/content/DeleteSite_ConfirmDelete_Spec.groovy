@@ -112,6 +112,25 @@ class DeleteSite_ConfirmDelete_Spec
         then:
         !contentBrowsePanel.exists( SITE.getName() );
     }
+    // this test verifies the XP-3428
+    def "GIVEN existing site with 'online' status WHEN site selected and Delete pressed AND 'Instantly delete' checkbox checked THEN site not listed"()
+    {
+        given: "existing site selected AND delete button pressed"
+        Content onlineSite = buildSite( "site", "confirm delete online", "description" );
+        addContent( onlineSite );
+        findAndSelectContent( onlineSite.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+
+        when:
+        contentBrowsePanel.clickToolbarDelete().clickOnInstantlyCheckbox().clickOnDeleteButton();
+        ConfirmContentDeleteDialog confirmDialog = new ConfirmContentDeleteDialog( getSession() );
+
+        and:
+        confirmDialog.typeNumber( "2" ).clickOnConfirmButton();
+        TestUtils.saveScreenshot( getSession(), "test_confirm_delete_site_online" );
+
+        then:
+        !contentBrowsePanel.exists( onlineSite.getName() );
+    }
 
     private ConfirmContentDeleteDialog openConfirmDeleteDialog( String siteName )
     {

@@ -68,7 +68,7 @@ class MoveContentDialogSpec
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when: "content moved to another location"
-        dialog.typeSearchText( SECOND_CONTENT.getName() ).doMove( SECOND_CONTENT.getName() );
+        dialog.typeSearchText( SECOND_CONTENT.getName() ).selectFolderAndClickOnMove( SECOND_CONTENT.getName() );
 
         then: "parent content expanded"
         filterPanel.typeSearchText( SECOND_CONTENT.getName() );

@@ -58,6 +58,16 @@ class UserStore_Save_Delete_Spec
         and: "correct notification message appears"
         creatingMessage == USER_STORE_CREATED_MESSAGE;
     }
+
+    def "GIVEN existing user store WHEN the store opened THEN correct description displayed"()
+    {
+        when: "existing store opened"
+        UserStoreWizardPanel userStoreWizardPanel = openUserStore( TEST_USER_STORE.getName() );
+
+        then: "correct description is displayed"
+        TestUtils.saveScreenshot( getSession(), "test_user_store_description" );
+        userStoreWizardPanel.getDescriptionValue() == TEST_USER_STORE.getDescription();
+    }
     //  INBOX-279
     @Ignore
     def "GIVEN a existing 'user store' WHEN creating new role with the same name THEN correct notification message appears"()

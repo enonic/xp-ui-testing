@@ -73,13 +73,13 @@ class Content_SaveBeforeCloseDialog_Spec
         when: "'Y' key pressed"
         saveBeforeCloseDialog.press_Y_key();
         String expectedMessage = String.format( Application.CONTENT_SAVED, name );
-        boolean isMessageDisplayed = contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
+        boolean isMessageCorrect = contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
 
         then: "modal dialog closed"
         !saveBeforeCloseDialog.isDisplayed();
 
         and: "correct notification message appears"
-        isMessageDisplayed;
+        isMessageCorrect;
 
         and: "new content listed in the grid"
         filterPanel.typeSearchText( name );

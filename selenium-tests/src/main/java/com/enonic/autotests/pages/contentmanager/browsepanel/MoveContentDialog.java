@@ -54,7 +54,7 @@ public class MoveContentDialog
         super( session );
     }
 
-    public MoveContentDialog doMove( String destinationName )
+    public MoveContentDialog selectFolderAndClickOnMove( String destinationName )
     {
         selectDestination( destinationName );
         sleep( 500 );

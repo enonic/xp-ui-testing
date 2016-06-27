@@ -338,6 +338,12 @@ public class ContentWizardPanel
         return this;
     }
 
+    public boolean waitExpectedNotificationMessage( String message, long timeout )
+    {
+        String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
+        return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
+    }
+
     public ContentPublishDialog clickOnWizardPublishButton()
     {
         toolbarPublishButton.click();
@@ -371,11 +377,22 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), 5 );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_wizard" ) );
             throw new TestFrameworkException( "ContentWizard was not showed!" );
+        }
+        return this;
+    }
+
+    public ContentWizardPanel waitUntilWizardClosed()
+    {
+        boolean result = waitsElementNotVisible( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_close_wizard" ) );
+            throw new TestFrameworkException( "ContentWizard was not closed!" );
         }
         return this;
     }

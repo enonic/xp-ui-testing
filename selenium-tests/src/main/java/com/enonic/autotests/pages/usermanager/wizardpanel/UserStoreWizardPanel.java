@@ -89,6 +89,11 @@ public class UserStoreWizardPanel
         return nameInput.getAttribute( "value" );
     }
 
+    public String getDescriptionValue()
+    {
+        return descriptionInput.getAttribute( "value" );
+    }
+
     public UserStoreWizardPanel typeDisplayName( String displayName )
     {
         clearAndType( displayNameInput, displayName );

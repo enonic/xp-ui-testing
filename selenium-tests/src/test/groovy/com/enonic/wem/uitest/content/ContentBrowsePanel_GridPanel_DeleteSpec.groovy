@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -121,5 +122,31 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         then: "New-button is enabled"
         contentBrowsePanel.isNewButtonEnabled();
+    }
+
+    def "GIVEN existing content is opened WHEN content has been moved to another location AND 'delete' button on the wizard-toolbar pressed THEN content deleted AND wizard closed"()
+    {
+        given: "existing content is opened"
+        Content parent = buildFolderContent( "folder", "destination folder" );
+        Content contentToDelete = buildFolderContent( "folder", "move content and delete it" );
+        addContent( parent );
+        addContent( contentToDelete );
+        ContentWizardPanel wizard = findAndSelectContent( contentToDelete.getName() ).clickToolbarEdit();
+        contentBrowsePanel.pressAppHomeButton();
+
+        when: "content has been moved"
+        contentBrowsePanel.clickToolbarMove().typeSearchText( parent.getName() ).selectFolderAndClickOnMove( parent.getName() );
+
+        and: "content deleted from the wizard"
+        contentBrowsePanel.clickOnTab( contentToDelete.getDisplayName() );
+        wizard.clickToolbarDelete().doDelete();
+
+        then: "wizard has been closed"
+        wizard.waitUntilWizardClosed();
+        TestUtils.saveScreenshot( getSession(), "test_content_moved_and_deleted" );
+
+        and: "content not listed in the grid"
+        !contentBrowsePanel.exists( contentToDelete.getName() );
+
     }
 }
