@@ -128,7 +128,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     {
         given: "existing content is opened"
         Content parent = buildFolderContent( "folder", "destination folder" );
-        Content contentToDelete = buildFolderContent( "folder", "move content and delete it" );
+        Content contentToDelete = buildFolderContent( "folder", "move and delete" );
         addContent( parent );
         addContent( contentToDelete );
         ContentWizardPanel wizard = findAndSelectContent( contentToDelete.getName() ).clickToolbarEdit();
