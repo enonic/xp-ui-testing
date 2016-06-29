@@ -136,6 +136,20 @@ public class WaitHelper
         }
     }
 
+    public static void waitUntilElementEnabled( final TestSession testSession, final By by, long timeout )
+        throws TestFrameworkException
+    {
+        try
+        {
+            new WebDriverWait( testSession.getDriver(), timeout ).until( ExpectedConditions.elementToBeClickable( by ) );
+        }
+        catch ( TimeoutException ex )
+        {
+            logger.error( "TimeoutException, element is disabled" + by.toString() );
+            throw new TestFrameworkException( "Element is disabled but should be enabled! " + ex.getMessage() );
+        }
+    }
+
     public static boolean waitUntilElementEnabledNoException( final WebDriver driver, final By by, long timeout )
     {
         try

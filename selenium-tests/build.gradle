@@ -37,6 +37,18 @@ task copyContentTypes( type: Copy ) {
     into file( deployDir )
 }
 
+task copyPerfomanceApp( type: Copy ) {
+
+    from '../test-applications/performance-app/build/libs/'
+    include '**/*.jar'
+    into file( deployDir )
+    doLast {
+        def mins = 1
+        println "I'm waiting for $mins mins, because all content should be crated."
+        sleep mins * 60 * 1000
+    }
+}
+
 task copyTestApplications( type: Copy ) {
     from '../test-applications/first-application/build/libs/'
     from '../test-applications/second-application/build/libs/'
@@ -353,6 +365,28 @@ task testContentManagerLocal( type: Test ) {
     exclude '**/content/relationship/**Spec.class'
     exclude '**/content/details_panel/**Spec.class'
     forkEvery = null
+}
+
+task testContentStudioPerformance( type: Test,
+                                   dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes, copyPerfomanceApp] ) {
+
+    scanForTestClasses = false
+    include '**/*Spec.class'
+    exclude '**/application/**'
+    exclude '**/user/**'
+    exclude '**/content/upload/**Spec.class'
+    exclude '**/content/relationship/**Spec.class'
+    exclude '**/content/liveedit/**Spec.class'
+    exclude '**/content/input_types/*Spec.class'
+    exclude '**/content/move_publish_sort/**Spec.class'
+    exclude '**/content/details_panel/**Spec.class'
+    include '**/content/upload/**Spec.class'
+    forkEvery = null
+    deleteFolders.mustRunAfter buildApplications
+    startServer.mustRunAfter deleteFolders
+    copyContentTypes.mustRunAfter startServer
+    copyPerfomanceApp.mustRunAfter copyContentTypes
+
 }
 
 testApplication.finalizedBy = ['stopServer']
