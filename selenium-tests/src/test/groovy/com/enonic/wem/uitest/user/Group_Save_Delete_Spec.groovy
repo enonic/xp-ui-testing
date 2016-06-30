@@ -8,7 +8,9 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
 import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class Group_Save_Delete_Spec
     extends BaseUsersSpec
 {

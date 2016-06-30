@@ -5,7 +5,9 @@ import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Role
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class RoleWizardPanel_SaveBeforeCloseDialog_Spec
     extends BaseUsersSpec
 {

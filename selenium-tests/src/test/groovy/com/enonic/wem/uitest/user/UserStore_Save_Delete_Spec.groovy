@@ -7,7 +7,9 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.UserStore
 import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class UserStore_Save_Delete_Spec
     extends BaseUsersSpec
 {

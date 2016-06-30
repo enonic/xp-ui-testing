@@ -5,7 +5,9 @@ import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class GroupWizardPanel_SaveBeforeCloseDialog_Spec
     extends BaseUsersSpec
 {
@@ -59,7 +61,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
 
         when: "Yes is chosen"
         dialog.clickYesButton();
-        TestUtils.saveScreenshot(getSession(), "SaveBeforeCloseDialog-yes-gr");
+        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-yes-gr" );
 
         then: "new display name not saved"
         userBrowseFilterPanel.typeSearchText( newDisplayName );
@@ -77,7 +79,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
 
         when: "No is chosen"
         dialog.clickNoButton();
-        TestUtils.saveScreenshot(getSession(), "SaveBeforeCloseDialog-no-gr");
+        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-no-gr" );
 
         then: "Content is listed in BrowsePanel with it's original name"
         userBrowseFilterPanel.typeSearchText( NO_BUTTON_PRESSED );

@@ -6,7 +6,9 @@ import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class UserBrowsePanel_GroupStatisticPanel_Spec
     extends BaseUsersSpec
 {

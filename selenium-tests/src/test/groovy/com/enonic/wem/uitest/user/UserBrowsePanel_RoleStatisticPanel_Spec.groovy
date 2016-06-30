@@ -7,7 +7,9 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Role
 import com.enonic.autotests.vo.usermanager.RoleName
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class UserBrowsePanel_RoleStatisticPanel_Spec
     extends BaseUsersSpec
 {
