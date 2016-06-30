@@ -136,10 +136,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         when: "content has been moved"
         contentBrowsePanel.clickToolbarMove().typeSearchText( parent.getName() ).selectFolderAndClickOnMove( parent.getName() );
+        sleep( 1000 );
 
         and: "content deleted from the wizard"
         contentBrowsePanel.clickOnTab( contentToDelete.getDisplayName() );
         wizard.clickToolbarDelete().doDelete();
+        sleep( 1000 );
 
         then: "wizard has been closed"
         !wizard.isOpened();
