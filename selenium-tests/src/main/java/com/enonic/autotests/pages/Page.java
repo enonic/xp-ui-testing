@@ -145,6 +145,12 @@ public abstract class Page
         return WaitHelper.waitUntilElementEnabledNoException( getDriver(), by, timeout );
     }
 
+    public void waitUntilElementEnabled( final By by, long timeout )
+    {
+        WaitHelper.waitUntilElementEnabled( getSession(), by, timeout );
+    }
+
+
     public Boolean waitElementExist( final String xpath, long timeout )
     {
         return WaitHelper.waitElementExist( getDriver(), xpath, timeout );

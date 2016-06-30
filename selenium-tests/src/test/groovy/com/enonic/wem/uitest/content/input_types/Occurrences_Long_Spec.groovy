@@ -43,7 +43,7 @@ class Occurrences_Long_Spec
         !wizard.isContentInvalid( VALID_LONG_CONTENT.getDisplayName() );
 
         and: "long input has green border (valid value)"
-        longFormViewPanel.isValueValid( 0 );
+        longFormViewPanel.isValueInInputValid( 0 );
     }
 
     def "GIVEN creating of content with type 'long'(not required) WHEN invalid value for long typed THEN input with a red border AND red icon not shown on the wizard tab"()
@@ -54,11 +54,11 @@ class Occurrences_Long_Spec
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "invalid value for long typed"
-        wizard.typeData( longContent ).save();
+        wizard.typeData( longContent );
         TestUtils.saveScreenshot( getSession(), "test_long_invalid_not_req" );
 
         then: "input with a red border"
-        !longFormViewPanel.isValueValid( 0 );
+        !longFormViewPanel.isValueInInputValid( 0 );
 
         and: "red icon not shown on the wizard tab, because this input is not required"
         !wizard.isContentInvalid( longContent.getDisplayName() );
@@ -75,11 +75,11 @@ class Occurrences_Long_Spec
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "invalid value for long typed"
-        wizard.typeData( longContent ).save();
+        wizard.typeData( longContent );
         TestUtils.saveScreenshot( getSession(), "test_long_invalid_req" );
 
         then: "input with a red border"
-        !longFormViewPanel.isValueValid( 0 );
+        !longFormViewPanel.isValueInInputValid( 0 );
 
         and: "red icon should be shown on the wizard tab, because this input is required"
         wizard.isContentInvalid( longContent.getDisplayName() );
@@ -122,7 +122,7 @@ class Occurrences_Long_Spec
         !wizard.isContentInvalid( doubleContent.getDisplayName() );
 
         and: "input has no a red border"
-        longFormViewPanel.isValueValid( 0 );
+        longFormViewPanel.isValueInInputValid( 0 );
     }
 
 
@@ -134,14 +134,14 @@ class Occurrences_Long_Spec
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "MAX value typed"
-        wizard.typeData( longContent ).save();
+        wizard.typeData( longContent );
         TestUtils.saveScreenshot( getSession(), "test_more_max_long" );
 
         then: "red icon displayed on the wizard tab"
         wizard.isContentInvalid( longContent.getDisplayName() );
 
         and: "input has a red border"
-        !longFormViewPanel.isValueValid( 0 );
+        !longFormViewPanel.isValueInInputValid( 0 );
     }
 
     def "GIVEN creating of long content WHEN MIN_SAFE value typed THEN red icon not displayed in the wizard tab"()
@@ -159,7 +159,7 @@ class Occurrences_Long_Spec
         !wizard.isContentInvalid( MIN_SAFE_CONTENT.getDisplayName() );
 
         and: "input has no a red border"
-        longFormViewPanel.isValueValid( 0 );
+        longFormViewPanel.isValueInInputValid( 0 );
     }
 
     def "GIVEN content with MIN_SAFE_VALUE has been added WHEN content opened THEN correct value displayed on the wizard page"()

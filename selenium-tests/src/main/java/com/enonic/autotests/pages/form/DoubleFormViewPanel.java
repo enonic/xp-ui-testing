@@ -83,7 +83,7 @@ public class DoubleFormViewPanel
         }
     }
 
-    public boolean isValueValid( int index )
+    public boolean isValueInInputValid( int index )
     {
         List<WebElement> actualInputs = getDisplayedElements( By.xpath( DOUBLE_INPUT ) );
         return !waitAndCheckAttrValue( actualInputs.get( index ), "class", "invalid", Application.EXPLICIT_NORMAL );

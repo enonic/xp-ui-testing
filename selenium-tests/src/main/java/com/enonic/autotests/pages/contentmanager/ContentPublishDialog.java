@@ -165,6 +165,11 @@ public class ContentPublishDialog
         return publishButton.isEnabled();
     }
 
+    public void waitUntilPublishButtonEnabled( long timeout )
+    {
+        waitUntilElementEnabled( By.xpath( PUBLISH_NOW_BUTTON ), timeout );
+    }
+
     public boolean isCancelButtonBottomEnabled()
     {
         return cancelButtonBottom.isEnabled();

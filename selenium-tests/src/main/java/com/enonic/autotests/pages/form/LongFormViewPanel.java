@@ -53,7 +53,7 @@ public class LongFormViewPanel
         return this;
     }
 
-    public boolean isValueValid( int index )
+    public boolean isValueInInputValid( int index )
     {
         List<WebElement> actualInputs = getDisplayedElements( By.xpath( LONG_INPUT ) );
         return !waitAndCheckAttrValue( actualInputs.get( index ), "class", "invalid", Application.EXPLICIT_NORMAL );

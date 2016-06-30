@@ -37,7 +37,7 @@ class Occurrences_Double_Spec
         !wizard.isContentInvalid( doubleContent.getDisplayName() );
 
         and: "double input has no a red border"
-        doubleFormViewPanel.isValueValid( 0 );
+        doubleFormViewPanel.isValueInInputValid( 0 );
     }
     //verifies the XP-3499  (ConfirmationDialog issue)
     def "GIVEN creating a double content WHEN name typed AND save button pressed THEN 'confirmation' dialog should not appears"()
@@ -134,13 +134,13 @@ class Occurrences_Double_Spec
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         when: "value more than MAX typed"
-        wizard.typeData( doubleContent ).save();
+        wizard.typeData( doubleContent );
         TestUtils.saveScreenshot( getSession(), "test_more_max_double" );
 
         then: "red icon not displayed in the wizard tab"
         wizard.isContentInvalid( doubleContent.getDisplayName() );
 
         and:
-        !doubleFormViewPanel.isValueValid( 0 );
+        !doubleFormViewPanel.isValueInInputValid( 0 );
     }
 }

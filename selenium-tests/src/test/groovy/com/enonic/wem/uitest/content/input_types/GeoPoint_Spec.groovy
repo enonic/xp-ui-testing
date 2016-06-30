@@ -50,11 +50,10 @@ class GeoPoint_Spec
     {
         given: "add a content with type 'Geo point'"
         Content notValidContent = buildGeoPoint1_1_Content( WRONG_GEO_LOCATION );
-        ContentWizardPanel wizard = selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            notValidContent )
+        ContentWizardPanel wizard = selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened();
 
         when: "'Save' button on toolbar pressed"
-        wizard.save();
+        wizard.typeData( notValidContent );
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "correct warning-message appears"
@@ -75,7 +74,8 @@ class GeoPoint_Spec
 
         then: "the 'save before close' dialog closed"
         dialog == null;
-        and: "correct warning-message appears"
+
+        and: "the content has red icon(invalid) in the grid, because input is required"
         filterPanel.typeSearchText( notValidContent.getName() );
         contentBrowsePanel.isContentInvalid( notValidContent.getName() );
     }
