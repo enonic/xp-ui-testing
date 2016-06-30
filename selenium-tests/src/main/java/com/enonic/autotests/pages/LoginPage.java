@@ -46,7 +46,7 @@ public class LoginPage
         LoginPage loginPage = new LoginPage( getSession() );
         loginPage.typeNameAndPassword( username, password );
         getSession().setLoggedIn( true );
-        sleep( 5000 );
+        sleep( 1000 );
         Boolean isLauncherPresent =
             waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isLauncherPresent )
