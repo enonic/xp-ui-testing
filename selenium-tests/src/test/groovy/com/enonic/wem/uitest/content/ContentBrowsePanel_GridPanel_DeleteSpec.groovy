@@ -142,7 +142,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         wizard.clickToolbarDelete().doDelete();
 
         then: "wizard has been closed"
-        wizard.waitUntilWizardClosed();
+        !wizard.isOpened();
         TestUtils.saveScreenshot( getSession(), "test_content_moved_and_deleted" );
 
         and: "content not listed in the grid"
