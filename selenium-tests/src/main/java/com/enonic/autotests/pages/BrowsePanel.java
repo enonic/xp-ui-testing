@@ -410,7 +410,7 @@ public abstract class BrowsePanel
         boolean isGridLoaded = waitAndFind( By.xpath( DIV_WITH_NAME ), timeout );
         if ( !isGridLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_bug" ) );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_is_empty" ) );
         }
     }
 
