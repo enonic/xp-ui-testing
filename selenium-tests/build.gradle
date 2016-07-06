@@ -19,7 +19,7 @@ ext {
 }
 
 dependencies {
-    compile 'org.seleniumhq.selenium:selenium-java:2.53.0'
+    compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
     compile 'com.google.guava:guava:18.0'
     compile "com.enonic.xp:core-api:$xpVersion"
     compile 'log4j:log4j:1.2.17'
@@ -44,7 +44,7 @@ task copyPerfomanceApp( type: Copy ) {
     into file( deployDir )
     doLast {
         def mins = 1
-        println "I'm waiting for $mins mins, because all content should be crated."
+        println "I'm waiting for $mins mins, because all content should be created."
         sleep mins * 60 * 1000
     }
 }
