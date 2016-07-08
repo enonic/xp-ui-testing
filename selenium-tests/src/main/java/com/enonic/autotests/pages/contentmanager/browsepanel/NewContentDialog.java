@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -52,9 +53,15 @@ public class NewContentDialog
     public static String CONTENT_TYPE_NAME =
         CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[@class='sub-name' and text()='%s']]";
 
-    private final String SEARCH_INPUT_SCRIPT = "window.api.dom.ElementRegistry.getElementById('%s').setValue(arguments[0])";
+    private final String AVAILABLE_CONTENT_TYPES = CONTAINER + "//ul[contains(@id,'FilterableItemsList')]" + "//li" + P_NAME;
 
     private final String UPLOAD_FILE_BUTTON = CONTAINER + "//a[contains(@id,'uploader-dropzone') and @class='dropzone']";
+
+    private final String MOST_POPULAR_BLOCK = CONTAINER + "//div[contains(@id,'MostPopularItemsBlock')]";
+
+    private final String MOST_POPULAR_ITEM_LIST = MOST_POPULAR_BLOCK + "//ul[contains(@id,'MostPopularItemsList')]";
+
+    private final String MOST_POPULAR_ITEM_NAME = MOST_POPULAR_ITEM_LIST + "//li" + H6_DISPLAY_NAME;
 
     @FindBy(xpath = UPLOAD_FILE_BUTTON)
     private WebElement uploadButton;
@@ -70,6 +77,21 @@ public class NewContentDialog
     public NewContentDialog( TestSession session )
     {
         super( session );
+    }
+
+    public boolean isMostPopularBlockDisplayed()
+    {
+        return isElementDisplayed( MOST_POPULAR_BLOCK );
+    }
+
+    public List<String> getContentTypesNames()
+    {
+        return getDisplayedStrings( By.xpath( AVAILABLE_CONTENT_TYPES ) );
+    }
+
+    public List<String> getMostPopularItemsNames()
+    {
+        return getDisplayedStrings( By.xpath( MOST_POPULAR_ITEM_NAME ) );
     }
 
     public static File createFileInTmp( String resName, final String fileName )
