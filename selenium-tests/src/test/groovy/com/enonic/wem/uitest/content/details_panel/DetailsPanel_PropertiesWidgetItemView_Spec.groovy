@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.PropertiesWidgetItemView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PropertiesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.utils.TestUtils

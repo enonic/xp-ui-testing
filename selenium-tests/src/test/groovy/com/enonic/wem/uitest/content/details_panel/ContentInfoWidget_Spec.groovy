@@ -1,8 +1,8 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentInfoTerms
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentInfoWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentInfoTerms
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentInfoWidget
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content

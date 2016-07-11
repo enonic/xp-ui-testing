@@ -1,9 +1,10 @@
-package com.enonic.autotests.pages.contentmanager.browsepanel;
+package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -20,9 +21,20 @@ public class ContentDetailsPanel
 
     public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
 
-    private final String VERSION_HISTORY_OPTION = "//div[text()='Version history']";
+    private final String WIDGET_SELECTOR_DROPDOWN = DETAILS_PANEL + "//div[contains(@id,'WidgetSelectorDropdown')]";
 
-    private final String CONTENT_INFO_OPTION = DETAILS_PANEL + "//div[contains(@id,'InfoWidgetToggleButton')]";
+    private final String VERSION_HISTORY_OPTION = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Version history']";
+
+    private final String DEPENDENCIES_OPTION = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Dependencies']";
+
+    private final String WIDGET_SELECTOR_DROPDOWN_HANDLER = WIDGET_SELECTOR_DROPDOWN + "//button[contains(@id,'DropdownHandle')]";
+
+    private final String INFO_WIDGET_TOGGLE_BUTTON = DETAILS_PANEL + "//div[contains(@id,'InfoWidgetToggleButton')]";
+
+
+    @FindBy(xpath = WIDGET_SELECTOR_DROPDOWN_HANDLER)
+    private WebElement widgetSelectorDropDownHandler;
+
 
     private UserAccessWidgetItemView userAccessWidgetItemView;
 
@@ -62,8 +74,28 @@ public class ContentDetailsPanel
         return attachmentsWidgetItemView;
     }
 
+    public DependenciesWidgetItemView openDependenciesWidget()
+    {
+        if ( !isElementDisplayed( DEPENDENCIES_OPTION ) )
+        {
+            widgetSelectorDropDownHandler.click();
+        }
+        if ( !isElementDisplayed( DEPENDENCIES_OPTION ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_dependencies_option" ) );
+            throw new TestFrameworkException( "dependencies option was not found!" );
+        }
+        getDisplayedElement( By.xpath( DEPENDENCIES_OPTION ) ).click();
+        sleep( 700 );
+        return new DependenciesWidgetItemView( getSession() );
+    }
+
     public AllContentVersionsView openVersionHistory()
     {
+        if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
+        {
+            widgetSelectorDropDownHandler.click();
+        }
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_history_opt" ) );
@@ -76,12 +108,12 @@ public class ContentDetailsPanel
 
     public ContentInfoWidget openInfoWidget()
     {
-        if ( !isElementDisplayed( CONTENT_INFO_OPTION ) )
+        if ( !isElementDisplayed( INFO_WIDGET_TOGGLE_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_info_opt" ) );
             throw new TestFrameworkException( "Info widget was not opened!" );
         }
-        getDisplayedElement( By.xpath( CONTENT_INFO_OPTION ) ).click();
+        getDisplayedElement( By.xpath( INFO_WIDGET_TOGGLE_BUTTON ) ).click();
         sleep( 700 );
         return new ContentInfoWidget( getSession() );
     }

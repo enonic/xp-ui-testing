@@ -1,4 +1,4 @@
-package com.enonic.autotests.pages.contentmanager.browsepanel;
+package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
 
 import java.util.HashMap;

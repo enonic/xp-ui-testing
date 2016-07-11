@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion

@@ -1,9 +1,9 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentVersionInfoView
-import com.enonic.autotests.pages.contentmanager.browsepanel.PropertiesWidgetItemView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PropertiesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel

@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentVersionInfoView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm

@@ -2,6 +2,8 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.XP_Windows
 import com.enonic.autotests.pages.contentmanager.browsepanel.*
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
@@ -364,6 +366,14 @@ class BaseContentSpec
             contentType( ContentTypeName.pageTemplate() ).data( data ).
             build();
         return pageTemplate;
+    }
+
+    protected DependenciesWidgetItemView openDependenciesWidgetView()
+    {
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
+        DependenciesWidgetItemView dependenciesWidget = contentDetailsPanel.openDependenciesWidget();
+        return dependenciesWidget;
     }
 
     protected void openResourceInMaster( String resource )

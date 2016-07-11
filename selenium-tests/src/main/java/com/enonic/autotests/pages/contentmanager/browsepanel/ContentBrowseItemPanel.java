@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
 
 public class ContentBrowseItemPanel
     extends Application

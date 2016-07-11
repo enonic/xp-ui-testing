@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.browsepanel.UserAccessWidgetItemView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.UserAccessWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content

@@ -1,4 +1,4 @@
-package com.enonic.autotests.pages.contentmanager.browsepanel;
+package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;

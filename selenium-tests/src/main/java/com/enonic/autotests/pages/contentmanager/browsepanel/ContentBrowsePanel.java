@@ -17,6 +17,7 @@ import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.NameHelper;

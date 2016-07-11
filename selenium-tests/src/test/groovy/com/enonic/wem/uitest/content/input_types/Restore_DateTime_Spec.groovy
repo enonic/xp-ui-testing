@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.AllContentVersionsView
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentVersionInfoView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.utils.TestUtils

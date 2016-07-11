@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.AttachmentsWidgetItemView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AttachmentsWidgetItemView
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Stepwise
 
