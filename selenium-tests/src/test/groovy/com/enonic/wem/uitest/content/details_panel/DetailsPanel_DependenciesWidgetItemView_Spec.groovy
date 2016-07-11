@@ -8,7 +8,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
     extends BaseContentSpec
 {
 
-    def "WHEN image content selected and details panel opened THEN AttachmentsWidgetItemView is displayed and has attachments"()
+    def "WHEN image content selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget is displayed and has attachments"()
     {
         when: "image content selected"
         findAndSelectContent( IMPORTED_BOOK_IMAGE );
