@@ -15,7 +15,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         TestUtils.saveScreenshot( getSession(), "test_dependencies_widget_opened" );
 
-        then: "Attachments Widget is displayed"
+        then: "Dependencies Widget is displayed"
         dependencies.isDisplayed();
     }
 }
