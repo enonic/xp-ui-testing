@@ -41,7 +41,11 @@ public class ContentBrowsePanel
 
     private final String BASE_PANEL_XPATH = "//div[contains(@id,'ContentBrowsePanel')]";
 
-    protected final String ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH = BASE_PANEL_XPATH + ALL_NAMES_FROM_BROWSE_PANEL_XPATH;
+    private final String CONTENT_TREE_GRID = BASE_PANEL_XPATH + TREE_GREED;
+
+    protected final String ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH = CONTENT_TREE_GRID + P_NAME;
+
+    protected final String DISPLAY_NAMES_FROM_TREE_GRID_XPATH = CONTENT_TREE_GRID + H6_DISPLAY_NAME;
 
     private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New']]";
 
@@ -339,15 +343,21 @@ public class ContentBrowsePanel
      *
      * @return list of names.
      */
-    public List<String> getContentNamesFromBrowsePanel()
+    public List<String> getContentNamesFromGrid()
     {
-        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH ) );
+        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
+        return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    public List<String> getContentDisplayNamesFromGrid()
+    {
+        List<WebElement> rows = getDriver().findElements( By.xpath( DISPLAY_NAMES_FROM_TREE_GRID_XPATH ) );
         return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public List<String> getChildContentNamesFromBrowsePanel( String parentName )
     {
-        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_BROWSE_PANEL_XPATH ) );
+        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
         return rows.stream().filter( e -> !e.getText().contains( parentName ) && !e.getText().isEmpty() ).map(
             WebElement::getText ).collect( Collectors.toList() );
     }

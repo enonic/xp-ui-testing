@@ -179,6 +179,30 @@ class BaseContentSpec
         return shortcut;
     }
 
+    protected Content buildShortcutWithTarget( String name, String parentName, String displayName, String target )
+    {
+        PropertyTree data = null;
+        ContentPath parent = null;
+        if ( target != null )
+        {
+            data = new PropertyTree();
+            data.addString( ShortcutFormViewPanel.SHORTCUT_PROPERTY, target );
+        }
+        if ( parentName != null )
+        {
+            parent = ContentPath.from( parentName )
+        }
+        else
+        {
+            parent = ContentPath.ROOT;
+        }
+        Content shortcut = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( displayName ).
+            parent( parent ).
+            contentType( ContentTypeName.shortcut() ).data( data ).build();
+        return shortcut;
+    }
 
     public Content buildFolderWithSettingsContent( String name, String displayName, ContentSettings settings )
     {

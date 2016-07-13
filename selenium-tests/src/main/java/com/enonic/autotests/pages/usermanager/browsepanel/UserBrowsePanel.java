@@ -44,6 +44,8 @@ public class UserBrowsePanel
         }
     }
 
+    private final String USER_ITEMS_GRID = "//div[contains(@id,'UserItemsTreeGrid')]";
+
     public final String USERS_BUTTON = "//button[contains(@id,'api.app.bar.HomeButton') and child::span[text()='Users']]";
 
     public final String NEW_BUTTON_XPATH =
@@ -161,10 +163,10 @@ public class UserBrowsePanel
         return dialog;
     }
 
-    public List<String> getNamesFromBrowsePanel()
+    public List<String> getItemsNameFromGrid()
     {
         List<String> allNames = new ArrayList<>();
-        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_NAMES_FROM_BROWSE_PANEL_XPATH ) );
+        List<WebElement> rows = findElements( By.xpath( USER_ITEMS_GRID + P_NAME ) );
         for ( WebElement row : rows )
         {
             allNames.add( row.getAttribute( "title" ) );

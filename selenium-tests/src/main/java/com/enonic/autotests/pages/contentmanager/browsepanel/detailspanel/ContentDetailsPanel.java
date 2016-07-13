@@ -76,18 +76,24 @@ public class ContentDetailsPanel
 
     public DependenciesWidgetItemView openDependenciesWidget()
     {
-        if ( !isElementDisplayed( DEPENDENCIES_OPTION ) )
+        DependenciesWidgetItemView dependenciesWidgetItemView = new DependenciesWidgetItemView( getSession() );
+        if ( dependenciesWidgetItemView.isDisplayed() )
+        {
+            return dependenciesWidgetItemView;
+        }
+        else
         {
             widgetSelectorDropDownHandler.click();
+            if ( !isElementDisplayed( DEPENDENCIES_OPTION ) )
+            {
+                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_dependencies_option" ) );
+                throw new TestFrameworkException( "dependencies option was not found!" );
+            }
+            getDisplayedElement( By.xpath( DEPENDENCIES_OPTION ) ).click();
+            sleep( 700 );
+            return dependenciesWidgetItemView;
         }
-        if ( !isElementDisplayed( DEPENDENCIES_OPTION ) )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_dependencies_option" ) );
-            throw new TestFrameworkException( "dependencies option was not found!" );
-        }
-        getDisplayedElement( By.xpath( DEPENDENCIES_OPTION ) ).click();
-        sleep( 700 );
-        return new DependenciesWidgetItemView( getSession() );
+
     }
 
     public AllContentVersionsView openVersionHistory()

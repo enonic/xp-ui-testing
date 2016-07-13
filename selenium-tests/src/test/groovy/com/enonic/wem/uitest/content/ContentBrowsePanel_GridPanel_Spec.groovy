@@ -35,7 +35,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN one content is selected in the root WHEN refresh button pressed THEN the row stays selected"()
     {
         given:
-        List<String> contentNames = contentBrowsePanel.getContentNamesFromBrowsePanel();
+        List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
         when:
@@ -49,7 +49,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN Content listed on root WHEN first is clicked THEN first row is blue"()
     {
         given:
-        List<String> contentNames = contentBrowsePanel.getContentNamesFromBrowsePanel();
+        List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
 
         when:
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
@@ -62,7 +62,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content selected WHEN spacebar is typed THEN row is no longer selected"()
     {
         given:
-        List<String> contentNames = contentBrowsePanel.getContentNamesFromBrowsePanel();
+        List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
         TestUtils.saveScreenshot( getTestSession(), "test_spacebar_before" );
 
@@ -77,7 +77,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN a Content selected WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
     {
         given:
-        List<String> contentNames = contentBrowsePanel.getContentNamesFromBrowsePanel();
+        List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
         when:

@@ -48,14 +48,14 @@ class UserBrowsePanel_GridPanel_Spec
     def "GIVEN a 'system' folder selected WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
     {
         given:
-        List<String> contentNames = userBrowsePanel.getNamesFromBrowsePanel();
+        List<String> userItemNames = userBrowsePanel.getItemsNameFromGrid();
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         when:
         userBrowsePanel.clickOnClearSelection();
 
         then:
-        userBrowsePanel.getSelectedRowsNumber() == 0 && contentNames.size() > 0;
+        userBrowsePanel.getSelectedRowsNumber() == 0 && userItemNames.size() > 0;
     }
 
     def "GIVEN no items selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
@@ -188,8 +188,8 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.doubleClickOnItem( "anonymous" );
 
         then: "new user present beneath a system store"
-        UserWizardPanel wizard = new UserWizardPanel(getSession(  ));
-        wizard.waitUntilWizardOpened(  );
+        UserWizardPanel wizard = new UserWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
     }
 
     def "GIVEN a system role WHEN role double clicked in the grid THEN role wizard opened"()
@@ -201,7 +201,7 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.doubleClickOnItem( "system.authenticated" );
 
         then: "new user present beneath a system store"
-        RoleWizardPanel wizard = new RoleWizardPanel(getSession(  ));
-        wizard.waitUntilWizardOpened(  );
+        RoleWizardPanel wizard = new RoleWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
     }
 }

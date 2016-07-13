@@ -1,12 +1,23 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.utils.TestUtils
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class DetailsPanel_DependenciesWidgetItemView_Spec
     extends BaseContentSpec
 {
+
+    @Shared
+    String TARGET_IMG = "whale.jpg";
+
+    @Shared
+    Content SHORTCUT_CONTENT;
 
     def "WHEN image content selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget is displayed and has attachments"()
     {
@@ -18,4 +29,44 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         then: "Dependencies Widget is displayed"
         dependencies.isDisplayed();
     }
+
+    def "GIVEN existing shortcut AND target is an image WHEN Dependencies Widget opened THEN 'show outbound'- button is displayed"()
+    {
+        given:
+        SHORTCUT_CONTENT = buildShortcutWithTarget( "shortcut", null, "shortcut display name", TARGET_IMG );
+        addContent( SHORTCUT_CONTENT );
+        findAndSelectContent( SHORTCUT_CONTENT.getName() );
+
+        when: "display name of the folder changed"
+        DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
+        TestUtils.saveScreenshot( getSession(), "dependencies_image_shortcut" );
+
+        then: "new 'version history item' appeared in the version-view"
+        dependencies.isShowOutBoundButtonDisplayed();
+    }
+
+    def "GIVEN existing shortcut AND Dependencies Widget opened WHEN 'show outbound'- button clicked THEN Dependencies Section appears on the filter panel AND correct label for dependencies is displayed"()
+    {
+        given:
+        findAndSelectContent( SHORTCUT_CONTENT.getName() );
+        DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
+
+        when: "'show outbound'- button has been clicked"
+        dependencies.clickOnShowOutBoundButton();
+        TestUtils.saveScreenshot( getSession(), "outbound_image_shortcut" );
+
+        then: "Dependencies Section appears on the filter panel"
+        filterPanel.isDependenciesSectionDisplayed();
+        List<String> names = contentBrowsePanel.getContentDisplayNamesFromGrid();
+
+        and: "correct label for dependencies is displayed"
+        filterPanel.getDependenciesSectionTitle() == ContentBrowseFilterPanel.DEPENDENCIES_SECTION_OUTBOUND_TITLE;
+
+        and: "correct target is filtered in the grid"
+        names.contains( TARGET_IMG );
+        and: "one content displayed in the grid"
+        names.size() == 1;
+    }
+
+
 }

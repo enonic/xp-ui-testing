@@ -21,7 +21,14 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowseFilterPanel
     extends BaseBrowseFilterPanel
 {
+    public static String DEPENDENCIES_SECTION_INBOUND_TITLE = "Inbound Dependencies";
+
+    public static String DEPENDENCIES_SECTION_OUTBOUND_TITLE = "Outbound Dependencies";
     private String FILTER_PANEL_DIV = "//div[contains(@class,'filter-panel')]";
+
+    private final String DEPENDENCIES_SECTION = FILTER_PANEL_DIV + "//div[contains(@id,'DependenciesSection')]";
+
+    private final String DEPENDENCIES_SECTION_TITLE = DEPENDENCIES_SECTION + "/label";
 
     private final String CONTENT_TYPE_AGGREGATION_VIEW = "//div[contains(@id,'ContentTypeAggregationGroupView')]";
 
@@ -58,6 +65,21 @@ public class ContentBrowseFilterPanel
     public ContentBrowseFilterPanel( TestSession session )
     {
         super( session );
+    }
+
+    public boolean isDependenciesSectionDisplayed()
+    {
+        return isElementDisplayed( DEPENDENCIES_SECTION );
+    }
+
+    public String getDependenciesSectionTitle()
+    {
+        if ( !isElementDisplayed( DEPENDENCIES_SECTION_TITLE ) )
+        {
+            throw new TestFrameworkException( "title not displayed in the dependencies section!" );
+        }
+        return getDisplayedString( DEPENDENCIES_SECTION_TITLE );
+
     }
 
     @Override
