@@ -33,19 +33,25 @@ public class DependenciesWidgetItemView
     @FindBy(xpath = SHOW_INBOUND_BUTTON)
     private WebElement showInboundButton;
 
-    public boolean isShowOutBoundButtonDisplayed()
+    public boolean isShowOutboundButtonDisplayed()
     {
         return showOutboundButton.isDisplayed();
     }
 
-    public DependenciesWidgetItemView clickOnShowOutBoundButton()
+    public boolean isShowInboundButtonDisplayed()
+    {
+        return showInboundButton.isDisplayed();
+    }
+
+
+    public DependenciesWidgetItemView clickOnShowOutboundButton()
     {
         showOutboundButton.click();
         sleep( 400 );
         return this;
     }
 
-    public DependenciesWidgetItemView clickOnShowInBoundButton()
+    public DependenciesWidgetItemView clickOnShowInboundButton()
     {
         showInboundButton.click();
         sleep( 400 );

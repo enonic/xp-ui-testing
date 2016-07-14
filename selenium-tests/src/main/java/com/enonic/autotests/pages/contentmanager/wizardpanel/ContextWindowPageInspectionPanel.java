@@ -78,14 +78,13 @@ public class ContextWindowPageInspectionPanel
     public String getSelectedPageController()
     {
         boolean isOptionDisplayed =
-            waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'PageControllerSelector')]//h6[@class='main-name']" ),
-                                         Application.EXPLICIT_NORMAL );
+            waitUntilVisibleNoException( By.xpath( PAGE_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ), Application.EXPLICIT_NORMAL );
         if ( !isOptionDisplayed )
         {
             TestUtils.saveScreenshot( getSession(), "err_context_wind_page_controller" );
             throw new TestFrameworkException( "page controller not displayed on the context window!" );
         }
-        return getDisplayedElement( By.xpath( "//div[contains(@id,'PageControllerSelector')]//h6[@class='main-name']" ) ).getText();
+        return getDisplayedElement( By.xpath( PAGE_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ) ).getText();
     }
 
     public boolean isPageControllerSelectorDisplayed()

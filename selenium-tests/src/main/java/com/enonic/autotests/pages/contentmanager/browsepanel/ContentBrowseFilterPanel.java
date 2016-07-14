@@ -24,9 +24,12 @@ public class ContentBrowseFilterPanel
     public static String DEPENDENCIES_SECTION_INBOUND_TITLE = "Inbound Dependencies";
 
     public static String DEPENDENCIES_SECTION_OUTBOUND_TITLE = "Outbound Dependencies";
+
     private String FILTER_PANEL_DIV = "//div[contains(@class,'filter-panel')]";
 
     private final String DEPENDENCIES_SECTION = FILTER_PANEL_DIV + "//div[contains(@id,'DependenciesSection')]";
+
+    private final String CLOSE_DEPENDENCIES_SECTION_BUTTON = DEPENDENCIES_SECTION + "//button[contains(@class,'btn-close')]";
 
     private final String DEPENDENCIES_SECTION_TITLE = DEPENDENCIES_SECTION + "/label";
 
@@ -70,6 +73,16 @@ public class ContentBrowseFilterPanel
     public boolean isDependenciesSectionDisplayed()
     {
         return isElementDisplayed( DEPENDENCIES_SECTION );
+    }
+
+    public boolean isCloseDependenciesSectionButtonDisplayed()
+    {
+        return isElementDisplayed( CLOSE_DEPENDENCIES_SECTION_BUTTON );
+    }
+
+    public void doCloseDependenciesSection()
+    {
+        getDisplayedElement( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ) ).click();
     }
 
     public String getDependenciesSectionTitle()
