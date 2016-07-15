@@ -22,7 +22,7 @@ class Wizard_DeleteSite_ConfirmDelete_Spec
     def "GIVEN creating of site WHEN data typed saved  AND 'Delete' on the wizard-toolbar pressed AND 'Delete' on the dialog clicked THEN 'Confirm delete' dialog appears with correct control elements"()
     {
         given: "existing site selected AND delete button pressed"
-        SITE = buildSite( "site", "confirm delete", "description" );
+        SITE = buildSiteWithNameAndDispalyNameAndDescription( "site", "confirm delete", "description" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
             SITE ).save();
 

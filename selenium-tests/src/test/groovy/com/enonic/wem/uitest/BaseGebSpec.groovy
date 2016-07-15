@@ -14,6 +14,12 @@ class BaseGebSpec
     Properties defaultProperties;
 
     @Shared
+    String ALL_CONTENT_TYPES_DISPLAY_NAME = "All Content Types App";
+
+    @Shared
+    String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
+
+    @Shared
     TestSession session;
 
     @Override

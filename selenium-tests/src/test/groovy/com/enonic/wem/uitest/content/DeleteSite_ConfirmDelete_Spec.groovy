@@ -24,7 +24,7 @@ class DeleteSite_ConfirmDelete_Spec
     def "GIVEN existing site WHEN site selected AND 'Delete'-toolbar button pressed AND 'Delete' on the dialog clicked THEN 'Confirm delete' dialog appears"()
     {
         given: "existing site selected AND delete button pressed"
-        SITE = buildSite( "site", "confirm delete", "description" );
+        SITE = buildSiteWithNameAndDispalyNameAndDescription( "site", "confirm delete", "description" );
         addContent( SITE );
 
         when:
@@ -116,7 +116,7 @@ class DeleteSite_ConfirmDelete_Spec
     def "GIVEN existing site with 'online' status WHEN site selected and Delete pressed AND 'Instantly delete' checkbox checked THEN site not listed"()
     {
         given: "existing site selected AND delete button pressed"
-        Content onlineSite = buildSite( "site", "confirm delete online", "description" );
+        Content onlineSite = buildSiteWithNameAndDispalyNameAndDescription( "site", "confirm delete online", "description" );
         addContent( onlineSite );
         findAndSelectContent( onlineSite.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 

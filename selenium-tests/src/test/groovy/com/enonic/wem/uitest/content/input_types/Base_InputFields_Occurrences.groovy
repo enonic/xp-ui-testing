@@ -38,13 +38,7 @@ class Base_InputFields_Occurrences
     String MAN_IMAGE_NAME = "man.jpg";
 
     @Shared
-    String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
-
-    @Shared
     static String SITE_NAME = "inputtypes199357987";//NameHelper.uniqueName( "inputtypes" );
-
-    @Shared
-    String MODULE_DISPLAY_NAME = "All Content Types App";
 
     @Shared
     String TAG_1 = "tag1";
@@ -89,19 +83,19 @@ class Base_InputFields_Occurrences
     def "create a site based on the application with all content types"()
     {
         when: "add a site, based on the test application"
-        addSite();
+        addSiteWithAllInputTypes();
 
         then: " test site should be listed"
         contentBrowsePanel.exists( SITE_NAME );
     }
 
-    private void addSite()
+    private void addSiteWithAllInputTypes()
     {
         Content site;
         filterPanel.typeSearchText( SITE_NAME );
         if ( !contentBrowsePanel.exists( SITE_NAME ) )
         {
-            site = buildSite();
+            site = buildSiteWithAllTypes();
             contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
                 site.getDisplayName() );
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
@@ -115,10 +109,10 @@ class Base_InputFields_Occurrences
         contentBrowsePanel.waitsForSpinnerNotVisible();
     }
 
-    private Content buildSite()
+    private Content buildSiteWithAllTypes()
     {
         PropertyTree data = new PropertyTree();
-        data.addString( SiteFormViewPanel.APP_KEY, MODULE_DISPLAY_NAME );
+        data.addString( SiteFormViewPanel.APP_KEY, ALL_CONTENT_TYPES_DISPLAY_NAME );
         data.addStrings( "description", "all content types  site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).

@@ -216,7 +216,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     def "WHEN site content selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
     {
         when: "unstructured content selected"
-        Content site = buildSite( "site", "test-site", "properties test" );
+        Content site = buildSiteWithNameAndDispalyNameAndDescription( "site", "test-site", "properties test" );
         addContent( site );
         findAndSelectContent( site.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();

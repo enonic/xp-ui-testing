@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -18,6 +19,9 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
     @Shared
     Content SHORTCUT_CONTENT;
+
+    @Shared
+    String TEST_SITE_NAME = NameHelper.uniqueName( "site" );
 
     def "WHEN image content selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget is displayed and has attachments"()
     {
@@ -112,7 +116,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "'show inbound'- button has been clicked"
         dependencies.clickOnShowInboundButton();
-        TestUtils.saveScreenshot( getSession(), "inbound_image_shortcut" );
+        TestUtils.saveScreenshot( getSession(), "test_inbound_image_shortcut" );
 
         then: "Dependencies Section appears on the filter panel"
         filterPanel.isDependenciesSectionDisplayed();
@@ -128,7 +132,33 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         names.get( 0 ).contains( SHORTCUT_CONTENT.getName() );
     }
 
+    def "GIVEN existing content with an 'image-selector' AND the test image is selected in its content WHEN dependencies for image is opened THEN two correct inbound dependencies are displayed"()
+    {
+        given: "add a site with all content types"
+        addSiteWithAllInputTypes( TEST_SITE_NAME );
+
+        and: "content with 'image-selector' added"
+        Content imageSelector = buildImageSelector1_1_Content( TEST_SITE_NAME, TARGET_IMG )
+        findAndSelectContent( TEST_SITE_NAME ).clickToolbarNew().selectContentType( imageSelector.getContentTypeName() ).typeData(
+            imageSelector ).save().close( imageSelector.getDisplayName() );
+        contentBrowsePanel.clickOnClearSelection();
+
+        when: "dependencies for image is opened"
+        findAndSelectContent( TARGET_IMG );
+        DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
+        dependencies.clickOnShowInboundButton();
+        List<String> names = contentBrowsePanel.getContentNamesFromGrid();
+        TestUtils.saveScreenshot( getSession(), "test_two_inbound_contents" );
+
+        then: "two contents are displayed in the grid"
+        names.size() == 2;
+
+        and: "correct contents are filtered in the grid"
+        names.get( 0 ).contains( SHORTCUT_CONTENT.getName() );
+
+        and: "correct contents are filtered in the grid"
+        names.get( 1 ).contains( imageSelector.getName() );
+    }
     //TODO add tests for outbound dependencies in site
     // https://youtrack.enonic.net/issue/INBOX-476
-
 }

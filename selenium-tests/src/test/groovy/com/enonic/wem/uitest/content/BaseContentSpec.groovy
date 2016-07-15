@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.*
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
@@ -75,9 +76,6 @@ class BaseContentSpec
 
     @Shared
     String EXECUTABLE_EXE = "Notepad2.exe";
-
-    @Shared
-    String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -332,7 +330,7 @@ class BaseContentSpec
         return site;
     }
 
-    protected Content buildSite( String name, String displayName, String description )
+    protected Content buildSiteWithNameAndDispalyNameAndDescription( String name, String displayName, String description )
     {
         String siteName = NameHelper.uniqueName( name );
         PropertyTree data = new PropertyTree();
@@ -418,5 +416,44 @@ class BaseContentSpec
     protected void openHomePage()
     {
         getDriver().navigate().to( browser.baseUrl + "admin/#/home" );
+    }
+
+    protected void addSiteWithAllInputTypes( String siteName )
+    {
+        Content site = buildSiteWithAllTypes( siteName );
+        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
+            site.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saved_" + siteName ) );
+    }
+
+    private Content buildSiteWithAllTypes( String siteName )
+    {
+        PropertyTree data = new PropertyTree();
+        data.addString( SiteFormViewPanel.APP_KEY, ALL_CONTENT_TYPES_DISPLAY_NAME );
+        data.addStrings( "description", "all content types  site " )
+        Content site = Content.builder().
+            name( siteName ).
+            displayName( "site with all content types" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.site() ).data( data ).
+            build();
+        return site;
+    }
+
+    protected Content buildImageSelector1_1_Content( String siteName, String imageName )
+    {
+        PropertyTree data = null;
+        if ( imageName != null )
+        {
+            data = new PropertyTree();
+            data.addString( ImageSelectorFormViewPanel.IMAGES_PROPERTY, imageName );
+        }
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "img1_1_" ) ).
+            displayName( "img_sel 1_1" ).
+            parent( ContentPath.from( siteName ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector1_1" ).data( data ).
+            build();
+        return imageSelectorContent;
     }
 }
