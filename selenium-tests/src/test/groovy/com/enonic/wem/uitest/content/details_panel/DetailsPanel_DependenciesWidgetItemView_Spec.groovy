@@ -154,10 +154,12 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         names.size() == 2;
 
         and: "correct contents are filtered in the grid"
-        names.get( 0 ).contains( SHORTCUT_CONTENT.getName() );
+        TestUtils.isContains( names, SHORTCUT_CONTENT.getName() )
+
 
         and: "correct contents are filtered in the grid"
-        names.get( 1 ).contains( imageSelector.getName() );
+        TestUtils.isContains( names, imageSelector.getName() )
+
     }
     //TODO add tests for outbound dependencies in site
     // https://youtrack.enonic.net/issue/INBOX-476

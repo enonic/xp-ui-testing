@@ -128,6 +128,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         wizard.switchToLiveEditFrame(  );
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( imageName );
+        sleep( 1000 );
         return new LiveFormPanel( getSession() );
     }
 

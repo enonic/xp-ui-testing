@@ -8,6 +8,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -237,4 +238,13 @@ public class TestUtils
         builder.build().perform();
     }
 
+    public static boolean isContains( Collection<String> collection, String target )
+    {
+        if ( collection.isEmpty() )
+        {
+            return false;
+        }
+        return collection.stream().anyMatch( s -> s.contains( target ) );
+
+    }
 }

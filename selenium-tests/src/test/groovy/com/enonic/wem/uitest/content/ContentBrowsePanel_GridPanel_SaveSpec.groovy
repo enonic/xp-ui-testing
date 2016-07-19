@@ -79,8 +79,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
     {
         given: "creating new Content beneath an existing expanded content"
-        String name = NameHelper.uniqueName( "folder" );
-        Content childContent = buildFolderContentWithParent( name, "child-folder3", PARENT_FOLDER.getName() );
+        Content childContent = buildFolderContentWithParent( "folder", "child-folder3", PARENT_FOLDER.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
         contentBrowsePanel.expandContent( PARENT_FOLDER.getPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
@@ -88,7 +87,6 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when: "child content saved and wizard closed"
         wizard.save().close( childContent.getDisplayName() );
-        TestUtils.saveScreenshot( getTestSession(), name );
 
         then: "new Content should be listed beneath parent"
         contentBrowsePanel.exists( childContent.getName() );
@@ -99,8 +97,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
     {
         given: "creating new Content beneath an existing expanded folder"
-        String name = NameHelper.uniqueName( "folder" );
-        Content childContent = buildFolderContentWithParent( name, "child-folder4", PARENT_FOLDER.getName() );
+        Content childContent = buildFolderContentWithParent( "folder", "child-folder4", PARENT_FOLDER.getName() );
         contentBrowsePanel.expandContent( PARENT_FOLDER.getPath() );
         contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
@@ -132,7 +129,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         filterPanel.typeSearchText( newName )
 
         then: "Content is listed with it's new name"
-        TestUtils.saveScreenshot( getTestSession(), "editnametest" );
+        TestUtils.saveScreenshot( getTestSession(), "test_content_edit_name" );
         contentBrowsePanel.exists( newName, true );
     }
 
