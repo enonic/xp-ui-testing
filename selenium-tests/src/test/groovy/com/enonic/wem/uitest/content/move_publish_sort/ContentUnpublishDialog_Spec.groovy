@@ -106,14 +106,14 @@ class ContentUnpublishDialog_Spec
         when: "content selected and 'Unpublish' menu item clicked"
         contentUnPublishDialog.clickOnUnpublishButton();
 
-        then: "'ContentUnPublishDialog' dialog displayed"
-        !contentUnPublishDialog.isOpened();
+        then: "wait until the dialog closed"
+        contentUnPublishDialog.waitForClosed();
 
         and: "content still has 'online' status"
         contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
 
 
-        and: "publish button on the toolbar is disabled"
+        and: "publish button on the toolbar is enabled"
         contentBrowsePanel.isPublishButtonEnabled();
     }
 

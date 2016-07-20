@@ -240,6 +240,7 @@ public class NewContentDialog
     public ContentWizardPanel selectContentType( String contentTypeName )
     {
         String searchString = contentTypeName.substring( contentTypeName.indexOf( ":" ) + 1 );
+        waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
         clearAndType( searchInput, searchString );
         sleep( 700 );
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );

@@ -64,6 +64,16 @@ public class ContentUnpublishDialog
         return this;
     }
 
+    public boolean waitForClosed()
+    {
+        boolean result = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            TestUtils.saveScreenshot( getSession(), "content_unpublish_not_closed" );
+        }
+        return result;
+    }
+
     public boolean isUnPublishButtonEnabled()
     {
         return unPublishButton.isEnabled();
