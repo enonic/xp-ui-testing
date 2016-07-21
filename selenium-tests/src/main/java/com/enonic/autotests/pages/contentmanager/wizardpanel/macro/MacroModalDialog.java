@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.pages.RichComboBoxInput;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -128,7 +128,6 @@ public class MacroModalDialog
     public boolean isOpened()
     {
         return isElementDisplayed( DIALOG_CONTAINER );
-
     }
 
     public boolean waitForClosed()
@@ -162,13 +161,8 @@ public class MacroModalDialog
         WebElement optionsInput = getDisplayedElement( By.xpath( DIALOG_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) );
         clearAndType( optionsInput, macroName.getValue() );
         sleep( 500 );
-        String optionXpath = String.format( COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, macroName.getValue() );
-        if ( !isElementDisplayed( optionXpath ) )
-        {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_macro_option" ) );
-            throw new TestFrameworkException( "macro option was not found! " + macroName );
-        }
-        getDisplayedElement( By.xpath( optionXpath ) ).click();
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        richComboBoxInput.selectOption( macroName.getValue() );
         switch ( macroName )
         {
             case TWITTER:

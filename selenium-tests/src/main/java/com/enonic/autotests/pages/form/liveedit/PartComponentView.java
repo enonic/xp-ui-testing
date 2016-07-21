@@ -15,8 +15,6 @@ public class PartComponentView
 {
     private final String COMPONENT_CONTAINER = "//div[contains(@id,'PartComponentView')]";
 
-    private final String OPTION_FILTER = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
-
     public static String PART_XPATH = "//div[contains(@id,'PartDescriptorViewer') and descendant::p[contains(.,'%s')]]";
 
     public PartComponentView( final TestSession session )
@@ -26,12 +24,12 @@ public class PartComponentView
 
     public LiveFormPanel selectItem( String partName )
     {
-        if ( !isElementDisplayed( COMPONENT_CONTAINER + OPTION_FILTER ) )
+        if ( !isElementDisplayed( COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_opt_filter" ) );
             throw new TestFrameworkException( "option filter input was not displayed" );
         }
-        getDisplayedElement( By.xpath( COMPONENT_CONTAINER + OPTION_FILTER ) ).sendKeys( partName );
+        getDisplayedElement( By.xpath( COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) ).sendKeys( partName );
         sleep( 400 );
         if ( !isPartExists( partName ) )
         {

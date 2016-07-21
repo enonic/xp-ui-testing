@@ -19,8 +19,7 @@ public class ContextWindowPageInspectionPanel
 
     private final String PAGE_CONTROLLER_SELECTOR = CONTAINER + "//div[contains(@id,'PageControllerSelector')]";
 
-    private final String PAGE_CONTROLLER_OPTION_FILTER_INPUT =
-        PAGE_CONTROLLER_SELECTOR + "//input[contains(@id,'DropdownOptionFilterInput')]";
+    private final String PAGE_CONTROLLER_OPTION_FILTER_INPUT = PAGE_CONTROLLER_SELECTOR + DROPDOWN_OPTION_FILTER_INPUT;
 
     private final String RENDERER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateSelector')]";
 

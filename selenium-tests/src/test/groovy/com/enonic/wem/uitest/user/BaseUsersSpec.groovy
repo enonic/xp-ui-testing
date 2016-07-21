@@ -70,6 +70,9 @@ class BaseUsersSpec
     String ROLE_EXISTS = "A role with name %s already exists";
 
     @Shared
+    String USER_STORE_EXISTS = "A user store with name %s already exists";
+
+    @Shared
     String GROUP_EXISTS = "A group with that name already exists";
 
 
@@ -160,6 +163,13 @@ class BaseUsersSpec
     {
         String generated = NameHelper.uniqueName( name );
         return UserStore.builder().displayName( displayName ).name( generated ).description( description ).build();
+    }
+
+    protected UserStore buildUserStoreWitIdProvider( String name, String displayName, String description, String idProviderDisplayName )
+    {
+        String generated = NameHelper.uniqueName( name );
+        return UserStore.builder().displayName( displayName ).name( generated ).description( description ).idProviderDisplayName(
+            idProviderDisplayName ).build();
     }
 
     protected UserStore buildUserStoreWithPermissions( String name, String displayName, String description )

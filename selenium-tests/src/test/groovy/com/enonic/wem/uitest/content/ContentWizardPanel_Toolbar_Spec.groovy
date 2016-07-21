@@ -24,8 +24,8 @@ class ContentWizardPanel_Toolbar_Spec
         and: "'Publish' button disabled"
         !wizardPanel.isPublishButtonEnabled();
 
-        and: "'Duplicate' button disabled"
-        !wizardPanel.isDuplicateButtonEnabled();
+        and: "'Duplicate' button is enabled"
+        wizardPanel.isDuplicateButtonEnabled();
 
         and: "content status is offline"
         wizardPanel.getStatus() == ContentStatus.OFFLINE.getValue();
@@ -48,8 +48,8 @@ class ContentWizardPanel_Toolbar_Spec
         and: "'Publish' button disabled"
         wizardPanel.isPublishButtonEnabled();
 
-        and: "'Duplicate' button disabled"
-        !wizardPanel.isDuplicateButtonEnabled();
+        and: "'Duplicate' button is enabled"
+        wizardPanel.isDuplicateButtonEnabled();
 
         and: "content status is offline"
         wizardPanel.getStatus() == ContentStatus.OFFLINE.getValue();

@@ -51,7 +51,6 @@ class UserAndUserStoreCreateAndDelete_Spec
         userBrowsePanel.exists( TEST_USER_STORE.getName() );
         and: "correct notification appears"
         USER_STORE_CREATED_MESSAGE == message;
-
     }
 
     def "WHEN the empty User Store expanded and 'Users' selected THEN 'Delete' button is disabled "()

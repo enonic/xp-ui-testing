@@ -29,8 +29,7 @@ public class EditPermissionsDialog
 
     private final String INHERIT_PERMISSIONS_CHECKBOX_LABEL = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]/label";
 
-
-    private final String OPTIONS_FILTER_INPUT = CONTAINER_XPATH + "//input[contains(@id,'combobox.ComboBoxOptionFilterInput')]";
+    private final String PRINCIPALS_OPTIONS_FILTER_INPUT = CONTAINER_XPATH + COMBOBOX_OPTION_FILTER_INPUT;
 
     private String PRINCIPAL_PATH = "//div[contains(@id,'AccessControlEntryViewer')]//p[contains(.,'%s')]";
 
@@ -67,7 +66,7 @@ public class EditPermissionsDialog
     public EditPermissionsDialog uncheckInheritCheckbox()
     {
         inheritPermissionsCheckbox.click();
-        if ( !waitUntilVisibleNoException( By.xpath( OPTIONS_FILTER_INPUT ), Application.EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( PRINCIPALS_OPTIONS_FILTER_INPUT ), Application.EXPLICIT_NORMAL ) )
         {
             throw new TestFrameworkException( "options filter input not found!" );
         }
@@ -76,7 +75,7 @@ public class EditPermissionsDialog
 
     public boolean isOptionsFilterDisplayed()
     {
-        return findElements( By.xpath( OPTIONS_FILTER_INPUT ) ).size() > 0;
+        return findElements( By.xpath( PRINCIPALS_OPTIONS_FILTER_INPUT ) ).size() > 0;
     }
 
     public EditPermissionsDialog updatePermissions( List<ContentAclEntry> entries )
@@ -135,7 +134,7 @@ public class EditPermissionsDialog
 
     private void selectPrincipal( String principalName )
     {
-        WebElement input = findElement( By.xpath( OPTIONS_FILTER_INPUT ) );
+        WebElement input = findElement( By.xpath( PRINCIPALS_OPTIONS_FILTER_INPUT ) );
         clearAndType( input, principalName );
         sleep( 1000 );
         By principalBy = By.xpath( String.format( PRINCIPAL_PATH, principalName ) );
@@ -148,7 +147,7 @@ public class EditPermissionsDialog
 
     private void selectPrincipalAndApply( String principalName )
     {
-        WebElement input = findElement( By.xpath( OPTIONS_FILTER_INPUT ) );
+        WebElement input = findElement( By.xpath( PRINCIPALS_OPTIONS_FILTER_INPUT ) );
         clearAndType( input, principalName );
         sleep( 1000 );
         By principalCheckbox = By.xpath( String.format( PRINCIPAL_CHECKBOX_PATH, principalName ) );

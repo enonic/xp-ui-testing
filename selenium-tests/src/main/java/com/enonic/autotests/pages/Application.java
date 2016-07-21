@@ -16,9 +16,6 @@ public class Application
 
     public static final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
-    public static String COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
-
     public static String MARKED_FOR_DELETION_MESSAGE = "\"%s\" marked for deletion";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";

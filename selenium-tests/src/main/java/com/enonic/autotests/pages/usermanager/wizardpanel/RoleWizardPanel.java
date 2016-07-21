@@ -29,16 +29,15 @@ public class RoleWizardPanel
 
     private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
 
-    public final String TOOLBAR_SAVE_BUTTON = WIZARD_PANEL + TOOLBAR +
-        "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
+    public final String TOOLBAR_SAVE_BUTTON = WIZARD_PANEL + TOOLBAR + "/*[contains(@id,'ActionButton') and child::span[text()='Save']]";
 
-    private final String TOOLBAR_DELETE_BUTTON = WIZARD_PANEL + TOOLBAR +
-        "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+    private final String TOOLBAR_DELETE_BUTTON =
+        WIZARD_PANEL + TOOLBAR + "/*[contains(@id,'ActionButton') and child::span[text()='Delete']]";
 
     private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
 
     private final String ROLE_OPTIONS_FILTER_INPUT =
-        "//div[contains(@id,'FormItem') and child::label[text()='Members']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+        "//div[contains(@id,'FormItem') and child::label[text()='Members']]" + COMBOBOX_OPTION_FILTER_INPUT;
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     private WebElement toolbarSaveButton;

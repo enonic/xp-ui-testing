@@ -23,9 +23,9 @@ public class SettingsWizardStepForm
 
     private final String PRINCIPAL_COMBOBOX = FORM_CONTAINER + "//div[contains(@id,'PrincipalComboBox')]";
 
-    private final String LANGUAGE_FILTER_INPUT = LOCALE_COMBOBOX + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
+    private final String LANGUAGE_FILTER_INPUT = LOCALE_COMBOBOX + COMBOBOX_OPTION_FILTER_INPUT;
 
-    private final String PRINCIPAL_FILTER_INPUT = PRINCIPAL_COMBOBOX + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
+    private final String PRINCIPAL_FILTER_INPUT = PRINCIPAL_COMBOBOX + COMBOBOX_OPTION_FILTER_INPUT;
 
     private String NAME_ITEM = "//h6[@class='main-name' and text()='%s']";
 

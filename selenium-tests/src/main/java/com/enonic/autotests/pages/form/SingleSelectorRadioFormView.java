@@ -19,6 +19,8 @@ public class SingleSelectorRadioFormView
 
     private String ALL_RADIO_INPUTS = "//div[contains(@id,'radiobutton.RadioButton')]//input[@type='radio']";
 
+    private String RADIO_INPUT = "//span[contains(@class,'radio-button') and child::label[text()='%s']]//input";
+
     public SingleSelectorRadioFormView( final TestSession session )
     {
         super( session );
@@ -37,15 +39,14 @@ public class SingleSelectorRadioFormView
         return this;
     }
 
-    public SingleSelectorRadioFormView selectOption( String option )
+    public SingleSelectorRadioFormView selectOption( String label )
     {
-        String radioInputXpath = String.format( "//span[contains(@class,'radio-button') and child::label[text()='%s']]//input", option );
-        if ( findElements( By.xpath( radioInputXpath ) ).size() == 0 )
+        String radioInputXpath = String.format( RADIO_INPUT, label );
+        if ( !isElementDisplayed( radioInputXpath ) )
         {
-            throw new TestFrameworkException( "option was not found! " + option );
+            throw new TestFrameworkException( "option was not found! " + label );
         }
-        findElements( By.xpath( radioInputXpath ) ).get( 0 ).click();
-
+        getDisplayedElement( By.xpath( radioInputXpath ) ).click();
         return this;
     }
 
@@ -68,6 +69,4 @@ public class SingleSelectorRadioFormView
         }
         return "";
     }
-
-
 }

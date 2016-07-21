@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.RichComboBoxInput;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
@@ -26,6 +27,14 @@ public class UserStoreWizardPanel
 
     public final String TOOLBAR_SAVE_BUTTON = WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
+    private final String PRINCIPAL_SELECTOR = WIZARD_PANEL + "//div[@name='principalSelector']";
+
+    private final String PRINCIPALS_OPTIONS_FILTER_INPUT = PRINCIPAL_SELECTOR + COMBOBOX_OPTION_FILTER_INPUT;
+
+    private final String ID_PROVIDER_COMBOBOX_SELCTOR = "//div[contains(@id,'AuthApplicationComboBox')]";
+
+    private final String ID_PROVIDER_OPTIONS_FILTER_INPUT = ID_PROVIDER_COMBOBOX_SELCTOR + COMBOBOX_OPTION_FILTER_INPUT;
+
     private final String TOOLBAR_DELETE_BUTTON =
         WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
@@ -40,6 +49,12 @@ public class UserStoreWizardPanel
     @FindBy(xpath = DESCRIPTION_INPUT)
     private WebElement descriptionInput;
 
+    @FindBy(xpath = ID_PROVIDER_OPTIONS_FILTER_INPUT)
+    protected WebElement idProviderOptiosnFilterInput;
+
+    @FindBy(xpath = PRINCIPALS_OPTIONS_FILTER_INPUT)
+    protected WebElement principalsOptionsFilterInput;
+
     /**
      * The constructor.
      *
@@ -50,6 +65,23 @@ public class UserStoreWizardPanel
         super( session );
     }
 
+    public UserStoreWizardPanel selectIdProviderOption( String providerName )
+    {
+        clearAndType( idProviderOptiosnFilterInput, providerName );
+        sleep( 500 );
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        richComboBoxInput.selectOption( providerName );
+        return this;
+    }
+
+    public UserStoreWizardPanel selectPrincipalOption( String principalName )
+    {
+        clearAndType( principalsOptionsFilterInput, principalName );
+        sleep( 500 );
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        richComboBoxInput.selectOption( principalName );
+        return this;
+    }
     @Override
     public String getWizardDivXpath()
     {

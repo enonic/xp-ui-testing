@@ -124,8 +124,7 @@ public class SiteConfiguratorDialog
 
     public SiteConfiguratorDialog selectBackGroundImage( String imageName )
     {
-        String optionFilter =
-            DIALOG_CONTAINER + "//div[contains(@id,'ImageContentComboBox')]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+        String optionFilter = DIALOG_CONTAINER + "//div[contains(@id,'ImageContentComboBox')]" + COMBOBOX_OPTION_FILTER_INPUT;
         if ( !isElementDisplayed( optionFilter ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( "optionFilter" ) );
@@ -168,6 +167,7 @@ public class SiteConfiguratorDialog
         builder.moveToElement( textArea ).click( textArea ).build().perform();
         textArea.sendKeys( "  " );
     }
+
     public String getTextFromArea()
     {
         String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";

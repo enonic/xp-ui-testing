@@ -27,8 +27,7 @@ public class PageTemplateFormViewPanel
 
     private final String SUPPORT_OPTION_FILTER_INPUT = FORM_VIEW + "//input[contains(@class,'option-filter-input')]";
 
-    private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT =
-        "//div[contains(@id,'PageDescriptorDropdown')]//input[contains(@id,'api.ui.selector.dropdown.DropdownOptionFilterInput')]";
+    private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT = "//div[contains(@id,'PageDescriptorDropdown')]" + DROPDOWN_OPTION_FILTER_INPUT;
 
     @FindBy(xpath = SUPPORT_OPTION_FILTER_INPUT)
     private WebElement optionFilterInput;

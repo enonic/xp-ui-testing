@@ -33,7 +33,7 @@ public class SiteFormViewPanel
     @FindBy(xpath = FORM_VIEW + "//textarea[contains(@name,'description')]")
     private WebElement descriptionInput;
 
-    @FindBy(xpath = FORM_VIEW + "//input[contains(@id,'ComboBoxOptionFilterInput')]")
+    @FindBy(xpath = FORM_VIEW + COMBOBOX_OPTION_FILTER_INPUT)
     private WebElement optionFilterInput;
 
     @FindBy(

@@ -11,6 +11,9 @@ public class UserStore
 
     private final String description;
 
+    private final String idProviderDisplayName;
+
+
     private List<String> aclEntryDisplayNames;
 
     public UserStore( final Builder builder )
@@ -18,6 +21,7 @@ public class UserStore
         this.name = builder.name;
         this.displayName = builder.displayName;
         this.description = builder.description;
+        this.idProviderDisplayName = builder.idProviderDisplayName;
     }
 
     public String getName()
@@ -28,6 +32,11 @@ public class UserStore
     public String getDisplayName()
     {
         return this.displayName;
+    }
+
+    public String getIdProviderDisplayName()
+    {
+        return this.idProviderDisplayName;
     }
 
     public String getDescription()
@@ -48,6 +57,8 @@ public class UserStore
 
         String description;
 
+        String idProviderDisplayName;
+
         private Builder()
         {
         }
@@ -57,7 +68,7 @@ public class UserStore
             this.displayName = userStore.displayName;
             this.name = userStore.name;
             this.description = userStore.description;
-
+            this.idProviderDisplayName = userStore.idProviderDisplayName;
         }
 
         public Builder name( final String name )
@@ -75,6 +86,12 @@ public class UserStore
         public Builder description( final String description )
         {
             this.description = description;
+            return this;
+        }
+
+        public Builder idProviderDisplayName( final String idProviderDisplayName )
+        {
+            this.idProviderDisplayName = idProviderDisplayName;
             return this;
         }
 

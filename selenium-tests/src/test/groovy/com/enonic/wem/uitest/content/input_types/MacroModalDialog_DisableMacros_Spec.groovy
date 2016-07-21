@@ -68,7 +68,6 @@ class MacroModalDialog_DisableMacros_Spec
         and:
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).isValidationMessagePresent();
 
-        and:
         and: "correct validation message appears"
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
     }

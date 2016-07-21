@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.RichComboBoxInput;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
@@ -24,7 +25,7 @@ public class ImageSelectorFormViewPanel
 
     protected final String CONTAINER_DIV = FORM_VIEW + "//div[contains(@id,'ImageSelector')]";
 
-    protected final String OPTION_FILTER_INPUT = CONTAINER_DIV + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
+    protected final String OPTION_FILTER_INPUT = CONTAINER_DIV + COMBOBOX_OPTION_FILTER_INPUT;
 
     protected final String SELECTED_IMAGE_VIEW = CONTAINER_DIV + "//div[contains(@id,'ImageSelectorSelectedOptionView')]";
 
@@ -39,10 +40,7 @@ public class ImageSelectorFormViewPanel
 
     protected String DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE = SELECTED_IMAGE_VIEW_BY_NAME + "//div[@class='checkbox form-input']";
 
-
     private final String SELECTED_IMAGES_NAMES = SELECTED_IMAGE_VIEW + "//div[@class='label']";
-
-    private String COMBOBOX_OPTIONS_ITEM = "//div[@class='slick-viewport']//div[contains(@id,'ImageSelectorViewer')]//h6[text()='%s']";
 
     private final String UPLOADER_BUTTON = CONTAINER_DIV + "//a[@class='dropzone']";
 
@@ -71,11 +69,12 @@ public class ImageSelectorFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
         for ( final String imageName : data.getStrings( IMAGES_PROPERTY ) )
         {
             clearAndType( optionFilterInput, imageName );
             sleep( 700 );
-            selectOption( imageName );
+            richComboBoxInput.selectOption( imageName );
             sleep( 300 );
         }
         return this;
@@ -83,21 +82,21 @@ public class ImageSelectorFormViewPanel
 
     public boolean isRemoveButtonDisplayed()
     {
-        return findElements( By.xpath( REMOVE_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( REMOVE_BUTTON );
     }
 
     public boolean isEditButtonDisplayed()
     {
-        return findElements( By.xpath( EDIT_BUTTON ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( EDIT_BUTTON );
     }
 
     public ImageSelectorFormViewPanel clickOnRemoveButton()
     {
-        if ( findElements( By.xpath( REMOVE_BUTTON ) ).size() == 0 )
+        if ( !isRemoveButtonDisplayed() )
         {
             throw new TestFrameworkException( "Remove button was not found!" );
         }
-        findElements( By.xpath( REMOVE_BUTTON ) ).get( 0 ).click();
+        getDisplayedElement( By.xpath( REMOVE_BUTTON ) ).click();
         sleep( 500 );
         return this;
     }
@@ -171,17 +170,5 @@ public class ImageSelectorFormViewPanel
         String script = "return arguments[0].innerHTML";
         String text = (String) ( (JavascriptExecutor) getDriver() ).executeScript( script, div );
         return text;
-    }
-
-    protected void selectOption( String option )
-    {
-        boolean isVisible = waitUntilVisibleNoException( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM, option ) ), 2 );
-        List<WebElement> elements = findElements( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM, option ) ) );
-        List<WebElement> displayedElements = elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
-        if ( displayedElements.size() == 0 )
-        {
-            throw new TestFrameworkException( "option was not found! " + option );
-        }
-        elements.get( 0 ).click();
     }
 }

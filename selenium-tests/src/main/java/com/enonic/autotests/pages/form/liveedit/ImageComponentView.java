@@ -30,12 +30,11 @@ public class ImageComponentView
 
     private void selectOptionsItem( String imageName )
     {
-        if ( !isElementDisplayed( EMPTY_IMAGE_COMPONENT_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]" ) )
+        if ( !isElementDisplayed( EMPTY_IMAGE_COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) )
         {
             throw new TestFrameworkException( "ImageComponentView: options filter input was not found!" );
         }
-        findElements( By.xpath( EMPTY_IMAGE_COMPONENT_CONTAINER + "//input[contains(@id,'ComboBoxOptionFilterInput')]" ) ).get(
-            0 ).sendKeys( imageName );
+        getDisplayedElement( By.xpath( EMPTY_IMAGE_COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) ).sendKeys( imageName );
         sleep( 300 );
         String optionXpath = String.format( NAMES_ICON_VIEW, imageName );
         if ( !isElementDisplayed( optionXpath ) )

@@ -82,7 +82,7 @@ class UserStore_Save_Delete_Spec
         String errorMessage = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "message that role with it  name already exists"
-        errorMessage == String.format( ROLE_EXISTS, TEST_USER_STORE.getName() );
+        errorMessage == String.format( USER_STORE_EXISTS, TEST_USER_STORE.getName() );
     }
 
     def "GIVEN existing 'user store' WHEN 'user store' selected and 'Delete' button pressed THEN 'user store' not displayed in a grid"()

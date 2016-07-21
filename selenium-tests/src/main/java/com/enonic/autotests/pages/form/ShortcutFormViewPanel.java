@@ -1,15 +1,13 @@
 package com.enonic.autotests.pages.form;
 
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.RichComboBoxInput;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
@@ -22,15 +20,13 @@ public class ShortcutFormViewPanel
 
     protected final String CONTENT_SELECTOR = FORM_VIEW + "//div[contains(@id,'ContentSelector')]";
 
-    protected final String OPTION_FILTER_INPUT = CONTENT_SELECTOR + "//input[contains(@id,'ComboBoxOptionFilterInput')]";
-
-    private String COMBOBOX_OPTIONS_ITEM = "//div[@class='slick-viewport']//div[contains(@id,'ContentSummaryViewer')]//h6[text()='%s']";
+    protected final String TARGET_OPTION_FILTER_INPUT = CONTENT_SELECTOR + COMBOBOX_OPTION_FILTER_INPUT;
 
     private String REMOVE_TARGET_BUTTON = CONTENT_SELECTOR + "//div[contains(@id,'ContentSelectedOptionView')]//a[@class='remove']";
 
     private String TARGET_DISPLAY_NAME = CONTENT_SELECTOR + H6_DISPLAY_NAME;
 
-    @FindBy(xpath = OPTION_FILTER_INPUT)
+    @FindBy(xpath = TARGET_OPTION_FILTER_INPUT)
     protected WebElement optionFilterInput;
 
     public ShortcutFormViewPanel( TestSession session )
@@ -49,21 +45,10 @@ public class ShortcutFormViewPanel
     public ShortcutFormViewPanel selectTarget( String targetName )
     {
         clearAndType( optionFilterInput, targetName );
-        sleep( 700 );
-        selectOption( targetName );
+        sleep( 300 );
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        richComboBoxInput.selectOption( targetName );
         return this;
-    }
-
-    protected void selectOption( String option )
-    {
-        waitUntilVisibleNoException( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM, option ) ), 2 );
-        List<WebElement> elements = findElements( By.xpath( String.format( COMBOBOX_OPTIONS_ITEM, option ) ) );
-        List<WebElement> displayedElements = elements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
-        if ( displayedElements.size() == 0 )
-        {
-            throw new TestFrameworkException( "option was not found! " + option );
-        }
-        elements.get( 0 ).click();
     }
 
     public ShortcutFormViewPanel removeTarget()
@@ -88,5 +73,4 @@ public class ShortcutFormViewPanel
             return getDisplayedString( TARGET_DISPLAY_NAME );
         }
     }
-
 }

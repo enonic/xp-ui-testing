@@ -16,11 +16,9 @@ public class LayoutComponentView
 {
     private final String COMPONENT_CONTAINER = "//div[contains(@id,'LayoutComponentView')]";
 
-    private final String OPTION_FILTER = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
-
     public static String REGION_XPATH = "//div[contains(@id,'RegionView') and descendant::p[contains(.,'%s')]]";
 
-    @FindBy(xpath = COMPONENT_CONTAINER + OPTION_FILTER)
+    @FindBy(xpath = COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT)
     private WebElement optionFilterInput;
 
     public LayoutComponentView( final TestSession session )

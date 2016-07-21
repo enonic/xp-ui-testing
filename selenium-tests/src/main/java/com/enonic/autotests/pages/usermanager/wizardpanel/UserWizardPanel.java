@@ -29,21 +29,17 @@ public class UserWizardPanel
 
     private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
 
-    public static String GRID_ROW =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
-
     public final String USER_WIZARD_PANEL = "//div[contains(@id,'UserWizardPanel') and not(contains(@style,'display: none'))]";
 
-    public final String TOOLBAR_SAVE_BUTTON = TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
+    public final String TOOLBAR_SAVE_BUTTON = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
-    private final String TOOLBAR_DELETE_BUTTON =
-        TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+    private final String TOOLBAR_DELETE_BUTTON = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
     private final String ROLE_OPTIONS_FILTER_INPUT =
-        "//div[contains(@id,'FormItem') and child::label[text()='Roles']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+        "//div[contains(@id,'FormItem') and child::label[text()='Roles']]" + COMBOBOX_OPTION_FILTER_INPUT;
 
     private final String GROUP_OPTIONS_FILTER_INPUT =
-        "//div[contains(@id,'FormItem') and child::label[text()='Groups']]//input[contains(@id,'ComboBoxOptionFilterInput')]";
+        "//div[contains(@id,'FormItem') and child::label[text()='Groups']]" + COMBOBOX_OPTION_FILTER_INPUT;
 
     private final String ROLE_COMBOBOX = "//div[contains(@id,'PrincipalComboBox')]";
 
@@ -151,7 +147,7 @@ public class UserWizardPanel
     {
         clearAndType( groupOptionsFilter, groupName );
         sleep( 1000 );
-        String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", groupName );
+        String rowCheckboxXpath = String.format( SLICK_ROW_BY_NAME + "//label[child::input[@type='checkbox']]", groupName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), "err_group_not_found" );
@@ -169,7 +165,7 @@ public class UserWizardPanel
     {
         clearAndType( roleOptionsFilter, roleName );
         sleep( 1000 );
-        String rowCheckboxXpath = String.format( GRID_ROW + "//label[child::input[@type='checkbox']]", roleName );
+        String rowCheckboxXpath = String.format( SLICK_ROW_BY_NAME + "//label[child::input[@type='checkbox']]", roleName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_role" ) );
@@ -185,7 +181,7 @@ public class UserWizardPanel
 
     private boolean isRoleOrGroupAlreadySelected( String name )
     {
-        String rowXpath = String.format( GRID_ROW + "//input[@type='checkbox']", name );
+        String rowXpath = String.format( SLICK_ROW_BY_NAME + "//input[@type='checkbox']", name );
         if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" ) );
