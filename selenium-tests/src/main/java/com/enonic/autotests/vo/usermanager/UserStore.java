@@ -3,6 +3,8 @@ package com.enonic.autotests.vo.usermanager;
 
 import java.util.List;
 
+import com.enonic.autotests.vo.contentmanager.security.UserStoreAclEntry;
+
 public class UserStore
 {
     private final String name;
@@ -13,8 +15,7 @@ public class UserStore
 
     private final String idProviderDisplayName;
 
-
-    private List<String> aclEntryDisplayNames;
+    private List<UserStoreAclEntry> aclEntries;
 
     public UserStore( final Builder builder )
     {
@@ -22,6 +23,7 @@ public class UserStore
         this.displayName = builder.displayName;
         this.description = builder.description;
         this.idProviderDisplayName = builder.idProviderDisplayName;
+        this.aclEntries = builder.aclEntries;
     }
 
     public String getName()
@@ -32,6 +34,11 @@ public class UserStore
     public String getDisplayName()
     {
         return this.displayName;
+    }
+
+    public List<UserStoreAclEntry> getAclEntries()
+    {
+        return this.aclEntries;
     }
 
     public String getIdProviderDisplayName()
@@ -59,6 +66,8 @@ public class UserStore
 
         String idProviderDisplayName;
 
+        List<UserStoreAclEntry> aclEntries;
+
         private Builder()
         {
         }
@@ -69,6 +78,7 @@ public class UserStore
             this.name = userStore.name;
             this.description = userStore.description;
             this.idProviderDisplayName = userStore.idProviderDisplayName;
+            this.aclEntries = userStore.aclEntries;
         }
 
         public Builder name( final String name )
@@ -92,6 +102,12 @@ public class UserStore
         public Builder idProviderDisplayName( final String idProviderDisplayName )
         {
             this.idProviderDisplayName = idProviderDisplayName;
+            return this;
+        }
+
+        public Builder aclEntries( List<UserStoreAclEntry> aclEntries )
+        {
+            this.aclEntries = aclEntries;
             return this;
         }
 

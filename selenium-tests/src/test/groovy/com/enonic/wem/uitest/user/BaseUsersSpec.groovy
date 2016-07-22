@@ -19,6 +19,9 @@ class BaseUsersSpec
     extends BaseGebSpec
 {
     @Shared
+    String STANDARD_ID_PROVIDER = "Standard ID Provider";
+
+    @Shared
     String USER_DELETING_NOTIFICATION_MESSAGE = "Principal [user:system:%s] deleted!";
 
     @Shared

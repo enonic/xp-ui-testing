@@ -31,14 +31,22 @@ public class UserStoreWizardPanel
 
     private final String PRINCIPALS_OPTIONS_FILTER_INPUT = PRINCIPAL_SELECTOR + COMBOBOX_OPTION_FILTER_INPUT;
 
-    private final String ID_PROVIDER_COMBOBOX_SELCTOR = "//div[contains(@id,'AuthApplicationComboBox')]";
+    private final String ID_PROVIDER_COMBOBOX = "//div[contains(@id,'AuthApplicationComboBox')]";
 
-    private final String ID_PROVIDER_OPTIONS_FILTER_INPUT = ID_PROVIDER_COMBOBOX_SELCTOR + COMBOBOX_OPTION_FILTER_INPUT;
+    private final String ID_PROVIDER_COMBOBOX_DROPDOWN_HANDLER = ID_PROVIDER_COMBOBOX + "//button[contains(@id,'DropdownHandle')]";
+
+    private final String ID_PROVIDER_OPTIONS_FILTER_INPUT = ID_PROVIDER_COMBOBOX + COMBOBOX_OPTION_FILTER_INPUT;
 
     private final String TOOLBAR_DELETE_BUTTON =
         WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
 
     private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
+
+    private final String SELECTED_ID_PROVIDER_INPUT = WIZARD_PANEL + "//div[contains(@id,'AuthApplicationSelectedOptionView')]";
+
+    private final String SELECTED_ID_PROVIDER_DISPLAY_NAME =
+        WIZARD_PANEL + "//div[contains(@id,'AuthApplicationSelectedOptionView')]" + H6_DISPLAY_NAME;
+
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
@@ -65,23 +73,26 @@ public class UserStoreWizardPanel
         super( session );
     }
 
-    public UserStoreWizardPanel selectIdProviderOption( String providerName )
+    public UserStoreWizardPanel selectIdProvider( String providerName )
     {
+        getDisplayedElement( By.xpath( ID_PROVIDER_COMBOBOX_DROPDOWN_HANDLER ) ).click();
         clearAndType( idProviderOptiosnFilterInput, providerName );
-        sleep( 500 );
+        sleep( 2000 );
         RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
         richComboBoxInput.selectOption( providerName );
         return this;
     }
 
-    public UserStoreWizardPanel selectPrincipalOption( String principalName )
+    public UserStoreWizardPanel addPrincipal( String principalDisplayName )
     {
-        clearAndType( principalsOptionsFilterInput, principalName );
-        sleep( 500 );
+        clearAndType( principalsOptionsFilterInput, principalDisplayName );
+        sleep( 400 );
         RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( principalName );
+        richComboBoxInput.selectOption( principalDisplayName );
+        sleep( 500 );
         return this;
     }
+
     @Override
     public String getWizardDivXpath()
     {
@@ -112,9 +123,19 @@ public class UserStoreWizardPanel
             getLogger().info( "types the description: " + userStore.getDescription() );
             clearAndType( descriptionInput, userStore.getDescription() );
         }
+        if ( StringUtils.isNotEmpty( userStore.getIdProviderDisplayName() ) )
+        {
+            selectIdProvider( userStore.getIdProviderDisplayName() );
+        }
         TestUtils.saveScreenshot( getSession(), userStore.getDisplayName() );
+
+        if ( userStore.getAclEntries() != null )
+        {
+            userStore.getAclEntries().stream().map( e -> addPrincipal( e.getPrincipalDisplayName() ) );
+        }
         return this;
     }
+
 
     public String getStoreNameInputValue()
     {
@@ -124,6 +145,26 @@ public class UserStoreWizardPanel
     public String getDescriptionValue()
     {
         return descriptionInput.getAttribute( "value" );
+    }
+
+    public String getIdProviderDisplayName()
+    {
+        return getDisplayedString( SELECTED_ID_PROVIDER_DISPLAY_NAME );
+    }
+
+    public boolean isIdProviderSelectorDisplayed()
+    {
+        return idProviderOptiosnFilterInput.isDisplayed();
+    }
+
+    public boolean isDescriptionInputDisplayed()
+    {
+        return descriptionInput.isDisplayed();
+    }
+
+    public boolean isPermissionsSelectorDisplayed()
+    {
+        return principalsOptionsFilterInput.isDisplayed();
     }
 
     public UserStoreWizardPanel typeDisplayName( String displayName )

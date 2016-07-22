@@ -21,6 +21,12 @@ class UserStoreWizardPanel_TabMenuSpec
 
         then: "item with title 'New User Store' is present "
         userBrowsePanel.isTabMenuItemPresent( USERSTORE_TAB_TITLE );
+
+        and: "options filter input for ID provider is displayed"
+        wizard.isIdProviderSelectorDisplayed();
+
+        and: "options filter input for Principals is displayed"
+        wizard.isPermissionsSelectorDisplayed();
     }
 
     def "GIVEN 'user store' Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
