@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.UserStore
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -33,9 +34,26 @@ class UserStore_IdProvider_Spec
         when: "existing store opened"
         UserStoreWizardPanel userStoreWizardPanel = openUserStore( USERSTORE_WITH_ID_PROVIDER.getName() );
 
-        then: "correct ID provider is displayed"
+        then: "provider is selected"
+        userStoreWizardPanel.isIdProviderSelected();
+
+        and: "correct ID provider is displayed"
         TestUtils.saveScreenshot( getSession(), "test_user_store_provider_verify" );
         userStoreWizardPanel.getIdProviderDisplayName() == STANDARD_ID_PROVIDER;
+    }
+
+    @Ignore
+    def "GIVEN existing user store with selected id-provider WHEN 'remove' provider button clicked THEN provider not displayed on the wizard"()
+    {
+        when: "existing store opened"
+        UserStoreWizardPanel userStoreWizardPanel = openUserStore( USERSTORE_WITH_ID_PROVIDER.getName() );
+
+        then: "provider is selected"
+        userStoreWizardPanel.removeIdProvider( STANDARD_ID_PROVIDER );
+
+        and: "correct ID provider is displayed"
+        TestUtils.saveScreenshot( getSession(), "test_user_store_provider_verify" );
+        userStoreWizardPanel.idProviderSelectorDisplayed();
     }
 
 }

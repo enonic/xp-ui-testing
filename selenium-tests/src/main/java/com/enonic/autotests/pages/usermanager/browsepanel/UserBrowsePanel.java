@@ -24,7 +24,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class UserBrowsePanel
     extends BrowsePanel
 {
-    public final String ITEM_TYPE = "type";
+    public final String USER_ITEM_TYPE = "user_item_type";
 
     public enum BrowseItemType
     {
@@ -127,7 +127,7 @@ public class UserBrowsePanel
         sleep( 700 );
         selectRowByName( "users" );
         sleep( 500 );
-        getSession().put( ITEM_TYPE, BrowseItemType.USERS_FOLDER );
+        getSession().put( USER_ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
     }
 
@@ -138,7 +138,7 @@ public class UserBrowsePanel
         // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
         selectRowByName( "groups" );
         sleep( 500 );
-        getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
+        getSession().put( USER_ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return this;
     }
 
@@ -176,31 +176,31 @@ public class UserBrowsePanel
 
     public UserBrowsePanel clickCheckboxAndSelectFolder( BrowseItemType itemType )
     {
-        getSession().put( ITEM_TYPE, itemType );
+        getSession().put( USER_ITEM_TYPE, itemType );
         return clickCheckboxAndSelectRow( itemType.getValue() );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectUser( String userAppItemName )
     {
-        getSession().put( ITEM_TYPE, BrowseItemType.USER );
+        getSession().put( USER_ITEM_TYPE, BrowseItemType.USER );
         return clickCheckboxAndSelectRow( userAppItemName );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectUserStore( String userAppItemName )
     {
-        getSession().put( ITEM_TYPE, BrowseItemType.USER_STORE );
+        getSession().put( USER_ITEM_TYPE, BrowseItemType.USER_STORE );
         return clickCheckboxAndSelectRow( userAppItemName );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectGroup( String groupName )
     {
-        getSession().put( ITEM_TYPE, BrowseItemType.GROUP );
+        getSession().put( USER_ITEM_TYPE, BrowseItemType.GROUP );
         return clickCheckboxAndSelectRow( groupName );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectRole( String roleName )
     {
-        getSession().put( ITEM_TYPE, BrowseItemType.ROLE );
+        getSession().put( USER_ITEM_TYPE, BrowseItemType.ROLE );
         return clickCheckboxAndSelectRow( roleName );
     }
 
@@ -210,7 +210,7 @@ public class UserBrowsePanel
         {
             clickOnExpander( userStoreName );
         }
-        getSession().put( ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
+        getSession().put( USER_ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return clickOnRowAndSelectGroupInUserStore( userStoreName );
     }
 
@@ -249,7 +249,7 @@ public class UserBrowsePanel
         newButton.click();
         sleep( 500 );
 
-        BrowseItemType selectedItem = (BrowseItemType) getSession().get( ITEM_TYPE );
+        BrowseItemType selectedItem = (BrowseItemType) getSession().get( USER_ITEM_TYPE );
         if ( selectedItem == null )
         {
             return new UserStoreWizardPanel( getSession() );
@@ -309,24 +309,33 @@ public class UserBrowsePanel
     public WizardPanel clickToolbarEdit()
     {
 
+        WizardPanel wizard = null;
         editButton.click();
-        BrowseItemType selectedItem = (BrowseItemType) getSession().get( ITEM_TYPE );
+        BrowseItemType selectedItem = (BrowseItemType) getSession().get( USER_ITEM_TYPE );
         if ( selectedItem == null )
         {
-            return new UserStoreWizardPanel( getSession() );
+            wizard = new UserStoreWizardPanel( getSession() );
+            wizard.waitUntilWizardOpened();
+            return wizard;
         }
         switch ( selectedItem )
         {
             case ROLE:
-                return new RoleWizardPanel( getSession() );
+                wizard = new RoleWizardPanel( getSession() );
+                break;
             case GROUP:
-                return new GroupWizardPanel( getSession() );
+                wizard = new GroupWizardPanel( getSession() );
+                break;
             case USER:
-                return new UserWizardPanel( getSession() );
+                wizard = new UserWizardPanel( getSession() );
+                break;
             case USER_STORE:
-                return new UserStoreWizardPanel( getSession() );
+                wizard = new UserStoreWizardPanel( getSession() );
+                break;
             default:
                 throw new TestFrameworkException( "unknown type of item!" );
         }
+        wizard.waitUntilWizardOpened();
+        return wizard;
     }
 }

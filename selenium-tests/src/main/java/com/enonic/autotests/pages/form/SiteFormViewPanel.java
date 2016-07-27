@@ -60,7 +60,7 @@ public class SiteFormViewPanel
     public FormViewPanel selectCheckBoxAndApply( String appName )
     {
         clearAndType( optionFilterInput, appName );
-        sleep( 300 );
+        sleep( 700 );
         String checkboxXpath = FORM_VIEW + String.format( SLICK_ROW_BY_DISPLAY_NAME, appName ) + "//div[contains(@class,'checkboxsel')]";
         if ( !isElementDisplayed( checkboxXpath ) )
         {

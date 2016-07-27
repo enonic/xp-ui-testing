@@ -130,8 +130,9 @@ class Occurrences_DefaultRelation_2_4_Spec
         formViewPanel.removeSelectedFile( MAN_IMAGE_NAME );
         wizard.save();
 
-        then: "'Publish' button is enabled, because content is valid"
+        then: "'Publish' button is enabled, because content is not valid"
         !wizard.isPublishButtonEnabled();
+
         and:
         wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
     }

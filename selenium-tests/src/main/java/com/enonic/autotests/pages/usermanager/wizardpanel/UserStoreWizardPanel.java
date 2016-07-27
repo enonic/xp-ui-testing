@@ -42,10 +42,9 @@ public class UserStoreWizardPanel
 
     private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
 
-    private final String SELECTED_ID_PROVIDER_INPUT = WIZARD_PANEL + "//div[contains(@id,'AuthApplicationSelectedOptionView')]";
+    private final String SELECTED_ID_PROVIDER_VIEW = WIZARD_PANEL + "//div[contains(@id,'AuthApplicationSelectedOptionView')]";
 
-    private final String SELECTED_ID_PROVIDER_DISPLAY_NAME =
-        WIZARD_PANEL + "//div[contains(@id,'AuthApplicationSelectedOptionView')]" + H6_DISPLAY_NAME;
+    private final String SELECTED_ID_PROVIDER_DISPLAY_NAME = SELECTED_ID_PROVIDER_VIEW + H6_DISPLAY_NAME;
 
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
@@ -80,6 +79,12 @@ public class UserStoreWizardPanel
         sleep( 2000 );
         RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
         richComboBoxInput.selectOption( providerName );
+        return this;
+    }
+
+    public UserStoreWizardPanel removeIdProvider( String providerDisplayName )
+    {
+
         return this;
     }
 
@@ -145,6 +150,11 @@ public class UserStoreWizardPanel
     public String getDescriptionValue()
     {
         return descriptionInput.getAttribute( "value" );
+    }
+
+    public boolean isIdProviderSelected()
+    {
+        return isElementDisplayed( SELECTED_ID_PROVIDER_VIEW );
     }
 
     public String getIdProviderDisplayName()

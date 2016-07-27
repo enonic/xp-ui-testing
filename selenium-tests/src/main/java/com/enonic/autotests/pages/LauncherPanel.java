@@ -138,8 +138,13 @@ public class LauncherPanel
 
     public boolean waitUntilLauncherClosed()
     {
-        WebElement launcherPanel = getDisplayedElement( By.xpath( PANEL_DIV ) );
-        return waitAndCheckAttrValue( launcherPanel, "class", "slideout", Application.EXPLICIT_NORMAL );
+        By launcherBy = By.xpath( PANEL_DIV );
+        if ( findElements( launcherBy ).size() == 0 )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher" ) );
+            throw new TestFrameworkException( "Launcher was not found!" );
+        }
+        return waitAndCheckAttrValue( findElement( launcherBy ), "class", "slideout", Application.EXPLICIT_NORMAL );
     }
 
     public boolean isUsersLinkDisplayed()

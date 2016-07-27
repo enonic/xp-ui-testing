@@ -634,6 +634,7 @@ public class ContentBrowsePanel
         return new ItemViewPanelPage( getSession() );
     }
 
+    @Override
     public ContentWizardPanel clickToolbarEdit()
     {
         editButton.click();
