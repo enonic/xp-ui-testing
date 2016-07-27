@@ -33,6 +33,7 @@ class UserStore_Save_Delete_Spec
 
         and: "page refreshed"
         userBrowsePanel.refreshPanelInBrowser();
+        sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "user_store_wizard_refreshed" );
 
         then: "wizard is opened"

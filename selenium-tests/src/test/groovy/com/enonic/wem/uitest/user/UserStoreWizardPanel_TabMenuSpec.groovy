@@ -23,7 +23,7 @@ class UserStoreWizardPanel_TabMenuSpec
         userBrowsePanel.isTabMenuItemPresent( USERSTORE_TAB_TITLE );
 
         and: "options filter input for ID provider is displayed"
-        wizard.isIdProviderSelectorDisplayed();
+        wizard.isSelectorForIdProviderDisplayed();
 
         and: "options filter input for Principals is displayed"
         wizard.isPermissionsSelectorDisplayed();

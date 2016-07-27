@@ -46,6 +46,8 @@ public class UserStoreWizardPanel
 
     private final String SELECTED_ID_PROVIDER_DISPLAY_NAME = SELECTED_ID_PROVIDER_VIEW + H6_DISPLAY_NAME;
 
+    private String REMOVE_SELECTED_ID_PROVIDER_BUTTON =
+        "//div[contains(@id,'AuthApplicationSelectedOptionView') and descendant::h6[@class='main-name' and contains(.,'%s')]]//a[contains(@class,'remove-button icon-close')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
@@ -82,10 +84,23 @@ public class UserStoreWizardPanel
         return this;
     }
 
-    public UserStoreWizardPanel removeIdProvider( String providerDisplayName )
+    public UserStoreWizardPanel removeIdProvider( String idProviderDisplayName )
     {
-
+        if ( !isRemoveSelectedIdProviderButtonDisplayed( idProviderDisplayName ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_remove_provider_button" );
+            throw new TestFrameworkException( "remove button for " + idProviderDisplayName + "was not found!" );
+        }
+        String removeButtonXpath = String.format( REMOVE_SELECTED_ID_PROVIDER_BUTTON, idProviderDisplayName );
+        getDisplayedElement( By.xpath( removeButtonXpath ) ).click();
+        sleep( 400 );
         return this;
+    }
+
+    public boolean isRemoveSelectedIdProviderButtonDisplayed( String idProviderDisplayName )
+    {
+        String removeButtonXpath = String.format( REMOVE_SELECTED_ID_PROVIDER_BUTTON, idProviderDisplayName );
+        return isElementDisplayed( removeButtonXpath );
     }
 
     public UserStoreWizardPanel addPrincipal( String principalDisplayName )
@@ -162,7 +177,7 @@ public class UserStoreWizardPanel
         return getDisplayedString( SELECTED_ID_PROVIDER_DISPLAY_NAME );
     }
 
-    public boolean isIdProviderSelectorDisplayed()
+    public boolean isSelectorForIdProviderDisplayed()
     {
         return idProviderOptiosnFilterInput.isDisplayed();
     }

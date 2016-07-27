@@ -49,6 +49,9 @@ class BaseUsersSpec
     String SUPER_USER_DISPLAY_NAME = "Super User";
 
     @Shared
+    String ANONYMOUS_USER_DISPLAY_NAME = "Anonymous User";
+
+    @Shared
     String ADMIN_CONSOLE_LOGIN_ROLE_DISPLAY_NAME = "Administration Console Login";
 
     @Shared
