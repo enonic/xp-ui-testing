@@ -8,6 +8,7 @@ import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.vo.contentmanager.security.UserStoreAclEntry
 import com.enonic.autotests.vo.usermanager.Group
 import com.enonic.autotests.vo.usermanager.Role
 import com.enonic.autotests.vo.usermanager.User
@@ -178,10 +179,11 @@ class BaseUsersSpec
             idProviderDisplayName ).build();
     }
 
-    protected UserStore buildUserStoreWithPermissions( String name, String displayName, String description )
+    protected UserStore buildUserStoreWithPermissions( String name, String displayName, String description,
+                                                       List<UserStoreAclEntry> entries )
     {
         String generated = NameHelper.uniqueName( name );
-        return UserStore.builder().displayName( displayName ).name( generated ).description( description ).build();
+        return UserStore.builder().displayName( displayName ).name( generated ).description( description ).aclEntries( entries ).build();
     }
 
     protected void addUser( User user )
