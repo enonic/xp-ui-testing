@@ -19,7 +19,7 @@ class ContentWizardPanel_TabMenuSpec
     def "WHEN started adding a 'Folder' and Wizard opened  THEN new tab with name 'New Folder' is present"()
     {
         when:
-        WizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened();
 
         then: "item menu with title should appears"
@@ -32,7 +32,7 @@ class ContentWizardPanel_TabMenuSpec
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.unstructured().toString() ).
             waitUntilWizardOpened();
         contentBrowsePanel.pressAppHomeButton();
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             waitUntilWizardOpened();
 
         then:

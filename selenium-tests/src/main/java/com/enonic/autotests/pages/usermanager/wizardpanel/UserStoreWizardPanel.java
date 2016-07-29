@@ -151,7 +151,7 @@ public class UserStoreWizardPanel
 
         if ( userStore.getAclEntries() != null )
         {
-            userStore.getAclEntries().stream().map( e -> addPrincipal( e.getPrincipalDisplayName() ) );
+            userStore.getAclEntries().stream().forEach( entry -> addPrincipal( entry.getPrincipalDisplayName() ) );
         }
         return this;
     }

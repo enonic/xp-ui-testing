@@ -148,6 +148,5 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         and: "content not listed in the grid"
         !contentBrowsePanel.exists( contentToDelete.getName() );
-
     }
 }

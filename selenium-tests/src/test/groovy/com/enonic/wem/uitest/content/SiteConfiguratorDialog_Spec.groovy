@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDialog
+import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.utils.TestUtils
@@ -26,8 +27,14 @@ class SiteConfiguratorDialog_Spec
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
 
         when: "data saved and wizard closed"
-        contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
-            SITE.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE );
+        PageTemplateFormViewPanel pageTemplateFormViewPanel = new PageTemplateFormViewPanel( getSession() );
+
+        and: "controller selected"
+        pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
+
+        and: "wizard closed"
+        wizard.save().close( SITE.getDisplayName() );
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );
@@ -65,6 +72,7 @@ class SiteConfiguratorDialog_Spec
         dialog.selectBackgroundColor( BACKGROUND_COLOR )
         TestUtils.saveScreenshot( getSession(), "page-background-selected" );
         dialog.doApply();
+        sleep( 2000 );
         TestUtils.saveScreenshot( getSession(), "page-background-applied" );
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );

@@ -6,7 +6,7 @@ public enum RoleName
 
     CONTENT_MANAGER_ADMINISTRATOR( "cms.admin" ), ADMIN_CONSOLE( "system.admin.login" ), CM_APP( "cms.cm.app" ), SYSTEM_ADMIN(
     "system.admin" ), SYSTEM_USER_MANAGER( "system.user.app" ), SYSTEM_AUTHENTICATED( "system.authenticated" ), SYSTEM_EVERYONE(
-    "system.everyone" );
+    "system.everyone" ), USER_ADMINISTRATOR( "system.user.admin" );
 
     private String role;
 

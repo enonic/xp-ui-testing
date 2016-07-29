@@ -1,7 +1,5 @@
 package com.enonic.autotests.vo.contentmanager.security;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -9,16 +7,16 @@ public class UserStoreAclEntry
 {
     private String principalDisplayName;
 
-    private List<String> permissions = new ArrayList<>();
+    private UserStoreAccess userStoreAccesses;
 
-    public List<String> getPermissions()
+    public UserStoreAccess getUserStoreAccess()
     {
-        return this.permissions;
+        return this.userStoreAccesses;
     }
 
-    public void setPermissions( final List<String> permissions )
+    public void setAccess( final UserStoreAccess userStoreAccesses )
     {
-        this.permissions = permissions;
+        this.userStoreAccesses = userStoreAccesses;
     }
 
     public String getPrincipalDisplayName()
@@ -26,14 +24,14 @@ public class UserStoreAclEntry
         return principalDisplayName;
     }
 
-    public void setPrincipalDisplayName( String principalDisplayName )
+    public void setPrincipalName( String principalName )
     {
-        this.principalDisplayName = principalDisplayName;
+        this.principalDisplayName = principalName;
     }
 
-    private UserStoreAclEntry( final UserStoreAclEntry.Builder builder )
+    private UserStoreAclEntry( final Builder builder )
     {
-        this.permissions = builder.permissions;
+        this.userStoreAccesses = builder.userStoreAccesses;
         this.principalDisplayName = builder.principalDisplayName;
     }
 
@@ -51,17 +49,16 @@ public class UserStoreAclEntry
 
         final UserStoreAclEntry other = (UserStoreAclEntry) obj;
 
-        return Objects.equals( principalDisplayName, other.principalDisplayName ) && Objects.equals( permissions, other.permissions );
-
+        return Objects.equals( principalDisplayName, other.principalDisplayName ) &&
+            Objects.equals( userStoreAccesses, other.userStoreAccesses );
     }
 
     public static class Builder
     {
-        private PermissionSuite suite;
 
         private String principalDisplayName;
 
-        private List<String> permissions;
+        private UserStoreAccess userStoreAccesses;
 
         Builder()
         {
@@ -70,24 +67,18 @@ public class UserStoreAclEntry
         public Builder( final UserStoreAclEntry aclEntry )
         {
             this.principalDisplayName = aclEntry.getPrincipalDisplayName();
-            this.permissions = aclEntry.getPermissions();
+            this.userStoreAccesses = aclEntry.getUserStoreAccess();
         }
 
-        public UserStoreAclEntry.Builder principalDisplayName( final String principalDisplayName )
+        public Builder principalName1( final String principalName )
         {
-            this.principalDisplayName = principalDisplayName;
+            this.principalDisplayName = principalName;
             return this;
         }
 
-        public UserStoreAclEntry.Builder suite( final PermissionSuite suite )
+        public Builder access( final UserStoreAccess userStoreAccesses )
         {
-            this.suite = suite;
-            return this;
-        }
-
-        public UserStoreAclEntry.Builder permissions( final List<String> permissions )
-        {
-            this.permissions = permissions;
+            this.userStoreAccesses = userStoreAccesses;
             return this;
         }
 
@@ -97,9 +88,9 @@ public class UserStoreAclEntry
         }
     }
 
-    public static ContentAclEntry.Builder builder()
+    public static Builder builder()
     {
-        return new ContentAclEntry.Builder();
+        return new Builder();
     }
 
 }
