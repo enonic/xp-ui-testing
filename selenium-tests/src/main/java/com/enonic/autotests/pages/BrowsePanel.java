@@ -105,10 +105,11 @@ public abstract class BrowsePanel
 
     private BrowsePanel clickOnShowFilterPanelButton()
     {
-        if ( !isElementDisplayed( SHOW_FILTER_PANEL_BUTTON ) )
+        boolean isClickable = waitUntilClickableNoException( By.xpath( SHOW_FILTER_PANEL_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_show_filter" ) );
-            throw new TestFrameworkException( "button 'show filter panel' not displayed or probably bad locator for web element" );
+            throw new TestFrameworkException( "button 'show filter panel' not clickable" );
         }
         showFilterPanelButton.click();
         sleep( 700 );

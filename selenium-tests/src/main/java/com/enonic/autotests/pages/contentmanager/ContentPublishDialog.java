@@ -53,6 +53,11 @@ public class ContentPublishDialog
 
     private final String NAMES_OF_CONTENTS_TO_PUBLISH = DIALOG_CONTAINER + ITEM_LIST + P_NAME;
 
+    private String ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME =
+        ITEM_LIST + "//div[contains(@id,'StatusSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
+
+    private String STATUS_OF_ITEM_TO_PUBLISH = ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME + "//div[contains(@class,'status')]";
+
     private final String DIALOG_INVALID_SUB_HEADER_XPATH =
         DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='sub-title']";
 

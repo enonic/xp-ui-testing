@@ -1,40 +1,23 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
-import spock.lang.Ignore
 
 class UserBrowsePanelToolbarSpec
     extends BaseUsersSpec
 {
 
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Delete' button should be disabled"()
+    def "GIVEN user BrowsePanel WHEN no selected content THEN all button on the grid-toolbar have correct state"()
     {
-        expect:
+        expect: "Delete button is disabled"
         !userBrowsePanel.isDeleteButtonEnabled();
-    }
 
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'New' button should be enabled"()
-    {
-        expect:
+        and: "New button is enabled"
         userBrowsePanel.isNewButtonEnabled();
-    }
 
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Edit' button should be disabled"()
-    {
-        expect:
+        and: "Edit button is disabled"
         !userBrowsePanel.isEditButtonEnabled();
-    }
 
-    @Ignore
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Duplicate' button should be disabled"()
-    {
-        expect:
-        !userBrowsePanel.isDuplicateEnabled();
-    }
-
-    def "GIVEN user BrowsePanel WHEN no selected content THEN 'Sync' button should be disabled"()
-    {
-        expect:
+        and: "Sync button is disabled"
         !userBrowsePanel.isSyncEnabled();
     }
 
@@ -43,7 +26,13 @@ class UserBrowsePanelToolbarSpec
         when:
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
-        then:
+        then: "Edit button on the toolbar is enabled, when system store is selected"
         userBrowsePanel.isEditButtonEnabled();
+
+        and: "Delete button on the toolbar is disabled, when system store is selected"
+        !userBrowsePanel.isDeleteButtonEnabled();
+
+        and: "New button on the toolbar is enabled, when system store is selected"
+        userBrowsePanel.isNewButtonEnabled();
     }
 }
