@@ -172,7 +172,11 @@ public class LiveFormPanel
 
     public String getBackgroundColor()
     {
-        WebElement element = getDisplayedElement( By.xpath( "//body[contains(@class,'data-portal-component-type']" ) );
+        if ( isElementDisplayed( "//body[@data-portal-component-type='page']" ) )
+        {
+            throw new TestFrameworkException( "component was not found" );
+        }
+        WebElement element = getDisplayedElement( By.xpath( "//body[@data-portal-component-type='page']" ) );
         return element.getCssValue( "background-color" );
     }
 }

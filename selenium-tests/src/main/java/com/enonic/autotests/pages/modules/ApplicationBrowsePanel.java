@@ -73,6 +73,12 @@ public class ApplicationBrowsePanel
 
     public ApplicationBrowsePanel clickOnToolbarStop()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( START_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_stop_button" );
+            throw new TestFrameworkException( "button 'stop' is not clickable!" );
+        }
         stopButton.click();
         sleep( 1500 );
         return this;
@@ -80,6 +86,12 @@ public class ApplicationBrowsePanel
 
     public ApplicationBrowsePanel clickOnToolbarInstall()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( INSTALL_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_insatll_button" );
+            throw new TestFrameworkException( "button 'install' is not clickable!" );
+        }
         installButton.click();
         sleep( 300 );
         return this;
@@ -87,6 +99,12 @@ public class ApplicationBrowsePanel
 
     public UninstallApplicationDialog clickOnToolbarUninstall()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( UNINSTALL_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_uninstall_button" );
+            throw new TestFrameworkException( "button 'uninstall' is not clickable!" );
+        }
         uninstallButton.click();
         sleep( 300 );
         return new UninstallApplicationDialog( getSession() );
@@ -95,6 +113,12 @@ public class ApplicationBrowsePanel
 
     public ApplicationBrowsePanel clickOnToolbarStart()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( START_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_start_button" );
+            throw new TestFrameworkException( "button 'start' is not clickable!" );
+        }
         startButton.click();
         sleep( 3000 );
         return this;

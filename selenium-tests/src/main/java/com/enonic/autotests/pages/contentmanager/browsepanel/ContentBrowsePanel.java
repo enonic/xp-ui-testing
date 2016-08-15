@@ -524,6 +524,12 @@ public class ContentBrowsePanel
      */
     public NewContentDialog clickToolbarNew()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( NEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_new_button" );
+            throw new TestFrameworkException( "button 'new' is not clickable!" );
+        }
         newButton.click();
         sleep( 500 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );

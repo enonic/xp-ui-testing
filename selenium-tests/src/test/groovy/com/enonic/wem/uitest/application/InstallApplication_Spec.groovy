@@ -168,6 +168,7 @@ class InstallApplication_Spec
         appDialog.waitUntilDialogLoaded();
         InstallAppDialog_MarketAppPanel marketPanel = new InstallAppDialog_MarketAppPanel( getSession() );
         sleep( 1000 );
+        TestUtils.saveScreenshot( getSession(), "test_install_dlg_installed" );
 
         then: "install button disabled for application that was already installed"
         marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_APP_DISPLAY_NAME );
