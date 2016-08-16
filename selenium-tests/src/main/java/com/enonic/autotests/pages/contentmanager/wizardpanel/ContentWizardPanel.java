@@ -64,7 +64,7 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
 
-    private String SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
+    private String TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
 
     private String COMPONENT_VIEW_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
 
@@ -409,12 +409,12 @@ public class ContentWizardPanel
         {
             return this;
         }
-        if ( !waitUntilVisibleNoException( By.xpath( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ), Application.EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-show-button" );
-            throw new TestFrameworkException( "The 'Show Page Editor' button was not found!" );
+            throw new TestFrameworkException( "The 'toggle Page Editor' button not displayed!" );
         }
-        getDisplayedElement( By.xpath( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
+        getDisplayedElement( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
         sleep( 700 );
         return this;
     }
@@ -425,12 +425,12 @@ public class ContentWizardPanel
         {
             return this;
         }
-        if ( !isElementDisplayed( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) )
+        if ( !isElementDisplayed( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) )
         {
             TestUtils.saveScreenshot( getSession(), "err-hide-button" );
             throw new TestFrameworkException( "The 'Hide Page Editor' button was not found!" );
         }
-        getDisplayedElement( By.xpath( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
+        getDisplayedElement( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
         sleep( 500 );
         return this;
     }
@@ -489,7 +489,7 @@ public class ContentWizardPanel
 
     public boolean isShowPageEditorButtonDisplayed()
     {
-        String button = String.format( SHOW_HIDE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
+        String button = String.format( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
         return isElementDisplayed( button );
     }
 

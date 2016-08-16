@@ -28,16 +28,16 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         when: "application started and it selected in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
-        then: "the Build date shown"
+        then: "'build date' shown"
         applicationItemStatisticsPanel.isBuildDatePresent();
 
-        and: "the version shown"
+        and: "application's version is shown"
         applicationItemStatisticsPanel.isVersionPresent();
 
-        and: "the key shown"
+        and: "application's key is shown"
         applicationItemStatisticsPanel.isKeyPresent();
 
-        and: "the system required shown"
+        and: "'system required' is shown"
         applicationItemStatisticsPanel.isSystemRequiredPresent();
     }
 
@@ -46,13 +46,13 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         when: "application started and it selected in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
-        then: "the Build date as a correct value"
+        then: "build date has a correct value"
         applicationItemStatisticsPanel.getBuildDate() == "TBA";
 
-        and: "the version as a correct value"
+        and: "version has a correct value"
         applicationItemStatisticsPanel.getVersion() == VERSION_OF_TEST_APPLICATION;
 
-        and: "the key as a correct value"
+        and: "application's key has a correct value"
         applicationItemStatisticsPanel.getKey() == FIRST_APP_KEY;
 
         and: "the system required has a correct value"
@@ -66,43 +66,37 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         when: "application stopped"
         applicationBrowsePanel.clickOnToolbarStop();
-        TestUtils.saveScreenshot( getSession(), "app-stopped" );
+        TestUtils.saveScreenshot( getSession(), "test_app_stopped" );
 
         then: "the application has status is stopped"
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
 
-        and: "'Content Types' - header present"
-        applicationItemStatisticsPanel.isContentTypesHeaderPresent();
+        and: "'Content Types' - header not displayed present"
+        !applicationItemStatisticsPanel.isContentTypesHeaderPresent();
 
         and: "page should not show any content types"
         applicationItemStatisticsPanel.getContentTypes().size() == 0;
+
+        and: "Info data group is displayed"
+        applicationItemStatisticsPanel.isInfoDataGroupDisplayed();
+
+        and: "the Build date is displayed"
+        applicationItemStatisticsPanel.getBuildDate() == "TBA";
+
+        and: "schema data group is not displayed"
+        !applicationItemStatisticsPanel.isSchemaDataGroupDisplayed();
+
+        and: "descriptors data group is not displayed"
+        !applicationItemStatisticsPanel.isDescriptorsDataGroupDisplayed();
     }
 
-    def "WHEN application that just stopped and selected  THEN detail page should not show any mixins, but header for mixins should be displayed"()
+    def "WHEN application that just stopped and selected  THEN detail page should not show any mixins"()
     {
         when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
-        then: "Mixin header present"
-        applicationItemStatisticsPanel.isMixinsHeaderPresent();
-
-        and: "detail page should not show any mixins"
+        then: "detail page should not show any mixins"
         applicationItemStatisticsPanel.getMixins().size() == 0;
-
-        and: "application is stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
-    }
-
-    def "WHEN application that just stopped and selected THEN detail page should not show any relationship types"()
-    {
-        when: "stopped application have been selected"
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        then: "RelationshipTypes header present"
-        applicationItemStatisticsPanel.isRelationShipTypesHeaderPresent();
-
-        and: "detail page should not show any relationship types"
-        applicationItemStatisticsPanel.getRelationShipTypes().size() == 0;
 
         and: "application is stopped"
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
@@ -113,10 +107,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
-        then: "Page header present"
-        applicationItemStatisticsPanel.isPageHeaderPresent();
-
-        and: "detail page should not show any pages"
+        then: "detail page should not show any pages"
         applicationItemStatisticsPanel.getPages().size() == 0;
 
         and: "application is stopped"
@@ -128,26 +119,8 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         when: "stopped application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
 
-        then: "Part header present"
-        applicationItemStatisticsPanel.isPartHeaderPresent();
-
-        and: "detail page should not show any parts"
+        then: "detail page should not show any parts"
         applicationItemStatisticsPanel.getParts().size() == 0;
-
-        and: "application is stopped"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
-    }
-
-    def "WHEN stopped application have been selected THEN detail page should not show any layout"()
-    {
-        when:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-
-        then: "Layout - header present"
-        applicationItemStatisticsPanel.isLayoutHeaderPresent();
-
-        and: "detail page should not show any layout"
-        applicationItemStatisticsPanel.getLayouts().size() == 0;
 
         and: "application is stopped"
         applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;

@@ -32,6 +32,12 @@ public class ApplicationItemStatisticsPanel
 
     private final String LIST_ITEMS = "/following-sibling::li";
 
+    private final String INFO_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'info')]";
+
+    private final String SCHEMA_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'schema')]";
+
+    private final String DESCRIPTORS_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'descriptors')]";
+
     private final String CONTENT_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Content Types']";
 
     private final String CONTENT_TYPES = CONTENT_TYPES_HEADER + LIST_ITEMS;
@@ -77,6 +83,21 @@ public class ApplicationItemStatisticsPanel
             Collectors.toList() );
     }
 
+    public boolean isInfoDataGroupDisplayed()
+    {
+        return isElementDisplayed( INFO_DATA_GROUP );
+    }
+
+    public boolean isSchemaDataGroupDisplayed()
+    {
+        return isElementDisplayed( SCHEMA_DATA_GROUP );
+    }
+
+    public boolean isDescriptorsDataGroupDisplayed()
+    {
+        return isElementDisplayed( DESCRIPTORS_DATA_GROUP );
+    }
+
     public boolean isPartHeaderPresent()
     {
         return doScrollAndFindHeader( PART_HEADER );
@@ -91,11 +112,6 @@ public class ApplicationItemStatisticsPanel
     public boolean isPageHeaderPresent()
     {
         return doScrollAndFindHeader( PAGE_HEADER );
-    }
-
-    public boolean isMixinsHeaderPresent()
-    {
-        return doScrollAndFindHeader( MIXINS_HEADER );
     }
 
     public boolean isContentTypesHeaderPresent()
@@ -131,7 +147,7 @@ public class ApplicationItemStatisticsPanel
         int scrollTopValue = getScrollHeight( panelId ) - getClientHeight( panelId );
         long scrollTopBefore;
         long scrollTopAfter;
-        for (; ; )
+        for ( ; ; )
         {
             scrollTopBefore = 0;
             scrollTopAfter = doScrollPanel( scrollTopValue );
@@ -169,9 +185,7 @@ public class ApplicationItemStatisticsPanel
 
     private String getPanelId()
     {
-        WebElement panel =
-            findElements( By.xpath( STATISTIC_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
-        return panel.getAttribute( "id" );
+        return getDisplayedElement( By.xpath( STATISTIC_PANEL_CONTAINER ) ).getAttribute( "id" );
     }
 
     public boolean isPanelScrollable()

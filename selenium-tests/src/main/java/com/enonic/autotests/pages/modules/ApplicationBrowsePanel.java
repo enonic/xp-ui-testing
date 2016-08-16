@@ -73,7 +73,7 @@ public class ApplicationBrowsePanel
 
     public ApplicationBrowsePanel clickOnToolbarStop()
     {
-        boolean isClickable = waitUntilClickableNoException( By.xpath( START_BUTTON ), Application.EXPLICIT_NORMAL );
+        boolean isClickable = waitUntilClickableNoException( By.xpath( STOP_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
             TestUtils.saveScreenshot( getSession(), "err_stop_button" );
