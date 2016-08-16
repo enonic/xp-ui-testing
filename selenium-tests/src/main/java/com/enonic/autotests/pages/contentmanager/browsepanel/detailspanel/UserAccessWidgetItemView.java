@@ -7,8 +7,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 public class UserAccessWidgetItemView
     extends Application
@@ -40,6 +43,12 @@ public class UserAccessWidgetItemView
 
     public EditPermissionsDialog clickOnEditPermissionsLink()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( EDIT_PERM_LINK ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_perm_link" ) );
+            throw new TestFrameworkException( "edit permissions link is not displayed" );
+        }
         editPermissionsLink.click();
         return new EditPermissionsDialog( getSession() );
     }
