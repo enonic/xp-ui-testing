@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class DateValidation_Spec
@@ -43,7 +42,6 @@ class DateValidation_Spec
         !picker.isTimeZoneDisplayed();
     }
 
-    @Ignore
     def "GIVEN wizard for adding a Time opened WHEN icon-clock has been clicked THEN 'time picker popup' dialog is displayed"()
     {
         given: "wizard for adding a Time opened"
