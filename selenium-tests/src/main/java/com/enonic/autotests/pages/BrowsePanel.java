@@ -458,7 +458,7 @@ public abstract class BrowsePanel
         return set.size();
     }
 
-    public Long doScrollViewport( long step )
+    protected Long doScrollViewport( long step )
     {
         if ( findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).size() != 0 )
         {

@@ -142,8 +142,7 @@ public class SortContentDialog
 
     public String getCurrentSortingName()
     {
-        return findElements( By.xpath( SORT_CONTENT_MENU_BUTTON + "//span[@class='label']" ) ).stream().filter(
-            WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() ).get( 0 );
+        return getDisplayedString( SORT_CONTENT_MENU_BUTTON + "//span[@class='label']" );
     }
 
     public SortContentDialog clickOnSaveButton()
@@ -156,10 +155,7 @@ public class SortContentDialog
 
     public List<String> getMenuItems()
     {
-        List<String> items =
-            findElements( By.xpath( DIALOG_CONTAINER + "//li[contains(@id,'SortContentTabMenuItem')]//span" ) ).stream().filter(
-                WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
-        return items;
+        return getDisplayedStrings( By.xpath( DIALOG_CONTAINER + "//li[contains(@id,'SortContentTabMenuItem')]//span" ) );
     }
 
     public void scrollViewPortToTop( WebElement viewport )
@@ -181,7 +177,7 @@ public class SortContentDialog
         long newScrollTop = 400;
         long scrollTopBefore;
         long scrollTopAfter;
-        for (; ; )
+        for ( ; ; )
         {
             scrollTopBefore = getViewportScrollTopValue( getViewportElement() );
             scrollTopAfter = doScrollViewport( newScrollTop );
@@ -223,9 +219,8 @@ public class SortContentDialog
 
     public SortContentDialog selectSortMenuItem( String itemName )
     {
-        findElements( By.xpath(
-            DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem')]//span[text()='%s']", itemName ) ) ).get(
-            0 ).click();
+        findElement( By.xpath(
+            DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem')]//span[text()='%s']", itemName ) ) ).click();
         sleep( 1000 );
         return this;
     }

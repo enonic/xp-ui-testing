@@ -159,6 +159,12 @@ public class InstallAppDialog
 
     public InstallAppDialog_MarketAppPanel clickOnUploadTab()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( UPLOAD_TAB ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_upload_button_install_dlg" );
+            throw new TestFrameworkException( "install app dialog: upload button is not clickable!" );
+        }
         uploadTab.click();
         sleep( 1000 );
         return getMarketAppPanel();

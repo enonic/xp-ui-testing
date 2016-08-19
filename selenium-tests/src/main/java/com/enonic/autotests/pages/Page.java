@@ -75,7 +75,7 @@ public abstract class Page
      * @param by
      * @return
      */
-    public boolean waitAndFind( final By by )
+    protected boolean waitAndFind( final By by )
     {
         return waitAndFind( by, Application.EXPLICIT_NORMAL );
     }
@@ -85,7 +85,7 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean waitAndFind( final By by, long timeout )
+    protected boolean waitAndFind( final By by, long timeout )
     {
         return WaitHelper.waitAndFind( by, getDriver(), timeout );
     }
@@ -95,7 +95,7 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean waitsElementNotVisible( By by, long timeout )
+    protected boolean waitsElementNotVisible( By by, long timeout )
     {
         return WaitHelper.waitsElementNotVisible( getDriver(), by, timeout );
     }
@@ -105,12 +105,12 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean waitUntilVisibleNoException( By by, long timeout )
+    protected boolean waitUntilVisibleNoException( By by, long timeout )
     {
         return WaitHelper.waitUntilVisibleNoException( getDriver(), by, timeout );
     }
 
-    public boolean waitUntilClickableNoException( By by, long timeout )
+    protected boolean waitUntilClickableNoException( By by, long timeout )
     {
         return WaitHelper.waitUntilClickableNoException( getDriver(), by, timeout );
     }
@@ -120,7 +120,7 @@ public abstract class Page
      * @return true if element is visible , otherwise return false.
      */
 
-    public void waitUntilVisible( final By by )
+    protected void waitUntilVisible( final By by )
     {
         WaitHelper.waitUntilVisible( getDriver(), by );
     }
@@ -130,7 +130,7 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean waitUntilTitleLoaded( final String title, long timeout )
+    protected boolean waitUntilTitleLoaded( final String title, long timeout )
     {
         return WaitHelper.waitUntilTitleLoad( getDriver(), title, timeout );
     }
@@ -140,18 +140,18 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean waitUntilElementEnabledNoException( final By by, long timeout )
+    protected boolean waitUntilElementEnabledNoException( final By by, long timeout )
     {
         return WaitHelper.waitUntilElementEnabledNoException( getDriver(), by, timeout );
     }
 
-    public void waitUntilElementEnabled( final By by, long timeout )
+    protected void waitUntilElementEnabled( final By by, long timeout )
     {
         WaitHelper.waitUntilElementEnabled( getSession(), by, timeout );
     }
 
 
-    public Boolean waitElementExist( final String xpath, long timeout )
+    protected Boolean waitElementExist( final String xpath, long timeout )
     {
         return WaitHelper.waitElementExist( getDriver(), xpath, timeout );
     }
@@ -163,7 +163,8 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean waitAndCheckAttrValue( final WebElement element, final String attributeName, final String attributeValue, long timeout )
+    protected boolean waitAndCheckAttrValue( final WebElement element, final String attributeName, final String attributeValue,
+                                             long timeout )
     {
         return WaitHelper.waitAndCheckAttrValue( getDriver(), element, attributeName, attributeValue, timeout );
     }
@@ -174,7 +175,7 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public boolean isAttributePresent( final WebElement element, final String attributeName, long timeout )
+    protected boolean isAttributePresent( final WebElement element, final String attributeName, long timeout )
     {
         String result = WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
         return result != null ? true : false;
@@ -186,7 +187,7 @@ public abstract class Page
      * @param timeout
      * @return
      */
-    public String getAttribute( final WebElement element, final String attributeName, long timeout )
+    protected String getAttribute( final WebElement element, final String attributeName, long timeout )
     {
         return WaitHelper.waitAndGetAttribute( getDriver(), element, attributeName, timeout );
     }
@@ -195,7 +196,7 @@ public abstract class Page
      * @param by
      * @return
      */
-    public WebElement waitAndFindElement( By by )
+    protected WebElement waitAndFindElement( By by )
     {
         FluentWait<By> fluentWait = new FluentWait<By>( by );
         fluentWait.pollingEvery( 500, TimeUnit.MILLISECONDS );
@@ -232,17 +233,17 @@ public abstract class Page
         return findElements( by ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
     }
 
-    public long getNumberOfElements( By by )
+    protected long getNumberOfElements( By by )
     {
         return findElements( by ).stream().filter( WebElement::isDisplayed ).count();
     }
 
-    public List<String> getDisplayedStrings( By by )
+    protected List<String> getDisplayedStrings( By by )
     {
         return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
-    public void waitForClickableAndClick( By by )
+    protected void waitForClickableAndClick( By by )
     {
         FluentWait<By> fluentWait = new FluentWait<By>( by );
         fluentWait.withTimeout( 3, TimeUnit.SECONDS ).pollingEvery( 500, TimeUnit.MICROSECONDS ).ignoring( NoSuchElementException.class );
@@ -284,7 +285,7 @@ public abstract class Page
         return session.getDriver();
     }
 
-    public boolean isDynamicElementPresent( By locator, int tries )
+    protected boolean isDynamicElementPresent( By locator, int tries )
     {
         getLogger().info( "Get element by locator: " + locator.toString() );
         long startTime = System.currentTimeMillis();
@@ -325,7 +326,7 @@ public abstract class Page
      * @param tries
      * @return
      */
-    public WebElement getDynamicElement( By locator, int tries )
+    protected WebElement getDynamicElement( By locator, int tries )
     {
         getLogger().info( "Get element by locator: " + locator.toString() );
         long startTime = System.currentTimeMillis();

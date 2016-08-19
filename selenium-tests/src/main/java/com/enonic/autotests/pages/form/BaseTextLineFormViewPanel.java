@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -15,6 +16,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BaseTextLineFormViewPanel
     extends FormViewPanel
 {
+    protected final String REMOVE_TEXT_INPUT_BUTTON = FORM_VIEW + "//div[contains(@id,'TextLine')]//a[@class='remove-button']";
+
     public BaseTextLineFormViewPanel( final TestSession session )
     {
         super( session );
@@ -27,7 +30,7 @@ public abstract class BaseTextLineFormViewPanel
 
     public int getNumberOfDisplayedRemoveButtons()
     {
-        List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[contains(@id,'TextLine')]//a[@class='remove-button']" ) );
+        List<WebElement> allElements = findElements( By.xpath( REMOVE_TEXT_INPUT_BUTTON ) );
         return allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() ).size();
     }
 
@@ -42,14 +45,13 @@ public abstract class BaseTextLineFormViewPanel
 
     public BaseTextLineFormViewPanel clickOnLastRemoveButton()
     {
-        List<WebElement> allElements = findElements( By.xpath( FORM_VIEW + "//div[contains(@id,'TextLine')]//a[@class='remove-button']" ) );
-
-        List<WebElement> list = allElements.stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
-        if ( list.size() == 0 )
+        List<WebElement> removeButtons = getDisplayedElements( By.xpath( REMOVE_TEXT_INPUT_BUTTON ) );
+        if ( removeButtons.size() == 0 )
         {
+            TestUtils.saveScreenshot( getSession(), "err_remove_button" );
             throw new TestFrameworkException( "Remove button was not found" );
         }
-        list.get( list.size() - 1 ).click();
+        removeButtons.get( removeButtons.size() - 1 ).click();
         sleep( 500 );
         return this;
 

@@ -90,12 +90,12 @@ public class Application
         super( session );
     }
 
-    public String getDisplayedString( String xpath )
+    protected String getDisplayedString( String xpath )
     {
         return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
     }
 
-    public boolean isElementDisplayed( String xpath )
+    protected boolean isElementDisplayed( String xpath )
     {
         return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
     }

@@ -135,7 +135,8 @@ public class LiveFormPanel
 
     public long getNumberImageComponentsInLayout()
     {
-        return findElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) ).stream().filter( WebElement::isDisplayed ).count();
+        //return findElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) ).stream().filter( WebElement::isDisplayed ).count();
+        return getNumberOfElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) );
     }
 
     public boolean isImagePresentInLayout( String imageName )

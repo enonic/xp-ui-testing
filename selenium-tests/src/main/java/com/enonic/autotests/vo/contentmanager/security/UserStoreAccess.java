@@ -18,4 +18,15 @@ public enum UserStoreAccess
 
     private String value;
 
+    public static UserStoreAccess findByValue( String value )
+    {
+        for ( UserStoreAccess v : values() )
+        {
+            if ( v.getValue().equals( value ) )
+            {
+                return v;
+            }
+        }
+        return null;
+    }
 }

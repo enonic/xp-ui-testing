@@ -60,7 +60,7 @@ public class EditPermissionsDialog
 
     public boolean isOpened()
     {
-        return findElements( By.xpath( CONTAINER_XPATH ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( CONTAINER_XPATH );
     }
 
     public EditPermissionsDialog uncheckInheritCheckbox()
@@ -212,17 +212,14 @@ public class EditPermissionsDialog
         List<WebElement> principals = findElements( By.xpath(
             CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']" ) );
 
-        List<String> principalsStrings = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
-
-        List<WebElement> suites = findElements( By.xpath(
+        List<String> principalNames = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
+        List<String> suiteNames = getDisplayedStrings( By.xpath(
             CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'TabMenuButton')]//span[@class='label']" ) );
-        List<String> suitesStrings =
-            suites.stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
-        for ( int i = 0; i < principalsStrings.size(); i++ )
+        for ( int i = 0; i < principalNames.size(); i++ )
         {
             builder = ContentAclEntry.builder();
-            builder.principalName( principalsStrings.get( i ) );
-            builder.suite( getSuite( suitesStrings.get( i ) ) );
+            builder.principalName( principalNames.get( i ) );
+            builder.suite( getSuite( suiteNames.get( i ) ) );
             entries.add( builder.build() );
         }
         return entries;

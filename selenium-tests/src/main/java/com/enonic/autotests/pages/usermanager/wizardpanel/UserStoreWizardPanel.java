@@ -1,6 +1,9 @@
 package com.enonic.autotests.pages.usermanager.wizardpanel;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,6 +17,8 @@ import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.vo.contentmanager.security.UserStoreAccess;
+import com.enonic.autotests.vo.contentmanager.security.UserStoreAclEntry;
 import com.enonic.autotests.vo.usermanager.UserStore;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -48,6 +53,10 @@ public class UserStoreWizardPanel
 
     private String REMOVE_SELECTED_ID_PROVIDER_BUTTON =
         "//div[contains(@id,'AuthApplicationSelectedOptionView') and descendant::h6[@class='main-name' and contains(.,'%s')]]//a[contains(@class,'remove-button icon-close')]";
+
+    private final String PERMISSIONS_LIST = "//ul[contains(@id,'UserStoreACESelectedOptionsView')]";
+
+    private final String SELECTED_ACE_ITEMS = PERMISSIONS_LIST + "//div[contains(@id,'UserStoreACESelectedOptionView')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
@@ -103,6 +112,9 @@ public class UserStoreWizardPanel
         return isElementDisplayed( removeButtonXpath );
     }
 
+    /**
+     * types a display name of role or user and select a principal from the drop down menu
+     */
     public UserStoreWizardPanel addPrincipal( String principalDisplayName )
     {
         clearAndType( principalsOptionsFilterInput, principalDisplayName );
@@ -113,8 +125,25 @@ public class UserStoreWizardPanel
         return this;
     }
 
+    /**
+     * gets list of acl-entries from the UI
+     */
+    public List<UserStoreAclEntry> getPermissions()
+    {
+        return findElements( By.xpath( SELECTED_ACE_ITEMS ) ).stream().map( e -> buildAclEntry( e ) ).collect( Collectors.toList() );
+    }
+
+    private UserStoreAclEntry buildAclEntry( WebElement itemView )
+    {
+        String principalName = itemView.findElement( By.xpath( "." + H6_DISPLAY_NAME ) ).getText();
+        String userStoreAccess =
+            itemView.findElement( By.xpath( "." + "//div[contains(@id,'UserStoreAccessSelector')]//span[@class='label']" ) ).getText();
+        UserStoreAccess access = UserStoreAccess.findByValue( userStoreAccess );
+        return UserStoreAclEntry.builder().principalName( principalName ).access( access ).build();
+    }
+
     @Override
-    public String getWizardDivXpath()
+    protected String getWizardDivXpath()
     {
         return WIZARD_PANEL;
     }
@@ -214,7 +243,6 @@ public class UserStoreWizardPanel
     public boolean isOpened()
     {
         return toolbarSaveButton.isDisplayed();
-
     }
 
     @Override

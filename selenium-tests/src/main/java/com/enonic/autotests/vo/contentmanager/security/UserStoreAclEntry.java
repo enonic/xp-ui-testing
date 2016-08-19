@@ -70,7 +70,7 @@ public class UserStoreAclEntry
             this.userStoreAccesses = aclEntry.getUserStoreAccess();
         }
 
-        public Builder principalName1( final String principalName )
+        public Builder principalName( final String principalName )
         {
             this.principalDisplayName = principalName;
             return this;

@@ -124,6 +124,7 @@ task testContentManager( type: Test, dependsOn: [buildApplications, deleteFolder
     exclude '**/content/input_types/*Spec.class'
     exclude '**/content/move_publish_sort/**Spec.class'
     exclude '**/content/details_panel/**Spec.class'
+    exclude '**/content/volume_testing/**Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
@@ -364,6 +365,7 @@ task testContentManagerLocal( type: Test ) {
     exclude '**/content/move_publish_sort/**Spec.class'
     exclude '**/content/relationship/**Spec.class'
     exclude '**/content/details_panel/**Spec.class'
+    exclude '**/content/volume_testing/**Spec.class'
     forkEvery = null
 }
 

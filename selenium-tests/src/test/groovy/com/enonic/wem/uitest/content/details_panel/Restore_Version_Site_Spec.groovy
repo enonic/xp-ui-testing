@@ -87,7 +87,7 @@ class Restore_Version_Site_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
 
         then: "and this role not present after restoring of version without this role"
-        !contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getAllDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        !contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
 
         and: "required role was present before restoring"
         beforeRestoring.contains( "Anonymous User" );
@@ -104,7 +104,7 @@ class Restore_Version_Site_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
 
         then: "new role present after restoring of the latest version"
-        contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getAllDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
     }
 
     def "GIVEN existing site with selected application opened WHEN application removed from the wizard THEN number of versions increased"()

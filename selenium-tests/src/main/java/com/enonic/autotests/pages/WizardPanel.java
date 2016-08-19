@@ -78,7 +78,7 @@ public abstract class WizardPanel<T>
     }
 
 
-    public abstract String getWizardDivXpath();
+    protected abstract String getWizardDivXpath();
 
     private CloseStatus verifyCloseAction( By by )
     {
@@ -122,7 +122,7 @@ public abstract class WizardPanel<T>
      *
      * @return width of input
      */
-    public int getInputNameWidth()
+    protected int getInputNameWidth()
     {
         String width = nameInput.getAttribute( "style" );
         //input Style should be like as: "width: 300px";

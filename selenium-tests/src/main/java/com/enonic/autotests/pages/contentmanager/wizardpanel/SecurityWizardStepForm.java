@@ -67,7 +67,7 @@ public class SecurityWizardStepForm
         executor.executeScript( script );
     }
 
-    public List<String> getAllDisplayNamesOfAclEntries()
+    public List<String> getDisplayNamesOfAclEntries()
     {
         return getDisplayedStrings( By.xpath( ACL_ENTRIES_DISPLAY_NAME ) );
     }

@@ -159,7 +159,7 @@ public class ContentPublishDialog
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_publish_dialog_open" );
+            TestUtils.saveScreenshot( getSession(), "err_publish_dialog_opening" );
             throw new TestFrameworkException( "Content publish dialog was not shown!" );
         }
         return this;

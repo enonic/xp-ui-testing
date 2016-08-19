@@ -27,6 +27,9 @@ class UserStoreWizardPanel_TabMenuSpec
 
         and: "options filter input for Principals is displayed"
         wizard.isPermissionsSelectorDisplayed();
+
+        and: "input for description is displayed"
+        wizard.isDescriptionInputDisplayed();
     }
 
     def "GIVEN 'user store' Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()

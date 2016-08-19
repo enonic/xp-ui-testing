@@ -133,7 +133,7 @@ public class ApplicationItemStatisticsPanel
 
     public boolean doScrollAndFindHeader( String itemXpath )
     {
-        boolean isPresent = findElements( By.xpath( itemXpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        boolean isPresent = isElementDisplayed( itemXpath );
         if ( isPresent )
         {
             return true;
