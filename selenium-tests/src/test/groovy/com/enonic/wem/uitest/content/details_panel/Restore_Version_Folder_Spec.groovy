@@ -100,7 +100,7 @@ class Restore_Version_Folder_Spec
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         modalDialog.setCheckedForInheritCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
         sleep( 1000 );
-        List<String> beforeRestoring = securityForm.getAllDisplayNamesOfAclEntries();
+        List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
         wizard.save().close( NEW_DISPLAY_NAME );
 
         when: "the previous version is restored"

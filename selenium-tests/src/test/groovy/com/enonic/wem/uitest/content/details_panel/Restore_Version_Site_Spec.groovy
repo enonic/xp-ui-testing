@@ -78,7 +78,7 @@ class Restore_Version_Site_Spec
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         modalDialog.setCheckedForInheritCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
         sleep( 1000 );
-        List<String> beforeRestoring = securityForm.getAllDisplayNamesOfAclEntries();
+        List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
         wizard.save().close( SITE.getDisplayName() );
 
         when: "the previous version was restored"
