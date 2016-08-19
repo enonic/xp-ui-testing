@@ -58,6 +58,9 @@ public class UserStoreWizardPanel
 
     private final String SELECTED_ACE_ITEMS = PERMISSIONS_LIST + "//div[contains(@id,'UserStoreACESelectedOptionView')]";
 
+    private final String SELECTED_ACE_ITEM_BY_DISPLAY_NAME = PERMISSIONS_LIST +
+        "//div[contains(@id,'UserStoreACESelectedOptionView') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
+
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
 
@@ -123,6 +126,13 @@ public class UserStoreWizardPanel
         richComboBoxInput.selectOption( principalDisplayName );
         sleep( 500 );
         return this;
+    }
+
+    public boolean isAclEntryReadOnly( String principalDisplayName )
+    {
+        String selectedAclEntry = String.format( SELECTED_ACE_ITEM_BY_DISPLAY_NAME, principalDisplayName );
+        WebElement entry = getDisplayedElement( By.xpath( selectedAclEntry ) );
+        return entry.getAttribute( "class" ).contains( "readonly" );
     }
 
     /**
