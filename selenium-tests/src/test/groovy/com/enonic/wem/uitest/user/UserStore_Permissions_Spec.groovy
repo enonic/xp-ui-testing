@@ -15,7 +15,7 @@ class UserStore_Permissions_Spec
 {
 
     @Shared
-    UserStore USERSTORE_WITH_PERMISSIONS;
+    UserStore USER_STORE_WITH_PERMISSIONS;
 
     def "WHEN user store wizard opened THEN two readonly permissions are displayed"()
     {
@@ -54,11 +54,11 @@ class UserStore_Permissions_Spec
         UserStoreAclEntry aclEntry = UserStoreAclEntry.builder().access( UserStoreAccess.CREATE_USERS ).principalName(
             RoleDisplayName.USERS_ADMINISTRATOR.getValue() ).build();
         aclEntries.add( aclEntry );
-        USERSTORE_WITH_PERMISSIONS = buildUserStoreWithPermissions( "store", "test store", "store with a permissions", aclEntries );
+        USER_STORE_WITH_PERMISSIONS = buildUserStoreWithPermissions( "store", "test store", "store with a permissions", aclEntries );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "data typed and user store saved"
-        String message = userStoreWizardPanel.typeData( USERSTORE_WITH_PERMISSIONS ).save().waitNotificationMessage();
+        String message = userStoreWizardPanel.typeData( USER_STORE_WITH_PERMISSIONS ).save().waitNotificationMessage();
         TestUtils.saveScreenshot( getSession(), "test_user_store_permission_added" );
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
 
@@ -75,8 +75,20 @@ class UserStore_Permissions_Spec
         entries.get( 2 ).getUserStoreAccess().getValue() == UserStoreAccess.CREATE_USERS.getValue();
     }
 
-    def "GIVEN existing user store with one added permission WHEN the permission has been removed THEN correct permission are displayed on the wizard"()
+    def "GIVEN existing user store with one added permission WHEN this permission has been removed THEN correct permissions list is displayed on the wizard"()
     {
+        given: "existing store with added permission is opened"
+        UserStoreWizardPanel userStoreWizardPanel = openUserStore( USER_STORE_WITH_PERMISSIONS.getName() );
 
+        when: "remove permission button clicked"
+        userStoreWizardPanel.removePermission( RoleDisplayName.USERS_ADMINISTRATOR.getValue() );
+        List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
+        TestUtils.saveScreenshot( getSession(), "test_user_store_permission_removed" );
+
+        then: "number of permissions has been reduced"
+        entries.size() == 2;
+
+        and: "removed permission is not displayed on the wizard panel"
+        !userStoreWizardPanel.isPermissionDisplayed( RoleDisplayName.USERS_ADMINISTRATOR.getValue() );
     }
 }

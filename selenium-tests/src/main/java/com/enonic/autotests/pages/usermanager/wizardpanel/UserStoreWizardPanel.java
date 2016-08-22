@@ -109,6 +109,19 @@ public class UserStoreWizardPanel
         return this;
     }
 
+    public UserStoreWizardPanel removePermission( String principalDisplayName )
+    {
+        String removeEntryButton = String.format( SELECTED_ACE_ITEM_BY_DISPLAY_NAME + "//a[@class='icon-close']", principalDisplayName );
+        if ( !isElementDisplayed( removeEntryButton ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_remove_acl_entry" );
+            throw new TestFrameworkException( "button 'remove acl-entry' was not found!" );
+        }
+        getDisplayedElement( By.xpath( removeEntryButton ) ).click();
+        sleep( 500 );
+        return this;
+    }
+
     public boolean isRemoveSelectedIdProviderButtonDisplayed( String idProviderDisplayName )
     {
         String removeButtonXpath = String.format( REMOVE_SELECTED_ID_PROVIDER_BUTTON, idProviderDisplayName );
@@ -141,6 +154,12 @@ public class UserStoreWizardPanel
     public List<UserStoreAclEntry> getPermissions()
     {
         return findElements( By.xpath( SELECTED_ACE_ITEMS ) ).stream().map( e -> buildAclEntry( e ) ).collect( Collectors.toList() );
+    }
+
+    public boolean isPermissionDisplayed( String principalDisplayName )
+    {
+        List<UserStoreAclEntry> permissions = getPermissions();
+        return permissions.stream().anyMatch( entry -> entry.getPrincipalDisplayName().equals( principalDisplayName ) );
     }
 
     private UserStoreAclEntry buildAclEntry( WebElement itemView )
