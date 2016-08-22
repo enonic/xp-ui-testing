@@ -2,9 +2,12 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -18,6 +21,18 @@ class ContentPublishDialog_Spec
     @Shared
     Content childContent1;
 
+    //this is tests verifies the  "XP-3824 Unknown status displayed on the publish dialog"
+    def "GIVEN creationg of new content WHEN data typed and 'Publish' button was pressed  THEN correct status of content is displayed on the modal dialog"()
+    {
+        given:
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+
+        when:
+        ContentPublishDialog dialog = wizard.typeDisplayName( "test for status" ).clickOnWizardPublishButton();
+
+        then:
+        dialog.getContentStatus( "test for status" ) == ContentStatus.OFFLINE.getValue();
+    }
 
     def "GIVEN existing folder in root WHEN one content without child selected and 'Publish' button clicked THEN 'Content publish' appears without 'Include child' checkbox"()
     {
@@ -32,6 +47,9 @@ class ContentPublishDialog_Spec
 
         then: "'ContentPublishDialog' dialog displayed but 'Include Child' checkbox not displayed"
         !contentPublishDialog.isIncludeChildCheckboxDisplayed();
+
+        and: "correct status of content is displayed"
+        contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.OFFLINE.getValue();
     }
 
     def "GIVEN parent content with a child WHEN the parent content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()

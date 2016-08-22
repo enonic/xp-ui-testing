@@ -13,6 +13,29 @@ class Occurrences_Double_Spec
     @Shared
     String TEST_DOUBLE = "123.4";
 
+    @Shared
+    String WRONG_DOUBLE = "-111111111111111111111111";
+
+    def "GIVEN creating of content with type 'double'(not required) WHEN invalid value for long typed THEN input with a red border AND red icon not shown on the wizard tab"()
+    {
+        given: "creating of  content with type 'Long'"
+        Content doubleContent = buildDouble0_0_Content( WRONG_DOUBLE );
+        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
+
+        when: "invalid value for long typed"
+        wizard.typeData( doubleContent );
+        TestUtils.saveScreenshot( getSession(), "test_double_invalid_not_req" );
+
+        then: "input with a red border"
+        !doubleFormViewPanel.isValueInInputValid( 0 );
+
+        and: "red icon not shown on the wizard tab, because this input is not required"
+        !wizard.isContentInvalid( doubleContent.getDisplayName() );
+
+        and: "'Publish' button on the wizard-toolbar is enabled, because input is not required"
+        wizard.isPublishButtonEnabled();
+    }
 
     def "GIVEN creating of 'Double' content WHEN the content opened THEN correct Double value present in the wizard AND content is valid"()
     {

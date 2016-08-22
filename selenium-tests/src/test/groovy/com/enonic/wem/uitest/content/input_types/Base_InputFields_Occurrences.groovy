@@ -354,6 +354,25 @@ class Base_InputFields_Occurrences
         return dateContent;
     }
 
+    protected Content buildDouble0_0_Content( String doubleValue )
+    {
+        PropertyTree data = new PropertyTree();
+        String name = "double";
+        if ( doubleValue != null )
+        {
+            data.addStrings( DoubleFormViewPanel.DOUBLE_VALUES, doubleValue );
+        }
+
+        Content dateContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "double content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double0_0" ).data( data ).
+            build();
+        return dateContent;
+    }
+
+
     protected Content buildDouble1_1_Content( String doubleValue )
     {
         PropertyTree data = new PropertyTree();

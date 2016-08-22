@@ -61,6 +61,9 @@ public class ContentPublishDialog
     private final String DIALOG_INVALID_SUB_HEADER_XPATH =
         DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='sub-title']";
 
+    private String STATUS_OF_CONTENT = ITEM_LIST +
+        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]/div[contains(@class,'status')][2]";
+
     @FindBy(xpath = PUBLISH_NOW_BUTTON)
     private WebElement publishButton;
 
@@ -82,6 +85,17 @@ public class ContentPublishDialog
     {
         cancelButtonTop.click();
         sleep( 200 );
+    }
+
+    public String getContentStatus( String displayName )
+    {
+        String status = String.format( STATUS_OF_CONTENT, displayName );
+        if ( !isElementDisplayed( status ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_publish_dlg_content_status" );
+            throw new TestFrameworkException( "status of content was not found!" );
+        }
+        return getDisplayedString( status );
     }
 
     public String getDialogSubHeader()

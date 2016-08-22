@@ -22,6 +22,26 @@ class DatesInDecember_Spec
     @Shared
     String DATE_IN_DECEMBER3 = "2099-12-31";
 
+    @Shared
+    String NANSEN_BIRTH = "1861-10-10";
+
+    def "GIVEN wizard for adding a Date opened WHEN Nansen birth typed AND saved THEN correct value displayed in the wizard"()
+    {
+        given: "wizard for adding a Date opened"
+        Content dateContent = buildDate1_1_Content( NANSEN_BIRTH );
+        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+
+        when: "Date typed and content saved"
+        contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
+
+        and: "just created date content opened"
+        contentBrowsePanel.clickOnClearSelection();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
+
+        then: "actual value and expected are equals"
+        dateFormViewPanel.getDateValue() == NANSEN_BIRTH;
+    }
     def "GIVEN wizard for adding a Date opened WHEN date in December typed AND saved THEN correct value displayed in the wizard"()
     {
         given: "wizard for adding a Date opened"
