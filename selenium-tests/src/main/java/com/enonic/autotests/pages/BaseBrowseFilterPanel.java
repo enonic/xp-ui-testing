@@ -34,7 +34,7 @@ public abstract class BaseBrowseFilterPanel
 
     public boolean isFilterPanelDisplayed()
     {
-        return isElementDisplayed( FILTER_PANEL_CONTAINER );
+        return waitUntilVisibleNoException( By.xpath( FILTER_PANEL_CONTAINER ), Application.EXPLICIT_NORMAL );
     }
 
     /**

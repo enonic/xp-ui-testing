@@ -28,7 +28,7 @@ class InstallApplication_Spec
     String CONTENT_VIEWER_APP = "Content Viewer App";
 
     @Shared
-    String CONTENT_VIEWER_APP_INSTALLED_NAME = "contentviewer";
+    String CONTENT_VIEWER_APP_INSTALLED_NAME = "Inspect your content object JSON";
 
     @Ignore
     def "GIVEN 'install app' dialog opened AND 'upload' tab activated WHEN an application uploaded THEN new application successfully installed"()

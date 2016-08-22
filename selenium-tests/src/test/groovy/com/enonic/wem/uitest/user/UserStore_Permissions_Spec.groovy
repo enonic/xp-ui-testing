@@ -7,7 +7,9 @@ import com.enonic.autotests.vo.contentmanager.security.UserStoreAclEntry
 import com.enonic.autotests.vo.usermanager.RoleDisplayName
 import com.enonic.autotests.vo.usermanager.UserStore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class UserStore_Permissions_Spec
     extends BaseUsersSpec
 {
@@ -71,5 +73,10 @@ class UserStore_Permissions_Spec
 
         and: "new added permission displayed with correct values"
         entries.get( 2 ).getUserStoreAccess().getValue() == UserStoreAccess.CREATE_USERS.getValue();
+    }
+
+    def "GIVEN existing user store with one added permission WHEN the permission has been removed THEN correct permission are displayed on the wizard"()
+    {
+
     }
 }
