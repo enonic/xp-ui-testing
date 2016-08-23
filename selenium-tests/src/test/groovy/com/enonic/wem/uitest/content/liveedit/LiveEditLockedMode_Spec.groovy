@@ -46,11 +46,11 @@ class LiveEditLockedMode_Spec
         and: "button show-hide the 'Page Editor' is displayed"
         wizard.isShowPageEditorButtonDisplayed();
 
-        and: "'Show Component view' displayed on toolbar"
-        wizard.isShowComponentViewButtonDisplayed()
+        and: "'Show Component view' not displayed on toolbar"
+        !wizard.isComponentViewTogglerDisplayed()
 
-        and: "'Show Inspection panel' displayed on toolbar"
-        wizard.isShowInspectionPanelButtonDisplayed();
+        and: "'Show Inspection panel' not displayed on toolbar"
+        !wizard.isInspectionPanelTogglerDisplayed();
     }
 
     def "GIVEN existing site WHEN template added THEN it listed beneath the _templates folder"()
@@ -72,14 +72,14 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( template.getName() );
     }
 
-    def "WHEN site opened for edit AND LiveEdit frame shown  THEN shader is applied to entire page"()
+    def "WHEN existing site with added template opened for edit THEN shader is applied to entire page"()
     {
-        given: "add a site, based on the test application"
+        given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
 
-
         when: "test site should be listed"
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit().showPageEditor();
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
+
         then: "shader is applied to entire page and LiveEdit locked"
         wizard.isLiveEditLocked();
     }

@@ -79,8 +79,7 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getLayouts()
     {
-        return findElements( By.xpath( LAYOUTS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-            Collectors.toList() );
+        return getDisplayedStrings( By.xpath( LAYOUTS ) );
     }
 
     public boolean isInfoDataGroupDisplayed()
@@ -121,8 +120,7 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getPages()
     {
-        return findElements( By.xpath( PAGES ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-            Collectors.toList() );
+        return getDisplayedStrings( By.xpath( PAGES ) );
     }
 
     public void scrollPanelToTop()
@@ -152,7 +150,7 @@ public class ApplicationItemStatisticsPanel
             scrollTopBefore = 0;
             scrollTopAfter = doScrollPanel( scrollTopValue );
 
-            if ( findElements( By.xpath( itemXpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0 )
+            if ( isElementDisplayed( itemXpath ) )
             {
                 getLogger().info( "header was found: " + itemXpath );
                 return true;
@@ -223,17 +221,17 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getContentTypes()
     {
-        return findElements( By.xpath( CONTENT_TYPES ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return getDisplayedStrings( By.xpath( CONTENT_TYPES ) );
     }
 
     public List<String> getMixins()
     {
-        return findElements( By.xpath( MIXINS ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return getDisplayedStrings( By.xpath( MIXINS ) );
     }
 
     public boolean isBuildDatePresent()
     {
-        return findElements( By.xpath( BUILD_DATE ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( BUILD_DATE );
     }
 
     public boolean isVersionPresent()
@@ -263,7 +261,7 @@ public class ApplicationItemStatisticsPanel
 
     public String getKey()
     {
-        return findElements( By.xpath( KEY ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
+        return getDisplayedString( KEY );
     }
 
     public String getSystemRequired()

@@ -152,6 +152,9 @@ public class ContentWizardPanel
             "disabled" );
     }
 
+    /*
+     * clicks on the toggler for 'Inspection Panel' and waits until the panel is shown
+     */
     public ContextWindow showContextWindow()
     {
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "context_window" ) );
@@ -403,6 +406,9 @@ public class ContentWizardPanel
         return DIV_CONTENT_WIZARD_PANEL;
     }
 
+    /**
+     * closes the Page Editor if it displayed
+     */
     public ContentWizardPanel showPageEditor()
     {
         if ( isLiveEditFrameDisplayed() )
@@ -419,6 +425,9 @@ public class ContentWizardPanel
         return this;
     }
 
+    /**
+     * checks if LiveEdit frame is displayed if it not displayed, clicks on the toggler for Page Editor and opens the editor
+     */
     public ContentWizardPanel hidePageEditor()
     {
         if ( !isLiveEditFrameDisplayed() )
@@ -435,6 +444,9 @@ public class ContentWizardPanel
         return this;
     }
 
+    /**
+     * clicks on the "Show Component View" toggler and waits until the view is displayed
+     */
     public PageComponentsViewDialog showComponentView()
     {
         if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
@@ -448,12 +460,18 @@ public class ContentWizardPanel
         return dialog;
     }
 
-    public boolean isShowComponentViewButtonDisplayed()
+    /**
+     * return true if button "Show Component View" is displayed
+     */
+    public boolean isComponentViewTogglerDisplayed()
     {
         return isElementDisplayed( COMPONENT_VIEW_TOGGLER );
     }
 
-    public boolean isShowInspectionPanelButtonDisplayed()
+    /**
+     * return true if button "Show Inspection Panel" is displayed
+     */
+    public boolean isInspectionPanelTogglerDisplayed()
     {
         return isElementDisplayed( INSPECTION_PANEL_TOGGLER );
     }
@@ -476,6 +494,9 @@ public class ContentWizardPanel
         return this;
     }
 
+    /**
+     * switches to the LiveEdit frame and checks if input for filtering of options is displayed
+     */
     public boolean isPageDescriptorOptionsFilterDisplayed()
     {
         switchToLiveEditFrame();
@@ -487,6 +508,9 @@ public class ContentWizardPanel
         return isElementDisplayed( Application.LIVE_EDIT_FRAME );
     }
 
+    /**
+     * return true if toggler "Show Page Editor" is displayed
+     */
     public boolean isShowPageEditorButtonDisplayed()
     {
         String button = String.format( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );

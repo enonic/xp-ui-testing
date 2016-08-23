@@ -42,6 +42,9 @@ class BaseContentSpec
     String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
 
     @Shared
+    String COUNTRY_LIST_PAGE_CONTROLLER = "country-list";
+
+    @Shared
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     @Shared

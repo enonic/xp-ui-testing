@@ -2,7 +2,6 @@ package com.enonic.autotests.pages.form;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -68,10 +67,8 @@ public class RelationshipFormView
 
     public List<String> getNamesOfSelectedFiles()
     {
-        List<String> list = findElements(
-            By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]//h6[@class='main-name']" ) ).stream().filter(
-            WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
-        return list;
+        return getDisplayedStrings(
+            By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]//h6[@class='main-name']" ) );
     }
 
     public boolean isOptionFilterDisplayed()

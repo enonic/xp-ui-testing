@@ -42,6 +42,8 @@ public class Application
 
     protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
 
+    protected final String SLICK_CELL = "//div[contains(@class,'slick-cell')]";
+
     public String SLICK_ROW_BY_NAME =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
 

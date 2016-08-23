@@ -2,10 +2,10 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -14,77 +14,35 @@ class ContextWindow_InspectionPanel_Spec
     extends BaseContentSpec
 {
     @Shared
-    String SITE_NAME = NameHelper.uniqueName( "inspection" );
+    Content TEST_SITE
 
-    @Shared
-    Content SITE
 
-    def "setup: add a site"()
+    def "GIVEN creating of new site with selected controller WHEN Context window opened and 'Inspect' link clicked THEN Inspection tab activated"()
     {
-        when: "site based on 'My First App'"
-        SITE = buildMyFirstAppSite( SITE_NAME );
-        addSiteBasedOnFirstApp( SITE );
+        given: "creating of new site"
+        TEST_SITE = buildMyFirstAppSite( "test-inspection-panel" );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
+            TEST_SITE ).selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
 
-        TestUtils.saveScreenshot( getSession(), "inspection-site" );
-        then: "it present in browse panel"
-        contentBrowsePanel.exists( SITE_NAME );
-    }
-
-    def "GIVEN 'Page Editor' opened WHEN 'Inspect' link clicked THEN inspection panel is displayed"()
-    {
-        given: "'Page Editor' for the existing site opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit();
-
-        when: "'Inspect' link clicked"
-        ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
+        when: "Context window opened and 'Inspect' link was pressed"
         wizardPanel.showContextWindow().clickOnInspectLink();
-        TestUtils.saveScreenshot( getSession(), "inspect-opened" );
+        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        TestUtils.saveScreenshot( getSession(), "test-inspection-tab-activated" );
 
-        then: "'inspect panel' is displayed"
-        inspectPanel.isDisplayed();
+        then: "Inspection tab activated"
+        inspectionPanel.isDisplayed();
 
         and: "template selector displayed "
-        inspectPanel.isPageTemplateSelectorDisplayed();
+        inspectionPanel.isPageTemplateSelectorDisplayed();
 
-        and: "page controller not displayed, when template not selected yet"
-        !inspectPanel.isPageControllerSelectorDisplayed()
-    }
-
-    def "GIVEN 'Inspect' panel opened WHEN 'Custom' renderer selected THEN 'Page Controller' selector appears"()
-    {
-        given: "'Inspect' panel opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit()
-        wizardPanel.showContextWindow().clickOnInspectLink();
-
-        when: "'Custom' renderer selected"
-        ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
-        inspectPanel.selectRenderer( "Custom" )
-        TestUtils.saveScreenshot( getSession(), "renderer-appears" );
-
-        then: "'Page Controller' selector appears"
-        inspectPanel.isPageControllerSelectorDisplayed()
-    }
-
-    def "GIVEN 'Custom' renderer selected WHEN region selected THEN correct page controller displayed in the selector"()
-    {
-        given: "'Inspect' panel opened ana 'Custom' renderer selected"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit()
-        wizardPanel.showContextWindow().clickOnInspectLink();
-        ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
-        inspectPanel.selectRenderer( "Custom" )
-
-        when: "'Country' page controller selected"
-        inspectPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
-        TestUtils.saveScreenshot( getSession(), "controller-is-country" );
-
-        then: "correct page controller displayed in the selector"
-        inspectPanel.getSelectedPageController() == COUNTRY_REGION_PAGE_CONTROLLER;
+        and: "page controller is displayed, because page controller was selected"
+        inspectionPanel.isPageControllerSelectorDisplayed()
     }
 
     def "GIVEN the site with 'page controller' selected  WHEN 'Preview' button pressed THEN page-sources are correct and correct header present as well"()
     {
         given: "the site with 'page controller' selected"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit();
 
         when: "'Preview' button pressed"
         wizardPanel.clickToolbarPreview();
@@ -95,5 +53,36 @@ class ContextWindow_InspectionPanel_Spec
 
         and: "page-sources are correct and correct html-header present as well"
         source.contains( COUNTRY_SITE_HTML_HEADER );
+    }
+
+    def "GIVEN 'Custom' renderer selected WHEN region selected THEN correct page controller displayed in the selector"()
+    {
+        given: "'Inspect' panel opened ana 'Custom' renderer selected"
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit();
+        wizardPanel.showContextWindow().clickOnInspectLink();
+        ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
+        //inspectPanel.selectRenderer( "Custom" )
+
+        when: "'Country' page controller selected"
+        inspectPanel.changePageController( COUNTRY_LIST_PAGE_CONTROLLER );
+        TestUtils.saveScreenshot( getSession(), "test-inspection-new-controller-selected" );
+
+        then: "correct page controller displayed in the selector"
+        inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;
+    }
+    //XP-3993 Inspection Panel should be closed, when 'Page Controller' was removed (Automatic)
+    @Ignore
+    def "GIVEN 'Inspect' panel opened WHEN 'Automatic' renderer selected THEN 'Page Controller' selector appears"()
+    {
+        given: "'Inspect' panel opened"
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit()
+        wizardPanel.showContextWindow().clickOnInspectLink();
+
+        when: "'Automatic' renderer selected"
+        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        inspectionPanel.selectRenderer( "Automatic" );
+
+        then: "'Context window has been closed "
+        !inspectionPanel.isDisplayed();
     }
 }
