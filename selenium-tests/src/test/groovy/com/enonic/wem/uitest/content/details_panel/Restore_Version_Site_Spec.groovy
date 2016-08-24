@@ -103,8 +103,12 @@ class Restore_Version_Site_Spec
         when: "the latest version is restored"
         versionItem.doRestoreVersion( versionItem.getId() );
 
+        and: "security tab opened"
+        SecurityWizardStepForm form = contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink();
+        TestUtils.saveScreenshot( getSession(), "version_acl_site_application_restored" );
+
         then: "new role present after restoring of the latest version"
-        contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        form.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
     }
 
     def "GIVEN existing site with selected application opened WHEN application removed from the wizard THEN number of versions increased"()
@@ -147,7 +151,6 @@ class Restore_Version_Site_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         contentBrowsePanel.clickOnTab( INITIAL_DISPLAY_NAME );
         TestUtils.saveScreenshot( getSession(), "version_site_application_restored" );
-
 
         then: "application present in the 'application selector'"
         siteFormViewPanel.getAppDisplayNames().get( 0 ) == MY_FIRST_APP;

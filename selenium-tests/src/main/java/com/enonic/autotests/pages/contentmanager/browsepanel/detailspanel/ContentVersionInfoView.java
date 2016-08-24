@@ -122,6 +122,12 @@ public class ContentVersionInfoView
 
     public String getContentStatus( String versionId )
     {
+        String status = String.format( ITEM_BY_ID + "/div[contains(@class,'status')]", versionId );
+        if ( !isElementDisplayed( status ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_version_info_status" );
+            throw new TestFrameworkException( "status was not found!" );
+        }
         return getDisplayedString( String.format( ITEM_BY_ID + "/div[contains(@class,'status')]", versionId ) );
     }
 }

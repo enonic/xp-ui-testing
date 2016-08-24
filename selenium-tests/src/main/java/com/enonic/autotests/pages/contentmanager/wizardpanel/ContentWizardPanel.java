@@ -451,7 +451,7 @@ public class ContentWizardPanel
     {
         if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "component-view-button" );
+            TestUtils.saveScreenshot( getSession(), "err_component-view-button" );
             throw new TestFrameworkException( "The 'Show Component View' button was not found!" );
         }
         getDisplayedElement( By.xpath( COMPONENT_VIEW_TOGGLER ) ).click();
