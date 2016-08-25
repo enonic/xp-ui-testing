@@ -450,6 +450,7 @@ public class ContentBrowsePanel
         deleteButton.click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
+        sleep( 500 );
         return dialog;
     }
 
