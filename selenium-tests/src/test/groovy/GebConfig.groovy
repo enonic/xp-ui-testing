@@ -1,5 +1,6 @@
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.remote.DesiredCapabilities
@@ -41,11 +42,8 @@ driver = {
 
     }
 
-    // def driver = new ChromeDriver();
-    //System.setProperty("webdriver.firefox.profile", "selenium");
-    //FirefoxProfile profile = new FirefoxProfile();
-    //def driver = new FirefoxDriver( profile );
-    def driver = new FirefoxDriver();
+    def driver = new ChromeDriver();
+
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
     println "default configuration";
@@ -64,7 +62,7 @@ environments {
             baseUrl = 'http://google.com'
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setCapability( "browser", "Firefox" );
-            caps.setCapability( "browser_version", "44.0" );
+            caps.setCapability( "browser_version", "48.0.2" );
             caps.setCapability( "os", "Windows" );
             caps.setCapability( "os_version", "7" );
             caps.setCapability( "resolution", "1024x768" );
