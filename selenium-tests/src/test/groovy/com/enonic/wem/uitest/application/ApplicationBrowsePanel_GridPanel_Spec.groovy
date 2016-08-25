@@ -85,7 +85,10 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
 
         then:
-        applicationBrowsePanel.getSelectedRowsNumber() == 1 && !namesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
+        applicationBrowsePanel.getSelectedRowsNumber() == 1;
+
+        and: "another application is selected"
+        !namesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
     }
 
     def "GIVEN a selected application WHEN arrow up is typed THEN previous row is selected"()
