@@ -124,7 +124,7 @@ public class Application
         boolean result = waitsElementNotVisible( By.xpath( SPINNER_XPATH ), timeout );
         if ( !result )
         {
-            throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
+            throw new TestFrameworkException( "after a" + EXPLICIT_NORMAL + " seconds, spinner still present" );
         }
     }
 

@@ -44,6 +44,8 @@ public class InstallAppDialog
 
     private final String VALIDATION_VIEWER_TEXT = VALIDATION_VIEWER + "//li";
 
+    private final String APP_VIEWER_DIV = INSTALL_DIALOG_DIV + "//div[contains(@id,'MarketAppViewer')]";
+
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
 
@@ -138,6 +140,8 @@ public class InstallAppDialog
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_install-dialog" ) );
             throw new TestFrameworkException( "Install app dialog not loaded!" );
         }
+        waitsForSpinnerNotVisible( Application.EXPLICIT_NORMAL );
+        waitUntilVisible( By.xpath( APP_VIEWER_DIV ) );
     }
 
     public void waitUntilDialogClosed()
