@@ -221,6 +221,7 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getContentTypes()
     {
+        waitUntilVisibleNoException( By.xpath( CONTENT_TYPES_HEADER ), 1 );
         return getDisplayedStrings( By.xpath( CONTENT_TYPES ) );
     }
 
