@@ -196,7 +196,7 @@ task testApplicationWin( type: Test, dependsOn: [buildApplications, deleteFolder
     copyTestApplications.mustRunAfter startServer
 }
 
-task testApplicationWithFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+task testApplicationFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
@@ -212,8 +212,8 @@ task testApplicationWithFirefox( type: Test, dependsOn: [buildApplications, dele
     copyTestApplications.mustRunAfter startServer
 }
 
-task testPublishMoveSortDeatailsPanelWithFirefox( type: Test,
-                                                  dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+task testPublishMoveSortDeatailsPanelFirefox( type: Test,
+                                              dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
@@ -229,7 +229,7 @@ task testPublishMoveSortDeatailsPanelWithFirefox( type: Test,
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
-task testUserWithFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
+task testUserFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
@@ -244,7 +244,7 @@ task testUserWithFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) 
 }
 
 
-task testInputTypesWithFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+task testInputTypesFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
@@ -263,7 +263,7 @@ task testInputTypesWithFirefox( type: Test, dependsOn: [buildApplications, delet
     copyContentTypes.mustRunAfter startServer
 }
 
-task testContentStudioWithFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+task testContentStudioFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
