@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.RichComboBoxInput;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
@@ -19,6 +20,8 @@ public class ShortcutFormViewPanel
     public static final String SHORTCUT_PROPERTY = "shortcut";
 
     protected final String CONTENT_SELECTOR = FORM_VIEW + "//div[contains(@id,'ContentSelector')]";
+
+    private final String VALIDATION_MESSAGE = FORM_VIEW + "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
     protected final String TARGET_OPTION_FILTER_INPUT = CONTENT_SELECTOR + COMBOBOX_OPTION_FILTER_INPUT;
 
@@ -42,12 +45,28 @@ public class ShortcutFormViewPanel
         return this;
     }
 
+    public boolean isValidationMessageDisplayed()
+    {
+        return waitUntilVisibleNoException( By.xpath( VALIDATION_MESSAGE ), Application.EXPLICIT_NORMAL );
+    }
+
+    public String getValidationMessage()
+    {
+        if ( !isValidationMessageDisplayed() )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_shortcut_validation" );
+            throw new TestFrameworkException( "validation message not displayed!" );
+        }
+        return getDisplayedString( VALIDATION_MESSAGE );
+    }
+
     public ShortcutFormViewPanel selectTarget( String targetName )
     {
         clearAndType( optionFilterInput, targetName );
         sleep( 300 );
         RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
         richComboBoxInput.selectOption( targetName );
+        sleep( 300 );
         return this;
     }
 

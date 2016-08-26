@@ -102,6 +102,7 @@ public class ContextWindowPageInspectionPanel
             throw new TestFrameworkException( "option was not found!  " + controllerName );
         }
         getDisplayedElement( By.xpath( optionItemXpath ) ).click();
+        sleep( 300 );
         return this;
     }
 
