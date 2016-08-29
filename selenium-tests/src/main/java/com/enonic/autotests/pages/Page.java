@@ -67,7 +67,7 @@ public abstract class Page
         input.clear();
         sleep( 100 );
         input.sendKeys( text );
-        sleep( 300 );
+        sleep( 200 );
         logger.info( "text in input: " + text );
     }
 

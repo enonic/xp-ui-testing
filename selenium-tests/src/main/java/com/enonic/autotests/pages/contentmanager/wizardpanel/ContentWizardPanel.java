@@ -157,7 +157,6 @@ public class ContentWizardPanel
      */
     public ContextWindow showContextWindow()
     {
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "context_window" ) );
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.isContextWindowPresent() )
         {
@@ -537,7 +536,7 @@ public class ContentWizardPanel
     {
         if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
         {
-            List<WebElement> liveEditFrames = getDriver().findElements( By.xpath( Application.LIVE_EDIT_FRAME ) );
+            List<WebElement> liveEditFrames = findElements( By.xpath( LIVE_EDIT_FRAME ) );
             if ( liveEditFrames.size() == 0 )
             {
                 throw new TestFrameworkException( "Unable to switch to the live-edit iframe " );
@@ -547,5 +546,31 @@ public class ContentWizardPanel
             getSession().setCurrentWindow( XP_Windows.LIVE_EDIT );
         }
         return new LiveFormPanel( getSession() );
+    }
+
+    public int getWidthOfPageEditor()
+    {
+        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        {
+            NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+            getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+        }
+        String style = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getAttribute( "style" );
+        String[] parts = style.split( ";" );
+        String width = parts[0].substring( 6, parts[0].indexOf( "px" ) );
+        return Integer.valueOf( width.trim() );
+    }
+
+    public int getHeightOfPageEditor()
+    {
+        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        {
+            NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+            getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+        }
+        String style = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getAttribute( "style" );
+        String[] parts = style.split( ";" );
+        String height = parts[1].substring( 8, parts[1].indexOf( "px" ) );
+        return Integer.valueOf( height.trim() );
     }
 }

@@ -25,9 +25,11 @@ public class ContextWindow
 {
     private final String DIV_CONTEXT_WINDOW = "//div[contains(@id,'ContextWindow') and not(contains(@class,'hidden'))]";
 
-    private final String DIV_DROP = "//div[@class='live-edit-drop-target-placeholder']";
+    private final String EMULATOR_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Emulator']";
 
-    private final String DIV_MOVE = "//div[contains(@id,'RegionPlaceholder')]//p[text()='Drop components here']";
+    private final String INSERT_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Insert']";
+
+    private final String INSPECT_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Inspect']";
 
     private final String INSERTABLES_GRID = "//div[contains(@id,'InsertablesGrid')]";
 
@@ -71,25 +73,37 @@ public class ContextWindow
 
     public ContextWindow clickOnInsertLink()
     {
-        String insertButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Insert']";
-        if ( findElements( By.xpath( insertButtonXpath ) ).size() == 0 )
+        if ( !isElementDisplayed( INSERT_TAB_LINK ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_insert_link" );
             throw new TestFrameworkException( "Insert link was not found on the ContextWindow!" );
         }
-        getDisplayedElement( By.xpath( insertButtonXpath ) ).click();
-        sleep( 1000 );
+        getDisplayedElement( By.xpath( INSERT_TAB_LINK ) ).click();
+        sleep( 500 );
+        return this;
+    }
+
+    public ContextWindow clickOnEmulatorLink()
+    {
+        if ( !isElementDisplayed( EMULATOR_TAB_LINK ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_emulator_link" );
+            throw new TestFrameworkException( "Emulator link was not found on the ContextWindow!" );
+        }
+        getDisplayedElement( By.xpath( EMULATOR_TAB_LINK ) ).click();
+        sleep( 500 );
         return this;
     }
 
     public ContextWindow clickOnInspectLink()
     {
-        String inspectButtonXpath = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Inspect']";
-        if ( !isElementDisplayed( inspectButtonXpath ) )
+        if ( !isElementDisplayed( INSPECT_TAB_LINK ) )
         {
+            TestUtils.saveScreenshot( getSession(), "err_inspect_link" );
             throw new TestFrameworkException( "'inspect' link was not found on the ContextWindow!" );
         }
-        getDisplayedElement( By.xpath( inspectButtonXpath ) ).click();
-        sleep( 1000 );
+        getDisplayedElement( By.xpath( INSPECT_TAB_LINK ) ).click();
+        sleep( 500 );
         return this;
     }
 
