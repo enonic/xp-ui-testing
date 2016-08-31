@@ -43,7 +43,7 @@ driver = {
     }
 
     def driver = new ChromeDriver();
-
+    //def driver = new FirefoxDriver(  );
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
     println "default configuration";
@@ -55,9 +55,9 @@ reportOnTestFailureOnly = false
 
 environments {
     // TODO read capabilities from a property-file
-    browserstack {
-        //TODO change the baseUrl to actual
-        baseUrl = 'http://google.com'
+    browserstack_chrome {
+        //TODO change the baseUrl to the actual URL,
+        baseUrl = 'http://google.com/'
         driver = {
             baseUrl = 'http://google.com'
             DesiredCapabilities caps = new DesiredCapabilities();
@@ -71,11 +71,29 @@ environments {
             return driver;
         }
     }
+    browserstack_ff {
+        //TODO change the baseUrl to the actual URL,
+        baseUrl = 'http://google.com/'
+        driver = {
+            baseUrl = 'http://google.com'
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setCapability( "browser", "Chrome" );
+            caps.setCapability( "browser_version", "49.0" );
+            caps.setCapability( "os", "Windows" );
+            caps.setCapability( "os_version", "7" );
+            caps.setCapability( "resolution", "1024x768" );
+            URL url = new URL( "http://alexrodriguez2:ZxWiqCXgYq5NJfmyy1ms@hub.browserstack.com/wd/hub" )
+            WebDriver driver = new RemoteWebDriver( url, caps );
+            return driver;
+        }
+    }
     firefox {
         driver = {
             FirefoxProfile profile = new FirefoxProfile();
             profile.setEnableNativeEvents( true );
             def driver = new FirefoxDriver( profile );
+            //System.setProperty("webdriver.firefox.marionette","C:/gecko/geckodriver.exe");
+            //System.setProperty("webdriver.gecko.driver","C:/gecko/geckodriver.exe");
             driver.setLogLevel( Level.INFO )
             driver.manage().window().maximize()
             println "firefox configuration"

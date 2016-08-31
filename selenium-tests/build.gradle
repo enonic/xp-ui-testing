@@ -325,9 +325,20 @@ task testApplicationLocal( type: Test ) {
     forkEvery = null
 }
 
-task testApplicationBrowserStack( type: Test ) {
+task testApplicationBrowserStackFirefox( type: Test ) {
     //set system property
-    System.setProperty 'geb.env', 'browserstack';
+    System.setProperty 'geb.env', 'browserstack_ff';
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' );
+    scanForTestClasses = false
+    include '**/application/*Spec.class'
+    exclude '**/content/**'
+    exclude '**/user/**'
+    forkEvery = null
+}
+task testApplicationBrowserStackChrome( type: Test ) {
+    //set system property
+    System.setProperty 'geb.env', 'browserstack_chrome';
     //set required JvmOption:
     systemProperty 'geb.env', System.getProperty( 'geb.env' );
     scanForTestClasses = false
