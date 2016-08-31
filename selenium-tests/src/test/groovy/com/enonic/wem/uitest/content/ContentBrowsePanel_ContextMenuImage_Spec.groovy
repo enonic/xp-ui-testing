@@ -22,7 +22,7 @@ class ContentBrowsePanel_ContextMenuImage_Spec
         !contentBrowsePanel.isContextMenuItemEnabled( "New" );
         and: "Sort menu item is enabled"
         !contentBrowsePanel.isContextMenuItemEnabled( "Sort" );
-        and: "New menu item is enabled"
+        and: "Duplicate menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( "Duplicate" );
         and: "Move menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( "Move" );
