@@ -48,7 +48,7 @@ class SiteConfiguratorDialog_Spec
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
 
         when: "edit button clicked"
-        SiteConfiguratorDialog dialog = formViewPanel.openSiteConfiguration( SIMPLE_SITE_APP );
+        SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
         then: "dialog is not null"
         dialog != null;
@@ -66,7 +66,7 @@ class SiteConfiguratorDialog_Spec
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
-        SiteConfiguratorDialog dialog = formViewPanel.openSiteConfiguration( SIMPLE_SITE_APP );
+        SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
         when: "red color selected for background"
         dialog.selectBackgroundColor( BACKGROUND_COLOR )

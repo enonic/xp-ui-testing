@@ -82,7 +82,7 @@ public class SiteFormViewPanel
     public FormViewPanel removeApp( String appName )
     {
         String removeButtonXpath =
-            FORM_VIEW + String.format( SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME, appName ) + "//a[contains(@class,'remove-button')]";
+            FORM_VIEW + String.format( SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME, appName ) + "//a[contains(@class,'remove')]";
         if ( !isElementDisplayed( removeButtonXpath ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_remove_btn" ) );
@@ -106,24 +106,24 @@ public class SiteFormViewPanel
         sleep( 500 );
     }
 
-    public SiteConfiguratorDialog openSiteConfiguration( String appName )
+    public SiteConfiguratorDialog openSiteConfigurationDialog( String appName )
     {
-        SiteConfiguratorDialog dialog = null;
         String editButton = String.format(
-            "//div[contains(@id,'SiteConfiguratorSelectedOptionView') and descendant::h6[@class='main-name' and text()='%s']]//a[@class='edit-button']",
+            "//div[contains(@id,'SiteConfiguratorSelectedOptionView') and descendant::h6[@class='main-name' and text()='%s']]//a[@class='edit']",
             appName );
-        if ( findElements( By.xpath( editButton ) ).size() == 0 )
+        if ( !isElementDisplayed( editButton ) )
         {
-            return null;
+            TestUtils.saveScreenshot( getSession(), "err_edit_button_site_config" );
+            throw new TestFrameworkException( "edit button for site configuration  was not found" );
         }
         else
         {
             getDisplayedElement( By.xpath( editButton ) ).click();
-            dialog = new SiteConfiguratorDialog( getSession() );
+            SiteConfiguratorDialog dialog = new SiteConfiguratorDialog( getSession() );
             dialog.waitForOpened();
             sleep( 300 );
+            return dialog;
         }
-        return dialog;
     }
 
     public SiteFormViewPanel swapApplications( String sourceApp, String targetApp )

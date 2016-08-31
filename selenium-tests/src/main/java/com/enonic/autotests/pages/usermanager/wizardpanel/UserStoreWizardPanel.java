@@ -52,7 +52,7 @@ public class UserStoreWizardPanel
     private final String SELECTED_ID_PROVIDER_DISPLAY_NAME = SELECTED_ID_PROVIDER_VIEW + H6_DISPLAY_NAME;
 
     private String REMOVE_SELECTED_ID_PROVIDER_BUTTON =
-        "//div[contains(@id,'AuthApplicationSelectedOptionView') and descendant::h6[@class='main-name' and contains(.,'%s')]]//a[contains(@class,'remove-button icon-close')]";
+        "//div[contains(@id,'AuthApplicationSelectedOptionView') and descendant::h6[@class='main-name' and contains(.,'%s')]]//a[contains(@class,'remove')]";
 
     private final String PERMISSIONS_LIST = "//ul[contains(@id,'UserStoreACESelectedOptionsView')]";
 
