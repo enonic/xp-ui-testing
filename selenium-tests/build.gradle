@@ -113,7 +113,7 @@ tasks.withType( Test ) {
     }
 }
 
-task testContentManager( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+task testContentStudio( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/application/**'
@@ -166,26 +166,8 @@ task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
 }
 
 task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    println xpHome
     println "XP_HOME is:"
     println System.getenv( "XP_HOME" );
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/user/**'
-    forkEvery = null
-    deleteFolders.mustRunAfter buildApplications
-    startServer.mustRunAfter deleteFolders
-    copyTestApplications.mustRunAfter startServer
-}
-
-task testApplicationWin( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    println xpHome
-    println "XP_HOME is:"
-    println System.getenv( "XP_HOME" );
-    System.setProperty 'geb.env', 'firefox';
-    //set required JvmOption:
-    systemProperty 'geb.env', System.getProperty( 'geb.env' );
     scanForTestClasses = false
     include '**/application/*Spec.class'
     exclude '**/content/**'
@@ -229,6 +211,7 @@ task testPublishMoveSortDeatailsPanelFirefox( type: Test,
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
+
 task testUserFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox';
@@ -242,7 +225,6 @@ task testUserFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
     forkEvery = null
     startServer.shouldRunAfter deleteFolders
 }
-
 
 task testInputTypesFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
@@ -285,7 +267,7 @@ task testContentStudioFirefox( type: Test, dependsOn: [buildApplications, delete
     copyContentTypes.mustRunAfter startServer
 }
 
-task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp, copySimplePageApp] ) {
+task testPageEditor( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp, copySimplePageApp] ) {
     scanForTestClasses = false
     exclude '**/application/**'
     exclude '**/user/**'
@@ -296,7 +278,6 @@ task testSimpleSiteLiveEdit( type: Test, dependsOn: [buildApplications, deleteFo
     copyMyFirstApp.mustRunAfter startServer
     copySimplePageApp.mustRunAfter startServer
 }
-
 
 task testUploadContent( type: Test, dependsOn: [deleteFolders, buildApplications, startServer, copyContentTypes] ) {
     scanForTestClasses = false
@@ -365,7 +346,7 @@ task testInputTypesLocal( type: Test ) {
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
 }
-task testContentManagerLocal( type: Test ) {
+task testContentStudioLocal( type: Test ) {
     scanForTestClasses = false
     include '**/*Spec.class'
     exclude '**/application/**'
@@ -403,8 +384,11 @@ task testContentStudioPerformance( type: Test,
 }
 
 testApplication.finalizedBy = ['stopServer']
-testSimpleSiteLiveEdit.finalizedBy = ['stopServer']
+testPageEditor.finalizedBy = ['stopServer']
 testUser.finalizedBy = ['stopServer']
-testContentManager.finalizedBy = ['stopServer']
+testContentStudio.finalizedBy = ['stopServer']
 testInputTypes.finalizedBy = ['stopServer']
+testContentStudioFirefox.finalizedBy = ['stopServer']
+testPublishMoveSortDeatailsPanelFirefox.finalizedBy = ['stopServer']
+testApplicationFirefox.finalizedBy = ['stopServer']
 
