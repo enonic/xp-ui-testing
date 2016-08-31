@@ -92,27 +92,27 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         roleStatisticsPanel.getItemDisplayName() == ROLE_WITH_MEMBER.getDisplayName();
     }
 
-    def "GIVEN creating a role with 'Anonymous user' WHEN the role saved THEN correct member shown in a role statistics panel"()
+    def "GIVEN creating a role with 'Super user' WHEN the role saved THEN correct member shown in a role statistics panel"()
     {
         given: "new role created"
         RoleWizardPanel roleWizardPanel = openRoleWizard();
         List<String> memberDisplayNames = new ArrayList<>();
-        memberDisplayNames.add( ANONYMOUS_USER_DISPLAY_NAME );
-        Role roleWithAnonymousUser = buildRoleWithMembers( "role", "role with anonymous member", "description", memberDisplayNames );
-        roleWizardPanel.typeData( roleWithAnonymousUser ).save().close( roleWithAnonymousUser.getDisplayName() );
+        memberDisplayNames.add( SUPER_USER_DISPLAY_NAME );
+        Role roleWithSuperUser = buildRoleWithMembers( "role", "role with super user as member", "description", memberDisplayNames );
+        roleWizardPanel.typeData( roleWithSuperUser ).save().close( roleWithSuperUser.getDisplayName() );
         userBrowsePanel.clickOnClearSelection();
 
         when: "role selected in a browse panel"
-        userBrowseFilterPanel.typeSearchText( roleWithAnonymousUser.getName() );
-        userBrowsePanel.clickCheckboxAndSelectRole( roleWithAnonymousUser.getName() );
+        userBrowseFilterPanel.typeSearchText( roleWithSuperUser.getName() );
+        userBrowsePanel.clickCheckboxAndSelectRole( roleWithSuperUser.getName() );
         List<String> membersActual = roleStatisticsPanel.getMemberDisplayNames();
-        TestUtils.saveScreenshot( getSession(), "role_with_anonymous" );
+        TestUtils.saveScreenshot( getSession(), "role_with_superuser" );
 
         then: "members in in a role statistics panel contains the 'Super User'"
-        membersActual.contains( ANONYMOUS_USER_DISPLAY_NAME );
+        membersActual.contains( SUPER_USER_DISPLAY_NAME );
 
         and: "correct header displayed"
-        roleStatisticsPanel.getItemDisplayName() == roleWithAnonymousUser.getDisplayName();
+        roleStatisticsPanel.getItemDisplayName() == roleWithSuperUser.getDisplayName();
     }
 
 
