@@ -5,7 +5,6 @@ target/
 *.iml
 *.ipr
 .idea
-performance*
 snapshots/
 build/
 .gradle/
