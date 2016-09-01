@@ -309,7 +309,7 @@ public abstract class BrowsePanel
             long scrollTopBefore;
             long scrollTopAfter;
             long valueForScroll = getViewportHeight();
-            for (; ; )
+            for ( ; ; )
             {
                 scrollTopBefore = getViewportScrollTopValue();
                 scrollTopAfter = doScrollViewport( valueForScroll );
@@ -342,22 +342,21 @@ public abstract class BrowsePanel
 
     public boolean isRowSelected( String name )
     {
-        List<WebElement> rows =
-            findElements( By.xpath( String.format( ( NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
+        String rowByName = String.format( ( NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]" ), name );
+        List<WebElement> rows = findElements( By.xpath( rowByName ) );
         if ( rows.size() == 0 )
         {
             getFilterPanel().typeSearchText( name );
-            rows =
-                findElements( By.xpath( String.format( ( NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]" ), name ) ) );
+            rows = findElements( By.xpath( rowByName ) );
             if ( rows.size() == 0 )
             {
                 TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_select_" + name ) );
                 throw new TestFrameworkException( "row with content was not found, content name is " + name );
             }
             getFilterPanel().clickOnCleanFilter();
-
         }
-        return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
+        return rows.get( 0 ).getAttribute( "class" ).contains( "selected" );
+        // return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
     }
 
     /**
@@ -444,7 +443,7 @@ public abstract class BrowsePanel
         long newScrollTop = getViewportHeight();
         long scrollTopBefore;
         long scrollTopAfter;
-        for (; ; )
+        for ( ; ; )
         {
             scrollTopBefore = getViewportScrollTopValue();
             scrollTopAfter = doScrollViewport( newScrollTop );
@@ -533,7 +532,7 @@ public abstract class BrowsePanel
 
     public BrowsePanel holdShiftAndPressArrow( int number, Keys key )
     {
-        sleep( 1000 );
+        sleep( 500 );
         Actions action = new Actions( getDriver() );
         List<CharSequence> list = new ArrayList<>( number );
         for ( int i = 0; i < number; i++ )
@@ -618,7 +617,7 @@ public abstract class BrowsePanel
         int scrollTopValue = getViewportHeight();
         long scrollTopBefore;
         long scrollTopAfter;
-        for (; ; )
+        for ( ; ; )
         {
             scrollTopBefore = getViewportScrollTopValue();
             scrollTopAfter = doScrollViewport( scrollTopValue );
