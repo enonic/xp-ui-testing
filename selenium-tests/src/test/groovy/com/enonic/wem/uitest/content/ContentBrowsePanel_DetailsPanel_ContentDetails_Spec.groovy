@@ -24,7 +24,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
 
         when: "unnamed content selected in greed"
         filterPanel.typeSearchText( "unnamed" )
-        contentBrowsePanel.selectRowByDisplayName( UNNAMED_SITE_DISPLAY_NAME );
+        contentBrowsePanel.selectRowByItemDisplayName( UNNAMED_SITE_DISPLAY_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
         then: "correct display name is shown"

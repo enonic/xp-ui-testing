@@ -26,7 +26,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
         int before = applicationBrowsePanel.getSelectedRowsNumber();
 
         when:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
 
         then:
         applicationBrowsePanel.getSelectedRowsNumber() == 1 && before == 0;
@@ -35,11 +35,11 @@ class ApplicationBrowsePanel_GridPanel_Spec
     def "GIVEN a selected application  WHEN spacebar is typed THEN row is no longer selected"()
     {
         given:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         TestUtils.saveScreenshot( getTestSession(), "app_spacebartest1" );
 
         when:
-        applicationBrowsePanel.pressKeyOnRow( FIRST_APP_NAME, Keys.SPACE );
+        applicationBrowsePanel.findRowByDisplayNameAndSendKey( FIRST_APP_DISPLAY_NAME, Keys.SPACE );
 
         then:
         TestUtils.saveScreenshot( getTestSession(), "app_spacebartest2" );
@@ -49,7 +49,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
     def "GIVEN a selected application WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
     {
         given:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         int before = applicationBrowsePanel.getSelectedRowsNumber();
 
         when:

@@ -174,6 +174,17 @@ public class ApplicationBrowsePanel
         return findElement( By.xpath( stateCell ) ).getText();
     }
 
+    public String findAppByDisplayNameAndGetStatus( String appDisplayName )
+    {
+        String stateCell = String.format( SLICK_ROW_BY_DISPLAY_NAME, appDisplayName ) + "//div[contains(@class,'state')]";
+        if ( findElements( By.xpath( stateCell ) ).size() == 0 )
+        {
+            throw new TestFrameworkException( "state was not found in the table ! application name is " + appDisplayName );
+        }
+        getLogger().info( "status of module is : " + findElement( By.xpath( stateCell ) ).getText() );
+        return findElement( By.xpath( stateCell ) ).getText();
+    }
+
     public boolean waitApplicationStatus( String appName, String state )
     {
         String stateCell = String.format( SLICK_ROW_BY_NAME, appName ) + "//div[contains(@class,'state')]";
@@ -219,12 +230,12 @@ public class ApplicationBrowsePanel
         return itemStatisticsPanel;
     }
 
-    public ApplicationBrowsePanel deSelectAppInTable( String moduleName )
+    public ApplicationBrowsePanel deSelectAppInTable( String appDisplayName )
     {
 
-        if ( isRowSelected( moduleName ) )
+        if ( isRowByDisplayNameSelected( appDisplayName ) )
         {
-            clickCheckboxAndSelectRow( moduleName );
+            clickCheckboxAndSelectRowByDisplayName( appDisplayName );
         }
         return this;
     }

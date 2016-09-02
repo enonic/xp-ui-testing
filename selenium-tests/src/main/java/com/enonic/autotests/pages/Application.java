@@ -52,6 +52,8 @@ public class Application
 
     protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
 
+    protected final String H6_MAIN_NAME = "//h6[@class='main-name']";
+
     protected final String H6_DISPLAY_NAME = NAMES_VIEW + "//h6[@class='main-name']";
 
     protected final String P_NAME = NAMES_VIEW + "//p[@class='sub-name']";

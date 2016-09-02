@@ -15,19 +15,20 @@ class BaseApplicationSpec
     String FIRST_APP_KEY = "com.enonic.xp.testing.first_app";
 
     @Shared
-    String FIRST_APP_NAME = "com.enonic.xp.testing.first_app";
+    String FIRST_APP_DISPLAY_NAME = "First Selenium App";
 
     @Shared
-    String SECOND_APP_NAME = "com.enonic.xp.testing.second_app";
+    String SECOND_APP_DISPLAY_NAME = "Second Selenium App";
 
     @Shared
-    String THIRD_APP_NAME = "com.enonic.xp.testing.third_app";
+    String THIRD_APP_DISPLAY_NAME = "Third Selenium App";
+
 
     @Shared
     String FOURTH_APP_NAME = "com.enonic.xp.testing.fourth_app";
 
     @Shared
-    String SIMPLE_APP_NAME = "com.enonic.xp.testing.simple_app";
+    String SIMPLE_APP_DISPLAY_NAME = "Simple Site App";
 
     @Shared
     String STARTED_STATE = "started";

@@ -23,7 +23,7 @@ class ApplicationBrowsePanelToolbarSpec
     def "WHEN one local application is selected  THEN 'Uninstall' button should be disabled"()
     {
         when: "one local application is selected"
-        applicationBrowsePanel.clickCheckboxAndSelectRow( SIMPLE_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SIMPLE_APP_DISPLAY_NAME );
         TestUtils.saveScreenshot( getSession(), "uninstall-local-disabled" )
 
         then: "'Uninstall' button is disabled"
@@ -45,10 +45,10 @@ class ApplicationBrowsePanelToolbarSpec
     def "GIVEN a started application WHEN one started application selected  THEN 'Stop' button should be enabled AND 'Start' button is disabled"()
     {
         when: " one application selected in the table"
-        applicationBrowsePanel.clickCheckboxAndSelectRow( SIMPLE_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SIMPLE_APP_DISPLAY_NAME );
 
         then: "app status is started"
-        applicationBrowsePanel.getApplicationStatus( SIMPLE_APP_NAME ) == STARTED_STATE;
+        applicationBrowsePanel.findAppByDisplayNameAndGetStatus( SIMPLE_APP_DISPLAY_NAME ) == STARTED_STATE;
         and: "Stop button is enabled"
         applicationBrowsePanel.isStopButtonEnabled();
 
@@ -59,7 +59,7 @@ class ApplicationBrowsePanelToolbarSpec
     def "GIVEN a started application WHEN  module selected in the grid and stopped THEN Stop button should be disabled AND 'Start' button should be enabled"()
     {
         given: " one application selected in the table"
-        applicationBrowsePanel.clickCheckboxAndSelectRow( SIMPLE_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SIMPLE_APP_DISPLAY_NAME );
 
         when: "stop button on the toolbar pressed"
         applicationBrowsePanel.clickOnToolbarStop();
@@ -74,8 +74,8 @@ class ApplicationBrowsePanelToolbarSpec
     def "GIVEN one stopped application WHEN started and stopped are selected THEN 'Stop' and 'Start' buttons should be enabled"()
     {
         when: " started and stopped are selected"
-        applicationBrowsePanel.clickCheckboxAndSelectRow( SIMPLE_APP_NAME );
-        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SIMPLE_APP_DISPLAY_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
 
         then: "Stop button is enabled"
         applicationBrowsePanel.isStopButtonEnabled();
@@ -87,24 +87,24 @@ class ApplicationBrowsePanelToolbarSpec
     def "GIVEN two started applications are selected WHEN 'stop' button on toolbar pressed THEN both applications are 'stopped'"()
     {
         given: " started and stopped are selected"
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
 
         when: "Stop button pressed"
         applicationBrowsePanel.clickOnToolbarStop();
         TestUtils.saveScreenshot( getSession(), "multiple_select_stop" )
 
         then: "both applications are 'stopped'"
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
+        applicationBrowsePanel.findAppByDisplayNameAndGetStatus( FIRST_APP_DISPLAY_NAME ) == STOPPED_STATE;
         and:
-        applicationBrowsePanel.getApplicationStatus( FIRST_APP_NAME ) == STOPPED_STATE;
+        applicationBrowsePanel.findAppByDisplayNameAndGetStatus( FIRST_APP_DISPLAY_NAME ) == STOPPED_STATE;
     }
 
     def "GIVEN two started applications are selected WHEN 'stop' button on toolbar pressed THEN 'Stop' button is disabled and 'Start' button is enabled"()
     {
         when: " started and stopped are selected"
-        applicationBrowsePanel.clickCheckboxAndSelectRow( FIRST_APP_NAME );
-        applicationBrowsePanel.clickCheckboxAndSelectRow( SECOND_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
 
         then: "Stop button is disabled"
         !applicationBrowsePanel.isStopButtonEnabled();

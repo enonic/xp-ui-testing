@@ -1,9 +1,7 @@
 package com.enonic.autotests.pages;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -45,6 +43,9 @@ public abstract class BrowsePanel
 
     protected String ROW_CHECKBOX_BY_NAME =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
+
+    protected String ROW_CHECKBOX_BY_DISPLAY_NAME =
+        NAMES_VIEW_BY_DISPLAY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
 
     protected static final String DIV_WITH_NAME =
         "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]//div[contains(@id,'api.app.NamesView')]";
@@ -297,7 +298,8 @@ public abstract class BrowsePanel
     public int getSelectedRowsNumber()
     {
         scrollViewPortToTop();
-        Set<String> names = new HashSet<>();
+        // Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.addAll( getSelectedGridItemNames() );
         if ( !isViewportScrollable() )
         {
@@ -324,20 +326,19 @@ public abstract class BrowsePanel
         }
     }
 
-    public Set<String> getSelectedGridItemNames()
+    public List<String> getSelectedGridItemNames()
     {
         List<WebElement> rows =
             findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[@class='sub-name']" ) );
-        Set<String> set = rows.stream().map( WebElement::getText ).collect( Collectors.toSet() );
-        return set;
+        return rows.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
 
-    private Set<String> getGridItemNames()
+    private List<String> getGridItemNames()
     {
         List<WebElement> elements = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH +
                                                                 "//div[contains(@class,'slick-cell l1 r1')]//div[@class='names-and-icon-view small']//p[@class='sub-name']" ) );
-        return elements.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toSet() );
+        return elements.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
     public boolean isRowSelected( String name )
@@ -358,6 +359,26 @@ public abstract class BrowsePanel
         return rows.get( 0 ).getAttribute( "class" ).contains( "selected" );
         // return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
     }
+
+    public boolean isRowByDisplayNameSelected( String displayName )
+    {
+        String rowByDisplayName =
+            String.format( ( NAMES_VIEW_BY_DISPLAY_NAME + "/ancestor::div[contains(@class,'slick-cell')]" ), displayName );
+        List<WebElement> rows = findElements( By.xpath( rowByDisplayName ) );
+        if ( rows.size() == 0 )
+        {
+            getFilterPanel().typeSearchText( displayName );
+            rows = findElements( By.xpath( rowByDisplayName ) );
+            if ( rows.size() == 0 )
+            {
+                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_select_" + displayName ) );
+                throw new TestFrameworkException( "row with grid-item was not found, display name is " + displayName );
+            }
+            getFilterPanel().clickOnCleanFilter();
+        }
+        return rows.get( 0 ).getAttribute( "class" ).contains( "selected" );
+    }
+
 
     /**
      * Clicks on 'Clear Selection' link and removes row-selections.
@@ -433,11 +454,12 @@ public abstract class BrowsePanel
     public int getRowsCount()
     {
         scrollViewPortToTop();
-        Set<String> set = new HashSet<>();
-        set.addAll( getGridItemNames() );
+        //Set<String> set = new HashSet<>();
+        List<String> names = new ArrayList<>();
+        names.addAll( getGridItemNames() );
         if ( !isViewportScrollable() )
         {
-            return set.size();
+            return names.size();
         }
         // else, do scroll and add values.
         long newScrollTop = getViewportHeight();
@@ -452,9 +474,9 @@ public abstract class BrowsePanel
                 break;
             }
             newScrollTop += newScrollTop;
-            set.addAll( getGridItemNames() );
+            names.addAll( getGridItemNames() );
         }
-        return set.size();
+        return names.size();
     }
 
     protected Long doScrollViewport( long step )
@@ -512,16 +534,15 @@ public abstract class BrowsePanel
      */
     public BrowsePanel pressKeyOnRow( String item, Keys key )
     {
-        String contentCheckBoxXpath = String.format( SLICK_ROW_BY_NAME, item );
+        String rowXpath = String.format( SLICK_ROW_BY_NAME, item );
 
-        getLogger().info( "Xpath of checkbox for content is :" + contentCheckBoxXpath );
-        boolean isPresent = waitUntilVisibleNoException( By.xpath( contentCheckBoxXpath ), 3l );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( rowXpath ), 3l );
         if ( !isPresent )
         {
             throw new SaveOrUpdateException( "checkbox for item: " + item + "was not found" );
         }
         Actions actions = new Actions( getDriver() );
-        actions.moveToElement( findElement( By.xpath( contentCheckBoxXpath ) ) );
+        actions.moveToElement( findElement( By.xpath( rowXpath ) ) );
         actions.sendKeys( key );
         actions.build().perform();
         sleep( 500 );
@@ -529,6 +550,34 @@ public abstract class BrowsePanel
         return this;
     }
 
+    public BrowsePanel findRowByDisplayNameAndSendKey( String itemDisplayName, Keys key )
+    {
+        WebElement row = findRowElementByDisplayName( itemDisplayName );
+        pressKeyOnRowElement( row, key );
+        return this;
+    }
+
+    protected WebElement findRowElementByDisplayName( String item )
+    {
+        String row = String.format( SLICK_ROW_BY_DISPLAY_NAME, item );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( row ), 3l );
+        if ( !isPresent )
+        {
+            throw new SaveOrUpdateException( "checkbox for item: " + item + "was not found" );
+        }
+        return findElement( By.xpath( row ) );
+    }
+
+    protected BrowsePanel pressKeyOnRowElement( WebElement element, Keys key )
+    {
+        Actions actions = new Actions( getDriver() );
+        actions.moveToElement( element );
+        actions.sendKeys( key );
+        actions.build().perform();
+        sleep( 500 );
+        getLogger().info( "key was typed:" + key.toString() );
+        return this;
+    }
 
     public BrowsePanel holdShiftAndPressArrow( int number, Keys key )
     {
@@ -544,7 +593,7 @@ public abstract class BrowsePanel
         return this;
     }
 
-    public BrowsePanel selectRowByDisplayName( String displayName )
+    public BrowsePanel selectRowByItemDisplayName( String displayName )
     {
         String rowXpath = String.format( NAMES_VIEW_BY_DISPLAY_NAME, displayName );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
@@ -709,6 +758,22 @@ public abstract class BrowsePanel
         return (T) this;
     }
 
+    public <T extends BrowsePanel> T clickCheckboxAndSelectRowByDisplayName( String itemDisplayName )
+    {
+        String itemCheckBoxXpath = String.format( ROW_CHECKBOX_BY_DISPLAY_NAME, itemDisplayName );
+        getLogger().info( "Xpath of checkbox for item is :" + itemCheckBoxXpath );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
+        if ( !isPresent )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_checkbox_" + itemDisplayName );
+            throw new SaveOrUpdateException( "checkbox for item: " + itemDisplayName + "was not found" );
+        }
+        waitAndFindElement( By.xpath( itemCheckBoxXpath ) ).click();
+        sleep( 1000 );
+        getLogger().info( "check box was selected, item: " + itemDisplayName );
+        return (T) this;
+    }
+
     public <T extends BrowsePanel> T clickCheckboxAndSelectRow( int number )
     {
         List<WebElement> elements = findElements( By.xpath( SLICK_ROW ) );
@@ -744,6 +809,16 @@ public abstract class BrowsePanel
     {
         getLogger().info( "opening a context menu, content path of content: " + gridItemName );
         String contentDescriptionXpath = String.format( NAMES_VIEW_BY_NAME, gridItemName );
+        WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
+        Actions action = new Actions( getDriver() );
+        action.contextClick( element ).build().perform();
+        sleep( 300 );
+    }
+
+    public void selectItemByDisplayNameOnOpenContextMenu( String gridItemDisplayName )
+    {
+        getLogger().info( "select a item and opening a context menu, : " + gridItemDisplayName );
+        String contentDescriptionXpath = String.format( NAMES_VIEW_BY_DISPLAY_NAME, gridItemDisplayName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
         Actions action = new Actions( getDriver() );
         action.contextClick( element ).build().perform();

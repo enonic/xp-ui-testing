@@ -8,7 +8,7 @@ class AppBrowsePanel_ContextMenu_Spec
     def "GIVEN a local 'started' application WHEN the application selected and context menu opened THEN all menu-items have correct state"()
     {
         when: "context menu opened"
-        applicationBrowsePanel.openContextMenu( THIRD_APP_NAME );
+        applicationBrowsePanel.selectItemByDisplayNameOnOpenContextMenu( THIRD_APP_DISPLAY_NAME );
         TestUtils.saveScreenshot( getSession(), "local-app-context-menu" );
 
         then: "Delete menu item is enabled"
@@ -24,12 +24,12 @@ class AppBrowsePanel_ContextMenu_Spec
     def "GIVEN a local 'stopped' application WHEN the application selected and context menu opened THEN all menu-items have correct state"()
     {
         given:
-        applicationBrowsePanel.selectRowByName( THIRD_APP_NAME );
+        applicationBrowsePanel.selectRowByItemDisplayName( THIRD_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickOnToolbarStop();
         applicationBrowsePanel.clickOnClearSelection();
 
         when: "context menu opened"
-        applicationBrowsePanel.openContextMenu( THIRD_APP_NAME );
+        applicationBrowsePanel.selectItemByDisplayNameOnOpenContextMenu( THIRD_APP_DISPLAY_NAME );
         TestUtils.saveScreenshot( getSession(), "local-app-context-menu" );
 
         then: "Delete menu item is enabled"
@@ -48,7 +48,7 @@ class AppBrowsePanel_ContextMenu_Spec
         installAppAndCloseDialog( DISQUS_APP_NAME, DISQUS_APP_DISPLAY_NAME );
 
         when: "context menu opened"
-        applicationBrowsePanel.openContextMenu( DISQUS_APP_NAME );
+        applicationBrowsePanel.selectRowByName( DISQUS_APP_NAME );
         TestUtils.saveScreenshot( getSession(), "disqus-context-menu" );
 
         then: "Delete menu item is enabled"
