@@ -22,7 +22,7 @@ class InstallApplication_Spec
     String APP_NAME = "install_app";
 
     @Shared
-    String LOCAL_APP_NAME = "first_app";
+    String LOCAL_APP_DISPLAY_NAME = "My First App";
 
     @Shared
     String CONTENT_VIEWER_APP = "Content Viewer App";
@@ -57,14 +57,14 @@ class InstallApplication_Spec
         //!applicationBrowsePanel.isApplicationLocal( APP_NAME );
 
         expect: "application, that is 'local' has a required icon"
-        applicationBrowsePanel.isApplicationLocal( LOCAL_APP_NAME );
+        applicationBrowsePanel.isApplicationByDisplayNameLocal( LOCAL_APP_DISPLAY_NAME );
     }
 
     @Ignore
     def "WHEN existing local application selected THEN 'uninstall' button is disabled"()
     {
         when:
-        applicationBrowsePanel.selectRowByName( LOCAL_APP_NAME )
+        applicationBrowsePanel.selectRowByItemDisplayName( LOCAL_APP_DISPLAY_NAME )
 
         then:
         !applicationBrowsePanel.isUninstallButtonEnabled();
@@ -106,7 +106,7 @@ class InstallApplication_Spec
     {
         when:
         applicationBrowsePanel.clickCheckboxAndSelectRow( APP_NAME );
-        applicationBrowsePanel.clickCheckboxAndSelectRow( LOCAL_APP_NAME );
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( LOCAL_APP_DISPLAY_NAME );
 
         then:
         !applicationBrowsePanel.isUninstallButtonEnabled();

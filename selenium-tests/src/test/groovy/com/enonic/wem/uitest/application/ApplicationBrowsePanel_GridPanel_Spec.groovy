@@ -76,12 +76,12 @@ class ApplicationBrowsePanel_GridPanel_Spec
         given:
 
         applicationBrowsePanel.clickCheckboxAndSelectRow( 0 );
-        Set<String> namesBefore = applicationBrowsePanel.getSelectedGridItemNames();
+        Set<String> namesBefore = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
         when:
         applicationBrowsePanel.pressKeyOnRow( 0, Keys.ARROW_DOWN );
         TestUtils.saveScreenshot( getTestSession(), "arrow_down_module" );
-        Set<String> namesAfter = applicationBrowsePanel.getSelectedGridItemNames();
+        Set<String> namesAfter = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
 
         then:
@@ -95,15 +95,15 @@ class ApplicationBrowsePanel_GridPanel_Spec
     {
         given:
         applicationBrowsePanel.clickCheckboxAndSelectRow( 3 );
-        Set<String> namesBefore = applicationBrowsePanel.getSelectedGridItemNames();
+        Set<String> displayNamesBefore = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
         when:
         applicationBrowsePanel.pressKeyOnRow( 3, Keys.ARROW_UP );
         TestUtils.saveScreenshot( getTestSession(), "module_arrow_up" );
-        Set<String> namesAfter = applicationBrowsePanel.getSelectedGridItemNames();
+        Set<String> namesAfter = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
         then:
-        applicationBrowsePanel.getSelectedRowsNumber() == 1 && !namesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
+        applicationBrowsePanel.getSelectedRowsNumber() == 1 && !displayNamesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
     }
 
 

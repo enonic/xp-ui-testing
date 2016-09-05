@@ -132,6 +132,14 @@ public class ApplicationBrowsePanel
         return result;
     }
 
+    public boolean isApplicationByDisplayNameLocal( String appDisplayName )
+    {
+        boolean result;
+        String iconLocal = String.format( SLICK_ROW_BY_DISPLAY_NAME, appDisplayName ) + "//div[@title='Local application']";
+        result = isElementDisplayed( iconLocal );
+        return result;
+    }
+
     @Override
     public WizardPanel clickToolbarEdit()
     {

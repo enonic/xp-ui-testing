@@ -300,7 +300,7 @@ public abstract class BrowsePanel
         scrollViewPortToTop();
         // Set<String> names = new HashSet<>();
         List<String> names = new ArrayList<>();
-        names.addAll( getSelectedGridItemNames() );
+        names.addAll( getNamesOfSelectedGridItem() );
         if ( !isViewportScrollable() )
         {
             return names.size();
@@ -315,7 +315,7 @@ public abstract class BrowsePanel
             {
                 scrollTopBefore = getViewportScrollTopValue();
                 scrollTopAfter = doScrollViewport( valueForScroll );
-                names.addAll( getSelectedGridItemNames() );
+                names.addAll( getNamesOfSelectedGridItem() );
                 if ( scrollTopBefore == scrollTopAfter )
                 {
                     break;
@@ -326,10 +326,17 @@ public abstract class BrowsePanel
         }
     }
 
-    public List<String> getSelectedGridItemNames()
+    public List<String> getNamesOfSelectedGridItem()
     {
         List<WebElement> rows =
             findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[@class='sub-name']" ) );
+        return rows.stream().map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    public List<String> getDisplayNamesOfSelectedGridItems()
+    {
+        List<WebElement> rows =
+            findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]" + H6_MAIN_NAME ) );
         return rows.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
