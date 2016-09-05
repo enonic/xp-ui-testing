@@ -193,6 +193,17 @@ public class ApplicationBrowsePanel
         return findElement( By.xpath( stateCell ) ).getText();
     }
 
+    public String getApplicationDescription( String appDisplayName )
+    {
+        String description = String.format( NAMES_VIEW_BY_DISPLAY_NAME + "//p[@class='sub-name']", appDisplayName );
+        if ( !isElementDisplayed( description ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_app_description" );
+            throw new TestFrameworkException( "description for:" + appDisplayName + "was not found" );
+        }
+        return getDisplayedString( description );
+    }
+
     public boolean waitApplicationStatus( String appName, String state )
     {
         String stateCell = String.format( SLICK_ROW_BY_NAME, appName ) + "//div[contains(@class,'state')]";

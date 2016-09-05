@@ -6,6 +6,11 @@ import org.openqa.selenium.Keys
 class ApplicationBrowsePanel_GridPanel_Spec
     extends BaseApplicationSpec
 {
+    def "GIVEN an existing application EXPECTED correct description for the application is displayed"()
+    {
+        expect:
+        applicationBrowsePanel.getApplicationDescription( FIRST_APP_DISPLAY_NAME ) == TEST_DESCRIPTION;
+    }
 
     def "GIVEN applications listed on root WHEN no selection THEN all rows are white"()
     {

@@ -20,7 +20,7 @@ public class RichComboBoxInput
     public void selectOption( String option )
     {
         String optionXpath = String.format( RICH_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, option );
-        boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), 2 );
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), Application.EXPLICIT_NORMAL );
 
         if ( !isVisible )
         {

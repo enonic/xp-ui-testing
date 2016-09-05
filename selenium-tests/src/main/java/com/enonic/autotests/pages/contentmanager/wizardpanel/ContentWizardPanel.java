@@ -174,6 +174,12 @@ public class ContentWizardPanel
 
     public ContentWizardPanel clickToolbarPreview()
     {
+        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), 1 );
+        if ( !isEnabled )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_preview_button_status" );
+            throw new TestFrameworkException( "button Preview disabled, but expected is enabled" );
+        }
         toolbarPreviewButton.click();
         sleep( 1000 );
         return this;

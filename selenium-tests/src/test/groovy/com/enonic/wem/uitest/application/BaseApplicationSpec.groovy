@@ -23,6 +23,8 @@ class BaseApplicationSpec
     @Shared
     String THIRD_APP_DISPLAY_NAME = "Third Selenium App";
 
+    @Shared
+    String TEST_DESCRIPTION = "Test application for ui-testing";
 
     @Shared
     String FOURTH_APP_NAME = "com.enonic.xp.testing.fourth_app";
