@@ -22,7 +22,7 @@ class InstallApplication_Spec
     String APP_NAME = "install_app";
 
     @Shared
-    String LOCAL_APP_DISPLAY_NAME = "My First App";
+    String LOCAL_APP_DISPLAY_NAME = "Second Selenium App";
 
     @Shared
     String CONTENT_VIEWER_APP = "Content Viewer App";
@@ -53,10 +53,11 @@ class InstallApplication_Spec
 
     def "GIVEN existing not local application EXPECTED icon for local application not displayed"()
     {
-        // expect:
-        //!applicationBrowsePanel.isApplicationLocal( APP_NAME );
-
         expect: "application, that is 'local' has a required icon"
+        TestUtils.saveScreenshot( getSession(), "app_local" );
+        applicationBrowsePanel.isGridItemPresent( LOCAL_APP_DISPLAY_NAME );
+
+        and:
         applicationBrowsePanel.isApplicationByDisplayNameLocal( LOCAL_APP_DISPLAY_NAME );
     }
 

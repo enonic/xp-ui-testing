@@ -730,6 +730,12 @@ public abstract class BrowsePanel
         return exists( itemName, false );
     }
 
+    public boolean isGridItemPresent( String displayName )
+    {
+        String itemXpath = String.format( NAMES_VIEW_BY_DISPLAY_NAME, displayName );
+        return isElementDisplayed( itemXpath );
+    }
+
     /**
      * Gets item names, that have a margin-left, that means items are children.
      * *
