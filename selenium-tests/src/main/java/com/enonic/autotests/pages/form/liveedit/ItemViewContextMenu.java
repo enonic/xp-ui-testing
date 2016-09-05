@@ -14,7 +14,7 @@ public class ItemViewContextMenu
 {
     public final String CONTAINER_DIV = "//div[contains(@id,'ItemViewContextMenu')]";
 
-    private final String CUSTOMIZE_MENU_ITEM = CONTAINER_DIV + "//dl//dt[text()='Customize']";
+    private final String CUSTOMIZE_MENU_ITEM = CONTAINER_DIV + "//dl//dt[text()='Customize Page']";
 
     public ItemViewContextMenu( TestSession session )
     {
