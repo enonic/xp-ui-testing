@@ -30,6 +30,9 @@ class BaseApplicationSpec
     String FOURTH_APP_NAME = "com.enonic.xp.testing.fourth_app";
 
     @Shared
+    String FOURTH_APP_DISPLAY_NAME = "Fourth Selenium App";
+
+    @Shared
     String SIMPLE_APP_DISPLAY_NAME = "Simple Site App";
 
     @Shared
