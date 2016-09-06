@@ -20,6 +20,7 @@ class InstallApplication_TypingURL_Spec
     def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN wrong URL to an application typed THEN correct validation message appears in the dialog"()
     {
         given: "'install app' dialog opened AND 'Upload' tab activated"
+        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_9" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -37,6 +38,7 @@ class InstallApplication_TypingURL_Spec
     def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN incorrect protocol typed THEN validation message not displayed"()
     {
         given: "'install app' dialog opened AND 'Upload' tab activated"
+        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_10" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();

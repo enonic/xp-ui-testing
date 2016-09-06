@@ -134,6 +134,7 @@ class InstallApplication_Spec
     def "GIVEN 'install app' dialog opened and 'Enonic Market' selected WHEN an application from the 'Enonic Market' installed THEN new application listed in the browse panel "()
     {
         given:
+        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_8" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -164,6 +165,7 @@ class InstallApplication_Spec
     def "GIVEN existing installed from the market application WHEN Install App Dialog opened THEN the application is disabled in the 'market'"()
     {
         when:
+        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_9" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();

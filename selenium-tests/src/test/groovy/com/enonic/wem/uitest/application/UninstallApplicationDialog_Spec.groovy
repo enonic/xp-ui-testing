@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.modules.UninstallApplicationDialog
+import com.enonic.autotests.utils.TestUtils
 import spock.lang.Stepwise
 
 @Stepwise
@@ -39,6 +40,7 @@ class UninstallApplicationDialog_Spec
     def "GIVEN 'UnInstallDialog' is opened WHEN 'cancel' button pressed THEN 'UnInstallDialog' not displayed"()
     {
         given: "'UnInstallDialog' is opened"
+        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_11" );
         applicationBrowsePanel.selectRowByName( GOOGLE_ANALYTICS_APP_NAME );
         UninstallApplicationDialog dialog = applicationBrowsePanel.clickOnToolbarUninstall();
         dialog.waitUntilDialogLoaded();
