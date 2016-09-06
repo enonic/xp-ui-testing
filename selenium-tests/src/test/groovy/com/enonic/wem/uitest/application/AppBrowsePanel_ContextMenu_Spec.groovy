@@ -25,6 +25,7 @@ class AppBrowsePanel_ContextMenu_Spec
     {
         given:
         applicationBrowsePanel.selectRowByItemDisplayName( THIRD_APP_DISPLAY_NAME );
+        TestUtils.saveScreenshot( getSession(), "local-app-stopped" );
         applicationBrowsePanel.clickOnToolbarStop();
         applicationBrowsePanel.clickOnClearSelection();
 
