@@ -23,10 +23,25 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     @Shared
     String VERSION_OF_TEST_APPLICATION = "2.0.0.SNAPSHOT";
 
+    def "set up: start all applications"()
+    {
+        when:
+        applicationBrowsePanel.clickOnSelectAll();
+        TestUtils.saveScreenshot( getSession(), "test_select_all_app" );
+
+        then: "start button is enabled"
+        applicationBrowsePanel.isStartButtonEnabled();
+
+        and: "start all"
+        applicationBrowsePanel.clickOnToolbarStart();
+
+    }
+
     def "WHEN One application is selected THEN The details panel should show 'Build'-date, version, key and 'System requirements'"()
     {
         when: "application started and it selected in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
+        TestUtils.saveScreenshot( getSession(), "test_app_stopped" );
 
         then: "'build date' shown"
         applicationItemStatisticsPanel.isBuildDatePresent();
