@@ -10,6 +10,7 @@ class InstallAppDialog_Spec
     def "GIVEN application BrowsePanel WHEN install button on toolbar pressed THEN 'Install App Dialog' appears with correct control elements"()
     {
         when:
+        TestUtils.saveScreenshot( getSession(), "test_toolbar_is_available5" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -43,6 +44,7 @@ class InstallAppDialog_Spec
     def "GIVEN 'Install App Dialog' opened WHEN 'Upload' tab clicked THEN this tab activated"()
     {
         given:
+        TestUtils.saveScreenshot( getSession(), "test_toolbar_is_available3" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -64,6 +66,7 @@ class InstallAppDialog_Spec
     def "GIVEN 'Install App Dialog' opened WHEN 'cancel' button clicked THEN dialog not present"()
     {
         given:
+        TestUtils.saveScreenshot( getSession(), "test_toolbar_is_available1" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -80,6 +83,7 @@ class InstallAppDialog_Spec
     def "WHEN 'Install App Dialog' opened  THEN table with applications appears"()
     {
         when:
+        TestUtils.saveScreenshot( getSession(), "test_toolbar_is_available2" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
