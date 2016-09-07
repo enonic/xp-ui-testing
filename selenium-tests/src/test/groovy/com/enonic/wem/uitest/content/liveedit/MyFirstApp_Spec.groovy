@@ -96,9 +96,7 @@ class MyFirstApp_Spec
         given: "the 'country' content opened for edit"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE );
-        switchToContentStudioWindow();
-        wizard.save();
+        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
         TestUtils.saveScreenshot( getSession(), "page_descriptor_added_in_country_content" );

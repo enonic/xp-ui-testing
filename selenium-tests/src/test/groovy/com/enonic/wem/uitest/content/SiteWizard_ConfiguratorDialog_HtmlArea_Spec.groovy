@@ -60,11 +60,10 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     {
         given:
         SITE = buildSiteWithApps( CONTENT_TYPES_NAME_APP );
+
         when: "data saved and wizard closed"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
-        wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER );
-        switchToContentStudioWindow();
-        wizardPanel.save().close( SITE.getDisplayName() );
+        wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER ).save().close( SITE.getDisplayName() );
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );

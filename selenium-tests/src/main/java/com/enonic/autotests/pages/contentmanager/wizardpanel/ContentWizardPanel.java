@@ -495,7 +495,6 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "drop-down-option-filter: item was not found!" + pageDescriptorDisplayName );
         }
         getDisplayedElement( By.xpath( pageDescriptor ) ).click();
-        waitsForSpinnerNotVisible();
         sleep( 1000 );
         return this;
     }
