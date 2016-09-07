@@ -447,7 +447,7 @@ public abstract class BrowsePanel
      */
     public void waitUntilPageLoaded( long timeout )
     {
-        boolean isLoaded = waitAndFind( By.xpath( TREE_GREED ), timeout );
+        boolean isLoaded = waitUntilVisibleNoException( By.xpath( GRID_CANVAS ), timeout );
         if ( !isLoaded )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_browse_panel" ) );

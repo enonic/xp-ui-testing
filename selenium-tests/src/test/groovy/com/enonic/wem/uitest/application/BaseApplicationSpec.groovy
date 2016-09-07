@@ -97,7 +97,7 @@ class BaseApplicationSpec
             InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab();
             marketPanel.doInstallApp( displayName );
             appDialog.clickOnCancelButton();
-            sleep( 3000 );
+            sleep( 4000 );
             applicationBrowsePanel.waitNewInstalledApplicationAppears( name, 10 );
             applicationBrowsePanel.waitApplicationStatus( name, "started" )
         }
