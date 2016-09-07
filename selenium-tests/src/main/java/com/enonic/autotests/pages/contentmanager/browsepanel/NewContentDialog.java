@@ -184,6 +184,11 @@ public class NewContentDialog
         return searchInput.isEnabled();
     }
 
+    public void waitUntilSearchInputEnabled()
+    {
+        waitUntilElementEnabledNoException( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
+    }
+
     public ContentBrowsePanel doUploadFile( String path, String fileName )
         throws AWTException
     {

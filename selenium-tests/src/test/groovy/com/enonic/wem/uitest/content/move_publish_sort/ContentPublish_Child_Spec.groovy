@@ -127,7 +127,7 @@ class ContentPublish_Child_Spec
         !contentBrowsePanel.exists( childContent2.getName() );
     }
 
-    def "GIVEN existing  parent folder with one child and status of both contents are 'PENDING_DELETE'  WHEN  parent folder selected and 'Publish' button pressed  THEN parent folder not listed"()
+    def "GIVEN existing parent folder with one child and status of both contents are 'PENDING_DELETE' WHEN parent folder selected and 'Publish' button pressed THEN parent folder not listed"()
     {
         when:
         filterPanel.typeSearchText( parentContent.getName() );

@@ -2,6 +2,8 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -50,16 +52,27 @@ class ContentPublishDelete_Spec
         message == "1 item was marked for deletion";
     }
 
+    def "GIVEN existing root content with 'Pending Delete' status  WHEN it selected and 'Delete' button pressed THEN checkbox with label 'Instantly delete published items' is checked"()
+    {
+        when:
+        filterPanel.typeSearchText( content.getName() )
+        DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete();
+        TestUtils.saveScreenshot( getSession(), "test_delete_dialog_checkbox" );
+
+        then:
+        dialog.isInstantlyDeleteCheckboxChecked();
+    }
+
     def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel"()
     {
         when:
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        filterPanel.typeSearchText( content.getName() );
 
         then:
         !contentBrowsePanel.exists( content.getName() );
+
         and:
         message == "pending item was deleted";
     }

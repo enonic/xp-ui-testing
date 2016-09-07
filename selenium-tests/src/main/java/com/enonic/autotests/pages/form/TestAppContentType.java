@@ -13,7 +13,7 @@ public enum TestAppContentType
     ":imageselector0_0" ), IMAGE_SELCTOR0_1( ":imageselector0_1" ), IMAGE_SELCTOR1_1( ":imageselector1_1" ), IMAGE_SELCTOR2_4(
     ":imageselector2_4" ), DEFAULT_RELATION0_1( ":default_relation0_1" ), DEFAULT_RELATION2_4( ":default_relation2_4" ), CUSTOM_RELATION0_1(
     ":custom-relationship0_1" ), ARTICLE( ":article" ), COUNTRY( ":country" ), CITY( ":city" ), ALL_INPUTS( ":all-inputs" ), FIELD_SET(
-    ":fieldset" );
+    ":fieldset" ), CUSTOM_SELECTOR0_2( "custom-selector0_2" ), CUSTOM_SELECTOR1_1( "custom-selector1_1" );
 
     private String name;
 
