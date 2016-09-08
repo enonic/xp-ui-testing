@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDia
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.TwitterConfigPanel
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
 import spock.lang.Ignore
@@ -42,7 +41,7 @@ class MacroModalDialog_Twitter_Spec
         dialog.selectOption( MacroType.TWITTER ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "test_macro_twit_inserted" );
+        saveScreenshot( "test_macro_twit_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
         formViewPanel.getText().contains( TEST_TWIT );
@@ -66,7 +65,7 @@ class MacroModalDialog_Twitter_Spec
         data.addString( TwitterConfigPanel.URL_VALUE, " " );
         dialog.selectOption( MacroType.TWITTER ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
-        TestUtils.saveScreenshot( getSession(), "test_macro_twit_not_valid" );
+        saveScreenshot( "test_macro_twit_not_valid" );
 
         then: "modal dialog is not closed"
         dialog.isOpened();

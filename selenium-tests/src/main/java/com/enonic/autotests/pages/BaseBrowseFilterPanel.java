@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -64,7 +63,7 @@ public abstract class BaseBrowseFilterPanel
         boolean isVisible = waitUntilVisibleNoException( By.xpath( SEARCH_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isVisible )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_filter" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_filter" ) );
             throw new TestFrameworkException( "filter panel or search input not displayed" );
         }
         clearAndType( searchInput, text );

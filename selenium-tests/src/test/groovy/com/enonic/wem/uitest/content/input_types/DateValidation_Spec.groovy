@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.TimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -33,7 +32,7 @@ class DateValidation_Spec
         when: "Time input has been clicked"
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
         TimePickerPopup picker = formViewPanel.clickOnInputAndShowPicker();
-        TestUtils.saveScreenshot( getSession(), "time-picker-popup" );
+        saveScreenshot( "time-picker-popup" );
 
         then: "'time picker' popup dialog is displayed"
         picker.isDisplayed();
@@ -51,7 +50,7 @@ class DateValidation_Spec
         when: "icon-clock has been clicked"
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
         TimePickerPopup picker = formViewPanel.clickOnClockIconAndShowPicker();
-        TestUtils.saveScreenshot( getSession(), "test_time_picker_icon" );
+        saveScreenshot( "test_time_picker_icon" );
 
         then: "'time picker' popup dialog is displayed"
         picker.isDisplayed();
@@ -69,7 +68,7 @@ class DateValidation_Spec
 
         when: "time with wrong format typed "
         wizard.typeData( timeContent );
-        TestUtils.saveScreenshot( getSession(), "test_wrong_time" );
+        saveScreenshot( "test_wrong_time" );
 
         then: "'Publish' button enabled, because input is not required"
         wizard.isPublishButtonEnabled();
@@ -103,7 +102,7 @@ class DateValidation_Spec
 
         when: "correct time typed "
         wizard.typeDisplayName( timeContent.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "required-time-publish-disabled" );
+        saveScreenshot( "required-time-publish-disabled" );
 
         then: "'Publish' button disabled, because required input not filled"
         !wizard.isPublishButtonEnabled();
@@ -118,7 +117,7 @@ class DateValidation_Spec
 
         when: "date time with wrong format typed "
         wizard.typeData( dateTimeContent );
-        TestUtils.saveScreenshot( getSession(), "wrong-date-time" );
+        saveScreenshot( "wrong-date-time" );
 
         then: "'Publish' button should be disabled, because wrong datetime typed in the required input"
         !wizard.isPublishButtonEnabled();
@@ -136,7 +135,7 @@ class DateValidation_Spec
 
         when: "only the name typed and dateTime not typed and 'Publish' button clicked"
         wizard.typeData( dateTimeContent );
-        TestUtils.saveScreenshot( getSession(), "correct-date-time" );
+        saveScreenshot( "correct-date-time" );
 
         then: "'Publish' button is enabled"
         wizard.isPublishButtonEnabled();
@@ -153,7 +152,7 @@ class DateValidation_Spec
 
         when: "only the 'name' typed and datetime not typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "required-date-time" );
+        saveScreenshot( "required-date-time" );
 
         then: "'Publish' button disabled"
         !wizard.isPublishButtonEnabled();

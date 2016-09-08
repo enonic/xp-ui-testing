@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -30,10 +29,10 @@ class DateContentValidation_Spec
         Content dateContent = buildDate0_1_Content( BAD_FORMAT_DATE );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
-        when: "date typed"
+        when: "date with wrong format typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "wrong_date_format" )
+        saveScreenshot( "wrong_date_format" )
 
         then: "red border appears"
         dateFormViewPanel.isInvalidDate();
@@ -45,10 +44,10 @@ class DateContentValidation_Spec
         Content dateContent = buildDate0_1_Content( WRONG_DAY_DATE );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
-        when: "date typed"
+        when: "wrong day of month typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "wrong_day" );
+        saveScreenshot( "date_wrong_day" );
 
         then: "red border appears"
         dateFormViewPanel.isInvalidDate();
@@ -60,10 +59,10 @@ class DateContentValidation_Spec
         Content dateContent = buildDate0_1_Content( WRONG_MONTH_DATE );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
-        when: "date typed"
+        when: "wrong month typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "wrong_month" );
+        saveScreenshot( "date_wrong_month" );
 
         then: "red border appears"
         dateFormViewPanel.isInvalidDate();
@@ -75,7 +74,7 @@ class DateContentValidation_Spec
         Content dateContent = buildDate0_1_Content( CORRECT_DATE );
         ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
 
-        when: "date typed"
+        when: "correct date typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 

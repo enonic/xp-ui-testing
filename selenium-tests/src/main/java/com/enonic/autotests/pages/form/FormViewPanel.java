@@ -16,6 +16,8 @@ public abstract class FormViewPanel
 {
     protected static final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
+    public static String VALIDATION_MESSAGE_OCCURRENCE = "This field is required";
+
     protected final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
     public FormViewPanel( final TestSession session )

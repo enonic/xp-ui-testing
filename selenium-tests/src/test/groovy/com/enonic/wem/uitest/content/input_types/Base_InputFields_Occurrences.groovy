@@ -269,6 +269,40 @@ class Base_InputFields_Occurrences
         return imageSelectorContent;
     }
 
+    protected Content buildCustomSelector0_2_Content( String... options )
+    {
+        PropertyTree data = null;
+        if ( options != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( CustomSelectorFormViewPanel.CUSTOM_SELECTOR_OPTIONS, options );
+        }
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "custom_sel" ) ).
+            displayName( "custom selector" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":custom-selector0_2" ).data( data ).
+            build();
+        return imageSelectorContent;
+    }
+
+    protected Content buildCustomSelector1_1_Content( String... options )
+    {
+        PropertyTree data = null;
+        if ( options != null )
+        {
+            data = new PropertyTree();
+            data.addStrings( CustomSelectorFormViewPanel.CUSTOM_SELECTOR_OPTIONS, options );
+        }
+        Content imageSelectorContent = Content.builder().
+            name( NameHelper.uniqueName( "custom_sel" ) ).
+            displayName( "custom selector" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":custom-selector1_1" ).data( data ).
+            build();
+        return imageSelectorContent;
+    }
+
     protected Content buildImageSelector0_0_Content( String... imageNames )
     {
         PropertyTree data = null;

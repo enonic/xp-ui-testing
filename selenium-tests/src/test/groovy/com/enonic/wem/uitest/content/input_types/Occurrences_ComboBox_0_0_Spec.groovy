@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -114,7 +113,7 @@ class Occurrences_ComboBox_0_0_Spec
 
         then: "only two options are present in the form view"
         List<String> optValues = formViewPanel.getSelectedOptionValues();
-        TestUtils.saveScreenshot( getSession(), "combo_removed_option" )
+        saveScreenshot( "combo_removed_option" );
         optValues.size() == 2;
 
         and: "and options have a correct text"
@@ -132,8 +131,6 @@ class Occurrences_ComboBox_0_0_Spec
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
         wizard.close( content_wit_opt.getDisplayName() );
-
-        TestUtils.saveScreenshot( getSession(), "occ" )
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
         then: "content has a 'online' status"

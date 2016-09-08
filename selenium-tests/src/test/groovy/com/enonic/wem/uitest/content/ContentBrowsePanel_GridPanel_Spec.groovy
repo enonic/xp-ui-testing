@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
@@ -40,7 +39,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.clickOnRefreshButton();
-        TestUtils.saveScreenshot( getSession(), "test_refresh_button_clicked" );
+        saveScreenshot( "test_refresh_button_clicked" );
 
         then:
         contentBrowsePanel.getSelectedRowsNumber() == 1;
@@ -53,7 +52,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
-        TestUtils.saveScreenshot( getSession(), "test_first_row_selected" );
+        saveScreenshot( "test_first_row_selected" );
 
         then:
         contentBrowsePanel.getSelectedRowsNumber() == 1;
@@ -64,13 +63,13 @@ class ContentBrowsePanel_GridPanel_Spec
         given:
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
-        TestUtils.saveScreenshot( getTestSession(), "test_spacebar_before" );
+        saveScreenshot( "test_spacebar_before" );
 
         when:
         contentBrowsePanel.pressKeyOnRow( ContentPath.from( contentNames.get( 0 ) ), Keys.SPACE );
 
         then:
-        TestUtils.saveScreenshot( getTestSession(), "test_spacebar_after" );
+        saveScreenshot( "test_spacebar_after" );
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
@@ -94,7 +93,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.clickOnSelectAll();
-        TestUtils.saveScreenshot( getTestSession(), "test_select_all_content" );
+        saveScreenshot( "test_select_all_content" );
 
         then:
         contentBrowsePanel.getRowsCount() == contentBrowsePanel.getSelectedRowsNumber();
@@ -166,7 +165,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when:
         contentBrowsePanel.unExpandContent( PARENT_CONTENT.getPath() );
-        TestUtils.saveScreenshot( getTestSession(), "test_unexpand_folder" );
+        saveScreenshot( "test_unexpand_folder" );
 
         then:
         contentBrowsePanel.getChildNames().size() == 0;
@@ -177,11 +176,11 @@ class ContentBrowsePanel_GridPanel_Spec
         given:
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_down_before" );
+        saveScreenshot( "test_arrow_down_before" );
 
         when:
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_down_after" );
+        saveScreenshot( "test_arrow_down_after" );
         then:
         !contentBrowsePanel.isRowSelected( PARENT_CONTENT.getName() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
     }
@@ -199,12 +198,12 @@ class ContentBrowsePanel_GridPanel_Spec
         addContent( content );
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_up_before" );
+        saveScreenshot( "test_arrow_up_before" );
 
 
         when:
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_up_after" );
+        saveScreenshot( "test_arrow_up_after" );
 
         then:
         !contentBrowsePanel.isRowSelected( PARENT_CONTENT.getPath().toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
@@ -215,11 +214,11 @@ class ContentBrowsePanel_GridPanel_Spec
         given: "a selected and expanded folder(content)"
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_left_before" );
+        saveScreenshot( "test_arrow_left_before" );
 
         when: "arrow left pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_LEFT );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_left_after" );
+        saveScreenshot( "test_arrow_left_after" );
 
         then: "folder is collapsed"
         !contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
@@ -232,7 +231,7 @@ class ContentBrowsePanel_GridPanel_Spec
 
         when: "arrow right pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_RIGHT );
-        TestUtils.saveScreenshot( getTestSession(), "content_arrow_right" );
+        saveScreenshot( "content_arrow_right" );
 
         then: "folder is expanded"
         contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
@@ -242,11 +241,11 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given: "one content has been selected "
         contentBrowsePanel.selectContentInTable( IMPORTED_FOLDER_NAME );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_down_shift_before" );
+        saveScreenshot( "test_arrow_down_shift_before" );
 
         when: "arrow down pressed 3 times"
         contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_down_shift_after" );
+        saveScreenshot( "test_arrow_down_shift_after" );
 
         then: "n+1 rows are selected in the browse panel"
         contentBrowsePanel.getSelectedRowsNumber() == 4
@@ -256,11 +255,11 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given: "one content has been selected "
         contentBrowsePanel.clickCheckboxAndSelectRow( 4 );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_up_shift_before" );
+        saveScreenshot( "test_arrow_up_shift_before" );
 
         when: "arrow up pressed 3 times"
         contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "test_arrow_up_shift_after" );
+        saveScreenshot( "test_arrow_up_shift_after" );
 
         then: "n+1 rows are selected in the browse panel"
         contentBrowsePanel.getSelectedRowsNumber() == 4

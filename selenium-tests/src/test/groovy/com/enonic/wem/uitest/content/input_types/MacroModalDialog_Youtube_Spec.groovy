@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDia
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.YoutubeConfigPanel
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
 import spock.lang.Ignore
@@ -58,7 +57,7 @@ class MacroModalDialog_Youtube_Spec
         data.addString( YoutubeConfigPanel.URL_VALUE, " " );
         dialog.selectOption( MacroType.YOUTUBE ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
-        TestUtils.saveScreenshot( getSession(), "test_macro_youtube_url_empty" );
+        saveScreenshot( "test_macro_youtube_url_empty" );
 
         then: "modal dialog is not closed"
         dialog.isOpened();

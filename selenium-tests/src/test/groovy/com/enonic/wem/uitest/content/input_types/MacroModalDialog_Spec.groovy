@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroType
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -27,7 +26,7 @@ class MacroModalDialog_Spec
 
         when: " 'insert macro' button on toolbar has been pressed"
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
-        TestUtils.saveScreenshot( getSession(), "test_macro_dialog_shown" );
+        saveScreenshot( "test_macro_dialog_shown" );
 
         then: "macro dialog has been opened"
         dialog.isOpened();
@@ -55,7 +54,7 @@ class MacroModalDialog_Spec
 
         when: "'embedded iframe'-macro selected from the options"
         dialog.selectOption( MacroType.EMBED_IFRAME );
-        TestUtils.saveScreenshot( getSession(), "test_embedded_iframe_macro" );
+        saveScreenshot( "test_embedded_iframe_macro" );
 
         then: "correct macro is displayed on the dialog"
         dialog.getSelectedMacroDisplayName() == MacroType.EMBED_IFRAME.getValue();
@@ -80,7 +79,7 @@ class MacroModalDialog_Spec
 
         when: "'Disable macros' selected from the options"
         dialog.selectOption( MacroType.DISABLE_MACROS );
-        TestUtils.saveScreenshot( getSession(), "test_disable_macro" );
+        saveScreenshot( "test_disable_macro" );
 
         then: "correct macro is displayed on the dialog"
         dialog.getSelectedMacroDisplayName() == MacroType.DISABLE_MACROS.getValue();
@@ -106,7 +105,7 @@ class MacroModalDialog_Spec
 
         when: "'embedded code'-macro selected from the options"
         dialog.selectOption( MacroType.EMBEDDED_CODE );
-        TestUtils.saveScreenshot( getSession(), "test_embedded_macro" );
+        saveScreenshot( "test_embedded_macro" );
 
         then: "correct macro is displayed on the dialog"
         dialog.getSelectedMacroDisplayName() == MacroType.EMBEDDED_CODE.getValue();
@@ -132,7 +131,7 @@ class MacroModalDialog_Spec
 
         when: "'no format'-macro selected from the options"
         dialog.selectOption( MacroType.NO_FORMAT );
-        TestUtils.saveScreenshot( getSession(), "test_no_format_macro" );
+        saveScreenshot( "test_no_format_macro" );
 
         then: "correct macro is displayed on the dialog"
         dialog.getSelectedMacroDisplayName() == MacroType.NO_FORMAT.getValue();
@@ -172,11 +171,11 @@ class MacroModalDialog_Spec
         and: "youtube macro selected"
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
         dialog.selectOption( MacroType.YOUTUBE );
-        TestUtils.saveScreenshot( getSession(), "test_youtube_macro_added" );
+        saveScreenshot( "test_youtube_macro_added" );
 
         when: "youtube-macro removed"
         dialog.clickOnRemoveMacroButton();
-        TestUtils.saveScreenshot( getSession(), "test_youtube_macro_removed" );
+        saveScreenshot( "test_youtube_macro_removed" );
 
         then: "the filter-options appears again"
         dialog.isOptionFilterDisplayed();

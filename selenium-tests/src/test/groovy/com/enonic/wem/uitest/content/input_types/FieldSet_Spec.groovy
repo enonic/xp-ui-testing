@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.FieldSetFormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -36,7 +35,7 @@ class FieldSet_Spec
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        TestUtils.saveScreenshot( getSession(), "test_fieldset_valid" );
+        saveScreenshot( "test_fieldset_valid" );
 
         then: "red icon not present in the wizard-tab"
         !wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );
@@ -59,7 +58,7 @@ class FieldSet_Spec
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        TestUtils.saveScreenshot( getSession(), "test_fieldset1" );
+        saveScreenshot( "test_fieldset1" );
 
         then: "red icon not present in the wizard-tab"
         wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );
@@ -73,7 +72,7 @@ class FieldSet_Spec
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        TestUtils.saveScreenshot( getSession(), "test_fieldset2" );
+        saveScreenshot( "test_fieldset2" );
 
         then: "red icon not present in the wizard-tab"
         wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );
@@ -87,7 +86,7 @@ class FieldSet_Spec
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        TestUtils.saveScreenshot( getSession(), "test_fieldset3" );
+        saveScreenshot( "test_fieldset3" );
 
         then: "red icon not present in the wizard-tab"
         wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );

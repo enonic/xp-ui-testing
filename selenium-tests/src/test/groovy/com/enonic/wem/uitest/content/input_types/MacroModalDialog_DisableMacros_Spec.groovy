@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.*
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
@@ -38,7 +37,7 @@ class MacroModalDialog_DisableMacros_Spec
         dialog.selectOption( MacroType.DISABLE_MACROS ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "test_disable_macros_inserted" );
+        saveScreenshot( "test_disable_macros_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
         formViewPanel.getText().contains( DISABLE_MACROS_RESULT );
@@ -57,7 +56,7 @@ class MacroModalDialog_DisableMacros_Spec
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, " " );
         dialog.selectOption( MacroType.DISABLE_MACROS ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
-        TestUtils.saveScreenshot( getSession(), "test_disable_macros_textarea_empty" );
+        saveScreenshot( "test_disable_macros_textarea_empty" );
 
         then: "modal dialog is not closed"
         dialog.isOpened();
@@ -88,7 +87,7 @@ class MacroModalDialog_DisableMacros_Spec
 
         and: "preview tab link clicked"
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
-        TestUtils.saveScreenshot( getSession(), "test_disable_macros_textarea_empty_preview" );
+        saveScreenshot( "test_disable_macros_textarea_empty_preview" );
 
         then: "correct preview warning appears"
         previewPanel.getPreviewMessage() == MacroConfigPanel.NOT_COMPLETE_PREVIEW_MESSAGE;
@@ -110,7 +109,7 @@ class MacroModalDialog_DisableMacros_Spec
 
         and: "preview tab link clicked"
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
-        TestUtils.saveScreenshot( getSession(), "test_disable_macros_textarea_filled_preview" );
+        saveScreenshot( "test_disable_macros_textarea_filled_preview" );
 
         then: "correct info in the preview-content panel appears"
         previewPanel.getPreviewContentMessage() == "test text";

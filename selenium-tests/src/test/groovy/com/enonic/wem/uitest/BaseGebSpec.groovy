@@ -2,6 +2,7 @@ package com.enonic.wem.uitest
 
 import com.enonic.autotests.TestSession
 import com.enonic.autotests.pages.HomePage
+import com.enonic.autotests.utils.TestUtils
 import geb.spock.GebSpec
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.JavascriptExecutor
@@ -95,6 +96,10 @@ class BaseGebSpec
 
     }
 
+    void saveScreenshot( String name )
+    {
+        TestUtils.saveScreenshot( getSession(), name );
+    }
 
     TestSession getTestSession()
     {

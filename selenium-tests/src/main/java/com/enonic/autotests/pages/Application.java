@@ -136,4 +136,9 @@ public class Application
         getLogger().info( "Notification warning " + message );
         return message;
     }
+
+    protected void saveScreenshot( String name )
+    {
+        TestUtils.saveScreenshot( getSession(), name );
+    }
 }

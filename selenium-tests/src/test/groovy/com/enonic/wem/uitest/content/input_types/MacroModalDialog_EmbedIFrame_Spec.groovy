@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.*
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
@@ -15,9 +14,6 @@ class MacroModalDialog_EmbedIFrame_Spec
 {
     @Shared
     Content HTML_AREA_CONTENT;
-
-    @Shared
-    String TEST_TEXT = "test text";
 
     @Shared
     String ENONIC_IFRAME = "<iframe src='http://www.enonic.com'> enonic</iframe>";
@@ -38,7 +34,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         dialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "test_embedded_iframe_macro_inserted" );
+        saveScreenshot( "test_embedded_iframe_macro_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
         formViewPanel.getText().contains( "[embed]" );
@@ -60,7 +56,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, " " );
         dialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
-        TestUtils.saveScreenshot( getSession(), "test_macro_embedded_iframe_textarea_empty" );
+        saveScreenshot( "test_macro_embedded_iframe_textarea_empty" );
 
         then: "modal dialog is not closed"
         dialog.isOpened();
@@ -71,7 +67,6 @@ class MacroModalDialog_EmbedIFrame_Spec
         and:
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).isValidationMessagePresent();
 
-        and:
         and: "correct validation message appears"
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
     }
@@ -92,7 +87,7 @@ class MacroModalDialog_EmbedIFrame_Spec
 
         and: "preview tab link clicked"
         MacroPreviewPanel macroPreviewPanel = dialog.clickOnPreviewTabLink();
-        TestUtils.saveScreenshot( getSession(), "test_embedded_iframe_textarea_empty_preview" );
+        saveScreenshot( "test_embedded_iframe_textarea_empty_preview" );
 
         then: "correct preview message appears"
         macroPreviewPanel.getPreviewMessage() == MacroConfigPanel.NOT_COMPLETE_PREVIEW_MESSAGE;
@@ -114,7 +109,7 @@ class MacroModalDialog_EmbedIFrame_Spec
 
         and: "preview tab link clicked"
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
-        TestUtils.saveScreenshot( getSession(), "test_embedded_iframe_textarea_filled_preview" );
+        saveScreenshot( "test_embedded_iframe_textarea_filled_preview" );
 
         then: "correct info in the preview-content panel appears"
         previewPanel.getPreviewContentMessage() == MacroPreviewPanel.EXPECTED_IFRAME_MESSAGE_PREVIEW_TAB;
@@ -136,7 +131,7 @@ class MacroModalDialog_EmbedIFrame_Spec
 
         and: "preview tab link clicked"
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
-        TestUtils.saveScreenshot( getSession(), "test_embedded_iframe_enonic_preview" );
+        saveScreenshot( "test_embedded_iframe_enonic_preview" );
 
         then: "correct info in the preview-content panel appears"
         previewPanel.isIFrameEmbedded( "enonic.com" );

@@ -12,7 +12,6 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -47,7 +46,7 @@ public abstract class BrowseItemsSelectionPanel
             CONTAINER + SELECTED_ITEM + String.format( NAMES_VIEW_BY_NAME, itemName ) + "/../../..//div[@class='icon remove']";
         if ( !isElementDisplayed( removeButton ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + "icon_" + itemName );
+            saveScreenshot( "err_" + "icon_" + itemName );
             throw new TestFrameworkException( "remove-icon for item: " + itemName + " was not found!" );
         }
         getDisplayedElement( By.xpath( removeButton ) ).click();

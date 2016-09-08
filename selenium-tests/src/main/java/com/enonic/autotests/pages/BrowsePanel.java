@@ -109,7 +109,7 @@ public abstract class BrowsePanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( SHOW_FILTER_PANEL_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_show_filter" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_show_filter" ) );
             throw new TestFrameworkException( "button 'show filter panel' not clickable" );
         }
         showFilterPanelButton.click();
@@ -152,7 +152,7 @@ public abstract class BrowsePanel
     {
         if ( !isElementDisplayed( HIDE_FILTER_PANEL_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_hide_filter" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_hide_filter" ) );
             throw new TestFrameworkException( "button 'hide filter panel' not displayed or probably bad locator for web element" );
         }
         hideFilterPanelButton.click();
@@ -267,7 +267,6 @@ public abstract class BrowsePanel
             return null;
         }
         List<WebElement> elements = findElements( By.xpath( expanderXpath ) );
-
         String attributeName = "class";
         String attributeValue = "collapse";
         return waitAndCheckAttrValue( elements.get( 0 ), attributeName, attributeValue, 1l );
@@ -364,7 +363,6 @@ public abstract class BrowsePanel
             getFilterPanel().clickOnCleanFilter();
         }
         return rows.get( 0 ).getAttribute( "class" ).contains( "selected" );
-        // return waitAndCheckAttrValue( rows.get( 0 ), "class", "selected", 1 );
     }
 
     public boolean isRowByDisplayNameSelected( String displayName )
@@ -401,7 +399,7 @@ public abstract class BrowsePanel
         }
         if ( !isLeLinkVisible )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_clear_sel" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_clear_sel" ) );
             throw new TestFrameworkException( "The link 'Clear Selection' was not found on the page, probably wrong xpath locator" );
         }
         clearSelectionLink.click();
@@ -416,9 +414,9 @@ public abstract class BrowsePanel
      */
     public Integer getNumberFromClearSelectionLink()
     {
-        List<WebElement> elems = findElements( By.xpath( CLEAR_SELECTION_LINK_XPATH ) );
-        if ( elems.size() == 0 )
+        if ( !isElementDisplayed( CLEAR_SELECTION_LINK_XPATH ) )
         {
+            saveScreenshot( "err_clear_selection" );
             throw new TestFrameworkException( "the 'Clear selection' Link was not found, probably wrong xpath locator!" );
         }
         String text = clearSelectionLink.getText();
@@ -450,7 +448,7 @@ public abstract class BrowsePanel
         boolean isLoaded = waitUntilVisibleNoException( By.xpath( GRID_CANVAS ), timeout );
         if ( !isLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_browse_panel" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_browse_panel" ) );
             throw new TestFrameworkException( "browse panel not loaded" );
         }
     }
@@ -606,7 +604,7 @@ public abstract class BrowsePanel
         boolean result = waitAndFind( By.xpath( rowXpath ) );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + displayName );
+            saveScreenshot( "err_" + displayName );
             throw new TestFrameworkException( "item was not found:" + displayName );
         }
         Actions builder = new Actions( getDriver() );
@@ -753,16 +751,15 @@ public abstract class BrowsePanel
     {
         if ( !doScrollAndFindGridItem( itemName ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_find_" + itemName );
+            saveScreenshot( "err_find_" + itemName );
             throw new TestFrameworkException( "grid item was not found! " + itemName );
         }
         String itemCheckBoxXpath = String.format( ROW_CHECKBOX_BY_NAME, itemName );
-
         getLogger().info( "Xpath of checkbox for item is :" + itemCheckBoxXpath );
         boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
         if ( !isPresent )
         {
-            TestUtils.saveScreenshot( getSession(), "err_checkbox_" + itemName );
+            saveScreenshot( "err_checkbox_" + itemName );
             throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
         }
         waitAndFindElement( By.xpath( itemCheckBoxXpath ) ).click();
@@ -789,16 +786,15 @@ public abstract class BrowsePanel
 
     public <T extends BrowsePanel> T clickCheckboxAndSelectRow( int number )
     {
-        List<WebElement> elements = findElements( By.xpath( SLICK_ROW ) );
-        if ( elements.size() == 0 )
+        long actualNumberOfRows = getNumberOfElements( By.xpath( GRID_CANVAS + SLICK_ROW ) );
+        if ( actualNumberOfRows == 0 || actualNumberOfRows < number )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_empty" ) );
+            saveScreenshot( NameHelper.uniqueName( "grid_empty" ) );
             throw new TestFrameworkException( "BrowsePanel, the grid is empty" );
         }
         findElements( By.xpath( GRID_CANVAS + SLICK_ROW + "//div[contains(@class,'slick-cell-checkboxsel')]/label" ) ).get(
             number ).click();
         sleep( 200 );
-
         return (T) this;
     }
 
