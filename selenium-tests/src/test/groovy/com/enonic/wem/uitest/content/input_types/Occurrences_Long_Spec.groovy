@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.LongFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -55,7 +54,7 @@ class Occurrences_Long_Spec
 
         when: "invalid value for long typed"
         wizard.typeData( longContent );
-        TestUtils.saveScreenshot( getSession(), "test_long_invalid_not_req" );
+        saveScreenshot( "test_long_invalid_not_req" );
 
         then: "input with a red border"
         !longFormViewPanel.isValueInInputValid( 0 );
@@ -76,7 +75,7 @@ class Occurrences_Long_Spec
 
         when: "invalid value for long typed"
         wizard.typeData( longContent );
-        TestUtils.saveScreenshot( getSession(), "test_long_invalid_req" );
+        saveScreenshot( "test_long_invalid_req" );
 
         then: "input with a red border"
         !longFormViewPanel.isValueInInputValid( 0 );
@@ -98,7 +97,7 @@ class Occurrences_Long_Spec
 
         when: "content saved"
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "test_long_save_confirm1" );
+        saveScreenshot( "test_long_save_confirm1" );
 
         then: "red icon displayed on the wizard tab"
         wizard.isContentInvalid( longContent.getDisplayName() );
@@ -116,7 +115,7 @@ class Occurrences_Long_Spec
 
         when: "MAX value typed"
         wizard.typeData( doubleContent ).save();
-        TestUtils.saveScreenshot( getSession(), "test_max_long1" );
+        saveScreenshot( "test_max_long1" );
 
         then: "red icon not displayed in the wizard tab"
         !wizard.isContentInvalid( doubleContent.getDisplayName() );
@@ -124,7 +123,6 @@ class Occurrences_Long_Spec
         and: "input has no a red border"
         longFormViewPanel.isValueInInputValid( 0 );
     }
-
 
     def "GIVEN creating of long content WHEN value is more than MAX_SAFE THEN red icon appears in the wizard tab"()
     {
@@ -135,7 +133,7 @@ class Occurrences_Long_Spec
 
         when: "MAX value typed"
         wizard.typeData( longContent );
-        TestUtils.saveScreenshot( getSession(), "test_more_max_long" );
+        saveScreenshot( "test_more_max_long" );
 
         then: "red icon displayed on the wizard tab"
         wizard.isContentInvalid( longContent.getDisplayName() );
@@ -153,7 +151,7 @@ class Occurrences_Long_Spec
 
         when: "MAX value typed"
         wizard.typeData( MIN_SAFE_CONTENT ).save();
-        TestUtils.saveScreenshot( getSession(), "test_min_long" );
+        saveScreenshot( "test_min_long" );
 
         then: "red icon not displayed in the wizard tab"
         !wizard.isContentInvalid( MIN_SAFE_CONTENT.getDisplayName() );
@@ -170,7 +168,7 @@ class Occurrences_Long_Spec
         when: "content opened"
         contentBrowsePanel.clickToolbarEdit();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "test_long_min_value" );
+        saveScreenshot( "test_long_min_value" );
 
         then: "correct value displayed on the wizard page"
         longFormViewPanel.getLongValue() == MIN_SAFE_INTEGER
@@ -186,7 +184,7 @@ class Occurrences_Long_Spec
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
         longFormViewPanel.typeLongValue( "" );
         sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "test_long_input_cleared" );
+        saveScreenshot( "test_long_input_cleared" );
 
         then: "red icon appears in the wizard tab"
         wizard.isContentInvalid( MIN_SAFE_CONTENT.getDisplayName() );

@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.CustomSelectorFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -29,7 +28,7 @@ class Occurrences_CustomSelector_0_2
 
         and:
         wizard.typeDisplayName( customSelector.getDisplayName() ).save();
-        TestUtils.saveScreenshot( getSession(), "custom_selector_not_req" );
+        saveScreenshot( "custom_selector_not_req" );
 
         then: "option filter input is present"
         formViewPanel.isOptionFilterIsDisplayed();
@@ -47,22 +46,22 @@ class Occurrences_CustomSelector_0_2
 
         when:
         wizard.typeData( TEST_CONTENT ).save();
-        TestUtils.saveScreenshot( getSession(), "custom_selector_option_selected" );
+        saveScreenshot( "custom_selector_option_selected_not_req" );
 
-        then: "option filter input is present, because one more option can be selcted"
+        then: "option filter input is present, because one more option can be selected"
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and:
+        and: "red icon not present on the wizard's tab"
         !wizard.isContentInvalid( TEST_CONTENT.getDisplayName() );
     }
 
-    def "GIVEN existing content with one selected option WHEN content opened THEN correct selcted option is displayed"()
+    def "GIVEN existing content with one selected option WHEN content opened THEN correct selected option is displayed"()
     {
-        when:
+        when: "content opened"
         findAndSelectContent( TEST_CONTENT.getName() ).clickToolbarEdit();
         CustomSelectorFormViewPanel formViewPanel = new CustomSelectorFormViewPanel( getSession() );
 
-        then:
+        then: "correct selected option is displayed"
         formViewPanel.getSelectedOptions().size() == 1;
 
         and:
@@ -79,7 +78,7 @@ class Occurrences_CustomSelector_0_2
         when:
         formViewPanel.selectOption( OPTION_2 );
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "custom_selector_two_option_selected" );
+        saveScreenshot( "custom_selector_two_option_selected" );
 
         then:
         formViewPanel.getSelectedOptions().size() == 2;

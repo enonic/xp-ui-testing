@@ -13,10 +13,7 @@ import spock.lang.Shared
 
 class Occurrences_ComboBox_0_1_Spec
     extends Base_InputFields_Occurrences
-
 {
-
-
     @Shared
     Content content_with_opt;
 
@@ -72,7 +69,6 @@ class Occurrences_ComboBox_0_1_Spec
 
         and: "options filter input is disabled"
         !formViewPanel.isOptionFilterInputEnabled();
-
     }
 
     def "GIVEN a existing new ComboBox 0:1 with one option  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()

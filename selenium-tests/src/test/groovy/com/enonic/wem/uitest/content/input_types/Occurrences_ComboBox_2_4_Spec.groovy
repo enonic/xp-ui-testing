@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -91,7 +90,7 @@ class Occurrences_ComboBox_2_4_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         then: "one option selected in the form "
-        TestUtils.saveScreenshot( getSession(), "24remove_opt" )
+        saveScreenshot( "combobox_remove_option" )
         List<String> optValues = formViewPanel.getSelectedOptionValues();
         optValues.size() == 1;
 

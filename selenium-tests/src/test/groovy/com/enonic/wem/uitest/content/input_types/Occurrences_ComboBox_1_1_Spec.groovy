@@ -7,7 +7,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -40,7 +39,7 @@ class Occurrences_ComboBox_1_1_Spec
         and: "content should be invalid, because required field- combobox1:1 not selected"
         wizard.isContentInvalid( comboBoxContent.getDisplayName() );
 
-        and: " and no options selected on the page"
+        and: "and there are no selected options on the page"
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
@@ -155,7 +154,7 @@ class Occurrences_ComboBox_1_1_Spec
 
         when: "content selected and 'Publish' button pressed"
         dialog.clickOnPublishNowButton();
-        TestUtils.saveScreenshot( getTestSession(), "invalid_cb_1_1_published" );
+        saveScreenshot( "invalid_cb_1_1_published" );
 
         then: "content not listed in the grid"
         !contentBrowsePanel.exists( comboBox1_1.getName() )
@@ -181,7 +180,7 @@ class Occurrences_ComboBox_1_1_Spec
         when: "content opened for edit"
         wizard.save().close( comboBoxContent.getDisplayName() );
         findAndSelectContent( comboBoxContent.getName() );
-        TestUtils.saveScreenshot( getSession(), "combobox-not-valid" )
+        saveScreenshot( "combobox-not-valid" )
 
         then: "content should be invalid, because required field not filled"
         contentBrowsePanel.isContentInvalid( comboBoxContent.getName() );
