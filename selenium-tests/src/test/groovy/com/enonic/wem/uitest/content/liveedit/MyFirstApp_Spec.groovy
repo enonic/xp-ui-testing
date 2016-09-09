@@ -26,7 +26,7 @@ class MyFirstApp_Spec
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
             MY_FIRST_SITE.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "site_added" );
+        saveScreenshot( "country_site_added" );
 
         then: "new site should be listed"
         contentBrowsePanel.exists( MY_FIRST_SITE.getName() );
@@ -40,7 +40,7 @@ class MyFirstApp_Spec
 
         when: "data typed and saved and wizard closed"
         String message = wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
-        TestUtils.saveScreenshot( getSession(), "content_added" );
+        saveScreenshot( "usa_content_added" );
         wizard.close( USA_CONTENT.getDisplayName() );
 
         then: "new 'country' content should be listed"
@@ -85,7 +85,7 @@ class MyFirstApp_Spec
 
         when: "the 'Hide Page Editor' button pressed"
         wizard.hidePageEditor();
-        TestUtils.saveScreenshot( getSession(), "editor_hidden" );
+        saveScreenshot( "editor_hidden" );
 
         then: "the 'LiveEdit' frame not displayed"
         !wizard.isLiveEditFrameDisplayed();
@@ -101,7 +101,7 @@ class MyFirstApp_Spec
         when: "the 'Preview' button pressed on the wizard-toolbar"
         TestUtils.saveScreenshot( getSession(), "page_descriptor_added_in_country_content" );
         wizard.clickToolbarPreview();
-        TestUtils.saveScreenshot( getSession(), "country_preview_clicked" );
+        saveScreenshot( "country_preview_clicked" );
 
         then: "the region page opened in a browser with correct title and correct header"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
@@ -125,7 +125,7 @@ class MyFirstApp_Spec
         wizard.switchToLiveEditFrame();
         PartComponentView partComponentView = new PartComponentView( getSession() );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME )
-        TestUtils.saveScreenshot( getSession(), "part_country_added" );
+        saveScreenshot( "part_country_added" );
         wizard.save();
         and: "'Preview' button pressed on the wizard-toolbar"
         wizard.clickToolbarPreview();

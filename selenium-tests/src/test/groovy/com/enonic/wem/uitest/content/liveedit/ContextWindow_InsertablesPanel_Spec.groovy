@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInsertablesPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -23,7 +22,7 @@ class ContextWindow_InsertablesPanel_Spec
         when: "page controller is not selected"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
             TEST_SITE ).save();
-        TestUtils.saveScreenshot( getSession(), "test-site-controller-not-selected" );
+        saveScreenshot( "test-site-controller-not-selected" );
 
         then: "'Components View' toggler is not displayed"
         !wizardPanel.isComponentViewTogglerDisplayed();
@@ -39,7 +38,7 @@ class ContextWindow_InsertablesPanel_Spec
 
         when: "page controller is not selected"
         siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
-        TestUtils.saveScreenshot( getSession(), "test-site-controller-selected" );
+        saveScreenshot( "test-site-controller-selected" );
 
         then: "'Components View' toggler is not displayed"
         siteWizard.isComponentViewTogglerDisplayed();
@@ -57,7 +56,7 @@ class ContextWindow_InsertablesPanel_Spec
         when: "'Inspect' link clicked"
         ContextWindowPageInsertablesPanel insertablesPanel = new ContextWindowPageInsertablesPanel( getSession() );
         siteWizard.showContextWindow().clickOnInsertLink();
-        TestUtils.saveScreenshot( getSession(), "insertables-panel-opened" );
+        saveScreenshot( "insertables-panel-opened" );
 
         then: "'inspect panel' is displayed"
         insertablesPanel.isDisplayed();

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
@@ -116,7 +115,7 @@ class LiveEditLockedMode_Spec
         site = buildSite( name );
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
             site.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "locked mode test" ) );
+        saveScreenshot( NameHelper.uniqueName( "locked mode" ) );
     }
 
     private Content buildSite( String siteName )

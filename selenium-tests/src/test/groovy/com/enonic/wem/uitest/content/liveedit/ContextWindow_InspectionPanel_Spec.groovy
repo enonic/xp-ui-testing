@@ -27,7 +27,7 @@ class ContextWindow_InspectionPanel_Spec
         when: "Context window opened and 'Inspect' link was pressed"
         wizardPanel.showContextWindow().clickOnInspectLink();
         ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "test-inspection-tab-activated" );
+        saveScreenshot( "test-inspection-tab-activated" );
 
         then: "Inspection tab activated"
         inspectionPanel.isDisplayed();
@@ -61,11 +61,10 @@ class ContextWindow_InspectionPanel_Spec
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit();
         wizardPanel.showContextWindow().clickOnInspectLink();
         ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
-        //inspectPanel.selectRenderer( "Custom" )
 
         when: "'Country' page controller selected"
         inspectPanel.changePageController( COUNTRY_LIST_PAGE_CONTROLLER );
-        TestUtils.saveScreenshot( getSession(), "test-inspection-new-controller-selected" );
+        saveScreenshot( "test-inspection-new-controller-selected" );
 
         then: "correct page controller displayed in the selector"
         inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;

@@ -60,7 +60,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
-        TestUtils.saveScreenshot( getSession(), "image-from-template" );
+        saveScreenshot( "image-from-template" );
 
         and: "and one component was replaced"
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
@@ -82,8 +82,8 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
         wizard.showComponentView();
         pageComponentsView.openMenu( "country template" ).selectMenuItem( "Reset" );
-        sleep( 5000 );
-        TestUtils.saveScreenshot( getSession(), "image-reset-to-template" );
+        sleep( 4000 );
+        saveScreenshot( "image-reset-to-template" );
 
         then: "site has been reset to default template, image from template appeared in the page editor"
         wizard.switchToLiveEditFrame();
@@ -110,7 +110,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         sleep( 2000 );
         wizard.switchToLiveEditFrame();
         LinkedList<String> after = liveFormPanel.getImageNames();
-        TestUtils.saveScreenshot( getSession(), "images-swapped" );
+        saveScreenshot( "page_comp_view_images-swapped" );
 
         then: "images swapped"
         before.getFirst() == TEST_IMAGE_SWAP;

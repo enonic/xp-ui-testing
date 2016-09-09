@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageEmulatorPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EmulatorResolution
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -42,7 +41,7 @@ class ContextWindow_EmulatorPanel_Spec
         when: "When context window opened and Emulator link clicked"
         siteWizard.showContextWindow().clickOnEmulatorLink();
         ContextWindowPageEmulatorPanel emulatorPanel = new ContextWindowPageEmulatorPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "emulator-panel-activated" );
+        saveScreenshot( "emulator-panel-activated" );
 
         then: "emulator panel is displayed"
         emulatorPanel.isDisplayed();
@@ -63,7 +62,7 @@ class ContextWindow_EmulatorPanel_Spec
 
         when: "Medium resolution selected"
         emulatorPanel.selectResolution( EmulatorResolution.MEDIUM_PHONE );
-        TestUtils.saveScreenshot( getSession(), "emulator_375_667" );
+        saveScreenshot( "emulator_375_667" );
 
         then: "editor get correct width"
         wizard.getWidthOfPageEditor() == MEDIUM_WIDTH;
@@ -81,7 +80,7 @@ class ContextWindow_EmulatorPanel_Spec
 
         when: "Medium resolution selected"
         emulatorPanel.selectResolution( EmulatorResolution.LARGE_TELEPHONE );
-        TestUtils.saveScreenshot( getSession(), "emulator_414_736" );
+        saveScreenshot( "emulator_414_736" );
 
         then: "editor get correct width"
         wizard.getWidthOfPageEditor() == LARGE_WIDTH;

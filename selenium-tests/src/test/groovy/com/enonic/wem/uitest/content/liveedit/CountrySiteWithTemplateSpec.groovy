@@ -80,7 +80,7 @@ class CountrySiteWithTemplateSpec
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
         NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
         contentWizard.save().clickToolbarPreview();
-        TestUtils.saveScreenshot( getSession(), "country_part_added" );
+        saveScreenshot( "country_part_added" );
 
         then: "page source of new opened tab in a browser is not empty"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
@@ -104,7 +104,7 @@ class CountrySiteWithTemplateSpec
         partComponentView.selectItem( "City list" );
         switchToContentStudioWindow();
         contentWizard.save().clickToolbarPreview();
-        TestUtils.saveScreenshot( getSession(), "city_part_added" );
+        saveScreenshot( "city_part_added" );
 
         then: "page source of new opened tab in a browser is not empty"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
@@ -125,7 +125,7 @@ class CountrySiteWithTemplateSpec
 
         when: "the 'Inspect' link clicked"
         String name = contentWizard.showContextWindow().clickOnInspectLink().getInspectionPanel().getSelectedPageController();
-        TestUtils.saveScreenshot( getSession(), "city_part_added" );
+        saveScreenshot( "city_part_added" );
 
         then: "correct region's name is shown"
         name == PAGE_CONTROLLER_NAME;
@@ -147,13 +147,13 @@ class CountrySiteWithTemplateSpec
             SAN_FR_CONTENT ).save().close( SAN_FR_CONTENT.getDisplayName() );
         findAndSelectContent( USA_CONTENT.getName() );
         sleep( 3000 );
-        TestUtils.saveScreenshot( getSession(), "san francisco" )
+        saveScreenshot( "san francisco" )
         contentBrowsePanel.clickOnClearSelection();
 
         when: "country-content selected in the grid and the 'Preview' button pressed"
         findAndSelectContent( USA_CONTENT.getName() );
         sleep( 2000 );
-        TestUtils.saveScreenshot( getSession(), "USA_City" )
+        saveScreenshot( "USA_City" )
         contentBrowsePanel.clickToolbarPreview();
 
         then: "correct text present in the 'page source'"
@@ -171,7 +171,7 @@ class CountrySiteWithTemplateSpec
         sleep( 2000 );
 
         expect:
-        TestUtils.saveScreenshot( getSession(), "portal-country-preview-master-offline" );
+        saveScreenshot( "portal-country-preview-master-offline" );
         String source = getDriver().getPageSource();
         source.contains( "404" );
     }
@@ -181,7 +181,7 @@ class CountrySiteWithTemplateSpec
         when: "site not published and opened in the 'master'"
         openResourceInDraft( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
         sleep( 2000 );
-        TestUtils.saveScreenshot( getSession(), "portal-country-preview-draft-offline" );
+        saveScreenshot( "portal-country-preview-draft-offline" );
 
         then: "correct data present in page sources"
         String source = getDriver().getPageSource();
@@ -251,7 +251,7 @@ class CountrySiteWithTemplateSpec
         wizard.showComponentView();
         PageComponentsViewDialog view = new PageComponentsViewDialog( getSession() );
         List<PageComponent> components = view.getPageComponents();
-        TestUtils.saveScreenshot( getSession(), "order-components" )
+        saveScreenshot( "order-components" )
 
         then: "all components that were added are shown"
         components.size() == 4;

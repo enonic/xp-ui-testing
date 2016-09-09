@@ -82,10 +82,12 @@ public class PageTemplateFormViewPanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( pageItemXpath ), Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( pageItemXpath ) || !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( pageName ) );
+            saveScreenshot( "err_" + pageName );
             throw new TestFrameworkException( "page controller was not found or not clickable ! " + pageName );
         }
         TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
+        waitUntilVisibleNoException( By.xpath( "//body[@data-portal-component-type='page']" ), Application.EXPLICIT_NORMAL );
+
     }
 }

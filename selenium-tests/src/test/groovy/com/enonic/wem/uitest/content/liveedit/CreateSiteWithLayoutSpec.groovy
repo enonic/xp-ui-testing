@@ -72,7 +72,7 @@ class CreateSiteWithLayoutSpec
 
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
-        TestUtils.saveScreenshot( getSession(), "simple_template" );
+        saveScreenshot( "simple_template" );
 
         then: "new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getName() );
@@ -94,7 +94,7 @@ class CreateSiteWithLayoutSpec
         switchToContentStudioWindow();
         pageComponentsView.doCloseDialog();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "text-typed" );
+        saveScreenshot( "text-typed" );
         wizard.switchToLiveEditFrame();
 
         then: "text-component appears in the 'live edit' frame"
@@ -113,12 +113,12 @@ class CreateSiteWithLayoutSpec
 
         when: "'Insert/Layout' menu items clicked and layout with 3 columns selected"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
-        TestUtils.saveScreenshot( getSession(), "select_insert_layout" );
+        saveScreenshot( "select_insert_layout" );
         pageComponentsView.doCloseDialog();
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getLayoutComponentView().selectLayout( LAYOUT_NAME );
-        TestUtils.saveScreenshot( getSession(), "layout_selected" );
+        saveScreenshot( "page_editor_layout_selected" );
 
         then: "layout-component appears in the 'live edit' frame and number of regions is 3"
         liveFormPanel.isLayoutComponentPresent();
@@ -142,7 +142,7 @@ class CreateSiteWithLayoutSpec
 
         switchToContentStudioWindow();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "left_inserted" );
+        saveScreenshot( "left_inserted" );
 
         then: "new image inserted in the left-region "
         wizard.switchToLiveEditFrame();
@@ -165,7 +165,7 @@ class CreateSiteWithLayoutSpec
         imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME );
         switchToContentStudioWindow();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "center_inserted" );
+        saveScreenshot( "center_region_inserted" );
 
         then: "new image inserted in the center-region "
         wizard.switchToLiveEditFrame();
@@ -188,7 +188,7 @@ class CreateSiteWithLayoutSpec
         imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
         switchToContentStudioWindow();
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "right_inserted" );
+        saveScreenshot( "right_region_inserted" );
 
         then: "new image inserted to the right-region"
         wizard.switchToLiveEditFrame();
@@ -208,7 +208,7 @@ class CreateSiteWithLayoutSpec
         wizardPanel.switchToLiveEditFrame();
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "reset_image" );
+        saveScreenshot( "reset_image" );
 
         then: "number of images in layout reduced"
         liveFormPanel.getNumberImagesInLayout() == 2;
@@ -230,7 +230,7 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Duplicate" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "duplicate_image" );
+        saveScreenshot( "duplicate_image" );
 
         then: "number of images in layout reduced"
         liveFormPanel.getNumberImagesInLayout() == 4;
@@ -251,7 +251,7 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Remove" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "remove_image" );
+        saveScreenshot( "remove_image" );
 
         then: "number of images reduced in the layout"
         liveFormPanel.getNumberImagesInLayout() == 3;
