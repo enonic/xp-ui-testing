@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.UserStore
 
@@ -12,7 +11,7 @@ class UserBrowsePanel_ContextMenu_Spec
     {
         when: "context menu opened"
         userBrowsePanel.openContextMenu( "/system" );
-        TestUtils.saveScreenshot( getSession(), "system-user-store-context-menu" );
+        saveScreenshot( "system-user-store-context-menu" );
 
         then: "Delete menu item is enabled"
         !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
@@ -29,7 +28,7 @@ class UserBrowsePanel_ContextMenu_Spec
         when: "context menu opened"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         userBrowsePanel.openContextMenu( "groups" );
-        TestUtils.saveScreenshot( getSession(), "system-groups-context-menu" );
+        saveScreenshot( "system-groups-context-menu" );
 
         then: "Delete menu item is disabled"
         !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
@@ -46,7 +45,7 @@ class UserBrowsePanel_ContextMenu_Spec
     {
         when: "context menu opened"
         userBrowsePanel.openContextMenu( "roles" );
-        TestUtils.saveScreenshot( getSession(), "roles-context-menu" );
+        saveScreenshot( "roles-context-menu" );
 
         then: "Delete menu item is disabled"
         !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
@@ -63,7 +62,7 @@ class UserBrowsePanel_ContextMenu_Spec
         when: "context menu opened"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         userBrowsePanel.openContextMenu( "users" );
-        TestUtils.saveScreenshot( getSession(), "system-users-context-menu" );
+        saveScreenshot( "system-users-context-menu" );
 
         then: "Delete menu item is disabled"
         !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
@@ -79,7 +78,7 @@ class UserBrowsePanel_ContextMenu_Spec
         when: "context menu opened"
         userBrowseFilterPanel.typeSearchText( "su" );
         userBrowsePanel.openContextMenu( "users/su" );
-        TestUtils.saveScreenshot( getSession(), "system-su-context-menu" );
+        saveScreenshot( "system-su-context-menu" );
 
         then: "Delete menu item is enabled"
         userBrowsePanel.isContextMenuItemEnabled( "Delete" );
@@ -96,7 +95,7 @@ class UserBrowsePanel_ContextMenu_Spec
         when: "a role selected and context menu opened"
         userBrowseFilterPanel.typeSearchText( RoleName.SYSTEM_USER_MANAGER.getValue() );
         userBrowsePanel.openContextMenu( "roles/" + RoleName.SYSTEM_USER_MANAGER.getValue() );
-        TestUtils.saveScreenshot( getSession(), "role-context-menu" );
+        saveScreenshot( "role-context-menu" );
 
         then: "Delete menu item is enabled"
         userBrowsePanel.isContextMenuItemEnabled( "Delete" );
@@ -116,6 +115,7 @@ class UserBrowsePanel_ContextMenu_Spec
 
         when:
         userBrowsePanel.openContextMenu( us.getName() );
+        saveScreenshot( "context_menu_user_store" );
 
         then: "Delete menu item is enabled"
         userBrowsePanel.isContextMenuItemEnabled( "Delete" );

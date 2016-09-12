@@ -483,7 +483,8 @@ public class ContentBrowsePanel
         boolean exist = doScrollAndFindGridItem( contentName );
         if ( !exist )
         {
-            TestUtils.saveScreenshot( getSession(), "err_content_not_found" + contentName );
+            saveScreenshot( "err_not_found" + contentName );
+            throw new TestFrameworkException( "item was not found: " + contentName );
         }
         if ( !isRowSelected( contentName ) )
         {
