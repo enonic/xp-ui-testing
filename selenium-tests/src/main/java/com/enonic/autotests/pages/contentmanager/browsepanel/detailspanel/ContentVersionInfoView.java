@@ -69,6 +69,11 @@ public class ContentVersionInfoView
 
     public String getId()
     {
+        if ( !isElementDisplayed( VERSION_INFO_ID ) )
+        {
+            saveScreenshot( "err_det_panel_version_id" );
+            throw new TestFrameworkException( "version id was not found! " );
+        }
         return getDisplayedString( VERSION_INFO_ID );
     }
 

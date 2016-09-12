@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 
 
@@ -76,6 +77,11 @@ public class PropertiesWidgetItemView
 
     public String getOwner()
     {
+        if ( !isElementDisplayed( OWNER_PROPERTY ) )
+        {
+            saveScreenshot( "err_det_panel_owner" );
+            throw new TestFrameworkException( "owner was not found on the details panel" );
+        }
         return getDisplayedString( OWNER_PROPERTY );
     }
 
