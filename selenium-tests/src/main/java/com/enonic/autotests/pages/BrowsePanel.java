@@ -1,7 +1,9 @@
 package com.enonic.autotests.pages;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -297,8 +299,8 @@ public abstract class BrowsePanel
     public int getSelectedRowsNumber()
     {
         scrollViewPortToTop();
-        // Set<String> names = new HashSet<>();
-        List<String> names = new ArrayList<>();
+        Set<String> names = new HashSet<>();
+        // List<String> names = new ArrayList<>();
         names.addAll( getNamesOfSelectedGridItem() );
         if ( !isViewportScrollable() )
         {
@@ -459,8 +461,8 @@ public abstract class BrowsePanel
     public int getRowsCount()
     {
         scrollViewPortToTop();
-        //Set<String> set = new HashSet<>();
-        List<String> names = new ArrayList<>();
+        Set<String> names = new HashSet<>();
+        //List<String> names = new ArrayList<>();
         names.addAll( getGridItemNames() );
         if ( !isViewportScrollable() )
         {
