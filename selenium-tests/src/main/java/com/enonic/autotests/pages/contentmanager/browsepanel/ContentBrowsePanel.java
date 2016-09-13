@@ -763,7 +763,7 @@ public class ContentBrowsePanel
         return sortContentDialog;
     }
 
-    public boolean isItemDisabledInContextMenu( String contentName, String menuItem )
+    public boolean waitUntilItemDisabledInContextMenu( String contentName, String menuItem )
     {
         openContextMenu( contentName );
         if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ), Application.EXPLICIT_NORMAL ) )
@@ -772,7 +772,19 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( menuItem + "  item was not found in the context menu" );
         }
         WebElement previewItem = getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) );
-        return waitAndCheckAttrValue( previewItem, "class", "disabled", 1 );
+        return waitAndCheckAttrValue( previewItem, "class", "disabled", 2 );
+    }
+
+    public boolean waitUntilItemEnabledInContextMenu( String contentName, String menuItem )
+    {
+        openContextMenu( contentName );
+        if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ), Application.EXPLICIT_NORMAL ) )
+        {
+            TestUtils.saveScreenshot( getSession(), "err_" + menuItem );
+            throw new TestFrameworkException( menuItem + "  item was not found in the context menu" );
+        }
+        WebElement previewItem = getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) );
+        return waitIsElementEnabled( previewItem, "class", "disabled", 2 );
     }
 
     public ContentBrowsePanel selectPreviewInContextMenu( String contentName )

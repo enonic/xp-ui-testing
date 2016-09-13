@@ -10,7 +10,6 @@ import spock.lang.Stepwise
 class SitePreview_Spec
     extends BaseSiteSpec
 {
-
     @Shared
     Content MY_SITE
 
@@ -22,43 +21,40 @@ class SitePreview_Spec
         "data typed and saved and wizard closed"
         addSiteBasedOnFirstApp( MY_SITE );
 
-        when: "site selected"
-        filterPanel.typeSearchText( MY_SITE.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( MY_SITE.getName() );
+        when: "site without a template selected"
+        findAndSelectContent( MY_SITE.getName() );
 
         then: "'Preview' on a BrowseToolbar is disabled"
         !contentBrowsePanel.isPreviewButtonEnabled();
     }
 
-    def "GIVEN a existing site without a template WHEN site selected THEN 'Preview' in a ContextMenu  is disabled"()
+    def "GIVEN a existing site without a template WHEN site selected THEN 'Preview' in a ContextMenu is disabled"()
     {
         when: "site selected"
         filterPanel.typeSearchText( MY_SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( MY_SITE.getName() );
 
         then: "'Preview' in the context menu is disabled"
-        contentBrowsePanel.isItemDisabledInContextMenu( MY_SITE.getName(), "Preview" );
+        contentBrowsePanel.waitUntilItemDisabledInContextMenu( MY_SITE.getName(), "Preview" );
     }
 
-    def "GIVEN a existing site without a template WHEN site opened THEN 'Preview' in the toolbar wizard  is disabled"()
+    def "GIVEN a existing site without a template WHEN site opened THEN 'Preview' in the toolbar wizard is disabled"()
     {
-        when: "site selected"
-        filterPanel.typeSearchText( MY_SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( MY_SITE.getName() ).clickToolbarEdit();
+        when: "site selected and wizard opened"
+        ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarEdit();
 
         then: "'Preview' in the toolbar wizard is disabled"
         !wizard.isPreviewButtonEnabled()
     }
 
-    def "GIVEN a existing site with a template WHEN site selected THEN 'Preview' on a BrowseToolbar is enabled"()
+    def "GIVEN a existing site with a template WHEN controller selected THEN 'Preview' on a BrowseToolbar becomes enabled"()
     {
         given:
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( MY_SITE.getName() ).clickToolbarEdit();
-        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).save().close( MY_SITE.getDisplayName() );
+        ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarEdit();
 
         when:
-        filterPanel.typeSearchText( MY_SITE.getName() );
-        TestUtils.saveScreenshot( getSession(), "site-template-preview" )
+        wizard.selectPageDescriptor( COUNTRY_REGION_TITLE ).save().close( MY_SITE.getDisplayName() );
+        TestUtils.saveScreenshot( getSession(), "site-template-preview" );
 
         then: "'Preview' on the BrowseToolbar is enabled"
         contentBrowsePanel.isPreviewButtonEnabled();
@@ -70,7 +66,7 @@ class SitePreview_Spec
         filterPanel.typeSearchText( MY_SITE.getName() );
 
         then: "'Preview' in the context menu is enabled"
-        !contentBrowsePanel.isItemDisabledInContextMenu( MY_SITE.getName(), "Preview" );
+        contentBrowsePanel.waitUntilItemEnabledInContextMenu( MY_SITE.getName(), "Preview" );
     }
 
     def "WHEN site selected and opened for edit THEN 'Preview' on a WizardToolbar is enabled"()

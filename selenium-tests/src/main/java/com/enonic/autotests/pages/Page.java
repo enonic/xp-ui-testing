@@ -169,6 +169,12 @@ public abstract class Page
         return WaitHelper.waitAndCheckAttrValue( getDriver(), element, attributeName, attributeValue, timeout );
     }
 
+    protected boolean waitIsElementEnabled( final WebElement element, final String attributeName, final String attributeValue,
+                                            long timeout )
+    {
+        return WaitHelper.waitAttrHasNoValue( getDriver(), element, attributeName, attributeValue, timeout );
+    }
+
     /**
      * @param element
      * @param attributeName

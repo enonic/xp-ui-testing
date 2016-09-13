@@ -238,6 +238,37 @@ public class WaitHelper
 
     }
 
+    public static boolean waitAttrHasNoValue( WebDriver webDriver, final WebElement element, final String attributeName,
+                                              final String attributeValue, long timeout )
+    {
+        WebDriverWait wait = new WebDriverWait( webDriver, timeout );
+        try
+        {
+            return wait.until( new ExpectedCondition<Boolean>()
+            {
+                @Override
+                public Boolean apply( WebDriver webDriver )
+                {
+                    try
+                    {
+                        return !element.getAttribute( attributeName ).contains( attributeValue );
+
+                    }
+                    catch ( Exception e )
+                    {
+
+                        return false;
+                    }
+                }
+            } );
+        }
+        catch ( org.openqa.selenium.TimeoutException e )
+        {
+            return false;
+        }
+
+    }
+
     public static String waitAndGetAttribute( WebDriver webDriver, final WebElement element, final String atrName, long timeout )
     {
         WebDriverWait wait = new WebDriverWait( webDriver, timeout );
