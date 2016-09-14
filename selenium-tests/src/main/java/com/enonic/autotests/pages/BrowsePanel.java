@@ -54,7 +54,7 @@ public abstract class BrowsePanel
 
     protected final String CLEAR_SELECTION_LINK_XPATH = TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Clear Selection')]";
 
-    protected final String REFRESH_BUTTON = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-loop2')]";
+    protected final String REFRESH_BUTTON = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-loop')]";
 
     private String BROWSE_PANEL_ITEM_EXPANDER =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
