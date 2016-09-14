@@ -42,6 +42,9 @@ class BaseContentSpec
     String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
 
     @Shared
+    String MAIN_REGION_PAGE_DESCRIPTOR_NAME = "main region";
+
+    @Shared
     String COUNTRY_LIST_PAGE_CONTROLLER = "country-list";
 
     @Shared

@@ -64,7 +64,7 @@ public abstract class BrowseItemsSelectionPanel
         {
             return Collections.emptyList();
         }
-        List<WebElement> h6Elements = getDriver().findElements( By.xpath( ALL_SELECTED_ITEMS + SELECTED_ITEM_NAME ) );
+        List<WebElement> h6Elements = findElements( By.xpath( ALL_SELECTED_ITEMS + SELECTED_ITEM_NAME ) );
         return h6Elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
@@ -74,7 +74,7 @@ public abstract class BrowseItemsSelectionPanel
         {
             return Collections.emptyList();
         }
-        List<WebElement> h6Elements = getDriver().findElements( By.xpath( ALL_SELECTED_ITEMS + H6_MAIN_NAME ) );
+        List<WebElement> h6Elements = findElements( By.xpath( ALL_SELECTED_ITEMS + H6_MAIN_NAME ) );
         return h6Elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 

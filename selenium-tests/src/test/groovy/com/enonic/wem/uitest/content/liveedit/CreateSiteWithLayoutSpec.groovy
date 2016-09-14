@@ -21,9 +21,6 @@ class CreateSiteWithLayoutSpec
     Content SITE
 
     @Shared
-    String MAIN_REGION_PAGE_DESCRIPTOR_NAME = "main region";
-
-    @Shared
     Content pageTemplate
 
     @Shared
@@ -94,7 +91,7 @@ class CreateSiteWithLayoutSpec
         switchToContentStudioWindow();
         pageComponentsView.doCloseDialog();
         wizard.save();
-        saveScreenshot( "text-typed" );
+        saveScreenshot( "text_component_text_saved" );
         wizard.switchToLiveEditFrame();
 
         then: "text-component appears in the 'live edit' frame"

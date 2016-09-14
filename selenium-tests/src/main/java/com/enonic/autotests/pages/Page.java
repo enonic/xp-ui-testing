@@ -62,7 +62,7 @@ public abstract class Page
      * @param input input type=text
      * @param text  text for input.
      */
-    public void clearAndType( WebElement input, String text )
+    protected void clearAndType( WebElement input, String text )
     {
         input.clear();
         sleep( 100 );
@@ -224,17 +224,17 @@ public abstract class Page
         return getDriver().findElement( by );
     }
 
-    public WebElement findElement( By by )
+    protected WebElement findElement( By by )
     {
         return getDriver().findElement( by );
     }
 
-    public WebElement getDisplayedElement( By by )
+    protected WebElement getDisplayedElement( By by )
     {
         return findElements( by ).stream().filter( WebElement::isDisplayed ).findFirst().get();
     }
 
-    public List<WebElement> getDisplayedElements( By by )
+    protected List<WebElement> getDisplayedElements( By by )
     {
         return findElements( by ).stream().filter( WebElement::isDisplayed ).collect( Collectors.toList() );
     }
@@ -281,12 +281,12 @@ public abstract class Page
     }
 
 
-    public List<WebElement> findElements( By by )
+    protected List<WebElement> findElements( By by )
     {
         return session.getDriver().findElements( by );
     }
 
-    public WebDriver getDriver()
+    protected WebDriver getDriver()
     {
         return session.getDriver();
     }
@@ -365,17 +365,17 @@ public abstract class Page
         return we;
     }
 
-    public TestSession getSession()
+    protected TestSession getSession()
     {
         return session;
     }
 
-    public void setSession( TestSession session )
+    protected void setSession( TestSession session )
     {
         this.session = session;
     }
 
-    public Logger getLogger()
+    protected Logger getLogger()
     {
         return logger;
     }

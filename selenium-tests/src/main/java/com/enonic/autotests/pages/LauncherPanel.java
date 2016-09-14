@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 public class LauncherPanel
     extends Application
@@ -61,7 +60,6 @@ public class LauncherPanel
         if ( findElements( By.xpath( PANEL_DIV ) ).size() == 0 )
         {
             throw new TestFrameworkException( "Launcher was not found!" );
-
         }
         WebElement launcherPanel = findElement( By.xpath( PANEL_DIV ) );
         return waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_NORMAL );
@@ -72,7 +70,7 @@ public class LauncherPanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( APPLICATIONS_LINK ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_link" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_app_link" ) );
             throw new TestFrameworkException( "applications link is not displayed" );
         }
         applicationsLink.click();
@@ -83,7 +81,7 @@ public class LauncherPanel
     {
         if ( !isElementDisplayed( CLOSE_LAUNCHER_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_close_launcher" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_close_launcher" ) );
             throw new TestFrameworkException( "close button is not displayed" );
         }
         closePanelButton.click();
@@ -95,7 +93,7 @@ public class LauncherPanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( USERS_LINK ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_user_link" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_user_link" ) );
             throw new TestFrameworkException( "user-manager link is not displayed" );
         }
         usersLink.click();
@@ -106,7 +104,7 @@ public class LauncherPanel
     {
         if ( !waitUntilVisibleNoException( By.xpath( ACTIVE_ROW_TEXT ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_active_link" );
+            saveScreenshot( "err_launcher_active_link" );
             throw new TestFrameworkException( "link was not found!" );
         }
         return getDisplayedString( ACTIVE_ROW_TEXT );
@@ -117,7 +115,7 @@ public class LauncherPanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( CONTENT_STUDIO_LINK ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_cs_link" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_cs_link" ) );
             throw new TestFrameworkException( "content-studio link is not displayed" );
         }
         contentStudioLink.click();
@@ -129,7 +127,7 @@ public class LauncherPanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( LOGOUT_LINK ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_logout_link" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_logout_link" ) );
             throw new TestFrameworkException( "logout link is not displayed" );
         }
         logoutLink.click();
@@ -141,7 +139,7 @@ public class LauncherPanel
         By launcherBy = By.xpath( PANEL_DIV );
         if ( findElements( launcherBy ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_launcher" ) );
             throw new TestFrameworkException( "Launcher was not found!" );
         }
         return waitAndCheckAttrValue( findElement( launcherBy ), "class", "slideout", Application.EXPLICIT_NORMAL );
@@ -193,7 +191,7 @@ public class LauncherPanel
         boolean isLoaded = waitUntilVisibleNoException( By.xpath( OPEN_LAUNCHER_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_button_load" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_launcher_button_load" ) );
             throw new TestFrameworkException( "launcher button was not loaded!" );
         }
         getDisplayedElement( By.xpath( OPEN_LAUNCHER_BUTTON ) ).click();
@@ -206,7 +204,7 @@ public class LauncherPanel
         boolean isVisible = waitUntilVisibleNoException( By.xpath( PANEL_DIV ), Application.EXPLICIT_NORMAL );
         if ( !isVisible )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_launcher_load" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_launcher_load" ) );
             throw new TestFrameworkException( "launcher panel was not loaded!" );
         }
     }

@@ -35,6 +35,8 @@ public class LiveFormPanel
 
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
+    private final String TEXT_COMPONENT_TOOLBAR = "//div[contains(@class,'mce-toolbar-grp')";
+
     private LayoutComponentView layoutComponentView;
 
     public LiveFormPanel( final TestSession session )
@@ -49,6 +51,11 @@ public class LiveFormPanel
             layoutComponentView = new LayoutComponentView( getSession() );
         }
         return layoutComponentView;
+    }
+
+    public boolean isTextComponentToolbarDisplayed()
+    {
+        return isElementDisplayed( TEXT_COMPONENT_TOOLBAR );
     }
 
     public void setLayoutComponentView( LayoutComponentView layoutComponentView )
@@ -135,7 +142,6 @@ public class LiveFormPanel
 
     public long getNumberImageComponentsInLayout()
     {
-        //return findElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) ).stream().filter( WebElement::isDisplayed ).count();
         return getNumberOfElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) );
     }
 

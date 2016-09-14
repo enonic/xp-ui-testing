@@ -56,7 +56,6 @@ public class SaveBeforeCloseDialog
         }
         findElement( By.xpath( CANCEL_BUTTON_XPATH ) ).click();
         sleep( 500 );
-
     }
 
     public void press_Y_key()

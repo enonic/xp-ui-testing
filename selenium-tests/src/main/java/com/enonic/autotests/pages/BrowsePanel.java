@@ -142,7 +142,7 @@ public abstract class BrowsePanel
     {
         if ( !isRefreshButtonDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_refresh_button" );
+            saveScreenshot( "err_refresh_button" );
             throw new TestFrameworkException( "refresh button was not found!" );
         }
         refreshButton.click();
@@ -176,7 +176,7 @@ public abstract class BrowsePanel
         String tabXpath = String.format( APP_BAR_TAB_MENU_ITEM, displayName );
         if ( !isElementDisplayed( tabXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_tab_" + displayName ) );
+            saveScreenshot( NameHelper.uniqueName( "err_tab_" + displayName ) );
             throw new TestFrameworkException( "tab menu item was not found: " + displayName );
         }
         getDisplayedElement( By.xpath( tabXpath ) ).click();
@@ -436,7 +436,7 @@ public abstract class BrowsePanel
         boolean isGridLoaded = waitAndFind( By.xpath( DIV_WITH_NAME ), timeout );
         if ( !isGridLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "grid_is_empty" ) );
+            saveScreenshot( NameHelper.uniqueName( "grid_is_empty" ) );
         }
     }
 

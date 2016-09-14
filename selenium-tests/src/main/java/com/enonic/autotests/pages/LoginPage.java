@@ -14,7 +14,7 @@ import com.enonic.autotests.utils.TestUtils;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class LoginPage
-    extends Page
+    extends Application
 {
 
     public static final String TITLE = "Enonic XP - Login";
@@ -51,7 +51,7 @@ public class LoginPage
             waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isLauncherPresent )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_login" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_login" ) );
             throw new AuthenticationException( "Authentication failed, launcher panel was not loaded!" );
         }
         return new HomePage( getSession() );
@@ -67,8 +67,8 @@ public class LoginPage
     {
         if ( !isPageLoaded() )
         {
-            String name = NameHelper.uniqueName( "login_page_error" );
-            TestUtils.saveScreenshot( getSession(), name );
+            String screenshotName = NameHelper.uniqueName( "login_page_error" );
+            saveScreenshot( screenshotName );
             throw new TestFrameworkException( "Login page was not loaded, timeout sec:" + Application.EXPLICIT_NORMAL );
         }
         getLogger().info( "Login action started. Username: " + username + " Password:" + password );
@@ -79,11 +79,9 @@ public class LoginPage
             throw new TestFrameworkException( " input 'user id or e-mail' was not found on page!" );
         }
         clearAndType( usernameInput, username );
-        sleep( 300 );
         clearAndType( passwordInput, password );
-        sleep( 300 );
         passwordInput.sendKeys( Keys.ENTER );
-        sleep( 200 );
+        sleep( 100 );
     }
 
     public boolean isPageLoaded()

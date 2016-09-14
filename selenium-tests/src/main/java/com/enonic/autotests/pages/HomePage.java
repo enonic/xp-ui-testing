@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.XP_Windows;
@@ -26,7 +28,27 @@ public class HomePage
 
     public static final String HOME_WINDOW_ID = "home_window_id_key";
 
+    private final String HOME_DASHBOARD = "//div[contains(@class,'home-main-dashboard')]";
+
+    private final String DASHBOARD_ITEM = "//div[contains(@class,'dashboard-item')]";
+
+    private final String ABOUT_LINK = DASHBOARD_ITEM + "//div[text()='About']";
+
+    private final String XP_TOUR_LINK = DASHBOARD_ITEM + "//div[text()='XP Tour']";
+
+    private final String DOCS_LINK = DASHBOARD_ITEM + "//div[text()='Docs']";
+
+    private final String DISCUSS_LINK = DASHBOARD_ITEM + "//div[text()='Discuss']";
+
+    private final String MARKET_LINK = DASHBOARD_ITEM + "//div[text()='Market']";
+
     private final String HOME_MAIN_CONTAINER = "//div[@class='home-main-container']";
+
+    @FindBy(xpath = XP_TOUR_LINK)
+    private WebElement xpTourLink;
+
+    @FindBy(xpath = ABOUT_LINK)
+    private WebElement aboutLink;
 
 
     /**
@@ -42,10 +64,15 @@ public class HomePage
         boolean result = waitUntilVisibleNoException( By.xpath( HOME_MAIN_CONTAINER ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_home_load" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_home_load" ) );
             throw new TestFrameworkException( "home page was not loaded" );
         }
         return result;
+    }
+
+    public boolean isDashboardToolbarDisplayed()
+    {
+        return isElementDisplayed( HOME_DASHBOARD );
     }
 
     public ContentBrowsePanel openContentManagerApplication()
@@ -53,7 +80,7 @@ public class HomePage
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         if ( !launcherPanel.isDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
+            saveScreenshot( "err_launcher_display" );
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
         launcherPanel.clickOnContentStudio();
@@ -71,7 +98,7 @@ public class HomePage
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         if ( !launcherPanel.isDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
+            saveScreenshot( "err_launcher_display" );
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
         launcherPanel.clickOnUsers();
@@ -90,7 +117,7 @@ public class HomePage
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         if ( !launcherPanel.isDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_launcher_display" );
+            saveScreenshot( "err_launcher_display" );
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
         launcherPanel.clickOnApplications();
@@ -139,4 +166,48 @@ public class HomePage
     {
         return isElementDisplayed( HOME_MAIN_CONTAINER );
     }
+
+    public boolean isXP_Tour_Displayed()
+    {
+        return isElementDisplayed( XP_TOUR_LINK );
+    }
+
+    public boolean isAbout_Displayed()
+    {
+        return isElementDisplayed( ABOUT_LINK );
+    }
+
+    public boolean isDocs_Displayed()
+    {
+        return isElementDisplayed( DOCS_LINK );
+    }
+
+    public boolean isMarket_Displayed()
+    {
+        return isElementDisplayed( MARKET_LINK );
+    }
+
+    public boolean isDiscus_Displayed()
+    {
+        return isElementDisplayed( DISCUSS_LINK );
+    }
+
+    public XpTourDialog clickOnXpTourLink()
+    {
+        xpTourLink.click();
+        sleep( 200 );
+        XpTourDialog dialog = new XpTourDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
+
+    public AboutDialog clickOnAboutLink()
+    {
+        aboutLink.click();
+        sleep( 200 );
+        AboutDialog dialog = new AboutDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
+
 }

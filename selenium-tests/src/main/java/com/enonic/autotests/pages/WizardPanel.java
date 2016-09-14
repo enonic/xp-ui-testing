@@ -54,7 +54,7 @@ public abstract class WizardPanel<T>
         String closeButtonXpath = String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName );
         if ( !waitUntilClickableNoException( By.xpath( closeButtonXpath ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_close_wizard" );
+            saveScreenshot( "err_close_wizard" );
             throw new TestFrameworkException( "'close' button for tab with name " + displayName + " was not found!" );
         }
         findElement( By.xpath( String.format( BUTTON_CLOSE_IN_TAB_MENU_ITEM, displayName ) ) ).click();
@@ -62,12 +62,12 @@ public abstract class WizardPanel<T>
         status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );
         if ( status == null )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_close" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_close" ) );
             throw new TestFrameworkException( "ContentWizard was not closed and Modal dialog not present!" );
         }
         else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saveBeforeClose" ) );
+            saveScreenshot( NameHelper.uniqueName( "saveBeforeClose" ) );
             return new SaveBeforeCloseDialog( getSession() );
         }
         else
@@ -131,20 +131,6 @@ public abstract class WizardPanel<T>
         int inputWidth = Integer.valueOf( width.substring( start + 1, end ).trim() );
         return inputWidth;
     }
-
-//    public boolean isTabMenuItemPresent( String itemText )
-//    {
-//        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'api.app.bar.AppBarTabMenuItem')]//span" ) );
-//
-//        for ( WebElement element : elems )
-//        {
-//            if ( element.getText().contains( itemText ) )
-//            {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     public String getNameInputValue()
     {

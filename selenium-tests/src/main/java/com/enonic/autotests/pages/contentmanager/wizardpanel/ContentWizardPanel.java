@@ -22,7 +22,6 @@ import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -121,7 +120,7 @@ public class ContentWizardPanel
     {
         if ( !isElementDisplayed( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_publish_dropdown_handler_wizard" );
+            saveScreenshot( "err_publish_dropdown_handler_wizard" );
             throw new TestFrameworkException( "dropdown handler for publish menu is not displayed" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ) ), "class",
@@ -132,7 +131,7 @@ public class ContentWizardPanel
     {
         if ( !isUnPublishMenuItemEnabled() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item" );
+            saveScreenshot( "err_unpublish_menu_item" );
             throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
         }
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
@@ -145,7 +144,7 @@ public class ContentWizardPanel
     {
         if ( !isElementDisplayed( UNPUBLISH_MENU_ITEM ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item_not_visible " );
+            saveScreenshot( "err_unpublish_menu_item_not_visible " );
             throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
@@ -162,12 +161,11 @@ public class ContentWizardPanel
         {
             if ( !isElementDisplayed( INSPECTION_PANEL_TOGGLER ) )
             {
-                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_icon-cog" ) );
+                saveScreenshot( NameHelper.uniqueName( "err_icon-cog" ) );
                 throw new TestFrameworkException( "button with 'icon-cog' was not found" );
             }
             getDisplayedElement( By.xpath( INSPECTION_PANEL_TOGGLER ) ).click();
             cw.waitUntilWindowLoaded( 1l );
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "context_window_opened" ) );
         }
         return cw;
     }
@@ -177,7 +175,7 @@ public class ContentWizardPanel
         boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), 1 );
         if ( !isEnabled )
         {
-            TestUtils.saveScreenshot( getSession(), "err_preview_button_status" );
+            saveScreenshot( "err_preview_button_status" );
             throw new TestFrameworkException( "button Preview disabled, but expected is enabled" );
         }
         toolbarPreviewButton.click();
@@ -200,7 +198,7 @@ public class ContentWizardPanel
         List<WebElement> elements = getDisplayedElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) );
         if ( elements.size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_tab_item)" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_tab_item)" ) );
             throw new TestFrameworkException( "tab menu item with name: " + contentDisplayName + " was not found" );
         }
         return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
@@ -285,7 +283,7 @@ public class ContentWizardPanel
             securityWizardStepForm.waitUntilButtonEditPermissionsClickable().clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
                 content.getAclEntries() ).clickOnApply();
             sleep( 700 );
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "acl_" + content.getName() ) );
+            saveScreenshot( NameHelper.uniqueName( "acl_" + content.getName() ) );
         }
         return this;
     }
@@ -309,7 +307,7 @@ public class ContentWizardPanel
         {
             throw new TestFrameworkException( "settings tab was not found!" );
         }
-        findElements( By.xpath( securityTabXpath ) ).get( 0 ).click();
+        findElement( By.xpath( securityTabXpath ) ).click();
         sleep( 1000 );
         return new SettingsWizardStepForm( getSession() );
     }
@@ -338,7 +336,7 @@ public class ContentWizardPanel
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_save_button" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();
@@ -388,7 +386,7 @@ public class ContentWizardPanel
         boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_wizard" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_wizard" ) );
             throw new TestFrameworkException( "ContentWizard was not showed!" );
         }
         return this;
@@ -399,7 +397,7 @@ public class ContentWizardPanel
         boolean result = waitsElementNotVisible( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_close_wizard" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_close_wizard" ) );
             throw new TestFrameworkException( "ContentWizard was not closed!" );
         }
         return this;
@@ -422,7 +420,7 @@ public class ContentWizardPanel
         }
         if ( !waitUntilVisibleNoException( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err-show-button" );
+            saveScreenshot( "err-show-button" );
             throw new TestFrameworkException( "The 'toggle Page Editor' button not displayed!" );
         }
         getDisplayedElement( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
@@ -441,7 +439,7 @@ public class ContentWizardPanel
         }
         if ( !isElementDisplayed( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err-hide-button" );
+            saveScreenshot( "err-hide-button" );
             throw new TestFrameworkException( "The 'Hide Page Editor' button was not found!" );
         }
         getDisplayedElement( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
@@ -456,7 +454,7 @@ public class ContentWizardPanel
     {
         if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_component-view-button" );
+            saveScreenshot( "err_component-view-button" );
             throw new TestFrameworkException( "The 'Show Component View' button was not found!" );
         }
         getDisplayedElement( By.xpath( COMPONENT_VIEW_TOGGLER ) ).click();
@@ -491,7 +489,7 @@ public class ContentWizardPanel
         String pageDescriptor = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
         if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + pageDescriptorDisplayName );
+            saveScreenshot( "err_" + pageDescriptorDisplayName );
             throw new TestFrameworkException( "drop-down-option-filter: item was not found!" + pageDescriptorDisplayName );
         }
         getDisplayedElement( By.xpath( pageDescriptor ) ).click();
