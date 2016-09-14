@@ -142,6 +142,11 @@ public class ContentDetailsPanel
 
     public String getContentDisplayName()
     {
+        if ( !isElementDisplayed( DETAILS_PANEL + H6_DISPLAY_NAME ) )
+        {
+            saveScreenshot( "err_det_panel_displayname" );
+            throw new TestFrameworkException( "display name was not found on the details panel!" );
+        }
         return getDisplayedString( DETAILS_PANEL + H6_DISPLAY_NAME );
     }
 }

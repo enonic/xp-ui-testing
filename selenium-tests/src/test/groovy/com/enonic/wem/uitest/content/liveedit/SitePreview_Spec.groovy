@@ -66,7 +66,7 @@ class SitePreview_Spec
         filterPanel.typeSearchText( MY_SITE.getName() );
 
         then: "'Preview' in the context menu is enabled"
-        contentBrowsePanel.waitUntilItemEnabledInContextMenu( MY_SITE.getName(), "Preview" );
+        contentBrowsePanel.openContextMenuAndWaitUntilItemEnabled( MY_SITE.getName(), "Preview" );
     }
 
     def "WHEN site selected and opened for edit THEN 'Preview' on a WizardToolbar is enabled"()

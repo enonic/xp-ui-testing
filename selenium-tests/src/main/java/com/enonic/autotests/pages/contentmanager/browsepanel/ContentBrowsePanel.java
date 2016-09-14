@@ -437,7 +437,7 @@ public class ContentBrowsePanel
      */
     public DeleteContentDialog clickToolbarDelete()
     {
-        if ( !isButtonDisplayed( DELETE_BUTTON_XPATH ) )
+        if ( !isElementDisplayed( DELETE_BUTTON_XPATH ) )
         {
             clickOnFoldButton();
         }
@@ -456,7 +456,7 @@ public class ContentBrowsePanel
 
     public ContentPublishDialog clickToolbarPublish()
     {
-        if ( !isButtonDisplayed( PUBLISH_BUTTON_XPATH ) )
+        if ( !isElementDisplayed( PUBLISH_BUTTON_XPATH ) )
         {
             clickOnFoldButton();
         }
@@ -502,7 +502,6 @@ public class ContentBrowsePanel
         }
         return this;
     }
-
 
     public BrowsePanel pressKeyOnRow( ContentPath path, Keys key )
     {
@@ -552,7 +551,7 @@ public class ContentBrowsePanel
 
     public SortContentDialog clickToolbarSort()
     {
-        if ( !isButtonDisplayed( SORT_BUTTON_XPATH ) )
+        if ( !isElementDisplayed( SORT_BUTTON_XPATH ) )
         {
             clickOnFoldButton();
         }
@@ -561,11 +560,6 @@ public class ContentBrowsePanel
         SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
         sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
         return sortContentDialog;
-    }
-
-    private boolean isButtonDisplayed( String xpath )
-    {
-        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).count() == 1;
     }
 
     private void clickOnFoldButton()
@@ -581,7 +575,7 @@ public class ContentBrowsePanel
 
     public MoveContentDialog clickToolbarMove()
     {
-        if ( !isButtonDisplayed( MOVE_BUTTON_XPATH ) )
+        if ( !isElementDisplayed( MOVE_BUTTON_XPATH ) )
         {
             clickOnFoldButton();
         }
@@ -633,7 +627,7 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage clickToolbarPreview()
     {
-        if ( !isButtonDisplayed( PREVIEW_BUTTON_XPATH ) )
+        if ( !isElementDisplayed( PREVIEW_BUTTON_XPATH ) )
         {
             clickOnFoldButton();
         }
@@ -667,10 +661,10 @@ public class ContentBrowsePanel
         }
         openContextMenu( contentName );
         String deleteMenuItem = String.format( CONTEXT_MENU_ITEM, "Delete" );
-        if ( !isElementDisplayed( deleteMenuItem ) )
+        if ( !waitIsElementEnabled( findElement( By.xpath( deleteMenuItem ) ), 2 ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-delete" ) );
-            throw new TestFrameworkException( "Delete context-menu item is not visible!" );
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            throw new TestFrameworkException( "Delete context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( deleteMenuItem ) ).click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
@@ -681,13 +675,18 @@ public class ContentBrowsePanel
     public ContentPublishDialog selectPublishFromContextMenu( String contentName )
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
-        sleep( 1000 );
         openContextMenu( contentName );
         String publishMenuItem = String.format( CONTEXT_MENU_ITEM, "Publish" );
+
         if ( !isElementDisplayed( publishMenuItem ) )
         {
             TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
             throw new TestFrameworkException( "publish context-menu item is not visible!" );
+        }
+        if ( !waitIsElementEnabled( findElement( By.xpath( publishMenuItem ) ), 2 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            throw new TestFrameworkException( "publish context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( publishMenuItem ) ).click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
@@ -699,13 +698,18 @@ public class ContentBrowsePanel
     public ContentUnpublishDialog selectUnPublishFromContextMenu( String contentName )
     {
         openContextMenu( contentName );
-        String publishMenuItem = String.format( CONTEXT_MENU_ITEM, "Unpublish" );
-        if ( !isElementDisplayed( publishMenuItem ) )
+        String unpublishMenuItem = String.format( CONTEXT_MENU_ITEM, "Unpublish" );
+        if ( !isElementDisplayed( unpublishMenuItem ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-unpublish" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-unpublish" ) );
             throw new TestFrameworkException( "unpublish context-menu item is not visible!" );
         }
-        getDisplayedElement( By.xpath( publishMenuItem ) ).click();
+        if ( !waitIsElementEnabled( findElement( By.xpath( unpublishMenuItem ) ), 2 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-unpublish" ) );
+            throw new TestFrameworkException( "unpublish context-menu item is disabled!" );
+        }
+        getDisplayedElement( By.xpath( unpublishMenuItem ) ).click();
         ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         sleep( 500 );
@@ -721,8 +725,13 @@ public class ContentBrowsePanel
         String duplicateMenuItem = String.format( CONTEXT_MENU_ITEM, "Duplicate" );
         if ( !isElementDisplayed( duplicateMenuItem ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-duplicate" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-duplicate" ) );
             throw new TestFrameworkException( "duplicate context-menu item is not visible!" );
+        }
+        if ( !waitIsElementEnabled( findElement( By.xpath( duplicateMenuItem ) ), 2 ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
+            throw new TestFrameworkException( "Duplicate context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( duplicateMenuItem ) ).click();
         sleep( 1000 );
@@ -741,8 +750,13 @@ public class ContentBrowsePanel
         String editMenuItem = String.format( CONTEXT_MENU_ITEM, "Edit" );
         if ( !isElementDisplayed( editMenuItem ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-edit" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-edit" ) );
             throw new TestFrameworkException( "'edit' context-menu item is not visible!" );
+        }
+        if ( !waitIsElementEnabled( findElement( By.xpath( editMenuItem ) ), 2 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            throw new TestFrameworkException( "Edit context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( editMenuItem ) ).click();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
@@ -753,9 +767,15 @@ public class ContentBrowsePanel
     public SortContentDialog selectSortInContextMenu( String contentName )
     {
         openContextMenu( contentName );
-        if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ), Application.EXPLICIT_NORMAL ) )
+        String sortMenuItem = String.format( CONTEXT_MENU_ITEM, "Sort" );
+        if ( !waitUntilVisibleNoException( By.xpath( sortMenuItem ), Application.EXPLICIT_NORMAL ) )
         {
             throw new TestFrameworkException( "Sort item was not found in the context menu" );
+        }
+        if ( !waitIsElementEnabled( findElement( By.xpath( sortMenuItem ) ), 2 ) )
+        {
+            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            throw new TestFrameworkException( "Sort context-menu item is disabled!" );
         }
         findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).click();
         SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
@@ -775,7 +795,7 @@ public class ContentBrowsePanel
         return waitAndCheckAttrValue( previewItem, "class", "disabled", 2 );
     }
 
-    public boolean waitUntilItemEnabledInContextMenu( String contentName, String menuItem )
+    public boolean openContextMenuAndWaitUntilItemEnabled( String contentName, String menuItem )
     {
         openContextMenu( contentName );
         if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ), Application.EXPLICIT_NORMAL ) )
@@ -784,7 +804,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( menuItem + "  item was not found in the context menu" );
         }
         WebElement previewItem = getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) );
-        return waitIsElementEnabled( previewItem, "class", "disabled", 2 );
+        return waitIsElementEnabled( previewItem, 2 );
     }
 
     public ContentBrowsePanel selectPreviewInContextMenu( String contentName )

@@ -65,7 +65,8 @@ public abstract class BrowsePanel
         APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem') and descendant::span[contains(.,'%s')]]";
 
 
-    protected String CONTEXT_MENU_ITEM = "//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
+    protected String CONTEXT_MENU_ITEM =
+        "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
     protected WebElement showFilterPanelButton;
@@ -823,7 +824,7 @@ public abstract class BrowsePanel
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
         Actions action = new Actions( getDriver() );
         action.contextClick( element ).build().perform();
-        sleep( 300 );
+        sleep( 400 );
     }
 
     public void selectItemByDisplayNameOnOpenContextMenu( String gridItemDisplayName )
@@ -842,8 +843,9 @@ public abstract class BrowsePanel
         {
             throw new TestFrameworkException( "menu item was not found!  " + action );
         }
-        String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
-        return !styleClass.contains( "disabled" );
+        //String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
+        return waitIsElementEnabled( findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ), 2 );
+        //return !styleClass.contains( "disabled" );
     }
 
     public boolean isContextMenuItemDisplayed( String menuItem )
