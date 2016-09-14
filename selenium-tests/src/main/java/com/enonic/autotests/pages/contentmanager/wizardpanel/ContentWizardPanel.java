@@ -96,19 +96,6 @@ public class ContentWizardPanel
         super( session );
     }
 
-    public static ContentWizardPanel getWizard( TestSession session )
-    {
-        ContentWizardPanel wizard = new ContentWizardPanel( session );
-        if ( wizard.isOpened() )
-        {
-            return wizard;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
     public ContentWizardPanel showPublishMenu()
     {
         publishMenuDropDownHandler.click();

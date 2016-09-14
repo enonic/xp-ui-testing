@@ -136,10 +136,11 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
+        wizard.close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
@@ -156,17 +157,22 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( TEST_IMG_2 );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        ContentWizardPanel.getWizard( getSession() ).close( imageSelectorContent.getDisplayName() );
+        wizard.close( imageSelectorContent.getDisplayName() );
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then:
+        then: "valid content with 'Online' status listed"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
+
+        and: "correct notification message appeared"
+        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 }

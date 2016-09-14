@@ -120,10 +120,13 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         when: "content with 4 selected images saved and published"
         IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME, MAN_IMAGE_NAME, FL_IMAGE_NAME );
-        selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
-            IMAGE_SELECTOR_CONTENT_4_IMAGES ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        ContentWizardPanel wizard = selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
+            IMAGE_SELECTOR_CONTENT_4_IMAGES ).save();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        ContentWizardPanel.getWizard( getSession() ).close( IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
+
+        and: "wizard closed"
+        wizard.close( IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
         filterPanel.typeSearchText( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() );
 
         then: "content has a 'online' status"

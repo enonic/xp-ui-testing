@@ -123,12 +123,14 @@ class Occurrences_ComboBox_2_4_Spec
 
     def "WHEN content with 2 selected option saved and published THEN it content with 'Online'-status listed"()
     {
-        when: "content without option saved and published"
+        when: "content without a selected option saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData(
-            comboBoxContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        ContentWizardPanel.getWizard( getSession() ).close( comboBoxContent.getDisplayName() );
+
+        and: "wizard closed"
+        wizard.close( comboBoxContent.getDisplayName() );
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"
