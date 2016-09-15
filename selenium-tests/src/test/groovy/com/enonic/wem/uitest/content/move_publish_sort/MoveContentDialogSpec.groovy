@@ -25,7 +25,7 @@ class MoveContentDialogSpec
     Content SECOND_CONTENT;
 
 
-    def "adding of the first folder"()
+    def "adding a first folder"()
     {
         when: "new content added in root"
         FIRST_CONTENT = buildFolderContent( "movetest", FIRST_DISPLAY_CONTENT_NAME );
@@ -36,7 +36,7 @@ class MoveContentDialogSpec
         contentBrowsePanel.exists( FIRST_CONTENT.getName() );
     }
 
-    def "adding of the second folder"()
+    def "adding a second folder"()
     {
         when: "second content added"
         SECOND_CONTENT = buildFolderContent( "movetest", SECOND_DISPLAY_CONTENT_NAME );
@@ -54,6 +54,7 @@ class MoveContentDialogSpec
 
         when: "button 'Move' pressed"
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
+        saveScreenshot( "test_move_dialog" );
 
         then: "modal dialog with correct title appears"
         dialog.isOpened();
@@ -61,7 +62,7 @@ class MoveContentDialogSpec
         dialog.getTitle() == MoveContentDialog.DIALOG_TITLE;
     }
 
-    def "GIVEN selected content and 'Move' button on toolbar pressed WHEN content moved to another location  THEN content listed beneath the content that was destination for moving"()
+    def "GIVEN one selected content and 'Move' button on toolbar pressed WHEN content moved to another location  THEN content listed beneath the content that was destination for moving"()
     {
         given:
         findAndSelectContent( FIRST_CONTENT.getName() )
@@ -78,6 +79,28 @@ class MoveContentDialogSpec
         contentBrowsePanel.exists( FIRST_CONTENT.getName() );
     }
 
+    def "GIVEN existing folder with a child WHEN parent folder expanded AND one more content moved to the parent THEN new child appears beneath the parent"()
+    {
+        given: "new folder added in ROOT"
+        Content folderToMove = buildFolderContent( "move_expanded", "move to expanded folder" );
+        addContent( folderToMove );
+
+        and: "parent folder expanded"
+        contentBrowsePanel.expandContent( SECOND_CONTENT.getPath() );
+        filterPanel.clickOnCleanFilter();
+
+        and: "folder to move is selected and 'Move' button pressed"
+        contentBrowsePanel.clickCheckboxAndSelectRow( folderToMove.getName() );
+        MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
+
+        when: "just added folder moved to the parent folder"
+        dialog.typeSearchText( SECOND_CONTENT.getName() ).selectFolderAndClickOnMove( SECOND_CONTENT.getName() );
+        saveScreenshot( "test_move_content_to_expanded_folder" );
+
+        then: "new folder listed beneath the parent"
+        contentBrowsePanel.exists( folderToMove.getName() );
+    }
+
     def "GIVEN 'move' dialog opened WHEN 'close' button clicked  THEN modal dialog disappears"()
     {
         given: "'move' dialog opened"
@@ -87,8 +110,8 @@ class MoveContentDialogSpec
         when: "the 'cancel' button on the bottom of dialog pressed"
         dialog.clickOnCancelBottomButton();
 
-        then: "dialog not present"
-        !dialog.isOpened()
+        then: "dialog has been closed"
+        !dialog.isOpened();
     }
 
     def "GIVEN 'move' dialog opened WHEN 'cancel' button clicked  THEN modal dialog disappears"()
@@ -100,7 +123,7 @@ class MoveContentDialogSpec
         when: "the 'cancel' button on the top of dialog pressed"
         dialog.clickOnCancelTopButton();
 
-        then: "dialog not present"
+        then: "dialog has been closed"
         !dialog.isOpened()
     }
 
@@ -115,7 +138,7 @@ class MoveContentDialogSpec
         dialog.closeByClickingOnEsc();
         TestUtils.saveScreenshot( getSession(), "test_move_dialog_esc_after" );
 
-        then: "dialog not present"
+        then: "dialog has been closed"
         !dialog.isOpened()
     }
 }

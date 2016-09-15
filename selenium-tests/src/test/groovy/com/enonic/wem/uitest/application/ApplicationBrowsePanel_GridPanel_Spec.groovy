@@ -119,7 +119,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
         when: "arrow down typed 3 times"
         applicationBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "module_arrow_down_shift" );
+        TestUtils.saveScreenshot( getTestSession(), "app_arrow_down_shift" );
 
         then: "n+1 rows are selected in the browse panel"
         applicationBrowsePanel.getSelectedRowsNumber() == 4
@@ -133,7 +133,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
         when: "arrow up typed 3 times"
         applicationBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "content_arrow_up_shift" );
+        TestUtils.saveScreenshot( getTestSession(), "app_arrow_up_shift" );
 
         then: "n+1 rows are selected in the browse panel"
         applicationBrowsePanel.getSelectedRowsNumber() == 4
