@@ -254,8 +254,9 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN one selected content WHEN hold a shift + arrow up pressed 3-times THEN 4 selected rows appears in the grid "()
     {
         given: "one content has been selected "
+        saveScreenshot( "test_arrow_up_shift_before1" );
         contentBrowsePanel.clickCheckboxAndSelectRow( 4 );
-        saveScreenshot( "test_arrow_up_shift_before" );
+        saveScreenshot( "test_arrow_up_shift_before2" );
 
         when: "arrow up pressed 3 times"
         contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );

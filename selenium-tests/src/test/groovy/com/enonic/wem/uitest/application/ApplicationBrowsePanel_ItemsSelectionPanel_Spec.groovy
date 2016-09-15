@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Stepwise
 
 @Stepwise
@@ -15,7 +14,7 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
 
         when: "selected a one more application"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_two_app_selected" );
+        saveScreenshot( "test_two_app_selected" );
 
         then:
         itemsSelectionPanel.getSelectedItemCount() == 2;
@@ -29,7 +28,7 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
 
         when: "selected a one more application"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( THIRD_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_three_app_selected1" );
+        saveScreenshot( "test_three_app_selected1" );
 
         then: "three SelectionItem-s are listed"
         itemsSelectionPanel.getSelectedItemCount() == 3;
@@ -41,11 +40,11 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( THIRD_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_three_app_selected2" );
+        saveScreenshot( "test_three_app_selected2" );
 
         when: "one application was deselected"
         applicationBrowsePanel.deSelectAppInTable( THIRD_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_three_app_one_deselected" );
+        saveScreenshot( "test_three_app_one_deselected" );
 
         then: "only two items are listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;
