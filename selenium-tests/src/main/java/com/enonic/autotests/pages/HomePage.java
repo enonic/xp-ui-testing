@@ -84,7 +84,7 @@ public class HomePage
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
         launcherPanel.clickOnContentStudio();
-        sleep( 1300 );
+        sleep( 1000 );
         switchToAppWindow( "content-studio" );
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
