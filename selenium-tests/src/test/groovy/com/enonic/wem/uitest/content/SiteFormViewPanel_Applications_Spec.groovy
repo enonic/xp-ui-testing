@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -35,10 +34,12 @@ class SiteFormViewPanel_Applications_Spec
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
 
-        when: "reordering of applications applied, site saved and opened again"
+        when: "reordering of applications applied, site saved"
         formViewPanel.swapApplications( SIMPLE_SITE_APP, MY_FIRST_APP );
         wizard.save().close( SITE.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), SITE.getDisplayName() + "_closed" );
+        saveScreenshot( SITE.getDisplayName() + "_closed" );
+
+        and: "site opened again"
         contentBrowsePanel.clickToolbarEdit();
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
 

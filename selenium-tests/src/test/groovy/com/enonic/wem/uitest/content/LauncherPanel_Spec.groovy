@@ -74,7 +74,7 @@ class LauncherPanel_Spec
         NavigatorHelper.openContentApp( getTestSession() );
         NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
 
-        and: "launcher panel opened"
+        and: "toggler pressed and launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
 
@@ -86,6 +86,8 @@ class LauncherPanel_Spec
     {
         when: "'Applications' app opened "
         NavigatorHelper.openApplications( getTestSession() );
+
+        and: "toggler pressed and launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
 

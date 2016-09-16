@@ -56,7 +56,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         TestUtils.saveScreenshot( getSession(), "page-comp-dialog-templ" );
         List<PageComponent> components = dialog.getPageComponents();
-        TestUtils.saveScreenshot( getSession(), "page-comp-view-opened-templ" );
+        saveScreenshot( "page-comp-view-opened-templ" );
 
         then: "'Page Components View' opened"
         dialog.isOpened();
@@ -123,7 +123,7 @@ class Site_With_TemplatePageComponentDialog_Spec
 
         when: "site-wizard have been closed"
         wizard.save().close( SITE.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "context-menu-closed-templ" );
+        saveScreenshot( "context-menu-closed-templ" );
 
         then: "context menu is not displayed"
         !contextMenu.isOpened();
@@ -141,7 +141,7 @@ class Site_With_TemplatePageComponentDialog_Spec
 
         when: "HomeButton clicked"
         contentBrowsePanel.pressAppHomeButton();
-        TestUtils.saveScreenshot( getSession(), "context-menu-home-template" );
+        saveScreenshot( "context-menu-home-template" );
 
         then: "context menu is not displayed"
         !contextMenu.isOpened();
@@ -155,7 +155,7 @@ class Site_With_TemplatePageComponentDialog_Spec
 
         when: "button 'close' clicked"
         dialog.doCloseDialog();
-        TestUtils.saveScreenshot( getSession(), "page-comp-dialog-closed" );
+        saveScreenshot( "page-comp-dialog-closed" );
 
         then: "'page component view' is not displayed"
         !dialog.isOpened()

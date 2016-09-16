@@ -27,9 +27,9 @@ class DeleteSite_ConfirmDelete_Spec
         SITE = buildSiteWithNameAndDispalyNameAndDescription( "site", "confirm delete", "description" );
         addContent( SITE );
 
-        when:
+        when: "'confirm delete site' dialog opened"
         ConfirmContentDeleteDialog confirmDialog = openConfirmDeleteDialog( SITE.getName() );
-        TestUtils.saveScreenshot( getSession(), "test_confirm_delete_site" );
+        saveScreenshot( "test_confirm_delete_site" );
 
         then:
         confirmDialog.isCancelButtonBottomDisplayed();
@@ -68,7 +68,7 @@ class DeleteSite_ConfirmDelete_Spec
 
         when:
         ConfirmContentDeleteDialog confirmDialog = openConfirmDeleteDialog( SITE.getName() );
-        TestUtils.saveScreenshot( getSession(), "test_number_to_delete_increased" );
+        saveScreenshot( "test_number_to_delete_increased" );
 
         then:
         confirmDialog.getNumberOfContentToDelete() == INITIAL_NUMBER_TO_DELETE + 1;
@@ -79,11 +79,11 @@ class DeleteSite_ConfirmDelete_Spec
         given: "existing site selected AND delete button pressed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = openConfirmDeleteDialog( SITE.getName() );
 
-        when:
+        when: "incorrect number of resources typed"
         confirmContentDeleteDialog.typeNumber( INCORRECT_NUMBER_OF_CONTENT );
-        TestUtils.saveScreenshot( getSession(), "test_site_number_to_delete_incorrect" )
+        saveScreenshot( "test_site_number_to_delete_incorrect" )
 
-        then:
+        then: "'confirm' button on the dialog disabled"
         !confirmContentDeleteDialog.isConfirmButtonButtonEnabled();
     }
 
@@ -92,11 +92,11 @@ class DeleteSite_ConfirmDelete_Spec
         given: "existing site selected AND delete button pressed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = openConfirmDeleteDialog( SITE.getName() );
 
-        when:
+        when: "correct number of resources typed"
         confirmContentDeleteDialog.typeNumber( "3" );
-        TestUtils.saveScreenshot( getSession(), "test_site_number_to_delete_correct" );
+        saveScreenshot( "test_site_number_to_delete_correct" );
 
-        then:
+        then: "'confirm' button on the dialog enabled"
         confirmContentDeleteDialog.waitUntilConfirmButtonEnabled();
     }
 
@@ -120,15 +120,15 @@ class DeleteSite_ConfirmDelete_Spec
         addContent( onlineSite );
         findAndSelectContent( onlineSite.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
-        when:
+        when: "site selected and Delete pressed AND 'Instantly delete' checkbox checked"
         contentBrowsePanel.clickToolbarDelete().clickOnInstantlyCheckbox().clickOnDeleteButton();
         ConfirmContentDeleteDialog confirmDialog = new ConfirmContentDeleteDialog( getSession() );
 
-        and:
+        and: "correct number of resources was typed"
         confirmDialog.typeNumber( "2" ).clickOnConfirmButton();
-        TestUtils.saveScreenshot( getSession(), "test_confirm_delete_site_online" );
+        saveScreenshot( "test_confirm_delete_site_online" );
 
-        then:
+        then: "site successfully deleted"
         !contentBrowsePanel.exists( onlineSite.getName() );
     }
 

@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -21,7 +20,7 @@ class DeleteContentDialog_With_DependantList_Spec
         PARENT_CONTENT = buildFolderContent( "folder", "delete with child" );
         addContent( PARENT_CONTENT );
 
-        and: "child content added"
+        and: "one child content added"
         CHILD_CONTENT = buildFolderContentWithParent( "child", "dependant child folder", PARENT_CONTENT.getName() );
         findAndSelectContent( PARENT_CONTENT.getName() );
         addContent( CHILD_CONTENT );
@@ -30,7 +29,7 @@ class DeleteContentDialog_With_DependantList_Spec
         DeleteContentDialog modalDialog = contentBrowsePanel.clickToolbarDelete();
         List<String> items = modalDialog.getDisplayNamesToDelete();
         List<String> dependantNames = modalDialog.getDependantList();
-        TestUtils.saveScreenshot( getSession(), "delete_dialog_dependant1" );
+        saveScreenshot( "delete_dialog_dependant1" );
 
         then: "'Delete Content' dialog with correct dependant list appears"
         dependantNames.get( 0 ).contains( CHILD_CONTENT.getName() );
@@ -55,7 +54,7 @@ class DeleteContentDialog_With_DependantList_Spec
         DeleteContentDialog modalDialog = wizard.clickToolbarDelete();
         List<String> items = modalDialog.getDisplayNamesToDelete();
         List<String> dependantNames = modalDialog.getDependantList();
-        TestUtils.saveScreenshot( getSession(), "delete_dialog_dependant2" );
+        saveScreenshot( "delete_dialog_dependant2" );
 
         then: "'Delete Content' dialog with correct dependant list appears"
         dependantNames.get( 0 ).contains( CHILD_CONTENT.getName() );

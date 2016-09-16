@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDia
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -68,12 +67,14 @@ class SiteConfiguratorDialog_Spec
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
-        when: "red color selected for background"
+        when: "red color for background was selected "
         dialog.selectBackgroundColor( BACKGROUND_COLOR )
-        TestUtils.saveScreenshot( getSession(), "page-background-selected" );
+        saveScreenshot( "page-background-selected" );
+
+        and: " changes were applied"
         dialog.doApply();
         sleep( 2000 );
-        TestUtils.saveScreenshot( getSession(), "page-background-applied" );
+        saveScreenshot( "page-background-applied" );
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         wizard.switchToLiveEditFrame();

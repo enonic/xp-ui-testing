@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -32,7 +31,7 @@ class DeleteContentDialogSpec
 
         then: "delete dialog opened"
         dialog.waitForOpened();
-        TestUtils.saveScreenshot( getSession(), "delete_content_dialog_elements" );
+        saveScreenshot( "delete_content_dialog_elements" );
 
         and: "'Cancel' button is present on the dialog"
         dialog.isCancelButtonPresent();
@@ -93,7 +92,7 @@ class DeleteContentDialogSpec
         then: "only one content is displayed"
         List<String> displayNamesFromUI = dialog.getDisplayNamesToDelete();
         displayNamesFromUI.size() == 1;
-        TestUtils.saveScreenshot( getSession(), "one_content_in_dialog" );
+        saveScreenshot( "one_content_in_dialog" );
 
         and: "correct display name of content is displayed"
         CONTENT1.getDisplayName().equals( displayNamesFromUI.get( 0 ) )
@@ -112,7 +111,7 @@ class DeleteContentDialogSpec
         then:
         dialog.waitForOpened();
         sleep( 300 );
-        TestUtils.saveScreenshot( getSession(), "delete_dialog_online_status" );
+        saveScreenshot( "delete_dialog_online_status" );
 
         and: "checkbox appeared in the modal dialog"
         dialog.isCheckboxForDeletePublishedItemsDisplayed();
@@ -138,7 +137,7 @@ class DeleteContentDialogSpec
         when: "two folders are selected and 'Delete' button pressed"
         DeleteContentDialog dialog = contentBrowsePanel.clickOnSelectAll().clickToolbarDelete();
         List<String> displayNames = dialog.getDisplayNamesToDelete();
-        TestUtils.saveScreenshot( getSession(), "two_contents_in_dialog" );
+        saveScreenshot( "two_contents_in_dialog" );
 
         then: "two correct display names are shown"
         displayNames.contains( CONTENT1.getDisplayName() );
@@ -162,7 +161,7 @@ class DeleteContentDialogSpec
 
         and: "Delete button was clicked "
         dialog.doDelete();
-        TestUtils.saveScreenshot( getSession(), "delete_dialog_content_deleted" );
+        saveScreenshot( "delete_dialog_content_deleted" );
 
         then: "dialog closed"
         !dialog.isOpened();

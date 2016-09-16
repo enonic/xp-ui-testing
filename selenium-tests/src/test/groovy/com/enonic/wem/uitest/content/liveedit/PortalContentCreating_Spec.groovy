@@ -72,7 +72,7 @@ class PortalContentCreating_Spec
         partComponentView.selectItem( "City Creation" );
         switchToContentStudioWindow();
         contentWizard.save().clickToolbarPreview();
-        TestUtils.saveScreenshot( getSession(), "country_part_added2" );
+        saveScreenshot( "country_part_added2" );
 
         then: "correct page-sources are present in the HTML"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
@@ -94,7 +94,7 @@ class PortalContentCreating_Spec
         TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
         cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( OSLO_CITY_NAME ).typeCityPopulation( OSLO_POPULATION );
-        TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
+        saveScreenshot( "oslo-creation-page" );
         cityCreationPage.clickSubmit();
         openHomePage();
         HomePage homePage = new HomePage( getSession() );
@@ -103,7 +103,7 @@ class PortalContentCreating_Spec
         then: "correct child content exist beneath a parent"
         filterPanel.typeSearchText( "Norway" );
         contentBrowsePanel.expandContent( NOR_CONTENT.getPath() );
-        TestUtils.saveScreenshot( getSession(), "norway-expanded" );
+        saveScreenshot( "norway-expanded" );
         contentBrowsePanel.exists( OSLO_CITY_NAME );
     }
 
@@ -112,7 +112,7 @@ class PortalContentCreating_Spec
         when: "city-content opened for edit"
         findAndSelectContent( "oslo" ).clickToolbarEdit()
         CityFormView cityFormView = new CityFormView( getSession() );
-        TestUtils.saveScreenshot( getSession(), "oslo-city-content-opened" );
+        saveScreenshot( "oslo-city-content-opened" );
 
         then: "correct location displayed"
         cityFormView.getLocationValue() == OSLO_LOCATION;
@@ -136,7 +136,7 @@ class PortalContentCreating_Spec
         findAndSelectContent( "oslo" ).clickToolbarEdit();
         sleep( 500 );
         CityFormView cityFormView = new CityFormView( getSession() );
-        TestUtils.saveScreenshot( getSession(), "oslo-city-content-new-population" );
+        saveScreenshot( "oslo-city-content-new-population" );
         cityFormView.getLocationValue() == OSLO_LOCATION;
         and: "and correct population displayed"
         cityFormView.getPopulationValue() == NEW_OSLO_POPULATION;

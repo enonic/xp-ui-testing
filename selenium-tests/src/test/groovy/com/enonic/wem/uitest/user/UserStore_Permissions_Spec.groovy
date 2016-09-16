@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.security.UserStoreAccess
 import com.enonic.autotests.vo.contentmanager.security.UserStoreAclEntry
 import com.enonic.autotests.vo.usermanager.RoleDisplayName
@@ -22,7 +21,7 @@ class UserStore_Permissions_Spec
         when: "wizard for creating of new user store is opened"
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
-        TestUtils.saveScreenshot( getSession(), "test_user_store_default_permission" );
+        saveScreenshot( "test_user_store_default_permission" );
 
         then: "two readonly permissions are displayed"
         entries.size() == 2;
@@ -59,7 +58,7 @@ class UserStore_Permissions_Spec
 
         when: "data typed and user store saved"
         String message = userStoreWizardPanel.typeData( USER_STORE_WITH_PERMISSIONS ).save().waitNotificationMessage();
-        TestUtils.saveScreenshot( getSession(), "test_user_store_permission_added" );
+        saveScreenshot( "test_user_store_permission_added" );
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
 
         then: "correct notification message appears"
@@ -83,7 +82,7 @@ class UserStore_Permissions_Spec
         when: "remove permission button clicked"
         userStoreWizardPanel.removePermission( RoleDisplayName.USERS_ADMINISTRATOR.getValue() );
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
-        TestUtils.saveScreenshot( getSession(), "test_user_store_permission_removed" );
+        saveScreenshot( "test_user_store_permission_removed" );
 
         then: "number of permissions has been reduced"
         entries.size() == 2;

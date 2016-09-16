@@ -86,7 +86,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
-        TestUtils.saveScreenshot( getSession(), "conf-dialog-with-url" );
+        saveScreenshot( "conf-dialog-with-url" );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( URL );
@@ -123,12 +123,12 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         linkModalDialog.clickContentBarItem().selectOption( "nord.jpg" ).typeText( CONTENT_TEXT ).pressInsertButton();
-        TestUtils.saveScreenshot( getSession(), "conf-dialog-content" );
+        saveScreenshot( "conf-dialog-content" );
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
-        TestUtils.saveScreenshot( getSession(), "conf-dialog-with-content" );
+        saveScreenshot( "conf-dialog-with-content" );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( CONTENT_TEXT );
@@ -146,7 +146,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         linkModalDialog.clickDownloadBarItem().selectOption( "nord.jpg" ).typeText( DOWNLOAD_TEXT ).pressInsertButton();
-        TestUtils.saveScreenshot( getSession(), "conf-dialog-download" );
+        saveScreenshot( "conf-dialog-download" );
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"
@@ -167,13 +167,13 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        TestUtils.saveScreenshot( getSession(), "conf-dialog-email" );
+        saveScreenshot( "conf-dialog-email" );
         linkModalDialog.clickEmailBarItem().typeEmail( EMAIL ).typeSubject( EMAIL_TEXT ).typeText( "send to" ).pressInsertButton();
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"
         configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
-        TestUtils.saveScreenshot( getSession(), "conf-dialog-email-inserted" );
+        saveScreenshot( "conf-dialog-email-inserted" );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( EMAIL_TEXT );
@@ -208,7 +208,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         and: "'embedded iframe' macro inserted, and changes applied"
         MacroModalDialog macroModalDialog = configurationDialog.showToolbarAndClickOnInsertMacroButton();
         sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "site_conf_dialog_macro" );
+        saveScreenshot( "site_conf_dialog_macro" );
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, EMBEDDED_IFRAME_CODE_RESULT );
         macroModalDialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
@@ -218,7 +218,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "preview button pressed"
         wizard.clickToolbarPreview();
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
-        TestUtils.saveScreenshot( getSession(), "site_config_preview" );
+        saveScreenshot( "site_config_preview" );
 
         then: "page source of new opened tab in a browser is not empty"
         source != null;

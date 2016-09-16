@@ -29,14 +29,16 @@ class Wizard_DeleteSite_ConfirmDelete_Spec
         when: "ConfirmContentDelete Dialog has been opened"
         DeleteContentDialog deleteContentDialog = wizard.clickToolbarDelete();
         deleteContentDialog.waitForOpened();
+
+        and: "Delete button on the dialog was pressed"
         deleteContentDialog.clickOnDeleteButton();
         ConfirmContentDeleteDialog confirmDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "test_wizard_confirm_delete_site" );
+        saveScreenshot( "test_wizard_confirm_delete_site" );
 
         then: "'Confirm delete' dialog appears with correct control elements"
         confirmDialog.isCancelButtonBottomDisplayed();
+
         and:
         confirmDialog.isCancelButtonTopDisplayed();
 

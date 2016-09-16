@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -21,7 +20,7 @@ class ContentWizardPanel_NameCollisions_Spec
         when:
         String warning = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).typeData(
             TEST_FOLDER ).save().waitNotificationWarning( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "test_save_content_name_in_use" )
+        saveScreenshot( "test_save_content_name_in_use" )
         then:
         warning == String.format( Application.CONTENT_ALREADY_IN_USE_WARNING, TEST_FOLDER.getName() );
     }
@@ -35,7 +34,7 @@ class ContentWizardPanel_NameCollisions_Spec
         when:
         boolean isMessageCorrect = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).typeData(
             TEST_FOLDER ).save().waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "test_save_content_name_no_longer_used" )
+        saveScreenshot( "test_save_content_name_no_longer_used" )
 
         then: "'content saved' notification message appeared"
         isMessageCorrect;

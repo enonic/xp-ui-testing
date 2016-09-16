@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PdfFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 
 class ContentWizard_TextExtractionData
@@ -25,7 +24,7 @@ class ContentWizard_TextExtractionData
         when: ""
         findAndSelectContent( TEST_PDF_FILE ).clickToolbarEdit().waitUntilWizardOpened();
         PdfFormViewPanel formViewPanel = new PdfFormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "test_text_extraction_pdf" )
+        saveScreenshot( "test_text_extraction_pdf" )
 
         then: "textarea for extraction of data is present"
         formViewPanel.isTextAreaPresent();
@@ -43,7 +42,7 @@ class ContentWizard_TextExtractionData
 
         and: "the content opend again "
         contentBrowsePanel.clickToolbarEdit();
-        TestUtils.saveScreenshot( getSession(), "test_text_extraction_pdf_updated" );
+        saveScreenshot( "test_text_extraction_pdf_updated" );
 
         then: "correct text displayed in the text-area"
         formViewPanel.getExtractionData() == PDF_EXTRACTION_TEXT;
@@ -53,7 +52,7 @@ class ContentWizard_TextExtractionData
     {
         when: "the text typed in the search input"
         filterPanel.typeSearchText( PDF_EXTRACTION_TEXT );
-        TestUtils.saveScreenshot( getSession(), "test_text_extraction_search_text_pdf" );
+        saveScreenshot( "test_text_extraction_search_text_pdf" );
 
         then: "only one content shown in the grid"
         contentBrowsePanel.getRowsCount() == 1;
@@ -66,7 +65,7 @@ class ContentWizard_TextExtractionData
     {
         when: "the text typed in the search input"
         filterPanel.typeSearchText( TXT_EXTRACTION_TEXT );
-        TestUtils.saveScreenshot( getSession(), "test_text_extraction_search_text_txt" );
+        saveScreenshot( "test_text_extraction_search_text_txt" );
 
         then: "only one content shown in the grid"
         contentBrowsePanel.getRowsCount() == 1;
