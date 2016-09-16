@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.LauncherPanel
 import com.enonic.autotests.pages.LoginPage
-import com.enonic.autotests.pages.XpTourDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
@@ -24,6 +23,9 @@ class LauncherPanel_Spec
     {
         when: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+
+        and: "Xp Tour modal dialog closed"
+        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
         TestUtils.saveScreenshot( getSession(), "launcher-panel-test" );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
@@ -52,21 +54,27 @@ class LauncherPanel_Spec
         launcherPanel.isCloseButtonDisplayed();
     }
 
-    def "WHEN home page opened THEN 'Home' link is active in 'Launcher Panel'"()
+    def "WHEN home page opened THEN 'Home' link is active on 'Launcher Panel'"()
     {
         when: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+
+        and: "'Xp Tour' dialog closed"
+        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
         TestUtils.saveScreenshot( getSession(), "launcher-panel-test" );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
-        then:
+        then: "'Home' link is active on 'Launcher Panel'"
         launcherPanel.getActiveLink() == "Home";
     }
 
     def "WHEN 'content studio' opened  THEN 'Content Studio' link is active in 'Launcher Panel'"()
     {
-        when: "home page opened"
+        when: "'content studio' opened"
         NavigatorHelper.openContentApp( getTestSession() );
+        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
+
+        and: "launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
 
@@ -76,7 +84,7 @@ class LauncherPanel_Spec
 
     def "WHEN 'Applications' opened  THEN 'Applications' link is active in 'Launcher Panel'"()
     {
-        when: "home page opened"
+        when: "'Applications' app opened "
         NavigatorHelper.openApplications( getTestSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
@@ -85,10 +93,13 @@ class LauncherPanel_Spec
         launcherPanel.getActiveLink() == "Applications";
     }
 
-    def "WHEN 'Users' opened  THEN 'Users' link is active in 'Launcher Panel'"()
+    def "WHEN 'Users' app opened  THEN 'Users' link is active in 'Launcher Panel'"()
     {
-        when: "home page opened"
+        when: "'Users' app opened"
         NavigatorHelper.openUsersApp( getTestSession() );
+        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
+
+        and: "launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
         TestUtils.saveScreenshot( getSession(), "test_launcher_application" );
@@ -101,9 +112,8 @@ class LauncherPanel_Spec
     {
         given: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        XpTourDialog xpTourDialog = new XpTourDialog( getSession() );
-        xpTourDialog.clickOnCancelButton();
 
         when: "close button pressed"
         launcherPanel.clickOnCloseButton();
@@ -124,11 +134,10 @@ class LauncherPanel_Spec
     {
         given: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        XpTourDialog xpTourDialog = new XpTourDialog( getSession() );
-        xpTourDialog.clickOnCancelButton();
+        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
 
         when: "'Log out' link clicked"
+        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.clickOnLogout();
         LoginPage loginPage = new LoginPage( getSession() );
 
