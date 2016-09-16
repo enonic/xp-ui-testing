@@ -21,7 +21,7 @@ import com.enonic.autotests.vo.usermanager.User;
 public class NavigatorHelper
 {
 
-    private static void closeXpTourDialogIfPresent( TestSession testSession )
+    public static void closeXpTourDialogIfPresent( TestSession testSession )
     {
         XpTourDialog xpTourDialog = new XpTourDialog( testSession );
         if ( xpTourDialog.isOpened() )

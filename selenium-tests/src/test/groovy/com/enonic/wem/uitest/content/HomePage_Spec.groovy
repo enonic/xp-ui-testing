@@ -21,16 +21,17 @@ class HomePage_Spec
     def setup()
     {
         go "admin"
+        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
     }
 
     def "WHEN home page opened THEN dashboard toolbar is present"()
     {
         when: "home page opened"
-        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        HomePage homePage = new HomePage( getSession() );
         saveScreenshot( "home-page-dashboard" );
 
         then:
-        HomePage homePage = new HomePage( getSession() );
         homePage.isDashboardToolbarDisplayed();
 
         and: "'XP Tour' link present"
@@ -52,10 +53,9 @@ class HomePage_Spec
     def "GIVEN home page opened WHEN 'XP Tour' pressed THEN modal dialog appears"()
     {
         given: "home page opened"
-        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-
-        when:
         HomePage homePage = new HomePage( getSession() );
+
+        when: "'XP Tour' pressed"
         XpTourDialog dialog = homePage.clickOnXpTourLink();
         saveScreenshot( "xp_tour_dialog" );
 
@@ -74,8 +74,7 @@ class HomePage_Spec
 
     def "GIVEN Xp Tour dialog opened WHEN cancel button clicked THEN modal dialog has been closed"()
     {
-        given: "home page opened"
-        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        given: " Xp Tour dialog opened"
         HomePage homePage = new HomePage( getSession() );
         XpTourDialog dialog = homePage.clickOnXpTourLink();
 
@@ -88,8 +87,7 @@ class HomePage_Spec
 
     def "GIVEN Xp Tour dialog opened WHEN Skip button clicked THEN modal dialog has been closed"()
     {
-        given: "home page opened"
-        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        given: "Xp Tour dialog opened"
         HomePage homePage = new HomePage( getSession() );
         XpTourDialog dialog = homePage.clickOnXpTourLink();
 
@@ -103,10 +101,9 @@ class HomePage_Spec
     def "GIVEN home page opened WHEN 'About' pressed THEN modal dialog appears"()
     {
         given: "home page opened"
-        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        HomePage homePage = new HomePage( getSession() );
 
         when:
-        HomePage homePage = new HomePage( getSession() );
         AboutDialog dialog = homePage.clickOnAboutLink();
         saveScreenshot( "about_dialog" );
 
@@ -128,8 +125,7 @@ class HomePage_Spec
 
     def "GIVEN About dialog opened WHEN cancel button clicked THEN modal dialog has been closed"()
     {
-        given: "home page opened"
-        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        given: "About dialog opened"
         HomePage homePage = new HomePage( getSession() );
         AboutDialog dialog = homePage.clickOnAboutLink();
 
