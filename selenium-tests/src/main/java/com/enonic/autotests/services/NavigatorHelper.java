@@ -12,6 +12,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.LoginPage;
+import com.enonic.autotests.pages.XpTourDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
@@ -20,6 +21,14 @@ import com.enonic.autotests.vo.usermanager.User;
 public class NavigatorHelper
 {
 
+    private static void closeXpTourDialogIfPresent( TestSession testSession )
+    {
+        XpTourDialog xpTourDialog = new XpTourDialog( testSession );
+        if ( xpTourDialog.isOpened() )
+        {
+            xpTourDialog.clickOnCancelButton();
+        }
+    }
     /**
      * Opens 'Content Studio' application.
      *
@@ -29,6 +38,7 @@ public class NavigatorHelper
     public static ContentBrowsePanel openContentApp( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
+        closeXpTourDialogIfPresent( testSession );
         ContentBrowsePanel cmPage = home.openContentManagerApplication();
         return cmPage;
     }
@@ -36,6 +46,7 @@ public class NavigatorHelper
     public static UserBrowsePanel openUsersApp( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
+        closeXpTourDialogIfPresent( testSession );
         UserBrowsePanel userBrowsePanel = home.openUserManagerApplication();
         return userBrowsePanel;
     }
@@ -43,6 +54,7 @@ public class NavigatorHelper
     public static ApplicationBrowsePanel openApplications( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
+        closeXpTourDialogIfPresent( testSession );
         ApplicationBrowsePanel userBrowsePanel = home.openApplications();
         return userBrowsePanel;
     }
