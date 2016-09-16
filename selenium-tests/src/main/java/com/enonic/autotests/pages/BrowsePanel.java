@@ -597,7 +597,7 @@ public abstract class BrowsePanel
             list.add( key );
         }
         action.keyDown( Keys.SHIFT ).sendKeys( list.toArray( new Keys[list.size()] ) ).keyUp( Keys.SHIFT ).build().perform();
-        sleep( 1000 );
+        sleep( 1200 );
         return this;
     }
 

@@ -122,7 +122,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "app_arrow_down_shift" );
 
         then: "n+1 rows are selected in the browse panel"
-        applicationBrowsePanel.getSelectedRowsNumber() == 4
+        applicationBrowsePanel.getDisplayNamesOfSelectedGridItems() == 4
     }
 
 
@@ -136,6 +136,6 @@ class ApplicationBrowsePanel_GridPanel_Spec
         TestUtils.saveScreenshot( getTestSession(), "app_arrow_up_shift" );
 
         then: "n+1 rows are selected in the browse panel"
-        applicationBrowsePanel.getSelectedRowsNumber() == 4
+        applicationBrowsePanel.getDisplayNamesOfSelectedGridItems() == 4
     }
 }
