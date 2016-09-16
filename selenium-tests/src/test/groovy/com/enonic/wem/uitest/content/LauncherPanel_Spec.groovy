@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.LauncherPanel
 import com.enonic.autotests.pages.LoginPage
+import com.enonic.autotests.pages.XpTourDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
@@ -101,6 +102,8 @@ class LauncherPanel_Spec
         given: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
+        XpTourDialog xpTourDialog = new XpTourDialog( getSession() );
+        xpTourDialog.clickOnCancelButton();
 
         when: "close button pressed"
         launcherPanel.clickOnCloseButton();
@@ -122,6 +125,8 @@ class LauncherPanel_Spec
         given: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
+        XpTourDialog xpTourDialog = new XpTourDialog( getSession() );
+        xpTourDialog.clickOnCancelButton();
 
         when: "'Log out' link clicked"
         launcherPanel.clickOnLogout();
