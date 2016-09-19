@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class RichComboBoxInput
     extends Application
