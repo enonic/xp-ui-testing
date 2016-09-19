@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -24,7 +23,7 @@ class ContentBrowsePanel_PublishMenu_Spec
 
         when: "the content selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
-        TestUtils.saveScreenshot( getSession(), "test_publish_menu_offline_content" );
+        saveScreenshot( "test_publish_menu_offline_content" );
 
         then: "and 'Publish'-menu is disabled"
         !contentBrowsePanel.isPublishMenuAvailable();
@@ -43,7 +42,7 @@ class ContentBrowsePanel_PublishMenu_Spec
 
         and: "AND 'Unpublish' menu-item is enabled"
         contentBrowsePanel.showPublishMenu();
-        TestUtils.saveScreenshot( getSession(), "test_publish_menu_online_content" );
+        saveScreenshot( "test_publish_menu_online_content" );
         contentBrowsePanel.isUnPublishMenuItemEnabled();
     }
 
@@ -60,7 +59,7 @@ class ContentBrowsePanel_PublishMenu_Spec
         String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "content has 'offline' status"
-        TestUtils.saveScreenshot( getSession(), "test_content_unpublished" );
+        saveScreenshot( "test_content_unpublished" );
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
 
         and: "correct notification message appears"

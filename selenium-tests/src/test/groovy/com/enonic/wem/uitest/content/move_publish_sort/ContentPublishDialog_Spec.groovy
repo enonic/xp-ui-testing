@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.schema.content.ContentTypeName
@@ -128,7 +127,7 @@ class ContentPublishDialog_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         List<String> names = contentPublishDialog.getNamesOfContentsToPublish();
-        TestUtils.saveScreenshot( getSession(), "publish-dialog-opened" );
+        saveScreenshot( "publish-dialog-opened" );
 
         then: "only one name of content displayed"
         names.size() == 1;
@@ -147,7 +146,7 @@ class ContentPublishDialog_Spec
         when:
         contentPublishDialog.setIncludeChildCheckbox( true );
         List<String> dependant = contentPublishDialog.getDependantList();
-        TestUtils.saveScreenshot( getSession(), "publish-dialog-dependencies" );
+        saveScreenshot( "publish-dialog-dependencies" );
 
         then: "The header of 'Dependencies list' appears"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
@@ -172,7 +171,7 @@ class ContentPublishDialog_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         List<String> dependant = contentPublishDialog.getDependantList();
-        TestUtils.saveScreenshot( getSession(), "publish-dialog-dependencies-child" );
+        saveScreenshot( "publish-dialog-dependencies-child" );
 
         then: "The header of 'Dependencies list' appears"
         contentPublishDialog.isDependenciesListHeaderDisplayed();

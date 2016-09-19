@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -57,7 +56,7 @@ class ContentPublishDelete_Spec
         when:
         filterPanel.typeSearchText( content.getName() )
         DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete();
-        TestUtils.saveScreenshot( getSession(), "test_delete_dialog_checkbox" );
+        saveScreenshot( "test_delete_dialog_checkbox" );
 
         then:
         dialog.isInstantlyDeleteCheckboxChecked();

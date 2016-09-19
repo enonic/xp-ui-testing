@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Ignore
@@ -183,7 +182,7 @@ class ContentUnpublishDialog_Spec
         when: "both contents are selected"
         contentBrowsePanel.selectContentInTable( first.getName(), second.getName() );
         contentBrowsePanel.showPublishMenu();
-        TestUtils.saveScreenshot( getSession(), "test_unpublish_item_disabled" );
+        saveScreenshot( "test_unpublish_item_disabled" );
 
         then: "Publish-menu is disabled when two 'offline' contents are selected"
         contentBrowsePanel.isPublishMenuAvailable();

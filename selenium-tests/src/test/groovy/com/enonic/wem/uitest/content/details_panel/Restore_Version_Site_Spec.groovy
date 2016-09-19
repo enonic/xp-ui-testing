@@ -7,7 +7,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDial
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
@@ -38,13 +37,13 @@ class Restore_Version_Site_Spec
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
-        TestUtils.saveScreenshot( getSession(), "versions_before_changing_dname_site" );
+        saveScreenshot( "versions_before_changing_dname_site" );
 
 
         when: "display name of the site changed"
         contentBrowsePanel.clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
-        TestUtils.saveScreenshot( getSession(), "versions_after_changing_dname_site" );
+        saveScreenshot( "versions_after_changing_dname_site" );
 
         then: "new 'version history item' appeared in the version-view"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
@@ -61,7 +60,7 @@ class Restore_Version_Site_Spec
         when: "the site selected AND previous version restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "site_display_name_restored" );
+        saveScreenshot( "site_display_name_restored" );
 
         then: "correct display name appears in the grid"
         filterPanel.typeSearchText( INITIAL_DISPLAY_NAME );
@@ -105,7 +104,7 @@ class Restore_Version_Site_Spec
 
         and: "security tab opened"
         SecurityWizardStepForm form = contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink();
-        TestUtils.saveScreenshot( getSession(), "version_acl_site_application_restored" );
+        saveScreenshot( "version_acl_site_application_restored" );
 
         then: "new role present after restoring of the latest version"
         form.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
@@ -122,14 +121,14 @@ class Restore_Version_Site_Spec
 
         when: "application removed"
         siteFormViewPanel.removeApp( MY_FIRST_APP );
-        TestUtils.saveScreenshot( getSession(), "app_removed_from_wizard" );
+        saveScreenshot( "app_removed_from_wizard" );
         and: "the site saved"
         wizard.save();
         sleep( 1000 );
 
         and: "home button clicked"
         contentBrowsePanel.pressAppHomeButton();
-        TestUtils.saveScreenshot( getSession(), "version_site_app_removed" );
+        saveScreenshot( "version_site_app_removed" );
 
         then: "number of versions increased after the removing of application in wizard"
         allContentVersionsView.getAllVersions().size() - before == 1;
@@ -150,7 +149,7 @@ class Restore_Version_Site_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
         contentBrowsePanel.clickOnTab( INITIAL_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "version_site_application_restored" );
+        saveScreenshot( "version_site_application_restored" );
 
         then: "application present in the 'application selector'"
         siteFormViewPanel.getAppDisplayNames().get( 0 ) == MY_FIRST_APP;
@@ -170,7 +169,7 @@ class Restore_Version_Site_Spec
 
         when: "page controller selected from the combobox-options"
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
-        TestUtils.saveScreenshot( getSession(), "site_version_controller_added_wizard" );
+        saveScreenshot( "site_version_controller_added_wizard" );
 
         and: "the site saved"
         wizard.save();
@@ -178,7 +177,7 @@ class Restore_Version_Site_Spec
 
         and: "home button clicked"
         contentBrowsePanel.pressAppHomeButton();
-        TestUtils.saveScreenshot( getSession(), "version_site_controller_added" );
+        saveScreenshot( "version_site_controller_added" );
 
         then: "number of versions increased after adding of controller in the wizard"
         allContentVersionsView.getAllVersions().size() - before == 1;
@@ -198,7 +197,7 @@ class Restore_Version_Site_Spec
         sleep( 1000 );
         contentBrowsePanel.clickOnTab( INITIAL_DISPLAY_NAME );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "test_version_without_selected_controller" );
+        saveScreenshot( "test_version_without_selected_controller" );
 
         then: "page controller not selected in the page editor and option filter input should be displayed"
         wizard.isPageDescriptorOptionsFilterDisplayed();

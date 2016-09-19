@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -108,7 +107,7 @@ class ContentWizard_PublishButton_Spec
         when: "'Unpublish' menu item selected"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "test_wizard_unpublish_selected" );
+        saveScreenshot( "test_wizard_unpublish_selected" );
 
         then: "the wizard closes"
         !wizard.isOpened();
