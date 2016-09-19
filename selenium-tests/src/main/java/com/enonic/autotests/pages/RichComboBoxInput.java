@@ -21,7 +21,8 @@ public class RichComboBoxInput
     {
         String optionXpath = String.format( RICH_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, option );
         boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), Application.EXPLICIT_NORMAL );
-
+        sleep( 400 );
+        saveScreenshot( "option: " + option );
         if ( !isVisible )
         {
             throw new TestFrameworkException( "option was not found! " + option );
