@@ -766,7 +766,7 @@ public abstract class BrowsePanel
             throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
         }
         waitAndFindElement( By.xpath( itemCheckBoxXpath ) ).click();
-        sleep( 1000 );
+        sleep( 700 );
         getLogger().info( "check box was selected, item: " + itemName );
         return (T) this;
     }
