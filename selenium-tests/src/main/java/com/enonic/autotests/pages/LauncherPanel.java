@@ -30,7 +30,7 @@ public class LauncherPanel
 
     private final String LOGOUT_LINK = PANEL_DIV + "//a[contains(@href,'logout')]";
 
-    private final String USER_DISPLAY_NAME = PANEL_DIV + "//div[@class='user-info']/span";
+    private final String USER_DISPLAY_NAME = PANEL_DIV + "//div[@class='user-info']/p";
 
     @FindBy(xpath = CLOSE_LAUNCHER_BUTTON)
     WebElement closePanelButton;

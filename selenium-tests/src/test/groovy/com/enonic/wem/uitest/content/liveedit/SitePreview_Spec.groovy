@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -77,5 +78,19 @@ class SitePreview_Spec
 
         then: "'Preview' in the toolbar wizard is disabled"
         wizard.isPreviewButtonEnabled()
+    }
+    // test for verifying of XP-4123 (Page Editor inaccessible for a folder)
+    def "GIVEN a existing site with a selected controller WHEN wizard for adding a child folder opened THEN 'Show Page Editor' button should be present "()
+    {
+        given:
+        ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarNew().selectContentType(
+            ContentTypeName.folder() );
+
+        when:
+        wizard.typeDisplayName( "test-page-editor-toggler" ).save();
+        saveScreenshot( "folder-show-page-editor-toggler" );
+
+        then: "'Show Page Editor' button should be present"
+        wizard.isShowPageEditorButtonDisplayed();
     }
 }
