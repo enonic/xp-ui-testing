@@ -30,7 +30,7 @@ public class LauncherPanel
 
     private final String LOGOUT_LINK = PANEL_DIV + "//a[contains(@href,'logout')]";
 
-    private final String USER_DISPLAY_NAME = PANEL_DIV + "//div[@class='user-info']/p";
+    private final String USER_DISPLAY_NAME = PANEL_DIV + "//div[@class='user-info']//p";
 
     @FindBy(xpath = CLOSE_LAUNCHER_BUTTON)
     WebElement closePanelButton;
@@ -178,6 +178,11 @@ public class LauncherPanel
 
     public String getUserDisplayName()
     {
+        if ( !isElementDisplayed( USER_DISPLAY_NAME ) )
+        {
+            saveScreenshot( "err_launcher_user_name" );
+            throw new TestFrameworkException( "user name was not found on the launcher panel!" );
+        }
         return getDisplayedString( USER_DISPLAY_NAME );
     }
 

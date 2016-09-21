@@ -126,8 +126,6 @@ class Base_InputFields_Occurrences
 
     protected ContentWizardPanel selectSiteOpenWizard( String contentTypeName )
     {
-        // filterPanel.typeSearchText( SITE_NAME );
-        //sleep( 1000 );
         return contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( contentTypeName );
     }
 
@@ -360,7 +358,6 @@ class Base_InputFields_Occurrences
         {
             contentData.addStrings( DateTimeFormViewPanel.DATE_TIME_PROPERTY, dateTime );
         }
-
         Content dateTimeContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "date time content" ).
@@ -378,7 +375,6 @@ class Base_InputFields_Occurrences
         {
             data.addStrings( DoubleFormViewPanel.DOUBLE_VALUES, doubleValue );
         }
-
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
@@ -396,7 +392,6 @@ class Base_InputFields_Occurrences
         {
             data.addStrings( DoubleFormViewPanel.DOUBLE_VALUES, doubleValue );
         }
-
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
@@ -625,8 +620,6 @@ class Base_InputFields_Occurrences
                 break;
             default:
                 throw new TestFrameworkException( "data not implemented" );
-
-
         }
         return data;
     }
@@ -638,7 +631,6 @@ class Base_InputFields_Occurrences
         Content tagContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( "tag2_5 content" ).
-
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":tag2_5" ).data( data ).
             build();

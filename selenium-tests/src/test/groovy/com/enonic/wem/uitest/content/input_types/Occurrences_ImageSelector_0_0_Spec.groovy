@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -62,7 +61,7 @@ class Occurrences_ImageSelector_0_0_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> images = formViewPanel.getSelectedImages();
-        TestUtils.saveScreenshot( getSession(), "imgs0_0_4" )
+        saveScreenshot( "img_sel_content0_0_4" )
 
         then: "four images are present on wizard page"
         images.size() == 4;
@@ -114,7 +113,7 @@ class Occurrences_ImageSelector_0_0_Spec
         when: "content opened for edit"
         formViewPanel.clickOnImage( TEST_IMG_3 );
         formViewPanel.clickOnRemoveButton();
-        TestUtils.saveScreenshot( getSession(), "imgs0_0_remove" );
+        saveScreenshot( "img_sel_0_0_one_removed" );
 
         then: "number of images reduced"
         formViewPanel.getSelectedImages().size() == 3;

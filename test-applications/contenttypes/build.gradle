@@ -7,11 +7,11 @@ buildscript {
         }
     }
     ext {
-        xpVersion = '6.7.0-SNAPSHOT'
+        xpVersion = '6.8.0-SNAPSHOT'
     }
 
     dependencies {
-        classpath 'com.enonic.xp:gradle-plugin:6.6.0-SNAPSHOT'
+        classpath 'com.enonic.xp:gradle-plugin:6.8.0-SNAPSHOT'
     }
 }
 
