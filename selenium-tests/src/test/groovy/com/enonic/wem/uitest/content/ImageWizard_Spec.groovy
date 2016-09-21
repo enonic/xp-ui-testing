@@ -15,7 +15,7 @@ class ImageWizard_Spec
     @Shared
     String COPYRIGHT_TEXT = "copyright text";
 
-    def "WHEN content wizard opened THEN all buttons on toolbar have correct state"()
+    def "WHEN image content opened THEN all control elemnts are present"()
     {
         when: "content wizard opened"
         findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -24,13 +24,13 @@ class ImageWizard_Spec
         then: "Caption text area is present"
         imageFormViewPanel.isCaptionTextAreaPresent();
 
-        and: "'Gps Info'tab bar item is present"
+        and: "'Gps Info' tab bar item is present"
         imageFormViewPanel.isGpsInfoTabBarItemPresent();
 
-        and: "'Image Info'tab bar item is present"
+        and: "'Image Info' tab bar item is present"
         imageFormViewPanel.isImageInfoTabBarItemPresent();
 
-        and: "'Photo Info'tab bar item is present"
+        and: "'Photo Info' tab bar item is present"
         imageFormViewPanel.isPhotoInfoTabBarItemPresent();
 
         and: "Image uploader is present"
