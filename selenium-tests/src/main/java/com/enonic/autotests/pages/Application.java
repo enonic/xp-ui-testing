@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
@@ -140,5 +141,10 @@ public class Application
     protected void saveScreenshot( String name )
     {
         TestUtils.saveScreenshot( getSession(), name );
+    }
+
+    protected JavascriptExecutor getJavaScriptExecutor()
+    {
+        return (JavascriptExecutor) getSession().getDriver();
     }
 }

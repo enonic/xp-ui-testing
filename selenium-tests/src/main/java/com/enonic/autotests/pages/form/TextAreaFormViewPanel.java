@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.form;
 
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -43,9 +42,7 @@ public class TextAreaFormViewPanel
     public String getTextAreaValue()
     {
         String id = textArea.getAttribute( "id" );
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String text = (String) executor.executeScript( String.format( ELEMENT_BY_ID, id ) + ".getValue()" );
-        return text;
+        return (String) getJavaScriptExecutor().executeScript( String.format( ELEMENT_BY_ID, id ) + ".getValue()" );
     }
 
 }
