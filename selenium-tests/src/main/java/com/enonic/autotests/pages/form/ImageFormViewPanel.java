@@ -1,5 +1,8 @@
 package com.enonic.autotests.pages.form;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,11 +41,23 @@ public class ImageFormViewPanel
     private final String ARTISTS_TAGS_INPUT =
         FORM_VIEW + "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Artist']]//input[@type='text']";
 
+    private final String TAGS_INPUT =
+        FORM_VIEW + "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//input[@type='text']";
+
+    private final String ARTISTS_TAGS = FORM_VIEW +
+        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Artist']]//ul/li[contains(@id,'api.ui.tags.Tag')]/span";
+
+    private final String TAGS = FORM_VIEW +
+        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//ul/li[contains(@id,'api.ui.tags.Tag')]/span";
+
     @FindBy(xpath = CAPTION_TEXTAREA)
     private WebElement captionTextArea;
 
     @FindBy(xpath = ARTISTS_TAGS_INPUT)
     private WebElement artistTagsInput;
+
+    @FindBy(xpath = TAGS_INPUT)
+    private WebElement tagsInput;
 
     @FindBy(xpath = COPYRIGHT_TEXT_INPUT)
     private WebElement copyrightInput;
@@ -108,9 +123,21 @@ public class ImageFormViewPanel
         for ( int i = 0; i < tags.length; i++ )
         {
             artistTagsInput.sendKeys( tags[i] );
-            sleep( 300 );
+            sleep( 250 );
             artistTagsInput.sendKeys( Keys.ENTER );
-            sleep( 300 );
+            sleep( 250 );
+        }
+        return this;
+    }
+
+    public ImageFormViewPanel typeTags( String... tags )
+    {
+        for ( int i = 0; i < tags.length; i++ )
+        {
+            tagsInput.sendKeys( tags[i] );
+            sleep( 200 );
+            tagsInput.sendKeys( Keys.ENTER );
+            sleep( 200 );
         }
         return this;
     }
@@ -140,4 +167,13 @@ public class ImageFormViewPanel
         return copyrightInput.getAttribute( "value" );
     }
 
+    public List<String> getArtistsTagsText()
+    {
+        return getDisplayedStrings( By.xpath( ARTISTS_TAGS ) );
+    }
+
+    public List<String> getTagsText()
+    {
+        return getDisplayedStrings( By.xpath( TAGS ) );
+    }
 }

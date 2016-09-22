@@ -15,6 +15,18 @@ class ImageWizard_Spec
     @Shared
     String COPYRIGHT_TEXT = "copyright text";
 
+    @Shared
+    String ARTIST_TAG1 = "artist1";
+
+    @Shared
+    String ARTIST_TAG2 = "artist2";
+
+    @Shared
+    String TAG1 = "tag1";
+
+    @Shared
+    String TAG2 = "tag2";
+
     def "WHEN image content opened THEN all control elemnts are present"()
     {
         when: "content wizard opened"
@@ -87,5 +99,51 @@ class ImageWizard_Spec
 
         then:
         imageFormViewPanel.getTextFromCopyright() == COPYRIGHT_TEXT;
+    }
+
+    def "GIVEN existing image content WHEN the content opened and 'Artists' tags added AND content saved THEN tags are presnt in the input"()
+    {
+        given: "content wizard opened"
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
+
+        when: "text in the 'Artists' input typed"
+        imageFormViewPanel.typeInArtistsInput( ARTIST_TAG1, ARTIST_TAG2 );
+
+        and: "wizard saved and closed"
+        wizard.save().close( IMPORTED_BOOK_IMAGE );
+
+        and: "image opened again"
+        contentBrowsePanel.clickToolbarEdit();
+        saveScreenshot( "image_artists_tags" );
+
+        then: "artist tags are present on the page "
+        imageFormViewPanel.getArtistsTagsText().contains( ARTIST_TAG1 );
+
+        and: ""
+        imageFormViewPanel.getArtistsTagsText().contains( ARTIST_TAG2 );
+    }
+
+    def "GIVEN existing image content WHEN the content opened AND two tags added AND content saved THEN tags are present on the page"()
+    {
+        given: "content wizard opened"
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
+
+        when: "two tags added"
+        imageFormViewPanel.typeTags( TAG1, TAG2 );
+
+        and: "wizard saved and closed"
+        wizard.save().close( IMPORTED_BOOK_IMAGE );
+
+        and: "image opened again"
+        contentBrowsePanel.clickToolbarEdit();
+        saveScreenshot( "image_two_tags_added" );
+
+        then: "added tags are present on the page "
+        imageFormViewPanel.getTagsText().contains( TAG1 );
+
+        and: ""
+        imageFormViewPanel.getTagsText().contains( TAG2 );
     }
 }
