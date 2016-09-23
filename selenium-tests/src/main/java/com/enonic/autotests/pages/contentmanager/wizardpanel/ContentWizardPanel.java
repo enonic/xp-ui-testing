@@ -275,15 +275,29 @@ public class ContentWizardPanel
         return this;
     }
 
+    public ContentWizardPanel clickOnWizardStep( String stepName )
+    {
+        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, stepName );
+        if ( !isElementDisplayed( securityTabXpath ) )
+        {
+            saveScreenshot( "err_" + stepName );
+            throw new TestFrameworkException( "step was not found! " + stepName );
+        }
+        findElement( By.xpath( securityTabXpath ) ).click();
+        sleep( 100 );
+        return this;
+    }
+
     public SecurityWizardStepForm clickOnSecurityTabLink()
     {
         String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SECURITY_LINK_TEXT );
-        if ( findElements( By.xpath( securityTabXpath ) ).size() == 0 )
+        if ( !isElementDisplayed( securityTabXpath ) )
         {
-            throw new TestFrameworkException( "security tab was not found!" );
+            saveScreenshot( "err_" + SECURITY_LINK_TEXT );
+            throw new TestFrameworkException( "step was not found! " + SECURITY_LINK_TEXT );
         }
-        findElements( By.xpath( securityTabXpath ) ).get( 0 ).click();
-        sleep( 1000 );
+        findElement( By.xpath( securityTabXpath ) ).click();
+        sleep( 100 );
         return new SecurityWizardStepForm( getSession() );
     }
 
@@ -295,7 +309,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "settings tab was not found!" );
         }
         findElement( By.xpath( securityTabXpath ) ).click();
-        sleep( 1000 );
+        sleep( 300 );
         return new SettingsWizardStepForm( getSession() );
     }
 
@@ -327,7 +341,7 @@ public class ContentWizardPanel
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();
-        sleep( 1000 );
+        sleep( 800 );
         return this;
     }
 
