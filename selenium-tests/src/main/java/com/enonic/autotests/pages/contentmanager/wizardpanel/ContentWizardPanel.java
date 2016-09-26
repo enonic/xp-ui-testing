@@ -297,7 +297,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "step was not found! " + SECURITY_LINK_TEXT );
         }
         findElement( By.xpath( securityTabXpath ) ).click();
-        sleep( 100 );
+        sleep( 500 );
         return new SecurityWizardStepForm( getSession() );
     }
 
