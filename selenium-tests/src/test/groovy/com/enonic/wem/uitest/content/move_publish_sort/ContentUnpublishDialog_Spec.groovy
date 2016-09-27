@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -161,8 +160,7 @@ class ContentUnpublishDialog_Spec
         then: "content not listed in the grid"
         !contentBrowsePanel.exists( content.getName() );
     }
-    //XP-3584
-    @Ignore
+    //test verifies the XP-3584
     def "GIVEN two existing 'offline' contents WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"()
     {
         given: "first content added"

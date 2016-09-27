@@ -2,15 +2,12 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PhotoInfoFormViewPanel
-import spock.lang.Shared
 
 /**
  * Created on 23.09.2016.*/
 class PhotoInfo_Wizard_Spec
     extends BaseContentSpec
 {
-    @Shared
-    String TEST_DESCRIPTION = "test description";
 
     def "WHEN image content opened THEN all control elements are present"()
     {
@@ -45,5 +42,38 @@ class PhotoInfo_Wizard_Spec
         and: "input for 'exposure bias' is displayed"
         photoInfoFormViewPanel.isExposureBiasInputPresent();
 
+        and: "input for 'aperture' is displayed"
+        photoInfoFormViewPanel.isApertureInputPresent();
+
+
+        and: "input for 'auto flash compensation' is displayed"
+        photoInfoFormViewPanel.isAutoFlashCompensationPresent();
+
+        and: "input for 'flash' is displayed"
+        photoInfoFormViewPanel.isPhotoFlashPresent();
+
+        and: "input for 'shutter time' is displayed"
+        photoInfoFormViewPanel.isShutterTimePresent();
+
+        and: "input for 'white balance' is displayed"
+        photoInfoFormViewPanel.isWhiteBalancePresent();
+
+        and: "input for 'exposure program' is displayed"
+        photoInfoFormViewPanel.isExposureProgramPresent();
+
+        and: "input for 'shooting mode' is displayed"
+        photoInfoFormViewPanel.isShootingModePresent();
+
+        and: "input for 'metering mode' is displayed"
+        photoInfoFormViewPanel.isMeteringModePresent();
+
+        and: "input for 'exposure mode' is displayed"
+        photoInfoFormViewPanel.isExposureModePresent();
+
+        and: "input for 'focus distance' is displayed"
+        photoInfoFormViewPanel.isFocusDistancePresent();
+
+        and: "input for 'orientation' is displayed"
+        photoInfoFormViewPanel.isOrientationPresent();
     }
 }

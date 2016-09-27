@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.RelationshipFormView
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.input_types.Base_InputFields_Occurrences
 import com.enonic.xp.content.ContentPath
@@ -68,7 +67,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         when:
         formViewPanel.type( TEST_RELATIONSHIP_CONTENT.getData() );
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "rel_4_opt" )
+        saveScreenshot( "rel_4_opt" )
 
         then: "one selected file displayed"
         formViewPanel.getNumberOfSelectedFiles() == 4;
@@ -86,7 +85,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         when:
         formViewPanel.removeSelectedFile( NORD_IMAGE_NAME );
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "rel_3_opt" );
+        saveScreenshot( "rel_3_opt" );
 
         then: "one selected file displayed"
         formViewPanel.getNumberOfSelectedFiles() == 3;

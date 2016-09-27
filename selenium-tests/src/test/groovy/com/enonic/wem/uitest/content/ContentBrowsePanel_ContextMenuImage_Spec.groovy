@@ -5,7 +5,7 @@ import com.enonic.autotests.utils.TestUtils
 class ContentBrowsePanel_ContextMenuImage_Spec
     extends BaseContentSpec
 {
-    def "GIVEN a folder WHEN context menu opened  THEN all items have correct state"()
+    def "GIVEN an offline folder WHEN context menu opened  THEN all items have correct state"()
     {
         when: "context menu opened"
         filterPanel.typeSearchText( IMPORTED_BOOK_IMAGE );

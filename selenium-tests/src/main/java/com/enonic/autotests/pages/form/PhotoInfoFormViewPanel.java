@@ -18,45 +18,101 @@ public class PhotoInfoFormViewPanel
     private final String PHOTO_INFO_STEP_FORM =
         "//div[contains(@id,'ContentWizardStepForm') and preceding-sibling::h2[text()='Photo Info']]";
 
-    private final String PHOTO_LENS_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'lens')]";
+    private final String LENS_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'lens')]";
 
-    private final String PHOTO_FOCAL_LENGTH_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'focalLength')]";
+    private final String FOCAL_LENGTH_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'focalLength')]";
 
-    private final String PHOTO_MAKE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'make')]";
+    private final String MAKE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'make')]";
 
-    private final String PHOTO_MODEL_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'model')]";
+    private final String MODEL_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'model')]";
 
-    private final String PHOTO_ISO_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'iso')]";
+    private final String ISO_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'iso')]";
 
-    private final String PHOTO_EXPOSURE_BIAS_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'exposureBias')]";
+    private final String EXPOSURE_BIAS_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'exposureBias')]";
+
+    private final String APERTURE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'aperture')]";
 
     private final String DATE_TIME_INPUT = PHOTO_INFO_STEP_FORM + "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]";
 
-    private final String PHOTO_FOCAL_LENGTH35_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'focalLength35')]";
+    private final String FOCAL_LENGTH35_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'focalLength35')]";
 
-    @FindBy(xpath = PHOTO_FOCAL_LENGTH35_INPUT)
+    private final String ORIENTATION_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'orientation')]";
+
+    private final String FOCUS_DISTANCE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'focusDistance')]";
+
+    private final String EXPOSURE_MODE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'exposureMode')]";
+
+    private final String SHOOTING_MODE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'shootingMode')]";
+
+    private final String EXPOSURE_PROGRAM_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'exposureProgram')]";
+
+    private final String WHITE_BALANCE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'whiteBalance')]";
+
+    private final String AUTO_FLASH_COMPENSATION_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'autoFlashCompensation')]";
+
+    private final String FLASH_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'flash')]";
+
+    private final String SHUTTER_TIME_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'shutterTime')]";
+
+    private final String METERING_MODE_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'meteringMode')]";
+
+
+    @FindBy(xpath = FOCAL_LENGTH35_INPUT)
     private WebElement focalLength35Input;
 
-    @FindBy(xpath = PHOTO_LENS_INPUT)
+    @FindBy(xpath = LENS_INPUT)
     private WebElement lensInput;
 
-    @FindBy(xpath = PHOTO_FOCAL_LENGTH_INPUT)
+    @FindBy(xpath = FOCAL_LENGTH_INPUT)
     private WebElement focalLengthInput;
 
     @FindBy(xpath = DATE_TIME_INPUT)
     private WebElement dateTimeInput;
 
-    @FindBy(xpath = PHOTO_MAKE_INPUT)
+    @FindBy(xpath = MAKE_INPUT)
     private WebElement makeInput;
 
-    @FindBy(xpath = PHOTO_MODEL_INPUT)
+    @FindBy(xpath = MODEL_INPUT)
     private WebElement modelInput;
 
-    @FindBy(xpath = PHOTO_ISO_INPUT)
+    @FindBy(xpath = ISO_INPUT)
     private WebElement isoInput;
 
-    @FindBy(xpath = PHOTO_EXPOSURE_BIAS_INPUT)
+    @FindBy(xpath = EXPOSURE_BIAS_INPUT)
     private WebElement exposureBiasInput;
+
+    @FindBy(xpath = APERTURE_INPUT)
+    private WebElement apertureInput;
+
+    @FindBy(xpath = FOCUS_DISTANCE_INPUT)
+    private WebElement focusDistanceInput;
+
+    @FindBy(xpath = EXPOSURE_MODE_INPUT)
+    private WebElement exposureModeInput;
+
+    @FindBy(xpath = SHOOTING_MODE_INPUT)
+    private WebElement shootingModeInput;
+
+    @FindBy(xpath = EXPOSURE_PROGRAM_INPUT)
+    private WebElement exposureProgramInput;
+
+    @FindBy(xpath = WHITE_BALANCE_INPUT)
+    private WebElement whiteBalanceInput;
+
+    @FindBy(xpath = METERING_MODE_INPUT)
+    private WebElement meteringModeInput;
+
+    @FindBy(xpath = SHUTTER_TIME_INPUT)
+    private WebElement shutterTimeInput;
+
+    @FindBy(xpath = AUTO_FLASH_COMPENSATION_INPUT)
+    private WebElement autoFlashCompensationInput;
+
+    @FindBy(xpath = FLASH_INPUT)
+    private WebElement flashInput;
+
+    @FindBy(xpath = ORIENTATION_INPUT)
+    private WebElement orientationInput;
 
 
     public PhotoInfoFormViewPanel( final TestSession session )
@@ -115,5 +171,60 @@ public class PhotoInfoFormViewPanel
     public boolean isExposureBiasInputPresent()
     {
         return exposureBiasInput.isDisplayed();
+    }
+
+    public boolean isApertureInputPresent()
+    {
+        return apertureInput.isDisplayed();
+    }
+
+    public boolean isFocusDistancePresent()
+    {
+        return focusDistanceInput.isDisplayed();
+    }
+
+    public boolean isExposureModePresent()
+    {
+        return exposureModeInput.isDisplayed();
+    }
+
+    public boolean isShootingModePresent()
+    {
+        return shootingModeInput.isDisplayed();
+    }
+
+    public boolean isExposureProgramPresent()
+    {
+        return exposureProgramInput.isDisplayed();
+    }
+
+    public boolean isWhiteBalancePresent()
+    {
+        return whiteBalanceInput.isDisplayed();
+    }
+
+    public boolean isAutoFlashCompensationPresent()
+    {
+        return autoFlashCompensationInput.isDisplayed();
+    }
+
+    public boolean isPhotoFlashPresent()
+    {
+        return flashInput.isDisplayed();
+    }
+
+    public boolean isShutterTimePresent()
+    {
+        return shutterTimeInput.isDisplayed();
+    }
+
+    public boolean isOrientationPresent()
+    {
+        return orientationInput.isDisplayed();
+    }
+
+    public boolean isMeteringModePresent()
+    {
+        return meteringModeInput.isDisplayed();
     }
 }
