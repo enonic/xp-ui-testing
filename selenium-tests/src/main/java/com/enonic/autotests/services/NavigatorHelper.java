@@ -16,6 +16,8 @@ import com.enonic.autotests.pages.XpTourDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.User;
 
 public class NavigatorHelper
@@ -26,9 +28,11 @@ public class NavigatorHelper
         XpTourDialog xpTourDialog = new XpTourDialog( testSession );
         if ( xpTourDialog.isOpened() )
         {
+            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "tour" ) );
             xpTourDialog.clickOnCancelButton();
         }
     }
+
     /**
      * Opens 'Content Studio' application.
      *
