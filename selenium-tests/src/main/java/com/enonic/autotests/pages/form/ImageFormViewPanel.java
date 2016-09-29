@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorDialog;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -62,10 +63,34 @@ public class ImageFormViewPanel
     @FindBy(xpath = COPYRIGHT_TEXT_INPUT)
     private WebElement copyrightInput;
 
+    @FindBy(xpath = BUTTON_CROP)
+    private WebElement buttonCrop;
+
+    @FindBy(xpath = BUTTON_FOCUS)
+    private WebElement buttonFocus;
+
+
     public ImageFormViewPanel( final TestSession session )
     {
         super( session );
     }
+
+    public ImageEditorDialog clickOnCropButton()
+    {
+        buttonCrop.click();
+        ImageEditorDialog imageEditorDialog = new ImageEditorDialog( getSession() );
+        imageEditorDialog.waitForOpened();
+        return imageEditorDialog;
+    }
+
+    public ImageEditorDialog clickOnFocusButton()
+    {
+        buttonFocus.click();
+        ImageEditorDialog imageEditorDialog = new ImageEditorDialog( getSession() );
+        imageEditorDialog.waitForOpened();
+        return imageEditorDialog;
+    }
+
 
     @Override
     public FormViewPanel type( final PropertyTree data )

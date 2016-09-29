@@ -152,7 +152,7 @@ public class ContentBrowsePanel
         showPublishMenu();
         if ( !isElementDisplayed( PUBLISH_TREE_MENU_ITEM ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_publish_menu_item" );
+            saveScreenshot( "err_publish_menu_item" );
             throw new TestFrameworkException( "menu item was not found!" + "Publish Tree" );
         }
         getDisplayedElement( By.xpath( PUBLISH_TREE_MENU_ITEM ) ).click();
@@ -165,7 +165,7 @@ public class ContentBrowsePanel
     {
         if ( !isUnPublishMenuItemEnabled() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item" );
+            saveScreenshot( "err_unpublish_menu_item" );
             throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
         }
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
@@ -178,7 +178,7 @@ public class ContentBrowsePanel
     {
         if ( !isElementDisplayed( PUBLISH_MENU_DROPDOWN_HANDLER ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_publish_dropdown_handler" );
+            saveScreenshot( "err_publish_dropdown_handler" );
             throw new TestFrameworkException( "dropdown handler for publish menu is not displayed" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( PUBLISH_MENU_DROPDOWN_HANDLER ) ), "class",
@@ -189,7 +189,7 @@ public class ContentBrowsePanel
     {
         if ( !isElementDisplayed( PUBLISH_TREE_MENU_ITEM ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_publish_tree_menu_item_not_visible " );
+            saveScreenshot( "err_publish_tree_menu_item_not_visible " );
             throw new TestFrameworkException( "'publish tree' menu item is not visible!" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( PUBLISH_TREE_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
@@ -200,7 +200,7 @@ public class ContentBrowsePanel
     {
         if ( !isElementDisplayed( UNPUBLISH_MENU_ITEM ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_unpublish_menu_item_not_visible " );
+            saveScreenshot( "err_unpublish_menu_item_not_visible " );
             throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
@@ -239,7 +239,7 @@ public class ContentBrowsePanel
         boolean result = waitUntilClickableNoException( By.xpath( DETAILS_TOGGLE_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_toggle_button" );
+            saveScreenshot( "err_toggle_button" );
             throw new TestFrameworkException( "DetailsToggle button is not clickable!" );
         }
         detailsToggleButton.click();
@@ -271,7 +271,7 @@ public class ContentBrowsePanel
         String contentInGrid = String.format( CONTENT_SUMMARY_VIEWER, contentName );
         if ( !isElementDisplayed( contentInGrid ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + contentName );
+            saveScreenshot( "err_" + contentName );
             throw new TestFrameworkException( "content with path was not found or browsePanel was not displayed!" + contentName );
         }
         WebElement element = getDisplayedElement( By.xpath( contentInGrid ) );
@@ -305,7 +305,7 @@ public class ContentBrowsePanel
             {
                 clickOnDetailsToggleButton();
                 selectContentInTable( contentName );
-                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "details_panel" ) );
+                saveScreenshot( NameHelper.uniqueName( "details_panel" ) );
             }
             return getContentDetailsPanel().openInfoWidget().getContentStatus();
         }
@@ -396,7 +396,7 @@ public class ContentBrowsePanel
     {
         if ( !doScrollAndFindGridItem( contentPath.getName() ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + contentPath.getName() );
+            saveScreenshot( "err_" + contentPath.getName() );
             throw new TestFrameworkException( "expandContent: content was not found! " + contentPath );
         }
         ContentPath path = null;
@@ -444,7 +444,7 @@ public class ContentBrowsePanel
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
-            TestUtils.saveScreenshot( getSession(), "err_delete_button" );
+            saveScreenshot( "err_delete_button" );
             throw new SaveOrUpdateException( "Impossible to delete content, because the 'Delete' button is disabled!" );
         }
         deleteButton.click();
@@ -528,7 +528,7 @@ public class ContentBrowsePanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( NEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), "err_new_button" );
+            saveScreenshot( "err_new_button" );
             throw new TestFrameworkException( "button 'new' is not clickable!" );
         }
         newButton.click();
@@ -566,7 +566,7 @@ public class ContentBrowsePanel
     {
         if ( !isElementDisplayed( MORE_BUTTON_XPATH ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_fold_button" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_fold_button" ) );
             throw new TestFrameworkException( "'More' button not found on the toolbar" );
         }
         getDisplayedElement( By.xpath( MORE_BUTTON_XPATH ) ).click();
@@ -606,7 +606,7 @@ public class ContentBrowsePanel
         boolean isPresentCheckbox = isDynamicElementPresent( By.xpath( checkBoxXpath ), 3 );
         if ( !isPresentCheckbox )
         {
-            TestUtils.saveScreenshot( getSession(), "checkbox" + contentPath.getName() );
+            saveScreenshot( "checkbox" + contentPath.getName() );
             throw new TestFrameworkException( "wrong xpath:" + checkBoxXpath + " or item with name " + contentPath.getName() +
                                                   " was not found!" );
         }
@@ -663,7 +663,7 @@ public class ContentBrowsePanel
         String deleteMenuItem = String.format( CONTEXT_MENU_ITEM, "Delete" );
         if ( !waitIsElementEnabled( findElement( By.xpath( deleteMenuItem ) ), 2 ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
             throw new TestFrameworkException( "Delete context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( deleteMenuItem ) ).click();
@@ -680,12 +680,12 @@ public class ContentBrowsePanel
 
         if ( !isElementDisplayed( publishMenuItem ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
             throw new TestFrameworkException( "publish context-menu item is not visible!" );
         }
         if ( !waitIsElementEnabled( findElement( By.xpath( publishMenuItem ) ), 2 ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
             throw new TestFrameworkException( "publish context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( publishMenuItem ) ).click();
@@ -706,7 +706,7 @@ public class ContentBrowsePanel
         }
         if ( !waitIsElementEnabled( findElement( By.xpath( unpublishMenuItem ) ), 2 ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-unpublish" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-unpublish" ) );
             throw new TestFrameworkException( "unpublish context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( unpublishMenuItem ) ).click();
@@ -755,7 +755,7 @@ public class ContentBrowsePanel
         }
         if ( !waitIsElementEnabled( findElement( By.xpath( editMenuItem ) ), 2 ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
             throw new TestFrameworkException( "Edit context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( editMenuItem ) ).click();
@@ -774,7 +774,7 @@ public class ContentBrowsePanel
         }
         if ( !waitIsElementEnabled( findElement( By.xpath( sortMenuItem ) ), 2 ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-publish" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
             throw new TestFrameworkException( "Sort context-menu item is disabled!" );
         }
         findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).click();
@@ -788,7 +788,7 @@ public class ContentBrowsePanel
         openContextMenu( contentName );
         if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + menuItem );
+            saveScreenshot( "err_" + menuItem );
             throw new TestFrameworkException( menuItem + "  item was not found in the context menu" );
         }
         WebElement previewItem = getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) );
@@ -800,7 +800,7 @@ public class ContentBrowsePanel
         openContextMenu( contentName );
         if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + menuItem );
+            saveScreenshot( "err_" + menuItem );
             throw new TestFrameworkException( menuItem + "  item was not found in the context menu" );
         }
         WebElement previewItem = getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, menuItem ) ) );
@@ -834,7 +834,7 @@ public class ContentBrowsePanel
         String newMenuItem = String.format( CONTEXT_MENU_ITEM, "New" );
         if ( !isElementDisplayed( newMenuItem ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_context-edit" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context-edit" ) );
             throw new TestFrameworkException( "'New' context-menu item is not visible!" );
         }
         getDisplayedElement( By.xpath( newMenuItem ) ).click();
