@@ -5,7 +5,10 @@ import com.enonic.autotests.pages.form.GpsInfoFormViewPanel
 import spock.lang.Shared
 
 /**
- * Created on 27.09.2016.*/
+ * XP-4175 Add selenium tests for Gps info in ImageWizard
+ *
+ * Created on 27.09.2016.
+ * */
 class GpsInfo_ImageWizard_Spec
     extends BaseContentSpec
 {

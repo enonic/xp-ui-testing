@@ -5,7 +5,9 @@ import com.enonic.autotests.pages.form.ImageInfoFormViewPanel
 import spock.lang.Shared
 
 /**
- * Created  on 22.09.2016.*/
+ * XP-4136 Add selenium tests for Image Info (Content Wizard)
+ * Created  on 22.09.2016.
+ * */
 class ImageInfo_Wizard_Spec
     extends BaseContentSpec
 {

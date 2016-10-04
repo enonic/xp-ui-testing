@@ -4,7 +4,9 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PhotoInfoFormViewPanel
 
 /**
- * Created on 23.09.2016.*/
+ * XP-4135 Add selenium tests for Photo Info (ContentWizard)
+ * Created on 23.09.2016.
+ * */
 class PhotoInfo_Wizard_Spec
     extends BaseContentSpec
 {

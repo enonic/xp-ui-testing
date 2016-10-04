@@ -54,6 +54,9 @@ class BaseContentSpec
     String IMPORTED_BOOK_IMAGE = "book.jpg";
 
     @Shared
+    String IMPORTED_WHALE_IMAGE = "whale.jpg";
+
+    @Shared
     String CIRCLES = "circles.svg"
 
     @Shared

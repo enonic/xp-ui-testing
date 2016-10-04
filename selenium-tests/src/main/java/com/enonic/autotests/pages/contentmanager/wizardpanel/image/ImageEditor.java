@@ -20,9 +20,7 @@ public class ImageEditor
 
     private final String FOCUS_CIRCLE = CONTAINER_DIV + "//*[name()='svg']/*[name()='g' and contains(@class,'focus-group')]";
 
-    private final String UP_DRAG_HANDLE = CONTAINER_DIV + "//*[name()='svg' and contains(@id,'dragHandle')]//*[name()='use']";
-
-    private final String IMAGE_FRAME = CONTAINER_DIV + "//div[@class='image-frame']";
+    private final String CROP_HANDLE = CONTAINER_DIV + "//*[name()='svg' and contains(@id,'dragHandle')]//*[name()='use']";
 
     public ImageEditor( TestSession session )
     {
@@ -46,22 +44,32 @@ public class ImageEditor
 
     public void doDragAndChangeSizeOfImage( int yOffset )
     {
-
-        if ( !isElementDisplayed( UP_DRAG_HANDLE ) )
+        if ( !isElementDisplayed( CROP_HANDLE ) )
         {
             throw new TestFrameworkException( "drag handler was not found" );
         }
         Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( findElements( By.xpath( UP_DRAG_HANDLE ) ).get( 0 ) ).moveByOffset( 0, yOffset ).release().perform();
-        sleep( 1000 );
+        builder.clickAndHold( findElement( By.xpath( CROP_HANDLE ) ) ).moveByOffset( 0, yOffset ).release().perform();
+        sleep( 500 );
+    }
 
+    public void doDragAndChangeFocus( int yOffset )
+    {
+        if ( !isElementDisplayed( FOCUS_CIRCLE ) )
+        {
+            saveScreenshot( "err_focus_circle" );
+            throw new TestFrameworkException( "focus-circle was not found" );
+        }
+        Actions builder = new Actions( getDriver() );
+        builder.clickAndHold( findElement( By.xpath( FOCUS_CIRCLE ) ) ).moveByOffset( 0, yOffset ).release().perform();
+        sleep( 500 );
     }
 
     public int getImageHeight()
     {
-        Object viewPortHeight =
+        Object heightOfImageFrame =
             ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('image-frame')[0].style.height" );
-        return Integer.valueOf( viewPortHeight.toString().substring( 0, viewPortHeight.toString().indexOf( "." ) ) );
+        return Integer.valueOf( heightOfImageFrame.toString().substring( 0, heightOfImageFrame.toString().indexOf( "." ) ) );
     }
 
 }
