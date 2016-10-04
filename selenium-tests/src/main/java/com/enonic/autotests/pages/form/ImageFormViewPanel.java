@@ -8,7 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorDialog;
+import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -36,6 +37,8 @@ public class ImageFormViewPanel
     private final String IMAGE_EDITOR = IMAGE_UPLOADER + "//div[contains(@id,'ImageEditor')]";
 
     private final String BUTTON_CROP = IMAGE_EDITOR + "//button[contains(@class,'button-crop')]";
+
+    private final String BUTTON_RESET = IMAGE_EDITOR + "//button[contains(@class,'button-reset')]";
 
     private final String BUTTON_FOCUS = IMAGE_EDITOR + "//button[contains(@class,'button-focus')]";
 
@@ -66,6 +69,9 @@ public class ImageFormViewPanel
     @FindBy(xpath = BUTTON_CROP)
     private WebElement buttonCrop;
 
+    @FindBy(xpath = BUTTON_RESET)
+    private WebElement buttonReset;
+
     @FindBy(xpath = BUTTON_FOCUS)
     private WebElement buttonFocus;
 
@@ -75,20 +81,25 @@ public class ImageFormViewPanel
         super( session );
     }
 
-    public ImageEditorDialog clickOnCropButton()
+    public ImageEditor clickOnCropButton()
     {
         buttonCrop.click();
-        ImageEditorDialog imageEditorDialog = new ImageEditorDialog( getSession() );
-        imageEditorDialog.waitForOpened();
-        return imageEditorDialog;
+        sleep( 200 );
+        return new ImageEditor( getSession() );
     }
 
-    public ImageEditorDialog clickOnFocusButton()
+    public ImageEditor clickOnFocusButton()
     {
         buttonFocus.click();
-        ImageEditorDialog imageEditorDialog = new ImageEditorDialog( getSession() );
-        imageEditorDialog.waitForOpened();
-        return imageEditorDialog;
+        sleep( 200 );
+        return new ImageEditor( getSession() );
+    }
+
+    public ImageFormViewPanel clickOnResetButton()
+    {
+        buttonReset.click();
+        waitsElementNotVisible( By.xpath( BUTTON_RESET ), Application.EXPLICIT_NORMAL );
+        return this;
     }
 
 
@@ -136,6 +147,11 @@ public class ImageFormViewPanel
     public boolean isButtonFocusPresent()
     {
         return isElementDisplayed( BUTTON_FOCUS );
+    }
+
+    public boolean isButtonResetPresent()
+    {
+        return isElementDisplayed( BUTTON_RESET );
     }
 
     public boolean isArtistTagInputPresent()

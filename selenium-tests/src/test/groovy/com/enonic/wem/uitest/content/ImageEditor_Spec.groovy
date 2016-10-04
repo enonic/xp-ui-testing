@@ -1,35 +1,37 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
+import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
 
 /**
  * Created on 28.09.2016.*/
-class ImageEditorDialog_Spec
+class ImageEditor_Spec
     extends BaseContentSpec
 {
-
     def "GIVEN image content opened WHEN 'Crop' button was pressed THEN 'Image Editor' dialog appears with required control elements"()
     {
         given: "content wizard opened"
         findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
-        ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
+        ImageEditor imageEditor = new ImageEditor( getSession() );
 
         when: "'Crop' button was pressed"
-        ImageEditorDialog imageEditorDialog = formViewPanel.clickOnCropButton();
+        imageFormViewPanel.clickOnCropButton();
+        ImageEditorToolbar toolbar = imageEditor.getToolbar();
         saveScreenshot( "image_editor_dialog_opened" );
 
-        then: "dialog opened"
-        imageEditorDialog.isOpened();
+        then: "toolbar appears on the top right"
+        toolbar.isDisplayed();
 
-        and: "'Apply' button present"
-        imageEditorDialog.isApplyButtonDisplayed();
+        and: "'Apply' button is present"
+        toolbar.isApplyButtonDisplayed();
 
-        and: "'Close' button present"
-        imageEditorDialog.isCloseButtonPresent();
+        and: "'Close' button is present"
+        toolbar.isCloseButtonDisplayed();
 
         and: "'Focus Circle' not displayed"
-        !imageEditorDialog.isFocusCircleDisplayed()
+        !imageEditor.isFocusCircleDisplayed();
     }
 
     def "GIVEN 'Image Editor' dialog opened WHEN 'Close' button was pressed THEN the dialog closes"()
@@ -37,14 +39,15 @@ class ImageEditorDialog_Spec
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
-        ImageEditorDialog imageEditorDialog = formViewPanel.clickOnCropButton();
+        ImageEditor imageEditor = formViewPanel.clickOnCropButton();
+        ImageEditorToolbar toolbar = imageEditor.getToolbar();
 
         when: "'Close' button was pressed"
-        imageEditorDialog.clickOnCloseButton();
-        saveScreenshot( "image_editor_dialog_closed" );
+        toolbar.clickOnCloseButton();
+        saveScreenshot( "image_editor_close_pressed" );
 
-        then: "dialog closes"
-        imageEditorDialog.isOpened();
+        then: "toolbar getting hidden"
+        !toolbar.isDisplayed();
     }
 
     def "GIVEN image content opened WHEN 'Focus' button was pressed THEN 'Image Editor' dialog appears and focus circle is present on it"()
@@ -55,13 +58,11 @@ class ImageEditorDialog_Spec
 
 
         when: "'Close' button was pressed"
-        ImageEditorDialog imageEditorDialog = formViewPanel.clickOnFocusButton();
+        ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         saveScreenshot( "image_editor_focus_circle" );
 
         then: "dialog opened"
-        imageEditorDialog.isOpened();
-
-        and: "Focus Circle is displayed"
-        imageEditorDialog.isFocusCircleDisplayed();
+        imageEditor.isFocusCircleDisplayed();
     }
+
 }

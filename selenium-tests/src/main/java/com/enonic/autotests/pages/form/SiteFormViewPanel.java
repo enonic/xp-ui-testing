@@ -132,9 +132,8 @@ public class SiteFormViewPanel
         String targetItem = String.format( SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME, targetApp );
         if ( findElements( By.xpath( sourceItem ) ).size() == 0 || findElements( By.xpath( targetItem ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), "err_swap_app" );
-            throw new TestFrameworkException(
-                "SiteFormViewPanel : drag and drop failed. items were not found: " + sourceApp + " " + targetApp );
+            saveScreenshot( "err_swap_app" );
+            throw new TestFrameworkException( "SiteFormViewPanel :  items were not found: " + sourceApp + " " + targetApp );
         }
         WebElement source = findElements( By.xpath( sourceItem ) ).get( 0 );
         WebElement target = findElements( By.xpath( targetItem ) ).get( 0 );
