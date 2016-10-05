@@ -9,6 +9,7 @@ import spock.lang.Stepwise
 
 /**
  * XP-4174 Add selenium tests for image cropping
+ * XP-4168 Add selenium test for verifying XP-4167
  *
  * Created on 30.09.2016.
  * */

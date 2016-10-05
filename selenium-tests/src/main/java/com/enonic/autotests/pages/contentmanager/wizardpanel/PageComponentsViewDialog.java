@@ -66,7 +66,7 @@ public class PageComponentsViewDialog
 
         if ( !isElementDisplayed( menuButton ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-comp_view_menu" ) );
+            saveScreenshot( NameHelper.uniqueName( "err-comp_view_menu" ) );
             throw new TestFrameworkException( "menu button was not found for  " + componentName );
         }
         getDisplayedElement( By.xpath( menuButton ) ).click();
@@ -80,7 +80,7 @@ public class PageComponentsViewDialog
         {
             if ( !isElementDisplayed( String.format( CONTEXT_MENU_ITEM, items[i] ) ) )
             {
-                TestUtils.saveScreenshot( getSession(), "err_" + items[i] );
+                saveScreenshot( "err_" + items[i] );
                 throw new TestFrameworkException( "" + items[i] );
             }
             getDisplayedElement( By.xpath( String.format( CONTEXT_MENU_ITEM, items[i] ) ) ).click();
@@ -103,7 +103,7 @@ public class PageComponentsViewDialog
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), EXPLICIT_LONG ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-page-comp-dialog" ) );
+            saveScreenshot( NameHelper.uniqueName( "err-page-comp-dialog" ) );
             throw new TestFrameworkException( "Page Components Dialog was not opened!" );
         }
         return this;
@@ -114,7 +114,7 @@ public class PageComponentsViewDialog
         boolean result = waitUntilVisibleNoException( By.xpath( CLOSE_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_close-components-view" );
+            saveScreenshot( "err_close-components-view" );
             throw new TestFrameworkException( "close button was not found!" );
         }
         closeButton.click();

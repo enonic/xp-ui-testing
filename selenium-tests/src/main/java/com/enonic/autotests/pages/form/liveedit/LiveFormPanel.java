@@ -35,7 +35,7 @@ public class LiveFormPanel
 
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
-    private final String TEXT_COMPONENT_TOOLBAR = "//div[contains(@class,'mce-toolbar-grp')";
+    private final String TEXT_COMPONENT_TOOLBAR = "//div[contains(@class,'mce-toolbar-grp')]";
 
     private LayoutComponentView layoutComponentView;
 

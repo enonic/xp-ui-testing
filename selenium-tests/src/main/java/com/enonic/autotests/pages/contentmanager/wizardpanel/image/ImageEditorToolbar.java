@@ -21,11 +21,21 @@ public class ImageEditorToolbar
 
     private final String BUTTON_CLOSE = TOOLBAR_CONTAINER + "//button[contains(@class,'close-button')]";
 
+    private final String RESET_MASK = "//button[contains(@id,'Button')]/span[text()='Reset Mask']";
+
+    private final String RESET_AUTO_FOCUS = "//button[contains(@id,'Button')]/span[text()='Reset Autofocus']";
+
     @FindBy(xpath = BUTTON_CLOSE)
     WebElement closeButton;
 
     @FindBy(xpath = BUTTON_APPLY)
     WebElement applyButton;
+
+    @FindBy(xpath = RESET_AUTO_FOCUS)
+    WebElement resetAutoFocusButton;
+
+    @FindBy(xpath = RESET_MASK)
+    WebElement resetMaskButton;
 
     public ImageEditorToolbar( TestSession session )
     {
@@ -47,6 +57,16 @@ public class ImageEditorToolbar
         return isElementDisplayed( BUTTON_CLOSE );
     }
 
+    public boolean isResetAutoFocusDisplayed()
+    {
+        return isElementDisplayed( RESET_AUTO_FOCUS );
+    }
+
+    public boolean isResetMaskDisplayed()
+    {
+        return isElementDisplayed( RESET_MASK );
+    }
+
     public void clickOnApplyButton()
     {
         applyButton.click();
@@ -58,5 +78,12 @@ public class ImageEditorToolbar
         closeButton.click();
         sleep( 200 );
     }
+
+    public void clickOnResetMaskButton()
+    {
+        resetMaskButton.click();
+        sleep( 200 );
+    }
+
 
 }
