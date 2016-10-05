@@ -85,5 +85,11 @@ public class ImageEditorToolbar
         sleep( 200 );
     }
 
+    public void clickOnResetAutofocusButton()
+    {
+        resetAutoFocusButton.click();
+        sleep( 200 );
+    }
+
 
 }

@@ -108,7 +108,7 @@ class ImageEditor_Spec
         !toolbar.isDisplayed();
     }
 
-    def "GIVEN image content opened WHEN 'Focus' button was pressed THEN 'Image Editor' dialog appears and focus circle is present on it"()
+    def "GIVEN image content opened WHEN 'Focus' button was pressed THEN focus circle appears on the Image Editor"()
     {
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -118,8 +118,46 @@ class ImageEditor_Spec
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         saveScreenshot( "image_editor_focus_circle" );
 
-        then: "dialog opened"
+        then: "red circle appears on the Image Editor"
         imageEditor.isFocusCircleDisplayed();
     }
 
+    def "GIVEN image content opened AND 'Focus' button was pressed WHEN focus circle moved THEN 'Reset Autofocus' link appears on the toolbar"()
+    {
+        given: "'Image Editor' dialog opened"
+        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
+        ImageEditorToolbar toolbar = imageEditor.getToolbar();
+
+        when: "'Autofocus' was moved"
+        imageEditor.doDragAndChangeFocus( -40 );
+
+        then: "red circle is displayed on the Image Editor"
+        imageEditor.isFocusCircleDisplayed();
+
+        and: "'Reset Autofocus' link appears on the toolbar"
+        toolbar.isResetAutoFocusDisplayed();
+    }
+
+    def "GIVEN image  opened AND 'AutoFocus' was moved WHEN 'Reset Autofocus' link pressed THEN 'Reset Autofocus' link is getting hidden"()
+    {
+        given: "'Image Editor' dialog opened"
+        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
+        ImageEditorToolbar toolbar = imageEditor.getToolbar();
+        and: "'Autofocus' was moved"
+        imageEditor.doDragAndChangeFocus( -40 );
+
+        when: "'Reset Autofocus' link was pressed"
+        toolbar.clickOnResetAutofocusButton();
+        saveScreenshot( "reset_focus_pressed" );
+
+        then: "red circle is  displayed on the Image Editor"
+        imageEditor.isFocusCircleDisplayed();
+
+        and: "'Reset Autofocus' is getting hidden on the toolbar"
+        !toolbar.isResetAutoFocusDisplayed();
+    }
 }
