@@ -560,10 +560,8 @@ public class ContentWizardPanel
             NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
             getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         }
-        String style = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getAttribute( "style" );
-        String[] parts = style.split( ";" );
-        String width = parts[0].substring( 6, parts[0].indexOf( "px" ) );
-        return Integer.valueOf( width.trim() );
+        String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
+        return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
     }
 
     public int getHeightOfPageEditor()
@@ -573,9 +571,7 @@ public class ContentWizardPanel
             NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
             getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         }
-        String style = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getAttribute( "style" );
-        String[] parts = style.split( ";" );
-        String height = parts[1].substring( 8, parts[1].indexOf( "px" ) );
-        return Integer.valueOf( height.trim() );
+        String height = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "height" );
+        return Integer.valueOf( height.substring( 0, height.indexOf( "px" ) ) );
     }
 }
