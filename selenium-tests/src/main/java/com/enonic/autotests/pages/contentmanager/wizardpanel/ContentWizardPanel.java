@@ -553,17 +553,6 @@ public class ContentWizardPanel
         return new LiveFormPanel( getSession() );
     }
 
-    public int getWidthOfPageEditor()
-    {
-        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
-        {
-            NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
-            getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
-        }
-        String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
-        return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
-    }
-
     public int getHeightOfPageEditor()
     {
         if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
@@ -573,5 +562,16 @@ public class ContentWizardPanel
         }
         String height = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "height" );
         return Integer.valueOf( height.substring( 0, height.indexOf( "px" ) ) );
+    }
+
+    public int getWidthOfPageEditor()
+    {
+        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        {
+            NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+            getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+        }
+        String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
+        return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
     }
 }
