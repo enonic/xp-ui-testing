@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
@@ -144,8 +145,8 @@ class ImageEditor_Spec
     {
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
-        ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
-        ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
+        ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
+        ImageEditor imageEditor = imageFormViewPanel.clickOnFocusButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
         and: "'Autofocus' was moved"
         imageEditor.doDragAndChangeFocus( -40 );
@@ -159,5 +160,33 @@ class ImageEditor_Spec
 
         and: "'Reset Autofocus' is getting hidden on the toolbar"
         !toolbar.isResetAutoFocusDisplayed();
+    }
+
+    def "GIVEN existing an image opened AND 'AutoFocus' was moved  AND all were saved WHEN image opened THEN 'Reset' button is displayed"()
+    {
+        given: "image opened"
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
+        ImageEditor imageEditor = imageFormViewPanel.clickOnFocusButton();
+        ImageEditorToolbar toolbar = imageEditor.getToolbar();
+
+        and: "focus was moved"
+        imageEditor.doDragAndChangeFocus( -40 );
+
+        and: "'Apply' button was clicked"
+        toolbar.clickOnApplyButton();
+
+        and: "image saved and wizard closed"
+        wizard.save().close( IMPORTED_BOOK_IMAGE );
+
+        when: "image opened again"
+        contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
+
+
+        then: "'Reset' red-button displayed on the page"
+        imageFormViewPanel.isButtonResetPresent();
+
+        and: "red circle is  displayed on the Image Editor"
+        imageEditor.isFocusCircleDisplayed();
     }
 }

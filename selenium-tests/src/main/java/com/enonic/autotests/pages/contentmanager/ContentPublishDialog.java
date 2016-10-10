@@ -102,8 +102,8 @@ public class ContentPublishDialog
     {
         if ( !isElementDisplayed( DIALOG_INVALID_SUB_HEADER_XPATH ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_subheader_not_displayed" );
-            throw new TestFrameworkException( "Publish dialog: error-subheader not shown!" );
+            saveScreenshot( "err_publish_dlg_subheader" );
+            throw new TestFrameworkException( "Publish dialog: subheader was not found!" );
         }
         return getDisplayedString( DIALOG_INVALID_SUB_HEADER_XPATH );
     }
