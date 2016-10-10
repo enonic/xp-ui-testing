@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewD
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
@@ -16,6 +17,7 @@ class TextComponent_Spec
     @Shared
     Content SITE
 
+    @Ignore
     def "GIVEN existing site with selected controller WHEN text component inserted THEN mce-toolbar appears"()
     {
         given:

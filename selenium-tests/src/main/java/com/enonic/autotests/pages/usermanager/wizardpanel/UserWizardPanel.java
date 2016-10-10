@@ -16,7 +16,6 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.User;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -93,7 +92,12 @@ public class UserWizardPanel
     @Override
     public WizardPanel<User> typeData( final User user )
     {
-        waitElementClickable( By.name( "displayName" ), 2 );
+        boolean isClickable = waitUntilClickableNoException( By.name( "displayName" ), 2 );
+        if ( !isClickable )
+        {
+            saveScreenshot( "err_user_wizard" );
+            throw new TestFrameworkException( "input for display name was not found" );
+        }
         getLogger().info( "types displayName: " + user.getDisplayName() );
         clearAndType( displayNameInput, user.getDisplayName() );
         sleep( 500 );
@@ -116,7 +120,6 @@ public class UserWizardPanel
         {
             addGroups( user.getGroups() );
         }
-        TestUtils.saveScreenshot( getSession(), user.getDisplayName() );
         return this;
     }
 
@@ -131,7 +134,7 @@ public class UserWizardPanel
         String removeButtonXpath = String.format( REMOVE_ROLE_BUTTON, roleName );
         if ( !isElementDisplayed( removeButtonXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + roleName );
+            saveScreenshot( "err_" + roleName );
             throw new TestFrameworkException( "role was not found in membership-step-form:  " + roleName );
         }
         getDisplayedElement( By.xpath( removeButtonXpath ) ).click();
@@ -150,7 +153,7 @@ public class UserWizardPanel
         String rowCheckboxXpath = String.format( SLICK_ROW_BY_NAME + "//label[child::input[@type='checkbox']]", groupName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), "err_group_not_found" );
+            saveScreenshot( "err_group_not_found" );
             throw new TestFrameworkException( "Group was not found!" );
         }
         if ( !isRoleOrGroupAlreadySelected( groupName ) )
@@ -168,7 +171,7 @@ public class UserWizardPanel
         String rowCheckboxXpath = String.format( SLICK_ROW_BY_NAME + "//label[child::input[@type='checkbox']]", roleName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_role" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_role" ) );
             throw new TestFrameworkException( "Role was not found!" );
         }
         if ( !isRoleOrGroupAlreadySelected( roleName ) )
@@ -184,7 +187,7 @@ public class UserWizardPanel
         String rowXpath = String.format( SLICK_ROW_BY_NAME + "//input[@type='checkbox']", name );
         if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_" ) );
             throw new TestFrameworkException( "checkbox for role or group was not found: " + name );
         }
         return findElement( By.xpath( rowXpath ) ).getAttribute( "checked" ) != null;
@@ -226,7 +229,7 @@ public class UserWizardPanel
         boolean result = waitUntilVisibleNoException( By.xpath( USER_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_user_wizard" );
+            saveScreenshot( "err_user_wizard" );
             throw new TestFrameworkException( "UserWizard was not shown!" );
         }
         return this;

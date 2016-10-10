@@ -4,10 +4,12 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 
 class ContentPublishDialog_Performance_Spec
     extends BaseContentSpec
 {
+    @Ignore
     def "GIVEN 'Select All' clicked AND more than 1000 content are selected  WHEN 'Publish' button pressed AND 'Include child items' is true THEN 'Publish' button on the modal dialog is 'enabled'"()
     {
         given:
@@ -23,6 +25,7 @@ class ContentPublishDialog_Performance_Spec
         contentPublishDialog.waitUntilPublishButtonEnabled( Application.EXPLICIT_NORMAL );
     }
 
+    @Ignore
     def "GIVEN 'Select All' clicked AND more than 1000 content are selected  WHEN all content have published THEN correct notification message appears and each content has 'online' status"()
     {
         given:
@@ -40,6 +43,5 @@ class ContentPublishDialog_Performance_Spec
         contentPublishDialog.waitForDialogClosed();
         and: "correct notification message appears"
         contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-
     }
 }

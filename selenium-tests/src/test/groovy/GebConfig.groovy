@@ -43,11 +43,8 @@ driver = {
     }
 
     def driver = new ChromeDriver();
-    //def driver = new FirefoxDriver(  );
     System.setProperty( "webdriver.gecko.driver", "c:/gecko/geckodriver.exe" );
     System.setProperty( "webdriver.firefox.marionette", "c:/gecko/geckodriver.exe" );
-    // WebDriver driver = new MarionetteDriver();
-    // def driver = new FirefoxDriver(  );
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
     println "default configuration";

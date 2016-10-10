@@ -15,7 +15,6 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.Role;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -73,8 +72,8 @@ public class RoleWizardPanel
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON ), 2l );
         if ( !isSaveButtonEnabled )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_save_button" ) );
-            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
+            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
+            throw new SaveOrUpdateException( "'Save' is disabled!" );
         }
         toolbarSaveButton.click();
         sleep( 700 );
@@ -96,7 +95,12 @@ public class RoleWizardPanel
     @Override
     public WizardPanel<Role> typeData( final Role role )
     {
-        waitElementClickable( By.name( "displayName" ), 2 );
+        boolean isClickable = waitUntilClickableNoException( By.name( "displayName" ), 2 );
+        if ( !isClickable )
+        {
+            saveScreenshot( "err_role_wizard" );
+            throw new TestFrameworkException( "input for display name was not found" );
+        }
         getLogger().info( "types displayName: " + role.getDisplayName() );
         sleep( 500 );
         if ( StringUtils.isNotEmpty( role.getDisplayName() ) )
@@ -118,7 +122,6 @@ public class RoleWizardPanel
         {
             addMembers( role.getMemberDisplayNames() );
         }
-        TestUtils.saveScreenshot( getSession(), role.getDisplayName() );
         return this;
     }
 
@@ -136,7 +139,7 @@ public class RoleWizardPanel
 
         if ( !isElementDisplayed( removeButton ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_member" + displayName ) );
+            saveScreenshot( NameHelper.uniqueName( "err_member" + displayName ) );
             throw new TestFrameworkException( "member was not found! " + displayName );
         }
         getDisplayedElement( By.xpath( removeButton ) ).click();
@@ -164,9 +167,9 @@ public class RoleWizardPanel
     private boolean isMemberAlreadyAdded( String memberDisplayName )
     {
         String rowXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//input[@type='checkbox']", memberDisplayName );
-        if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
+        if ( !isElementDisplayed( rowXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_member" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_role_member" ) );
             throw new TestFrameworkException( "checkbox for option was not found: " + memberDisplayName );
         }
         return findElement( By.xpath( rowXpath ) ).getAttribute( "checked" ) != null;
@@ -178,7 +181,7 @@ public class RoleWizardPanel
         boolean result = waitUntilVisibleNoException( By.xpath( WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_role" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_role" ) );
             throw new TestFrameworkException( "RoleWizard was not opened!" );
         }
         return this;
