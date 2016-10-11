@@ -154,6 +154,7 @@ public class RoleWizardPanel
         String rowCheckboxXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//label[child::input[@type='checkbox']]", memberDisplayName );
         if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
         {
+            saveScreenshot( "err_" + memberDisplayName );
             throw new TestFrameworkException( "Role was not found!" );
         }
         if ( !isMemberAlreadyAdded( memberDisplayName ) )
@@ -166,13 +167,13 @@ public class RoleWizardPanel
 
     private boolean isMemberAlreadyAdded( String memberDisplayName )
     {
-        String rowXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//input[@type='checkbox']", memberDisplayName );
-        if ( !isElementDisplayed( rowXpath ) )
+        String checkboxPath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//input[@type='checkbox']", memberDisplayName );
+        if ( findElements( By.xpath( checkboxPath ) ).size() == 0 )
         {
             saveScreenshot( NameHelper.uniqueName( "err_role_member" ) );
             throw new TestFrameworkException( "checkbox for option was not found: " + memberDisplayName );
         }
-        return findElement( By.xpath( rowXpath ) ).getAttribute( "checked" ) != null;
+        return findElement( By.xpath( checkboxPath ) ).getAttribute( "checked" ) != null;
     }
 
     @Override

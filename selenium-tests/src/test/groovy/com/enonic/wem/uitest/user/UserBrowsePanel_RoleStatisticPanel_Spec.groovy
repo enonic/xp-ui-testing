@@ -58,9 +58,8 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         when: "system 'everyone' selected"
         userBrowseFilterPanel.typeSearchText( SYSTEM_EVERYONE_NAME );
         userBrowsePanel.clickCheckboxAndSelectGroup( SYSTEM_EVERYONE_NAME );
-        TestUtils.saveScreenshot( getSession(), "everyone-selected" );
         List<String> members = roleStatisticsPanel.getMemberDisplayNames();
-        TestUtils.saveScreenshot( getSession(), "everyone-selected" );
+        saveScreenshot( "everyone-group-selected" );
 
         then: "members is empty"
         members.isEmpty();
