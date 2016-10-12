@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageIn
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -70,8 +69,7 @@ class ContextWindow_InspectionPanel_Spec
         then: "correct page controller displayed in the selector"
         inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;
     }
-    //XP-3993 Inspection Panel should be closed, when 'Page Controller' was removed (Automatic)
-    @Ignore
+    //verifies :XP-3993 Inspection Panel should be closed, when 'Page Controller' was removed (Automatic)
     def "GIVEN 'Inspect' panel opened WHEN 'Automatic' renderer selected THEN 'Page Controller' selector appears"()
     {
         given: "'Inspect' panel opened"

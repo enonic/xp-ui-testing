@@ -52,7 +52,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         contentBrowsePanel.selectContentInTable( THIRD_CONTENT.getName() );
 
         then: "three SelectionItem-s are listed"
-        TestUtils.saveScreenshot( getSession(), "select_3_items" )
+        saveScreenshot( "select_3_items" )
         itemsSelectionPanel.getSelectedItemCount() == before + 1;
     }
 
@@ -68,9 +68,9 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         int before = itemsSelectionPanel.getSelectedItemCount();
 
         when: " deselecting one"
-        TestUtils.saveScreenshot( getSession(), "deselect_before" );
+        saveScreenshot( "deselect_before" );
         contentBrowsePanel.deSelectContentInTable( SECOND_CONTENT.getName() );
-        TestUtils.saveScreenshot( getSession(), "deselect_after" );
+        saveScreenshot( "deselect_after" );
 
         then: "two SelectionItem-s are listed"
         itemsSelectionPanel.getSelectedItemCount() == before - 1;

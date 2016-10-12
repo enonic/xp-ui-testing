@@ -133,9 +133,10 @@ public class ContentBrowsePanel
     @Override
     public void waitsForSpinnerNotVisible()
     {
-        boolean result = waitsElementNotVisible( By.xpath( BASE_PANEL_XPATH + SPINNER_XPATH ), Application.EXPLICIT_NORMAL );
+        boolean result = waitsElementNotVisible( By.xpath( SPINNER_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
+            saveScreenshot( NameHelper.uniqueName( "err_spinner" ) );
             throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
         }
     }

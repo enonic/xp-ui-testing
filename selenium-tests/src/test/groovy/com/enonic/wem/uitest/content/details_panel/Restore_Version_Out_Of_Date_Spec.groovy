@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
@@ -44,5 +45,22 @@ class Restore_Version_Out_Of_Date_Spec
 
         and: "'out-of-date' status displayed in the Browse panel"
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OUT_OF_DATE.getValue();
+    }
+    //verifies the  XP-4156
+    def "GIVEN existing content with 'out-of-date' status  AND version history is opened WHEN the content selected and 'Unpublish' menu item was clicked THEN spinner automatically disappears after a short interval "()
+    {
+        given: "existing content with 'out-of-date' status"
+        findAndSelectContent( FOLDER_CONTENT.getName() );
+
+        and: " version history is opened "
+        contentBrowsePanel.openContentDetailsPanel().openVersionHistory();
+
+        when:
+        ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
+        contentUnPublishDialog.clickOnUnpublishButton();
+        saveScreenshot( "out_of_date_unpublished" );
+
+        then: "spinner automatically disappears after a short interval"
+        contentBrowsePanel.waitsForSpinnerNotVisible();
     }
 }
