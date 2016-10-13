@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
-import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
@@ -44,8 +43,7 @@ class ImageEditor_Crop_Reset_Spec
         and: "'Reset' button appeared"
         formViewPanel.isButtonResetPresent();
     }
-    //XP-4167
-    @Ignore
+    //verifies XP-4167 Impossible to save changes and close the Wizard after an image was cropped
     def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image cropped  AND save  button pressed THEN image's height was reduced"()
     {
         given: "'Image Editor' dialog opened"
@@ -67,8 +65,7 @@ class ImageEditor_Crop_Reset_Spec
         then: "wizard closed and save before close dialog does not appear"
         result == null;
     }
-    //XP-4167
-    @Ignore
+
     def "GIVEN existing cropped image WHEN the image opened THEN 'Reset' button displayed on the page"()
     {
         given: "existing cropped image"
@@ -81,8 +78,7 @@ class ImageEditor_Crop_Reset_Spec
         then: "'Reset' button displayed on the Image Editor"
         formViewPanel.isButtonResetPresent();
     }
-    //XP-4167
-    @Ignore
+
     def "GIVEN existing cropped image opened WHEN  'Reset' button has been pressed THEN 'Reset' button is getting hidden"()
     {
         given: "existing cropped image"
@@ -99,8 +95,6 @@ class ImageEditor_Crop_Reset_Spec
         !imageFormViewPanel.isButtonResetPresent();
     }
 
-    //XP-4167
-    @Ignore
     def "GIVEN existing cropped image opened WHEN  'Reset' button has been pressed AND 'Save' button pressed AND 'Close' button pressed THEN the wizard closes"()
     {
         given: "existing cropped image"

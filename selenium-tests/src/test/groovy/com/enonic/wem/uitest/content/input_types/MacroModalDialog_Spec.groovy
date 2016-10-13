@@ -93,7 +93,7 @@ class MacroModalDialog_Spec
         and: "remove button appears on the dialog"
         dialog.isRemoveMacroButtonPresent();
     }
-
+    //  'embedded code' moved to the separated app
     @Ignore
     def "GIVEN MacroModalDialog opened WHEN 'embedded code' macro selected THEN correct macro is displayed on the dialog"()
     {
@@ -119,7 +119,7 @@ class MacroModalDialog_Spec
         and: "remove button appears on the dialog"
         dialog.isRemoveMacroButtonPresent()
     }
-
+    // 'no format' moved to the separated app
     @Ignore
     def "GIVEN MacroModalDialog opened WHEN 'No Format macro' macro selected THEN correct macro is displayed on the dialog"()
     {
@@ -160,7 +160,7 @@ class MacroModalDialog_Spec
         then: "the modal dialog is closed"
         dialog.waitForClosed();
     }
-
+    //  'youtube' moved to the separated app
     @Ignore
     def "GIVEN MacroModalDialog opened AND YouTube macro selected WHEN 'remove macro' button has been pressed THEN macro-view removed"()
     {

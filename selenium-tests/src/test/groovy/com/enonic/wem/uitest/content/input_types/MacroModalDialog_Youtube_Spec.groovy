@@ -19,7 +19,7 @@ class MacroModalDialog_Youtube_Spec
     @Shared
     String ENONIC_INTRO_URL = "https://www.youtube.com/watch?v=cFfxuWUgcvI";
 
-    //this is macro was removed into the 'social applications'
+    //this is macro was moved into the 'social applications'
     @Ignore
     def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND content saved THEN correct macro is displayed in the htmlarea"()
     {
@@ -68,7 +68,6 @@ class MacroModalDialog_Youtube_Spec
         and:
         ( (YoutubeConfigPanel) dialog.getMacroConfigPanel() ).isValidationMessagePresent();
 
-        and:
         and: "correct validation message appears"
         ( (YoutubeConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
     }

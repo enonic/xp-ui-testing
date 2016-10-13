@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModi
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -26,7 +25,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.doShowFilterPanel();
 
         when:
-        TestUtils.saveScreenshot( getTestSession(), "filter_panel_unstructured_before_selecting" );
+        saveScreenshot( "filter_panel_unstructured_before_selecting" );
         String label = filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         TestUtils.saveScreenshot( getTestSession(), "filter_panel_unstructured_selected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
@@ -45,7 +44,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "clicking CleanFilter"
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "clear_filter_link_not_displayed" );
+        saveScreenshot( "clear_filter_link_not_displayed" );
 
         then: "CleanFilter link should disappears"
         filterPanel.waitForClearFilterLinkNotVisible();
@@ -63,7 +62,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "clicking CleanFilter"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "test_cleanFilter_cleared" );
+        saveScreenshot( "test_cleanFilter_pressed" );
 
         then: "all selections should disappear"
         !contentBrowsePanel.getFilterPanel().isAnySelectionPresent();
@@ -103,7 +102,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "content saved and wizard closed"
         wizard.save().close( TEST_FOLDER.getDisplayName() );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "last-mod-day-increased" );
+        saveScreenshot( "last-mod-day-increased" );
 
         then: "folders count increased by 1"
         filterPanel.getNumberAggregatedByContentType( "Folder" ) - beforeAdding == 1
@@ -119,12 +118,12 @@ class ContentBrowsePanel_FilterPanel_Spec
         TestUtils.saveScreenshot( getSession(), "LastModified_filter_before_folder_deleting" );
         int beforeRemoving = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "day" );
-        TestUtils.saveScreenshot( getSession(), "test_LastModified_aggregation_before_deleting" );
+        saveScreenshot( "test_LastModified_aggregation_before_deleting" );
 
         when: "the folder deleted"
         contentBrowsePanel.selectContentInTable( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
         sleep( 2000 );
-        TestUtils.saveScreenshot( getSession(), "test_LastModified_aggregation_folder_deleted" )
+        saveScreenshot( "test_LastModified_aggregation_folder_deleted" )
 
         then: "folders count reduced by 1"
         beforeRemoving - filterPanel.getNumberAggregatedByContentType( "Folder" ) == 1
@@ -143,7 +142,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "folder's name typed in the text input"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "test_aggregation_searchText_typed" );
+        saveScreenshot( "test_aggregation_searchText_typed" );
 
         then: "all filters should be updated to only contain entries with matches in text-search"
         filterPanel.getNumberAggregatedByContentType( "Folder" ) == 1;
@@ -151,11 +150,9 @@ class ContentBrowsePanel_FilterPanel_Spec
         and:
         filterPanel.getLastModifiedCount( "hour" ) == 1;
     }
-    //XP-3586 Content not correctly filtered, when filter panel has been hidden
-    @Ignore
+    //verifies the "XP-3586 Content not correctly filtered, when filter panel has been hidden"
     def "GIVEN existing folder WHEN name of folder typed in the filter panel AND filter panel has been hidden AND new folder has been added THEN only one folder with matches in text-search is displayed"()
     {
-
         given: "the name of existing folder typed"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
 
@@ -165,7 +162,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         and: "new folder has been added"
         Content newFolder = buildFolderContent( "folder", "test for  hidden filter panel" );
         addContent( newFolder );
-        TestUtils.saveScreenshot( getSession(), "test_text_typed_filter_panel_hidden" )
+        saveScreenshot( "test_text_typed_filter_panel_hidden" );
 
         then: "only one folder with matches in text-search is displayed"
         contentBrowsePanel.getRowsCount() == 1; ;
@@ -194,7 +191,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "selecting one entry in ContentTypes-aggregation (Image)"
         filterPanel.selectContentTypeInAggregationView( "Image" );
-        TestUtils.saveScreenshot( getSession(), "test_filter_panel_image_selected" );
+        saveScreenshot( "test_filter_panel_image_selected" );
         Integer newLastModifiedHour = filterPanel.getNumberAggregatedByLastModified( FilterPanelLastModified.HOUR );
         Integer newLastModifiedDay = filterPanel.getNumberAggregatedByLastModified( FilterPanelLastModified.DAY );
 
@@ -213,7 +210,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "adding text-search"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
-        TestUtils.saveScreenshot( getTestSession(), "test_aggregation_selected_content_name_typed" );
+        saveScreenshot( "test_aggregation_selected_content_name_typed" );
 
         then: "all filters should be updated to only contain entries with selection"
         Integer newNumberOfFolders = filterPanel.getNumberAggregatedByContentType( "Folder" );
