@@ -35,13 +35,13 @@ class Restore_Version_Folder_Spec
         findAndSelectContent( FOLDER_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
-        TestUtils.saveScreenshot( getSession(), "versions_before_changing_dname" );
+        saveScreenshot( "versions_before_changing_dname" );
 
 
         when: "display name of the folder changed"
         contentBrowsePanel.clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
-        TestUtils.saveScreenshot( getSession(), "versions_after_changing_dname" );
+        saveScreenshot( "versions_after_changing_dname" );
 
         then: "new 'version history item' appeared in the version-view"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
@@ -58,7 +58,7 @@ class Restore_Version_Folder_Spec
         when: "the folder selected AND previous version restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "display_name_restored" );
+        saveScreenshot( "folder_display_name_restored" );
 
         then: "correct display name appears in the grid"
         filterPanel.typeSearchText( INITIAL_DISPLAY_NAME );
@@ -84,7 +84,7 @@ class Restore_Version_Folder_Spec
 
         and: "folder opened in the wizard again"
         contentBrowsePanel.clickToolbarEdit();
-        TestUtils.saveScreenshot( getSession(), "language_restored" );
+        saveScreenshot( "folder_language_restored" );
 
         then: "language is restored on the wizard page"
         form.getLanguage() == NORSK_LANGUAGE;

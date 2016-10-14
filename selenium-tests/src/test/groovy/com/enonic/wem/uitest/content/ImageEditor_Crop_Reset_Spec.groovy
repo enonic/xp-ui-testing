@@ -22,7 +22,7 @@ class ImageEditor_Crop_Reset_Spec
         findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
-        ImageEditorToolbar toolbar = imageEditor.getToolbar()
+        ImageEditorToolbar toolbar = imageEditor.getToolbar();
         int before = imageEditor.getImageHeight();
 
         when: "handler moved up and image was cropped "
