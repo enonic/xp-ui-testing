@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor;
 import com.enonic.xp.data.PropertyTree;
@@ -83,13 +84,25 @@ public class ImageFormViewPanel
 
     public ImageEditor clickOnCropButton()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_CROP ), EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            saveScreenshot( "err_crop_button" );
+            throw new TestFrameworkException( "button crop was not found" );
+        }
         buttonCrop.click();
-        sleep( 200 );
+        sleep( 300 );
         return new ImageEditor( getSession() );
     }
 
     public ImageEditor clickOnFocusButton()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_FOCUS ), EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            saveScreenshot( "err_focus_button" );
+            throw new TestFrameworkException( "button focus was not found" );
+        }
         buttonFocus.click();
         sleep( 200 );
         return new ImageEditor( getSession() );

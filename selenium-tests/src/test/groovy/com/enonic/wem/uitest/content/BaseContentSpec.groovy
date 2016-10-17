@@ -57,6 +57,10 @@ class BaseContentSpec
     String IMPORTED_MAN_IMAGE = "man.jpg";
 
     @Shared
+    String IMPORTED_MAN2_IMAGE = "man2.jpg";
+
+
+    @Shared
     String IMPORTED_WHALE_IMAGE = "whale.jpg";
 
     @Shared
@@ -468,5 +472,16 @@ class BaseContentSpec
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector1_1" ).data( data ).
             build();
         return imageSelectorContent;
+    }
+
+    public Content buildFolderWithName( String name, String displayName )
+    {
+        Content content = Content.builder().
+            name( name ).
+            displayName( displayName ).
+            contentType( ContentTypeName.folder() ).
+            parent( ContentPath.ROOT ).
+            build();
+        return content;
     }
 }

@@ -8,7 +8,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DatePickerPopup
 import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -28,7 +27,7 @@ class Occurrences_Date_1_1_Spec
         when: "Date input has been clicked"
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
         DatePickerPopup picker = formViewPanel.showPicker();
-        TestUtils.saveScreenshot( getSession(), "date-picker-popup" );
+        saveScreenshot( "date-picker-popup" );
 
         then: "'date picker' popup dialog is displayed"
         picker.isDisplayed();
@@ -76,7 +75,7 @@ class Occurrences_Date_1_1_Spec
         when: "content saved without required 'date' and wizard closed"
         wizard.save().close( dateContent.getDisplayName() );
         filterPanel.typeSearchText( dateContent.getName() );
-        TestUtils.saveScreenshot( getSession(), "date-not-valid" )
+        saveScreenshot( "date-not-valid" )
 
         then: "content should be invalid, because required field not filled"
         contentBrowsePanel.isContentInvalid( dateContent.getName() );
@@ -94,7 +93,7 @@ class Occurrences_Date_1_1_Spec
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateContent.getDisplayName() );
         if ( modalDialog != null )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-close-wizard" ) );
+            saveScreenshot( NameHelper.uniqueName( "err-close-wizard" ) );
             throw new TestFrameworkException( "'save before closing' modal dialog present but all changes were saved! " )
         }
         filterPanel.typeSearchText( dateContent.getName() );

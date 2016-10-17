@@ -23,18 +23,18 @@ class ImageEditor_Crop_Reset_Spec
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
-        int before = imageEditor.getImageHeight();
+        int before = imageEditor.getCropAreaHeight();
 
         when: "handler moved up and image was cropped "
-        imageEditor.doDragAndChangeSizeOfImage( -50 );
+        imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
         saveScreenshot( "image_cropped" );
 
         and: "Apply button pressed"
         toolbar.clickOnApplyButton();
         saveScreenshot( "image_cropped_and_applied" )
-        int after = imageEditor.getImageHeight();
+        int after = imageEditor.getCropAreaHeight();
 
-        then: "the height of the image is reduced"
+        then: "the height of the 'crop area' is reduced"
         before - after == 50;
 
         and: "ImageEditor's toolbar getting hidden"
@@ -52,7 +52,7 @@ class ImageEditor_Crop_Reset_Spec
 
         when: " dragHandler moved up AND image cropped "
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
-        imageEditor.doDragAndChangeSizeOfImage( -50 );
+        imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
         imageEditor.getToolbar().clickOnApplyButton();
 
         and: "Save button pressed "
@@ -103,7 +103,7 @@ class ImageEditor_Crop_Reset_Spec
 
         and: "the image has been cropped"
         ImageEditor imageEditor = imageFormViewPanel.clickOnCropButton();
-        imageEditor.doDragAndChangeSizeOfImage( -50 );
+        imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
         and: "changes was applied"
         imageEditor.getToolbar().clickOnApplyButton();
 

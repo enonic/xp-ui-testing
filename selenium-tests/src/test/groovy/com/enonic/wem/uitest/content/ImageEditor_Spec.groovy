@@ -34,6 +34,12 @@ class ImageEditor_Spec
         and: "'Close' button is present"
         toolbar.isCloseButtonDisplayed();
 
+        and: "'zoom knob' is displayed"
+        imageEditor.isZoomKnobPresent();
+
+        and: "'zoom knob' button present"
+        imageEditor.getZoomKnobValue() == 0;
+
         and: "'Focus Circle' not displayed"
         !imageEditor.isFocusCircleDisplayed();
 
@@ -52,7 +58,7 @@ class ImageEditor_Spec
         imageFormViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
         and: "image was cropped"
-        imageEditor.doDragAndChangeSizeOfImage( -40 );
+        imageEditor.doDragCropButtonAndChangeHeightCropArea( -40 );
 
         then: "'Reset Mask' link is displayed"
         toolbar.isResetMaskDisplayed();
@@ -74,14 +80,14 @@ class ImageEditor_Spec
         and: "crop button pressed"
         imageFormViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
-        def imageHeightBefore = imageEditor.getImageHeight();
+        def cropAreaBefore = imageEditor.getCropAreaHeight();
 
         and: "the image has been cropped"
-        imageEditor.doDragAndChangeSizeOfImage( -40 );
+        imageEditor.doDragCropButtonAndChangeHeightCropArea( -40 );
 
         when: "'Reset Mask' button was pressed"
         toolbar.clickOnResetMaskButton();
-        def imageHeightAfter = imageEditor.getImageHeight();
+        def cropAreaHeightAfter = imageEditor.getCropAreaHeight();
 
         then: "toolbar still displayed"
         toolbar.isDisplayed();
@@ -89,8 +95,8 @@ class ImageEditor_Spec
         and: "'Reset Mask' is getting hidden"
         !toolbar.isResetMaskDisplayed();
 
-        and: "image's size is not changed"
-        imageHeightBefore == imageHeightAfter;
+        and: "crop area is not changed"
+        cropAreaBefore == cropAreaHeightAfter;
     }
 
     def "GIVEN 'Image Editor' dialog opened WHEN 'Close' button was pressed THEN the dialog closes"()
