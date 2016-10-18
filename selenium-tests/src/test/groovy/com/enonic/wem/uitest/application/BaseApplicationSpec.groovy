@@ -42,7 +42,7 @@ class BaseApplicationSpec
     String STOPPED_STATE = "stopped";
 
     @Shared
-    String GOOGLE_ANALYTICS_APP_NAME = "com.enonic.app.ga";
+    String GOOGLE_ANALYTICS_APP_NAME = "Track and report website traffic with Google Analytics";
 
     @Shared
     String GOOGLE_ANALYTICS_DISPLAY_NAME = "Google Analytics";
