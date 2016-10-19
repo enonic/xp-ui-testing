@@ -11,7 +11,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 public abstract class BaseHtmlAreaFormViewPanel
     extends FormViewPanel
@@ -79,7 +78,7 @@ public abstract class BaseHtmlAreaFormViewPanel
         textArea.sendKeys( " " );
         if ( !isElementDisplayed( TOOLBAR_INSERT_LINK_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_html_toolbar" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_html_toolbar" ) );
             throw new TestFrameworkException( "toolbar button was not found!" );
         }
     }

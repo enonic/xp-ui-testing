@@ -7,7 +7,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -57,7 +56,6 @@ public class CheckBoxFormViewPanel
         String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s')" + ".setChecked(%b)", id, checked );
         executor.executeScript( script );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "checkbox" );
         return this;
     }
 

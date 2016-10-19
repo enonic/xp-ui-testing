@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -77,7 +78,7 @@ public class Application
 
     public static final String LIVE_EDIT_FRAME = "//iframe[@class='live-edit-frame']";
 
-    public static final String SPINNER_XPATH = "//div[contains(@id,'api.ui.LoadMask')]";
+    public static final String SPINNER_XPATH = "//div[@class='spinner']";
 
     public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']/span";
 
@@ -100,11 +101,6 @@ public class Application
         return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
     }
 
-    protected boolean isElementDisplayed( String xpath )
-    {
-        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
-    }
-
     public void waitsForSpinnerNotVisible()
     {
         boolean isDisplayed = true;
@@ -122,11 +118,12 @@ public class Application
         while ( isDisplayed );
     }
 
-    public void waitsForSpinnerNotVisible( long timeout )
+    public void waitInvisibilityOfSpinner( long timeout )
     {
-        boolean result = waitsElementNotVisible( By.xpath( SPINNER_XPATH ), timeout );
+        boolean result = waitInvisibilityOfElement( By.xpath( SPINNER_XPATH ), timeout );
         if ( !result )
         {
+            saveScreenshot( NameHelper.uniqueName( "err_spinner" ) );
             throw new TestFrameworkException( "after a" + EXPLICIT_NORMAL + " seconds, spinner still present" );
         }
     }

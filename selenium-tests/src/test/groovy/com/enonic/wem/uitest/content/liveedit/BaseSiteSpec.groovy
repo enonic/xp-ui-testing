@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.CityFormView
 import com.enonic.autotests.pages.form.CountryFormView
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
@@ -63,7 +62,6 @@ class BaseSiteSpec
             site = buildMyFirstAppSite( FIRST_SITE_NAME );
             contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
                 site.getDisplayName() );
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "first_site_saved" ) );
         }
     }
 

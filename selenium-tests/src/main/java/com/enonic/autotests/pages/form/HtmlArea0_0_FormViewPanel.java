@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -20,8 +19,6 @@ public class HtmlArea0_0_FormViewPanel
 {
 
     private final String REMOVE_BUTTON_XPATH = FORM_VIEW + "//div[contains(@id,'InputOccurrenceView')]//a[@class='remove-button']";
-
-    private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";
 
     public HtmlArea0_0_FormViewPanel( final TestSession session )
     {
@@ -63,11 +60,6 @@ public class HtmlArea0_0_FormViewPanel
         }
         sleep( 300 );
         return this;
-    }
-
-    private void setTextIntoArea( String id, String text )
-    {
-        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SET_TINY_MCE_INNERHTML, id, text );
     }
 
     public void addEditors( long numberOfEditors )

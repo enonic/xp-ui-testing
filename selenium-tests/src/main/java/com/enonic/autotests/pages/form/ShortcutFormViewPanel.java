@@ -54,7 +54,7 @@ public class ShortcutFormViewPanel
     {
         if ( !isValidationMessageDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_shortcut_validation" );
+            saveScreenshot( "err_shortcut_validation" );
             throw new TestFrameworkException( "validation message not displayed!" );
         }
         return getDisplayedString( VALIDATION_MESSAGE );

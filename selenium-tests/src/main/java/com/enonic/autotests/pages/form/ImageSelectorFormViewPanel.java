@@ -171,4 +171,9 @@ public class ImageSelectorFormViewPanel
         String text = (String) ( (JavascriptExecutor) getDriver() ).executeScript( script, div );
         return text;
     }
+
+    public boolean isOptionSelected()
+    {
+        return findElements( By.xpath( SELECTED_IMAGE_VIEW ) ).size() > 0;
+    }
 }

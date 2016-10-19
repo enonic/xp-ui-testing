@@ -28,7 +28,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.TextTransfer;
 import com.enonic.xp.schema.content.ContentTypeName;
 
@@ -252,14 +251,12 @@ public class NewContentDialog
         boolean isContentTypePresent = isElementDisplayed( ctypeXpath );
         if ( !isContentTypePresent )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_type" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_type" ) );
             throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
         getDisplayedElement( By.xpath( ctypeXpath ) ).click();
-        waitsForSpinnerNotVisible( Application.EXPLICIT_NORMAL );
-        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened();
-        return wizard;
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        return new ContentWizardPanel( getSession() );
 
     }
 

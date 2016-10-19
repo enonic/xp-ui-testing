@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -48,7 +47,7 @@ public abstract class BaseTextLineFormViewPanel
         List<WebElement> removeButtons = getDisplayedElements( By.xpath( REMOVE_TEXT_INPUT_BUTTON ) );
         if ( removeButtons.size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), "err_remove_button" );
+            saveScreenshot( "err_remove_button" );
             throw new TestFrameworkException( "Remove button was not found" );
         }
         removeButtons.get( removeButtons.size() - 1 ).click();

@@ -12,7 +12,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Predicate;
 
@@ -109,6 +111,58 @@ public abstract class Page
     {
         return WaitHelper.waitUntilVisibleNoException( getDriver(), by, timeout );
     }
+
+    protected boolean waitInvisibilityOfElement( By by, long timeout )
+    {
+        WebDriverWait wait = new WebDriverWait( getDriver(), timeout );
+        try
+        {
+            wait.until( invisibilityOfElementLocated( by ) );
+            return true;
+        }
+        catch ( Exception e )
+        {
+            return false;
+        }
+    }
+
+    private ExpectedCondition<Boolean> invisibilityOfElementLocated( final By locator )
+    {
+        return new ExpectedCondition<Boolean>()
+        {
+            public Boolean apply( WebDriver driver )
+            {
+                try
+                {
+                    return Boolean.valueOf( !isElementDisplayed( locator ) );
+                }
+                catch ( NoSuchElementException var3 )
+                {
+                    return Boolean.valueOf( true );
+                }
+                catch ( StaleElementReferenceException var4 )
+                {
+                    return Boolean.valueOf( true );
+                }
+            }
+
+            public String toString()
+            {
+                return "element to no longer be visible: " + locator;
+            }
+        };
+    }
+
+    protected boolean isElementDisplayed( String xpath )
+    {
+        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
+    protected boolean isElementDisplayed( final By locator )
+    {
+        return findElements( locator ).stream().filter( WebElement::isDisplayed ).count() > 0;
+    }
+
 
     protected boolean waitUntilClickableNoException( By by, long timeout )
     {

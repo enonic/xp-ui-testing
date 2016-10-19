@@ -16,21 +16,19 @@ public class CityCreationPage
 
     public CityCreationPage typeCityName( String cityName )
     {
-        // findElements( By.xpath( "//input[@name='cityName']" ) ).get( 0 ).sendKeys( cityName );
-        clearAndType( findElements( By.xpath( "//input[@name='cityName']" ) ).get( 0 ), cityName );
+        clearAndType( findElement( By.xpath( "//input[@name='cityName']" ) ), cityName );
         return this;
     }
 
     public CityCreationPage typeCityPopulation( String cityPopulation )
     {
-        //findElements( By.xpath( "//input[@name='cityPopulation']" ) ).get( 0 ).sendKeys( cityPopulation );
-        clearAndType( findElements( By.xpath( "//input[@name='cityPopulation']" ) ).get( 0 ), cityPopulation );
+        clearAndType( findElement( By.xpath( "//input[@name='cityPopulation']" ) ), cityPopulation );
         return this;
     }
 
     public CityCreationPage typeCityLocation( String cityLocation )
     {
-        clearAndType( findElements( By.xpath( "//input[@name='cityLocation']" ) ).get( 0 ), cityLocation );
+        clearAndType( findElement( By.xpath( "//input[@name='cityLocation']" ) ), cityLocation );
 
         return this;
     }
@@ -40,6 +38,4 @@ public class CityCreationPage
         findElements( By.xpath( "//input[@type='submit']" ) ).get( 0 ).click();
         return this;
     }
-
-
 }

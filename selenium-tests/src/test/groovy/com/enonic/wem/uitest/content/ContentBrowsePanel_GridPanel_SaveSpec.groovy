@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
@@ -129,7 +128,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         filterPanel.typeSearchText( newName )
 
         then: "Content is listed with it's new name"
-        TestUtils.saveScreenshot( getTestSession(), "test_content_edit_name" );
+        saveScreenshot( "test_content_edit_name" );
         contentBrowsePanel.exists( newName, true );
     }
 

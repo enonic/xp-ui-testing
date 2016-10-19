@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.form;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -25,8 +24,6 @@ public class FieldSetFormViewPanel
     private final String HTML_AREA = FORM_VIEW + "//div[contains(@id,'TextLine')]";
 
     protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'TextArea')]";
-
-    private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";
 
     @FindBy(xpath = TEXT_LINE)
     private WebElement textLineInput;
@@ -65,11 +62,6 @@ public class FieldSetFormViewPanel
             sleep( 300 );
         }
         return this;
-    }
-
-    private void setTextIntoArea( String id, String text )
-    {
-        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SET_TINY_MCE_INNERHTML, id, text );
     }
 
     public String getTextLineValue()

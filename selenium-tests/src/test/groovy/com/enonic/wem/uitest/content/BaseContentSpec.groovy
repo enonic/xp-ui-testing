@@ -386,9 +386,8 @@ class BaseContentSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
             site ).save();
         sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "site-wizard_" + site.getName() );
+        saveScreenshot( "site-wizard_" + site.getName() );
         wizard.close( site.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), site.getName() );
     }
 
     protected Content buildPageTemplate( String pageDescriptorName, String supports, String displayName, String parentName )
