@@ -633,6 +633,7 @@ public class ContentBrowsePanel
         sleep( 500 );
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return wizard;
     }
 

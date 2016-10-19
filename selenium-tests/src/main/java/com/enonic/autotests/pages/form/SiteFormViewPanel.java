@@ -113,7 +113,7 @@ public class SiteFormViewPanel
             appName );
         if ( !isElementDisplayed( editButton ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_edit_button_site_config" );
+            saveScreenshot( "err_edit_button_site_config" );
             throw new TestFrameworkException( "edit button for site configuration  was not found" );
         }
         else

@@ -25,7 +25,7 @@ class SiteWizard_Mixin_ImageSelector_Spec
     def "GIVEN creating a site WHEN application with 'selected-image'-mixin selected THEN image selector appears on the page"()
     {
         given: ""
-        SITE = buildSiteWithApps( ALL_CONTENT_TYPES_DISPLAY_NAME );
+        SITE = buildSiteWithApps( FOURTH_TEST_APP_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             SITE.getContentTypeName() ).waitUntilWizardOpened();
         ImageSelectorFormViewPanel imageSelectorFormViewPanel = new ImageSelectorFormViewPanel( getSession() );

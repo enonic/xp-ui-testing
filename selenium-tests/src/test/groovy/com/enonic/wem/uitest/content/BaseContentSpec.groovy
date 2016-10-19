@@ -77,6 +77,12 @@ class BaseContentSpec
     String CONTENT_TYPES_NAME_APP = "All Content Types App";
 
     @Shared
+    String SIMPLE_TEST_APP_NAME = "Simple Test Selenium App";
+
+    @Shared
+    String FOURTH_TEST_APP_NAME = "Fourth Selenium App";
+
+    @Shared
     String COUNTRY_SITE_HTML_HEADER = "<title>Country Region</title>";
 
     @Shared

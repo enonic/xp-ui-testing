@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <config/>
+  <x-data mixin="select-image"/>
+  <x-data mixin="menu-item"/>
+  <config>
+    <input type="ImageSelector" name="backgroundImage">
+      <label>Background image</label>
+      <occurrences minimum="0" maximum="1"/>
+      <config/>
+    </input>
+    <input type="TextLine" name="numPosts">
+      <label>Max posts per page</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+
+    <input name="commentSort" type="ComboBox">
+      <label>Comments sort</label>
+      <occurrences minimum="0" maximum="1"/>
+      <config>
+        <option value="ASC">Oldest on top</option>
+        <option value="DESC">Newest on top</option>
+      </config>
+    </input>
+  </config>
 </site>
