@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.WizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -77,7 +78,7 @@ class ContentWizardPanel_TabMenuSpec
         when: "'close' button in the tabMenu pressed and 'Yes' button on confirm dialog chosen "
         SaveBeforeCloseDialog dialog = wizard.close( content.getDisplayName() );
         dialog.clickYesButton();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "new content listed in the browse panel"
         contentBrowsePanel.exists( content.getName() );

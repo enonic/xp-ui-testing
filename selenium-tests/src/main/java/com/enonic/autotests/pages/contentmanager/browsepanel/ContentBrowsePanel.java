@@ -130,17 +130,6 @@ public class ContentBrowsePanel
         super( session );
     }
 
-    @Override
-    public void waitsForSpinnerNotVisible()
-    {
-        boolean result = waitsElementNotVisible( By.xpath( SPINNER_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !result )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_spinner" ) );
-            throw new TestFrameworkException( "after " + EXPLICIT_NORMAL + " second, spinner still present" );
-        }
-    }
-
     public ContentBrowsePanel showPublishMenu()
     {
         publishMenuDropDownHandler.click();
@@ -427,7 +416,7 @@ public class ContentBrowsePanel
             }
         }
         waitsForSpinnerNotVisible();
-        sleep( 700 );
+        sleep( 300 );
         return this;
     }
 

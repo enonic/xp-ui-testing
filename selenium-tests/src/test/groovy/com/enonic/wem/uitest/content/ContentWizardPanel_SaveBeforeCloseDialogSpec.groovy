@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.WizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
@@ -39,7 +39,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         when: "'Close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.close( newDisplayName )
-        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-appears" );
+        saveScreenshot( "close_content_not_saved_SaveBeforeCloseDialog" );
 
         then: "modal dialog appears"
         dialog != null;
@@ -57,7 +57,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         when: "Yes is chosen"
         dialog.clickYesButton();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "Content is listed in BrowsePanel with it's new name"
         contentBrowsePanel.exists( content.getName() );
@@ -74,7 +74,7 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         when: "No is chosen"
         dialog.clickNoButton();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "Content is listed in BrowsePanel with it's original name"
         contentBrowsePanel.exists( content.getName() ) && !contentBrowsePanel.exists( newName );
@@ -90,8 +90,8 @@ class ContentWizardPanel_SaveBeforeCloseDialogSpec
 
         when:
         dialog.clickCancelButton();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-cancel" );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "SaveBeforeCloseDialog-cancel" );
 
         then:
         wizard.isOpened();

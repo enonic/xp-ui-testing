@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -38,7 +38,7 @@ class Restore_Version_Out_Of_Date_Spec
 
         and: "the version view has been expanded"
         allContentVersionsView.clickOnVersionAndExpand( 1 );
-        TestUtils.saveScreenshot( getSession(), "versions_out_of_date" );
+        saveScreenshot( "versions_out_of_date" );
 
         then: "'out-of-date' status displayed in the version view"
         versionItem.getContentStatus( versionItem.getId() ) == ContentStatus.OUT_OF_DATE.getValue();
@@ -61,6 +61,6 @@ class Restore_Version_Out_Of_Date_Spec
         saveScreenshot( "out_of_date_unpublished" );
 
         then: "spinner automatically disappears after a short interval"
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 }

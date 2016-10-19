@@ -107,7 +107,7 @@ public class HomePage
         getSession().setCurrentWindow( XP_Windows.USER_MANAGER );
         UserBrowsePanel panel = new UserBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        panel.waitsForSpinnerNotVisible();
+        panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         getLogger().info( "User Manger App loaded" );
         return panel;
     }
@@ -121,11 +121,11 @@ public class HomePage
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
         launcherPanel.clickOnApplications();
-        sleep( 1000 );
+        sleep( 500 );
         switchToAppWindow( "applications" );
         getSession().setCurrentWindow( XP_Windows.APPLICATIONS );
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
-        panel.waitsForSpinnerNotVisible();
+        panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         panel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         getLogger().info( "Applications App opened" );
         return panel;

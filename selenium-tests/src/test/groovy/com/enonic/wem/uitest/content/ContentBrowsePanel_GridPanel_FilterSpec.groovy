@@ -1,8 +1,8 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContentTypeDisplayNames
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
@@ -34,7 +34,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         when: "panel not displayed adn button 'show filter panel' clicked"
         displayed || contentBrowsePanel.doShowFilterPanel();
-        TestUtils.saveScreenshot( getSession(), "filter_panel_shown" )
+        saveScreenshot( "filter_panel_shown" )
 
         then: "filter panel displayed"
         filterPanel.isFilterPanelDisplayed();
@@ -56,8 +56,8 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         when: "Selecting one entry in ContentTypes-filter"
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getSession(), "filter_unstructured" )
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "filtered_unstructured" )
 
         then: "all existing Content of the selected type should be listed in gridPanel"
         Integer numberOfFilteredContent = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
@@ -69,12 +69,12 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         given: "selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         boolean beforeClean = contentBrowsePanel.exists( initialFolder.getName() );
 
         when: "clicking clean filter "
         filterPanel.clickOnCleanFilter();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "initial grid view displayed"
         !beforeClean && contentBrowsePanel.exists( initialFolder.getName() );
@@ -85,13 +85,13 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         given: "one selection in ContentTypes-filter"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         Integer numberOfData = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
 
         when: "selecting one additional entry in ContentTypes-filter"
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.FOLDER.getValue() );
-        contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
-        TestUtils.saveScreenshot( getTestSession(), "one-selection1" );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "filtering_one-selection1" );
 
         then: "all existing content of the both selected types should be listed in gridPanel"
         Integer numberOfFolder = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
@@ -103,13 +103,13 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         given: "one selection in any filter"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        contentBrowsePanel.waitsForSpinnerNotVisible( 1 );
-        TestUtils.saveScreenshot( getTestSession(), "one-selection2" );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "one-selection2" );
         boolean existsBeforeDeselect = contentBrowsePanel.exists( initialFolder.getName() );
 
         when: "deselecting selection"
         filterPanel.deselectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        TestUtils.saveScreenshot( getTestSession(), "one-selection-deselected" );
+        saveScreenshot( "one-selection-deselected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then: "initial grid view displayed"
@@ -121,8 +121,8 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         when: "adding text-search in filter panel"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.typeSearchText( initialFolder.getName() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "text-search1" );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "filtered_text-search1" );
 
         then: "all Content matching the text-search should be listed in gridPanel"
         contentBrowsePanel.exists( initialFolder.getName() );
@@ -134,12 +134,12 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.doShowFilterPanel();
         Content folder = buildFolderContent( "folder", "filter test" )
         filterPanel.typeSearchText( folder.getName() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "clicking clean filter"
         filterPanel.clickOnCleanFilter();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
-        TestUtils.saveScreenshot( getTestSession(), "text-search2" );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "filtered_text-search2" );
 
         then: "initial grid view displayed"
         contentBrowsePanel.getRowsCount() > 1 && contentBrowsePanel.exists( initialFolder.getName() );

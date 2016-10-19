@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.utils.TestUtils;
@@ -189,24 +190,23 @@ public class ContentBrowseFilterPanel
     {
         if ( !isFilterPanelDisplayed() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_show_filter_panel" );
-            throw new TestFrameworkException( "FilterPanel not shown!" );
+            saveScreenshot( "err_show_filter_panel" );
+            throw new TestFrameworkException( "FilterPanel was not shown!" );
         }
         String itemXpath = String.format( CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME, contentTypeDisplayName );
         WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
         if ( element == null )
         {
-            TestUtils.saveScreenshot( getSession(), contentTypeDisplayName );
+            saveScreenshot( contentTypeDisplayName );
             logError( "content type was not found in the search panel:" + contentTypeDisplayName );
             throw new ContentFilterException( "content type was not found in the search panel:" + contentTypeDisplayName );
         }
         else
         {
-            waitsForSpinnerNotVisible();
             if ( !isEntrySelected( contentTypeDisplayName ) )
             {
                 getDynamicElement( By.xpath( itemXpath ), 2 ).click();
-                waitsForSpinnerNotVisible();
+                waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
             }
         }
         return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();

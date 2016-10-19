@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContentTypeDisplayNames
 import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModified
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -27,8 +28,8 @@ class ContentBrowsePanel_FilterPanel_Spec
         when:
         saveScreenshot( "filter_panel_unstructured_before_selecting" );
         String label = filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        TestUtils.saveScreenshot( getTestSession(), "filter_panel_unstructured_selected" );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        saveScreenshot( "filter_panel_unstructured_selected" );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then:
         contentBrowsePanel.getRowsCount() == TestUtils.getNumberFromFilterLabel( label );
@@ -43,7 +44,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "clicking CleanFilter"
         filterPanel.clickOnCleanFilter();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "clear_filter_link_not_displayed" );
 
         then: "CleanFilter link should disappears"
@@ -58,10 +59,11 @@ class ContentBrowsePanel_FilterPanel_Spec
         given: "Selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        TestUtils.saveScreenshot( getTestSession(), "test_cleanFilter_entry_selected" );
+        saveScreenshot( "test_cleanFilter_entry_selected" );
+
         when: "clicking CleanFilter"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "test_cleanFilter_pressed" );
 
         then: "all selections should disappear"
@@ -88,12 +90,12 @@ class ContentBrowsePanel_FilterPanel_Spec
         filterPanel.getLastModifiedCount( "day" ) - lastModifiedBeforeAdding == 1;
     }
 
-    def "GIVEN creating new content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN creating of a new content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
-        given: "opened a content wizard and data typed"
+        given: "creating of a new content"
         contentBrowsePanel.doShowFilterPanel();
         TEST_FOLDER = buildFolderContent( "folder", "last modified test 2" );
-        TestUtils.saveScreenshot( getSession(), "last-mod-day-before-adding" );
+        saveScreenshot( "last-mod-day-before-adding" );
         int beforeAdding = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).
@@ -115,7 +117,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     {
         given: "existing folder"
         contentBrowsePanel.doShowFilterPanel();
-        TestUtils.saveScreenshot( getSession(), "LastModified_filter_before_folder_deleting" );
+        saveScreenshot( "LastModified_filter_before_folder_deleting" );
         int beforeRemoving = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "day" );
         saveScreenshot( "test_LastModified_aggregation_before_deleting" );
@@ -141,7 +143,7 @@ class ContentBrowsePanel_FilterPanel_Spec
 
         when: "folder's name typed in the text input"
         filterPanel.typeSearchText( TEST_FOLDER.getName() );
-        contentBrowsePanel.waitsForSpinnerNotVisible();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "test_aggregation_searchText_typed" );
 
         then: "all filters should be updated to only contain entries with matches in text-search"
