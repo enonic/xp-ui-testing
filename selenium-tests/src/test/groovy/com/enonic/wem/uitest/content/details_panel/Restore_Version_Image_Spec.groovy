@@ -18,7 +18,7 @@ class Restore_Version_Image_Spec
     extends BaseVersionHistorySpec
 {
     @Shared
-    Integer INITIAL_CROP_AREA_HEIGHT;
+    Integer ORIGINAL_CROP_AREA_HEIGHT;
 
     @Shared
     Integer CROPPED_IMAGE_HEIGHT;
@@ -40,7 +40,7 @@ class Restore_Version_Image_Spec
 
         when: "handler moved up and image was cropped "
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
-        INITIAL_CROP_AREA_HEIGHT = imageEditor.getCropAreaHeight();
+        ORIGINAL_CROP_AREA_HEIGHT = imageEditor.getCropAreaHeight();
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
         CROPPED_IMAGE_HEIGHT = imageEditor.getCropAreaHeight();
         imageEditor.getToolbar().clickOnApplyButton();
@@ -54,7 +54,7 @@ class Restore_Version_Image_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing image with several versions WHEN version with with full size is restored THEN button 'reset' is not present on the wizard page "()
+    def "GIVEN existing image with several versions WHEN version with original image is restored THEN button 'reset' is not present on the wizard page "()
     {
         given: "existing image with several versions"
         findAndSelectContent( IMPORTED_MAN_IMAGE );
@@ -62,7 +62,7 @@ class Restore_Version_Image_Spec
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version of image with full size is restored"
+        when: "version with original image is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
 
@@ -70,10 +70,10 @@ class Restore_Version_Image_Spec
         contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
-        saveScreenshot( "full_size_image_restored" );
+        saveScreenshot( "original_size_image_restored" );
 
-        then: "image with full initial size is displayed"
-        imageEditor.getCropAreaHeight() == INITIAL_CROP_AREA_HEIGHT;
+        then: "height of crop area is correct "
+        imageEditor.getCropAreaHeight() == ORIGINAL_CROP_AREA_HEIGHT;
         imageEditor.getToolbar().clickOnCloseButton();
 
         and: "button 'reset' is not present on the wizard page"
@@ -99,7 +99,7 @@ class Restore_Version_Image_Spec
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
         saveScreenshot( "cropped_size_image_restored" );
 
-        then: "image with full initial size is displayed"
+        then: "height of crop area is correct"
         imageEditor.getCropAreaHeight() == CROPPED_IMAGE_HEIGHT;
         imageEditor.getToolbar().clickOnCloseButton();
 
