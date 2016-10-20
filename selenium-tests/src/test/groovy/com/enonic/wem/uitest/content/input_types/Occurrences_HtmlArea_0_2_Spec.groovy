@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.BaseHtmlAreaFormViewPanel
 import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -54,6 +53,7 @@ class Occurrences_HtmlArea_0_2_Spec
 
         when: "clock on 'Add' button"
         formViewPanel.clickOnAddButton();
+        saveScreenshot( "add_button_hidden" );
 
         then: "wait until the button 'add' disappears"
         formViewPanel.waitUntilAddButtonNotVisible()
@@ -78,6 +78,7 @@ class Occurrences_HtmlArea_0_2_Spec
 
         when: "remove the last text area"
         formViewPanel.removeLastTextArea();
+        saveScreenshot( "one_htmlarea_removed" );
 
         then: "button 'Add' should be present on page"
         formViewPanel.isAddButtonPresent();
@@ -95,7 +96,7 @@ class Occurrences_HtmlArea_0_2_Spec
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1, TEST_TEXT2 );
         ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "area0_2_saved" )
+        saveScreenshot( "area0_2_saved" )
 
         when: "just created content opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
