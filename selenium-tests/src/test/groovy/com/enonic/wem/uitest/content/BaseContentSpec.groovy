@@ -80,7 +80,7 @@ class BaseContentSpec
     String SIMPLE_TEST_APP_NAME = "Simple Test Selenium App";
 
     @Shared
-    String FOURTH_TEST_APP_NAME = "Fourth Selenium App";
+    String FIRST_TEST_APP_NAME = "First Selenium App";
 
     @Shared
     String COUNTRY_SITE_HTML_HEADER = "<title>Country Region</title>";
