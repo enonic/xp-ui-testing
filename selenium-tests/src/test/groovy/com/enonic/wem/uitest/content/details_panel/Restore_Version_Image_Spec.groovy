@@ -23,7 +23,7 @@ class Restore_Version_Image_Spec
     @Shared
     Integer CROPPED_IMAGE_HEIGHT;
 
-    def "GIVEN existing folder WHEN display name of the folder changed THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing image WHEN handler moved up and image was cropped THEN new 'version history item' appeared in the version-view"()
     {
         given:
         findAndSelectContent( IMPORTED_MAN_IMAGE );
@@ -38,7 +38,7 @@ class Restore_Version_Image_Spec
 
 
 
-        when: "handler moved up and image was cropped "
+        when: "handler moved up and image was cropped"
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
         ORIGINAL_CROP_AREA_HEIGHT = imageEditor.getCropAreaHeight();
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
