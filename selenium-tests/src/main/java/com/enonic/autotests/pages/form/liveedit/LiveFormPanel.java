@@ -29,15 +29,16 @@ public class LiveFormPanel
 
     public final String SHADER_PAGE = "//div[@class='xp-page-editor-shader xp-page-editor-page']";
 
-    private final String PANEL_DIV = "//div[contains(@id,'app.wizard.page.LiveFormPanel')]";
+    public static final String LIVE_FORM_PANEL = "//div[contains(@id,'LiveFormPanel')]";
+
 
     private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'ImageComponentView')]";
 
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
-    private final String TEXT_COMPONENT_TOOLBAR = "//div[contains(@class,'mce-toolbar-grp')]";
-
     private LayoutComponentView layoutComponentView;
+
+    private MceToolbar mceToolbar;
 
     public LiveFormPanel( final TestSession session )
     {
@@ -53,9 +54,13 @@ public class LiveFormPanel
         return layoutComponentView;
     }
 
-    public boolean isTextComponentToolbarDisplayed()
+    public MceToolbar getMceToolbar()
     {
-        return isElementDisplayed( TEXT_COMPONENT_TOOLBAR );
+        if ( mceToolbar == null )
+        {
+            mceToolbar = new MceToolbar( getSession() );
+        }
+        return mceToolbar;
     }
 
     public void setLayoutComponentView( LayoutComponentView layoutComponentView )
@@ -91,10 +96,10 @@ public class LiveFormPanel
      */
     public void waitUntilPageLoaded( long timeout )
     {
-        boolean isPageLoaded = waitAndFind( By.xpath( PANEL_DIV ), timeout );
+        boolean isPageLoaded = waitAndFind( By.xpath( LIVE_FORM_PANEL ), timeout );
         if ( !isPageLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "LiveFormPanel_bug" ) );
+            saveScreenshot( NameHelper.uniqueName( "LiveFormPanel_bug" ) );
             throw new TestFrameworkException( "LIVE EDIT:  LiveFormPanel was not loaded!" );
         }
     }
@@ -108,7 +113,7 @@ public class LiveFormPanel
     {
         if ( !isElementDisplayed( TEXT_COMPONENT_VIEW + "//section/p" ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_text_component" );
+            saveScreenshot( "err_text_component" );
             throw new TestFrameworkException( "text in the component was not found!" );
         }
         return getDisplayedString( TEXT_COMPONENT_VIEW + "//section/p" );
