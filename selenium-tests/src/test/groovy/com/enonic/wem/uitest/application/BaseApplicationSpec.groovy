@@ -57,7 +57,7 @@ class BaseApplicationSpec
     String DISQUS_APP_DISPLAY_NAME = "Disqus";
 
     @Shared
-    String DISQUS_APP_NAME = "com.enonic.app.disqus";
+    String DISQUS_APP_NAME = "Add Disqus comments to your website pages";
 
     @Shared
     String APP_UNINSTALLED = "Application '%s' uninstalled successfully";
