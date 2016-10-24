@@ -162,7 +162,7 @@ class Occurrences_TextLine_2_5_Spec
         then: "content has a 'online' status"
         contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and: "correct notification message was shown"
-        publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, textLineContent.getDisplayName() );
+        publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, textLineContent.getDisplayName() );
     }
 
     def "GIVEN creating new TextLine2:5 on root WHEN name typed but required text input is empty THEN content is invalid and the 'Publish' button is disabled"()

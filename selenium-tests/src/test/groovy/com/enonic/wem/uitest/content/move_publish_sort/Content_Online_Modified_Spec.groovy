@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -31,7 +30,7 @@ class Content_Online_Modified_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
         and: "correct notification message appears"
-        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getDisplayName() );
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getDisplayName() );
     }
 
     def "GIVEN existing root content with 'Online' status  WHEN content edited THEN content becomes 'Modified' in the BrowsePanel"()
@@ -56,7 +55,7 @@ class Content_Online_Modified_Spec
 
         when: "new display name typed"
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save();
-        TestUtils.saveScreenshot( getSession(), "test_modified_wizard" );
+        saveScreenshot( "content_is_modified_wizard" );
 
         then: "status of content is 'modified'"
         wizard.getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
@@ -79,7 +78,7 @@ class Content_Online_Modified_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
         and: "correct notification message appears"
-        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
 
         and: "Publish button on the BrowsePanel-toolbar becomes disabled"
         !contentBrowsePanel.isPublishButtonEnabled();

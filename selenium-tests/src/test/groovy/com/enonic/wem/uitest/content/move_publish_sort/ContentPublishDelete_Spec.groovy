@@ -33,7 +33,7 @@ class ContentPublishDelete_Spec
         then:
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
-        message == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
     }
 
     def "GIVEN existing root content with 'Online' status WHEN content selected and 'Delete' button pressed THEN content with a 'Pending delete' status present"()
@@ -48,7 +48,7 @@ class ContentPublishDelete_Spec
         then:
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
         and:
-        message == "1 item was marked for deletion";
+        message == Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE;
     }
 
     def "GIVEN existing root content with 'Pending Delete' status  WHEN it selected and 'Delete' button pressed THEN checkbox with label 'Instantly delete published items' is checked"()
@@ -73,6 +73,6 @@ class ContentPublishDelete_Spec
         !contentBrowsePanel.exists( content.getName() );
 
         and:
-        message == "pending item was deleted";
+        message == Application.ONE_PENDING_ITEM_IS_DELETED;
     }
 }

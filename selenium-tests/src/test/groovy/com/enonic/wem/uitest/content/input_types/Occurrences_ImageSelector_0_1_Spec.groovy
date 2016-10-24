@@ -84,7 +84,7 @@ class Occurrences_ImageSelector_0_1_Spec
         and: "content is valid"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
         and:
-        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
+        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
     def "GIVEN saving of Image Selector-content (0:1) and one image selected WHEN content opened for edit THEN correct image present on page and option filter not displayed"()

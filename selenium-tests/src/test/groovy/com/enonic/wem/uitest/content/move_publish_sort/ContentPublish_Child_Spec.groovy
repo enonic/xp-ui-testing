@@ -1,8 +1,8 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -28,23 +28,24 @@ class ContentPublish_Child_Spec
         parentContent = buildFolderContent( "publish", "parent-folder" );
         addContent( parentContent );
 
-        and: "new child content added"
+        and: "one child content added"
         findAndSelectContent( parentContent.getName() );
         childContent1 = buildFolderContentWithParent( "publish", "child-folder1", parentContent.getName() );
         addContent( childContent1 );
 
         when: " 'publish' dialog opened and parent content has been published without a child "
-        contentBrowsePanel.clickOnClearSelection();
-        filterPanel.typeSearchText( parentContent.getName() );
-        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish();
-        dialog.setIncludeChildCheckbox( false ).clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().setIncludeChildCheckbox( false ).clickOnPublishNowButton(); ;
+        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "child content has 'offline' status"
         filterPanel.typeSearchText( childContent1.getName() );
         contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
+
+        and: "correct notification message is displayed"
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, parentContent.getDisplayName() );
     }
 
-    def "GIVEN parent 'online' folder with not published child WHEN the parent folder is selected THEN 'Publish' button on toolbar is disabled"()
+    def "GIVEN parent 'online' folder with not published child WHEN the parent folder is selected THEN Publish-menu becomes available"()
     {
         given: "parent folder with a not published child"
         filterPanel.typeSearchText( parentContent.getName() );
@@ -52,10 +53,10 @@ class ContentPublish_Child_Spec
         when: "the parent folder is selected"
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
 
-        then: "'Publish' button on toolbar is disabled"
+        then: "'Publish' button on the toolbar is disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
 
-        and: "Publish-menu becomes enabled now"
+        and: "Publish-menu becomes available"
         contentBrowsePanel.isPublishMenuAvailable();
     }
 
@@ -88,34 +89,35 @@ class ContentPublish_Child_Spec
 
         and: "'publish' button on modal dialog clicked"
         modalDialog.clickOnPublishNowButton();
-        TestUtils.saveScreenshot( getSession(), "test_child_published" );
 
         then: "child content is 'online' now"
         filterPanel.typeSearchText( childContent1.getName() );
+        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
-    def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN just added child content has a 'Offline' status"()
+    def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN the child content has a 'Offline' status"()
     {
-        setup: "add one more content into the published folder"
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
+        given: "add one more content added for the published folder"
+        findAndSelectContent( parentContent.getName() );
         childContent2 = buildFolderContentWithParent( "publish", "child-folder2", parentContent.getName() );
         addContent( childContent2 );
 
-        when:
-        contentBrowsePanel.clickOnClearSelection();
+        when: "the child content filtered"
         filterPanel.typeSearchText( childContent2.getName() );
 
-        then: "just new added content has a 'Offline' status"
+        then: "new added content has a 'Offline' status"
         contentBrowsePanel.getContentStatus( childContent2.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
     }
 
     def "GIVEN existing parent has 'online' and child contents is 'offline' WHEN parent folder selected and 'Delete' button pressed  THEN 'offline' child content removed, but parent folder and 'online' child content are 'Pending delete' "()
     {
-        when: "parent folder selected and 'Delete' button pressed"
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarDelete().doDelete();
+        when: "parent 'online'-folder selected and 'Delete' button pressed"
+        findAndSelectContent( parentContent.getName() ).clickToolbarDelete().doDelete();
+        String message = contentBrowsePanel.waitNotificationMessage()
+
+        and: "parent folder has been expanded"
         contentBrowsePanel.expandItem( parentContent.getPath().toString() );
+        saveScreenshot( "parent_child_are_pending" );
 
         then: "online-parent becomes 'pending-delete'"
         contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
@@ -125,16 +127,22 @@ class ContentPublish_Child_Spec
 
         and: "offline-child has been removed"
         !contentBrowsePanel.exists( childContent2.getName() );
+
+        and: "correct notification message is displayed"
+        message == Application.CONTENT_DELETED_MESSAGE;
     }
 
     def "GIVEN existing parent folder with one child and status of both contents are 'PENDING_DELETE' WHEN parent folder selected and 'Publish' button pressed THEN parent folder not listed"()
     {
         when:
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton(); ;
+        findAndSelectContent( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        String message = contentBrowsePanel.waitNotificationMessage();
 
         then: "parent folder not listed"
         !contentBrowsePanel.exists( parentContent.getName() );
+
+        and: "correct notification message is displayed"
+        message == String.format( Application.PENDING_ITEMS_ARE_DELETED, "2" );
     }
 
 }

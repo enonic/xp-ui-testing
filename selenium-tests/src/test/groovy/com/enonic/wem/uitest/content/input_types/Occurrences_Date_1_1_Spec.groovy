@@ -102,6 +102,6 @@ class Occurrences_Date_1_1_Spec
         contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
         and: "correct notification message was shown "
-        publishMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateContent.getDisplayName() );
+        publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateContent.getDisplayName() );
     }
 }

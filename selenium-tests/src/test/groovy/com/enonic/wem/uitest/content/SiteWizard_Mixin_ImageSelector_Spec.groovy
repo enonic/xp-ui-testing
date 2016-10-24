@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -24,7 +23,7 @@ class SiteWizard_Mixin_ImageSelector_Spec
 
     def "GIVEN creating a site WHEN application with 'selected-image'-mixin selected THEN image selector appears on the page"()
     {
-        given: ""
+        given: "creating a site"
         SITE = buildSiteWithApps( FIRST_TEST_APP_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             SITE.getContentTypeName() ).waitUntilWizardOpened();
@@ -40,7 +39,6 @@ class SiteWizard_Mixin_ImageSelector_Spec
         wizard.isWizardStepPresent( "Selected image" );
     }
     //verifies: XP-4278 A mixin with image selector crashes the Content Wizard
-    @Ignore
     def "GIVEN existing site with mixin(image-selector) WHEN site opened THEN spinner disappears after a few seconds "()
     {
         given: "existing site with mixin(image-selector)"
@@ -53,13 +51,11 @@ class SiteWizard_Mixin_ImageSelector_Spec
         then: "wizard opened and spinner disappears after a few seconds"
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
-    //TODO remove it, when bug will be fixed
-    @Ignore
+
     def "GIVEN existing site with mixin(image-selector) WHEN site opened AND image selected AND site saved THEN image is displayed on te page"()
     {
         given: "existing site with mixin(image-selector)"
-        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit().waitInvisibilityOfSpinner(
-            Application.EXPLICIT_NORMAL );
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel imageSelectorFormViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "image selected"

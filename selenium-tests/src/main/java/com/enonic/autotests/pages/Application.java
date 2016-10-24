@@ -18,17 +18,21 @@ public class Application
 
     public static final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
-    public static String MARKED_FOR_DELETION_MESSAGE = "\"%s\" marked for deletion";
+    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion";
+
+    public static String CONTENTS_MARKED_FOR_DELETION_MESSAGE = "%s items are marked for deletion";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
     public static String GROUP_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
-    public static String UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" was unpublished";
+    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is unpublished";
+
+    public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "% items are unpublished";
 
     public static String CONTENT_SAVED = "\"%s\" saved";
 
-    public static String CONTENT_DELETED_MESSAGE = "\"%s\" deleted";
+    public static String CONTENT_DELETED_MESSAGE = "The item is deleted";
 
     public static final String FULL_ACCESS = "Full Access";
 
@@ -64,7 +68,13 @@ public class Application
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
 
-    public static String CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" published";
+    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is published";
+
+    public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published";
+
+    public static String ONE_PENDING_ITEM_IS_DELETED = "The item is deleted";
+
+    public static String PENDING_ITEMS_ARE_DELETED = "%s items are deleted";
 
     public static final long PAGE_LOAD_TIMEOUT = 15l;
 

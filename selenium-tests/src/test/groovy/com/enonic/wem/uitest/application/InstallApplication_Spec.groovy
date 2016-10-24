@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.application
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
 import com.enonic.autotests.pages.modules.InstallAppDialog_MarketAppPanel
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -42,7 +41,7 @@ class InstallApplication_Spec
         when: "the application uploaded"
         appDialog.duUploadApplication( LOCAL_PATH_TO_APP );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "app_install" )
+        saveScreenshot( "local_app_installed" );
 
         then: "new application listed in the grid"
         applicationBrowsePanel.exists( APP_NAME );
@@ -54,14 +53,12 @@ class InstallApplication_Spec
     def "GIVEN existing not local application EXPECTED icon for local application not displayed"()
     {
         expect: "application, that is 'local' has a required icon"
-        TestUtils.saveScreenshot( getSession(), "app_local" );
         applicationBrowsePanel.isGridItemPresent( LOCAL_APP_DISPLAY_NAME );
 
         and:
         applicationBrowsePanel.isApplicationByDisplayNameLocal( LOCAL_APP_DISPLAY_NAME );
     }
 
-    @Ignore
     def "WHEN existing local application selected THEN 'uninstall' button is disabled"()
     {
         when:
@@ -83,7 +80,7 @@ class InstallApplication_Spec
         when: "an application uploaded"
         appDialog.duUploadApplication( LOCAL_PATH_TO_APP );
         String appUpdatedMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "app_install" )
+        saveScreenshot( "app_was_uploaded" )
 
         then: "updated application listed in the grid"
         applicationBrowsePanel.exists( APP_NAME );
@@ -92,15 +89,6 @@ class InstallApplication_Spec
         appUpdatedMessage == String.format( APP_UPDATED_MESSAGE, APP_DISPLAY_NAME )
     }
 
-    @Ignore
-    def "WHEN existing not local application selected THEN 'uninstall' button is enabled"()
-    {
-        when:
-        applicationBrowsePanel.selectRowByName( APP_NAME )
-
-        then:
-        applicationBrowsePanel.isUninstallButtonEnabled();
-    }
 
     @Ignore
     def "WHEN one local application and one not local application are selected THEN 'uninstall' button is disabled"()
@@ -122,7 +110,7 @@ class InstallApplication_Spec
         when: "'uninstall' button pressed"
         String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "app_uninstall" );
+        saveScreenshot( "app_uninstalled" );
 
         then: "application not listed"
         !applicationBrowsePanel.exists( APP_NAME );
@@ -134,7 +122,6 @@ class InstallApplication_Spec
     def "GIVEN 'install app' dialog opened and 'Enonic Market' selected WHEN an application from the 'Enonic Market' installed THEN new application listed in the browse panel "()
     {
         given:
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_8" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -144,13 +131,13 @@ class InstallApplication_Spec
         when: "an application from the 'Enonic Market' installed"
         marketPanel.doInstallApp( CONTENT_VIEWER_APP_DISPLAY_NAME );
         String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "app_notification_message" );
+        saveScreenshot( "app_installed_notification_message" );
         appDialog.clickOnCancelButton();
         sleep( 1000 );
 
         then: "correct notification message appears"
         notificationMessage == String.format( APP_INSTALLED_MESSAGE, CONTENT_VIEWER_APP );
-        TestUtils.saveScreenshot( getSession(), "app_from_market" );
+        saveScreenshot( "app_from_market" );
 
         and: "new application listed in the browse panel"
         applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );
@@ -165,23 +152,31 @@ class InstallApplication_Spec
     def "GIVEN existing installed from the market application WHEN Install App Dialog opened THEN the application is disabled in the 'market'"()
     {
         when:
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_9" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
         InstallAppDialog_MarketAppPanel marketPanel = new InstallAppDialog_MarketAppPanel( getSession() );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "test_install_dlg_installed" );
+        saveScreenshot( "test_app_installed_in_dialog" );
 
         then: "install button disabled for application that was already installed"
         marketPanel.isApplicationAlreadyInstalled( CONTENT_VIEWER_APP_DISPLAY_NAME );
+    }
+
+    def "WHEN existing not local application selected THEN 'uninstall' button is enabled"()
+    {
+        when:
+        applicationBrowsePanel.selectRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME )
+
+        then:
+        applicationBrowsePanel.isUninstallButtonEnabled();
     }
 
     def "GIVEN installed from 'Enonic Market' application WHEN the application selected and context-menu shown THEN all menu-items have correct state"()
     {
         when: "context menu opened"
         applicationBrowsePanel.openContextMenu( CONTENT_VIEWER_APP_INSTALLED_NAME );
-        TestUtils.saveScreenshot( getSession(), "not-local-app-context-menu" );
+        saveScreenshot( "not-local-app-context-menu" );
 
         then: "Delete menu item is enabled"
         applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );
@@ -201,7 +196,7 @@ class InstallApplication_Spec
         when: "'uninstall' button pressed"
         String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(
             Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "enonic_app_uninstall" );
+        saveScreenshot( "enonic_app_uninstalled" );
 
         then: "application not listed"
         !applicationBrowsePanel.exists( CONTENT_VIEWER_APP_INSTALLED_NAME );

@@ -106,6 +106,7 @@ class ContentUnpublishDialog_Spec
 
         then: "wait until the dialog closed"
         contentUnPublishDialog.waitForClosed();
+        def message = contentBrowsePanel.waitNotificationMessage();
 
         and: "content still has 'online' status"
         contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
@@ -113,6 +114,9 @@ class ContentUnpublishDialog_Spec
 
         and: "publish button on the toolbar is enabled"
         contentBrowsePanel.isPublishButtonEnabled();
+
+        and: "correct notification message appears"
+        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, PARENT_CONTENT.getDisplayName() );
     }
 
     def "GIVEN parent and child content are 'online' WHEN parent content selected and 'Unpublish' menu item selected THEN parent and child contents are 'offline'"()

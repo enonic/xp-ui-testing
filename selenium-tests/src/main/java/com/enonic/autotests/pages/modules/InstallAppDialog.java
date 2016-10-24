@@ -15,7 +15,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.TextTransfer;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -110,7 +109,7 @@ public class InstallAppDialog
     {
         if ( !isUploadTabActivated() )
         {
-            TestUtils.saveScreenshot( getSession(), "err_upload_tab" );
+            saveScreenshot( "err_upload_tab" );
             throw new TestFrameworkException( "Upload-tab is not activated!" );
         }
         String absolutePath = null;
@@ -137,10 +136,10 @@ public class InstallAppDialog
         boolean isLoaded = waitUntilVisibleNoException( By.xpath( HEADER_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_install-dialog" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_install-dialog" ) );
             throw new TestFrameworkException( "Install app dialog not loaded!" );
         }
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        waitInvisibilityOfSpinner( 5 );
         waitUntilVisible( By.xpath( APP_VIEWER_DIV ) );
     }
 
@@ -149,7 +148,7 @@ public class InstallAppDialog
         boolean isPresent = waitsElementNotVisible( By.xpath( HEADER_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isPresent )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_dialog-not-closed" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_dialog-not-closed" ) );
             throw new TestFrameworkException( "Install app dialog not closed!" );
         }
     }
@@ -166,7 +165,7 @@ public class InstallAppDialog
         boolean isClickable = waitUntilClickableNoException( By.xpath( UPLOAD_TAB ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), "err_upload_button_install_dlg" );
+            saveScreenshot( "err_upload_button_install_dlg" );
             throw new TestFrameworkException( "install app dialog: upload button is not clickable!" );
         }
         uploadTab.click();

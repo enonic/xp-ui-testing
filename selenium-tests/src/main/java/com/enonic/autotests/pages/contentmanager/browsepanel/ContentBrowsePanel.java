@@ -253,7 +253,7 @@ public class ContentBrowsePanel
         {
             return null;
         }
-        return findElements( By.xpath( NOTIFICATION_MESSAGE ) ).get( 0 ).getText();
+        return getDisplayedString( NOTIFICATION_MESSAGE );
     }
 
     public boolean isContentInvalid( String contentName )

@@ -63,7 +63,7 @@ class ContentBrowsePanel_PublishMenu_Spec
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
 
         and: "correct notification message appears"
-        message == String.format( Application.UNPUBLISHED_NOTIFICATION_MESSAGE, FOLDER_CONTENT.getDisplayName() );
+        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, FOLDER_CONTENT.getDisplayName() );
 
         and: "'Publish' on the toolbar is enabled now"
         contentBrowsePanel.isPublishButtonEnabled();

@@ -149,7 +149,7 @@ class Occurrences_ImageSelector_0_0_Spec
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
         and:
-        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
+        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
     def "GIVEN saving 'Image Selector 0:0' content with selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
@@ -172,6 +172,6 @@ class Occurrences_ImageSelector_0_0_Spec
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
 
         and: "correct notification message appeared"
-        publishedMessage == String.format( Application.CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
+        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 }
