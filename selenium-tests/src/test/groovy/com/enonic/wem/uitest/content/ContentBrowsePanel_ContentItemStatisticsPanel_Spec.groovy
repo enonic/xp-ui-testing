@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 
@@ -49,6 +50,8 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
 
         when: "the template is selected"
         findAndSelectContent( template.getName() );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "page_preview_statistic_panel" )
 
         then: "'page' displayed in the preview panel"
         contentItemPreviewPanel.isPageDisplayed();

@@ -300,7 +300,7 @@ class BaseContentSpec
         data.addStrings( "description", "My first Site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
-            name( siteName ).
+            name( NameHelper.uniqueName( siteName ) ).
             displayName( "my-site" ).
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.site() ).data( data ).
