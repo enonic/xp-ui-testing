@@ -14,7 +14,7 @@ import spock.lang.Stepwise
  * XP-4222 Add selenium tests for restoring of cropped image
  * */
 @Stepwise
-class Restore_Version_Image_Spec
+class Restore_Version_Crop_Image_Spec
     extends BaseVersionHistorySpec
 {
     @Shared
@@ -35,8 +35,6 @@ class Restore_Version_Image_Spec
         and: "image opened in the wizard"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
-
-
 
         when: "handler moved up and image was cropped"
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
@@ -89,7 +87,7 @@ class Restore_Version_Image_Spec
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version of image with full size is restored"
+        when: "version of image with cropped size is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
 

@@ -36,7 +36,8 @@ import com.enonic.xp.security.auth.AuthenticationInfo;
 @Component(immediate = true)
 public class Initializer
 {
-    private static final String[] FOLDER_IMAGES = {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "hand.jpg"};
+    private static final String[] FOLDER_IMAGES =
+        {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "hand.jpg", "spumans.jpg"};
 
     private static final String[] BAT_FILES = {"server.bat", "start.bat"};
 

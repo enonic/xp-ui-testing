@@ -1,7 +1,5 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.utils.TestUtils
-
 class AppBrowsePanel_ContextMenu_Spec
     extends BaseApplicationSpec
 {
@@ -9,7 +7,7 @@ class AppBrowsePanel_ContextMenu_Spec
     {
         when: "context menu opened"
         applicationBrowsePanel.selectItemByDisplayNameOnOpenContextMenu( THIRD_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "local-app-context-menu" );
+        saveScreenshot( "local-app-context-menu" );
 
         then: "Delete menu item is enabled"
         applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );
@@ -25,13 +23,13 @@ class AppBrowsePanel_ContextMenu_Spec
     {
         given:
         applicationBrowsePanel.selectRowByItemDisplayName( THIRD_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "local-app-stopped" );
+        saveScreenshot( "local-app-stopped" );
         applicationBrowsePanel.clickOnToolbarStop();
         applicationBrowsePanel.clickOnClearSelection();
 
         when: "context menu opened"
         applicationBrowsePanel.selectItemByDisplayNameOnOpenContextMenu( THIRD_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "local-app-context-menu" );
+        saveScreenshot( "local-app-stopped--context-menu" );
 
         then: "Delete menu item is enabled"
         !applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );
@@ -50,7 +48,7 @@ class AppBrowsePanel_ContextMenu_Spec
 
         when: "context menu opened"
         applicationBrowsePanel.selectRowByName( DISQUS_APP_NAME );
-        TestUtils.saveScreenshot( getSession(), "disqus-context-menu" );
+        saveScreenshot( "disqus-context-menu" );
 
         then: "Delete menu item is enabled"
         applicationBrowsePanel.isContextMenuItemEnabled( "Stop" );

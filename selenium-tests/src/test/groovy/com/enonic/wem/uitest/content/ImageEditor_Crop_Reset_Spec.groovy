@@ -44,7 +44,7 @@ class ImageEditor_Crop_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
     //verifies XP-4167 Impossible to save changes and close the Wizard after an image was cropped
-    def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image cropped  AND save  button pressed THEN image's height was reduced"()
+    def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image cropped  AND save button pressed AND wizard closed THEN 'save before close' dialog does not appear"()
     {
         given: "'Image Editor' dialog opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -79,14 +79,14 @@ class ImageEditor_Crop_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing cropped image opened WHEN  'Reset' button has been pressed THEN 'Reset' button is getting hidden"()
+    def "GIVEN existing cropped image opened WHEN 'Reset' button has been pressed THEN 'Reset' button is getting hidden"()
     {
         given: "existing cropped image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         saveScreenshot( "reset_button_displayed" );
 
-        when: "the image opened"
+        when: "'Reset' button has been pressed"
         imageFormViewPanel.clickOnResetButton();
         wizard.save();
         saveScreenshot( "reset_button_pressed" );

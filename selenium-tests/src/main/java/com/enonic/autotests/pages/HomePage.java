@@ -14,7 +14,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -157,7 +156,7 @@ public class HomePage
         }
         else
         {
-            TestUtils.saveScreenshot( getSession(), "new tab was not opened!" );
+            saveScreenshot( "new tab was not opened!" );
             throw new TestFrameworkException( "error during switching to   " + appName );
         }
     }
