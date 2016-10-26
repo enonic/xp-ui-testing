@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewD
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
@@ -39,7 +38,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     {
         given: "existing Site based on 'My First App'"
         Content site = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
-        addSiteBasedOnFirstApp( site );
+        addSite( site );
         contentBrowsePanel.expandContent( ContentPath.from( SITE_WITH_COMPONENTS_NAME ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, TEMPLATE_DISPLAY_NAME,
                                            SITE_WITH_COMPONENTS_NAME );
@@ -77,7 +76,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
         and: "wizard saved"
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "new-image-set" );
+        saveScreenshot( "new-image-set" );
 
         when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
         wizard.showComponentView();
@@ -98,7 +97,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
         LiveFormPanel liveFormPanel = addImageComponent( TEST_IMAGE_SWAP );
-        TestUtils.saveScreenshot( getSession(), "two-images-in-view" );
+        saveScreenshot( "two-images-in-view" );
         LinkedList<String> before = liveFormPanel.getImageNames();
 
         when: "swapping components by DnD"

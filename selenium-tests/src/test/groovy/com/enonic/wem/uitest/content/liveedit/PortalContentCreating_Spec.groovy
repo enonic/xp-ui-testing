@@ -39,13 +39,21 @@ class PortalContentCreating_Spec
     @Shared
     String OSLO_CITY_NAME = "oslo";
 
+    @Shared
+    Content SITE;
+
+
     def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller added and wizard closed THEN new template should be listed"()
     {
         given: "existing Site based on 'My First App'"
-        filterPanel.typeSearchText( FIRST_SITE_NAME );
-        contentBrowsePanel.expandContent( ContentPath.from( FIRST_SITE_NAME ) );
+        SITE = buildMyFirstAppSite( "mysite" );
+        addSite( SITE );
+        filterPanel.typeSearchText( SITE.getName() );
+
+        and: "site expanded"
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_COUNTRY, TEMPLATE_DISPLAY_NAME,
-                                           FIRST_SITE_NAME );
+                                           SITE.getName() );
 
         when: "'Templates' folder selected and new page-template added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
@@ -82,16 +90,16 @@ class PortalContentCreating_Spec
     def "GIVEN new country-content added  WHEN city-creation page opened AND 'SUBMIT' button pressed  AND city-content added as child into the country THEN new child content exist beneath a parent"()
     {
         given: "new country-content added"
-        NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", FIRST_SITE_NAME );
+        NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", SITE.getName() );
 
-        ContentWizardPanel wizard = selectSiteOpenWizard( NOR_CONTENT.getContentTypeName(), FIRST_SITE_NAME );
+        ContentWizardPanel wizard = selectSiteOpenWizard( NOR_CONTENT.getContentTypeName(), SITE.getName() );
         wizard.typeData( NOR_CONTENT ).save().waitNotificationMessage();
         wizard.close( NOR_CONTENT.getDisplayName() );
 
         when: "the submit button pressed and new city-content added as child into the country"
         contentBrowsePanel.clickOnClearSelection();
-        openResourceInDraft( FIRST_SITE_NAME + "/" + NOR_CONTENT.getName() );
-        TestUtils.saveScreenshot( getSession(), "oslo-creation-page" );
+        openResourceInDraft( SITE.getName() + "/" + NOR_CONTENT.getName() );
+        saveScreenshot( "oslo-creation-page" );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
         cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( OSLO_CITY_NAME ).typeCityPopulation( OSLO_POPULATION );
         saveScreenshot( "oslo-creation-page" );
@@ -123,7 +131,7 @@ class PortalContentCreating_Spec
     def "GIVEN existing city content WHEN page for 'creating/updating' content and new population typed THEN the city-content with the new population present in the grid "()
     {
         given: "city-content opened for edit and new population typed"
-        openResourceInDraft( FIRST_SITE_NAME + "/" + NOR_CONTENT.getName() );
+        openResourceInDraft( SITE.getName() + "/" + NOR_CONTENT.getName() );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
         cityCreationPage.typeCityName( "oslo" ).typeCityPopulation( NEW_OSLO_POPULATION ).typeCityLocation( OSLO_LOCATION ).clickSubmit();
 

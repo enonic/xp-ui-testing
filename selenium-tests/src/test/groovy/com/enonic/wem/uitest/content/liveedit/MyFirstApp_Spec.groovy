@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
@@ -22,7 +21,7 @@ class MyFirstApp_Spec
     def "GIVEN creating new Site based on 'My First App' WHEN saved and wizard closed THEN new site should be listed"()
     {
         given:
-        MY_FIRST_SITE = buildMyFirstAppSite( NameHelper.uniqueName( "country-site" ) );
+        MY_FIRST_SITE = buildMyFirstAppSite( "country-site" );
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
             MY_FIRST_SITE.getDisplayName() );
@@ -39,7 +38,7 @@ class MyFirstApp_Spec
         ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), MY_FIRST_SITE.getName() );
 
         when: "data typed and saved and wizard closed"
-        String message = wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
+        wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
         saveScreenshot( "usa_content_added" );
         wizard.close( USA_CONTENT.getDisplayName() );
 
@@ -99,7 +98,7 @@ class MyFirstApp_Spec
         wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
-        TestUtils.saveScreenshot( getSession(), "page_descriptor_added_in_country_content" );
+        saveScreenshot( "page_descriptor_added_in_country_content" );
         wizard.clickToolbarPreview();
         saveScreenshot( "country_preview_clicked" );
 
@@ -113,9 +112,10 @@ class MyFirstApp_Spec
 
     def "GIVEN country-content with a controller WHEN content opened for edit and part inserted into the region THEN correct page source displayed"()
     {
-        given: "country-content with a controller"
-        filterPanel.typeSearchText( USA_CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
+        given: "country-content with a controller is opened"
+        ContentWizardPanel wizard = findAndSelectContent( USA_CONTENT.getName() ).clickToolbarEdit();
+
+        and: "Component View is shown"
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
@@ -127,6 +127,7 @@ class MyFirstApp_Spec
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME )
         saveScreenshot( "part_country_added" );
         wizard.save();
+
         and: "'Preview' button pressed on the wizard-toolbar"
         wizard.clickToolbarPreview();
 

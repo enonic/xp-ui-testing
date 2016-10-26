@@ -115,7 +115,6 @@ class LiveEditLockedMode_Spec
         site = buildSite( name );
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
             site.getDisplayName() );
-        saveScreenshot( NameHelper.uniqueName( "locked mode" ) );
     }
 
     private Content buildSite( String siteName )

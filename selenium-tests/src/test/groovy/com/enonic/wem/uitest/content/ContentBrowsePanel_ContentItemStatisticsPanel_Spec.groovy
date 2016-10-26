@@ -38,7 +38,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
     {
         given: "site with a template added"
         Content site = buildMyFirstAppSite( "site-statistics" );
-        addSiteBasedOnFirstApp( site );
+        addSite( site );
         Content template = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, "test statistics template",
                                               site.getName() );
 

@@ -8,7 +8,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-class ContextWindow_InsertablesPanel_Spec
+class ContextWindow_InsertPanel_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -17,7 +17,7 @@ class ContextWindow_InsertablesPanel_Spec
     def "GIVEN creating of new site WHEN page controller is not selected THEN toggler buttons 'Components View' and 'Inspection Panel' are not displayed"()
     {
         given: "creating of new site"
-        TEST_SITE = buildMyFirstAppSite( "test-insertables-panel" );
+        TEST_SITE = buildMyFirstAppSite( "test-insert-panel" );
 
         when: "page controller is not selected"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(

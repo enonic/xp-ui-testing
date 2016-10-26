@@ -48,13 +48,18 @@ class CountrySiteWithTemplateSpec
     @Shared
     String CITY_HEADER = "<h3>San Francisco</h3>";
 
+    @Shared
+    Content SITE;
+
     def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller added and wizard closed THEN new template should be listed"()
     {
         given: "existing Site based on 'My First App'"
-        filterPanel.typeSearchText( FIRST_SITE_NAME );
-        contentBrowsePanel.expandContent( ContentPath.from( FIRST_SITE_NAME ) );
+        SITE = buildMyFirstAppSite( "mysite" );
+        addSite( SITE );
+        filterPanel.typeSearchText( SITE.getName() );
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_COUNTRY, COUNTRY_TEMPLATE_DISPLAY_NAME,
-                                           FIRST_SITE_NAME );
+                                           SITE.getName() );
 
         when: "'Templates' folder selected and new page-template added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
@@ -134,9 +139,9 @@ class CountrySiteWithTemplateSpec
     def "GIVEN new USA-content added and a child city content added into the country WHEN country content selected AND 'Preview' button pressed THEN correct text present in the page-source "()
     {
         given: "new USA-content added"
-        USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, FIRST_SITE_NAME );
+        USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, SITE.getName() );
 
-        ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), FIRST_SITE_NAME );
+        ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), SITE.getName() );
         wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
         wizard.close( USA_CONTENT.getDisplayName() );
         and: "and it content selected and the 'New' button on the toolbar pressed"
@@ -167,7 +172,7 @@ class CountrySiteWithTemplateSpec
     def "WHEN site not published yet WHEN site opened in 'master', through the portal THEN '404' present in the sources"()
     {
         given: "site not published and opened in the 'master'"
-        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
         sleep( 2000 );
 
         expect:
@@ -179,7 +184,7 @@ class CountrySiteWithTemplateSpec
     def "WHEN site not published yet AND site opened in 'draft', through the portal THEN correct data present in page sources"()
     {
         when: "site not published and opened in the 'master'"
-        openResourceInDraft( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
+        openResourceInDraft( SITE.getName() + "/" + USA_CONTENT.getName() );
         sleep( 2000 );
         saveScreenshot( "portal-country-preview-draft-offline" );
 
@@ -194,13 +199,13 @@ class CountrySiteWithTemplateSpec
     def "WHEN site have been published  AND site opened through the portal THEN correct data present in page sources"()
     {
         given: "site have been 'published'"
-        filterPanel.typeSearchText( FIRST_SITE_NAME, );
-        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( FIRST_SITE_NAME, ).clickToolbarPublish();
+        filterPanel.typeSearchText( SITE.getName(), );
+        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), ).clickToolbarPublish();
         dialog.setIncludeChildCheckbox( true ).clickOnPublishNowButton();
         sleep( 3000 );
 
         when: "site opened in master"
-        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
         then: "correct data present in page sources"
         String source = getDriver().getPageSource();
@@ -219,7 +224,7 @@ class CountrySiteWithTemplateSpec
         wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
 
         when: "site opened in master"
-        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
         then: "population is not changed"
         String source = getDriver().getPageSource();
@@ -235,7 +240,7 @@ class CountrySiteWithTemplateSpec
         wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
 
         when: "site opened in master"
-        openResourceInMaster( FIRST_SITE_NAME + "/" + USA_CONTENT.getName() );
+        openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
         then: "population is not changed"
         String source = getDriver().getPageSource();

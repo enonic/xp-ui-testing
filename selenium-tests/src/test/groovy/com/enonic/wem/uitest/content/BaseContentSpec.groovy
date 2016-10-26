@@ -391,12 +391,11 @@ class BaseContentSpec
         return unstructured;
     }
 
-    protected void addSiteBasedOnFirstApp( Content site )
+    protected void addSite( Content site )
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
             site ).save();
         sleep( 500 );
-        saveScreenshot( "site-wizard_" + site.getName() );
         wizard.close( site.getDisplayName() );
     }
 

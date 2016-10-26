@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageEmulatorPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EmulatorResolution
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -33,7 +32,7 @@ class ContextWindow_EmulatorPanel_Spec
     def "GIVEN creating of new site WHEN When context window opened and Emulator link clicked THEN Emulator panel is activated AND correct title displayed"()
     {
         given: "creating of new site"
-        TEST_SITE = buildMyFirstAppSite( NameHelper.uniqueName( "emulator_panel" ) );
+        TEST_SITE = buildMyFirstAppSite( "emulator_panel" );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
             TEST_SITE ).save();
         siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();

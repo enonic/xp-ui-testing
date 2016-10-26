@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
@@ -20,7 +19,7 @@ class SitePreview_Spec
         given:
         MY_SITE = buildMyFirstAppSite( "preview" );
         "data typed and saved and wizard closed"
-        addSiteBasedOnFirstApp( MY_SITE );
+        addSite( MY_SITE );
 
         when: "site without a template selected"
         findAndSelectContent( MY_SITE.getName() );
@@ -48,49 +47,49 @@ class SitePreview_Spec
         !wizard.isPreviewButtonEnabled()
     }
 
-    def "GIVEN a existing site with a template WHEN controller selected THEN 'Preview' on a BrowseToolbar becomes enabled"()
+    def "GIVEN existing site with a template WHEN controller selected THEN 'Preview' on a BrowseToolbar becomes enabled"()
     {
-        given:
+        given: "existing site with a template"
         ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarEdit();
 
-        when:
+        when: "controller is selected"
         wizard.selectPageDescriptor( COUNTRY_REGION_TITLE ).save().close( MY_SITE.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "site-template-preview" );
+        saveScreenshot( "site-template-preview" );
 
         then: "'Preview' on the BrowseToolbar is enabled"
         contentBrowsePanel.isPreviewButtonEnabled();
     }
 
-    def "WHEN site with a page template selected THEN 'Preview' in a ContextMenu is enabled"()
+    def "WHEN site with a page template selected THEN 'Preview' menu item in is enabled in the ContextMenu"()
     {
         when:
         filterPanel.typeSearchText( MY_SITE.getName() );
 
-        then: "'Preview' in the context menu is enabled"
+        then: "'Preview' menu item in is enabled in the ContextMenu"
         contentBrowsePanel.openContextMenuAndWaitUntilItemEnabled( MY_SITE.getName(), "Preview" );
     }
 
-    def "WHEN site selected and opened for edit THEN 'Preview' on a WizardToolbar is enabled"()
+    def "WHEN site selected and opened for edit THEN 'Preview' button is enabled on the toolbar wizard"()
     {
-        when: "site selected"
+        when: "site is selected"
         filterPanel.typeSearchText( MY_SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( MY_SITE.getName() ).clickToolbarEdit();
 
-        then: "'Preview' in the toolbar wizard is disabled"
+        then: "'Preview' button is enabled on the toolbar wizard"
         wizard.isPreviewButtonEnabled()
     }
     // test for verifying of XP-4123 (Page Editor inaccessible for a folder)
-    def "GIVEN a existing site with a selected controller WHEN wizard for adding a child folder opened THEN 'Show Page Editor' button should be present "()
+    def "GIVEN existing site with a selected controller WHEN child-folder has been added to the site THEN 'Show Page Editor' button should be present on the wizard toolbar"()
     {
         given:
         ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarNew().selectContentType(
             ContentTypeName.folder() );
 
-        when:
+        when: "child-folder has been added to the site"
         wizard.typeDisplayName( "test-page-editor-toggler" ).save();
         saveScreenshot( "folder-show-page-editor-toggler" );
 
-        then: "'Show Page Editor' button should be present"
+        then: "'Show Page Editor' button should be present on the wizard-toolbar"
         wizard.isShowPageEditorButtonDisplayed();
     }
 }

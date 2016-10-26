@@ -41,30 +41,6 @@ class BaseSiteSpec
     @Shared
     String MY_FIRST_APP_NAME = "com.enonic.myfirstapp";
 
-    @Shared
-    static String FIRST_SITE_NAME = NameHelper.uniqueName( "first-site" );
-
-    def "create a site based on the 'My First App' application"()
-    {
-        when: "add a site, based on the test application"
-        addSite();
-
-        then: " test site should be listed"
-        contentBrowsePanel.exists( FIRST_SITE_NAME );
-    }
-
-    private void addSite()
-    {
-        Content site;
-        filterPanel.typeSearchText( FIRST_SITE_NAME );
-        if ( !contentBrowsePanel.exists( FIRST_SITE_NAME ) )
-        {
-            site = buildMyFirstAppSite( FIRST_SITE_NAME );
-            contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-                site.getDisplayName() );
-        }
-    }
-
     protected ContentWizardPanel selectSiteOpenWizard( String contentTypeName, String siteName )
     {
         filterPanel.typeSearchText( siteName );
