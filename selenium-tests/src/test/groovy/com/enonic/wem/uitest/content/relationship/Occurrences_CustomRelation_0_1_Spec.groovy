@@ -117,7 +117,7 @@ class Occurrences_CustomRelation_0_1_Spec
 
         and: "correct notification message appeared"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
-            message.contains( "items were published" );
+            message.contains( "items are published" );
 
     }
 
