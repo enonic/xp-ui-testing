@@ -4,11 +4,13 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Stepwise
 
 /**
  * Created on 04.10.2016.
  * XP-4328 Add selenium tests for changing of focus in the Image Wizard
  * */
+@Stepwise
 class ImageEditor_Focus_Spec
     extends BaseContentSpec
 {
