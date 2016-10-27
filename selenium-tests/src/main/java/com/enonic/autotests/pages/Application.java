@@ -14,8 +14,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
-
-
     public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion";
 
     public static String CONTENTS_MARKED_FOR_DELETION_MESSAGE = "%s items are marked for deletion";

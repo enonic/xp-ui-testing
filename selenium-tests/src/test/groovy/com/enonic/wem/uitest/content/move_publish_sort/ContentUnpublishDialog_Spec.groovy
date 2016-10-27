@@ -116,7 +116,7 @@ class ContentUnpublishDialog_Spec
         contentBrowsePanel.isPublishButtonEnabled();
 
         and: "correct notification message appears"
-        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, PARENT_CONTENT.getDisplayName() );
+        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
     }
 
     def "GIVEN parent and child content are 'online' WHEN parent content selected and 'Unpublish' menu item selected THEN parent and child contents are 'offline'"()
@@ -129,7 +129,7 @@ class ContentUnpublishDialog_Spec
 
         when: "parent content selected and 'Unpublish' menu item selected"
         contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
-        boolean isMessageAppeared = contentBrowsePanel.waitExpectedNotificationMessage( "2 items were unpublished",
+        boolean isMessageAppeared = contentBrowsePanel.waitExpectedNotificationMessage( "2 items are unpublished",
                                                                                         Application.EXPLICIT_NORMAL );
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
