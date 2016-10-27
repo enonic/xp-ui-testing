@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.LiveEditComponentContextMenu;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -79,9 +81,18 @@ public class LiveFormPanel
         String input = TEXT_COMPONENT_VIEW + "//div[@class='tiny-mce-here mce-content-body mce-edit-focus']";
         String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
         setTextIntoArea( id, text );
-        TestUtils.saveScreenshot( getSession(), "text_typed_in_component" );
         sleep( 500 );
         return this;
+    }
+
+    public LiveEditComponentContextMenu clickOnTextComponentAndShowContextMenu()
+    {
+        WebElement textComponent = getDisplayedElement( By.xpath( TEXT_COMPONENT_VIEW ) );
+        Actions action = new Actions( getDriver() );
+        action.contextClick( textComponent ).build().perform();
+        sleep( 1000 );
+        LiveEditComponentContextMenu contextMenu = new LiveEditComponentContextMenu( getSession() );
+        return contextMenu;
     }
 
     private void setTextIntoArea( String id, String text )

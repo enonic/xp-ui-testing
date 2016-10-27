@@ -22,6 +22,7 @@ class MyFirstApp_Spec
     {
         given:
         MY_FIRST_SITE = buildMyFirstAppSite( "country-site" );
+
         when: "data typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
             MY_FIRST_SITE.getDisplayName() );
@@ -33,7 +34,7 @@ class MyFirstApp_Spec
 
     def "GIVEN adding a content with type 'country' WHEN 'save' pressed THEN new added content listed"()
     {
-        given:
+        given: "site selected and wizard for adding of new country-content is opened"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, MY_FIRST_SITE.getName() );
         ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), MY_FIRST_SITE.getName() );
 

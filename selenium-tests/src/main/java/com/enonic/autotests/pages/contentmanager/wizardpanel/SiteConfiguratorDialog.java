@@ -71,7 +71,7 @@ public class SiteConfiguratorDialog
         boolean result = waitUntilVisibleNoException( By.xpath( APPLY_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_apply-site-config" );
+            saveScreenshot( "err_apply-site-config" );
             throw new TestFrameworkException( "button 'apply' on 'site-config-dialog' was not found!" );
         }
         Actions builder = new Actions( getDriver() );
@@ -85,7 +85,7 @@ public class SiteConfiguratorDialog
         boolean result = waitUntilVisibleNoException( By.xpath( CANCEL_BUTTON_TOP ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_close-site-config" );
+            saveScreenshot( "err_close-site-config" );
             throw new TestFrameworkException( "button 'close' on 'site-config-dialog' was not found!" );
         }
         closeButton.click();
@@ -145,7 +145,7 @@ public class SiteConfiguratorDialog
         textArea.sendKeys( "  " );
         if ( !isElementDisplayed( INSERT_LINK_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_insert_link" );
+            saveScreenshot( "err_insert_link" );
             throw new TestFrameworkException( "insert-link menu item not present!" );
         }
         getDisplayedElement( By.xpath( INSERT_LINK_BUTTON ) ).click();

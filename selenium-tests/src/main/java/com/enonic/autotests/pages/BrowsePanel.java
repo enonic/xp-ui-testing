@@ -843,7 +843,6 @@ public abstract class BrowsePanel
         {
             throw new TestFrameworkException( "menu item was not found!  " + action );
         }
-        //String styleClass = findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ).getAttribute( "class" );
         return waitIsElementEnabled( findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ), 2 );
         //return !styleClass.contains( "disabled" );
     }

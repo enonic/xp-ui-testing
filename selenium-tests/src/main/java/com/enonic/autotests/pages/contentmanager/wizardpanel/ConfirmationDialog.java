@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -69,7 +68,7 @@ public class ConfirmationDialog
         boolean isClosed = waitForClosed();
         if ( !isClosed )
         {
-            TestUtils.saveScreenshot( getSession(), "err_confirm_dialog" );
+            saveScreenshot( "err_close_confirm_dialog" );
             throw new TestFrameworkException( "Confirmation dialog was not closed!" );
         }
         sleep( 1000 );
@@ -81,7 +80,7 @@ public class ConfirmationDialog
         boolean isClosed = waitForClosed();
         if ( !isClosed )
         {
-            TestUtils.saveScreenshot( getSession(), "err_confirm_dialog" );
+            saveScreenshot( "err_close_confirm_dialog" );
             throw new TestFrameworkException( "Confirmation dialog was not closed!" );
         }
         sleep( 1000 );

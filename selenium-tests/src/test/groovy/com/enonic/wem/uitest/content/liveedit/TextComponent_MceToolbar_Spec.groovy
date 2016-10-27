@@ -2,12 +2,12 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.SourceCodeMceWindow
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.LiveEditComponentContextMenu
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.pages.form.liveedit.MceToolbar
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
@@ -25,6 +25,9 @@ class TextComponent_MceToolbar_Spec
     @Shared
     Content SITE
 
+    @Shared
+    String TEST_TEXT = "test text";
+
     def "GIVEN existing site with selected controller WHEN text component inserted THEN mce-toolbar appears AND all buttons are present"()
     {
         given:
@@ -37,7 +40,7 @@ class TextComponent_MceToolbar_Spec
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        liveFormPanel.typeTextInTextComponent( "test" );
+        liveFormPanel.typeTextInTextComponent( TEST_TEXT );
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
 
 
@@ -97,23 +100,34 @@ class TextComponent_MceToolbar_Spec
         mceToolbar.isSourceCodeButtonDisplayed();
     }
 
-    //TODO not finished yet
-    @Ignore
-    def "GIVEN existing site with selected controller WHEN text component inserted  AND 'Source Code' button pressed THEN "()
+    def "GIVEN existing text component  WHEN the component right-clicked AND 'Edit' menu item was selected AND 'Source Code' button clicked THEN Source Code window is opened"()
     {
-        given:
+        given: "existing text component"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        liveFormPanel.typeTextInTextComponent( "test" );
+        liveFormPanel.typeTextInTextComponent( TEST_TEXT );
+        wizard.switchToMainWindow();
+        pageComponentsView.doCloseDialog();
 
-        when: "new site should be present"
+        and: "right-click on the text-component"
+        wizard.switchToLiveEditFrame();
+        LiveEditComponentContextMenu contextMenu = liveFormPanel.clickOnTextComponentAndShowContextMenu();
+
+        and: "'Edit' menu item was selected"
+        contextMenu.clickOnEdit();
+        saveScreenshot( "test_component_edit" )
+
+        when: "'Source Code' button clicked"
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
         SourceCodeMceWindow sourceCodeMceWindow = mceToolbar.clickOnSourceCodeButton();
 
         then: "modal dialog is opened"
         sourceCodeMceWindow.isOpened();
+
+        and: "correct text is present in the window"
+        sourceCodeMceWindow.getText().contains( TEST_TEXT );
     }
 }

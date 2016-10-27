@@ -18,6 +18,8 @@ public class SourceCodeMceWindow
 
     private final String TITLE_XPATH = WINDOW + "//div[@class='mce-title']";
 
+    private final String TEXT_AREA = WINDOW + "//textarea";
+
     public SourceCodeMceWindow( final TestSession session )
     {
         super( session );
@@ -35,5 +37,14 @@ public class SourceCodeMceWindow
     public boolean isOpened()
     {
         return isElementDisplayed( WINDOW );
+    }
+
+    public String getText()
+    {
+        String id = findElement( By.xpath( TEXT_AREA ) ).getAttribute( "id" );
+        String script = "return document.getElementById(arguments[0]).value";
+        String result = getJavaScriptExecutor().executeScript( script, id ).toString();
+        return result;
+
     }
 }

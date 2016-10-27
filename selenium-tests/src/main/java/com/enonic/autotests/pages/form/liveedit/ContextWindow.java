@@ -16,7 +16,6 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -61,7 +60,7 @@ public class ContextWindow
         boolean isPageLoaded = waitAndFind( By.xpath( DIV_CONTEXT_WINDOW ), timeout );
         if ( !isPageLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "ContextWindow_bug" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_context_wind_load" ) );
             throw new TestFrameworkException( "LIVE EDIT:  ContextWindow was not loaded!" );
         }
     }
@@ -75,7 +74,7 @@ public class ContextWindow
     {
         if ( !isElementDisplayed( INSERT_TAB_LINK ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_insert_link" );
+            saveScreenshot( "err_insert_link" );
             throw new TestFrameworkException( "Insert link was not found on the ContextWindow!" );
         }
         getDisplayedElement( By.xpath( INSERT_TAB_LINK ) ).click();
@@ -87,7 +86,7 @@ public class ContextWindow
     {
         if ( !isElementDisplayed( EMULATOR_TAB_LINK ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_emulator_link" );
+            saveScreenshot( "err_emulator_link" );
             throw new TestFrameworkException( "Emulator link was not found on the ContextWindow!" );
         }
         getDisplayedElement( By.xpath( EMULATOR_TAB_LINK ) ).click();
@@ -99,7 +98,7 @@ public class ContextWindow
     {
         if ( !isElementDisplayed( INSPECT_TAB_LINK ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_inspect_link" );
+            saveScreenshot( "err_inspect_link" );
             throw new TestFrameworkException( "'inspect' link was not found on the ContextWindow!" );
         }
         getDisplayedElement( By.xpath( INSPECT_TAB_LINK ) ).click();
@@ -135,7 +134,6 @@ public class ContextWindow
         builder.release( regionDiv );
         sleep( 1000 );
         builder.build().perform();
-        TestUtils.saveScreenshot( getSession(), "drag_helperLayout" );
         return new LayoutComponentView( getSession() );
     }
 
@@ -143,12 +141,12 @@ public class ContextWindow
     {
         sleep( 1000 );
         String gridItem = String.format( GRID_ITEM, "part" );
-        WebElement componentForDrag = findElements( By.xpath( gridItem ) ).get( 0 );
+        WebElement componentForDrag = findElement( By.xpath( gridItem ) );
 
         Actions builder = new Actions( getDriver() );
         builder.clickAndHold( componentForDrag ).build().perform();
 
-        WebElement liveEditFrame = getDriver().findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
+        WebElement liveEditFrame = findElement( By.xpath( Application.LIVE_EDIT_FRAME ) );
         int liveEditFrameX = liveEditFrame.getLocation().x;
         int liveEditFrameY = liveEditFrame.getLocation().y;
         int toolbarHeight = findElements( By.xpath( TOOLBAR_DIV ) ).get( 0 ).getSize().getHeight();
@@ -195,8 +193,6 @@ public class ContextWindow
         WebElement regionPlaceHolderDiv = findElement( By.xpath( regionXpath ) );
 
         showDragHelper( regionPlaceHolderDiv, liveEditFrameX, liveEditFrameY, toolbarHeight, headers );
-
-        TestUtils.saveScreenshot( getSession(), "drag_helperImage" );
         builder.release( regionPlaceHolderDiv );
         builder.build().perform();
         return new ImageComponentView( getSession() );
@@ -240,7 +236,6 @@ public class ContextWindow
 
         builder2.moveToElement( targetElement ).build().perform();
         sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "layout_dropzone" );
         WebElement dropZoneLayout = findElement( By.xpath( dropZone ) );
         builder2.release( dropZoneLayout ).build().perform();
     }

@@ -22,7 +22,6 @@ class ContextWindow_InspectionPanel_Spec
         TEST_SITE = buildMyFirstAppSite( "test-inspection-panel" );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
             TEST_SITE ).selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
-        saveScreenshot( "test_issue" );
 
         when: "Context window opened and 'Inspect' link was pressed"
         wizardPanel.showContextWindow().clickOnInspectLink();
