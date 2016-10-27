@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
@@ -70,12 +71,12 @@ class Delete_Published_Parent_Folder_Spec
     def "GIVEN existing pending-folder with a child WHEN the folder selected AND 'Unpublish menu item clicked THEN correct notification message is displayed'"()
     {
         given: "existing online-folder with a child"
-        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        ContentPublishDialog dialog = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true );
         sleep( 1000 );
 
         when: "the folder selected AND 'Unpublish menu item clicked"
-        contentBrowsePanel.clickToolbarDelete().doDelete();
-        def expectedMessage = String.format( Application.CONTENTS_MARKED_FOR_DELETION_MESSAGE, "2" );
+        dialog.clickOnPublishNowButton();
+        def expectedMessage = String.format( Application.PENDING_ITEMS_ARE_DELETED, "2" );
 
         then: "correct notification message is displayed'"
         contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
