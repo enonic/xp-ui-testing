@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -16,7 +15,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.LiveEditComponentContextMenu;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -97,7 +95,7 @@ public class LiveFormPanel
 
     private void setTextIntoArea( String id, String text )
     {
-        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SET_TINY_MCE_INNERHTML, id, text );
+        getJavaScriptExecutor().executeScript( SET_TINY_MCE_INNERHTML, id, text );
     }
 
     /**
@@ -197,7 +195,7 @@ public class LiveFormPanel
     {
         if ( !isElementDisplayed( "//body[@data-portal-component-type='page']" ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_background" );
+            saveScreenshot( "err_background" );
             throw new TestFrameworkException( "component was not found" );
         }
         WebElement element = getDisplayedElement( By.xpath( "//body[@data-portal-component-type='page']" ) );

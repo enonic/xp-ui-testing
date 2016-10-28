@@ -14,7 +14,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.ContentVersion;
 
@@ -62,7 +61,7 @@ public class AllContentVersionsView
     {
         if ( !isElementDisplayed( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item active')]" ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_active_version" );
+            saveScreenshot( "err_active_version" );
             throw new TestFrameworkException( "active version was not found in the version history panel! " );
         }
         WebElement element = getDisplayedElement( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item active')]" ) );
@@ -72,11 +71,12 @@ public class AllContentVersionsView
     public ContentVersionInfoView clickOnVersionAndExpand( int index )
     {
         List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
-        if ( liElements.size() == 0 )
+        if ( liElements.size() == 0 || liElements.size() < index )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_list_versions" ) );
-            throw new TestFrameworkException( "list of versions was not found!" );
+            saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
+            throw new TestFrameworkException( "required version does not exist!" );
         }
+
         WebElement version = liElements.get( index );
         Actions builder = new Actions( getDriver() );
         builder.moveToElement( version ).click().build().perform();
@@ -87,7 +87,7 @@ public class AllContentVersionsView
     {
         if ( !isElementDisplayed( CONTAINER_WIDGET ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_version_panel" );
+            saveScreenshot( "err_version_panel" );
             throw new TestFrameworkException( "ContentItemVersionsPanel was not loaded!" );
         }
         return this;

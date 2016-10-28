@@ -206,10 +206,8 @@ public class ApplicationItemStatisticsPanel
 
     public int getClientHeight( String applicationItemStatisticsPanelId )
     {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-
         String script = String.format( "return document.getElementById('%s').clientHeight", applicationItemStatisticsPanelId );
-        Object obj = executor.executeScript( script );
+        Object obj = getJavaScriptExecutor().executeScript( script );
         int scrollHeight = Integer.valueOf( obj.toString() );
         return scrollHeight;
     }

@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel.image;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
@@ -92,7 +91,7 @@ public class ImageEditor
     public int getCropAreaHeight()
     {
         Object heightOfImageFrame =
-            ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('image-frame')[0].style.height" );
+            getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('image-frame')[0].style.height" );
         return Integer.valueOf( heightOfImageFrame.toString().substring( 0, heightOfImageFrame.toString().indexOf( "." ) ) );
     }
 

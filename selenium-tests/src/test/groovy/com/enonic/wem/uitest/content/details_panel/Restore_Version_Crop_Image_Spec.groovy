@@ -11,7 +11,8 @@ import spock.lang.Stepwise
 /**
  * Created  on 13.10.2016.
  *
- * XP-4222 Add selenium tests for restoring of cropped image
+ * TASKS: XP-4222 Add selenium tests for restoring of cropped image
+ * Verifies the bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
 class Restore_Version_Crop_Image_Spec
@@ -102,6 +103,54 @@ class Restore_Version_Crop_Image_Spec
         imageEditor.getToolbar().clickOnCloseButton();
 
         and: "button 'reset' is  present on the wizard page"
+        formViewPanel.isButtonResetPresent();
+    }
+    //Verifies bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
+    def "GIVEN existing cropped image is opened WHEN original version is restored THEN image has been updated on the wizard page"()
+    {
+        given: "existing zoomed image is opened"
+        findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+
+        and: "AppHome button was pressed"
+        contentBrowsePanel.pressAppHomeButton();
+
+        when: "version panel opened"
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+
+        and: "original version is restored"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        versionItem.doRestoreVersion( versionItem.getId() );
+        saveScreenshot( "image_reverted_to_zoomed" );
+
+        and: "wizard-tab activated again"
+        contentBrowsePanel.clickOnTab( IMPORTED_MAN_IMAGE );
+        ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+
+        then: "original image is displayed on the wizard"
+        !formViewPanel.isButtonResetPresent();
+    }
+
+    def "GIVEN existing image is opened WHEN version with cropped image is restored THEN image has been updated on the wizard page"()
+    {
+        given: "existing zoomed image is opened"
+        findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+
+        and: "AppHome button was pressed"
+        contentBrowsePanel.pressAppHomeButton();
+
+        when: "version panel opened"
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+
+        and: "original version is restored"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        versionItem.doRestoreVersion( versionItem.getId() );
+        saveScreenshot( "image_reverted_to_zoomed" );
+
+        and: "wizard-tab activated again"
+        contentBrowsePanel.clickOnTab( IMPORTED_MAN_IMAGE );
+        ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+
+        then: "original image is displayed on the wizard"
         formViewPanel.isButtonResetPresent();
     }
 }

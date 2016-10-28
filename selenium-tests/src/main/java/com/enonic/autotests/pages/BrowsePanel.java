@@ -492,7 +492,7 @@ public abstract class BrowsePanel
         if ( findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).size() != 0 )
         {
             WebElement viewportElement = findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).get( 0 );
-            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
+            getJavaScriptExecutor().executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
         }
         sleep( 1000 );
         return getViewportScrollTopValue();
@@ -640,7 +640,7 @@ public abstract class BrowsePanel
 
     protected int getGridCanvasHeight()
     {
-        Object scrollHeight = ( (JavascriptExecutor) getDriver() ).executeScript(
+        Object scrollHeight = getJavaScriptExecutor().executeScript(
             "return document.getElementsByClassName('slick-viewport')[0].scrollHeight" );
         return Integer.valueOf( scrollHeight.toString() );
     }
@@ -653,7 +653,7 @@ public abstract class BrowsePanel
 
     public void scrollViewPortToTop()
     {
-        ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
+        getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
         sleep( 1000 );
     }
 

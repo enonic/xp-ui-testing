@@ -2,7 +2,6 @@ package com.enonic.autotests.pages.form;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -49,7 +48,7 @@ public abstract class BaseHtmlAreaFormViewPanel
     {
         String wHandle = getDriver().getWindowHandle();
         getDriver().switchTo().frame( htmlAreaFrame );
-        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
+        Object obj = getJavaScriptExecutor().executeScript( TEXT_IN_AREA_SCRIPT );
         String text = obj.toString();
         getDriver().switchTo().window( wHandle );
         return text;
