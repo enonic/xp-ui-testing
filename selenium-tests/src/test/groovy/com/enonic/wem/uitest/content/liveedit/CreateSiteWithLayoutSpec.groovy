@@ -1,10 +1,12 @@
 package com.enonic.wem.uitest.content.liveedit
 
+import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
@@ -13,6 +15,10 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+/*
+one test for task "XP-4368 Add tests to verify the XP-4367'
+
+ */
 class CreateSiteWithLayoutSpec
     extends BaseContentSpec
 {
@@ -84,7 +90,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'Insert/Text' menu items clicked and text typed"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
-        TestUtils.saveScreenshot( getSession(), "select_insert_text" );
+        saveScreenshot( "select_insert_text" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEXT_COMPONENT_TEXT );
@@ -123,28 +129,48 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getLayoutColumnNumber() == 3;
     }
 
+    def "GIVEN existing site with the layout WHEN site selected AND published with its children THEN site has 'online' status on the wizard page"()
+    {
+        given: "existing site with the layout"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit().waitUntilWizardOpened()
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+
+        when: "site selected AND published with its children"
+        ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+
+        then: "modal dialog is closed"
+        modalDialog.waitForDialogClosed();
+
+        and: "correct status is displayed on the wizard-page"
+        wizard.getStatus() == ContentStatus.ONLINE.getValue();
+    }
+
     def "'Page Components' opened WHEN menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image in the left region inserted"()
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
-        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
+        ContentWizardPanel templateWizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = templateWizard.showComponentView();
 
         when: "menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
-        wizard.switchToLiveEditFrame();
+        templateWizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE_COMPONENT_NAME )
 
         switchToContentStudioWindow();
-        wizard.save();
-        saveScreenshot( "left_inserted" );
+        templateWizard.save();
+        String statusAfterInsertingImage = templateWizard.getStatus();
+        saveScreenshot( "image_in_left_inserted" );
 
         then: "new image inserted in the left-region "
-        wizard.switchToLiveEditFrame();
+        templateWizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 1;
+
+        and: "template's status is getting 'Modified'"
+        statusAfterInsertingImage == ContentStatus.MODIFIED.getValue();
     }
 
     def "GIVEN 'Page Components' opened WHEN menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the center-region "()
@@ -244,6 +270,7 @@ class CreateSiteWithLayoutSpec
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
+
         when: "menu for image clicked and 'reset' menu-item selected"
         pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Remove" );
         wizardPanel.switchToLiveEditFrame();

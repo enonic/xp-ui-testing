@@ -202,7 +202,8 @@ class CountrySiteWithTemplateSpec
         filterPanel.typeSearchText( SITE.getName(), );
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), ).clickToolbarPublish();
         dialog.setIncludeChildCheckbox( true ).clickOnPublishNowButton();
-        sleep( 3000 );
+        sleep( 2000 );
+        saveScreenshot( "country_site_published" );
 
         when: "site opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );

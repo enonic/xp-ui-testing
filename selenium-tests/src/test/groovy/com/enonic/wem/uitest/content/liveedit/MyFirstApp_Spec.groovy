@@ -58,9 +58,9 @@ class MyFirstApp_Spec
         wizard.isShowPageEditorButtonDisplayed();
     }
 
-    def "GIVEN country-content is opened for edit WHEN  'Show Page Editor' button clicked  THEN LiveEdit frame displayed AND option filter displayed"()
+    def "GIVEN country-content is opened WHEN  'Show Page Editor' button clicked  THEN LiveEdit frame displayed AND option filter displayed"()
     {
-        given: "a child country-content of the site is opened for edit"
+        given: "child country-content is opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel countryContentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
@@ -74,9 +74,9 @@ class MyFirstApp_Spec
         countryContentWizard.isPageDescriptorOptionsFilterDisplayed();
     }
 
-    def "GIVEN a child country-content of the site is opened for edit AND 'Page Editor' have been opened WHEN 'Hide Page Editor' button pressed THEN 'Live Edit' frame is not displayed"()
+    def "GIVEN child country-content is opened AND 'Page Editor' has been shown WHEN 'Hide Page Editor' button pressed THEN 'Live Edit' frame is not displayed"()
     {
-        given: "a child country-content of the site is opened for edit"
+        given: "child country-content is opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
 
@@ -91,9 +91,9 @@ class MyFirstApp_Spec
         !wizard.isLiveEditFrameDisplayed();
     }
 
-    def "GIVEN the 'country' content opened for edit WHEN region selected and 'Preview' button pressed THEN region component correctly shown in the new browser window"()
+    def "GIVEN 'country' content opened WHEN region selected and 'Preview' button pressed THEN region component correctly shown in the new browser window"()
     {
-        given: "the 'country' content opened for edit"
+        given: "'country' content opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
         wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
