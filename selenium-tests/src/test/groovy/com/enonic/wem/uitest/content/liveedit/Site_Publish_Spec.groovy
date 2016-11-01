@@ -58,4 +58,24 @@ class Site_Publish_Spec
         then: "status on the wizard-page is getting 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
+
+    def "GIVEN existing 'online' site WHEN text component was removed THEN status on the wizard-page is getting 'Modified'"()
+    {
+        given: "existing text component"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
+
+        when: "new text component has been inserted"
+        pageComponentsView.openMenu( TEST_TEXT ).selectMenuItem( "Remove" );
+        pageComponentsView.doCloseDialog();
+
+        and: "site saved in the wizard"
+        wizard.save();
+
+        then: "status on the wizard-page is getting 'Modified'"
+        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+    }
+
+    //TODO implement the Use Case: swap 2 components and verify, that status is getting 'Modified'
 }
