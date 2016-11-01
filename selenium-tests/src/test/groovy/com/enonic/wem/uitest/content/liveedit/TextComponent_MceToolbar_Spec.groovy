@@ -15,6 +15,7 @@ import spock.lang.Shared
  *
  * TASKS: XP-4298 Add selenium tests to verify XP-4280
  *       XP-4306 Add selenium tests for SourceCode modal window
+ *       XP-4068 Add selenium tests for mce-toolbar in a Text-component
  *
  * Verifies: XP-4280
  * */

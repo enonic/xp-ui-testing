@@ -67,6 +67,9 @@ class BaseContentSpec
     String IMPORTED_HAND_IMAGE = "hand.jpg";
 
     @Shared
+    String IMPORTED_ELEPHANT_IMAGE = "elephant.jpg";
+
+    @Shared
     String IMPORTED_WHALE_IMAGE = "whale.jpg";
 
     @Shared

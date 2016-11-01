@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.schema.content.ContentTypeName
 
@@ -87,7 +86,7 @@ class ContentWizardPanel_Toolbar_Spec
 
         when: "content has been published"
         wizardPanel.clickOnWizardPublishButton().clickOnPublishNowButton();
-        TestUtils.saveScreenshot( getSession(), "wizard_published" );
+        saveScreenshot( "folder_published_in_wizard" );
 
         then: "'Delete' button enabled"
         wizardPanel.isDeleteButtonEnabled();
