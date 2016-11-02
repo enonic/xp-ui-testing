@@ -3,7 +3,9 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
+import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -27,9 +29,9 @@ class Site_Publish_Spec
     def "GIVEN creating new Site with selected controller WHEN site has been published THEN 'Online' status is displayed in the grid"()
     {
         given: "data typed and saved and wizard closed"
-        SITE = buildSimpleSiteApp();
+        SITE = buildMyFirstAppSite( "site" );
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).selectPageDescriptor(
-            MAIN_REGION_PAGE_DESCRIPTOR_NAME ).save().close( SITE.getDisplayName() );
+            COUNTRY_REGION_PAGE_CONTROLLER ).save().close( SITE.getDisplayName() );
 
         when: "site has been published"
         findAndSelectContent( SITE.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
@@ -69,6 +71,61 @@ class Site_Publish_Spec
         when: "new text component has been inserted"
         pageComponentsView.openMenu( TEST_TEXT ).selectMenuItem( "Remove" );
         pageComponentsView.doCloseDialog();
+
+        and: "site saved in the wizard"
+        wizard.save();
+
+        then: "status on the wizard-page is getting 'Modified'"
+        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+    }
+
+    def "GIVEN existing 'online' site WHEN display name changed THEN status on the wizard-page is getting 'Modified'"()
+    {
+        given: "existing text component"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+
+        when: "display name changed"
+        wizard.typeDisplayName( "new name" )
+
+        and: "site saved in the wizard"
+        wizard.save();
+
+        then: "status on the wizard-page is getting 'Modified'"
+        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+    }
+
+    def "GIVEN existing 'online' site WHEN language changed THEN status on the wizard-page is getting 'Modified'"()
+    {
+        given: "existing text component"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+
+        when: "display name changed"
+        SettingsWizardStepForm settings = wizard.clickOnSettingsTabLink();
+        settings.waitUntilDisplayed();
+        settings.selectLanguage( ENGLISH_LANGUAGE );
+
+        and: "site saved in the wizard"
+        wizard.save();
+
+        then: "status on the wizard-page is getting 'Modified'"
+        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+    }
+
+    def "GIVEN existing 'online' site WHEN new part inserted THEN status on the wizard-page is getting 'Modified'"()
+    {
+        given: "existing text component"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
+
+        when: "display name changed"
+        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Part" );
+        pageComponentsView.doCloseDialog();
+        wizard.switchToLiveEditFrame();
+        PartComponentView partComponentView = new PartComponentView( getSession() );
+        partComponentView.selectItem( CITY_CREATION_PART );
 
         and: "site saved in the wizard"
         wizard.save();
