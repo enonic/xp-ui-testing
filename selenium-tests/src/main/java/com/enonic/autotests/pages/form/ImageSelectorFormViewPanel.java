@@ -38,7 +38,7 @@ public class ImageSelectorFormViewPanel
     protected String CHECKBOX_OF_SELECTED_BY_NAME_IMAGE =
         SELECTED_IMAGE_VIEW_BY_NAME + "//div[@class='checkbox form-input']//input[@type='checkbox']";
 
-    protected String DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE = SELECTED_IMAGE_VIEW_BY_NAME + "//div[@class='checkbox form-input']";
+    protected String DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE = SELECTED_IMAGE_VIEW_BY_NAME + "//div[contains(@class,'checkbox form-input')]";
 
     private final String SELECTED_IMAGES_NAMES = SELECTED_IMAGE_VIEW + "//div[@class='label']";
 
@@ -133,7 +133,13 @@ public class ImageSelectorFormViewPanel
 
     public ImageSelectorFormViewPanel clickOnCheckboxAndSelectImage( String imageName )
     {
-        WebElement ch = getDisplayedElement( By.xpath( String.format( DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName ) ) );
+        String checkBox = String.format( DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName );
+        if ( !isElementDisplayed( checkBox ) )
+        {
+            saveScreenshot( "err_checkbox_" + imageName );
+            throw new TestFrameworkException( "checkbox for " + imageName );
+        }
+        WebElement ch = getDisplayedElement( By.xpath( checkBox ) );
         Actions builder = new Actions( getDriver() );
         builder.click( ch ).build().perform();
         sleep( 500 );
