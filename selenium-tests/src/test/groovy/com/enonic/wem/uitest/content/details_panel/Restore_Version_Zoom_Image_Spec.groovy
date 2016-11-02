@@ -12,6 +12,7 @@ import spock.lang.Stepwise
  * *
  * Task: XP-4344 Add selenium tests for restoring of zoomed image
  *       XP-4272 Add selenium tests for zooming an image
+ *       XP-4332 Add selenium tests to verify XP-4331
  * Verifies bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
@@ -114,7 +115,7 @@ class Restore_Version_Zoom_Image_Spec
         then: "original image is displayed on the wizard"
         !formViewPanel.isButtonResetPresent();
     }
-
+    //verifies the XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
     def "GIVEN existing  image is opened WHEN version with zoomed image is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
@@ -126,7 +127,7 @@ class Restore_Version_Zoom_Image_Spec
         when: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        and: "original version is restored"
+        and: "version with zoomed image is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "image_reverted_to_zoomed" );
