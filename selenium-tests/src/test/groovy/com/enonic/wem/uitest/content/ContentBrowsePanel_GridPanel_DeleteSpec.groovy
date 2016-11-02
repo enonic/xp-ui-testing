@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
@@ -84,7 +83,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         when: "child content deleted"
         contentBrowsePanel.expandContent( parent.getPath() );
-        TestUtils.saveScreenshot( getTestSession(), "deletecontentbeneath" )
+        saveScreenshot( "child_content_deleted" );
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
         then: "expand icon of parent is no longer shown"
@@ -135,13 +134,13 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.pressAppHomeButton();
 
         when: "content has been moved"
-        contentBrowsePanel.clickToolbarMove().typeSearchText( parent.getName() ).selectFolderAndClickOnMove( parent.getName() );
+        contentBrowsePanel.clickToolbarMove().typeSearchText( parent.getName() ).selectDestinationAndClickOnMove( parent.getName() );
         sleep( 1000 );
 
         and: "content deleted from the wizard"
         contentBrowsePanel.clickOnTab( contentToDelete.getDisplayName() );
         wizard.clickToolbarDelete().doDelete();
-        TestUtils.saveScreenshot( getSession(), "test_content_moved_and_deleted" );
+        saveScreenshot( "test_content_moved_and_deleted" );
 
         then: "wizard has been closed"
         !wizard.isOpened();

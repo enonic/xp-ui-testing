@@ -78,7 +78,7 @@ class DisplayNameSortContent_Spec
         List<String> contentsInDialog = sortContentDialog.clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.DNAME_ASCENDING.getValue() ).getContentNames();
         sortContentDialog.clickOnSaveButton();
-        contentBrowsePanel.expandContent( ContentPath.from( IMPORTED_FOLDER_NAME ) )
+        contentBrowsePanel.expandContent( ContentPath.from( IMPORTED_FOLDER_NAME ) );
 
         then: "contents sorted in the browse panel the same order as in the dialog"
         List<String> names = contentBrowsePanel.getChildContentNamesFromBrowsePanel( IMPORTED_FOLDER_NAME );

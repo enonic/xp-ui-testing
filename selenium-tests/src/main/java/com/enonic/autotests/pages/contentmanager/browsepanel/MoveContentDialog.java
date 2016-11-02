@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -18,6 +17,8 @@ public class MoveContentDialog
     extends Application
 {
     public static String DIALOG_TITLE = "Move item with children";
+
+    public static String NO_MATCHING_ITEMS = "No matching items";
 
     private final String DIALOG_CONTAINER = "//div[contains(@id,'MoveContentDialog')]";
 
@@ -47,14 +48,14 @@ public class MoveContentDialog
     /**
      * The constructor.
      *
-     * @param session {@link com.enonic.autotests.TestSession}   instance.
+     * @param session {@link TestSession}   instance.
      */
     public MoveContentDialog( TestSession session )
     {
         super( session );
     }
 
-    public MoveContentDialog selectFolderAndClickOnMove( String destinationName )
+    public MoveContentDialog selectDestinationAndClickOnMove( String destinationName )
     {
         selectDestination( destinationName );
         sleep( 500 );
@@ -68,7 +69,7 @@ public class MoveContentDialog
         String destinationXpath = DIALOG_CONTAINER + String.format( NAMES_VIEW_BY_NAME, name );
         if ( !waitUntilVisibleNoException( By.xpath( destinationXpath ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_move" );
+            saveScreenshot( "err_move_" + name );
             throw new TestFrameworkException( "destination folder was not found! " + name );
         }
         getDisplayedElement( By.xpath( destinationXpath ) ).click();
@@ -114,6 +115,18 @@ public class MoveContentDialog
         clearAndType( optionFilterInput, text );
         sleep( 500 );
         return this;
+    }
+
+    public boolean isDestinationMatches( String name )
+    {
+        String destinationXpath = DIALOG_CONTAINER + String.format( NAMES_VIEW_BY_NAME, name );
+        return isElementDisplayed( destinationXpath );
+    }
+
+    public boolean isNoMatchingItemsMessageDisplayed()
+    {
+        String message = DIALOG_CONTAINER + "//div[@class='empty-options']";
+        return isElementDisplayed( message );
     }
 
     public boolean isOpened()

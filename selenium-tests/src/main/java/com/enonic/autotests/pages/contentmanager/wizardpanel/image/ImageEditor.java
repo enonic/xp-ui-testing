@@ -71,11 +71,6 @@ public class ImageEditor
         sleep( 500 );
     }
 
-    public int getZoomCanvasHeight()
-    {
-        return 0;
-    }
-
     public void doDragAndChangeFocus( int yOffset )
     {
         if ( !isElementDisplayed( FOCUS_CIRCLE ) )

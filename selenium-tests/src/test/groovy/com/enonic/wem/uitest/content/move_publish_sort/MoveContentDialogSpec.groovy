@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.MoveContentDialog
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -69,7 +68,7 @@ class MoveContentDialogSpec
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when: "content moved to another location"
-        dialog.typeSearchText( SECOND_CONTENT.getName() ).selectFolderAndClickOnMove( SECOND_CONTENT.getName() );
+        dialog.typeSearchText( SECOND_CONTENT.getName() ).selectDestinationAndClickOnMove( SECOND_CONTENT.getName() );
 
         then: "parent content expanded"
         filterPanel.typeSearchText( SECOND_CONTENT.getName() );
@@ -94,7 +93,7 @@ class MoveContentDialogSpec
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when: "just added folder moved to the parent folder"
-        dialog.typeSearchText( SECOND_CONTENT.getName() ).selectFolderAndClickOnMove( SECOND_CONTENT.getName() );
+        dialog.typeSearchText( SECOND_CONTENT.getName() ).selectDestinationAndClickOnMove( SECOND_CONTENT.getName() );
         saveScreenshot( "test_move_content_to_expanded_folder" );
 
         then: "new folder listed beneath the parent"
@@ -132,11 +131,11 @@ class MoveContentDialogSpec
         given:
         findAndSelectContent( FIRST_CONTENT.getName() );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
-        TestUtils.saveScreenshot( getSession(), "test_move_dialog_esc_before" );
+        saveScreenshot( "test_move_dialog_esc_before" );
 
         when: "the 'Esc' key pressed"
         dialog.closeByClickingOnEsc();
-        TestUtils.saveScreenshot( getSession(), "test_move_dialog_esc_after" );
+        saveScreenshot( "test_move_dialog_esc_after" );
 
         then: "dialog has been closed"
         !dialog.isOpened()

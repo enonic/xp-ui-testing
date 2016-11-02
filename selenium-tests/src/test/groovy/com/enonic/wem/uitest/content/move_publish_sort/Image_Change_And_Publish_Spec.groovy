@@ -11,8 +11,9 @@ import com.enonic.wem.uitest.content.BaseContentSpec
  * Created  on 28.10.2016.
  *
  * Task:XP-4352 Add selenium test to verify the XP-4351
+ * Bug: XP-4351 Status of published content changes from "Modified" to "Online" after save
  * */
-class Image_Change_And_Publish
+class Image_Change_And_Publish_Spec
     extends BaseContentSpec
 {
     //verifies status on the wizard page
@@ -38,7 +39,7 @@ class Image_Change_And_Publish
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
     //verifies status in the Grid
-    def "GIVEN image that has been zoomed WHEN the image is selected in the grid THEN 'Modified' status is displayed"()
+    def "GIVEN online image that has been zoomed WHEN the image is selected in the grid THEN 'Modified' status is displayed"()
     {
         when: "online image that has been zoomed is selected"
         findAndSelectContent( IMPORTED_ELEPHANT_IMAGE );
