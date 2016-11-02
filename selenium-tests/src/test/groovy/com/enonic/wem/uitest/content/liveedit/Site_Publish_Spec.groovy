@@ -42,7 +42,7 @@ class Site_Publish_Spec
 
     def "GIVEN existing 'online' site WHEN text component was added THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing text component"
+        given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
@@ -63,12 +63,12 @@ class Site_Publish_Spec
 
     def "GIVEN existing 'online' site WHEN text component was removed THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing text component"
+        given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "new text component has been inserted"
+        when: "text component was removed"
         pageComponentsView.openMenu( TEST_TEXT ).selectMenuItem( "Remove" );
         pageComponentsView.doCloseDialog();
 
@@ -81,7 +81,7 @@ class Site_Publish_Spec
 
     def "GIVEN existing 'online' site WHEN display name changed THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing text component"
+        given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
 
@@ -97,11 +97,11 @@ class Site_Publish_Spec
 
     def "GIVEN existing 'online' site WHEN language changed THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing text component"
+        given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
 
-        when: "display name changed"
+        when: "language changed"
         SettingsWizardStepForm settings = wizard.clickOnSettingsTabLink();
         settings.waitUntilDisplayed();
         settings.selectLanguage( ENGLISH_LANGUAGE );
@@ -115,12 +115,12 @@ class Site_Publish_Spec
 
     def "GIVEN existing 'online' site WHEN new part inserted THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing text component"
+        given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "display name changed"
+        when: "new part inserted"
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Part" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
