@@ -7,7 +7,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDial
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
@@ -72,7 +71,7 @@ class Restore_Version_Folder_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
         form.removeLanguage( NORSK_LANGUAGE ).selectLanguage( ENGLISH_LANGUAGE );
-        TestUtils.saveScreenshot( getSession(), "language_changed" );
+        saveScreenshot( "folder_language_changed" );
         wizard.save().close( INITIAL_DISPLAY_NAME );
 
         and: "version panel opened"

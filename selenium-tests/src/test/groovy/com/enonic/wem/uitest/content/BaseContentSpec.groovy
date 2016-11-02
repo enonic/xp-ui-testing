@@ -40,6 +40,9 @@ class BaseContentSpec
     String CONTENT_STUDIO_URL_PART = "content-studio";
 
     @Shared
+    String CITY_CREATION_PART = "City Creation";
+
+    @Shared
     String COUNTRY_REGION_PAGE_CONTROLLER = "Country Region";
 
     @Shared

@@ -125,7 +125,7 @@ class MyFirstApp_Spec
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
         PartComponentView partComponentView = new PartComponentView( getSession() );
-        partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME )
+        partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
         saveScreenshot( "part_country_added" );
         wizard.save();
 

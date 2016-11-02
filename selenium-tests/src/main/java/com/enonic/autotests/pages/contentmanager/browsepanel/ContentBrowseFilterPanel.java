@@ -37,12 +37,12 @@ public class ContentBrowseFilterPanel
     private final String CONTENT_TYPE_AGGREGATION_VIEW = "//div[contains(@id,'ContentTypeAggregationGroupView')]";
 
     private String CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME =
-        CONTENT_TYPE_AGGREGATION_VIEW + "//div[@class='checkbox form-input' and child::label[contains(.,'%s')]]//label";
+        CONTENT_TYPE_AGGREGATION_VIEW + "//div[contains(@class,'checkbox') and child::label[contains(.,'%s')]]//label";
 
-    private String CONTENT_TYPE_AGGREGATION_ITEMS = CONTENT_TYPE_AGGREGATION_VIEW + "//div[@class='checkbox form-input']//label";
+    private String CONTENT_TYPE_AGGREGATION_ITEMS = CONTENT_TYPE_AGGREGATION_VIEW + "//div[contains(@class,'checkbox']//label";
 
     private String LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME =
-        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[@class='checkbox form-input' and child::label]//label[contains(.,'%s')]";
+        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[contains(@class,'checkbox' and child::label]//label[contains(.,'%s')]";
 
     public enum ContentTypeDisplayNames
     {
@@ -197,7 +197,7 @@ public class ContentBrowseFilterPanel
         WebElement element = getDynamicElement( By.xpath( itemXpath ), 2 );
         if ( element == null )
         {
-            saveScreenshot( contentTypeDisplayName );
+            saveScreenshot( "err_" + contentTypeDisplayName );
             logError( "content type was not found in the search panel:" + contentTypeDisplayName );
             throw new ContentFilterException( "content type was not found in the search panel:" + contentTypeDisplayName );
         }

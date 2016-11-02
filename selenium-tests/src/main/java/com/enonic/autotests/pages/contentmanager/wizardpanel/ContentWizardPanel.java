@@ -315,7 +315,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "settings tab was not found!" );
         }
         findElement( By.xpath( securityTabXpath ) ).click();
-        sleep( 300 );
+        sleep( 500 );
         return new SettingsWizardStepForm( getSession() );
     }
 
