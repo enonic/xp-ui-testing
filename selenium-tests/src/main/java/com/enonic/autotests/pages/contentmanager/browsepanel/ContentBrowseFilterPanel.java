@@ -39,10 +39,10 @@ public class ContentBrowseFilterPanel
     private String CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME =
         CONTENT_TYPE_AGGREGATION_VIEW + "//div[contains(@class,'checkbox') and child::label[contains(.,'%s')]]//label";
 
-    private String CONTENT_TYPE_AGGREGATION_ITEMS = CONTENT_TYPE_AGGREGATION_VIEW + "//div[contains(@class,'checkbox']//label";
+    private String CONTENT_TYPE_AGGREGATION_ITEMS = CONTENT_TYPE_AGGREGATION_VIEW + "//div[contains(@class,'checkbox')]//label";
 
     private String LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME =
-        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[contains(@class,'checkbox' and child::label]//label[contains(.,'%s')]";
+        "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[contains(@class,'checkbox') and child::label]//label[contains(.,'%s')]";
 
     public enum ContentTypeDisplayNames
     {
