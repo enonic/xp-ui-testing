@@ -130,5 +130,20 @@ class TextComponent_MceToolbar_Spec
 
         and: "correct text is present in the window"
         sourceCodeMceWindow.getText().contains( TEST_TEXT );
+
+        and: "source code window has the correct title"
+        sourceCodeMceWindow.isTitlePresent();
+
+        and: "source code window has the correct title"
+        sourceCodeMceWindow.getTitle() == SourceCodeMceWindow.WINDOW_TITLE;
+
+        and: "button Cancel is displayed"
+        sourceCodeMceWindow.isButtonCancelPresent();
+
+        and: "button Ok is displayed"
+        sourceCodeMceWindow.isButtonOkPresent();
+
+        and: "button 'Close' is displayed"
+        sourceCodeMceWindow.isButtonClosePresent();
     }
 }
