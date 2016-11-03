@@ -16,7 +16,7 @@ import spock.lang.Stepwise
 
 @Stepwise
 /*
-one test for task "XP-4368 Add tests to verify the XP-4367'
+one test for task " XP-4368 Add tests to verify the XP-4367'
 
  */
 class CreateSiteWithLayoutSpec

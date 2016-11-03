@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.liveedit
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
@@ -47,7 +48,7 @@ class Site_Publish_Spec
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "new text component has been inserted"
-        pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
+        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Text" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEST_TEXT );
@@ -56,6 +57,7 @@ class Site_Publish_Spec
 
         and: "site saved in the wizard"
         wizard.save();
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
@@ -74,6 +76,7 @@ class Site_Publish_Spec
 
         and: "site saved in the wizard"
         wizard.save();
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
@@ -90,6 +93,7 @@ class Site_Publish_Spec
 
         and: "site saved in the wizard"
         wizard.save();
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
@@ -108,6 +112,7 @@ class Site_Publish_Spec
 
         and: "site saved in the wizard"
         wizard.save();
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
@@ -129,6 +134,7 @@ class Site_Publish_Spec
 
         and: "site saved in the wizard"
         wizard.save();
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
