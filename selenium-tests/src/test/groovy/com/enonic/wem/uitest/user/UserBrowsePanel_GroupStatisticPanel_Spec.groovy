@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.usermanager.browsepanel.GroupStatisticsPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -26,7 +25,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         when: "'Groups' folder selected"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.GROUPS_FOLDER );
-        TestUtils.saveScreenshot( getSession(), "groups-statistic-panel" );
+        saveScreenshot( "groups-statistic-panel" );
         groupStatisticsPanel = new GroupStatisticsPanel( getSession() );
 
         then: "correct info shown in statistics panel"
@@ -45,7 +44,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
 
         when: "the group selected in a grid"
         userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() );
-        TestUtils.saveScreenshot( getSession(), "empty-group-statistics" );
+        saveScreenshot( "empty-group-statistics" );
 
         then: "empty members displayed in statistics panel"
         groupStatisticsPanel.getMemberDisplayNames().size() == 0;
@@ -62,7 +61,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
 
         when: "the group selected in a grid"
         groupWizardPanel.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "new-display-name-group-statistics" );
+        saveScreenshot( "new-display-name-group-statistics" );
 
         then: "new display name of group is shown"
         groupStatisticsPanel.getItemDisplayName() == NEW_DISPLAY_NAME;

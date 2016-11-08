@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
 import spock.lang.Shared
@@ -41,7 +40,7 @@ class DetailsPanels_VersionHistory_Spec
         when: "'Version History' option selected'"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         LinkedList<ContentVersion> allVersions = allContentVersionsView.getAllVersions();
-        TestUtils.saveScreenshot( getSession(), "two-versions" )
+        saveScreenshot( "default_number_of_versions" )
 
         then: "two versions are present in the panel"
         allVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
@@ -65,11 +64,11 @@ class DetailsPanels_VersionHistory_Spec
 
         when: "content published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
-        TestUtils.saveScreenshot( getTestSession(), "vh_online" )
+        saveScreenshot( "history_panel_content_was_published" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
-        then: "the number of versions not increased"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
+        then: "the number of versions is increased"
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 1;
 
         and: "latest version has status 'online'"
         contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
@@ -83,11 +82,11 @@ class DetailsPanels_VersionHistory_Spec
 
         when: "'Version Panel' opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        TestUtils.saveScreenshot( getSession(), "online-modified" )
+        saveScreenshot( "version_history_content-modified" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "number of versions increased to 3"
-        contentVersions.size() - INITIAL_NUMBER_OF_VERSIONS == 1;
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 2;
 
         and: "the latest version has a 'modified' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
@@ -103,7 +102,7 @@ class DetailsPanels_VersionHistory_Spec
 
         when: "'Delete' button on the toolbar pressed"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        TestUtils.saveScreenshot( getSession(), "online-modified" )
+        saveScreenshot( "version_panel_pending" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the latest version has a 'pending delete' badge"

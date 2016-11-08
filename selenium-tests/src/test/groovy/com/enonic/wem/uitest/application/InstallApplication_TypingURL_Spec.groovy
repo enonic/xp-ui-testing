@@ -20,7 +20,7 @@ class InstallApplication_TypingURL_Spec
     def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN wrong URL to an application typed THEN correct validation message appears in the dialog"()
     {
         given: "'install app' dialog opened AND 'Upload' tab activated"
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_9" );
+        saveScreenshot( "test_app_toolbar_9" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -29,7 +29,7 @@ class InstallApplication_TypingURL_Spec
         when: "wrong URL to an application typed"
         appDialog.typeApplicationURL( WRONG_APP_URL );
         String validationMessage = appDialog.waitValidationViewerText( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "wrong_app_url" )
+        saveScreenshot( "wrong_app_url" )
 
         then: "correct validation message appears in the dialog"
         validationMessage == String.format( WARNING, WRONG_APP_URL );
@@ -46,7 +46,7 @@ class InstallApplication_TypingURL_Spec
 
         when: "wrong protocol typed"
         appDialog.typeApplicationURL( WRONG_PROTOCOL_URL );
-        TestUtils.saveScreenshot( getSession(), "wrong_protocol_url" )
+        saveScreenshot( "wrong_protocol_url" );
 
         then: "validation message not displayed"
         !appDialog.waitUntilValidationViewerAppears( Application.EXPLICIT_NORMAL );

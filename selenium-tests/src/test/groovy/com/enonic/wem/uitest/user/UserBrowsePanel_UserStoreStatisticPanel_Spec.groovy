@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.usermanager.browsepanel.RoleStatisticsPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.UserStore
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -22,7 +21,7 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
     {
         when: "'System User Store' selected"
         userBrowsePanel.clickCheckboxAndSelectRow( SYSTEM_USER_STORE_NAME );
-        TestUtils.saveScreenshot( getSession(), "user-store-statistic-panel" );
+        saveScreenshot( "user-store-statistic-panel" );
         roleStatisticsPanel = new RoleStatisticsPanel( getSession() );
 
         then: "correct info shown in statistics panel"

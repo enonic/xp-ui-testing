@@ -79,7 +79,8 @@ public class AllContentVersionsView
 
         WebElement version = liElements.get( index );
         Actions builder = new Actions( getDriver() );
-        builder.moveToElement( version ).click().build().perform();
+        //builder.moveToElement( version ).click().build().perform();
+        builder.click( version ).build().perform();
         return new ContentVersionInfoView( getSession() );
     }
 

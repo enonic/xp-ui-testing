@@ -30,7 +30,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         when: "Roles folder selected"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.ROLES_FOLDER );
-        TestUtils.saveScreenshot( getSession(), "roles-statistic-panel" );
+        saveScreenshot( "roles-statistic-panel" );
         roleStatisticsPanel = new RoleStatisticsPanel( getSession() );
 
         then: "correct info shown in statistics panel"
@@ -42,9 +42,9 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         when: "the 'administrator console login' role selected in a grid"
         userBrowseFilterPanel.typeSearchText( ADMINISTRATOR_CONSOLE_LOGIN_ROLE_NAME );
         userBrowsePanel.clickCheckboxAndSelectGroup( ADMINISTRATOR_CONSOLE_LOGIN_ROLE_NAME );
-        TestUtils.saveScreenshot( getSession(), "adm-console-login-selected" );
+        saveScreenshot( "adm-console-login-selected" );
         List<String> members = roleStatisticsPanel.getMemberDisplayNames();
-        TestUtils.saveScreenshot( getSession(), "su-selected" );
+        saveScreenshot( "su-selected" );
 
         then: "'Super User' is member of the role"
         members.contains( SUPER_USER_DISPLAY_NAME );
@@ -105,7 +105,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         userBrowseFilterPanel.typeSearchText( roleWithSuperUser.getName() );
         userBrowsePanel.clickCheckboxAndSelectRole( roleWithSuperUser.getName() );
         List<String> membersActual = roleStatisticsPanel.getMemberDisplayNames();
-        TestUtils.saveScreenshot( getSession(), "role_with_superuser" );
+        saveScreenshot( "role_with_superuser" );
 
         then: "members in in a role statistics panel contains the 'Super User'"
         membersActual.contains( SUPER_USER_DISPLAY_NAME );
@@ -124,7 +124,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
 
         when: "a member was removed and role saved"
         wizard.removeMember( SUPER_USER_DISPLAY_NAME ).save().close( ROLE_WITH_MEMBER.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "member-removed" );
+        saveScreenshot( "member-removed" );
 
         then: "members is empty in a role statistics panel"
         roleStatisticsPanel.getMemberDisplayNames().size() == 0;
