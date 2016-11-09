@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.details_panel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PropertiesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -12,6 +11,9 @@ import spock.lang.Stepwise
 
 import java.time.LocalDate
 
+/**Tasks:
+ XP-4424 Add selenium tests for 'Published from' property, that displayed at the Info Widget
+ **/
 @Stepwise
 class DetailsPanel_PropertiesWidgetItemView_Spec
     extends BaseContentSpec
@@ -35,7 +37,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( EXECUTABLE_BAT );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "executable_bat" );
+        saveScreenshot( "executable_bat_info_widget" );
 
         then: "'media' is application's name"
         view.getApplicationName() == MEDIA_APP_NAME;
@@ -50,7 +52,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( EXECUTABLE_SH );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "executable_sh" );
+        saveScreenshot( "executable_sh_info_widget" );
 
         then: "'media' is application's name"
         view.getApplicationName() == MEDIA_APP_NAME;
@@ -66,7 +68,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( EXECUTABLE_EXE );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "executable_exe" );
+        saveScreenshot( "executable_exe_info_widget" );
 
         then: "'media' is application's name"
         view.getApplicationName() == MEDIA_APP_NAME;
@@ -117,13 +119,13 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         when: "PropertiesWidgetItemView is shown"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "folder_properties" );
+        saveScreenshot( "folder_info_properties" );
 
         then: "correct 'created' date displayed"
-        view.getCreated() == LocalDate.now().toString();
+        view.getCreated().contains( LocalDate.now().toString() );
 
         and: "correct 'modified' date displayed"
-        view.getModified() == LocalDate.now().toString();
+        view.getModified().contains( LocalDate.now().toString() );
 
         and: "correct application-name displayed"
         view.getApplicationName() == BASE_APP_NAME;
@@ -144,7 +146,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( IMPORTED_BOOK_IMAGE );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "image_properties" );
+        saveScreenshot( "image_info_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();
@@ -167,7 +169,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         wizard.save().close( FOLDER_CONTENT.getDisplayName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "property-widget-owner-anonym" )
+        saveScreenshot( "property-widget-owner-anonym" )
 
         then: "new owner shown in the widget"
         view.getOwner() == "anonymous";
@@ -181,7 +183,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( shortcut.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "shortcut_properties" );
+        saveScreenshot( "shortcut_info_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();
@@ -201,7 +203,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( unstructured.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "unstructured_properties" );
+        saveScreenshot( "unstructured_info_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();
@@ -221,7 +223,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( site.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "site_properties" );
+        saveScreenshot( "site_info_properties" );
 
         then: "Properties Widget is displayed"
         view.isDisplayed();
@@ -232,5 +234,4 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         and: "correct application-name displayed"
         view.getApplicationName() == "portal";
     }
-
 }

@@ -3,7 +3,8 @@ package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
 public enum ContentInfoTerms
 {
-    TYPE( "Type" ), APPLICATION( "Application" ), OWNER( "Owner" ), CREATED( "Created" ), MODIFIED( "Modified" ), ID( "Id" );
+    TYPE( "Type" ), APPLICATION( "Application" ), OWNER( "Owner" ), CREATED( "Created" ), MODIFIED( "Modified" ), ID(
+    "Id" ), PUBLISHED_FROM( "Published from" );
 
 
     private String value;
