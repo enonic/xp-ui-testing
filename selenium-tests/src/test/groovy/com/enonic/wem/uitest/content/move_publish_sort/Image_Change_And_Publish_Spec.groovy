@@ -39,7 +39,7 @@ class Image_Change_And_Publish_Spec
         saveScreenshot( "online_image_zoomed" );
 
         then: "status should be 'Modified'"
-        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+        wizard.waitStatus( ContentStatus.MODIFIED, Application.EXPLICIT_NORMAL );
     }
     //verifies status in the Grid
     def "GIVEN online image that has been zoomed WHEN the image is selected in the grid THEN 'Modified' status is displayed"()

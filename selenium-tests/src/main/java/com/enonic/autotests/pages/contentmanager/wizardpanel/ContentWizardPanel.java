@@ -16,6 +16,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
@@ -541,6 +542,17 @@ public class ContentWizardPanel
     public String getStatus()
     {
         return getDisplayedString( CONTENT_STATUS );
+    }
+
+    public void waitStatus( ContentStatus status, long timeout )
+    {
+        String expectedStatus = String.format( CONTENT_STATUS + "[text()='%s']", status.getValue() );
+        boolean result = waitUntilVisibleNoException( By.xpath( expectedStatus ), timeout );
+        if ( !result )
+        {
+            saveScreenshot( "err_wizard_status" );
+            throw new TestFrameworkException( "expected status was not found" );
+        }
     }
 
     public LiveFormPanel switchToLiveEditFrame()
