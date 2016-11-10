@@ -98,7 +98,7 @@ public class SiteFormViewPanel
         String moduleGridItem = String.format( NAMES_VIEW_BY_DISPLAY_NAME, appName );
         if ( !isElementDisplayed( moduleGridItem ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_app_" ) );
             throw new TestFrameworkException( "application with name: " + appName + "  was not found!" );
         }
         //else select application from options.

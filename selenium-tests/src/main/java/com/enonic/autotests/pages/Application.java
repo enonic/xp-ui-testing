@@ -3,6 +3,7 @@ package com.enonic.autotests.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -153,5 +154,10 @@ public class Application
     protected JavascriptExecutor getJavaScriptExecutor()
     {
         return (JavascriptExecutor) getSession().getDriver();
+    }
+
+    protected Actions buildActions()
+    {
+        return new Actions( getDriver() );
     }
 }

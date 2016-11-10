@@ -13,6 +13,7 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.contentmanager.ItemSet
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -664,5 +665,27 @@ class Base_InputFields_Occurrences
             contentType( ALL_CONTENT_TYPES_APP_NAME + ":htmlarea0_1" ).data( data ).
             build();
         return tinyMceContent;
+    }
+
+    protected Content buildItemSetContent()
+    {
+        Content itemSetContent = ItemSet.builder().
+            name( NameHelper.uniqueName( "itemset" ) ).
+            displayName( "item set content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":item-set0_0" ).
+            build();
+        return itemSetContent;
+    }
+
+    protected Content buildItemSetContentWitData( PropertyTree data )
+    {
+        Content itemSetContent = ItemSet.builder().
+            name( NameHelper.uniqueName( "itemset" ) ).
+            displayName( "item set content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":item-set0_0" ).data( data ).
+            build();
+        return itemSetContent;
     }
 }
