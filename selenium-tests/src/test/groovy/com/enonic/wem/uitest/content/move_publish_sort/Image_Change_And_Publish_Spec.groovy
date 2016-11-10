@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.form.ImageFormViewPanel
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Stepwise
 
 /**
  * Created  on 28.10.2016.
@@ -13,6 +14,7 @@ import com.enonic.wem.uitest.content.BaseContentSpec
  * Task:XP-4352 Add selenium test to verify the XP-4351
  * Bug: XP-4351 Status of published content changes from "Modified" to "Online" after save
  * */
+@Stepwise
 class Image_Change_And_Publish_Spec
     extends BaseContentSpec
 {
@@ -20,8 +22,9 @@ class Image_Change_And_Publish_Spec
     def "GIVEN existing 'online' image WHEN the image has been zoomed AND changes were applied THEN status is getting 'Modified'"()
     {
         given: "existing 'online' image"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_ELEPHANT_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_ELEPHANT_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        formViewPanel.waitUntilImageLoaded();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "the image has been zoomed "

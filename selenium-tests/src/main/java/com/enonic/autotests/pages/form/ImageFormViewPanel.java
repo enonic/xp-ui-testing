@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor;
 import com.enonic.xp.data.PropertyTree;
 
@@ -22,6 +21,8 @@ public class ImageFormViewPanel
     extends FormViewPanel
 {
     private final String STEP_NAVIGATOR = "//ul[contains(@id,'WizardStepNavigator')]";
+
+    private final String IMG = FORM_VIEW + "//img[contains(@class,'image-bg')]";
 
     private final String IMAGE_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + "//li[contains(@id,'TabBarItem') and child::span[text()='Image Info']]";
 
@@ -111,10 +112,20 @@ public class ImageFormViewPanel
     public ImageFormViewPanel clickOnResetButton()
     {
         buttonReset.click();
-        waitsElementNotVisible( By.xpath( BUTTON_RESET ), Application.EXPLICIT_NORMAL );
+        waitsElementNotVisible( By.xpath( BUTTON_RESET ), EXPLICIT_NORMAL );
         return this;
     }
 
+    public ImageFormViewPanel waitUntilImageLoaded()
+    {
+        boolean isLoaded = waitUntilVisibleNoException( By.xpath( IMG ), EXPLICIT_NORMAL );
+        if ( !isLoaded )
+        {
+            saveScreenshot( "err_image_not_loaded" );
+            throw new TestFrameworkException( "Image was not loaded in the wizard" );
+        }
+        return this;
+    }
 
     @Override
     public FormViewPanel type( final PropertyTree data )

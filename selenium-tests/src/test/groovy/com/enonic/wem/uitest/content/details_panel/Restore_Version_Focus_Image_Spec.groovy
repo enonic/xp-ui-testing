@@ -27,6 +27,7 @@ class Restore_Version_Focus_Image_Spec
         and: "image opened in the wizard"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        formViewPanel.waitUntilImageLoaded();
 
         when: "focus was moved"
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
@@ -59,6 +60,7 @@ class Restore_Version_Focus_Image_Spec
         and: "image is opened in the wizard"
         contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        formViewPanel.waitUntilImageLoaded();
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
 
@@ -85,6 +87,7 @@ class Restore_Version_Focus_Image_Spec
         and: "image is opened in the wizard"
         contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        formViewPanel.waitUntilImageLoaded();
         ImageEditor imageEditor = new ImageEditor( getSession() );
         saveScreenshot( "focused_image_restored" );
 

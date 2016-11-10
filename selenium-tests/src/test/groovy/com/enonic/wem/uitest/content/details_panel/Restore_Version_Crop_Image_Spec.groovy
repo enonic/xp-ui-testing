@@ -36,6 +36,7 @@ class Restore_Version_Crop_Image_Spec
         and: "image opened in the wizard"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        formViewPanel.waitUntilImageLoaded();
 
         when: "handler moved up and image was cropped"
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();

@@ -31,7 +31,7 @@ class ContentInfoWidget_Spec
         filterPanel.typeSearchText( FOLDER.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
-        saveScreenshot( "folinfo-opened1" );
+        saveScreenshot( "folder_info_widget_opened1" );
         HashMap<String, String> props = contentInfo.getContentProperties();
 
         then: "Offline status displayed"

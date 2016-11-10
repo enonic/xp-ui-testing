@@ -71,7 +71,7 @@ public class AllContentVersionsView
     public ContentVersionInfoView clickOnVersionAndExpand( int index )
     {
         List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
-        if ( liElements.size() == 0 || liElements.size() < index )
+        if ( liElements.size() == 0 || index >= liElements.size() )
         {
             saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
             throw new TestFrameworkException( "required version does not exist!" );

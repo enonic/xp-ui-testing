@@ -32,6 +32,8 @@ class Restore_Version_Zoom_Image_Spec
         and: "image opened in the wizard"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        and: "image was loaded"
+        formViewPanel.waitUntilImageLoaded();
 
         when: "the image has been zoomed "
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
