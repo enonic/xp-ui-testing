@@ -1,8 +1,12 @@
 package com.enonic.autotests.pages.form;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -17,6 +21,10 @@ public abstract class FormViewPanel
     protected static final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
     public static String VALIDATION_MESSAGE_OCCURRENCE = "This field is required";
+
+    protected final String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
+
+    protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
 
     protected final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
@@ -45,6 +53,21 @@ public abstract class FormViewPanel
         sleep( 500 );
     }
 
+    protected String getTextFromArea( WebElement htmlAreaFrame )
+    {
+        String wHandle = getDriver().getWindowHandle();
+        getDriver().switchTo().frame( htmlAreaFrame );
+        Object obj = getJavaScriptExecutor().executeScript( TEXT_IN_AREA_SCRIPT );
+        String text = obj.toString();
+        getDriver().switchTo().window( wHandle );
+        return text;
+    }
+
+    public List<String> getTextFromAreas()
+    {
+        List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
+        return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
+    }
     protected void setTextIntoArea( String id, String text )
     {
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SCRIPT_SET_INNERHTML, id, text );

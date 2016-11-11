@@ -1,5 +1,8 @@
 package com.enonic.autotests.pages.form;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -18,24 +21,22 @@ public class ItemSetViewPanel
     extends FormViewPanel
 
 {
-    public static String TEXT_LINE_VALUE = "item_set_text_line";
+    public static String TEXT_LINE_VALUES = "item_set_text_line";
 
-    public static String HTML_AREA_VALUE = "item_set_html_area";
+    public static String HTML_AREA_VALUES = "item_set_html_area";
 
     private final String FORM_ITEM_SET_VIEW = FORM_VIEW + "//div[contains(@id,'FormItemSetView')]";
 
     private final String OCCURRENCE_VIEW = FORM_ITEM_SET_VIEW + "//div[contains(@id,'FormItemSetOccurrenceView')]";
 
-    private final String TEXT_LINE = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
+    private final String TEXT_LINE_INPUTS = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
 
-    protected final String HTML_AREA = FORM_ITEM_SET_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'TextArea')]";
+    protected final String HTML_AREA_INPUTS =
+        FORM_ITEM_SET_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'TextArea')]";
 
     protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//button/span[text()='Add ItemSet']";
 
     protected final String REMOVE_ITEM_SET_BUTTON = OCCURRENCE_VIEW + "/a[@class='remove-button']";
-
-    @FindBy(xpath = TEXT_LINE)
-    private WebElement textLineInput;
 
     @FindBy(xpath = ADD_ITEM_SET_BUTTON)
     private WebElement addItemSetButton;
@@ -48,15 +49,32 @@ public class ItemSetViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        typeTextInTextLine( data.getString( TEXT_LINE_VALUE ) );
-        typeTextInHtmlArea( data.getString( HTML_AREA_VALUE ) );
-
+        Iterable<String> textLineStrings = data.getStrings( TEXT_LINE_VALUES );
+        Iterable<String> htmlAreaStrings = data.getStrings( HTML_AREA_VALUES );
+        typeTextInTextLines( textLineStrings );
+        typeTextInHtmlAreas( htmlAreaStrings );
         return this;
     }
 
-    public ItemSetViewPanel typeTextInTextLine( final String text )
+    public List<String> getTextFromTextLines()
     {
+        List<WebElement> textInputs = findElements( By.xpath( TEXT_LINE_INPUTS ) );
+        return textInputs.stream().map( input -> input.getAttribute( "value" ) ).collect( Collectors.toList() );
+    }
 
+    public List<String> getTextFromHtmlAreas()
+    {
+        List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
+        return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
+    }
+
+    public ItemSetViewPanel typeTextInTextLines( final Iterable<String> stringsForTextLines )
+    {
+        List<WebElement> textLines = findElements( By.xpath( TEXT_LINE_INPUTS ) );
+        for ( String text : stringsForTextLines )
+        {
+            textLines.stream().forEach( e -> clearAndType( e, text ) );
+        }
         return this;
     }
 
@@ -94,17 +112,26 @@ public class ItemSetViewPanel
 //        }
     }
 
-    public ItemSetViewPanel typeTextInHtmlArea( String text )
+    public ItemSetViewPanel typeTextInHtmlAreas( Iterable<String> strings )
     {
-        if ( text != null )
+        List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
+        if ( frames.size() == 0 )
         {
-            WebElement areaElement = findElement( By.xpath( HTML_AREA ) );
-            Actions builder = buildActions();
-            builder.click( findElement( By.xpath( HTML_AREA ) ) ).build().perform();
-            setTextIntoArea( areaElement.getAttribute( "id" ), text );
-            sleep( 300 );
+            throw new TestFrameworkException( "Html areas were not found on the page" );
+        }
+        for ( String text : strings )
+        {
+            frames.stream().forEach( e -> typeInHtmlArea( e, text ) );
         }
         return this;
+    }
+
+    private void typeInHtmlArea( WebElement areaElement, String text )
+    {
+        Actions builder = buildActions();
+        builder.click( areaElement ).build().perform();
+        setTextIntoArea( areaElement.getAttribute( "id" ), text );
+        sleep( 300 );
     }
 
     public long getNumberOfSets()

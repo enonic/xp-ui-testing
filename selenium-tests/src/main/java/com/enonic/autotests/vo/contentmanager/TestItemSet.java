@@ -1,10 +1,9 @@
 package com.enonic.autotests.vo.contentmanager;
 
 /**
- * Created  on 10.11.2016.
+ * Created on 11.11.2016.
  */
-public class ItemSet
-    extends Content
+public class TestItemSet
 {
     private String textLineText;
 
@@ -20,9 +19,8 @@ public class ItemSet
         return this.htmlAreaText;
     }
 
-    protected ItemSet( final Builder builder )
+    protected TestItemSet( final Builder builder )
     {
-        super( builder );
         this.htmlAreaText = builder.getHtmlAreaText();
         this.textLineText = builder.getTextLineText();
     }
@@ -34,7 +32,7 @@ public class ItemSet
 /////////////////////////////////////////////////////
 
     public static class Builder
-        extends Content.Builder<ItemSet.Builder, ItemSet>
+
     {
         private String textLineText;
 
@@ -45,9 +43,8 @@ public class ItemSet
             super();
         }
 
-        private Builder( final ItemSet itemSet )
+        private Builder( final TestItemSet itemSet )
         {
-            super( itemSet );
             this.htmlAreaText = itemSet.getHtmlAreaText();
             this.textLineText = itemSet.getTextLineText();
         }
@@ -74,9 +71,9 @@ public class ItemSet
             return this;
         }
 
-        public ItemSet build()
+        public TestItemSet build()
         {
-            return new ItemSet( this );
+            return new TestItemSet( this );
         }
     }
 

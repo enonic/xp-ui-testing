@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.form;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -69,12 +68,6 @@ public class HtmlArea0_0_FormViewPanel
             clickOnAddButton();
             sleep( 500 );
         }
-    }
-
-    public List<String> getTextFromAreas()
-    {
-        List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
-        return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
     }
 
     public boolean waitUntilAddButtonNotVisible()

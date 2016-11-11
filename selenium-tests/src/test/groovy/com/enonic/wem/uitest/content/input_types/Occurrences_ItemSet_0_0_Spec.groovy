@@ -3,13 +3,17 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ItemSetViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.contentmanager.TestItemSet
+import com.enonic.xp.data.PropertyTree
 import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Created  on 10.11.2016.
- * Tasks: XP-4439 Add selenium tests for occurrences of ItemSet
+ * Tasks:
+ *   XP-4439 Add selenium tests for occurrences of ItemSet
+ *   XP-4450 Add selenium tests for saving of data in the ItemSet content
  *
  * Verifies Bug: XP-4422 ItemSet content wizard - 'save before close' should appear, when there are unsaved changes
  *
@@ -24,6 +28,18 @@ class Occurrences_ItemSet_0_0_Spec
 
     @Shared
     Content ITEM_SET_CONTENT;
+
+    @Shared
+    Content ITEM_SET_WITH_DATA;
+
+    @Shared
+    String TEST_TEXT_HTML_AREA = "text for htmlArea 1"
+
+    @Shared
+    String TEST_TEXT_TEXT_LINE = "text line 1";
+
+    @Shared
+    String EXPECTED_TEXT_HTML_AREA = "<p>" + TEST_TEXT_HTML_AREA + "</p>"
 
     def "WHEN wizard for adding of new ItemSet content is opened THEN 'Add ItemSet' button is displayed"()
     {
@@ -118,5 +134,55 @@ class Occurrences_ItemSet_0_0_Spec
 
         then: "'Save Before Close' dialog should appear"
         dialog != null;
+    }
+
+    def "GIVEN creating of ItemSet with data WHEN data typed THEN content is getting valid"()
+    {
+        given: "wizard for adding of new ItemSet content is opened"
+        ITEM_SET_WITH_DATA = buildItemSetWithOneTextLineAndHtmlArea();
+        ContentWizardPanel wizard = selectSiteOpenWizard( ITEM_SET_WITH_DATA.getContentTypeName() );
+        ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
+
+        when: "data typed"
+        itemSetViewPanel.clickOnAddButton();
+        wizard.typeData( ITEM_SET_WITH_DATA );
+        saveScreenshot( "1_item_set_with_data_added" );
+
+        and: "Save button pressed"
+        wizard.save();
+
+        then: "content is valid, because all required inputs are filled"
+        !wizard.isContentInvalid( ITEM_SET_WITH_DATA.getDisplayName() );
+
+        and: "Publish button is enabled"
+        wizard.isPublishButtonEnabled();
+    }
+
+    def "GIVEN existing ItemSet-content with saved data WHEN content opened THEN correct text is present in the text-line and html-area inputs"()
+    {
+        when: "wizard for adding of new ItemSet content is opened"
+        ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
+        ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
+
+        then: "correct text is present in html-area inputs"
+        itemSetViewPanel.getTextFromHtmlAreas().get( 0 ) == EXPECTED_TEXT_HTML_AREA;
+
+        and: "correct text is displayed in the text-line"
+        itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
+
+        and: "content is valid, because all required inputs are filled"
+        !wizard.isContentInvalid( ITEM_SET_WITH_DATA.getDisplayName() );
+
+        and: "Publish button is enabled"
+        wizard.isPublishButtonEnabled();
+    }
+
+    private Content buildItemSetWithOneTextLineAndHtmlArea()
+    {
+        TestItemSet itemSet1 = buildItemSetValues( TEST_TEXT_TEXT_LINE, TEST_TEXT_HTML_AREA );
+        List<TestItemSet> items = new ArrayList<>();
+        items.add( itemSet1 );
+        PropertyTree data = build_ItemSet_Data( items );
+        return buildItemSetContentWitData( data );
     }
 }

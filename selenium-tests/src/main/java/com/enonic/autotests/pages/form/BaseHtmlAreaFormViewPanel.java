@@ -28,11 +28,7 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     protected final String STEP_XPATH = "//li[contains(@id,'api.ui.tab.TabBarItem')]//span[text()='Html Area']";
 
-    protected final String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
-
     protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'api.ui.text.TextArea')]";
-
-    protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
 
     public BaseHtmlAreaFormViewPanel( final TestSession session )
     {
@@ -42,16 +38,6 @@ public abstract class BaseHtmlAreaFormViewPanel
     public int getNumberOfAreas()
     {
         return findElements( By.xpath( TINY_MCE ) ).size();
-    }
-
-    public String getTextFromArea( WebElement htmlAreaFrame )
-    {
-        String wHandle = getDriver().getWindowHandle();
-        getDriver().switchTo().frame( htmlAreaFrame );
-        Object obj = getJavaScriptExecutor().executeScript( TEXT_IN_AREA_SCRIPT );
-        String text = obj.toString();
-        getDriver().switchTo().window( wHandle );
-        return text;
     }
 
     public InsertLinkModalDialog showToolbarAndClickOnInsertLinkButton()

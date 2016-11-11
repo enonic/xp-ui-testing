@@ -13,7 +13,8 @@ import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.autotests.vo.contentmanager.ItemSet
+import com.enonic.autotests.vo.contentmanager.ItemSetContent
+import com.enonic.autotests.vo.contentmanager.TestItemSet
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -669,7 +670,7 @@ class Base_InputFields_Occurrences
 
     protected Content buildItemSetContent()
     {
-        Content itemSetContent = ItemSet.builder().
+        Content itemSetContent = ItemSetContent.builder().
             name( NameHelper.uniqueName( "itemset" ) ).
             displayName( "item set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
@@ -680,7 +681,7 @@ class Base_InputFields_Occurrences
 
     protected Content buildItemSetContentWitData( PropertyTree data )
     {
-        Content itemSetContent = ItemSet.builder().
+        Content itemSetContent = ItemSetContent.builder().
             name( NameHelper.uniqueName( "itemset" ) ).
             displayName( "item set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
@@ -688,4 +689,37 @@ class Base_InputFields_Occurrences
             build();
         return itemSetContent;
     }
+
+    protected PropertyTree build_ItemSet_Data( List<TestItemSet> itemSets )
+    {
+        PropertyTree data = new PropertyTree();
+        for ( TestItemSet itemSet : itemSets )
+        {
+            if ( itemSet.getTextLineText() == null )
+            {
+                data.addString( ItemSetViewPanel.TEXT_LINE_VALUES, "" );
+            }
+            else
+            {
+                data.addString( ItemSetViewPanel.TEXT_LINE_VALUES, itemSet.getTextLineText() );
+            }
+
+            if ( itemSet.getTextLineText() == null )
+            {
+                data.addString( ItemSetViewPanel.HTML_AREA_VALUES, "" );
+            }
+            else
+            {
+                data.addString( ItemSetViewPanel.HTML_AREA_VALUES, itemSet.getHtmlAreaText() );
+            }
+
+        }
+        return data;
+    }
+
+    protected TestItemSet buildItemSetValues( String textLine, String htmlareaText )
+    {
+        return TestItemSet.builder().textLineText( textLine ).htmlAreaText( htmlareaText ).build();
+    }
+
 }
