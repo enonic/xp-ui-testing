@@ -87,7 +87,7 @@ public class Application
 
     public static final long APP_INSTALL_TIMEOUT = 10;
 
-    public static final String LIVE_EDIT_FRAME = "//iframe[@class='live-edit-frame']";
+    public static final String LIVE_EDIT_FRAME = "//iframe[contains(@class,'live-edit-frame')]";
 
     public static final String SPINNER_XPATH = "//div[@class='spinner']";
 
