@@ -1,5 +1,10 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ItemSetViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -14,6 +19,7 @@ import spock.lang.Stepwise
  * Tasks:
  *   XP-4439 Add selenium tests for occurrences of ItemSet
  *   XP-4450 Add selenium tests for saving of data in the ItemSet content
+ *   XP-4467 Add selenium tests for restoring of version and publishing of ItemSet
  *
  * Verifies Bug: XP-4422 ItemSet content wizard - 'save before close' should appear, when there are unsaved changes
  *
@@ -36,10 +42,11 @@ class Occurrences_ItemSet_0_0_Spec
     String TEST_TEXT_HTML_AREA = "text for htmlArea 1"
 
     @Shared
-    String TEST_TEXT_TEXT_LINE = "text line 1";
+    String NEW_TEXT_HTML_AREA = "new text for htmlArea 1"
 
     @Shared
-    String EXPECTED_TEXT_HTML_AREA = "<p>" + TEST_TEXT_HTML_AREA + "</p>"
+    String TEST_TEXT_TEXT_LINE = "text line 1";
+
 
     def "WHEN wizard for adding of new ItemSet content is opened THEN 'Add ItemSet' button is displayed"()
     {
@@ -136,14 +143,14 @@ class Occurrences_ItemSet_0_0_Spec
         dialog != null;
     }
 
-    def "GIVEN creating of ItemSet with data WHEN data typed THEN content is getting valid"()
+    def "GIVEN creating of ItemSet with data WHEN data typed and saved THEN content is getting valid"()
     {
         given: "wizard for adding of new ItemSet content is opened"
         ITEM_SET_WITH_DATA = buildItemSetWithOneTextLineAndHtmlArea();
         ContentWizardPanel wizard = selectSiteOpenWizard( ITEM_SET_WITH_DATA.getContentTypeName() );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
-        when: "data typed"
+        when: "all required inputs are filled"
         itemSetViewPanel.clickOnAddButton();
         wizard.typeData( ITEM_SET_WITH_DATA );
         saveScreenshot( "1_item_set_with_data_added" );
@@ -165,7 +172,7 @@ class Occurrences_ItemSet_0_0_Spec
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         then: "correct text is present in html-area inputs"
-        itemSetViewPanel.getTextFromHtmlAreas().get( 0 ) == EXPECTED_TEXT_HTML_AREA;
+        itemSetViewPanel.getInnerTextFromHtmlAreas().get( 0 ) == TEST_TEXT_HTML_AREA;
 
         and: "correct text is displayed in the text-line"
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
@@ -175,6 +182,64 @@ class Occurrences_ItemSet_0_0_Spec
 
         and: "Publish button is enabled"
         wizard.isPublishButtonEnabled();
+    }
+
+    def "GIVEN existing ItemSet-content with saved valid data WHEN the content has been published THEN 'online' status is displayed"()
+    {
+        given: "existing ItemSet-content with saved valid data"
+        ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
+
+        when: "the content has been published"
+        wizard.clickOnWizardPublishButton().waitUntilDialogShown(
+            Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+
+        then: "'online' status is displayed"
+        wizard.getStatus() == ContentStatus.ONLINE.getValue();
+    }
+
+    def "GIVEN existing ItemSet-content with saved valid data WHEN text in the htmlArea changed THEN 'modified' status is displayed"()
+    {
+        given: "existing ItemSet-content with saved valid data"
+        ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
+        ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
+
+        when: "the content has been published"
+        itemSetViewPanel.typeTextInHtmlArea( NEW_TEXT_HTML_AREA );
+        wizard.save();
+
+        then: "'online' status is displayed"
+        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+    }
+
+    def "GIVEN existing ItemSet-content with a several versions WHEN when the version with empty required fields is restored THEN ItemSet shown correctly"()
+    {
+        given: "content added selected and version history opened"
+        ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
+
+        and: "AppHome button was pressed"
+        contentBrowsePanel.pressAppHomeButton();
+        and: "details panel is opened"
+        contentBrowsePanel.clickOnDetailsToggleButton();
+
+        when: "when the version with empty required fields is restored"
+        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        versionItem.doRestoreVersion( versionItem.getId() );
+        saveScreenshot( "item_set_text_reverted" );
+
+        and: "wizard-tab activated again"
+        contentBrowsePanel.clickOnTab( ITEM_SET_WITH_DATA.getDisplayName() );
+        ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
+
+        then: "correct text in the htmlArea is displayed"
+        itemSetViewPanel.getInnerTextFromHtmlAreas().get( 0 ) == TEST_TEXT_HTML_AREA;
+
+        and: "correct text in the text-line is displayed"
+        itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
+
+        then: "'online' status is displayed"
+        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
     private Content buildItemSetWithOneTextLineAndHtmlArea()

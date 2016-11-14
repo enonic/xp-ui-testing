@@ -22,7 +22,9 @@ public abstract class FormViewPanel
 
     public static String VALIDATION_MESSAGE_OCCURRENCE = "This field is required";
 
-    protected final String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
+    protected final String INNER_HTML_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
+
+    protected final String INNER_TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerText";
 
     protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
 
@@ -53,21 +55,32 @@ public abstract class FormViewPanel
         sleep( 500 );
     }
 
-    protected String getTextFromArea( WebElement htmlAreaFrame )
+    protected String getInnerHtmlFromArea( WebElement htmlAreaFrame )
+    {
+        return executeScriptInHtmlArea( htmlAreaFrame, INNER_HTML_IN_AREA_SCRIPT );
+    }
+
+    protected String executeScriptInHtmlArea( WebElement htmlAreaFrame, String script )
     {
         String wHandle = getDriver().getWindowHandle();
         getDriver().switchTo().frame( htmlAreaFrame );
-        Object obj = getJavaScriptExecutor().executeScript( TEXT_IN_AREA_SCRIPT );
+        Object obj = getJavaScriptExecutor().executeScript( script );
         String text = obj.toString();
         getDriver().switchTo().window( wHandle );
         return text;
     }
 
-    public List<String> getTextFromAreas()
+    protected String getInnerTextFromArea( WebElement htmlAreaFrame )
+    {
+        return executeScriptInHtmlArea( htmlAreaFrame, INNER_TEXT_IN_AREA_SCRIPT );
+    }
+
+    public List<String> getInnerHtmlFromAreas()
     {
         List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
-        return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
+        return frames.stream().map( e -> getInnerHtmlFromArea( e ) ).collect( Collectors.toList() );
     }
+
     protected void setTextIntoArea( String id, String text )
     {
         ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SCRIPT_SET_INNERHTML, id, text );

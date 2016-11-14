@@ -39,7 +39,7 @@ class MacroModalDialog_Youtube_Spec
         wizard.save();
 
         then: "correct macro is displayed in the htmlarea"
-        formViewPanel.getText().contains( ENONIC_INTRO_URL );
+        formViewPanel.getInnerHtml().contains( ENONIC_INTRO_URL );
     }
     //this is macro was removed into the 'social applications'
     @Ignore

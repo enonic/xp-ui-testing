@@ -44,10 +44,10 @@ class MacroModalDialog_Twitter_Spec
         saveScreenshot( "test_macro_twit_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
-        formViewPanel.getText().contains( TEST_TWIT );
+        formViewPanel.getInnerHtml().contains( TEST_TWIT );
 
         and:
-        formViewPanel.getText().contains( LANGUAGE_STRING );
+        formViewPanel.getInnerHtml().contains( LANGUAGE_STRING );
     }
     //this is macro was moved into the 'social applications'
     @Ignore

@@ -58,7 +58,7 @@ class Occurrences_HtmlArea_0_0_Spec
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> actual = formViewPanel.getTextFromAreas();
+        List<String> actual = formViewPanel.getInnerHtmlFromAreas();
 
         then: "expected text present in the editor"
         actual.size() == 1;
@@ -91,7 +91,7 @@ class Occurrences_HtmlArea_0_0_Spec
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getTextFromAreas();
+        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
 
         then: "one empty area present"
         strings.size() == 1;
@@ -110,7 +110,7 @@ class Occurrences_HtmlArea_0_0_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         TestUtils.saveScreenshot( getTestSession(), "html_editor_2" )
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getTextFromAreas();
+        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
 
         then: "two areas with correct text are present"
         strings.size() == 2;
@@ -131,7 +131,7 @@ class Occurrences_HtmlArea_0_0_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContentContent );
         TestUtils.saveScreenshot( getTestSession(), "area_3" );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getTextFromAreas();
+        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
 
         then: "three areas with correct text are present"
         strings.size() == 3;

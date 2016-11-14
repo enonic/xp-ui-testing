@@ -31,16 +31,15 @@ public class ContentDetailsPanel
 
     private final String INFO_WIDGET_TOGGLE_BUTTON = DETAILS_PANEL + "//div[contains(@id,'InfoWidgetToggleButton')]";
 
-
-    @FindBy(xpath = WIDGET_SELECTOR_DROPDOWN_HANDLER)
-    private WebElement widgetSelectorDropDownHandler;
-
-
     private UserAccessWidgetItemView userAccessWidgetItemView;
 
     private AttachmentsWidgetItemView attachmentsWidgetItemView;
 
     private PropertiesWidgetItemView propertiesWidgetItemView;
+
+
+    @FindBy(xpath = WIDGET_SELECTOR_DROPDOWN_HANDLER)
+    private WebElement widgetSelectorDropDownHandler;
 
     public ContentDetailsPanel( final TestSession session )
     {
@@ -104,7 +103,7 @@ public class ContentDetailsPanel
         }
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_history_opt" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_history_opt" ) );
             throw new TestFrameworkException( "Version history option was not found!" );
         }
         getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION ) ).click();
@@ -116,7 +115,7 @@ public class ContentDetailsPanel
     {
         if ( !isElementDisplayed( INFO_WIDGET_TOGGLE_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_info_opt" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_info_opt" ) );
             throw new TestFrameworkException( "Info widget was not opened!" );
         }
         getDisplayedElement( By.xpath( INFO_WIDGET_TOGGLE_BUTTON ) ).click();

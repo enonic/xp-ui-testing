@@ -47,14 +47,13 @@ public class HtmlArea0_1_FormViewPanel
         return waitUntilVisibleNoException( By.xpath( STEP_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
-    public String getText()
+    public String getInnerHtml()
     {
-        return getTextFromArea( findElement( By.xpath( TEXT_AREA ) ) );
+        return getInnerHtmlFromArea( findElement( By.xpath( TEXT_AREA ) ) );
     }
 
-    public boolean isTextAreaEmpty()
+    public String getInnerText()
     {
-        String actual = getTextFromArea( findElement( By.xpath( TEXT_AREA ) ) );
-        return actual.equals( EMPTY_TEXT_AREA_CONTENT );
+        return getInnerTextFromArea( findElement( By.xpath( TEXT_AREA ) ) );
     }
 }

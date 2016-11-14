@@ -101,7 +101,7 @@ class Occurrences_HtmlArea_0_2_Spec
         when: "just created content opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getTextFromAreas();
+        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
 
         then: "correct values of strings are showed in both text areas"
         strings.contains( EXPECTED_TEXT1 );

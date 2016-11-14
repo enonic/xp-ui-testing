@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -50,7 +49,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         String versionId = versionItem.getId();
-        TestUtils.saveScreenshot( getSession(), "version-history-expanded" );
+        saveScreenshot( "version-history-expanded" );
 
         then: "correct display name is shown"
         versionItem.getDisplayName() == folderContent.getDisplayName();
@@ -82,7 +81,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         String versionId = versionItem.getId();
-        TestUtils.saveScreenshot( getSession(), "version-history-expanded-no-display-name" );
+        saveScreenshot( "version-history-expanded-no-display-name" );
 
 
         then: "correct display name is shown"
@@ -109,7 +108,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
 
         when: "'close info' button clicked"
         versionItem.doCloseVersionInfo( versionId );
-        TestUtils.saveScreenshot( getSession(), "version-history-collapsed" );
+        saveScreenshot( "version-history-collapsed" );
 
         then: "'version info' is hidden"
         !versionItem.isVersionInfoDisplayed();
@@ -126,7 +125,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         then: "new display name shown in the 'version info'"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        TestUtils.saveScreenshot( getSession(), "version-history-new-display-name" );
+        saveScreenshot( "version-history-new-display-name" );
         versionItem.getDisplayName() == NEW_DISPLAY_NAME;
     }
 

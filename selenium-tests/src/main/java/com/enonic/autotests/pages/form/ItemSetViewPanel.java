@@ -62,10 +62,10 @@ public class ItemSetViewPanel
         return textInputs.stream().map( input -> input.getAttribute( "value" ) ).collect( Collectors.toList() );
     }
 
-    public List<String> getTextFromHtmlAreas()
+    public List<String> getInnerTextFromHtmlAreas()
     {
         List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
-        return frames.stream().map( e -> getTextFromArea( e ) ).collect( Collectors.toList() );
+        return frames.stream().map( e -> getInnerTextFromArea( e ) ).collect( Collectors.toList() );
     }
 
     public ItemSetViewPanel typeTextInTextLines( final Iterable<String> stringsForTextLines )
@@ -104,12 +104,20 @@ public class ItemSetViewPanel
     {
         addItemSetButton.click();
         sleep( 500 );
-//        boolean isLoaded = waitUntilVisibleNoException( By.xpath( FORM_ITEM_SET_VIEW ), EXPLICIT_NORMAL );
-//        if ( !isLoaded )
-//        {
-//            saveScreenshot( "err_load_item_set" );
-//            throw new TestFrameworkException( "ItemSet form was not loaded!" );
-//        }
+    }
+
+    /**
+     * Types a string  the first htmlArea.
+     */
+    public ItemSetViewPanel typeTextInHtmlArea( String text )
+    {
+        List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
+        if ( frames.size() == 0 )
+        {
+            throw new TestFrameworkException( "Html areas were not found on the page" );
+        }
+        typeInHtmlArea( frames.get( 0 ), text );
+        return this;
     }
 
     public ItemSetViewPanel typeTextInHtmlAreas( Iterable<String> strings )

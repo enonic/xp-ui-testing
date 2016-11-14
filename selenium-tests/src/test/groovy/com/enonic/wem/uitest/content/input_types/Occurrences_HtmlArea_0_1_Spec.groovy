@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog
+import com.enonic.autotests.pages.form.BaseHtmlAreaFormViewPanel
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
@@ -16,7 +17,7 @@ class Occurrences_HtmlArea_0_1_Spec
     String TEST_TEXT = "html area text";
 
     @Shared
-    String EXPECTED_TEXT = "<p>" + TEST_TEXT + "</p>";
+    String EXPECTED_INNER_HTML = "<p>" + TEST_TEXT + "</p>";
 
     @Shared
     String NORWEGIAN_TEXT = "Hej og hå så kan det gå"
@@ -36,7 +37,7 @@ class Occurrences_HtmlArea_0_1_Spec
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
-        String text = formViewPanel.getText();
+        String text = formViewPanel.getInnerHtml();
 
         then: "expected text present in the editor"
         text.contains( NORWEGIAN_TEXT );
@@ -61,10 +62,10 @@ class Occurrences_HtmlArea_0_1_Spec
         when: "start to add a content with type 'HtmlArea 0:1'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
         selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "HtmlArea-toolbar is hidden"
-        !formViewPanel.isEditorToolbarVisible();
+        !htmlAreaFormViewPanel.isEditorToolbarVisible();
     }
 
     def "WHEN wizard opened AND the editor in edit mode THEN HtmlArea toolbar is visible"()
@@ -72,11 +73,11 @@ class Occurrences_HtmlArea_0_1_Spec
         when: "start to add a content with type 'HtmlArea 0:1'"
         Content tinyMceContent = buildHtmlArea0_1_Content( TEST_TEXT );
         selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        formViewPanel.type( tinyMceContent.getData() );
+        HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        htmlAreaFormViewPanel.type( tinyMceContent.getData() );
 
         then: "HtmlArea-toolbar is visible"
-        formViewPanel.isEditorToolbarVisible();
+        htmlAreaFormViewPanel.isEditorToolbarVisible();
     }
 
     def "GIVEN saving of content with HtmlArea editor (0:1) and text typed WHEN content opened for edit THEN expected string is present in the editor "()
@@ -88,11 +89,11 @@ class Occurrences_HtmlArea_0_1_Spec
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        String text = formViewPanel.getText();
+        HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        String text = htmlAreaFormViewPanel.getInnerHtml();
 
         then: "expected text present in the editor"
-        text == EXPECTED_TEXT;
+        text == EXPECTED_INNER_HTML;
     }
 
     def "GIVEN saving of content with HtmlArea editor (0:1) and text not typed WHEN content opened for edit THEN no text present in the editor"()
@@ -104,9 +105,9 @@ class Occurrences_HtmlArea_0_1_Spec
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "text area is empty"
-        formViewPanel.isTextAreaEmpty();
+        htmlAreaFormViewPanel.getInnerHtml() == BaseHtmlAreaFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
     }
 }
