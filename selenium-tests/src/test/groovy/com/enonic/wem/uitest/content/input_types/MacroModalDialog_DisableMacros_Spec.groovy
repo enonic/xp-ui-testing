@@ -28,10 +28,10 @@ class MacroModalDialog_DisableMacros_Spec
 
         and: "MacroDialog opened"
         ContentWizardPanel wizard = selectSiteOpenWizard( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         when: "'Disable macros' selected from the options"
-        MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
+        MacroModalDialog dialog = htmlAreaFormViewPanel.showToolbarAndClickOnInsertMacroButton();
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, TEST_TEXT );
         dialog.selectOption( MacroType.DISABLE_MACROS ).getMacroConfigPanel().typeData( data );
@@ -40,7 +40,7 @@ class MacroModalDialog_DisableMacros_Spec
         saveScreenshot( "test_disable_macros_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
-        formViewPanel.getInnerHtmlFromAreas().contains( DISABLE_MACROS_RESULT );
+        htmlAreaFormViewPanel.getInnerText().contains( DISABLE_MACROS_RESULT );
     }
 
     def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
@@ -104,7 +104,7 @@ class MacroModalDialog_DisableMacros_Spec
         when: "'Disable macros' selected from the options"
         PropertyTree data = new PropertyTree();
         and: "text in the text area not inserted"
-        data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, "test text" );
+        data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, TEST_TEXT );
         dialog.selectOption( MacroType.DISABLE_MACROS ).getMacroConfigPanel().typeData( data );
 
         and: "preview tab link clicked"
@@ -112,6 +112,6 @@ class MacroModalDialog_DisableMacros_Spec
         saveScreenshot( "test_disable_macros_textarea_filled_preview" );
 
         then: "correct info in the preview-content panel appears"
-        previewPanel.getPreviewContentMessage() == "test text";
+        previewPanel.getPreviewContentMessage() == TEST_TEXT;
     }
 }
