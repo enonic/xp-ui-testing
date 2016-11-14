@@ -104,6 +104,7 @@ class Site_Publish_Spec
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        saveScreenshot( "site_published_in_wizard" );
 
         when: "language changed"
         SettingsWizardStepForm settings = wizard.clickOnSettingsTabLink();
@@ -131,6 +132,7 @@ class Site_Publish_Spec
         wizard.switchToLiveEditFrame();
         PartComponentView partComponentView = new PartComponentView( getSession() );
         partComponentView.selectItem( CITY_CREATION_PART );
+        saveScreenshot( "site_modified_in_wizard" );
 
         and: "site saved in the wizard"
         wizard.save();
