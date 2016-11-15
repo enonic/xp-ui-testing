@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllCon
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -20,7 +19,7 @@ class Restore_ImageSelector_Spec
     {
         given: "new ImageSelector-content 2:4 added"
         IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT.getContentTypeName() );
         wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().close( IMAGE_SELECTOR_CONTENT.getDisplayName() );
         contentBrowsePanel.clickOnClearSelection();
 
@@ -49,7 +48,7 @@ class Restore_ImageSelector_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "image_selector_valid_version" );
+        saveScreenshot( "image_selector_valid_version" );
 
         then: "red icon is not present on the wizard"
         !wizard.isContentInvalid( IMAGE_SELECTOR_CONTENT.getDisplayName() );
@@ -82,7 +81,7 @@ class Restore_ImageSelector_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "image_selector_not_valid_version" );
+        saveScreenshot( "image_selector_not_valid_version" );
 
         then: "red icon appears on the wizard tab"
         wizard.isContentInvalid( IMAGE_SELECTOR_CONTENT.getDisplayName() );

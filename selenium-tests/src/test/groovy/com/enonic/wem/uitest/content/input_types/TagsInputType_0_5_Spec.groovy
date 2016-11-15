@@ -18,7 +18,7 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 0 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
@@ -34,7 +34,7 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 1 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
 
         when: "type a data and 'save' and open for edit new created content"
@@ -52,7 +52,7 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 5 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
@@ -67,7 +67,7 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 5 );
-        selectSiteOpenWizard( tagContent.getContentTypeName() ).typeData( tagContent );
+        selectSitePressNew( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
@@ -82,7 +82,7 @@ class TagsInputType_0_5_Spec
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 5 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
 
         when: "type a data and 'save' and open for edit new created content"

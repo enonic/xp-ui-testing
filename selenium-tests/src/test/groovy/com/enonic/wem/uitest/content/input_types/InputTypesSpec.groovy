@@ -26,7 +26,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Date'"
         Content dateContent = buildDate0_1_Content( TEST_DATE );
-        selectSiteOpenWizard( dateContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateContent ).save().close(
+        selectSitePressNew( dateContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateContent ).save().close(
             dateContent.getDisplayName() );
 
 
@@ -42,7 +42,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Date Time'"
         Content dateTimeContent = buildDateTime0_1_Content( TEST_DATE_TIME );
-        selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateTimeContent ).save().close(
+        selectSitePressNew( dateTimeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateTimeContent ).save().close(
             dateTimeContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
@@ -57,7 +57,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'Time'"
         Content timeContent = buildTime0_0_Content( TEST_TIME );
-        selectSiteOpenWizard( timeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( timeContent ).save().close(
+        selectSitePressNew( timeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( timeContent ).save().close(
             timeContent.getDisplayName() ); ;
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
@@ -72,7 +72,7 @@ class InputTypesSpec
     {
         given: "add a content with type 'checkbox'"
         Content checkBoxContent = buildCheckBoxContent( true );
-        selectSiteOpenWizard( checkBoxContent.getContentTypeName() ).waitUntilWizardOpened().typeData( checkBoxContent ).save().close(
+        selectSitePressNew( checkBoxContent.getContentTypeName() ).waitUntilWizardOpened().typeData( checkBoxContent ).save().close(
             checkBoxContent.getDisplayName() );
 
         when: "site expanded and just created content selected and 'Edit' button clicked"

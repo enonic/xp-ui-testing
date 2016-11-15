@@ -27,7 +27,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "start to add a content with type 'ComboBox 1:1'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() );
 
         when: "only the name typed and no option selected"
         wizard.typeDisplayName( comboBoxContent.getDisplayName() );
@@ -47,7 +47,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
             comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -69,7 +69,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         content_with_opt = buildComboBox1_1_Content( 1 );
-        selectSiteOpenWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
+        selectSitePressNew( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
             content_with_opt.getDisplayName() );
 
         when: "content opened for edit"
@@ -116,7 +116,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         when: "content with selected option saved and published"
         comboBox1_1 = buildComboBox1_1_Content( 1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( comboBox1_1.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( comboBox1_1.getContentTypeName() );
         wizard.typeData( comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( comboBox1_1.getDisplayName() );
@@ -165,7 +165,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         when: "start to add a content with type 'ComboBox-content (1:1)'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( comboBoxContent.getContentTypeName() );
 
         then: "button 'Publish' is disabled"
         !contentWizardPanel.isPublishButtonEnabled();
@@ -175,7 +175,7 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type date time added'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent );
+        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent );
 
         when: "content opened for edit"
         wizard.save().close( comboBoxContent.getDisplayName() );

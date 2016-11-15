@@ -22,7 +22,7 @@ class Occurrences_DefaultRelation_0_1_Spec
     {
         when: "start to add a content with type 'Relation 0:1'"
         Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_NAME );
-        selectSiteOpenWizard( relationship.getContentTypeName() );
+        selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         then: "wizard with form view opened"
@@ -37,7 +37,7 @@ class Occurrences_DefaultRelation_0_1_Spec
     {
         given: "start to add a content with type 'Relation 0:1'"
         Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( relationship.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         when:
@@ -55,7 +55,7 @@ class Occurrences_DefaultRelation_0_1_Spec
     {
         given: "saving a content with type 'Relation 0:1'"
         TEST_RELATIONSHIP_CONTENT = buildDefaultRelation0_1_Content( NORD_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().close( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
 

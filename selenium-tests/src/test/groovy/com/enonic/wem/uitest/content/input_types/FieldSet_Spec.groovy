@@ -31,7 +31,7 @@ class FieldSet_Spec
     {
         given: "start to add a content with a 'fieldset'"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( FIELDSET_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
@@ -54,7 +54,7 @@ class FieldSet_Spec
     {
         given: "start to add a content with a fieldset"
         FIELDSET_CONTENT = build_FieldSet_Content( "", HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( FIELDSET_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
@@ -68,7 +68,7 @@ class FieldSet_Spec
     {
         given: "start to add a content with a fieldset"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, "", TEST_DOUBLE, TEST_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( FIELDSET_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
@@ -82,7 +82,7 @@ class FieldSet_Spec
     {
         given: "start to add a content with a fieldset "
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, "", TEST_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( FIELDSET_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();

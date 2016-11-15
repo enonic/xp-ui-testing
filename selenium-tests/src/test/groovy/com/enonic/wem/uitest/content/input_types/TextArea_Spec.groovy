@@ -17,7 +17,7 @@ class TextArea_Spec
     {
         when: "wizard opened"
         Content textAreaContent = build_TextArea_Content( "test" );
-        selectSiteOpenWizard( textAreaContent.getContentTypeName() );
+        selectSitePressNew( textAreaContent.getContentTypeName() );
 
         then: "empty text area present"
         TextAreaFormViewPanel areaFormViewPanel = new TextAreaFormViewPanel( getSession() );
@@ -29,7 +29,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "" );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textAreaContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
@@ -45,7 +45,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textAreaContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( textAreaContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
@@ -62,7 +62,7 @@ class TextArea_Spec
     {
         given: "start to add a content with type 'TextArea'"
         Content textAreaContent = build_TextArea_Content( "test text" );
-        selectSiteOpenWizard( textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close(
+        selectSitePressNew( textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close(
             textAreaContent.getDisplayName() ); ;
 
         when: "just created content opened"

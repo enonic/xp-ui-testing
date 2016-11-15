@@ -18,7 +18,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "start to add a content with type 'ComboBox 2:4'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
         when: "only the name typed and no option selected"
@@ -37,7 +37,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
             comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -59,7 +59,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         content_with_opt = buildComboBox2_4_Content( 2 );
-        selectSiteOpenWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
+        selectSitePressNew( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
             content_with_opt.getDisplayName() );
 
         when: "content opened for edit"
@@ -102,7 +102,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
             comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -125,7 +125,7 @@ class Occurrences_ComboBox_2_4_Spec
     {
         when: "content without a selected option saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
+        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 

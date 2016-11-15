@@ -21,7 +21,7 @@ class Occurrences_ImageSelector_1_1_Spec
     {
         when: "start to add a content with type 'Image Selector 1:1'"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() );
+        selectSitePressNew( imageSelectorContent.getContentTypeName() );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         then: "option filter input is present"
@@ -36,7 +36,7 @@ class Occurrences_ImageSelector_1_1_Spec
     {
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() )
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
         wizard.typeData( imageSelectorContent ).save().close( imageSelectorContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -59,7 +59,7 @@ class Occurrences_ImageSelector_1_1_Spec
     {
         when: "content without required image saved"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
+        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
             imageSelectorContent.getDisplayName() );
 
         then:
@@ -71,7 +71,7 @@ class Occurrences_ImageSelector_1_1_Spec
     {
         given: "new content with type 'Image Selector0_1' added"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector1_1_Content( TEST_IMAGE_NAME );
-        selectSiteOpenWizard( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
+        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
             TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
 
         when: "content opened for edit"
@@ -131,7 +131,7 @@ class Occurrences_ImageSelector_1_1_Spec
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
 
         when: "data typed AND image not selected"
-        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
 
         then: "'Publish' button on the wizard-toolbar is disabled"
         !wizard.isPublishButtonEnabled();

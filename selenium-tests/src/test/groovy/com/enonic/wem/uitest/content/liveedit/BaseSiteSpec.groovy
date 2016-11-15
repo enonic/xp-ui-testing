@@ -41,7 +41,7 @@ class BaseSiteSpec
     @Shared
     String MY_FIRST_APP_NAME = "com.enonic.myfirstapp";
 
-    protected ContentWizardPanel selectSiteOpenWizard( String contentTypeName, String siteName )
+    protected ContentWizardPanel selectSitePressNew( String contentTypeName, String siteName )
     {
         filterPanel.typeSearchText( siteName );
         return contentBrowsePanel.clickCheckboxAndSelectRow( siteName ).clickToolbarNew().selectContentType( contentTypeName );

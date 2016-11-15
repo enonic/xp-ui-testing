@@ -20,7 +20,7 @@ class Occurrences_Double_Spec
     {
         given: "creating of  content with type 'Long'"
         Content doubleContent = buildDouble0_0_Content( WRONG_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         when: "invalid value for long typed"
@@ -41,7 +41,7 @@ class Occurrences_Double_Spec
     {
         given: "add a content with type 'Double'"
         Content doubleContent = buildDouble0_1_Content( TEST_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
         wizard.save().close( doubleContent.getDisplayName() ); ;
 
@@ -67,7 +67,7 @@ class Occurrences_Double_Spec
     {
         given: "adding of content with empty value for double"
         Content doubleContent = buildDouble0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
 
@@ -85,7 +85,7 @@ class Occurrences_Double_Spec
     {
         given: "adding of double content with empty value"
         Content doubleContent = buildDouble1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
 
@@ -104,7 +104,7 @@ class Occurrences_Double_Spec
     {
         given: " adding of double content(min2 max4)"
         Content doubleContent = buildDouble2_4_Content( TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
 
@@ -123,7 +123,7 @@ class Occurrences_Double_Spec
     {
         given: "adding of double content(min2 max4)"
         Content doubleContent = buildDouble2_4_Content( TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened()
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened()
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
         when: "three values typed"
         wizard.typeData( doubleContent );
@@ -139,7 +139,7 @@ class Occurrences_Double_Spec
     {
         given: "creating of double content"
         Content doubleContent = buildDouble1_1_Content( MAX_SAFE_INTEGER );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
 
         when: "MAX value typed"
         wizard.typeData( doubleContent ).save();
@@ -153,7 +153,7 @@ class Occurrences_Double_Spec
     {
         given:
         Content doubleContent = buildDouble1_1_Content( MORE_MAX_SAFE_INTEGER );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         when: "value more than MAX typed"

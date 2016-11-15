@@ -20,7 +20,7 @@ class Occurrences_Local_DateTime_0_1_Spec
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime0_1_Content( VALID_DATE_TIME1 );
-        selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        selectSitePressNew( dateTimeContent.getContentTypeName() );
 
         when: "DateTime input has been clicked"
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
@@ -38,7 +38,7 @@ class Occurrences_Local_DateTime_0_1_Spec
     {
         given: "start to add a content with type local 'DateTime(0:1)'"
         Content dateTimeContent = buildDateTime0_1_Content( VALID_DATE_TIME1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
         when: "only a name typed and dateTime was not typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
@@ -61,7 +61,7 @@ class Occurrences_Local_DateTime_0_1_Spec
     {
         given: "start to add a content with type local 'DateTime(0:1)'"
         Content dateTimeNotValid = buildDateTime0_1_Content( NOT_VALID_DATE_TIME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeNotValid.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeNotValid.getContentTypeName() );
 
         when: "all data typed"
         wizard.typeData( dateTimeNotValid );
@@ -75,7 +75,7 @@ class Occurrences_Local_DateTime_0_1_Spec
     {
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
         when: "content opened for edit"
         wizard.save();
@@ -92,7 +92,7 @@ class Occurrences_Local_DateTime_0_1_Spec
     {
         given: "new content with type 'DateTime(0:1)' added'"
         Content dateTimeContent = buildDateTime0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
         when: "content opened for edit"
         wizard.save().close( dateTimeContent.getDisplayName() );

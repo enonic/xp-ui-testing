@@ -21,7 +21,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         when: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view "
@@ -32,7 +32,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         when: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         then: "button 'Add' should be displayed under the text input  in 'form view panel'"
@@ -43,7 +43,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         when: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         then: "the 'remove button' should not be displayed in the form view"
@@ -54,7 +54,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         when: "'Add' button clicked"
@@ -71,7 +71,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
 
         when: "button 'Add' twice pressed"
@@ -88,7 +88,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         formViewPanel.clickOnAddButton();
         int numberBeforeRemoving = formViewPanel.getNumberOfTextInputs()
@@ -110,7 +110,7 @@ class Occurrences_TextLine_1_0_Spec
     {
         given: "start to add a content with type 'TextLine 1:0'"
         Content textLineContent = buildTextLine1_0_Content( FIRST_TEST_STRING );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_0_FormViewPanel formViewPanel = new TextLine1_0_FormViewPanel( getSession() );
         formViewPanel.clickOnAddButton();
         textLineContent.getData().addProperty( "1", ValueFactory.newString( SECOND_TEST_STRING ) );

@@ -47,12 +47,11 @@ class Occurrences_ItemSet_0_0_Spec
     @Shared
     String TEST_TEXT_TEXT_LINE = "text line 1";
 
-
     def "WHEN wizard for adding of new ItemSet content is opened THEN 'Add ItemSet' button is displayed"()
     {
         when: "wizard for adding of new ItemSet content is opened"
         Content itemSetContent = buildItemSetContent();
-        ContentWizardPanel wizard = selectSiteOpenWizard( itemSetContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( itemSetContent.getContentTypeName() );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         then: "required wizard's step is present "
@@ -66,7 +65,7 @@ class Occurrences_ItemSet_0_0_Spec
     {
         given: "wizard for adding of new ItemSet content is opened"
         ITEM_SET_CONTENT = buildItemSetContent();
-        ContentWizardPanel wizard = selectSiteOpenWizard( ITEM_SET_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( ITEM_SET_CONTENT.getContentTypeName() );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         when: "required wizard's step is present "
@@ -147,7 +146,7 @@ class Occurrences_ItemSet_0_0_Spec
     {
         given: "wizard for adding of new ItemSet content is opened"
         ITEM_SET_WITH_DATA = buildItemSetWithOneTextLineAndHtmlArea();
-        ContentWizardPanel wizard = selectSiteOpenWizard( ITEM_SET_WITH_DATA.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( ITEM_SET_WITH_DATA.getContentTypeName() );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         when: "all required inputs are filled"
@@ -239,7 +238,7 @@ class Occurrences_ItemSet_0_0_Spec
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
 
         then: "'online' status is displayed"
-        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
+        wizard.getStatus() == ContentStatus.ONLINE.getValue();
     }
 
     private Content buildItemSetWithOneTextLineAndHtmlArea()
@@ -250,4 +249,5 @@ class Occurrences_ItemSet_0_0_Spec
         PropertyTree data = build_ItemSet_Data( items );
         return buildItemSetContentWitData( data );
     }
+
 }

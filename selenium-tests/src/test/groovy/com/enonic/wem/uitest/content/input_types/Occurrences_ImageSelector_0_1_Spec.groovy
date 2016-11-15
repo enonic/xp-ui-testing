@@ -22,7 +22,7 @@ class Occurrences_ImageSelector_0_1_Spec
     {
         when: "start to add a content with type 'Image Selector 0:1'"
         Content imageSelectorContent = buildImageSelector0_1_Content( TEST_IMAGE_NAME );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() );
+        selectSitePressNew( imageSelectorContent.getContentTypeName() );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         then: "option filter input is present"
@@ -37,7 +37,7 @@ class Occurrences_ImageSelector_0_1_Spec
     {
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() )
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
         wizard.typeData( imageSelectorContent ).save().close( imageSelectorContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -61,7 +61,7 @@ class Occurrences_ImageSelector_0_1_Spec
         Content imageSelectorContent = buildImageSelector0_1_Content( null );
 
         when: "data typed AND image not selected"
-        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
 
         then: "'Publish' button on the wizard-toolbar is enabled"
         wizard.isPublishButtonEnabled();
@@ -71,7 +71,7 @@ class Occurrences_ImageSelector_0_1_Spec
     {
         given: "new content with type 'Image Selector'"
         Content imageSelectorContent = buildImageSelector0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() );
         wizard.typeData( imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( imageSelectorContent.getDisplayName() );
@@ -91,7 +91,7 @@ class Occurrences_ImageSelector_0_1_Spec
     {
         given: "new content with type 'Image Selector0_1' added"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector0_1_Content( TEST_IMAGE_NAME );
-        selectSiteOpenWizard( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
+        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
             TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
 
         when: "content opened for edit"

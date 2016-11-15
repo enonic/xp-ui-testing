@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllCon
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -19,7 +18,7 @@ class Restore_Tags_Spec
     {
         given: "new Tag-content with two tags added"
         TAG_CONTENT = buildTag_2_5_Content( 2 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( TAG_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( TAG_CONTENT.getContentTypeName() );
         wizard.typeData( TAG_CONTENT ).save().close( TAG_CONTENT.getDisplayName() );
         contentBrowsePanel.clickOnClearSelection();
 
@@ -47,7 +46,7 @@ class Restore_Tags_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "tag_valid_version" );
+        saveScreenshot( "tag_valid_version" );
 
         then: "content has no a red icon on the wizard-tab"
         !wizard.isContentInvalid( TAG_CONTENT.getDisplayName() )
@@ -64,7 +63,7 @@ class Restore_Tags_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "tag_not_valid_restored" );
+        saveScreenshot( "tag_not_valid_restored" );
 
         then: "red icon appears on the wizard tab"
         wizard.isContentInvalid( TAG_CONTENT.getDisplayName() )

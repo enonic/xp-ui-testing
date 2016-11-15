@@ -25,7 +25,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         when: "start to add a content with type 'ComboBox 0:0'"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
+        selectSitePressNew( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
         then: "option filter input is present and enabled"
@@ -38,7 +38,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type Combobbox0_0 added'"
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
             comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -57,7 +57,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type ComboBox 0_0 added"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
             comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -80,7 +80,7 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type ComboBox0_0 added'"
         content_wit_opt = buildComboBox0_0_Content( 3 );
-        selectSiteOpenWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
+        selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
             content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"

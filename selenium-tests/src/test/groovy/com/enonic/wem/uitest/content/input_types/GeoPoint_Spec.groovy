@@ -19,7 +19,7 @@ class GeoPoint_Spec
     {
         given: "add a content with type 'Geo point'"
         Content geopointContent = buildGeoPoint0_0_Content( TEST_GEO_LOCATION );
-        selectSiteOpenWizard( geopointContent.getContentTypeName() ).waitUntilWizardOpened().typeData( geopointContent ).save().close(
+        selectSitePressNew( geopointContent.getContentTypeName() ).waitUntilWizardOpened().typeData( geopointContent ).save().close(
             geopointContent.getDisplayName() ); ;
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
@@ -34,7 +34,7 @@ class GeoPoint_Spec
     {
         given: "add a content with type 'Geo point'"
         Content notValidContent = buildGeoPoint0_0_Content( WRONG_GEO_LOCATION );
-        selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData( notValidContent ).save().close(
+        selectSitePressNew( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData( notValidContent ).save().close(
             notValidContent.getDisplayName() )
 
         when: "'Save' button on toolbar pressed"
@@ -49,7 +49,7 @@ class GeoPoint_Spec
     {
         given: "add a content with type 'Geo point'"
         Content notValidContent = buildGeoPoint1_1_Content( WRONG_GEO_LOCATION );
-        ContentWizardPanel wizard = selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( notValidContent.getContentTypeName() ).waitUntilWizardOpened();
 
         when: "'Save' button on toolbar pressed"
         wizard.typeData( notValidContent );
@@ -65,7 +65,7 @@ class GeoPoint_Spec
     {
         given: "add a content with type 'Geo point'"
         Content notValidContent = buildGeoPoint1_1_Content( WRONG_GEO_LOCATION );
-        ContentWizardPanel wizard = selectSiteOpenWizard( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( notValidContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             notValidContent )
 
         when: "'Save' button on toolbar pressed"
@@ -83,7 +83,7 @@ class GeoPoint_Spec
     {
         given: "add a content with type 'Geo point'"
         Content validContent = buildGeoPoint1_1_Content( TEST_GEO_LOCATION );
-        ContentWizardPanel wizard = selectSiteOpenWizard( validContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( validContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             validContent );
 
         when: "content saved and HomeButton clicked"
@@ -101,7 +101,7 @@ class GeoPoint_Spec
     {
         when: "add a content with type 'Geo point'"
         Content validContent = buildGeoPoint1_1_Content( TEST_GEO_LOCATION );
-        ContentWizardPanel wizard = selectSiteOpenWizard( validContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( validContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             validContent );
         saveScreenshot( "geo-location-wizard-valid" )
 

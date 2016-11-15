@@ -18,7 +18,7 @@ class Restore_ComboBox_Spec
     {
         given: "new COMBOBOX-content 2:4 added"
         COMBOBOX_CONTENT = buildComboBox2_4_Content( 2 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( COMBOBOX_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( COMBOBOX_CONTENT.getContentTypeName() );
         wizard.typeData( COMBOBOX_CONTENT ).save().close( COMBOBOX_CONTENT.getDisplayName() );
         contentBrowsePanel.clickOnClearSelection();
 

@@ -21,7 +21,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         when: "start to add a content with type 'ComboBox 0:1'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() );
+        selectSitePressNew( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
         then: "option filter input is present and enabled"
@@ -34,7 +34,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
             comboBoxContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -53,7 +53,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         content_with_opt = buildComboBox0_1_Content( 1 );
-        selectSiteOpenWizard( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
+        selectSitePressNew( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
             content_with_opt.getDisplayName() );
 
         when: "content opened for edit"
@@ -108,7 +108,7 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "content without option saved and published"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
+        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
         wizard.close( comboBoxContent.getDisplayName() );

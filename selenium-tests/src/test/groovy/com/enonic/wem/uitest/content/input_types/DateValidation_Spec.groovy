@@ -27,7 +27,7 @@ class DateValidation_Spec
     {
         given: "wizard for adding a Time opened"
         Content dateContent = buildTime0_0_Content( CORRECT_TIME );
-        selectSiteOpenWizard( dateContent.getContentTypeName() );
+        selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Time input has been clicked"
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
@@ -45,7 +45,7 @@ class DateValidation_Spec
     {
         given: "wizard for adding a Time opened"
         Content dateContent = buildTime0_0_Content( CORRECT_TIME );
-        selectSiteOpenWizard( dateContent.getContentTypeName() );
+        selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "icon-clock has been clicked"
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
@@ -63,7 +63,7 @@ class DateValidation_Spec
     {
         given: "start to add a content with type 'Time 0:0'"
         Content timeContent = buildTime0_0_Content( WRONG_TIME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
 
         when: "time with wrong format typed "
@@ -81,7 +81,7 @@ class DateValidation_Spec
     {
         given: "start to add a content with type 'Time 0:0'"
         Content timeContent = buildTime0_0_Content( CORRECT_TIME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
 
         when: "correct time typed "
@@ -98,7 +98,7 @@ class DateValidation_Spec
     {
         given: "start to add a content with type 'Time 1:1'"
         Content timeContent = buildTime1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( timeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
 
         when: "correct time typed "
         wizard.typeDisplayName( timeContent.getDisplayName() );
@@ -112,7 +112,7 @@ class DateValidation_Spec
     {
         given: "saving of content with type 'DateTime 1:1'"
         Content dateTimeContent = buildDateTime1_1_Content( WRONG_DATE_TIME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         when: "date time with wrong format typed "
@@ -130,7 +130,7 @@ class DateValidation_Spec
     {
         given: "start to add a content with type 'DateTime(1:1)'"
         Content dateTimeContent = buildDateTime1_1_Content( CORRECT_DATE_TIME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         when: "only the name typed and dateTime not typed and 'Publish' button clicked"
@@ -148,7 +148,7 @@ class DateValidation_Spec
     {
         given: "start to add a content with type 'DateTime(2:4)'"
         Content dateTimeContent = buildDateTime2_4_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
         when: "only the 'name' typed and datetime not typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );

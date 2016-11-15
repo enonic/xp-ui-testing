@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Conten
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.*
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -68,9 +67,9 @@ class Restore_Version_All_Inputs_Spec
     {
         given: "adding of content with input types"
         ALL_INPUTS_CONTENT = buildContent( "types", INITIAL_DISPLAY_NAME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( ALL_INPUTS_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( ALL_INPUTS_CONTENT.getContentTypeName() );
         wizard.typeData( ALL_INPUTS_CONTENT );
-        TestUtils.saveScreenshot( getSession(), "all_inputs_typed" );
+        saveScreenshot( "all_inputs_typed" );
         wizard.save().close( INITIAL_DISPLAY_NAME );
 
 
@@ -114,7 +113,7 @@ class Restore_Version_All_Inputs_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "all_inputs_restored" );
+        saveScreenshot( "all_inputs_restored" );
 
         and: "content opened"
         contentBrowsePanel.clickToolbarEdit();

@@ -19,7 +19,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "new content with type 'text line' added'"
         Content textLineContent = buildTextLine1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( textLineContent.getContentTypeName() ).typeData( textLineContent );
+        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() ).typeData( textLineContent );
 
         when: "content opened for edit"
         wizard.save();
@@ -32,7 +32,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "new content with type 'text line' added'"
         Content textLineContent = buildTextLine1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( textLineContent.getContentTypeName() ).typeData( textLineContent );
+        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() ).typeData( textLineContent );
 
         when: "content opened for edit"
         wizard.save().close( textLineContent.getDisplayName() );
@@ -47,7 +47,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         when: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         then: "one text input should be displayed in the form view"
@@ -58,7 +58,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         when: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
-        selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         then: "'Remove' button should not be displayed"
@@ -72,7 +72,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         when:
@@ -92,7 +92,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
 
         when:
         contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
@@ -108,7 +108,7 @@ class Occurrences_TextLine_1_1_Spec
     {
         given: "start to add a content with type 'TextLine 1:1'"
         Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( textLineContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
 
         when:
         contentWizardPanel.typeDisplayName( textLineContent.getDisplayName() );

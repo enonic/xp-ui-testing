@@ -26,7 +26,7 @@ class DateTime_April_Spec
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime1_1_Content( DATE_TIME_1 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
 
         when: "DateTime in March typed and content saved"
@@ -45,7 +45,7 @@ class DateTime_April_Spec
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime1_1_Content( DATE_TIME_2 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
 
         when: "DateTime in April typed and content saved"
@@ -64,7 +64,7 @@ class DateTime_April_Spec
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime1_1_Content( DATE_TIME_3 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
 
         when: "DateTime in March typed and content saved"

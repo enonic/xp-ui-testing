@@ -20,7 +20,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 0 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
@@ -37,7 +37,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 1 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit the new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
@@ -55,7 +55,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
-        selectSiteOpenWizard( tagContent.getContentTypeName() ).typeData( tagContent );
+        selectSitePressNew( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         int numberOfTagBeforeRemoving = formViewPanel.getNumberOfTags();
 
@@ -70,7 +70,7 @@ class TagsInputType_Unlim_Spec
     {
         when: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
-        selectSiteOpenWizard( tagContent.getContentTypeName() ).typeData( tagContent );
+        selectSitePressNew( tagContent.getContentTypeName() ).typeData( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
         then: "tags input enabled, because this is unlimited type"
@@ -85,7 +85,7 @@ class TagsInputType_Unlim_Spec
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 6 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( tagContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllCon
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -27,7 +26,7 @@ class Restore_Date_Spec
     {
         given: "new content added"
         DATE_CONTENT = buildDate1_1_Content( DATE_V1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( DATE_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( DATE_CONTENT.getContentTypeName() );
         wizard.typeData( DATE_CONTENT ).save().close( DATE_CONTENT.getDisplayName() );
         contentBrowsePanel.clickOnClearSelection();
 
@@ -54,7 +53,7 @@ class Restore_Date_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "date_restored" );
+        saveScreenshot( "date_restored" );
 
         and: "content opened"
         contentBrowsePanel.clickToolbarEdit();

@@ -27,7 +27,7 @@ class Occurrences_HtmlArea_0_1_Spec
 
         given: "creating of content with html-area"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
@@ -48,7 +48,7 @@ class Occurrences_HtmlArea_0_1_Spec
         when: "start to add a content with type 'HtmlArea 0:1'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
 
-        selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -61,7 +61,7 @@ class Occurrences_HtmlArea_0_1_Spec
     {
         when: "start to add a content with type 'HtmlArea 0:1'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
-        selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "HtmlArea-toolbar is hidden"
@@ -72,7 +72,7 @@ class Occurrences_HtmlArea_0_1_Spec
     {
         when: "start to add a content with type 'HtmlArea 0:1'"
         Content tinyMceContent = buildHtmlArea0_1_Content( TEST_TEXT );
-        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        selectSitePressNew( tinyMceContent.getContentTypeName() );
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         htmlAreaFormViewPanel.type( tinyMceContent.getData() );
 
@@ -84,7 +84,7 @@ class Occurrences_HtmlArea_0_1_Spec
     {
         given: "new content with type HtmlArea added'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
-        ContentWizardPanel wizard = selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent ).save().close( htmlAreaContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -100,7 +100,7 @@ class Occurrences_HtmlArea_0_1_Spec
     {
         given: "new content with type HtmlArea added'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( htmlAreaContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent ).save().close( htmlAreaContent.getDisplayName() );
 
         when: "content opened for edit"

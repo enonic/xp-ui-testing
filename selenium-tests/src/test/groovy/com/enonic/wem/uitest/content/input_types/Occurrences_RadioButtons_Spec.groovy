@@ -23,7 +23,7 @@ class Occurrences_RadioButtons_Spec
         when: "start to add a content with type 'Radio Buttons'"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
-        selectSiteOpenWizard( radioButtonsContent.getContentTypeName() );
+        selectSitePressNew( radioButtonsContent.getContentTypeName() );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
         then: "radio buttons present on page and no any options selected"
@@ -35,7 +35,7 @@ class Occurrences_RadioButtons_Spec
         given: "new content with type 'Radio Buttons'"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
-        selectSiteOpenWizard( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent ).save().close(
+        selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent ).save().close(
             radioButtonsContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -52,7 +52,7 @@ class Occurrences_RadioButtons_Spec
         given: "new content with type 'Radio Buttons'"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
-        ContentWizardPanel wizard = selectSiteOpenWizard( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent )
+        ContentWizardPanel wizard = selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent )
         wizard.save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( radioButtonsContent.getDisplayName() );
@@ -73,7 +73,7 @@ class Occurrences_RadioButtons_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = "option A";
         content_wit_opt = buildRadioButtonsContent( option );
-        selectSiteOpenWizard( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
+        selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
             content_wit_opt.getDisplayName() );
 
         when: "content opened for edit"

@@ -22,7 +22,7 @@ class Occurrences_Date_1_1_Spec
     {
         given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
-        selectSiteOpenWizard( dateContent.getContentTypeName() );
+        selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date input has been clicked"
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
@@ -37,7 +37,7 @@ class Occurrences_Date_1_1_Spec
     {
         given: "start to add a content with type 'Date(1:1)'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "only a name typed and date was not typed"
         wizard.typeDisplayName( dateContent.getDisplayName() );
@@ -57,7 +57,7 @@ class Occurrences_Date_1_1_Spec
     {
         given: "new content with type date added'"
         Content dateContent = buildDate1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateContent.getContentTypeName() ).typeData( dateContent );
+        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
 
         when: "content without required 'date' saved"
         wizard.save();
@@ -70,7 +70,7 @@ class Occurrences_Date_1_1_Spec
     {
         given: "new content with type date time added'"
         Content dateContent = buildDate1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateContent.getContentTypeName() ).typeData( dateContent );
+        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
 
         when: "content saved without required 'date' and wizard closed"
         wizard.save().close( dateContent.getDisplayName() );
@@ -85,7 +85,7 @@ class Occurrences_Date_1_1_Spec
     {
         given: "start to add a content with type 'Date'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "data typed and 'Save' and  'Publish' are pressed"
         contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();

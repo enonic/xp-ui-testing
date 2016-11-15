@@ -37,7 +37,7 @@ class Occurrences_HtmlArea_0_0_Spec
     {
         when: "start to add a content with type 'HtmlArea 0:0'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
-        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        selectSitePressNew( tinyMceContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -52,7 +52,7 @@ class Occurrences_HtmlArea_0_0_Spec
     {
         given: "new content with type HtmlArea added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -70,7 +70,7 @@ class Occurrences_HtmlArea_0_0_Spec
     {
         given: "start to add a content with type 'HtmlArea 0:0'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
-        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        selectSitePressNew( tinyMceContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
 
         when: "button 'Add' clicked 3 times"
@@ -85,7 +85,7 @@ class Occurrences_HtmlArea_0_0_Spec
     {
         given: "new content with type HtmlArea added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -103,7 +103,7 @@ class Occurrences_HtmlArea_0_0_Spec
     {
         given: "new content with type HtmlArea added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 2, TEST_TEXT1, TEST_TEXT2 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -124,7 +124,7 @@ class Occurrences_HtmlArea_0_0_Spec
     {
         given: "new content with type HtmlArea added'"
         Content htmlAreaContentContent = buildHtmlArea0_0_Content( 3, TEST_TEXT1, TEST_TEXT2, TEST_TEXT3 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( htmlAreaContentContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContentContent.getContentTypeName() );
         wizard.typeData( htmlAreaContentContent ).save().close( htmlAreaContentContent.getDisplayName() );
 
         when: "content opened for edit"

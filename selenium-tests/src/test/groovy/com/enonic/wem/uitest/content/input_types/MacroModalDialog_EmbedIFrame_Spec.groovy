@@ -24,7 +24,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
 
         and: "MacroDialog opened"
-        ContentWizardPanel wizard = selectSiteOpenWizard( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
+        ContentWizardPanel wizard = selectSitePressNew( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         when: "'embedded code' selected from the options"

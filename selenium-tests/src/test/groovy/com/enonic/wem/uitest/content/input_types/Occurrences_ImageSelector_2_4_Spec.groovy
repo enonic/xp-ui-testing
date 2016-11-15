@@ -22,7 +22,7 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         when: "start to add a content with type 'Image Selector 2:4'"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() );
+        selectSitePressNew( imageSelectorContent.getContentTypeName() );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         then: "option filter input is present"
@@ -37,7 +37,7 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( imageSelectorContent.getContentTypeName() )
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
         wizard.typeData( imageSelectorContent ).save().close( imageSelectorContent.getDisplayName() );
 
         when: "content opened for edit"
@@ -60,7 +60,7 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         when: "content without required image saved"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
-        selectSiteOpenWizard( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
+        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
             imageSelectorContent.getDisplayName() );
 
         then: "invalid content listed"
@@ -72,13 +72,13 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         given: "new content with type 'Image Selector2_4' added"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME );
-        selectSiteOpenWizard( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
+        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
             TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "image-selector-2-img" )
+        saveScreenshot( "image-selector-2-img" )
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> imagesActual = formViewPanel.getSelectedImages();
 
@@ -106,7 +106,7 @@ class Occurrences_ImageSelector_2_4_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
 
         then: "one image present on the page "
-        TestUtils.saveScreenshot( getSession(), "24remove_img" )
+        saveScreenshot( "24remove_img" )
         formViewPanel.getSelectedImages().size() == 1;
 
         and: "content is invalid, because only one image present on page"
@@ -120,7 +120,7 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         when: "content with 4 selected images saved and published"
         IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME, MAN_IMAGE_NAME, FL_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
+        ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
             IMAGE_SELECTOR_CONTENT_4_IMAGES ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
@@ -139,7 +139,7 @@ class Occurrences_ImageSelector_2_4_Spec
         when: "content with four selected images opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( IMAGE_SELECTOR_CONTENT_4_IMAGES );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "img_sel_2_4" )
+        saveScreenshot( "img_sel_2_4" )
 
         then: "option filter should not be displayed"
         !formViewPanel.isOptionFilterIsDisplayed();
@@ -153,7 +153,7 @@ class Occurrences_ImageSelector_2_4_Spec
 
         when:
         formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
-        TestUtils.saveScreenshot( getSession(), "img_sel_2_4_remove" )
+        saveScreenshot( "img_sel_2_4_remove" )
 
         then: "option filter appears"
         formViewPanel.isOptionFilterIsDisplayed();

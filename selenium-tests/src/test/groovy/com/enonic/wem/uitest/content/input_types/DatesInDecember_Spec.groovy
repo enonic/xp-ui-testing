@@ -29,7 +29,7 @@ class DatesInDecember_Spec
     {
         given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( NANSEN_BIRTH );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date typed and content saved"
         contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
@@ -46,7 +46,7 @@ class DatesInDecember_Spec
     {
         given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( DATE_IN_DECEMBER1 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date in December typed and content saved"
         contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
@@ -64,7 +64,7 @@ class DatesInDecember_Spec
     {
         given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( DATE_IN_DECEMBER2 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date in December typed and content saved"
         contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
@@ -82,7 +82,7 @@ class DatesInDecember_Spec
     {
         given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( DATE_IN_DECEMBER3 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date in December typed and content saved"
         contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );

@@ -24,7 +24,7 @@ class Occurrences_DefaultRelation_2_4_Spec
     {
         given: "start to add a content with type 'Relation 2:4'"
         Content relationship = buildDefaultRelation2_4_Content( NORD_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( relationship.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         when:
@@ -44,7 +44,7 @@ class Occurrences_DefaultRelation_2_4_Spec
     {
         given: "saving of a content with type 'Relation 2:4'"
         TEST_RELATIONSHIP_CONTENT = buildDefaultRelation2_4_Content( NORD_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSiteOpenWizard( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().close( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
 

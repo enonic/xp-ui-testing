@@ -23,7 +23,7 @@ class Occurrences_DateTime_1_1_Spec
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
-        selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        selectSitePressNew( dateTimeContent.getContentTypeName() );
 
         when: "DateTime input has been clicked"
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
@@ -40,7 +40,7 @@ class Occurrences_DateTime_1_1_Spec
     {
         given: "start to adding a content with type 'DateTime(1:1)'"
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
         when: "only a name typed and dateTime was not typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
@@ -60,7 +60,7 @@ class Occurrences_DateTime_1_1_Spec
     {
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
         when: "content without required 'date time' saved"
         wizard.save();
@@ -73,7 +73,7 @@ class Occurrences_DateTime_1_1_Spec
     {
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+        ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
         when: "content saved and the wizard has been closed"
         wizard.save().close( dateTimeContent.getDisplayName() );
@@ -88,17 +88,17 @@ class Occurrences_DateTime_1_1_Spec
     {
         given: "start to add a content with type 'DateTime1 1:1'"
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateTimeContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
         when: "data typed and 'Save' and  'Publish' are pressed"
         contentWizardPanel.typeData( dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.refreshInBrowser();
         SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateTimeContent.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "datetime1_1_close" ) );
+        saveScreenshot( NameHelper.uniqueName( "datetime1_1_close" ) );
         if ( modalDialog != null )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-close-wizard" ) );
+            saveScreenshot( NameHelper.uniqueName( "err-close-wizard" ) );
             throw new TestFrameworkException( "'save before closing' modal dialog present but all changes were saved! " )
         }
         filterPanel.typeSearchText( dateTimeContent.getName() );

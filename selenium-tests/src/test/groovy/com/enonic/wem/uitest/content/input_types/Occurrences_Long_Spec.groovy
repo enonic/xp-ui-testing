@@ -28,7 +28,7 @@ class Occurrences_Long_Spec
     {
         given: "creating of  content with type 'Long'"
         VALID_LONG_CONTENT = buildLong0_1_Content( TEST_LONG );
-        ContentWizardPanel wizard = selectSiteOpenWizard( VALID_LONG_CONTENT.getContentTypeName() ).waitUntilWizardOpened()
+        ContentWizardPanel wizard = selectSitePressNew( VALID_LONG_CONTENT.getContentTypeName() ).waitUntilWizardOpened()
         wizard.typeData( VALID_LONG_CONTENT ).save().close( VALID_LONG_CONTENT.getDisplayName() ); ;
 
         when: "just created content selected and 'Edit' button clicked"
@@ -49,7 +49,7 @@ class Occurrences_Long_Spec
     {
         given: "creating of  content with type 'Long'"
         Content longContent = buildLong0_1_Content( INVALID_LONG1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( longContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "invalid value for long typed"
@@ -70,7 +70,7 @@ class Occurrences_Long_Spec
     {
         given: "creating of  content with type 'Long'"
         Content longContent = buildLong1_1_Content( INVALID_LONG1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( longContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "invalid value for long typed"
@@ -91,7 +91,7 @@ class Occurrences_Long_Spec
     {
         given: "adding of long content with empty value"
         Content longContent = buildLong1_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
+        ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             longContent );
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
 
@@ -110,7 +110,7 @@ class Occurrences_Long_Spec
     {
         given: "creating of double content"
         Content doubleContent = buildLong1_1_Content( MAX_SAFE_INTEGER );
-        ContentWizardPanel wizard = selectSiteOpenWizard( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "MAX value typed"
@@ -128,7 +128,7 @@ class Occurrences_Long_Spec
     {
         given: "creating of long content"
         Content longContent = buildLong1_1_Content( MORE_MAX_SAFE_INTEGER );
-        ContentWizardPanel wizard = selectSiteOpenWizard( longContent.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "MAX value typed"
@@ -146,7 +146,7 @@ class Occurrences_Long_Spec
     {
         given: "creating of double content"
         MIN_SAFE_CONTENT = buildLong1_1_Content( MIN_SAFE_INTEGER );
-        ContentWizardPanel wizard = selectSiteOpenWizard( MIN_SAFE_CONTENT.getContentTypeName() ).waitUntilWizardOpened();
+        ContentWizardPanel wizard = selectSitePressNew( MIN_SAFE_CONTENT.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
         when: "MAX value typed"

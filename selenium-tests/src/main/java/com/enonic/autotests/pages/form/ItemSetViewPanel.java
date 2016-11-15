@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.form;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,6 +63,23 @@ public class ItemSetViewPanel
         return textInputs.stream().map( input -> input.getAttribute( "value" ) ).collect( Collectors.toList() );
     }
 
+
+    public ItemSetViewPanel typeTextInHtmlAreas( Iterable<String> strings )
+    {
+        List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
+        if ( frames.size() == 0 )
+        {
+            throw new TestFrameworkException( "Html areas were not found on the page" );
+        }
+        Iterator<String> it = strings.iterator();
+        int i = 0;
+        while ( it.hasNext() )
+        {
+            typeInHtmlArea( frames.get( i ), it.next() );
+            i++;
+        }
+        return this;
+    }
     public List<String> getInnerTextFromHtmlAreas()
     {
         List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
@@ -71,9 +89,12 @@ public class ItemSetViewPanel
     public ItemSetViewPanel typeTextInTextLines( final Iterable<String> stringsForTextLines )
     {
         List<WebElement> textLines = findElements( By.xpath( TEXT_LINE_INPUTS ) );
-        for ( String text : stringsForTextLines )
+        Iterator<String> it = stringsForTextLines.iterator();
+        int i = 0;
+        while ( it.hasNext() )
         {
-            textLines.stream().forEach( e -> clearAndType( e, text ) );
+            clearAndType( textLines.get( i ), it.next() );
+            i++;
         }
         return this;
     }
@@ -117,20 +138,6 @@ public class ItemSetViewPanel
             throw new TestFrameworkException( "Html areas were not found on the page" );
         }
         typeInHtmlArea( frames.get( 0 ), text );
-        return this;
-    }
-
-    public ItemSetViewPanel typeTextInHtmlAreas( Iterable<String> strings )
-    {
-        List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
-        if ( frames.size() == 0 )
-        {
-            throw new TestFrameworkException( "Html areas were not found on the page" );
-        }
-        for ( String text : strings )
-        {
-            frames.stream().forEach( e -> typeInHtmlArea( e, text ) );
-        }
         return this;
     }
 

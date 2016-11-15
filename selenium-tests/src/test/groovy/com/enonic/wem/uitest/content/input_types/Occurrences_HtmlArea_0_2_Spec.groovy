@@ -30,7 +30,7 @@ class Occurrences_HtmlArea_0_2_Spec
     {
         when: "start to add a content with type 'htmlArea 0:2'"
         Content tinyMceContent = buildHtmlArea0_2_Content( 1, TEST_TEXT1 );
-        selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        selectSitePressNew( tinyMceContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
 
         then: "wizard with form view opened"
@@ -47,7 +47,7 @@ class Occurrences_HtmlArea_0_2_Spec
     {
         given: "start to add a content with type 'htmlArea 0:2'"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         wizard.typeName( tinyMceContent.getName() )
 
@@ -70,7 +70,7 @@ class Occurrences_HtmlArea_0_2_Spec
         given: "start to add a content with type 'htmlArea 0:2'"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
 
-        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         wizard.typeName( tinyMceContent.getName() );
         formViewPanel.clickOnAddButton();
@@ -94,7 +94,7 @@ class Occurrences_HtmlArea_0_2_Spec
     {
         given: "add a content with type 'HtmlArea 0:2'"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1, TEST_TEXT2 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( tinyMceContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
         saveScreenshot( "area0_2_saved" )
 

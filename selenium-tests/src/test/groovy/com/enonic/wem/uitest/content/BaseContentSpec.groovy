@@ -295,7 +295,7 @@ class BaseContentSpec
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
-    protected ContentWizardPanel selectSiteOpenWizard( String siteName, String contentTypeName )
+    protected ContentWizardPanel selectSitePressNew( String siteName, String contentTypeName )
     {
         filterPanel.typeSearchText( siteName );
         return contentBrowsePanel.clickCheckboxAndSelectRow( siteName ).clickToolbarNew().selectContentType( contentTypeName );

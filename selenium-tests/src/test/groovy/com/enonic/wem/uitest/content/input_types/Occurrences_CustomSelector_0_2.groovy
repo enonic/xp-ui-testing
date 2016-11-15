@@ -23,7 +23,7 @@ class Occurrences_CustomSelector_0_2
     {
         when: "start to add a content with type 'Custom Selector'"
         Content customSelector = buildCustomSelector0_2_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( customSelector.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( customSelector.getContentTypeName() );
         CustomSelectorFormViewPanel formViewPanel = new CustomSelectorFormViewPanel( getSession() );
 
         and:
@@ -41,7 +41,7 @@ class Occurrences_CustomSelector_0_2
     {
         given: "start to add a content with type 'Custom Selector'-content(0:2)"
         TEST_CONTENT = buildCustomSelector0_2_Content( OPTION_1 );
-        ContentWizardPanel wizard = selectSiteOpenWizard( TEST_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( TEST_CONTENT.getContentTypeName() );
         CustomSelectorFormViewPanel formViewPanel = new CustomSelectorFormViewPanel( getSession() );
 
         when:

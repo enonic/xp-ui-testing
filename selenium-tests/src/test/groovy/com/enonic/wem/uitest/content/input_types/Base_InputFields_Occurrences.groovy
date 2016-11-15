@@ -127,7 +127,7 @@ class Base_InputFields_Occurrences
         return site;
     }
 
-    protected ContentWizardPanel selectSiteOpenWizard( String contentTypeName )
+    protected ContentWizardPanel selectSitePressNew( String contentTypeName )
     {
         return contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType( contentTypeName );
     }

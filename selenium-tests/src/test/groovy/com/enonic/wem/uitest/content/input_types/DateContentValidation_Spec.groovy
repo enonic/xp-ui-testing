@@ -27,7 +27,7 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDate0_1_Content( BAD_FORMAT_DATE );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "date with wrong format typed"
         contentWizardPanel.typeData( dateContent );
@@ -42,7 +42,7 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDate0_1_Content( WRONG_DAY_DATE );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "wrong day of month typed"
         contentWizardPanel.typeData( dateContent );
@@ -57,7 +57,7 @@ class DateContentValidation_Spec
     {
         given: "date with wrong format"
         Content dateContent = buildDate0_1_Content( WRONG_MONTH_DATE );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "wrong month typed"
         contentWizardPanel.typeData( dateContent );
@@ -72,7 +72,7 @@ class DateContentValidation_Spec
     {
         given: "date with correct date format"
         Content dateContent = buildDate0_1_Content( CORRECT_DATE );
-        ContentWizardPanel contentWizardPanel = selectSiteOpenWizard( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "correct date typed"
         contentWizardPanel.typeData( dateContent );

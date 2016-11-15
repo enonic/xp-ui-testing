@@ -92,7 +92,7 @@ class PortalContentCreating_Spec
         given: "new country-content added"
         NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", SITE.getName() );
 
-        ContentWizardPanel wizard = selectSiteOpenWizard( NOR_CONTENT.getContentTypeName(), SITE.getName() );
+        ContentWizardPanel wizard = selectSitePressNew( NOR_CONTENT.getContentTypeName(), SITE.getName() );
         wizard.typeData( NOR_CONTENT ).save().waitNotificationMessage();
         wizard.close( NOR_CONTENT.getDisplayName() );
 

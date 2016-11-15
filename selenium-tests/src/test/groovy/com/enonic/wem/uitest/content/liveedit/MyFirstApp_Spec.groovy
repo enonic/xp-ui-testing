@@ -36,7 +36,7 @@ class MyFirstApp_Spec
     {
         given: "site selected and wizard for adding of new country-content is opened"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, MY_FIRST_SITE.getName() );
-        ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), MY_FIRST_SITE.getName() );
+        ContentWizardPanel wizard = selectSitePressNew( USA_CONTENT.getContentTypeName(), MY_FIRST_SITE.getName() );
 
         when: "data typed and saved and wizard closed"
         wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();

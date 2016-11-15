@@ -141,7 +141,7 @@ class CountrySiteWithTemplateSpec
         given: "new USA-content added"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, SITE.getName() );
 
-        ContentWizardPanel wizard = selectSiteOpenWizard( USA_CONTENT.getContentTypeName(), SITE.getName() );
+        ContentWizardPanel wizard = selectSitePressNew( USA_CONTENT.getContentTypeName(), SITE.getName() );
         wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
         wizard.close( USA_CONTENT.getDisplayName() );
         and: "and it content selected and the 'New' button on the toolbar pressed"

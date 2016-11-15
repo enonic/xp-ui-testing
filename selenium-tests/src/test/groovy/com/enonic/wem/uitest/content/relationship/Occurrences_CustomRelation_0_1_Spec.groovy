@@ -7,7 +7,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ArticleFormView
 import com.enonic.autotests.pages.form.RelationshipFormView
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.input_types.Base_InputFields_Occurrences
 import com.enonic.xp.content.ContentPath
@@ -31,7 +30,7 @@ class Occurrences_CustomRelation_0_1_Spec
     {
         when: "article-content saved"
         TEST_ARTICLE_CONTENT = buildArticle_Content( "articletest", "title", "body" );
-        selectSiteOpenWizard( TEST_ARTICLE_CONTENT.getContentTypeName() ).typeData( TEST_ARTICLE_CONTENT ).save().close(
+        selectSitePressNew( TEST_ARTICLE_CONTENT.getContentTypeName() ).typeData( TEST_ARTICLE_CONTENT ).save().close(
             TEST_ARTICLE_CONTENT.getDisplayName() );
         then: "it listed in the grid"
         filterPanel.typeSearchText( TEST_ARTICLE_CONTENT.getName() );
@@ -43,7 +42,7 @@ class Occurrences_CustomRelation_0_1_Spec
     {
         when: "start to add a content with type 'Custom Relation 0:1'"
         Content relationship = buildCitationRelation0_1_Content( null );
-        selectSiteOpenWizard( relationship.getContentTypeName() );
+        selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         then: "wizard with form view opened"
@@ -60,7 +59,7 @@ class Occurrences_CustomRelation_0_1_Spec
     {
         given: "start to add a content with type ' Custom Relation 0:1'"
         Content citation = buildCitationRelation0_1_Content( null );
-        ContentWizardPanel wizard = selectSiteOpenWizard( citation.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( citation.getContentTypeName() );
 
         when: "wizard with form view opened"
         wizard.typeData( citation ).save().close( citation.getDisplayName() );
@@ -68,7 +67,7 @@ class Occurrences_CustomRelation_0_1_Spec
         then: "new content listed"
         filterPanel.typeSearchText( citation.getName() );
         contentBrowsePanel.exists( citation.getName() );
-        TestUtils.saveScreenshot( getSession(), "citation-added" );
+        saveScreenshot( "citation-added" );
 
         and: "content is valid"
         !contentBrowsePanel.isContentInvalid( citation.getName() );
@@ -78,7 +77,7 @@ class Occurrences_CustomRelation_0_1_Spec
     {
         given: "start to add a content with type 'Relation 0:1'"
         RELATIONSHIP_CONTENT = buildCitationRelation0_1_Content( TEST_ARTICLE_CONTENT.getDisplayName() );
-        ContentWizardPanel wizard = selectSiteOpenWizard( RELATIONSHIP_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( RELATIONSHIP_CONTENT.getContentTypeName() );
 
         when: "wizard with form view opened"
         wizard.typeData( RELATIONSHIP_CONTENT ).save().close( RELATIONSHIP_CONTENT.getDisplayName() );
@@ -91,7 +90,7 @@ class Occurrences_CustomRelation_0_1_Spec
     {
         when: "citation content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( RELATIONSHIP_CONTENT );
-        TestUtils.saveScreenshot( getSession(), "citation-with-article" );
+        saveScreenshot( "citation-with-article" );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         then: "correct article shown in the selected options"
@@ -110,7 +109,7 @@ class Occurrences_CustomRelation_0_1_Spec
         when:
         contentPublishDialog.clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "citation-published" );
+        saveScreenshot( "citation-published" );
 
         then: "citation has a 'online' status"
         contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
