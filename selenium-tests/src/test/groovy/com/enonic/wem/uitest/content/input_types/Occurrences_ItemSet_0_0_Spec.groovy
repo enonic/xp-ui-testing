@@ -205,7 +205,7 @@ class Occurrences_ItemSet_0_0_Spec
 
         when: "the content has been published"
         itemSetViewPanel.typeTextInHtmlArea( NEW_TEXT_HTML_AREA );
-        wizard.save();
+        wizard.save().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "'online' status is displayed"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
