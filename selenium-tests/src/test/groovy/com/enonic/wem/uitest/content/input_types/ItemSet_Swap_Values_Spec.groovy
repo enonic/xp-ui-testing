@@ -10,7 +10,7 @@ import spock.lang.Shared
 /**
  * Created  on 15.11.2016.
  *
- * Task:
+ * Task:  XP-4475 Add selenium tests for ItemSet content: add two items and swap it
  *
  * Verifies:
  *    XP-4277 After an item-set has been drag'n'dropped, HTML Area inside stops working
