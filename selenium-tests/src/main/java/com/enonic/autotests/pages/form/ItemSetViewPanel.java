@@ -80,6 +80,7 @@ public class ItemSetViewPanel
         }
         return this;
     }
+
     public List<String> getInnerTextFromHtmlAreas()
     {
         List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
@@ -106,7 +107,7 @@ public class ItemSetViewPanel
             saveScreenshot( "err_remove_set_button" );
             throw new TestFrameworkException( "Button remove item set was not found!" );
         }
-        findElements( By.xpath( REMOVE_ITEM_SET_BUTTON ) ).get( 0 ).click();
+        findElement( By.xpath( REMOVE_ITEM_SET_BUTTON ) ).click();
     }
 
     public boolean isFormItemSetDisplayed()

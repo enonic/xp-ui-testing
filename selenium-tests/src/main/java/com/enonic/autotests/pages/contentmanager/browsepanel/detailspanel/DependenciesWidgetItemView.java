@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -67,7 +66,7 @@ public class DependenciesWidgetItemView
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIV_CONTAINER ), timeout ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_dependencies_widget_open" );
+            saveScreenshot( "err_dependencies_widget_open" );
             throw new TestFrameworkException( "Dependencies Widget was not shown!" );
         }
         return this;

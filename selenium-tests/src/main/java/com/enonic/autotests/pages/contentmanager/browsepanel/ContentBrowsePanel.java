@@ -21,7 +21,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Conten
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.Content;
 import com.enonic.xp.content.ContentPath;
 
@@ -156,7 +155,7 @@ public class ContentBrowsePanel
         if ( !isUnPublishMenuItemEnabled() )
         {
             saveScreenshot( "err_unpublish_menu_item" );
-            throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
+            throw new TestFrameworkException( "menu item was not found!" );
         }
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
         ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
@@ -290,7 +289,7 @@ public class ContentBrowsePanel
             contentName );
         if ( findElements( By.xpath( statusXpath ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "status_not_found" ) );
+            saveScreenshot( NameHelper.uniqueName( "content_status_not_found" ) );
             if ( !getContentDetailsPanel().isDisplayed() )
             {
                 clickOnDetailsToggleButton();
@@ -335,7 +334,7 @@ public class ContentBrowsePanel
      */
     public List<String> getContentNamesFromGrid()
     {
-        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
+        List<WebElement> rows = findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
         return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
@@ -347,7 +346,7 @@ public class ContentBrowsePanel
 
     public List<String> getChildContentNamesFromBrowsePanel( String parentName )
     {
-        List<WebElement> rows = getDriver().findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
+        List<WebElement> rows = findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
         return rows.stream().filter( e -> !e.getText().contains( parentName ) && !e.getText().isEmpty() ).map(
             WebElement::getText ).collect( Collectors.toList() );
     }
@@ -597,10 +596,9 @@ public class ContentBrowsePanel
         if ( !isPresentCheckbox )
         {
             saveScreenshot( "checkbox" + contentPath.getName() );
-            throw new TestFrameworkException( "wrong xpath:" + checkBoxXpath + " or item with name " + contentPath.getName() +
-                                                  " was not found!" );
+            throw new TestFrameworkException( "wrong xpath:" + checkBoxXpath );
         }
-        getDriver().findElement( By.xpath( checkBoxXpath ) ).click();
+        findElement( By.xpath( checkBoxXpath ) ).click();
         sleep( 200 );
         boolean isNewEnabled = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), 2l );
         if ( !isNewEnabled )
@@ -647,7 +645,7 @@ public class ContentBrowsePanel
     {
         if ( !doScrollAndFindGridItem( contentName ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" + contentName ) );
+            saveScreenshot( NameHelper.uniqueName( "err_" + contentName ) );
             throw new TestFrameworkException( "content was not found: " + contentName );
         }
         openContextMenu( contentName );
@@ -803,7 +801,7 @@ public class ContentBrowsePanel
         openContextMenu( contentName );
         if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, "Preview" ) ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + "preview" );
+            saveScreenshot( "err_" + "preview" );
             throw new TestFrameworkException( "'Preview' menu item is not visible" );
         }
         findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Preview" ) ) ).get( 0 ).click();

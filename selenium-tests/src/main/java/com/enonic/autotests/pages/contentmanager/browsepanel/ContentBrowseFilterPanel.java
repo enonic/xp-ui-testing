@@ -115,7 +115,7 @@ public class ContentBrowseFilterPanel
     public Integer getNumberAggregatedByContentType( String contentTypeName )
     {
         String itemXpath = String.format( CONTENT_TYPE_AGGREGATION_ITEM_BY_NAME, contentTypeName );
-        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
+        List<WebElement> elems = findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
         {
             return 0;
@@ -175,10 +175,9 @@ public class ContentBrowseFilterPanel
      */
     public boolean isAnySelectionPresent()
     {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         WebElement filterPanel = getDisplayedElement( By.xpath( FILTER_PANEL_DIV ) );
-        return (Boolean) executor.executeScript( "return window.api.dom.ElementRegistry.getElementById(arguments[0]).hasFilterSet()",
-                                                 filterPanel.getAttribute( "id" ) );
+        return (Boolean) getJavaScriptExecutor().executeScript(
+            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).hasFilterSet()", filterPanel.getAttribute( "id" ) );
     }
 
     /**
@@ -261,7 +260,7 @@ public class ContentBrowseFilterPanel
     public Integer getLastModifiedCount( String filterItem )
     {
         String itemXpath = String.format( LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME, filterItem );
-        List<WebElement> elems = getDriver().findElements( By.xpath( itemXpath ) );
+        List<WebElement> elems = findElements( By.xpath( itemXpath ) );
         if ( elems.size() == 0 )
         {
             return null;

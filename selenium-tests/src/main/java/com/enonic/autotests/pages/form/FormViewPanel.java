@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
@@ -83,6 +82,6 @@ public abstract class FormViewPanel
 
     protected void setTextIntoArea( String id, String text )
     {
-        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( SCRIPT_SET_INNERHTML, id, text );
+        getJavaScriptExecutor().executeScript( SCRIPT_SET_INNERHTML, id, text );
     }
 }

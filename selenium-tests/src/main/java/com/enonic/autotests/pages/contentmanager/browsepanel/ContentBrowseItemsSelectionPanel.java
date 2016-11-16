@@ -42,7 +42,7 @@ public class ContentBrowseItemsSelectionPanel
             getDisplayedElement( By.xpath( SHOW_ALL_BUTTON ) ).click();
             SleepHelper.sleep( 500 );
         }
-        List<WebElement> h6Elements = getDriver().findElements( By.xpath( ALL_SELECTED_ITEMS + H6_DISPLAY_NAME ) );
+        List<WebElement> h6Elements = findElements( By.xpath( ALL_SELECTED_ITEMS + H6_DISPLAY_NAME ) );
         return h6Elements.stream().filter( e -> !e.getText().isEmpty() ).filter( WebElement::isDisplayed ).map(
             WebElement::getText ).collect( Collectors.toList() );
     }
