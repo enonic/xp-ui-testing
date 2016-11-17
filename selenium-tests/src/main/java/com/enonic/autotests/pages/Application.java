@@ -153,7 +153,7 @@ public class Application
 
     protected JavascriptExecutor getJavaScriptExecutor()
     {
-        return (JavascriptExecutor) getSession().getDriver();
+        return (JavascriptExecutor) getDriver();
     }
 
     protected Actions buildActions()

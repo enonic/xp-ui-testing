@@ -30,6 +30,8 @@ public class ItemSetViewPanel
 
     private final String OCCURRENCE_VIEW = FORM_ITEM_SET_VIEW + "//div[contains(@id,'FormItemSetOccurrenceView')]";
 
+    private final String DRAG_HANDLER = OCCURRENCE_VIEW + "//span[@class='drag-handle']";
+
     private final String TEXT_LINE_INPUTS = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
 
     protected final String HTML_AREA_INPUTS =
@@ -57,12 +59,23 @@ public class ItemSetViewPanel
         return this;
     }
 
+    /**
+     * Swaps two sets
+     */
+    public void doSwapItems()
+    {
+        WebElement sourceElement = findElements( By.xpath( DRAG_HANDLER ) ).get( 1 );
+
+        Actions builder = new Actions( getDriver() );
+        builder.clickAndHold( sourceElement ).moveByOffset( 0, -50 ).release().perform();
+        sleep( 1000 );
+    }
+
     public List<String> getTextFromTextLines()
     {
         List<WebElement> textInputs = findElements( By.xpath( TEXT_LINE_INPUTS ) );
         return textInputs.stream().map( input -> input.getAttribute( "value" ) ).collect( Collectors.toList() );
     }
-
 
     public ItemSetViewPanel typeTextInHtmlAreas( Iterable<String> strings )
     {

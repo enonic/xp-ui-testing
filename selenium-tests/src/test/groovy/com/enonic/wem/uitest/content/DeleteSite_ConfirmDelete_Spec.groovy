@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -50,7 +49,7 @@ class DeleteSite_ConfirmDelete_Spec
 
         when: "'Cancel' on the confirmation dialog has been clicked"
         confirmDialog.clickOnCancelBottomButton();
-        TestUtils.saveScreenshot( getSession(), "test_confirm_delete_dialog_cancel_clicked" );
+        saveScreenshot( "test_confirm_delete_dialog_cancel_clicked" );
 
         then: "modal dialog closed"
         confirmDialog.waitUntilDialogClosed( Application.EXPLICIT_NORMAL );

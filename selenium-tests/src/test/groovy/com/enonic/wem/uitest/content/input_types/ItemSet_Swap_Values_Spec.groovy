@@ -81,6 +81,22 @@ class ItemSet_Swap_Values_Spec
 
     }
 
+    def "GIVEN existing ItemSet content with 2 sets WHEN sets have been swapped THEN texts displayed in correct order"()
+    {
+        given: "existing itemSet content is opened"
+        findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
+        ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
+
+        when: "sets have been swapped"
+        itemSetViewPanel.doSwapItems();
+
+        then: "texts displayed in correct order"
+        itemSetViewPanel.getTextFromTextLines().get( 1 ) == TEXT_LINE_TEXT1;
+
+        and: ""
+        itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEXT_LINE_TEXT2;
+    }
+
     private Content buildItemSetWithTwoTextLineAndHtmlArea()
     {
         TestItemSet itemSet1 = buildItemSetValues( TEXT_LINE_TEXT1, HTML_AREA_TEXT1 );

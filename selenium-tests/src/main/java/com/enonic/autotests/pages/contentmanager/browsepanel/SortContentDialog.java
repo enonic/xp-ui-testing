@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -118,11 +116,9 @@ public class SortContentDialog
         Actions builder = new Actions( getDriver() );
         builder.clickAndHold( element ).build().perform();
         // builder.moveToElement( target, 0, -20 ).build().perform();;
-        Locatable loc = (Locatable) target;
-
         builder.release( target );
         builder.build().perform();
-        sleep( 3000 );
+        sleep( 2000 );
         return this;
     }
 
@@ -160,7 +156,7 @@ public class SortContentDialog
 
     public void scrollViewPortToTop( WebElement viewport )
     {
-        ( (JavascriptExecutor) getDriver() ).executeScript( "return arguments[0].scrollTop=0", viewport );
+        getJavaScriptExecutor().executeScript( "return arguments[0].scrollTop=0", viewport );
         sleep( 1000 );
     }
 
@@ -193,7 +189,7 @@ public class SortContentDialog
 
     public Long getViewportScrollTopValue( WebElement viewport )
     {
-        return (Long) ( (JavascriptExecutor) getDriver() ).executeScript( "return arguments[0].scrollTop", viewport );
+        return (Long) getJavaScriptExecutor().executeScript( "return arguments[0].scrollTop", viewport );
     }
 
     private LinkedList<String> getGridItemNames()
@@ -210,7 +206,7 @@ public class SortContentDialog
         if ( findElements( By.xpath( VIEWPORT_XPATH ) ).size() != 0 )
         {
             WebElement viewportElement = findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 );
-            ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
+            getJavaScriptExecutor().executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
         }
 
         sleep( 1000 );
