@@ -19,7 +19,6 @@ public class ConfirmationDialog
 
     public final String NO_BUTTON_XPATH = DIALOG_CONTAINER + "//div[@class='dialog-buttons']//button/span[text()='No']";
 
-
     private final String TITLE_TEXT = DIALOG_CONTAINER + "//div[@class='dialog-header']//h2";
 
     public static final String QUESTION = "Are you sure you want to delete this content?";
