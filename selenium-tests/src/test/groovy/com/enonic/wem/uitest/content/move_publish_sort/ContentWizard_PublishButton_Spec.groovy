@@ -25,6 +25,7 @@ class ContentWizard_PublishButton_Spec
         when: "content has been 'published'"
         ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "folder is 'online' now"
         wizard.getStatus() == ContentStatus.ONLINE.getValue();

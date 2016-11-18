@@ -28,7 +28,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "image content selected"
         findAndSelectContent( IMPORTED_BOOK_IMAGE );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
-        TestUtils.saveScreenshot( getSession(), "test_dependencies_widget_opened" );
+        saveScreenshot( "test_dependencies_widget_opened" );
 
         then: "Dependencies Widget is displayed"
         dependencies.isDisplayed();
@@ -39,7 +39,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "image content selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
-        TestUtils.saveScreenshot( getSession(), "test_dependencies_widget_no_dependencies" );
+        saveScreenshot( "test_dependencies_widget_no_dependencies" );
 
         then: "Dependencies Widget is displayed"
         dependencies.isDisplayed();
@@ -60,7 +60,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "display name of the folder changed"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
-        TestUtils.saveScreenshot( getSession(), "dependencies_shortcut_selected" );
+        saveScreenshot( "dependencies_shortcut_selected" );
 
         then: "'show outbound'- button is displayed"
         dependencies.isShowOutboundButtonDisplayed();
@@ -74,7 +74,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "'show outbound'- button has been clicked"
         dependencies.clickOnShowOutboundButton();
-        TestUtils.saveScreenshot( getSession(), "outbound_image_shortcut" );
+        saveScreenshot( "outbound_image_shortcut" );
 
         then: "Dependencies Section appears on the filter panel"
         filterPanel.isDependenciesSectionDisplayed();
@@ -116,7 +116,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "'show inbound'- button has been clicked"
         dependencies.clickOnShowInboundButton();
-        TestUtils.saveScreenshot( getSession(), "test_inbound_image_shortcut" );
+        saveScreenshot( "test_inbound_image_shortcut" );
 
         then: "Dependencies Section appears on the filter panel"
         filterPanel.isDependenciesSectionDisplayed();
@@ -148,7 +148,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowInboundButton();
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
-        TestUtils.saveScreenshot( getSession(), "test_two_inbound_contents" );
+        saveScreenshot( "test_two_inbound_contents" );
 
         then: "two contents are displayed in the grid"
         names.size() == 2;

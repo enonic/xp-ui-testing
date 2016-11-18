@@ -12,7 +12,9 @@ import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.usermanager.SystemUserName
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class Restore_Version_Folder_Spec
     extends BaseVersionHistorySpec
 {

@@ -8,7 +8,9 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class Restore_Version_Shortcut_Spec
     extends BaseVersionHistorySpec
 {
