@@ -13,7 +13,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
@@ -270,10 +269,10 @@ public class ContentBrowsePanel
     public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )
     {
         clickOnClearSelection();
-        if ( findElements( By.linkText( BaseBrowseFilterPanel.CLEAR_FILTER_LINK ) ).size() > 0 )
-        {
-            findElements( By.linkText( BaseBrowseFilterPanel.CLEAR_FILTER_LINK ) ).get( 0 ).click();
-        }
+//        if ( isElementDisplayed( By.xpath( BaseBrowseFilterPanel.CLEAR_FILTER_BUTTON ) ) )
+//        {
+//            findElement( By.xpath( BaseBrowseFilterPanel.CLEAR_FILTER_BUTTON ) ).click();
+//        }
 
         filterPanel.typeSearchText( content.getName() );
         clickCheckboxAndSelectRow( content.getName() ).clickToolbarEdit();
