@@ -1,6 +1,8 @@
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.firefox.MarionetteDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -109,7 +111,9 @@ environments {
                 throw new RuntimeException( "Unsupported operating system [${Platform.current}]" )
             }
             System.setProperty( "webdriver.gecko.driver", pathToDriver );
+            FirefoxProfile profile = new FirefoxProfile();
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            capabilities.setCapability( FirefoxDriver.PROFILE, profile );
             capabilities.setCapability( "marionette", true );
             def driver = new MarionetteDriver( capabilities );
             driver.setLogLevel( Level.INFO )
