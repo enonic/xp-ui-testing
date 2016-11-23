@@ -63,7 +63,8 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
 
         when: "content selected and  widget is displayed"
         modalDialog.setCheckedForInheritCheckbox( false ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
-        TestUtils.saveScreenshot( getSession(), "anonymous_ua_widget" );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "anonymous_ua_widget" );
 
         then: "new 'Acl-entry' is displayed on the widget"
         view.getNamesFromAccessLine( Application.CAN_READ ).contains( "AU" );

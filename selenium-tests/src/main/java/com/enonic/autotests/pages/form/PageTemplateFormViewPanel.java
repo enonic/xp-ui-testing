@@ -11,7 +11,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -55,7 +54,7 @@ public class PageTemplateFormViewPanel
         String siteContentTypeGridItem = String.format( "//div[contains(@id,'NamesView')]/p[contains(.,'%s')]", supports );
         if ( !isElementDisplayed( siteContentTypeGridItem ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + supports );
+            saveScreenshot( "err_" + supports );
             throw new TestFrameworkException( "content type with name: " + supports + "  was not found!" );
         }
         //select supports: portal:site
@@ -72,7 +71,7 @@ public class PageTemplateFormViewPanel
         }
         if ( !isElementDisplayed( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_page_controller" );
+            saveScreenshot( "err_page_controller" );
             throw new TestFrameworkException( "page controller: DropdownOptionFilterInput was not found" );
         }
         getDisplayedElement( By.xpath( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) ).sendKeys( pageName );
@@ -85,7 +84,7 @@ public class PageTemplateFormViewPanel
             saveScreenshot( "err_" + pageName );
             throw new TestFrameworkException( "page controller was not found or not clickable ! " + pageName );
         }
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( pageName ) );
+        saveScreenshot( NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
         waitUntilVisibleNoException( By.xpath( "//body[@data-portal-component-type='page']" ), Application.EXPLICIT_NORMAL );
 

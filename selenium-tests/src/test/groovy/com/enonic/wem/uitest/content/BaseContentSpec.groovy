@@ -97,6 +97,9 @@ class BaseContentSpec
     String COUNTRY_SITE_HTML_HEADER = "<title>Country Region</title>";
 
     @Shared
+    String DEFAULT_NUMBER_OF_CONTENT_IN_SITE = "2";
+
+    @Shared
     String SUPER_USER = "Super User";
 
     @Shared

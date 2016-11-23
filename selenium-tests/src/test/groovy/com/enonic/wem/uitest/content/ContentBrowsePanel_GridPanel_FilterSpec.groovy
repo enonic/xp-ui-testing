@@ -24,6 +24,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         addContent( initialFolder );
 
         then:
+        filterPanel.typeSearchText( initialFolder.getName() )
         contentBrowsePanel.exists( initialFolder.getName() );
     }
 
