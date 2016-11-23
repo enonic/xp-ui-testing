@@ -8,13 +8,13 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.enonic.xp:gradle-plugin:6.8.0-SNAPSHOT'
+        classpath 'com.enonic.xp:gradle-plugin:6.9.0-SNAPSHOT'
     }
 }
 apply plugin: 'maven'
 apply plugin: 'com.enonic.xp.app'
 
-version = '6.8.0'
+version = '6.9.0'
 
 app {
     name = 'com.enonic.myfirstapp'
@@ -24,7 +24,7 @@ app {
 }
 
 ext {
-    xpVersion = '6.8.0-SNAPSHOT'
+    xpVersion = '6.9.0-SNAPSHOT'
 }
 
 dependencies {
