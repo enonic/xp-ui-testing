@@ -71,7 +71,7 @@ class LauncherPanel_Spec
     def "WHEN 'content studio' opened  THEN 'Content Studio' link is active in 'Launcher Panel'"()
     {
         when: "'content studio' opened"
-        NavigatorHelper.openContentApp( getTestSession() );
+        NavigatorHelper.openContentStudioApp( getTestSession() );
         NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
 
         and: "toggler pressed and launcher panel opened"

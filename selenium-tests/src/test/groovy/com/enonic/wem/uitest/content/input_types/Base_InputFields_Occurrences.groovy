@@ -91,7 +91,7 @@ class Base_InputFields_Occurrences
     def setup()
     {
         go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
     }
 

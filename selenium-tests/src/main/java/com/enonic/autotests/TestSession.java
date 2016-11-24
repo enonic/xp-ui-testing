@@ -25,7 +25,7 @@ public class TestSession
 
     public final String CURRENT_WINDOW_NAME = "current_window";
 
-    private String windowHandle;
+    private String currentWindowHandle;
 
     private Map<String, Object> session = new HashMap<String, Object>();
 
@@ -114,14 +114,19 @@ public class TestSession
         session.put( CURRENT_WINDOW_NAME, currentWindow );
     }
 
-    public String getWindowHandle()
+    public String getCurrentTabHandle()
     {
-        return windowHandle;
+        return currentWindowHandle;
     }
 
-    public void setWindowHandle( String windowHandle )
+    public void setCurrentTabHandle( String windowHandle )
     {
-        this.windowHandle = windowHandle;
+        this.currentWindowHandle = windowHandle;
+    }
+
+    public void setContentStudioTabHandle()
+    {
+
     }
 
 }

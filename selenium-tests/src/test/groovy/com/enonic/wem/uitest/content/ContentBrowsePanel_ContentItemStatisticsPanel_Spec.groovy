@@ -45,7 +45,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
         filterPanel.typeSearchText( site.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( site.getName() ) );
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).showPageEditor().typeData( template ).save().close( template.getDisplayName() );
+            template.getContentTypeName() ).showPageEditor().typeData( template ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
         when: "the template is selected"

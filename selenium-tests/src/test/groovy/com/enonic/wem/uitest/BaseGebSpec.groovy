@@ -15,7 +15,7 @@ class BaseGebSpec
     Properties defaultProperties;
 
     @Shared
-    String ALL_CONTENT_TYPES_DISPLAY_NAME = "All Content Types App";
+    String APP_CONTENT_TYPES_DISPLAY_NAME = "All Content Types App";
 
     @Shared
     String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.testing.contenttypes";
@@ -31,9 +31,9 @@ class BaseGebSpec
             session.setLoggedIn( false )
         }
 
-        if ( session.get( HomePage.APP_WINDOW_ID ) != null )
+        if ( session.get( HomePage.APP_TAB_HANDLE ) != null )
         {
-            closeAllApp( session.get( HomePage.HOME_WINDOW_ID ) );
+            closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
         }
         resetBrowser();
     }
@@ -46,7 +46,7 @@ class BaseGebSpec
         println "user agent is : " + userAgent;
     }
 
-    def closeAllApp( String homeHandle )
+    def closeAllTabs( String homeHandle )
     {
         for ( String handle : driver.getWindowHandles() )
         {
@@ -56,7 +56,7 @@ class BaseGebSpec
                 getDriver().close();
             }
         }
-        session.put( HomePage.APP_WINDOW_ID, null );
+        session.put( HomePage.APP_TAB_HANDLE, null );
         getDriver().switchTo().window( homeHandle );
     }
 

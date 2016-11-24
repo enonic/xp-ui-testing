@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages;
 
+import java.util.ArrayList;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -15,6 +17,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
+    public static final String APP_TAB_HANDLE = "app_window_id_key";
+
     public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion";
 
     public static String CONTENTS_MARKED_FOR_DELETION_MESSAGE = "%s items are marked for deletion";
@@ -159,5 +163,12 @@ public class Application
     protected Actions buildActions()
     {
         return new Actions( getDriver() );
+    }
+
+    public void switchToNewWizardTab()
+    {
+        ArrayList<String> tabHandles = new ArrayList<String>( getDriver().getWindowHandles() );
+        getDriver().switchTo().window( tabHandles.get( tabHandles.size() - 1 ) );
+        // NavigatorHelper.sw
     }
 }

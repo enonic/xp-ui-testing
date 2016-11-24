@@ -1,9 +1,6 @@
 package com.enonic.autotests.pages;
 
-import java.util.Set;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -13,6 +10,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -23,9 +21,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class HomePage
     extends Application
 {
-    public static final String APP_WINDOW_ID = "app_window_id_key";
 
-    public static final String HOME_WINDOW_ID = "home_window_id_key";
+    public static final String HOME_PAGE_TAB_HANDLE = "home_window_id_key";
 
     private final String HOME_DASHBOARD = "//div[contains(@class,'home-main-dashboard')]";
 
@@ -74,7 +71,7 @@ public class HomePage
         return isElementDisplayed( HOME_DASHBOARD );
     }
 
-    public ContentBrowsePanel openContentManagerApplication()
+    public ContentBrowsePanel openContentStudioApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         if ( !launcherPanel.isDisplayed() )
@@ -84,15 +81,33 @@ public class HomePage
         }
         launcherPanel.clickOnContentStudio();
         sleep( 1000 );
-        switchToAppWindow( "content-studio" );
-        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+        switchToContentStudioTab();
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         getLogger().info( "Content App loaded" );
         return panel;
     }
 
-    public UserBrowsePanel openUserManagerApplication()
+    private void switchToContentStudioTab()
+    {
+        String contentBrowseTabHandle = NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
+        getSession().put( HomePage.APP_TAB_HANDLE, contentBrowseTabHandle );
+        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+    }
+
+    private void switchToUsersTab()
+    {
+        NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.USER_MANAGER.getWindowName() );
+        getSession().setCurrentWindow( XP_Windows.USER_MANAGER );
+    }
+
+    private void switchToApplicationsTab()
+    {
+        NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.APPLICATIONS.getWindowName() );
+        getSession().setCurrentWindow( XP_Windows.APPLICATIONS );
+    }
+
+    public UserBrowsePanel openUsersApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         if ( !launcherPanel.isDisplayed() )
@@ -102,8 +117,7 @@ public class HomePage
         }
         launcherPanel.clickOnUsers();
         sleep( 1000 );
-        switchToAppWindow( "user-manager" );
-        getSession().setCurrentWindow( XP_Windows.USER_MANAGER );
+        switchToUsersTab();
         UserBrowsePanel panel = new UserBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
@@ -121,44 +135,12 @@ public class HomePage
         }
         launcherPanel.clickOnApplications();
         sleep( 500 );
-        switchToAppWindow( "applications" );
-        getSession().setCurrentWindow( XP_Windows.APPLICATIONS );
+        switchToApplicationsTab();
         ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
         panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         panel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         getLogger().info( "Applications App opened" );
         return panel;
-    }
-
-    public void switchToAppWindow( String appName )
-    {
-        String current = getDriver().getWindowHandle();
-        Set<String> allWindows = getDriver().getWindowHandles();
-
-        if ( !allWindows.isEmpty() )
-        {
-            for ( String windowId : allWindows )
-            {
-                try
-                {
-                    if ( getDriver().switchTo().window( windowId ).getCurrentUrl().contains( appName ) )
-                    {
-                        getSession().put( APP_WINDOW_ID, windowId );
-                        getSession().put( HOME_WINDOW_ID, current );
-                        return;
-                    }
-                }
-                catch ( NoSuchWindowException e )
-                {
-                    throw new TestFrameworkException( "NoSuchWindowException- wrong ID" + e.getLocalizedMessage() );
-                }
-            }
-        }
-        else
-        {
-            saveScreenshot( "new tab was not opened!" );
-            throw new TestFrameworkException( "error during switching to   " + appName );
-        }
     }
 
     public boolean isDisplayed()
@@ -208,5 +190,4 @@ public class HomePage
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
     }
-
 }

@@ -16,6 +16,7 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus;
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog;
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
@@ -336,9 +337,10 @@ public class ContentWizardPanel
     public ContentWizardPanel save()
     {
         XP_Windows currentW = getSession().getCurrentWindow();
-        if ( currentW != null && !currentW.equals( XP_Windows.CONTENT_STUDIO ) )
+        if ( currentW != null && currentW.equals( XP_Windows.LIVE_EDIT ) )
         {
-            NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
+            //NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
+            //TODO switch to the wizard tab by name
             getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         }
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
@@ -596,5 +598,28 @@ public class ContentWizardPanel
         }
         String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
         return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
+    }
+
+    public ContentBrowsePanel switchToBrowsePanelTab()
+    {
+        getSession().getDriver().switchTo().window( getHandleForContentBrowseTab() );
+        return new ContentBrowsePanel( getSession() );
+    }
+
+    public ContentWizardPanel closeBrowserTab()
+    {
+        getDriver().close();
+        sleep( 300 );
+        return this;
+    }
+
+    private String getHandleForContentBrowseTab()
+    {
+        String contentBrowseTabHandle = (String) getSession().get( APP_TAB_HANDLE );
+        if ( contentBrowseTabHandle == null )
+        {
+            throw new TestFrameworkException( "Handle for content browse panel was not set" );
+        }
+        return contentBrowseTabHandle;
     }
 }

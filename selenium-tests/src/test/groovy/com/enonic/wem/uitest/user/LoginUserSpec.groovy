@@ -86,7 +86,7 @@ class LoginUserSpec
             build();
 
         go "admin"
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         when: "new content with permissions CAN_READ for user  saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
@@ -108,7 +108,7 @@ class LoginUserSpec
             build();
 
         go "admin"
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         when: "new content with permissions CAN_READ for user  saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
@@ -147,7 +147,7 @@ class LoginUserSpec
         given: "user manager opened"
         go "admin"
         getTestSession().setUser( USER_ADMIN_CONSOLE );
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         TestUtils.saveScreenshot( getSession(), "logged_" + USER_NAME );
 
         when: "user opened a content with CAN_WRITE permission and typed new 'display name'"
@@ -164,7 +164,7 @@ class LoginUserSpec
         given: "just created user is 'logged in'"
         go "admin"
         getTestSession().setUser( USER_ADMIN_CONSOLE );
-        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         TestUtils.saveScreenshot( getSession(), "logged_" + USER_NAME );
 
         when: "user opened a content without 'CAN_WRITE' permission and typed new display name"
@@ -213,7 +213,7 @@ class LoginUserSpec
         when: "user's password was changed by administrator"
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
         dialog.doChangePassword( NEW_USER_PASSWORD );
-        TestUtils.saveScreenshot( getSession(), "test_password_for_user_changed" )
+        saveScreenshot( "test_password_for_user_changed" )
         userWizardPanel.save().close( USER_ADMIN_CONSOLE.getDisplayName() );
 
         then: "user-browse panel shown"
@@ -227,7 +227,7 @@ class LoginUserSpec
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "test_login_old_password" );
+        saveScreenshot( "test_login_old_password" );
 
         then: "old password should not work for login"
         thrown( AuthenticationException )
@@ -240,7 +240,7 @@ class LoginUserSpec
         User user = User.builder().displayName( USER_NAME ).password( NEW_USER_PASSWORD ).build();
         getTestSession().setUser( user );
         HomePage home = NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "test_login_with_new_pass" );
+        saveScreenshot( "test_login_with_new_pass" );
 
         then: "home page successfully loaded"
         home.isDisplayed();

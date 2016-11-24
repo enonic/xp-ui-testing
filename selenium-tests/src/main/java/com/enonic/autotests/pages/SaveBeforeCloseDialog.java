@@ -82,7 +82,7 @@ public class SaveBeforeCloseDialog
         boolean isPresent = waitAndFind( By.xpath( NO_BUTTON_XPATH ) );
         if ( !isPresent )
         {
-            saveScreenshot( "no_button_was_not_found" );
+            saveScreenshot( "err_no_button_was_not_found" );
             throw new TestFrameworkException( "'No' button was not found on modal dialog!" );
         }
         findElement( By.xpath( NO_BUTTON_XPATH ) ).click();

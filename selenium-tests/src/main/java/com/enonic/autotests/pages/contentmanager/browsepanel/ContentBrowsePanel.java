@@ -747,6 +747,8 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "Edit context-menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( editMenuItem ) ).click();
+        sleep( 300 );
+        switchToNewWizardTab();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;

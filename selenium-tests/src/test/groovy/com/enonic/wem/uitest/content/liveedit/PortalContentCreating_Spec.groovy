@@ -106,7 +106,7 @@ class PortalContentCreating_Spec
         cityCreationPage.clickSubmit();
         openHomePage();
         HomePage homePage = new HomePage( getSession() );
-        homePage.openContentManagerApplication();
+        homePage.openContentStudioApplication();
 
         then: "correct child content exist beneath a parent"
         filterPanel.typeSearchText( "Norway" );
@@ -138,7 +138,7 @@ class PortalContentCreating_Spec
         when:
         openHomePage();
         HomePage homePage = new HomePage( getSession() );
-        homePage.openContentManagerApplication();
+        homePage.openContentStudioApplication();
 
         then: "new population displayed"
         findAndSelectContent( "oslo" ).clickToolbarEdit();

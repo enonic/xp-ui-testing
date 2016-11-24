@@ -59,7 +59,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN creating new Site with configuration and a page-controller WHEN site saved and wizard closed THEN new site should be present"()
     {
         given:
-        SITE = buildSiteWithApps( CONTENT_TYPES_NAME_APP );
+        SITE = buildSiteWithApps( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "data saved and wizard closed"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
@@ -75,7 +75,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
-        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "URL inserted, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
@@ -85,7 +85,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"
-        configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
         saveScreenshot( "conf-dialog-with-url" );
 
         then: "correct text present in HtmlArea"
@@ -117,7 +117,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
-        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
@@ -127,7 +127,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"
-        configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
         saveScreenshot( "conf-dialog-with-content" );
 
         then: "correct text present in HtmlArea"
@@ -140,7 +140,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
-        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
@@ -150,7 +150,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"
-        configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         then: "correct text present in HtmlArea"
         configurationDialog.getTextFromArea().contains( DOWNLOAD_TEXT );
@@ -162,7 +162,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
-        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
@@ -172,7 +172,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.doApply();
 
         and: "and configurationDialog opened again"
-        configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
         saveScreenshot( "conf-dialog-email-inserted" );
 
         then: "correct text present in HtmlArea"
@@ -185,7 +185,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
-        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "background selected and changes applied"
         configurationDialog.selectBackGroundImage( IMAGE_NAME ).doApply();
@@ -203,7 +203,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
-        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( CONTENT_TYPES_NAME_APP );
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         and: "'embedded iframe' macro inserted, and changes applied"
         MacroModalDialog macroModalDialog = configurationDialog.showToolbarAndClickOnInsertMacroButton();

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.usermanager.browsepanel.GroupStatisticsPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
 import com.enonic.autotests.vo.usermanager.User
 import spock.lang.Shared
@@ -30,8 +29,8 @@ class Group_And_Member_Spec
         sleep( 500 );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
 
-        then: "new Group should be listed"
-        TestUtils.saveScreenshot( getSession(), "group-for-adding-user" );
+        then: "new Group should be listed in the grid"
+        saveScreenshot( "group-for-adding-user" );
         userBrowsePanel.exists( TEST_GROUP.getName() );
     }
 
@@ -56,7 +55,7 @@ class Group_And_Member_Spec
         when: "user was added to a group and this group opened"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
-        TestUtils.saveScreenshot( getSession(), "group-with-user" );
+        saveScreenshot( "group-with-user" );
 
         then: "correct display name of user is shown on members-form"
         List<String> members = groupWizardPanel.getMembersDisplayNames();
@@ -82,14 +81,14 @@ class Group_And_Member_Spec
         given: "a group with a member"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
-        TestUtils.saveScreenshot( getSession(), "group-with-member" );
+        saveScreenshot( "group-with-member" );
 
         when: "member was removed AND group saved"
         groupWizardPanel.removeMember( TEST_USER.getDisplayName() ).save();
 
         then: "member not displayed in form"
         List<String> members = groupWizardPanel.getMembersDisplayNames();
-        TestUtils.saveScreenshot( getSession(), "member-removed" );
+        saveScreenshot( "member-removed" );
         members.size() == 0;
     }
 

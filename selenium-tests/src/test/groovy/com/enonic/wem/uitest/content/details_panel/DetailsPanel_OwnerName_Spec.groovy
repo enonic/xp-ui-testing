@@ -70,7 +70,7 @@ class DetailsPanel_OwnerName_Spec
     def "GIVEN SU user logged in WHEN new folder added THEN the folder listed in the grid"()
     {
         setup: "SU is logged in"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         when: "new folder added"
         FOLDER_TO_DUPLICATE = buildFolderContent( "folder", "owner_testing" )
@@ -86,7 +86,7 @@ class DetailsPanel_OwnerName_Spec
     {
         setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         when: "the folder duplicated"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
@@ -101,7 +101,7 @@ class DetailsPanel_OwnerName_Spec
     {
         setup: "user is  'logged in'"
         getTestSession().setUser( TEST_USER );
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         and: "folder that was copied by the user is selected"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
@@ -120,7 +120,7 @@ class DetailsPanel_OwnerName_Spec
     {
         setup: "user is  'logged in'"
         getTestSession().setUser( TEST_USER );
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         and: "folder that was copied by the user is selected"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
@@ -141,7 +141,7 @@ class DetailsPanel_OwnerName_Spec
     {
         setup: "user is  'logged in'"
         getTestSession().setUser( TEST_USER );
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         when: "when existing content opened for edit"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );

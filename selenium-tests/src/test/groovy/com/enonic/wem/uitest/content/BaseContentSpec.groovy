@@ -88,9 +88,6 @@ class BaseContentSpec
     String MY_FIRST_APP = "My First App";
 
     @Shared
-    String CONTENT_TYPES_NAME_APP = "All Content Types App";
-
-    @Shared
     String SIMPLE_TEST_APP_NAME = "Simple Test Selenium App";
 
     @Shared
@@ -139,7 +136,7 @@ class BaseContentSpec
     def setup()
     {
         go "admin"
-        contentBrowsePanel = NavigatorHelper.openContentApp( getTestSession() );
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
         itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
         contentBrowseItemPanel = new ContentBrowseItemPanel( getSession() );
@@ -279,8 +276,9 @@ class BaseContentSpec
 
     public void addContent( Content content )
     {
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
+        wizard.typeData( content ).save();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
@@ -410,7 +408,7 @@ class BaseContentSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
             site ).save();
         sleep( 500 );
-        wizard.close( site.getDisplayName() );
+        wizard.closeBrowserTab().switchToNewWizardTab();
     }
 
     protected Content buildPageTemplate( String pageDescriptorName, String supports, String displayName, String parentName )

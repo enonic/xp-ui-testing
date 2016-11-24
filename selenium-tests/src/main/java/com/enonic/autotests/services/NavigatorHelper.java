@@ -26,7 +26,6 @@ public class NavigatorHelper
         XpTourDialog xpTourDialog = new XpTourDialog( testSession );
         if ( xpTourDialog.isOpened() )
         {
-            //TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "tour" ) );
             xpTourDialog.clickOnCancelButton();
         }
     }
@@ -37,11 +36,11 @@ public class NavigatorHelper
      * @param testSession {@link TestSession} instance.
      * @return {@link ContentBrowsePanel} instance.
      */
-    public static ContentBrowsePanel openContentApp( TestSession testSession )
+    public static ContentBrowsePanel openContentStudioApp( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
-        ContentBrowsePanel cmPage = home.openContentManagerApplication();
+        ContentBrowsePanel cmPage = home.openContentStudioApplication();
         return cmPage;
     }
 
@@ -49,7 +48,7 @@ public class NavigatorHelper
     {
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
-        UserBrowsePanel userBrowsePanel = home.openUserManagerApplication();
+        UserBrowsePanel userBrowsePanel = home.openUsersApplication();
         return userBrowsePanel;
     }
 
@@ -78,26 +77,25 @@ public class NavigatorHelper
     }
 
 
-    public static void switchToAppWindow( TestSession session, String appName )
+    public static String switchToAppWindow( TestSession session, String appName )
     {
         WebDriver driver = session.getDriver();
-        Set<String> allWindows = driver.getWindowHandles();
-
-        if ( !allWindows.isEmpty() )
+        Set<String> windowHandles = driver.getWindowHandles();
+        if ( !windowHandles.isEmpty() )
         {
-            for ( String windowId : allWindows )
+            for ( String windowHandle : windowHandles )
             {
                 try
                 {
-                    if ( driver.switchTo().window( windowId ).getCurrentUrl().contains( appName ) )
+                    if ( driver.switchTo().window( windowHandle ).getCurrentUrl().contains( appName ) )
                     {
-                        session.put( HomePage.APP_WINDOW_ID, windowId );
-                        return;
+                        //session.put( HomePage.APP_TAB_HANDLE, windowHandle );
+                        return windowHandle;
                     }
                 }
                 catch ( NoSuchWindowException e )
                 {
-                    throw new TestFrameworkException( "NoSuchWindowException- wrong ID" + e.getLocalizedMessage() );
+                    throw new TestFrameworkException( "NoSuchWindowException- wrong handle" );
                 }
             }
         }
@@ -109,6 +107,9 @@ public class NavigatorHelper
     {
         User user = testSession.getCurrentUser();
         LoginPage loginPage = new LoginPage( testSession );
+        //save window-handle for HomePage
+        String homeTabHandle = testSession.getDriver().getWindowHandle();
+        testSession.put( HomePage.HOME_PAGE_TAB_HANDLE, homeTabHandle );
         if ( user != null )
         {
             return loginPage.doLogin( user.getDisplayName(), user.getPassword() );

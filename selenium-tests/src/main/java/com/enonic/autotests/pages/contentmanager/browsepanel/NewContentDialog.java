@@ -256,6 +256,8 @@ public class NewContentDialog
         }
         getDisplayedElement( By.xpath( ctypeXpath ) ).click();
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        //switch to the new browser tab
+        switchToNewWizardTab();
         return new ContentWizardPanel( getSession() );
 
     }
