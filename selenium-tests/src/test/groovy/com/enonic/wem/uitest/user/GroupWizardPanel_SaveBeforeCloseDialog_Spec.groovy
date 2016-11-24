@@ -44,7 +44,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
 
         when: "'Close' button pressed"
         SaveBeforeCloseDialog dialog = groupWizardPanel.close( newDisplayName )
-        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-appears-gr" );
+        saveScreenshot( "SaveBeforeCloseDialog-displayed-group" );
 
         then: "modal dialog appears"
         dialog != null;
@@ -61,7 +61,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
 
         when: "Yes is chosen"
         dialog.clickYesButton();
-        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-yes-gr" );
+        saveScreenshot( "SaveBeforeCloseDialog-yes-pressed-group" );
 
         then: "new display name not saved"
         userBrowseFilterPanel.typeSearchText( newDisplayName );
@@ -73,7 +73,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
         given:
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
-        groupWizardPanel.typeDisplayName( NO_BUTTON_PRESSED ).close( NO_BUTTON_PRESSED );
+        groupWizardPanel.typeDisplayName( NEW_DISPLAY_NAME ).close( NEW_DISPLAY_NAME );
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
         dialog.waitForPresent();
 
@@ -82,7 +82,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
         TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-no-gr" );
 
         then: "Content is listed in BrowsePanel with it's original name"
-        userBrowseFilterPanel.typeSearchText( NO_BUTTON_PRESSED );
+        userBrowseFilterPanel.typeSearchText( NEW_DISPLAY_NAME );
         !userBrowsePanel.exists( TEST_GROUP.getName() );
     }
 
@@ -95,7 +95,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
 
         when:
         dialog.clickCancelButton();
-        TestUtils.saveScreenshot( getSession(), "SaveBeforeCloseDialog-cancel-gr" );
+        saveScreenshot( "SaveBeforeCloseDialog-cancel-clicked" );
 
         then:
         groupWizardPanel.isOpened();

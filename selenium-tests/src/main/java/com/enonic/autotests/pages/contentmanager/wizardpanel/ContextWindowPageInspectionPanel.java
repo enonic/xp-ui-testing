@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -50,7 +49,7 @@ public class ContextWindowPageInspectionPanel
     {
         if ( !isElementDisplayed( RENDERER_DROPDOWN_HANDLER ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_dropdown_renderer" );
+            saveScreenshot( "err_dropdown_renderer" );
             throw new TestFrameworkException( "dropdown handler was not found!  " + templateName );
         }
         getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
@@ -58,7 +57,7 @@ public class ContextWindowPageInspectionPanel
         String optionItemXpath = RENDERER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_renderer" );
+            saveScreenshot( "err_renderer" );
             throw new TestFrameworkException( "option was not found!  " + templateName );
         }
         getDisplayedElement( By.xpath( optionItemXpath ) ).click();
@@ -76,7 +75,7 @@ public class ContextWindowPageInspectionPanel
             String.format( NAMES_VIEW_BY_DISPLAY_NAME, controllerName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_controller" );
+            saveScreenshot( "err_selecting_controller" );
             throw new TestFrameworkException( "option was not found!  " + controllerName );
         }
         getDisplayedElement( By.xpath( optionItemXpath ) ).click();
@@ -90,7 +89,7 @@ public class ContextWindowPageInspectionPanel
     {
         if ( !isElementDisplayed( PAGE_CONTROLLER_DROPDOWN_HANDLER ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_dropdown_page_controller" );
+            saveScreenshot( "err_dropdown_page_controller" );
             throw new TestFrameworkException( "dropdown handler was not found!  " + controllerName );
         }
         getDisplayedElement( By.xpath( PAGE_CONTROLLER_DROPDOWN_HANDLER ) ).click();
@@ -98,7 +97,7 @@ public class ContextWindowPageInspectionPanel
         String optionItemXpath = PAGE_CONTROLLER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, controllerName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_inspection_controller" );
+            saveScreenshot( "err_inspection_controller" );
             throw new TestFrameworkException( "option was not found!  " + controllerName );
         }
         getDisplayedElement( By.xpath( optionItemXpath ) ).click();
@@ -112,7 +111,7 @@ public class ContextWindowPageInspectionPanel
             waitUntilVisibleNoException( By.xpath( PAGE_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ), Application.EXPLICIT_NORMAL );
         if ( !isOptionDisplayed )
         {
-            TestUtils.saveScreenshot( getSession(), "err_context_wind_page_controller" );
+            saveScreenshot( "err_context_wind_page_controller" );
             throw new TestFrameworkException( "page controller not displayed on the context window!" );
         }
         return getDisplayedElement( By.xpath( PAGE_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ) ).getText();
@@ -126,5 +125,10 @@ public class ContextWindowPageInspectionPanel
     public boolean isDisplayed()
     {
         return isElementDisplayed( CONTAINER );
+    }
+
+    public void waitUntilPanelClosed( long timeout )
+    {
+        waitInvisibilityOfElement( By.xpath( CONTAINER ), timeout );
     }
 }

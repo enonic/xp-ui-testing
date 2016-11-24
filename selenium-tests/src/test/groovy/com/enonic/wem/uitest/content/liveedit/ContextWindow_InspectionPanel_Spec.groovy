@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.liveedit
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel
 import com.enonic.autotests.utils.TestUtils
@@ -78,6 +79,7 @@ class ContextWindow_InspectionPanel_Spec
         when: "'Automatic' renderer selected"
         ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
         inspectionPanel.selectRenderer( "Automatic" );
+        inspectionPanel.waitUntilPanelClosed( Application.EXPLICIT_NORMAL );
 
         then: "'Context window has been closed "
         !inspectionPanel.isDisplayed();
