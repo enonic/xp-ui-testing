@@ -40,15 +40,15 @@ public class RelationshipFormView
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        List<String> alreadySelected = getNamesOfSelectedFiles();
+        List<String> alreadySelected = getDisplayNamesOfSelectedFiles();
         RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        for ( final String imageName : data.getStrings( RELATIONSHIPS_PROPERTY ) )
+        for ( final String imageDisplayName : data.getStrings( RELATIONSHIPS_PROPERTY ) )
         {
-            if ( !alreadySelected.contains( imageName ) )
+            if ( !alreadySelected.contains( imageDisplayName ) )
             {
-                clearAndType( optionFilterInput, imageName );
+                clearAndType( optionFilterInput, imageDisplayName );
                 sleep( 700 );
-                richComboBoxInput.selectOption( imageName );
+                richComboBoxInput.selectOption( imageDisplayName );
                 sleep( 300 );
             }
         }
@@ -66,6 +66,11 @@ public class RelationshipFormView
     }
 
     public List<String> getNamesOfSelectedFiles()
+    {
+        return getDisplayedStrings( By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]" + P_NAME ) );
+    }
+
+    public List<String> getDisplayNamesOfSelectedFiles()
     {
         return getDisplayedStrings(
             By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]//h6[@class='main-name']" ) );

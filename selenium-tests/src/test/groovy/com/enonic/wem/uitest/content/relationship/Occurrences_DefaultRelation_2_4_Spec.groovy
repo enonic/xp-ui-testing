@@ -23,7 +23,7 @@ class Occurrences_DefaultRelation_2_4_Spec
     def "GIVEN  wizard for  Default Relation(0:1) opened WHEN one file selected THEN option filter displayed and one selected file present "()
     {
         given: "start to add a content with type 'Relation 2:4'"
-        Content relationship = buildDefaultRelation2_4_Content( NORD_IMAGE_NAME );
+        Content relationship = buildDefaultRelation2_4_Content( NORD_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
@@ -35,7 +35,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         and: "option filter displayed"
         formViewPanel.isOptionFilterDisplayed();
         and: "correct name of selected file displayed"
-        formViewPanel.getNamesOfSelectedFiles().get( 0 ).equals( NORD_IMAGE_NAME );
+        formViewPanel.getDisplayNamesOfSelectedFiles().get( 0 ).equals( NORD_IMAGE_DISPLAY_NAME );
         and: "content is invalid, because only one option selected, but min required is 2"
         wizard.isContentInvalid( relationship.getDisplayName() )
     }
@@ -43,7 +43,7 @@ class Occurrences_DefaultRelation_2_4_Spec
     def "GIVEN saving of content with type Default Relation(2:4) WHEN content saved and opened for edit THEN correct selected file displayed "()
     {
         given: "saving of a content with type 'Relation 2:4'"
-        TEST_RELATIONSHIP_CONTENT = buildDefaultRelation2_4_Content( NORD_IMAGE_NAME );
+        TEST_RELATIONSHIP_CONTENT = buildDefaultRelation2_4_Content( NORD_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().close( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
@@ -54,7 +54,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         then: "one file selected in the form view"
         formViewPanel.getNumberOfSelectedFiles() == 1;
         and: "correct name of selected file displayed"
-        formViewPanel.getNamesOfSelectedFiles().get( 0 ).equals( NORD_IMAGE_NAME );
+        formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( NORD_IMAGE_NAME );
     }
 
     def "GIVEN a content with type Default Relation(2:4) and one file selected in the form view WHEN content opened for edit AND three options added THEN option filter not displayed and there are four selected options"()
@@ -62,8 +62,9 @@ class Occurrences_DefaultRelation_2_4_Spec
         given: "content selected in the grid and opened"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
-        TEST_RELATIONSHIP_CONTENT.getData().addStrings( RelationshipFormView.RELATIONSHIPS_PROPERTY, BOOK_IMAGE_NAME, FL_IMAGE_NAME,
-                                                        MAN_IMAGE_NAME )
+        TEST_RELATIONSHIP_CONTENT.getData().addStrings( RelationshipFormView.RELATIONSHIPS_PROPERTY, BOOK_IMAGE_DISPLAY_NAME,
+                                                        FL_IMAGE_DISPLAY_NAME,
+                                                        MAN_IMAGE_DISPLAY_NAME )
         when:
         formViewPanel.type( TEST_RELATIONSHIP_CONTENT.getData() );
         wizard.save();
@@ -83,7 +84,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         when:
-        formViewPanel.removeSelectedFile( NORD_IMAGE_NAME );
+        formViewPanel.removeSelectedFile( NORD_IMAGE_DISPLAY_NAME );
         wizard.save();
         saveScreenshot( "rel_3_opt" );
 
@@ -125,8 +126,8 @@ class Occurrences_DefaultRelation_2_4_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
         when:
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
-        formViewPanel.removeSelectedFile( BOOK_IMAGE_NAME );
-        formViewPanel.removeSelectedFile( MAN_IMAGE_NAME );
+        formViewPanel.removeSelectedFile( BOOK_IMAGE_DISPLAY_NAME );
+        formViewPanel.removeSelectedFile( MAN_IMAGE_DISPLAY_NAME );
         wizard.save();
 
         then: "'Publish' button is enabled, because content is not valid"

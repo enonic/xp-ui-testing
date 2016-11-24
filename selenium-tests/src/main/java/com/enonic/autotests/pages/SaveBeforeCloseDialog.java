@@ -19,8 +19,7 @@ public class SaveBeforeCloseDialog
     private final String YES_BUTTON_XPATH =
         DIALOG_DIV + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'es')]]";
 
-    private final String NO_BUTTON_XPATH =
-        DIALOG_DIV + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'o')]]";
+    private final String NO_BUTTON_XPATH = DIALOG_DIV + "//button[contains(@id,'DialogButton') and child::span[contains(.,'o')]]";
 
     private final String CANCEL_BUTTON_XPATH = DIALOG_DIV + "//div[contains(@class,'cancel-button')]";
 
@@ -83,6 +82,7 @@ public class SaveBeforeCloseDialog
         boolean isPresent = waitAndFind( By.xpath( NO_BUTTON_XPATH ) );
         if ( !isPresent )
         {
+            saveScreenshot( "no_button_was_not_found" );
             throw new TestFrameworkException( "'No' button was not found on modal dialog!" );
         }
         findElement( By.xpath( NO_BUTTON_XPATH ) ).click();

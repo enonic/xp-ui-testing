@@ -18,7 +18,7 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
     Group TEST_GROUP
 
     @Shared
-    String NO_BUTTON_PRESSED = "no button selected";
+    String NEW_DISPLAY_NAME = "no button selected";
 
     def "GIVEN a unchanged group WHEN closing THEN SaveBeforeCloseDialog must not appear"()
     {

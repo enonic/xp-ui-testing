@@ -13,6 +13,9 @@ public class RichComboBoxInput
     public String RICH_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME =
         "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
 
+    public String RICH_COMBOBOX_OPTIONS_ITEM_BY_NAME = "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//p[contains(.,'%s']";
+
+
     public RichComboBoxInput( final TestSession session )
     {
         super( session );

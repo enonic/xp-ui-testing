@@ -32,10 +32,22 @@ class Base_InputFields_Occurrences
     String FL_IMAGE_NAME = "fl.jpg";
 
     @Shared
+    String FL_IMAGE_DISPLAY_NAME = "fl";
+
+    @Shared
     String NORD_IMAGE_NAME = "nord.jpg";
 
     @Shared
+    String NORD_IMAGE_DISPLAY_NAME = "nord";
+
+    @Shared
     String BOOK_IMAGE_NAME = "book.jpg";
+
+    @Shared
+    String BOOK_IMAGE_DISPLAY_NAME = "book";
+
+    @Shared
+    String MAN_IMAGE_DISPLAY_NAME = "man";
 
     @Shared
     String MAN_IMAGE_NAME = "man.jpg";

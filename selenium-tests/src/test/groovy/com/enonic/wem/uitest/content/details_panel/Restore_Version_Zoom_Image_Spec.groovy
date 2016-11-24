@@ -23,7 +23,7 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing image WHEN image THEN new 'version history item' appeared in the version-view"()
     {
         given:
-        findAndSelectContent( IMPORTED_HAND_IMAGE );
+        findAndSelectContent( HAND_IMAGE_NAME );
 
         and: "version history panel has been opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -43,7 +43,7 @@ class Restore_Version_Zoom_Image_Spec
         imageEditor.getToolbar().clickOnApplyButton();
 
         and: "content saved in the wizard and closed"
-        wizard.save().close( IMPORTED_HAND_IMAGE );
+        wizard.save().close( HAND_IMAGE_DISPLAY_NAME );
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_increased_after_zoom" );
 
@@ -54,7 +54,7 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing image with several versions WHEN version with original image is restored THEN button 'reset' is not present on the wizard page "()
     {
         given: "existing image with several versions"
-        findAndSelectContent( IMPORTED_HAND_IMAGE );
+        findAndSelectContent( HAND_IMAGE_NAME );
 
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -75,7 +75,7 @@ class Restore_Version_Zoom_Image_Spec
     {
 
         given: "existing image with several versions"
-        findAndSelectContent( IMPORTED_HAND_IMAGE );
+        findAndSelectContent( HAND_IMAGE_NAME );
 
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -97,7 +97,7 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing zoomed image is opened WHEN original version is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        findAndSelectContent( IMPORTED_HAND_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
 
         and: "AppHome button was pressed"
         contentBrowsePanel.pressAppHomeButton();
@@ -111,7 +111,7 @@ class Restore_Version_Zoom_Image_Spec
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
-        contentBrowsePanel.clickOnTab( IMPORTED_HAND_IMAGE );
+        contentBrowsePanel.clickOnTab( HAND_IMAGE_DISPLAY_NAME );
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "original image is displayed on the wizard"
@@ -121,7 +121,7 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing  image is opened WHEN version with zoomed image is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        findAndSelectContent( IMPORTED_HAND_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
 
         and: "AppHome button was pressed"
         contentBrowsePanel.pressAppHomeButton();
@@ -135,7 +135,7 @@ class Restore_Version_Zoom_Image_Spec
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
-        contentBrowsePanel.clickOnTab( IMPORTED_HAND_IMAGE );
+        contentBrowsePanel.clickOnTab( HAND_IMAGE_DISPLAY_NAME );
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "original image is displayed on the wizard"

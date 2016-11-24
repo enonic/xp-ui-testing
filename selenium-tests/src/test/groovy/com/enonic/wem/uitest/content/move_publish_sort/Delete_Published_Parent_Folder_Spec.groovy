@@ -54,17 +54,17 @@ class Delete_Published_Parent_Folder_Spec
         message == String.format( Application.CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE, "2" );
     }
 
-    def "GIVEN existing online-folder with a child WHEN the folder selected AND 'Unpublish menu item clicked THEN correct notification message is displayed'"()
+    def "GIVEN existing online-folder with a child WHEN the folder selected AND 'Delete button item clicked THEN correct notification message is displayed'"()
     {
         given: "existing online-folder with a child"
         findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
         sleep( 1000 );
 
-        when: "the folder selected AND 'Unpublish menu item clicked"
+        when: "the folder selected AND 'Delete' button clicked"
         contentBrowsePanel.clickToolbarDelete().doDelete();
         def expectedMessage = String.format( Application.CONTENTS_MARKED_FOR_DELETION_MESSAGE, "2" );
 
-        then: "correct notification message is displayed'"
+        then: "'2 items are marked for deletion' - message should appear"
         contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
 
