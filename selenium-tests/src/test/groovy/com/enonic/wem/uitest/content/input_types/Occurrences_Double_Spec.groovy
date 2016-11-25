@@ -43,7 +43,7 @@ class Occurrences_Double_Spec
         Content doubleContent = buildDouble0_1_Content( TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
-        wizard.save().close( doubleContent.getDisplayName() ); ;
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( doubleContent );
@@ -81,45 +81,40 @@ class Occurrences_Double_Spec
         !dialog.isOpened();
     }
 
-    def "GIVEN creating a double content with a required value WHEN name typed AND save button pressed THEN 'confirmation' dialog should not appears"()
+    def "GIVEN creating a double content with a required value WHEN name typed AND save button pressed THEN validation message appears"()
     {
         given: "adding of double content with empty value"
         Content doubleContent = buildDouble1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
-        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         when: "content saved"
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "test_double_save_confirm1" );
+        saveScreenshot( "test_double_save_confirm1" );
 
-        then: "red icon displayed on the wizard tab"
-        wizard.isContentInvalid( doubleContent.getDisplayName() );
+        then: "validation message appears"
+        doubleFormViewPanel.isValidationMessagePresent();
 
-        and: "confirmation dialog should not appears"
-        !dialog.isOpened();
     }
 
-    def "GIVEN adding of double content(min2 max4)  WHEN all values typed AND content saved THEN confirmation dialog not appears AND red icon not displayed on the wizard tab"()
+    def "GIVEN adding of double content(min2 max4)  WHEN all values typed AND content saved THEN validation message is not displayed"()
     {
         given: " adding of double content(min2 max4)"
         Content doubleContent = buildDouble2_4_Content( TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             doubleContent );
-        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         when: "content saved"
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "test_double_save_confirm2" );
+        saveScreenshot( "test_double_save_confirm2" );
 
-        then: "confirmation dialog should not appears"
-        !dialog.isOpened();
-
-        and: "red icon not displayed on the wizard tab"
-        !wizard.isContentInvalid( doubleContent.getDisplayName() );
+        then: "validation message is not displayed"
+        !doubleFormViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN adding of double content(min2 max4)  WHEN three values typed  THEN content is valid AND 'add' button shown"()
+    def "GIVEN adding of double content(min2 max4)  WHEN three values typed  THEN content is valid AND 'add' button is shown"()
     {
         given: "adding of double content(min2 max4)"
         Content doubleContent = buildDouble2_4_Content( TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
@@ -131,25 +126,26 @@ class Occurrences_Double_Spec
         then: "'add' button displayed in form"
         doubleFormViewPanel.isAddButtonPresent();
 
-        and: "red icon not displayed on the wizard tab"
-        !wizard.isContentInvalid( doubleContent.getDisplayName() );
+        and: "validation message is not displayed"
+        !doubleFormViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN creating of double content WHEN MAX value typed THEN red icon not displayed in the wizard tab"()
+    def "GIVEN creating of double content WHEN MAX value typed THEN validation message is not displayed"()
     {
         given: "creating of double content"
         Content doubleContent = buildDouble1_1_Content( MAX_SAFE_INTEGER );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
         when: "MAX value typed"
         wizard.typeData( doubleContent ).save();
-        TestUtils.saveScreenshot( getSession(), "test_max_double" );
+        saveScreenshot( "test_max_double" );
 
-        then: "red icon not displayed in the wizard tab"
-        !wizard.isContentInvalid( doubleContent.getDisplayName() );
+        then: "validation message is not displayed"
+        !doubleFormViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN creating of double content WHEN value more than MAX typedd THEN red icon should appears in the wizard tab"()
+    def "GIVEN creating of double content WHEN value more than MAX typedd THEN validation message is displayed"()
     {
         given:
         Content doubleContent = buildDouble1_1_Content( MORE_MAX_SAFE_INTEGER );
@@ -158,12 +154,12 @@ class Occurrences_Double_Spec
 
         when: "value more than MAX typed"
         wizard.typeData( doubleContent );
-        TestUtils.saveScreenshot( getSession(), "test_more_max_double" );
+        saveScreenshot( "test_more_max_double" );
 
-        then: "red icon not displayed in the wizard tab"
-        wizard.isContentInvalid( doubleContent.getDisplayName() );
+        then: "validation message is displayed"
+        doubleFormViewPanel.isValidationMessagePresent();
 
-        and:
+        and: "input has a red border"
         !doubleFormViewPanel.isValueInInputValid( 0 );
     }
 }

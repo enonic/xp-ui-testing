@@ -53,7 +53,7 @@ class Occurrences_HtmlArea_0_0_Spec
         given: "new content with type HtmlArea added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
-        wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
+        wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
@@ -86,7 +86,7 @@ class Occurrences_HtmlArea_0_0_Spec
         given: "new content with type HtmlArea added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, null );
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
-        wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
+        wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );

@@ -27,7 +27,7 @@ class FieldSet_Spec
     String TEST_DOUBLE = "123.4";
 
 
-    def "GIVEN adding a content with a fieldset WHEN all required fields are filled THEN content is valid in the grid"()
+    def "GIVEN adding a content with a fieldset WHEN all required fields are typed THEN content is valid in the grid"()
     {
         given: "start to add a content with a 'fieldset'"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );

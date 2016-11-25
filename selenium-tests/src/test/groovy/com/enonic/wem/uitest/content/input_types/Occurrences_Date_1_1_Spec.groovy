@@ -1,13 +1,10 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.exceptions.TestFrameworkException
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DatePickerPopup
 import com.enonic.autotests.pages.form.DateFormViewPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -90,12 +87,7 @@ class Occurrences_Date_1_1_Spec
         when: "data typed and 'Save' and  'Publish' are pressed"
         contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateContent.getDisplayName() );
-        if ( modalDialog != null )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err-close-wizard" ) );
-            throw new TestFrameworkException( "'save before closing' modal dialog present but all changes were saved! " )
-        }
+        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );
 
         then: "content is 'online now'"

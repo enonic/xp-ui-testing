@@ -38,11 +38,11 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type Combobbox0_0 added'"
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
-        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
-            comboBoxContent.getDisplayName() );
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
+        when: "combobox content opened for edit"
+        findAndSelectContent( comboBoxContent.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
@@ -57,8 +57,8 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type ComboBox 0_0 added"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
-        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
-            comboBoxContent.getDisplayName() );
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -80,8 +80,8 @@ class Occurrences_ComboBox_0_0_Spec
     {
         given: "new content with type ComboBox0_0 added'"
         content_wit_opt = buildComboBox0_0_Content( 3 );
-        selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
-            content_wit_opt.getDisplayName() );
+        selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData(
+            content_wit_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -106,7 +106,7 @@ class Occurrences_ComboBox_0_0_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
-        wizard.save().close( content_wit_opt.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when content opened for edit again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -130,7 +130,7 @@ class Occurrences_ComboBox_0_0_Spec
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
-        wizard.close( content_wit_opt.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
 
         then: "content has a 'online' status"
@@ -149,7 +149,7 @@ class Occurrences_ComboBox_0_0_Spec
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
-        wizard.close( comboBoxContent.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
         then: "content has a 'online' status"

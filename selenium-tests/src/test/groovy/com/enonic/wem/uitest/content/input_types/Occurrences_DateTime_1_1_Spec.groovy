@@ -1,14 +1,10 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.exceptions.TestFrameworkException
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
-import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -28,7 +24,7 @@ class Occurrences_DateTime_1_1_Spec
         when: "DateTime input has been clicked"
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
         DateTimePickerPopup picker = formViewPanel.showPicker();
-        TestUtils.saveScreenshot( getSession(), "date-time-picker-with-timezone" );
+        saveScreenshot( "date-time-picker-with-timezone" );
 
         then: "'date time picker' popup dialog is displayed"
         picker.isDisplayed();
@@ -78,7 +74,7 @@ class Occurrences_DateTime_1_1_Spec
         when: "content saved and the wizard has been closed"
         wizard.save().close( dateTimeContent.getDisplayName() );
         filterPanel.typeSearchText( dateTimeContent.getName() );
-        TestUtils.saveScreenshot( getSession(), "date-time-not-valid-grid" )
+        saveScreenshot( "date-time-not-valid-grid" )
 
         then: "content should be invalid, because required field not filled"
         contentBrowsePanel.isContentInvalid( dateTimeContent.getName() );
@@ -94,13 +90,8 @@ class Occurrences_DateTime_1_1_Spec
         contentWizardPanel.typeData( dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.refreshInBrowser();
-        SaveBeforeCloseDialog modalDialog = contentWizardPanel.close( dateTimeContent.getDisplayName() );
-        saveScreenshot( NameHelper.uniqueName( "datetime1_1_close" ) );
-        if ( modalDialog != null )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err-close-wizard" ) );
-            throw new TestFrameworkException( "'save before closing' modal dialog present but all changes were saved! " )
-        }
+        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
+
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
         then: "status of content is 'online' now"

@@ -36,9 +36,6 @@ class Occurrences_ComboBox_1_1_Spec
         then: "option filter input is present and enabled"
         formViewPanel.isOptionFilterInputEnabled();
 
-        and: "content should be invalid, because required field- combobox1:1 not selected"
-        wizard.isContentInvalid( comboBoxContent.getDisplayName() );
-
         and: "and there are no selected options on the page"
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
@@ -47,8 +44,8 @@ class Occurrences_ComboBox_1_1_Spec
     {
         given: "new content with type ComboBox1_1 added'"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
-        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
-            comboBoxContent.getDisplayName() );
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -62,15 +59,15 @@ class Occurrences_ComboBox_1_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
 
         and: "content should be invalid, because required field- combobox1:1 not selected"
-        wizard.isContentInvalid( comboBoxContent.getDisplayName() );
+        formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN saving of  ComboBox-content (1:1) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
     {
         given: "new content with type ComboBox1_1 added'"
         content_with_opt = buildComboBox1_1_Content( 1 );
-        selectSitePressNew( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
-            content_with_opt.getDisplayName() );
+        selectSitePressNew( content_with_opt.getContentTypeName() ).typeData(
+            content_with_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -87,7 +84,7 @@ class Occurrences_ComboBox_1_1_Spec
         !formViewPanel.isOptionFilterInputEnabled();
 
         and: "content is valid, because option is selected"
-        !wizard.isContentInvalid( content_with_opt.getDisplayName() );
+        !formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN ComboBox-content (1:1) with one selected option and one option removed and content saved WHEN content opened for edit THEN no options selected on the page "()
@@ -96,7 +93,7 @@ class Occurrences_ComboBox_1_1_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
-        wizard.save().close( content_with_opt.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when content selected in the grid and opened for edit again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -109,7 +106,7 @@ class Occurrences_ComboBox_1_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
 
         and:
-        wizard.isContentInvalid( content_with_opt.getDisplayName() );
+        formViewPanel.isValidationMessagePresent();
     }
 
     def "WHEN content with one option saved and published THEN it content with status equals 'Online' listed"()
@@ -119,7 +116,7 @@ class Occurrences_ComboBox_1_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( comboBox1_1.getContentTypeName() );
         wizard.typeData( comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        wizard.close( comboBox1_1.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBox1_1.getName() );
 
         then: "content has a 'online' status"
@@ -134,7 +131,7 @@ class Occurrences_ComboBox_1_1_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBox1_1 );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
-        wizard.save().close( comboBox1_1.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content selected and 'Delete' pressed"
         filterPanel.typeSearchText( comboBox1_1.getName() );
@@ -178,7 +175,7 @@ class Occurrences_ComboBox_1_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent );
 
         when: "content opened for edit"
-        wizard.save().close( comboBoxContent.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         findAndSelectContent( comboBoxContent.getName() );
         saveScreenshot( "combobox-not-valid" )
 

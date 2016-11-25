@@ -34,8 +34,8 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
-        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save().close(
-            comboBoxContent.getDisplayName() );
+        selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
+            comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -53,8 +53,8 @@ class Occurrences_ComboBox_0_1_Spec
     {
         given: "new content with type ComboBox0_1 added'"
         content_with_opt = buildComboBox0_1_Content( 1 );
-        selectSitePressNew( content_with_opt.getContentTypeName() ).typeData( content_with_opt ).save().close(
-            content_with_opt.getDisplayName() );
+        selectSitePressNew( content_with_opt.getContentTypeName() ).typeData(
+            content_with_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -78,7 +78,7 @@ class Occurrences_ComboBox_0_1_Spec
 
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton().waitForDialogClosed();
-        wizard.close( content_with_opt.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab(); ;
         filterPanel.typeSearchText( content_with_opt.getName() );
 
         then: "content has a 'online' status"
@@ -91,7 +91,7 @@ class Occurrences_ComboBox_0_1_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
-        wizard.save().close( content_with_opt.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when content opened for edit again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -111,7 +111,7 @@ class Occurrences_ComboBox_0_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
-        wizard.close( comboBoxContent.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when:
         filterPanel.typeSearchText( comboBoxContent.getName() );

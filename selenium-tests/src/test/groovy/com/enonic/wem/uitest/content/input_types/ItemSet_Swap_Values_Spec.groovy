@@ -55,7 +55,7 @@ class ItemSet_Swap_Values_Spec
         saveScreenshot( "itemset_two_items_saved" );
 
         then: "content is valid, because all required inputs are filled"
-        !wizard.isContentInvalid( ITEM_SET_WITH_DATA.getDisplayName() );
+        !itemSetViewPanel.isValidationMessagePresent();
 
         and: "Publish button is enabled"
         wizard.isPublishButtonEnabled();
