@@ -70,7 +70,7 @@ class Occurrences_DateTime_1_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
         when: "content saved and the wizard has been closed"
-        wizard.save().close( dateTimeContent.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateTimeContent.getName() );
         saveScreenshot( "date-time-not-valid-grid" )
 

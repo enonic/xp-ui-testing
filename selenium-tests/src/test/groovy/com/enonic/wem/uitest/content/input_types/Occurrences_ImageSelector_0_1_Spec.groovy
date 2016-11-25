@@ -38,7 +38,7 @@ class Occurrences_ImageSelector_0_1_Spec
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
-        wizard.typeData( imageSelectorContent ).save().close( imageSelectorContent.getDisplayName() );
+        wizard.typeData( imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );

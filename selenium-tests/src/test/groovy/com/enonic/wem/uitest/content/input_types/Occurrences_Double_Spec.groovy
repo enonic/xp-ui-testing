@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DoubleFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -25,13 +24,10 @@ class Occurrences_Double_Spec
 
         when: "invalid value for long typed"
         wizard.typeData( doubleContent );
-        TestUtils.saveScreenshot( getSession(), "test_double_invalid_not_req" );
+        saveScreenshot( "test_double_invalid_not_req" );
 
         then: "input with a red border"
         !doubleFormViewPanel.isValueInInputValid( 0 );
-
-        and: "red icon not shown on the wizard tab, because this input is not required"
-        !wizard.isContentInvalid( doubleContent.getDisplayName() );
 
         and: "'Publish' button on the wizard-toolbar is enabled, because input is not required"
         wizard.isPublishButtonEnabled();
@@ -56,8 +52,8 @@ class Occurrences_Double_Spec
         and: "actual value in the form view and expected should be equals"
         values.get( 0 ).equals( TEST_DOUBLE );
 
-        and: "red icon not present on the wizard tab"
-        !wizard.isContentInvalid( doubleContent.getDisplayName() );
+        and: "validation message is not displayed, because content is valid"
+        !doubleFormViewPanel.isValidationMessagePresent();
 
         and: "double input has no a red border"
         doubleFormViewPanel.isValueInInputValid( 0 );
@@ -75,10 +71,10 @@ class Occurrences_Double_Spec
         when: "content saved"
         wizard.save();
 
-        then: "validation message appears"
-        doubleFormViewPanel.isValidationMessagePresent();
+        then: "validation message not displayed"
+        !doubleFormViewPanel.isValidationMessagePresent();
 
-        and: "confirmation dialog should not appears"
+        and: "confirmation dialog should not appear"
         !dialog.isOpened();
     }
 
@@ -94,7 +90,7 @@ class Occurrences_Double_Spec
         wizard.save();
         saveScreenshot( "test_double_save_confirm1" );
 
-        then: "validation message appears"
+        then: "validation message appears, because required input is empty"
         doubleFormViewPanel.isValidationMessagePresent();
 
     }

@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -43,7 +42,7 @@ class Occurrences_ImageSelector_1_1_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> imagesNames = formViewPanel.getSelectedImages();
-        TestUtils.saveScreenshot( getSession(), "img1_1_invalid" )
+        saveScreenshot( "img1_1_invalid" )
 
         then: "no one options present in form view"
         imagesNames.size() == 0;
