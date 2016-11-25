@@ -43,9 +43,6 @@ class Occurrences_Date_1_1_Spec
         then: "option filter input is present and enabled"
         formViewPanel.isDateInputDisplayed();
 
-        and: "content should be invalid, because required field- date not typed"
-        wizard.isContentInvalid( dateContent.getDisplayName() );
-
         and: "date input is empty"
         formViewPanel.getDateValue().isEmpty();
     }
@@ -55,12 +52,13 @@ class Occurrences_Date_1_1_Spec
         given: "new content with type date added'"
         Content dateContent = buildDate1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
+        DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
         when: "content without required 'date' saved"
         wizard.save();
 
         then: "content should be invalid, because required field not filled"
-        wizard.isContentInvalid( dateContent.getDisplayName() );
+        formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN opened content wizard WHEN content saved without required 'date' and wizard closed THEN content displayed in a grid with a invalid status"()
@@ -70,7 +68,7 @@ class Occurrences_Date_1_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
 
         when: "content saved without required 'date' and wizard closed"
-        wizard.save().close( dateContent.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );
         saveScreenshot( "date-not-valid" )
 

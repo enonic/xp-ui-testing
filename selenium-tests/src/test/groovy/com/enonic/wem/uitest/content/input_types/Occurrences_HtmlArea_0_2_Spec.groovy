@@ -95,7 +95,7 @@ class Occurrences_HtmlArea_0_2_Spec
         given: "add a content with type 'HtmlArea 0:2'"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1, TEST_TEXT2 );
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
-        wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
+        wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( "area0_2_saved" )
 
         when: "just created content opened"

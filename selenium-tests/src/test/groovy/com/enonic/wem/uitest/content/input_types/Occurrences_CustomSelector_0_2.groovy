@@ -34,7 +34,7 @@ class Occurrences_CustomSelector_0_2
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "content is valid, because the value is not required"
-        !wizard.isContentInvalid( customSelector.getDisplayName() );
+        !formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN wizard for adding a 'Custom Selector'-content(0:2) opened WHEN one option selected THEN option filter input is present"()
@@ -51,8 +51,8 @@ class Occurrences_CustomSelector_0_2
         then: "option filter input is present, because one more option can be selected"
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "red icon not present on the wizard's tab"
-        !wizard.isContentInvalid( TEST_CONTENT.getDisplayName() );
+        and: "validation message is not displayed"
+        !formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN existing content with one selected option WHEN content opened THEN correct selected option is displayed"()

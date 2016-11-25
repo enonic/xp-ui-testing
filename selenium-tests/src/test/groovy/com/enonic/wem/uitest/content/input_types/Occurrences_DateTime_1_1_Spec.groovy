@@ -45,9 +45,6 @@ class Occurrences_DateTime_1_1_Spec
         then: "date time input is present and enabled"
         formViewPanel.isDateTimeInputDisplayed();
 
-        and: "content should be invalid, because required field- datetime1:1 not typed"
-        wizard.isContentInvalid( dateTimeContent.getDisplayName() );
-
         and: "and date time input is empty"
         formViewPanel.getDateTimeValue().isEmpty();
     }
@@ -57,12 +54,13 @@ class Occurrences_DateTime_1_1_Spec
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+        DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         when: "content without required 'date time' saved"
         wizard.save();
 
         then: "content should be invalid, because required field is empty"
-        wizard.isContentInvalid( dateTimeContent.getDisplayName() );
+        formViewPanel.isValidationMessagePresent();
     }
 
     def "WHEN content without required 'date time ' saved and wizard closed THEN grid row with it content has a red icon"()

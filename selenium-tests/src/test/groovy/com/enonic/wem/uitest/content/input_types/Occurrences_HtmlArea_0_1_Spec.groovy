@@ -32,7 +32,7 @@ class Occurrences_HtmlArea_0_1_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
         modalDialog.clickURLBarItem().typeText( NORWEGIAN_TEXT ).typeURL( "http://enonic.com" ).pressInsertButton();
-        wizard.save().close( htmlAreaContent.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
 
         when: "content opened for edit"
@@ -85,7 +85,7 @@ class Occurrences_HtmlArea_0_1_Spec
         given: "new content with type HtmlArea added'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
-        wizard.typeData( htmlAreaContent ).save().close( htmlAreaContent.getDisplayName() );
+        wizard.typeData( htmlAreaContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
@@ -101,7 +101,7 @@ class Occurrences_HtmlArea_0_1_Spec
         given: "new content with type HtmlArea added'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
-        wizard.typeData( htmlAreaContent ).save().close( htmlAreaContent.getDisplayName() );
+        wizard.typeData( htmlAreaContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );

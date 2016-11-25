@@ -31,8 +31,8 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type Image Selector 0:0 added'"
         Content imageSelectorContent = buildImageSelector0_0_Content( TEST_IMG_1, TEST_IMG_2 );
-        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
-            imageSelectorContent.getDisplayName() );
+        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
@@ -54,8 +54,8 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type Image Selector 0_0 added'"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector0_0_Content( TEST_IMG_1, TEST_IMG_2, TEST_IMG_3, TEST_IMG_4 );
-        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
-            TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
+            TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
@@ -135,8 +135,7 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save();
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( imageSelectorContent.getDisplayName() );
@@ -156,8 +155,7 @@ class Occurrences_ImageSelector_0_0_Spec
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( TEST_IMG_2 );
-        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
-            imageSelectorContent ).save();
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( imageSelectorContent.getDisplayName() );

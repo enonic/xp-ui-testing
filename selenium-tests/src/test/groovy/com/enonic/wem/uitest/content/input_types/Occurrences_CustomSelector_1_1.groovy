@@ -33,7 +33,7 @@ class Occurrences_CustomSelector_1_1
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "content is valid, because the value is not required"
-        wizard.isContentInvalid( customSelector.getDisplayName() );
+        formViewPanel.isValidationMessagePresent();
 
         and:
         formViewPanel.isValidationMessageDisplayed();
@@ -49,15 +49,15 @@ class Occurrences_CustomSelector_1_1
         ContentWizardPanel wizard = selectSitePressNew( TEST_CONTENT.getContentTypeName() );
         CustomSelectorFormViewPanel formViewPanel = new CustomSelectorFormViewPanel( getSession() );
 
-        when:
+        when: "option selected and name typed"
         wizard.typeData( TEST_CONTENT ).save();
         saveScreenshot( "custom_selector_option_selected" );
 
         then: "option filter input is not displayed, one required option was selected"
         !formViewPanel.isOptionFilterIsDisplayed();
 
-        and:
-        !wizard.isContentInvalid( TEST_CONTENT.getDisplayName() );
+        and: "validation message not displayed"
+        !formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN existing content with one selected option WHEN content opened THEN correct selected option is displayed"()
@@ -90,7 +90,7 @@ class Occurrences_CustomSelector_1_1
         and: "'options filter input' appears"
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "red icon appears on the wizard's tab"
-        wizard.isContentInvalid( TEST_CONTENT.getDisplayName() );
+        and: "validation message appears, because required option is not selected"
+        formViewPanel.isValidationMessagePresent();
     }
 }
