@@ -19,6 +19,12 @@ public abstract class FormViewPanel
 {
     protected static final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
 
+    protected final String VALIDATION_VIEWER = "//div[contains(@id,'ValidationRecordingViewer')]";
+
+    public static String REQUIRED_MESSAGE = "This field is required";
+
+    protected final String VALIDATION_MESSAGE = VALIDATION_VIEWER + "//li";
+
     public static String VALIDATION_MESSAGE_OCCURRENCE = "This field is required";
 
     protected final String INNER_HTML_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
@@ -83,5 +89,15 @@ public abstract class FormViewPanel
     protected void setTextIntoArea( String id, String text )
     {
         getJavaScriptExecutor().executeScript( SCRIPT_SET_INNERHTML, id, text );
+    }
+
+    public boolean isValidationMessagePresent()
+    {
+        return isElementDisplayed( VALIDATION_VIEWER );
+    }
+
+    public String getValidationMessage()
+    {
+        return getDisplayedString( VALIDATION_MESSAGE );
     }
 }

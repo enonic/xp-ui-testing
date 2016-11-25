@@ -30,11 +30,11 @@ class DateTime_April_Spec
 
 
         when: "DateTime in March typed and content saved"
-        contentWizardPanel.typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
+        contentWizardPanel.typeData( dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created datetime content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -49,11 +49,11 @@ class DateTime_April_Spec
 
 
         when: "DateTime in April typed and content saved"
-        contentWizardPanel.typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
+        contentWizardPanel.typeData( dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created datetime content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"

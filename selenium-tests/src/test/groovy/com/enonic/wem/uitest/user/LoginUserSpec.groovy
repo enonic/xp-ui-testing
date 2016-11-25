@@ -90,10 +90,9 @@ class LoginUserSpec
 
         when: "new content with permissions CAN_READ for user  saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
-            typeData( contentCanWrite ).save().close( contentCanWrite.getDisplayName() );
+            typeData( contentCanWrite ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content listed in the grid"
-        TestUtils.saveScreenshot( getSession(), "login-content1" );
         contentBrowsePanel.exists( contentCanWrite.getName() );
     }
 
@@ -112,10 +111,9 @@ class LoginUserSpec
 
         when: "new content with permissions CAN_READ for user  saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
-            typeData( contentCanNotWrite ).save().close( contentCanNotWrite.getDisplayName() );
+            typeData( contentCanNotWrite ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content listed in the grid"
-        TestUtils.saveScreenshot( getSession(), "login-content2" );
         contentBrowsePanel.exists( contentCanNotWrite.getName() );
     }
 
@@ -128,7 +126,7 @@ class LoginUserSpec
 
         when:
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "logged_home" + USER_NAME );
+        saveScreenshot( "logged_home" + USER_NAME );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
         then: "'Applications' link not displayed"
@@ -148,12 +146,12 @@ class LoginUserSpec
         go "admin"
         getTestSession().setUser( USER_ADMIN_CONSOLE );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "logged_" + USER_NAME );
+        saveScreenshot( "logged_" + USER_NAME );
 
         when: "user opened a content with CAN_WRITE permission and typed new 'display name'"
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentCanWrite.getName() ).clickToolbarEdit();
         wizard.typeDisplayName( "content updated" );
-        TestUtils.saveScreenshot( getSession(), "save_enabled" );
+        saveScreenshot( "save_enabled" );
 
         then: "'save draft' button is enabled"
         wizard.isSaveButtonEnabled()
@@ -165,12 +163,12 @@ class LoginUserSpec
         go "admin"
         getTestSession().setUser( USER_ADMIN_CONSOLE );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        TestUtils.saveScreenshot( getSession(), "logged_" + USER_NAME );
+        saveScreenshot( "logged_" + USER_NAME );
 
         when: "user opened a content without 'CAN_WRITE' permission and typed new display name"
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentCanNotWrite.getName() ).clickToolbarEdit();
         wizard.typeDisplayName( "content updated" );
-        TestUtils.saveScreenshot( getSession(), "test_perm_save_disabled" );
+        saveScreenshot( "test_perm_save_disabled" );
 
         then: "'save draft' button is disabled"
         !wizard.isSaveButtonEnabled()

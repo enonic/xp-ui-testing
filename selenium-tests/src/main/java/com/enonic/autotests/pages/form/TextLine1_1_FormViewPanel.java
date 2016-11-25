@@ -23,7 +23,6 @@ public class TextLine1_1_FormViewPanel
         super( session );
     }
 
-
     @FindBy(xpath = TEXT_INPUT_XPATH)
     private WebElement textInput;
 

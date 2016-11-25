@@ -169,6 +169,6 @@ public class Application
     {
         ArrayList<String> tabHandles = new ArrayList<String>( getDriver().getWindowHandles() );
         getDriver().switchTo().window( tabHandles.get( tabHandles.size() - 1 ) );
-        // NavigatorHelper.sw
+        sleep( 400 );
     }
 }

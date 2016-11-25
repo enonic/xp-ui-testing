@@ -11,7 +11,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.*
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ItemSetContent
 import com.enonic.autotests.vo.contentmanager.TestItemSet
@@ -111,9 +110,8 @@ class Base_InputFields_Occurrences
         if ( !contentBrowsePanel.exists( SITE_NAME ) )
         {
             site = buildSiteWithAllTypes();
-            contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-                site.getDisplayName() );
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "site_saved" ) );
+            contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
+                site ).save().closeBrowserTab().switchToBrowsePanelTab();
         }
     }
 
@@ -127,7 +125,7 @@ class Base_InputFields_Occurrences
     private Content buildSiteWithAllTypes()
     {
         PropertyTree data = new PropertyTree();
-        data.addString( SiteFormViewPanel.APP_KEY, ALL_CONTENT_TYPES_DISPLAY_NAME );
+        data.addString( SiteFormViewPanel.APP_KEY, APP_CONTENT_TYPES_DISPLAY_NAME );
         data.addStrings( "description", "all content types  site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).

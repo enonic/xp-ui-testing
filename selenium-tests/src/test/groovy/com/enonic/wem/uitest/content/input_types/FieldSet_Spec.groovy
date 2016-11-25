@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.FieldSetFormViewPanel
+import com.enonic.autotests.pages.form.*
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
@@ -27,30 +27,23 @@ class FieldSet_Spec
     String TEST_DOUBLE = "123.4";
 
 
-    def "GIVEN adding a content with a fieldset WHEN all required fields are filled THEN content is valid in the wizard AND content is valid in the grid"()
+    def "GIVEN adding a content with a fieldset WHEN all required fields are filled THEN content is valid in the grid"()
     {
         given: "start to add a content with a 'fieldset'"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
+        wizard.typeData( FIELDSET_CONTENT ).save();
 
         when: "data typed"
-        wizard.typeData( FIELDSET_CONTENT ).save();
+        wizard.switchToBrowsePanelTab();
         saveScreenshot( "test_fieldset_valid" );
 
-        then: "red icon not present in the wizard-tab"
-        !wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );
-    }
-
-    def "WHEN existing field set content WHEN all required inputs are filled THEN content displayed as valid in the grid"()
-    {
-        when: "existing field set content AND all required inputs are filled "
-        findAndSelectContent( FIELDSET_CONTENT.getName() );
-
-        then: "content displayed as valid in the grid"
+        then: "red icon not present in the browse panel"
+        filterPanel.typeSearchText( FIELDSET_CONTENT.getName() );
         !contentBrowsePanel.isContentInvalid( FIELDSET_CONTENT.getName() );
     }
 
-    def "GIVEN adding a content with type fieldset WHEN required text in the textline is empty THEN content is not valid in the wizard"()
+    def "GIVEN adding a content with type fieldset WHEN required textline is empty THEN validation message is displayed under the textline"()
     {
         given: "start to add a content with a fieldset"
         FIELDSET_CONTENT = build_FieldSet_Content( "", HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE );
@@ -58,10 +51,14 @@ class FieldSet_Spec
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        saveScreenshot( "test_fieldset1" );
+        saveScreenshot( "test_fieldset_textline_empty" );
+        TextLine1_1_FormViewPanel textLine1_1_formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
-        then: "red icon not present in the wizard-tab"
-        wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );
+        then: "validation message is displayed under the textline"
+        textLine1_1_formViewPanel.isValidationMessagePresent();
+
+        and: "correct message is displayed"
+        textLine1_1_formViewPanel.getValidationMessage() == BaseTextLineFormViewPanel.REQUIRED_MESSAGE
     }
 
     def "GIVEN adding a content with type fieldset WHEN required text in the HTML-area is empty THEN content is not valid in the wizard"()
@@ -72,10 +69,11 @@ class FieldSet_Spec
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        saveScreenshot( "test_fieldset2" );
+        saveScreenshot( "test_fieldset_hmlarea_empty" );
+        HtmlArea0_1_FormViewPanel htmlArea0_1_formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        then: "red icon not present in the wizard-tab"
-        wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );
+        then: "correct message is displayed"
+        htmlArea0_1_formViewPanel.getValidationMessage() == BaseTextLineFormViewPanel.REQUIRED_MESSAGE
     }
 
     def "GIVEN adding a content with type fieldset WHEN one required double is empty THEN content is not valid in the wizard"()
@@ -86,10 +84,11 @@ class FieldSet_Spec
 
         when: "data typed"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        saveScreenshot( "test_fieldset3" );
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
+        saveScreenshot( "test_fieldset_double_is_empty" );
 
-        then: "red icon not present in the wizard-tab"
-        wizard.isContentInvalid( FIELDSET_CONTENT.getDisplayName() );
+        then: "correct message is displayed"
+        doubleFormViewPanel.getValidationMessage() == "Min 2 occurrences required";
     }
 
     protected Content build_FieldSet_Content( String textLine, String areaText, String... values )

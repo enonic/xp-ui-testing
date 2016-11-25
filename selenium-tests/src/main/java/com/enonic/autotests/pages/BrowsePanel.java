@@ -301,7 +301,6 @@ public abstract class BrowsePanel
     {
         scrollViewPortToTop();
         Set<String> names = new HashSet<>();
-        // List<String> names = new ArrayList<>();
         names.addAll( getNamesOfSelectedGridItem() );
         if ( !isViewportScrollable() )
         {
@@ -463,7 +462,6 @@ public abstract class BrowsePanel
     {
         scrollViewPortToTop();
         Set<String> names = new HashSet<>();
-        //List<String> names = new ArrayList<>();
         names.addAll( getGridItemNames() );
         if ( !isViewportScrollable() )
         {
@@ -622,12 +620,12 @@ public abstract class BrowsePanel
         boolean result = waitAndFind( By.xpath( rowXpath ) );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + itemName );
+            saveScreenshot( "err_" + itemName );
             throw new TestFrameworkException( "item was not found:" + itemName );
         }
         Actions builder = new Actions( getDriver() );
         builder.click( waitAndFindElement( By.xpath( rowXpath ) ) ).build().perform();
-        sleep( 500 );
+        sleep( 300 );
         return this;
     }
 
@@ -691,7 +689,7 @@ public abstract class BrowsePanel
             scrollTopValue += scrollTopValue;
         }
         getLogger().info( "slick-grid was scrolled and content was not found!" );
-        TestUtils.saveScreenshot( getSession(), "scrolled_" + NameHelper.resolveScreenshotName( gridItemName ) );
+        saveScreenshot( "scrolled_" + NameHelper.resolveScreenshotName( gridItemName ) );
         return false;
     }
 

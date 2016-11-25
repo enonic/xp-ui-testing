@@ -32,11 +32,11 @@ class DatesInDecember_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date typed and content saved"
-        contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
+        contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.clickOnClearSelection();
 
         and: "just created date content opened"
-        contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -49,11 +49,11 @@ class DatesInDecember_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date in December typed and content saved"
-        contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
+        contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created date content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -67,29 +67,29 @@ class DatesInDecember_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date in December typed and content saved"
-        contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
+        contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created date content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
         dateFormViewPanel.getDateValue() == DATE_IN_DECEMBER2;
     }
 
-    def "GIVEN wizard for adding a Date opened WHEN thisrd date in December typed AND saved THEN correct value displayed in the wizard"()
+    def "GIVEN wizard for adding a Date opened WHEN third date in December typed AND saved THEN correct value displayed in the wizard"()
     {
         given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( DATE_IN_DECEMBER3 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "Date in December typed and content saved"
-        contentWizardPanel.typeData( dateContent ).save().close( dateContent.getDisplayName() );
+        contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created date content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"

@@ -258,8 +258,10 @@ public class NewContentDialog
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         //switch to the new browser tab
         switchToNewWizardTab();
-        return new ContentWizardPanel( getSession() );
-
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        return wizard;
     }
 
     /**

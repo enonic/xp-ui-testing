@@ -22,64 +22,62 @@ class InputTypesSpec
     String TEST_DATE_TIME = "2015-02-28 19:01";
 
 
-    def "GIVEN content type with name 'Date' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
+    def "GIVEN existing 'Date' content WHEN content selected and 'Edit' button clicked THEN actual value and expected should be equals"()
     {
         given: "add a content with type 'Date'"
         Content dateContent = buildDate0_1_Content( TEST_DATE );
-        selectSitePressNew( dateContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateContent ).save().close(
-            dateContent.getDisplayName() );
+        selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
 
-        when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateContent );
+        when: "just created content selected and 'Edit' button clicked"
+        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
-        then: "actual value in the form view and expected should be equals"
+        then: "actual value and expected should be equals"
         formViewPanel.getDateValue().equals( TEST_DATE )
     }
 
-    def "GIVEN content type with name 'DateTime' selected and wizard opened WHEN date typed and content saved THEN new content with correct date listed "()
+    def "GIVEN existing 'DateTime' content WHEN content selected and 'Edit' button clicked THEN actual value and expected should be equals"()
     {
         given: "add a content with type 'Date Time'"
         Content dateTimeContent = buildDateTime0_1_Content( TEST_DATE_TIME );
-        selectSitePressNew( dateTimeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( dateTimeContent ).save().close(
-            dateTimeContent.getDisplayName() );
+        selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData(
+            dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( dateTimeContent )
+        when: "just created content selected and 'Edit' button clicked"
+        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit();
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        then: "actual value in the form view and expected should be equals"
+        then: "actual value and expected should be equals"
         dateTimeFormViewPanel.getDateTimeValue().equals( TEST_DATE_TIME );
     }
 
-    def "GIVEN content type with name 'Time' selected and wizard opened WHEN time typed and content saved THEN new content with correct date listed "()
+    def "GIVEN existing 'Time' content WHEN content selected and 'Edit' button clicked THEN actual and expected should be equals"()
     {
         given: "add a content with type 'Time'"
         Content timeContent = buildTime0_0_Content( TEST_TIME );
-        selectSitePressNew( timeContent.getContentTypeName() ).waitUntilWizardOpened().typeData( timeContent ).save().close(
-            timeContent.getDisplayName() ); ;
+        selectSitePressNew( timeContent.getContentTypeName() ).typeData( timeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( timeContent );
+        when: "just created content selected and 'Edit' button clicked"
+        findAndSelectContent( timeContent.getName() ).clickToolbarEdit();
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
-        then: "actual value in the form view and expected should be equals"
+        then: "actual and expected should be equals"
         timeFormViewPanel.getTimeValue().equals( TEST_TIME );
     }
 
-    def "GIVEN content type with name 'checkbox' selected and wizard opened WHEN  the checkbox selected and content saved THEN new content with correct boolean value listed "()
+    def "GIVEN existing 'checkbox' content WHEN content selected and 'Edit' button clicked THEN actual and expected should be equals"()
     {
         given: "add a content with type 'checkbox'"
         Content checkBoxContent = buildCheckBoxContent( true );
-        selectSitePressNew( checkBoxContent.getContentTypeName() ).waitUntilWizardOpened().typeData( checkBoxContent ).save().close(
-            checkBoxContent.getDisplayName() );
+        selectSitePressNew( checkBoxContent.getContentTypeName() ).typeData(
+            checkBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( checkBoxContent )
         CheckBoxFormViewPanel checkBoxFormViewPanel = new CheckBoxFormViewPanel( getSession() );
 
-        then: "actual value in the form view and expected should be equals"
+        then: "actual and expected should be equals"
         checkBoxFormViewPanel.isChecked();
     }
 }

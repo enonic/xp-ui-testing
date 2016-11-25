@@ -602,7 +602,7 @@ public class ContentWizardPanel
 
     public ContentBrowsePanel switchToBrowsePanelTab()
     {
-        getSession().getDriver().switchTo().window( getHandleForContentBrowseTab() );
+        getDriver().switchTo().window( getHandleForContentBrowseTab() );
         return new ContentBrowsePanel( getSession() );
     }
 

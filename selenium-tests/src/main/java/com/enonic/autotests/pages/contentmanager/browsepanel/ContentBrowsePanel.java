@@ -19,6 +19,7 @@ import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
+import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.vo.contentmanager.Content;
 import com.enonic.xp.content.ContentPath;
@@ -269,11 +270,6 @@ public class ContentBrowsePanel
     public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )
     {
         clickOnClearSelection();
-//        if ( isElementDisplayed( By.xpath( BaseBrowseFilterPanel.CLEAR_FILTER_BUTTON ) ) )
-//        {
-//            findElement( By.xpath( BaseBrowseFilterPanel.CLEAR_FILTER_BUTTON ) ).click();
-//        }
-
         filterPanel.typeSearchText( content.getName() );
         clickCheckboxAndSelectRow( content.getName() ).clickToolbarEdit();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
@@ -628,10 +624,19 @@ public class ContentBrowsePanel
     {
         editButton.click();
         sleep( 500 );
+        //need to switch to the required tab
+        switchToWizardTaBySelectedContent();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return wizard;
+    }
+
+    public void switchToWizardTaBySelectedContent()
+    {
+        String contentTeeGridId = getDisplayedElement( By.xpath( CONTENT_TREE_GRID ) ).getAttribute( "id" );
+        String contentId = (String) getJavaScriptExecutor().executeScript(
+            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).getSelectedNodes()[0].getDataId()", contentTeeGridId );
+        NavigatorHelper.switchToAppWindow( getSession(), contentId );
     }
 
     /**
