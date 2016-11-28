@@ -19,8 +19,8 @@ class SiteFormViewPanel_Applications_Spec
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
 
         when: "data saved and wizard closed"
-        contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
-            SITE.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
+            SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );
@@ -29,18 +29,17 @@ class SiteFormViewPanel_Applications_Spec
     def "GIVEN site with two applications WHEN reordering of applications applied AND site saved THEN new order of applications present in form-panel"()
     {
         given: "site with two applications opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
 
         when: "reordering of applications applied, site saved"
         formViewPanel.swapApplications( SIMPLE_SITE_APP, MY_FIRST_APP );
-        wizard.save().close( SITE.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( SITE.getDisplayName() + "_closed" );
 
         and: "site opened again"
-        contentBrowsePanel.clickToolbarEdit();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
 
         then: "new order of applications present in form-panel"
@@ -50,15 +49,16 @@ class SiteFormViewPanel_Applications_Spec
     def "GIVEN site with two applications WHEN one application removed THEN only one application present in form-panel"()
     {
         given: "site with two application opened "
-        filterPanel.typeSearchText( SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
 
         when: "one application removed"
         formViewPanel.removeApp( MY_FIRST_APP )
-        wizard.save().close( SITE.getDisplayName() );
-        contentBrowsePanel.clickToolbarEdit();
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+
+        and: "opened in the wizard again"
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
 
         then: "only one application present in form-panel"
@@ -70,15 +70,14 @@ class SiteFormViewPanel_Applications_Spec
     def "GIVEN site with application WHEN checkbox clicked and 'Apply' button pressed THEN two application present in form-panel"()
     {
         given: "site with one application opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
 
         when: "checkbox for application clicked and 'Apply' button pressed"
         formViewPanel.selectCheckBoxAndApply( MY_FIRST_APP )
-        wizard.save().close( SITE.getDisplayName() );
-        contentBrowsePanel.clickToolbarEdit();
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
 
         then: "new application present in form"
