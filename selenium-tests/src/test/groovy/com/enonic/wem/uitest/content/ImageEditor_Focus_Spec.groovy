@@ -17,7 +17,7 @@ class ImageEditor_Focus_Spec
     def "GIVEN 'Image Editor' dialog opened WHEN focus has been moved THEN red circle appears"()
     {
         given: "'Image Editor' dialog opened"
-        findAndSelectContent( IMPORTED_WHALE_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         ImageEditorToolbar imageEditorToolbar = imageEditor.getToolbar();
@@ -44,7 +44,7 @@ class ImageEditor_Focus_Spec
     def "GIVEN 'Image Editor' dialog opened WHEN focus changed  AND 'Save' button pressed THEN 'save before close dialog' does not appear"()
     {
         given: "'Image Editor' dialog opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_WHALE_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         when: " dragHandler moved up AND image cropped "
@@ -56,7 +56,7 @@ class ImageEditor_Focus_Spec
         wizard.save();
 
         and: "wizard closed"
-        def result = wizard.close( IMPORTED_WHALE_IMAGE );
+        def result = wizard.close( WHALE_IMAGE_NAME );
         saveScreenshot( "focus_image_saved_and_closed" );
 
         then: "wizard closed and 'save before close' dialog does not appear"
@@ -66,7 +66,7 @@ class ImageEditor_Focus_Spec
     def "GIVEN existing image with changed focus WHEN the image opened THEN 'Reset' button displayed on the page"()
     {
         given: "existing image with changed focus"
-        findAndSelectContent( IMPORTED_WHALE_IMAGE )
+        findAndSelectContent( WHALE_IMAGE_NAME )
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "the image opened"
@@ -79,7 +79,7 @@ class ImageEditor_Focus_Spec
     def "GIVEN existing image with changed focus WHEN 'Reset' button has been pressed THEN 'Reset' button is getting hidden"()
     {
         given: "existing image with changed focus"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_WHALE_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "'Reset' button has been pressed"
@@ -94,7 +94,7 @@ class ImageEditor_Focus_Spec
     def "GIVEN existing image with changed focus WHEN 'Reset' button has been pressed AND 'Save' button pressed AND 'Close' button pressed THEN the wizard closes"()
     {
         given: "existing image"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_WHALE_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         and: "focus was moved"
@@ -108,7 +108,7 @@ class ImageEditor_Focus_Spec
         imageFormViewPanel.clickOnResetButton();
 
         and: "'close' wizard button pressed"
-        def result = wizard.save().close( IMPORTED_WHALE_IMAGE );
+        def result = wizard.save().close( WHALE_IMAGE_NAME );
 
         then: "Image-wizard closes"
         result == null;

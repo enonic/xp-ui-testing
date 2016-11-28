@@ -36,10 +36,10 @@ class Content_Online_Modified_Spec
     def "GIVEN existing root content with 'Online' status  WHEN content edited THEN content becomes 'Modified' in the BrowsePanel"()
     {
         given: "existing root content with 'Online' status opened for edit"
-        ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEdit(); ;
+        ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab(); ;
 
         when: "new display name typed"
-        wizard.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
+        wizard.typeDisplayName( NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content becomes 'Modified' in the BrowsePanel"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
@@ -50,7 +50,7 @@ class Content_Online_Modified_Spec
         given: "existing root content with 'Online' status opened for edit"
         Content content = buildFolderContent( "publish", "folder-content" );
         addContent( content );
-        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
 
         when: "new display name typed"

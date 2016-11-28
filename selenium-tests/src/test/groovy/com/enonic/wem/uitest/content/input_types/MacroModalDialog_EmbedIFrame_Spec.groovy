@@ -74,7 +74,7 @@ class MacroModalDialog_EmbedIFrame_Spec
     def "GIVEN MacroModalDialog opened WHEN 'Embed iframe' selected AND text not typed AND 'preview' link on the dialog clicked THEN warning message appears on the modal dialog"()
     {
         given: "existing content with html-area is opened"
-        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
         and: "MacroModalDialog opened"
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
@@ -96,7 +96,7 @@ class MacroModalDialog_EmbedIFrame_Spec
     def "GIVEN MacroModalDialog opened WHEN 'Embed iframe' selected AND text typed in the textArea AND 'preview' link on the dialog clicked THEN correct info in the preview-content panel appears"()
     {
         given: "existing content with html-area is opened"
-        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
         and: "MacroModalDialog opened"
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
@@ -118,7 +118,7 @@ class MacroModalDialog_EmbedIFrame_Spec
     def "GIVEN MacroModalDialog opened WHEN 'Embed iframe' selected AND correct code typed in the textArea AND 'preview' link on the dialog clicked THEN correct html appears in the preview-content panel"()
     {
         given: "existing content with html-area is opened"
-        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
         and: "MacroModalDialog opened"
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();

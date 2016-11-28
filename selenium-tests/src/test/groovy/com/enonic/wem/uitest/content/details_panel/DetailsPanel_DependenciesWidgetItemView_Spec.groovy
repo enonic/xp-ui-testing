@@ -15,7 +15,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 {
 
     @Shared
-    String TARGET_IMG = "whale.jpg";
+    String TARGET_IMG = WHALE_IMAGE_DISPLAY_NAME;
 
     @Shared
     Content SHORTCUT_CONTENT;
@@ -54,7 +54,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
     def "GIVEN existing shortcut AND target is an image WHEN Dependencies Widget opened THEN 'show outbound'- button is displayed"()
     {
         given:
-        SHORTCUT_CONTENT = buildShortcutWithTarget( "shortcut", null, "shortcut display name", TARGET_IMG );
+        SHORTCUT_CONTENT = buildShortcutWithTarget( "shortcut", null, "shortcut display name", WHALE_IMAGE_DISPLAY_NAME );
         addContent( SHORTCUT_CONTENT );
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
 

@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
@@ -19,7 +20,7 @@ class ImageEditor_Crop_Reset_Spec
     def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image was cropped THEN image's height was reduced"()
     {
         given: "'Image Editor' dialog opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
@@ -43,11 +44,13 @@ class ImageEditor_Crop_Reset_Spec
         and: "'Reset' button appeared"
         formViewPanel.isButtonResetPresent();
     }
+    //TODO verify that alert does not appears
+    @Ignore
     //verifies XP-4167 Impossible to save changes and close the Wizard after an image was cropped
     def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image cropped  AND save button pressed AND wizard closed THEN 'save before close' dialog does not appear"()
     {
         given: "'Image Editor' dialog opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         when: " dragHandler moved up AND image cropped "
@@ -55,11 +58,13 @@ class ImageEditor_Crop_Reset_Spec
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
         imageEditor.getToolbar().clickOnApplyButton();
 
-        and: "Save button pressed "
-        wizard.save();
+        //and: "Save button pressed "
+        // wizard.save();
 
+        //TODO check alert
         and: "wizard closed"
-        def result = wizard.close( IMPORTED_BOOK_IMAGE );
+        def result = wizard.closeBrowserTab();
+        wizard.switchToBrowsePanelTab();
         saveScreenshot( "cropped_image_saved_and_closed" );
 
         then: "wizard closed and save before close dialog does not appear"
@@ -73,7 +78,7 @@ class ImageEditor_Crop_Reset_Spec
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "the image opened"
-        contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
 
         then: "'Reset' button displayed on the Image Editor"
         formViewPanel.isButtonResetPresent();
@@ -82,7 +87,7 @@ class ImageEditor_Crop_Reset_Spec
     def "GIVEN existing cropped image opened WHEN 'Reset' button has been pressed THEN 'Reset' button is getting hidden"()
     {
         given: "existing cropped image"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         saveScreenshot( "reset_button_displayed" );
 
@@ -98,7 +103,7 @@ class ImageEditor_Crop_Reset_Spec
     def "GIVEN existing cropped image opened WHEN  'Reset' button has been pressed AND 'Save' button pressed AND 'Close' button pressed THEN the wizard closes"()
     {
         given: "existing cropped image"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         and: "the image has been cropped"

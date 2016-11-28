@@ -119,12 +119,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         findAndSelectContent( PARENT_FOLDER.getName() );
         addContent( contentToEdit );
         contentBrowsePanel.clickOnClearSelection();
-        filterPanel.typeSearchText( contentToEdit.getName() )
-        ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getName() ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab();
         String newName = NameHelper.uniqueName( "newname" );
 
         when: "new name saved and wizard closed"
-        contentWizard.typeName( newName ).save().close( contentToEdit.getDisplayName() );
+        contentWizard.typeName( newName ).save().closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( newName )
 
         then: "Content is listed with it's new name"
@@ -132,24 +131,23 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( newName, true );
     }
 
-    def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new displayName"()
+    def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with its new displayName"()
     {
         given: "changing of displayName of an existing Content"
         Content contentToEdit = buildFolderContentWithParent( "edit-displayname", "child-folder6", PARENT_FOLDER.getName() );
         findAndSelectContent( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
-        wizard.typeData( contentToEdit ).save().close( contentToEdit.getDisplayName() );
+        wizard.typeData( contentToEdit ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         contentBrowsePanel.clickOnClearSelection();
-        filterPanel.typeSearchText( contentToEdit.getName() );
         String newDisplayName = NameHelper.uniqueName( "display-name" );
-        wizard =
-            contentBrowsePanel.clickCheckboxAndSelectRow( contentToEdit.getName() ).clickToolbarEdit().typeDisplayName( newDisplayName );
+        findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName();
+
 
         when: "new display-name saved and wizard closed"
-        wizard.save().close( newDisplayName );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "content is listed with it's new displayName"
+        then: "content is listed with its new displayName"
         filterPanel.typeSearchText( newDisplayName );
         contentBrowsePanel.exists( contentToEdit.getName() );
     }

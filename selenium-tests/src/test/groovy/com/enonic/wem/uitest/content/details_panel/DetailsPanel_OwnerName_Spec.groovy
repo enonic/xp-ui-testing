@@ -73,9 +73,9 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         when: "new folder added"
-        FOLDER_TO_DUPLICATE = buildFolderContent( "folder", "owner_testing" )
-        contentBrowsePanel.clickToolbarNew().selectContentType( FOLDER_TO_DUPLICATE.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            FOLDER_TO_DUPLICATE ).save().close( FOLDER_TO_DUPLICATE.getDisplayName() );
+        FOLDER_TO_DUPLICATE = buildFolderContent( "folder", "owner_testing" );
+        contentBrowsePanel.clickToolbarNew().selectContentType( FOLDER_TO_DUPLICATE.getContentTypeName() ).typeData(
+            FOLDER_TO_DUPLICATE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "folder listed in the grid"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
@@ -137,17 +137,18 @@ class DetailsPanel_OwnerName_Spec
         versionItem.getOwnerName( versionId ) == TEST_USER.getDisplayName();
     }
 
-    def "WHEN the copy of existing folder opened THEN correct owner shown in settings"()
+    def "WHEN the copy of the existing folder opened THEN correct owner shown in settings"()
     {
         setup: "user is  'logged in'"
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "when existing content opened for edit"
+        when: "when the copy of the existing content opened for edit"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
+            FOLDER_TO_DUPLICATE.getName() + "-copy" ).clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
-        TestUtils.saveScreenshot( getSession(), "test_owner_wizard" )
+        saveScreenshot( "test_owner_wizard" );
 
         then: "correct owner shown in settings"
         form.getOwner() == TEST_USER.getDisplayName();

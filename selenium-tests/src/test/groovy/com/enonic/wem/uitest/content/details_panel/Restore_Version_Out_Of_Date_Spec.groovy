@@ -26,7 +26,8 @@ class Restore_Version_Out_Of_Date_Spec
         FOLDER_CONTENT = buildFolderContent( "folder", INITIAL_DISPLAY_NAME );
         addContent( FOLDER_CONTENT );
         findAndSelectContent( FOLDER_CONTENT.getName() );
-        contentBrowsePanel.clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
+            NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the folder has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();

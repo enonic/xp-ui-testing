@@ -124,11 +124,10 @@ class ContentInfoWidget_Spec
     def "GIVEN existing folder with 'Online' status  WHEN content edited THEN content has got a 'Modified' status"()
     {
         given:
-        filterPanel.typeSearchText( FOLDER.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( FOLDER.getName() ).clickToolbarEditAndSwitchToWizardTab();
 
         when: "content updated"
-        wizard.typeDisplayName( "new display name" ).save().close( "new display name" );
+        wizard.typeDisplayName( "new display name" ).save().closeBrowserTab().switchToBrowsePanelTab()
         contentBrowsePanel.clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
         saveScreenshot( "info_widget_folder_modified" );

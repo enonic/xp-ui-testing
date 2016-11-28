@@ -97,8 +97,8 @@ class ContentUnpublishDialog_Spec
     def "GIVEN 'modified' content selected AND ContentUnpublishDialog opened WHEN 'unpublish' menu item selected THEN the content becomes is 'offline'"()
     {
         given:
-        findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().close(
-            NEW_DISPLAY_NAME );
+        findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
+            NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
 
         when: "content selected and 'Unpublish' menu item clicked"

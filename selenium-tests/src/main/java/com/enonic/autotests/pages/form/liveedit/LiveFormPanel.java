@@ -70,7 +70,7 @@ public class LiveFormPanel
 
     public ContentWizardPanel switchToContentWizardPanel()
     {
-        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
         return new ContentWizardPanel( getSession() );
     }
 

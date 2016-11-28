@@ -82,6 +82,9 @@ class Base_InputFields_Occurrences
     String MORE_MAX_SAFE_INTEGER = "9007199254740992";
 
     @Shared
+    Integer INITIAL_NUMBER_OF_VERSIONS = 2;
+
+    @Shared
     ContentBrowsePanel contentBrowsePanel;
 
     @Shared

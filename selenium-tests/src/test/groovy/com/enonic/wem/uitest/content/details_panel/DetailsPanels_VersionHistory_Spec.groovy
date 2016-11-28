@@ -14,14 +14,12 @@ class DetailsPanels_VersionHistory_Spec
     @Shared
     Content folderContent;
 
-    @Shared
-    Integer INITIAL_NUMBER_OF_VERSIONS = 2;
-
     def "GIVEN content selected  WHEN 'Version History' option selected THEN panel with all versions for the content is loaded"()
     {
         given: "content added"
         folderContent = buildFolderContent( "version_h_", "version_history_test" );
         addContent( folderContent );
+
         and: "the content selected"
         findAndSelectContent( folderContent.getName() );
 
@@ -77,8 +75,8 @@ class DetailsPanels_VersionHistory_Spec
     def "GIVEN 'published'-content WHEN content's display name changed AND versions panel opened THEN three versions are listed. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
     {
         given: "content with 'online' status was changed and content has got a 'Modified' status"
-        findAndSelectContent( folderContent.getName() ).clickToolbarEdit().typeDisplayName( "newDisplayName" ).save().close(
-            "newDisplayName" );
+        findAndSelectContent( folderContent.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
+            "newDisplayName" ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "'Version Panel' opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();

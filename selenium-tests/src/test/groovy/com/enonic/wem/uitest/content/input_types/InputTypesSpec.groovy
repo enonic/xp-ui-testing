@@ -30,7 +30,7 @@ class InputTypesSpec
 
 
         when: "just created content selected and 'Edit' button clicked"
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected should be equals"
@@ -45,7 +45,7 @@ class InputTypesSpec
             dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "just created content selected and 'Edit' button clicked"
-        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value and expected should be equals"
@@ -59,7 +59,7 @@ class InputTypesSpec
         selectSitePressNew( timeContent.getContentTypeName() ).typeData( timeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "just created content selected and 'Edit' button clicked"
-        findAndSelectContent( timeContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( timeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
         then: "actual and expected should be equals"

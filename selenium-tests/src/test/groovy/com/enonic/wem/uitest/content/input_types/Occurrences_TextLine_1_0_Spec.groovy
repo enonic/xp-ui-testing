@@ -116,7 +116,7 @@ class Occurrences_TextLine_1_0_Spec
         textLineContent.getData().addProperty( "1", ValueFactory.newString( SECOND_TEST_STRING ) );
 
         when: "content saved and wizard closed"
-        contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
+        contentWizardPanel.typeData( textLineContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new content listed in the grid and can be opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );

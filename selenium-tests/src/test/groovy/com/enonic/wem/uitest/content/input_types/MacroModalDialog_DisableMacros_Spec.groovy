@@ -46,7 +46,7 @@ class MacroModalDialog_DisableMacros_Spec
     def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
     {
         given: "existing content with html-area is opened"
-        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
         and: "MacroModalDialog opened"
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
@@ -74,7 +74,8 @@ class MacroModalDialog_DisableMacros_Spec
     def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text not typed AND 'preview' link on the dialog clicked THEN warning message appears on the modal dialog"()
     {
         given: "existing content with html-area is opened"
-        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
+        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
+
         and: "MacroModalDialog opened"
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();

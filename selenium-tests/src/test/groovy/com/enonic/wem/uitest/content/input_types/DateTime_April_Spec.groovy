@@ -34,7 +34,7 @@ class DateTime_April_Spec
 
         and: "just created datetime content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -53,7 +53,7 @@ class DateTime_April_Spec
 
         and: "just created datetime content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -66,13 +66,12 @@ class DateTime_April_Spec
         Content dateTimeContent = buildDateTime1_1_Content( DATE_TIME_3 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-
         when: "DateTime in March typed and content saved"
-        contentWizardPanel.typeData( dateTimeContent ).save().close( dateTimeContent.getDisplayName() );
+        contentWizardPanel.typeData( dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created datetime content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"

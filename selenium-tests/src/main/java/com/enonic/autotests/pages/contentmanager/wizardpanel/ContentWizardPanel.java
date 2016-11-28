@@ -212,7 +212,7 @@ public class ContentWizardPanel
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         return this;
     }
@@ -500,7 +500,7 @@ public class ContentWizardPanel
         if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_" + pageDescriptorDisplayName );
-            throw new TestFrameworkException( "drop-down-option-filter: item was not found!" + pageDescriptorDisplayName );
+            throw new TestFrameworkException( "drop-down-option-filter: item was not found: " + pageDescriptorDisplayName );
         }
         getDisplayedElement( By.xpath( pageDescriptor ) ).click();
         sleep( 1000 );
@@ -585,7 +585,7 @@ public class ContentWizardPanel
 
     public void switchToMainWindow()
     {
-        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
@@ -593,7 +593,7 @@ public class ContentWizardPanel
     {
         if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
         {
-            NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+            NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
             getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         }
         String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );

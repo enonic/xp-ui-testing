@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllCon
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -14,48 +13,53 @@ class Restore_ComboBox_Spec
     @Shared
     Content COMBOBOX_CONTENT;
 
-    def "GIVEN creating new combobox-content 2:4 WHEN content opened and one option was removed THEN number of versions increased by one"()
+    def "GIVEN existing combobox-content 2:4 with two selected options WHEN content opened and one option was removed THEN number of versions increased by one"()
     {
-        given: "new COMBOBOX-content 2:4 added"
+        given: "new COMBOBOX-content (2:4) has been added"
         COMBOBOX_CONTENT = buildComboBox2_4_Content( 2 );
         ContentWizardPanel wizard = selectSitePressNew( COMBOBOX_CONTENT.getContentTypeName() );
-        wizard.typeData( COMBOBOX_CONTENT ).save().close( COMBOBOX_CONTENT.getDisplayName() );
+        wizard.typeData( COMBOBOX_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
         when: "content opened and one option was removed"
         findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
-        wizard.save().close( COMBOBOX_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        and: "version panel opened "
+        and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         then: "number of versions increased by one"
-        allContentVersionsView.getAllVersions().size() == 3;
+        allContentVersionsView.getAllVersions().size() == INITIAL_NUMBER_OF_VERSIONS + 1;
     }
 
-    def "GIVEN existing combobox content with 3 versions WHEN valid version of content with two options has been restored THEN content has no red icon on the wizard-tab"()
+    def "GIVEN existing combobox content with 3 versions WHEN valid version with two selected options is restored THEN content displayed as valid in the grid"()
     {
-        given: "content with a changed date"
+        given: "existing combobox content with 3 versions is selected "
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
-        contentBrowsePanel.pressAppHomeButton();
+        ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
+        wizard.switchToBrowsePanelTab();
+
+        and: "version history panel is expanded"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "valid version of content with two images is restored"
+        when: "valid version with two selected options is restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "combobox_valid_version" );
+        saveScreenshot( "combobox_valid_version" );
 
-        then: "red icon is not present on the wizard-tab"
-        !wizard.isContentInvalid( COMBOBOX_CONTENT.getDisplayName() );
-
-        and: "the content is valid in the grid as well"
+        then: "content displayed as valid in the grid"
         !contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
 
-        and: "'publish' button on the toolbar is enabled"
+        and: "'publish' button on the grid-toolbar is enabled"
         contentBrowsePanel.isPublishButtonEnabled();
+
+        and: "validation message appears on the combobox-form"
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
+        formViewPanel.isValidationMessagePresent();
+
     }
 
     def "GIVEN version of content with two images has been restored WHEN content opened THEN two options are displayed on the wizard"()
@@ -75,14 +79,14 @@ class Restore_ComboBox_Spec
     {
         given: "existing content with 3 versions opened"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
-        contentBrowsePanel.pressAppHomeButton();
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "not valid version of content is restored, one required image missed"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        TestUtils.saveScreenshot( getSession(), "combobox_not_valid_version" );
+        saveScreenshot( "combobox_not_valid_version" );
 
         then: "red icon appears on the wizard-tab"
         wizard.isContentInvalid( COMBOBOX_CONTENT.getDisplayName() );
@@ -95,6 +99,7 @@ class Restore_ComboBox_Spec
     {
         when: "version of content with one option has been restored and content was opened "
         findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
         then: "only one option is displayed in the form"

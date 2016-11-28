@@ -36,7 +36,7 @@ class DatesInDecember_Spec
         contentBrowsePanel.clickOnClearSelection();
 
         and: "just created date content opened"
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -53,7 +53,7 @@ class DatesInDecember_Spec
 
         and: "just created date content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -71,7 +71,7 @@ class DatesInDecember_Spec
 
         and: "just created date content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"
@@ -89,7 +89,7 @@ class DatesInDecember_Spec
 
         and: "just created date content opened"
         contentBrowsePanel.clickOnClearSelection();
-        findAndSelectContent( dateContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
         then: "actual value and expected are equals"

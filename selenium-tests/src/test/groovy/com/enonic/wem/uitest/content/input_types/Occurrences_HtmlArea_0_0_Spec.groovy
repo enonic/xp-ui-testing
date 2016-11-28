@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.BaseHtmlAreaFormViewPanel
 import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -104,11 +103,11 @@ class Occurrences_HtmlArea_0_0_Spec
         given: "new content with type HtmlArea added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 2, TEST_TEXT1, TEST_TEXT2 );
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
-        wizard.typeData( tinyMceContent ).save().close( tinyMceContent.getDisplayName() );
+        wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
-        TestUtils.saveScreenshot( getTestSession(), "html_editor_2" )
+        saveScreenshot( "html_editor_2" );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getInnerHtmlFromAreas();
 
@@ -125,11 +124,11 @@ class Occurrences_HtmlArea_0_0_Spec
         given: "new content with type HtmlArea added'"
         Content htmlAreaContentContent = buildHtmlArea0_0_Content( 3, TEST_TEXT1, TEST_TEXT2, TEST_TEXT3 );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContentContent.getContentTypeName() );
-        wizard.typeData( htmlAreaContentContent ).save().close( htmlAreaContentContent.getDisplayName() );
+        wizard.typeData( htmlAreaContentContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContentContent );
-        TestUtils.saveScreenshot( getTestSession(), "area_3" );
+        saveScreenshot( "area_3" );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getInnerHtmlFromAreas();
 

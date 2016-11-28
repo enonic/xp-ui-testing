@@ -23,7 +23,7 @@ class GeoPoint_Spec
         contentBrowsePanel.clickOnClearSelection();
 
         when: "just created content selected and 'Edit' button clicked"
-        findAndSelectContent( geopointContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( geopointContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
@@ -41,7 +41,7 @@ class GeoPoint_Spec
         contentBrowsePanel.clickOnClearSelection();
 
         when: "the content opened"
-        findAndSelectContent( notValidContent.getName() ).clickToolbarEdit();
+        findAndSelectContent( notValidContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "incorrect value not saved"

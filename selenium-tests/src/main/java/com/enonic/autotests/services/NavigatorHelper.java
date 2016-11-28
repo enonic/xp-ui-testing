@@ -77,7 +77,7 @@ public class NavigatorHelper
     }
 
 
-    public static String switchToAppWindow( TestSession session, String appName )
+    public static String switchToBrowserTab( TestSession session, String urlPart )
     {
         WebDriver driver = session.getDriver();
         Set<String> windowHandles = driver.getWindowHandles();
@@ -87,7 +87,7 @@ public class NavigatorHelper
             {
                 try
                 {
-                    if ( driver.switchTo().window( windowHandle ).getCurrentUrl().contains( appName ) )
+                    if ( driver.switchTo().window( windowHandle ).getCurrentUrl().contains( urlPart ) )
                     {
                         //session.put( HomePage.APP_TAB_HANDLE, windowHandle );
                         return windowHandle;
@@ -99,7 +99,7 @@ public class NavigatorHelper
                 }
             }
         }
-        throw new TestFrameworkException( "application was not found!" + appName );
+        throw new TestFrameworkException( "application was not found!" + urlPart );
     }
 
 

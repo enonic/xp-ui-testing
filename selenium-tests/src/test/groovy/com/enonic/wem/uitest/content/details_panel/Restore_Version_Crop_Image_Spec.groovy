@@ -34,7 +34,7 @@ class Restore_Version_Crop_Image_Spec
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
         and: "image opened in the wizard"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
 
@@ -46,7 +46,7 @@ class Restore_Version_Crop_Image_Spec
         imageEditor.getToolbar().clickOnApplyButton();
 
         and: "changes saved and wizard closed"
-        wizard.save().close( IMPORTED_MAN_IMAGE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_increased_after_cropping" );
 
@@ -110,7 +110,8 @@ class Restore_Version_Crop_Image_Spec
     def "GIVEN existing cropped image is opened WHEN original version is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
+
 
         and: "AppHome button was pressed"
         contentBrowsePanel.pressAppHomeButton();

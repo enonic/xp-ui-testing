@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -271,7 +272,7 @@ public class ContentBrowsePanel
     {
         clickOnClearSelection();
         filterPanel.typeSearchText( content.getName() );
-        clickCheckboxAndSelectRow( content.getName() ).clickToolbarEdit();
+        ( (ContentBrowsePanel) clickCheckboxAndSelectRow( content.getName() ) ).clickToolbarEditAndSwitchToWizardTab();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
@@ -335,16 +336,24 @@ public class ContentBrowsePanel
 
     public List<String> getContentDisplayNamesFromGrid()
     {
-        List<WebElement> rows = getDriver().findElements( By.xpath( DISPLAY_NAMES_FROM_TREE_GRID_XPATH ) );
+        List<WebElement> rows = findElements( By.xpath( DISPLAY_NAMES_FROM_TREE_GRID_XPATH ) );
         return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
-    public List<String> getChildContentNamesFromBrowsePanel( String parentName )
+    public List<String> getChildContentNamesFromTreeGrid( String parentName )
     {
         List<WebElement> rows = findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
         return rows.stream().filter( e -> !e.getText().contains( parentName ) && !e.getText().isEmpty() ).map(
             WebElement::getText ).collect( Collectors.toList() );
     }
+
+    public List<String> getChildContentDisplayNamesFromTreeGrid( String parentDisplayName )
+    {
+        List<WebElement> rows = findElements( By.xpath( DISPLAY_NAMES_FROM_TREE_GRID_XPATH ) );
+        return rows.stream().filter( e -> !e.getText().contains( parentDisplayName ) && !e.getText().isEmpty() ).map(
+            WebElement::getText ).collect( Collectors.toList() );
+    }
+
 
     public boolean exists( ContentPath contentPath, boolean saveScreenshot )
     {
@@ -624,19 +633,25 @@ public class ContentBrowsePanel
     {
         editButton.click();
         sleep( 500 );
-        //need to switch to the required tab
-        switchToWizardTaBySelectedContent();
+        return null;
+    }
+
+    public ContentWizardPanel clickToolbarEditAndSwitchToWizardTab()
+    {
+        clickToolbarEdit();
+        switchToContentWizardTabBySelectedContent();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
         return wizard;
     }
 
-    public void switchToWizardTaBySelectedContent()
+    public ContentWizardPanel switchToContentWizardTabBySelectedContent()
     {
         String contentTeeGridId = getDisplayedElement( By.xpath( CONTENT_TREE_GRID ) ).getAttribute( "id" );
         String contentId = (String) getJavaScriptExecutor().executeScript(
             "return window.api.dom.ElementRegistry.getElementById(arguments[0]).getSelectedNodes()[0].getDataId()", contentTeeGridId );
-        NavigatorHelper.switchToAppWindow( getSession(), contentId );
+        NavigatorHelper.switchToBrowserTab( getSession(), contentId );
+        return new ContentWizardPanel( getSession() );
     }
 
     /**
@@ -854,6 +869,21 @@ public class ContentBrowsePanel
         String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
         return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
+
+    public void switchToNextTab()
+    {
+        if ( Platform.getCurrent().is( Platform.MAC ) )
+        {
+            buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.TAB ) ).perform();
+        }
+        else
+        {
+            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.TAB ) ).perform();
+        }
+
+        //switchToNewWizardTab();
+    }
+
 
     /**
      * @return true if 'Delete' button enabled, otherwise false.

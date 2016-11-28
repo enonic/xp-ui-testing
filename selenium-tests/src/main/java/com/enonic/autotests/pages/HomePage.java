@@ -90,20 +90,20 @@ public class HomePage
 
     private void switchToContentStudioTab()
     {
-        String contentBrowseTabHandle = NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
+        String contentBrowseTabHandle = NavigatorHelper.switchToBrowserTab( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
         getSession().put( HomePage.APP_TAB_HANDLE, contentBrowseTabHandle );
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
     private void switchToUsersTab()
     {
-        NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.USER_MANAGER.getWindowName() );
+        NavigatorHelper.switchToBrowserTab( getSession(), XP_Windows.USER_MANAGER.getWindowName() );
         getSession().setCurrentWindow( XP_Windows.USER_MANAGER );
     }
 
     private void switchToApplicationsTab()
     {
-        NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.APPLICATIONS.getWindowName() );
+        NavigatorHelper.switchToBrowserTab( getSession(), XP_Windows.APPLICATIONS.getWindowName() );
         getSession().setCurrentWindow( XP_Windows.APPLICATIONS );
     }
 

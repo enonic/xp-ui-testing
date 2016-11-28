@@ -12,7 +12,6 @@ import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.wem.uitest.BaseGebSpec
@@ -55,6 +54,9 @@ class BaseContentSpec
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     @Shared
+    String IMAGES_FOLDER_DISPLAY_NAME = "All Content types images";
+
+    @Shared
     String IMPORTED_BOOK_IMAGE = "book.jpg";
 
     @Shared
@@ -76,7 +78,10 @@ class BaseContentSpec
     String IMPORTED_ELEPHANT_IMAGE = "elephant.jpg";
 
     @Shared
-    String IMPORTED_WHALE_IMAGE = "whale.jpg";
+    String WHALE_IMAGE_NAME = "whale.jpg";
+
+    @Shared
+    String WHALE_IMAGE_DISPLAY_NAME = "whale";
 
     @Shared
     String CIRCLES = "circles.svg"
@@ -113,6 +118,9 @@ class BaseContentSpec
 
     @Shared
     String EXECUTABLE_EXE = "Notepad2.exe";
+
+    @Shared
+    Integer INITIAL_NUMBER_OF_VERSIONS = 2;
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
@@ -277,8 +285,7 @@ class BaseContentSpec
     public void addContent( Content content )
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
-        wizard.typeData( content ).save();
-        wizard.closeBrowserTab().switchToBrowsePanelTab();
+        wizard.typeData( content ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
@@ -295,7 +302,7 @@ class BaseContentSpec
 
     protected void switchToContentStudioWindow()
     {
-        NavigatorHelper.switchToAppWindow( getSession(), CONTENT_STUDIO_URL_PART );
+        NavigatorHelper.switchToBrowserTab( getSession(), CONTENT_STUDIO_URL_PART );
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
@@ -460,13 +467,13 @@ class BaseContentSpec
         Content site = buildSiteWithAllTypes( siteName );
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
             site.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "saved_" + siteName ) );
+        saveScreenshot( NameHelper.uniqueName( "saved_" + siteName ) );
     }
 
     private Content buildSiteWithAllTypes( String siteName )
     {
         PropertyTree data = new PropertyTree();
-        data.addString( SiteFormViewPanel.APP_KEY, ALL_CONTENT_TYPES_DISPLAY_NAME );
+        data.addString( SiteFormViewPanel.APP_KEY, APP_CONTENT_TYPES_DISPLAY_NAME );
         data.addStrings( "description", "all content types  site " )
         Content site = Content.builder().
             name( siteName ).

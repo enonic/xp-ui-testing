@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -38,30 +37,27 @@ class Occurrences_ImageSelector_2_4_Spec
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
-        wizard.typeData( imageSelectorContent ).save().close( imageSelectorContent.getDisplayName() );
+        wizard.typeData( imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> imagesNames = formViewPanel.getSelectedImages();
-        TestUtils.saveScreenshot( getSession(), "img2_4_invalid" )
+        saveScreenshot( "img2_4_invalid" )
 
         then: "no one options present in form view"
         imagesNames.size() == 0;
 
         and: "options filter input is displayed"
         formViewPanel.isOptionFilterIsDisplayed();
-
-        and: "just created content without images is invalid"
-        wizard.isContentInvalid( imageSelectorContent.getDisplayName() );
     }
 
     def "GIVEN saving of 'Image Selector (2:4)' without required image WHEN content saved  THEN invalid content listed"()
     {
         when: "content without required image saved"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
-        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
-            imageSelectorContent.getDisplayName() );
+        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "invalid content listed"
         filterPanel.typeSearchText( imageSelectorContent.getDisplayName() );

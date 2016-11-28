@@ -161,12 +161,14 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     def "GIVEN existing content with owner opened WHEN owner changed  THEN new owner shown in the widget"()
     {
         given: "when content opened for edit"
-        ContentWizardPanel wizard = findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
         when: "owner changed AND content saved"
         form.removeOwner( SUPER_USER ).selectOwner( ANONYMOUS_USER );
-        wizard.save().close( FOLDER_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+
+        and: "details panel has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "property-widget-owner-anonym" )

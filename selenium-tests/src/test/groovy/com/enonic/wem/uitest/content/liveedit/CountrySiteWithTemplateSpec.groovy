@@ -64,7 +64,7 @@ class CountrySiteWithTemplateSpec
         when: "'Templates' folder selected and new page-template added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
-        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
         wizard.save().close( PAGE_TEMPLATE.getDisplayName() );
         sleep( 500 );
 
@@ -83,7 +83,7 @@ class CountrySiteWithTemplateSpec
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionView",
                                                                                                                              LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
-        NavigatorHelper.switchToAppWindow( getSession(), "content-studio" );
+        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
         contentWizard.save().clickToolbarPreview();
         saveScreenshot( "country_part_added" );
 
@@ -222,7 +222,7 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
-        wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -238,7 +238,7 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        wizard.save().close( SAN_FR_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );

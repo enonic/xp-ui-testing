@@ -81,7 +81,7 @@ class DisplayNameSortContent_Spec
         contentBrowsePanel.expandContent( ContentPath.from( IMPORTED_FOLDER_NAME ) );
 
         then: "contents sorted in the browse panel the same order as in the dialog"
-        List<String> names = contentBrowsePanel.getChildContentNamesFromBrowsePanel( IMPORTED_FOLDER_NAME );
+        List<String> names = contentBrowsePanel.getChildContentDisplayNamesFromTreeGrid( IMAGES_FOLDER_DISPLAY_NAME );
         contentsInDialog.equals( names );
     }
 }

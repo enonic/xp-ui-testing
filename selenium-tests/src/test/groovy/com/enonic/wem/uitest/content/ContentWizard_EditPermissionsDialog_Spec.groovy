@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
@@ -30,8 +29,8 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         when: "'Edit Permissions' button on the wizard panel pressed"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
-        TestUtils.saveScreenshot( getSession(), "test_edit_perm_dialog_default" );
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+        saveScreenshot( "test_edit_perm_dialog_default" );
 
         then: "modal dialog appears"
         modalDialog.isOpened();
@@ -47,7 +46,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "content selected and 'Edit Permissions' dialog opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         when: "'inherit permissions' has been unchecked"
         modalDialog.setCheckedForInheritCheckbox( false );
@@ -63,9 +62,9 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         when: "content selected and 'Edit Permissions' dialog has been opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEdit().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
         List<String> principals = modalDialog.getPrincipalNames();
-        TestUtils.saveScreenshot( getSession(), "test_default_acl_entries" );
+        saveScreenshot( "test_default_acl_entries" );
 
         then: "two default acl-entry are displayed"
         principals.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
@@ -78,7 +77,8 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' opened WHEN checkbox selected AND role selected and AND 'Apply' button in the selector pressed THEN new ACL entry with new role and 'Can Read' operations appears"()
     {
         given: "'Edit Permissions' opened"
-        SecurityWizardStepForm securityForm = findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSecurityTabLink();
+        SecurityWizardStepForm securityForm = findAndSelectContent(
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
@@ -98,13 +98,14 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN existing folder with one added ACL-entry AND 'Edit Permissions' opened WHEN one acl entry removed THEN number of entries reduced to default"()
     {
         given: "existing folder with one added ACL-entry"
-        SecurityWizardStepForm securityForm = findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSecurityTabLink();
+        SecurityWizardStepForm securityForm = findAndSelectContent(
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         modalDialog.setCheckedForInheritCheckbox( false );
 
         when: "one acl-entry removed"
         modalDialog.removeAclEntry( RoleName.SYSTEM_USER_MANAGER.getValue() );
-        TestUtils.saveScreenshot( getSession(), "acl-removed" )
+        saveScreenshot( "acl-removed" )
         modalDialog.clickOnApply();
 
         and: "dialog opened again"
@@ -121,14 +122,15 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' opened WHEN one more role added THEN new ACL entry with new role and 'Can Read' operations appears"()
     {
         given: "content selected and 'Edit Permissions' opened"
-        SecurityWizardStepForm securityForm = findAndSelectContent( content.getName() ).clickToolbarEdit().clickOnSecurityTabLink();
+        SecurityWizardStepForm securityForm = findAndSelectContent(
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
         when: "one more acl-entry added"
         modalDialog.setCheckedForInheritCheckbox( false ).addPermission( entry );
         sleep( 500 );
-        TestUtils.saveScreenshot( getSession(), "acl-added" );
+        saveScreenshot( "acl-added" );
 
         then: "number of ACL-entries increased"
         List<ContentAclEntry> aclEntriesActual = modalDialog.getAclEntries();

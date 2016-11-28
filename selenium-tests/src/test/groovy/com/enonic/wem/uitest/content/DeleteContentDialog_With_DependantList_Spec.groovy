@@ -47,8 +47,7 @@ class DeleteContentDialog_With_DependantList_Spec
     def "GIVEN parent content with a child is opened WHEN 'delete' button on the wizard-toolbar pressed THEN 'Delete Content' dialog with dependant list appeared"()
     {
         given: "parent content with a child is opened"
-        findAndSelectContent( PARENT_CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab(); ;
 
         when: " 'Delete' button on the wizard-toolbar pressed"
         DeleteContentDialog modalDialog = wizard.clickToolbarDelete();

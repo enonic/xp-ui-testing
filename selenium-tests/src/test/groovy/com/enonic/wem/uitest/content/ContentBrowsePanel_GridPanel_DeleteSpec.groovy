@@ -130,7 +130,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         Content contentToDelete = buildFolderContent( "folder", "move and delete" );
         addContent( parent );
         addContent( contentToDelete );
-        ContentWizardPanel wizard = findAndSelectContent( contentToDelete.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( contentToDelete.getName() ).clickToolbarEditAndSwitchToWizardTab();
         contentBrowsePanel.pressAppHomeButton();
 
         when: "content has been moved"

@@ -73,7 +73,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
 
     def "GIVEN content selected AND 'Version History' option selected  WHEN first version item clicked THEN version info displayed"()
     {
-        given: "content added selected and version history opened"
+        given: "content selected and version history opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
@@ -99,14 +99,16 @@ class DetailsPanel_Extended_VersionHistory_Spec
 
     def "GIVEN content selected AND version info expanded  WHEN 'close info' button clicked THEN 'version info' is hidden"()
     {
-        given: "content added selected and version history opened"
+        given: "content selected and version history opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
+
+        and: "version history panel has been opened "
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         String versionId = versionItem.getId();
 
-        when: "'close info' button clicked"
+        when: "'close version info' button clicked"
         versionItem.doCloseVersionInfo( versionId );
         saveScreenshot( "version-history-collapsed" );
 
@@ -117,9 +119,10 @@ class DetailsPanel_Extended_VersionHistory_Spec
 
     def "GIVEN existing content AND version info opened WHEN content changed THEN new display name present in the 'version info'"()
     {
-        when: "content added selected and version history opened"
-        findAndSelectContent( folderContent.getName() ).clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().close(
-            NEW_DISPLAY_NAME );
+        when: "content selected and version history opened"
+        findAndSelectContent( folderContent.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
+            NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
+        and: "details panel has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
 
         then: "new display name shown in the 'version info'"

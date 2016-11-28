@@ -235,6 +235,7 @@ public class Initializer
             createPPTX_Content( testFolderPath );
 
             createTXT_Content( testFolderPath );
+            createPDF_Content( testFolderPath );
         }
 
     }
@@ -274,6 +275,26 @@ public class Initializer
         contentService.create( params ).getId();
         LOG.info( "content added :  " + fileName );
     }
+
+    private void createPDF_Content( final ContentPath parent )
+        throws Exception
+    {
+        String fileName = "pdf.pdf";
+        final byte[] bytes = loadFileAsBytes( fileName );
+        if ( bytes == null )
+        {
+            LOG.info( "PDF :  " + fileName + "not loaded" );
+            return;
+        }
+
+        final CreateMediaParams params = new CreateMediaParams().
+            mimeType( "application/pdf" ).
+            name( fileName ).
+            parent( parent ).byteSource( ByteSource.wrap( bytes ) );
+        contentService.create( params ).getId();
+        LOG.info( "content added :  " + fileName );
+    }
+
 
     private void createSVG_Content( final ContentPath parent )
         throws Exception

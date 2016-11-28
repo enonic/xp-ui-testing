@@ -4,7 +4,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PdfFormViewPanel
 import spock.lang.Shared
 
-class ContentWizard_TextExtractionData
+class Content_TextExtractionData_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -21,8 +21,8 @@ class ContentWizard_TextExtractionData
 
     def "GIVEN existing PDF content WHEN content opened THEN textarea for extraction of data is present"()
     {
-        when: ""
-        findAndSelectContent( TEST_PDF_FILE ).clickToolbarEdit().waitUntilWizardOpened();
+        when: "existing PDF content is opened"
+        findAndSelectContent( TEST_PDF_FILE ).clickToolbarEditAndSwitchToWizardTab();
         PdfFormViewPanel formViewPanel = new PdfFormViewPanel( getSession() );
         saveScreenshot( "test_text_extraction_pdf" )
 
@@ -33,15 +33,15 @@ class ContentWizard_TextExtractionData
     def "GIVEN existing PDF content WHEN content opened AND new extraction data typed AND content saved THEN correct text displayed in the text-area"()
     {
         given: "existing PDF content"
-        ContentWizardPanel wizard = findAndSelectContent( TEST_PDF_FILE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( TEST_PDF_FILE ).clickToolbarEditAndSwitchToWizardTab();
         PdfFormViewPanel formViewPanel = new PdfFormViewPanel( getSession() );
 
         when: "content opened, new extraction data typed"
         formViewPanel.setExtractionData( PDF_EXTRACTION_TEXT );
-        wizard.save().close( TEST_PDF_FILE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        and: "the content opend again "
-        contentBrowsePanel.clickToolbarEdit();
+        and: "the content opened again "
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         saveScreenshot( "test_text_extraction_pdf_updated" );
 
         then: "correct text displayed in the text-area"
