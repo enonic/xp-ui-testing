@@ -5,7 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.xp.schema.content.ContentTypeName
 
-class Content_SaveBeforeCloseDialog_Spec
+class ContentWizard_Leave_Stay_Alert_Spec
     extends BaseContentSpec
 {
     def "GIVEN content-wizard opened AND data typed and content not saved WHEN 'delete content' dialog opened AND 'Delete' pressed THEN wizard closed and content not present in grid"()
