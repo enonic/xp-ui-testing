@@ -30,7 +30,7 @@ class ImageWizard_Spec
     def "WHEN image content opened THEN all control elemnts are present"()
     {
         when: "content wizard opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "Caption text area is present"
@@ -64,17 +64,17 @@ class ImageWizard_Spec
     def "GIVEN existing image content WHEN the content opened and caption was typed AND content saved THEN correct text present in the text area"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "text in the caption input typed"
         imageFormViewPanel.typeInCaptionTextArea( CAPTION_TEXT );
 
         and: "wizard saved and closed"
-        wizard.save().close( IMPORTED_BOOK_IMAGE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "image opened again"
-        contentBrowsePanel.clickToolbarEdit();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         saveScreenshot( "image_caption_text" );
 
         then:
@@ -84,17 +84,17 @@ class ImageWizard_Spec
     def "GIVEN existing image content WHEN the content opened and 'copyright' text was typed AND content saved THEN correct text present in the input"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "text in the 'copyright' input typed"
         imageFormViewPanel.typeInCopyRightInput( COPYRIGHT_TEXT );
 
         and: "wizard saved and closed"
-        wizard.save().close( IMPORTED_BOOK_IMAGE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "image opened again"
-        contentBrowsePanel.clickToolbarEdit();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         saveScreenshot( "image_copyright_text" );
 
         then:
@@ -104,17 +104,17 @@ class ImageWizard_Spec
     def "GIVEN existing image content WHEN the content opened and 'Artists' tags added AND content saved THEN tags are presnt in the input"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "text in the 'Artists' input typed"
         imageFormViewPanel.typeInArtistsInput( ARTIST_TAG1, ARTIST_TAG2 );
 
         and: "wizard saved and closed"
-        wizard.save().close( IMPORTED_BOOK_IMAGE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "image opened again"
-        contentBrowsePanel.clickToolbarEdit();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         saveScreenshot( "image_artists_tags" );
 
         then: "artist tags are present on the page "
@@ -127,17 +127,17 @@ class ImageWizard_Spec
     def "GIVEN existing image content WHEN the content opened AND two tags added AND content saved THEN tags are present on the page"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "two tags added"
         imageFormViewPanel.typeTags( TAG1, TAG2 );
 
         and: "wizard saved and closed"
-        wizard.save().close( IMPORTED_BOOK_IMAGE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "image opened again"
-        contentBrowsePanel.clickToolbarEdit();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         saveScreenshot( "image_two_tags_added" );
 
         then: "added tags are present on the page "

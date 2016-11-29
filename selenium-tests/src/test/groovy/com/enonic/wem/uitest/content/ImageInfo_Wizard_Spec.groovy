@@ -17,7 +17,7 @@ class ImageInfo_Wizard_Spec
     def "WHEN image content opened THEN all control elements are present"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit();
 
         when: "'Image Info' step was clicked"
         wizard.clickOnWizardStep( "Image Info" );
@@ -51,7 +51,7 @@ class ImageInfo_Wizard_Spec
     def "WHEN description text typed AND save button pressed THEN description for image correctly saved"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit();
 
         when: "new description typed"
         wizard.clickOnWizardStep( "Image Info" );
@@ -59,7 +59,7 @@ class ImageInfo_Wizard_Spec
         imageInfoFormViewPanel.typeDescription( TEST_DESCRIPTION );
 
         and: "save button pressed and wizard closed"
-        wizard.save().close( IMPORTED_BOOK_IMAGE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: " image opened again"
         contentBrowsePanel.clickToolbarEdit();

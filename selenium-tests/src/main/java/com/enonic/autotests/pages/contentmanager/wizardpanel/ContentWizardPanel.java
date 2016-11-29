@@ -14,6 +14,7 @@ import com.enonic.autotests.XP_Windows;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.SaveBeforeCloseDialog;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
@@ -404,6 +405,13 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "ContentWizard was not loaded!" );
         }
         return this;
+    }
+
+    @Override
+    public SaveBeforeCloseDialog close( String displayName )
+    {
+        closeBrowserTab().switchToBrowsePanelTab();
+        return null;
     }
 
     public ContentWizardPanel waitUntilWizardClosed()

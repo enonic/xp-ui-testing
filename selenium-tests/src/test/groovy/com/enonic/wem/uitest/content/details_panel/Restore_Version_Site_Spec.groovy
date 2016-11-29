@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -41,7 +42,11 @@ class Restore_Version_Site_Spec
 
 
         when: "display name of the site changed"
-        contentBrowsePanel.clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
+            NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+
+        and: "navigated to 'Version history' panel again"
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_after_changing_dname_site" );
 
@@ -72,13 +77,13 @@ class Restore_Version_Site_Spec
         given: "new acl entry added and folder saved"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         findAndSelectContent( SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         modalDialog.setCheckedForInheritCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
         sleep( 1000 );
         List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
-        wizard.save().close( SITE.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the previous version was restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -86,7 +91,8 @@ class Restore_Version_Site_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
 
         then: "and this role not present after restoring of version without this role"
-        !contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        !contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().getDisplayNamesOfAclEntries().contains(
+            "Anonymous User" );
 
         and: "required role was present before restoring"
         beforeRestoring.contains( "Anonymous User" );
@@ -103,7 +109,7 @@ class Restore_Version_Site_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
 
         and: "security tab opened"
-        SecurityWizardStepForm form = contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink();
+        SecurityWizardStepForm form = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
         saveScreenshot( "version_acl_site_application_restored" );
 
         then: "new role present after restoring of the latest version"
@@ -116,7 +122,7 @@ class Restore_Version_Site_Spec
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int before = allContentVersionsView.getAllVersions().size();
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel siteFormViewPanel = new SiteFormViewPanel( getSession() );
 
         when: "application removed"
@@ -127,7 +133,7 @@ class Restore_Version_Site_Spec
         sleep( 1000 );
 
         and: "home button clicked"
-        contentBrowsePanel.pressAppHomeButton();
+        contentBrowsePanel.switchToPreviousTab();
         saveScreenshot( "version_site_app_removed" );
 
         then: "number of versions increased after the removing of application in wizard"
@@ -137,10 +143,9 @@ class Restore_Version_Site_Spec
     def "GIVEN existing site without an application opened WHEN version of site with the application was restored THEN application present in the 'application selector'"()
     {
         given: "existing site without an application opened"
-        findAndSelectContent( SITE.getName() );
-        contentBrowsePanel.clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel siteFormViewPanel = new SiteFormViewPanel( getSession() );
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -148,7 +153,7 @@ class Restore_Version_Site_Spec
         when: "version with an application restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        contentBrowsePanel.clickOnTab( INITIAL_DISPLAY_NAME );
+        contentBrowsePanel.switchToNextTab();
         saveScreenshot( "version_site_application_restored" );
 
         then: "application present in the 'application selector'"

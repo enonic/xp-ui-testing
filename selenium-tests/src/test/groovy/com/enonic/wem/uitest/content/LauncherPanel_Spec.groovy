@@ -61,7 +61,7 @@ class LauncherPanel_Spec
 
         and: "'Xp Tour' dialog closed"
         NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
-        TestUtils.saveScreenshot( getSession(), "launcher-panel-test" );
+        saveScreenshot( "launcher-panel-test" );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
         then: "'Home' link is active on 'Launcher Panel'"
@@ -104,7 +104,7 @@ class LauncherPanel_Spec
         and: "launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
-        TestUtils.saveScreenshot( getSession(), "test_launcher_application" );
+        saveScreenshot( "test_launcher_application" );
 
         then:
         launcherPanel.getActiveLink() == "Users";
@@ -126,7 +126,7 @@ class LauncherPanel_Spec
 
         and: "button with 'lines' appears"
         launcherPanel.isOpenLauncherButtonPresent();
-        TestUtils.saveScreenshot( getSession(), "launcher-closed-home-page" );
+        saveScreenshot( "launcher-closed-home-page" );
 
         and: "button 'close' not displayed now"
         !launcherPanel.isCloseButtonDisplayed();

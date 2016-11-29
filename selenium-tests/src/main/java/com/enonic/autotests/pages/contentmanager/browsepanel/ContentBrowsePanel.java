@@ -631,14 +631,16 @@ public class ContentBrowsePanel
     @Override
     public ContentWizardPanel clickToolbarEdit()
     {
-        editButton.click();
-        sleep( 500 );
-        return null;
+        // editButton.click();
+        // sleep( 500 );
+        //  return null;
+        return clickToolbarEditAndSwitchToWizardTab();
     }
 
     public ContentWizardPanel clickToolbarEditAndSwitchToWizardTab()
     {
-        clickToolbarEdit();
+        editButton.click();
+        sleep( 500 );
         switchToContentWizardTabBySelectedContent();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
@@ -880,8 +882,23 @@ public class ContentBrowsePanel
         {
             buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.TAB ) ).perform();
         }
+        // getDriver().switchTo().defaultContent();
+        ////switchToNewWizardTab();
+    }
 
-        //switchToNewWizardTab();
+    public void switchToPreviousTab( String xpathLocator )
+    {
+        if ( Platform.getCurrent().is( Platform.MAC ) )
+        {
+            buildActions().click( findElement( By.xpath( xpathLocator ) ) ).sendKeys(
+                Keys.chord( Keys.COMMAND, Keys.SHIFT, Keys.TAB ) ).perform();
+        }
+        else
+        {
+            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.SHIFT, Keys.TAB ) ).perform();
+        }
+        getDriver().switchTo().defaultContent();
+        ////switchToNewWizardTab();
     }
 
 
