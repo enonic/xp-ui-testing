@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.AuthenticationException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -47,13 +46,6 @@ public class LoginPage
         loginPage.typeNameAndPassword( username, password );
         getSession().setLoggedIn( true );
         sleep( 700 );
-        Boolean isLauncherPresent =
-            waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), Application.EXPLICIT_NORMAL );
-        if ( !isLauncherPresent )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_login" ) );
-            throw new AuthenticationException( "Authentication failed, launcher panel was not loaded!" );
-        }
         return new HomePage( getSession() );
     }
 

@@ -51,8 +51,10 @@ class ContentBrowsePanel_GridPanel_FilterSpec
             parent( ContentPath.ROOT ).
             contentType( ContentTypeName.unstructured() ).
             build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData(
+            content ).save().closeBrowserTab().switchToBrowsePanelTab();
+
+        and: "filter panel is opened"
         contentBrowsePanel.doShowFilterPanel();
 
         when: "Selecting one entry in ContentTypes-filter"

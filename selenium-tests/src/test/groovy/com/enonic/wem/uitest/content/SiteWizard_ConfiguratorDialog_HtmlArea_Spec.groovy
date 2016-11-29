@@ -63,7 +63,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         when: "data saved and wizard closed"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
-        wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER ).save().close( SITE.getDisplayName() );
+        wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );
@@ -72,15 +72,14 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN site configurator dialog opened WHEN URL inserted, and changes applied THEN correct text present in HtmlArea"()
     {
         given: "site opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "URL inserted, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        TestUtils.saveScreenshot( getSession(), "insert-link-dialog" );
+        saveScreenshot( "insert-link-dialog" );
         linkModalDialog.clickURLBarItem().typeURL( URL ).typeText( LINK_TEXT ).pressInsertButton();
         configurationDialog.doApply();
 
@@ -95,8 +94,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN existing site with configured links WHEN preview of site opened THEN correct links present in page-source"()
     {
         given: "existing site with configured links"
-        filterPanel.typeSearchText( SITE.getName() );
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
 
         when: "preview button pressed"
         contentWizard.clickToolbarPreview();
@@ -114,8 +112,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN site configurator dialog opened WHEN Content selected, and changes applied THEN correct text present in HtmlArea"()
     {
         given: "site opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
@@ -137,8 +134,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN site configurator dialog opened WHEN Download-resource selected, and changes applied THEN correct text present in HtmlArea"()
     {
         given: "site opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
@@ -159,8 +155,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN site configurator dialog opened WHEN Email-link inserted, and changes applied THEN correct text present in HtmlArea"()
     {
         given: "site opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
@@ -182,8 +177,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN site configurator dialog opened WHEN Background image selected THEN correct image file present in a page-source"()
     {
         given: "site opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        ContentWizardPanel contentWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
@@ -200,8 +194,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     def "GIVEN site configurator dialog opened WHEN 'embedded iframe' macro inserted, and changes applied THEN correct text present in page sources"()
     {
         given: "site opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
@@ -216,7 +209,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.doApply();
 
         when: "preview button pressed"
-        wizard.clickToolbarPreview();
+        contentWizard.clickToolbarPreview();
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
         saveScreenshot( "site_config_preview" );
 

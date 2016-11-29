@@ -83,6 +83,21 @@ public class WaitHelper
         }
     }
 
+    public static boolean waitUntilAlertPresentNoException( WebDriver driver, long timeout )
+    {
+        WebDriverWait wait = new WebDriverWait( driver, timeout );
+        try
+        {
+            wait.until( ExpectedConditions.alertIsPresent() );
+            return true;
+        }
+        catch ( Exception e )
+        {
+            return false;
+        }
+    }
+
+
     public static boolean waitUntilClickableNoException( WebDriver driver, By by, long timeout )
     {
         WebDriverWait wait = new WebDriverWait( driver, timeout );

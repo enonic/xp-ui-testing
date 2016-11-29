@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.contentmanager.wizardpanel;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -24,6 +25,8 @@ import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.Content;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -341,6 +344,7 @@ public class ContentWizardPanel
         {
             //NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
             //TODO switch to the wizard tab by name
+            //getDriver().switchTo().defaultContent();
             getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         }
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
@@ -613,6 +617,22 @@ public class ContentWizardPanel
         return this;
     }
 
+    public ContentWizardPanel closeWizardAndCheckAlert()
+    {
+        getJavaScriptExecutor().executeScript( "window.close();" );
+        sleep( 500 );
+        try
+        {
+            TestUtils.createScreenCaptureWithRobot( NameHelper.uniqueName( "alert" ) );
+        }
+        catch ( Exception e )
+        {
+            getLogger().error( "exception when saving of a screenshot!" );
+        }
+
+        return this;
+    }
+
     private String getHandleForContentBrowseTab()
     {
         String contentBrowseTabHandle = (String) getSession().get( APP_TAB_HANDLE );
@@ -622,4 +642,36 @@ public class ContentWizardPanel
         }
         return contentBrowseTabHandle;
     }
+
+    public boolean waitIsAlertDisplayed()
+    {
+        return waitUntilAlertPresent( Application.EXPLICIT_NORMAL );
+    }
+
+    public void acceptAlertAndLeavePage()
+    {
+        if ( !waitIsAlertDisplayed() )
+        {
+            throw new TestFrameworkException( "Expected Alert dialog was not displayed!" );
+        }
+        Alert alert = getDriver().switchTo().alert();
+        alert.accept();
+        switchToBrowsePanelTab();
+    }
+
+    private boolean waitUntilAlertPresent( long timeout )
+    {
+        return WaitHelper.waitUntilAlertPresentNoException( getDriver(), timeout );
+    }
+
+    public void dismissAlertAndStayOnPage()
+    {
+        if ( !waitIsAlertDisplayed() )
+        {
+            throw new TestFrameworkException( "Expected Alert dialog was not displayed!" );
+        }
+        Alert alert = getDriver().switchTo().alert();
+        alert.dismiss();
+    }
+
 }

@@ -103,12 +103,8 @@ public class DeleteContentDialog
     public void doDelete()
     {
         deleteButton.click();
-        boolean isClosed = waitForClosed();
-        if ( !isClosed )
-        {
-            throw new TestFrameworkException( "Confirm 'delete content' dialog was not closed!" );
-        }
-        sleep( 1000 );
+        getDriver().close();
+        sleep( 300 );
     }
 
     public DeleteContentDialog clickOnDeleteButton()
@@ -184,7 +180,7 @@ public class DeleteContentDialog
     {
         if ( !isElementDisplayed( DEPENDANT_HEADER_TEXT ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_delete_dialog_subheader" );
+            saveScreenshot( "err_delete_dialog_subheader" );
             throw new TestFrameworkException( "Header element was not found!" );
         }
         return getDisplayedString( DEPENDANT_HEADER_TEXT );

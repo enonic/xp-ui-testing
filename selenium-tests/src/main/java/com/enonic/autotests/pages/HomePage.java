@@ -74,11 +74,7 @@ public class HomePage
     public ContentBrowsePanel openContentStudioApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        if ( !launcherPanel.isDisplayed() )
-        {
-            saveScreenshot( "err_launcher_display" );
-            throw new TestFrameworkException( "launcher panel should be displayed by default" );
-        }
+        checkLauncher();
         launcherPanel.clickOnContentStudio();
         sleep( 1000 );
         switchToContentStudioTab();
@@ -110,11 +106,7 @@ public class HomePage
     public UserBrowsePanel openUsersApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        if ( !launcherPanel.isDisplayed() )
-        {
-            saveScreenshot( "err_launcher_display" );
-            throw new TestFrameworkException( "launcher panel should be displayed by default" );
-        }
+        checkLauncher();
         launcherPanel.clickOnUsers();
         sleep( 1000 );
         switchToUsersTab();
@@ -125,14 +117,21 @@ public class HomePage
         return panel;
     }
 
+    public boolean checkLauncher()
+    {
+        Boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 1 );
+        if ( !isLauncherPresent )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_launcher_display" ) );
+            throw new TestFrameworkException( "launcher panel should be displayed by default" );
+        }
+        return isLauncherPresent;
+    }
+
     public ApplicationBrowsePanel openApplications()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        if ( !launcherPanel.isDisplayed() )
-        {
-            saveScreenshot( "err_launcher_display" );
-            throw new TestFrameworkException( "launcher panel should be displayed by default" );
-        }
+        checkLauncher();
         launcherPanel.clickOnApplications();
         sleep( 500 );
         switchToApplicationsTab();

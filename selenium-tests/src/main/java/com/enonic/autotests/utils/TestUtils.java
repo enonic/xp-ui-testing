@@ -1,5 +1,10 @@
 package com.enonic.autotests.utils;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,6 +16,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -59,6 +66,27 @@ public class TestUtils
         JavascriptExecutor executor = (JavascriptExecutor) session.getDriver();
         String script = String.format( Application.ELEMENT_BY_ID + ".isChecked()", checkboxId );
         return (Boolean) executor.executeScript( script );
+    }
+
+    public static void createScreenCaptureWithRobot( String screenshotName )
+        throws AWTException, IOException
+    {
+        String fileName = screenshotName + ".png";
+        BufferedImage image = new Robot().createScreenCapture( new Rectangle( Toolkit.getDefaultToolkit().getScreenSize() ) );
+        File folder = new File( "build/screenshots" );
+        if ( !folder.exists() )
+        {
+            if ( !folder.mkdir() )
+            {
+                System.out.println( "Folder for snapshots was not created " );
+            }
+            else
+            {
+                System.out.println( "Folder for snapshots was created " + folder.getAbsolutePath() );
+            }
+        }
+        String fullFileName = folder.getAbsolutePath() + File.separator + fileName;
+        ImageIO.write( image, "png", new File( fullFileName ) );
     }
 
     public static String saveScreenshot( final TestSession testSession, String screenshotName )
