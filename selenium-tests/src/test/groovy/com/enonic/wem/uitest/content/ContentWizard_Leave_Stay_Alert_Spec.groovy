@@ -5,6 +5,9 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.xp.schema.content.ContentTypeName
 
+/**
+ * TASK: XP-4570 Add selenium tests for Alert, that appears where there are unsaved changes in the wizard
+ **/
 class ContentWizard_Leave_Stay_Alert_Spec
     extends BaseContentSpec
 {
