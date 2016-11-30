@@ -3,6 +3,9 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
 
+/**
+ * The preview panel foe showing of info, when a content selected in the grid
+ */
 public class ContentItemPreviewPanel
     extends Application
 {

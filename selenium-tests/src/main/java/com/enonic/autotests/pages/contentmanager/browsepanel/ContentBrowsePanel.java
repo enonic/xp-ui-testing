@@ -631,9 +631,6 @@ public class ContentBrowsePanel
     @Override
     public ContentWizardPanel clickToolbarEdit()
     {
-        // editButton.click();
-        // sleep( 500 );
-        //  return null;
         return clickToolbarEditAndSwitchToWizardTab();
     }
 
@@ -876,29 +873,28 @@ public class ContentBrowsePanel
     {
         if ( Platform.getCurrent().is( Platform.MAC ) )
         {
-            buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.TAB ) ).perform();
+            buildActions().click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys( Keys.chord( Keys.COMMAND, Keys.TAB ) ).perform();
         }
         else
         {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.TAB ) ).perform();
+            buildActions().click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys( Keys.chord( Keys.CONTROL, Keys.TAB ) ).perform();
         }
-        // getDriver().switchTo().defaultContent();
-        ////switchToNewWizardTab();
     }
 
-    public void switchToPreviousTab( String xpathLocator )
+    public void switchToPreviousTab()
     {
         if ( Platform.getCurrent().is( Platform.MAC ) )
         {
-            buildActions().click( findElement( By.xpath( xpathLocator ) ) ).sendKeys(
+            buildActions().click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys(
                 Keys.chord( Keys.COMMAND, Keys.SHIFT, Keys.TAB ) ).perform();
         }
         else
         {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.SHIFT, Keys.TAB ) ).perform();
+            buildActions().
+                click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys( Keys.chord( Keys.CONTROL, Keys.SHIFT, Keys.TAB ) ).perform();
         }
         getDriver().switchTo().defaultContent();
-        ////switchToNewWizardTab();
+
     }
 
 

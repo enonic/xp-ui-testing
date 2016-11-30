@@ -73,7 +73,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
         Collections.addAll( contentList, parentFolder.getName(), shortcut1.getName(), shortcut2.getName(), shortcut3.getName() );
         filterPanel.typeSearchText( parentFolder.getName() );
         contentBrowsePanel.expandContent( shortcut1.getParent() );
-        TestUtils.saveScreenshot( getTestSession(), "three-items-selected" );
+        saveScreenshot( "three-items-selected" );
         contentBrowsePanel.selectContentInTable( contentList );
         int beforeRemove = itemsSelectionPanel.getSelectedItemCount();
         int selectedRowsBefore = contentBrowsePanel.getSelectedRowsNumber();
@@ -121,14 +121,14 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
                             shortcut3.getName() );
         filterPanel.typeSearchText( parentFolder.getName() )
         contentBrowsePanel.expandContent( shortcut1.getParent() );
-        TestUtils.saveScreenshot( getTestSession(), "item_selection_4" );
+        saveScreenshot( "item_selection_4" );
         contentBrowsePanel.selectContentInTable( contentList )
 
         when: "'Delete button' pressed"
         contentBrowsePanel.clickToolbarDelete().doDelete();
 
         then: "no SelectionItem-s are displayed"
-        TestUtils.saveScreenshot( getSession(), "item_selection_0" )
+        saveScreenshot( "item_selection_0" );
         itemsSelectionPanel.getSelectedItemCount() == 0;
     }
 }

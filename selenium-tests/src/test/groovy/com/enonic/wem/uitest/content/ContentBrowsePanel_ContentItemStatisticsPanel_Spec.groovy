@@ -10,7 +10,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
     def "WHEN existing image is selected THEN preview panel displayed with a image"()
     {
         when: "existing image is selected"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE );
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
 
         then: "preview panel displayed with a image"
         contentItemPreviewPanel.isImageDisplayed();
@@ -30,7 +30,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
         when: "existing folder is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
 
-        then: "'preview not available' displayed in the preview panel"
+        then: "'preview not available' for the folder"
         contentItemPreviewPanel.isPreviewNotAvailAble();
     }
 

@@ -13,8 +13,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.TestUtils;
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
-
 /**
  * This Dialog appears, when user tries to delete a content.
  */
@@ -103,8 +101,19 @@ public class DeleteContentDialog
     public void doDelete()
     {
         deleteButton.click();
-        getDriver().close();
-        sleep( 300 );
+        waitForClosed();
+    }
+
+    public void doDeleteAndSwitchToBrowsePanel()
+    {
+        doDelete();
+        switchToBrowsePanelTab();
+    }
+
+    public ContentBrowsePanel switchToBrowsePanelTab()
+    {
+        getDriver().switchTo().window( getSession().getHandleForContentBrowseTab() );
+        return new ContentBrowsePanel( getSession() );
     }
 
     public DeleteContentDialog clickOnDeleteButton()

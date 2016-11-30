@@ -17,7 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
-    public static final String APP_TAB_HANDLE = "app_window_id_key";
+    public static final String CONTENT_STUDIO_TAB_HANDLE = "content_studio_window_id_key";
 
     public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion";
 

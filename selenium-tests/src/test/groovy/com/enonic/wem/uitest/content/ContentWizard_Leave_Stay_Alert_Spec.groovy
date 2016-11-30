@@ -11,7 +11,7 @@ import com.enonic.xp.schema.content.ContentTypeName
 class ContentWizard_Leave_Stay_Alert_Spec
     extends BaseContentSpec
 {
-    def "GIVEN content-wizard opened AND data typed and content not saved WHEN 'delete content' dialog opened AND 'Delete' pressed THEN wizard closed and content not present in grid"()
+    def "GIVEN content-wizard opened AND data typed and content not saved WHEN 'delete content' dialog opened AND 'Delete' pressed THEN wizard closed and content not listed in the grid"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
@@ -19,13 +19,9 @@ class ContentWizard_Leave_Stay_Alert_Spec
 
         when: "display name typed and Delete button pressed"
         DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
-        deleteContentDialog.doDelete();
-        wizardPanel.switchToBrowsePanelTab();
+        deleteContentDialog.doDeleteAndSwitchToBrowsePanel();
 
-        then: "wizard closed"
-        !wizardPanel.isOpened();
-
-        and: "correct title displayed"
+        then: "content not listed in the grid"
         filterPanel.typeSearchText( displayName );
         !contentBrowsePanel.exists( displayName );
     }

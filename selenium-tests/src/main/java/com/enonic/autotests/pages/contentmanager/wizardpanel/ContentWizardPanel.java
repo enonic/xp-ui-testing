@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -343,9 +345,8 @@ public class ContentWizardPanel
         XP_Windows currentW = getSession().getCurrentWindow();
         if ( currentW != null && currentW.equals( XP_Windows.LIVE_EDIT ) )
         {
-            //NavigatorHelper.switchToAppWindow( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
             //TODO switch to the wizard tab by name
-            //getDriver().switchTo().defaultContent();
+            getDriver().switchTo().defaultContent();
             getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         }
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
@@ -643,7 +644,7 @@ public class ContentWizardPanel
 
     private String getHandleForContentBrowseTab()
     {
-        String contentBrowseTabHandle = (String) getSession().get( APP_TAB_HANDLE );
+        String contentBrowseTabHandle = (String) getSession().get( CONTENT_STUDIO_TAB_HANDLE );
         if ( contentBrowseTabHandle == null )
         {
             throw new TestFrameworkException( "Handle for content browse panel was not set" );
@@ -680,6 +681,42 @@ public class ContentWizardPanel
         }
         Alert alert = getDriver().switchTo().alert();
         alert.dismiss();
+    }
+
+    public void switchToNextTab()
+    {
+        if ( Platform.getCurrent().is( Platform.MAC ) )
+        {
+            buildActions().click( findElement( By.xpath( DIV_CONTENT_WIZARD_PANEL ) ) ).sendKeys(
+                Keys.chord( Keys.COMMAND, Keys.TAB ) ).perform();
+        }
+        else
+        {
+            buildActions().click( findElement( By.xpath( DIV_CONTENT_WIZARD_PANEL ) ) ).sendKeys(
+                Keys.chord( Keys.CONTROL, Keys.TAB ) ).perform();
+        }
+        // getDriver().switchTo().defaultContent();
+    }
+
+    public void switchToPreviousTab()
+    {
+        if ( Platform.getCurrent().is( Platform.MAC ) )
+        {
+
+            buildActions().click( findElement( By.xpath( DIV_CONTENT_WIZARD_PANEL ) ) ).sendKeys(
+                Keys.chord( Keys.COMMAND, Keys.SHIFT, Keys.TAB ) ).perform();
+        }
+        else
+        {
+            //Actions action= buildActions();
+            //action.keyDown(Keys.CONTROL).sendKeys(Keys.TAB).build().perform();
+
+            //new Actions(getDriver()).sendKeys(Keys.chord(Keys.CONTROL, Keys.TAB)).build().perform();
+            //findElement( By.xpath( "//body" ) ).sendKeys( Keys.CONTROL, Keys.TAB );
+            buildActions().
+                click( findElement( By.xpath( "//body" ) ) ).sendKeys( Keys.chord( Keys.CONTROL, Keys.TAB ) ).build().perform();
+        }
+        //getDriver().switchTo().defaultContent();
     }
 
 }

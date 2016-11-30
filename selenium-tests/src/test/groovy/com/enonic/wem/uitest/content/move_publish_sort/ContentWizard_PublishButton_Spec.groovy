@@ -87,7 +87,7 @@ class ContentWizard_PublishButton_Spec
 
 
         when: "'Delete' button on the wizard-toolbar pressed AND content deleted"
-        wizard.clickToolbarDelete().doDelete();
+        wizard.clickToolbarDelete().doDeleteAndSwitchToBrowsePanel();
 
         then: "'pending delete' status for this content is displayed on the wizard"
         wizard.getStatus() == ContentStatus.PENDING_DELETE.getValue();

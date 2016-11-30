@@ -6,6 +6,8 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.CapabilityType;
 
+import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.vo.usermanager.User;
 
 public class TestSession
@@ -124,9 +126,14 @@ public class TestSession
         this.currentWindowHandle = windowHandle;
     }
 
-    public void setContentStudioTabHandle()
+    public String getHandleForContentBrowseTab()
     {
-
+        String contentBrowseTabHandle = (String) get( Application.CONTENT_STUDIO_TAB_HANDLE );
+        if ( contentBrowseTabHandle == null )
+        {
+            throw new TestFrameworkException( "Handle for content browse panel was not set" );
+        }
+        return contentBrowseTabHandle;
     }
 
 }

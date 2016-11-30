@@ -131,7 +131,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         addContent( parent );
         addContent( contentToDelete );
         ContentWizardPanel wizard = findAndSelectContent( contentToDelete.getName() ).clickToolbarEditAndSwitchToWizardTab();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         when: "content has been moved"
         contentBrowsePanel.clickToolbarMove().typeSearchText( parent.getName() ).selectDestinationAndClickOnMove( parent.getName() );

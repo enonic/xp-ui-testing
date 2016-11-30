@@ -1,16 +1,14 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.utils.TestUtils
-
 class ContentBrowsePanel_ContextMenuImage_Spec
     extends BaseContentSpec
 {
-    def "GIVEN an offline folder WHEN context menu opened  THEN all items have correct state"()
+    def "GIVEN an offline image WHEN context menu opened  THEN all menu-items have correct state"()
     {
         when: "context menu opened"
-        filterPanel.typeSearchText( IMPORTED_BOOK_IMAGE );
-        contentBrowsePanel.openContextMenu( IMPORTED_BOOK_IMAGE );
-        TestUtils.saveScreenshot( getSession(), "image-context-menu" );
+        filterPanel.typeSearchText( IMPORTED_IMAGE_BOOK_NAME );
+        contentBrowsePanel.openContextMenu( IMPORTED_IMAGE_BOOK_NAME );
+        saveScreenshot( "image-context-menu" );
 
         then: "Delete menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( "Delete" );
@@ -18,9 +16,9 @@ class ContentBrowsePanel_ContextMenuImage_Spec
         !contentBrowsePanel.isContextMenuItemEnabled( "Preview" );
         and: "Edit menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( "Edit" );
-        and: "New menu item is enabled"
+        and: "New menu item is disabled"
         !contentBrowsePanel.isContextMenuItemEnabled( "New" );
-        and: "Sort menu item is enabled"
+        and: "Sort menu item is disabled"
         !contentBrowsePanel.isContextMenuItemEnabled( "Sort" );
         and: "Duplicate menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( "Duplicate" );

@@ -79,8 +79,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
 
         when: "content saved and the HomeButton clicked"
-        contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData( folder ).save();
-        contentBrowsePanel.pressAppHomeButton();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData(
+            folder ).save();
+        //wizardPanel.switchToPreviousTab(  );
+        wizardPanel.switchToBrowsePanelTab();
         sleep( 1000 );
 
         then: "new ContentType-filter should be updated with new count"

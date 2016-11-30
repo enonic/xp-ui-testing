@@ -30,11 +30,7 @@ class BaseGebSpec
         {
             session.setLoggedIn( false )
         }
-
-        if ( session.get( HomePage.APP_TAB_HANDLE ) != null )
-        {
-            closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
-        }
+        closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
         resetBrowser();
     }
     // run before the first feature method
@@ -56,7 +52,7 @@ class BaseGebSpec
                 getDriver().close();
             }
         }
-        session.put( HomePage.APP_TAB_HANDLE, null );
+        // session.put( HomePage.APP_TAB_HANDLE, null );
         getDriver().switchTo().window( homeHandle );
     }
 

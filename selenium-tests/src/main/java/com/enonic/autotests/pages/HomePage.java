@@ -77,17 +77,17 @@ public class HomePage
         checkLauncher();
         launcherPanel.clickOnContentStudio();
         sleep( 1000 );
-        switchToContentStudioTab();
+        switchToContentBrowseTab();
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         getLogger().info( "Content App loaded" );
         return panel;
     }
 
-    private void switchToContentStudioTab()
+    private void switchToContentBrowseTab()
     {
         String contentBrowseTabHandle = NavigatorHelper.switchToBrowserTab( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
-        getSession().put( HomePage.APP_TAB_HANDLE, contentBrowseTabHandle );
+        getSession().put( HomePage.CONTENT_STUDIO_TAB_HANDLE, contentBrowseTabHandle );
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
