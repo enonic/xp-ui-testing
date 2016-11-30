@@ -181,7 +181,7 @@ class Restore_Version_Site_Spec
         sleep( 1000 );
 
         and: "home button clicked"
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
         saveScreenshot( "version_site_controller_added" );
 
         then: "number of versions increased after adding of controller in the wizard"
@@ -194,7 +194,7 @@ class Restore_Version_Site_Spec
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         when: "version without a selected controller was restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 2 );

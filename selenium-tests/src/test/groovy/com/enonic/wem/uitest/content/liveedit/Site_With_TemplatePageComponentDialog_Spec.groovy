@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.liveedit
 
-import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu
@@ -89,57 +88,18 @@ class Site_With_TemplatePageComponentDialog_Spec
     {
         given: "opened a existing site"
         filterPanel.typeSearchText( SITE.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit(); ;
 
         and: "'Page Components View' shown"
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
 
 
         when: "wizard closed"
-        SaveBeforeCloseDialog dialog = wizard.close( SITE.getDisplayName() );
+        wizard.closeWizardAndCheckAlert();
 
-        then: "save before close dialog displayed, because renderer was changed"
-        dialog != null;
-    }
+        then: "Alert dialog appears, because renderer was changed"
+        wizard.waitIsAlertDisplayed();
 
-    def "GIVEN 'Page Component View' shown AND context menu displayed WHEN wizard closed THEN context menu closed as well "()
-    {
-        given: "existing site is opened"
-        filterPanel.typeSearchText( SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
-
-        and: "page components view shown "
-        wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
-        PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
-
-        and: "context-menu opened"
-        dialog.openMenu( PAGE_TEMPLATE.getDisplayName() );
-        ItemViewContextMenu contextMenu = new ItemViewContextMenu( getSession() );
-
-        when: "site-wizard have been closed"
-        wizard.save().close( SITE.getDisplayName() );
-        saveScreenshot( "context-menu-closed-templ" );
-
-        then: "context menu is not displayed"
-        !contextMenu.isOpened();
-    }
-
-    def "GIVEN 'Page Component View' shown AND context menu displayed WHEN 'HomeButton' pressed THEN context menu is not displayed "()
-    {
-        given: "existing site have been opened"
-        filterPanel.typeSearchText( SITE.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
-        wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
-        PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
-        dialog.openMenu( PAGE_TEMPLATE.getDisplayName() );
-        ItemViewContextMenu contextMenu = new ItemViewContextMenu( getSession() );
-
-        when: "HomeButton clicked"
-        contentBrowsePanel.pressAppHomeButton();
-        saveScreenshot( "context-menu-home-template" );
-
-        then: "context menu is not displayed"
-        !contextMenu.isOpened();
     }
 
     def "GIVEN 'Page Components' view opened WHEN button 'close' clicked THEN dialog not displayed"()

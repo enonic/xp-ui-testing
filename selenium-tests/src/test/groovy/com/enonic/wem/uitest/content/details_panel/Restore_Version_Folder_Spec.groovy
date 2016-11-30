@@ -74,7 +74,7 @@ class Restore_Version_Folder_Spec
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
         form.removeLanguage( NORSK_LANGUAGE ).selectLanguage( ENGLISH_LANGUAGE );
         saveScreenshot( "folder_language_changed" );
-        wizard.save().close( INITIAL_DISPLAY_NAME );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -102,7 +102,7 @@ class Restore_Version_Folder_Spec
         modalDialog.setCheckedForInheritCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
         sleep( 1000 );
         List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
-        wizard.save().close( NEW_DISPLAY_NAME );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the previous version is restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();

@@ -97,10 +97,10 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing zoomed image is opened WHEN original version is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
 
         and: "AppHome button was pressed"
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         when: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -121,10 +121,10 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing  image is opened WHEN version with zoomed image is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
 
         and: "AppHome button was pressed"
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         when: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();

@@ -217,7 +217,7 @@ class Occurrences_ItemSet_0_0_Spec
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
 
         and: "AppHome button was pressed"
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
         and: "details panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
 

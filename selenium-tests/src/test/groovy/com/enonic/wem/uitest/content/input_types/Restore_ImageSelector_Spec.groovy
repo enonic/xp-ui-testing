@@ -41,7 +41,7 @@ class Restore_ImageSelector_Spec
         given: "version of the content with one missed required image is current"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         and: "AppHome button has been pressed"
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "valid version of content with two images is restored"
@@ -74,7 +74,7 @@ class Restore_ImageSelector_Spec
     {
         given: "versions of content with two images is current"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "version of content with one images is restored"

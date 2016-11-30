@@ -37,7 +37,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when: "content saved and HomeButton clicked"
         wizard.save();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         then: "new Content should be listed"
         contentBrowsePanel.exists( rootContent.getName() );
@@ -69,7 +69,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when: "child content saved and HomeButton clicked"
         wizard.save();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         then: "parent should still be unexpanded"
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
@@ -104,7 +104,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when: "saved and HomeButton clicked"
         wizard.save();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         then: "new Content should be listed beneath parent"
         contentBrowsePanel.exists( childContent.getName() )

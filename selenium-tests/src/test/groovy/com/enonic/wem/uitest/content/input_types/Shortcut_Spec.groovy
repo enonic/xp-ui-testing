@@ -32,7 +32,7 @@ class Shortcut_Spec
         wizard.typeDisplayName( name ).save();
 
         and: "App Home button clicked"
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
         findAndSelectContent( name );
         TestUtils.saveScreenshot( getSession(), "shortcut_in_grid_invalid" );
 

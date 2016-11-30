@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -29,6 +30,7 @@ public class RichComboBoxInput
         saveScreenshot( "option: " + option );
         if ( !isVisible )
         {
+            saveScreenshot( NameHelper.uniqueName( "err_option" ) );
             throw new TestFrameworkException( "option was not found! " + option );
         }
         getDisplayedElement( By.xpath( optionXpath ) ).click();

@@ -111,10 +111,7 @@ class Restore_Version_Crop_Image_Spec
     {
         given: "existing zoomed image is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
-
-
-        and: "AppHome button was pressed"
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
 
         when: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -125,7 +122,7 @@ class Restore_Version_Crop_Image_Spec
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
-        contentBrowsePanel.clickOnTab( IMPORTED_MAN_IMAGE );
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent()
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "original image is displayed on the wizard"
@@ -135,10 +132,8 @@ class Restore_Version_Crop_Image_Spec
     def "GIVEN existing image is opened WHEN version with cropped image is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
-
-        and: "AppHome button was pressed"
-        contentBrowsePanel.pressAppHomeButton();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEdit();
+        wizard.switchToBrowsePanelTab();
 
         when: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
@@ -149,7 +144,7 @@ class Restore_Version_Crop_Image_Spec
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
-        contentBrowsePanel.clickOnTab( IMPORTED_MAN_IMAGE );
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "original image is displayed on the wizard"

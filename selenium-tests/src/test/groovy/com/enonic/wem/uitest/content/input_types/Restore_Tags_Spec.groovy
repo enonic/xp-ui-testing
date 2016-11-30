@@ -39,7 +39,7 @@ class Restore_Tags_Spec
     {
         given: "content with missed required value"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "valid version of content is restored"
@@ -56,7 +56,7 @@ class Restore_Tags_Spec
     {
         given: "current version of content is valid"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
-        contentBrowsePanel.pressAppHomeButton();
+        wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "not valid version of content is restored"

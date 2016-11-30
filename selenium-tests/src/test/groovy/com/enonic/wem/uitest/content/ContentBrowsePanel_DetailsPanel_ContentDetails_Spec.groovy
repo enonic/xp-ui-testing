@@ -2,8 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
@@ -11,25 +9,6 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
 {
     @Shared
     Content folderContent;
-
-    @Shared
-    String UNNAMED_SITE_DISPLAY_NAME = "<Unnamed Site>";
-
-    @Ignore
-    def "GIVEN site wizard opened AND and HomeButton clicked WHEN unnamed content selected in greed THEN correct display name is shown"()
-    {
-        given: "site wizard opened AND and HomeButton clicked"
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.site() );
-        contentBrowsePanel.pressAppHomeButton();
-
-        when: "unnamed content selected in greed"
-        filterPanel.typeSearchText( "unnamed" )
-        contentBrowsePanel.selectRowByItemDisplayName( UNNAMED_SITE_DISPLAY_NAME );
-        contentBrowsePanel.clickOnDetailsToggleButton();
-
-        then: "correct display name is shown"
-        contentDetailsPanel.getContentDisplayName() == UNNAMED_SITE_DISPLAY_NAME;
-    }
 
     def "WHEN no one content selected THEN 'Details Panel Toggle' button is displayed AND details panel not displayed"()
     {
@@ -65,7 +44,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         given: "content selected and the 'Content Details Panel' shown"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
-        TestUtils.saveScreenshot( getSession(), "detail-panel-opened" );
+        saveScreenshot( "detail-panel-opened" );
 
         when: "'Toggle' button clicked"
         contentBrowsePanel.clickOnDetailsToggleButton();

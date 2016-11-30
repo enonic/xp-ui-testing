@@ -209,6 +209,7 @@ public class ContentWizardPanel
 
     public ItemViewContextMenu showItemViewContextMenu()
     {
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         clickOnPageView();
         sleep( 500 );
         return new ItemViewContextMenu( getSession() );
@@ -218,7 +219,8 @@ public class ContentWizardPanel
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
+        //NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
+        getDriver().switchTo().defaultContent();
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         return this;
     }

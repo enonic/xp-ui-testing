@@ -25,7 +25,7 @@ class Restore_Version_Focus_Image_Spec
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
         and: "image opened in the wizard"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
 
