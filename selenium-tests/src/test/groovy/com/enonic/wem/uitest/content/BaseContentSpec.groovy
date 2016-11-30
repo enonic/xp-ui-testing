@@ -57,7 +57,10 @@ class BaseContentSpec
     String IMAGES_FOLDER_DISPLAY_NAME = "All Content types images";
 
     @Shared
-    String IMPORTED_BOOK_IMAGE = "book.jpg";
+    String IMPORTED_IMAGE_BOOK_NAME = "book.jpg";
+
+    @Shared
+    String IMPORTED_IMAGE_BOOK_DISPLAY_NAME = "book";
 
     @Shared
     String IMPORTED_MAN_IMAGE = "man.jpg";
