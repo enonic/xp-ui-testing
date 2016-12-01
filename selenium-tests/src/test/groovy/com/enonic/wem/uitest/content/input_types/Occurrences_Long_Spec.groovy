@@ -29,7 +29,7 @@ class Occurrences_Long_Spec
         given: "creating of  content with type 'Long'"
         VALID_LONG_CONTENT = buildLong0_1_Content( TEST_LONG );
         ContentWizardPanel wizard = selectSitePressNew( VALID_LONG_CONTENT.getContentTypeName() ).waitUntilWizardOpened()
-        wizard.typeData( VALID_LONG_CONTENT ).save().close( VALID_LONG_CONTENT.getDisplayName() ); ;
+        wizard.typeData( VALID_LONG_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( VALID_LONG_CONTENT );
@@ -59,8 +59,8 @@ class Occurrences_Long_Spec
         then: "input with a red border"
         !longFormViewPanel.isValueInInputValid( 0 );
 
-        and: "red icon not shown on the wizard tab, because this input is not required"
-        !wizard.isContentInvalid( longContent.getDisplayName() );
+        and: "validation message is not dispalyed, because this input is not required"
+        !longFormViewPanel.isValidationMessagePresent();
 
         and: "'Publish' button on the wizard-toolbar is enabled, because input is not required"
         wizard.isPublishButtonEnabled();
@@ -80,8 +80,8 @@ class Occurrences_Long_Spec
         then: "input with a red border"
         !longFormViewPanel.isValueInInputValid( 0 );
 
-        and: "red icon should be shown on the wizard tab, because this input is required"
-        wizard.isContentInvalid( longContent.getDisplayName() );
+        and: "validation message is displayed, because this input is required"
+        longFormViewPanel.isValidationMessagePresent();
 
         and: "'Publish' button on the wizard-toolbar is disabled, because input is required"
         !wizard.isPublishButtonEnabled();
@@ -93,14 +93,15 @@ class Occurrences_Long_Spec
         Content longContent = buildLong1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             longContent );
+        LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
 
         when: "content saved"
         wizard.save();
         saveScreenshot( "test_long_save_confirm1" );
 
-        then: "red icon displayed on the wizard tab"
-        wizard.isContentInvalid( longContent.getDisplayName() );
+        then: "validation message is displayed, because this input is required"
+        longFormViewPanel.isValidationMessagePresent();
 
         and: "confirmation dialog should not appears"
         !dialog.isOpened();
@@ -118,7 +119,7 @@ class Occurrences_Long_Spec
         saveScreenshot( "test_max_long1" );
 
         then: "red icon not displayed in the wizard tab"
-        !wizard.isContentInvalid( doubleContent.getDisplayName() );
+        !longFormViewPanel.isValidationMessagePresent();
 
         and: "input has no a red border"
         longFormViewPanel.isValueInInputValid( 0 );
@@ -135,10 +136,7 @@ class Occurrences_Long_Spec
         wizard.typeData( longContent );
         saveScreenshot( "test_more_max_long" );
 
-        then: "red icon displayed on the wizard tab"
-        wizard.isContentInvalid( longContent.getDisplayName() );
-
-        and: "input has a red border"
+        then: "input has a red border"
         !longFormViewPanel.isValueInInputValid( 0 );
     }
 
@@ -153,10 +151,7 @@ class Occurrences_Long_Spec
         wizard.typeData( MIN_SAFE_CONTENT ).save();
         saveScreenshot( "test_min_long" );
 
-        then: "red icon not displayed in the wizard tab"
-        !wizard.isContentInvalid( MIN_SAFE_CONTENT.getDisplayName() );
-
-        and: "input has no a red border"
+        then: "input has no a red border"
         longFormViewPanel.isValueInInputValid( 0 );
     }
 
@@ -183,10 +178,11 @@ class Occurrences_Long_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
         longFormViewPanel.typeLongValue( "" );
+        wizard.save();
         sleep( 500 );
         saveScreenshot( "test_long_input_cleared" );
 
-        then: "red icon appears in the wizard tab"
-        wizard.isContentInvalid( MIN_SAFE_CONTENT.getDisplayName() );
+        then: "validation message appears"
+        longFormViewPanel.isValidationMessagePresent();
     }
 }

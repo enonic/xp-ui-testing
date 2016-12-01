@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -20,12 +19,13 @@ class Occurrences_TextLine_1_1_Spec
         given: "new content with type 'text line' added'"
         Content textLineContent = buildTextLine1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() ).typeData( textLineContent );
+        TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         when: "content opened for edit"
         wizard.save();
 
         then: "content should be invalid, because required field not filled"
-        wizard.isContentInvalid( textLineContent.getDisplayName() );
+        formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN opened content wizard WHEN content without required 'text ' saved and wizard closed THEN grid row with it content has a red icon"()
@@ -35,9 +35,9 @@ class Occurrences_TextLine_1_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() ).typeData( textLineContent );
 
         when: "content opened for edit"
-        wizard.save().close( textLineContent.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );
-        TestUtils.saveScreenshot( getSession(), "textline-not-valid1" )
+        saveScreenshot( "textline-not-valid1" )
 
         then: "content should be invalid, because required field not filled"
         contentBrowsePanel.isContentInvalid( textLineContent.getName() );
@@ -76,7 +76,7 @@ class Occurrences_TextLine_1_1_Spec
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         when:
-        contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
+        contentWizardPanel.typeData( textLineContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new content listed in the grid and can be opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
@@ -97,7 +97,7 @@ class Occurrences_TextLine_1_1_Spec
         when:
         contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL )
-        contentWizardPanel.close( textLineContent.getDisplayName() );
+        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then:
