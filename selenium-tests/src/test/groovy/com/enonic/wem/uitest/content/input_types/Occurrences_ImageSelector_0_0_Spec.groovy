@@ -13,24 +13,12 @@ class Occurrences_ImageSelector_0_0_Spec
     extends Base_InputFields_Occurrences
 {
     @Shared
-    String TEST_IMG_1 = "nord.jpg";
-
-    @Shared
-    String TEST_IMG_2 = "book.jpg";
-
-    @Shared
-    String TEST_IMG_3 = "man.jpg";
-
-    @Shared
-    String TEST_IMG_4 = "fl.jpg";
-
-    @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
     def "GIVEN saving of Image Selector-content (0:0) and two image selected WHEN content opened for edit THEN correct images present on page "()
     {
         given: "new content with type Image Selector 0:0 added'"
-        Content imageSelectorContent = buildImageSelector0_0_Content( TEST_IMG_1, TEST_IMG_2 );
+        Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
             imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
@@ -45,15 +33,17 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "images present with correct names"
-        images.get( 0 ) == TEST_IMG_1;
+        images.get( 0 ) == NORD_IMAGE_NAME;
         and:
-        images.get( 1 ) == TEST_IMG_2;
+        images.get( 1 ) == BOOK_IMAGE_NAME;
     }
 
     def "GIVEN saving of 'Image Selector-content' (0:0) and four images selected WHEN content opened for edit THEN correct images present on page "()
     {
         given: "new content with type Image Selector 0_0 added'"
-        TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector0_0_Content( TEST_IMG_1, TEST_IMG_2, TEST_IMG_3, TEST_IMG_4 );
+        TEST_IMAGE_SELECTOR_CONTENT =
+            buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME, MAN_IMAGE_DISPLAY_NAME,
+                                           FL_IMAGE_DISPLAY_NAME );
         selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
             TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
@@ -69,13 +59,13 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "images present with correct names"
-        images.get( 0 ) == TEST_IMG_1;
+        images.get( 0 ) == NORD_IMAGE_NAME;
         and:
-        images.get( 1 ) == TEST_IMG_2;
+        images.get( 1 ) == BOOK_IMAGE_NAME;
         and:
-        images.get( 2 ) == TEST_IMG_3;
+        images.get( 2 ) == MAN_IMAGE_NAME;
         and:
-        images.get( 3 ) == TEST_IMG_4;
+        images.get( 3 ) == FL_IMAGE_NAME;
     }
 
     def "GIVEN content opened for edit WHEN one of the images clicked THEN buttons 'Edit' and 'Remove' appears"()
@@ -85,9 +75,10 @@ class Occurrences_ImageSelector_0_0_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "content opened for edit"
-        formViewPanel.clickOnImage( TEST_IMG_3 )
+        formViewPanel.clickOnImage( MAN_IMAGE_NAME )
         then: "buttons 'Edit' and 'Remove' appears"
         formViewPanel.isRemoveButtonDisplayed();
+
         and:
         formViewPanel.isEditButtonDisplayed();
     }
@@ -99,7 +90,8 @@ class Occurrences_ImageSelector_0_0_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "content opened for edit"
-        formViewPanel.clickOnCheckboxAndSelectImage( TEST_IMG_3 );
+        formViewPanel.clickOnCheckboxAndSelectImage( MAN_IMAGE_NAME );
+
         then: "label for button 'Remove' has a correct number"
         formViewPanel.getNumberFromRemoveButton() == 1;
     }
@@ -111,7 +103,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "content opened for edit"
-        formViewPanel.clickOnImage( TEST_IMG_3 );
+        formViewPanel.clickOnImage( MAN_IMAGE_NAME );
         formViewPanel.clickOnRemoveButton();
         saveScreenshot( "img_sel_0_0_one_removed" );
 
@@ -154,7 +146,7 @@ class Occurrences_ImageSelector_0_0_Spec
     def "GIVEN saving 'Image Selector 0:0' content with selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
     {
         given: "new content with type 'Image Selector 0:0'"
-        Content imageSelectorContent = buildImageSelector0_0_Content( TEST_IMG_2 );
+        Content imageSelectorContent = buildImageSelector0_0_Content( BOOK_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );

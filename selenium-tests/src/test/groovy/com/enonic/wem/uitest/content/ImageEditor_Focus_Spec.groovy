@@ -44,7 +44,7 @@ class ImageEditor_Focus_Spec
     def "GIVEN 'Image Editor' dialog opened WHEN focus changed  AND 'Save' button pressed THEN 'save before close dialog' does not appear"()
     {
         given: "'Image Editor' dialog opened"
-        ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         when: " dragHandler moved up AND image cropped "
@@ -56,11 +56,11 @@ class ImageEditor_Focus_Spec
         wizard.save();
 
         and: "wizard closed"
-        def result = wizard.close( WHALE_IMAGE_NAME );
-        saveScreenshot( "focus_image_saved_and_closed" );
+        wizard.closeWizardAndCheckAlert();
+        wizard.switchToBrowsePanelTab();
 
-        then: "wizard closed and 'save before close' dialog does not appear"
-        result == null;
+        then: "Alert dialog should not appear"
+        !wizard.isAlertPresent();
     }
 
     def "GIVEN existing image with changed focus WHEN the image opened THEN 'Reset' button displayed on the page"()
@@ -79,7 +79,7 @@ class ImageEditor_Focus_Spec
     def "GIVEN existing image with changed focus WHEN 'Reset' button has been pressed THEN 'Reset' button is getting hidden"()
     {
         given: "existing image with changed focus"
-        ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "'Reset' button has been pressed"
@@ -108,9 +108,10 @@ class ImageEditor_Focus_Spec
         imageFormViewPanel.clickOnResetButton();
 
         and: "'close' wizard button pressed"
-        def result = wizard.save().close( WHALE_IMAGE_NAME );
+        wizard.save().closeWizardAndCheckAlert();
+        wizard.switchToBrowsePanelTab();
 
-        then: "Image-wizard closes"
-        result == null;
+        then: "Alert dialog should not appear"
+        !wizard.isAlertPresent();
     }
 }

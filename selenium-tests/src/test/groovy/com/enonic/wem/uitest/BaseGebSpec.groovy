@@ -4,6 +4,7 @@ import com.enonic.autotests.TestSession
 import com.enonic.autotests.pages.HomePage
 import com.enonic.autotests.utils.TestUtils
 import geb.spock.GebSpec
+import org.openqa.selenium.Alert
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.JavascriptExecutor
 import spock.lang.Shared
@@ -30,6 +31,7 @@ class BaseGebSpec
         {
             session.setLoggedIn( false )
         }
+        closeAlerts();
         closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
         resetBrowser();
     }
@@ -40,6 +42,19 @@ class BaseGebSpec
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String userAgent = (String) js.executeScript( "return navigator.userAgent;" );
         println "user agent is : " + userAgent;
+    }
+
+    def closeAlerts()
+    {
+        try
+        {
+            Alert alert = getDriver().switchTo().alert();
+            alert.dismiss();
+        }
+        catch ( Exception e )
+        {
+            println "no alerts";
+        }
     }
 
     def closeAllTabs( String homeHandle )

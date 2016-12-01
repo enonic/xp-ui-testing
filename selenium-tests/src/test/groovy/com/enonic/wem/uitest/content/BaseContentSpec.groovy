@@ -468,9 +468,8 @@ class BaseContentSpec
     protected void addSiteWithAllInputTypes( String siteName )
     {
         Content site = buildSiteWithAllTypes( siteName );
-        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-            site.getDisplayName() );
-        saveScreenshot( NameHelper.uniqueName( "saved_" + siteName ) );
+        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
+            site ).save().closeBrowserTab().switchToBrowsePanelTab();
     }
 
     private Content buildSiteWithAllTypes( String siteName )

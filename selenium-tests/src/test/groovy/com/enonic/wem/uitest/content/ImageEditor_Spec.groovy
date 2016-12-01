@@ -16,7 +16,7 @@ class ImageEditor_Spec
     def "GIVEN image content opened WHEN 'Crop' button was pressed THEN 'Image Editor' dialog appears with required control elements"()
     {
         given: "content wizard opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
@@ -50,7 +50,7 @@ class ImageEditor_Spec
     def "GIVEN image content opened AND 'Crop' button was pressed THEN image was cropped THEN 'Reset Mask' link appears on the toolbar "()
     {
         given: "content wizard opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
@@ -73,7 +73,7 @@ class ImageEditor_Spec
     def "GIVEN a cropped image WHEN 'Reset Mask' was pressed THEN the button is getting hidden AND image's size is not changed"()
     {
         given: "content wizard opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
@@ -102,7 +102,7 @@ class ImageEditor_Spec
     def "GIVEN 'Image Editor' dialog opened WHEN 'Close' button was pressed THEN the dialog closes"()
     {
         given: "'Image Editor' dialog opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
@@ -118,7 +118,7 @@ class ImageEditor_Spec
     def "GIVEN image content opened WHEN 'Focus' button was pressed THEN focus circle appears on the Image Editor"()
     {
         given: "'Image Editor' dialog opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "'Close' button was pressed"
@@ -132,7 +132,7 @@ class ImageEditor_Spec
     def "GIVEN image content opened AND 'Focus' button was pressed WHEN focus circle moved THEN 'Reset Autofocus' link appears on the toolbar"()
     {
         given: "'Image Editor' dialog opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
@@ -150,7 +150,7 @@ class ImageEditor_Spec
     def "GIVEN image  opened AND 'AutoFocus' was moved WHEN 'Reset Autofocus' link pressed THEN 'Reset Autofocus' link is getting hidden"()
     {
         given: "'Image Editor' dialog opened"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = imageFormViewPanel.clickOnFocusButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
@@ -171,7 +171,7 @@ class ImageEditor_Spec
     def "GIVEN existing an image opened AND 'AutoFocus' was moved  AND all were saved WHEN image opened THEN 'Reset' button is displayed"()
     {
         given: "image opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = imageFormViewPanel.clickOnFocusButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
@@ -183,7 +183,7 @@ class ImageEditor_Spec
         toolbar.clickOnApplyButton();
 
         and: "image saved and wizard closed"
-        wizard.save().close( IMPORTED_BOOK_IMAGE );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "image opened again"
         contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();

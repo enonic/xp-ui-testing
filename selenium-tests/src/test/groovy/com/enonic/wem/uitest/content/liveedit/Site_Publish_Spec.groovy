@@ -52,7 +52,7 @@ class Site_Publish_Spec
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEST_TEXT );
-        wizard.switchToMainWindow();
+        wizard.switchToDefaultWindow();
         pageComponentsView.doCloseDialog();
 
         and: "site saved in the wizard"

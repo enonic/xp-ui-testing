@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -25,7 +24,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         when: "DateTime input has been clicked"
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
         DateTimePickerPopup picker = formViewPanel.showPicker();
-        TestUtils.saveScreenshot( getSession(), "date-time-picker-with-timezone" );
+        saveScreenshot( "date-time-picker-with-timezone" );
 
         then: "'date time picker' popup dialog is displayed"
         picker.isDisplayed();
@@ -76,13 +75,14 @@ class Occurrences_Local_DateTime_0_1_Spec
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
+        DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
         when: "content opened for edit"
         wizard.save();
-        TestUtils.saveScreenshot( getSession(), "wizard-datetime01-valid" );
+        saveScreenshot( "wizard-datetime01-valid" );
 
-        then: "content is valid"
-        !wizard.isContentInvalid( dateTimeContent.getDisplayName() );
+        then: "content is valid and validation message is not displayed"
+        !formViewPanel.isValidationMessagePresent();
 
         and: "'Publish' button is enabled"
         wizard.isPublishButtonEnabled();
@@ -97,7 +97,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         when: "content opened for edit"
         wizard.save().close( dateTimeContent.getDisplayName() );
         filterPanel.typeSearchText( dateTimeContent.getName() );
-        TestUtils.saveScreenshot( getSession(), "date-time01-without-date" );
+        saveScreenshot( "date-time01-without-date" );
 
         then: "content should is valid, because the 'date time' field not required"
         !contentBrowsePanel.isContentInvalid( dateTimeContent.getName() );

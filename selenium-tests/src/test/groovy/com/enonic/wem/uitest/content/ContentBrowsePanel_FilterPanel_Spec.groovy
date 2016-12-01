@@ -81,7 +81,6 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "content saved and the HomeButton clicked"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData(
             folder ).save();
-        //wizardPanel.switchToPreviousTab(  );
         wizardPanel.switchToBrowsePanelTab();
         sleep( 1000 );
 
@@ -104,7 +103,7 @@ class ContentBrowsePanel_FilterPanel_Spec
             typeData( TEST_FOLDER );
 
         when: "content saved and wizard closed"
-        wizard.save().close( TEST_FOLDER.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 1000 );
         saveScreenshot( "last-mod-day-increased" );
 

@@ -11,9 +11,6 @@ class Occurrences_ImageSelector_1_1_Spec
     extends Base_InputFields_Occurrences
 {
     @Shared
-    String TEST_IMAGE_NAME = "nord.jpg";
-
-    @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
     def "WHEN wizard for adding a 'Image Selector'-content(1:1) opened THEN option filter input is present, there no selected image and upload button is enabled "()
@@ -36,7 +33,7 @@ class Occurrences_ImageSelector_1_1_Spec
         given: "new content with type Image Selector added'"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
-        wizard.typeData( imageSelectorContent ).save().close( imageSelectorContent.getDisplayName() );
+        wizard.typeData( imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
@@ -50,16 +47,16 @@ class Occurrences_ImageSelector_1_1_Spec
         and: "options filter input is displayed"
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "just created content without images is invalid"
-        wizard.isContentInvalid( imageSelectorContent.getDisplayName() );
+        and: "validation warning is displayed on the form"
+        formViewPanel.isValidationMessagePresent()
     }
 
     def "GIVEN saving of 'Image Selector (1:1)' without required image WHEN content saved  THEN invalid content listed"()
     {
         when: "content without required image saved"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
-        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save().close(
-            imageSelectorContent.getDisplayName() );
+        selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
+            imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then:
         filterPanel.typeSearchText( imageSelectorContent.getDisplayName() );
@@ -69,9 +66,9 @@ class Occurrences_ImageSelector_1_1_Spec
     def "GIVEN saving of Image Selector-content (1:1) and image selected WHEN content opened for edit THEN correct image present on page and option filter not displayed"()
     {
         given: "new content with type 'Image Selector0_1' added"
-        TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector1_1_Content( TEST_IMAGE_NAME );
-        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
-            TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector1_1_Content( NORD_IMAGE_DISPLAY_NAME );
+        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
+            TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
@@ -84,7 +81,7 @@ class Occurrences_ImageSelector_1_1_Spec
         !formViewPanel.isOptionFilterIsDisplayed();
 
         and: "correct image present on the page"
-        images.get( 0 ) == TEST_IMAGE_NAME;
+        images.get( 0 ) == NORD_IMAGE_NAME;
 
         and: "options filter input is not shown"
         !formViewPanel.isOptionFilterIsDisplayed();
@@ -97,7 +94,7 @@ class Occurrences_ImageSelector_1_1_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "image clicked"
-        formViewPanel.clickOnImage( TEST_IMAGE_NAME )
+        formViewPanel.clickOnImage( NORD_IMAGE_NAME )
         then: "buttons 'Edit' and 'Remove' appears"
         formViewPanel.isRemoveButtonDisplayed();
         and:
@@ -111,7 +108,7 @@ class Occurrences_ImageSelector_1_1_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "image clicked and 'Remove' button pressed"
-        formViewPanel.clickOnImage( TEST_IMAGE_NAME );
+        formViewPanel.clickOnImage( NORD_IMAGE_NAME );
         formViewPanel.clickOnRemoveButton();
 
         then: "buttons 'Edit' and 'Remove' disappears"
@@ -120,8 +117,9 @@ class Occurrences_ImageSelector_1_1_Spec
         !formViewPanel.isEditButtonDisplayed();
         and: "option filter displayed"
         formViewPanel.isOptionFilterIsDisplayed();
-        and:
-        wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+
+        and: "validation warning appears on the form"
+        formViewPanel.isValidationMessagePresent();
     }
 
     def "GIVEN saving of 'Image Selector 1:1' and content without selected image WHEN data typed AND image not selected THEN 'Publish' button on the wizard-toolbar is disabled"()

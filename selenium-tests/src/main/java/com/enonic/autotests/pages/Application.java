@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -170,5 +171,19 @@ public class Application
         ArrayList<String> tabHandles = new ArrayList<String>( getDriver().getWindowHandles() );
         getDriver().switchTo().window( tabHandles.get( tabHandles.size() - 1 ) );
         sleep( 400 );
+    }
+
+    public boolean isAlertPresent()
+    {
+        try
+        {
+            getDriver().switchTo().alert();
+            getDriver().switchTo().defaultContent();
+            return true;
+        }
+        catch ( NoAlertPresentException var3 )
+        {
+            return false;
+        }
     }
 }

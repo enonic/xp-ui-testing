@@ -153,6 +153,10 @@ public class ImageSelectorFormViewPanel
             throw new TestFrameworkException( "Remove label was not found!" );
         }
         String label = findElements( By.xpath( REMOVE_BUTTON_LABEL ) ).get( 0 ).getText();
+        if ( !label.contains( "(" ) )
+        {
+            return 1;
+        }
         return Integer.valueOf( label.substring( label.indexOf( "(" ) + 1, label.indexOf( ")" ) ) );
     }
 

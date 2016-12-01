@@ -97,9 +97,8 @@ class Site_With_TemplatePageComponentDialog_Spec
         when: "wizard closed"
         wizard.closeWizardAndCheckAlert();
 
-        then: "Alert dialog appears, because renderer was changed"
+        then: "Alert dialog appears, because renderer was changed from "
         wizard.waitIsAlertDisplayed();
-
     }
 
     def "GIVEN 'Page Components' view opened WHEN button 'close' clicked THEN dialog not displayed"()

@@ -142,7 +142,6 @@ class Occurrences_HtmlArea_0_0_Spec
         strings.contains( EXPECTED_TEXT3 );
     }
 
-
     private Content buildHtmlArea0_0_Content( long numberOfEditors, String... text )
     {
         PropertyTree data = new PropertyTree(); ;

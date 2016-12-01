@@ -40,7 +40,7 @@ class ImageEditor_Zoom_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND 'Close' button pressed THEN 'save before close' modal dialog appears"()
+    def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND 'Close' button pressed THEN 'Alert' dialog with warning messages should appear"()
     {
         given: "'Image Editor' dialog opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -55,14 +55,14 @@ class ImageEditor_Zoom_Reset_Spec
         toolbar.clickOnApplyButton();
         saveScreenshot( "image_zoomed_and_applied" );
 
-        and: "'close' button pressed"
-        def modalDialog = wizard.close( IMPORTED_MAN2_IMAGE );
+        and: "wizard-tab is closing"
+        wizard.closeWizardAndCheckAlert();
 
-        then: "'save before close' dialog appears"
-        modalDialog != null
+        then: "'Alert' dialog with warning messages should appear"
+        wizard.waitIsAlertDisplayed();
     }
 
-    def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN 'save before close' modal dialog appears"()
+    def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN Alert modal dialog should not appear"()
     {
         given: "'Image Editor' dialog opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -77,40 +77,41 @@ class ImageEditor_Zoom_Reset_Spec
         toolbar.clickOnApplyButton();
         saveScreenshot( "image_zoomed_and_applied" );
 
-        and: "'close' button pressed"
-        def modalDialog = wizard.save().close( IMPORTED_MAN2_IMAGE );
+        and: "wizard-tab is closing"
+        wizard.save().closeWizardAndCheckAlert();
+        wizard.switchToBrowsePanelTab();
 
-        then: "'save before close' dialog does not appear"
-        modalDialog == null
+        then: "'Alert' dialog with warning messages should not appear"
+        !wizard.isAlertPresent();
     }
 
     def "GIVEN existing zoomed image WHEN it opened THEN 'Reset' button displayed on the wizard"()
     {
         when: "existing zoomed image"
-        findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "'Reset' button displayed on the wizard"
         formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button pressed AND 'close' button pressed THEN 'save before close' dialog appears"()
+    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button pressed AND 'close' button pressed THEN 'Alert' dialog with warning messages should appear"()
     {
         given: "existing zoomed image"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         when: "'Reset' button has been pressed"
         formViewPanel.clickOnResetButton();
 
-        and: "'close' button pressed"
-        def modalDialog = wizard.close( IMPORTED_MAN2_IMAGE );
+        and: "'close tab' button pressed"
+        wizard.closeWizardAndCheckAlert();
 
-        then: "'save before close' dialog appears"
-        modalDialog != null
+        then: "'Alert' dialog with warning messages should appear"
+        wizard.waitIsAlertDisplayed();
     }
 
-    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button pressed AND 'close' button pressed AND 'save' pressed THEN 'save before close' dialog appears"()
+    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button pressed AND 'close' button pressed AND 'save' pressed THEN 'Alert' dialog should not appear"()
     {
         given: "existing zoomed image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -119,10 +120,11 @@ class ImageEditor_Zoom_Reset_Spec
         when: "'Reset' button has been pressed"
         formViewPanel.clickOnResetButton();
 
-        and: "'save' and 'close' buttons have been pressed"
-        def modalDialog = wizard.save().close( IMPORTED_MAN2_IMAGE );
+        and: "wizard-tab is closing"
+        wizard.save().closeWizardAndCheckAlert();
+        wizard.switchToBrowsePanelTab();
 
-        then: "'save before close' dialog does not appear"
-        modalDialog == null
+        then: "'Alert' dialog with warning messages should not appear"
+        !wizard.isAlertPresent();
     }
 }

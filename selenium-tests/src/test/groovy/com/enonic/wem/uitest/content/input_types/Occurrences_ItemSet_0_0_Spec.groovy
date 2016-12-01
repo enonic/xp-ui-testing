@@ -136,10 +136,10 @@ class Occurrences_ItemSet_0_0_Spec
         itemSetViewPanel.removeOneItem();
 
         and: "Close button pressed"
-        def dialog = wizard.close( ITEM_SET_CONTENT.getDisplayName() );
+        wizard.closeWizardAndCheckAlert();
 
-        then: "'Save Before Close' dialog should appear"
-        dialog != null;
+        then: "'Alert' dialog should appear"
+        wizard.waitIsAlertDisplayed();
     }
 
     def "GIVEN creating of ItemSet with data WHEN data typed and saved THEN content is getting valid"()

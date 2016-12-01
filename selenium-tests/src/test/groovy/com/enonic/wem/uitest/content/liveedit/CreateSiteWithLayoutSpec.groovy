@@ -36,13 +36,16 @@ class CreateSiteWithLayoutSpec
     String SUPPORTS = ContentTypeName.site().toString();
 
     @Shared
-    String TEST_IMAGE_COMPONENT_NAME = "telk.png";
+    String TEST_IMAGE_DISPLAY_NAME = "telk";
 
     @Shared
-    String SECOND_TEST_IMAGE_COMPONENT_NAME = "geek.png";
+    String TEST_IMAGE_NAME = "telk.jpg";
 
     @Shared
-    String THIRD_TEST_IMAGE_COMPONENT_NAME = "foss.jpg";
+    String SECOND_TEST_IMAGE_COMPONENT_NAME = "geek";
+
+    @Shared
+    String THIRD_TEST_IMAGE_COMPONENT_NAME = "foss";
 
     @Shared
     String LAYOUT_NAME = "3-col";
@@ -55,8 +58,8 @@ class CreateSiteWithLayoutSpec
         given:
         SITE = buildSimpleSiteApp();
         when: "data typed and saved and wizard closed"
-        contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).save().close(
-            SITE.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
+            SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );
@@ -71,7 +74,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().close( pageTemplate.getDisplayName() );
+            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
@@ -94,7 +97,8 @@ class CreateSiteWithLayoutSpec
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEXT_COMPONENT_TEXT );
-        switchToContentStudioWindow();
+        //switchToContentStudioWindow();
+        getDriver().switchTo().defaultContent();
         pageComponentsView.doCloseDialog();
         wizard.save();
         saveScreenshot( "text_component_text_saved" );
@@ -107,14 +111,14 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getTextFromTextComponent().equals( TEXT_COMPONENT_TEXT );
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'main region' clicked and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout present on the live edit frame"()
+    def "GIVEN 'Page Components' opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout present on the live edit frame"()
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
-        when: "'Insert/Layout' menu items clicked and layout with 3 columns selected"
+        when: "menu for the region is opened and layout with 3 columns has been selected"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
         saveScreenshot( "select_insert_layout" );
         pageComponentsView.doCloseDialog();
@@ -145,21 +149,21 @@ class CreateSiteWithLayoutSpec
         wizard.getStatus() == ContentStatus.ONLINE.getValue();
     }
 
-    def "'Page Components' opened WHEN menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image in the left region inserted"()
+    def "'Page Components' opened WHEN menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image in the left region inserted"()
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel templateWizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = templateWizard.showComponentView();
 
-        when: "menu for 'left region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
+        when: "menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         templateWizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( TEST_IMAGE_COMPONENT_NAME )
+        imageComponentView.selectImageItemFromList( TEST_IMAGE_DISPLAY_NAME )
 
-        switchToContentStudioWindow();
+        and: "the template is saved"
         templateWizard.save();
         String statusAfterInsertingImage = templateWizard.getStatus();
         saveScreenshot( "image_in_left_inserted" );
@@ -173,20 +177,21 @@ class CreateSiteWithLayoutSpec
         statusAfterInsertingImage == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the center-region "()
+    def "GIVEN 'Page Components' opened WHEN menu for 'center region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the center-region "()
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "menu for 'center region' clicked and 'insert' menu-item selected AND 'image'-item clicked"
+        when: "menu for 'center region' is opened and 'insert' menu-item selected AND 'image'-item clicked"
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME );
-        switchToContentStudioWindow();
+
+        and: "the template is saved"
         wizard.save();
         saveScreenshot( "center_region_inserted" );
 
@@ -196,24 +201,25 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'right region' clicked and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the right-region "()
+    def "GIVEN 'Page Components' opened WHEN menu for 'right region' is opened and 'insert' menu-item selected AND 'image'-item is clicked THEN new image is displayed on the right-region"()
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "menu for right region clicked and 'insert' menu-item selected AND 'image'-item clicked"
+        when: "menu for right region is opened and 'insert' menu-item selected AND 'image'-item has been clicked"
         pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
-        switchToContentStudioWindow();
+
+        and: "the template is saved"
         wizard.save();
         saveScreenshot( "right_region_inserted" );
 
-        then: "new image inserted to the right-region"
+        then: "new image is displayed on the right-region"
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 3;
@@ -227,11 +233,11 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "menu for image clicked and 'reset' menu-item selected"
-        pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Reset" );
+        pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Reset" );
         wizardPanel.switchToLiveEditFrame();
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        saveScreenshot( "reset_image" );
+        saveScreenshot( "image_was_reset" );
 
         then: "number of images in layout reduced"
         liveFormPanel.getNumberImagesInLayout() == 2;
@@ -239,7 +245,7 @@ class CreateSiteWithLayoutSpec
         and: "but number of components not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 3;
         and: "image with the required name no longer present on LiveEdit"
-        !liveFormPanel.isImagePresentInLayout( TEST_IMAGE_COMPONENT_NAME );
+        !liveFormPanel.isImagePresentInLayout( TEST_IMAGE_DISPLAY_NAME );
     }
 
     def "GIVEN a layout with inserted 3 images 'Page Components' opened WHEN menu for one of them images selected AND 'duplicate' menu-item selected THEN two images with the same name present in layout"()
@@ -249,11 +255,11 @@ class CreateSiteWithLayoutSpec
         ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
-        when: "menu for image clicked and 'reset' menu-item selected"
-        pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Duplicate" );
+        when: "menu for image is opened and 'duplicate' menu-item selected"
+        pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Duplicate" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        saveScreenshot( "duplicate_image" );
+        saveScreenshot( "image_was_duplicated" );
 
         then: "number of images in layout reduced"
         liveFormPanel.getNumberImagesInLayout() == 4;
@@ -261,7 +267,7 @@ class CreateSiteWithLayoutSpec
         and: "but number of components not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 4;
         and: "image with the required name no longer present on LiveEdit"
-        liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_COMPONENT_NAME ) == 2;
+        liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_DISPLAY_NAME ) == 2;
     }
 
     def "GIVEN a layout with 4 images AND 'Page Components' view opened WHEN menu for one of them images selected AND 'remove' menu-item selected THEN number of images reduced in the layout"()
@@ -271,18 +277,19 @@ class CreateSiteWithLayoutSpec
         ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
-        when: "menu for image clicked and 'reset' menu-item selected"
-        pageComponentsView.openMenu( TEST_IMAGE_COMPONENT_NAME ).selectMenuItem( "Remove" );
+        when: "menu for image is opened and 'remove' menu-item selected"
+        pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Remove" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        saveScreenshot( "remove_image" );
+        saveScreenshot( "one_image_was_removed" );
 
-        then: "number of images reduced in the layout"
+        then: "number of images is reduced in the layout"
         liveFormPanel.getNumberImagesInLayout() == 3;
 
-        and: "but number of components not changed"
+        and: "but number of components has not changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 3;
-        and: "image with the required name no longer present in the layout"
-        liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_COMPONENT_NAME ) == 1;
+
+        and: "only one image with the name is present in the layout"
+        liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_DISPLAY_NAME ) == 1;
     }
 }

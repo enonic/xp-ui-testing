@@ -40,7 +40,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
 
         ContentWizardPanel wizard = contentBrowsePanel.clickOnParentCheckbox( parentFolder.getPath() ).clickToolbarNew().selectContentType(
             shortcut1.getContentTypeName() );
-        wizard.typeData( shortcut1 ).save().close( shortcut1.getDisplayName() );
+        wizard.typeData( shortcut1 ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         shortcut2 = Content.builder().
             parent( ContentPath.from( parentFolder.getName() ) ).
@@ -59,7 +59,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
             build();
 
         contentBrowsePanel.clickToolbarNew().selectContentType( shortcut3.getContentTypeName() );
-        wizard.typeData( shortcut3 ).save().close( shortcut3.getDisplayName() );
+        wizard.typeData( shortcut3 ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then:
         filterPanel.typeSearchText( parentFolder.getName() );

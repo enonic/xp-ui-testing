@@ -68,8 +68,8 @@ class Occurrences_ImageSelector_2_4_Spec
     {
         given: "new content with type 'Image Selector2_4' added"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME );
-        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData( TEST_IMAGE_SELECTOR_CONTENT ).save().close(
-            TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
+            TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
@@ -96,7 +96,7 @@ class Occurrences_ImageSelector_2_4_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
-        wizard.save().close( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when content selected in the grid and opened for edit again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
@@ -106,7 +106,7 @@ class Occurrences_ImageSelector_2_4_Spec
         formViewPanel.getSelectedImages().size() == 1;
 
         and: "content is invalid, because only one image present on page"
-        wizard.isContentInvalid( TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        formViewPanel.isValidationMessagePresent();
 
         and: "'Publish button' is disabled now"
         !wizard.isPublishButtonEnabled();
@@ -122,7 +122,7 @@ class Occurrences_ImageSelector_2_4_Spec
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         and: "wizard closed"
-        wizard.close( IMAGE_SELECTOR_CONTENT_4_IMAGES.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() );
 
         then: "content has a 'online' status"

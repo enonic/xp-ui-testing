@@ -219,7 +219,7 @@ public class ContentWizardPanel
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        //NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
+        //NavigatorHelper.switchToBrowserTab( getSession(), "browse" );
         getDriver().switchTo().defaultContent();
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
         return this;
@@ -249,7 +249,7 @@ public class ContentWizardPanel
     public ContentWizardPanel typeData( Content content )
     {
         // 1. type a data: 'name' and 'Display Name'.
-        waitElementClickable( By.name( "displayName" ), 1 );
+        waitElementClickable( By.name( "displayName" ), 2 );
         if ( content.getDisplayName() != null )
         {
             getLogger().info( "types displayName: " + content.getDisplayName() );
@@ -592,15 +592,15 @@ public class ContentWizardPanel
     {
         if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
         {
-            switchToMainWindow();
+            switchToDefaultWindow();
         }
         String height = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "height" );
         return Integer.valueOf( height.substring( 0, height.indexOf( "px" ) ) );
     }
 
-    public void switchToMainWindow()
+    public void switchToDefaultWindow()
     {
-        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
+        getDriver().switchTo().defaultContent();
         getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 

@@ -22,20 +22,20 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( PARENT_FOLDER );
 
         when: "saved and wizard closed"
-        wizard.save().close( PARENT_FOLDER.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new Content should be listed"
         contentBrowsePanel.exists( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating new Content on root WHEN saved and HomeButton clicked THEN new Content should be listed"()
+    def "GIVEN creating new Content on root WHEN content saved and tab with the grid is switched THEN new Content should be listed"()
     {
         given: "creating new Content on root"
         Content rootContent = buildFolderContent( "folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() ).
             typeData( rootContent );
 
-        when: "content saved and HomeButton clicked"
+        when: "content saved and tab with the grid is switched"
         wizard.save();
         wizard.switchToBrowsePanelTab();
 
@@ -53,13 +53,13 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( childContent );
 
         when: "content saved and wizard closed"
-        wizard.save().close( childContent.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "parent should still be unexpanded"
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing unexpanded WHEN saved and HomeButton clicked THEN parent should still be unexpanded"()
+    def "GIVEN creating new Content beneath an existing unexpanded WHEN content saved and tab with the grid is switched THEN parent should still be unexpanded"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder2", PARENT_FOLDER.getName() );
@@ -67,7 +67,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).
             typeData( childContent );
 
-        when: "child content saved and HomeButton clicked"
+        when: "child content saved and tab with the grid is switched"
         wizard.save();
         wizard.switchToBrowsePanelTab();
 
@@ -85,7 +85,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         wizard.typeData( childContent );
 
         when: "child content saved and wizard closed"
-        wizard.save().close( childContent.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new Content should be listed beneath parent"
         contentBrowsePanel.exists( childContent.getName() );
@@ -93,7 +93,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing expanded WHEN saved and HomeButton clicked THEN new Content should be listed beneath parent"()
+    def "GIVEN creating new Content beneath an existing expanded WHEN content saved and tab with the grid is opened THEN new Content should be listed beneath parent"()
     {
         given: "creating new Content beneath an existing expanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder4", PARENT_FOLDER.getName() );
@@ -102,7 +102,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
         wizard.typeData( childContent );
 
-        when: "saved and HomeButton clicked"
+        when: "content saved and tab with the grid is opened"
         wizard.save();
         wizard.switchToBrowsePanelTab();
 
@@ -141,7 +141,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         contentBrowsePanel.clickOnClearSelection();
         String newDisplayName = NameHelper.uniqueName( "display-name" );
-        findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName();
+        findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName( newDisplayName );
 
 
         when: "new display-name saved and wizard closed"
