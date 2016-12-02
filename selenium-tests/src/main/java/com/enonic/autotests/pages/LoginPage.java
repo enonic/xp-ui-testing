@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -81,10 +80,15 @@ public class LoginPage
         boolean isLoginPageLoaded = waitUntilVisibleNoException( By.xpath( EMAIL_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isLoginPageLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_login_page" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_login_page" ) );
             throw new TestFrameworkException( "login page not loaded!" );
         }
         return isLoginPageLoaded;
+    }
+
+    public boolean isDisplayed()
+    {
+        return isElementDisplayed( EMAIL_INPUT_XPATH );
     }
 
     public String getTitle()

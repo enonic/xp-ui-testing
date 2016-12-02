@@ -1,8 +1,8 @@
 package com.enonic.wem.uitest.user
 
-import com.enonic.autotests.exceptions.AuthenticationException
 import com.enonic.autotests.pages.HomePage
 import com.enonic.autotests.pages.LauncherPanel
+import com.enonic.autotests.pages.LoginPage
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
@@ -225,10 +225,11 @@ class LoginUserSpec
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
+        LoginPage loginPage = new LoginPage( getSession() );
         saveScreenshot( "test_login_old_password" );
 
-        then: "old password should not work for login"
-        thrown( AuthenticationException )
+        then: "old password should not work for login, login page should still displayed"
+        loginPage.isDisplayed();
     }
 
     def "WHEN user 'logged in' with the new password THEN home page loaded"()
