@@ -38,8 +38,9 @@ class Occurrences_Long_Spec
         then: "actual value in the form view and expected are equals"
         longFormViewPanel.getLongValue().equals( TEST_LONG );
 
-        and: "content is valid in the wizard"
-        !wizard.isContentInvalid( VALID_LONG_CONTENT.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and: "content is valid in the wizard"
+        //!wizard.isContentInvalid( VALID_LONG_CONTENT.getDisplayName() );
 
         and: "long input has green border (valid value)"
         longFormViewPanel.isValueInInputValid( 0 );

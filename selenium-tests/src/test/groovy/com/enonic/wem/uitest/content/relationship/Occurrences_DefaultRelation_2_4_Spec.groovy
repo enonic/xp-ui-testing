@@ -36,8 +36,10 @@ class Occurrences_DefaultRelation_2_4_Spec
         formViewPanel.isOptionFilterDisplayed();
         and: "correct name of selected file displayed"
         formViewPanel.getDisplayNamesOfSelectedFiles().get( 0 ).equals( NORD_IMAGE_DISPLAY_NAME );
-        and: "content is invalid, because only one option selected, but min required is 2"
-        wizard.isContentInvalid( relationship.getDisplayName() )
+
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and: "content is invalid, because only one option selected, but min required is 2"
+        //wizard.isContentInvalid( relationship.getDisplayName() )
     }
 
     def "GIVEN saving of content with type Default Relation(2:4) WHEN content saved and opened for edit THEN correct selected file displayed "()
@@ -92,8 +94,9 @@ class Occurrences_DefaultRelation_2_4_Spec
         formViewPanel.getNumberOfSelectedFiles() == 3;
         and: "option filter appears again"
         formViewPanel.isOptionFilterDisplayed();
-        and: "content is valid, because three  option are selected, and min required is 2"
-        !wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        // and: "content is valid, because three  option are selected, and min required is 2"
+        // !wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
     }
 
     def "WHEN content with three selected options opened for edit THEN 'Publish' button is enabled"()
@@ -132,9 +135,9 @@ class Occurrences_DefaultRelation_2_4_Spec
 
         then: "'Publish' button is enabled, because content is not valid"
         !wizard.isPublishButtonEnabled();
-
-        and:
-        wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and:
+        // wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
     }
 
     private Content buildDefaultRelation2_4_Content( String... names )

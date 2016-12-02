@@ -28,10 +28,11 @@ class Publish_InvalidContent_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( invalidFolder.getContentTypeName() ).typeData(
             invalidFolder ).save();
 
-        then: "content is not valid"
-        wizard.isContentInvalid( UNNAMED_FOLDER_TAB_NAME );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //then: "content is not valid"
+        // wizard.isContentInvalid( UNNAMED_FOLDER_TAB_NAME );
 
-        and: "'Publish' button is disabled"
+        then: "'Publish' button is disabled"
         !wizard.isPublishButtonEnabled();
     }
 

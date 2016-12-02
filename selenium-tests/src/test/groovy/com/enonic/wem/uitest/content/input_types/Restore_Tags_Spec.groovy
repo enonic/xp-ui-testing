@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Conten
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Restore_Tags_Spec
@@ -35,6 +36,7 @@ class Restore_Tags_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
+    @Ignore
     def "GIVEN version of tag-content with missed required value is current WHEN valid version of content is restored THEN content has no red icon on the wizard"()
     {
         given: "content with missed required value"
@@ -52,6 +54,7 @@ class Restore_Tags_Spec
         !wizard.isContentInvalid( TAG_CONTENT.getDisplayName() )
     }
 
+    @Ignore
     def "GIVEN current version of content is valid AND wizard opened WHEN 'AppHomeButton' clicked and not valid version of content is restored THEN red icon appears on the wizard tab"()
     {
         given: "current version of content is valid"

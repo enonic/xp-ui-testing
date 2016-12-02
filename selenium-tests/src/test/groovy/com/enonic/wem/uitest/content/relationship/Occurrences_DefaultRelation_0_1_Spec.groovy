@@ -100,8 +100,9 @@ class Occurrences_DefaultRelation_0_1_Spec
         formViewPanel.getNumberOfSelectedFiles() == 0;
         and: "option filter not  displayed"
         formViewPanel.isOptionFilterDisplayed();
-        and:
-        !wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() )
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and:
+        //!wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() )
     }
 
     private Content buildDefaultRelation0_1_Content( String... names )

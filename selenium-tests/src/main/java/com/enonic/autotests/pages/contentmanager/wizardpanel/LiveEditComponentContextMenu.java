@@ -64,6 +64,11 @@ public class LiveEditComponentContextMenu
 
     public void clickOnEdit()
     {
+        if ( !isElementDisplayed( EDIT_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_edit_menu_item" );
+            throw new TestFrameworkException( "Edit menu item was not found!" );
+        }
         getDisplayedElement( By.xpath( EDIT_MENU_ITEM ) ).click();
         sleep( 300 );
     }

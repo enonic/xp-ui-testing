@@ -38,8 +38,10 @@ class TagsInputType_2_5_Spec
 
         then: "'Publish' button disabled"
         !contentWizardPanel.isPublishButtonEnabled();
-        and: "content is invalid"
-        contentWizardPanel.isContentInvalid( tagContent.getDisplayName() );
+
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and: "content is invalid"
+        //contentWizardPanel.isContentInvalid( tagContent.getDisplayName() );
     }
 
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()

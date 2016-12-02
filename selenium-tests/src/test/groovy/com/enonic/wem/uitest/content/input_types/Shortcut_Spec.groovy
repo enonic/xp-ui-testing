@@ -20,7 +20,7 @@ class Shortcut_Spec
     Content SHORTCUT_CONTENT
 
     @Shared
-    String TARGET_1 = "server.bat";
+    String TARGET_1 = "server";
 
     def " creating of new shortcut WHEN name typed but target not selected AND AppHome button pressed THEN the content displayed in the grid as invalid "()
     {
@@ -31,13 +31,14 @@ class Shortcut_Spec
         when: "name and display name typed"
         wizard.typeDisplayName( name ).save();
 
-        and: "App Home button clicked"
+        and: "navigate to the grid"
         wizard.switchToBrowsePanelTab();
         findAndSelectContent( name );
-        TestUtils.saveScreenshot( getSession(), "shortcut_in_grid_invalid" );
+        saveScreenshot( "shortcut_in_grid_invalid" );
 
         then: "red icon is present on the wizard-tab"
-        wizard.isContentInvalid( name );
+        filterPanel.typeSearchText( name );
+        contentBrowsePanel.isContentInvalid( name );
     }
 
     def "GIVEN creating of new shortcut WHEN name typed but target is not selected THEN red icon is present on the wizard-tab AND validation message appears"()
@@ -49,7 +50,7 @@ class Shortcut_Spec
 
         when: "name and display name typed"
         wizard.typeName( SHORTCUT_CONTENT.getName() ).typeDisplayName( SHORTCUT_CONTENT.getDisplayName() ).save();
-        TestUtils.saveScreenshot( getSession(), "shortcut_validation_message" );
+        saveScreenshot( "shortcut_validation_message" );
 
         then: "red icon is present on the wizard-tab"
         formViewPanel.isValidationMessageDisplayed();
@@ -57,8 +58,9 @@ class Shortcut_Spec
         and: "validation message appears"
         formViewPanel.getValidationMessage() == "This field is required";
 
-        and: "red icon is present on the wizard-tab"
-        wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and: "red icon is present on the wizard-tab"
+        //wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
     }
 
     def "GIVEN existing shortcut without selected target WHEN target selected THEN red icon not displayed on the wizard tab"()
@@ -72,10 +74,11 @@ class Shortcut_Spec
         TestUtils.saveScreenshot( getSession(), "shortcut_valid" );
         wizard.save();
 
-        then: "red icon not displayed on the wizard-tab"
-        !wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        // then: "red icon not displayed on the wizard-tab"
+        // !wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
 
-        and: "validation message not displayed"
+        then: "validation message not displayed"
         !formViewPanel.isValidationMessageDisplayed();
     }
 
@@ -87,12 +90,13 @@ class Shortcut_Spec
 
         when: "name and display name typed"
         formViewPanel.removeTarget();
-        TestUtils.saveScreenshot( getSession(), "shortcut_target_removed" );
+        saveScreenshot( "shortcut_target_removed" );
 
-        then: "red icon appears displayed on the wizard-tab"
-        wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //then: "red icon appears displayed on the wizard-tab"
+        //wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
 
-        and: "validation message  displayed"
+        then: "validation message  displayed"
         formViewPanel.isValidationMessageDisplayed();
     }
 }

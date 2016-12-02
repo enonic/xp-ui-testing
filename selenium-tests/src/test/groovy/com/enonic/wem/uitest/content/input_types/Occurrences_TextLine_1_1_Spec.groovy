@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_TextLine_1_1_Spec
@@ -104,6 +105,8 @@ class Occurrences_TextLine_1_1_Spec
         contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
     }
 
+    //TODO add test check for validation in the wizard( when the feature will be implemented)
+    @Ignore
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty THEN content is invalid and the 'Publish' button is disabled"()
     {
         given: "start to add a content with type 'TextLine 1:1'"

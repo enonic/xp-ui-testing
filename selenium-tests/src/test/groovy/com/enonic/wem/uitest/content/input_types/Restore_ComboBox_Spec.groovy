@@ -56,9 +56,10 @@ class Restore_ComboBox_Spec
         and: "'publish' button on the grid-toolbar is enabled"
         contentBrowsePanel.isPublishButtonEnabled();
 
-        and: "validation message appears on the combobox-form"
-        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
-        formViewPanel.isValidationMessagePresent();
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and: "validation message appears on the combobox-form"
+        //contentBrowsePanel.switchToContentWizardTabBySelectedContent();
+        //formViewPanel.isValidationMessagePresent();
 
     }
 
@@ -79,7 +80,7 @@ class Restore_ComboBox_Spec
     {
         given: "existing content with 3 versions opened"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
-        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
+        wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "not valid version of content is restored, one required image missed"
@@ -88,10 +89,11 @@ class Restore_ComboBox_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "combobox_not_valid_version" );
 
-        then: "red icon appears on the wizard-tab"
-        wizard.isContentInvalid( COMBOBOX_CONTENT.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //then: "red icon appears on the wizard-tab"
+        //wizard.isContentInvalid( COMBOBOX_CONTENT.getDisplayName() );
 
-        and: "the content is invalid in the grid as well"
+        then: "the content is invalid in the grid as well"
         contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
     }
 
@@ -99,7 +101,6 @@ class Restore_ComboBox_Spec
     {
         when: "version of content with one option has been restored and content was opened "
         findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
-        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
         then: "only one option is displayed in the form"

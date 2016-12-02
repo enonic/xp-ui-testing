@@ -180,8 +180,9 @@ class Occurrences_TextLine_2_5_Spec
         then: "'Publish' button is disabled"
         !contentWizardPanel.isPublishButtonEnabled();
 
-        and: "content is invalid"
-        contentWizardPanel.isContentInvalid( textLineContent.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and: "content is invalid"
+        // contentWizardPanel.isContentInvalid( textLineContent.getDisplayName() );
     }
 
     private Content buildTextLine2_5_Content()

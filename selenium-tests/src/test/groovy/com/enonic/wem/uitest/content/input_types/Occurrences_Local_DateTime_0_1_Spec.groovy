@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_Local_DateTime_0_1_Spec
@@ -49,13 +50,16 @@ class Occurrences_Local_DateTime_0_1_Spec
         and: "Add button not displayed on the form"
         !formViewPanel.isAddButtonPresent();
 
-        and: "content should be valid, because 'datetime' is not required"
-        !wizard.isContentInvalid( dateTimeContent.getDisplayName() );
+        //TODO add test check for validation in the wizard( when the feature will be implemented)
+        //and: "content should be valid, because 'datetime' is not required"
+        //!wizard.isContentInvalid( dateTimeContent.getDisplayName() );
 
         and: "and date time input is empty"
         formViewPanel.getDateTimeValue().isEmpty();
     }
 
+    //TODO add test check for validation in the wizard( when the feature will be implemented)
+    @Ignore
     def "GIVEN wizard for adding a Local DateTime(0:1) opened WHEN not valid dateTime typed THEN content has a invalid status"()
     {
         given: "start to add a content with type local 'DateTime(0:1)'"
