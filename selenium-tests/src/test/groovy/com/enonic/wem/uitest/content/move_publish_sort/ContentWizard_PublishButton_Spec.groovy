@@ -78,7 +78,7 @@ class ContentWizard_PublishButton_Spec
         !wizard.isPublishMenuAvailable();
     }
 
-    def "GIVEN existing 'online' content WHEN 'Delete' button on the wizard-toolbar pressed AND content deleted THEN 'pending delete' status for this content is displayed on the wizard"()
+    def "GIVEN existing 'online' content WHEN 'Delete' button on the wizard-toolbar pressed AND content deleted THEN 'pending delete' status is displayed on the wizard"()
     {
         given: "existing 'online' content"
         findAndSelectContent( CONTENT.getName() );
@@ -87,9 +87,9 @@ class ContentWizard_PublishButton_Spec
 
 
         when: "'Delete' button on the wizard-toolbar pressed AND content deleted"
-        wizard.clickToolbarDelete().doDeleteAndSwitchToBrowsePanel();
+        wizard.clickToolbarDelete().doDelete();
 
-        then: "'pending delete' status for this content is displayed on the wizard"
+        then: "'pending delete' status is displayed on the wizard"
         wizard.getStatus() == ContentStatus.PENDING_DELETE.getValue();
 
         and: "'Publish' menu becomes enabled"

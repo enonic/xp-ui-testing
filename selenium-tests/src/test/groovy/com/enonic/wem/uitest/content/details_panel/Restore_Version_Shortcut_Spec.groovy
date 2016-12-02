@@ -74,7 +74,7 @@ class Restore_Version_Shortcut_Spec
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
-        saveScreenshot( getSession(), "versions_before_changing_target" );
+        saveScreenshot( "versions_before_changing_target" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 

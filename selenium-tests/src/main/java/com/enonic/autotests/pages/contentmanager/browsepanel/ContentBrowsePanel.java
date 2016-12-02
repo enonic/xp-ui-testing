@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -869,35 +868,6 @@ public class ContentBrowsePanel
         String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
         return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
-
-    public void switchToNextTab()
-    {
-        if ( Platform.getCurrent().is( Platform.MAC ) )
-        {
-            buildActions().click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys( Keys.chord( Keys.COMMAND, Keys.TAB ) ).perform();
-        }
-        else
-        {
-            buildActions().click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys( Keys.chord( Keys.CONTROL, Keys.TAB ) ).perform();
-        }
-    }
-
-    public void switchToPreviousTab()
-    {
-        if ( Platform.getCurrent().is( Platform.MAC ) )
-        {
-            buildActions().click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys(
-                Keys.chord( Keys.COMMAND, Keys.SHIFT, Keys.TAB ) ).perform();
-        }
-        else
-        {
-            buildActions().
-                click( findElement( By.xpath( TREE_GREED ) ) ).sendKeys( Keys.chord( Keys.CONTROL, Keys.SHIFT, Keys.TAB ) ).perform();
-        }
-        getDriver().switchTo().defaultContent();
-
-    }
-
 
     /**
      * @return true if 'Delete' button enabled, otherwise false.

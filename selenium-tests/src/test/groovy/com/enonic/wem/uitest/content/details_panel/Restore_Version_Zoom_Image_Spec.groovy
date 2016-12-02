@@ -30,7 +30,7 @@ class Restore_Version_Zoom_Image_Spec
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
         and: "image opened in the wizard"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         and: "image was loaded"
         formViewPanel.waitUntilImageLoaded();
@@ -97,7 +97,7 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing zoomed image is opened WHEN original version is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        ContentWizardPanel wizard = findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit();
 
         and: "AppHome button was pressed"
         wizard.switchToBrowsePanelTab();
@@ -111,7 +111,7 @@ class Restore_Version_Zoom_Image_Spec
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
-        contentBrowsePanel.clickOnTab( HAND_IMAGE_DISPLAY_NAME );
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "original image is displayed on the wizard"
@@ -121,7 +121,7 @@ class Restore_Version_Zoom_Image_Spec
     def "GIVEN existing  image is opened WHEN version with zoomed image is restored THEN image has been updated on the wizard page"()
     {
         given: "existing zoomed image is opened"
-        ContentWizardPanel wizard = findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
+        ContentWizardPanel wizard = findAndSelectContent( HAND_IMAGE_NAME ).clickToolbarEdit();
 
         and: "AppHome button was pressed"
         wizard.switchToBrowsePanelTab();

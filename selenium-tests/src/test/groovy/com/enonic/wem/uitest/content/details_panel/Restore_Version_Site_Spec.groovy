@@ -130,10 +130,10 @@ class Restore_Version_Site_Spec
         saveScreenshot( "app_removed_from_wizard" );
         and: "the site saved"
         wizard.save();
-        sleep( 1000 );
+        sleep( 500 );
 
-        and: "home button clicked"
-        contentBrowsePanel.switchToPreviousTab();
+        and: "navigated to the tab with the Grid"
+        wizard.switchToBrowsePanelTab();
         saveScreenshot( "version_site_app_removed" );
 
         then: "number of versions increased after the removing of application in wizard"
@@ -153,7 +153,7 @@ class Restore_Version_Site_Spec
         when: "version with an application restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        contentBrowsePanel.switchToNextTab();
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         saveScreenshot( "version_site_application_restored" );
 
         then: "application present in the 'application selector'"
@@ -178,7 +178,7 @@ class Restore_Version_Site_Spec
 
         and: "the site saved"
         wizard.save();
-        sleep( 1000 );
+        sleep( 500 );
 
         and: "home button clicked"
         wizard.switchToBrowsePanelTab();
@@ -199,9 +199,9 @@ class Restore_Version_Site_Spec
         when: "version without a selected controller was restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 2 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        sleep( 1000 );
-        contentBrowsePanel.clickOnTab( INITIAL_DISPLAY_NAME );
-        sleep( 1000 );
+        sleep( 300 );
+        contentBrowsePanel.switchToContentWizardTabBySelectedContent();
+        sleep( 700 );
         saveScreenshot( "test_version_without_selected_controller" );
 
         then: "page controller not selected in the page editor and option filter input should be displayed"
