@@ -107,13 +107,11 @@ class ContentWizard_PublishButton_Spec
 
         when: "'Unpublish' menu item selected"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
-        sleep( 1000 );
-        saveScreenshot( "test_wizard_unpublish_selected" );
+        wizard.switchToBrowsePanelTab();
+        sleep( 400 );
+        saveScreenshot( "test_wizard_unpublish_of_pending_delete" );
 
-        then: "the wizard closes"
-        !wizard.isOpened();
-
-        and: "the content not listed in the grid"
+        then: "the content not listed in the grid"
         !contentBrowsePanel.exists( CONTENT.getName() );
     }
 }
