@@ -8,6 +8,7 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.pages.form.liveedit.MceToolbar
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
@@ -29,6 +30,7 @@ class TextComponent_MceToolbar_Spec
     @Shared
     String TEST_TEXT = "test text";
 
+    @Ignore
     def "GIVEN existing site with selected controller WHEN text component inserted THEN mce-toolbar appears AND all buttons are present"()
     {
         given:
@@ -102,6 +104,7 @@ class TextComponent_MceToolbar_Spec
         mceToolbar.isSourceCodeButtonDisplayed();
     }
 
+    @Ignore
     def "GIVEN existing text component  WHEN the component right-clicked AND 'Edit' menu item was selected AND 'Source Code' button clicked THEN Source Code window is opened"()
     {
         given: "existing text component"
