@@ -35,12 +35,13 @@ class SiteFormViewPanel_Applications_Spec
 
         when: "reordering of applications applied, site saved"
         formViewPanel.swapApplications( SIMPLE_SITE_APP, MY_FIRST_APP );
+        saveScreenshot( "app_swapped1" );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-        saveScreenshot( SITE.getDisplayName() + "_closed" );
 
         and: "site opened again"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
+        saveScreenshot( "app_swapped2" );
 
         then: "new order of applications present in form-panel"
         namesBefore.getFirst() == namesAfter.getLast();

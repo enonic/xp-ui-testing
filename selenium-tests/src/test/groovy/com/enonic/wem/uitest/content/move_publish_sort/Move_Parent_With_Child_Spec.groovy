@@ -39,7 +39,7 @@ class Move_Parent_With_Child_Spec
         given: "parent folder and its child are selected AND 'Move' button pressed"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
         contentBrowsePanel.expandContent( ContentPath.from( IMPORTED_FOLDER_NAME ) );
-        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_BOOK_IMAGE );
+        contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_IMAGE_BOOK_NAME );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
         when: "name of parent folder is typed"

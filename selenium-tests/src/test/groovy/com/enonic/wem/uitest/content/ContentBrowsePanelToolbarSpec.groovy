@@ -67,7 +67,7 @@ class ContentBrowsePanelToolbarSpec
     def "GIVEN a content that not allowing children WHEN content selected THEN Sort button is  disabled for content types not allowing children"()
     {
         when: "image content selected"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE );
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         sleep( 1000 );
         TestUtils.saveScreenshot( getSession(), "children_not_allow" );
 

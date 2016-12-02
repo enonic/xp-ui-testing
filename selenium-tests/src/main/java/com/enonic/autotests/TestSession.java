@@ -33,6 +33,8 @@ public class TestSession
 
     private boolean loggedIn;
 
+    private boolean inLiveEditFrame;
+
     public boolean isLoggedIn()
     {
         return loggedIn;
@@ -134,6 +136,16 @@ public class TestSession
             throw new TestFrameworkException( "Handle for content browse panel was not set" );
         }
         return contentBrowseTabHandle;
+    }
+
+    public boolean isInLiveEditFrame()
+    {
+        return inLiveEditFrame;
+    }
+
+    public void setInLiveEditFrame( boolean value )
+    {
+        this.inLiveEditFrame = value;
     }
 
 }

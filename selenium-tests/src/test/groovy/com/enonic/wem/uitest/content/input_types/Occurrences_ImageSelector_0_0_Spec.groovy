@@ -130,7 +130,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        wizard.close( imageSelectorContent.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
@@ -150,7 +150,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        wizard.close( imageSelectorContent.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content was found in the grid"
         filterPanel.typeSearchText( imageSelectorContent.getName() );

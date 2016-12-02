@@ -14,7 +14,7 @@ class PhotoInfo_Wizard_Spec
     def "WHEN image content opened THEN all control elements are present"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit();
 
         when: "'Image Info' step was clicked"
         wizard.clickOnWizardStep( "Photo Info" );

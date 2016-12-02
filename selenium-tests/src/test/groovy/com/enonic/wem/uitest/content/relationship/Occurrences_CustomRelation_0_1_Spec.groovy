@@ -62,7 +62,7 @@ class Occurrences_CustomRelation_0_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( citation.getContentTypeName() );
 
         when: "wizard with form view opened"
-        wizard.typeData( citation ).save().close( citation.getDisplayName() );
+        wizard.typeData( citation ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new content listed"
         filterPanel.typeSearchText( citation.getName() );
@@ -80,7 +80,7 @@ class Occurrences_CustomRelation_0_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( RELATIONSHIP_CONTENT.getContentTypeName() );
 
         when: "wizard with form view opened"
-        wizard.typeData( RELATIONSHIP_CONTENT ).save().close( RELATIONSHIP_CONTENT.getDisplayName() );
+        wizard.typeData( RELATIONSHIP_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         then: "new content listed"
         filterPanel.typeSearchText( RELATIONSHIP_CONTENT.getName() );
         contentBrowsePanel.exists( RELATIONSHIP_CONTENT.getName() );

@@ -32,7 +32,7 @@ class Site_Publish_Spec
         given: "data typed and saved and wizard closed"
         SITE = buildMyFirstAppSite( "site" );
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).selectPageDescriptor(
-            COUNTRY_REGION_PAGE_CONTROLLER ).save().close( SITE.getDisplayName() );
+            COUNTRY_REGION_PAGE_CONTROLLER ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site has been published"
         findAndSelectContent( SITE.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();

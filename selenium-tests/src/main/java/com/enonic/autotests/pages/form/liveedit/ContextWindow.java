@@ -67,12 +67,12 @@ public class ContextWindow
 
     public boolean isContextWindowPresent()
     {
-        return findElements( By.xpath( DIV_CONTEXT_WINDOW ) ).size() > 0;
+        return waitUntilVisibleNoException( By.xpath( DIV_CONTEXT_WINDOW ), Application.EXPLICIT_NORMAL );
     }
 
     public ContextWindow clickOnInsertLink()
     {
-        if ( !isElementDisplayed( INSERT_TAB_LINK ) )
+        if ( !waitUntilVisibleNoException( By.xpath( INSERT_TAB_LINK ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_insert_link" );
             throw new TestFrameworkException( "Insert link was not found on the ContextWindow!" );
@@ -84,7 +84,7 @@ public class ContextWindow
 
     public ContextWindow clickOnEmulatorLink()
     {
-        if ( !isElementDisplayed( EMULATOR_TAB_LINK ) )
+        if ( !waitUntilVisibleNoException( By.xpath( EMULATOR_TAB_LINK ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_emulator_link" );
             throw new TestFrameworkException( "Emulator link was not found on the ContextWindow!" );
@@ -96,7 +96,7 @@ public class ContextWindow
 
     public ContextWindow clickOnInspectLink()
     {
-        if ( !isElementDisplayed( INSPECT_TAB_LINK ) )
+        if ( !waitUntilVisibleNoException( By.xpath( INSPECT_TAB_LINK ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_inspect_link" );
             throw new TestFrameworkException( "'inspect' link was not found on the ContextWindow!" );

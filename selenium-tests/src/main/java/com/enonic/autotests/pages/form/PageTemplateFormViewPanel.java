@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.XP_Windows;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
@@ -22,7 +21,7 @@ public class PageTemplateFormViewPanel
 
     public static final String PAGE_CONTROLLER = "pageController";
 
-    ContentWizardPanel contentWizardPanel;
+    private ContentWizardPanel contentWizardPanel;
 
     private final String SUPPORT_OPTION_FILTER_INPUT = FORM_VIEW + "//input[contains(@class,'option-filter-input')]";
 
@@ -64,11 +63,7 @@ public class PageTemplateFormViewPanel
 
     public void selectPageController( String pageName )
     {
-        if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
-        {
-            contentWizardPanel.switchToLiveEditFrame();
-
-        }
+        contentWizardPanel.switchToLiveEditFrame();
         if ( !isElementDisplayed( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) )
         {
             saveScreenshot( "err_page_controller" );

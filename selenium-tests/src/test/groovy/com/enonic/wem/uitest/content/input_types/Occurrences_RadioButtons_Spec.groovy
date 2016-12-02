@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -18,7 +17,7 @@ class Occurrences_RadioButtons_Spec
     Content content_wit_opt;
 
 
-    def "WHEN wizard for adding a 'Radio Buttons' opened THEN radio buttons present on page and no any options selected"()
+    def "WHEN wizard for  'Radio Buttons'-content is opened THEN radio buttons are present on page AND options are not selected"()
     {
         when: "start to add a content with type 'Radio Buttons'"
         String option = null;
@@ -26,24 +25,24 @@ class Occurrences_RadioButtons_Spec
         selectSitePressNew( radioButtonsContent.getContentTypeName() );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
-        then: "radio buttons present on page and no any options selected"
+        then: " radio buttons are present on page and options are not selected"
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    def "GIVEN saving of not required 'Radio Buttons' without selected option WHEN content opened for edit THEN no one selected options present in form view"()
+    def "GIVEN saving of content without selected option WHEN content opened for edit THEN no one selected options is present in form view"()
     {
         given: "new content with type 'Radio Buttons'"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
-        selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent ).save().close(
-            radioButtonsContent.getDisplayName() );
+        selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData(
+            radioButtonsContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
-        TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "close-radio" ) )
+        saveScreenshot( NameHelper.uniqueName( "radio-button" ) )
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( radioButtonsContent );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
-        then:
+        then: "no one selected options is present in form view"
         formViewPanel.getSelectedOption().isEmpty();
     }
 
@@ -73,8 +72,8 @@ class Occurrences_RadioButtons_Spec
         given: "new content with type 'Single Selector Radio'"
         String option = "option A";
         content_wit_opt = buildRadioButtonsContent( option );
-        selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData( content_wit_opt ).save().close(
-            content_wit_opt.getDisplayName() );
+        selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData(
+            content_wit_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
@@ -93,7 +92,7 @@ class Occurrences_RadioButtons_Spec
         when: "new option selected"
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
         formViewPanel.selectOption( newOption );
-        contentWizardPanel.save().close( content_wit_opt.getDisplayName() );
+        contentWizardPanel.save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
         then: "new selected option displayed"

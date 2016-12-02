@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.CityFormView
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
@@ -64,8 +63,7 @@ class CountrySiteWithTemplateSpec
         when: "'Templates' folder selected and new page-template added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
-        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
-        wizard.save().close( PAGE_TEMPLATE.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
         then: "new page-template listed"
@@ -83,7 +81,6 @@ class CountrySiteWithTemplateSpec
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionView",
                                                                                                                              LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
-        NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
         contentWizard.save().clickToolbarPreview();
         saveScreenshot( "country_part_added" );
 
@@ -107,7 +104,6 @@ class CountrySiteWithTemplateSpec
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "PartComponentView", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City list" );
-        switchToContentStudioWindow();
         contentWizard.save().clickToolbarPreview();
         saveScreenshot( "city_part_added" );
 
@@ -136,23 +132,25 @@ class CountrySiteWithTemplateSpec
         name == PAGE_CONTROLLER_NAME;
     }
 
-    def "GIVEN new USA-content added and a child city content added into the country WHEN country content selected AND 'Preview' button pressed THEN correct text present in the page-source "()
+    def "GIVEN new USA-content added AND child city-content added for the country WHEN USA-content selected AND 'Preview' button pressed THEN correct text is present in the page-source "()
     {
         given: "new USA-content added"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, SITE.getName() );
 
         ContentWizardPanel wizard = selectSitePressNew( USA_CONTENT.getContentTypeName(), SITE.getName() );
         wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
-        wizard.close( USA_CONTENT.getDisplayName() );
-        and: "and it content selected and the 'New' button on the toolbar pressed"
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
+
+        and: "the content selected and 'New' button on the toolbar pressed"
         contentBrowsePanel.clickOnClearSelection();
         SAN_FR_CONTENT = buildCity_Content( "San Francisco", SF_LOCATION, SF_POPULATION, USA_CONTENT.getName() );
+
         and: "new City-content added beneath the USA-content"
         findAndSelectContent( USA_CONTENT.getName() ).clickToolbarNew().selectContentType( SAN_FR_CONTENT.getContentTypeName() ).typeData(
-            SAN_FR_CONTENT ).save().close( SAN_FR_CONTENT.getDisplayName() );
+            SAN_FR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         findAndSelectContent( USA_CONTENT.getName() );
         sleep( 3000 );
-        saveScreenshot( "san francisco" )
+        saveScreenshot( "san_francisco_added" )
         contentBrowsePanel.clickOnClearSelection();
 
         when: "country-content selected in the grid and the 'Preview' button pressed"
@@ -164,7 +162,7 @@ class CountrySiteWithTemplateSpec
         then: "correct text present in the 'page source'"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source.contains( CITY_HEADER );
-        and: "correct description displayed"
+        and: "correct description is displayed"
         source.contains( "Population: " + SF_POPULATION );
 
     }

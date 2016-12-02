@@ -120,8 +120,8 @@ class Base_InputFields_Occurrences
 
     public void addContent( Content content )
     {
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData( content ).save().close(
-            content.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData(
+            content ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 

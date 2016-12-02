@@ -58,8 +58,9 @@ class PortalContentCreating_Spec
         when: "'Templates' folder selected and new page-template added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
-        switchToContentStudioWindow();
-        wizard.save().close( PAGE_TEMPLATE.getDisplayName() );
+
+        and: "the template saved"
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
         then: "new page-template listed"
@@ -67,19 +68,18 @@ class PortalContentCreating_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-
-    def "GIVEN existing page-template WHEN the template opened for edit and the 'country region' controller selected and 'country' part inserted THEN correct page-sources are present in the HTML"()
+    def "GIVEN existing page-template is opened WHEN 'country region' controller selected and 'country' part inserted THEN correct page-sources are present in the HTML"()
     {
-        given: "existing page-template"
-        filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
+        given: "existing page-template is opened"
+        ContentWizardPanel wizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
-        when: "the template opened for edit and the 'country region' controller selected and 'country' part inserted"
-        PartComponentView partComponentView = contentWizard.showPageEditor().showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
+        when: " 'country region' controller selected and 'country' part inserted"
+        PartComponentView partComponentView = wizard.showPageEditor().showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
             "RegionView", LIVE_EDIT_FRAME_SITE_HEADER );
         partComponentView.selectItem( "City Creation" );
-        switchToContentStudioWindow();
-        contentWizard.save().clickToolbarPreview();
+
+        and: "'Preview' button has been pressed"
+        wizard.save().clickToolbarPreview();
         saveScreenshot( "country_part_added2" );
 
         then: "correct page-sources are present in the HTML"
@@ -94,7 +94,7 @@ class PortalContentCreating_Spec
 
         ContentWizardPanel wizard = selectSitePressNew( NOR_CONTENT.getContentTypeName(), SITE.getName() );
         wizard.typeData( NOR_CONTENT ).save().waitNotificationMessage();
-        wizard.close( NOR_CONTENT.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the submit button pressed and new city-content added as child into the country"
         contentBrowsePanel.clickOnClearSelection();

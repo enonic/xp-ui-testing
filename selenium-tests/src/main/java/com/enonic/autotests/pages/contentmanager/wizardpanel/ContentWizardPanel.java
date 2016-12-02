@@ -5,14 +5,11 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.XP_Windows;
 import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
@@ -26,7 +23,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
-import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
@@ -219,9 +215,7 @@ public class ContentWizardPanel
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        //NavigatorHelper.switchToBrowserTab( getSession(), "browse" );
-        getDriver().switchTo().defaultContent();
-        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+        switchToDefaultWindow();
         return this;
     }
 
@@ -344,12 +338,9 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel save()
     {
-        XP_Windows currentW = getSession().getCurrentWindow();
-        if ( currentW != null && currentW.equals( XP_Windows.LIVE_EDIT ) )
+        if ( isInLiveEditFrame() )
         {
-            //TODO switch to the wizard tab by name
-            getDriver().switchTo().defaultContent();
-            getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+            switchToDefaultWindow();
         }
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
         if ( !isSaveButtonEnabled )
@@ -506,11 +497,16 @@ public class ContentWizardPanel
 
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
     {
-        if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
+        if ( !isInLiveEditFrame() )
         {
             switchToLiveEditFrame();
         }
-        findElements( By.xpath( DROPDOWN_OPTION_FILTER_INPUT ) ).get( 0 ).sendKeys( pageDescriptorDisplayName );
+        if ( !isElementDisplayed( DROPDOWN_OPTION_FILTER_INPUT ) )
+        {
+            saveScreenshot( "err_content_wizard_dropdown_not_displayed" );
+            throw new TestFrameworkException( "option filter input was not found" );
+        }
+        findElement( By.xpath( DROPDOWN_OPTION_FILTER_INPUT ) ).sendKeys( pageDescriptorDisplayName );
         String pageDescriptor = String.format( "//h6[@class='main-name' and text()='%s']", pageDescriptorDisplayName );
         if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
         {
@@ -574,7 +570,7 @@ public class ContentWizardPanel
 
     public LiveFormPanel switchToLiveEditFrame()
     {
-        if ( getSession().getCurrentWindow().equals( XP_Windows.CONTENT_STUDIO ) )
+        if ( !isInLiveEditFrame() )
         {
             List<WebElement> liveEditFrames = findElements( By.xpath( LIVE_EDIT_FRAME ) );
             if ( liveEditFrames.size() == 0 )
@@ -583,14 +579,15 @@ public class ContentWizardPanel
             }
             //switch to 'live edit' frame
             getDriver().switchTo().frame( liveEditFrames.get( 0 ) );
-            getSession().setCurrentWindow( XP_Windows.LIVE_EDIT );
+            setInLiveEditFrame( true );
         }
         return new LiveFormPanel( getSession() );
     }
 
     public int getHeightOfPageEditor()
     {
-        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        //if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        if ( isInLiveEditFrame() )
         {
             switchToDefaultWindow();
         }
@@ -598,18 +595,13 @@ public class ContentWizardPanel
         return Integer.valueOf( height.substring( 0, height.indexOf( "px" ) ) );
     }
 
-    public void switchToDefaultWindow()
-    {
-        getDriver().switchTo().defaultContent();
-        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
-    }
 
     public int getWidthOfPageEditor()
     {
-        if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
+        if ( isInLiveEditFrame() )
         {
-            NavigatorHelper.switchToBrowserTab( getSession(), "content-studio" );
-            getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
+            switchToDefaultWindow();
+
         }
         String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
         return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
@@ -619,6 +611,13 @@ public class ContentWizardPanel
     {
         getDriver().switchTo().window( getHandleForContentBrowseTab() );
         return new ContentBrowsePanel( getSession() );
+    }
+
+    public ContentWizardPanel switchToDefaultWindow()
+    {
+        getDriver().switchTo().defaultContent();
+        setInLiveEditFrame( false );
+        return this;
     }
 
     public ContentWizardPanel closeBrowserTab()
@@ -685,40 +684,13 @@ public class ContentWizardPanel
         alert.dismiss();
     }
 
-    public void switchToNextTab()
+    public boolean isInLiveEditFrame()
     {
-        if ( Platform.getCurrent().is( Platform.MAC ) )
-        {
-            buildActions().click( findElement( By.xpath( DIV_CONTENT_WIZARD_PANEL ) ) ).sendKeys(
-                Keys.chord( Keys.COMMAND, Keys.TAB ) ).perform();
-        }
-        else
-        {
-            buildActions().click( findElement( By.xpath( DIV_CONTENT_WIZARD_PANEL ) ) ).sendKeys(
-                Keys.chord( Keys.CONTROL, Keys.TAB ) ).perform();
-        }
-        // getDriver().switchTo().defaultContent();
+        return getSession().isInLiveEditFrame();
     }
 
-    public void switchToPreviousTab()
+    public void setInLiveEditFrame( boolean value )
     {
-        if ( Platform.getCurrent().is( Platform.MAC ) )
-        {
-
-            buildActions().click( findElement( By.xpath( DIV_CONTENT_WIZARD_PANEL ) ) ).sendKeys(
-                Keys.chord( Keys.COMMAND, Keys.SHIFT, Keys.TAB ) ).perform();
-        }
-        else
-        {
-            //Actions action= buildActions();
-            //action.keyDown(Keys.CONTROL).sendKeys(Keys.TAB).build().perform();
-
-            //new Actions(getDriver()).sendKeys(Keys.chord(Keys.CONTROL, Keys.TAB)).build().perform();
-            //findElement( By.xpath( "//body" ) ).sendKeys( Keys.CONTROL, Keys.TAB );
-            buildActions().
-                click( findElement( By.xpath( "//body" ) ) ).sendKeys( Keys.chord( Keys.CONTROL, Keys.TAB ) ).build().perform();
-        }
-        //getDriver().switchTo().defaultContent();
+        getSession().setInLiveEditFrame( value );
     }
-
 }

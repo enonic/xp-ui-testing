@@ -24,8 +24,8 @@ class MyFirstApp_Spec
         MY_FIRST_SITE = buildMyFirstAppSite( "country-site" );
 
         when: "data typed and saved and wizard closed"
-        contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData( MY_FIRST_SITE ).save().close(
-            MY_FIRST_SITE.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData(
+            MY_FIRST_SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( "country_site_added" );
 
         then: "new site should be listed"
@@ -41,7 +41,7 @@ class MyFirstApp_Spec
         when: "data typed and saved and wizard closed"
         wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
         saveScreenshot( "usa_content_added" );
-        wizard.close( USA_CONTENT.getDisplayName() );
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new 'country' content should be listed"
         filterPanel.typeSearchText( USA_CONTENT.getName() );

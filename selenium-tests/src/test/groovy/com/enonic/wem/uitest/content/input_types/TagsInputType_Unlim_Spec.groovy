@@ -40,7 +40,7 @@ class TagsInputType_Unlim_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit the new created content"
-        contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
+        contentWizardPanel.typeData( tagContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
@@ -88,7 +88,7 @@ class TagsInputType_Unlim_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and open for edit new created content"
-        contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
+        contentWizardPanel.typeData( tagContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );

@@ -26,7 +26,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
     def "WHEN image content selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget is displayed and has attachments"()
     {
         when: "image content selected"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE );
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         saveScreenshot( "test_dependencies_widget_opened" );
 
@@ -140,7 +140,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         and: "content with 'image-selector' added"
         Content imageSelector = buildImageSelector1_1_Content( TEST_SITE_NAME, TARGET_IMG )
         findAndSelectContent( TEST_SITE_NAME ).clickToolbarNew().selectContentType( imageSelector.getContentTypeName() ).typeData(
-            imageSelector ).save().close( imageSelector.getDisplayName() );
+            imageSelector ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
         when: "dependencies for image is opened"

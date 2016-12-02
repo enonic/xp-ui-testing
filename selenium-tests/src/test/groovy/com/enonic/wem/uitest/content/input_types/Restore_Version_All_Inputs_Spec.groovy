@@ -70,7 +70,7 @@ class Restore_Version_All_Inputs_Spec
         ContentWizardPanel wizard = selectSitePressNew( ALL_INPUTS_CONTENT.getContentTypeName() );
         wizard.typeData( ALL_INPUTS_CONTENT );
         saveScreenshot( "all_inputs_typed" );
-        wizard.save().close( INITIAL_DISPLAY_NAME );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
 
         when: "display name of the folder changed"
@@ -96,7 +96,7 @@ class Restore_Version_All_Inputs_Spec
         formView.getGeoPointFormViewPanel().typeGeoPoint( GEO_POINT_V2 );
         formView.getSingleSelectorRadioFormView().selectOption( RADIO_OPTION_V2 );
         formView.getTextLineFormViewPanel().typeText( TEXT_LINE_V2 );
-        wizard.save().close( ALL_INPUTS_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         then:

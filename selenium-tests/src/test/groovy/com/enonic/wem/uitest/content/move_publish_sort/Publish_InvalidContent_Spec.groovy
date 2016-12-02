@@ -72,8 +72,8 @@ class Publish_InvalidContent_Spec
         and: "add a not valid child folder"
         findAndSelectContent( parentFolder.getName() );
         Content childContent = buildFolderContentWithParent( "not_valid", null, parentFolder.getName() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent ).save().close(
-            "<Unnamed Folder>" );
+        contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent ).save().
+            closeBrowserTab().switchToBrowsePanelTab();
 
         when: "parent content selected and 'Publish' button pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(

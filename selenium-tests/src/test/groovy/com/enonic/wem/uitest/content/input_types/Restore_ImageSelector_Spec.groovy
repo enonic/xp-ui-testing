@@ -20,14 +20,14 @@ class Restore_ImageSelector_Spec
         given: "new ImageSelector-content 2:4 added"
         IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME );
         ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT.getContentTypeName() );
-        wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().close( IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
         when: "content opened and one image was removed"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
-        wizard.save().close( IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();

@@ -34,7 +34,7 @@ class TextArea_Spec
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        contentWizardPanel.close( textAreaContent.getDisplayName() );
+        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
 
         then: "content has a 'online' status"
@@ -50,7 +50,7 @@ class TextArea_Spec
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        contentWizardPanel.close( textAreaContent.getDisplayName() );
+        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
 
         then: "content has a 'online' status"

@@ -114,8 +114,7 @@ class CreateSiteWithLayoutSpec
     def "GIVEN 'Page Components' opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout present on the live edit frame"()
     {
         given: "'Page Components' opened"
-        filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = findAndSelectContent( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "menu for the region is opened and layout with 3 columns has been selected"

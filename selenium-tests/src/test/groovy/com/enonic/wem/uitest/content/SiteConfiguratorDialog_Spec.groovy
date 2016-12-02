@@ -33,7 +33,7 @@ class SiteConfiguratorDialog_Spec
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
 
         and: "wizard closed"
-        wizard.save().close( SITE.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );

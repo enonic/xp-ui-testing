@@ -62,8 +62,7 @@ class LiveEditLockedMode_Spec
         when: "test site should be listed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).typeData( template );
-        switchToContentStudioWindow();
-        wizard.save().close( template.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
         then: "new page-template listed"
@@ -103,7 +102,7 @@ class LiveEditLockedMode_Spec
 
         when: "the 'Customize' menu item selected"
         itemViewContextMenu.clickOnCustomizeMenuItem();
-        switchToContentStudioWindow();
+        wizard.switchToDefaultWindow();
 
         then: "LiveEdit not locked"
         !wizard.isLiveEditLocked();
@@ -113,8 +112,8 @@ class LiveEditLockedMode_Spec
     {
         Content site;
         site = buildSite( name );
-        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site ).save().close(
-            site.getDisplayName() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
+            site ).save().closeBrowserTab().switchToBrowsePanelTab();
     }
 
     private Content buildSite( String siteName )

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
@@ -16,7 +15,10 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     extends BaseContentSpec
 {
     @Shared
-    String SITE_WITH_COMPONENTS_NAME = NameHelper.uniqueName( "page-component-reset" );
+    String SITE_WITH_COMPONENTS_NAME = "page-component-reset";
+
+    @Shared
+    Content SITE;
 
     @Shared
     Content PAGE_TEMPLATE;
@@ -25,26 +27,32 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     String TEMPLATE_DISPLAY_NAME = "country template";
 
     @Shared
-    String IMAGE_FOR_TEMPLATE = "book.jpg";
+    String IMAGE_DISPLAY_NAME_FOR_TEMPLATE = IMPORTED_IMAGE_BOOK_DISPLAY_NAME;
 
     @Shared
-    String TEST_IMAGE = "man2.jpg";
+    String IMAGE_NAME_FOR_TEMPLATE = IMPORTED_IMAGE_BOOK_NAME;
 
     @Shared
-    String TEST_IMAGE_SWAP = "whale.jpg";
+    String TEST_IMAGE = IMPORTED_MAN2_IMAGE_DISPLAY_NAME;
+
+    @Shared
+    String TEST_IMAGE_SWAP = WHALE_IMAGE_DISPLAY_NAME;
+
+    @Shared
+    String TEST_IMAGE_NAME_SWAP = WHALE_IMAGE_NAME;
 
 
     def "setup:add site with a template"()
     {
         given: "existing Site based on 'My First App'"
-        Content site = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
-        addSite( site );
-        contentBrowsePanel.expandContent( ContentPath.from( SITE_WITH_COMPONENTS_NAME ) );
+        SITE = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
+        addSite( SITE );
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, TEMPLATE_DISPLAY_NAME,
-                                           SITE_WITH_COMPONENTS_NAME );
+                                           SITE.getName() );
 
         when: "'Templates' folder selected and new page-template added"
-        addTemplateWithImage( PAGE_TEMPLATE, IMAGE_FOR_TEMPLATE )
+        addTemplateWithImage( PAGE_TEMPLATE, IMAGE_DISPLAY_NAME_FOR_TEMPLATE )
         sleep( 500 );
 
         then: "new page-template listed"
@@ -56,23 +64,22 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     def "GIVEN opened a site in wizard AND one component was replaced WHEN root element in page component dialog was selected and 'Reset' menu item selected THEN site should be reset to default template"()
     {
         given: "site opened for edit  and site saved"
-        filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
+        filterPanel.typeSearchText( SITE.getName() )
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
         saveScreenshot( "image-from-template" );
 
         and: "and one component was replaced"
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-        pageComponentsView.openMenu( IMAGE_FOR_TEMPLATE ).selectMenuItem( "Remove" );
+        pageComponentsView.openMenu( IMAGE_DISPLAY_NAME_FOR_TEMPLATE ).selectMenuItem( "Remove" );
 
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
-        wizard.switchToLiveEditFrame(  );
+        wizard.switchToLiveEditFrame();
 
         and: "new image inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE );
-        switchToContentStudioWindow();
 
         and: "wizard saved"
         wizard.save();
@@ -87,24 +94,24 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         then: "site has been reset to default template, image from template appeared in the page editor"
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        liveFormPanel.isImagePresent( IMAGE_FOR_TEMPLATE );
+        liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
     }
 
     def "GIVEN site with 2 image-components WHEN swapping components by DnD THEN components shown correctly"()
     {
         given: "site with 2 image-components"
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_WITH_COMPONENTS_NAME ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
         LiveFormPanel liveFormPanel = addImageComponent( TEST_IMAGE_SWAP );
         saveScreenshot( "two-images-in-view" );
         LinkedList<String> before = liveFormPanel.getImageNames();
 
         when: "swapping components by DnD"
-        switchToContentStudioWindow();
+        wizard.switchToDefaultWindow();
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-        pageComponentsView.swapComponents( IMAGE_FOR_TEMPLATE, TEST_IMAGE_SWAP );
+        pageComponentsView.swapComponents( IMAGE_DISPLAY_NAME_FOR_TEMPLATE, TEST_IMAGE_SWAP );
         wizard.save();
         sleep( 2000 );
         wizard.switchToLiveEditFrame();
@@ -112,9 +119,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         saveScreenshot( "page_comp_view_images-swapped" );
 
         then: "images swapped"
-        before.getFirst() == TEST_IMAGE_SWAP;
+        before.getFirst() == TEST_IMAGE_NAME_SWAP;
         and:
-        after.getFirst() == IMAGE_FOR_TEMPLATE;
+        after.getFirst() == IMAGE_NAME_FOR_TEMPLATE;
 
     }
 
@@ -123,8 +130,8 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
-        ContentWizardPanel wizard = new ContentWizardPanel(getSession(  ));
-        wizard.switchToLiveEditFrame(  );
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( imageName );
         sleep( 1000 );
@@ -135,10 +142,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     {
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template );
-        switchToContentStudioWindow();
+        wizard.switchToDefaultWindow();
         wizard.showComponentView();
         addImageComponent( imageName );
-        switchToContentStudioWindow();
-        wizard.save().close( template.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
     }
 }

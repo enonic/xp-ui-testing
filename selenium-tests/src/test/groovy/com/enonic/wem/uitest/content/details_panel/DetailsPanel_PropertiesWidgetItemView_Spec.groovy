@@ -143,7 +143,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     def "WHEN image content selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
     {
         when: "image content selected"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE );
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "image_info_properties" );

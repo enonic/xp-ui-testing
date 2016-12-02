@@ -19,14 +19,14 @@ class Restore_Tags_Spec
         given: "new Tag-content with two tags added"
         TAG_CONTENT = buildTag_2_5_Content( 2 );
         ContentWizardPanel wizard = selectSitePressNew( TAG_CONTENT.getContentTypeName() );
-        wizard.typeData( TAG_CONTENT ).save().close( TAG_CONTENT.getDisplayName() );
+        wizard.typeData( TAG_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
         when: "content opened and one tag was removed "
         findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         formViewPanel.removeLastTag();
-        wizard.save().close( TAG_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and:
         AllContentVersionsView allContentVersionsView = openVersionPanel();

@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.XP_Windows
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.*
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
@@ -70,6 +69,9 @@ class BaseContentSpec
 
     @Shared
     String IMPORTED_MAN2_IMAGE = "man2.jpg";
+
+    @Shared
+    String IMPORTED_MAN2_IMAGE_DISPLAY_NAME = "man2";
 
     @Shared
     String HAND_IMAGE_NAME = "hand.jpg";
@@ -301,12 +303,6 @@ class BaseContentSpec
         }
 
         return contentBrowsePanel;
-    }
-
-    protected void switchToContentStudioWindow()
-    {
-        NavigatorHelper.switchToBrowserTab( getSession(), CONTENT_STUDIO_URL_PART );
-        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
     protected ContentWizardPanel selectSitePressNew( String siteName, String contentTypeName )

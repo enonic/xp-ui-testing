@@ -43,6 +43,7 @@ class TextComponent_MceToolbar_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEST_TEXT );
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
+        saveScreenshot( "mce_toolbar_should_be_displayed" );
 
 
         then: "mce toolbar is displayed"
@@ -110,7 +111,7 @@ class TextComponent_MceToolbar_Spec
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEST_TEXT );
-        wizard.switchToMainWindow();
+        wizard.switchToDefaultWindow();
         pageComponentsView.doCloseDialog();
 
         and: "right-click on the text-component"

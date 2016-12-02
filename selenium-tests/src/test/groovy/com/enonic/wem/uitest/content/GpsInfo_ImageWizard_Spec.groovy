@@ -24,7 +24,7 @@ class GpsInfo_ImageWizard_Spec
     def "GIVEN image content opened WHEN 'Gps Info' step was clicked THEN all control elements are present"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
 
         when: "'Gps Info' step was clicked"
         wizard.clickOnWizardStep( "Gps Info" );
@@ -44,7 +44,7 @@ class GpsInfo_ImageWizard_Spec
     def "GIVEN image content opened WHEN new gps-info data typed and wizard saved THEN correct info present on the page"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BOOK_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
         wizard.clickOnWizardStep( "Gps Info" );
         GpsInfoFormViewPanel gpsInfoFormViewPanel = new GpsInfoFormViewPanel( getSession() );
 

@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.XP_Windows;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
@@ -21,6 +20,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class HomePage
     extends Application
 {
+    public static final String CONTENT_STUDIO_URL_PART = "content-studio";
+
+    public static final String USER_MANAGER_URL_PART = "user-manager";
+
+    public static final String APPLICATIONS_URL_PART = "applications";
 
     public static final String HOME_PAGE_TAB_HANDLE = "home_window_id_key";
 
@@ -86,21 +90,18 @@ public class HomePage
 
     private void switchToContentBrowseTab()
     {
-        String contentBrowseTabHandle = NavigatorHelper.switchToBrowserTab( getSession(), XP_Windows.CONTENT_STUDIO.getWindowName() );
+        String contentBrowseTabHandle = NavigatorHelper.switchToBrowserTab( getSession(), CONTENT_STUDIO_URL_PART );
         getSession().put( HomePage.CONTENT_STUDIO_TAB_HANDLE, contentBrowseTabHandle );
-        getSession().setCurrentWindow( XP_Windows.CONTENT_STUDIO );
     }
 
     private void switchToUsersTab()
     {
-        NavigatorHelper.switchToBrowserTab( getSession(), XP_Windows.USER_MANAGER.getWindowName() );
-        getSession().setCurrentWindow( XP_Windows.USER_MANAGER );
+        NavigatorHelper.switchToBrowserTab( getSession(), USER_MANAGER_URL_PART );
     }
 
     private void switchToApplicationsTab()
     {
-        NavigatorHelper.switchToBrowserTab( getSession(), XP_Windows.APPLICATIONS.getWindowName() );
-        getSession().setCurrentWindow( XP_Windows.APPLICATIONS );
+        NavigatorHelper.switchToBrowserTab( getSession(), APPLICATIONS_URL_PART );
     }
 
     public UserBrowsePanel openUsersApplication()

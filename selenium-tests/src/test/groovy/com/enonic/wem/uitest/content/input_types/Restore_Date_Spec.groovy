@@ -27,14 +27,14 @@ class Restore_Date_Spec
         given: "new content added"
         DATE_CONTENT = buildDate1_1_Content( DATE_V1 );
         ContentWizardPanel wizard = selectSitePressNew( DATE_CONTENT.getContentTypeName() );
-        wizard.typeData( DATE_CONTENT ).save().close( DATE_CONTENT.getDisplayName() );
+        wizard.typeData( DATE_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
         when: "the content opened and date was changed"
         findAndSelectContent( DATE_CONTENT.getName() ).clickToolbarEdit();
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
         formViewPanel.typeDate( DATE_V2 );
-        wizard.save().close( DATE_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and:
         AllContentVersionsView allContentVersionsView = openVersionPanel();

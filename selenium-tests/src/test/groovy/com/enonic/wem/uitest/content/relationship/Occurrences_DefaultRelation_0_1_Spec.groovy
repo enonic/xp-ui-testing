@@ -57,7 +57,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         TEST_RELATIONSHIP_CONTENT = buildDefaultRelation0_1_Content( NORD_IMAGE_NAME );
         ContentWizardPanel wizard = selectSitePressNew( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
-        wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().close( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
+        wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when:
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
@@ -93,7 +93,7 @@ class Occurrences_DefaultRelation_0_1_Spec
 
         when:
         formViewPanel.removeSelectedFile( NORD_IMAGE_NAME );
-        wizard.save().close( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
 
         then: "there are no selected files in the form"

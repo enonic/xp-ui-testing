@@ -22,7 +22,7 @@ class TagsInputType_0_5_Spec
 
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
-        contentWizardPanel.close( tagContent.getDisplayName() );
+        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( tagContent.getName() );
 
         then: "content has a 'online' status"
@@ -38,7 +38,7 @@ class TagsInputType_0_5_Spec
 
 
         when: "type a data and 'save' and open for edit new created content"
-        contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
+        contentWizardPanel.typeData( tagContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
@@ -86,7 +86,7 @@ class TagsInputType_0_5_Spec
 
 
         when: "type a data and 'save' and open for edit new created content"
-        contentWizardPanel.typeData( tagContent ).save().close( tagContent.getDisplayName() );
+        contentWizardPanel.typeData( tagContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 

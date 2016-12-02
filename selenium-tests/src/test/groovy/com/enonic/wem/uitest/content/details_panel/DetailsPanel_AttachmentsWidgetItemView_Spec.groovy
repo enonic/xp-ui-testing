@@ -11,7 +11,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
     def "WHEN image content selected and details panel opened THEN AttachmentsWidgetItemView is displayed and has attachments"()
     {
         when: "image content selected"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE );
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
 
@@ -24,7 +24,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
     def "GIVEN existing image-content WHEN content selected and details panel opened THEN correct attachment name displayed in the widget "()
     {
         when: "image content selected"
-        findAndSelectContent( IMPORTED_BOOK_IMAGE );
+        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
         List<String> attachmentNames = view.getAttachmentNames();
@@ -32,7 +32,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
         then: "correct attachment name displayed in the widget"
         attachmentNames.size() == 1;
         and:
-        attachmentNames.get( 0 ) == IMPORTED_BOOK_IMAGE;
+        attachmentNames.get( 0 ) == IMPORTED_IMAGE_BOOK_NAME;
     }
 
     def "GIVEN existing folder-content WHEN content selected and details panel opened THEN correct message displayed in the widget"()

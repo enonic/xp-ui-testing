@@ -53,7 +53,7 @@ class SitePreview_Spec
         ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarEdit();
 
         when: "controller is selected"
-        wizard.selectPageDescriptor( COUNTRY_REGION_TITLE ).save().close( MY_SITE.getDisplayName() );
+        wizard.selectPageDescriptor( COUNTRY_REGION_TITLE ).save().closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( "site-template-preview" );
 
         then: "'Preview' on the BrowseToolbar is enabled"

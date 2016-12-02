@@ -67,7 +67,6 @@ class Occurrences_Local_DateTime_0_1_Spec
 
         then: "content should be invalid, because 'datetime' is not valid"
         !wizard.isContentInvalid( dateTimeNotValid.getDisplayName() );
-
     }
 
     def "GIVEN 'date time' wizard is opened WHEN content saved without a 'date time' THEN wizard has no a red icon"()
@@ -88,18 +87,18 @@ class Occurrences_Local_DateTime_0_1_Spec
         wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN 'date time' wizard is opened WHEN content  saved and wizard closed without a 'date time' THEN grid row with this content has no a red icon"()
+    def "GIVEN 'date time' wizard is opened WHEN 'date time' is empty and content was saved and wizard closed THEN content should be displayed as valid in the grid"()
     {
         given: "new content with type 'DateTime(0:1)' added'"
         Content dateTimeContent = buildDateTime0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
-        when: "content opened for edit"
-        wizard.save().close( dateTimeContent.getDisplayName() );
+        when: "'date time' is empty and content was saved and wizard closed"
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateTimeContent.getName() );
         saveScreenshot( "date-time01-without-date" );
 
-        then: "content should is valid, because the 'date time' field not required"
+        then: "content should be displayed as valid in the grid, because the 'date time' field not required"
         !contentBrowsePanel.isContentInvalid( dateTimeContent.getName() );
     }
 }

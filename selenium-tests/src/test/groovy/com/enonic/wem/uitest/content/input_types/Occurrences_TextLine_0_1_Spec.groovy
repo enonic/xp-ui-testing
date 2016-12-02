@@ -56,7 +56,7 @@ class Occurrences_TextLine_0_1_Spec
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
         when:
-        contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
+        contentWizardPanel.typeData( textLineContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
 
         then: "actual text in the text line should be equals as expected"
@@ -73,7 +73,7 @@ class Occurrences_TextLine_0_1_Spec
         when: "type a data and 'save' and 'publish'"
         contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        contentWizardPanel.close( textLineContent.getDisplayName() );
+        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );
 
         then: "content has a 'online' status"
