@@ -22,7 +22,7 @@ class LoginSpec
         when:
         $( 'input', placeholder: 'userid or e-mail' ) << 'user';
         report "login page, username is 'user', password is empty";
-        TestUtils.saveScreenshot( getSession(), "pass_empty" );
+        saveScreenshot( "pass_empty" );
         then:
         !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
     }
@@ -32,7 +32,7 @@ class LoginSpec
         when:
         $( 'input', placeholder: 'password' ) << 'password';
         report "login page, username is empty, password is 'password'";
-        TestUtils.saveScreenshot( getSession(), "login_empty" )
+        saveScreenshot( "login_empty" )
 
         then:
         !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
