@@ -135,7 +135,7 @@ class Restore_Version_Zoom_Image_Spec
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
-        contentBrowsePanel.clickOnTab( HAND_IMAGE_DISPLAY_NAME );
+        contentBrowsePanel.switchToBrowserTabByTitle( HAND_IMAGE_DISPLAY_NAME );
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
         then: "original image is displayed on the wizard"

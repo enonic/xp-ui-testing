@@ -148,7 +148,7 @@ class Restore_Version_All_Inputs_Spec
         addComboboxData( data, COMBOBOX_OPTION_V1 );
         addRadioData( data, RADIO_OPTION_V1 );
         addCheckboxData( data, true );
-        addImageSelectorData( data, BOOK_IMAGE_NAME )
+        addImageSelectorData( data, BOOK_IMAGE_DISPLAY_NAME )
         addRelationshipData( data, DATA_FOR_RELATIONSHIP )
         Content content = Content.builder().
             name( NameHelper.uniqueName( name ) ).
