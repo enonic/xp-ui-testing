@@ -12,7 +12,7 @@ public class ApplicationBrowseItemsSelectionPanel
         CONTAINER = "//div[contains(@id,'ApplicationBrowseItemPanel')]";
         ITEMS_SELECTION_PANEL = CONTAINER + "//div[contains(@id,'ApplicationBrowseItemsSelectionPanel')]";
         ALL_SELECTED_ITEMS = ITEMS_SELECTION_PANEL + "//div[contains(@id,'SelectionItem')]";
-        SELECTED_ITEM_NAME = "//p[@class='sub-name']";
+        SELECTED_ITEM_NAME = P_NAME;
     }
 
 

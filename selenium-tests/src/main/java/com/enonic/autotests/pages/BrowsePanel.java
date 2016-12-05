@@ -41,7 +41,7 @@ public abstract class BrowsePanel
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
     protected String CONTENT_SUMMARY_VIEWER =
-        "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
+        "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
     protected String ROW_CHECKBOX_BY_NAME =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
@@ -329,8 +329,8 @@ public abstract class BrowsePanel
 
     public List<String> getNamesOfSelectedGridItem()
     {
-        List<WebElement> rows =
-            findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[@class='sub-name']" ) );
+        List<WebElement> rows = findElements(
+            By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[contains(@class,'sub-name')]" ) );
         return rows.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 

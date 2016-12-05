@@ -193,7 +193,7 @@ public class ApplicationBrowsePanel
 
     public String getApplicationDescription( String appDisplayName )
     {
-        String description = String.format( NAMES_VIEW_BY_DISPLAY_NAME + "//p[@class='sub-name']", appDisplayName );
+        String description = String.format( NAMES_VIEW_BY_DISPLAY_NAME + P_NAME, appDisplayName );
         if ( !isElementDisplayed( description ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_app_description" );

@@ -38,7 +38,7 @@ public class EditPermissionsDialog
     private final String APPLY_BUTTON_XPATH = "//button[contains(@id,'dialog.DialogButton') and child::span[text()='Apply']]";
 
     private String ACL_ENTRY_ROW =
-        "//div[contains(@class,'access-control-entry') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
+        "//div[contains(@class,'access-control-entry') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
     @FindBy(xpath = INHERIT_PERMISSIONS_CHECKBOX_LABEL)
     WebElement inheritPermissionsCheckbox;
@@ -200,8 +200,7 @@ public class EditPermissionsDialog
 
     public List<String> getPrincipalNames()
     {
-        List<WebElement> elements =
-            findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']" ) );
+        List<WebElement> elements = findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'NamesView')]" + P_NAME ) );
         return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
@@ -210,7 +209,7 @@ public class EditPermissionsDialog
         ContentAclEntry.Builder builder;
         List<ContentAclEntry> entries = new ArrayList<>();
         List<WebElement> principals = findElements( By.xpath(
-            CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']" ) );
+            CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'NamesView')]]" + P_NAME ) );
 
         List<String> principalNames = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
         List<String> suiteNames = getDisplayedStrings( By.xpath(

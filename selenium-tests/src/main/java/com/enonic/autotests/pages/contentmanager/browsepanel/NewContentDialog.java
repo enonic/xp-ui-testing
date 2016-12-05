@@ -50,7 +50,7 @@ public class NewContentDialog
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
 
     public static String CONTENT_TYPE_NAME =
-        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[@class='sub-name' and text()='%s']]";
+        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[contains(@class,'sub-name') and text()='%s']]";
 
     private final String AVAILABLE_CONTENT_TYPES = CONTAINER + "//ul[contains(@id,'FilterableItemsList')]" + "//li" + P_NAME;
 
