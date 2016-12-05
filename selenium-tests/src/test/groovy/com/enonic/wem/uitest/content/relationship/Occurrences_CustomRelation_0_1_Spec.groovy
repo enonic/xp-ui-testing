@@ -95,7 +95,7 @@ class Occurrences_CustomRelation_0_1_Spec
 
         then: "correct article shown in the selected options"
         List<String> names = formViewPanel.getNamesOfSelectedFiles();
-        names.contains( TEST_ARTICLE_CONTENT.getDisplayName() );
+        names.get( 0 ).contains( TEST_ARTICLE_CONTENT.getName() );
     }
 
     def "GIVEN the citation content with selected article selected in the grid WHEN 'Publish' button pressed THEN citation has a 'online' status"()

@@ -67,7 +67,7 @@ class Occurrences_ImageSelector_2_4_Spec
     def "GIVEN saving of Image Selector-content (2:4) and 2 image selected WHEN content opened for edit THEN correct images present on page and option filter displayed"()
     {
         given: "new content with type 'Image Selector2_4' added"
-        TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME );
+        TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
             TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
@@ -115,7 +115,9 @@ class Occurrences_ImageSelector_2_4_Spec
     def "WHEN content with 4 selected images saved and published THEN it content with 'Online'-status listed"()
     {
         when: "content with 4 selected images saved and published"
-        IMAGE_SELECTOR_CONTENT_4_IMAGES = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME, MAN_IMAGE_NAME, FL_IMAGE_NAME );
+        IMAGE_SELECTOR_CONTENT_4_IMAGES =
+            buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME, MAN_IMAGE_DISPLAY_NAME,
+                                           FL_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
             IMAGE_SELECTOR_CONTENT_4_IMAGES ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();

@@ -36,7 +36,7 @@ class Occurrences_DefaultRelation_0_1_Spec
     def "GIVEN  wizard for  Default Relation(0:1) opened WHEN one file selected THEN option filter not present and one selected file displayed "()
     {
         given: "start to add a content with type 'Relation 0:1'"
-        Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_NAME );
+        Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
@@ -48,13 +48,13 @@ class Occurrences_DefaultRelation_0_1_Spec
         and: "option filter not displayed"
         !formViewPanel.isOptionFilterDisplayed();
         and: "correct name of selected file displayed"
-        formViewPanel.getNamesOfSelectedFiles().get( 0 ).equals( NORD_IMAGE_NAME );
+        formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( NORD_IMAGE_NAME );
     }
 
     def "GIVEN saving a content with type Default Relation(0:1) WHEN content saved and opened for edit  THEN correct selected file displayed "()
     {
         given: "saving a content with type 'Relation 0:1'"
-        TEST_RELATIONSHIP_CONTENT = buildDefaultRelation0_1_Content( NORD_IMAGE_NAME );
+        TEST_RELATIONSHIP_CONTENT = buildDefaultRelation0_1_Content( NORD_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -67,7 +67,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         and: "option filter not displayed"
         !formViewPanel.isOptionFilterDisplayed();
         and: "correct name of selected file displayed"
-        formViewPanel.getNamesOfSelectedFiles().get( 0 ).equals( NORD_IMAGE_NAME );
+        formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( NORD_IMAGE_NAME );
     }
 
     def "GIVEN a content with type Default Relation(0:1) and one file selected in the form view WHEN content opened for edit AND selected option removed THEN option filter appears and there are no selected options"()
@@ -77,7 +77,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         when:
-        formViewPanel.removeSelectedFile( NORD_IMAGE_NAME );
+        formViewPanel.removeSelectedFile( NORD_IMAGE_DISPLAY_NAME );
 
         then: "one selected file displayed"
         formViewPanel.getNumberOfSelectedFiles() == 0;
@@ -92,7 +92,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         when:
-        formViewPanel.removeSelectedFile( NORD_IMAGE_NAME );
+        formViewPanel.removeSelectedFile( NORD_IMAGE_DISPLAY_NAME );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
 

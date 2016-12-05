@@ -230,7 +230,7 @@ class Occurrences_ItemSet_0_0_Spec
         saveScreenshot( "item_set_text_reverted" );
 
         and: "wizard-tab activated again"
-        contentBrowsePanel.clickOnTab( ITEM_SET_WITH_DATA.getDisplayName() );
+        contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() )
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         then: "correct text in the htmlArea is displayed"
