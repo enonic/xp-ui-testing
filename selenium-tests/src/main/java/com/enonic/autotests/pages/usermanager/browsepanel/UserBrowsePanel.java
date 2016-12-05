@@ -269,9 +269,12 @@ public class UserBrowsePanel
 
     public UserStoreWizardPanel openUserStoreWizard()
     {
+        sleep( 500 );
         newButton.click();
         sleep( 500 );
-        return new UserStoreWizardPanel( getSession() );
+        UserStoreWizardPanel wizard = new UserStoreWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        return wizard;
     }
 
     /**

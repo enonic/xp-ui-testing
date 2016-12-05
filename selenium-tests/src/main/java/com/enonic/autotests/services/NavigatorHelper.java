@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.LoginPage;
 import com.enonic.autotests.pages.XpTourDialog;
@@ -49,6 +50,7 @@ public class NavigatorHelper
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
         UserBrowsePanel userBrowsePanel = home.openUsersApplication();
+        userBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         return userBrowsePanel;
     }
 

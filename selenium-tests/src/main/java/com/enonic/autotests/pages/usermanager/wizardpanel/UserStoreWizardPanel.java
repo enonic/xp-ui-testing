@@ -280,7 +280,7 @@ public class UserStoreWizardPanel
         boolean result = waitUntilVisibleNoException( By.xpath( WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_us_wizard" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_us_wizard" ) );
             throw new TestFrameworkException( "UserStoreWizard was not showed!" );
         }
         return this;
