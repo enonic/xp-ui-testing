@@ -52,27 +52,28 @@ public class Application
 
     protected final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
-    protected String NAMES_VIEW_BY_NAME = "//div[contains(@id,'NamesView') and child::p[@class='sub-name' and contains(.,'%s')]]";
+    protected String NAMES_VIEW_BY_NAME = "//div[contains(@id,'NamesView') and child::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
-    protected String NAMES_VIEW_BY_DISPLAY_NAME = "//div[contains(@id,'NamesView') and child::h6[@class='main-name' and contains(.,'%s')]]";
+    protected String NAMES_VIEW_BY_DISPLAY_NAME =
+        "//div[contains(@id,'NamesView') and child::h6[contains(@class,'main-name') and contains(.,'%s')]]";
 
     protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
 
     protected final String SLICK_CELL = "//div[contains(@class,'slick-cell')]";
 
     public String SLICK_ROW_BY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[@class='sub-name' and contains(.,'%s')]]";
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
     public String SLICK_ROW_BY_DISPLAY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
+        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
 
     protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
 
-    protected final String H6_MAIN_NAME = "//h6[@class='main-name']";
+    protected final String H6_MAIN_NAME = "//h6[contains(@class,'main-name')]";
 
     protected final String H6_DISPLAY_NAME = NAMES_VIEW + H6_MAIN_NAME;
 
-    protected final String P_NAME = NAMES_VIEW + "//p[@class='sub-name']";
+    protected final String P_NAME = NAMES_VIEW + "//p[contains(@class,'sub-name')]";
 
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 

@@ -345,7 +345,8 @@ public abstract class BrowsePanel
     private List<String> getGridItemNames()
     {
         List<WebElement> elements = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH +
-                                                                "//div[contains(@class,'slick-cell l1 r1')]//div[@class='names-and-icon-view small']//p[@class='sub-name']" ) );
+                                                                "//div[contains(@class,'slick-cell l1 r1')]//div[@class='names-and-icon-view small']" +
+                                                                P_NAME ) );
         return elements.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
@@ -359,7 +360,7 @@ public abstract class BrowsePanel
             rows = findElements( By.xpath( rowByName ) );
             if ( rows.size() == 0 )
             {
-                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_select_" + name ) );
+                saveScreenshot( NameHelper.uniqueName( "err_select_" + name ) );
                 throw new TestFrameworkException( "row with content was not found, content name is " + name );
             }
             getFilterPanel().clickOnCleanFilter();
@@ -638,8 +639,8 @@ public abstract class BrowsePanel
 
     protected int getGridCanvasHeight()
     {
-        Object scrollHeight = getJavaScriptExecutor().executeScript(
-            "return document.getElementsByClassName('slick-viewport')[0].scrollHeight" );
+        Object scrollHeight =
+            getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollHeight" );
         return Integer.valueOf( scrollHeight.toString() );
     }
 
