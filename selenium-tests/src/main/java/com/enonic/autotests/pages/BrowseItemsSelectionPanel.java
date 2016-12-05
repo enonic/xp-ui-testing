@@ -24,7 +24,7 @@ public abstract class BrowseItemsSelectionPanel
 
     protected String ALL_SELECTED_ITEMS;
 
-    protected String SELECTED_ITEM_NAME = "//p[@class='sub-name']";
+    protected String SELECTED_ITEM_NAME = "//p[contains(@class,'sub-name')]";
 
     protected String SELECTED_ITEM = "//div[contains(@id,'SelectionItem')]";
 
