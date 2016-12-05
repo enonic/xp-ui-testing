@@ -130,9 +130,9 @@ public class PageComponentsViewDialog
     {
         List<PageComponent> result = new ArrayList<>();
         List<String> names = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT +
-                                                                "//div[contains(@id,'PageComponentsItemViewer')]//h6[@class='main-name']" ) );
+                                                                "//div[contains(@id,'PageComponentsItemViewer')]" + H6_MAIN_NAME ) );
         List<String> types = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT +
-                                                                "//div[contains(@id,'PageComponentsItemViewer')]//p[@class='sub-name']" ) );
+                                                                "//div[contains(@id,'PageComponentsItemViewer')]" + P_NAME ) );
         for ( int i = 0; i < names.size(); i++ )
         {
             result.add( PageComponent.builder().name( names.get( i ) ).type( types.get( i ) ).build() );
