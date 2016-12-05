@@ -30,7 +30,6 @@ class TextComponent_MceToolbar_Spec
     @Shared
     String TEST_TEXT = "test text";
 
-    @Ignore
     def "GIVEN existing site with selected controller WHEN text component inserted THEN mce-toolbar appears AND all buttons are present"()
     {
         given:

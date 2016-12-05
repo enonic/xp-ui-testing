@@ -15,7 +15,7 @@ import com.enonic.autotests.pages.contentmanager.SourceCodeMceWindow;
 public class MceToolbar
     extends Application
 {
-    private final String MCE_TOOLBAR_CONTAINER = "//div[@class='mce-toolbar-container']";
+    private final String MCE_TOOLBAR_CONTAINER = "//div[contains(@class,'mce-toolbar-container')]";
 
     @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/span[text()='Formats']")
     private WebElement formatsButtonMenu;
