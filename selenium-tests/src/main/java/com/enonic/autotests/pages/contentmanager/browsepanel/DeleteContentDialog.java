@@ -98,15 +98,21 @@ public class DeleteContentDialog
         return getDisplayedString( CHECKBOX_LABEL );
     }
 
+    /**
+     * Clocks on the Delete button and waits until the wizard will be closed
+     */
     public void doDelete()
     {
         deleteButton.click();
         waitForClosed();
     }
 
+    /**
+     * If content is not 'online', so need to switch to the browse panel and do not need to wait of closing the wizard
+     */
     public void doDeleteAndSwitchToBrowsePanel()
     {
-        doDelete();
+        deleteButton.click();
         switchToBrowsePanelTab();
     }
 

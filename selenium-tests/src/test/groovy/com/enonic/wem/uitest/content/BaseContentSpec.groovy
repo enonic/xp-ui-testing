@@ -35,9 +35,6 @@ class BaseContentSpec
     String TEMPLATE_SUPPORTS_SITE = "site";
 
     @Shared
-    String CONTENT_STUDIO_URL_PART = "content-studio";
-
-    @Shared
     String CITY_CREATION_PART = "City Creation";
 
     @Shared
@@ -57,6 +54,9 @@ class BaseContentSpec
 
     @Shared
     String IMPORTED_IMAGE_BOOK_NAME = "book.jpg";
+
+    @Shared
+    String IMPORTED_IMAGE_NORD_NAME = "nord";
 
     @Shared
     String IMPORTED_IMAGE_BOOK_DISPLAY_NAME = "book";

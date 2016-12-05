@@ -85,7 +85,7 @@ public class LiveFormPanel
 
     public LiveEditComponentContextMenu clickOnTextComponentAndShowContextMenu()
     {
-        WebElement textComponent = getDisplayedElement( By.xpath( TEXT_COMPONENT_VIEW ) );
+        WebElement textComponent = getDisplayedElement( By.xpath( TEXT_COMPONENT_VIEW + "/section" ) );
         Actions action = new Actions( getDriver() );
         action.contextClick( textComponent ).build().perform();
         sleep( 1000 );

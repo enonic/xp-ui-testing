@@ -89,7 +89,6 @@ public class NavigatorHelper
                 {
                     if ( driver.switchTo().window( windowHandle ).getCurrentUrl().contains( urlPart ) )
                     {
-                        //session.put( HomePage.APP_TAB_HANDLE, windowHandle );
                         return windowHandle;
                     }
                 }
@@ -99,7 +98,31 @@ public class NavigatorHelper
                 }
             }
         }
-        throw new TestFrameworkException( "application was not found!" + urlPart );
+        throw new TestFrameworkException( "tab was not found!" + urlPart );
+    }
+
+    public static String switchToBrowserTabByTitle( TestSession session, String titlePart )
+    {
+        WebDriver driver = session.getDriver();
+        Set<String> windowHandles = driver.getWindowHandles();
+        if ( !windowHandles.isEmpty() )
+        {
+            for ( String windowHandle : windowHandles )
+            {
+                try
+                {
+                    if ( driver.switchTo().window( windowHandle ).getTitle().contains( titlePart ) )
+                    {
+                        return windowHandle;
+                    }
+                }
+                catch ( NoSuchWindowException e )
+                {
+                    throw new TestFrameworkException( "NoSuchWindowException- wrong handle" );
+                }
+            }
+        }
+        throw new TestFrameworkException( "tab was not found!" + titlePart );
     }
 
 

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -65,15 +64,14 @@ class Wizard_DeleteSite_ConfirmDelete_Spec
 
         and: "correct number typed"
         confirm.typeNumber( "2" );
-        TestUtils.saveScreenshot( getSession(), "test_wizard_delete_site_number_typed" );
+        saveScreenshot( "confirm_delete_site_number_typed" );
 
         and: "'Confirm' button clicked"
         confirm.clickOnConfirmButton();
+        wizard.switchToBrowsePanelTab();
 
-        then: "wizard closes"
-        !wizard.isOpened();
 
-        and: "site not listed in the grid"
+        then: "site not listed in the grid"
         !contentBrowsePanel.exists( SITE.getName() );
     }
 }

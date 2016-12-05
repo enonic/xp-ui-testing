@@ -45,9 +45,6 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     String backgroundPart = "man2.jpg.jpeg"
 
     @Shared
-    String IMAGE_NAME = "man2.jpg";
-
-    @Shared
     String PAGE_TITLE = "Home Page";
 
     @Shared
@@ -119,7 +116,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        linkModalDialog.clickContentBarItem().selectOption( "nord.jpg" ).typeText( CONTENT_TEXT ).pressInsertButton();
+        linkModalDialog.clickContentBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText( CONTENT_TEXT ).pressInsertButton();
         saveScreenshot( "conf-dialog-content" );
         configurationDialog.doApply();
 
@@ -141,7 +138,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        linkModalDialog.clickDownloadBarItem().selectOption( "nord.jpg" ).typeText( DOWNLOAD_TEXT ).pressInsertButton();
+        linkModalDialog.clickDownloadBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText( DOWNLOAD_TEXT ).pressInsertButton();
         saveScreenshot( "conf-dialog-download" );
         configurationDialog.doApply();
 
@@ -182,7 +179,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         when: "background selected and changes applied"
-        configurationDialog.selectBackGroundImage( IMAGE_NAME ).doApply();
+        configurationDialog.selectBackGroundImage( IMPORTED_MAN2_IMAGE_DISPLAY_NAME ).doApply();
         sleep( 700 );
         contentWizard.clickToolbarPreview();
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );

@@ -96,7 +96,7 @@ public class SiteConfiguratorDialog
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), EXPLICIT_LONG ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-site-configurator-dialog" ) );
+            saveScreenshot( NameHelper.uniqueName( "err-site-cfg-dialog" ) );
             throw new TestFrameworkException( "Site-Configurator Dialog was not opened!" );
         }
         return this;
@@ -114,7 +114,7 @@ public class SiteConfiguratorDialog
         Actions builder = new Actions( getDriver() );
         if ( !isElementDisplayed( radioButton ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( "radioBtn" ) );
+            saveScreenshot( "err_" + NameHelper.uniqueName( "radioBtn" ) );
             throw new TestFrameworkException( "radio button was not found!" );
         }
         builder.click( findElement( By.xpath( radioButton ) ) ).build().perform();
@@ -127,7 +127,7 @@ public class SiteConfiguratorDialog
         String optionFilter = DIALOG_CONTAINER + "//div[contains(@id,'ImageContentComboBox')]" + COMBOBOX_OPTION_FILTER_INPUT;
         if ( !isElementDisplayed( optionFilter ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + NameHelper.uniqueName( "optionFilter" ) );
+            saveScreenshot( "err_" + NameHelper.uniqueName( "optionFilter" ) );
             throw new TestFrameworkException( "ImageContentComboBox option filter was not found!" );
         }
         getDisplayedElement( By.xpath( optionFilter ) ).sendKeys( imageName );

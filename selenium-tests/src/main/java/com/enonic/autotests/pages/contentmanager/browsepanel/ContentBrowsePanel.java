@@ -653,6 +653,12 @@ public class ContentBrowsePanel
         return new ContentWizardPanel( getSession() );
     }
 
+    public ContentWizardPanel switchToBrowserTabByTitle( String contentDisplayName )
+    {
+        NavigatorHelper.switchToBrowserTabByTitle( getSession(), contentDisplayName );
+        return new ContentWizardPanel( getSession() );
+    }
+
     /**
      * Selects 'Delete' in a context menu.
      *

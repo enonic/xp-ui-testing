@@ -60,7 +60,7 @@ class SiteWizard_Mixin_ImageSelector_Spec
 
         when: "image selected"
         PropertyTree data = new PropertyTree();
-        data.addStrings( ImageSelectorFormViewPanel.IMAGES_PROPERTY, IMPORTED_IMAGE_BOOK_NAME );
+        data.addStrings( ImageSelectorFormViewPanel.IMAGES_PROPERTY, IMPORTED_IMAGE_BOOK_DISPLAY_NAME );
         imageSelectorFormViewPanel.type( data );
 
         and: "site saved"
