@@ -9,7 +9,7 @@ public abstract class UIComponent
     extends Application
 {
 
-    public static String NAMES_ICON_VIEW = "//div[contains(@id,'NamesAndIconView')]//h6[@class='main-name' and text()='%s']";
+    public static String NAMES_ICON_VIEW = "//div[contains(@id,'NamesAndIconView')]//h6[contains(@class,'main-name') and text()='%s']";
 
     private ContentWizardPanel contentWizardPanel;
 

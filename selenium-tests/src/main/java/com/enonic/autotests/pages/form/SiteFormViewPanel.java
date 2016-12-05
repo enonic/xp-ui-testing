@@ -26,9 +26,9 @@ public class SiteFormViewPanel
     public static final String DESCRIPTION_KEY = "description";
 
     private String SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME =
-        "//div[contains(@id,'SiteConfiguratorSelectedOptionView') and descendant::h6[@class='main-name' and text()='%s']]";
+        "//div[contains(@id,'SiteConfiguratorSelectedOptionView') and descendant::h6[contains(@class,'main-name') and text()='%s']]";
 
-    private String SITE_CONFIGURATOR_OPTIONS = "//div[contains(@id,'SiteConfiguratorSelectedOptionView')]//h6[@class='main-name']";
+    private String SITE_CONFIGURATOR_OPTIONS = "//div[contains(@id,'SiteConfiguratorSelectedOptionView')]" + H6_MAIN_NAME;
 
     @FindBy(xpath = FORM_VIEW + "//textarea[contains(@name,'description')]")
     private WebElement descriptionInput;
@@ -109,7 +109,7 @@ public class SiteFormViewPanel
     public SiteConfiguratorDialog openSiteConfigurationDialog( String appName )
     {
         String editButton = String.format(
-            "//div[contains(@id,'SiteConfiguratorSelectedOptionView') and descendant::h6[@class='main-name' and text()='%s']]//a[@class='edit']",
+            "//div[contains(@id,'SiteConfiguratorSelectedOptionView') and descendant::h6[contains(@class,'main-name') and text()='%s']]//a[@class='edit']",
             appName );
         if ( !isElementDisplayed( editButton ) )
         {

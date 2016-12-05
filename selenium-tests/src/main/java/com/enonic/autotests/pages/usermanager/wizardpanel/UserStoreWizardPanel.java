@@ -52,14 +52,14 @@ public class UserStoreWizardPanel
     private final String SELECTED_ID_PROVIDER_DISPLAY_NAME = SELECTED_ID_PROVIDER_VIEW + H6_DISPLAY_NAME;
 
     private String REMOVE_SELECTED_ID_PROVIDER_BUTTON =
-        "//div[contains(@id,'AuthApplicationSelectedOptionView') and descendant::h6[@class='main-name' and contains(.,'%s')]]//a[contains(@class,'remove')]";
+        "//div[contains(@id,'AuthApplicationSelectedOptionView') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]//a[contains(@class,'remove')]";
 
     private final String PERMISSIONS_LIST = "//ul[contains(@id,'UserStoreACESelectedOptionsView')]";
 
     private final String SELECTED_ACE_ITEMS = PERMISSIONS_LIST + "//div[contains(@id,'UserStoreACESelectedOptionView')]";
 
     private final String SELECTED_ACE_ITEM_BY_DISPLAY_NAME = PERMISSIONS_LIST +
-        "//div[contains(@id,'UserStoreACESelectedOptionView') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
+        "//div[contains(@id,'UserStoreACESelectedOptionView') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;

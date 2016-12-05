@@ -27,7 +27,7 @@ public class SettingsWizardStepForm
 
     private final String PRINCIPAL_FILTER_INPUT = PRINCIPAL_COMBOBOX + COMBOBOX_OPTION_FILTER_INPUT;
 
-    private String NAME_ITEM = "//h6[@class='main-name' and text()='%s']";
+    private String NAME_ITEM = "//h6[contains(@class,'main-name') and text()='%s']";
 
     private String REMOVE_LANG_BUTTON = LOCALE_COMBOBOX +
         "//div[contains(@class,'selected-options locale-selected-options-view') and descendant::h6[text()='%s']]//a[@class='icon-close']";
@@ -35,11 +35,10 @@ public class SettingsWizardStepForm
     private String REMOVE_OWNER_BUTTON = PRINCIPAL_COMBOBOX +
         "//div[contains(@class,'selected-options principal-selected-options-view') and descendant::h6[text()='%s']]//a[@class='icon-close']";
 
-    private String LOCALE_TEXT =
-        LOCALE_COMBOBOX + "//div[contains(@class,'selected-options locale-selected-options-view')]//h6[@class='main-name']";
+    private String LOCALE_TEXT = LOCALE_COMBOBOX + "//div[contains(@class,'selected-options locale-selected-options-view')]" + H6_MAIN_NAME;
 
     private String OWNER_TEXT =
-        PRINCIPAL_COMBOBOX + "//div[contains(@class,'selected-options principal-selected-options-view')]//h6[@class='main-name']";
+        PRINCIPAL_COMBOBOX + "//div[contains(@class,'selected-options principal-selected-options-view')]" + H6_MAIN_NAME;
 
 
     @FindBy(xpath = LANGUAGE_FILTER_INPUT)

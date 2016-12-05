@@ -72,8 +72,7 @@ public class RelationshipFormView
 
     public List<String> getDisplayNamesOfSelectedFiles()
     {
-        return getDisplayedStrings(
-            By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]//h6[@class='main-name']" ) );
+        return getDisplayedStrings( By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]" + H6_MAIN_NAME ) );
     }
 
     public boolean isOptionFilterDisplayed()

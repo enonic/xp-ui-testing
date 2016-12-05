@@ -30,7 +30,7 @@ public class CustomSelectorFormViewPanel
     private final String SELECTED_OPTIONS = "//div[contains(@id,'CustomSelectorSelectedOptionView')]" + H6_DISPLAY_NAME;
 
     private String SELECTED_ITEM_VIEWER =
-        "//div[contains(@id,'CustomSelectorSelectedOptionView') and descendant::h6[@class='main-name' and text()='%s']]";
+        "//div[contains(@id,'CustomSelectorSelectedOptionView') and descendant::h6[contains(@class,'main-name') and text()='%s']]";
 
     private String SELECTED_ITEM_REMOVE = SELECTED_ITEM_VIEWER + "//a[@class='remove']";
 

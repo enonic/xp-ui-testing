@@ -104,7 +104,7 @@ public class SiteConfiguratorDialog
 
     public String getTitle()
     {
-        return getDisplayedString( DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='main-name']" );
+        return getDisplayedString( DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]" + H6_MAIN_NAME );
     }
 
     public SiteConfiguratorDialog selectBackgroundColor( String color )

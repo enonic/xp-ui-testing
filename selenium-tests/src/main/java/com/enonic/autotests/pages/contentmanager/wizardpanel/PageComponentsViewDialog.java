@@ -29,7 +29,7 @@ public class PageComponentsViewDialog
     public final String COMPONENTS_GRID = "//div[contains(@id,'PageComponentsTreeGrid')]";
 
     private String COMPONENT_ITEM =
-        DIALOG_CONTAINER + "//div[contains(@class,'slick-row') and descendant::h6[@class='main-name'  and text()='%s']]";
+        DIALOG_CONTAINER + "//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name')  and text()='%s']]";
 
     public final String CLOSE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'CloseButton')]";
 
@@ -61,7 +61,7 @@ public class PageComponentsViewDialog
     public PageComponentsViewDialog openMenu( String componentName )
     {
         String menuButton = String.format( COMPONENTS_GRID +
-                                               "//div[contains(@class,'slick-row') and descendant::h6[@class='main-name'  and text()='%s']]//div[@class='menu-icon']",
+                                               "//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name')  and text()='%s']]//div[@class='menu-icon']",
                                            componentName );
 
         if ( !isElementDisplayed( menuButton ) )
@@ -96,7 +96,7 @@ public class PageComponentsViewDialog
 
     public String getContentName()
     {
-        return getDisplayedElement( By.xpath( DIALOG_CONTAINER + "//h6[@class='main-name']" ) ).getText();
+        return getDisplayedElement( By.xpath( DIALOG_CONTAINER + H6_MAIN_NAME ) ).getText();
     }
 
     public PageComponentsViewDialog waitForOpened()
