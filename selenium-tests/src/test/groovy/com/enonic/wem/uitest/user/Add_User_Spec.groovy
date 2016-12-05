@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.User
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -26,7 +25,7 @@ class Add_User_Spec
 
         when: "data typed and user saved"
         String errorMessage = userWizardPanel.typeData( userEmptyPassword ).save().waitNotificationError( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "user_error_mess" );
+        saveScreenshot( "user_error_mess" );
 
         then: "new user present beneath a system store"
         errorMessage == UserWizardPanel.PASSWORD_ERROR_MESSAGE;
@@ -44,7 +43,7 @@ class Add_User_Spec
         String creatingMessage = userWizardPanel.typeData( USER ).save().waitNotificationMessage();
         userWizardPanel.close( USER.getDisplayName() );
         def isWizardOpened = userWizardPanel.isOpened();
-        TestUtils.saveScreenshot( getSession(), "user_saved" );
+        saveScreenshot( "user_saved" );
 
         then: "new user present beneath a store"
         !isWizardOpened;
@@ -64,10 +63,10 @@ class Add_User_Spec
         when: "data typed and user saved"
         userBrowsePanel.clickCheckboxAndSelectRow( USER.getDisplayName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( 2l );
-        TestUtils.saveScreenshot( getSession(), "user_removed_message" );
+        saveScreenshot( "user_removed_message" );
         userBrowseFilterPanel.clickOnCleanFilter();
         userBrowsePanel.expandUsersFolder( "system" );
-        TestUtils.saveScreenshot( getSession(), "user_removed" );
+        saveScreenshot( "user_removed" );
 
         then: "removed user not present beneath a 'Users' folder"
         !userBrowsePanel.exists( USER.getDisplayName(), true );
@@ -86,7 +85,7 @@ class Add_User_Spec
         when: "data typed and user saved"
         userWizardPanel.typeData( refreshWizardUser ).save().waitNotificationMessage();
         userBrowsePanel.refreshPanelInBrowser();
-        TestUtils.saveScreenshot( getSession(), "user_wizard_refreshed" );
+        saveScreenshot( "user_wizard_refreshed" );
 
         then: "wizard is opened"
         userWizardPanel.isOpened();

@@ -43,7 +43,7 @@ public class ContentPublishDialog
 
     private final String DEPENDANT_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
 
-    private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]//h6[@class='main-name']";
+    private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]" + H6_MAIN_NAME;
 
     private final String DEPENDENCIES_LIST_HEADER = DIALOG_CONTAINER + "//h6[@class='dependants-header']";
 
@@ -62,7 +62,7 @@ public class ContentPublishDialog
         DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='sub-title']";
 
     private String STATUS_OF_CONTENT = ITEM_LIST +
-        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]/div[contains(@class,'status')][2]";
+        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]/div[contains(@class,'status')][2]";
 
     @FindBy(xpath = PUBLISH_NOW_BUTTON)
     private WebElement publishButton;

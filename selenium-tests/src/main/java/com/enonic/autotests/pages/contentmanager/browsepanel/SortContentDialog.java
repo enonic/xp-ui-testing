@@ -194,8 +194,7 @@ public class SortContentDialog
 
     private LinkedList<String> getGridItemNames()
     {
-        LinkedList list = findElements(
-            By.xpath( DIALOG_CONTAINER + "//div[contains(@id,'NamesView')]//h6[contains(@class,'main-name')]" ) ).stream().filter(
+        LinkedList list = findElements( By.xpath( DIALOG_CONTAINER + "//div[contains(@id,'NamesView')]" + H6_MAIN_NAME ) ).stream().filter(
             WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
         return list;
     }

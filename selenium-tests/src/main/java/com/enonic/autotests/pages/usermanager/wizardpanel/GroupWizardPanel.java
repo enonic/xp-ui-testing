@@ -144,10 +144,10 @@ public class GroupWizardPanel
     public GroupWizardPanel removeMember( String displayName )
     {
         String removeButton = MEMBERS_FORM +
-            "//div[contains(@class,'principal-selected-options-view') and descendant::h6[@class='main-name']]//a[@class='icon-close']";
+            "//div[contains(@class,'principal-selected-options-view') and descendant::h6[contains(@class,'main-name')]]//a[@class='icon-close']";
         if ( !isElementDisplayed( removeButton ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_member" + displayName ) );
+            saveScreenshot( NameHelper.uniqueName( "err_member" + displayName ) );
             throw new TestFrameworkException( "member was not found! " + displayName );
         }
         getDisplayedElement( By.xpath( removeButton ) ).click();

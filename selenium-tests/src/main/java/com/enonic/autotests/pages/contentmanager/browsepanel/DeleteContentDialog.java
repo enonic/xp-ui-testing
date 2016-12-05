@@ -28,13 +28,13 @@ public class DeleteContentDialog
     private final String CONTAINER_DIV = "//div[contains(@id,'ContentDeleteDialog')]";
 
     private String CONTENT_STATUS = CONTAINER_DIV +
-        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]//div[contains(@class,'status')][2]";
+        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]//div[contains(@class,'status')][2]";
 
     private final String DEPENDANT_LIST = CONTAINER_DIV + "//ul[contains(@id,'DialogDependantList')]";
 
     private final String DEPENDANT_HEADER_TEXT = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header']";
 
-    private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]//h6[@class='main-name']";
+    private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]" + H6_MAIN_NAME;
 
     private final String CHECKBOX_DELETE_PUBLISHED_ITEMS =
         CONTAINER_DIV + "//div[contains(@id,'Checkbox') and contains(@class,'instant-delete-check')]";

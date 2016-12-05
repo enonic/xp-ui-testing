@@ -33,7 +33,7 @@ public class ContentVersionInfoView
 
     private String TIMESTAMP_VALUE = ITEM_BY_ID + "//div[@class='version-info-timestamp']/span[2]";
 
-    private String OWNER_NAME_VALUE = ITEM_BY_ID + "//div[@class='viewer description']//h6[@class='main-name']";
+    private String OWNER_NAME_VALUE = ITEM_BY_ID + "//div[@class='viewer description']" + H6_MAIN_NAME;
 
     public ContentVersionInfoView( final TestSession session )
     {
