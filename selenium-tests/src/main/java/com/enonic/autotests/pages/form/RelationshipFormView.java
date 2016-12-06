@@ -27,7 +27,7 @@ public class RelationshipFormView
     protected final String STEP_XPATH = "//li[contains(@id,'api.ui.tab.TabBarItem')]//span[contains(.,'Relationship')]";
 
     private String REMOVE_TARGET_BUTTON =
-        "//div[contains(@id,'ContentSelectedOptionView') and descendant::h6[@class='main-name' and text()='%s']]//a[@class='remove']";
+        "//div[contains(@id,'ContentSelectedOptionView') and descendant::h6[contains(@class,'main-name') and text()='%s']]//a[@class='remove']";
 
     @FindBy(xpath = OPTION_FILTER_INPUT)
     protected WebElement optionFilterInput;
@@ -86,6 +86,7 @@ public class RelationshipFormView
         boolean isDisplayed = waitUntilVisibleNoException( By.xpath( CONTAINER_DIV + removeButtonXpath ), Application.EXPLICIT_NORMAL );
         if ( !isDisplayed )
         {
+            saveScreenshot( "err_remove_button_relationship" );
             throw new TestFrameworkException( "Button remove for " + fileName + " was not found!" );
         }
         getDisplayedElement( By.xpath( CONTAINER_DIV + removeButtonXpath ) ).click();

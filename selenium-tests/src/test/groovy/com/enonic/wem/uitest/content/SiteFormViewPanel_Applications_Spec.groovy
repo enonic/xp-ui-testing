@@ -13,9 +13,9 @@ class SiteFormViewPanel_Applications_Spec
     @Shared
     Content SITE;
 
-    def "GIVEN creating new Site with two configurations WHEN site saved and wizard closed THEN new site should be present"()
+    def "GIVEN creating new Site with two applications WHEN site saved and wizard closed THEN new site should be present"()
     {
-        given: "creating new Site with two configurations"
+        given: "creating new Site with two applications"
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
 
         when: "data saved and wizard closed"
