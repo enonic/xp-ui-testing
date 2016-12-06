@@ -77,6 +77,8 @@ public class Application
 
     protected final String P_NAME = NAMES_VIEW + P_SUB_NAME;
 
+    protected final String CHECKBOX_ELEMENT = "//div[contains(@id,'api.ui.Checkbox')]";
+
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";

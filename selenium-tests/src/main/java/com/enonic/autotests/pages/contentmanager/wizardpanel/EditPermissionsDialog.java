@@ -25,7 +25,7 @@ public class EditPermissionsDialog
 {
     private final String CONTAINER_XPATH = "//div[contains(@id,'EditPermissionsDialog')]";
 
-    private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]";
+    private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + CHECKBOX_ELEMENT;
 
     private final String INHERIT_PERMISSIONS_CHECKBOX_LABEL = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]/label";
 
@@ -52,7 +52,7 @@ public class EditPermissionsDialog
     {
         if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_XPATH ), EXPLICIT_LONG ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err-perm-dialog" ) );
+            saveScreenshot( NameHelper.uniqueName( "err-perm-dialog" ) );
             throw new TestFrameworkException( "Edit Permissions Dialog was not opened!" );
         }
         return this;
@@ -109,14 +109,13 @@ public class EditPermissionsDialog
 
     public EditPermissionsDialog removeAclEntry( String principalName )
     {
-        if ( findElements(
-            By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//a[@class='icon-close']" ) ).size() == 0 )
+        String principalXpath = CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//a[@class='icon-close']";
+        if ( findElements( By.xpath( principalXpath ) ).size() == 0 )
         {
+            saveScreenshot( "err_principal_" + principalName );
             throw new TestFrameworkException( "Principal with name :" + principalName + "  was not found!" );
         }
-        findElements( By.xpath( CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//a[@class='icon-close']" ) ).get(
-            0 ).click();
-
+        findElement( By.xpath( principalXpath ) ).click();
         return this;
     }
 
@@ -182,7 +181,12 @@ public class EditPermissionsDialog
 
     public boolean isInheritCheckBoxChecked()
     {
-        WebElement checkbox = findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]" ) ).get( 0 );
+        if ( !isElementDisplayed( INHERIT_PERMISSIONS_CHECKBOX ) )
+        {
+            saveScreenshot( "err_inherit_checkbox" );
+            throw new TestFrameworkException( "inherit permissions checkbox was not found!" );
+        }
+        WebElement checkbox = findElement( By.xpath( INHERIT_PERMISSIONS_CHECKBOX ) );
         return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
     }
 
@@ -200,7 +204,7 @@ public class EditPermissionsDialog
 
     public List<String> getPrincipalNames()
     {
-        List<WebElement> elements = findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@id,'NamesView')]" + P_NAME ) );
+        List<WebElement> elements = findElements( By.xpath( CONTAINER_XPATH + P_NAME ) );
         return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
@@ -208,8 +212,7 @@ public class EditPermissionsDialog
     {
         ContentAclEntry.Builder builder;
         List<ContentAclEntry> entries = new ArrayList<>();
-        List<WebElement> principals = findElements( By.xpath(
-            CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'NamesView')]]" + P_NAME ) );
+        List<WebElement> principals = findElements( By.xpath( CONTAINER_XPATH + "//div[@class='access-control-entry']" + P_NAME ) );
 
         List<String> principalNames = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
         List<String> suiteNames = getDisplayedStrings( By.xpath(
