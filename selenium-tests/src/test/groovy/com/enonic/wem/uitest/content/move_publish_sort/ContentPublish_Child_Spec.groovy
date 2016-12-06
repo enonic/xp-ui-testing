@@ -129,7 +129,7 @@ class ContentPublish_Child_Spec
         !contentBrowsePanel.exists( childContent2.getName() );
 
         and: "correct notification message is displayed"
-        message == Application.CONTENT_DELETED_MESSAGE;
+        message == "1 items are deleted. 1 items are marked for deletion.";
     }
 
     def "GIVEN existing parent folder with one child and status of both contents are 'PENDING_DELETE' WHEN parent folder selected and 'Publish' button pressed THEN parent folder not listed"()
