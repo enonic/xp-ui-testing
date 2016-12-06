@@ -35,8 +35,9 @@ public abstract class BrowsePanel
     protected final String HIDE_FILTER_PANEL_BUTTON =
         "//div[contains(@id,'ContentBrowseFilterPanel')]//span[contains(@class, 'icon-search')]";
 
-    public static String NAME_OF_CHILD_ROW =
-        "//div[contains(@class,'ui-widget-content slick-row') and descendant::span[contains(@class,'toggle icon') and contains(@style,'margin-left: 16')]]//div[contains(@id,'api.app.NamesView')]/p[@class='sub-name']";
+    public String NAME_OF_CHILD_ROW =
+        "//div[contains(@class,'slick-row') and descendant::span[contains(@class,'toggle icon') and contains(@style,'margin-left: 16')]]" +
+            P_NAME;
 
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
 
@@ -49,8 +50,7 @@ public abstract class BrowsePanel
     protected String ROW_CHECKBOX_BY_DISPLAY_NAME =
         NAMES_VIEW_BY_DISPLAY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
 
-    protected static final String DIV_WITH_NAME =
-        "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]//div[contains(@id,'api.app.NamesView')]";
+    protected final String DIV_WITH_NAME = "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]" + NAMES_VIEW;
 
     protected final String CLEAR_SELECTION_LINK_XPATH = TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Clear Selection')]";
 
