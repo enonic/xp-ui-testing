@@ -52,6 +52,9 @@ class Base_InputFields_Occurrences
     String MAN_IMAGE_NAME = "man.jpg";
 
     @Shared
+    String EXECUTABLE_BAT_DISPLAY_NAME = "server";
+
+    @Shared
     static String SITE_NAME = "inputtypes199357987";//NameHelper.uniqueName( "inputtypes" );
 
     @Shared

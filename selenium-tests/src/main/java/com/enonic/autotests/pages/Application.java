@@ -71,9 +71,11 @@ public class Application
 
     protected final String H6_MAIN_NAME = "//h6[contains(@class,'main-name')]";
 
+    protected final String P_SUB_NAME = "//p[contains(@class,'sub-name')]";
+
     protected final String H6_DISPLAY_NAME = NAMES_VIEW + H6_MAIN_NAME;
 
-    protected final String P_NAME = NAMES_VIEW + "//p[contains(@class,'sub-name')]";
+    protected final String P_NAME = NAMES_VIEW + P_SUB_NAME;
 
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 

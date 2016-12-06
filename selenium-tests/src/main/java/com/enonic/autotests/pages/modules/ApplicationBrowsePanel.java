@@ -12,7 +12,6 @@ import com.enonic.autotests.pages.BaseBrowseFilterPanel;
 import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -76,7 +75,7 @@ public class ApplicationBrowsePanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( STOP_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), "err_stop_button" );
+            saveScreenshot( "err_stop_button" );
             throw new TestFrameworkException( "button 'stop' is not clickable!" );
         }
         stopButton.click();
@@ -89,7 +88,7 @@ public class ApplicationBrowsePanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( INSTALL_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), "err_insatll_button" );
+            saveScreenshot( "err_insatll_button" );
             throw new TestFrameworkException( "button 'install' is not clickable!" );
         }
         installButton.click();
@@ -102,7 +101,7 @@ public class ApplicationBrowsePanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( UNINSTALL_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), "err_uninstall_button" );
+            saveScreenshot( "err_uninstall_button" );
             throw new TestFrameworkException( "button 'uninstall' is not clickable!" );
         }
         uninstallButton.click();
@@ -116,7 +115,7 @@ public class ApplicationBrowsePanel
         boolean isClickable = waitUntilClickableNoException( By.xpath( START_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
-            TestUtils.saveScreenshot( getSession(), "err_start_button" );
+            saveScreenshot( "err_start_button" );
             throw new TestFrameworkException( "button 'start' is not clickable!" );
         }
         startButton.click();
@@ -193,10 +192,10 @@ public class ApplicationBrowsePanel
 
     public String getApplicationDescription( String appDisplayName )
     {
-        String description = String.format( NAMES_VIEW_BY_DISPLAY_NAME + P_NAME, appDisplayName );
+        String description = String.format( NAMES_VIEW_BY_DISPLAY_NAME + P_SUB_NAME, appDisplayName );
         if ( !isElementDisplayed( description ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_app_description" );
+            saveScreenshot( "err_app_description" );
             throw new TestFrameworkException( "description for:" + appDisplayName + "was not found" );
         }
         return getDisplayedString( description );
@@ -207,7 +206,7 @@ public class ApplicationBrowsePanel
         String stateCell = String.format( SLICK_ROW_BY_NAME, appName ) + "//div[contains(@class,'state')]";
         if ( !isElementDisplayed( stateCell ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_status" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_app_status" ) );
             throw new TestFrameworkException( "state was not found in the table ! application name is " + appName );
         }
         String expectedState =
@@ -224,7 +223,7 @@ public class ApplicationBrowsePanel
         boolean result = waitUntilVisibleNoException( By.xpath( appXpath ), timeout );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + appName );
+            saveScreenshot( "err_" + appName );
             throw new TestFrameworkException( "application has not appeared in the grid after " + timeout + "seconds" + "app: " + appName );
         }
     }

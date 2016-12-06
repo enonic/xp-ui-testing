@@ -25,9 +25,6 @@ class Restore_Version_All_Inputs_Spec
     String NEW_DISPLAY_NAME = NameHelper.uniqueName( "restore-all" );
 
     @Shared
-    String DATA_FOR_RELATIONSHIP = "server.bat";
-
-    @Shared
     String TEXT_LINE_V1 = "version1";
 
     @Shared
@@ -88,7 +85,7 @@ class Restore_Version_All_Inputs_Spec
         ContentWizardPanel wizard = findAndSelectContent( ALL_INPUTS_CONTENT.getName() ).clickToolbarEdit();
         InputsFormViewPanel formView = new InputsFormViewPanel( getSession() );
 
-        when:
+        when: "all data in inputs are changed"
         formView.getComboBoxFormViewPanel().clickOnLastRemoveButton().typeNameOfOptionAndSelectOption( COMBOBOX_OPTION_V2 );
         formView.getCheckBoxFormViewPanel().setChecked( false );
         formView.getLongFormViewPanel().typeLongValue( LONG_V2 );
@@ -99,7 +96,7 @@ class Restore_Version_All_Inputs_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then:
+        then: "total amount of versions is increased"
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
@@ -149,7 +146,7 @@ class Restore_Version_All_Inputs_Spec
         addRadioData( data, RADIO_OPTION_V1 );
         addCheckboxData( data, true );
         addImageSelectorData( data, BOOK_IMAGE_DISPLAY_NAME )
-        addRelationshipData( data, DATA_FOR_RELATIONSHIP )
+        addRelationshipData( data, EXECUTABLE_BAT_DISPLAY_NAME )
         Content content = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).

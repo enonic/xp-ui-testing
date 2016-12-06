@@ -18,7 +18,7 @@ class Restore_ImageSelector_Spec
     def "GIVEN creating new ImageSelector-content 2:4 WHEN one image was removed THEN number of versions increased by one"()
     {
         given: "new ImageSelector-content 2:4 added"
-        IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_NAME, BOOK_IMAGE_NAME );
+        IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT.getContentTypeName() );
         wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();

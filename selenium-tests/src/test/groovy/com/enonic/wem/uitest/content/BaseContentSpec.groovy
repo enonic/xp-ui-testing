@@ -119,6 +119,9 @@ class BaseContentSpec
     String EXECUTABLE_BAT = "server.bat";
 
     @Shared
+    String EXECUTABLE_BAT_DISPLAY_NAME = "server";
+
+    @Shared
     String EXECUTABLE_SH = "server.sh";
 
     @Shared
