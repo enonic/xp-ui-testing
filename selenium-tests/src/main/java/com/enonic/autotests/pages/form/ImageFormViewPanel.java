@@ -119,6 +119,7 @@ public class ImageFormViewPanel
     public ImageFormViewPanel waitUntilImageLoaded()
     {
         boolean isLoaded = waitUntilVisibleNoException( By.xpath( IMG ), EXPLICIT_NORMAL );
+        sleep( 1000 );
         if ( !isLoaded )
         {
             saveScreenshot( "err_image_not_loaded" );

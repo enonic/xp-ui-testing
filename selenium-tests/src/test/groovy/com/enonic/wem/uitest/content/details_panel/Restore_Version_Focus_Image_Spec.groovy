@@ -32,6 +32,7 @@ class Restore_Version_Focus_Image_Spec
         when: "focus was moved"
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         imageEditor.doDragAndChangeFocus( -50 );
+        saveScreenshot( "image_was_focused" );
 
         and: "changes were applied"
         imageEditor.getToolbar().clickOnApplyButton();
