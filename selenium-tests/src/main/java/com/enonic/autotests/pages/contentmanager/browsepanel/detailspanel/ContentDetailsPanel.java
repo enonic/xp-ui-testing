@@ -10,7 +10,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -85,7 +84,7 @@ public class ContentDetailsPanel
             widgetSelectorDropDownHandler.click();
             if ( !isElementDisplayed( DEPENDENCIES_OPTION ) )
             {
-                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_dependencies_option" ) );
+                saveScreenshot( NameHelper.uniqueName( "err_dependencies_option" ) );
                 throw new TestFrameworkException( "dependencies option was not found!" );
             }
             getDisplayedElement( By.xpath( DEPENDENCIES_OPTION ) ).click();

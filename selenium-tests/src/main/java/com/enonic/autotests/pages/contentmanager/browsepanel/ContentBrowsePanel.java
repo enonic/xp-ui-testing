@@ -233,6 +233,7 @@ public class ContentBrowsePanel
         }
         detailsToggleButton.click();
         sleep( 1000 );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return this;
     }
 

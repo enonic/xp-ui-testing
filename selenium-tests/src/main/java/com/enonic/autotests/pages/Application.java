@@ -104,7 +104,7 @@ public class Application
     public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']/span";
 
     public String EXPECTED_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']/span[text()='%s']";
+        "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-content')]//span[contains(.,'%s')]";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
