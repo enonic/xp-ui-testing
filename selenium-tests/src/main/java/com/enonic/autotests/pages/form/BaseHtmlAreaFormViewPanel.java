@@ -58,9 +58,10 @@ public abstract class BaseHtmlAreaFormViewPanel
     {
         Actions builder = new Actions( getDriver() );
         String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
-        if ( isElementDisplayed( textAreaXpath ) )
+        if ( !isElementDisplayed( textAreaXpath ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_textarea" ) );
+            throw new TestFrameworkException( "Html Area was not found!" );
         }
         WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
         builder.moveToElement( textArea ).click( textArea ).build().perform();
