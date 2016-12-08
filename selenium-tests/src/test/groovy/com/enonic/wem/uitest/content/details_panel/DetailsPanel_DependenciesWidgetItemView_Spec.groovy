@@ -2,6 +2,9 @@ package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
+import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -9,6 +12,10 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks:
+ * XP-4643 Add selenium tests to verify XP-3893
+ * verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed , when site with inserted images was selected*/
 @Stepwise
 class DetailsPanel_DependenciesWidgetItemView_Spec
     extends BaseContentSpec
@@ -161,6 +168,31 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         TestUtils.isContains( names, imageSelector.getName() )
 
     }
-    //TODO add tests for outbound dependencies in site
-    // https://youtrack.enonic.net/issue/INBOX-476
+    // verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed, when site with inserted images was selected
+    def "GIVEN existing site with inserted Image Component"()
+    {
+        given: "existing site with a Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency is displayed"
+        def name = NameHelper.uniqueName( "site" );
+        addSiteWithAllInputTypes( name );
+        ContentWizardPanel wizard = findAndSelectContent( name ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsViewDialog = wizard.selectPageDescriptor( "Page" ).save().showComponentView();
+        pageComponentsViewDialog.openMenu( "main" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsViewDialog.doCloseDialog();
+        wizard.switchToLiveEditFrame();
+
+        and: "image component is inserted"
+        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
+        imageComponentView.selectImageItemFromList( HAND_IMAGE_DISPLAY_NAME );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+
+        when: "site selected and dependency widget is opened"
+        DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
+        dependencies.clickOnShowOutboundButton();
+        List<String> names = contentBrowsePanel.getContentNamesFromGrid();
+        saveScreenshot( "test_dependencies_site_with_component" );
+
+        then: "correct outbound dependency is displayed"
+        names.get( 0 ).contains( HAND_IMAGE_DISPLAY_NAME );
+
+    }
 }
