@@ -538,7 +538,7 @@ public class ContentWizardPanel
     public boolean isShowPageEditorButtonDisplayed()
     {
         String button = String.format( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
-        return isElementDisplayed( button );
+        return waitUntilVisibleNoException( By.xpath( button ), Application.EXPLICIT_NORMAL );
     }
 
     @Override

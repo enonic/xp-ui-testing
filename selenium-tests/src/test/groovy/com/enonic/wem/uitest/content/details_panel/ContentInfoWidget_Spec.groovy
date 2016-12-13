@@ -38,7 +38,7 @@ class ContentInfoWidget_Spec
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
 
         and: "correct number of properties present "
-        props.size() == 7;
+        props.size() == 8;
 
         and: "correct type present"
         props.get( ContentInfoTerms.TYPE.getValue() ).equals( ContentTypeName.folder().getLocalName() );
@@ -60,6 +60,9 @@ class ContentInfoWidget_Spec
 
         and: "Published from is White space"
         StringUtils.isWhitespace( props.get( ContentInfoTerms.PUBLISHED_FROM.getValue() ) );
+
+        and: "Published to is White space"
+        StringUtils.isWhitespace( props.get( ContentInfoTerms.PUBLISHED_TO.getValue() ) );
     }
 
     def "GIVEN a existing 'unstructured' WHEN content selected and Details panel opened THEN correct status and actual content-properties are present"()
@@ -79,7 +82,7 @@ class ContentInfoWidget_Spec
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
 
         and: "correct number of properties present "
-        props.size() == 7;
+        props.size() == 8;
 
         and: "correct type present"
         props.get( ContentInfoTerms.TYPE.getValue() ).equals( ContentTypeName.unstructured().getLocalName() );

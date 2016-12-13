@@ -10,7 +10,6 @@ import com.enonic.autotests.pages.usermanager.wizardpanel.ChangeUserPasswordDial
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
@@ -186,7 +185,7 @@ class LoginUserSpec
 
         when: "'change password' button pressed"
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
-        TestUtils.saveScreenshot( getSession(), "test_open_change_password_dialog" );
+        saveScreenshot( "test_open_change_password_dialog" );
 
         then: "modal dialog appears"
         dialog.isOpened();
