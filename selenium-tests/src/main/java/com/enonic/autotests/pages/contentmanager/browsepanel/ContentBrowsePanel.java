@@ -34,6 +34,8 @@ public class ContentBrowsePanel
 {
     public static final String PUBLISH_MENU_ITEM_LABEL = "Publish...";
 
+    public static final String UNPUBLISH_MENU_ITEM_LABEL = "Unpublish";
+
     public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
 
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
@@ -692,7 +694,7 @@ public class ContentBrowsePanel
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         openContextMenu( contentName );
-        String publishMenuItem = String.format( CONTEXT_MENU_ITEM, "Publish" );
+        String publishMenuItem = String.format( CONTEXT_MENU_ITEM, PUBLISH_MENU_ITEM_LABEL );
 
         if ( !isElementDisplayed( publishMenuItem ) )
         {
@@ -714,7 +716,7 @@ public class ContentBrowsePanel
     public ContentUnpublishDialog selectUnPublishFromContextMenu( String contentName )
     {
         openContextMenu( contentName );
-        String unpublishMenuItem = String.format( CONTEXT_MENU_ITEM, "Unpublish" );
+        String unpublishMenuItem = String.format( CONTEXT_MENU_ITEM, UNPUBLISH_MENU_ITEM_LABEL );
         if ( !isElementDisplayed( unpublishMenuItem ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_context-unpublish" ) );

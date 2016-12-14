@@ -56,7 +56,7 @@ public class ContentWizardPanel
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish']]";
+        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
 
     private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
@@ -361,6 +361,11 @@ public class ContentWizardPanel
 
     public ContentPublishDialog clickOnWizardPublishButton()
     {
+        if ( !isElementDisplayed( TOOLBAR_PUBLISH_BUTTON_XPATH ) )
+        {
+            saveScreenshot( "err_toolbar_publish" );
+            throw new TestFrameworkException( "publish button was not found in the wizard" );
+        }
         toolbarPublishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
