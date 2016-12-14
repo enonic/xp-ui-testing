@@ -124,7 +124,7 @@ class Display_SourceButton_Spec
         liveFormPanel.isTextComponentPresent();
     }
 
-    def "GIVEN existing site with text component WHEN user without required roles tries to edit the text component THEN Source Button is not displayed"()
+    def "GIVEN login with the User AND open te site WHEN user without required roles tries to edit the text component THEN Source Button is not displayed"()
     {
         given: "user manager opened"
         go "admin"
@@ -144,9 +144,9 @@ class Display_SourceButton_Spec
         !mceToolbar.isSourceCodeButtonDisplayed();
     }
 
-    def "GIVEN existing site WHEN user without required roles tries to add a htmlArea content THEN Source Button should not be displayed on the htmlarea-toolbar"()
+    def "GIVEN login with the User WHEN user without required roles tries to add a htmlArea content THEN Source Button should not be displayed on the htmlarea-toolbar"()
     {
-        given: "user manager opened"
+        given: "login with the User"
         go "admin"
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -184,9 +184,9 @@ class Display_SourceButton_Spec
         TestUtils.isContains( userWizardPanel.getRoleNames(), RoleName.CM_EXPERT.getValue() );
     }
 
-    def "GIVEN existing site with text component WHEN user with required roles tries to edit the text component THEN Source Button should be displayed on the mce-toolbar"()
+    def "GIVEN login with the User AND open the site WHEN user with required roles tries to edit the text component THEN Source Button should be displayed on the mce-toolbar"()
     {
-        given: "user manager opened"
+        given: "login with the User AND open the site"
         go "admin"
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -204,7 +204,7 @@ class Display_SourceButton_Spec
         mceToolbar.isSourceCodeButtonDisplayed();
     }
 
-    def "GIVEN existing site WHEN user with required roles tries to add a htmlArea content THEN 'Source Button' should be displayed on the htmlarea-toolbar"()
+    def "GIVEN login with the User WHEN user with required roles tries to add a htmlArea content THEN 'Source Button' should be displayed on the htmlarea-toolbar"()
     {
         given: "user manager opened"
         go "admin"
