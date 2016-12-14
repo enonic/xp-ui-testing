@@ -94,6 +94,12 @@ public class AllContentVersionsView
         return this;
     }
 
+    public AllContentVersionsView waitUntilLoaded()
+    {
+        waitUntilVisible( By.xpath( CONTAINER_WIDGET ) );
+        return this;
+    }
+
     public boolean waitUntilPanelNotVisible()
     {
         return WaitHelper.waitsElementNotVisible( getDriver(), By.xpath( CONTAINER_WIDGET ), Application.EXPLICIT_NORMAL );

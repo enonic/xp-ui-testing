@@ -201,4 +201,14 @@ public class LiveFormPanel
         WebElement element = getDisplayedElement( By.xpath( "//body[@data-portal-component-type='page']" ) );
         return element.getCssValue( "background-color" );
     }
+
+    public LiveFormPanel doubleClickOnTextComponent( String text )
+    {
+        String textComponentXpath = TEXT_COMPONENT_VIEW + String.format( "//p[contains(.,'%s')]", text );
+        WebElement textComponent = getDisplayedElement( By.xpath( textComponentXpath ) );
+        buildActions().click( textComponent ).build().perform();
+        buildActions().doubleClick( textComponent ).build().perform();
+        sleep( 2000 );
+        return this;
+    }
 }

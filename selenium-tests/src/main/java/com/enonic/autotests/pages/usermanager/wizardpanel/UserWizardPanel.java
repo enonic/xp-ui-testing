@@ -45,6 +45,8 @@ public class UserWizardPanel
     private String REMOVE_ROLE_BUTTON = ROLE_COMBOBOX +
         "//div[contains(@class,'principal-selected-option-view') and descendant::p[contains(.,'%s')]]//a[@class='icon-close']";
 
+    private final String ALL_ROLES = USER_WIZARD_PANEL + "//div[contains(@id,'PrincipalSelectedOptionsView')]" + P_NAME;
+
     @FindBy(xpath = USER_WIZARD_PANEL + ROLE_OPTIONS_FILTER_INPUT)
     protected WebElement roleOptionsFilter;
 
@@ -164,7 +166,7 @@ public class UserWizardPanel
         }
     }
 
-    private void addRole( String roleName )
+    public void addRole( String roleName )
     {
         clearAndType( roleOptionsFilter, roleName );
         sleep( 1000 );
@@ -248,5 +250,10 @@ public class UserWizardPanel
         sleep( 500 );
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
         return confirmationDialog;
+    }
+
+    public List<String> getRoleNames()
+    {
+        return getDisplayedStrings( By.xpath( ALL_ROLES ) );
     }
 }

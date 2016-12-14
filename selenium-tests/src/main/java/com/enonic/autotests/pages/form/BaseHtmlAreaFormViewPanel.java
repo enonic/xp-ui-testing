@@ -18,6 +18,8 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     private final String TOOLBAR_INSERT_MACRO_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert macro']";
 
+    private final String SOURCE_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Source code']";
+
     public static final String EMPTY_TEXT_AREA_CONTENT = "<p><br data-mce-bogus=\"1\"></p>";
 
     public static final String NUMBER_OF_EDITORS = "number-of-editors";
@@ -71,5 +73,10 @@ public abstract class BaseHtmlAreaFormViewPanel
             saveScreenshot( NameHelper.uniqueName( "err_html_toolbar" ) );
             throw new TestFrameworkException( "toolbar button was not found!" );
         }
+    }
+
+    public boolean isSourceCodeButtonDisplayed()
+    {
+        return isElementDisplayed( SOURCE_BUTTON );
     }
 }
