@@ -66,7 +66,7 @@ public class ContentBrowsePanel
     private final String MORE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'FoldButton')]";
 
     private final String PUBLISH_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish']]";
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...']]";
 
     private final String PUBLISH_MENU_DROPDOWN_HANDLER =
         BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]//button[contains(@id,'DropdownHandle')]";
