@@ -17,7 +17,7 @@ public class HtmlArea0_0_FormViewPanel
     extends BaseHtmlAreaFormViewPanel
 {
 
-    private final String REMOVE_BUTTON_XPATH = FORM_VIEW + "//div[contains(@id,'InputOccurrenceView')]//a[@class='remove-button']";
+    private final String REMOVE_AREA_BUTTON_XPATH = FORM_VIEW + "//div[contains(@id,'HtmlArea')]//a[@class='remove-button']";
 
     public HtmlArea0_0_FormViewPanel( final TestSession session )
     {
@@ -77,14 +77,14 @@ public class HtmlArea0_0_FormViewPanel
 
     public HtmlArea0_0_FormViewPanel removeLastTextArea()
     {
-        List<WebElement> buttons = findElements( By.xpath( REMOVE_BUTTON_XPATH ) );
+        List<WebElement> buttons = findElements( By.xpath( REMOVE_AREA_BUTTON_XPATH ) );
         if ( buttons.size() != 0 )
         {
             Actions builder = new Actions( getDriver() );
-            builder.moveToElement( buttons.get( buttons.size() - 1 ), 0, 5 ).click().build().perform();
+            builder.moveToElement( buttons.get( buttons.size() - 1 ) ).click().build().perform();
             //builder.click( buttons.get( buttons.size() - 1 ).getLocation(). ) .build().perform();
             //buttons.get( buttons.size() - 1 ).click();
-            sleep( 1000 );
+            sleep( 700 );
             return this;
         }
         else
