@@ -169,7 +169,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
     }
     // verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed, when site with inserted images was selected
-    def "GIVEN existing site with inserted Image Component"()
+    def "GIVEN existing site with inserted Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency is displayed"()
     {
         given: "existing site with a Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency is displayed"
         def name = NameHelper.uniqueName( "site" );

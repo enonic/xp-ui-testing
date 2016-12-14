@@ -1,5 +1,7 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+
 class ContentBrowsePanel_ContextMenuImage_Spec
     extends BaseContentSpec
 {
@@ -25,7 +27,7 @@ class ContentBrowsePanel_ContextMenuImage_Spec
         and: "Move menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( "Move" );
         and: "Publish menu item is enabled"
-        contentBrowsePanel.isContextMenuItemEnabled( "Publish" );
+        contentBrowsePanel.isContextMenuItemEnabled( ContentBrowsePanel.PUBLISH_MENU_ITEM_LABEL );
 
         and: "'unpublish'-item not present in the context menu, because content is 'offline'"
         !contentBrowsePanel.isContextMenuItemDisplayed( "Unpublish" );

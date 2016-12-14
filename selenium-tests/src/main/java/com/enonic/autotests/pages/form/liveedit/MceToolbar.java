@@ -161,7 +161,7 @@ public class MceToolbar
 
     public boolean isSourceCodeButtonDisplayed()
     {
-        return sourceCodeButton.isDisplayed();
+        return isElementDisplayed( MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'code')]" );
     }
 
     public SourceCodeMceWindow clickOnSourceCodeButton()

@@ -32,6 +32,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
+    public static final String PUBLISH_MENU_ITEM_LABEL = "Publish...";
+
     public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
 
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";

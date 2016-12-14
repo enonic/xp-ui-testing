@@ -41,7 +41,7 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.pressKeyOnRow( "system", Keys.SPACE );
 
         then:
-        TestUtils.saveScreenshot( getTestSession(), "spacebar-system2" );
+        saveScreenshot( "spacebar-system2" );
         userBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
@@ -98,10 +98,10 @@ class UserBrowsePanel_GridPanel_Spec
     {
         given:
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        TestUtils.saveScreenshot( getTestSession(), "system-expanded" );
+        saveScreenshot( "system-expanded" );
         when:
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        TestUtils.saveScreenshot( getTestSession(), "system-collapsed" );
+        saveScreenshot( "system-collapsed" );
 
         then:
         userBrowsePanel.getChildNames().size() == 0;
@@ -130,7 +130,7 @@ class UserBrowsePanel_GridPanel_Spec
 
         when: "arrow up typed"
         userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_up_roles" );
+        saveScreenshot( "arrow_up_roles" );
 
         then: "roles is not selected now, another folder in the root directory is selected"
         !userBrowsePanel.isRowSelected( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() ) &&
@@ -144,7 +144,7 @@ class UserBrowsePanel_GridPanel_Spec
 
         when: "arrow right typed"
         userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_RIGHT );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_right_roles" );
+        saveScreenshot( "arrow_right_roles" );
 
         then: "'roles' folder is expanded"
         userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
@@ -158,7 +158,7 @@ class UserBrowsePanel_GridPanel_Spec
 
         when: "arrow left typed"
         userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue(), Keys.ARROW_LEFT );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_left_roles" );
+        saveScreenshot( "arrow_left_roles" );
 
         then: "'roles' folder is collapsed"
         !userBrowsePanel.isRowExpanded( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
@@ -169,11 +169,11 @@ class UserBrowsePanel_GridPanel_Spec
         given: "selected and expanded 'System' folder"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
-        TestUtils.saveScreenshot( getTestSession(), "test_user_arrow_down_shift_before" );
+        saveScreenshot( "test_user_arrow_down_shift_before" );
 
         when: "arrow down typed 3 times"
         userBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "test_user_arrow_down_shift_after" );
+        saveScreenshot( "test_user_arrow_down_shift_after" );
 
         then: "n+1 rows are selected in the browse panel"
         userBrowsePanel.getSelectedRowsNumber() == 4
