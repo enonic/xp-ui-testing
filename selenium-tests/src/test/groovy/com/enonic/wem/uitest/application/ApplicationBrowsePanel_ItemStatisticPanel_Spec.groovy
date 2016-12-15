@@ -1,9 +1,13 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/*
+ Tasks:
+  XP-3944 Add selenium test for verifying of "XP-3932 Show idproviders in application panel"
+
+  */
 @Stepwise
 class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     extends BaseApplicationSpec
@@ -27,7 +31,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     {
         when:
         applicationBrowsePanel.clickOnSelectAll();
-        TestUtils.saveScreenshot( getSession(), "test_select_all_app" );
+        saveScreenshot( "test_select_all_app" );
 
         then: "start button is enabled"
         applicationBrowsePanel.isStartButtonEnabled();
@@ -41,7 +45,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     {
         when: "application started and it selected in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_app_stopped" );
+        saveScreenshot( "test_app_stopped" );
 
         then: "'build date' shown"
         applicationItemStatisticsPanel.isBuildDatePresent();
@@ -72,6 +76,12 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         and: "the system required has a correct value"
         applicationItemStatisticsPanel.getSystemRequired() == SYSTEM_REQUIRED;
+
+        and: "providers data group is displayed"
+        applicationItemStatisticsPanel.isProvidersDataGroupDisplayed();
+
+        and: "Provider's key is displayed"
+        applicationItemStatisticsPanel.isProvidersDataKeyDisplayed();
     }
 
     def "GIVEN Application is 'started' WHEN the application have been stopped THEN detail page should not show any content types"()
@@ -81,7 +91,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         when: "application stopped"
         applicationBrowsePanel.clickOnToolbarStop();
-        TestUtils.saveScreenshot( getSession(), "test_app_stopped" );
+        saveScreenshot( "test_app_stopped" );
 
         then: "the application has status is stopped"
         applicationBrowsePanel.findAppByDisplayNameAndGetStatus( FIRST_APP_DISPLAY_NAME ) == STOPPED_STATE;
@@ -103,6 +113,9 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         and: "descriptors data group is not displayed"
         !applicationItemStatisticsPanel.isDescriptorsDataGroupDisplayed();
+
+        and: "providers data group is not displayed"
+        !applicationItemStatisticsPanel.isProvidersDataGroupDisplayed();
     }
 
     def "WHEN application that just stopped and selected  THEN detail page should not show any mixins"()
@@ -148,15 +161,18 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationBrowsePanel.clickOnToolbarStart();
 
         then: "detail page should show all its content types"
-        TestUtils.saveScreenshot( getSession(), "stopped_started_ct" )
+        saveScreenshot( "stopped_started_ct" )
         applicationItemStatisticsPanel.getContentTypes().size() > 0;
+
+        and: "providers data group is displayed again"
+        applicationItemStatisticsPanel.isProvidersDataGroupDisplayed();
     }
 
     def "GIVEN Application that was stopped and started again WHEN the application have been selected THEN detail page should show all its mixins"()
     {
         when: "stopped and started again application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "stopped_started_mixins" )
+        saveScreenshot( "stopped_started_mixins" )
         List<String> mixins = applicationItemStatisticsPanel.getMixins();
 
         then: "detail page should show all its mixins"
@@ -173,7 +189,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     {
         when: "Application that was stopped and started again"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "stopped_started_relationships" );
+        saveScreenshot( "app_restarted_relationships" );
 
         then: "detail page should show all its relationship types"
         List<String> relationshipsTypes = applicationItemStatisticsPanel.getRelationShipTypes();

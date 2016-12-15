@@ -56,6 +56,7 @@ public class ContentVersionInfoView
     {
         getDisplayedElement( By.xpath( String.format( RESTORE_BUTTON, versionId ) ) ).click();
         sleep( 700 );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
     public void isVersionInfoExpanded( String versionId )

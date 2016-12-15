@@ -36,6 +36,10 @@ public class ApplicationItemStatisticsPanel
 
     private final String SCHEMA_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'schema')]";
 
+    private final String PROVIDERS_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'providers')]";
+
+    private final String PROVIDERS_DATA_LIST = PROVIDERS_DATA_GROUP + "//li[@class='list-header' and text()='Key']";
+
     private final String DESCRIPTORS_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'descriptors')]";
 
     private final String CONTENT_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Content Types']";
@@ -90,6 +94,16 @@ public class ApplicationItemStatisticsPanel
     public boolean isSchemaDataGroupDisplayed()
     {
         return isElementDisplayed( SCHEMA_DATA_GROUP );
+    }
+
+    public boolean isProvidersDataGroupDisplayed()
+    {
+        return isElementDisplayed( PROVIDERS_DATA_GROUP );
+    }
+
+    public boolean isProvidersDataKeyDisplayed()
+    {
+        return isElementDisplayed( PROVIDERS_DATA_LIST );
     }
 
     public boolean isDescriptorsDataGroupDisplayed()
