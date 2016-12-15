@@ -7,6 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
 import com.enonic.autotests.utils.NameHelper;
@@ -60,7 +61,7 @@ public abstract class BaseHtmlAreaFormViewPanel
     {
         Actions builder = new Actions( getDriver() );
         String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
-        if ( !isElementDisplayed( textAreaXpath ) )
+        if ( !waitUntilVisibleNoException( By.xpath( textAreaXpath ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_textarea" ) );
             throw new TestFrameworkException( "Html Area was not found!" );
