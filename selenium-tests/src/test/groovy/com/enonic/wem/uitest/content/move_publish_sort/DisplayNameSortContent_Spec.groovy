@@ -19,7 +19,7 @@ class DisplayNameSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.MODIFIED_DESCENDING.getValue() );
         List<String> defaultSortingList = sortContentDialog.getContentNames();
-        TestUtils.saveScreenshot( getSession(), "modified_descending" );
+        saveScreenshot( "modified_descending" );
         sortContentDialog.clickOnSaveButton();
 
         when:

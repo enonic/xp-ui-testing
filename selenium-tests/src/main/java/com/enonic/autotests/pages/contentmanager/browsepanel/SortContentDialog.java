@@ -151,7 +151,7 @@ public class SortContentDialog
 
     public List<String> getMenuItems()
     {
-        return getDisplayedStrings( By.xpath( DIALOG_CONTAINER + "//li[contains(@id,'SortContentTabMenuItem')]//span" ) );
+        return getDisplayedStrings( By.xpath( DIALOG_CONTAINER + "//li[contains(@id,'SortContentTabMenuItem')]//a" ) );
     }
 
     public void scrollViewPortToTop( WebElement viewport )
@@ -194,8 +194,8 @@ public class SortContentDialog
 
     private LinkedList<String> getGridItemNames()
     {
-        LinkedList list = findElements( By.xpath( DIALOG_CONTAINER + "//div[contains(@id,'NamesView')]" + H6_MAIN_NAME ) ).stream().filter(
-            WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
+        LinkedList list = findElements( By.xpath( DIALOG_CONTAINER + H6_DISPLAY_NAME ) ).stream().filter( WebElement::isDisplayed ).map(
+            WebElement::getText ).collect( Collectors.toCollection( LinkedList::new ) );
         return list;
     }
 
@@ -214,8 +214,14 @@ public class SortContentDialog
 
     public SortContentDialog selectSortMenuItem( String itemName )
     {
-        findElement( By.xpath(
-            DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem')]//span[text()='%s']", itemName ) ) ).click();
+        String menuItem =
+            DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem') and child::a[text()='%s']]", itemName );
+        if ( !isElementDisplayed( menuItem ) )
+        {
+            saveScreenshot( "err_sort_menu" );
+            throw new TestFrameworkException( "sort menu item was not found!" );
+        }
+        getDisplayedElement( By.xpath( menuItem ) ).click();
         sleep( 1000 );
         return this;
     }
