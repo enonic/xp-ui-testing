@@ -29,7 +29,7 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     public static String STRINGS_PROPERTY = "strings";
 
-    protected final String STEP_XPATH = "//li[contains(@id,'api.ui.tab.TabBarItem')]//span[text()='Html Area']";
+    protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[text()='Html Area']]";
 
     protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'api.ui.text.TextArea')]";
 

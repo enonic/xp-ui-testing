@@ -32,10 +32,9 @@ public class MacroModalDialog
 
     private final String TAB_BAR = DIALOG_CONTAINER + "//ul[contains(@id,'TabBar')]";
 
-    private final String CONFIG_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem')]//span[@title='Configuration']";
+    private final String CONFIG_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::a[@title='Configuration']]";
 
-    private final String PREVIEW_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem')]//span[@title='Preview']";
-
+    private final String PREVIEW_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::a[@title='Preview']]";
 
     private final String MACRO_SELECTED_DISPLAY_NAME = MACRO_SELECTED_VIEW + H6_DISPLAY_NAME;
 
@@ -103,6 +102,11 @@ public class MacroModalDialog
 
     public MacroPreviewPanel clickOnPreviewTabLink()
     {
+        if ( !isElementDisplayed( PREVIEW_TAB_BAR_ITEM ) )
+        {
+            saveScreenshot( "err_preview_tab" );
+            throw new TestFrameworkException( "Preview tab item was not found!" );
+        }
         previewTabLink.click();
         sleep( 200 );
         return new MacroPreviewPanel( getSession() );
@@ -110,6 +114,11 @@ public class MacroModalDialog
 
     public MacroConfigPanel clickOnConfigurationTabLink()
     {
+        if ( !isElementDisplayed( CONFIG_TAB_BAR_ITEM ) )
+        {
+            saveScreenshot( "err_config_tab" );
+            throw new TestFrameworkException( "Preview tab item was not found!" );
+        }
         configurationTabLink.click();
         sleep( 200 );
         return macroConfigPanel;
