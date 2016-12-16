@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.schema.content.ContentTypeName
@@ -25,12 +26,13 @@ class ContentPublishDialog_Spec
     {
         given:
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        String displayName = NameHelper.uniqueName( "test" );
 
         when:
-        ContentPublishDialog dialog = wizard.typeDisplayName( "test for status" ).clickOnWizardPublishButton();
+        ContentPublishDialog dialog = wizard.typeDisplayName( displayName ).clickOnWizardPublishButton();
 
         then:
-        dialog.getContentStatus( "test for status" ) == ContentStatus.OFFLINE.getValue();
+        dialog.getContentStatus( displayName ) == ContentStatus.OFFLINE.getValue();
     }
 
     def "GIVEN existing folder in root WHEN one content without child selected and 'Publish' button clicked THEN 'Content publish' appears without 'Include child' checkbox"()
@@ -73,7 +75,7 @@ class ContentPublishDialog_Spec
         and: "dialog has a correct title"
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
 
-        and: "dialog has 'Publish Now' and 'Cancel' buttons"
+        and: "dialog has 'Publish' and 'Cancel' buttons"
         contentPublishDialog.isPublishNowButtonEnabled();
 
         and:

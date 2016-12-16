@@ -36,7 +36,7 @@ class Publish_InvalidContent_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN a content without a displayName WHEN it content selected and 'Publish' button on grid toolbar pressed THEN publish dialog appears AND the 'Publish Now' button is disabled and correct header present on dialog"()
+    def "GIVEN a content without a displayName WHEN it content selected and 'Publish' button on grid toolbar pressed THEN publish dialog appears AND the 'Publish' button is disabled and correct header present on dialog"()
     {
         given:
         filterPanel.typeSearchText( invalidFolder.getName() );
@@ -50,7 +50,7 @@ class Publish_InvalidContent_Spec
         then: "'invalid' subheader shown"
         contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
 
-        and: "'publish now' button disabled"
+        and: "'publish' button disabled"
         !contentPublishDialog.isPublishNowButtonEnabled();
 
         and: "dependency list not present"
@@ -64,7 +64,7 @@ class Publish_InvalidContent_Spec
         contentPublishDialog.getNamesOfContentsToPublish().get( 0 ) == invalidFolder.getPath().toString();
     }
 
-    def "GIVEN a parent folder with not valid child WHEN parent content selected and 'Publish' button clicked THEN 'Content publish' dialog appears and 'Publish Now' button disabled"()
+    def "GIVEN a parent folder with not valid child WHEN parent content selected and 'Publish' button clicked THEN 'Content publish' dialog appears and 'Publish' button disabled"()
     {
         setup: "add a valid parent folder"
         Content parentFolder = buildFolderContent( "folder", "publish not valid content" );

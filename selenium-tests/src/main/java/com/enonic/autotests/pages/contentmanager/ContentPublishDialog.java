@@ -29,8 +29,8 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-    private final String PUBLISH_NOW_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish Now')]]";
+    private final String PUBLISH_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish')]]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
@@ -64,7 +64,7 @@ public class ContentPublishDialog
     private String STATUS_OF_CONTENT = ITEM_LIST +
         "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]/div[contains(@class,'status')][2]";
 
-    @FindBy(xpath = PUBLISH_NOW_BUTTON)
+    @FindBy(xpath = PUBLISH_BUTTON)
     private WebElement publishButton;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
@@ -186,7 +186,7 @@ public class ContentPublishDialog
 
     public void waitUntilPublishButtonEnabled( long timeout )
     {
-        waitUntilElementEnabled( By.xpath( PUBLISH_NOW_BUTTON ), timeout );
+        waitUntilElementEnabled( By.xpath( PUBLISH_BUTTON ), timeout );
     }
 
     public boolean isCancelButtonBottomEnabled()
