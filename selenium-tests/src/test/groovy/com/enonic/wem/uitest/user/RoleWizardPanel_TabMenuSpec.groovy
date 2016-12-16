@@ -17,7 +17,7 @@ class RoleWizardPanel_TabMenuSpec
         when: "'Roles' folder clicked and 'New' button clicked and role wizard opened"
         RoleWizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.ROLES_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
-        TestUtils.saveScreenshot( getTestSession(), "tab_role" );
+        saveScreenshot( "tab_role" );
 
         then: "tab with title 'New Role' is present "
         userBrowsePanel.isTabMenuItemPresent( ROLE_TAB_TITLE );

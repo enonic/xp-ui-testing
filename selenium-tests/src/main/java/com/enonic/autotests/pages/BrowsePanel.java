@@ -122,7 +122,8 @@ public abstract class BrowsePanel
 
     public boolean isTabMenuItemPresent( String itemText )
     {
-        List<WebElement> elems = findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem')]//span" ) );
+        List<WebElement> elems =
+            findElements( By.xpath( APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem')]//a[@class='label']" ) );
 
         for ( WebElement element : elems )
         {
