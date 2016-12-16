@@ -316,6 +316,7 @@ public class ContentWizardPanel
         String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SETTINGS_LINK_TEXT );
         if ( findElements( By.xpath( securityTabXpath ) ).size() == 0 )
         {
+            saveScreenshot( "err_settings_tab" );
             throw new TestFrameworkException( "settings tab was not found!" );
         }
         findElement( By.xpath( securityTabXpath ) ).click();

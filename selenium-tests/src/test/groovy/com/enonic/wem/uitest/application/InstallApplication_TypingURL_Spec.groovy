@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 
 class InstallApplication_TypingURL_Spec
@@ -38,7 +37,6 @@ class InstallApplication_TypingURL_Spec
     def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN incorrect protocol typed THEN validation message not displayed"()
     {
         given: "'install app' dialog opened AND 'Upload' tab activated"
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_10" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
