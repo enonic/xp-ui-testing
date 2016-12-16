@@ -24,13 +24,13 @@ public class InsertLinkModalDialog
 
     private final String LINK_TEXT_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Text']]//input[@type='text']";
 
-    private final String BAR_ITEM_URL = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='URL']";
+    private final String BAR_ITEM_URL = CONTAINER + "//li[contains(@id,'TabBarItem') and child::a[text()='URL']]";
 
-    private final String BAR_ITEM_CONTENT = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='Content']";
+    private final String BAR_ITEM_CONTENT = CONTAINER + "//li[contains(@id,'TabBarItem')] and child::a[text()='Content']]";
 
-    private final String BAR_ITEM_DOWNLOAD = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='Download']";
+    private final String BAR_ITEM_DOWNLOAD = CONTAINER + "//li[contains(@id,'TabBarItem')] and child::a[text()='Download']]";
 
-    private final String BAR_ITEM_EMAIL = CONTAINER + "//li[contains(@id,'TabBarItem')]/span[text()='Email']";
+    private final String BAR_ITEM_EMAIL = CONTAINER + "//li[contains(@id,'TabBarItem')] and child::a[text()='Email']]";
 
     private final String INSERT_OR_UPDATE_BUTTON =
         CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Insert' or text()='Update']]";
