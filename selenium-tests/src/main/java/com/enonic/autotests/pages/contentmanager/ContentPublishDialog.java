@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -92,7 +92,7 @@ public class ContentPublishDialog
         String status = String.format( STATUS_OF_CONTENT, displayName );
         if ( !isElementDisplayed( status ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_publish_dlg_content_status" );
+            saveScreenshot( "err_publish_dlg_content_status" );
             throw new TestFrameworkException( "status of content was not found!" );
         }
         return getDisplayedString( status );
@@ -140,6 +140,11 @@ public class ContentPublishDialog
     public ContentPublishDialog clickOnPublishNowButton()
     {
         sleep( 500 );
+        if ( !isElementDisplayed( PUBLISH_BUTTON ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_publish_button" ) );
+            throw new TestFrameworkException( "publish button was not found!" );
+        }
         publishButton.click();
         sleep( 1000 );
         return this;

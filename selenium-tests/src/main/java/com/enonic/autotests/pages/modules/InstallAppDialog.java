@@ -30,10 +30,9 @@ public class InstallAppDialog
 
     private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + "//div[contains(@class,'cancel-button-top')]";
 
-    private final String UPLOAD_TAB = INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::span[text()='Upload']]";
+    private final String UPLOAD_TAB = INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::a[text()='Upload']]";
 
-    private final String ENONIC_MARKET_TAB =
-        INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::span[text()='Enonic Market']]";
+    private final String ENONIC_MARKET_TAB = INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::a[text()='Enonic Market']]";
 
     private final String APPLICATION_INPUT = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
 
