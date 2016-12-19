@@ -24,7 +24,7 @@ public class RelationshipFormView
 
     protected final String OPTION_FILTER_INPUT = CONTAINER_DIV + COMBOBOX_OPTION_FILTER_INPUT;
 
-    protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[contains(.,'Relationship')]";
+    protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[contains(.,'Relationship')]]";
 
     private String REMOVE_TARGET_BUTTON =
         "//div[contains(@id,'ContentSelectedOptionView') and descendant::h6[contains(@class,'main-name') and text()='%s']]//a[@class='remove']";
@@ -62,17 +62,17 @@ public class RelationshipFormView
 
     public long getNumberOfSelectedFiles()
     {
-        return getNumberOfElements( By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]" ) );
+        return getNumberOfElements( By.xpath( CONTAINER_DIV + CONTENT_SELECTED_OPTION_VIEW ) );
     }
 
     public List<String> getNamesOfSelectedFiles()
     {
-        return getDisplayedStrings( By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]" + P_NAME ) );
+        return getDisplayedStrings( By.xpath( CONTAINER_DIV + CONTENT_SELECTED_OPTION_VIEW + P_NAME ) );
     }
 
     public List<String> getDisplayNamesOfSelectedFiles()
     {
-        return getDisplayedStrings( By.xpath( CONTAINER_DIV + "//div[contains(@id,'ContentSelectedOptionView')]" + H6_MAIN_NAME ) );
+        return getDisplayedStrings( By.xpath( CONTAINER_DIV + CONTENT_SELECTED_OPTION_VIEW + H6_MAIN_NAME ) );
     }
 
     public boolean isOptionFilterDisplayed()

@@ -9,7 +9,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.RichComboBoxInput;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -74,7 +73,7 @@ public class ShortcutFormViewPanel
     {
         if ( !isElementDisplayed( REMOVE_TARGET_BUTTON ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_remove_target" );
+            saveScreenshot( "err_remove_target" );
             throw new TestFrameworkException( "remove target button was not found!" );
         }
         getDisplayedElement( By.xpath( REMOVE_TARGET_BUTTON ) ).click();

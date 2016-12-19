@@ -23,6 +23,8 @@ public abstract class FormViewPanel
 
     public static String REQUIRED_MESSAGE = "This field is required";
 
+    protected final String CONTENT_SELECTED_OPTION_VIEW = "//div[contains(@id,'ContentSelectedOptionView')]";
+
     protected final String VALIDATION_MESSAGE = VALIDATION_VIEWER + "//li";
 
     public static String VALIDATION_MESSAGE_OCCURRENCE = "This field is required";

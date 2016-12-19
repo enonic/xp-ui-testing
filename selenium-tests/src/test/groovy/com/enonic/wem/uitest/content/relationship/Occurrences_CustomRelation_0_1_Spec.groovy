@@ -44,6 +44,7 @@ class Occurrences_CustomRelation_0_1_Spec
         Content relationship = buildCitationRelation0_1_Content( null );
         selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
+        saveScreenshot( "wizard_custom_rel" );
 
         then: "wizard with form view opened"
         formViewPanel.isOpened();
