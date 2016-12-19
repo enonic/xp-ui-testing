@@ -7,7 +7,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.RichComboBoxInput;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -26,11 +25,11 @@ public class InsertLinkModalDialog
 
     private final String BAR_ITEM_URL = CONTAINER + "//li[contains(@id,'TabBarItem') and child::a[text()='URL']]";
 
-    private final String BAR_ITEM_CONTENT = CONTAINER + "//li[contains(@id,'TabBarItem')] and child::a[text()='Content']]";
+    private final String BAR_ITEM_CONTENT = CONTAINER + "//li[contains(@id,'TabBarItem') and child::a[text()='Content']]";
 
-    private final String BAR_ITEM_DOWNLOAD = CONTAINER + "//li[contains(@id,'TabBarItem')] and child::a[text()='Download']]";
+    private final String BAR_ITEM_DOWNLOAD = CONTAINER + "//li[contains(@id,'TabBarItem') and child::a[text()='Download']]";
 
-    private final String BAR_ITEM_EMAIL = CONTAINER + "//li[contains(@id,'TabBarItem')] and child::a[text()='Email']]";
+    private final String BAR_ITEM_EMAIL = CONTAINER + "//li[contains(@id,'TabBarItem') and child::a[text()='Email']]";
 
     private final String INSERT_OR_UPDATE_BUTTON =
         CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Insert' or text()='Update']]";
@@ -111,7 +110,7 @@ public class InsertLinkModalDialog
     {
         if ( !waitUntilVisibleNoException( By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_insert_link_dialog" );
+            saveScreenshot( "err_insert_link_dialog" );
             throw new TestFrameworkException( "InsertLink dialog was not opened!" );
         }
     }

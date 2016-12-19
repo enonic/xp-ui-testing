@@ -24,11 +24,11 @@ public class ContextWindow
 {
     private final String DIV_CONTEXT_WINDOW = "//div[contains(@id,'ContextWindow') and not(contains(@class,'hidden'))]";
 
-    private final String EMULATOR_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Emulator']";
+    private final String EMULATOR_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem') and child::a[ text()='Emulator']]";
 
-    private final String INSERT_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Insert']";
+    private final String INSERT_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem') and child::a[ text()='Insert']";
 
-    private final String INSPECT_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem')]/span[ text()='Inspect']";
+    private final String INSPECT_TAB_LINK = DIV_CONTEXT_WINDOW + "//li[contains(@id,'TabBarItem') and child::a[ text()='Inspect']";
 
     private final String INSERTABLES_GRID = "//div[contains(@id,'InsertablesGrid')]";
 
