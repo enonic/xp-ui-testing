@@ -48,11 +48,15 @@ public class Application
 
     protected final String GRID_CANVAS = "//div[@class='grid-canvas']";
 
+    protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
+
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
     protected final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
     protected String NAMES_VIEW_BY_NAME = "//div[contains(@id,'NamesView') and child::p[contains(@class,'sub-name') and contains(.,'%s')]]";
+
+    protected String TAB_BAR_ITEM = "//li[contains(@id,'TabBarItem') and child::a[text()='%s']]";
 
     protected String NAMES_VIEW_BY_DISPLAY_NAME =
         "//div[contains(@id,'NamesView') and child::h6[contains(@class,'main-name') and contains(.,'%s')]]";

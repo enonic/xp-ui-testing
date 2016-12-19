@@ -34,8 +34,7 @@ public class ItemSetViewPanel
 
     private final String TEXT_LINE_INPUTS = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
 
-    protected final String HTML_AREA_INPUTS =
-        FORM_ITEM_SET_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'TextArea')]";
+    protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
 
     protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//button/span[text()='Add ItemSet']";
 

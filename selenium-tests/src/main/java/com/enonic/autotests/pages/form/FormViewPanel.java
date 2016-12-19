@@ -31,8 +31,6 @@ public abstract class FormViewPanel
 
     protected final String INNER_TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerText";
 
-    protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
-
     protected final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
     protected final String SCRIPT_SET_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";

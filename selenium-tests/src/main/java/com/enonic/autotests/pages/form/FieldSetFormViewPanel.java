@@ -2,7 +2,6 @@ package com.enonic.autotests.pages.form;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
@@ -23,7 +22,7 @@ public class FieldSetFormViewPanel
 
     private final String HTML_AREA = FORM_VIEW + "//div[contains(@id,'TextLine')]";
 
-    protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'TextArea')]";
+    protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
 
     @FindBy(xpath = TEXT_LINE)
     private WebElement textLineInput;
@@ -56,8 +55,7 @@ public class FieldSetFormViewPanel
         if ( text != null )
         {
             WebElement areaElement = findElement( By.xpath( TINY_MCE ) );
-            Actions builder = new Actions( getDriver() );
-            builder.click( findElement( By.xpath( TINY_MCE ) ) ).build().perform();
+            buildActions().click( findElement( By.xpath( TINY_MCE ) ) ).build().perform();
             setTextIntoArea( areaElement.getAttribute( "id" ), text );
             sleep( 300 );
         }

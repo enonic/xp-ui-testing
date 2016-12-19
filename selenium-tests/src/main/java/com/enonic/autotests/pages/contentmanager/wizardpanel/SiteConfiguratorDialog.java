@@ -11,7 +11,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -59,7 +58,7 @@ public class SiteConfiguratorDialog
         boolean result = waitUntilVisibleNoException( By.xpath( CANCEL_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_cancel-site-config" );
+            saveScreenshot( "err_cancel-site-config" );
             throw new TestFrameworkException( "button 'cancel' on 'site-config-dialog' was not found!" );
         }
         cancelButton.click();
@@ -138,10 +137,8 @@ public class SiteConfiguratorDialog
 
     public InsertLinkModalDialog clickOnHtmlAreaInsertLinkButton()
     {
-        Actions builder = new Actions( getDriver() );
-        String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
-        WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
-        builder.moveToElement( textArea ).click( textArea ).build().perform();
+        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
+        buildActions().moveToElement( textArea ).click( textArea ).build().perform();
         textArea.sendKeys( "  " );
         if ( !isElementDisplayed( INSERT_LINK_BUTTON ) )
         {
@@ -161,16 +158,13 @@ public class SiteConfiguratorDialog
 
     private void showToolbar()
     {
-        Actions builder = new Actions( getDriver() );
-        String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
-        WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
-        builder.moveToElement( textArea ).click( textArea ).build().perform();
+        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
+        buildActions().moveToElement( textArea ).click( textArea ).build().perform();
         textArea.sendKeys( "  " );
     }
 
     public String getTextFromArea()
     {
-        String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
         WebElement frame = findElement( By.xpath( TEXT_AREA ) );
         String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
         String contentStudioWHandle = getDriver().getWindowHandle();

@@ -31,7 +31,7 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[text()='Html Area']]";
 
-    protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]//iframe[contains(@id,'api.ui.text.TextArea')]";
+    protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
 
     public BaseHtmlAreaFormViewPanel( final TestSession session )
     {
@@ -60,13 +60,12 @@ public abstract class BaseHtmlAreaFormViewPanel
     private void showToolbar()
     {
         Actions builder = new Actions( getDriver() );
-        String textAreaXpath = "//iframe[contains(@id,'api.ui.text.TextArea')]";
-        if ( !waitUntilVisibleNoException( By.xpath( textAreaXpath ), Application.EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( TEXT_AREA ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_textarea" ) );
             throw new TestFrameworkException( "Html Area was not found!" );
         }
-        WebElement textArea = getDisplayedElement( By.xpath( textAreaXpath ) );
+        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
         builder.moveToElement( textArea ).click( textArea ).build().perform();
         textArea.sendKeys( " " );
         if ( !isElementDisplayed( TOOLBAR_INSERT_LINK_BUTTON ) )

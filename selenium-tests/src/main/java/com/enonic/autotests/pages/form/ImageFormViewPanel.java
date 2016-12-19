@@ -24,11 +24,11 @@ public class ImageFormViewPanel
 
     private final String IMG = FORM_VIEW + "//img[contains(@class,'image-bg')]";
 
-    private final String IMAGE_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + "//li[contains(@id,'TabBarItem') and child::a[text()='Image Info']]";
+    private final String IMAGE_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Image Info" );
 
-    private final String PHOTO_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + "//li[contains(@id,'TabBarItem') and child::a[text()='Photo Info']]";
+    private final String PHOTO_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Photo Info" );
 
-    private final String GPS_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + "//li[contains(@id,'TabBarItem') and child::a[text()='Gps Info']]";
+    private final String GPS_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Gps Info" );
 
     private final String CAPTION_TEXTAREA = FORM_VIEW + "//textarea[contains(@name,'caption')]";
 

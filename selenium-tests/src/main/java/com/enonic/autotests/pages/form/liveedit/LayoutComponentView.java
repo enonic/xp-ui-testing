@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -30,10 +29,10 @@ public class LayoutComponentView
     {
         optionFilterInput.sendKeys( layoutName );
         sleep( 900 );
-        TestUtils.saveScreenshot( getSession(), "try_find" + layoutName );
+        saveScreenshot( "try_find" + layoutName );
         if ( !isLayoutExists( layoutName ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + layoutName );
+            saveScreenshot( "err_" + layoutName );
             throw new TestFrameworkException( "The layout with name: " + layoutName + "  was not found!" );
         }
         clickOnOptionsItem( layoutName );
