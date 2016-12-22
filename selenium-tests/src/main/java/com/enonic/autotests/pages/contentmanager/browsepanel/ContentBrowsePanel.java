@@ -284,21 +284,21 @@ public class ContentBrowsePanel
 
     public String getContentStatus( String contentName )
     {
-        String statusXpath = String.format(
-            "//div[contains(@class,'slick-row') and descendant::p[contains(.,'%s')]]//div[contains(@class,'slick-cell')][4]/span",
-            contentName );
-        if ( findElements( By.xpath( statusXpath ) ).size() == 0 )
+        String statusXpath = String.format( CONTENT_TREE_GRID + SLICK_ROW_BY_NAME + "//div[contains(@class,'r3')]", contentName );
+        if ( !isElementDisplayed( statusXpath ) )
         {
             saveScreenshot( NameHelper.uniqueName( "content_status_not_found" ) );
-            if ( !getContentDetailsPanel().isDisplayed() )
-            {
-                clickOnDetailsToggleButton();
-                selectContentInTable( contentName );
-                saveScreenshot( NameHelper.uniqueName( "details_panel" ) );
-            }
-            return getContentDetailsPanel().openInfoWidget().getContentStatus();
+            throw new TestFrameworkException( "content status was not found in the grid: " + contentName );
+//            if ( !getContentDetailsPanel().isDisplayed() )
+//            {
+//                clickOnDetailsToggleButton();
+//                selectContentInTable( contentName );
+//                saveScreenshot( NameHelper.uniqueName( "details_panel" ) );
+//            }
+//            return getContentDetailsPanel().openInfoWidget().getContentStatus();
         }
-        return findElement( By.xpath( statusXpath ) ).getText();
+
+        return findElement( By.xpath( statusXpath ) ).getText().replace( "\n", " " );
     }
 
     public ContentBrowseFilterPanel getFilterPanel()

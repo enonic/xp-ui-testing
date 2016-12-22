@@ -18,7 +18,7 @@ public class DateTimeFormViewPanel
 {
     public static String DATE_TIME_PROPERTY = "date_time";
 
-    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]")
+    @FindBy(xpath = FORM_VIEW + DATA_TIME_PICKER_INPUT)
     private WebElement dateTimeInput;
 
 

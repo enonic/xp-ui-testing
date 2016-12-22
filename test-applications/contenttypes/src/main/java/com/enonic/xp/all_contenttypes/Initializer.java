@@ -291,7 +291,15 @@ public class Initializer
             mimeType( "application/pdf" ).
             name( fileName ).
             parent( parent ).byteSource( ByteSource.wrap( bytes ) );
-        contentService.create( params ).getId();
+        try
+        {
+            contentService.create( params ).getId();
+        }
+        catch ( Exception e )
+        {
+            LOG.info( "Exception" + e.getMessage() );
+        }
+
         LOG.info( "content added :  " + fileName );
     }
 

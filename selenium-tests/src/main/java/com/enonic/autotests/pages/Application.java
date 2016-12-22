@@ -48,6 +48,8 @@ public class Application
 
     protected final String GRID_CANVAS = "//div[@class='grid-canvas']";
 
+    protected final String DATA_TIME_PICKER_INPUT = "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]";
+
     protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
 
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
@@ -64,6 +66,8 @@ public class Application
     protected final String SLICK_ROW = "//div[contains(@class,'slick-row')]";
 
     protected final String SLICK_CELL = "//div[contains(@class,'slick-cell')]";
+
+    protected final String VALIDATION_RECORDING_VIEWER = "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
     public String SLICK_ROW_BY_NAME =
         "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
@@ -115,6 +119,8 @@ public class Application
 
     public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";
+
+    public static String REQUIRED_MESSAGE = "This field is required";
 
     public Application( TestSession session )
     {

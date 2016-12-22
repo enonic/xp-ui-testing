@@ -64,6 +64,11 @@ public class ContentPublishDialog
     private String STATUS_OF_CONTENT = ITEM_LIST +
         "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]/div[contains(@class,'status')][2]";
 
+    private final String SHOW_SCHEDULE_DIALOG_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'show-schedule')]";
+
+    @FindBy(xpath = SHOW_SCHEDULE_DIALOG_BUTTON)
+    private WebElement showScheduleButton;
+
     @FindBy(xpath = PUBLISH_BUTTON)
     private WebElement publishButton;
 
@@ -137,6 +142,16 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
+    public SchedulePublishDialog clickOnShowScheduleButton()
+    {
+        showScheduleButton.click();
+        sleep( 200 );
+        SchedulePublishDialog dialog = new SchedulePublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+
+    }
+
     public ContentPublishDialog clickOnPublishNowButton()
     {
         sleep( 500 );
@@ -144,6 +159,11 @@ public class ContentPublishDialog
         {
             saveScreenshot( NameHelper.uniqueName( "err_publish_button" ) );
             throw new TestFrameworkException( "publish button was not found!" );
+        }
+        if ( !publishButton.isEnabled() )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_publish_button_disabled" ) );
+            throw new TestFrameworkException( "publish button is disabled!" );
         }
         publishButton.click();
         sleep( 1000 );

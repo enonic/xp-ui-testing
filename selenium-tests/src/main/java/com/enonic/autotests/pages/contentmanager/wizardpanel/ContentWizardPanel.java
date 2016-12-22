@@ -52,6 +52,12 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_PUBLISH_DROPDOWN_HANDLER = TOOLBAR_PUBLISH + "//button[contains(@id,'DropdownHandle')]";
 
+    private final String SCHEDULE_WIZARD_STEP = "//div[contains(@id,'ScheduleWizardStepForm')]";
+
+    private final String ONLINE_FROM_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
+        "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" + DATA_TIME_PICKER_INPUT;
+
+
     private final String UNPUBLISH_MENU_ITEM =
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
@@ -88,6 +94,9 @@ public class ContentWizardPanel
 
     @FindBy(xpath = TOOLBAR_PUBLISH_DROPDOWN_HANDLER)
     private WebElement publishMenuDropDownHandler;
+
+    @FindBy(xpath = ONLINE_FROM_DATETIME_INPUT)
+    private WebElement onlineFromInput;
 
 
     /**
@@ -343,7 +352,8 @@ public class ContentWizardPanel
         {
             switchToDefaultWindow();
         }
-        boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), 2l );
+        boolean isSaveButtonEnabled =
+            waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isSaveButtonEnabled )
         {
             saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
@@ -699,4 +709,15 @@ public class ContentWizardPanel
     {
         getSession().setInLiveEditFrame( value );
     }
+
+    public boolean isOnlineFromInputDisplayed()
+    {
+        return isElementDisplayed( ONLINE_FROM_DATETIME_INPUT );
+    }
+
+    public String getOnlineFromDateTime()
+    {
+        return onlineFromInput.getAttribute( "value" );
+    }
+
 }

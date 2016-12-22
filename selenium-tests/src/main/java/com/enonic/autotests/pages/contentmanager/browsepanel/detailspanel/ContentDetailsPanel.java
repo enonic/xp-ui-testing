@@ -91,7 +91,6 @@ public class ContentDetailsPanel
             sleep( 700 );
             return dependenciesWidgetItemView;
         }
-
     }
 
     public AllContentVersionsView openVersionHistory()

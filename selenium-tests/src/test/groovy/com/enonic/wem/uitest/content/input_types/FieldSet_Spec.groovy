@@ -1,7 +1,11 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.*
+import com.enonic.autotests.pages.form.DoubleFormViewPanel
+import com.enonic.autotests.pages.form.FieldSetFormViewPanel
+import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
+import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
@@ -58,7 +62,7 @@ class FieldSet_Spec
         textLine1_1_formViewPanel.isValidationMessagePresent();
 
         and: "correct message is displayed"
-        textLine1_1_formViewPanel.getValidationMessage() == BaseTextLineFormViewPanel.REQUIRED_MESSAGE
+        textLine1_1_formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE
     }
 
     def "GIVEN adding a content with type fieldset WHEN required text in the HTML-area is empty THEN content is not valid in the wizard"()
@@ -73,7 +77,7 @@ class FieldSet_Spec
         HtmlArea0_1_FormViewPanel htmlArea0_1_formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "correct message is displayed"
-        htmlArea0_1_formViewPanel.getValidationMessage() == BaseTextLineFormViewPanel.REQUIRED_MESSAGE
+        htmlArea0_1_formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE
     }
 
     def "GIVEN adding a content with type fieldset WHEN one required double is empty THEN content is not valid in the wizard"()

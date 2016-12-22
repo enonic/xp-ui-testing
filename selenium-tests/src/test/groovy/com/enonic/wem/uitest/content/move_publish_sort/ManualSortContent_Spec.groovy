@@ -43,7 +43,7 @@ class ManualSortContent_Spec
         sortContentDialog.clickOnSaveButton();
         sortContentDialog = contentBrowsePanel.clickToolbarSort();
         LinkedList<String> manuallySortedList = sortContentDialog.getContentNames();
-        TestUtils.saveScreenshot( getSession(), "manual_sort-drag3" );
+        saveScreenshot( "manual_sort-drag3" );
 
         then: "'SortContent' dialog displayed"
         defaultSortingList.indexOf( "nord.jpg" ) == manuallySortedList.indexOf( "whale.jpg" );

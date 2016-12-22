@@ -87,7 +87,16 @@ public class ImageEditor
     {
         Object heightOfImageFrame =
             getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('image-frame')[0].style.height" );
-        return Integer.valueOf( heightOfImageFrame.toString().substring( 0, heightOfImageFrame.toString().indexOf( "." ) ) );
+        getLogger().info( "getCropAreaHeight: image-frame height is  " + heightOfImageFrame );
+        if ( heightOfImageFrame.toString().contains( "." ) )
+        {
+            return Integer.valueOf( heightOfImageFrame.toString().substring( 0, heightOfImageFrame.toString().indexOf( "." ) ) );
+        }
+        else
+        {
+            return Integer.valueOf( heightOfImageFrame.toString().substring( 0, heightOfImageFrame.toString().indexOf( "p" ) ) );
+        }
+
     }
 
     public boolean isZoomKnobPresent()

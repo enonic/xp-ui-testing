@@ -22,7 +22,7 @@ class ContentPublishDialog_Spec
     Content childContent1;
 
     //this is tests verifies the  "XP-3824 Unknown status displayed on the publish dialog"
-    def "GIVEN creationg of new content WHEN data typed and 'Publish' button was pressed  THEN correct status of content is displayed on the modal dialog"()
+    def "GIVEN creating of new content WHEN data typed and 'Publish' button was pressed  THEN correct status of content is displayed on the modal dialog"()
     {
         given:
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
