@@ -17,7 +17,9 @@ import java.time.temporal.ChronoUnit
 /**
  * Created on 19.12.2016.
  *
- * Tasks: XP-4682 Add selenium tests for 'Scheduled Publishing Dialog'
+ * Tasks:
+ *    XP-4682 Add selenium tests for 'Scheduled Publishing Dialog'
+ *    XP-4562 Add selenium tests for Time-based publishing
  * */
 @Stepwise
 class SchedulePublishDialog_Spec
@@ -28,6 +30,9 @@ class SchedulePublishDialog_Spec
 
     @Shared
     String testTomorrowDateTime;
+
+    @Shared
+    String TEST_ONLINE_TO_VALUE = "2016-12-31 00:00";
 
     def "GIVEN existing folder is selcted WHEN show schedule button pressed THEN 'SchedulePublishDialog' dialog displayed"()
     {
@@ -102,6 +107,7 @@ class SchedulePublishDialog_Spec
         when: "'Schedule' button was pressed"
         testTomorrowDateTime = getTomorrowDateTime();
         schedulePublishDialog.typeOnlineFrom( testTomorrowDateTime ).hideTimePickerPopup().clickOnScheduleButton();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_onlinefrom_typed" );
 
         then: "'Online(Pending)' status is displayed for the folder"
@@ -121,6 +127,21 @@ class SchedulePublishDialog_Spec
 
         and: "'Online(Pending)' status is displayed on the wizard"
         wizard.getStatus() == ContentStatus.ONLINE_PENDING.getValue();
+    }
+
+    def "GIVEN existing 'Online (Pending)' folder WHEN the content opened and 'online to' date time typed AND the content was saved THEN correct 'online to' is displayed"()
+    {
+        given: " existing 'Online (Pending)' folder"
+        findAndSelectContent( TEST_FOLDER.getName() );
+
+        when: "the content is opened"
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit()
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        and: "'online to' date time was typed and the content has been saved"
+        wizard.typeOnlineTo( TEST_ONLINE_TO_VALUE ).save();
+
+        then: "correct 'online to' is displayed"
+        wizard.getOnlineFromDateTime() == TEST_ONLINE_TO_VALUE;
     }
 
     def "GIVEN existing 'Online (Pending)' folder WHEN the folder is slected AND Unpublish menu item clicked THEN the folders is getting 'offline'"()

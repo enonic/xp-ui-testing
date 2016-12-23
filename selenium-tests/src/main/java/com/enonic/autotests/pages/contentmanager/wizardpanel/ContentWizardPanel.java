@@ -57,6 +57,9 @@ public class ContentWizardPanel
     private final String ONLINE_FROM_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
         "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" + DATA_TIME_PICKER_INPUT;
 
+    private final String ONLINE_TO_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
+        "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + DATA_TIME_PICKER_INPUT;
+
 
     private final String UNPUBLISH_MENU_ITEM =
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
@@ -97,6 +100,9 @@ public class ContentWizardPanel
 
     @FindBy(xpath = ONLINE_FROM_DATETIME_INPUT)
     private WebElement onlineFromInput;
+
+    @FindBy(xpath = ONLINE_TO_DATETIME_INPUT)
+    private WebElement onlineFromTo;
 
 
     /**
@@ -717,7 +723,24 @@ public class ContentWizardPanel
 
     public String getOnlineFromDateTime()
     {
+        if ( !isElementDisplayed( ONLINE_FROM_DATETIME_INPUT ) )
+        {
+            saveScreenshot( "err_online_from_input_not_present" );
+            throw new TestFrameworkException( "Online From input was not found!" );
+        }
         return onlineFromInput.getAttribute( "value" );
+    }
+
+    public ContentWizardPanel typeOnlineFrom( String dateTime )
+    {
+        clearAndType( onlineFromInput, dateTime );
+        return this;
+    }
+
+    public ContentWizardPanel typeOnlineTo( String dateTime )
+    {
+        clearAndType( onlineFromInput, dateTime );
+        return this;
     }
 
 }
