@@ -38,6 +38,12 @@ public class ContentWizardPanel
 {
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
+    public static final String ONLINE_TO_VALIDATION_MESSAGE = "\"Online to\" date/time must be later than \"Online from\"";
+
+    public static final String ONLINE_FROM_VALIDATION_MESSAGE = "\"Online from\" date/time must be earlier than \"Online to\"";
+
+    public static final String ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE = "'Publish from' must be set if 'Publish from' is set.";
+
     private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
 
     private final String CONTENT_STATUS = "//span[@class='content-status']/span";
@@ -59,6 +65,13 @@ public class ContentWizardPanel
 
     private final String ONLINE_TO_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
         "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + DATA_TIME_PICKER_INPUT;
+
+    private final String ONLINE_TO_INPUT_ERROR_MESSAGE = SCHEDULE_WIZARD_STEP +
+        "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + "//div[contains(@id,'ValidationRecordingViewer')]//li";
+
+    private final String ONLINE_FROM_INPUT_ERROR_MESSAGE = SCHEDULE_WIZARD_STEP +
+        "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" +
+        "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
 
     private final String UNPUBLISH_MENU_ITEM =
@@ -102,7 +115,7 @@ public class ContentWizardPanel
     private WebElement onlineFromInput;
 
     @FindBy(xpath = ONLINE_TO_DATETIME_INPUT)
-    private WebElement onlineFromTo;
+    private WebElement onlineToInput;
 
 
     /**
@@ -721,6 +734,11 @@ public class ContentWizardPanel
         return isElementDisplayed( ONLINE_FROM_DATETIME_INPUT );
     }
 
+    public boolean isOnlineToInputDisplayed()
+    {
+        return isElementDisplayed( ONLINE_TO_DATETIME_INPUT );
+    }
+
     public String getOnlineFromDateTime()
     {
         if ( !isElementDisplayed( ONLINE_FROM_DATETIME_INPUT ) )
@@ -739,8 +757,19 @@ public class ContentWizardPanel
 
     public ContentWizardPanel typeOnlineTo( String dateTime )
     {
-        clearAndType( onlineFromInput, dateTime );
+        clearAndType( onlineToInput, dateTime );
         return this;
     }
+
+    public String getOnlineToValidationMessage()
+    {
+        return getDisplayedString( ONLINE_TO_INPUT_ERROR_MESSAGE );
+    }
+
+    public String getOnlineFromValidationMessage()
+    {
+        return getDisplayedString( ONLINE_FROM_INPUT_ERROR_MESSAGE );
+    }
+
 
 }

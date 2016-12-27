@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -58,7 +57,7 @@ public class ContentUnpublishDialog
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_unpublish_dialog_not_opened" );
+            saveScreenshot( "err_unpublish_dialog_not_opened" );
             throw new TestFrameworkException( "Content unpublish dialog was not shown!" );
         }
         return this;
@@ -69,7 +68,7 @@ public class ContentUnpublishDialog
         boolean result = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "content_unpublish_not_closed" );
+            saveScreenshot( "content_unpublish_not_closed" );
         }
         return result;
     }
@@ -92,7 +91,7 @@ public class ContentUnpublishDialog
     public void clickOnUnpublishButton()
     {
         unPublishButton.click();
-        sleep( 500 );
+        sleep( 800 );
     }
 
     public void clickOnCancelBottomButton()

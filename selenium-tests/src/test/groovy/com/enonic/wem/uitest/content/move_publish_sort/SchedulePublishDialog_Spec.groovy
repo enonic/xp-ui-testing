@@ -5,14 +5,11 @@ import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.SchedulePublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.utils.TimeUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
-
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 
 /**
  * Created on 19.12.2016.
@@ -105,7 +102,7 @@ class SchedulePublishDialog_Spec
         saveScreenshot( "schedule_dlg_displayed" );
 
         when: "'Schedule' button was pressed"
-        testTomorrowDateTime = getTomorrowDateTime();
+        testTomorrowDateTime = TimeUtils.getTomorrowDateTime();
         schedulePublishDialog.typeOnlineFrom( testTomorrowDateTime ).hideTimePickerPopup().clickOnScheduleButton();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_onlinefrom_typed" );
@@ -123,7 +120,7 @@ class SchedulePublishDialog_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
 
         then: "correct 'online from' is displayed"
-        wizard.getOnlineFromDateTime() == tomorrowDateTime;
+        wizard.getOnlineFromDateTime() == testTomorrowDateTime
 
         and: "'Online(Pending)' status is displayed on the wizard"
         wizard.getStatus() == ContentStatus.ONLINE_PENDING.getValue();
@@ -137,6 +134,7 @@ class SchedulePublishDialog_Spec
         when: "the content is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit()
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+
         and: "'online to' date time was typed and the content has been saved"
         wizard.typeOnlineTo( TEST_ONLINE_TO_VALUE ).save();
 
@@ -160,12 +158,5 @@ class SchedulePublishDialog_Spec
         contentBrowsePanel.getContentStatus( TEST_FOLDER.getName() ).equals( ContentStatus.OFFLINE.getValue() );
     }
 
-    private String getTomorrowDateTime()
-    {
-        LocalDateTime today = LocalDateTime.now();
-        LocalDateTime tomorrow = today.plus( 1, ChronoUnit.DAYS );
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm" );
-        String formatDateTime = tomorrow.format( formatter );
-        return formatDateTime;
-    }
+
 }
