@@ -28,6 +28,8 @@ class ContentWizard_Publish_Inputs_Spec
         TEST_FOLDER = buildFolderContent( "schedule", "schedule inputs test" );
         addContent( TEST_FOLDER );
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
+
+        and: "'Online From' input is not displayed"
         boolean isDisplayedBeforePublish = wizard.isOnlineFromInputDisplayed();
 
         when: "'Publish' button has been pressed and the content published"
@@ -111,11 +113,10 @@ class ContentWizard_Publish_Inputs_Spec
         SchedulePublishDialog schedulePublishDialog = wizard.clickOnWizardPublishButton().clickOnShowScheduleButton();
         schedulePublishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).hideTimePickerPopup().clickOnScheduleButton();
 
-
         then: "status is getting 'Offline'"
         wizard.waitStatus( ContentStatus.ONLINE_PENDING, Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_wizard_online_pending" )
     }
-    //TODO add tests foe Online (Expired), when  https://youtrack.enonic.net/issue/INBOX-615 will be fixed
+    //TODO add tests for Online (Expired), when  https://youtrack.enonic.net/issue/INBOX-615 will be fixed
 
 }
