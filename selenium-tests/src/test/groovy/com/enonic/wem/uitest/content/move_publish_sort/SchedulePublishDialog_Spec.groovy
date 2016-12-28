@@ -31,7 +31,7 @@ class SchedulePublishDialog_Spec
     @Shared
     String TEST_ONLINE_TO_VALUE = "2016-12-31 00:00";
 
-    def "GIVEN existing folder is selcted WHEN show schedule button pressed THEN 'SchedulePublishDialog' dialog displayed"()
+    def "GIVEN existing folder is selected WHEN show schedule button pressed THEN 'SchedulePublishDialog' dialog displayed"()
     {
         given: "existing folder in root"
         TEST_FOLDER = buildFolderContent( "folder", "schedule dialog" );
@@ -93,7 +93,7 @@ class SchedulePublishDialog_Spec
         schedulePublishDialog.getValidationMessage() == Application.REQUIRED_MESSAGE;
     }
 
-    def "GIVEN SchedulePublish dialog is opened AND 'online from' is Tomorrow WHEN 'Schedule' button has been pressed THEN correct status is displayed"()
+    def "GIVEN SchedulePublish dialog is opened AND 'online from' is Tomorrow WHEN 'Schedule' button has been pressed THEN status 'Online (Pending)' is displayed"()
     {
         given: "SchedulePublish dialog is opened AND 'online from' is empty"
         findAndSelectContent( TEST_FOLDER.getName() )
@@ -142,7 +142,7 @@ class SchedulePublishDialog_Spec
         wizard.getOnlineFromDateTime() == TEST_ONLINE_TO_VALUE;
     }
 
-    def "GIVEN existing 'Online (Pending)' folder WHEN the folder is slected AND Unpublish menu item clicked THEN the folders is getting 'offline'"()
+    def "GIVEN existing 'Online (Pending)' folder WHEN the folder is selected AND Unpublish menu item clicked THEN the folders is getting 'offline'"()
     {
 
         given: "existing 'Online (Pending)' folder"
