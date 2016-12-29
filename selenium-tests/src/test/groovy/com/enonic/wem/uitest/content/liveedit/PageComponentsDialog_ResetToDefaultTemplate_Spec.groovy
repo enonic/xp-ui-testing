@@ -61,7 +61,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     }
 
 
-    def "GIVEN opened a site in wizard AND one component was replaced WHEN root element in page component dialog was selected and 'Reset' menu item selected THEN site should be reset to default template"()
+    def "GIVEN the site is opened AND one image was replaced WHEN root element in page component dialog was selected and 'Reset' menu item selected THEN site should be reset to default template"()
     {
         given: "site opened for edit  and site saved"
         filterPanel.typeSearchText( SITE.getName() )
@@ -69,19 +69,18 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
         saveScreenshot( "image-from-template" );
 
-        and: "and one component was replaced"
+        and: "and an image has been removed"
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
         pageComponentsView.openMenu( IMAGE_DISPLAY_NAME_FOR_TEMPLATE ).selectMenuItem( "Remove" );
-
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
 
-        and: "new image inserted"
+        and: "and new image inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE );
 
-        and: "wizard saved"
+        and: "the content is saved"
         wizard.save();
         saveScreenshot( "new-image-set" );
 
