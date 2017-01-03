@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -40,7 +39,7 @@ class Publish_InvalidContent_Spec
     {
         given:
         filterPanel.typeSearchText( invalidFolder.getName() );
-        TestUtils.saveScreenshot( getSession(), "invalid_folder" )
+        saveScreenshot( "publish_invalid_folder" )
 
         when: "parent content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );

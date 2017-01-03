@@ -21,7 +21,7 @@ public class ContentPublishDialog
 
     public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
 
-    public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid content(s) prevent publish";
+    public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid item(s) prevent publish";
 
     public static final String DIALOG_TITLE = "Publishing Wizard";
 

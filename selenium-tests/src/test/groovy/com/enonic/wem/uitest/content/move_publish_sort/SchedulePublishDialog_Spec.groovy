@@ -29,7 +29,7 @@ class SchedulePublishDialog_Spec
     String testTomorrowDateTime;
 
     @Shared
-    String TEST_ONLINE_TO_VALUE = "2016-12-31 00:00";
+    String TEST_ONLINE_TO_VALUE = "2116-12-31 00:00";
 
     def "GIVEN existing folder is selected WHEN show schedule button pressed THEN 'SchedulePublishDialog' dialog displayed"()
     {
@@ -139,7 +139,7 @@ class SchedulePublishDialog_Spec
         wizard.typeOnlineTo( TEST_ONLINE_TO_VALUE ).save();
 
         then: "correct 'online to' is displayed"
-        wizard.getOnlineFromDateTime() == TEST_ONLINE_TO_VALUE;
+        wizard.getOnlineToDateTime() == TEST_ONLINE_TO_VALUE;
     }
 
     def "GIVEN existing 'Online (Pending)' folder WHEN the folder is selected AND Unpublish menu item clicked THEN the folders is getting 'offline'"()

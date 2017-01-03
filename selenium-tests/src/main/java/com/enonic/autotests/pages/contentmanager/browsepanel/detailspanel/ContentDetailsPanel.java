@@ -95,6 +95,7 @@ public class ContentDetailsPanel
 
     public AllContentVersionsView openVersionHistory()
     {
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
         {
             widgetSelectorDropDownHandler.click();

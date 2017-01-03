@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -136,6 +137,12 @@ public class ItemSetViewPanel
     @Override
     public void clickOnAddButton()
     {
+        boolean isClickable = waitUntilClickableNoException( By.xpath( ADD_ITEM_SET_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isClickable )
+        {
+            saveScreenshot( "err_item_set_add_button" );
+            throw new TestFrameworkException( "Add set button is not clickable!" );
+        }
         addItemSetButton.click();
         sleep( 500 );
     }

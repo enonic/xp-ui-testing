@@ -749,6 +749,16 @@ public class ContentWizardPanel
         return onlineFromInput.getAttribute( "value" );
     }
 
+    public String getOnlineToDateTime()
+    {
+        if ( !isElementDisplayed( ONLINE_TO_DATETIME_INPUT ) )
+        {
+            saveScreenshot( "err_online_to_input_not_present" );
+            throw new TestFrameworkException( "Online to input was not found!" );
+        }
+        return onlineToInput.getAttribute( "value" );
+    }
+
     public ContentWizardPanel typeOnlineFrom( String dateTime )
     {
         clearAndType( onlineFromInput, dateTime );
