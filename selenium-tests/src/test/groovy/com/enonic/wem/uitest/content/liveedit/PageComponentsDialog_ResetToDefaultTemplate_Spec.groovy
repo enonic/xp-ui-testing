@@ -18,6 +18,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     String SITE_WITH_COMPONENTS_NAME = "page-component-reset";
 
     @Shared
+    String PAGE_CONTROLLER_NAME = "Country Region";
+
+    @Shared
     Content SITE;
 
     @Shared
@@ -86,7 +89,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
         when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
         wizard.showComponentView();
-        pageComponentsView.openMenu( "country template" ).selectMenuItem( "Reset" );
+        pageComponentsView.openMenu( PAGE_CONTROLLER_NAME ).selectMenuItem( "Reset" );
         sleep( 4000 );
         saveScreenshot( "image-reset-to-template" );
 
