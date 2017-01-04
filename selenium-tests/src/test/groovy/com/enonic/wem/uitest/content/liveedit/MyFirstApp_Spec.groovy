@@ -53,6 +53,7 @@ class MyFirstApp_Spec
         when: "a child country-content of the site is opened for edit"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
+        saveScreenshot( "button_show_page_editor_displayed" )
 
         then: "'Show Page Editor' button should be present on the toolbar"
         wizard.isShowPageEditorButtonDisplayed();
