@@ -76,8 +76,8 @@ class Site_With_TemplatePageComponentDialog_Spec
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
 
-        when: "menu-button clicked"
-        dialog.openMenu( PAGE_TEMPLATE.getDisplayName() );
+        when: "'Country Region' item has been clicked and the context menu shown "
+        dialog.openMenu( COUNTRY_REGION_PAGE_CONTROLLER );
         ItemViewContextMenu contextMenu = new ItemViewContextMenu( getSession() );
 
         then: "context menu is displayed"

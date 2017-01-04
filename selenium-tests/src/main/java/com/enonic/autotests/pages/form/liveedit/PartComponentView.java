@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -26,14 +25,14 @@ public class PartComponentView
     {
         if ( !isElementDisplayed( COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_opt_filter" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_opt_filter" ) );
             throw new TestFrameworkException( "option filter input was not displayed" );
         }
         getDisplayedElement( By.xpath( COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) ).sendKeys( partName );
         sleep( 400 );
         if ( !isPartExists( partName ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_" + partName ) );
+            saveScreenshot( NameHelper.uniqueName( "err_" + partName ) );
             throw new TestFrameworkException( "The part with name: " + partName + "  was not found!" );
         }
         clickOnOptionsItem( partName );

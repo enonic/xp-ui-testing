@@ -79,7 +79,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
 
-        and: "and new image inserted"
+        and: "and new image was inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE );
 
@@ -93,7 +93,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         sleep( 4000 );
         saveScreenshot( "image-reset-to-template" );
 
-        then: "site has been reset to default template, image from template appeared in the page editor"
+        then: "site has been reset to default template, image from the template appeared in the page editor"
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
