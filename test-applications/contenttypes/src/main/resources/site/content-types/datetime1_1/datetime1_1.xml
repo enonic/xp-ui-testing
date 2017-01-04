@@ -11,10 +11,7 @@
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
       <occurrences minimum="1" maximum="1"/>
-      <config>
-        <with-timezone>true</with-timezone>
-      </config>
-      <help-text>..that's the question!</help-text>
+      <help-text>required DateTime</help-text>
     </input>
   </form>
 </content-type>

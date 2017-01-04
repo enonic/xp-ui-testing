@@ -369,6 +369,37 @@ class Base_InputFields_Occurrences
         return dateContent;
     }
 
+    protected Content buildAttachment1_1_Content( String attachmentName )
+    {
+        String name = "date";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( AttachmentsFormView.ATTACHMENT_PROPERTY, attachmentName );
+
+        Content attachmentContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "attachment content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":attachment1_1" ).data( data ).
+            build();
+        return attachmentContent;
+    }
+
+    protected Content buildAttachment2_4_Content( String... attachmentNames )
+    {
+        String name = "date";
+        PropertyTree data = new PropertyTree();
+        data.addStrings( AttachmentsFormView.ATTACHMENT_PROPERTY, attachmentNames );
+
+        Content attachmentsContent = Content.builder().
+            name( NameHelper.uniqueName( name ) ).
+            displayName( "attachments content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":attachment2_4" ).data( data ).
+            build();
+        return attachmentsContent;
+    }
+
+
     protected Content buildDateTime0_1_Content( String dateTime )
     {
         String name = "datetime";

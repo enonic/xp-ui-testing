@@ -11,9 +11,6 @@
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
       <occurrences minimum="0" maximum="1"/>
-      <config>
-        <with-timezone>true</with-timezone>
-      </config>
       <help-text>date Time</help-text>
     </input>
   </form>

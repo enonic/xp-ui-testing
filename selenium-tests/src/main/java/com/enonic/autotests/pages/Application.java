@@ -122,6 +122,8 @@ public class Application
 
     public static String REQUIRED_MESSAGE = "This field is required";
 
+    public static String MIN_OCCURRENCES_REQUIRED_MESSAGE = "Min %s occurrences required";
+
     public Application( TestSession session )
     {
         super( session );
