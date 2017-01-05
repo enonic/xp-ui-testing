@@ -29,22 +29,21 @@ class TextComponent_MceToolbar_Spec
     @Shared
     String TEST_TEXT = "test text";
 
-    def "GIVEN existing site with selected controller WHEN text component inserted THEN mce-toolbar appears AND all buttons are present"()
+    def "GIVEN Page Components View is opened WHEN text component inserted THEN mce-toolbar appears AND all buttons are present"()
     {
-        given:
+        given: "Page Components View is opened"
         SITE = buildSimpleSiteApp();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
             SITE ).selectPageDescriptor( MAIN_REGION_PAGE_DESCRIPTOR_NAME ).save();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "new site should be present"
+        when: "new text component inserted"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEST_TEXT );
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
         saveScreenshot( "mce_toolbar_should_be_displayed" );
-
 
         then: "mce toolbar is displayed"
         mceToolbar.isDisplayed();
@@ -69,7 +68,6 @@ class TextComponent_MceToolbar_Spec
 
         and: "'Numbered List' menu is displayed on the toolbar"
         mceToolbar.isNumListButtonDisplayed();
-
 
         and: "'Decrease Indent' menu is displayed on the toolbar"
         mceToolbar.isOutdentButtonDisplayed();
@@ -102,7 +100,7 @@ class TextComponent_MceToolbar_Spec
         mceToolbar.isSourceCodeButtonDisplayed();
     }
 
-    def "GIVEN existing text component  WHEN the component right-clicked AND 'Edit' menu item was selected AND 'Source Code' button clicked THEN Source Code window is opened"()
+    def "GIVEN existing text-component WHEN the component right-clicked AND 'Edit' menu item was selected AND 'Source Code' button clicked THEN Source Code window is opened"()
     {
         given: "existing text component"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();

@@ -8,6 +8,10 @@ import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/*
+Tasks
+ XP-4746 Add selenium test to verify XP-4698
+ */
 @Stepwise
 class Occurrences_HtmlArea_0_1_Spec
     extends Base_InputFields_Occurrences
@@ -24,7 +28,6 @@ class Occurrences_HtmlArea_0_1_Spec
 
     def "GIVEN creating of content with html-area WHEN link with norwegian text typed THEN correct string is present in the text area "()
     {
-
         given: "creating of content with html-area"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
@@ -109,5 +112,42 @@ class Occurrences_HtmlArea_0_1_Spec
 
         then: "text area is empty"
         htmlAreaFormViewPanel.getInnerHtml() == BaseHtmlAreaFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
+    }
+    // verifies the XP-4698
+    def "GIVEN Insert Link modal dialog is opened WHEN the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog "()
+    {
+        given: "'Insert Link' modal dialog is opened "
+        Content htmlAreaContent = buildHtmlArea0_1_Content( null );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
+        wizard.typeData( htmlAreaContent );
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
+
+        when: "the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed"
+        modalDialog.clickURLBarItem().typeText( "" ).typeURL( "http://enonic.com" ).pressInsertButton();
+        saveScreenshot( "validation_msg_text" );
+
+        then: "validation message for the input appears"
+        modalDialog.isValidationMessageForTextInputDisplayed();
+
+        and: "correct message is displayed"
+        modalDialog.getValidationMessageForTextInput() == InsertLinkModalDialog.VALIDATION_MESSAGE;
+    }
+    // verifies the XP-4698
+    def "GIVEN Insert Link modal dialog is opened WHEN the Text has been typed but the required 'URL' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog "()
+    {
+        given: "'Insert Link' modal dialog is opened "
+        Content htmlAreaContent = buildHtmlArea0_1_Content( null );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
+        wizard.typeData( htmlAreaContent );
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
+
+        when: "the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed"
+        modalDialog.clickURLBarItem().typeText( "test" ).typeURL( "" ).pressInsertButton();
+        saveScreenshot( "validation_msg_url" );
+
+        then: "validation message for the input appears"
+        modalDialog.isValidationMessageForUrlInputDisplayed();
     }
 }

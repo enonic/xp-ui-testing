@@ -13,6 +13,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class InsertLinkModalDialog
     extends Application
 {
+    public static String VALIDATION_MESSAGE = "This field is required";
+
     private final String CONTAINER = "//div[contains(@id,'LinkModalDialog')]";
 
     private final String URL_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Url']]//input[@type='text']";
@@ -22,6 +24,14 @@ public class InsertLinkModalDialog
     private final String EMAIL_SUBJECT_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Subject']]//input[@type='text']";
 
     private final String LINK_TEXT_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Text']]//input[@type='text']";
+
+    private final String LINK_TEXT_FIELDSET = CONTAINER + "//fieldset[contains(id,'Fieldset') and child::label[text()='Text']]";
+
+    private final String LINK_TEXT_VALIDATION_MESSAGE =
+        "//div[contains(@id,'FormItem') and child::label[text()='Text']]/.." + VALIDATION_RECORDING_VIEWER;
+
+    private final String LINK_URL_VALIDATION_MESSAGE =
+        "//div[contains(@id,'FormItem') and child::label[text()='Url']]/.." + VALIDATION_RECORDING_VIEWER;
 
     private final String BAR_ITEM_URL = CONTAINER + String.format( TAB_BAR_ITEM, "URL" );
 
@@ -34,10 +44,25 @@ public class InsertLinkModalDialog
     private final String INSERT_OR_UPDATE_BUTTON =
         CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Insert' or text()='Update']]";
 
-
     public InsertLinkModalDialog( TestSession session )
     {
         super( session );
+    }
+
+    public boolean isValidationMessageForTextInputDisplayed()
+    {
+        return isElementDisplayed( By.xpath( LINK_TEXT_VALIDATION_MESSAGE ) );
+    }
+
+    public boolean isValidationMessageForUrlInputDisplayed()
+    {
+        return isElementDisplayed( By.xpath( LINK_URL_VALIDATION_MESSAGE ) );
+    }
+
+
+    public String getValidationMessageForTextInput()
+    {
+        return getDisplayedString( LINK_TEXT_VALIDATION_MESSAGE );
     }
 
     public InsertLinkModalDialog clickURLBarItem()
