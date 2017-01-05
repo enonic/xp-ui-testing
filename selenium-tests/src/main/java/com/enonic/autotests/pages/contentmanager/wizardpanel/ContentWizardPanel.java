@@ -42,7 +42,7 @@ public class ContentWizardPanel
 
     public static final String ONLINE_FROM_VALIDATION_MESSAGE = "\"Online from\" date/time must be earlier than \"Online to\"";
 
-    public static final String ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE = "'Publish from' must be set if 'Publish from' is set.";
+    public static final String ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE = "[Online to] date/time cannot be set without [Online from]";
 
     private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
 
