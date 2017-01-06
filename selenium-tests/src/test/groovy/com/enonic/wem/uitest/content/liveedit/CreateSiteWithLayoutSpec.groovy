@@ -14,11 +14,11 @@ import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-@Stepwise
 /*
 one test for task " XP-4368 Add tests to verify the XP-4367'
-
  */
+
+@Stepwise
 class CreateSiteWithLayoutSpec
     extends BaseContentSpec
 {
@@ -53,23 +53,25 @@ class CreateSiteWithLayoutSpec
     @Shared
     String TEXT_COMPONENT_TEXT = "test text";
 
-    def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be present"()
+    def "GIVEN creating new Site based on 'Simple site'  WHEN saved and wizard closed THEN new site should be listed int he grid"()
     {
         given:
         SITE = buildSimpleSiteApp();
-        when: "data typed and saved and wizard closed"
+
+        when: "data was typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
             SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "new site should be present"
+        then: "new site should be listed in the grid"
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN existing site, based on 'Simple site' app WHEN site expanded and templates folder selected AND page-template added  THEN new template should be present in a 'Templates' folder"()
+    def "GIVEN existing site, based on 'Simple site' app WHEN site was expanded and templates folder selected AND page-template added  THEN new template should be present in a 'Templates' folder"()
     {
-        given:
+        given: " existing site"
         pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME, SUPPORTS, SITE_DISPLAY_NAME, SITE.getName() );
         filterPanel.typeSearchText( SITE.getName() );
+        and: "the site is expanded"
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
 
         when: "'Templates' folder selected and new page-template added"
@@ -91,13 +93,12 @@ class CreateSiteWithLayoutSpec
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "'Insert/Text' menu items clicked and text typed"
+        when: "Menu is opened AND 'Insert/Text' menu items clicked and text typed"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         saveScreenshot( "select_insert_text" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( TEXT_COMPONENT_TEXT );
-        //switchToContentStudioWindow();
         getDriver().switchTo().defaultContent();
         pageComponentsView.doCloseDialog();
         wizard.save();
@@ -111,46 +112,49 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getTextFromTextComponent().equals( TEXT_COMPONENT_TEXT );
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout present on the live edit frame"()
+    def "GIVEN 'Page Components' opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout should be present on the live edit frame"()
     {
-        given: "'Page Components' opened"
+        given: "site is opened and 'Page Components' opened as well"
         ContentWizardPanel wizardPanel = findAndSelectContent( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
-        when: "menu for the region is opened and layout with 3 columns has been selected"
+        when: "menu is opened and 'Layout' menu item has been selected"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Layout" );
         saveScreenshot( "select_insert_layout" );
         pageComponentsView.doCloseDialog();
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+
+        and: "layout with 3 columns has been inserted"
         liveFormPanel.getLayoutComponentView().selectLayout( LAYOUT_NAME );
         saveScreenshot( "page_editor_layout_selected" );
 
-        then: "layout-component appears in the 'live edit' frame and number of regions is 3"
+        then: "layout-component should appear in the 'live edit' frame and number of regions should be 3"
         liveFormPanel.isLayoutComponentPresent();
+
         and: "tree column present in layout"
         liveFormPanel.getLayoutColumnNumber() == 3;
     }
 
     def "GIVEN existing site with the layout WHEN site selected AND published with its children THEN site has 'online' status on the wizard page"()
     {
-        given: "existing site with the layout"
+        given: "existing site with the layout is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit().waitUntilWizardOpened()
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        when: "site selected AND published with its children"
+        when: "site selected AND was published with its children"
         ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
 
-        then: "modal dialog is closed"
+        then: "modal dialog should be closed"
         modalDialog.waitForDialogClosed();
 
         and: "correct status is displayed on the wizard-page"
         wizard.getStatus() == ContentStatus.ONLINE.getValue();
     }
 
-    def "'Page Components' opened WHEN menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image in the left region inserted"()
+    def "GIVEN page-template is opened and 'Page Components' is shown WHEN menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image should be present in the left region"()
     {
-        given: "'Page Components' opened"
+        given: "template is opened and 'Page Components' is shown"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel templateWizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = templateWizard.showComponentView();
@@ -167,7 +171,7 @@ class CreateSiteWithLayoutSpec
         String statusAfterInsertingImage = templateWizard.getStatus();
         saveScreenshot( "image_in_left_inserted" );
 
-        then: "new image inserted in the left-region "
+        then: "new image should be present in the left-region "
         templateWizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 1;
@@ -176,9 +180,9 @@ class CreateSiteWithLayoutSpec
         statusAfterInsertingImage == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'center region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image inserted in the center-region "()
+    def "GIVEN template is opened and 'Page Components' is shown WHEN menu for 'center region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image should be present in the center-region "()
     {
-        given: "'Page Components' opened"
+        given: "template is opened and 'Page Components' is shown"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
@@ -194,15 +198,15 @@ class CreateSiteWithLayoutSpec
         wizard.save();
         saveScreenshot( "center_region_inserted" );
 
-        then: "new image inserted in the center-region "
+        then: "new image should be present in the center-region "
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'right region' is opened and 'insert' menu-item selected AND 'image'-item is clicked THEN new image is displayed on the right-region"()
+    def "GIVEN 'Page Components' opened WHEN menu for 'right region' is opened and 'insert' menu-item selected AND 'image'-item is clicked THEN new image should be displayed on the right-region"()
     {
-        given: "'Page Components' opened"
+        given: "template is opened and 'Page Components' is shown"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
@@ -218,7 +222,7 @@ class CreateSiteWithLayoutSpec
         wizard.save();
         saveScreenshot( "right_region_inserted" );
 
-        then: "new image is displayed on the right-region"
+        then: "new image should be displayed on the right-region"
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 3;

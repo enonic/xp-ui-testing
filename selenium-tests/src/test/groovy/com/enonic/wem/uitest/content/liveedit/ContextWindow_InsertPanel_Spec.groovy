@@ -14,7 +14,7 @@ class ContextWindow_InsertPanel_Spec
     @Shared
     Content TEST_SITE;
 
-    def "GIVEN creating of new site WHEN page controller is not selected THEN toggler buttons 'Components View' and 'Inspection Panel' are not displayed"()
+    def "GIVEN creating of new site WHEN page controller is not selected THEN toggler buttons 'Components View' and 'Inspection Panel' should not be displayed"()
     {
         given: "creating of new site"
         TEST_SITE = buildMyFirstAppSite( "test-insert-panel" );
@@ -24,31 +24,30 @@ class ContextWindow_InsertPanel_Spec
             TEST_SITE ).save();
         saveScreenshot( "test-site-controller-not-selected" );
 
-        then: "'Components View' toggler is not displayed"
+        then: "'Components View' toggler should not be displayed"
         !wizardPanel.isComponentViewTogglerDisplayed();
 
-        and: "'Inspection Panel' toggler is not displayed"
+        and: "'Inspection Panel' toggler should not be displayed"
         !wizardPanel.isInspectionPanelTogglerDisplayed()
     }
 
-    def "GIVEN existing site without selected page controller WHEN page controller is  selected THEN toggler buttons 'Components View' and 'Inspection Panel' are displayed"()
+    def "GIVEN existing site without selected page controller WHEN page controller is  selected THEN toggler buttons for 'Components View' and 'Inspection Panel' should be displayed"()
     {
-        given: "creating of new site"
+        given: "existing site without selected page controller is opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
         when: "page controller is not selected"
         siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
         saveScreenshot( "test-site-controller-selected" );
 
-        then: "'Components View' toggler is not displayed"
+        then: "'Components View' toggler should be displayed"
         siteWizard.isComponentViewTogglerDisplayed();
 
-        and: "'Inspection Panel' toggler is not displayed"
+        and: "'Inspection Panel' toggler should be displayed"
         siteWizard.isInspectionPanelTogglerDisplayed()
-
     }
 
-    def "GIVEN 'Page Editor' opened WHEN 'Insert' link clicked THEN 'Insertables' panel is displayed AND all available components are present on the panel"()
+    def "GIVEN existing site is opened WHEN 'Insert' link clicked THEN 'Insertables' panel is displayed AND all available components should be present on the panel"()
     {
         given: "'Page Editor' for the existing site opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
@@ -65,22 +64,22 @@ class ContextWindow_InsertPanel_Spec
         and: "correct number of components are shown"
         components.size() == 5
 
-        and: "'Image' component are present"
+        and: "'Image' component is present"
         components.contains( "Image" );
 
-        and: "'Part' component are present"
+        and: "'Part' component is present"
         components.contains( "Part" );
 
-        and: "'Layout' component are present"
+        and: "'Layout' component is present"
         components.contains( "Layout" );
 
-        and: "'Text' component are present"
+        and: "'Text' component is present"
         components.contains( "Text" );
 
-        and: "'Fragment' component are present"
+        and: "'Fragment' component is present"
         components.contains( "Fragment" );
 
-        and: "correct description displayed"
+        and: "correct description is displayed"
         insertablesPanel.getTitle() == ContextWindowPageInsertablesPanel.TITLE
     }
 

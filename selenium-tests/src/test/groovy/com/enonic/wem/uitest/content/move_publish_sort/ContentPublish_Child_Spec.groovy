@@ -5,10 +5,13 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * verifies the "XP-4628 Add correct notification messages, when a parent folder with children has been removed or published"  will be fixed
+ *
+ * */
 @Stepwise
 class ContentPublish_Child_Spec
     extends BaseContentSpec
@@ -132,8 +135,7 @@ class ContentPublish_Child_Spec
         //and: "correct notification message is displayed"
         // message == "1 items is deleted. 2 items are marked for deletion.";
     }
-    //TODO  remove it when the "XP-4628 Add correct notification messages, when a parent folder with children has been removed or published"  will be fixed
-    @Ignore
+    //verifies the "XP-4628 Add correct notification messages, when a parent folder with children has been removed or published"  will be fixed
     def "GIVEN existing parent folder with one child and status of both contents are 'PENDING_DELETE' WHEN parent folder selected and 'Publish' button pressed THEN parent folder not listed"()
     {
         when:

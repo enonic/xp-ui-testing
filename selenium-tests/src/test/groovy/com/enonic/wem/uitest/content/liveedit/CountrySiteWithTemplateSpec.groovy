@@ -167,7 +167,7 @@ class CountrySiteWithTemplateSpec
 
     }
 
-    def "WHEN site not published yet WHEN site opened in 'master', through the portal THEN '404' present in the sources"()
+    def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' present in the sources"()
     {
         given: "site not published and opened in the 'master'"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -179,7 +179,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "404" );
     }
 
-    def "WHEN site not published yet AND site opened in 'draft', through the portal THEN correct data present in page sources"()
+    def "WHEN site is not published yet AND site opened in 'draft', through the portal THEN correct data is present in page sources"()
     {
         when: "site not published and opened in the 'master'"
         openResourceInDraft( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -194,7 +194,7 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    def "WHEN site have been published  AND site opened through the portal THEN correct data present in page sources"()
+    def "WHEN site has been published AND site opened through the portal THEN correct data present in page sources"()
     {
         given: "site have been 'published'"
         filterPanel.typeSearchText( SITE.getName(), );
@@ -246,18 +246,18 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
 
-    def "GIVEN existing country content WHEN content opened for edit and 'Page Component View' shown THEN all components that were added are shown"()
+    def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all components that were added should be shown"()
     {
-        given: "existing country content"
+        given: "existing country content is opened"
         ContentWizardPanel wizard = findAndSelectContent( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.showPageEditor();
-        when: "content opened for edit and 'Page Component View' shown"
+
+        when: "'Page Component View' is opened"
         wizard.showComponentView();
         PageComponentsViewDialog view = new PageComponentsViewDialog( getSession() );
         List<PageComponent> components = view.getPageComponents();
         saveScreenshot( "order-components" )
 
-        then: "all components that were added are shown"
+        then: "all components that were added should be shown"
         components.size() == 4;
 
         and:

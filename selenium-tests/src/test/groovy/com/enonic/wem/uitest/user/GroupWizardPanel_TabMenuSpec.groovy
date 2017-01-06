@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.WizardPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 
 class GroupWizardPanel_TabMenuSpec
@@ -13,36 +12,38 @@ class GroupWizardPanel_TabMenuSpec
     @Shared
     String GROUP_TAB_TITLE = "<Unnamed Group>"
 
-    def "WHEN started adding a 'system Group' and Wizard opened  THEN list of items with one name 'New Group' is present"()
+    def "WHEN 'System' folder, is expanded AND 'Grpoup' is selcted AND 'New' button has been pressed THEN new tab with the name 'New Role' is added "()
     {
-        when: "'Groups' folder,that located beneath a 'System' folder, was selected, the 'New' button pressed  and group wizard opened"
+        when: "'System' folder, is expanded"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        TestUtils.saveScreenshot( getTestSession(), "system_exp" );
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
+        saveScreenshot( "system_folder_expanded" );
+
+        and: "'Group' folder is selected AND 'New' button has been pressed"
+        userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        then: "item with title 'New Role' is present "
+        then: "new tab with name 'New Role' is added "
         userBrowsePanel.isTabMenuItemPresent( GROUP_TAB_TITLE );
     }
 
-    def "GIVEN Group Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
+    def "GIVEN Group Wizard is opened, no any data typed WHEN 'close' button has been clicked THEN wizard closed and BrowsePanel is shown"()
     {
-        given: "group wizard was opened ad AppBarTabMenu clicked"
+        given: "group wizard is opened"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "no any data typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.close( GROUP_TAB_TITLE );
-        TestUtils.saveScreenshot( getTestSession(), "grw_close1" );
+        saveScreenshot( "gr_wizard_closed" );
 
         then: "close dialog should not be showed"
         dialog == null;
     }
 
-    def "GIVEN Group Wizard opened and name is typed WHEN TabmenuItem(close) clicked THEN 'SaveBeforeClose' dialog showed"()
+    def "GIVEN Group Wizard opened and name has been typed WHEN 'close' button pressed THEN 'SaveBeforeClose' dialog should appear"()
     {
-        given: "group Wizard opened and name is typed"
+        given: "group Wizard opened and name has been typed"
         String displayName = "testname";
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
@@ -50,9 +51,9 @@ class GroupWizardPanel_TabMenuSpec
 
         when: "'Close' button clicked"
         SaveBeforeCloseDialog dialog = wizard.close( displayName );
-        TestUtils.saveScreenshot( getTestSession(), "grw_close2" );
+        saveScreenshot( "gr_wizard_closed2" );
 
-        then: "'SaveBeforeClose' dialog showed"
+        then: "'SaveBeforeClose' dialog should appear"
         dialog != null;
     }
 }

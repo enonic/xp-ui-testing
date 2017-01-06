@@ -49,11 +49,11 @@ class LoginUserSpec
 
     def "setup: add a test user to the system user store"()
     {
-        setup: "add a user"
+        setup: "'Users' app is opened"
         go "admin"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
 
-        and: "start adding a new user"
+        and: "User-wizard is opened"
         String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CM_APP.getValue()];
         USER_ADMIN_CONSOLE = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( USER_PASSWORD ).roles(
             roles.toList() ).build();

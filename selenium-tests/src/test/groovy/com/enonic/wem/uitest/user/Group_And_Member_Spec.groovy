@@ -20,9 +20,9 @@ class Group_And_Member_Spec
     User TEST_USER;
 
 
-    def "WHEN system group saved THEN new group present in a System Store "()
+    def "WHEN system group has been added THEN new group is listed in a System User Store "()
     {
-        when: "group saved and wizard closed"
+        when: "new group added and wizard was closed"
         GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
         TEST_GROUP = buildGroup( "group", "group-for-user", "description" );
         groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
@@ -34,7 +34,7 @@ class Group_And_Member_Spec
         userBrowsePanel.exists( TEST_GROUP.getName() );
     }
 
-    def "WHEN user with role saved THEN user is searchable and displayed in a grid"()
+    def "WHEN 'User'-wizard is opened WHEN the data was typed AND wizard was closed THEN user is searchable and it displayed in a grid"()
     {
         given: "start adding a new user"
         List<String> groups = new ArrayList<>();
@@ -42,32 +42,32 @@ class Group_And_Member_Spec
         TEST_USER = buildUserWithRolesAndGroups( "user", "password", null, groups );
         UserWizardPanel userWizardPanel = openSystemUserWizard();
 
-        when: "data typed and user saved"
+        when: "data typed and user saved and the wizard was closed"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );
 
-        then: "new user present beneath a store"
+        then: "new user listed beneath the system user store"
         userBrowseFilterPanel.typeSearchText( TEST_USER.getDisplayName() );
         userBrowsePanel.exists( TEST_USER.getDisplayName() );
     }
 
-    def "WHEN user was added to a group and this group opened THEN correct display name of user is shown on members-form"()
+    def "WHEN existing user was added to a group and this group is opened THEN correct display name of user is shown on members-form"()
     {
-        when: "user was added to a group and this group opened"
+        when: "the group has been selected and opened"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
         saveScreenshot( "group-with-user" );
 
-        then: "correct display name of user is shown on members-form"
+        then: "correct display name of user is displayed on the  members-form"
         List<String> members = groupWizardPanel.getMembersDisplayNames();
         members.get( 0 ) == TEST_USER.getDisplayName();
     }
 
-    def "GIVEN existing group with a user WHEN group selected in browse panel THEN correct member displayed in statistics panel "()
+    def "GIVEN existing group with a user WHEN group is selected in browse panel THEN correct member displayed in statistics panel "()
     {
         given: "existing group with a user"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
 
-        when: "group selected in browse panel"
+        when: "group is selected in browse panel"
         userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() );
         GroupStatisticsPanel groupStatisticsPanel = new GroupStatisticsPanel( getSession() );
 
@@ -76,9 +76,9 @@ class Group_And_Member_Spec
 
     }
 
-    def "GIVEN a group with a member WHEN this group opened AND member was removed AND group saved THEN member not displayed in form"()
+    def "GIVEN existing a group with a member WHEN this group opened AND member was removed AND group saved THEN member not displayed in form"()
     {
-        given: "a group with a member"
+        given: "existing a group with a member"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
         saveScreenshot( "group-with-member" );
@@ -86,7 +86,7 @@ class Group_And_Member_Spec
         when: "member was removed AND group saved"
         groupWizardPanel.removeMember( TEST_USER.getDisplayName() ).save();
 
-        then: "member not displayed in form"
+        then: "member not displayed in the form"
         List<String> members = groupWizardPanel.getMembersDisplayNames();
         saveScreenshot( "member-removed" );
         members.size() == 0;

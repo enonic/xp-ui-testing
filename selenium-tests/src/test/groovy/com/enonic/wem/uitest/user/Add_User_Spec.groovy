@@ -14,53 +14,55 @@ class Add_User_Spec
     @Shared
     User USER;
 
-
-    def "GIVEN start adding a new user WHEN data typed and password is empty and 'Save' button pressed THEN error notification message appears"()
+    def "GIVEN 'System' was expanded AND 'User' is selected  and 'New' pressed WHEN user-data typed but the  password is empty and 'Save' button pressed THEN error notification message should appear"()
     {
-        given: "start adding a new user"
+        given: "'System' was expanded AND 'User' is selected"
         User userEmptyPassword = buildUser( "user", null );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        when: "data typed and user saved"
+        when: "user-data typed but the  password is empty and 'Save' button pressed"
         String errorMessage = userWizardPanel.typeData( userEmptyPassword ).save().waitNotificationError( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "user_error_mess" );
+        saveScreenshot( "user_error_message1" );
 
-        then: "new user present beneath a system store"
+        then: "error notification message should appear"
         errorMessage == UserWizardPanel.PASSWORD_ERROR_MESSAGE;
     }
 
-    def "GIVEN start adding a new user WHEN data typed  and 'Save' button pressed THEN notification message appears and user listed in the grid"()
+    def "GIVEN start adding a new user WHEN data typed  and 'Save' button pressed THEN correct notification message is displayed and user listed in the grid"()
     {
-        given: "start adding a new user"
+        given: "'System' was expanded AND 'User' is selected  and 'New' pressed"
         USER = buildUser( "user", "password" );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        when: "data typed and user saved"
+        when: "correct user-data is typed and 'Save' button pressed"
         String creatingMessage = userWizardPanel.typeData( USER ).save().waitNotificationMessage();
+
+        and: "'Close' button has been pressed"
         userWizardPanel.close( USER.getDisplayName() );
         def isWizardOpened = userWizardPanel.isOpened();
         saveScreenshot( "user_saved" );
 
-        then: "new user present beneath a store"
+        then: "wizard should be closed "
         !isWizardOpened;
-        and: "user present beneath a store"
+
+        and: "the user should be listed"
         userBrowseFilterPanel.typeSearchText( USER.getDisplayName() );
         userBrowsePanel.exists( USER.getDisplayName(), true );
 
-        and: "correct notification message appears"
+        and: "correct notification message is displayed"
         creatingMessage == USER_CREATED_MESSAGE;
     }
 
-    def "GIVEN a existing user WHEN user filtered and selected and deleted THEN correct notification message appears and user not listed"()
+    def "GIVEN existing user WHEN user filtered and selected and 'Delete' button was pressed THEN correct notification message appears and user not listed"()
     {
-        given: "user filtered"
+        given: "user's name is typed in the filter input"
         userBrowseFilterPanel.typeSearchText( USER.getDisplayName() );
 
-        when: "data typed and user saved"
+        when: "user is selected and 'Delete' button has been pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( USER.getDisplayName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( 2l );
         saveScreenshot( "user_removed_message" );
@@ -68,15 +70,16 @@ class Add_User_Spec
         userBrowsePanel.expandUsersFolder( "system" );
         saveScreenshot( "user_removed" );
 
-        then: "removed user not present beneath a 'Users' folder"
+        then: "the user not listed in the grid"
         !userBrowsePanel.exists( USER.getDisplayName(), true );
-        and: "correct notification message appears"
+
+        and: "correct notification message is displayed"
         message == String.format( USER_DELETING_NOTIFICATION_MESSAGE, USER.getDisplayName() );
     }
 
     def "GIVEN adding of a new user WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
     {
-        given: "start adding a new user"
+        given: "'System' was expanded AND 'User' is selected  and 'New' pressed"
         User refreshWizardUser = buildUser( "user", "password" );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
@@ -84,13 +87,15 @@ class Add_User_Spec
 
         when: "data typed and user saved"
         userWizardPanel.typeData( refreshWizardUser ).save().waitNotificationMessage();
+
+        and: "page has been refreshed in the browser"
         userBrowsePanel.refreshPanelInBrowser();
         saveScreenshot( "user_wizard_refreshed" );
 
         then: "wizard is opened"
         userWizardPanel.isOpened();
 
-        and: "correct display name displayed"
+        and: "correct display name is displayed"
         userWizardPanel.getNameInputValue() == refreshWizardUser.getDisplayName();
     }
 }

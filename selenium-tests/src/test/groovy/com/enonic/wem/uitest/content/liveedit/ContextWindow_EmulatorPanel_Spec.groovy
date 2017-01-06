@@ -31,13 +31,13 @@ class ContextWindow_EmulatorPanel_Spec
 
     def "GIVEN creating of new site WHEN When context window opened and Emulator link clicked THEN Emulator panel is activated AND correct title displayed"()
     {
-        given: "creating of new site"
+        given: "new site is added"
         TEST_SITE = buildMyFirstAppSite( "emulator_panel" );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
             TEST_SITE ).save();
         siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
 
-        when: "When context window opened and Emulator link clicked"
+        when: "When context window opened and 'Emulator' link has been clicked"
         siteWizard.showContextWindow().clickOnEmulatorLink();
         ContextWindowPageEmulatorPanel emulatorPanel = new ContextWindowPageEmulatorPanel( getSession() );
         saveScreenshot( "emulator-panel-activated" );
@@ -45,16 +45,16 @@ class ContextWindow_EmulatorPanel_Spec
         then: "emulator panel is displayed"
         emulatorPanel.isDisplayed();
 
-        and: "correct title displayed on the panel"
+        and: "correct title is displayed"
         emulatorPanel.getTitle() == ContextWindowPageEmulatorPanel.TITLE;
 
-        and: "correct title displayed on the panel"
+        and: "8 available resolutions are present"
         emulatorPanel.getAvailableResolutions().size() == 8;
     }
 
-    def "GIVEN Emulator Panel opened WHEN resolution changed THEN correct size of frame applied"()
+    def "GIVEN Emulator Panel opened WHEN resolution changed THEN correct size of frame is applied"()
     {
-        given: " Emulator Panel opened "
+        given: "Emulator Panel is opened "
         ContentWizardPanel wizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
         wizard.showContextWindow().clickOnEmulatorLink();
         ContextWindowPageEmulatorPanel emulatorPanel = new ContextWindowPageEmulatorPanel( getSession() );
@@ -70,9 +70,9 @@ class ContextWindow_EmulatorPanel_Spec
         wizard.getHeightOfPageEditor() == MEDIUM_HEIGHT;
     }
 
-    def "GIVEN Emulator Panel opened WHEN resolution changed to LARGE_TELEPHONE THEN correct size of frame applied"()
+    def "GIVEN Emulator Panel is opened WHEN resolution changed to LARGE_TELEPHONE THEN correct size of frame is applied"()
     {
-        given: " Emulator Panel opened "
+        given: "Emulator Panel is opened "
         ContentWizardPanel wizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
         wizard.showContextWindow().clickOnEmulatorLink();
         ContextWindowPageEmulatorPanel emulatorPanel = new ContextWindowPageEmulatorPanel( getSession() );
