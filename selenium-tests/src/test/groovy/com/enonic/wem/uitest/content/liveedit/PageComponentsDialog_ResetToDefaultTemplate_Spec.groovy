@@ -79,11 +79,11 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
 
-        and: "and new image was inserted"
+        and: "new image was inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( TEST_IMAGE );
 
-        and: "the content is saved"
+        and: "the content was saved"
         wizard.save();
         saveScreenshot( "new-image-set" );
 

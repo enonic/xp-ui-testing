@@ -32,7 +32,7 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( SIT_NAME );
     }
 
-    def "GIVEN existing site WHEN site selected and opened for edit THEN 'Page Editor' shown and buttons 'Show Component view'  'Show Inspection panel' are not visible"()
+    def "GIVEN existing site WHEN site was selected and opened for edit THEN 'Page Editor' shown and buttons 'Show Component view'  'Show Inspection panel' should not be visible"()
     {
         given: "add a site, based on the test application"
         filterPanel.typeSearchText( SIT_NAME );
@@ -65,7 +65,7 @@ class LiveEditLockedMode_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
-        then: "new page-template listed"
+        then: "new page-template should be listed"
         filterPanel.typeSearchText( template.getName() );
         contentBrowsePanel.exists( template.getName() );
     }
@@ -82,18 +82,18 @@ class LiveEditLockedMode_Spec
         wizard.isLiveEditLocked();
     }
 
-    def "WHEN site opened for edit AND 'Page Editor' is shown AND right button clicked on the frame THEN context menu for page appears"()
+    def "WHEN site opened for edit AND 'Page Editor' is shown AND right button clicked on the frame THEN context menu for the page should appear"()
     {
         when: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
-        then: "context menu for page appears"
+        then: "context menu for the page should appear"
         itemViewContextMenu.isOpened();
     }
 
-    def "GIVEN site opened for edit WHEN the 'Customize' menu item selected THEN LiveEdit not locked"()
+    def "GIVEN site opened for edit WHEN the 'Customize' menu item selected THEN LiveEdit should not be locked"()
     {
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
@@ -104,7 +104,7 @@ class LiveEditLockedMode_Spec
         itemViewContextMenu.clickOnCustomizeMenuItem();
         wizard.switchToDefaultWindow();
 
-        then: "LiveEdit not locked"
+        then: "LiveEdit should not be locked"
         !wizard.isLiveEditLocked();
     }
 

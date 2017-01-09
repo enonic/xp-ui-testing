@@ -27,7 +27,7 @@ class Site_Publish_Spec
     @Shared
     String TEST_TEXT = "test text";
 
-    def "GIVEN creating new Site with selected controller WHEN site has been published THEN 'Online' status is displayed in the grid"()
+    def "GIVEN creating of the new Site with a controller WHEN site has been published THEN 'Online' status should be displayed in the grid"()
     {
         given: "data typed and saved and wizard closed"
         SITE = buildMyFirstAppSite( "site" );
@@ -37,7 +37,7 @@ class Site_Publish_Spec
         when: "site has been published"
         findAndSelectContent( SITE.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
 
-        then: "'Online' status is displayed in the grid"
+        then: "'Online' status should be displayed in the grid"
         contentBrowsePanel.getContentStatus( SITE.getName() ) == ContentStatus.ONLINE.getValue();
     }
 
@@ -55,7 +55,7 @@ class Site_Publish_Spec
         wizard.switchToDefaultWindow();
         pageComponentsView.doCloseDialog();
 
-        and: "site saved in the wizard"
+        and: "site was saved in the wizard"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
@@ -74,7 +74,7 @@ class Site_Publish_Spec
         pageComponentsView.openMenu( TEST_TEXT ).selectMenuItem( "Remove" );
         pageComponentsView.doCloseDialog();
 
-        and: "site saved in the wizard"
+        and: "site was saved in the wizard"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
@@ -82,16 +82,16 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN display name changed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'online' site WHEN display name was changed THEN status on the wizard-page is getting 'Modified'"()
     {
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
 
-        when: "display name changed"
+        when: "display name was changed"
         wizard.typeDisplayName( "new name" )
 
-        and: "site saved in the wizard"
+        and: "site was saved in the wizard"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
@@ -99,19 +99,19 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN language changed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'online' site WHEN language was changed THEN status on the wizard-page is getting 'Modified'"()
     {
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
         saveScreenshot( "site_published_in_wizard" );
 
-        when: "language changed"
+        when: "language was changed"
         SettingsWizardStepForm settings = wizard.clickOnSettingsTabLink();
         settings.waitUntilDisplayed();
         settings.selectLanguage( ENGLISH_LANGUAGE );
 
-        and: "site saved in the wizard"
+        and: "site was saved in the wizard"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
@@ -119,14 +119,14 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN new part inserted THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'online' site WHEN new part was inserted THEN status on the wizard-page is getting 'Modified'"()
     {
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "new part inserted"
+        when: "new part was inserted"
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Part" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();

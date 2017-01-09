@@ -645,6 +645,7 @@ public class ContentBrowsePanel
         switchToContentWizardTabBySelectedContent();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         wizard.setInLiveEditFrame( false );
         return wizard;
     }

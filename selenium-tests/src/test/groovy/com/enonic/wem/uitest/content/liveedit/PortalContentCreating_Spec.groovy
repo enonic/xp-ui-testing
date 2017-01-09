@@ -52,6 +52,8 @@ class PortalContentCreating_Spec
 
         and: "site expanded"
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
+
+        and: "new template with the controller should be added"
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_COUNTRY, TEMPLATE_DISPLAY_NAME,
                                            SITE.getName() );
 

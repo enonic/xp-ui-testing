@@ -48,7 +48,6 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
 
         then: "only two items are listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;
-
     }
 
     def "WHEN two selected application THEN two SelectionItem-s with the same name are listed"()
