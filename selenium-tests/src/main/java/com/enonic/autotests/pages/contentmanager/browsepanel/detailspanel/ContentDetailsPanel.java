@@ -107,7 +107,9 @@ public class ContentDetailsPanel
         }
         getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION ) ).click();
         sleep( 700 );
-        return new AllContentVersionsView( getSession() );
+        AllContentVersionsView versions = new AllContentVersionsView( getSession() );
+        versions.waitUntilLoaded();
+        return versions;
     }
 
     public ContentInfoWidget openInfoWidget()
