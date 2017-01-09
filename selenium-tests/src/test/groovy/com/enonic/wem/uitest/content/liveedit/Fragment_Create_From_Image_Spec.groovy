@@ -6,13 +6,16 @@ import com.enonic.autotests.pages.form.liveedit.ComponentMenuItems
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 /**
  * Created on 05.01.2017.
  *
  * Task: XP-4814 Add selenium tests for creating of fragment from an image
  * */
+@Stepwise
 class Fragment_Create_From_Image_Spec
     extends BaseContentSpec
 {
@@ -134,6 +137,12 @@ class Fragment_Create_From_Image_Spec
 
         then: "the fragment should not be present on the Component View"
         fragments.size() == 0;
+    }
+
+    @Ignore
+    def "GIVEN page component view is opened WHEN 'main' region is selcted AND fragment component has been inserted THEN the fragment should be present in the Component View"()
+    {
+
     }
 
     private String buildFragmentName( String resourceDisplayName )
