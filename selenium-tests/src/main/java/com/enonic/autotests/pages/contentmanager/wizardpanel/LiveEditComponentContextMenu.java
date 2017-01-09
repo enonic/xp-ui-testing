@@ -72,4 +72,15 @@ public class LiveEditComponentContextMenu
         getDisplayedElement( By.xpath( EDIT_MENU_ITEM ) ).click();
         sleep( 300 );
     }
+
+    public void clickOnCreateFragment()
+    {
+        if ( !isElementDisplayed( CREATE_FRAGMENT_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_edit_menu_item" );
+            throw new TestFrameworkException( "Edit menu item was not found!" );
+        }
+        getDisplayedElement( By.xpath( CREATE_FRAGMENT_MENU_ITEM ) ).click();
+        sleep( 300 );
+    }
 }

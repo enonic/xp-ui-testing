@@ -157,7 +157,7 @@ public class Application
         if ( !result )
         {
             saveScreenshot( NameHelper.uniqueName( "err_spinner" ) );
-            throw new TestFrameworkException( "after a" + EXPLICIT_NORMAL + " seconds, spinner still present" );
+            throw new TestFrameworkException( "after a" + timeout + " seconds, spinner still present" );
         }
     }
 

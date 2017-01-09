@@ -36,6 +36,8 @@ public class LiveFormPanel
 
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
+    private final String FRAGMENT_COMPONENT_VIEW = "//div[contains(@id,'FragmentComponentView')]";
+
     private LayoutComponentView layoutComponentView;
 
     private MceToolbar mceToolbar;
@@ -116,6 +118,11 @@ public class LiveFormPanel
     public boolean isTextComponentPresent()
     {
         return isElementDisplayed( TEXT_COMPONENT_VIEW );
+    }
+
+    public long getNumberOfFragments()
+    {
+        return getNumberOfElements( By.xpath( FRAGMENT_COMPONENT_VIEW ) );
     }
 
     public String getTextFromTextComponent()

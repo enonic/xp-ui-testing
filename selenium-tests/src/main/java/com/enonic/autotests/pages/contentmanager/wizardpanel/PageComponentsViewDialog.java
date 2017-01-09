@@ -26,10 +26,15 @@ public class PageComponentsViewDialog
 
     public final String DIALOG_CONTAINER = "//div[contains(@id,'PageComponentsView')]";
 
+    public final String COMPONENT_VIEWER = "//div[contains(@id,'PageComponentsItemViewer')]";
+
     public final String COMPONENTS_GRID = "//div[contains(@id,'PageComponentsTreeGrid')]";
 
-    private String COMPONENT_ITEM =
-        DIALOG_CONTAINER + "//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name')  and text()='%s']]";
+    private String COMPONENT_ITEM = DIALOG_CONTAINER + COMPONENTS_GRID +
+        "//div[contains(@id,'PageComponentsItemViewer') and descendant::h6[contains(@class,'main-name')  and text()='%s']]";
+
+    private String FRAGMENT_DISPLAY_NAMES = DIALOG_CONTAINER +
+        "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" + H6_DISPLAY_NAME;
 
     public final String CLOSE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'CloseButton')]";
 
@@ -50,6 +55,11 @@ public class PageComponentsViewDialog
         return isElementDisplayed( DIALOG_CONTAINER );
     }
 
+    public List<String> getFragmentDisplayNames()
+    {
+        return getDisplayedStrings( By.xpath( FRAGMENT_DISPLAY_NAMES ) );
+    }
+
     public ItemViewContextMenu showItemViewContextMenu()
     {
         Actions builder = new Actions( getDriver() );
@@ -60,10 +70,7 @@ public class PageComponentsViewDialog
 
     public PageComponentsViewDialog openMenu( String componentName )
     {
-        String menuButton = String.format( COMPONENTS_GRID +
-                                               "//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name')  and text()='%s']]//div[@class='menu-icon']",
-                                           componentName );
-
+        String menuButton = String.format( COMPONENT_ITEM + "/../..//div[@class='menu-icon']", componentName );
         if ( !isElementDisplayed( menuButton ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err-comp_view_menu" ) );
@@ -74,6 +81,13 @@ public class PageComponentsViewDialog
         return this;
     }
 
+    /**
+     * Navigates in the Context Menu and selects a menu item
+     * This method should be called after the 'openMenu'
+     *
+     * @param items item or path to the menu item
+     * @return {@link PageComponentsViewDialog instance}
+     */
     public PageComponentsViewDialog selectMenuItem( String... items )
     {
         for ( int i = 0; i < items.length; i++ )
@@ -87,6 +101,11 @@ public class PageComponentsViewDialog
             sleep( 500 );
         }
         return this;
+    }
+
+    public boolean isMenuItemPresent( String menuItem )
+    {
+        return isElementDisplayed( String.format( CONTEXT_MENU_ITEM, menuItem ) );
     }
 
     public String getTextFromHeader()
@@ -129,10 +148,8 @@ public class PageComponentsViewDialog
     public List<PageComponent> getPageComponents()
     {
         List<PageComponent> result = new ArrayList<>();
-        List<String> names = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT +
-                                                                "//div[contains(@id,'PageComponentsItemViewer')]" + H6_MAIN_NAME ) );
-        List<String> types = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT +
-                                                                "//div[contains(@id,'PageComponentsItemViewer')]" + P_NAME ) );
+        List<String> names = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT + COMPONENT_VIEWER + H6_MAIN_NAME ) );
+        List<String> types = getDisplayedStrings( By.xpath( DIALOG_CONTAINER + SLICK_VIEW_PORT + COMPONENT_VIEWER + P_NAME ) );
         for ( int i = 0; i < names.size(); i++ )
         {
             result.add( PageComponent.builder().name( names.get( i ) ).type( types.get( i ) ).build() );
@@ -147,7 +164,7 @@ public class PageComponentsViewDialog
         if ( !isElementDisplayed( sourceItem ) || !isElementDisplayed( targetItem ) )
         {
             throw new TestFrameworkException(
-                "PageComponentsViewDialog: drag and drop failed. items were not found: " + sourceName + " " + targetName );
+                "PageComponentsView: swap is failed. Items were not found: " + sourceName + " " + targetName );
         }
         WebElement source = findElement( By.xpath( sourceItem ) );
         WebElement target = findElement( By.xpath( targetItem ) );
