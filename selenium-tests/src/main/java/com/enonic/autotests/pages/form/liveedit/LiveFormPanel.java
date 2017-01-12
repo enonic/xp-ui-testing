@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.RichComboBoxInput;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.LiveEditComponentContextMenu;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -123,6 +124,15 @@ public class LiveFormPanel
     public long getNumberOfFragments()
     {
         return getNumberOfElements( By.xpath( FRAGMENT_COMPONENT_VIEW ) );
+    }
+
+    public LiveFormPanel selectFragment( String fragmentDisplayName )
+    {
+        WebElement optionFilterInput = findElement( By.xpath( FRAGMENT_COMPONENT_VIEW + COMBOBOX_OPTION_FILTER_INPUT ) );
+        clearAndType( optionFilterInput, fragmentDisplayName );
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        richComboBoxInput.selectOption( fragmentDisplayName );
+        return this;
     }
 
     public String getTextFromTextComponent()

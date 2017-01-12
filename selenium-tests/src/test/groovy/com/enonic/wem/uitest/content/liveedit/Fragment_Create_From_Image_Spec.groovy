@@ -1,19 +1,22 @@
 package com.enonic.wem.uitest.content.liveedit
 
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ComponentMenuItems
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
+import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Created on 05.01.2017.
  *
- * Task: XP-4814 Add selenium tests for creating of fragment from an image
+ * Tasks:
+ *   XP-4814 Add selenium tests for creating of fragment from an image
+ *   XP-4851 Add selenium tests for checking of outbound, inbound dependencies (Image Fragment)
  * */
 @Stepwise
 class Fragment_Create_From_Image_Spec
@@ -42,7 +45,7 @@ class Fragment_Create_From_Image_Spec
         wizard.showComponentView();
         pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( "Create Fragment" );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
-        sleep( 700 );
+        sleep( 1000 );
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( HAND_IMAGE_DISPLAY_NAME );
         saveScreenshot( "fragment_wizard" );
 
@@ -112,6 +115,7 @@ class Fragment_Create_From_Image_Spec
         when: "page component view opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
         pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.EDIT_IN_NEW_TAB.getValue() );
+        sleep( 500 );
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( HAND_IMAGE_DISPLAY_NAME );
         saveScreenshot( "fragment_edit_in_new_tab" );
 
@@ -120,6 +124,52 @@ class Fragment_Create_From_Image_Spec
 
         and: "Fragment step should be present on the wizard-page"
         wizard.isWizardStepPresent( "Fragment" );
+    }
+
+    def "GIVEN existing image-fragment is selected WHEN Dependencies Section is opened AND Inbound button has been pressed THEN the parent site should be filtered in the grid"()
+    {
+        given: "existing image-fragment is filtered"
+        contentBrowsePanel.doShowFilterPanel();
+        filterPanel.selectContentTypeInAggregationView( "Fragment" );
+
+        and: "the fragment has been selected"
+        contentBrowsePanel.clickCheckboxAndSelectRow( "hand" );
+
+        when: "Dependencies Section is opened"
+        DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
+
+        and: "'Show Inbound' button has been pressed"
+        dependencies.clickOnShowInboundButton();
+        List<String> names = contentBrowsePanel.getContentNamesFromGrid();
+
+        then: "only one inbound dependency should be filtered"
+        names.size() == 1;
+
+        and: "correct name of the inbound dependency should be displayed"
+        names.get( 0 ).contains( SITE.getName() );
+    }
+
+    def "GIVEN existing image-fragment is selected WHEN Dependencies Section is opened AND Outbound button has been pressed THEN the correct image should be filtered in the grid"()
+    {
+        given: "existing image-fragment is filtered"
+        contentBrowsePanel.doShowFilterPanel();
+        filterPanel.selectContentTypeInAggregationView( "Fragment" );
+
+        and: "the fragment has been selected"
+        contentBrowsePanel.clickCheckboxAndSelectRow( "hand" );
+
+        when: "Dependencies Section is opened"
+        DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
+
+        and: "'Show Inbound' button has been pressed"
+        dependencies.clickOnShowOutboundButton();
+        List<String> names = contentBrowsePanel.getContentNamesFromGrid();
+
+        then: "only one inbound dependency should be filtered"
+        names.size() == 1;
+
+        and: "correct name of the outbound dependency should be displayed"
+        names.get( 0 ).contains( "hand" );
     }
 
     def "GIVEN page component view is opened WHEN the fragment is selected AND 'Remove' menu item has been selected THEN the fragment should be removed from the Component View"()
@@ -134,16 +184,36 @@ class Fragment_Create_From_Image_Spec
         pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.REMOVE.getValue() );
         List<String> fragments = pageComponentsView.getFragmentDisplayNames();
         saveScreenshot( "fragment_was_removed" );
+        wizard.save();
 
         then: "the fragment should not be present on the Component View"
         fragments.size() == 0;
     }
 
-    @Ignore
-    def "GIVEN page component view is opened WHEN 'main' region is selcted AND fragment component has been inserted THEN the fragment should be present in the Component View"()
+    def "GIVEN page component view is opened WHEN 'main' region is selected AND fragment component has been inserted THEN the fragment should be present on the the page"()
     {
+        given: "existing site with the fragment, that was removed, is opened"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+
+        and: "Page Component View is opened"
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
+
+
+        when: "root component in the  view is selected AND Insert Fragment menu item has been clicked"
+        pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Fragment" );
+        pageComponentsView.doCloseDialog();
+        saveScreenshot( "fragment_inserted_in_component_view" );
+        wizard.switchToLiveEditFrame();
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+
+        and: "existing fragment has been selected in the options menu"
+        liveFormPanel.selectFragment( "hand" );
+
+        then: "new added fragment is present on the page"
+        liveFormPanel.getNumberOfFragments() == 1;
 
     }
+
 
     private String buildFragmentName( String resourceDisplayName )
     {
