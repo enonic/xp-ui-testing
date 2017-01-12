@@ -25,6 +25,9 @@ class Fragment_Create_From_Image_Spec
     @Shared
     Content SITE;
 
+    @Shared
+    String FRAGMENT_DISPLAY_NAME = HAND_IMAGE_DISPLAY_NAME;
+
     def "GIVEN Page Component View is opened AND image component is inserted WHEN click on the image-component and 'create fragment' menu item is selected THEN fragment-wizard is opened in the new browser tab"()
     {
         given: "Page Components View is opened"
@@ -133,7 +136,7 @@ class Fragment_Create_From_Image_Spec
         filterPanel.selectContentTypeInAggregationView( "Fragment" );
 
         and: "the fragment has been selected"
-        contentBrowsePanel.clickCheckboxAndSelectRow( "hand" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( FRAGMENT_DISPLAY_NAME );
 
         when: "Dependencies Section is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
@@ -156,7 +159,7 @@ class Fragment_Create_From_Image_Spec
         filterPanel.selectContentTypeInAggregationView( "Fragment" );
 
         and: "the fragment has been selected"
-        contentBrowsePanel.clickCheckboxAndSelectRow( "hand" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( FRAGMENT_DISPLAY_NAME );
 
         when: "Dependencies Section is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
@@ -169,7 +172,7 @@ class Fragment_Create_From_Image_Spec
         names.size() == 1;
 
         and: "correct name of the outbound dependency should be displayed"
-        names.get( 0 ).contains( "hand" );
+        names.get( 0 ).contains( HAND_IMAGE_DISPLAY_NAME );
     }
 
     def "GIVEN page component view is opened WHEN the fragment is selected AND 'Remove' menu item has been selected THEN the fragment should be removed from the Component View"()
@@ -207,11 +210,10 @@ class Fragment_Create_From_Image_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
 
         and: "existing fragment has been selected in the options menu"
-        liveFormPanel.selectFragment( "hand" );
+        liveFormPanel.selectFragment( FRAGMENT_DISPLAY_NAME );
 
         then: "new added fragment is present on the page"
         liveFormPanel.getNumberOfFragments() == 1;
-
     }
 
 
