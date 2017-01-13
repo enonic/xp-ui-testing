@@ -130,7 +130,7 @@ class Restore_Version_Site_Spec
         saveScreenshot( "app_removed_from_wizard" );
         and: "the site saved"
         wizard.save();
-        sleep( 500 );
+        sleep( 1000 );
 
         and: "navigated to the tab with the Grid"
         wizard.switchToBrowsePanelTab();
