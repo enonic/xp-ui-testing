@@ -126,6 +126,12 @@ public class LiveFormPanel
         return getNumberOfElements( By.xpath( FRAGMENT_COMPONENT_VIEW ) );
     }
 
+    public long getNumberOfColumnInFragment()
+    {
+        String columns = FRAGMENT_COMPONENT_VIEW + "//div[contains(@class,'col-sm')]";
+        return getNumberOfElements( By.xpath( columns ) );
+    }
+
     public LiveFormPanel selectFragment( String fragmentDisplayName )
     {
         WebElement optionFilterInput = findElement( By.xpath( FRAGMENT_COMPONENT_VIEW + COMBOBOX_OPTION_FILTER_INPUT ) );

@@ -41,13 +41,13 @@ class ApplicationBrowsePanel_GridPanel_Spec
     {
         given:
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getTestSession(), "app_spacebartest1" );
+        saveScreenshot( "app_spacebartest1" );
 
         when:
         applicationBrowsePanel.findRowByDisplayNameAndSendKey( FIRST_APP_DISPLAY_NAME, Keys.SPACE );
 
         then:
-        TestUtils.saveScreenshot( getTestSession(), "app_spacebartest2" );
+        saveScreenshot( "app_spacebartest2" );
         applicationBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
@@ -85,7 +85,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
         when:
         applicationBrowsePanel.pressKeyOnRow( 0, Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_down_module" );
+        saveScreenshot( "arrow_down_app" );
         Set<String> namesAfter = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
 
@@ -104,7 +104,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
         when:
         applicationBrowsePanel.pressKeyOnRow( 3, Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "module_arrow_up" );
+        saveScreenshot( "app_arrow_up" );
         Set<String> namesAfter = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
         then:
@@ -119,7 +119,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
         when: "arrow down typed 3 times"
         applicationBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "app_arrow_down_shift" );
+        saveScreenshot( "app_arrow_down_shift" );
 
         then: "n+1 rows are selected in the browse panel"
         applicationBrowsePanel.getDisplayNamesOfSelectedGridItems().size() == 4
@@ -133,7 +133,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
         when: "arrow up typed 3 times"
         applicationBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );
-        TestUtils.saveScreenshot( getTestSession(), "app_arrow_up_shift" );
+        saveScreenshot( "app_arrow_up_shift" );
 
         then: "n+1 rows are selected in the browse panel"
         applicationBrowsePanel.getDisplayNamesOfSelectedGridItems().size() == 4

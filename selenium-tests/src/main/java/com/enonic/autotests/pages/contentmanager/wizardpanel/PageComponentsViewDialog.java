@@ -33,6 +33,9 @@ public class PageComponentsViewDialog
     private String COMPONENT_ITEM = DIALOG_CONTAINER + COMPONENTS_GRID +
         "//div[contains(@id,'PageComponentsItemViewer') and descendant::h6[contains(@class,'main-name')  and text()='%s']]";
 
+    private String LAYOUT_BY_DISPLAY_NAME = DIALOG_CONTAINER +
+        "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-layout')]]" + NAMES_VIEW_BY_DISPLAY_NAME;
+
     private String FRAGMENT_DISPLAY_NAMES = DIALOG_CONTAINER +
         "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" + H6_DISPLAY_NAME;
 
@@ -170,6 +173,19 @@ public class PageComponentsViewDialog
         WebElement target = findElement( By.xpath( targetItem ) );
         TestUtils.dragAndDrop( getDriver(), source, target );
         sleep( 1000 );
+        return this;
+    }
+
+    public PageComponentsViewDialog clickOnLayout( String layoutDisplayName )
+    {
+        String xpath = String.format( LAYOUT_BY_DISPLAY_NAME, layoutDisplayName );
+        if ( !isElementDisplayed( xpath ) )
+        {
+            saveScreenshot( "layout was not found" );
+            throw new TestFrameworkException( "layout was not found: " + layoutDisplayName );
+
+        }
+        getDisplayedElement( By.xpath( xpath ) ).click();
         return this;
     }
 }

@@ -215,11 +215,4 @@ class Fragment_Create_From_Image_Spec
         then: "new added fragment is present on the page"
         liveFormPanel.getNumberOfFragments() == 1;
     }
-
-
-    private String buildFragmentName( String resourceDisplayName )
-    {
-        return "fragment-" + resourceDisplayName;
-    }
-
 }
