@@ -512,4 +512,9 @@ class BaseContentSpec
             build();
         return content;
     }
+
+    protected String buildFragmentName( String resourceDisplayName )
+    {
+        return "fragment-" + resourceDisplayName;
+    }
 }
