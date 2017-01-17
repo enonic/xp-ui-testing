@@ -162,7 +162,7 @@ public class NewContentDialog
      *
      * @return true if dialog opened, otherwise false.
      */
-    public boolean waitUntilDialogShowed( long timeout )
+    public boolean waitUntilDialogLoaded( long timeout )
     {
         return waitUntilVisibleNoException( By.xpath( DIALOG_TITLE_XPATH ), timeout );
     }

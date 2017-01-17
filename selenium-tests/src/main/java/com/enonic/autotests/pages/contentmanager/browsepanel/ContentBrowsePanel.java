@@ -140,6 +140,60 @@ public class ContentBrowsePanel
         return this;
     }
 
+    /**
+     * Keyboard shortcut to open the 'New content' dialog
+     *
+     * @param itemName
+     */
+    public void pressNewContentKeyboardShortcut( String itemName )
+    {
+        buildActions().sendKeys( Keys.chord( Keys.ALT, "n" ) ).build().perform();
+        sleep( 500 );
+    }
+
+    /**
+     * Keyboard shortcut to 'Edit selected content'
+     */
+    public ContentWizardPanel pressEditSelectedContentKeyboardShortcut()
+    {
+        String os = System.getProperty( "os.name" ).toLowerCase();
+
+        if ( os.indexOf( "mac" ) >= 0 )
+        {
+            buildActions().sendKeys( Keys.chord( Keys.COMMAND, "e" ) ).build().perform();
+        }
+        else
+        {
+            buildActions().sendKeys( Keys.chord( Keys.CONTROL, "e" ) ).build().perform();
+        }
+        switchToContentWizardTabBySelectedContent();
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        waitInvisibilityOfSpinner( Application.EXPLICIT_LONG );
+        wizard.setInLiveEditFrame( false );
+        return wizard;
+    }
+
+    /**
+     * Keyboard shortcut to 'Delete selected content'
+     */
+    public DeleteContentDialog pressDeleteSelectedContentKeyboardShortcut()
+    {
+        String os = System.getProperty( "os.name" ).toLowerCase();
+
+        if ( os.indexOf( "mac" ) >= 0 )
+        {
+            buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.DELETE ) ).build().perform();
+        }
+        else
+        {
+            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.DELETE ) ).build().perform();
+        }
+        DeleteContentDialog deleteContentDialog = new DeleteContentDialog( getSession() );
+        return deleteContentDialog;
+    }
+
+
     public ContentPublishDialog selectPublishTreeMenuItem()
     {
         showPublishMenu();
@@ -531,7 +585,7 @@ public class ContentBrowsePanel
         newButton.click();
         sleep( 500 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        boolean isLoaded = newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        boolean isLoaded = newContentDialog.waitUntilDialogLoaded( Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
             throw new TestFrameworkException( "NewContentDialog dialog was not loaded!" );
@@ -662,6 +716,7 @@ public class ContentBrowsePanel
     public ContentWizardPanel switchToBrowserTabByTitle( String contentDisplayName )
     {
         NavigatorHelper.switchToBrowserTabByTitle( getSession(), contentDisplayName );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return new ContentWizardPanel( getSession() );
     }
 
@@ -860,7 +915,7 @@ public class ContentBrowsePanel
         }
         getDisplayedElement( By.xpath( newMenuItem ) ).click();
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
-        newContentDialog.waitUntilDialogShowed( Application.EXPLICIT_NORMAL );
+        newContentDialog.waitUntilDialogLoaded( Application.EXPLICIT_NORMAL );
         return newContentDialog;
     }
 

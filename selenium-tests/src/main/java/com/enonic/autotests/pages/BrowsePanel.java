@@ -220,8 +220,7 @@ public abstract class BrowsePanel
         sleep( 500 );
         String rowXpath = String.format( NAMES_VIEW_BY_NAME, itemName );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
-        Actions builder = new Actions( getDriver() );
-        builder.doubleClick( findElement( By.xpath( rowXpath ) ) ).build().perform();
+        buildActions().doubleClick( findElement( By.xpath( rowXpath ) ) ).build().perform();
         sleep( 500 );
     }
 
