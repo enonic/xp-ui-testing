@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -134,6 +135,52 @@ public class ContentWizardPanel
         sleep( 400 );
         return this;
     }
+
+    /**
+     * Keyboard shortcut to 'Edit selected content'
+     */
+    public ContentWizardPanel pressSaveKeyboardShortcut()
+    {
+        String os = System.getProperty( "os.name" ).toLowerCase();
+
+        if ( os.indexOf( "mac" ) >= 0 )
+        {
+            buildActions().sendKeys( Keys.chord( Keys.COMMAND, "s" ) ).build().perform();
+        }
+        else
+        {
+            buildActions().sendKeys( Keys.chord( Keys.CONTROL, "s" ) ).build().perform();
+        }
+        return this;
+    }
+
+    /**
+     * Keyboard shortcut to 'Save and close'  Ctrl+Enter  or Cmd+Enter
+     */
+    public ContentWizardPanel pressSaveAndCloseKeyboardShortcut()
+    {
+        String os = System.getProperty( "os.name" ).toLowerCase();
+
+        if ( os.indexOf( "mac" ) >= 0 )
+        {
+            buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.ENTER ) ).build().perform();
+        }
+        else
+        {
+            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.ENTER ) ).build().perform();
+        }
+        return this;
+    }
+
+    /**
+     * Keyboard shortcut to 'Close'  Alt+W
+     */
+    public ContentWizardPanel pressCloseKeyboardShortcut()
+    {
+        buildActions().sendKeys( Keys.chord( Keys.ALT, "w" ) ).build().perform();
+        return this;
+    }
+
 
     public boolean isPublishMenuAvailable()
     {
@@ -271,7 +318,7 @@ public class ContentWizardPanel
     public ContentWizardPanel typeData( Content content )
     {
         // 1. type a data: 'name' and 'Display Name'.
-        waitElementClickable( By.name( "displayName" ), 2 );
+        //waitUntilElementEnabledNoException( By.name( "displayName" ), 2 );
         if ( content.getDisplayName() != null )
         {
             getLogger().info( "types displayName: " + content.getDisplayName() );
