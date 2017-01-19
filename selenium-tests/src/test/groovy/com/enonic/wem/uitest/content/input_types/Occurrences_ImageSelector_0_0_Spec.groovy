@@ -8,6 +8,11 @@ import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks:
+ * XP-4893 Add selenium test to verify the XP-4863
+ * Verifies XP-4863 Content Wizard - Mod+S won't save content when image selector has focus
+ * */
 @Stepwise
 class Occurrences_ImageSelector_0_0_Spec
     extends Base_InputFields_Occurrences
@@ -15,30 +20,30 @@ class Occurrences_ImageSelector_0_0_Spec
     @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
-    def "GIVEN saving of Image Selector-content (0:0) and two image selected WHEN content opened for edit THEN correct images present on page "()
+    def "GIVEN saving of Image Selector-content (0:0) and two image selected WHEN content opened for edit THEN correct images should be present on the page "()
     {
-        given: "new content with type Image Selector 0:0 added'"
+        given: "new content with type Image Selector 0:0 was added'(2 images were selected)"
         Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
             imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> images = formViewPanel.getSelectedImages();
 
-        then: "two images are present on wizard page"
+        then: "two images should be present on the wizard page"
         images.size() == 2;
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "images present with correct names"
+        and: "images are present with correct names"
         images.get( 0 ) == NORD_IMAGE_NAME;
         and:
         images.get( 1 ) == BOOK_IMAGE_NAME;
     }
 
-    def "GIVEN saving of 'Image Selector-content' (0:0) and four images selected WHEN content opened for edit THEN correct images present on page "()
+    def "GIVEN saving of 'Image Selector-content' (0:0) and four images selected WHEN content opened for edit THEN correct images should be present on the page"()
     {
         given: "new content with type Image Selector 0_0 added'"
         TEST_IMAGE_SELECTOR_CONTENT =
@@ -47,18 +52,18 @@ class Occurrences_ImageSelector_0_0_Spec
         selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
             TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> images = formViewPanel.getSelectedImages();
         saveScreenshot( "img_sel_content0_0_4" )
 
-        then: "four images are present on wizard page"
+        then: "four images should be present on the wizard page"
         images.size() == 4;
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "images present with correct names"
+        and: "images are present with correct names"
         images.get( 0 ) == NORD_IMAGE_NAME;
         and:
         images.get( 1 ) == BOOK_IMAGE_NAME;
@@ -68,28 +73,44 @@ class Occurrences_ImageSelector_0_0_Spec
         images.get( 3 ) == FL_IMAGE_NAME;
     }
 
-    def "GIVEN content opened for edit WHEN one of the images clicked THEN buttons 'Edit' and 'Remove' appears"()
+    def "GIVEN content with an image-selector is opened WHEN one of the images clicked THEN buttons 'Edit' and 'Remove' appears"()
     {
-        given: "new content with type Image Selector 0_0 added'"
+        given: "content with an image-selector is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "content opened for edit"
+        when: "an image has been clicked"
         formViewPanel.clickOnImage( MAN_IMAGE_NAME )
-        then: "buttons 'Edit' and 'Remove' appears"
-        formViewPanel.isRemoveButtonDisplayed();
 
+        then: "buttons 'Edit' and 'Remove' should be displayed"
+        formViewPanel.isRemoveButtonDisplayed();
         and:
         formViewPanel.isEditButtonDisplayed();
     }
-
-    def "GIVEN content opened for edit WHEN checkbox for one of the images clicked THEN label for button 'Remove' has a correct number"()
+    //Verifies XP-4863 Content Wizard - Mod+S won't save content when image selector has focus
+    def "GIVEN content is opened WHEN image has been clicked AND keyboard shortcut to 'Save' is pressed THEN correct notification message should appear"()
     {
-        given: "new content with type Image Selector 0_0 added'"
+        given: "content with a image-selector is opened(4 images is selected)"
+        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
+        ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+
+        when: "an image has been clicked"
+        formViewPanel.clickOnImage( MAN_IMAGE_NAME );
+        and: "keyboard shortcut to 'Save' is pressed"
+        wizard.pressSaveKeyboardShortcut();
+        String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+
+        then: "correct notification message should appear"
+        wizard.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
+    }
+
+    def "GIVEN content with an image-selector is opened WHEN checkbox for one of the images was clicked THEN label for button 'Remove' has a correct number"()
+    {
+        given: "content with an image-selector is opened(4 images is selected)"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "content opened for edit"
+        when: "the checkbox near the image has been clicked"
         formViewPanel.clickOnCheckboxAndSelectImage( MAN_IMAGE_NAME );
 
         then: "label for button 'Remove' has a correct number"
@@ -98,11 +119,11 @@ class Occurrences_ImageSelector_0_0_Spec
 
     def "GIVEN content with 4 images opened for edit WHEN one of the images selected and 'Remove' button pressed THEN number of images reduced"()
     {
-        given: "new content with type Image Selector 0_0 added'"
+        given: "content with an image-selector is opened(4 images is selected)"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "content opened for edit"
+        when: "an image has been clicked"
         formViewPanel.clickOnImage( MAN_IMAGE_NAME );
         formViewPanel.clickOnRemoveButton();
         saveScreenshot( "img_sel_0_0_one_removed" );
@@ -123,23 +144,25 @@ class Occurrences_ImageSelector_0_0_Spec
         wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN saving of not required 'Image Selector 0:0' content without selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
+    def "GIVEN creating of new content(0,0) AND no one image was selected WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
     {
-        given: "new content with type 'Image Selector 0:0'"
+        given: "creating of new content AND no one image was selected"
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
+        and: "Publish button has been pressed"
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        and: "wizard tab was closed"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content was found in the grid"
+        when: "the name of the content was typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then:
+        then: "the content has 'online' status"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
-        and:
+        and: "the content is valid, because images are not required for this content"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
-        and:
+        and: "correct notification message was displayed"
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
@@ -152,16 +175,16 @@ class Occurrences_ImageSelector_0_0_Spec
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content was found in the grid"
+        when: "name of the content is typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "valid content with 'Online' status listed"
+        then: "valid content with 'Online' status should be listed"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
         and:
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
 
-        and: "correct notification message appeared"
+        and: "correct notification message should be displayed"
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 }

@@ -17,18 +17,18 @@ class Occurrences_ImageSelector_2_4_Spec
     @Shared
     Content IMAGE_SELECTOR_CONTENT_4_IMAGES;
 
-    def "WHEN wizard for a 'Image Selector'-content(2:4) opened THEN option filter input is present, there no selected image and upload button is enabled"()
+    def "WHEN wizard for a 'Image Selector'-content(2:4) is opened THEN option filter input should be present, there no selected image and upload button should be enabled"()
     {
-        when: "start to add a content with type 'Image Selector 2:4'"
+        when: "wizard for a 'Image Selector'-content(2:4) is opened and image was not selcted"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
         selectSitePressNew( imageSelectorContent.getContentTypeName() );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        then: "option filter input is present"
+        then: "option filter input should be present"
         formViewPanel.isOptionFilterIsDisplayed();
-        and: "no one option selected"
+        and: "no one option is selected"
         formViewPanel.getSelectedImages().size() == 0;
-        and:
+        and: "upload button should be enabled"
         formViewPanel.isUploaderButtonEnabled();
     }
 
@@ -39,7 +39,7 @@ class Occurrences_ImageSelector_2_4_Spec
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
         wizard.typeData( imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> imagesNames = formViewPanel.getSelectedImages();
@@ -48,18 +48,18 @@ class Occurrences_ImageSelector_2_4_Spec
         then: "no one options present in form view"
         imagesNames.size() == 0;
 
-        and: "options filter input is displayed"
+        and: "options filter input should be displayed"
         formViewPanel.isOptionFilterIsDisplayed();
     }
 
-    def "GIVEN saving of 'Image Selector (2:4)' without required image WHEN content saved  THEN invalid content listed"()
+    def "GIVEN saving of 'Image Selector (2:4)' without required image WHEN content saved  THEN content should be displayed with red circle"()
     {
         when: "content without required image saved"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
         selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
             imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "invalid content listed"
+        then: "content should be displayed with red circle"
         filterPanel.typeSearchText( imageSelectorContent.getDisplayName() );
         contentBrowsePanel.isContentInvalid( imageSelectorContent.getName() );
     }
@@ -83,10 +83,10 @@ class Occurrences_ImageSelector_2_4_Spec
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "correct image present on the page"
+        and: "correct image should be present on the page"
         imagesActual.get( 0 ) == NORD_IMAGE_NAME;
 
-        and: "correct image present on the page"
+        and:
         imagesActual.get( 1 ) == BOOK_IMAGE_NAME;
     }
 
@@ -143,17 +143,17 @@ class Occurrences_ImageSelector_2_4_Spec
         !formViewPanel.isOptionFilterIsDisplayed();
     }
 
-    def "GIVEN content with 4 selected images opened WHEN one image removed THEN option filter appears"()
+    def "GIVEN content with 4 selected images opened WHEN one image removed THEN option filter should appear"()
     {
         given: "content with four selected images opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( IMAGE_SELECTOR_CONTENT_4_IMAGES );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when:
+        when: "the image has been removed"
         formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
         saveScreenshot( "img_sel_2_4_remove" )
 
-        then: "option filter appears"
+        then: "option filter should appear"
         formViewPanel.isOptionFilterIsDisplayed();
     }
 }
