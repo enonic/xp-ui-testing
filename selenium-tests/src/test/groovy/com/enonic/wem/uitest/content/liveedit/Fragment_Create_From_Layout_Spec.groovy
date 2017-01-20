@@ -113,7 +113,7 @@ class Fragment_Create_From_Layout_Spec
 
         when: "the layout with 3 columns has been replaced with the '2-col' layout"
         LayoutInspectionPanel inspectionPanel = new LayoutInspectionPanel( getSession() );
-        inspectionPanel.selectNewLayout( LAYOUT_2_COL_DISPLAY_NAME );
+        inspectionPanel.setLayout( LAYOUT_2_COL_DISPLAY_NAME );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
 
@@ -121,23 +121,23 @@ class Fragment_Create_From_Layout_Spec
         liveFormPanel.getLayoutColumnNumber() == INITIAL_NUMBER_OF_COLUMN - 1;
     }
 
-    def "GIVEN existing site with the fragment is opened WHEN the initial layout was set on the fragment-wizard THEN initial layout should be present on the site-wizard as well"()
+    def "GIVEN fragment wizard is opened WHEN the initial layout was set on the fragment-wizard THEN initial layout should be present on the site-wizard as well"()
     {
         given: "existing site with the fragment is opened "
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         and: "PageComponentsView has been opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
         and: "the fragment has been opened in the new tab"
-        pageComponentsView.openMenu( LAYOUT_2_COL_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.EDIT_IN_NEW_TAB.getValue() );
+        pageComponentsView.openMenu( LAYOUT_3_COL_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.EDIT_IN_NEW_TAB.getValue() );
 
         and: "switched to the fragment-wizard"
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( LAYOUT_3_COL_DISPLAY_NAME );
         and: "open the 'Component View' and click on the layout's display name"
         wizard.showComponentView().clickOnLayout( LAYOUT_2_COL_DISPLAY_NAME );
 
-        when: "'Layout Inspection' panel is opened, current layout has been replaced"
+        when: "'Layout Inspection' panel is opened, 2-col has been replaced with 3-col"
         LayoutInspectionPanel inspectionPanel = new LayoutInspectionPanel( getSession() );
-        inspectionPanel.selectNewLayout( LAYOUT_3_COL_DISPLAY_NAME );
+        inspectionPanel.setLayout( LAYOUT_3_COL_DISPLAY_NAME );
 
         and: "switching to the site-wizard"
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( SITE.getDisplayName() );

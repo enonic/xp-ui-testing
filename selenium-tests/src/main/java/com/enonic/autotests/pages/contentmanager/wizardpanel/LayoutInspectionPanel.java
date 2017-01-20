@@ -26,7 +26,7 @@ public class LayoutInspectionPanel
         super( session );
     }
 
-    public LayoutInspectionPanel selectNewLayout( String layoutDisplayName )
+    public LayoutInspectionPanel setLayout( String layoutDisplayName )
     {
         if ( !isElementDisplayed( LAYOUT_DROPDOWN_HANDLER ) )
         {
