@@ -41,7 +41,7 @@ class GpsInfo_ImageWizard_Spec
         gpsInfoFormViewPanel.isAltitudeInputPresent();
     }
 
-    def "GIVEN image content opened WHEN new gps-info data typed and wizard saved THEN correct info present on the page"()
+    def "GIVEN image content opened WHEN new gps-info data typed and wizard saved THEN correct info should be present on the page"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
@@ -61,13 +61,13 @@ class GpsInfo_ImageWizard_Spec
         wizard.clickOnWizardStep( "Gps Info" );
         saveScreenshot( "test_gps_info_saved" );
 
-        then: "correct value for 'altitude' displayed"
+        then: "correct value for 'altitude' should be displayed"
         gpsInfoFormViewPanel.getAltitude() == TEST_ALTITUDE;
 
-        and: "correct value for 'direction' displayed"
+        and: "correct value for 'direction' should be displayed"
         gpsInfoFormViewPanel.getDirection() == TEST_DIRECTION;
 
-        and: "correct value for 'geo point' displayed"
+        and: "correct value for 'geo point' should be displayed"
         gpsInfoFormViewPanel.getGeoPoint() == TEST_GEO_POINT;
     }
 }
