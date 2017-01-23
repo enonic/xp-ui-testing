@@ -19,6 +19,9 @@ import com.enonic.autotests.utils.TextTransfer;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
+/**
+ *
+ */
 public class InstallAppDialog
     extends Application
 {
