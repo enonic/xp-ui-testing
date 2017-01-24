@@ -23,13 +23,13 @@ class Occurrences_HtmlArea_0_0_Spec
     String TEST_TEXT3 = "html area text3";
 
     @Shared
-    String EXPECTED_TEXT1 = "<p>" + TEST_TEXT1 + "</p>";
+    String EXPECTED_TEXT1 = "<div>" + TEST_TEXT1 + "</div>";
 
     @Shared
-    String EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
+    String EXPECTED_TEXT2 = "<div>" + TEST_TEXT2 + "</div>";
 
     @Shared
-    String EXPECTED_TEXT3 = "<p>" + TEST_TEXT3 + "</p>";
+    String EXPECTED_TEXT3 = "<div>" + TEST_TEXT3 + "</div>";
 
 
     def "WHEN wizard for adding a content with HtmlArea(0:0) opened THEN text area is present "()

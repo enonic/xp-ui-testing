@@ -2,8 +2,11 @@ package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
+import spock.lang.Ignore
 import spock.lang.Shared
 
+//Ignored due to https://youtrack.enonic.net/issue/XP-4912
+@Ignore
 class InstallApplication_TypingURL_Spec
     extends BaseApplicationSpec
 {
@@ -19,14 +22,13 @@ class InstallApplication_TypingURL_Spec
     def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN wrong URL to an application typed THEN correct validation message appears in the dialog"()
     {
         given: "'install app' dialog opened AND 'Upload' tab activated"
-        saveScreenshot( "test_app_toolbar_9" );
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
-        appDialog.clickOnUploadTab();
+
 
         when: "wrong URL to an application typed"
-        appDialog.typeApplicationURL( WRONG_APP_URL );
+        appDialog.typeInApplicationInput( WRONG_APP_URL );
         String validationMessage = appDialog.waitValidationViewerText( Application.EXPLICIT_NORMAL );
         saveScreenshot( "wrong_app_url" )
 
@@ -40,10 +42,9 @@ class InstallApplication_TypingURL_Spec
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
-        appDialog.clickOnUploadTab();
 
         when: "wrong protocol typed"
-        appDialog.typeApplicationURL( WRONG_PROTOCOL_URL );
+        appDialog.typeInApplicationInput( WRONG_PROTOCOL_URL );
         saveScreenshot( "wrong_protocol_url" );
 
         then: "validation message not displayed"

@@ -36,7 +36,7 @@ class InstallApplication_Spec
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
-        appDialog.clickOnUploadTab();
+
 
         when: "the application uploaded"
         appDialog.duUploadApplication( LOCAL_PATH_TO_APP );

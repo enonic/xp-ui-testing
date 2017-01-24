@@ -22,7 +22,7 @@ class Publish_Dialog_LazyLoader_Spec
         def numberOfChild = contentPublishDialog.getDependantList().size();
 
         when: "'Include child items' is unchecked and ContentPublishDialog has been closed"
-        contentPublishDialog.setIncludeChildCheckbox( false ).clickOnCancelTopButton();
+        contentPublishDialog.includeChildren( false ).clickOnCancelTopButton();
 
         and: "Publish Tree menu item clicked again"
         contentBrowsePanel.selectPublishTreeMenuItem();

@@ -143,7 +143,7 @@ class CreateSiteWithLayoutSpec
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "site selected AND was published with its children"
-        ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
 
         then: "modal dialog should be closed"
         modalDialog.waitForDialogClosed();

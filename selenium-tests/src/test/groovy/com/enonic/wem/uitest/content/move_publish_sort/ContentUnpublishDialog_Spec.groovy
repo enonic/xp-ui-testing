@@ -125,7 +125,7 @@ class ContentUnpublishDialog_Spec
         CHILD_CONTENT = buildFolderContentWithParent( "child", "child for unpublishing", PARENT_CONTENT.getName() );
         findAndSelectContent( PARENT_CONTENT.getName() );
         addContent( CHILD_CONTENT );
-        contentBrowsePanel.clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
 
         when: "parent content selected and 'Unpublish' menu item selected"
         contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();

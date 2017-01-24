@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
 public class InstallAppDialog_MarketAppPanel
     extends Application
@@ -35,14 +34,14 @@ public class InstallAppDialog_MarketAppPanel
         WebElement installWebElement = getDynamicElement( By.xpath( installButton ), 3 );
         if ( installWebElement == null )
         {
-            TestUtils.saveScreenshot( getSession(), "err_install_" + appDisplayName );
+            saveScreenshot( "err_install_" + appDisplayName );
             throw new TestFrameworkException( "install button was not found! " + appDisplayName );
         }
         installWebElement.click();
         boolean result = waitUntilVisibleNoException( By.xpath( installedButton ), APP_INSTALL_TIMEOUT );
         if ( !result )
         {
-            TestUtils.saveScreenshot( getSession(), "err_install_timeout" );
+            saveScreenshot( "err_install_timeout" );
         }
     }
 
@@ -50,5 +49,11 @@ public class InstallAppDialog_MarketAppPanel
     {
         String installedButton = String.format( INSTALLED_APP_BUTTON, appDisplayName );
         return isElementDisplayed( installedButton );
+    }
+
+    public boolean isDisplayed()
+    {
+
+        return isElementDisplayed( PANEL_DIV );
     }
 }

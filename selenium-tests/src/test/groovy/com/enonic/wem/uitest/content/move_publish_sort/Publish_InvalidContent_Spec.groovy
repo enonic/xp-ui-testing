@@ -78,7 +78,7 @@ class Publish_InvalidContent_Spec
         when: "parent content selected and 'Publish' button pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
-        contentPublishDialog.setIncludeChildCheckbox( true );
+        contentPublishDialog.includeChildren( true );
 
         then: "modal dialog appears and 'Publish' button on dialog is disabled"
         !contentPublishDialog.isPublishNowButtonEnabled();

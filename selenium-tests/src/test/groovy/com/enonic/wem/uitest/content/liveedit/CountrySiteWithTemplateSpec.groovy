@@ -199,7 +199,7 @@ class CountrySiteWithTemplateSpec
         given: "site have been 'published'"
         filterPanel.typeSearchText( SITE.getName(), );
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), ).clickToolbarPublish();
-        dialog.setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        dialog.includeChildren( true ).clickOnPublishNowButton();
         sleep( 2000 );
         saveScreenshot( "country_site_published" );
 

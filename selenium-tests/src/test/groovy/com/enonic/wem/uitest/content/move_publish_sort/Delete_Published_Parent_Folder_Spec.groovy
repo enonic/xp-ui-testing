@@ -29,7 +29,7 @@ class Delete_Published_Parent_Folder_Spec
         addContent( child );
 
         when:
-        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "parent_with_child_published" );
 
@@ -57,7 +57,7 @@ class Delete_Published_Parent_Folder_Spec
     def "GIVEN existing online-folder with a child WHEN the folder selected AND 'Delete button item clicked THEN correct notification message is displayed'"()
     {
         given: "existing online-folder with a child"
-        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
         sleep( 1000 );
 
         when: "the folder selected AND 'Delete' button clicked"
@@ -71,7 +71,7 @@ class Delete_Published_Parent_Folder_Spec
     def "GIVEN existing pending-folder with a child WHEN the folder selected AND 'Unpublish menu item clicked THEN correct notification message is displayed'"()
     {
         given: "existing online-folder with a child"
-        ContentPublishDialog dialog = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true );
+        ContentPublishDialog dialog = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true );
         sleep( 1000 );
 
         when: "the folder selected AND 'Unpublish menu item clicked"

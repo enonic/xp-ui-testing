@@ -36,10 +36,7 @@ public class ContentPublishDialog
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 
-    private final String INCLUDE_CHILD_CHECKBOX =
-        DIALOG_CONTAINER + "//div[contains(@class,'include-child-check')]//input[@type='checkbox']";
-
-    private final String INCLUDE_CHILD_CHECKBOX_LABEL = DIALOG_CONTAINER + "//div[contains(@class,'include-child-check')]//label";
+    private final String INCLUDE_CHILD_TOGGLER = DIALOG_CONTAINER + "//div[contains(@id,'')]";
 
     private final String DEPENDANT_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
 
@@ -77,9 +74,6 @@ public class ContentPublishDialog
 
     @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
     private WebElement cancelButtonBottom;
-
-    @FindBy(xpath = INCLUDE_CHILD_CHECKBOX)
-    private WebElement includeChildCheckbox;
 
     public ContentPublishDialog( final TestSession session )
     {
@@ -125,17 +119,21 @@ public class ContentPublishDialog
         return displayNames;
     }
 
-    public ContentPublishDialog setIncludeChildCheckbox( boolean value )
+    public ContentPublishDialog includeChildren( boolean value )
     {
-        boolean isChecked = includeChildCheckbox.isSelected();
-        if ( !isChecked && value || isChecked && !value )
+        boolean isIncluded = isDependantsDisplayed();
+        if ( !isIncluded && value || isIncluded && !value )
         {
-            findElements( By.xpath( INCLUDE_CHILD_CHECKBOX_LABEL ) ).get( 0 ).click();
+            findElements( By.xpath( INCLUDE_CHILD_TOGGLER ) ).get( 0 ).click();
         }
         sleep( 700 );
         return this;
     }
 
+    public boolean isDependantsDisplayed()
+    {
+        return isElementDisplayed( DIALOG_CONTAINER + "//div[contains(@class,'dependants')]" );
+    }
     public void clickOnCancelBottomButton()
     {
         cancelButtonBottom.click();
@@ -222,16 +220,6 @@ public class ContentPublishDialog
     public boolean isCancelButtonTopEnabled()
     {
         return cancelButtonTop.isEnabled();
-    }
-
-    public boolean isIncludeChildCheckboxSelected()
-    {
-        return includeChildCheckbox.isSelected();
-    }
-
-    public boolean isIncludeChildCheckboxDisplayed()
-    {
-        return includeChildCheckbox.isDisplayed();
     }
 
     public String getDependenciesListHeader()

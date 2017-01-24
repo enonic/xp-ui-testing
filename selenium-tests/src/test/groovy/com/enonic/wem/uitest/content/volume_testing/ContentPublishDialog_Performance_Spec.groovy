@@ -19,7 +19,7 @@ class ContentPublishDialog_Performance_Spec
         when:
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish();
         contentPublishDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        contentPublishDialog.setIncludeChildCheckbox( true );
+        contentPublishDialog.includeChildren( true );
 
         then: "'publish' button on the dialog becomes enabled after the required time"
         contentPublishDialog.waitUntilPublishButtonEnabled( Application.EXPLICIT_NORMAL );
@@ -35,7 +35,7 @@ class ContentPublishDialog_Performance_Spec
         when:
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish();
         contentPublishDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        contentPublishDialog.setIncludeChildCheckbox( true );
+        contentPublishDialog.includeChildren( true );
         contentPublishDialog.waitUntilPublishButtonEnabled( Application.EXPLICIT_NORMAL );
         contentPublishDialog.clickOnPublishNowButton();
 

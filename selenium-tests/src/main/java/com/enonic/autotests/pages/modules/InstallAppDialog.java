@@ -33,10 +33,6 @@ public class InstallAppDialog
 
     private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + "//div[contains(@class,'cancel-button-top')]";
 
-    private final String UPLOAD_TAB = INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::a[text()='Upload']]";
-
-    private final String ENONIC_MARKET_TAB = INSTALL_DIALOG_DIV + "//li[contains(@id,'TabBarItem') and child::a[text()='Enonic Market']]";
-
     private final String APPLICATION_INPUT = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
 
     private final String APPLICATION_UPLOADER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
@@ -50,14 +46,8 @@ public class InstallAppDialog
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
 
-    @FindBy(xpath = UPLOAD_TAB)
-    private WebElement uploadTab;
-
-    @FindBy(xpath = ENONIC_MARKET_TAB)
-    private WebElement enonicMarketTab;
-
     @FindBy(xpath = APPLICATION_INPUT)
-    private WebElement applicationURLInput;
+    private WebElement applicationInput;
 
     @FindBy(xpath = APPLICATION_UPLOADER)
     private WebElement applicationUploaderButton;
@@ -88,9 +78,9 @@ public class InstallAppDialog
         return getDisplayedString( HEADER_XPATH );
     }
 
-    public InstallAppDialog typeApplicationURL( String url )
+    public InstallAppDialog typeInApplicationInput( String url )
     {
-        clearAndType( applicationURLInput, url );
+        clearAndType( applicationInput, url );
         sleep( 3000 );
         return this;
     }
@@ -109,11 +99,6 @@ public class InstallAppDialog
 
     public InstallAppDialog duUploadApplication( String pathToApp )
     {
-        if ( !isUploadTabActivated() )
-        {
-            saveScreenshot( "err_upload_tab" );
-            throw new TestFrameworkException( "Upload-tab is not activated!" );
-        }
         String absolutePath = null;
         URL resource = InstallAppDialog.class.getResource( pathToApp );
         try
@@ -132,6 +117,10 @@ public class InstallAppDialog
         return this;
     }
 
+    public boolean isAppUploaderButtonPresent()
+    {
+        return isElementDisplayed( APPLICATION_UPLOADER );
+    }
 
     public void waitUntilDialogLoaded()
     {
@@ -155,26 +144,6 @@ public class InstallAppDialog
         }
     }
 
-    public InstallAppDialog_MarketAppPanel clickOnEnonicMarketTab()
-    {
-        enonicMarketTab.click();
-        sleep( 1500 );
-        return getMarketAppPanel();
-    }
-
-    public InstallAppDialog_MarketAppPanel clickOnUploadTab()
-    {
-        boolean isClickable = waitUntilClickableNoException( By.xpath( UPLOAD_TAB ), Application.EXPLICIT_NORMAL );
-        if ( !isClickable )
-        {
-            saveScreenshot( "err_upload_button_install_dlg" );
-            throw new TestFrameworkException( "install app dialog: upload button is not clickable!" );
-        }
-        uploadTab.click();
-        sleep( 1000 );
-        return getMarketAppPanel();
-    }
-
 
     public InstallAppDialog clickOnCancelButton()
     {
@@ -183,29 +152,15 @@ public class InstallAppDialog
         return this;
     }
 
-    public boolean isUploadTabActivated()
-    {
-        return waitAndCheckAttrValue( uploadTab, "class", "active", Application.EXPLICIT_NORMAL );
-    }
-
-    public boolean isEnonicMarketTabActivated()
-    {
-        return waitAndCheckAttrValue( enonicMarketTab, "class", "active", Application.EXPLICIT_NORMAL );
-    }
-
     public boolean isDisplayed()
     {
         return isElementDisplayed( HEADER_XPATH );
     }
 
-    public boolean isUploadTabPresent()
-    {
-        return isElementDisplayed( UPLOAD_TAB );
-    }
 
-    public boolean isEnonicMarketTabPresent()
+    public boolean isEnonicMarketPanelPresent()
     {
-        return isElementDisplayed( ENONIC_MARKET_TAB );
+        return getMarketAppPanel().isDisplayed();
     }
 
 
@@ -219,8 +174,8 @@ public class InstallAppDialog
         return isElementDisplayed( CANCEL_BUTTON );
     }
 
-    public boolean isEnonicMarketTableDisplayed()
+    public Long countDisplayedApplications()
     {
-        return isElementDisplayed( INSTALL_DIALOG_DIV + GRID_CANVAS );
+        return getNumberOfElements( By.xpath( APP_VIEWER_DIV + H6_DISPLAY_NAME ) );
     }
 }

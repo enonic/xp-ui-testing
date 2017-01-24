@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.modules.InstallAppDialog
-import com.enonic.autotests.utils.TestUtils
 
 class InstallAppDialog_Spec
     extends BaseApplicationSpec
@@ -15,58 +14,29 @@ class InstallAppDialog_Spec
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
 
-        then: "'Install App Dialog' appears"
+        then: "'Install App' Dialog should appear"
         appDialog.isDisplayed();
 
-        and: "correct title displayed on the dialog"
+        and: "correct title is displayed on the dialog"
         appDialog.getHeader() == InstallAppDialog.HEADER;
 
-        and: "'upload' and 'enonic market' tabs are present"
-        appDialog.isEnonicMarketTabPresent();
+        and: "'enonic market' panel should be present"
+        appDialog.isEnonicMarketPanelPresent();
 
-        and:
-        appDialog.isUploadTabPresent();
+        and: "'Upload' button should be displayed"
+        appDialog.isAppUploaderButtonPresent();
 
-        and: "'Enonic Market' tab is activated by default "
-        appDialog.isEnonicMarketTabActivated();
+        and: "Application Input should be displayed"
+        appDialog.isApplicationInputDisplayed();
 
-        and: "'Upload' tab is not activated by default "
-        !appDialog.isUploadTabActivated();
-
-        and: "Application Input not displayed by default"
-        !appDialog.isApplicationInputDisplayed();
-
-        and: "'cancel' button present on the dialog"
+        and: "'cancel' button should be present on the dialog"
         appDialog.isCancelButtonDisplayed();
 
     }
 
-    def "GIVEN 'Install App Dialog' opened WHEN 'Upload' tab clicked THEN this tab activated"()
+    def "GIVEN 'Install App Dialog' is opened WHEN 'cancel' button clicked THEN dialog not present"()
     {
-        given:
-        saveScreenshot( "test_toolbar_is_available3" );
-        applicationBrowsePanel.clickOnToolbarInstall();
-        InstallAppDialog appDialog = new InstallAppDialog( getSession() );
-        appDialog.waitUntilDialogLoaded();
-
-        when:
-        appDialog.clickOnUploadTab();
-        TestUtils.saveScreenshot( getSession(), "upload-activated" );
-
-        then: "'Upload' tab is activated"
-        appDialog.isUploadTabActivated();
-
-        and: "Application Input displayed"
-        appDialog.isApplicationInputDisplayed();
-
-        and: "Enonic Market tab is not activated "
-        !appDialog.isEnonicMarketTabActivated();
-    }
-
-    def "GIVEN 'Install App Dialog' opened WHEN 'cancel' button clicked THEN dialog not present"()
-    {
-        given:
-        saveScreenshot( "test_toolbar_is_available1" );
+        given: "'Install App Dialog' is opened "
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
@@ -74,22 +44,24 @@ class InstallAppDialog_Spec
         when: "'cancel' button clicked"
         appDialog.clickOnCancelButton();
         appDialog.waitUntilDialogClosed();
-        saveScreenshot( "close-install-dialog" );
+        saveScreenshot( "cancel-install-dialog" );
 
-        then: "dialog not present"
+        then: "dialog should not be displayed"
         !appDialog.isDisplayed();
     }
 
-    def "WHEN 'Install App Dialog' opened  THEN table with applications appears"()
+    def "GIVEN 'Install App Dialog' is opened WHEN the name of an application has been typed THEN only one application should be displayed"()
     {
-        when:
-        saveScreenshot( "test_toolbar_is_available2" );
-        applicationBrowsePanel.clickOnToolbarInstall();
-        InstallAppDialog appDialog = new InstallAppDialog( getSession() );
-        appDialog.waitUntilDialogLoaded();
-        saveScreenshot( "enonic-market" );
 
-        then: "table with applications appears"
-        appDialog.isEnonicMarketTableDisplayed();
+        given: "'Install App Dialog' is opened "
+        applicationBrowsePanel.clickOnToolbarInstall();
+        InstallAppDialog installAppDialog = new InstallAppDialog( getSession() );
+        installAppDialog.waitUntilDialogLoaded();
+
+        when: "the name of an application has been typed "
+        installAppDialog.typeInApplicationInput( CONTENT_VIEWER_APP_DISPLAY_NAME );
+
+        then: "only one application should be displayed"
+        installAppDialog.countDisplayedApplications() == 1
     }
 }

@@ -21,10 +21,10 @@ class Occurrences_HtmlArea_0_2_Spec
     String TEST_TEXT2 = "htmlArea text2";
 
     @Shared
-    String EXPECTED_TEXT1 = "<p>" + TEST_TEXT1 + "</p>";
+    String EXPECTED_TEXT1 = "<div>" + TEST_TEXT1 + "</div>";
 
     @Shared
-    String EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
+    String EXPECTED_TEXT2 = "<div>" + TEST_TEXT2 + "</div>";
 
     def "WHEN wizard for adding a content with htmlArea(0:2) opened THEN text area is present "()
     {

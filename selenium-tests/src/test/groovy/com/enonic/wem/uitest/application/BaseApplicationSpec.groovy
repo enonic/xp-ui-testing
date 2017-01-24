@@ -94,7 +94,7 @@ class BaseApplicationSpec
             applicationBrowsePanel.clickOnToolbarInstall();
             InstallAppDialog appDialog = new InstallAppDialog( getSession() );
             appDialog.waitUntilDialogLoaded();
-            InstallAppDialog_MarketAppPanel marketPanel = appDialog.clickOnEnonicMarketTab();
+            InstallAppDialog_MarketAppPanel marketPanel = appDialog.getMarketAppPanel();
             marketPanel.doInstallApp( displayName );
             appDialog.clickOnCancelButton();
             sleep( 4000 );

@@ -35,7 +35,7 @@ class Site_Publish_Spec
             COUNTRY_REGION_PAGE_CONTROLLER ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site has been published"
-        findAndSelectContent( SITE.getName() ).clickToolbarPublish().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
 
         then: "'Online' status should be displayed in the grid"
         contentBrowsePanel.getContentStatus( SITE.getName() ) == ContentStatus.ONLINE.getValue();
@@ -67,7 +67,7 @@ class Site_Publish_Spec
     {
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "text component was removed"
@@ -86,7 +86,7 @@ class Site_Publish_Spec
     {
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
 
         when: "display name was changed"
         wizard.typeDisplayName( "new name" )
@@ -103,7 +103,7 @@ class Site_Publish_Spec
     {
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
         saveScreenshot( "site_published_in_wizard" );
 
         when: "language was changed"
@@ -123,7 +123,7 @@ class Site_Publish_Spec
     {
         given: "existing 'online' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().setIncludeChildCheckbox( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "new part was inserted"

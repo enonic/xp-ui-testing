@@ -205,6 +205,7 @@ public class ContentBrowsePanel
         getDisplayedElement( By.xpath( PUBLISH_TREE_MENU_ITEM ) ).click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return dialog;
     }
 
@@ -343,13 +344,7 @@ public class ContentBrowsePanel
         {
             saveScreenshot( NameHelper.uniqueName( "content_status_not_found" ) );
             throw new TestFrameworkException( "content status was not found in the grid: " + contentName );
-//            if ( !getContentDetailsPanel().isDisplayed() )
-//            {
-//                clickOnDetailsToggleButton();
-//                selectContentInTable( contentName );
-//                saveScreenshot( NameHelper.uniqueName( "details_panel" ) );
-//            }
-//            return getContentDetailsPanel().openInfoWidget().getContentStatus();
+
         }
 
         return findElement( By.xpath( statusXpath ) ).getText().replace( "\n", " " );

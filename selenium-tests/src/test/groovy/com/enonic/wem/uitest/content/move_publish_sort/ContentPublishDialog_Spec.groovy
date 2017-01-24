@@ -84,11 +84,8 @@ class ContentPublishDialog_Spec
         and:
         contentPublishDialog.isCancelButtonTopEnabled();
 
-        and: "'Include Child' checkbox is displayed"
-        contentPublishDialog.isIncludeChildCheckboxDisplayed();
-
-        and: "'Include Child' checkbox not checked"
-        !contentPublishDialog.isIncludeChildCheckboxSelected();
+        and: "Dependants should not be displayed"
+        !contentPublishDialog.isDependantsDisplayed();
 
     }
 
@@ -146,7 +143,7 @@ class ContentPublishDialog_Spec
             Application.EXPLICIT_NORMAL );
 
         when:
-        contentPublishDialog.setIncludeChildCheckbox( true );
+        contentPublishDialog.includeChildren( true );
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies" );
 

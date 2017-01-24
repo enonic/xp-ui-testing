@@ -21,7 +21,7 @@ class Occurrences_HtmlArea_0_1_Spec
     String TEST_TEXT = "html area text";
 
     @Shared
-    String EXPECTED_INNER_HTML = "<p>" + TEST_TEXT + "</p>";
+    String EXPECTED_INNER_HTML = "<div>" + TEST_TEXT + "</div>";
 
     @Shared
     String NORWEGIAN_TEXT = "Hej og hå så kan det gå"

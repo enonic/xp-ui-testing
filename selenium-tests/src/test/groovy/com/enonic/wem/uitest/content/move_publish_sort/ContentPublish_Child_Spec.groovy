@@ -38,7 +38,7 @@ class ContentPublish_Child_Spec
         addContent( childContent1 );
 
         when: " 'publish' dialog opened and parent content has been published without a child "
-        contentBrowsePanel.clickToolbarPublish().setIncludeChildCheckbox( false ).clickOnPublishNowButton(); ;
+        contentBrowsePanel.clickToolbarPublish().includeChildren( false ).clickOnPublishNowButton(); ;
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "child content has 'offline' status"
@@ -73,8 +73,8 @@ class ContentPublish_Child_Spec
         ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeMenuItem();
         List<String> dependantList = modalDialog.getDependantList();
 
-        then: "checkbox 'Include child 'is checked"
-        modalDialog.isIncludeChildCheckboxSelected();
+        then: "Dependants should be displayed"
+        modalDialog.isDependantsDisplayed();
 
         and: "one content present in the dependant list"
         dependantList.size() == 1;
