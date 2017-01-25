@@ -36,7 +36,7 @@ class Delete_Published_Parent_Folder_Spec
         then:
         contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
-        and: "correct notification message is displayed"
+        and: "correct notification message should be displayed"
         message == String.format( Application.CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE, "2" );
     }
 
@@ -78,7 +78,7 @@ class Delete_Published_Parent_Folder_Spec
         dialog.clickOnPublishNowButton();
         def expectedMessage = String.format( Application.PENDING_ITEMS_ARE_DELETED, "2" );
 
-        then: "correct notification message is displayed'"
+        then: "correct notification message should be displayed'"
         contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
 }

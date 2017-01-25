@@ -36,7 +36,7 @@ public class ContentPublishDialog
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 
-    private final String INCLUDE_CHILD_TOGGLER = DIALOG_CONTAINER + "//div[contains(@id,'')]";
+    private final String INCLUDE_CHILD_TOGGLER = DIALOG_CONTAINER + "//div[contains(@id,'IncludeChildrenToggler')]";
 
     private final String DEPENDANT_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
 
