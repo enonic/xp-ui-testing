@@ -119,6 +119,11 @@ public class ContentPublishDialog
         return displayNames;
     }
 
+    public boolean isIncludeChildTogglerDisplayed()
+    {
+        return isElementDisplayed( INCLUDE_CHILD_TOGGLER );
+    }
+
     public ContentPublishDialog includeChildren( boolean value )
     {
         boolean isIncluded = isDependantsDisplayed();
@@ -134,6 +139,7 @@ public class ContentPublishDialog
     {
         return isElementDisplayed( DIALOG_CONTAINER + "//div[contains(@class,'dependants')]" );
     }
+
     public void clickOnCancelBottomButton()
     {
         cancelButtonBottom.click();

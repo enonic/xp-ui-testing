@@ -18,9 +18,9 @@ public class InstallAppDialog_MarketAppPanel
     private String APP_ROW_BY_DISPLAY_NAME = APP_GRID + SLICK_ROW_BY_DISPLAY_NAME;
 
 
-    private String INSTALL_APP_BUTTON = APP_ROW_BY_DISPLAY_NAME + "//div[@class='install']";
+    private String INSTALL_APP_BUTTON = APP_ROW_BY_DISPLAY_NAME + "//a[@class='install']";
 
-    private String INSTALLED_APP_BUTTON = APP_ROW_BY_DISPLAY_NAME + "//div[@class='installed']";
+    private String INSTALLED_APP_BUTTON = APP_ROW_BY_DISPLAY_NAME + "//a[@class='installed']";
 
     public InstallAppDialog_MarketAppPanel( final TestSession session )
     {

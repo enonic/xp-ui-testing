@@ -46,8 +46,8 @@ class ContentPublishDialog_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        then: "'ContentPublishDialog' dialog displayed but 'Include Child' checkbox not displayed"
-        !contentPublishDialog.isIncludeChildCheckboxDisplayed();
+        then: "'Include Child' button should be displayed displayed"
+        contentPublishDialog.isIncludeChildTogglerDisplayed();
 
         and: "correct status of content is displayed"
         contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.OFFLINE.getValue();
