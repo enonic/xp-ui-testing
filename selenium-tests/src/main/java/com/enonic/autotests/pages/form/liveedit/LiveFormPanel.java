@@ -138,17 +138,19 @@ public class LiveFormPanel
         clearAndType( optionFilterInput, fragmentDisplayName );
         RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
         richComboBoxInput.selectOption( fragmentDisplayName );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return this;
     }
 
     public String getTextFromTextComponent()
     {
-        if ( !isElementDisplayed( TEXT_COMPONENT_VIEW + "//section/p" ) )
+        String textPath = "//section/div";
+        if ( !isElementDisplayed( TEXT_COMPONENT_VIEW + textPath ) )
         {
-            saveScreenshot( "err_text_component" );
+            saveScreenshot( "err_text_component_not_found" );
             throw new TestFrameworkException( "text in the component was not found!" );
         }
-        return getDisplayedString( TEXT_COMPONENT_VIEW + "//section/p" );
+        return getDisplayedString( TEXT_COMPONENT_VIEW + textPath );
     }
 
     public boolean isLayoutComponentPresent()

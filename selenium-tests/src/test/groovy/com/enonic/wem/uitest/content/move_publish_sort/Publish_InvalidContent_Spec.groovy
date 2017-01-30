@@ -80,7 +80,7 @@ class Publish_InvalidContent_Spec
             Application.EXPLICIT_NORMAL );
         contentPublishDialog.includeChildren( true );
 
-        then: "modal dialog appears and 'Publish' button on dialog is disabled"
+        then: "modal dialog appears and 'Publish' button on dialog should be disabled"
         !contentPublishDialog.isPublishNowButtonEnabled();
 
         and: "correct subheader present in dialog"

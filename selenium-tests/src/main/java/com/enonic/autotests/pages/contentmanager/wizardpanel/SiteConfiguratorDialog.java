@@ -67,22 +67,31 @@ public class SiteConfiguratorDialog
 
     public void doApply()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( APPLY_BUTTON ), Application.EXPLICIT_NORMAL );
-        if ( !result )
+        boolean isApplyButtonPresent = waitUntilVisibleNoException( By.xpath( APPLY_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isApplyButtonPresent )
         {
             saveScreenshot( "err_apply-site-config" );
             throw new TestFrameworkException( "button 'apply' on 'site-config-dialog' was not found!" );
         }
-        Actions builder = new Actions( getDriver() );
-        builder.moveToElement( applyButton ).click().build().perform();
-        //applyButton.click();
-        sleep( 1100 );
+        buildActions().moveToElement( applyButton ).click().build().perform();
+        waitForDialogClosed();
+    }
+
+    public boolean waitForDialogClosed()
+    {
+        boolean isDialogInvisible = waitInvisibilityOfElement( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !isDialogInvisible )
+        {
+            saveScreenshot( "err_site_configurator_not_closed!" );
+            throw new TestFrameworkException( "site config was not closed" );
+        }
+        return isDialogInvisible;
     }
 
     public void doClose()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( CANCEL_BUTTON_TOP ), Application.EXPLICIT_NORMAL );
-        if ( !result )
+        boolean isCancelButtonPresent = waitUntilVisibleNoException( By.xpath( CANCEL_BUTTON_TOP ), Application.EXPLICIT_NORMAL );
+        if ( !isCancelButtonPresent )
         {
             saveScreenshot( "err_close-site-config" );
             throw new TestFrameworkException( "button 'close' on 'site-config-dialog' was not found!" );

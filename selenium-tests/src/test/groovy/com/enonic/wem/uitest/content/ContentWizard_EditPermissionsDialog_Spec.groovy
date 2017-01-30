@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
 import com.enonic.autotests.vo.contentmanager.Content
@@ -74,70 +75,73 @@ class ContentWizard_EditPermissionsDialog_Spec
         entriesActual.equals( getExpectedDefaultPermissions() );
     }
 
-    def "GIVEN 'Edit Permissions' opened WHEN checkbox selected AND role selected and AND 'Apply' button in the selector pressed THEN new ACL entry with new role and 'Can Read' operations appears"()
+    def "GIVEN 'Edit Permissions' dialog is opened WHEN new role has been THEN new ACL entry with the role and 'Can Read' operations should appear on the dialog"()
     {
-        given: "'Edit Permissions' opened"
-        SecurityWizardStepForm securityForm = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
+        given: "'Edit Permissions' dialog is opened"
+        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
+        SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
-        when: "new acl-entry added"
+        when: "new Role was added"
         modalDialog.setCheckedForInheritCheckbox( false ).addPermissionByClickingCheckbox( entry ).clickOnApply();
         sleep( 500 );
+
+        and: "the content has been saved"
+        wizard.save();
         modalDialog = securityForm.clickOnEditPermissionsButton();
 
-        then: "number of ACL-entries increased"
+        then: "number of ACL-entries on the modal dialog should be increased"
         List<ContentAclEntry> aclEntriesActual = modalDialog.getAclEntries();
         aclEntriesActual.size() == ( DEFAULT_NUMBER_OF_ACL_ENTRIES + 1 );
 
-        and: "actual entries and expected are the same"
+        and: "actual entries on the dialog and expected are the same"
         aclEntriesActual.containsAll( getUpdatedPermissions() );
     }
 
-    def "GIVEN existing folder with one added ACL-entry AND 'Edit Permissions' opened WHEN one acl entry removed THEN number of entries reduced to default"()
+    def "'Edit Permissions' dialog is opened AND one role was removed WHEN try to close the wizard THEN alert dialog should appear"()
     {
-        given: "existing folder with one added ACL-entry"
+
+        given: "'Edit Permissions' dialog is opened"
+        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
+        SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
+        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
+
+        and: "one Role was removed"
+        modalDialog.removeAclEntry( RoleName.SYSTEM_USER_MANAGER.getValue() );
+
+        and: "Apply button has been pressed"
+        modalDialog.clickOnApply();
+
+        when: "shortcut to 'Close' has been pressed"
+        wizard.pressCloseKeyboardShortcut();
+
+        then: "'Alert' dialog with warning message should appear"
+        wizard.waitIsAlertDisplayed();
+    }
+
+    def "GIVEN 'Edit Permissions' dialog is opened WHEN one acl entry was removed THEN number of entries on the modal dialog should be reduced"()
+    {
+        given: "'Edit Permissions' dialog is opened"
         SecurityWizardStepForm securityForm = findAndSelectContent(
             content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
-        modalDialog.setCheckedForInheritCheckbox( false );
 
-        when: "one acl-entry removed"
+        when: "one Role was removed"
         modalDialog.removeAclEntry( RoleName.SYSTEM_USER_MANAGER.getValue() );
-        saveScreenshot( "acl-removed" )
+        saveScreenshot( "content-wizard-role-was-removed" );
+        and: "Apply button has been pressed"
         modalDialog.clickOnApply();
 
-        and: "dialog opened again"
+        and: "dialog is opened again"
         modalDialog = securityForm.clickOnEditPermissionsButton();
 
-        then: "number of entries reduced to default"
+        then: "number of entries on the modal dialog should be reduced"
         List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
         aclEntries.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
 
         and: "actual entries contains expected entries"
         aclEntries.containsAll( getExpectedDefaultPermissions() );
-    }
-
-    def "GIVEN 'Edit Permissions' opened WHEN one more role added THEN new ACL entry with new role and 'Can Read' operations appears"()
-    {
-        given: "content selected and 'Edit Permissions' opened"
-        SecurityWizardStepForm securityForm = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
-        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
-        ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
-
-        when: "one more acl-entry added"
-        modalDialog.setCheckedForInheritCheckbox( false ).addPermission( entry );
-        sleep( 500 );
-        saveScreenshot( "acl-added" );
-
-        then: "number of ACL-entries increased"
-        List<ContentAclEntry> aclEntriesActual = modalDialog.getAclEntries();
-        aclEntriesActual.size() == ( DEFAULT_NUMBER_OF_ACL_ENTRIES + 1 );
-
-        and: "actual entries and expected are the same"
-        aclEntriesActual.containsAll( getUpdatedPermissions() );
     }
 
     private List<ContentAclEntry> getExpectedDefaultPermissions()
