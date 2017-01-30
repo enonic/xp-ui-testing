@@ -57,7 +57,7 @@ public class SiteFormViewPanel
         return this;
     }
 
-    public FormViewPanel selectCheckBoxAndApply( String appName )
+    public FormViewPanel clickOnAppCheckBoxAndDoApply( String appName )
     {
         clearAndType( optionFilterInput, appName );
         sleep( 700 );

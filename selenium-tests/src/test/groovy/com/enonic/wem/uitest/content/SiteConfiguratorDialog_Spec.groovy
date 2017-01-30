@@ -20,9 +20,9 @@ class SiteConfiguratorDialog_Spec
     @Shared
     String BACKGROUND_RED_COLOR_VALUE = "213, 147, 146"
 
-    def "GIVEN creating new Site with a configuration WHEN site saved and wizard closed THEN new site should be present"()
+    def "GIVEN creating of new Site with 2 applications WHEN site was saved and wizard closed THEN new site should be present"()
     {
-        given: "creating new Site with a configuration"
+        given: "creating of new Site with 2 applications"
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
 
         when: "data saved and wizard closed"
@@ -32,14 +32,14 @@ class SiteConfiguratorDialog_Spec
         and: "controller selected"
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
 
-        and: "wizard closed"
+        and: "wizard was closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN jexisting site is opened WHEN the 'edit-button' on the selected application was clicked THEN configurator dialog with correct title should appear"()
+    def "GIVEN existing site is opened WHEN the 'edit-button' on the selected application was clicked THEN configurator dialog with correct title should appear"()
     {
         given: "site is opened"
         filterPanel.typeSearchText( SITE.getName() );
@@ -68,7 +68,7 @@ class SiteConfiguratorDialog_Spec
         dialog.isApplyButtonPresent();
     }
 
-    def "GIVEN configurator dialog is opened WHEN red color was selected for the background THEN correct background color present should be displayed in the page-editor"()
+    def "GIVEN configurator dialog is opened WHEN red color was selected for the background THEN correct background color should be displayed in the page-editor"()
     {
         given: "site was opened and configurator dialog is opened"
         filterPanel.typeSearchText( SITE.getName() );
