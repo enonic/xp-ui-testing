@@ -39,29 +39,38 @@ class SiteConfiguratorDialog_Spec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN just added site opened WHEN the 'edit-button' on the selected application clicked THEN configurator dialog with correct title appears"()
+    def "GIVEN jexisting site is opened WHEN the 'edit-button' on the selected application was clicked THEN configurator dialog with correct title should appear"()
     {
-        given: "site opened"
+        given: "site is opened"
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
 
-        when: "edit button clicked"
+        when: "edit button was clicked"
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
         then: "dialog is not null"
         dialog != null;
 
-        and: "dialog opened"
+        and: "dialog should be opened"
         dialog.isOpened();
 
         and: "correct title is displayed"
         dialog.getTitle() == SIMPLE_SITE_APP;
+
+        and: "Cancel Top button is displayed"
+        dialog.isCancelTopButtonPresent();
+
+        and: "'Cancel Bottom' button is displayed"
+        dialog.isCancelBottomButtonPresent();
+
+        and: "Apply button is displayed"
+        dialog.isApplyButtonPresent();
     }
 
-    def "GIVEN configurator dialog opened WHEN red color selected for background THEN correct background color present in the page-editor"()
+    def "GIVEN configurator dialog is opened WHEN red color was selected for the background THEN correct background color present should be displayed in the page-editor"()
     {
-        given: "site opened and configurator dialog opened"
+        given: "site was opened and configurator dialog is opened"
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
@@ -71,9 +80,8 @@ class SiteConfiguratorDialog_Spec
         dialog.selectBackgroundColor( BACKGROUND_COLOR )
         saveScreenshot( "page-background-selected" );
 
-        and: " changes were applied"
+        and: "changes were applied"
         dialog.doApply();
-        sleep( 2000 );
         saveScreenshot( "page-background-applied" );
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );

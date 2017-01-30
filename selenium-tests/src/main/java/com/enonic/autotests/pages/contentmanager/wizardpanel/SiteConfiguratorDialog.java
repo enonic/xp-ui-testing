@@ -20,18 +20,15 @@ public class SiteConfiguratorDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SiteConfiguratorDialog')]";
 
-    private final String SPEC_CHARS_BUTTON = "";
-
     private final String INSERT_LINK_BUTTON = "//div[@aria-label='Insert/edit link']";
 
     private final String TOOLBAR_INSERT_MACRO_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert macro']";
 
-    public final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']";
+    public final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']]";
 
     public final String APPLY_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Apply']]";
 
-    public final String CANCEL_BUTTON_TOP =
-        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and contains(@calss,'cancel-button-top')]";
+    public final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
     @FindBy(xpath = CANCEL_BUTTON)
     WebElement cancelButton;
@@ -42,6 +39,20 @@ public class SiteConfiguratorDialog
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     WebElement closeButton;
 
+    public boolean isCancelTopButtonPresent()
+    {
+        return isElementDisplayed( CANCEL_BUTTON_TOP );
+    }
+
+    public boolean isCancelBottomButtonPresent()
+    {
+        return isElementDisplayed( CANCEL_BUTTON );
+    }
+
+    public boolean isApplyButtonPresent()
+    {
+        return isElementDisplayed( APPLY_BUTTON );
+    }
 
     public SiteConfiguratorDialog( final TestSession session )
     {
