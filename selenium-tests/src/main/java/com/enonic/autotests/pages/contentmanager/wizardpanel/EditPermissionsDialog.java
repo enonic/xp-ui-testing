@@ -253,22 +253,9 @@ public class EditPermissionsDialog
         {
             builder = ContentAclEntry.builder();
             builder.principalName( principalNames.get( i ) );
-            builder.suite( getSuite( suiteNames.get( i ) ) );
+            builder.suite( PermissionSuite.getSuite( suiteNames.get( i ) ) );
             entries.add( builder.build() );
         }
         return entries;
-    }
-
-    private PermissionSuite getSuite( String suiteString )
-    {
-        switch ( suiteString )
-        {
-            case "Full Access":
-                return PermissionSuite.FULL_ACCESS;
-            case "Can Read":
-                return PermissionSuite.CAN_READ;
-            default:
-                return PermissionSuite.CUSTOM;
-        }
     }
 }

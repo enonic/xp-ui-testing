@@ -57,6 +57,7 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "wizard-tab is closing, but 'Save' was not pressed"
         wizard.executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should appear"
         wizard.waitIsAlertDisplayed();
@@ -79,6 +80,7 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "'Save' was pressed and wizard-tab is closing"
         wizard.save().executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should not appear"
         !wizard.isAlertPresent();
@@ -105,6 +107,7 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "'close tab' button was pressed, but Save was not pressed"
         wizard.executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should appear"
         wizard.waitIsAlertDisplayed();
@@ -121,6 +124,7 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "Save was pressed and wizard-tab is closing"
         wizard.save().executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should not appear"
         !wizard.isAlertPresent();

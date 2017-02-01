@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.contentmanager.wizardpanel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -25,9 +26,10 @@ import com.enonic.autotests.pages.form.liveedit.ContextWindow;
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu;
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.Content;
+import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry;
+import com.enonic.autotests.vo.contentmanager.security.PermissionSuite;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -61,18 +63,19 @@ public class ContentWizardPanel
 
     private final String SCHEDULE_WIZARD_STEP = "//div[contains(@id,'ScheduleWizardStepForm')]";
 
-    private final String ONLINE_FROM_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
-        "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" + DATA_TIME_PICKER_INPUT;
+    private final String ONLINE_FROM_DATETIME_INPUT =
+        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" + DATA_TIME_PICKER_INPUT;
 
-    private final String ONLINE_TO_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
-        "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + DATA_TIME_PICKER_INPUT;
+    private final String ONLINE_TO_DATETIME_INPUT =
+        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + DATA_TIME_PICKER_INPUT;
 
-    private final String ONLINE_TO_INPUT_ERROR_MESSAGE = SCHEDULE_WIZARD_STEP +
-        "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + "//div[contains(@id,'ValidationRecordingViewer')]//li";
+    private final String ONLINE_TO_INPUT_ERROR_MESSAGE =
+        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" +
+            "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
-    private final String ONLINE_FROM_INPUT_ERROR_MESSAGE = SCHEDULE_WIZARD_STEP +
-        "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" +
-        "//div[contains(@id,'ValidationRecordingViewer')]//li";
+    private final String ONLINE_FROM_INPUT_ERROR_MESSAGE =
+        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" +
+            "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
 
     private final String UNPUBLISH_MENU_ITEM =
@@ -668,7 +671,6 @@ public class ContentWizardPanel
 
     public int getHeightOfPageEditor()
     {
-        //if ( getSession().getCurrentWindow().equals( XP_Windows.LIVE_EDIT ) )
         if ( isInLiveEditFrame() )
         {
             switchToDefaultWindow();
@@ -677,13 +679,11 @@ public class ContentWizardPanel
         return Integer.valueOf( height.substring( 0, height.indexOf( "px" ) ) );
     }
 
-
     public int getWidthOfPageEditor()
     {
         if ( isInLiveEditFrame() )
         {
             switchToDefaultWindow();
-
         }
         String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
         return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
@@ -712,16 +712,6 @@ public class ContentWizardPanel
     public ContentWizardPanel executeCloseWizardScript()
     {
         getJavaScriptExecutor().executeScript( "window.close();" );
-        sleep( 500 );
-        try
-        {
-            TestUtils.createScreenCaptureWithRobot( NameHelper.uniqueName( "alert" ) );
-        }
-        catch ( Exception e )
-        {
-            getLogger().error( "exception when saving of a screenshot!" );
-        }
-        switchToBrowsePanelTab();
         return this;
     }
 
@@ -826,6 +816,29 @@ public class ContentWizardPanel
     public String getOnlineFromValidationMessage()
     {
         return getDisplayedString( ONLINE_FROM_INPUT_ERROR_MESSAGE );
+    }
+
+    /**
+     * Gets Permissions from the Security tab
+     *
+     * @return
+     */
+    public List<ContentAclEntry> getAclEntries()
+    {
+        ContentAclEntry.Builder builder;
+        List<ContentAclEntry> entries = new ArrayList<>();
+        List<WebElement> principalViews =
+            findElements( By.xpath( DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'AccessControlEntryView')]" ) );
+        for ( WebElement el : principalViews )
+        {
+            String principalName = el.findElement( By.xpath( "." + P_NAME ) ).getText();
+            String suite = el.findElement( By.xpath( "." + "//div[contains(@id,'TabMenuButton')]//span[@class='label']" ) ).getText();
+            builder = ContentAclEntry.builder();
+            builder.principalName( principalName );
+            builder.suite( PermissionSuite.getSuite( suite ) );
+            entries.add( builder.build() );
+        }
+        return entries;
     }
 
 

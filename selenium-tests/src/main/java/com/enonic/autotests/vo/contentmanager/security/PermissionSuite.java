@@ -16,4 +16,17 @@ public enum PermissionSuite
 
     private String value;
 
+    public static PermissionSuite getSuite( String suiteString )
+    {
+        switch ( suiteString )
+        {
+            case "Full Access":
+                return PermissionSuite.FULL_ACCESS;
+            case "Can Read":
+                return PermissionSuite.CAN_READ;
+            default:
+                return PermissionSuite.CUSTOM;
+        }
+    }
+
 }

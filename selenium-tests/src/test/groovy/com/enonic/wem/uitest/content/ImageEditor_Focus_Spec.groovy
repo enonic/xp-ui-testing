@@ -57,7 +57,7 @@ class ImageEditor_Focus_Spec
 
         and: "wizard has been closed"
         wizard.executeCloseWizardScript();
-        //wizard.switchToBrowsePanelTab();
+        wizard.switchToBrowsePanelTab();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();
@@ -109,7 +109,7 @@ class ImageEditor_Focus_Spec
 
         and: "'close' wizard button pressed"
         wizard.save().executeCloseWizardScript();
-        //wizard.switchToBrowsePanelTab();
+        wizard.switchToBrowsePanelTab();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();

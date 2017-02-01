@@ -60,6 +60,7 @@ class ImageEditor_Crop_Reset_Spec
 
         and: "wizard has been closed"
         wizard.executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' with warning message should not be displayed"
         !wizard.isAlertPresent();
