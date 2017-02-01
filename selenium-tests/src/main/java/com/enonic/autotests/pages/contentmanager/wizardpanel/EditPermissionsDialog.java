@@ -25,9 +25,13 @@ public class EditPermissionsDialog
 {
     private final String CONTAINER_XPATH = "//div[contains(@id,'EditPermissionsDialog')]";
 
-    private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + CHECKBOX_ELEMENT;
+    private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@class,'inherit-perm')]";
 
-    private final String INHERIT_PERMISSIONS_CHECKBOX_LABEL = CONTAINER_XPATH + "//div[contains(@id,'api.ui.Checkbox')]/label";
+    private final String OVERWRITE_CHILD_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@class,'overwrite-child')]";
+
+    private final String INHERIT_PERMISSIONS_CHECKBOX_LABEL = INHERIT_PERMISSIONS_CHECKBOX + "/label";
+
+    private final String OVERWRITE_CHILD_PERMISSIONS_CHECKBOX_LABEL = OVERWRITE_CHILD_PERMISSIONS_CHECKBOX + "/label";
 
     private final String PRINCIPALS_OPTIONS_FILTER_INPUT = CONTAINER_XPATH + COMBOBOX_OPTION_FILTER_INPUT;
 
@@ -35,13 +39,16 @@ public class EditPermissionsDialog
 
     private String PRINCIPAL_CHECKBOX_PATH = SLICK_ROW_BY_NAME + "//div[contains(@class,'checkboxsel')]";
 
-    private final String APPLY_BUTTON_XPATH = "//button[contains(@id,'dialog.DialogButton') and child::span[text()='Apply']]";
+    private final String APPLY_BUTTON_XPATH = "//button[contains(@id,'DialogButton') and child::span[text()='Apply']]";
 
     private String ACL_ENTRY_ROW =
         "//div[contains(@class,'access-control-entry') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
     @FindBy(xpath = INHERIT_PERMISSIONS_CHECKBOX_LABEL)
     WebElement inheritPermissionsCheckbox;
+
+    @FindBy(xpath = OVERWRITE_CHILD_PERMISSIONS_CHECKBOX_LABEL)
+    WebElement overwritePermissionsCheckbox;
 
     public EditPermissionsDialog( TestSession session )
     {
@@ -54,6 +61,17 @@ public class EditPermissionsDialog
         {
             saveScreenshot( NameHelper.uniqueName( "err-perm-dialog" ) );
             throw new TestFrameworkException( "Edit Permissions Dialog was not opened!" );
+        }
+        return this;
+    }
+
+    public EditPermissionsDialog setOverwriteChildPermissionsCheckbox( boolean value )
+    {
+
+        boolean isChecked = isOverwriteChildPermissionsCheckBoxChecked();
+        if ( ( !isChecked && value ) || ( isChecked && !value ) )
+        {
+            overwritePermissionsCheckbox.click();
         }
         return this;
     }
@@ -73,7 +91,7 @@ public class EditPermissionsDialog
         return this;
     }
 
-    public boolean isOptionsFilterDisplayed()
+    public boolean isPrincipalOptionsFilterDisplayed()
     {
         return findElements( By.xpath( PRINCIPALS_OPTIONS_FILTER_INPUT ) ).size() > 0;
     }
@@ -179,7 +197,12 @@ public class EditPermissionsDialog
         return inheritPermissionsCheckbox.isDisplayed();
     }
 
-    public boolean isInheritCheckBoxChecked()
+    public boolean isOverwriteChildPermissionsCheckboxDisplayed()
+    {
+        return overwritePermissionsCheckbox.isDisplayed();
+    }
+
+    public boolean isInheritPermissionsCheckBoxChecked()
     {
         if ( !isElementDisplayed( INHERIT_PERMISSIONS_CHECKBOX ) )
         {
@@ -190,15 +213,24 @@ public class EditPermissionsDialog
         return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
     }
 
-    public EditPermissionsDialog setCheckedForInheritCheckbox( boolean value )
+    public boolean isOverwriteChildPermissionsCheckBoxChecked()
     {
-        boolean isChecked = isInheritCheckBoxChecked();
+        if ( !isElementDisplayed( OVERWRITE_CHILD_PERMISSIONS_CHECKBOX ) )
+        {
+            saveScreenshot( "err_overwrite_checkbox" );
+            throw new TestFrameworkException( "overwrite child permissions checkbox was not found!" );
+        }
+        WebElement checkbox = findElement( By.xpath( OVERWRITE_CHILD_PERMISSIONS_CHECKBOX ) );
+        return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
+    }
+
+    public EditPermissionsDialog setInheritPermissionsCheckbox( boolean value )
+    {
+        boolean isChecked = isInheritPermissionsCheckBoxChecked();
         if ( ( !isChecked && value ) || ( isChecked && !value ) )
         {
             inheritPermissionsCheckbox.click();
         }
-        //String id = findElements( By.xpath( INHERIT_PERMISSIONS_CHECKBOX ) ).get( 0 ).getAttribute( "id" );
-        //setChecked( id, value );
         return this;
     }
 

@@ -41,23 +41,23 @@ class ImageEditor_Focus_Spec
         formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN 'Image Editor' dialog opened WHEN focus changed  AND 'Save' button pressed THEN 'save before close dialog' does not appear"()
+    def "GIVEN 'Image Editor' dialog is opened WHEN focus was changed AND 'Save' button has been pressed THEN 'save before close dialog' does not appear"()
     {
         given: "'Image Editor' dialog opened"
         ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
-        when: " dragHandler moved up AND image cropped "
+        when: "dragHandler was moved up AND the image is cropped "
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         imageEditor.doDragAndChangeFocus( -50 );
         imageEditor.getToolbar().clickOnApplyButton();
 
-        and: "Save button pressed "
+        and: "'Save' button was pressed "
         wizard.save();
 
-        and: "wizard closed"
-        wizard.closeWizardAndCheckAlert();
-        wizard.switchToBrowsePanelTab();
+        and: "wizard has been closed"
+        wizard.executeCloseWizardScript();
+        //wizard.switchToBrowsePanelTab();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();
@@ -108,8 +108,8 @@ class ImageEditor_Focus_Spec
         imageFormViewPanel.clickOnResetButton();
 
         and: "'close' wizard button pressed"
-        wizard.save().closeWizardAndCheckAlert();
-        wizard.switchToBrowsePanelTab();
+        wizard.save().executeCloseWizardScript();
+        //wizard.switchToBrowsePanelTab();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();

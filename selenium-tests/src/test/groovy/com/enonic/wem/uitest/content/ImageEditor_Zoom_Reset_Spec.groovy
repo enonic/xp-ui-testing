@@ -17,7 +17,7 @@ class ImageEditor_Zoom_Reset_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN 'Image Editor' opened WHEN image has been zoomed THEN 'Reset' button appears"()
+    def "GIVEN 'Image Editor' opened WHEN image has been zoomed THEN 'Reset' button should appear"()
     {
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -29,14 +29,14 @@ class ImageEditor_Zoom_Reset_Spec
         imageEditor.doZoomImage( 70 );
         saveScreenshot( "image_zoomed_70" );
 
-        and: "Apply button pressed"
+        and: "'Apply' button pressed"
         toolbar.clickOnApplyButton();
         saveScreenshot( "zoom_applied" )
 
-        then: "ImageEditor's toolbar getting hidden"
+        then: "ImageEditor's toolbar is getting hidden"
         !toolbar.isDisplayed();
 
-        and: "'Reset' button appeared"
+        and: "'Reset' button should be present"
         formViewPanel.isButtonResetPresent();
     }
 
@@ -51,12 +51,12 @@ class ImageEditor_Zoom_Reset_Spec
         when: "the image has been zoomed "
         imageEditor.doZoomImage( 70 );
 
-        and: "Apply button pressed"
+        and: "'Apply' button pressed"
         toolbar.clickOnApplyButton();
         saveScreenshot( "image_zoomed_and_applied" );
 
-        and: "wizard-tab is closing"
-        wizard.closeWizardAndCheckAlert();
+        and: "wizard-tab is closing, but 'Save' was not pressed"
+        wizard.executeCloseWizardScript();
 
         then: "'Alert' dialog with warning messages should appear"
         wizard.waitIsAlertDisplayed();
@@ -73,29 +73,28 @@ class ImageEditor_Zoom_Reset_Spec
         when: "the image has been zoomed "
         imageEditor.doZoomImage( 70 );
 
-        and: "Apply button pressed"
+        and: "'Apply' button pressed"
         toolbar.clickOnApplyButton();
         saveScreenshot( "image_zoomed_and_applied" );
 
-        and: "wizard-tab is closing"
-        wizard.save().closeWizardAndCheckAlert();
-        wizard.switchToBrowsePanelTab();
+        and: "'Save' was pressed and wizard-tab is closing"
+        wizard.save().executeCloseWizardScript();
 
         then: "'Alert' dialog with warning messages should not appear"
         !wizard.isAlertPresent();
     }
 
-    def "GIVEN existing zoomed image WHEN it opened THEN 'Reset' button displayed on the wizard"()
+    def "GIVEN existing zoomed image WHEN it opened THEN 'Reset' button should be displayed on the wizard"()
     {
         when: "existing zoomed image"
         findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
-        then: "'Reset' button displayed on the wizard"
+        then: "'Reset' button should be displayed on the wizard"
         formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button pressed AND 'close' button pressed THEN 'Alert' dialog with warning messages should appear"()
+    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button was pressed AND 'close' button pressed THEN 'Alert' dialog with warning messages should appear"()
     {
         given: "existing zoomed image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
@@ -104,8 +103,8 @@ class ImageEditor_Zoom_Reset_Spec
         when: "'Reset' button has been pressed"
         formViewPanel.clickOnResetButton();
 
-        and: "'close tab' button pressed"
-        wizard.closeWizardAndCheckAlert();
+        and: "'close tab' button was pressed, but Save was not pressed"
+        wizard.executeCloseWizardScript();
 
         then: "'Alert' dialog with warning messages should appear"
         wizard.waitIsAlertDisplayed();
@@ -120,9 +119,8 @@ class ImageEditor_Zoom_Reset_Spec
         when: "'Reset' button has been pressed"
         formViewPanel.clickOnResetButton();
 
-        and: "wizard-tab is closing"
-        wizard.save().closeWizardAndCheckAlert();
-        wizard.switchToBrowsePanelTab();
+        and: "Save was pressed and wizard-tab is closing"
+        wizard.save().executeCloseWizardScript();
 
         then: "'Alert' dialog with warning messages should not appear"
         !wizard.isAlertPresent();

@@ -39,27 +39,33 @@ class ContentWizard_EditPermissionsDialog_Spec
         and: "'inherit permissions ' checkbox present on dialog"
         modalDialog.isInheritPermissionsCheckboxDisplayed();
 
-        and: "the checkbox is checked"
-        modalDialog.isInheritCheckBoxChecked();
+        and: "the checkbox should be checked"
+        modalDialog.isInheritPermissionsCheckBoxChecked();
+
+        and: "'Overwrite child permissions' checkbox should be present"
+        modalDialog.isOverwriteChildPermissionsCheckboxDisplayed();
+
+        and: "'Overwrite child permissions' checkbox should be unchecked"
+        !modalDialog.isOverwriteChildPermissionsCheckBoxChecked();
     }
 
-    def "GIVEN 'Edit Permissions' dialog opened WHEN 'inherit permissions' unchecked  THEN options filter input appears "()
+    def "GIVEN 'Edit Permissions' dialog is opened WHEN 'inherit permissions' has been unchecked THEN options filter input should appear"()
     {
         given: "content selected and 'Edit Permissions' dialog opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
             content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 
         when: "'inherit permissions' has been unchecked"
-        modalDialog.setCheckedForInheritCheckbox( false );
+        modalDialog.setInheritPermissionsCheckbox( false );
 
-        then:
-        !modalDialog.isInheritCheckBoxChecked();
+        then: "the checkbox should be unchecked"
+        !modalDialog.isInheritPermissionsCheckBoxChecked();
 
-        and: "options filter input appears"
-        modalDialog.isOptionsFilterDisplayed();
+        and: "options filter for principals should appear, when 'Inherit Permissions' was unchecked"
+        modalDialog.isPrincipalOptionsFilterDisplayed();
     }
 
-    def "WHEN 'Edit Permissions' opened THEN two default permissions displayed "()
+    def "WHEN 'Edit Permissions' is opened THEN two default permissions should be displayed "()
     {
         when: "content selected and 'Edit Permissions' dialog has been opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
@@ -75,7 +81,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         entriesActual.equals( getExpectedDefaultPermissions() );
     }
 
-    def "GIVEN 'Edit Permissions' dialog is opened WHEN new role has been THEN new ACL entry with the role and 'Can Read' operations should appear on the dialog"()
+    def "GIVEN 'Edit Permissions' dialog is opened WHEN new role has been added THEN new ACL entry with the role and 'Can Read' operations should appear on the dialog"()
     {
         given: "'Edit Permissions' dialog is opened"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -83,8 +89,8 @@ class ContentWizard_EditPermissionsDialog_Spec
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
-        when: "new Role was added"
-        modalDialog.setCheckedForInheritCheckbox( false ).addPermissionByClickingCheckbox( entry ).clickOnApply();
+        when: "new Role has been added"
+        modalDialog.setInheritPermissionsCheckbox( false ).addPermissionByClickingCheckbox( entry ).clickOnApply();
         sleep( 500 );
 
         and: "the content has been saved"
@@ -101,7 +107,6 @@ class ContentWizard_EditPermissionsDialog_Spec
 
     def "'Edit Permissions' dialog is opened AND one role was removed WHEN try to close the wizard THEN alert dialog should appear"()
     {
-
         given: "'Edit Permissions' dialog is opened"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();

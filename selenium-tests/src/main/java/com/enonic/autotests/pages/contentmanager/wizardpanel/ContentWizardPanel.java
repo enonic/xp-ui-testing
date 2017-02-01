@@ -474,7 +474,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), 7l );
+        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), 10l );
         if ( !result )
         {
             saveScreenshot( NameHelper.uniqueName( "err_wizard" ) );
@@ -709,7 +709,7 @@ public class ContentWizardPanel
         return this;
     }
 
-    public ContentWizardPanel closeWizardAndCheckAlert()
+    public ContentWizardPanel executeCloseWizardScript()
     {
         getJavaScriptExecutor().executeScript( "window.close();" );
         sleep( 500 );
@@ -721,7 +721,7 @@ public class ContentWizardPanel
         {
             getLogger().error( "exception when saving of a screenshot!" );
         }
-
+        switchToBrowsePanelTab();
         return this;
     }
 
@@ -737,7 +737,7 @@ public class ContentWizardPanel
 
     public boolean waitIsAlertDisplayed()
     {
-        return waitUntilAlertPresent( Application.EXPLICIT_NORMAL );
+        return waitIsAlertPresent( Application.EXPLICIT_NORMAL );
     }
 
     public void acceptAlertAndLeavePage()
@@ -751,7 +751,7 @@ public class ContentWizardPanel
         switchToBrowsePanelTab();
     }
 
-    private boolean waitUntilAlertPresent( long timeout )
+    private boolean waitIsAlertPresent( long timeout )
     {
         return WaitHelper.waitUntilAlertPresentNoException( getDriver(), timeout );
     }

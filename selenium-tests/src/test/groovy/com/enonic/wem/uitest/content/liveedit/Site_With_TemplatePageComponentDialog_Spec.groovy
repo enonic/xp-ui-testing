@@ -94,10 +94,10 @@ class Site_With_TemplatePageComponentDialog_Spec
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
 
 
-        when: "wizard closed"
-        wizard.closeWizardAndCheckAlert();
+        when: "wizard has been closed"
+        wizard.executeCloseWizardScript();
 
-        then: "Alert dialog appears, because renderer was changed from "
+        then: "Alert dialog appears, because renderer was changed"
         wizard.waitIsAlertDisplayed();
     }
 
@@ -107,11 +107,11 @@ class Site_With_TemplatePageComponentDialog_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit().showPageEditor().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
 
-        when: "button 'close' clicked"
+        when: "button 'close' was clicked"
         dialog.doCloseDialog();
         saveScreenshot( "page-comp-dialog-closed" );
 
-        then: "'page component view' is not displayed"
+        then: "'page component view' should not be displayed"
         !dialog.isOpened()
     }
 }

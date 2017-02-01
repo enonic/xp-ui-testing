@@ -99,7 +99,7 @@ class Restore_Version_Folder_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
-        modalDialog.setCheckedForInheritCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
+        modalDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
         sleep( 1000 );
         List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();

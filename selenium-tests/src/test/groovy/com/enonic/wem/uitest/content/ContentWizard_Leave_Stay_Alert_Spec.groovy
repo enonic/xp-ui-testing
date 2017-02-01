@@ -65,7 +65,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         String name = NameHelper.uniqueName( "folder" );
         and: "try to close the wizard with unsaved changes"
-        wizardPanel.typeDisplayName( name ).closeWizardAndCheckAlert();
+        wizardPanel.typeDisplayName( name ).executeCloseWizardScript();
 
         when: "'Leave' is selected"
         wizardPanel.acceptAlertAndLeavePage();
@@ -80,7 +80,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
         given: "content wizard is opened AND typed data was not saved"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         String name = NameHelper.uniqueName( "folder" );
-        wizardPanel.typeDisplayName( name ).closeWizardAndCheckAlert();
+        wizardPanel.typeDisplayName( name ).executeCloseWizardScript();
 
         when: "'Stay' is selected"
         wizardPanel.dismissAlertAndStayOnPage();

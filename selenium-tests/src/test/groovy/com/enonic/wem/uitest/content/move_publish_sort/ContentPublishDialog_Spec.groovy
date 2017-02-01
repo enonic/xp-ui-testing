@@ -35,7 +35,7 @@ class ContentPublishDialog_Spec
         dialog.getContentStatus( displayName ) == ContentStatus.OFFLINE.getValue();
     }
 
-    def "GIVEN existing folder in root WHEN one content without child selected and 'Publish' button clicked THEN 'Content publish' appears without 'Include child' checkbox"()
+    def "GIVEN existing folder without child in the root WHEN the folder was selected and 'Publish' button clicked THEN 'Content publish' should appear without 'Include child' icon"()
     {
         given: "existing folder in root"
         Content folderContent = buildFolderContent( "no_child", "content publish dialog" );
@@ -131,57 +131,57 @@ class ContentPublishDialog_Spec
         then: "only one name of content displayed"
         names.size() == 1;
 
-        and: "correct name of content present in the dialog"
+        and: "correct name of content should be displayed on the dialog"
         names.get( 0 ).contains( parentContent.getName() );
     }
 
-    def "GIVEN a parent content on root selected 'Content publish' dialog opened WHEN 'include child' checkbox set to true THEN correct text shown in the header of 'dependant list' and one dependant item is displayed"()
+    def "GIVEN a parent content on root is selected AND 'Content publish' dialog is opened WHEN 'include child' icon was pressed THEN correct text shown in the header of 'dependant list' and one dependant item should be displayed"()
     {
-        given: "parent content selected and 'Publish' button pressed"
+        given: "parent folder is selected and 'Publish' button pressed"
         findAndSelectContent( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        when:
+        when: "'include child' icon was pressed"
         contentPublishDialog.includeChildren( true );
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies" );
 
-        then: "The header of 'Dependencies list' appears"
+        then: "The header of 'Dependencies list' should appear"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
 
-        and: "correct text shown in the header"
+        and: "correct text should be shown in the header"
         contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
 
-        and: "one correct dependant is shown "
+        and: "one correct dependant should be shown"
         dependant.size() == 1;
 
         and: "correct name of the dependency is displayed"
         dependant.get( 0 ).contains( childContent1.getName() );
     }
 
-    def "GIVEN existing child content WHEN it content selected and 'Publish' button pressed THEN correct text shown in the header of 'dependencies list' and name of the parent folder is displayed"()
+    def "GIVEN existing child content WHEN the content was selected and 'Publish' button pressed THEN correct text should be present in the header of 'dependencies list' and name of the parent folder should be present"()
     {
         given: "existing child content"
         filterPanel.typeSearchText( childContent1.getName() );
 
-        when: "child content selected and 'Publish' button pressed"
+        when: "child content was selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( childContent1.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies-child" );
 
-        then: "The header of 'Dependencies list' appears"
+        then: "The header of 'Dependencies list' should be present"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
 
-        and: "correct text shown in the header"
+        and: "correct text should be shown in the header"
         contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
 
-        and: "one correct dependency shown "
+        and: "one correct dependency should be shown "
         dependant.size() == 1;
 
-        and: "name of the parent folder is displayed"
+        and: "name of the parent folder should be present"
         dependant.get( 0 ).contains( parentContent.getName() );
     }
 }

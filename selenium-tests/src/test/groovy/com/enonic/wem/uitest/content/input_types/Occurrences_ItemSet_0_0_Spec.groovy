@@ -134,7 +134,7 @@ class Occurrences_ItemSet_0_0_Spec
         itemSetViewPanel.removeOneItem();
 
         and: "Close button pressed"
-        wizard.closeWizardAndCheckAlert();
+        wizard.executeCloseWizardScript();
 
         then: "'Alert' dialog should appear"
         wizard.waitIsAlertDisplayed();

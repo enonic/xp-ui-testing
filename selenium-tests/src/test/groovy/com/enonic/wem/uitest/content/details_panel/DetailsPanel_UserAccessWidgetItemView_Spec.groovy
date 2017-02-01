@@ -62,7 +62,7 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         EditPermissionsDialog modalDialog = view.clickOnEditPermissionsLink();
 
         when: "content selected and  widget is displayed"
-        modalDialog.setCheckedForInheritCheckbox( false ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
+        modalDialog.setInheritPermissionsCheckbox( false ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "anonymous_ua_widget" );
 

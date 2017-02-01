@@ -58,9 +58,8 @@ class ImageEditor_Crop_Reset_Spec
         and: "Save button pressed "
         wizard.save();
 
-        and: "wizard closed"
-        wizard.closeWizardAndCheckAlert();
-        wizard.switchToBrowsePanelTab();
+        and: "wizard has been closed"
+        wizard.executeCloseWizardScript();
 
         then: "'Alert' with warning message should not be displayed"
         !wizard.isAlertPresent();
@@ -72,10 +71,10 @@ class ImageEditor_Crop_Reset_Spec
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
-        when: "the image opened"
+        when: "the image was opened"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
 
-        then: "'Reset' button displayed on the Image Editor"
+        then: "'Reset' button should be displayed on the Image Editor"
         formViewPanel.isButtonResetPresent();
     }
 
@@ -111,10 +110,9 @@ class ImageEditor_Crop_Reset_Spec
         imageFormViewPanel.clickOnResetButton();
 
         and: "tab with wizard has been closed"
-        wizard.save().closeWizardAndCheckAlert();
-        wizard.switchToBrowsePanelTab();
+        wizard.save().executeCloseWizardScript();
 
         then: "Alert dialog should not appear"
-        !wizard.isAlertPresent();
+        !wizard.waitIsAlertDisplayed();
     }
 }
