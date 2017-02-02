@@ -69,7 +69,7 @@ public class TestUtils
     }
 
     public static void createScreenCaptureWithRobot( String screenshotName )
-        throws AWTException, IOException
+        throws AWTException
     {
         String fileName = screenshotName + ".png";
         BufferedImage image = new Robot().createScreenCapture( new Rectangle( Toolkit.getDefaultToolkit().getScreenSize() ) );
@@ -86,7 +86,14 @@ public class TestUtils
             }
         }
         String fullFileName = folder.getAbsolutePath() + File.separator + fileName;
-        ImageIO.write( image, "png", new File( fullFileName ) );
+        try
+        {
+            ImageIO.write( image, "png", new File( fullFileName ) );
+        }
+        catch ( IOException e )
+        {
+            System.out.println( "IOException was occurred" );
+        }
     }
 
     public static String saveScreenshot( final TestSession testSession, String screenshotName )
@@ -113,7 +120,7 @@ public class TestUtils
         }
         catch ( IOException e )
         {
-
+            System.out.println( "IOException was occurred" );
         }
         return fileName;
     }

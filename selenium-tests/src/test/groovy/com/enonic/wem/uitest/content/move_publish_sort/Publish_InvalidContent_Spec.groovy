@@ -35,9 +35,9 @@ class Publish_InvalidContent_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN a content without a displayName WHEN it content selected and 'Publish' button on grid toolbar pressed THEN publish dialog appears AND the 'Publish' button is disabled and correct header present on dialog"()
+    def "GIVEN existing content without a displayName WHEN it content was selected and 'Publish' button on grid toolbar was pressed THEN 'Publish' button on the dialog should be disabled and warning message should be present on dialog"()
     {
-        given:
+        given: " existing content without a displayName"
         filterPanel.typeSearchText( invalidFolder.getName() );
         saveScreenshot( "publish_invalid_folder" )
 
@@ -46,44 +46,45 @@ class Publish_InvalidContent_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        then: "'invalid' subheader shown"
+        then: "warning message should be displayed"
         contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
 
-        and: "'publish' button disabled"
+        and: "'publish' button should be disabled"
         !contentPublishDialog.isPublishNowButtonEnabled();
 
-        and: "dependency list not present"
+        and: "dependency list should not be present"
         !contentPublishDialog.isDependenciesListHeaderDisplayed();
 
-        and: "one item present in the list"
+        and: "one item should be in the list"
         List<String> itemList = contentPublishDialog.getNamesOfContentsToPublish();
         itemList.size() == 1;
 
-        and: "correct name of content shown"
+        and: "correct name of content should be shown"
         contentPublishDialog.getNamesOfContentsToPublish().get( 0 ) == invalidFolder.getPath().toString();
     }
 
-    def "GIVEN a parent folder with not valid child WHEN parent content selected and 'Publish' button clicked THEN 'Content publish' dialog appears and 'Publish' button disabled"()
+    def "GIVEN existing parent folder with not valid child WHEN parent content was selected and 'Publish' button clicked THEN 'Publish' button on the 'Content publish' dialog should be disabled"()
     {
         setup: "add a valid parent folder"
         Content parentFolder = buildFolderContent( "folder", "publish not valid content" );
         addContent( parentFolder );
 
-        and: "add a not valid child folder"
+        and: "child folder was added"
         findAndSelectContent( parentFolder.getName() );
         Content childContent = buildFolderContentWithParent( "not_valid", null, parentFolder.getName() );
         contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent ).save().
             closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "parent content selected and 'Publish' button pressed"
+        when: "parent content was selected and 'Publish' button pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
+        and: "'include child' icon was clicked"
         contentPublishDialog.includeChildren( true );
 
-        then: "modal dialog appears and 'Publish' button on dialog should be disabled"
+        then: "'Publish' button on the 'Content publish' dialog should be disabled"
         !contentPublishDialog.isPublishNowButtonEnabled();
 
-        and: "correct subheader present in dialog"
+        and: "warning message should be displayed"
         contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
     }
 }

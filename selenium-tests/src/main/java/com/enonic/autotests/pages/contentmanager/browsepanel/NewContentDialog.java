@@ -28,6 +28,7 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.TextTransfer;
 import com.enonic.xp.schema.content.ContentTypeName;
 
@@ -193,12 +194,14 @@ public class NewContentDialog
     {
         uploadButton.click();
         sleep( 1000 );
+        TestUtils.createScreenCaptureWithRobot( "upload_image" );
         File file = createFileInTmp( path, fileName );
         insertPathToFileToSystemDialog( file.getAbsolutePath() );
         return new ContentBrowsePanel( getSession() );
     }
 
     public ContentBrowsePanel doUploadFile( String pathToFile )
+        throws AWTException
     {
         String absolutePath = null;
         URL resource = NewContentDialog.class.getResource( pathToFile );
@@ -212,6 +215,7 @@ public class NewContentDialog
         }
         uploadButton.click();
         sleep( 1000 );
+        TestUtils.createScreenCaptureWithRobot( "upload_image" );
         TextTransfer transfer = new TextTransfer();
         transfer.typePathToFileToSystemDialog( absolutePath );
         return new ContentBrowsePanel( getSession() );
