@@ -116,7 +116,8 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "Content selected, and changes applied"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        linkModalDialog.clickContentBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText( CONTENT_TEXT ).pressInsertButton();
+        linkModalDialog.clickContentBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText(
+            CONTENT_TEXT ).pressInsertButton().waitForDialogClosed(); ;
         saveScreenshot( "conf-dialog-content" );
         configurationDialog.doApply();
 
@@ -128,74 +129,80 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.getTextFromArea().contains( CONTENT_TEXT );
     }
 
-    def "GIVEN site configurator dialog opened WHEN Download-resource selected, and changes applied THEN correct text present in HtmlArea"()
+    def "GIVEN site configurator dialog opened WHEN Download-resource selected, and changes applied THEN correct text should be present in HtmlArea"()
     {
-        given: "site opened"
+        given: "site is opened"
         findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        and: "'Site Configurator' dialog is opened"
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        when: "Content selected, and changes applied"
+        when: "InsertLinkModalDialog was opened"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        linkModalDialog.clickDownloadBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText( DOWNLOAD_TEXT ).pressInsertButton();
+        and: "download bar-item has been pressed AND data typed AND 'Insert' button pressed"
+        linkModalDialog.clickDownloadBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText(
+            DOWNLOAD_TEXT ).pressInsertButton().waitForDialogClosed();
         saveScreenshot( "conf-dialog-download" );
+        and: "'Apply' button on the SiteConfiguratorDialog has been pressed"
         configurationDialog.doApply();
 
-        and: "and configurationDialog opened again"
+        and: "and the configurationDialog is opened again"
         configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        then: "correct text present in HtmlArea"
+        then: "correct text present should be displayed in the HtmlArea"
         configurationDialog.getTextFromArea().contains( DOWNLOAD_TEXT );
     }
 
-    def "GIVEN site configurator dialog opened WHEN Email-link inserted, and changes applied THEN correct text present in HtmlArea"()
+    def "GIVEN site configurator dialog is opened WHEN Email-link inserted, and changes applied THEN correct text should be present in HtmlArea"()
     {
-        given: "site opened"
+        given: "site is opened"
         findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        when: "Content selected, and changes applied"
+        when: "InsertLinkModalDialog was opened"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         saveScreenshot( "conf-dialog-email" );
+        and: "download email bar item has been pressed AND data typed AND 'Insert' button pressed"
         linkModalDialog.clickEmailBarItem().typeEmail( EMAIL ).typeSubject( EMAIL_TEXT ).typeText( "send to" ).pressInsertButton();
+        and: "'Apply' button on the SiteConfiguratorDialog has been pressed"
         configurationDialog.doApply();
 
-        and: "and configurationDialog opened again"
+        and: "the configurationDialog is opened again"
         configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
         saveScreenshot( "conf-dialog-email-inserted" );
 
-        then: "correct text present in HtmlArea"
+        then: "correct text should be present in HtmlArea"
         configurationDialog.getTextFromArea().contains( EMAIL_TEXT );
     }
 
-    def "GIVEN site configurator dialog opened WHEN Background image selected THEN correct image file present in a page-source"()
+    def "GIVEN site configurator dialog is opened WHEN Image for the background was selected and changes applied THEN correct image file should be present in a page-source"()
     {
         given: "site opened"
         ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        when: "background selected and changes applied"
+        when: "Image for the background is selected and changes applied"
         configurationDialog.selectBackGroundImage( IMPORTED_MAN2_IMAGE_DISPLAY_NAME ).doApply();
         sleep( 700 );
         contentWizard.clickToolbarPreview();
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
 
-        then: "correct background present in a page-source"
+        then: "correct background should be present in a page-source"
         source.contains( backgroundPart );
     }
 
-    def "GIVEN site configurator dialog opened WHEN 'embedded iframe' macro inserted, and changes applied THEN correct text present in page sources"()
+    def "GIVEN site configurator dialog is opened WHEN 'embedded iframe' macro inserted, and changes applied THEN correct text should be present in page sources"()
     {
         given: "site opened"
         ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        and: "'embedded iframe' macro inserted, and changes applied"
+        and: "'embedded iframe' macro was inserted, and changes applied"
         MacroModalDialog macroModalDialog = configurationDialog.showToolbarAndClickOnInsertMacroButton();
         sleep( 500 );
         saveScreenshot( "site_conf_dialog_macro" );
@@ -205,7 +212,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         macroModalDialog.clickInsertButton();
         configurationDialog.doApply();
 
-        when: "preview button pressed"
+        when: "preview button has been pressed"
         contentWizard.clickToolbarPreview();
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
         saveScreenshot( "site_config_preview" );
@@ -213,7 +220,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         then: "page source of new opened tab in a browser is not empty"
         source != null;
 
-        and: "iframe text is present in the sources"
+        and: "'iframe' text should be present in the sources"
         source.contains( "iframe" );
     }
 }

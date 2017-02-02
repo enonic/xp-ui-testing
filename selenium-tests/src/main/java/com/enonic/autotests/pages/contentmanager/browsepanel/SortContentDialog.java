@@ -83,9 +83,9 @@ public class SortContentDialog
         return cancelButton.isEnabled();
     }
 
-    public boolean isPresent()
+    public boolean isDisplayed()
     {
-        return findElements( By.xpath( DIALOG_CONTAINER ) ).size() > 0;
+        return isElementDisplayed( By.xpath( DIALOG_CONTAINER ) );
     }
 
     public String getTitle()

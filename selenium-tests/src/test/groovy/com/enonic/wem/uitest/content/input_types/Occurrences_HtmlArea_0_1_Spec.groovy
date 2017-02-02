@@ -34,7 +34,7 @@ class Occurrences_HtmlArea_0_1_Spec
         wizard.typeData( htmlAreaContent );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
-        modalDialog.clickURLBarItem().typeText( NORWEGIAN_TEXT ).typeURL( "http://enonic.com" ).pressInsertButton();
+        modalDialog.clickURLBarItem().typeText( NORWEGIAN_TEXT ).typeURL( "http://enonic.com" ).pressInsertButton().waitForDialogClosed();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
 
@@ -71,7 +71,7 @@ class Occurrences_HtmlArea_0_1_Spec
         !htmlAreaFormViewPanel.isEditorToolbarVisible();
     }
 
-    def "WHEN wizard opened AND the editor in edit mode THEN HtmlArea toolbar is visible"()
+    def "WHEN wizard is opened AND the editor in edit mode THEN HtmlArea-toolbar should be displayed"()
     {
         when: "start to add a content with type 'HtmlArea 0:1'"
         Content tinyMceContent = buildHtmlArea0_1_Content( TEST_TEXT );
@@ -79,62 +79,62 @@ class Occurrences_HtmlArea_0_1_Spec
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         htmlAreaFormViewPanel.type( tinyMceContent.getData() );
 
-        then: "HtmlArea-toolbar is visible"
+        then: "HtmlArea-toolbar should be displayed"
         htmlAreaFormViewPanel.isEditorToolbarVisible();
     }
 
-    def "GIVEN saving of content with HtmlArea editor (0:1) and text typed WHEN content opened for edit THEN expected string is present in the editor "()
+    def "GIVEN existing content with HtmlArea editor (0:1) and text was saved WHEN content opened for edit THEN expected text should be present in the editor"()
     {
         given: "new content with type HtmlArea added'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         String text = htmlAreaFormViewPanel.getInnerHtml();
 
-        then: "expected text present in the editor"
+        then: "expected text should be present in the editor"
         text == EXPECTED_INNER_HTML;
     }
 
-    def "GIVEN saving of content with HtmlArea editor (0:1) and text not typed WHEN content opened for edit THEN no text present in the editor"()
+    def "GIVEN existing content with HtmlArea editor (0:1) and text was not saved WHEN content opened for edit THEN text area should be empty"()
     {
-        given: "new content with type HtmlArea added'"
+        given: "new content with type HtmlArea is added'"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        then: "text area is empty"
+        then: "text area should be empty"
         htmlAreaFormViewPanel.getInnerHtml() == BaseHtmlAreaFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
     }
     // verifies the XP-4698
-    def "GIVEN Insert Link modal dialog is opened WHEN the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog "()
+    def "GIVEN 'Insert Link' modal dialog is opened WHEN the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog"()
     {
         given: "'Insert Link' modal dialog is opened "
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
+        InsertLinkModalDialog insertLinkModalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
 
         when: "the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed"
-        modalDialog.clickURLBarItem().typeText( "" ).typeURL( "http://enonic.com" ).pressInsertButton();
+        insertLinkModalDialog.clickURLBarItem().typeText( "" ).typeURL( "http://enonic.com" ).pressInsertButton();
         saveScreenshot( "validation_msg_text" );
 
-        then: "validation message for the input appears"
-        modalDialog.isValidationMessageForTextInputDisplayed();
+        then: "validation message for the input should appear"
+        insertLinkModalDialog.isValidationMessageForTextInputDisplayed();
 
         and: "correct message is displayed"
-        modalDialog.getValidationMessageForTextInput() == InsertLinkModalDialog.VALIDATION_MESSAGE;
+        insertLinkModalDialog.getValidationMessageForTextInput() == InsertLinkModalDialog.VALIDATION_MESSAGE;
     }
     // verifies the XP-4698
-    def "GIVEN Insert Link modal dialog is opened WHEN the Text has been typed but the required 'URL' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog "()
+    def "GIVEN 'Insert Link' modal dialog is opened WHEN the Text has been typed but the required 'URL' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog "()
     {
         given: "'Insert Link' modal dialog is opened "
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
@@ -143,11 +143,11 @@ class Occurrences_HtmlArea_0_1_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
 
-        when: "the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed"
+        when: "the URL has been typed but the required 'text' field has not AND 'Insert' button has been pressed"
         modalDialog.clickURLBarItem().typeText( "test" ).typeURL( "" ).pressInsertButton();
         saveScreenshot( "validation_msg_url" );
 
-        then: "validation message for the input appears"
+        then: "validation message for the input should be displayed"
         modalDialog.isValidationMessageForUrlInputDisplayed();
     }
 }

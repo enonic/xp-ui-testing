@@ -125,10 +125,10 @@ public class InsertLinkModalDialog
         return this;
     }
 
-    public void pressInsertButton()
+    public InsertLinkModalDialog pressInsertButton()
     {
         getDisplayedElement( By.xpath( INSERT_OR_UPDATE_BUTTON ) ).click();
-        waitForDialogClosed();
+        return this;
     }
 
     public boolean waitForDialogClosed()
@@ -136,7 +136,7 @@ public class InsertLinkModalDialog
         boolean isDialogInvisible = waitInvisibilityOfElement( By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL );
         if ( !isDialogInvisible )
         {
-            saveScreenshot( "err_insert_link_dialog_not_closed!" );
+            saveScreenshot( "err_insert_link_dialog_not_closed" );
             throw new TestFrameworkException( "'Insert Link' dialog was not closed" );
         }
         return isDialogInvisible;
