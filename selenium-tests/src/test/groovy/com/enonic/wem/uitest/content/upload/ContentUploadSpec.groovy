@@ -48,12 +48,12 @@ class ContentUploadSpec
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
 
         when: " click on drop zone and select a archive"
-        TestUtils.saveScreenshot( getSession(), "start-upload-txt" )
+        TestUtils.createScreenCaptureWithRobot( "upload_new" );
         dialog.doUploadFile( pathToTxt, FILE_NAME );
         sleep( 1000 )
 
         then: "new png file content appears in the browse panel"
-        TestUtils.saveScreenshot( getSession(), "upload-txt" )
+        saveScreenshot( "txt_file_should_be_uploaded" );
         contentBrowsePanel.exists( FILE_NAME )
     }
 
@@ -62,7 +62,7 @@ class ContentUploadSpec
         when: "text file was selected and opened"
         filterPanel.typeSearchText( FILE_NAME );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( FILE_NAME ).clickToolbarEdit();
-        TestUtils.saveScreenshot( getSession(), "txt-content-opened" )
+        saveScreenshot( "txt-content-opened" )
 
         then: "correct name is displayed"
         wizardPanel.getNameInputValue().equalsIgnoreCase( FILE_NAME );
