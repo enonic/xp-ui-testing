@@ -43,7 +43,7 @@ class PortalContentCreating_Spec
     Content SITE;
 
 
-    def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller added and wizard closed THEN new template should be listed"()
+    def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller was added THEN new template should be listed"()
     {
         given: "existing Site based on 'My First App'"
         SITE = buildMyFirstAppSite( "mysite" );
@@ -57,20 +57,20 @@ class PortalContentCreating_Spec
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_COUNTRY, TEMPLATE_DISPLAY_NAME,
                                            SITE.getName() );
 
-        when: "'Templates' folder selected and new page-template added"
+        when: "'Templates' folder selected and new page-template is added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
 
-        and: "the template saved"
+        and: "the template is saved"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
-        then: "new page-template listed"
+        then: "new page-template should be listed"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing page-template is opened WHEN 'country region' controller selected and 'country' part inserted THEN correct page-sources are present in the HTML"()
+    def "GIVEN existing page-template is opened WHEN 'country region' controller selected and 'country' part inserted THEN correct page-sources should be present in the HTML"()
     {
         given: "existing page-template is opened"
         ContentWizardPanel wizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
@@ -89,7 +89,7 @@ class PortalContentCreating_Spec
         source.contains( "City Creation/Update" );
     }
 
-    def "GIVEN new country-content added  WHEN city-creation page opened AND 'SUBMIT' button pressed  AND city-content added as child into the country THEN new child content exist beneath a parent"()
+    def "GIVEN new country-content is added  WHEN city-creation page opened AND 'SUBMIT' button pressed  AND city-content added as child into the country THEN new child content should be listed beneath the parent"()
     {
         given: "new country-content added"
         NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", SITE.getName() );
@@ -110,45 +110,44 @@ class PortalContentCreating_Spec
         HomePage homePage = new HomePage( getSession() );
         homePage.openContentStudioApplication();
 
-        then: "correct child content exist beneath a parent"
+        then: "content with name 'Norway'  should be listed beneath the site"
         filterPanel.typeSearchText( "Norway" );
         contentBrowsePanel.expandContent( NOR_CONTENT.getPath() );
         saveScreenshot( "norway-expanded" );
+        and: "Oslo sity should be present beneath the Norway"
         contentBrowsePanel.exists( OSLO_CITY_NAME );
     }
 
-    def "GIVEN just created through the portal content WHEN city-content opened for edit THEN correct location and population displayed"()
+    def "WHEN just created through the portal Oslo-content is opened  THEN correct location and population should be displayed"()
     {
-        when: "city-content opened for edit"
+        when: "Oslo-content is opened"
         findAndSelectContent( "oslo" ).clickToolbarEdit()
         CityFormView cityFormView = new CityFormView( getSession() );
         saveScreenshot( "oslo-city-content-opened" );
 
-        then: "correct location displayed"
+        then: "correct location should be displayed"
         cityFormView.getLocationValue() == OSLO_LOCATION;
-        and: "and correct population displayed"
+        and: "and correct population should be displayed"
         cityFormView.getPopulationValue() == OSLO_POPULATION;
     }
 
-    def "GIVEN existing city content WHEN page for 'creating/updating' content and new population typed THEN the city-content with the new population present in the grid "()
+    def "GIVEN existing Oslo-content WHEN 'creating/updating' page is opened AND new population for Oslo is typed THEN Oslo-content with the new population should be present in the grid"()
     {
-        given: "city-content opened for edit and new population typed"
+        given: "Creation-page is opened AND Oslo-content is updated, new population is typed"
         openResourceInDraft( SITE.getName() + "/" + NOR_CONTENT.getName() );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
         cityCreationPage.typeCityName( "oslo" ).typeCityPopulation( NEW_OSLO_POPULATION ).typeCityLocation( OSLO_LOCATION ).clickSubmit();
 
-        when:
+        when: "navigate to Content Studio and Oslo-content is opened"
         openHomePage();
         HomePage homePage = new HomePage( getSession() );
         homePage.openContentStudioApplication();
-
-        then: "new population displayed"
         findAndSelectContent( "oslo" ).clickToolbarEdit();
         sleep( 500 );
+
+        then: "new population for Oslo should be displayed"
         CityFormView cityFormView = new CityFormView( getSession() );
         saveScreenshot( "oslo-city-content-new-population" );
-        cityFormView.getLocationValue() == OSLO_LOCATION;
-        and: "and correct population displayed"
         cityFormView.getPopulationValue() == NEW_OSLO_POPULATION;
     }
 }

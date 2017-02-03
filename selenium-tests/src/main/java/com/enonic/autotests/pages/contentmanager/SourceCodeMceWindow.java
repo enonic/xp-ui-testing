@@ -24,11 +24,11 @@ public class SourceCodeMceWindow
 
     private final String TEXT_AREA = WINDOW + "//textarea";
 
-    private final String BUTTON_OK = WINDOW + "//button[text()='Ok']";
+    private final String BUTTON_OK = WINDOW + "//div[contains(@class,'mce-btn') and descendant::span[text()='Ok']]";
 
     private final String BUTTON_CLOSE = WINDOW + "//button[contains(@class,'mce-close')]";
 
-    private final String BUTTON_CANCEL = WINDOW + "//button[text()='Cancel']";
+    private final String BUTTON_CANCEL = WINDOW + "//div[contains(@class,'mce-btn') and descendant::span[text()='Cancel']]";
 
     @FindBy(xpath = BUTTON_OK)
     WebElement buttonOk;
@@ -64,7 +64,6 @@ public class SourceCodeMceWindow
         String script = "return document.getElementById(arguments[0]).value";
         String result = getJavaScriptExecutor().executeScript( script, id ).toString();
         return result;
-
     }
 
     public boolean isTitlePresent()

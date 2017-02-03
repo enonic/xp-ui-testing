@@ -99,9 +99,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
     }
 
-    def "GIVEN site with 2 image-components WHEN swapping components by DnD THEN components shown correctly"()
+    def "GIVEN site with 2 image-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()
     {
-        given: "site with 2 image-components"
+        given: "site with 2 image-components is opened"
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
@@ -109,7 +109,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         saveScreenshot( "two-images-in-view" );
         LinkedList<String> before = liveFormPanel.getImageNames();
 
-        when: "swapping components by DnD"
+        when: "swapping of components by DnD"
         wizard.switchToDefaultWindow();
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
@@ -122,7 +122,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
         then: "images swapped"
         before.getFirst() == TEST_IMAGE_NAME_SWAP;
-        and:
+        and: "components should be displayed in the new order"
         after.getFirst() == IMAGE_NAME_FOR_TEMPLATE;
 
     }

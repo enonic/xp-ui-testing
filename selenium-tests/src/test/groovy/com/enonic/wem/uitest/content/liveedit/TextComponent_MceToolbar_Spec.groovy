@@ -29,7 +29,7 @@ class TextComponent_MceToolbar_Spec
     @Shared
     String TEST_TEXT = "test text";
 
-    def "GIVEN Page Components View is opened WHEN text component inserted THEN mce-toolbar appears AND all buttons are present"()
+    def "GIVEN Page Components View is opened WHEN text component was inserted THEN mce-toolbar should appear AND all buttons should be present"()
     {
         given: "Page Components View is opened"
         SITE = buildSimpleSiteApp();
@@ -37,7 +37,7 @@ class TextComponent_MceToolbar_Spec
             SITE ).selectPageDescriptor( MAIN_REGION_PAGE_DESCRIPTOR_NAME ).save();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "new text component inserted"
+        when: "new text component is inserted"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
@@ -45,7 +45,7 @@ class TextComponent_MceToolbar_Spec
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
         saveScreenshot( "mce_toolbar_should_be_displayed" );
 
-        then: "mce toolbar is displayed"
+        then: "mce toolbar should be displayed"
         mceToolbar.isDisplayed();
 
         and: "'Formats' menu is displayed on the toolbar"
@@ -102,7 +102,7 @@ class TextComponent_MceToolbar_Spec
 
     def "GIVEN existing text-component WHEN the component right-clicked AND 'Edit' menu item was selected AND 'Source Code' button clicked THEN Source Code window is opened"()
     {
-        given: "existing text component"
+        given: "existing text component is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
@@ -124,10 +124,10 @@ class TextComponent_MceToolbar_Spec
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
         SourceCodeMceWindow sourceCodeMceWindow = mceToolbar.clickOnSourceCodeButton();
 
-        then: "modal dialog is opened"
+        then: "'source code' modal dialog should be opened"
         sourceCodeMceWindow.isOpened();
 
-        and: "correct text is present in the window"
+        and: "correct text should be present in the window"
         sourceCodeMceWindow.getText().contains( TEST_TEXT );
 
         and: "source code window has the correct title"
@@ -136,13 +136,13 @@ class TextComponent_MceToolbar_Spec
         and: "source code window has the correct title"
         sourceCodeMceWindow.getTitle() == SourceCodeMceWindow.WINDOW_TITLE;
 
-        and: "button Cancel is displayed"
+        and: "button Cancel should be present"
         sourceCodeMceWindow.isButtonCancelPresent();
 
-        and: "button Ok is displayed"
+        and: "button Ok should be present"
         sourceCodeMceWindow.isButtonOkPresent();
 
-        and: "button 'Close' is displayed"
+        and: "button 'Close' should be present"
         sourceCodeMceWindow.isButtonClosePresent();
     }
 }

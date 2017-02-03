@@ -32,7 +32,7 @@ class MyFirstApp_Spec
         contentBrowsePanel.exists( MY_FIRST_SITE.getName() );
     }
 
-    def "GIVEN adding new country-content WHEN dtata was typed AND 'save' pressed THEN new added content should be listed"()
+    def "GIVEN adding new country-content WHEN data was typed AND 'save' pressed THEN new added content should be listed"()
     {
         given: "site is selected and wizard for adding of new country-content is opened"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, MY_FIRST_SITE.getName() );
