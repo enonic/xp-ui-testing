@@ -28,7 +28,7 @@ class Fragment_Create_From_Image_Spec
     @Shared
     String FRAGMENT_DISPLAY_NAME = HAND_IMAGE_DISPLAY_NAME;
 
-    def "GIVEN Page Component View is opened AND image component is inserted WHEN click on the image-component and 'create fragment' menu item is selected THEN fragment-wizard is opened in the new browser tab"()
+    def "GIVEN 'Page Component View' is opened AND image component is inserted WHEN click on the image-component and click on 'create fragment' menu item THEN fragment-wizard should be opened in the new browser tab"()
     {
         given: "Page Components View is opened"
         SITE = buildSimpleSiteApp();
@@ -44,7 +44,7 @@ class Fragment_Create_From_Image_Spec
         imageComponentView.selectImageItemFromList( HAND_IMAGE_DISPLAY_NAME );
         wizard.save();
 
-        when: "click on the image-component and 'create fragment' menu item is selected"
+        when: "click on the image-component and click on 'create fragment' menu item"
         wizard.showComponentView();
         pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( "Create Fragment" );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
@@ -58,7 +58,7 @@ class Fragment_Create_From_Image_Spec
         and:
         wizard.isWizardStepPresent( "Fragment" );
 
-        and: "Preview button is enabled"
+        and: "Preview button should be enabled"
         wizard.isPreviewButtonEnabled();
     }
 
@@ -78,12 +78,12 @@ class Fragment_Create_From_Image_Spec
         fragments.get( 0 ) == HAND_IMAGE_DISPLAY_NAME;
     }
 
-    def "GIVEN existing site with the fragment is opened WHEN page component view is opened AND context menu for the fragment has been opened THEN all menu items shoule be present"()
+    def "GIVEN existing site with the fragment is opened WHEN page component view is opened AND context menu for the fragment has been opened THEN all menu items should be present"()
     {
         given: "existing site with the fragment is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
 
-        when: "page component view opened"
+        when: "page component view is opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
         pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME );
         saveScreenshot( "fragment_context_menu" );
@@ -115,7 +115,7 @@ class Fragment_Create_From_Image_Spec
         given: "existing site with the fragment is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
 
-        when: "page component view opened"
+        when: "page component view is opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
         pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.EDIT_IN_NEW_TAB.getValue() );
         sleep( 500 );
@@ -125,7 +125,7 @@ class Fragment_Create_From_Image_Spec
         then: "fragment-wizard should be opened in the new browser tab with the correct display name"
         wizard.getNameInputValue() == buildFragmentName( HAND_IMAGE_DISPLAY_NAME );
 
-        and: "Fragment step should be present on the wizard-page"
+        and: "Fragment wizard-step should be present on the wizard-page"
         wizard.isWizardStepPresent( "Fragment" );
     }
 

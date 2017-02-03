@@ -32,34 +32,34 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( SIT_NAME );
     }
 
-    def "GIVEN existing site WHEN site was selected and opened for edit THEN 'Page Editor' shown and buttons 'Show Component view'  'Show Inspection panel' should not be visible"()
+    def "GIVEN existing site WHEN site is opened THEN 'Page Editor' should be shown AND buttons 'Show Component view' 'Show Inspection panel' should not be visible"()
     {
         given: "add a site, based on the test application"
         filterPanel.typeSearchText( SIT_NAME );
 
-        when: "site selected and opened for edit"
+        when: "site was selected and opened"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( SIT_NAME ).clickToolbarEdit();
 
-        then: "Page Editor is shown by default"
+        then: "Page Editor should be shown by default"
         wizard.isLiveEditFrameDisplayed();
-        and: "button show-hide the 'Page Editor' is displayed"
+        and: "button show-hide the 'Page Editor' should be displayed"
         wizard.isShowPageEditorButtonDisplayed();
 
-        and: "'Show Component view' not displayed on toolbar"
+        and: "'Show Component view' should not be displayed on the toolbar"
         !wizard.isComponentViewTogglerDisplayed()
 
         and: "'Show Inspection panel' not displayed on toolbar"
         !wizard.isInspectionPanelTogglerDisplayed();
     }
 
-    def "GIVEN existing site WHEN template added THEN it listed beneath the _templates folder"()
+    def "GIVEN existing site WHEN template was added THEN it should be listed beneath the '_templates' folder"()
     {
         given: "add a site, based on the test application"
         filterPanel.typeSearchText( SIT_NAME );
         contentBrowsePanel.expandContent( ContentPath.from( SIT_NAME ) );
         Content template = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, "site", "site-template", SIT_NAME );
 
-        when: "test site should be listed"
+        when: "the site should be listed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).typeData( template );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
@@ -70,7 +70,7 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( template.getName() );
     }
 
-    def "WHEN existing site with added template opened for edit THEN shader is applied to entire page"()
+    def "WHEN existing site with added template is opened THEN shader is applied to entire page"()
     {
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
@@ -84,7 +84,7 @@ class LiveEditLockedMode_Spec
 
     def "WHEN site opened for edit AND 'Page Editor' is shown AND right button clicked on the frame THEN context menu for the page should appear"()
     {
-        when: "site opened for edit"
+        when: "site is opened"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
@@ -93,14 +93,14 @@ class LiveEditLockedMode_Spec
         itemViewContextMenu.isOpened();
     }
 
-    def "GIVEN site opened for edit WHEN the 'Customize' menu item selected THEN LiveEdit should not be locked"()
+    def "GIVEN site is opened WHEN the 'Customize' menu item clicked THEN LiveEdit should not be locked"()
     {
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
-        when: "the 'Customize' menu item selected"
+        when: "the 'Customize' menu item was clicked"
         itemViewContextMenu.clickOnCustomizeMenuItem();
         wizard.switchToDefaultWindow();
 

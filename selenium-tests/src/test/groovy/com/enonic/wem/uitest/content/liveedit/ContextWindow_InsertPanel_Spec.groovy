@@ -19,7 +19,7 @@ class ContextWindow_InsertPanel_Spec
         given: "creating of new site"
         TEST_SITE = buildMyFirstAppSite( "test-insert-panel" );
 
-        when: "page controller is not selected"
+        when: "page controller was not selected"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
             TEST_SITE ).save();
         saveScreenshot( "test-site-controller-not-selected" );
@@ -52,16 +52,16 @@ class ContextWindow_InsertPanel_Spec
         given: "'Page Editor' for the existing site opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
-        when: "'Inspect' link clicked"
+        when: "'Inspect' link was clicked"
         ContextWindowPageInsertablesPanel insertablesPanel = new ContextWindowPageInsertablesPanel( getSession() );
         siteWizard.showContextWindow().clickOnInsertLink();
         saveScreenshot( "insertables-panel-opened" );
 
-        then: "'inspect panel' is displayed"
+        then: "'inspect panel' should be displayed"
         insertablesPanel.isDisplayed();
         List<String> components = insertablesPanel.getAvailableComponents();
 
-        and: "correct number of components are shown"
+        and: "correct number of components should be shown"
         components.size() == 5
 
         and: "'Image' component is present"

@@ -80,8 +80,8 @@ public class LoginPage
         boolean isLoginPageLoaded = waitUntilVisibleNoException( By.xpath( EMAIL_INPUT_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isLoginPageLoaded )
         {
-            saveScreenshot( NameHelper.uniqueName( "err_login_page" ) );
-            throw new TestFrameworkException( "login page not loaded!" );
+            saveScreenshot( NameHelper.uniqueName( "err_load_login_page" ) );
+            throw new TestFrameworkException( "login page was not loaded!" );
         }
         return isLoginPageLoaded;
     }
