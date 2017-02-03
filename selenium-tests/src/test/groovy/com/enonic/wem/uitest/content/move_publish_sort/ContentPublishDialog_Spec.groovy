@@ -46,96 +46,96 @@ class ContentPublishDialog_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        then: "'Include Child' button should be displayed displayed"
-        contentPublishDialog.isIncludeChildTogglerDisplayed();
+        then: "'Include Child' button should not be displayed displayed"
+        !contentPublishDialog.isIncludeChildTogglerDisplayed();
 
         and: "correct status of content is displayed"
         contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.OFFLINE.getValue();
     }
 
-    def "GIVEN parent content with a child WHEN the parent content selected and 'Publish' button clicked THEN 'Content publish' appears with correct control elements"()
+    def "GIVEN parent content with a child WHEN the parent content is selected and 'Publish' button clicked THEN 'Content publish' dialog should appear with correct control elements"()
     {
-        setup:
+        setup: "add a parent folder"
         parentContent = buildFolderContent( "publish_dialog", "content publish dialog" );
         addContent( parentContent );
 
-        and:
+        and: "add one child to the parent folder"
         filterPanel.typeSearchText( parentContent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
         childContent1 = buildFolderContentWithParent( "publish_dialog", "child-folder1", parentContent.getName() );
         addContent( childContent1 );
 
-        when: "parent content selected and 'Publish' button pressed"
+        when: "parent content is selected and 'Publish' button was pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        then: "'ContentPublishDialog' dialog displayed"
+        then: "'ContentPublishDialog' dialog should be displayed"
         contentPublishDialog.isOpened();
 
-        and: "dialog has a correct title"
+        and: "dialog should have the correct title"
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
 
-        and: "dialog has 'Publish' and 'Cancel' buttons"
+        and: "'Publish' and 'Cancel' buttons should be displayed on the dialog"
         contentPublishDialog.isPublishNowButtonEnabled();
 
         and:
         contentPublishDialog.isCancelButtonBottomEnabled();
 
-        and:
+        and: "'Cancel' button on the top should be displayed"
         contentPublishDialog.isCancelButtonTopEnabled();
 
-        and: "Dependants should not be displayed"
+        and: "Dependants list should not be displayed, because 'Include child' icon was not pressed"
         !contentPublishDialog.isDependantsDisplayed();
 
     }
 
-    def "GIVEN 'Content Publish' dialog shown WHEN the cancel button on the bottom clicked THEN dialog not present"()
+    def "GIVEN 'Content Publish' dialog shown WHEN the cancel button on the bottom was clicked THEN dialog is closing"()
     {
-        given: "parent content selected and 'Publish' button pressed"
+        given: "parent content is selected and 'Publish' button pressed"
         findAndSelectContent( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        when: "button 'Cancel' on the bottom of dialog pressed"
+        when: "button 'Cancel' on the bottom of dialog was pressed"
         contentPublishDialog.clickOnCancelBottomButton();
 
-        then: "dialog not present"
+        then: "dialog is closing"
         !contentPublishDialog.isOpened();
     }
 
-    def "GIVEN 'Content Publish' dialog shown WHEN the button cancel on the top clicked THEN dialog not present"()
+    def "GIVEN 'Content Publish' dialog is opened WHEN the button cancel on the top was clicked THEN dialog is closing"()
     {
         given: "parent content selected and 'Publish' button pressed"
         findAndSelectContent( parentContent.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        when: "button 'Cancel' on the top of dialog pressed"
+        when: "button 'Cancel' on the top of dialog was pressed"
         contentPublishDialog.clickOnCancelTopButton();
 
-        then: "dialog not present"
+        then: "dialog is closing"
         !contentPublishDialog.isOpened();
     }
 
-    def "GIVEN one parent content on root selected WHEN 'Content Publish' dialog opened THEN correct name of content present in the dialog"()
+    def "GIVEN parent content on root is selected WHEN 'Content Publish' dialog opened THEN correct name of content present in the dialog"()
     {
-        given: "one parent content in the root selected"
+        given: "parent content in the root is selected"
         findAndSelectContent( parentContent.getName() );
 
-        when: "'Content Publish' dialog opened"
+        when: "'Content Publish' dialog has been opened"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         List<String> names = contentPublishDialog.getNamesOfContentsToPublish();
         saveScreenshot( "publish-dialog-opened" );
 
-        then: "only one name of content displayed"
+        then: "only one name of content should be present on the dialog"
         names.size() == 1;
 
         and: "correct name of content should be displayed on the dialog"
         names.get( 0 ).contains( parentContent.getName() );
     }
 
-    def "GIVEN a parent content on root is selected AND 'Content publish' dialog is opened WHEN 'include child' icon was pressed THEN correct text shown in the header of 'dependant list' and one dependant item should be displayed"()
+    def "GIVEN parent content on root is selected AND 'Content publish' dialog is opened WHEN 'include child' icon was pressed THEN one dependant item should be displayed on the dialog"()
     {
         given: "parent folder is selected and 'Publish' button pressed"
         findAndSelectContent( parentContent.getName() );
@@ -147,20 +147,20 @@ class ContentPublishDialog_Spec
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies" );
 
-        then: "The header of 'Dependencies list' should appear"
+        then: "The header of 'Dependencies list' should be displayed"
         contentPublishDialog.isDependenciesListHeaderDisplayed();
 
         and: "correct text should be shown in the header"
         contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
 
-        and: "one correct dependant should be shown"
+        and: "one correct dependant should be present"
         dependant.size() == 1;
 
-        and: "correct name of the dependency is displayed"
+        and: "correct name of the dependency should be displayed"
         dependant.get( 0 ).contains( childContent1.getName() );
     }
 
-    def "GIVEN existing child content WHEN the content was selected and 'Publish' button pressed THEN correct text should be present in the header of 'dependencies list' and name of the parent folder should be present"()
+    def "GIVEN existing child content WHEN the content was selected and 'Publish' button pressed THEN the name of the parent folder should be present on the dialog"()
     {
         given: "existing child content"
         filterPanel.typeSearchText( childContent1.getName() );
@@ -178,10 +178,10 @@ class ContentPublishDialog_Spec
         and: "correct text should be shown in the header"
         contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
 
-        and: "one correct dependency should be shown "
+        and: "one dependency should be shown on the dialog"
         dependant.size() == 1;
 
-        and: "name of the parent folder should be present"
+        and: "name of the parent folder should be displayed"
         dependant.get( 0 ).contains( parentContent.getName() );
     }
 }

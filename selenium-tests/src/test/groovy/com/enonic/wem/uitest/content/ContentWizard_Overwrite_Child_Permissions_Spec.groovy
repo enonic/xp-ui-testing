@@ -114,7 +114,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         childWizard.getAclEntries().contains( expectedEntryFromUI );
     }
 
-    def "GIVEN existing child folder is opened AND 'Edit Permission' dialog is opened WHEN 'Inherit permissions' set in true THEN permissions list should be updated to permissions in the parent folder"()
+    def "GIVEN existing child folder is opened AND 'Edit Permission' dialog is opened WHEN 'Inherit permissions' set in true THEN permissions list should be updated to permissions from the parent folder"()
     {
         given: "existing parent folder with a child is opened"
         ContentWizardPanel childWizard = findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarEdit();

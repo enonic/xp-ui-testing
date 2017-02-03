@@ -38,6 +38,8 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         when: "content saved and tab with the grid is switched"
         wizard.save();
         wizard.switchToBrowsePanelTab();
+        and: "the name of the content was typed"
+        filterPanel.typeSearchText( rootContent.getName() );
 
         then: "new Content should be listed"
         contentBrowsePanel.exists( rootContent.getName() );

@@ -169,9 +169,9 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
     }
     // verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed, when site with inserted images was selected
-    def "GIVEN existing site with inserted Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency is displayed"()
+    def "GIVEN existing site with inserted Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency should be displayed"()
     {
-        given: "existing site with a Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency is displayed"
+        given: "Image Component was added on the site"
         def name = NameHelper.uniqueName( "site" );
         addSiteWithAllInputTypes( name );
         ContentWizardPanel wizard = findAndSelectContent( name ).clickToolbarEdit();
@@ -180,18 +180,18 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         pageComponentsViewDialog.doCloseDialog();
         wizard.switchToLiveEditFrame();
 
-        and: "image component is inserted"
+        and: "image has been selected from the options list"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageItemFromList( HAND_IMAGE_DISPLAY_NAME );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "site selected and dependency widget is opened"
+        when: "site with the component was selected in the grid and dependency widget is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowOutboundButton();
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_dependencies_site_with_component" );
 
-        then: "correct outbound dependency is displayed"
+        then: "correct outbound dependency should be displayed"
         names.get( 0 ).contains( HAND_IMAGE_DISPLAY_NAME );
 
     }
