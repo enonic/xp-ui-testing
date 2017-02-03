@@ -19,60 +19,61 @@ class ContentPublishDelete_Spec
     @Shared
     Content content;
 
-    def "GIVEN existing root content WHEN content selected and 'Publish' button on toolbar pressed THEN notification message appears and content have got 'Online' status"()
+    def "GIVEN existing content WHEN content was selected and 'Publish' button on toolbar was pressed THEN notification message should appear and content is getting 'Online'"()
     {
-        given:
+        given: "existing content"
         content = buildFolderContent( "publish", DISPLAY_NAME );
         addContent( content );
 
-        when:
+        when: "content is published"
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then:
+        then: "Online status should be displayed in the grid"
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
     }
 
-    def "GIVEN existing root content with 'Online' status WHEN content selected and 'Delete' button pressed THEN content with a 'Pending delete' status present"()
+    def "GIVEN existing content with 'Online' status WHEN content was selected and 'Delete' button pressed THEN content is getting 'Pending delete'"()
     {
-        given:
+        given: "existing content with 'Online' status"
         filterPanel.typeSearchText( content.getName() )
 
-        when:
+        when: "content was selected and 'Delete' button pressed"
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().doDelete();
         String message = contentBrowsePanel.waitNotificationMessage();
 
-        then:
+        then: "content is getting 'Pending delete'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
-        and:
+        and: "correct notification message should be shown"
         message == Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE;
     }
 
-    def "GIVEN existing root content with 'Pending Delete' status  WHEN it selected and 'Delete' button pressed THEN checkbox with label 'Instantly delete published items' is checked"()
+    def "GIVEN existing content with 'Pending Delete' status WHEN content is selected and 'Delete' button pressed THEN checkbox with label 'Instantly delete published items' should be checked"()
     {
-        when:
+        when: "existing content with 'Pending Delete' status"
         filterPanel.typeSearchText( content.getName() )
         DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete();
         saveScreenshot( "test_delete_dialog_checkbox" );
 
-        then:
+        then: "checkbox with label 'Instantly delete published items' should be checked"
         dialog.isInstantlyDeleteCheckboxChecked();
     }
 
-    def "GIVEN existing root content with 'Pending Delete' status  WHEN content selected and 'Publish' button pressed THEN content not listed in browse panel"()
+    def "GIVEN existing content with 'Pending Delete' status WHEN content is selected and 'Publish' button pressed THEN content should not be listed in the browse panel"()
     {
-        when:
-        filterPanel.typeSearchText( content.getName() )
+        when: "existing content with 'Pending Delete' status"
+        filterPanel.typeSearchText( content.getName() );
+        and: "content is selected and 'Publish' button pressed"
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then:
+        then: "content should not be listed in the browse panel"
         !contentBrowsePanel.exists( content.getName() );
 
-        and:
+        and: "correct notification message should be displayed"
         message == Application.ONE_PENDING_ITEM_IS_DELETED;
     }
 }
