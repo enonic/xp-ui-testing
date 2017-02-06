@@ -41,7 +41,7 @@ public class ContentWizardPanel
 {
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
-    public static final String ONLINE_TO_VALIDATION_MESSAGE = "\"Online to\" date/time must be later than \"Online from\"";
+    public static final String ONLINE_TO_VALIDATION_MESSAGE = "\"Online to\" date/time cannot be in the past";
 
     public static final String ONLINE_FROM_VALIDATION_MESSAGE = "\"Online from\" date/time must be earlier than \"Online to\"";
 
@@ -449,6 +449,7 @@ public class ContentWizardPanel
         toolbarPublishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return dialog;
     }
 
