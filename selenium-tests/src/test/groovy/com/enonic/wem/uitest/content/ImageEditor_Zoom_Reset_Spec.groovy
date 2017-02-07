@@ -57,10 +57,10 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "wizard-tab is closing, but 'Save' was not pressed"
         wizard.executeCloseWizardScript();
-        wizard.switchToBrowsePanelTab();
+        //wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should appear"
-        wizard.waitIsAlertDisplayed();
+        wizard.isAlertPresent();
     }
 
     def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN Alert modal dialog should not appear"()
@@ -107,7 +107,7 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "'close tab' button was pressed, but Save was not pressed"
         wizard.executeCloseWizardScript();
-        wizard.switchToBrowsePanelTab();
+        // wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should appear"
         wizard.waitIsAlertDisplayed();

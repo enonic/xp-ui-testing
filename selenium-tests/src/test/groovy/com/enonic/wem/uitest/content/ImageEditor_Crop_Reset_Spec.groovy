@@ -112,8 +112,9 @@ class ImageEditor_Crop_Reset_Spec
 
         and: "tab with wizard has been closed"
         wizard.save().executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "Alert dialog should not appear"
-        !wizard.waitIsAlertDisplayed();
+        !wizard.isAlertPresent();
     }
 }
