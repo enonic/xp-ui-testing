@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor;
 import com.enonic.xp.data.PropertyTree;
 
@@ -176,7 +177,7 @@ public class ImageFormViewPanel
 
     public boolean isButtonResetPresent()
     {
-        return isElementDisplayed( BUTTON_RESET );
+        return waitUntilVisibleNoException( By.xpath( BUTTON_RESET ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean isArtistTagInputPresent()
