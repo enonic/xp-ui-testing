@@ -4,10 +4,14 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Shared
 
 class SortContentDialogSpec
     extends BaseContentSpec
 {
+
+    @Shared
+    Content PARENT_FOLDER;
 
     def "GIVEN Content BrowsePanel WHEN one content selected and 'Sort' button clicked THEN 'Sort Content' appears with correct control elements"()
     {
@@ -105,18 +109,37 @@ class SortContentDialogSpec
         !sortContentDialog.isDisplayed();
     }
 
-    def "WHEN sort dialog is opened THEN default sorting should be set"()
+    def "GIVEN existing folder without children WHEN the folder has been selected  THEN 'Sort' button should be disabled"()
     {
-        given: "folder added at root"
-        Content folderContent = buildFolderContent( "folder", "sort_test" );
-        addContent( folderContent );
+        given: "existing folder without children"
+        PARENT_FOLDER = buildFolderContent( "folder", "sort-test" );
+        addContent( PARENT_FOLDER );
 
         when: "content was selected and 'Sort' dialog is opened"
-        findAndSelectContent( folderContent.getName() );
+        findAndSelectContent( PARENT_FOLDER.getName() );
+
+        then: "'Sort' button should be disabled"
+        !contentBrowsePanel.isSortButtonEnabled()
+        saveScreenshot( "default_sorting" );
+    }
+
+    def "GIVEN parent folder is selected WHEN sort dialog is opened THEN default sorting should be present on the dialog"()
+    {
+        given: "the parent folder is selected"
+        findAndSelectContent( PARENT_FOLDER.getName(  ) );
+        Content childFolder = buildFolderContent( "child-folder", "child folder" );
+
+        and:"child content has been added"
+        addContent( childFolder );
+        contentBrowsePanel.clickOnClearSelection(  );
+
+        when: "parent folder has been selected and 'Sort' dialog is opened"
+        findAndSelectContent( PARENT_FOLDER.getName() );
+        and:"and 'Sort' dialog is opened"
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
         saveScreenshot( "default_sorting" );
 
-        then: "default sorting should be set for the dialog"
+        then: "default sorting should be present on the dialog"
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MODIFIED_DESCENDING.getValue();
     }
 
