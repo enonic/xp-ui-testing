@@ -48,9 +48,9 @@ class ContentUploadSpec
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
 
         when: "upload button was clicked and txt-file selected"
-        //TestUtils.createScreenCaptureWithRobot( "upload_txt1" );
-        dialog.doUploadFile( pathToTxt, FILE_NAME );
-        //TestUtils.createScreenCaptureWithRobot( "upload_txt2" );
+        TestUtils.createScreenCaptureWithRobot( "upload_txt1" );
+        dialog.doUploadFile( pathToTxt );
+        TestUtils.createScreenCaptureWithRobot( "upload_txt2" );
         sleep( 1000 )
 
         then: "new txt-file should appear in the browse panel"
