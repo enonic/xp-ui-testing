@@ -27,6 +27,7 @@ public abstract class WizardPanel<T>
 
     public static final String SETTINGS_LINK_TEXT = "Settings";
 
+
     public static String TAB_MENU_ITEM =
         "//div[contains(@id,'AppBar')]//li[contains(@id,'AppBarTabMenuItem') and child::a[@class='label' and text() ='%s']]";
 
