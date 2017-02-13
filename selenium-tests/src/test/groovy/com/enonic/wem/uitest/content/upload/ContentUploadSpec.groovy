@@ -34,7 +34,7 @@ class ContentUploadSpec
 
         when: " click on drop zone and select a archive"
         dialog.doUploadFile( path, IMAGE_FILE_NAME );
-        TestUtils.createScreenCaptureWithRobot( "upload_image" );
+        //TestUtils.createScreenCaptureWithRobot( "upload_image" );
         sleep( 1000 )
 
         then: "new png file content appears in the browse panel"
@@ -48,9 +48,9 @@ class ContentUploadSpec
         NewContentDialog dialog = contentBrowsePanel.clickToolbarNew();
 
         when: "upload button was clicked and txt-file selected"
-        TestUtils.createScreenCaptureWithRobot( "upload_txt1" );
+        //TestUtils.createScreenCaptureWithRobot( "upload_txt1" );
         dialog.doUploadFile( pathToTxt, FILE_NAME );
-        TestUtils.createScreenCaptureWithRobot( "upload_txt2" );
+        //TestUtils.createScreenCaptureWithRobot( "upload_txt2" );
         sleep( 1000 )
 
         then: "new txt-file should appear in the browse panel"
