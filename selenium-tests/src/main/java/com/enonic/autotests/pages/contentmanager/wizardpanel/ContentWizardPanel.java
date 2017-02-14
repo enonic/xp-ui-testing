@@ -49,11 +49,14 @@ public class ContentWizardPanel
 
     private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
 
+    private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
+
+    private String THUMBNAIL_UPLOADER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ThumbnailUploaderEl')]";
+
     private final String CONTENT_STATUS = "//span[@class='content-status']/span";
 
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
-    private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
 
@@ -262,15 +265,16 @@ public class ContentWizardPanel
         return deleteContentDialog;
     }
 
-    public boolean isContentInvalid( String contentDisplayName )
+    public boolean isContentInvalid()
     {
-        List<WebElement> elements = getDisplayedElements( By.xpath( String.format( TAB_MENU_ITEM, contentDisplayName ) ) );
-        if ( elements.size() == 0 )
+
+        if ( !isElementDisplayed( By.xpath( THUMBNAIL_UPLOADER ) ) )
         {
-            saveScreenshot( NameHelper.uniqueName( "err_tab_item)" ) );
-            throw new TestFrameworkException( "tab menu item with name: " + contentDisplayName + " was not found" );
+            saveScreenshot( NameHelper.uniqueName( "err_thumbnail)" ) );
+            throw new TestFrameworkException( "thumbnail icon was not found" );
         }
-        return waitAndCheckAttrValue( elements.get( 0 ), "class", "invalid", Application.EXPLICIT_NORMAL );
+        return waitAndCheckAttrValue( getDisplayedElement( By.xpath( THUMBNAIL_UPLOADER ) ), "class", "invalid",
+                                      Application.EXPLICIT_NORMAL );
     }
 
     public boolean isLiveEditLocked()
