@@ -55,7 +55,7 @@ public class ContentVersionInfoView
     public void doRestoreVersion( String versionId )
     {
         getDisplayedElement( By.xpath( String.format( RESTORE_BUTTON, versionId ) ) ).click();
-        sleep( 700 );
+        sleep( 1000 );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 

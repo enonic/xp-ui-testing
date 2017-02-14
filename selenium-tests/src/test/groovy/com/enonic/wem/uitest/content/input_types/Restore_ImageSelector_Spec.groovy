@@ -7,7 +7,10 @@ import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
-
+/**
+ * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
+ *
+ */
 @Stepwise
 class Restore_ImageSelector_Spec
     extends Base_InputFields_Occurrences
@@ -15,7 +18,7 @@ class Restore_ImageSelector_Spec
     @Shared
     Content IMAGE_SELECTOR_CONTENT;
 
-    def "GIVEN creating new ImageSelector-content 2:4 WHEN one image was removed THEN number of versions increased by one"()
+    def "GIVEN creating new ImageSelector-content 2:4 WHEN one image was removed THEN number of versions should be increased by one"()
     {
         given: "new ImageSelector-content 2:4 added"
         IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
@@ -23,7 +26,7 @@ class Restore_ImageSelector_Spec
         wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
-        when: "content opened and one image was removed"
+        when: "content is opened and one image was removed"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
@@ -32,7 +35,7 @@ class Restore_ImageSelector_Spec
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "number of versions increased by one"
+        then: "number of versions should increase by one"
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
@@ -50,15 +53,15 @@ class Restore_ImageSelector_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "image_selector_valid_version" );
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //then: "red icon is not present on the wizard"
-        //!wizard.isContentInvalid( IMAGE_SELECTOR_CONTENT.getDisplayName() );
-
         then: "the content is valid in the grid as well"
         !contentBrowsePanel.isContentInvalid( IMAGE_SELECTOR_CONTENT.getName() );
 
-        and: "'publish' button on the toolbar is enabled"
+        and: "'publish' button on the toolbar should be enabled"
         contentBrowsePanel.isPublishButtonEnabled();
+
+        and: "red icon should not de displayed on the wizard"
+        contentBrowsePanel.switchToBrowserTabByTitle( IMAGE_SELECTOR_CONTENT.getDisplayName(  ) );
+        !wizard.isContentInvalid();
     }
 
     def "GIVEN version of content with two images is restored WHEN content opened THEN two images are displayed on the wizard"()
@@ -67,7 +70,7 @@ class Restore_ImageSelector_Spec
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        then: "two images are displayed on the wizard"
+        then: "two images should be displayed on the wizard"
         formViewPanel.getSelectedImages().size() == 2;
     }
 
@@ -84,12 +87,12 @@ class Restore_ImageSelector_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "image_selector_not_valid_version" );
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //then: "red icon appears on the wizard tab"
-        //wizard.isContentInvalid( IMAGE_SELECTOR_CONTENT.getDisplayName() );
-
         then: "the content is invalid in the grid as well"
         contentBrowsePanel.isContentInvalid( IMAGE_SELECTOR_CONTENT.getName() );
+
+        and: "red icon should not be displayed on the wizard tab"
+        contentBrowsePanel.switchToBrowserTabByTitle( IMAGE_SELECTOR_CONTENT.getDisplayName() );
+        wizard.isContentInvalid(  );
     }
 
     def "GIVEN version of content with one images was restored WHEN content opened THEN one image is displayed on the wizard"()
@@ -98,7 +101,7 @@ class Restore_ImageSelector_Spec
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        then: "only one image is displayed on the wizard"
+        then: "only one image should be displayed on the wizard"
         formViewPanel.getSelectedImages().size() == 1;
     }
 }

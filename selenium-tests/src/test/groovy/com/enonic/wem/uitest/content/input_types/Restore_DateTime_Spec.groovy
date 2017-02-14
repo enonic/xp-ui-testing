@@ -6,7 +6,10 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
-
+/**
+ * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
+ *
+ */
 class Restore_DateTime_Spec
     extends Base_InputFields_Occurrences
 {
@@ -20,24 +23,24 @@ class Restore_DateTime_Spec
     @Shared
     Content DATE_TIME_CONTENT
 
-    def "GIVEN existing date content WHEN date is changed THEN new version item appears in the version history panel"()
+    def "GIVEN existing date content WHEN date is changed THEN new version item should appear in the version history panel"()
     {
-        given: "new content added"
+        given: "existing date content"
         DATE_TIME_CONTENT = buildDateTime1_1_Content( DATE_TIME_V1 );
         ContentWizardPanel wizard = selectSitePressNew( DATE_TIME_CONTENT.getContentTypeName() );
         wizard.typeData( DATE_TIME_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickOnClearSelection();
 
-        when: "the content opened and date was changed"
+        when: "the content is opened and date changed"
         findAndSelectContent( DATE_TIME_CONTENT.getName() ).clickToolbarEdit();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
         formViewPanel.typeDateTime( DATE_TIME_V2 );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        and:
+        and:"version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "number of versions is increased"
+        then: "number of versions should be increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
     }
 

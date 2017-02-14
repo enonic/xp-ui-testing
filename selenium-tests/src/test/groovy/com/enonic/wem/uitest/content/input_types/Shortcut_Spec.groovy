@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.schema.content.ContentTypeName
@@ -28,7 +27,7 @@ class Shortcut_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.shortcut() );
         String name = NameHelper.uniqueName( "shortcut" );
 
-        when: "name and display name typed"
+        when: "name and display name has been typed"
         wizard.typeDisplayName( name ).save();
 
         and: "navigate to the grid"
@@ -36,7 +35,7 @@ class Shortcut_Spec
         findAndSelectContent( name );
         saveScreenshot( "shortcut_in_grid_invalid" );
 
-        then: "red icon is present on the wizard-tab"
+        then: "red icon should be present on the wizard-tab"
         filterPanel.typeSearchText( name );
         contentBrowsePanel.isContentInvalid( name );
     }
@@ -52,51 +51,48 @@ class Shortcut_Spec
         wizard.typeName( SHORTCUT_CONTENT.getName() ).typeDisplayName( SHORTCUT_CONTENT.getDisplayName() ).save();
         saveScreenshot( "shortcut_validation_message" );
 
-        then: "red icon is present on the wizard-tab"
+        then: "red icon should be present on the wizard-tab"
         formViewPanel.isValidationMessageDisplayed();
 
-        and: "validation message appears"
+        and: "validation message should appear"
         formViewPanel.getValidationMessage() == "This field is required";
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and: "red icon is present on the wizard-tab"
-        //wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
+        and: "red icon should be present on the wizard-tab"
+        wizard.isContentInvalid();
     }
 
-    def "GIVEN existing shortcut without selected target WHEN target selected THEN red icon not displayed on the wizard tab"()
+    def "GIVEN existing shortcut without selected target WHEN target was selected THEN red icon should not be displayed on the wizard tab"()
     {
         given:
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
-        when: "target selected"
+        when: "target was selected"
         formViewPanel.selectTarget( TARGET_1 );
-        TestUtils.saveScreenshot( getSession(), "shortcut_valid" );
+        saveScreenshot( "shortcut_valid" );
         wizard.save();
-
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        // then: "red icon not displayed on the wizard-tab"
-        // !wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
 
         then: "validation message not displayed"
         !formViewPanel.isValidationMessageDisplayed();
+
+        and: "red icon should not be displayed on the wizard-tab"
+        !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing shortcut with selected target WHEN target removed THEN red icon appears  on the wizard tab"()
+    def "GIVEN existing shortcut with selected target WHEN target was removed THEN red icon appears  on the wizard tab"()
     {
         given:
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
-        when: "name and display name typed"
+        when: "target was removed"
         formViewPanel.removeTarget();
         saveScreenshot( "shortcut_target_removed" );
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //then: "red icon appears displayed on the wizard-tab"
-        //wizard.isContentInvalid( SHORTCUT_CONTENT.getDisplayName() );
-
-        then: "validation message  displayed"
+        then: "validation message should be displayed"
         formViewPanel.isValidationMessageDisplayed();
+
+        and: "red icon should appear on the wizard-tab"
+        wizard.isContentInvalid();
     }
 }

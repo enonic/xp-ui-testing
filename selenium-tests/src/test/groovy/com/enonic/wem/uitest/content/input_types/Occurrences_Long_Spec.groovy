@@ -6,6 +6,11 @@ import com.enonic.autotests.pages.form.LongFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
+/**
+ * Tasks:
+ * XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
+ *
+ */
 class Occurrences_Long_Spec
     extends Base_InputFields_Occurrences
 {
@@ -38,33 +43,34 @@ class Occurrences_Long_Spec
         then: "actual value in the form view and expected are equals"
         longFormViewPanel.getLongValue().equals( TEST_LONG );
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and: "content is valid in the wizard"
-        //!wizard.isContentInvalid( VALID_LONG_CONTENT.getDisplayName() );
+        and: "content should be displayed as valid in the wizard page"
+        !wizard.isContentInvalid();
 
         and: "long input has green border (valid value)"
         longFormViewPanel.isValueInInputValid( 0 );
     }
 
-    def "GIVEN creating of content with type 'long'(not required) WHEN invalid value for long typed THEN input with a red border AND red icon not shown on the wizard tab"()
+    def "GIVEN creating of content with type 'long'(not required) WHEN invalid value for long typed THEN input should be displayed with a red border AND red icon should not shown on the wizard tab"()
     {
         given: "creating of  content with type 'Long'"
         Content longContent = buildLong0_1_Content( INVALID_LONG1 );
         ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
-        when: "invalid value for long typed"
+        when: "invalid value for long has been typed"
         wizard.typeData( longContent );
         saveScreenshot( "test_long_invalid_not_req" );
 
-        then: "input with a red border"
+        then: "input should be displayed with a red border"
         !longFormViewPanel.isValueInInputValid( 0 );
 
-        //TODO remove it when validation in wizard will be implemented
-        //and: "validation message is not dispalyed, because this input is not required"
-        //!longFormViewPanel.isValidationMessagePresent();
+        and: "content should be displayed as valid in the wizard page"
+        !wizard.isContentInvalid();
 
-        and: "'Publish' button on the wizard-toolbar is enabled, because input is not required"
+        and: "validation message should be displayed"
+        !longFormViewPanel.isValidationMessagePresent();
+
+        and: "'Publish' button on the wizard-toolbar should be enabled, because input is not required"
         wizard.isPublishButtonEnabled();
     }
 
@@ -82,8 +88,12 @@ class Occurrences_Long_Spec
         then: "input with a red border"
         !longFormViewPanel.isValueInInputValid( 0 );
 
-        // and: "validation message is displayed, because this input is required"
-        // longFormViewPanel.isValidationMessagePresent();
+        and: "content should be displayed as invalid in the wizard page"
+        wizard.isContentInvalid();
+
+
+        and: "validation message should be displayed, because this input is required"
+         longFormViewPanel.isValidationMessagePresent();
 
         and: "'Publish' button on the wizard-toolbar is disabled, because input is required"
         !wizard.isPublishButtonEnabled();
@@ -93,8 +103,7 @@ class Occurrences_Long_Spec
     {
         given: "adding of long content with empty value"
         Content longContent = buildLong1_1_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
-            longContent );
+        ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData( longContent );
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
 

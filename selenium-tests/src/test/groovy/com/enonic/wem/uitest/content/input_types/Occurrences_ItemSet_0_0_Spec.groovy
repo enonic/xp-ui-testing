@@ -19,6 +19,7 @@ import spock.lang.Stepwise
  *   XP-4439 Add selenium tests for occurrences of ItemSet
  *   XP-4450 Add selenium tests for saving of data in the ItemSet content
  *   XP-4467 Add selenium tests for restoring of version and publishing of ItemSet
+ *   XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
  *
  * Verifies Bug: XP-4422 ItemSet content wizard - 'save before close' should appear, when there are unsaved changes
  *
@@ -80,8 +81,8 @@ class Occurrences_ItemSet_0_0_Spec
         and: "Item Set with text line and htmlArea are displayed"
         itemSetViewPanel.isFormItemSetDisplayed();
 
-        //and: "content is not valid, because both required inputs are not filled"
-        //wizard.isContentInvalid( ITEM_SET_CONTENT.getDisplayName() );
+        and: "content should be not valid, because both required inputs are not filled"
+        wizard.isContentInvalid();
 
         and: "Publish button is disabled"
         !wizard.isPublishButtonEnabled();
@@ -152,15 +153,15 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.typeData( ITEM_SET_WITH_DATA );
         saveScreenshot( "1_item_set_with_data_added" );
 
-        and: "Save button pressed"
+        and: "Save button has been pressed"
         wizard.save();
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //then: "content is valid, because all required inputs are filled"
-        // !wizard.isContentInvalid( ITEM_SET_WITH_DATA.getDisplayName() );
-
-        then: "Publish button is enabled"
+        then: "Publish button should be enabled"
         wizard.isPublishButtonEnabled();
+
+        and: "content should be valid, because all required inputs are filled"
+        !wizard.isContentInvalid();
+
     }
 
     def "GIVEN existing ItemSet-content with saved data WHEN content opened THEN correct text is present in the text-line and html-area inputs"()
@@ -175,9 +176,8 @@ class Occurrences_ItemSet_0_0_Spec
         and: "correct text is displayed in the text-line"
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and: "content is valid, because all required inputs are filled"
-        //!wizard.isContentInvalid( ITEM_SET_WITH_DATA.getDisplayName() );
+        and: "content is valid, because all required inputs are filled"
+        !wizard.isContentInvalid();
 
         and: "Publish button is enabled"
         wizard.isPublishButtonEnabled();

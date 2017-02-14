@@ -7,6 +7,10 @@ import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
+/**
+ * Tasks:
+ * XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
+ */
 class Restore_ComboBox_Spec
     extends Base_InputFields_Occurrences
 {
@@ -48,18 +52,17 @@ class Restore_ComboBox_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        saveScreenshot( "combobox_valid_version" );
 
         then: "content displayed as valid in the grid"
+        saveScreenshot( "combobox_valid_version" );
         !contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
 
-        and: "'publish' button on the grid-toolbar is enabled"
+        and: "'publish' button on the grid-toolbar should be enabled"
         contentBrowsePanel.isPublishButtonEnabled();
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and: "validation message appears on the combobox-form"
-        //contentBrowsePanel.switchToContentWizardTabBySelectedContent();
-        //formViewPanel.isValidationMessagePresent();
+        and: "validation message should not be present on the form"
+        contentBrowsePanel.switchToBrowserTabByTitle(COMBOBOX_CONTENT.getDisplayName(  ));
+        !formViewPanel.isValidationMessagePresent();
 
     }
 
@@ -87,23 +90,23 @@ class Restore_ComboBox_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        saveScreenshot( "combobox_not_valid_version" );
-
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //then: "red icon appears on the wizard-tab"
-        //wizard.isContentInvalid( COMBOBOX_CONTENT.getDisplayName() );
 
         then: "the content is invalid in the grid as well"
+        saveScreenshot( "combobox_not_valid_version" );
         contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
+
+        and: "red icon should appear on the wizard-tab"
+        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName(  ) );
+        wizard.isContentInvalid();
     }
 
-    def "GIVEN version of content with one images is restored WHEN content opened THEN one image is displayed on the wizard"()
+    def "GIVEN version of content with one images is restored WHEN content opened THEN one image should be displayed on the wizard"()
     {
-        when: "version of content with one option has been restored and content was opened "
+        when: "version of content with one option has been restored and content is opened "
         findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
-        then: "only one option is displayed in the form"
+        then: "only one option should be displayed in the form"
         formViewPanel.getSelectedOptionValues().size() == 1;
     }
 }

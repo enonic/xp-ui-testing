@@ -8,6 +8,10 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
+ *
+ */
 @Stepwise
 class Publish_InvalidContent_Spec
     extends BaseContentSpec
@@ -15,24 +19,20 @@ class Publish_InvalidContent_Spec
     @Shared
     Content invalidFolder;
 
-    @Shared
-    String UNNAMED_FOLDER_TAB_NAME = "<Unnamed Folder>";
-
-    def "GIVEN creating a not valid content WHEN data typed and 'Publish' button on the wizard toolbar pressed THEN notification warning appears and content not published"()
+    def "GIVEN wizard for adding of a folder is opened WHEN display name is empty  AND 'Save' button has been pressed THEN 'Publish button should be disabled' AND red icon should be present on the wizard"()
     {
-        given:
+        given: "wizard for adding of a folder is opened"
         invalidFolder = buildFolderWithEmptyDisplayNameContent( "not_valid" );
 
-        when:
+        when: "display name is empty  AND 'Save' button has been pressed "
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( invalidFolder.getContentTypeName() ).typeData(
             invalidFolder ).save();
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //then: "content is not valid"
-        // wizard.isContentInvalid( UNNAMED_FOLDER_TAB_NAME );
-
-        then: "'Publish' button is disabled"
+        then: "'Publish' button should be disabled"
         !wizard.isPublishButtonEnabled();
+
+        and: "red icon should be displayed on the wizard page"
+        wizard.isContentInvalid();
     }
 
     def "GIVEN existing content without a displayName WHEN it content was selected and 'Publish' button on grid toolbar was pressed THEN 'Publish' button on the dialog should be disabled and warning message should be present on dialog"()
