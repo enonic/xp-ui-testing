@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.modules.*
 import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
@@ -94,6 +95,9 @@ class BaseApplicationSpec
             applicationBrowsePanel.clickOnToolbarInstall();
             InstallAppDialog appDialog = new InstallAppDialog( getSession() );
             appDialog.waitUntilDialogLoaded();
+            saveScreenshot( NameHelper.uniqueName( "install-dlg-opened" ) );
+            appDialog.typeInApplicationInput( displayName );
+            saveScreenshot( NameHelper.uniqueName( "app-name-typed" ) );
             InstallAppDialog_MarketAppPanel marketPanel = appDialog.getMarketAppPanel();
             marketPanel.doInstallApp( displayName );
             appDialog.clickOnCancelButton();

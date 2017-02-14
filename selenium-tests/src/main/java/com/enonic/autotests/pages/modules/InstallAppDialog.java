@@ -81,7 +81,7 @@ public class InstallAppDialog
     public InstallAppDialog typeInApplicationInput( String url )
     {
         clearAndType( applicationInput, url );
-        sleep( 3000 );
+        sleep( 2000 );
         return this;
     }
 
