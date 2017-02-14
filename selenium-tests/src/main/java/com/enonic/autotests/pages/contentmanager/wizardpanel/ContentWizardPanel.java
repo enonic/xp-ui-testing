@@ -263,6 +263,10 @@ public class ContentWizardPanel
         return deleteContentDialog;
     }
 
+    /**
+     *
+     * @return true if red icon is displayed on the wizard page
+     */
     public boolean isContentInvalid()
     {
 

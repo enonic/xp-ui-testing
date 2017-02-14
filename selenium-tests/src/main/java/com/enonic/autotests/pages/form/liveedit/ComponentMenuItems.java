@@ -6,7 +6,7 @@ package com.enonic.autotests.pages.form.liveedit;
 public enum ComponentMenuItems
 {
     SELECT_PARENT( "Select parent" ), INSERT( "Insert" ), INSPECT( "Inspect" ), RESET( "Reset" ), REMOVE( "Remove" ), DUPLICATE(
-    "Duplicate" ), EDIT_IN_NEW_TAB( "Edit in new tab" );
+    "Duplicate" ), EDIT_IN_NEW_TAB( "Edit" );
 
     private String value;
 
