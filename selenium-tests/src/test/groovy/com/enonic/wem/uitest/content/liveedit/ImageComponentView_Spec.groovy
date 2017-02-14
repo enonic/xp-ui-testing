@@ -15,7 +15,7 @@ import spock.lang.Shared
  * XP-4945 Add ui-test to verify the XP-4944
  * Verifies:
  * XP-4944 ImageComponentView - NullPointerException and Upload does not add new file
- * (NullPointerException occurrs when dropdownHandler was clicked )
+ * (NullPointerException thrown when dropdownHandler was clicked  when dropdownHandler was clicked)
  * */
 class ImageComponentView_Spec
     extends BaseContentSpec
@@ -67,7 +67,7 @@ class ImageComponentView_Spec
         !imageComponentView.isErrorMessageDisplayed();
     }
 
-    //verifies the XP-4944 - NullPointerException occurrs when dropdownHandler was clicked
+    //verifies the XP-4944 -NullPointerException thrown when dropdownHandler was clicked  when dropdownHandler was clicked
     def "GIVEN existing site with a controller is opened WHEN Image component was inserted AND an image has been selected from the list of options THEN "()
     {
         given: "existing site is opened"
