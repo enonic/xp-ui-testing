@@ -50,16 +50,13 @@ class Occurrences_Local_DateTime_0_1_Spec
         and: "Add button not displayed on the form"
         !formViewPanel.isAddButtonPresent();
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and: "content should be valid, because 'datetime' is not required"
-        //!wizard.isContentInvalid( dateTimeContent.getDisplayName() );
+        and: "content should be valid, because 'datetime' is not required"
+        !wizard.isContentInvalid(  );
 
         and: "and date time input is empty"
         formViewPanel.getDateTimeValue().isEmpty();
     }
 
-    //TODO add test check for validation in the wizard( when the feature will be implemented)
-    @Ignore
     def "GIVEN wizard for adding a Local DateTime(0:1) opened WHEN not valid dateTime typed THEN content has a invalid status"()
     {
         given: "start to add a content with type local 'DateTime(0:1)'"
@@ -70,7 +67,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         wizard.typeData( dateTimeNotValid );
 
         then: "content should be invalid, because 'datetime' is not valid"
-        !wizard.isContentInvalid( dateTimeNotValid.getDisplayName() );
+        !wizard.isContentInvalid(  );
     }
 
     def "GIVEN 'date time' wizard is opened WHEN content saved without a 'date time' THEN wizard has no a red icon"()

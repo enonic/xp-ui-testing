@@ -105,8 +105,6 @@ class Occurrences_TextLine_1_1_Spec
         contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
     }
 
-    //TODO add test check for validation in the wizard( when the feature will be implemented)
-    @Ignore
     def "GIVEN creating new TextLine2:5 on root WHEN required text input is empty THEN content is invalid and the 'Publish' button is disabled"()
     {
         given: "start to add a content with type 'TextLine 1:1'"
@@ -120,6 +118,6 @@ class Occurrences_TextLine_1_1_Spec
         !contentWizardPanel.isPublishButtonEnabled();
 
         and: "content is invalid"
-        contentWizardPanel.isContentInvalid( textLineContent.getDisplayName() );
+        contentWizardPanel.isContentInvalid(  );
     }
 }
