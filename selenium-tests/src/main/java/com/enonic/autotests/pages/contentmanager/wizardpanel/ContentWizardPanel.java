@@ -51,12 +51,9 @@ public class ContentWizardPanel
 
     private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
-    private String THUMBNAIL_UPLOADER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ThumbnailUploaderEl')]";
-
     private final String CONTENT_STATUS = "//span[@class='content-status']/span";
 
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
-
 
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
 
@@ -80,7 +77,6 @@ public class ContentWizardPanel
         SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" +
             "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
-
     private final String UNPUBLISH_MENU_ITEM =
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
@@ -95,6 +91,8 @@ public class ContentWizardPanel
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
+
+    private String THUMBNAIL_UPLOADER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ThumbnailUploaderEl')]";
 
     private String TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
 

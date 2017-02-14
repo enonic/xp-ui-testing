@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.wem.uitest.content.BaseContentSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
@@ -16,6 +15,7 @@ import spock.lang.Shared
  * XP-4945 Add ui-test to verify the XP-4944
  * Verifies:
  * XP-4944 ImageComponentView - NullPointerException and Upload does not add new file
+ * (NullPointerException occurrs when dropdownHandler was clicked )
  * */
 class ImageComponentView_Spec
     extends BaseContentSpec
@@ -67,8 +67,7 @@ class ImageComponentView_Spec
         !imageComponentView.isErrorMessageDisplayed();
     }
 
-    //TODO remove it when XP-4944 will be fixed
-    @Ignore
+    //verifies the XP-4944 - NullPointerException occurrs when dropdownHandler was clicked
     def "GIVEN existing site with a controller is opened WHEN Image component was inserted AND an image has been selected from the list of options THEN "()
     {
         given: "existing site is opened"
@@ -82,14 +81,15 @@ class ImageComponentView_Spec
 
         when: "dropdown handler was clicked"
         imageComponentView.clickOnTheDropDownHandler();
+        saveScreenshot( "img_comp_view_dropdown_handler" );
 
         and: "image has been selected from the list of options"
-        imageComponentView.clickOnOption( IMPORTED_IMAGE_BOOK_DISPLAY_NAME );
+        imageComponentView.clickOnOption( "enterprise" );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         wizard.switchToLiveEditFrame();
 
         then: "new image should be added on the page"
         LinkedList<String> images = liveFormPanel.getImageNames();
-        images.contains( IMPORTED_IMAGE_BOOK_DISPLAY_NAME )
+        images.contains( "enterprise.png" )
     }
 }
