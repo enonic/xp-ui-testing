@@ -17,9 +17,8 @@ class Occurrences_ComboBox_0_0_Spec
     extends Base_InputFields_Occurrences
 
 {
-
     @Shared
-    Content content_wit_opt;
+    Content COMBOBOX_0_0_CONTENT;
 
     def "WHEN wizard for adding a Combo box-content(0:0) opened THEN option filter input is present "()
     {
@@ -40,16 +39,17 @@ class Occurrences_ComboBox_0_0_Spec
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.clickOnClearSelection();
 
-        when: "combobox content opened for edit"
+        when: "combobox content is opened"
         findAndSelectContent( comboBoxContent.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "no one options present in form view"
+        then: "no one options should be present in form view"
         optValues.size() == 0;
 
-        and: "options filter input is enabled"
+        and: "options filter input should be enabled"
         formViewPanel.isOptionFilterInputEnabled();
     }
 
@@ -59,6 +59,7 @@ class Occurrences_ComboBox_0_0_Spec
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.clickOnClearSelection();
 
         when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
@@ -73,18 +74,18 @@ class Occurrences_ComboBox_0_0_Spec
 
         and: "options filter input is enabled"
         formViewPanel.isOptionFilterInputEnabled();
-
     }
 
-    def "GIVEN saving of  ComboBox-content (0:0) with three options WHEN content opened for edit THEN three selected options and buttons 'Remove' present on page "()
+    def "GIVEN saving of ComboBox-content (0:0) with three options WHEN content opened for edit THEN three selected options and buttons 'Remove' present on page "()
     {
         given: "new content with type ComboBox0_0 added'"
-        content_wit_opt = buildComboBox0_0_Content( 3 );
-        selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData(
-            content_wit_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
+        COMBOBOX_0_0_CONTENT = buildComboBox0_0_Content( 3 );
+        selectSitePressNew( COMBOBOX_0_0_CONTENT.getContentTypeName() ).typeData(
+            COMBOBOX_0_0_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.clickOnClearSelection();
 
         when: "content opened for edit"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
@@ -97,19 +98,18 @@ class Occurrences_ComboBox_0_0_Spec
 
         and: "options filter input is enabled"
         formViewPanel.isOptionFilterInputEnabled();
-
     }
 
     def "GIVEN ComboBox-content (0:0) with three options and one option removed and content saved WHEN content opened for edit THEN two selected options and buttons 'Remove' present on the page "()
     {
         given: "content with tree options opened for edit' and one option removed"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when content opened for edit again"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
 
         then: "only two options are present in the form view"
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -119,24 +119,22 @@ class Occurrences_ComboBox_0_0_Spec
         and: "and options have a correct text"
         String[] options = ["option A", "option B"];
         optValues.containsAll( options.toList() );
-
     }
 
     def "GIVEN a existing ComboBox 0:0 with options  WHEN content opened and 'Publish' on toolbar pressed THEN it content with status equals 'Online' listed"()
     {
         given: "existing new ComboBox 0:0 with options'"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
+        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
 
         when: "type a data and 'save' and 'publish'"
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
-        filterPanel.clickOnCleanFilter().typeSearchText( content_wit_opt.getName() );
+        filterPanel.clickOnCleanFilter().typeSearchText( COMBOBOX_0_0_CONTENT.getName() );
 
         then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( content_wit_opt.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( COMBOBOX_0_0_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
-
 
     def "GIVEN a creating of a new ComboBox 0:0 without options WHEN content saved and 'Publish' on toolbar pressed THEN new content with status equals 'Online' listed"()
     {
