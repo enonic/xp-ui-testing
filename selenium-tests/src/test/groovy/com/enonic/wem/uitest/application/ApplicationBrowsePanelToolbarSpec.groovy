@@ -11,7 +11,7 @@ class ApplicationBrowsePanelToolbarSpec
     def "GIVEN Applications BrowsePanel WHEN no selected module THEN 'Uninstall' button should be disabled AND 'Install' button should be enabled"()
     {
         expect:
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar1" );
+        saveScreenshot( "test_app_toolbar1" );
         !applicationBrowsePanel.isUninstallButtonEnabled();
 
         and: "'Install' button should be enabled"
@@ -28,7 +28,7 @@ class ApplicationBrowsePanelToolbarSpec
     {
         when: "one local application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FOURTH_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "uninstall-local-disabled" )
+        saveScreenshot( "uninstall-local-disabled" )
 
         then: "'Uninstall' button is disabled"
         !applicationBrowsePanel.isUninstallButtonEnabled();
@@ -38,7 +38,7 @@ class ApplicationBrowsePanelToolbarSpec
     {
         when: " one application selected in the table"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FOURTH_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar2" );
+        saveScreenshot( "test_app_toolbar2" );
 
         then: "app status is started"
         applicationBrowsePanel.findAppByDisplayNameAndGetStatus( FOURTH_APP_DISPLAY_NAME ) == STARTED_STATE;
@@ -54,7 +54,7 @@ class ApplicationBrowsePanelToolbarSpec
     {
         given: "existing started application selected in the table"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FOURTH_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar3" );
+        saveScreenshot( "test_app_toolbar3" );
 
         when: "stop button on the toolbar pressed"
         applicationBrowsePanel.clickOnToolbarStop();
@@ -87,9 +87,9 @@ class ApplicationBrowsePanelToolbarSpec
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
 
         when: "Stop button pressed"
-        TestUtils.saveScreenshot( getSession(), "multiple_select_stop_before" );
+        saveScreenshot( "multiple_select_stop_before" );
         applicationBrowsePanel.clickOnToolbarStop();
-        TestUtils.saveScreenshot( getSession(), "multiple_select_stop_after" )
+        saveScreenshot( "multiple_select_stop_after" )
 
         then: "both applications are 'stopped'"
         applicationBrowsePanel.findAppByDisplayNameAndGetStatus( FIRST_APP_DISPLAY_NAME ) == STOPPED_STATE;

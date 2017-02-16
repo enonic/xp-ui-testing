@@ -155,6 +155,7 @@ public class UserBrowsePanel
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
+            saveScreenshot( "err_deleting_users" );
             throw new TestFrameworkException( "Impossible to delete a user store, because the 'Delete' button is disabled!" );
         }
         deleteButton.click();

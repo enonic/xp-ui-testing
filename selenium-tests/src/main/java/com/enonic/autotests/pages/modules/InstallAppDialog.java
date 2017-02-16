@@ -37,9 +37,9 @@ public class InstallAppDialog
 
     private final String APPLICATION_UPLOADER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
 
-    private final String VALIDATION_VIEWER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ValidationRecordingViewer')]";
 
-    private final String VALIDATION_VIEWER_TEXT = VALIDATION_VIEWER + "//li";
+    private final String VALIDATION_MESSAGE = INSTALL_DIALOG_DIV +
+        "//div[contains(@id,'ModalDialogContentPanel')]//div[contains(@class,'status-message') and contains(@class,'failed')]";
 
     private final String APP_VIEWER_DIV = INSTALL_DIALOG_DIV + "//div[contains(@id,'MarketAppViewer')]";
 
@@ -85,16 +85,16 @@ public class InstallAppDialog
         return this;
     }
 
-    public String waitValidationViewerText( long timeout )
+    public String getValidationMessage( long timeout )
     {
         WebDriverWait wait = new WebDriverWait( getDriver(), timeout );
-        WebElement element = wait.until( ExpectedConditions.visibilityOfElementLocated( By.xpath( VALIDATION_VIEWER_TEXT ) ) );
+        WebElement element = wait.until( ExpectedConditions.visibilityOfElementLocated( By.xpath( VALIDATION_MESSAGE ) ) );
         return element.getText();
     }
 
-    public boolean waitUntilValidationViewerAppears( long timeout )
+    public boolean waitUntilValidationMessageAppears( long timeout )
     {
-        return waitUntilVisibleNoException( By.xpath( VALIDATION_VIEWER ), timeout );
+        return waitUntilVisibleNoException( By.xpath( VALIDATION_MESSAGE ), timeout );
     }
 
     public InstallAppDialog duUploadApplication( String pathToApp )

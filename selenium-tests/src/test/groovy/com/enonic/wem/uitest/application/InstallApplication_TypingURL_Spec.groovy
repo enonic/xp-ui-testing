@@ -2,11 +2,8 @@ package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.modules.InstallAppDialog
-import spock.lang.Ignore
 import spock.lang.Shared
 
-//Ignored due to https://youtrack.enonic.net/issue/XP-4912
-@Ignore
 class InstallApplication_TypingURL_Spec
     extends BaseApplicationSpec
 {
@@ -19,35 +16,34 @@ class InstallApplication_TypingURL_Spec
     @Shared
     String WARNING = "Failed to process application from %s"
 
-    def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN wrong URL to an application typed THEN correct validation message appears in the dialog"()
+    def "GIVEN 'install app' dialog is opened  WHEN wrong URL for the application was typed THEN correct validation message should appear on the dialog"()
     {
-        given: "'install app' dialog opened AND 'Upload' tab activated"
+        given: "'install app' dialog is "
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
 
-
-        when: "wrong URL to an application typed"
+        when: "wrong URL to an application was typed"
         appDialog.typeInApplicationInput( WRONG_APP_URL );
-        String validationMessage = appDialog.waitValidationViewerText( Application.EXPLICIT_NORMAL );
+        String validationMessage = appDialog.getValidationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "wrong_app_url" )
 
-        then: "correct validation message appears in the dialog"
+        then: "correct validation message should appear on the dialog"
         validationMessage == String.format( WARNING, WRONG_APP_URL );
     }
 
-    def "GIVEN 'install app' dialog opened AND 'Upload' tab activated WHEN incorrect protocol typed THEN validation message not displayed"()
+    def "GIVEN 'install app' dialog is opened WHEN incorrect protocol was typed THEN validation message should not be displayed"()
     {
-        given: "'install app' dialog opened AND 'Upload' tab activated"
+        given: "'install app' dialog is opened"
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
 
-        when: "wrong protocol typed"
+        when: "wrong protocol was typed"
         appDialog.typeInApplicationInput( WRONG_PROTOCOL_URL );
         saveScreenshot( "wrong_protocol_url" );
 
-        then: "validation message not displayed"
-        !appDialog.waitUntilValidationViewerAppears( Application.EXPLICIT_NORMAL );
+        then: "validation message should not be displayed"
+        !appDialog.waitUntilValidationMessageAppears( Application.EXPLICIT_NORMAL );
     }
 }
