@@ -10,6 +10,10 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks
+ * XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
+ */
 @Stepwise
 class Occurrences_DefaultRelation_0_1_Spec
     extends Base_InputFields_Occurrences
@@ -18,36 +22,36 @@ class Occurrences_DefaultRelation_0_1_Spec
     @Shared
     Content TEST_RELATIONSHIP_CONTENT;
 
-    def "WHEN wizard for adding a content with Default Relation(0:1) opened THEN option filter present and there are no selected items"()
+    def "WHEN wizard for adding a content with Default Relation(0:1) is opened THEN option filter should be present and target should not be selcted"()
     {
-        when: "start to add a content with type 'Relation 0:1'"
+        when: "site was clicked and 'Relation 0:1' content type selcted in the New Content Dialog"
         Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_NAME );
         selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        then: "wizard with form view opened"
+        then: "required form should be opened"
         formViewPanel.isOpened();
-        and: "option filter is displayed"
+        and: "option filter should be displayed"
         formViewPanel.isOptionFilterDisplayed();
-        and: "there are no selected files"
+        and: "target should not be selcted"
         formViewPanel.getNumberOfSelectedFiles() == 0;
     }
 
-    def "GIVEN  wizard for  Default Relation(0:1) opened WHEN one file selected THEN option filter not present and one selected file displayed "()
+    def "GIVEN wizard for Default Relation(0:1) is opened WHEN one target has been selected THEN option filter should not be present and one target should be displayed "()
     {
         given: "start to add a content with type 'Relation 0:1'"
         Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        when:
+        when:"all correct data was typed"
         wizard.typeData( relationship );
 
-        then: "one selected file displayed"
+        then: "one selected file should be displayed"
         formViewPanel.getNumberOfSelectedFiles() == 1;
-        and: "option filter not displayed"
+        and: "option filter should not displayed"
         !formViewPanel.isOptionFilterDisplayed();
-        and: "correct name of selected file displayed"
+        and: "correct name of selected file should be displayed"
         formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( NORD_IMAGE_NAME );
     }
 
@@ -59,50 +63,51 @@ class Occurrences_DefaultRelation_0_1_Spec
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when:
+        when:"just saved Relation 0:1 content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
 
-        then: "one file selected in form view"
+        then: "one file should be selected in form view"
         formViewPanel.getNumberOfSelectedFiles() == 1;
-        and: "option filter not displayed"
+        and: "option filter should not be displayed"
         !formViewPanel.isOptionFilterDisplayed();
-        and: "correct name of selected file displayed"
+        and: "correct name of the selected file should be displayed"
         formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( NORD_IMAGE_NAME );
     }
 
-    def "GIVEN a content with type Default Relation(0:1) and one file selected in the form view WHEN content opened for edit AND selected option removed THEN option filter appears and there are no selected options"()
+    def "GIVEN existing content with type Default Relation(0:1) is opened WHEN  selected option was removed THEN option filter should appear"()
     {
-        given: "content selected in the grid and opened"
+        given: "existing content with type Default Relation(0:1) is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        when:
+        when:"target has been removed"
         formViewPanel.removeSelectedFile( NORD_IMAGE_DISPLAY_NAME );
 
-        then: "one selected file displayed"
+        then: "target should not be selcted"
         formViewPanel.getNumberOfSelectedFiles() == 0;
-        and: "option filter not  displayed"
+        and: "option filter should appear on the form"
         formViewPanel.isOptionFilterDisplayed();
     }
 
-    def "GIVEN a content with type Default Relation(0:1) and one file selected in content WHEN content opened for edit AND selected option removed AND content saved and opened again THEN option filter displayed and there are no selected options and content is valid "()
+    def "GIVEN existing content with type Default Relation(0:1) is opened WHEN selected option was removed AND content was saved and opened again THEN option filter should be displayed "()
     {
-        given: "start to add a content with type 'Relation 0:1'"
+        given: "existing content with type Default Relation(0:1) is opened"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        when:
+        when:"target has been removed"
         formViewPanel.removeSelectedFile( NORD_IMAGE_DISPLAY_NAME );
+        and:"content has been saved"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
 
-        then: "there are no selected files in the form"
+        then: "number of selcted files should be 0"
         formViewPanel.getNumberOfSelectedFiles() == 0;
-        and: "option filter not  displayed"
+        and: "option filter should be displayed"
         formViewPanel.isOptionFilterDisplayed();
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and:
-        //!wizard.isContentInvalid( TEST_RELATIONSHIP_CONTENT.getDisplayName() )
+
+        and:"red icon should not be displayed, content is valid, because option is not required"
+        !wizard.isContentInvalid( );
     }
 
     private Content buildDefaultRelation0_1_Content( String... names )

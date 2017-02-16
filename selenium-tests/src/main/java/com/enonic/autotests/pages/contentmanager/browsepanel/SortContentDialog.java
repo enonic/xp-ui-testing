@@ -14,6 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -126,14 +127,22 @@ public class SortContentDialog
     public SortContentDialog clickOnCancelButton()
     {
         cancelButton.click();
-        waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        boolean isClosed = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !isClosed )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_close_sort" ) );
+        }
         return this;
     }
 
     public SortContentDialog clickOnCancelOnTop()
     {
         cancelTopButton.click();
-        waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        boolean isClosed = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !isClosed )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_close_sort" ) );
+        }
         return this;
     }
 
@@ -145,7 +154,11 @@ public class SortContentDialog
     public SortContentDialog clickOnSaveButton()
     {
         saveButton.click();
-        waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        boolean isClosed = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !isClosed )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_close_sort" ) );
+        }
         sleep( 1000 );
         return this;
     }

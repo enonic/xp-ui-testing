@@ -68,7 +68,7 @@ class Occurrences_Long_Spec
         !wizard.isContentInvalid();
 
         and: "validation message should be displayed"
-        !longFormViewPanel.isValidationMessagePresent();
+        longFormViewPanel.isValidationMessagePresent();
 
         and: "'Publish' button on the wizard-toolbar should be enabled, because input is not required"
         wizard.isPublishButtonEnabled();

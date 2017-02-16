@@ -13,19 +13,19 @@ class SortContentDialogSpec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN Content BrowsePanel WHEN one content selected and 'Sort' button clicked THEN 'Sort Content' appears with correct control elements"()
+    def "GIVEN existing folder with children is selcted WHEN 'Sort' button has been clicked THEN 'Sort Content' appears with correct control elements"()
     {
-        given: "one selected content"
+        given: "existing folder with children is selcted"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
 
-        when:
+        when:"'Sort' button has been clicked"
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         then: "'SortContent' dialog should be displayed"
         sortContentDialog.isDisplayed();
-        and: "has a correct title"
+        and: "dialog has a correct title"
         sortContentDialog.getTitle() == SortContentDialog.TITLE;
-        and: "has 'save, close' buttons"
+        and: "has 'save, close' buttons should be displayed"
         sortContentDialog.isCancelButtonEnabled();
         and:
         sortContentDialog.isSaveButtonEnabled();
@@ -35,20 +35,20 @@ class SortContentDialogSpec
 
     def "GIVEN sort dialog is opened WHEN 'Save' button was clicked THEN dialog should not be displayed"()
     {
-        given: "one selected content"
+        given: "sort dialog is opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
-        when: "'Save' clicked"
+        when: "'Save' has been clicked"
         sortContentDialog.clickOnSaveButton();
 
-        then:
+        then:"the dialog should not be displayed"
         !sortContentDialog.isDisplayed();
     }
 
     def "GIVEN sort dialog is opened WHEN 'Cancel' button was clicked THEN dialog should not be displayed"()
     {
-        given: "one selected content"
+        given: "sort dialog is opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 

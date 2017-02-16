@@ -14,6 +14,9 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
+ */
 @Stepwise
 class Occurrences_CustomRelation_0_1_Spec
     extends Base_InputFields_Occurrences
@@ -32,13 +35,12 @@ class Occurrences_CustomRelation_0_1_Spec
         TEST_ARTICLE_CONTENT = buildArticle_Content( "articletest", "title", "body" );
         selectSitePressNew( TEST_ARTICLE_CONTENT.getContentTypeName() ).typeData( TEST_ARTICLE_CONTENT ).save().close(
             TEST_ARTICLE_CONTENT.getDisplayName() );
-        then: "it listed in the grid"
+        then: "it should be listed in the grid"
         filterPanel.typeSearchText( TEST_ARTICLE_CONTENT.getName() );
         contentBrowsePanel.exists( TEST_ARTICLE_CONTENT.getName() );
     }
 
-
-    def "WHEN wizard for adding a content with Custom Relation(0:1) opened THEN option filter present and there are no selected items"()
+    def "WHEN wizard for adding a content with Custom Relation(0:1) is opened THEN option filter should be present"()
     {
         when: "start to add a content with type 'Custom Relation 0:1'"
         Content relationship = buildCitationRelation0_1_Content( null );
@@ -46,55 +48,55 @@ class Occurrences_CustomRelation_0_1_Spec
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         saveScreenshot( "wizard_custom_rel" );
 
-        then: "wizard with form view opened"
+        then: "wizard with form view should be opened"
         formViewPanel.isOpened();
 
-        and: "option filter is displayed"
+        and: "option filter should be displayed"
         formViewPanel.isOptionFilterDisplayed();
 
-        and: "there are no selected files"
+        and: "number of selcted files is 0"
         formViewPanel.getNumberOfSelectedFiles() == 0;
     }
 
-    def "GIVEN saving of citation without selected article WHEN option not selected THEN new content listed and it is valid"()
+    def "GIVEN saving of citation without selected article WHEN option was not selected THEN new content should be listed and it is valid"()
     {
-        given: "start to add a content with type ' Custom Relation 0:1'"
+        given: "start to add a content with type 'Custom Relation 0:1'"
         Content citation = buildCitationRelation0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( citation.getContentTypeName() );
 
-        when: "wizard with form view opened"
+        when: "'citation' content was saved"
         wizard.typeData( citation ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "new content listed"
+        then: "new content should be listed"
         filterPanel.typeSearchText( citation.getName() );
         contentBrowsePanel.exists( citation.getName() );
         saveScreenshot( "citation-added" );
 
-        and: "content is valid"
+        and: "content should be displayed as valid in the grid"
         !contentBrowsePanel.isContentInvalid( citation.getName() );
     }
 
-    def "GIVEN saving of citation content with one selected article WHEN relationship saved THEN new content listed"()
+    def "GIVEN saving of citation content with one selected article WHEN relationship was saved THEN new content should be listed in the grid"()
     {
         given: "start to add a content with type 'Relation 0:1'"
         RELATIONSHIP_CONTENT = buildCitationRelation0_1_Content( TEST_ARTICLE_CONTENT.getDisplayName() );
         ContentWizardPanel wizard = selectSitePressNew( RELATIONSHIP_CONTENT.getContentTypeName() );
 
-        when: "wizard with form view opened"
+        when: "data typed and the content has been saved"
         wizard.typeData( RELATIONSHIP_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
-        then: "new content listed"
+        then: "new content should be listed in the grid"
         filterPanel.typeSearchText( RELATIONSHIP_CONTENT.getName() );
         contentBrowsePanel.exists( RELATIONSHIP_CONTENT.getName() );
     }
 
-    def "WHEN the citation content with selected article opened for edit THEN correct article shown in the selected options"()
+    def "WHEN existing citation content with selected article is opened THEN correct article should be shown in selected options"()
     {
-        when: "citation content opened for edit"
+        when: "existing citation content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( RELATIONSHIP_CONTENT );
         saveScreenshot( "citation-with-article" );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        then: "correct article shown in the selected options"
+        then: "correct article should be shown in the selected options"
         List<String> names = formViewPanel.getNamesOfSelectedFiles();
         names.get( 0 ).contains( TEST_ARTICLE_CONTENT.getName() );
     }
@@ -107,15 +109,15 @@ class Occurrences_CustomRelation_0_1_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        when:
+        when:"content has been published"
         contentPublishDialog.clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "citation-published" );
 
-        then: "citation has a 'online' status"
+        then: "citation should be with 'online' status"
         contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
-        and: "correct notification message appeared"
+        and: "correct notification message should be displayed"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
             message.contains( "items are published" );
 
