@@ -689,6 +689,12 @@ public class ContentBrowsePanel
 
     public ContentWizardPanel clickToolbarEditAndSwitchToWizardTab()
     {
+        boolean isEditButtonEnabled = waitUntilElementEnabledNoException( By.xpath( EDIT_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isEditButtonEnabled )
+        {
+            saveScreenshot( "err_edit_button" );
+            throw new TestFrameworkException( "Edit button should be enabled!" );
+        }
         editButton.click();
         sleep( 500 );
         switchToContentWizardTabBySelectedContent();

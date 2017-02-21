@@ -17,6 +17,8 @@ import com.enonic.autotests.pages.XpTourDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
 import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
+import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.User;
 
 public class NavigatorHelper
@@ -100,6 +102,7 @@ public class NavigatorHelper
                 }
             }
         }
+        TestUtils.saveScreenshot( session, NameHelper.uniqueName( "err_switch_tab" ) );
         throw new TestFrameworkException( "tab was not found!" + urlPart );
     }
 
