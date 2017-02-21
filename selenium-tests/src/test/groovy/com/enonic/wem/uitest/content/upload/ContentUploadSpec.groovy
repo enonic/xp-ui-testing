@@ -14,13 +14,13 @@ class ContentUploadSpec
 {
 
     @Shared
-    String pathToTxt = "test-data/upload/text.txt";
+    String pathToTxt = "/test-data/upload/text.txt";
 
     @Shared
     String FILE_NAME = "text.txt";
 
     @Shared
-    String path = "test-data/upload/ea.png";
+    String path = "/test-data/upload/ea.png";
 
     @Shared
     String IMAGE_FILE_NAME = "ea.png";

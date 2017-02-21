@@ -61,7 +61,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( NORD_IMAGE_NAME );
     }
 
-    def "GIVEN existing content with one selcted option is opened WHEN three options were added THEN 4 selected files should be displayed on the  wizard page"()
+    def "GIVEN existing content with one selected option is opened WHEN three options were added THEN 4 selected files should be displayed on the  wizard page"()
     {
         given: "existing content with one selcted option is opened"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
