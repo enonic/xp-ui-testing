@@ -68,8 +68,7 @@ class ContentBrowsePanelToolbarSpec
     {
         when: "image content selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
-        sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "children_not_allow" );
+        saveScreenshot( "children_not_allow" );
 
         then: "sort button is disabled"
         !contentBrowsePanel.isSortButtonEnabled();

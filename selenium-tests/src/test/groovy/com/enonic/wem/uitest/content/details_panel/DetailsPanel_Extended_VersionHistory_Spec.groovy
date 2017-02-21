@@ -15,33 +15,32 @@ class DetailsPanel_Extended_VersionHistory_Spec
     extends BaseContentSpec
 {
 
-
     @Shared
     Content folderContent;
 
     @Shared
     String NEW_DISPLAY_NAME = "version-info-changed"
 
-    def "GIVEN existing content is selected AND 'Version History' opened  WHEN latest 'version item' clicked THEN 'version info' appears"()
+    def "GIVEN existing content is selected AND 'Version History' is opened WHEN latest 'version item' clicked THEN 'version info' appears"()
     {
-        given: "content added selected and version history opened"
+        given: "saving of new folder content"
         folderContent = buildFolderContent( "version_info", "version_info_test" );
         addContent( folderContent );
-        and: "the content selected and details panel opened"
+        and: "the content was selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
-        when: "latest 'version item' clicked"
+        when: "latest 'version item' has been clicked"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
 
-        then: "'version info' is shown"
+        then: "'version info' panel should be shown"
         versionItem.isVersionInfoDisplayed();
     }
 
-    def "GIVEN existing content selected AND 'Version History' opened  WHEN latest 'version item' clicked THEN correct 'version info' displayed"()
+    def "GIVEN existing content was selected AND 'Version History' is opened WHEN latest 'version item' was clicked THEN correct 'version info' should be displayed"()
     {
-        given: "existing content selected and version history opened"
+        given: "existing content was selected and version history opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
@@ -54,16 +53,16 @@ class DetailsPanel_Extended_VersionHistory_Spec
         then: "correct display name is shown"
         versionItem.getDisplayName() == folderContent.getDisplayName();
 
-        and: "version id is displayed"
+        and: "version-id is displayed"
         !versionId.isEmpty();
 
-        and: "close button for the version view is displayed"
+        and: "close button for the version view should be displayed"
         versionItem.isCloseButtonDisplayed( versionId );
 
-        and: "message 'this version is active' is present"
+        and: "message 'this version is active' should be present"
         versionItem.getVersionStatus( versionId ) == ContentVersionInfoView.ACTIVE_VERSION;
 
-        and: "timestamp displayed on the info-view"
+        and: "timestamp should be displayed on the info-view"
         String timestamp = versionItem.getTimeStamp( versionId );
         timestamp != null;
         and: "string successfully parsed to date time"
@@ -71,9 +70,9 @@ class DetailsPanel_Extended_VersionHistory_Spec
     }
 
 
-    def "GIVEN content selected AND 'Version History' option selected  WHEN first version item clicked THEN version info displayed"()
+    def "GIVEN existing content is selected and version history opened  WHEN first version item was expanded THEN required version-info should be displayed"()
     {
-        given: "content selected and version history opened"
+        given: "existing content is selected and version history opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
@@ -84,22 +83,22 @@ class DetailsPanel_Extended_VersionHistory_Spec
         saveScreenshot( "version-history-expanded-no-display-name" );
 
 
-        then: "correct display name is shown"
+        then: "correct display name should be empty"
         versionItem.getDisplayName() == "";
 
-        and: "version id is displayed"
+        and: "correct version id should be displayed"
         !versionId.isEmpty();
 
-        and: "close button for the version view is displayed"
+        and: "close button for the version view should be displayed"
         versionItem.isCloseButtonDisplayed( versionId );
 
         and:
         versionItem.getVersionStatus( versionId ) == ContentVersionInfoView.RESTORE_THIS;
     }
 
-    def "GIVEN content selected AND version info expanded  WHEN 'close info' button clicked THEN 'version info' is hidden"()
+    def "GIVEN content was selected AND version info expanded  WHEN 'close info' button has been clicked THEN 'version info' is getting hidden"()
     {
-        given: "content selected and version history opened"
+        given: "content is selected and version history is opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
@@ -108,24 +107,23 @@ class DetailsPanel_Extended_VersionHistory_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         String versionId = versionItem.getId();
 
-        when: "'close version info' button clicked"
+        when: "'close version info' button was clicked"
         versionItem.doCloseVersionInfo( versionId );
         saveScreenshot( "version-history-collapsed" );
 
-        then: "'version info' is hidden"
+        then: "'version info' is getting hidden"
         !versionItem.isVersionInfoDisplayed();
     }
 
-
-    def "GIVEN existing content AND version info opened WHEN content changed THEN new display name present in the 'version info'"()
+    def "GIVEN existing content AND version info is opened WHEN content was changed THEN new display name should be present on the 'version info'"()
     {
-        when: "content selected and version history opened"
+        when: "existing content is opened new display name typed"
         findAndSelectContent( folderContent.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
             NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
         and: "details panel has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
 
-        then: "new display name shown in the 'version info'"
+        then: "new display name should be present on the 'version info"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         saveScreenshot( "version-history-new-display-name" );

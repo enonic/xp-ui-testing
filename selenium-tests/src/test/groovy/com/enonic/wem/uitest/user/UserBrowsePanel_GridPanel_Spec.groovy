@@ -52,21 +52,18 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         when:
-        userBrowsePanel.clickOnClearSelection();
+        userBrowsePanel.doClearSelection();
 
         then:
         userBrowsePanel.getSelectedRowsNumber() == 0 && userItemNames.size() > 0;
     }
 
-    def "GIVEN no items selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
+    def "GIVEN no any items are selected WHEN 'Selection Controller' checkbox is checked THEN all rows should be selected"()
     {
-        given:
-        userBrowsePanel.clickOnClearSelection();
+        when: "'Selection Controller' checkbox is checked"
+        userBrowsePanel.doSelectAll();
 
-        when: "'Select all'-link is clicked"
-        userBrowsePanel.clickOnSelectAll();
-
-        then: "the number of rows in the grid the same as number in the 'Select All' link"
+        then: "all rows should be selected"
         userBrowsePanel.getRowsCount() == userBrowsePanel.getSelectedRowsNumber();
     }
 
@@ -107,17 +104,17 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.getChildNames().size() == 0;
     }
 
-    def "GIVEN a 'system' folder selected WHEN arrow down is typed THEN next row is selected"()
+    def "GIVEN 'system' folder is selected WHEN arrow down was pressed THEN next row should be selected"()
     {
-        given: "a 'system folder is selected'"
+        given: "'system folder is selected'"
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
         int before = userBrowsePanel.getSelectedRowsNumber();
 
-        when: "'arrow down' typed"
+        when: "'arrow down' was pressed"
         userBrowsePanel.pressKeyOnRow( UserBrowsePanel.BrowseItemType.SYSTEM.getValue(), Keys.ARROW_DOWN );
-        TestUtils.saveScreenshot( getTestSession(), "arrow_down_user" );
+        saveScreenshot( "arrow_down_pressed_user" );
 
-        then: "'system' is not selected now and another folder in the root directory is selected"
+        then: "'system' is not selected now and the next folder should be selected"
         !userBrowsePanel.isRowSelected( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() ) && userBrowsePanel.getSelectedRowsNumber() ==
             before;
     }

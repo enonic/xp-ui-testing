@@ -27,71 +27,72 @@ class Restore_Version_Folder_Spec
     @Shared
     String NEW_DISPLAY_NAME = NameHelper.uniqueName( "restore-version" )
 
-    def "GIVEN existing folder WHEN display name of the folder changed THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing folder WHEN display name of the folder was changed THEN new 'version history item' should appear in the version-view"()
     {
-        given:
+        given: "new folder was added"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
         FOLDER_CONTENT = buildFolderWithSettingsContent( "folder", INITIAL_DISPLAY_NAME, settings );
         addContent( FOLDER_CONTENT );
         findAndSelectContent( FOLDER_CONTENT.getName() );
+        and: "version panel for the content is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_before_changing_dname" );
 
-
-        when: "display name of the folder changed"
+        when: "display name of the folder was changed"
         contentBrowsePanel.clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_after_changing_dname" );
 
-        then: "new 'version history item' appeared in the version-view"
+        then: "new 'version history item' should appear in the version-view"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing folder with updated 'display name' WHEN the folder selected AND previous version restored THEN correct display name appears in the grid"()
+    def "GIVEN existing folder with updated 'display name' WHEN the folder was selected AND previous version restored THEN content with original display name should be present"()
     {
         given: "existing folder with updated 'display name'"
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
-        and: "version panel opened"
+        and: "version panel was opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the folder selected AND previous version restored"
+        when: "the folder selected AND previous version is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "folder_display_name_restored" );
 
-        then: "correct display name appears in the grid"
+        then: "content with original display name should be present"
         filterPanel.typeSearchText( INITIAL_DISPLAY_NAME );
         contentBrowsePanel.exists( FOLDER_CONTENT.getName() );
     }
 
-    def "GIVEN existing folder AND language changed for it WHEN the folder selected AND previous version restored THEN language is restored on the wizard page"()
+    def "GIVEN existing folder is opened AND language was changed WHEN  previous version restored THEN original language should be restored on the wizard page"()
     {
-        given: "existing folder AND language changed for it"
+        given: "existing folder is opened"
         findAndSelectContent( FOLDER_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
+        and: "language was changed"
         form.removeLanguage( NORSK_LANGUAGE ).selectLanguage( ENGLISH_LANGUAGE );
         saveScreenshot( "folder_language_changed" );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the folder selected AND previous version restored"
+        when: "the folder selected AND previous version of the folder was restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
 
-        and: "folder opened in the wizard again"
+        and: "folder is opened"
         contentBrowsePanel.clickToolbarEdit();
         saveScreenshot( "folder_language_restored" );
 
-        then: "language is restored on the wizard page"
+        then: "original language should be restored on the wizard page"
         form.getLanguage() == NORSK_LANGUAGE;
     }
 
-    def "GIVEN new acl-entry added for the folder WHEN previous version restored THEN acl entry not present in the content wizard"()
+    def "GIVEN new acl-entry was added in the folder wizard WHEN previous version of folder is restored THEN the acl entry should not be present on the content wizard"()
     {
         given: "new acl entry added and folder saved"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
@@ -116,7 +117,7 @@ class Restore_Version_Folder_Spec
         beforeRestoring.contains( "Anonymous User" );
     }
 
-    def "GIVEN version panel opened for the folder WHEN version with the acl-entry restored THEN acl-entry present again in the content wizard"()
+    def "GIVEN folder is selected and version panel is opened WHEN version with the acl-entry restored THEN acl-entry present again in the content wizard"()
     {
         given: "new acl entry added and folder saved"
         findAndSelectContent( FOLDER_CONTENT.getName() );

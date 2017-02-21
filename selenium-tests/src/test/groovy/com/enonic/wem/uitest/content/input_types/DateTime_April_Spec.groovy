@@ -32,8 +32,8 @@ class DateTime_April_Spec
         when: "DateTime in March typed and content saved"
         contentWizardPanel.typeData( dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        and: "just created datetime content opened"
-        contentBrowsePanel.clickOnClearSelection();
+        and: "just created datetime content is opened"
+        contentBrowsePanel.doClearSelection();
         findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
@@ -51,8 +51,8 @@ class DateTime_April_Spec
         when: "DateTime in April typed and content saved"
         contentWizardPanel.typeData( dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        and: "just created datetime content opened"
-        contentBrowsePanel.clickOnClearSelection();
+        and: "just created datetime content is opened"
+        contentBrowsePanel.doClearSelection();
         findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
@@ -70,7 +70,7 @@ class DateTime_April_Spec
         contentWizardPanel.typeData( dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created datetime content opened"
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 

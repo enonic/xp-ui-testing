@@ -11,8 +11,9 @@ import spock.lang.Stepwise
 
 import java.time.LocalDate
 
-/**Tasks:
- XP-4424 Add selenium tests for 'Published from' property, that displayed at the Info Widget
+/**
+ * Tasks:
+ *  XP-4424 Add selenium tests for 'Published from' property, that displayed at the Info Widget
  **/
 @Stepwise
 class DetailsPanel_PropertiesWidgetItemView_Spec
@@ -30,88 +31,91 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     @Shared
     String EXECUTABLE_APP_NAME = "executable";
 
-
-    def "GIVEN existing '*.bat' WHEN  file selected THEN correct info displayed in the widget"()
+    def "GIVEN existing '*.bat' WHEN the file was selected THEN correct info should be displayed on the widget"()
     {
-        when: "executable file selected"
+        when: "executable file is selected"
         findAndSelectContent( EXECUTABLE_BAT );
+        and: "Details Panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "executable_bat_info_widget" );
 
-        then: "'media' is application's name"
+        then: "application's name should be 'media'"
         view.getApplicationName() == MEDIA_APP_NAME;
 
-        and: "'executable' type is displayed"
+        and: "'executable' type should be displayed"
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
-    def "GIVEN existing '*.sh' WHEN file selected THEN correct info displayed in the widget"()
+    def "GIVEN existing '*.sh' WHEN file was selected THEN correct info should be displayed on the widget"()
     {
-        when: "executable file selected"
+        when: "executable file was selected"
         findAndSelectContent( EXECUTABLE_SH );
+        and: "Details Panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "executable_sh_info_widget" );
 
-        then: "'media' is application's name"
+        then: "application's name should be 'media'"
         view.getApplicationName() == MEDIA_APP_NAME;
 
-        and: "'executable' type is displayed"
+        and: "'executable' type should be displayed"
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
 
-    def "GIVEN existing '*.exe' WHEN file selected THEN correct info displayed in the widget"()
+    def "GIVEN existing '*.exe' WHEN the file was selected THEN correct info should be displayed on the widget"()
     {
-        when: "executable file selected"
+        when: "executable file was selected"
         findAndSelectContent( EXECUTABLE_EXE );
+        and: "Details Panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "executable_exe_info_widget" );
 
-        then: "'media' is application's name"
+        then:"application's name should be 'media'"
         view.getApplicationName() == MEDIA_APP_NAME;
 
         and: "'executable' type is displayed"
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
-    def "GIVEN a new created folder is selected WHEN details panel opened THEN correct properties displayed in the PropertiesWidgetItemView "()
+    def "GIVEN folder was added an it selected WHEN details panel was opened THEN correct properties should be displayed in the PropertiesWidgetItemView "()
     {
-        given: "new created folder is selected"
+        given: "folder was added"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
         FOLDER_CONTENT = buildFolderWithSettingsContent( "folder", "properties-test", settings );
         addContent( FOLDER_CONTENT );
+        and:"the folder is selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
-        when: "details panel opened"
+        when: "details panel was opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
 
-        then: "'Id' present on the widget"
+        then: "'Id' should be present on the widget"
         view.isIdPresent();
 
-        and: "'Created' present on the widget"
+        and: "'Created' should be present on the widget"
         view.isCreatedPresent();
 
-        and: "'Modified' present on the widget"
+        and: "'Modified' should be present on the widget"
         view.isIdModifiedPresent();
 
         and: "'Application-name' present on the widget"
         view.isApplicationNamePresent();
 
-        and: "'Owner' present on the widget"
+        and: "'Owner' should be present on the widget"
         view.isOwnerPresent();
 
-        and: "'Type' present on the widget"
+        and: "'Type' should be present on the widget"
         view.isTypePresent();
 
-        and: "'Language' present on the widget"
+        and: "'Language' should be present on the widget"
         view.isLanguagePresent();
     }
 
-    def "GIVEN existing folder is selected WHEN details panel opened THEN correct values for properties are shown in the PropertiesWidgetItemView "()
+    def "GIVEN existing folder is selected WHEN details panel is opened THEN correct values for properties should be shown on the PropertiesWidgetItemView "()
     {
         given: "existing folder is selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
@@ -121,51 +125,52 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "folder_info_properties" );
 
-        then: "correct 'created' date displayed"
+        then: "correct 'created' date should be displayed"
         view.getCreated().contains( LocalDate.now().toString() );
 
-        and: "correct 'modified' date displayed"
+        and: "correct 'modified' date should be displayed"
         view.getModified().contains( LocalDate.now().toString() );
 
-        and: "correct application-name displayed"
+        and: "correct application-name should be displayed"
         view.getApplicationName() == BASE_APP_NAME;
 
         and: "correct owner displayed"
         view.getOwner() == "su";
 
-        and: "correct type displayed"
+        and: "correct type should be displayed"
         view.getType() == "folder";
 
-        and: "correct language displayed"
+        and: "correct language should be displayed"
         view.getLanguage() == "no";
     }
 
-    def "WHEN image content selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
+    def "WHEN image content was selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
     {
-        when: "image content selected"
+        when: "image content was selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "image_info_properties" );
 
-        then: "Properties Widget is displayed"
+        then: "Properties Widget should be displayed"
         view.isDisplayed();
 
-        and: "Type is image"
+        and: "type should be 'image'"
         view.getType() == "image";
 
-        and: "correct application-name displayed"
+        and: "correct application-name should be displayed"
         view.getApplicationName() == MEDIA_APP_NAME;
     }
 
     def "GIVEN existing content with owner opened WHEN owner changed  THEN new owner shown in the widget"()
     {
-        given: "when content opened for edit"
+        given: "when content is opened"
         ContentWizardPanel wizard = findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
-        when: "owner changed AND content saved"
+        when: "super user was replaced with the Anonymous user"
         form.removeOwner( SUPER_USER ).selectOwner( ANONYMOUS_USER );
+        and: "the folder has been saved"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "details panel has been opened"
@@ -173,67 +178,72 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "property-widget-owner-anonym" )
 
-        then: "new owner shown in the widget"
+        then: "new owner should be shown on the widget"
         view.getOwner() == "anonymous";
     }
 
-    def "WHEN shortcut content selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
+    def "GIVEN shortcut content was added and it selected in the grid WHEN details panel is opened THEN correct type of the content should be displayed"()
     {
-        when: "shortcut content selected"
+        given: "shortcut content was added and it selected in the grid"
         Content shortcut = buildShortcut( "shortcut", null, "test-properties" );
         addContent( shortcut );
         findAndSelectContent( shortcut.getName() );
+
+        when: "details panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "shortcut_info_properties" );
 
-        then: "Properties Widget is displayed"
+        then: "Properties Widget should be displayed"
         view.isDisplayed();
 
-        and: "Type is shortcut"
+        and: "correct type of the content should be displayed"
         view.getType() == "shortcut";
 
-        and: "correct application-name displayed"
+        and: "correct application's name should be displayed"
         view.getApplicationName() == BASE_APP_NAME;
     }
 
-    def "WHEN unstructured content selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
+    def "GIVEN unstructured content was added and it selected in the grid WHEN details panel was opened THEN correct type of the content should be displayed"()
     {
-        when: "unstructured content selected"
+        given: "unstructured content was added and it selected in the grid"
         Content unstructured = buildUnstructured( "unstructured", null, "test-unstructured" );
         addContent( unstructured );
         findAndSelectContent( unstructured.getName() );
+
+        when: "details panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "unstructured_info_properties" );
 
-        then: "Properties Widget is displayed"
+        then: "Properties Widget should be displayed"
         view.isDisplayed();
 
-        and: "Type is unstructured"
+        and: "correct type of the content should be displayed"
         view.getType() == "unstructured";
 
-        and: "correct application-name displayed"
+        and: "correct application-name should be displayed"
         view.getApplicationName() == BASE_APP_NAME;
     }
 
-    def "WHEN site content selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
+    def "GIVEN site content was added and it selected in the grid WHEN details panel is opened THEN correct type of the content should be displayed"()
     {
-        when: "unstructured content selected"
+        given: "site content was added and it selected in the grid WHEN details panel is opened"
         Content site = buildSiteWithNameAndDispalyNameAndDescription( "site", "test-site", "properties test" );
         addContent( site );
         findAndSelectContent( site.getName() );
+        when: "details panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "site_info_properties" );
 
-        then: "Properties Widget is displayed"
+        then: "Properties Widget should be displayed"
         view.isDisplayed();
 
-        and: "Type is site"
+        and: "Type of the content should be 'site'"
         view.getType() == "site";
 
-        and: "correct application-name displayed"
+        and: "application's name should be 'portal'"
         view.getApplicationName() == "portal";
     }
 }

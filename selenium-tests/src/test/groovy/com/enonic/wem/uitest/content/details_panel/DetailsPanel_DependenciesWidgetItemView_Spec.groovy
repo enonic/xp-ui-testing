@@ -148,7 +148,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         Content imageSelector = buildImageSelector1_1_Content( TEST_SITE_NAME, TARGET_IMG )
         findAndSelectContent( TEST_SITE_NAME ).clickToolbarNew().selectContentType( imageSelector.getContentTypeName() ).typeData(
             imageSelector ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "dependencies for image is opened"
         findAndSelectContent( TARGET_IMG );

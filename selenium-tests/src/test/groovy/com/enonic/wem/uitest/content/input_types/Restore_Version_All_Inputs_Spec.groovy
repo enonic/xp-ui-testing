@@ -71,7 +71,7 @@ class Restore_Version_All_Inputs_Spec
 
 
         when: "display name of the folder changed"
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 

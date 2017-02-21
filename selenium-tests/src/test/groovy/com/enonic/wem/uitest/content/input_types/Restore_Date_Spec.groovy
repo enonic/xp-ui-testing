@@ -32,7 +32,7 @@ class Restore_Date_Spec
         DATE_CONTENT = buildDate1_1_Content( DATE_V1 );
         ContentWizardPanel wizard = selectSitePressNew( DATE_CONTENT.getContentTypeName() );
         wizard.typeData( DATE_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "the content is opened and date was changed"
         findAndSelectContent( DATE_CONTENT.getName() ).clickToolbarEdit();

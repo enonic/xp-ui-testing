@@ -1,104 +1,98 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.utils.TestUtils
 import org.openqa.selenium.Keys
 
 class ApplicationBrowsePanel_GridPanel_Spec
     extends BaseApplicationSpec
 {
-    def "GIVEN an existing application EXPECTED correct description for the application is displayed"()
+    def "GIVEN some applications are listed on the root EXPECTED correct description for the application should be displayed"()
     {
         expect:
         applicationBrowsePanel.getApplicationDescription( FIRST_APP_DISPLAY_NAME ) == TEST_DESCRIPTION;
     }
 
-    def "GIVEN applications listed on root WHEN no selection THEN all rows are white"()
+    def "GIVEN some applications are listed on the root WHEN no selection THEN all rows should be white"()
     {
         given:
         int rowNumber = applicationBrowsePanel.getRowsCount();
 
-        expect:
+        expect: "number of selected rows should be 0"
         applicationBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
 
-        and: "refresh button is present on the tree grid toolbar"
+        and: "refresh button should be present on the tree grid toolbar"
         applicationBrowsePanel.isRefreshButtonDisplayed();
-
     }
 
-    def "GIVEN applications listed on root WHEN one row is clicked THEN its row is blue"()
+    def "GIVEN some applications are listed on the root WHEN one checkbox has been clicked THEN its row should be blue"()
     {
-        given:
+        given: "some applications are listed on the root"
         int before = applicationBrowsePanel.getSelectedRowsNumber();
 
-        when:
+        when: "one checkbox has been clicked"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
 
-        then:
+        then: "one row should be blue"
         applicationBrowsePanel.getSelectedRowsNumber() == 1 && before == 0;
     }
 
-    def "GIVEN a selected application  WHEN spacebar is typed THEN row is no longer selected"()
+    def "GIVEN existing selected application  WHEN spacebar is typed THEN row is no longer selected"()
     {
         given:
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         saveScreenshot( "app_spacebartest1" );
 
-        when:
+        when: "space key has been pressed"
         applicationBrowsePanel.findRowByDisplayNameAndSendKey( FIRST_APP_DISPLAY_NAME, Keys.SPACE );
 
-        then:
+        then: "row is no longer selected"
         saveScreenshot( "app_spacebartest2" );
         applicationBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN a selected application WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
+    def "GIVEN existing application is selected WHEN 'Selection Controller' checkbos was clicked twice THEN row is no longer selected"()
     {
-        given:
+        given:"existign application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         int before = applicationBrowsePanel.getSelectedRowsNumber();
 
-        when:
-        applicationBrowsePanel.clickOnClearSelection();
+        when: "'Selection Controller' checkbos was clicked twice"
+        applicationBrowsePanel.doClearSelection();
 
-        then:
+        then: "row is no longer selected"
         applicationBrowsePanel.getSelectedRowsNumber() == 0 && before == 1;
     }
 
-
-    def "GIVEN no applications selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
+    def "GIVEN no applications are selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
     {
         when:
-        applicationBrowsePanel.clickOnSelectAll();
-        TestUtils.saveScreenshot( getTestSession(), "select-all-apps" );
+        applicationBrowsePanel.doSelectAll();
+        saveScreenshot( "select-all-apps-pressed" );
 
         then:
         applicationBrowsePanel.getRowsCount() == applicationBrowsePanel.getSelectedRowsNumber();
     }
 
-
-    def "GIVEN a selected application WHEN arrow down is typed THEN next row is selected"()
+    def "GIVEN existing application is selected WHEN arrow down was pressed THEN next row should be selected"()
     {
         given:
-
         applicationBrowsePanel.clickCheckboxAndSelectRow( 0 );
         Set<String> namesBefore = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
-        when:
+        when:"arrow down is typed"
         applicationBrowsePanel.pressKeyOnRow( 0, Keys.ARROW_DOWN );
         saveScreenshot( "arrow_down_app" );
         Set<String> namesAfter = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
-
         then:
         applicationBrowsePanel.getSelectedRowsNumber() == 1;
 
-        and: "another application is selected"
+        and: "another application should be selected"
         !namesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
     }
 
-    def "GIVEN a selected application WHEN arrow up is typed THEN previous row is selected"()
+    def "GIVEN existing application is selected WHEN arrow up was pressed THEN previous row should be selected"()
     {
-        given:
+        given:"existin application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( 3 );
         Set<String> displayNamesBefore = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
@@ -111,31 +105,29 @@ class ApplicationBrowsePanel_GridPanel_Spec
         applicationBrowsePanel.getSelectedRowsNumber() == 1 && !displayNamesBefore.asList().get( 0 ).equals( namesAfter.asList().get( 0 ) );
     }
 
-
-    def "GIVEN selected application WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN existing application is selected WHEN hold a shift and arrow down is typed  3-times THEN 4 selected rows appears in the grid "()
     {
         given: "one application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( 0 );
 
-        when: "arrow down typed 3 times"
+        when: "arrow down was typed 3 times"
         applicationBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
         saveScreenshot( "app_arrow_down_shift" );
 
-        then: "n+1 rows are selected in the browse panel"
+        then: "n+1 rows should be selected in the browse panel"
         applicationBrowsePanel.getDisplayNamesOfSelectedGridItems().size() == 4
     }
 
-
-    def "GIVEN selected application WHEN hold a shift and arrow up is typed  3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN existing application is selected WHEN 'shift' key is hold 'arrow up' was pressed 3-times THEN 4 selected rows should be present in the grid "()
     {
-        given: "one application is selected"
+        given: "existing application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRow( 3 );
 
-        when: "arrow up typed 3 times"
+        when: "'shift' key is hold and 'arrow up' was pressed  3-times"
         applicationBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );
         saveScreenshot( "app_arrow_up_shift" );
 
-        then: "n+1 rows are selected in the browse panel"
+        then: "n+1 rows should be selected in the browse panel"
         applicationBrowsePanel.getDisplayNamesOfSelectedGridItems().size() == 4
     }
 }

@@ -10,16 +10,10 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     @Shared
     Content folderContent;
 
-    def "WHEN no one content selected THEN 'Details Panel Toggle' button is displayed AND details panel not displayed"()
+    def "WHEN no one content is selected THEN 'Details Panel Toggle' button should be displayed AND details panel should not be displayed"()
     {
-        when: "no one content selected"
-        int numberOfSelectedItems = contentBrowsePanel.getNumberFromClearSelectionLink();
-
-        then: "'Details Panel Toggle' button is displayed"
+        expect: "'Details Panel Toggle' button is displayed"
         contentBrowsePanel.isDetailsPanelToggleButtonDisplayed();
-
-        and: "number of selected items is 0"
-        numberOfSelectedItems == 0;
 
         and: "details panel not displayed"
         !contentDetailsPanel.isDisplayed();

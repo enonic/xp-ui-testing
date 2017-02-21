@@ -329,7 +329,7 @@ public class ContentBrowsePanel
 
     public ContentWizardPanel selectAndOpenContentFromToolbarMenu( Content content )
     {
-        clickOnClearSelection();
+        doClearSelection();
         filterPanel.typeSearchText( content.getName() );
         ( (ContentBrowsePanel) clickCheckboxAndSelectRow( content.getName() ) ).clickToolbarEditAndSwitchToWizardTab();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );

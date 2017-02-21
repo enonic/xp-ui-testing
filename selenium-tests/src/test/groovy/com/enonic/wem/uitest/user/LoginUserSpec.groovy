@@ -203,7 +203,7 @@ class LoginUserSpec
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
-        userBrowsePanel.expandUsersFolder( "system" ).clickOnClearSelection();
+        userBrowsePanel.expandUsersFolder( "system" ).doClearSelection();
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
             USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
 

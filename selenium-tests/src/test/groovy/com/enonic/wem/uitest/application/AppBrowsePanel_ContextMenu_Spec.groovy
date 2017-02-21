@@ -25,7 +25,7 @@ class AppBrowsePanel_ContextMenu_Spec
         applicationBrowsePanel.selectRowByItemDisplayName( THIRD_APP_DISPLAY_NAME );
         saveScreenshot( "local-app-stopped" );
         applicationBrowsePanel.clickOnToolbarStop();
-        applicationBrowsePanel.clickOnClearSelection();
+        applicationBrowsePanel.doClearSelection();
 
         when: "context menu opened"
         applicationBrowsePanel.selectItemByDisplayNameOnOpenContextMenu( THIRD_APP_DISPLAY_NAME );

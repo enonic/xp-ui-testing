@@ -31,7 +31,6 @@ class InstallAppDialog_Spec
 
         and: "'cancel' button should be present on the dialog"
         appDialog.isCancelButtonDisplayed();
-
     }
 
     def "GIVEN 'Install App Dialog' is opened WHEN 'cancel' button clicked THEN dialog not present"()
@@ -52,7 +51,6 @@ class InstallAppDialog_Spec
 
     def "GIVEN 'Install App Dialog' is opened WHEN the name of an application has been typed THEN only one application should be displayed"()
     {
-
         given: "'Install App Dialog' is opened "
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog installAppDialog = new InstallAppDialog( getSession() );

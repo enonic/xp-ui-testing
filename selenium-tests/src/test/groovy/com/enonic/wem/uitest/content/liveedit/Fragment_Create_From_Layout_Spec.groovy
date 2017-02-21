@@ -56,13 +56,13 @@ class Fragment_Create_From_Layout_Spec
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( LAYOUT_3_COL_DISPLAY_NAME );
         saveScreenshot( "fragment_wizard" );
 
-        then: "fragment-wizard is opened in the new browser tab"
+        then: "fragment-wizard should be opened in the new browser tab"
         wizard.getNameInputValue() == buildFragmentName( LAYOUT_3_COL_DISPLAY_NAME );
 
-        and:
+        and:"'Fragment' wizard's step should be present"
         wizard.isWizardStepPresent( "Fragment" );
 
-        and: "Preview button is enabled"
+        and: "Preview button should be enabled"
         wizard.isPreviewButtonEnabled();
     }
 
@@ -108,7 +108,7 @@ class Fragment_Create_From_Layout_Spec
         and: "switching to the fragment-wizard"
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( LAYOUT_3_COL_DISPLAY_NAME );
         and: "'click on the layout's name and open the Inspection panel"
-        wizard.showComponentView().clickOnLayout( LAYOUT_3_COL_DISPLAY_NAME );
+        wizard.showComponentView().openMenu( LAYOUT_3_COL_DISPLAY_NAME ).selectMenuItem( "Inspect" );
         saveScreenshot( "layout_fragment_wizard" );
 
         when: "the layout with 3 columns has been replaced with the '2-col' layout"
@@ -133,7 +133,7 @@ class Fragment_Create_From_Layout_Spec
         and: "switched to the fragment-wizard"
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( LAYOUT_3_COL_DISPLAY_NAME );
         and: "open the 'Component View' and click on the layout's display name"
-        wizard.showComponentView().clickOnLayout( LAYOUT_2_COL_DISPLAY_NAME );
+        wizard.showComponentView().openMenu( LAYOUT_2_COL_DISPLAY_NAME ).selectMenuItem( "Inspect" );
 
         when: "'Layout Inspection' panel is opened, 2-col has been replaced with 3-col"
         LayoutInspectionPanel inspectionPanel = new LayoutInspectionPanel( getSession() );

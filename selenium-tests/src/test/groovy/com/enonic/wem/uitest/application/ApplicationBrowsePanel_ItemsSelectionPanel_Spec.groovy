@@ -7,10 +7,10 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
     extends BaseApplicationSpec
 {
 
-    def "GIVEN one selected application WHEN selecting one more THEN two SelectionItem-s are listed"()
+    def "GIVEN existing application is selected WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
-        given: " there is a one selected application"
-        applicationBrowsePanel.selectRowByItemDisplayName( FIRST_APP_DISPLAY_NAME );
+        given: "existing application is selected"
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
 
         when: "selected a one more application"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
@@ -20,21 +20,21 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
         itemsSelectionPanel.getSelectedItemCount() == 2;
     }
 
-    def "GIVEN two selected application WHEN selecting one more THEN three SelectionItem-s are listed"()
+    def "GIVEN 2 existing applications are selected WHEN selecting one more app THEN three SelectionItem-s should be listed"()
     {
-        given: " there is a two selected module"
-        applicationBrowsePanel.selectRowByItemDisplayName( FIRST_APP_DISPLAY_NAME );
+        given: "2 existing applications are selected"
+        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
 
-        when: "selected a one more application"
+        when: "one more application has been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( THIRD_APP_DISPLAY_NAME );
         saveScreenshot( "test_three_app_selected1" );
 
-        then: "three SelectionItem-s are listed"
+        then: "three SelectionItem-s should be displayed"
         itemsSelectionPanel.getSelectedItemCount() == 3;
     }
 
-    def "GIVEN three selected application WHEN deselecting one THEN two SelectionItem-s are listed"()
+    def "GIVEN three application are selected WHEN deselecting one THEN two SelectionItem-s should be listed"()
     {
         given: "there are three selected application in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
@@ -46,17 +46,17 @@ class ApplicationBrowsePanel_ItemsSelectionPanel_Spec
         applicationBrowsePanel.deSelectAppInTable( THIRD_APP_DISPLAY_NAME );
         saveScreenshot( "test_three_app_one_deselected" );
 
-        then: "only two items are listed in the browse panel"
+        then: "only two items should be listed in the browse panel"
         itemsSelectionPanel.getSelectedItemCount() == 2;
     }
 
-    def "WHEN two selected application THEN two SelectionItem-s with the same name are listed"()
+    def "WHEN two application are selected THEN two SelectionItem-s with correct  names should be displayed"()
     {
         when: "two applications are selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
 
-        then: " correct display names are displayed on the SelectionItem"
+        then: "correct display names should be displayed on the SelectionItem panel"
         List actualNames = itemsSelectionPanel.getSelectedItemDisplayNames();
         actualNames.size() == 2;
 

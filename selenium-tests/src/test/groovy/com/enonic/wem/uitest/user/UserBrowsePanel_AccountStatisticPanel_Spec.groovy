@@ -72,7 +72,7 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         groupExpected.add( TEST_GROUP.getName() );
         TEST_USER = buildUserWithRolesAndGroups( "user", "password", generateEmail( "test-user" ), rolesExpected, groupExpected );
         addUser( TEST_USER );
-        userBrowsePanel.clickOnClearSelection();
+        userBrowsePanel.doClearSelection();
 
         when: "user selected"
         userBrowseFilterPanel.typeSearchText( TEST_USER.getDisplayName() );
@@ -115,7 +115,7 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         when: "Users folder selected"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.USERS_FOLDER );
-        TestUtils.saveScreenshot( getSession(), "users-statistic-panel" );
+        saveScreenshot( "users-folder-selected" );
 
         then: "correct info shown in statistics panel"
         accountStatisticsPanel.getItemDisplayName() == "Users";

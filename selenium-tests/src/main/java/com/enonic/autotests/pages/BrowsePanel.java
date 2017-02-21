@@ -30,6 +30,10 @@ public abstract class BrowsePanel
 
     protected final String TREEGRID_TOOLBAR_XPATH = "//div[contains(@id,'TreeGridToolbar')]";
 
+    protected final String CART_TOOLBAR = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-cart') ]";
+
+    protected final String NUMBER_IN_CART = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-cart') ]/span";
+
     protected final String SHOW_FILTER_PANEL_BUTTON = BROWSE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
 
     protected final String HIDE_FILTER_PANEL_BUTTON =
@@ -39,7 +43,7 @@ public abstract class BrowsePanel
         "//div[contains(@class,'slick-row') and descendant::span[contains(@class,'toggle icon') and contains(@style,'margin-left: 16')]]" +
             P_NAME;
 
-    protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'ui-widget-content slick-row')]";
+    protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'slick-row')]";
 
     protected String CONTENT_SUMMARY_VIEWER =
         "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
@@ -52,7 +56,7 @@ public abstract class BrowsePanel
 
     protected final String DIV_WITH_NAME = "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]" + NAMES_VIEW;
 
-    protected final String CLEAR_SELECTION_LINK_XPATH = TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Clear Selection')]";
+    protected final String SELECTION_CONTROLLER_CHECKBOX = TREEGRID_TOOLBAR_XPATH + "//div[contains(@id,'SelectionController')]";
 
     protected final String REFRESH_BUTTON = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-loop')]";
 
@@ -74,14 +78,8 @@ public abstract class BrowsePanel
     @FindBy(xpath = HIDE_FILTER_PANEL_BUTTON)
     protected WebElement hideFilterPanelButton;
 
-    @FindBy(xpath = CLEAR_SELECTION_LINK_XPATH)
-    protected WebElement clearSelectionLink;
-
-    private final String SELECT_ALL_LINK_XPATH =
-        TREEGRID_TOOLBAR_XPATH + "/button/span[contains(.,'Select All') or contains(.,'Select all')]";
-
-    @FindBy(xpath = SELECT_ALL_LINK_XPATH)
-    protected WebElement selectAllLink;
+    @FindBy(xpath = SELECTION_CONTROLLER_CHECKBOX)
+    protected WebElement selectionController;
 
     @FindBy(xpath = REFRESH_BUTTON)
     protected WebElement refreshButton;
@@ -280,15 +278,16 @@ public abstract class BrowsePanel
      *
      * @return the number of selected rows.
      */
-    public BrowsePanel clickOnSelectAll()
+    public BrowsePanel doSelectAll()
     {
-        boolean isVisibleLink = waitUntilVisibleNoException( By.xpath( SELECT_ALL_LINK_XPATH ), 2l );
-        if ( !isVisibleLink )
+        boolean isCheckboxPresent = waitUntilVisibleNoException( By.xpath( SELECTION_CONTROLLER_CHECKBOX ), 2l );
+        if ( !isCheckboxPresent )
         {
-            throw new TestFrameworkException( "The link 'Select All' was not found on the page, probably wrong xpath locator" );
+            throw new TestFrameworkException( "'Selection Controller' checkbox was not found on the grid-toolbar" );
         }
-        selectAllLink.click();
-        sleep( 2000 );
+        selectionController.click();
+        sleep( 500 );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return this;
     }
 
@@ -329,16 +328,47 @@ public abstract class BrowsePanel
 
     public List<String> getNamesOfSelectedGridItem()
     {
-        List<WebElement> rows = findElements(
-            By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]//p[contains(@class,'sub-name')]" ) );
-        return rows.stream().map( WebElement::getText ).collect( Collectors.toList() );
+        List<String> result = new ArrayList<>();
+        List<WebElement> rows = getDisplayedElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) );
+        for ( WebElement row : rows )
+        {
+            if ( row.getAttribute( "class" ).contains( "selected" ) || isRowCheckBoxChecked( row ) )
+            {
+                result.add( getNameFromRow( row ) );
+            }
+        }
+        return result;
+    }
+
+    private boolean isRowCheckBoxChecked( WebElement row )
+    {
+        WebElement rowCheckbox = row.findElement( By.xpath( ".//div[contains(@class,'checkboxsel')]" ) );
+        return rowCheckbox.getAttribute( "class" ).contains( "selected" );
+    }
+
+    private String getNameFromRow( WebElement row )
+    {
+        return row.findElement( By.xpath( "." + P_NAME ) ).getText();
+    }
+
+    private String getDisplayNameFromRow( WebElement row )
+    {
+        return row.findElement( By.xpath( "." + H6_DISPLAY_NAME ) ).getText();
     }
 
     public List<String> getDisplayNamesOfSelectedGridItems()
     {
-        List<WebElement> rows =
-            findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH + "/div[contains(@class,'selected')]" + H6_MAIN_NAME ) );
-        return rows.stream().map( WebElement::getText ).collect( Collectors.toList() );
+        List<String> result = new ArrayList<>();
+        List<WebElement> rows = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) );
+        for ( WebElement row : rows )
+        {
+
+            if ( row.getAttribute( "class" ).contains( "selected" ) || isRowCheckBoxChecked( row ) )
+            {
+                result.add( getDisplayNameFromRow( row ) );
+            }
+        }
+        return result;
     }
 
 
@@ -389,48 +419,42 @@ public abstract class BrowsePanel
 
 
     /**
-     * Clicks on 'Clear Selection' link and removes row-selections.
+     * Check and Uncheck the 'Selection Controller' checkbox and removes all row-selections.
      */
-    public BrowsePanel clickOnClearSelection()
+    public BrowsePanel doClearSelection()
     {
+        boolean isCheckboxDisplayed = waitUntilVisibleNoException( By.xpath( SELECTION_CONTROLLER_CHECKBOX ), 2l );
+        if ( !isCheckboxDisplayed )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_selection_controller_not_visible" ) );
+            throw new TestFrameworkException( "'selection controller' was not found on the grid toolbar" );
+        }
+        if ( isSelectionControllerChecked() )
+        {
+            clickOnSelectionController();
+            waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+            sleep( 300 );
+            return this;
+        }
+        clickOnSelectionController();
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        sleep( 300 );
+        clickOnSelectionController();
         sleep( 500 );
-        boolean isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
-        if ( !isLeLinkVisible && getFilterPanel().isFilterPanelDisplayed() )
-        {
-            doHideFilterPanel();
-            isLeLinkVisible = waitUntilVisibleNoException( By.xpath( CLEAR_SELECTION_LINK_XPATH ), 2l );
-        }
-        if ( !isLeLinkVisible )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_clear_sel" ) );
-            throw new TestFrameworkException( "The link 'Clear Selection' was not found on the page, probably wrong xpath locator" );
-        }
-        clearSelectionLink.click();
-        sleep( 1000 );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return this;
     }
 
-    /**
-     * Finds on page 'Clear selection' link and get text.
-     *
-     * @return for example : 'Clear selection (2)'
-     */
-    public Integer getNumberFromClearSelectionLink()
+    public boolean isSelectionControllerChecked()
     {
-        if ( !isElementDisplayed( CLEAR_SELECTION_LINK_XPATH ) )
-        {
-            saveScreenshot( "err_clear_selection" );
-            throw new TestFrameworkException( "the 'Clear selection' Link was not found, probably wrong xpath locator!" );
-        }
-        String text = clearSelectionLink.getText();
-        if ( text.indexOf( "(" ) == -1 )
-        {
-            return 0;
-        }
-        String numberOfSelectedItems = text.substring( text.indexOf( "(" ) + 1, text.indexOf( ")" ) );
-        return Integer.valueOf( numberOfSelectedItems );
+        WebElement checkbox = findElement( By.xpath( SELECTION_CONTROLLER_CHECKBOX ) );
+        return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
     }
 
+    public void clickOnSelectionController()
+    {
+        selectionController.click();
+    }
 
     public void isGridEmpty( long timeout )
     {
@@ -439,6 +463,21 @@ public abstract class BrowsePanel
         {
             saveScreenshot( NameHelper.uniqueName( "grid_is_empty" ) );
         }
+    }
+
+    public boolean isCartDisplayed()
+    {
+        return isElementDisplayed( CART_TOOLBAR );
+    }
+
+    public boolean isCartActive()
+    {
+        return getDisplayedElement( By.xpath( CART_TOOLBAR ) ).getAttribute( "class" ).contains( "active" );
+    }
+
+    public String getNumberInCart()
+    {
+        return getDisplayedString( NUMBER_IN_CART  );
     }
 
     /**
@@ -843,7 +882,6 @@ public abstract class BrowsePanel
             throw new TestFrameworkException( "menu item was not found!  " + action );
         }
         return waitIsElementEnabled( findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ), 2 );
-        //return !styleClass.contains( "disabled" );
     }
 
     public boolean isContextMenuItemDisplayed( String menuItem )

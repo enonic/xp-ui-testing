@@ -96,16 +96,16 @@ class Role_Save_Delete_Spec
         roleWizardPanel.typeData( role ).save().close( role.getDisplayName() );
 
         when: "role selected and 'Delete' button pressed"
-        userBrowsePanel.clickOnClearSelection();
+        userBrowsePanel.doClearSelection();
         userBrowseFilterPanel.typeSearchText( role.getName() );
         userBrowsePanel.clickCheckboxAndSelectRole( role.getName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "role-deleted" );
+        saveScreenshot( "role-was-deleted" );
 
-        then: "role not displayed in a grid"
-        TestUtils.saveScreenshot( getSession(), role.getName() );
+        then: "role should not be displayed in the grid"
+        saveScreenshot( role.getName() );
         !userBrowsePanel.exists( role.getName() );
-        and: "correct notification message appears"
+        and: "correct notification message should be displayed"
         message == String.format( ROLE_DELETED_MESSAGE, role.getName() );
     }
 
@@ -126,9 +126,9 @@ class Role_Save_Delete_Spec
 
     //app bug
     @Ignore
-    def "GIVEN existing role WHEN name changed THEN role with new name should be listed"()
+    def "GIVEN existing role is opened WHEN name was changed THEN role with new name should be listed"()
     {
-        given: "existing role opened"
+        given: "existing role is opened"
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
         RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
 
@@ -141,24 +141,24 @@ class Role_Save_Delete_Spec
         userBrowsePanel.exists( NEW_NAME );
     }
 
-    def "GIVEN creating new role WHEN data saved and 'Delete' button on wizard-toolbar pressed THEN wizard closed and role not displayed in grid"()
+    def "GIVEN creating new role WHEN data saved and 'Delete' button on wizard-toolbar pressed THEN wizard closes and role should not be displayed in the grid"()
     {
-        given: "creating new role"
+        given: "creating of new role"
         RoleWizardPanel roleWizardPanel = openRoleWizard();
         Role role = buildRole( "role", "test-role", "description" );
         roleWizardPanel.typeData( role ).save();
 
-        when: "data saved and 'Delete' button on wizard-toolbar pressed"
+        when: "data was saved and 'Delete' button on wizard-toolbar has been pressed"
         ConfirmationDialog confirmationDialog = roleWizardPanel.clickToolbarDelete();
         confirmationDialog.pressYesButton();
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
 
-        then: "wizard closed and role not displayed in grid"
-        TestUtils.saveScreenshot( getSession(), "role-deleted-from-wizard" );
+        then: "wizard closes and role should not be displayed in the grid"
+        saveScreenshot( "role-was-deleted-from-wizard" );
         !userBrowsePanel.exists( role.getName() );
     }
 
-    def "GIVEN role wizard opened, data saved WHEN HomeButton pressed THEN new role displayed in grid"()
+    def "GIVEN role wizard opened, data saved WHEN HomeButton pressed THEN new role should be displayed in the grid"()
     {
         given: "role wizard opened, data saved"
         RoleWizardPanel roleWizardPanel = openRoleWizard();
@@ -168,9 +168,9 @@ class Role_Save_Delete_Spec
         when: "HomeButton pressed"
         userBrowsePanel.pressAppHomeButton();
 
-        then: "new role displayed in grid"
+        then: "new role should be displayed in the grid"
         userBrowseFilterPanel.typeSearchText( testRole.getName() );
-        TestUtils.saveScreenshot( getSession(), "role-app-home-clicked" );
+        saveScreenshot( "role-app-home-clicked" );
         userBrowsePanel.exists( testRole.getName() );
     }
 }

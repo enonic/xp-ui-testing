@@ -131,7 +131,7 @@ class SortContentDialogSpec
 
         and:"child content has been added"
         addContent( childFolder );
-        contentBrowsePanel.clickOnClearSelection(  );
+        contentBrowsePanel.doClearSelection(  );
 
         when: "parent folder has been selected and 'Sort' dialog is opened"
         findAndSelectContent( PARENT_FOLDER.getName() );

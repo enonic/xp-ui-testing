@@ -145,26 +145,15 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         selectedNames.size() == 0 && contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN browse panel opened  WHEN Select All clicked  THEN number of items in the selection panel and number of selected rows in the grid are equals "()
+    def "GIVEN browse panel opened AND  checkbox 'Select All' was clicked  WHEN 'Selection Controller' checkbox is clicked one more THEN no any items should be displayed on the selection panel"()
     {
-        when: "filter cleared "
-        contentBrowsePanel.clickOnSelectAll();
-        TestUtils.saveScreenshot( getSession(), "select_all_clicked" );
-        def numberOfContent = contentBrowsePanel.getNumberFromClearSelectionLink();
+        setup: "checkbox 'Select All' was clicked"
+        contentBrowsePanel.doSelectAll();
 
-        then: "number of items in the selection panel and number of of selected rows in the grid are equals"
-        itemsSelectionPanel.getDisplayNameOfSelectedItems().size() == numberOfContent;
-    }
+        when: "'Selection Controller' checkbox is clicked"
+        contentBrowsePanel.clickOnSelectionController();
 
-    def "GIVEN browse panel opened AND 'Select All' clicked  WHEN 'Clear Selection' clicked  THEN there are no any items in the selection panel"()
-    {
-        setup: "click on 'Select All' link"
-        contentBrowsePanel.clickOnSelectAll();
-
-        when: "'Clear Selection' link pressed "
-        contentBrowsePanel.clickOnClearSelection();
-
-        then: "there are no any items in the selection panel"
+        then: "no any items should be displayed on the selection panel"
         itemsSelectionPanel.getDisplayNameOfSelectedItems().size() == 0;
     }
 }

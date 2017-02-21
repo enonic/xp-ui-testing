@@ -33,7 +33,7 @@ class DatesInDecember_Spec
 
         when: "Date typed and content saved"
         contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         and: "just created date content opened"
         findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -52,7 +52,7 @@ class DatesInDecember_Spec
         contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created date content opened"
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
@@ -70,7 +70,7 @@ class DatesInDecember_Spec
         contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created date content opened"
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 
@@ -88,7 +88,7 @@ class DatesInDecember_Spec
         contentWizardPanel.typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "just created date content opened"
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
 

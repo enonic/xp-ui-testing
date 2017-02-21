@@ -5,6 +5,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import org.openqa.selenium.Keys
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -80,19 +81,16 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
         when:
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         then:
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN no Content selected WHEN 'Select all'-link is clicked THEN all rows are selected"()
+    def "GIVEN no Content selected WHEN 'Selction Controller ' has been checked THEN all rows should be selected"()
     {
-        given:
-        contentBrowsePanel.clickOnClearSelection();
-
         when:
-        contentBrowsePanel.clickOnSelectAll();
+        contentBrowsePanel.doSelectAll();
         saveScreenshot( "test_select_all_content" );
 
         then:

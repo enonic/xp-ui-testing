@@ -46,7 +46,7 @@ class DetailsPanel_OwnerName_Spec
 
     def "setup: add a test user to the system user store"()
     {
-        setup: "User app opened"
+        setup: "User app is opened"
         UserBrowsePanel userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
 
         and: "build new user with roles"
@@ -63,11 +63,11 @@ class DetailsPanel_OwnerName_Spec
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );
         userBrowsePanel.getFilterPanel().typeSearchText( TEST_USER.getDisplayName() );
 
-        then: "new user present beneath a system store"
+        then: "new user should be present beneath the system store"
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN SU user logged in WHEN new folder added THEN the folder listed in the grid"()
+    def "GIVEN SU user is logged in WHEN new folder was added THEN the folder should be listed in the grid"()
     {
         setup: "SU is logged in"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -82,22 +82,22 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.exists( FOLDER_TO_DUPLICATE.getName() );
     }
 
-    def "GIVEN existing folder WHEN new created user selected the folder AND pressed 'Duplicate' THEN new folder appears in the grid"()
+    def "GIVEN existing folder WHEN just created user has selected the folder AND pressed 'Duplicate' THEN new folder should appear in the grid"()
     {
         setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "the folder duplicated"
+        when: "the folder was duplicated"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() ).clickToolbarDuplicate();
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
 
-        then: "new folder appears in the grid"
+        then: "new folder should be listed in the grid"
         contentBrowsePanel.exists( FOLDER_TO_DUPLICATE.getName() + "-copy" );
     }
 
-    def "GIVEN existing folder created by the user WHEN details panel opened THEN correct 'user name' is shown in the PropertiesWidgetItemView "()
+    def "GIVEN existing folder created by the the user WHEN details panel was opened THEN correct 'user name' is shown in the PropertiesWidgetItemView "()
     {
         setup: "user is  'logged in'"
         getTestSession().setUser( TEST_USER );
@@ -107,50 +107,50 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
 
-        when: "PropertiesWidgetItemView is shown"
+        when: "PropertiesWidgetItemView was opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         TestUtils.saveScreenshot( getSession(), "copied_folder_user_name" );
 
-        then: "correct 'owner' is displayed"
+        then: "correct 'owner' should be displayed"
         view.getOwner() == TEST_USER.getDisplayName();
     }
 
-    def "GIVEN existing folder created by the user WHEN version history opened THEN correct user name is displayed"()
+    def "GIVEN existing folder created by the user WHEN version history was opened THEN correct owner name should be displayed"()
     {
         setup: "user is  'logged in'"
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        and: "folder that was copied by the user is selected"
+        and: "just was copied folder is selected"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
-        when:
+        when:"the first 'version history' item was expanded"
         AllContentVersionsView allContentVersionsView = contentBrowsePanel.getContentDetailsPanel().openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         String versionId = versionItem.getId();
 
-        then:
-        TestUtils.saveScreenshot( getSession(), "test_owner_version-history_user_name" );
+        then:"correct owner name should be displayed"
+        saveScreenshot( "test_owner_version-history_user_name" );
         versionItem.getOwnerName( versionId ) == TEST_USER.getDisplayName();
     }
 
-    def "WHEN the copy of the existing folder opened THEN correct owner shown in settings"()
+    def "WHEN the copy of the existing folder is opened THEN correct owner should be displayed in settings"()
     {
         setup: "user is  'logged in'"
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "when the copy of the existing content opened for edit"
+        when: "when the copy of the existing content was opened"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
             FOLDER_TO_DUPLICATE.getName() + "-copy" ).clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
         saveScreenshot( "test_owner_wizard" );
 
-        then: "correct owner shown in settings"
+        then: "correct owner should be shown in settings"
         form.getOwner() == TEST_USER.getDisplayName();
     }
 

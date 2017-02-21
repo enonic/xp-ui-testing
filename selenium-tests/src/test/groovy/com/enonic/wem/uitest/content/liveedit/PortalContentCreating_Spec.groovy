@@ -99,7 +99,7 @@ class PortalContentCreating_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the submit button pressed and new city-content added as child into the country"
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         openResourceInDraft( SITE.getName() + "/" + NOR_CONTENT.getName() );
         saveScreenshot( "oslo-creation-page" );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );

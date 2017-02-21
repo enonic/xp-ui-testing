@@ -15,14 +15,14 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
     @Shared
     Content FOLDER_CONTENT;
 
-    def "GIVEN a new created folder is selected WHEN details panel opened THEN UserAccessWidgetItemView is shown "()
+    def "GIVEN new folder was added and it selected WHEN details panel has been opened THEN UserAccessWidgetItemView should be shown "()
     {
-        given: "new created folder is selected"
+        given: "new folder was added and it selected"
         FOLDER_CONTENT = buildFolderContent( "folder", "user access widget" );
         addContent( FOLDER_CONTENT );
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
-        when: "details panel was shown"
+        when: "details panel has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         UserAccessWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getUserAccessWidgetItemView();
 
@@ -33,11 +33,13 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         view.isEditPermissionsLinkDisplayed();
     }
 
-    def "GIVEN existing content with permissions for 'Everyone' WHEN details panel opened THEN correct info should be shown "()
+    def "GIVEN existing executable content with permissions for 'Everyone' WHEN details panel opened THEN correct info should be shown "()
     {
-        when: "details panel was opened"
+        when: "existing executable content with permissions for 'Everyone' is selected"
         findAndSelectContent( EXECUTABLE_BAT );
         contentBrowsePanel.clickOnDetailsToggleButton();
+
+        and: "User Access widget was selected in the details panel"
         UserAccessWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getUserAccessWidgetItemView();
         saveScreenshot( "everyone_ua_widget" );
 
@@ -51,16 +53,16 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         view.getEveryoneText() == UserAccessWidgetItemView.EVERYONE_CAN_READ;
     }
 
-    def "GIVEN new 'Acl-entry' was added for existing content WHEN the content selected and 'UserAccessWidgetItemView' opened THEN new 'acl-entry' is displayed on the widget"()
+    def "GIVEN new 'Acl-entry' was added for existing content WHEN the content is selected and 'UserAccessWidgetItemView' opened THEN new 'acl-entry' should be displayed on the widget"()
     {
-        given: "new Acl-entry added for existing content"
+        given: "new Acl-entry was added for existing content"
         findAndSelectContent( FOLDER_CONTENT.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         UserAccessWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getUserAccessWidgetItemView();
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         EditPermissionsDialog modalDialog = view.clickOnEditPermissionsLink();
 
-        when: "content was selected and widget is shown"
+        when: "content was selected and widget opened"
         modalDialog.setInheritPermissionsCheckbox( false ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "anonymous_ua_widget" );

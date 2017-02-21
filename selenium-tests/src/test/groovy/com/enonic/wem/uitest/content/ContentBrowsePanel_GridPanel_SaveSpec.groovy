@@ -120,7 +120,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         Content contentToEdit = buildFolderContentWithParent( "edit-name", "child-folder5", PARENT_FOLDER.getName() );
         findAndSelectContent( PARENT_FOLDER.getName() );
         addContent( contentToEdit );
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         ContentWizardPanel contentWizard = findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab();
         String newName = NameHelper.uniqueName( "newname" );
 
@@ -141,7 +141,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         String newDisplayName = NameHelper.uniqueName( "display-name" );
         findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName( newDisplayName );
 

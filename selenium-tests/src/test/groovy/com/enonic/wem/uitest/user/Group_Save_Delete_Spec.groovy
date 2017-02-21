@@ -33,7 +33,7 @@ class Group_Save_Delete_Spec
         when: "data typed and group saved"
         groupWizardPanel.typeData( refreshGroupRole ).save().waitNotificationMessage();
         userBrowsePanel.refreshPanelInBrowser();
-        TestUtils.saveScreenshot( getSession(), "role_wizard_refreshed" );
+        saveScreenshot( "role_wizard_was_refreshed" );
 
         then: "wizard is opened"
         groupWizardPanel.isOpened();
@@ -55,7 +55,7 @@ class Group_Save_Delete_Spec
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUPS_FOLDER.getValue() );
 
         then: "new Group should be listed"
-        TestUtils.saveScreenshot( getSession(), "group-added" );
+        saveScreenshot( "group-was-added" );
         userBrowsePanel.exists( TEST_GROUP.getName() );
 
         and: "correct notification message appears"
@@ -75,20 +75,20 @@ class Group_Save_Delete_Spec
     }
     //app bug
     @Ignore
-    def "GIVEN a existing group  WHEN creating new group with the same name THEN correct notification message appears"()
+    def "GIVEN a existing group  WHEN creating new group with the same name THEN "()
     {
         given: "creating new Group in System User Store"
         GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
 
-        when: " saved and wizard closed"
+        when: "group was saved and wizard closed"
         groupWizardPanel.typeData( TEST_GROUP ).save();
         String message = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then: "message that group with it  name already exists"
+        then: "correct notification message should be displayed"
         message == String.format( Application.GROUP_ALREADY_IN_USE_WARNING, TEST_GROUP.getName() );
     }
 
-    def "GIVEN existing group in System User Store WHEN display name changed THEN  group with new display name should be listed"()
+    def "GIVEN existing group in System User Store WHEN display name was changed THEN group with new display name should be listed"()
     {
         given: "existing group opened"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
@@ -99,36 +99,36 @@ class Group_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( NEW_DISPLAY_NAME );
 
         then: "group with new display name should be listed"
-        TestUtils.saveScreenshot( getSession(), "d-name-changed" );
+        saveScreenshot( "d-name-changed" );
         userBrowsePanel.exists( TEST_GROUP.getName() );
     }
 
-    def "GIVEN existing group in System User Store WHEN group selected and 'Delete' button pressed THEN group not displayed in grid"()
+    def "GIVEN existing group in System User Store WHEN group was selected and 'Delete' button pressed THEN group should not be displayed in the grid"()
     {
-        given: " existing group in System User Store"
+        given: "existing group in System User Store"
         GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
         Group group = buildGroup( "group", "test-group", "description" );
         groupWizardPanel.typeData( group ).save().close( group.getDisplayName() );
 
-        when: "group selected and 'Delete' button pressed"
-        userBrowsePanel.clickOnClearSelection();
+        when: "group is selected and 'Delete' button has been pressed"
+        userBrowsePanel.doClearSelection();
         userBrowseFilterPanel.typeSearchText( group.getName() );
         userBrowsePanel.clickCheckboxAndSelectGroup( group.getName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "group-deleted" );
+        saveScreenshot( "group-is-deleted" );
 
-        then: "group not displayed in grid"
-        TestUtils.saveScreenshot( getSession(), group.getName() );
+        then: "group should not be displayed in the grid"
+        saveScreenshot( group.getName() );
         !userBrowsePanel.exists( group.getName() );
-        and: "correct notification message appears"
+        and: "correct notification message should be displayed"
         message == String.format( GROUP_DELETING_NOTIFICATION_MESSAGE, group.getName() );
     }
 
     //app bug
     @Ignore
-    def "GIVEN existing group in System User Store WHEN name changed THEN group with new name should be listed"()
+    def "GIVEN existing group in System User Store WHEN name was changed THEN group with new name should be listed"()
     {
-        given: "existing group opened"
+        given: "existing group is opened"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
 
@@ -137,7 +137,7 @@ class Group_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( NEW_NAME );
 
         then: "group with new display name should be listed"
-        TestUtils.saveScreenshot( getSession(), "name-changed" );
+        saveScreenshot( "name-changed" );
         userBrowsePanel.exists( NEW_NAME );
     }
 
@@ -154,7 +154,7 @@ class Group_Save_Delete_Spec
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
 
         then: "wizard closed and group not displayed in grid"
-        TestUtils.saveScreenshot( getSession(), "group-deleted-from-wizard" );
+        saveScreenshot( "group-deleted-from-wizard" );
         !userBrowsePanel.exists( group.getName() );
     }
 

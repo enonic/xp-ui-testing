@@ -20,7 +20,7 @@ class GeoPoint_Spec
         Content geopointContent = buildGeoPoint0_0_Content( TEST_GEO_LOCATION );
         selectSitePressNew( geopointContent.getContentTypeName() ).waitUntilWizardOpened().typeData(
             geopointContent ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "just created content selected and 'Edit' button clicked"
         findAndSelectContent( geopointContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -38,7 +38,7 @@ class GeoPoint_Spec
         and: "content saved"
         selectSitePressNew( notValidContent.getContentTypeName() ).typeData(
             notValidContent ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "the content opened"
         findAndSelectContent( notValidContent.getName() ).clickToolbarEditAndSwitchToWizardTab();

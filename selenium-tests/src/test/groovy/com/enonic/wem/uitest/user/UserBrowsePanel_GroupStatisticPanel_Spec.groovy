@@ -40,7 +40,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
         sleep( 500 );
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
-        userBrowsePanel.clickOnClearSelection();
+        userBrowsePanel.doClearSelection();
 
         when: "the group selected in a grid"
         userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() );

@@ -139,7 +139,7 @@ class CountrySiteWithTemplateSpec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         and: "child city-content for USA was added "
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         SAN_FR_CONTENT = buildCity_Content( "San Francisco", SF_LOCATION, SF_POPULATION, USA_CONTENT.getName() );
 
         and: "new City-content added beneath the USA-content"
@@ -148,7 +148,7 @@ class CountrySiteWithTemplateSpec
         findAndSelectContent( USA_CONTENT.getName() );
         sleep( 3000 );
         saveScreenshot( "san_francisco_added" )
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "country-content is selected in the grid and the 'Preview' button pressed"
         findAndSelectContent( USA_CONTENT.getName() );
@@ -200,7 +200,7 @@ class CountrySiteWithTemplateSpec
         sleep( 2000 );
         saveScreenshot( "country_site_published" );
 
-        when: "site opened in master"
+        when: "site was opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
         then: "correct population should be present in page sources"
@@ -213,21 +213,21 @@ class CountrySiteWithTemplateSpec
 
     def "GIVEN city content changed and content is not 'Published' now WHEN site opened in 'master', through the portal THEN old data for city-content should be displayed"()
     {
-        given: "city content changed and content is not 'Published'"
+        given: "city content was changed and content was not 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "site opened in master"
+        when: "site was opened in the master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
-        then: "population is not changed"
+        then: "population should not be changed"
         String source = getDriver().getPageSource();
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    def "GIVEN city content changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
+    def "GIVEN city content was changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
@@ -235,10 +235,10 @@ class CountrySiteWithTemplateSpec
         contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "site opened in master"
+        when: "site was opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
-        then: "population is not changed"
+        then: "new population should be displayed"
         String source = getDriver().getPageSource();
         source.contains( "Population: " + NEW_SF_POPULATION );
     }

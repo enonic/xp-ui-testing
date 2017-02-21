@@ -24,7 +24,7 @@ class Restore_Tags_Spec
         TAG_CONTENT = buildTag_2_5_Content( 2 );
         ContentWizardPanel wizard = selectSitePressNew( TAG_CONTENT.getContentTypeName() );
         wizard.typeData( TAG_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "content opened and one tag was removed "
         findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
@@ -54,10 +54,10 @@ class Restore_Tags_Spec
         saveScreenshot( "tag_valid_version" );
 
         then: "content has no a red icon on the wizard-tab"
-        !wizard.isContentInvalid()
+        !wizard.isContentInvalid(  )
     }
 
-    def "GIVEN current version of content is valid AND wizard opened WHEN 'AppHomeButton' clicked and not valid version of content was restored THEN red icon should appear on the wizard tab"()
+    def "GIVEN current version of content is valid AND wizard opened WHEN 'AppHomeButton' clicked and not valid version of content is restored THEN red icon appears on the wizard tab"()
     {
         given: "current version of content is valid"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();

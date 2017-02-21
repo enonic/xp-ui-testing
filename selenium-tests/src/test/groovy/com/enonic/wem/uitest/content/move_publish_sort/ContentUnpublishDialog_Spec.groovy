@@ -178,7 +178,7 @@ class ContentUnpublishDialog_Spec
         findAndSelectContent( first.getName() );
         and: "child for the first content added"
         addContent( childForFirst );
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         filterPanel.clickOnCleanFilter();
 
         when: "both contents are selected"

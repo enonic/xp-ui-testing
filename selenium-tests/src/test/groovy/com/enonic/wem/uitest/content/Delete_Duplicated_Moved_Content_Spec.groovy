@@ -49,13 +49,13 @@ class Delete_Duplicated_Moved_Content_Spec
 
         and: "one empty folder added"
         Content emptyFolder = buildFolderContent( "empty", "empty folder" );
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         addContent( emptyFolder );
 
         when: "the child content moved to the empty folder"
         findAndSelectContent( childFolder.getName() ).clickToolbarMove().typeSearchText(
             emptyFolder.getName() ).selectDestinationAndClickOnMove( emptyFolder.getName() );
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         and: "first folder has been deleted"
         findAndSelectContent( parentFolder.getName() ).clickToolbarDelete().doDelete();

@@ -24,7 +24,7 @@ class Restore_ImageSelector_Spec
         IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT.getContentTypeName() );
         wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "content is opened and one image was removed"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();

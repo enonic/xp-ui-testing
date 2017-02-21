@@ -98,19 +98,16 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
                             shortcut3.getName() );
         filterPanel.typeSearchText( parentFolder.getName() );
         contentBrowsePanel.expandContent( shortcut1.getParent() );
-        TestUtils.saveScreenshot( getTestSession(), "item_selection_clear1" );
-        contentBrowsePanel.selectContentInTable( contentList )
-        int numberOfSelected = contentBrowsePanel.getNumberFromClearSelectionLink();
 
-        when: "'Clear Selection' clicked"
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.selectContentInTable( contentList );
+        saveScreenshot( "tree_item_selected_in_grid" );
+
+        when: "'Selection Controller' has been clicked twice"
+        contentBrowsePanel.doClearSelection();
 
         then: "no SelectionItem-s are displayed"
-        TestUtils.saveScreenshot( getSession(), "item_selection_clear2" )
+        saveScreenshot( "clear_selections_done" )
         itemsSelectionPanel.getSelectedItemCount() == 0;
-
-        and: "number of selected items was correct"
-        numberOfSelected == contentList.size();
     }
 
     def "GIVEN three selected Content WHEN all deleted THEN no SelectionItem-s are displayed"()

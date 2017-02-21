@@ -15,7 +15,7 @@ class Restore_Version_Focus_Image_Spec
     extends BaseVersionHistorySpec
 {
 
-    def "GIVEN existing image WHEN focus was moved THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing image is opened WHEN focus was moved THEN new 'version history item' should appear in the version-view"()
     {
         given:
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
@@ -42,7 +42,7 @@ class Restore_Version_Focus_Image_Spec
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_increased_after_focus_moved" );
 
-        then: "number of version is increased"
+        then: "number of version should be increased by 1"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
@@ -51,7 +51,7 @@ class Restore_Version_Focus_Image_Spec
         given: "existing image with several versions"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "version with original image is restored"
@@ -74,14 +74,13 @@ class Restore_Version_Focus_Image_Spec
 
     def "GIVEN existing image with several versions WHEN version with focused image is restored THEN button 'reset' is present on the wizard page "()
     {
-
         given: "existing image with several versions"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
 
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version of image with focus is restored"
+        when: "version of image with focus was restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
 
@@ -95,7 +94,7 @@ class Restore_Version_Focus_Image_Spec
         then: "red circle(focus) is displayed"
         imageEditor.isFocusCircleDisplayed();
 
-        and: "button 'reset' is  present on the wizard page"
+        and: "button 'reset' should be present on the wizard page"
         formViewPanel.isButtonResetPresent();
     }
 }

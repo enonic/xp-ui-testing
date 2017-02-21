@@ -10,9 +10,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     extends BaseContentSpec
 {
 
-    def "GIVEN existing two contents WHEN both content are selected and delete button pressed THEN both contents should not be listed in the table"()
+    def "GIVEN existing two folders WHEN both folders are selected and delete button pressed THEN both contents should not be listed in the table"()
     {
-        given: "existing two contents"
+        given: "existing two folders"
         Content content1 = buildFolderContent( "deletecontent", "content to delete" );
         addContent( content1 );
         Content content2 = buildFolderContent( "deletecontent", "content to delete" );
@@ -24,7 +24,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         when: "both content are selected and delete button pressed AND deleting is confirmed"
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
-        then: "both contents should not be listed in the table"
+        then: "both folders should not be listed in the grid"
         !contentBrowsePanel.exists( content1.getName() ) && !contentBrowsePanel.exists( content2.getName() );
     }
 
@@ -34,10 +34,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         Content content = buildFolderContent( "deletecontent", "delete content" );
         addContent( content );
 
-        when: "just created content selected and 'Delete' button on toolbar  pressed and 'Yes' pressed on confirm dialog "
+        when: "the folder was selected and 'Delete' button on toolbar  pressed and 'Yes' pressed on confirm dialog "
         findAndSelectContent( content.getName() ).clickToolbarDelete().doDelete();
 
-        then: "deleted content is no longer listed at the root"
+        then: "deleted folder is no longer listed at the root"
         !contentBrowsePanel.exists( content.getName() );
     }
 
@@ -62,20 +62,20 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( parent.getName() ) );
     }
 
-    def "GIVEN a Content on root WHEN deleted THEN New-button is enabled"()
+    def "GIVEN existing folder WHEN the folder is selcted and deleted THEN New-button should be enabled"()
     {
         given: "folder content was added at the root"
         Content folder = buildFolderContent( "folder", "folder-to-delete" );
         addContent( folder );
 
-        when: "just created content deleted"
+        when: "just created content was deleted"
         contentBrowsePanel.selectContentInTable( folder.getName() ).clickToolbarDelete().doDelete();
 
-        then: "New-button is enabled"
+        then: "New-button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
     }
 
-    def "GIVEN two Content on root WHEN both deleted THEN New-button is enabled"()
+    def "GIVEN two existing folders in the root WHEN both folders were deleted THEN New-button should be enabled"()
     {
         given: "two folder were added at the root"
         Content content1 = buildFolderContent( "folder", "folder-to-delete1" );
@@ -91,7 +91,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         when: "both contents selected in the grid and  deleted"
         contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
 
-        then: "New-button is enabled"
+        then: "New-button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
     }
 
@@ -109,12 +109,11 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.clickToolbarMove().typeSearchText( parent.getName() ).selectDestinationAndClickOnMove( parent.getName() );
         sleep( 1000 );
 
-        and: "content deleted from the wizard"
+        and: "content was deleted from the wizard"
         contentBrowsePanel.switchToBrowserTabByTitle( contentToDelete.getDisplayName() );
         wizard.clickToolbarDelete().doDeleteAndSwitchToBrowsePanel();
 
-
-        then: "content not listed in the grid"
+        then: "content should not be listed in the grid"
         saveScreenshot( "test_content_moved_and_deleted" );
         !contentBrowsePanel.exists( contentToDelete.getName() );
     }

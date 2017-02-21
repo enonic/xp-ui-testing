@@ -71,7 +71,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         given: "existing parent folder with a child is opened"
         ContentWizardPanel parent = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarEdit()
         parent.switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
         ContentWizardPanel childFolder = findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarEdit();
         contentBrowsePanel.switchToBrowserTabByTitle( PARENT_FOLDER.getDisplayName() );
 

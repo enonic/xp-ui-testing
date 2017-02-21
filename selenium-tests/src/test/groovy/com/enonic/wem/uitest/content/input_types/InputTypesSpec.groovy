@@ -27,7 +27,7 @@ class InputTypesSpec
         given: "add a content with type 'Date'"
         Content dateContent = buildDate0_1_Content( TEST_DATE );
         selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
 
         when: "just created content selected and 'Edit' button clicked"
@@ -44,7 +44,7 @@ class InputTypesSpec
         Content dateTimeContent = buildDateTime0_1_Content( TEST_DATE_TIME );
         selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData(
             dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "just created content selected and 'Edit' button clicked"
         findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -59,7 +59,7 @@ class InputTypesSpec
         given: "add a content with type 'Time'"
         Content timeContent = buildTime0_0_Content( TEST_TIME );
         selectSitePressNew( timeContent.getContentTypeName() ).typeData( timeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "just created content selected and 'Edit' button clicked"
         findAndSelectContent( timeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -75,7 +75,7 @@ class InputTypesSpec
         Content checkBoxContent = buildCheckBoxContent( true );
         selectSitePressNew( checkBoxContent.getContentTypeName() ).typeData(
             checkBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "site expanded and just created content selected and 'Edit' button clicked"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( checkBoxContent )

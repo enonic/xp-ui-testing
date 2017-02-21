@@ -63,20 +63,20 @@ class DeleteContentDialogSpec
         contentBrowsePanel.exists( CONTENT1.getName() );
     }
 
-    def "GIVEN 'Delete Content' dialog opened WHEN 'Cancel' on Top pressed THEN dialog closed and content not removed from the grid"()
+    def "GIVEN 'Delete Content' dialog opened WHEN 'Cancel' on Top pressed THEN dialog closed and content should not be removed from the grid"()
     {
-        given: "content selected and Delete button clicked"
+        given: "content is selected and Delete button clicked"
         findAndSelectContent( CONTENT1.getName() );
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();
         dialog.waitForOpened();
 
-        when: "'cancel' button on the top clicked"
+        when: "'cancel' button on the top has been clicked"
         dialog.clickOnCancelTop();
 
-        then: "dialog closing"
+        then: "dialog is closing"
         !dialog.isOpened();
 
-        and: "content not removed"
+        and: "content should be present in the grid"
         contentBrowsePanel.exists( CONTENT1.getName() );
     }
 
@@ -99,7 +99,7 @@ class DeleteContentDialogSpec
     }
 
 
-    def "GIVEN existing published content WHEN content selected and Delete button clicked THEN modal dialog with the checkbox appears AND the checkbox is not checked"()
+    def "GIVEN existing published content WHEN content was selected and Delete button clicked THEN DeleteContentDialog with the checkbox appears AND the checkbox is not checked"()
     {
         given: "content published"
         findAndSelectContent( CONTENT1.getName() );
@@ -135,7 +135,7 @@ class DeleteContentDialogSpec
         sleep( 1000 );
 
         when: "two folders are selected and 'Delete' button pressed"
-        DeleteContentDialog dialog = contentBrowsePanel.clickOnSelectAll().clickToolbarDelete();
+        DeleteContentDialog dialog = contentBrowsePanel.doSelectAll().clickToolbarDelete();
         List<String> displayNames = dialog.getDisplayNamesToDelete();
         saveScreenshot( "two_contents_in_dialog" );
 

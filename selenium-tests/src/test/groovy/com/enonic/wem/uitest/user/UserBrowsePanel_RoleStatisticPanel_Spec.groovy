@@ -76,7 +76,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         memberDisplayNames.add( SUPER_USER_DISPLAY_NAME );
         ROLE_WITH_MEMBER = buildRoleWithMembers( "role", "role-selections", "description", memberDisplayNames );
         roleWizardPanel.typeData( ROLE_WITH_MEMBER ).save().close( ROLE_WITH_MEMBER.getDisplayName() );
-        userBrowsePanel.clickOnClearSelection();
+        userBrowsePanel.doClearSelection();
 
         when: "role selected in a browse panel"
         userBrowseFilterPanel.typeSearchText( ROLE_WITH_MEMBER.getName() );
@@ -99,7 +99,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         memberDisplayNames.add( SUPER_USER_DISPLAY_NAME );
         Role roleWithSuperUser = buildRoleWithMembers( "role", "role with super user as member", "description", memberDisplayNames );
         roleWizardPanel.typeData( roleWithSuperUser ).save().close( roleWithSuperUser.getDisplayName() );
-        userBrowsePanel.clickOnClearSelection();
+        userBrowsePanel.doClearSelection();
 
         when: "role selected in a browse panel"
         userBrowseFilterPanel.typeSearchText( roleWithSuperUser.getName() );
@@ -141,7 +141,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         when: "role saved and HomeButton clicked"
         roleWizardPanel.save();
         userBrowsePanel.pressAppHomeButton();
-        userBrowsePanel.clickOnClearSelection();
+        userBrowsePanel.doClearSelection();
 
         then: "correct display name shown in a statistics panel"
         userBrowseFilterPanel.typeSearchText( testRole.getDisplayName() );

@@ -23,7 +23,7 @@ class Restore_ComboBox_Spec
         COMBOBOX_CONTENT = buildComboBox2_4_Content( 2 );
         ContentWizardPanel wizard = selectSitePressNew( COMBOBOX_CONTENT.getContentTypeName() );
         wizard.typeData( COMBOBOX_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
-        contentBrowsePanel.clickOnClearSelection();
+        contentBrowsePanel.doClearSelection();
 
         when: "content opened and one option was removed"
         findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
@@ -79,7 +79,7 @@ class Restore_ComboBox_Spec
         wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN existing combobox content with 3 versions WHEN version of content with one option has been restored THEN red icon appears on the wizard-tab"()
+    def "GIVEN existing combobox content with 3 versions WHEN version of content with one option has been restored THEN red icon should appear on the wizard-tab and in the grid"()
     {
         given: "existing content with 3 versions opened"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
@@ -90,6 +90,11 @@ class Restore_ComboBox_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
+        saveScreenshot( "combobox_not_valid_version" );
+
+        and: "switch to wizard tab"
+        def isRedIconInGrid = contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
+        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getName() )
 
         then: "the content is invalid in the grid as well"
         saveScreenshot( "combobox_not_valid_version" );
@@ -98,6 +103,12 @@ class Restore_ComboBox_Spec
         and: "red icon should appear on the wizard-tab"
         contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName(  ) );
         wizard.isContentInvalid();
+
+        then: "red icon should be present on the wizard-tab"
+        wizard.isContentInvalid();
+
+        and: "the content should be displayed as invalid in the grid"
+        isRedIconInGrid;
     }
 
     def "GIVEN version of content with one images is restored WHEN content opened THEN one image should be displayed on the wizard"()

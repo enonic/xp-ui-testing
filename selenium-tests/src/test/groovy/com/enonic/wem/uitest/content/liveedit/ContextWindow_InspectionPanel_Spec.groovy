@@ -72,9 +72,9 @@ class ContextWindow_InspectionPanel_Spec
         inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;
     }
     //verifies :XP-3993 Inspection Panel should be closed, when 'Page Controller' was removed (Automatic)
-    def "GIVEN 'Inspect' panel opened WHEN 'Automatic' renderer selected THEN 'Context window' should be closed"()
+    def "GIVEN 'Inspect' panel is opened WHEN 'Automatic' renderer was selected THEN 'Context window' should be closed"()
     {
-        given: "'Inspect' panel opened"
+        given: "'Inspect' panel is opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit()
         wizardPanel.showContextWindow().clickOnInspectLink();
 
