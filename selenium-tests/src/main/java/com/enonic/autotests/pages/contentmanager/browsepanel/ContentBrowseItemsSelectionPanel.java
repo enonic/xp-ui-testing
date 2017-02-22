@@ -2,10 +2,8 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.BrowseItemsSelectionPanel;
@@ -19,9 +17,9 @@ public class ContentBrowseItemsSelectionPanel
         CONTAINER = "//div[contains(@id,'ContentBrowsePanel')]";
         ITEMS_SELECTION_PANEL = CONTAINER + "//div[contains(@id,'ContentBrowseItemsSelectionPanel')]";
         ALL_SELECTED_ITEMS = ITEMS_SELECTION_PANEL + "//div[contains(@id,'SelectionItem')]";
+        CLEAR_SELECTION_BUTTON = ITEMS_SELECTION_PANEL + "//button[child::span[contains(.,'Clear Selection')]]";
+        SHOW_ALL_BUTTON = ITEMS_SELECTION_PANEL + "//button[child::span[contains(.,'Show All')]]";
     }
-
-    private String SHOW_ALL_BUTTON = ITEMS_SELECTION_PANEL + "//button[child::span[contains(.,'Show All')]]";
 
     /**
      * @param session
@@ -42,13 +40,26 @@ public class ContentBrowseItemsSelectionPanel
             getDisplayedElement( By.xpath( SHOW_ALL_BUTTON ) ).click();
             SleepHelper.sleep( 500 );
         }
-        List<WebElement> h6Elements = findElements( By.xpath( ALL_SELECTED_ITEMS + H6_DISPLAY_NAME ) );
-        return h6Elements.stream().filter( e -> !e.getText().isEmpty() ).filter( WebElement::isDisplayed ).map(
-            WebElement::getText ).collect( Collectors.toList() );
+        return getDisplayedStrings( By.xpath( ALL_SELECTED_ITEMS + H6_DISPLAY_NAME ) );
     }
 
+    @Override
+    public boolean isClearSelectionLinkDisplayed()
+    {
+        return isElementDisplayed( CLEAR_SELECTION_BUTTON );
+    }
+
+    @Override
     public boolean isShowAllButtonDisplayed()
     {
         return isElementDisplayed( SHOW_ALL_BUTTON );
+    }
+
+    @Override
+    public String getNumberInClearSelectionLink()
+    {
+        String xpath = CLEAR_SELECTION_BUTTON + "/span";
+        String linkText = getDisplayedString( xpath );
+        return linkText.substring( linkText.indexOf( "(" )+1, linkText.indexOf( ")" ) );
     }
 }

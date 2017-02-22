@@ -84,6 +84,9 @@ public abstract class BrowsePanel
     @FindBy(xpath = REFRESH_BUTTON)
     protected WebElement refreshButton;
 
+    @FindBy(xpath = CART_TOOLBAR)
+    protected WebElement cartIcon;
+
 
     /**
      * The Constructor
@@ -274,9 +277,7 @@ public abstract class BrowsePanel
     }
 
     /**
-     * Clicks by "Select All" and selects all items from the table.
-     *
-     * @return the number of selected rows.
+     * Clicks on  "Selection Controller" checkbox and selects all items in the grid.
      */
     public BrowsePanel doSelectAll()
     {
@@ -475,9 +476,24 @@ public abstract class BrowsePanel
         return getDisplayedElement( By.xpath( CART_TOOLBAR ) ).getAttribute( "class" ).contains( "active" );
     }
 
+    public boolean waitUntilCartActive()
+    {
+       return waitAndCheckAttrValue( findElement( By.xpath( CART_TOOLBAR ) ), "class", "active", Application.EXPLICIT_NORMAL );
+    }
+
+    public BrowsePanel clickOnCart()
+    {
+        cartIcon.click();
+        sleep( 300 );
+        return this;
+    }
+
     public String getNumberInCart()
     {
-        return getDisplayedString( NUMBER_IN_CART  );
+        if(!isElementDisplayed( NUMBER_IN_CART )){
+            return "";
+        }
+        return getDisplayedString( NUMBER_IN_CART );
     }
 
     /**
@@ -663,8 +679,7 @@ public abstract class BrowsePanel
             saveScreenshot( "err_" + itemName );
             throw new TestFrameworkException( "item was not found:" + itemName );
         }
-        Actions builder = new Actions( getDriver() );
-        builder.click( waitAndFindElement( By.xpath( rowXpath ) ) ).build().perform();
+        buildActions().click( waitAndFindElement( By.xpath( rowXpath ) ) ).build().perform();
         sleep( 300 );
         return this;
     }

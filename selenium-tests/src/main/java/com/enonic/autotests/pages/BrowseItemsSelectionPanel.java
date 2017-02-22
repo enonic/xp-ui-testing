@@ -28,6 +28,10 @@ public abstract class BrowseItemsSelectionPanel
 
     protected String SELECTED_ITEM = "//div[contains(@id,'SelectionItem')]";
 
+    protected String SHOW_ALL_BUTTON;
+
+    protected String CLEAR_SELECTION_BUTTON;
+
 
     public BrowseItemsSelectionPanel( final TestSession session )
     {
@@ -90,4 +94,18 @@ public abstract class BrowseItemsSelectionPanel
             return !getAttribute( elements.get( 0 ), "style", 1 ).contains( "display: none" );
         }
     }
+
+    public BrowseItemsSelectionPanel clickOnClearSelectionButton()
+    {
+        getDisplayedElement( By.xpath( CLEAR_SELECTION_BUTTON ) ).click();
+        return this;
+    }
+
+    public abstract boolean isShowAllButtonDisplayed();
+
+    public abstract boolean isClearSelectionLinkDisplayed();
+
+    public abstract String getNumberInClearSelectionLink();
+
+
 }
