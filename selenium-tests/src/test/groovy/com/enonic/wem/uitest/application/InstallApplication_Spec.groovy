@@ -105,7 +105,7 @@ class InstallApplication_Spec
     def "GIVEN existing not local application selected WHEN 'uninstall' button pressed THEN application not listed AND correct notification appears"()
     {
         given: "existing not local application selected"
-        applicationBrowsePanel.selectRowByName( APP_NAME )
+        applicationBrowsePanel.clickOnRowByName( APP_NAME )
 
         when: "'uninstall' button pressed"
         String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(
@@ -166,7 +166,7 @@ class InstallApplication_Spec
     def "WHEN existing not local application selected THEN 'uninstall' button is enabled"()
     {
         when:
-        applicationBrowsePanel.selectRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME )
+        applicationBrowsePanel.clickOnRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME )
 
         then:
         applicationBrowsePanel.isUninstallButtonEnabled();
@@ -191,7 +191,7 @@ class InstallApplication_Spec
     def "GIVEN existing installed application from 'Enonic Market' WHEN application uninstalled THEN it not listed in the grid AND correct notification message appears"()
     {
         given: "existing application from 'Enonic Market' is selected"
-        applicationBrowsePanel.selectRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME );
+        applicationBrowsePanel.clickOnRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         when: "'uninstall' button pressed"
         String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(

@@ -229,7 +229,7 @@ public abstract class BrowsePanel
     {
         if ( !isRowSelected( gritItemName ) )
         {
-            selectRowByName( gritItemName );
+            clickOnRowByName( gritItemName );
             sleep( 700 );
         }
         pressKeyOnRow( gritItemName, Keys.ARROW_RIGHT );
@@ -670,7 +670,7 @@ public abstract class BrowsePanel
         return this;
     }
 
-    public BrowsePanel selectRowByName( String itemName )
+    public BrowsePanel clickOnRowByName( String itemName )
     {
         String rowXpath = String.format( NAMES_VIEW_BY_NAME, itemName );
         boolean result = waitAndFind( By.xpath( rowXpath ) );
@@ -875,8 +875,7 @@ public abstract class BrowsePanel
         getLogger().info( "opening a context menu, content path of content: " + gridItemName );
         String contentDescriptionXpath = String.format( NAMES_VIEW_BY_NAME, gridItemName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
-        Actions action = new Actions( getDriver() );
-        action.contextClick( element ).build().perform();
+        buildActions().contextClick( element ).build().perform();
         sleep( 400 );
     }
 
@@ -885,8 +884,7 @@ public abstract class BrowsePanel
         getLogger().info( "select a item and opening a context menu, : " + gridItemDisplayName );
         String contentDescriptionXpath = String.format( NAMES_VIEW_BY_DISPLAY_NAME, gridItemDisplayName );
         WebElement element = findElement( By.xpath( contentDescriptionXpath ) );
-        Actions action = new Actions( getDriver() );
-        action.contextClick( element ).build().perform();
+        buildActions().contextClick( element ).build().perform();
         sleep( 300 );
     }
 

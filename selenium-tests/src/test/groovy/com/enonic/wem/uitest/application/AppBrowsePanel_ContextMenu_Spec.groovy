@@ -47,7 +47,7 @@ class AppBrowsePanel_ContextMenu_Spec
         installAppAndCloseDialog( DISQUS_APP_NAME, DISQUS_APP_DISPLAY_NAME );
 
         when: "context menu opened"
-        applicationBrowsePanel.selectRowByName( DISQUS_APP_NAME );
+        applicationBrowsePanel.clickOnRowByName( DISQUS_APP_NAME );
         saveScreenshot( "disqus-context-menu" );
 
         then: "Delete menu item is enabled"

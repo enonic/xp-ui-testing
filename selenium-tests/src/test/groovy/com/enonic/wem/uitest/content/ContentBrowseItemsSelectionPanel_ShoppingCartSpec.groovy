@@ -42,7 +42,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         filterPanel.typeSearchText( CHILD_CONTENT_NAME );
 
         when: "all contents filtered and one more row with content clicked "
-        contentBrowsePanel.selectRowByName( CHILD_CONTENT_NAME );
+        contentBrowsePanel.clickOnRowByName( CHILD_CONTENT_NAME );
 
         then: "no any items should not be present in the selection panel  "
         List<String> selectedNames = itemsSelectionPanel.getDisplayNameOfSelectedItems();
@@ -134,7 +134,7 @@ class ContentBrowseItemsSelectionPanel_ShoppingCartSpec
         filterPanel.typeSearchText( CHILD_CONTENT_NAME );
 
         and: "click on row with the child content"
-        contentBrowsePanel.selectRowByName( CHILD_CONTENT_NAME );
+        contentBrowsePanel.clickOnRowByName( CHILD_CONTENT_NAME );
 
         when: "click on 'Clear filter' link and expand a parent content"
         filterPanel.clickOnCleanFilter();

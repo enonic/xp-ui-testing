@@ -47,7 +47,7 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
     def "GIVEN existing user store WHEN display name changed THEN new display name displayed in a selections panel"()
     {
         given: "existing user store"
-        UserStoreWizardPanel wizard = userBrowsePanel.selectRowByName( TEST_USER_STORE.getName() ).clickToolbarEdit();
+        UserStoreWizardPanel wizard = userBrowsePanel.clickOnRowByName( TEST_USER_STORE.getName() ).clickToolbarEdit();
 
         when: "display name changed"
         String newDisplayName = NameHelper.uniqueName( "display-name" );

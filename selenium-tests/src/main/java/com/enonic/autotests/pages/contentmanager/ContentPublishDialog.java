@@ -44,14 +44,19 @@ public class ContentPublishDialog
 
     private final String DEPENDENCIES_LIST_HEADER = DIALOG_CONTAINER + "//h6[@class='dependants-header']";
 
-    private final String ITEM_LIST = "//ul[contains(@id,'DialogItemList')]";
+    private final String ITEM_LIST = "//ul[contains(@id,'PublishDialogItemList')]";
 
     private final String DISPLAY_NAMES_OF_CONTENTS_TO_PUBLISH = DIALOG_CONTAINER + ITEM_LIST + H6_DISPLAY_NAME;
 
     private final String NAMES_OF_CONTENTS_TO_PUBLISH = DIALOG_CONTAINER + ITEM_LIST + P_NAME;
 
     private String ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME =
-        ITEM_LIST + "//div[contains(@id,'StatusSelectionItem') and descendant::h6[@class='main-name' and contains(.,'%s')]]";
+        ITEM_LIST + "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
+
+    private String DEPENDANT_ROW_TO_PUBLISH_BY_DISPLAY_NAME =
+        DEPENDANT_LIST + "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
+
+    private String REMOVE_DEPENDANT_ICON = DEPENDANT_ROW_TO_PUBLISH_BY_DISPLAY_NAME + "//div[contains(@class,'icon remove')]";
 
     private String STATUS_OF_ITEM_TO_PUBLISH = ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME + "//div[contains(@class,'status')]";
 
@@ -84,6 +89,39 @@ public class ContentPublishDialog
     {
         cancelButtonTop.click();
         sleep( 200 );
+    }
+
+    public boolean isPublishItemRemovable( String itemDisplayName )
+    {
+        String xpath = String.format( ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME, itemDisplayName );
+        if ( !isElementDisplayed( xpath ) )
+        {
+            throw new TestFrameworkException( "publish item was not found!" + itemDisplayName );
+        }
+        return findElement( By.xpath( xpath ) ).getAttribute( "class" ).contains( "removable" );
+    }
+
+    public boolean isDependantItemRemovable( String itemDisplayName )
+    {
+        String xpath = String.format( DEPENDANT_ROW_TO_PUBLISH_BY_DISPLAY_NAME, itemDisplayName );
+        if ( !isElementDisplayed( xpath ) )
+        {
+            throw new TestFrameworkException( "publish item was not found!" + itemDisplayName );
+        }
+        return findElement( By.xpath( xpath ) ).getAttribute( "class" ).contains( "removable" );
+    }
+
+    public ContentPublishDialog removeDependant( String name )
+    {
+        String removeButton = String.format(  REMOVE_DEPENDANT_ICON,name);
+        if ( !isElementDisplayed( removeButton ) )
+        {
+            saveScreenshot( "err_remove_dependant" );
+            throw new TestFrameworkException( "remove icon was not found on the publish dialog!" );
+        }
+        findElement( By.xpath( removeButton ) ).click();
+        sleep( 300 );
+        return this;
     }
 
     public String getContentStatus( String displayName )
@@ -137,7 +175,7 @@ public class ContentPublishDialog
 
     public boolean isDependantsDisplayed()
     {
-        return isElementDisplayed( DIALOG_CONTAINER + "//div[contains(@class,'dependants')]" );
+        return isElementDisplayed( DEPENDENCIES_LIST_HEADER );
     }
 
     public void clickOnCancelBottomButton()

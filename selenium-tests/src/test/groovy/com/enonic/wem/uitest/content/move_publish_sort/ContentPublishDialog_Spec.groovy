@@ -7,6 +7,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -16,10 +17,10 @@ class ContentPublishDialog_Spec
     extends BaseContentSpec
 {
     @Shared
-    Content parentContent;
+    Content PARENT_FOLDER;
 
     @Shared
-    Content childContent1;
+    Content CHILD_FOLDER;
 
     //this is tests verifies the  "XP-3824 Unknown status displayed on the publish dialog"
     def "GIVEN creating of new content WHEN data typed and 'Publish' button was pressed  THEN correct status of content is displayed on the modal dialog"()
@@ -51,48 +52,52 @@ class ContentPublishDialog_Spec
 
         and: "correct status of content is displayed"
         contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.OFFLINE.getValue();
+
+        and: "'remove' button should be disabled for this content"
+        !contentPublishDialog.isPublishItemRemovable( folderContent.getDisplayName() )
     }
 
     def "GIVEN parent content with a child WHEN the parent content is selected and 'Publish' button clicked THEN 'Content publish' dialog should appear with correct control elements"()
     {
         setup: "add a parent folder"
-        parentContent = buildFolderContent( "publish_dialog", "content publish dialog" );
-        addContent( parentContent );
+        PARENT_FOLDER = buildFolderContent( "publish_dialog", "content publish dialog" );
+        addContent( PARENT_FOLDER );
 
         and: "add one child to the parent folder"
-        filterPanel.typeSearchText( parentContent.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
-        childContent1 = buildFolderContentWithParent( "publish_dialog", "child-folder1", parentContent.getName() );
-        addContent( childContent1 );
+        filterPanel.typeSearchText( PARENT_FOLDER.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() )
+        CHILD_FOLDER = buildFolderContentWithParent( "publish_dialog", "child-folder1", PARENT_FOLDER.getName() );
+        addContent( CHILD_FOLDER );
 
         when: "parent content is selected and 'Publish' button was pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
+        and: "'include children' has been clicked"
+        contentPublishDialog.includeChildren( true );
 
-        then: "'ContentPublishDialog' dialog should be displayed"
-        contentPublishDialog.isOpened();
-
-        and: "dialog should have the correct title"
+        then: "correct title should be displayed on the dialog"
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
 
         and: "'Publish' and 'Cancel' buttons should be displayed on the dialog"
         contentPublishDialog.isPublishNowButtonEnabled();
 
-        and:
+        and: "'Cancel' button on the bottom should be enabled"
         contentPublishDialog.isCancelButtonBottomEnabled();
 
         and: "'Cancel' button on the top should be displayed"
         contentPublishDialog.isCancelButtonTopEnabled();
 
-        and: "Dependants list should not be displayed, because 'Include child' icon was not pressed"
-        !contentPublishDialog.isDependantsDisplayed();
+        and: "Dependants list should be displayed, because 'Include child' icon was clicked"
+        contentPublishDialog.isDependantsDisplayed();
 
+        and: "'remove' button should be enabled fot the dependant item"
+        contentPublishDialog.isDependantItemRemovable( CHILD_FOLDER.getName() );
     }
 
     def "GIVEN 'Content Publish' dialog shown WHEN the cancel button on the bottom was clicked THEN dialog is closing"()
     {
         given: "parent content is selected and 'Publish' button pressed"
-        findAndSelectContent( parentContent.getName() );
+        findAndSelectContent( PARENT_FOLDER.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
@@ -106,7 +111,7 @@ class ContentPublishDialog_Spec
     def "GIVEN 'Content Publish' dialog is opened WHEN the button cancel on the top was clicked THEN dialog is closing"()
     {
         given: "parent content selected and 'Publish' button pressed"
-        findAndSelectContent( parentContent.getName() );
+        findAndSelectContent( PARENT_FOLDER.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
@@ -120,7 +125,7 @@ class ContentPublishDialog_Spec
     def "GIVEN parent content on root is selected WHEN 'Content Publish' dialog opened THEN correct name of content present in the dialog"()
     {
         given: "parent content in the root is selected"
-        findAndSelectContent( parentContent.getName() );
+        findAndSelectContent( PARENT_FOLDER.getName() );
 
         when: "'Content Publish' dialog has been opened"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
@@ -132,13 +137,13 @@ class ContentPublishDialog_Spec
         names.size() == 1;
 
         and: "correct name of content should be displayed on the dialog"
-        names.get( 0 ).contains( parentContent.getName() );
+        names.get( 0 ).contains( PARENT_FOLDER.getName() );
     }
 
     def "GIVEN parent content on root is selected AND 'Content publish' dialog is opened WHEN 'include child' icon was pressed THEN one dependant item should be displayed on the dialog"()
     {
         given: "parent folder is selected and 'Publish' button pressed"
-        findAndSelectContent( parentContent.getName() );
+        findAndSelectContent( PARENT_FOLDER.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
@@ -157,16 +162,16 @@ class ContentPublishDialog_Spec
         dependant.size() == 1;
 
         and: "correct name of the dependency should be displayed"
-        dependant.get( 0 ).contains( childContent1.getName() );
+        dependant.get( 0 ).contains( CHILD_FOLDER.getName() );
     }
 
     def "GIVEN existing child content WHEN the content was selected and 'Publish' button pressed THEN the name of the parent folder should be present on the dialog"()
     {
         given: "existing child content"
-        filterPanel.typeSearchText( childContent1.getName() );
+        filterPanel.typeSearchText( CHILD_FOLDER.getName() );
 
         when: "child content was selected and 'Publish' button pressed"
-        contentBrowsePanel.clickCheckboxAndSelectRow( childContent1.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( CHILD_FOLDER.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
         List<String> dependant = contentPublishDialog.getDependantList();
@@ -182,6 +187,54 @@ class ContentPublishDialog_Spec
         dependant.size() == 1;
 
         and: "name of the parent folder should be displayed"
-        dependant.get( 0 ).contains( parentContent.getName() );
+        dependant.get( 0 ).contains( PARENT_FOLDER.getName() );
+    }
+
+    def "GIVEN the parent content is selected and 'Publish' button clicked WHEN the dependant item was removed THEN dependants list should not be displayed"()
+    {
+        given: "the parent content is selected"
+        findAndSelectContent( PARENT_FOLDER.getName() );
+        and: "Publish dialog is opened"
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
+            Application.EXPLICIT_NORMAL );
+        and: "'include children' has been clicked"
+        contentPublishDialog.includeChildren( true );
+
+        when: "'remove' button has been clicked and the dependant is removed"
+        contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );
+        saveScreenshot( "dependant_removed" );
+
+        then: "Dependants list-header should not be displayed, because all dependants were removed"
+        !contentPublishDialog.isDependenciesListHeaderDisplayed();
+
+        and: "Dependants list should not be displayed, because all dependants were removed"
+        !contentPublishDialog.isDependantsDisplayed();
+    }
+
+    def "GIVEN the parent content is selected and 'PublishDialog' is opened WHEN the dependant item was removed AND 'Publish' button has been pressed THEN only the parent folder should be is 'online'"()
+    {
+        given: "the parent content is selected"
+        findAndSelectContent( PARENT_FOLDER.getName() );
+        and: "the folder is expanded"
+        contentBrowsePanel.expandContent( ContentPath.from( PARENT_FOLDER.getName() ) )
+
+        and: "Publish dialog is opened"
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
+            Application.EXPLICIT_NORMAL );
+        and: "'include children' has been clicked"
+        contentPublishDialog.includeChildren( true );
+
+        when: "'remove' button has been clicked and the dependant was removed"
+        contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );
+
+        and: "Publish button has been pressed"
+        contentPublishDialog.clickOnPublishNowButton().waitForDialogClosed();
+        saveScreenshot( "dependant_not_published" );
+
+        then: "parent folder should be 'online'"
+        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.ONLINE.getValue();
+
+        and: "child folder should be 'offline'"
+        contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.OFFLINE.getValue();
     }
 }

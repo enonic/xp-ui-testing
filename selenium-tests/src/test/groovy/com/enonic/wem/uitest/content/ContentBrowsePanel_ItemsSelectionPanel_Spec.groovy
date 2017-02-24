@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -17,7 +16,6 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
 
     @Shared
     Content THIRD_CONTENT;
-
 
     def "GIVEN one selected Content WHEN selecting one more THEN two SelectionItem-s are listed"()
     {
@@ -38,7 +36,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
 
     def "GIVEN two selected Content WHEN selecting one more THEN three SelectionItem-s are listed"()
     {
-        given: "two selected Content"
+        given: "two selected Contents"
         THIRD_CONTENT = buildFolderContent( "folder", "folder3" );
         addContent( THIRD_CONTENT );
         List<String> list = new ArrayList<>();
@@ -46,13 +44,13 @@ class ContentBrowsePanel_ItemsSelectionPanel_Spec
         list.add( SECOND_CONTENT.getName() );
         contentBrowsePanel.selectContentInTable( list );
         int before = itemsSelectionPanel.getSelectedItemCount();
-        TestUtils.saveScreenshot( getSession(), "select_2_items" )
+        saveScreenshot( "2_items_selected" )
 
-        when: "selecting one more"
+        when: "one more checkbox has been checked"
         contentBrowsePanel.selectContentInTable( THIRD_CONTENT.getName() );
 
-        then: "three SelectionItem-s are listed"
-        saveScreenshot( "select_3_items" )
+        then: "three SelectionItem-s should be listed on the panel"
+        saveScreenshot( "3_items_selected" )
         itemsSelectionPanel.getSelectedItemCount() == before + 1;
     }
 

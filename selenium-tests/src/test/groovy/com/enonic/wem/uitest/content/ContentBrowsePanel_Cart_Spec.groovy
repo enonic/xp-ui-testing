@@ -65,7 +65,7 @@ class ContentBrowsePanel_Cart_Spec
         given:"content grid is opened"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        when: "existing two contents is selected"
+        when: "existing two contents are selected"
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
@@ -84,7 +84,8 @@ class ContentBrowsePanel_Cart_Spec
 
     def "GIVEN two contents were selected WHEN 'Clear Selection' has been pressed THEN cart should not be active and the link should not be displayed"()
     {
-        given: "checkbox is checked and existing content is selected"
+        given: "two contents were selected"
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
 

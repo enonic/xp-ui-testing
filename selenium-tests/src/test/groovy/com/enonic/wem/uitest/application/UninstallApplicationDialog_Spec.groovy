@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.application
 
 import com.enonic.autotests.pages.modules.UninstallApplicationDialog
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Stepwise
 
 @Stepwise
@@ -14,7 +13,7 @@ class UninstallApplicationDialog_Spec
         installAppAndCloseDialog( GOOGLE_ANALYTICS_APP_NAME, GOOGLE_ANALYTICS_DISPLAY_NAME );
 
         when: "app was selected and 'uninstall' button pressed"
-        applicationBrowsePanel.selectRowByName( GOOGLE_ANALYTICS_APP_NAME );
+        applicationBrowsePanel.clickOnRowByName( GOOGLE_ANALYTICS_APP_NAME );
         UninstallApplicationDialog dialog = applicationBrowsePanel.clickOnToolbarUninstall();
         dialog.waitUntilDialogLoaded();
 
@@ -40,7 +39,7 @@ class UninstallApplicationDialog_Spec
     def "GIVEN 'UnInstallDialog' is opened WHEN 'cancel' button pressed THEN 'UnInstallDialog' not displayed"()
     {
         given: "'UnInstallDialog' is opened"
-        applicationBrowsePanel.selectRowByName( GOOGLE_ANALYTICS_APP_NAME );
+        applicationBrowsePanel.clickOnRowByName( GOOGLE_ANALYTICS_APP_NAME );
         UninstallApplicationDialog dialog = applicationBrowsePanel.clickOnToolbarUninstall();
         dialog.waitUntilDialogLoaded();
 
@@ -54,7 +53,7 @@ class UninstallApplicationDialog_Spec
     def "GIVEN 'UnInstallDialog' is opened WHEN 'No' button pressed THEN 'UnInstallDialog' not displayed AND the application should not be uninstalled"()
     {
         given: "'UnInstallDialog' is opened"
-        applicationBrowsePanel.selectRowByName( GOOGLE_ANALYTICS_APP_NAME );
+        applicationBrowsePanel.clickOnRowByName( GOOGLE_ANALYTICS_APP_NAME );
         UninstallApplicationDialog dialog = applicationBrowsePanel.clickOnToolbarUninstall();
         dialog.waitUntilDialogLoaded();
 
@@ -71,7 +70,7 @@ class UninstallApplicationDialog_Spec
     def "GIVEN 'UnInstallDialog' is opened WHEN 'Yes' button pressed THEN 'UnInstallDialog' not displayed AND the application should be uninstalled"()
     {
         given: "'UnInstallDialog' is opened"
-        applicationBrowsePanel.selectRowByName( GOOGLE_ANALYTICS_APP_NAME );
+        applicationBrowsePanel.clickOnRowByName( GOOGLE_ANALYTICS_APP_NAME );
         UninstallApplicationDialog dialog = applicationBrowsePanel.clickOnToolbarUninstall();
         dialog.waitUntilDialogLoaded();
 

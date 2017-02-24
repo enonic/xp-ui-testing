@@ -98,6 +98,7 @@ public abstract class BrowseItemsSelectionPanel
     public BrowseItemsSelectionPanel clickOnClearSelectionButton()
     {
         getDisplayedElement( By.xpath( CLEAR_SELECTION_BUTTON ) ).click();
+        sleep( 400 );
         return this;
     }
 

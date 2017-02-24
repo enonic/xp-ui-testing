@@ -125,7 +125,7 @@ public class UserBrowsePanel
     {
         clickOnExpander( storeName );
         sleep( 700 );
-        selectRowByName( "users" );
+        clickOnRowByName( "users" );
         sleep( 500 );
         getSession().put( USER_ITEM_TYPE, BrowseItemType.USERS_FOLDER );
         return this;
@@ -136,7 +136,7 @@ public class UserBrowsePanel
         clickOnExpander( storeName );
         sleep( 700 );
         // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
-        selectRowByName( "groups" );
+        clickOnRowByName( "groups" );
         sleep( 500 );
         getSession().put( USER_ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
         return this;
