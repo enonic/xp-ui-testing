@@ -20,7 +20,7 @@ class ContentBrowsePanel_GridPanel_Spec
     @Shared
     Content CHILD_CONTENT;
 
-    def "GIVEN Content listed on root WHEN no selection THEN all rows are white"()
+    def "GIVEN some content are listed in root WHEN no selection THEN all rows should be white"()
     {
         given:
         int rowNumber = contentBrowsePanel.getRowsCount();
@@ -28,11 +28,11 @@ class ContentBrowsePanel_GridPanel_Spec
         expect:
         contentBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
 
-        and: "refresh button is present on the tree grid toolbar"
+        and: "refresh button should be present on the tree grid toolbar"
         contentBrowsePanel.isRefreshButtonDisplayed();
     }
 
-    def "GIVEN one content is selected in the root WHEN refresh button pressed THEN the row stays selected"()
+    def "GIVEN one content is selected in the root WHEN refresh button was pressed THEN the row stays should be selected"()
     {
         given:
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
@@ -46,7 +46,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN Content listed on root WHEN first is clicked THEN first row is blue"()
+    def "GIVEN existing contents in the root WHEN checkbox for the first content is checked THEN first row should be blue"()
     {
         given:
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
@@ -59,73 +59,74 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN a Content selected WHEN spacebar is typed THEN row is no longer selected"()
+    def "GIVEN existing Content is selected WHEN spacebar was pressed THEN row is no longer selected"()
     {
-        given:
+        given:"existing Content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
         saveScreenshot( "test_spacebar_before" );
 
-        when:
+        when:"spacebar was pressed"
         contentBrowsePanel.pressKeyOnRow( ContentPath.from( contentNames.get( 0 ) ), Keys.SPACE );
 
-        then:
+        then:"row is no longer selected"
         saveScreenshot( "test_spacebar_after" );
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN a Content selected WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
+    def "GIVEN existing content is selected WHEN 'Selection Controller' checkbox was clicked twice THEN row is no longer selected"()
     {
-        given:
+        given:"existing content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
-        when:
+        when:"'Selection Controller' checkbox was clicked twice"
         contentBrowsePanel.doClearSelection();
 
-        then:
+        then:"row is no longer selected"
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN no Content selected WHEN 'Selction Controller ' has been checked THEN all rows should be selected"()
+    def "WHEN 'Selection Controller' has been checked THEN all rows should be selected"()
     {
-        when:
+        when: "'Selection Controller ' has been checked"
         contentBrowsePanel.doSelectAll();
         saveScreenshot( "test_select_all_content" );
 
-        then:
+        then: "all rows should be selected"
         contentBrowsePanel.getRowsCount() == contentBrowsePanel.getSelectedRowsNumber();
     }
 
-    def "GIVEN a Content on root having a child WHEN listed THEN expander is shown"()
+    def "GIVEN existing parent folder with a child WHEN the folder is selcted THEN 'expand icon' should be displayed for this folder"()
     {
-        given:
+        given: "existing folder"
         PARENT_CONTENT = buildFolderContent( "parentfolder", "folder-test" );
         CHILD_CONTENT = buildFolderContentWithParent( "child-content", "child folder", PARENT_CONTENT.getName() );
         addContent( PARENT_CONTENT );
-        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_CONTENT.getName() );
+        findAndSelectContent( PARENT_CONTENT.getName() );
+
+        when: "child folder has been added"
         addContent( CHILD_CONTENT );
 
-        expect:
-        contentBrowsePanel.exists( PARENT_CONTENT.getName() ) && contentBrowsePanel.isExpanderPresent( PARENT_CONTENT.getName() )
+        then: "'expand icon' should be displayed for the parent folder"
+        contentBrowsePanel.isExpanderPresent( PARENT_CONTENT.getName() )
     }
 
-    def "GIVEN a parent folder with child WHEN the name of parent typed in the TextSearchField and folder expanded THEN child content appears "()
+    def "GIVEN existing parent folder with a child WHEN 'expand icon' for the content has been clicked THEN child content should be listed"()
     {
-        given: "a parent folder with child and filter panel shown"
-        contentBrowsePanel.doShowFilterPanel();
+        given: "existing parent folder with a child is selected"
+        findAndSelectContent( PARENT_CONTENT.getName() )
 
-        when: "the name of parent typed in the TextSearchField and folder expanded"
-        filterPanel.typeSearchText( PARENT_CONTENT.getName() )
+        when: "'expand icon' for the content has been clicked"
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
-        then: "child content appears"
+        then: "child content should be listed"
         contentBrowsePanel.exists( CHILD_CONTENT.getName() );
     }
 
-    def "GIVEN a Content on root having no children WHEN listed THEN expander is not shown"()
+    def "GIVEN existing content without children WHEN listed THEN 'expand icon' should not be displayed for this content"()
     {
-        given:
+        given: "existing content without children"
         String name = NameHelper.uniqueName( "unstructured" );
         Content unstructured = Content.builder().
             name( name ).
@@ -135,55 +136,54 @@ class ContentBrowsePanel_GridPanel_Spec
             build();
         addContent( unstructured );
 
-        expect:
+        expect: "'expand icon' should not be displayed for this content"
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( name ) );
     }
 
-    def "GIVEN a Content with a closed expander WHEN expanded THEN one or more children is listed beneath"()
+    def "GIVEN existing collapsed folder WHEN 'expand icon' has been clicked THEN child content should be displayed"()
     {
-        expect:
+        expect: "existing collapsed folder"
         !contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
 
-        when:
+        when: "'expand icon' has been clicked"
         filterPanel.typeSearchText( PARENT_CONTENT.getName() );
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
-        List<String> names = contentBrowsePanel.getChildNames()
+        List<String> childNames = contentBrowsePanel.getChildNames()
 
-        then:
-        names.size() == 1;
+        then: "child content should be displayed"
+        childNames.size() == 1;
         and:
-        names.get( 0 ) == CHILD_CONTENT.getName();
-
+        childNames.get( 0 ) == CHILD_CONTENT.getName();
     }
 
-    def "GIVEN a Content with an open expander WHEN closed THEN no children are listed beneath"()
+    def "GIVEN existing unexpanded folder WHEN 'expand icon' has been clicked THEN the folder should be collapsed"()
     {
-        given:
+        given: "existing unexpanded folder"
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
         when:
         contentBrowsePanel.unExpandContent( PARENT_CONTENT.getPath() );
         saveScreenshot( "test_unexpand_folder" );
 
-        then:
+        then: "the folder should be collapsed"
         contentBrowsePanel.getChildNames().size() == 0;
     }
 
-    def "GIVEN a selected Content  WHEN arrow down is typed THEN next row is selected"()
+    def "GIVEN existing content is selected WHEN arrow down has been pressed THEN next row should be selected"()
     {
         given:
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
         saveScreenshot( "test_arrow_down_before" );
 
-        when:
+        when: "arrow down has been pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_DOWN );
         saveScreenshot( "test_arrow_down_after" );
-        then:
+        then: " next row should be selected"
         !contentBrowsePanel.isRowSelected( PARENT_CONTENT.getName() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
-    def "GIVEN a selected content WHEN arrow up is typed THEN previous row is selected"()
+    def "GIVEN existing content is selected WHEN arrow up has been pressed THEN previous row should be selected"()
     {
         given:
         String name = NameHelper.uniqueName( "unstructured" );
@@ -199,11 +199,11 @@ class ContentBrowsePanel_GridPanel_Spec
         saveScreenshot( "test_arrow_up_before" );
 
 
-        when:
+        when: "arrow up has been pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_UP );
         saveScreenshot( "test_arrow_up_after" );
 
-        then:
+        then: "another row should be selected"
         !contentBrowsePanel.isRowSelected( PARENT_CONTENT.getPath().toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
@@ -218,11 +218,11 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_LEFT );
         saveScreenshot( "test_arrow_left_after" );
 
-        then: "folder is collapsed"
+        then: "folder should be collapsed"
         !contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
     }
 
-    def "GIVEN a selected and collapsed content and  WHEN arrow right is typed THEN folder becomes expanded"()
+    def "GIVEN a selected and collapsed content and  WHEN arrow right is typed THEN folder is getting expanded"()
     {
         given: "a selected and collapsed folder"
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
@@ -231,7 +231,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_RIGHT );
         saveScreenshot( "content_arrow_right" );
 
-        then: "folder is expanded"
+        then: "folder should be expanded"
         contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
     }
 
@@ -241,11 +241,11 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.selectContentInTable( IMPORTED_FOLDER_NAME );
         saveScreenshot( "test_arrow_down_shift_before" );
 
-        when: "arrow down pressed 3 times"
+        when: "arrow down was pressed 3 times"
         contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
         saveScreenshot( "test_arrow_down_shift_after" );
 
-        then: "n+1 rows are selected in the browse panel"
+        then: "n+1 rows should be selected in the browse panel"
         contentBrowsePanel.getSelectedRowsNumber() == 4
     }
 
@@ -256,11 +256,30 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( 4 );
         saveScreenshot( "test_arrow_up_shift_before2" );
 
-        when: "arrow up pressed 3 times"
+        when: "arrow up was pressed 3 times"
         contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );
         saveScreenshot( "test_arrow_up_shift_after" );
 
-        then: "n+1 rows are selected in the browse panel"
+        then: "n+1 rows should be selected in the browse panel"
         contentBrowsePanel.getSelectedRowsNumber() == 4
+    }
+    @Ignore
+    //verifies  enonic/xp#4463 After a node is unhighlighted in the grid the toolbar action buttons are still active
+    def "GIVEN row with the content is highlighted WHEN highlighting has been removed THEN 'Edit', 'Delete', 'Duplicate 'buttons  should be disabled on the toolbar"()
+    {
+        given: "row with the content is highlighted"
+        contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
+
+        when: "node is unhighlighted"
+        contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
+
+        then: "'Edit' button should be disabled"
+        !contentBrowsePanel.isEditButtonEnabled();
+        and: "'Sort' button should be disabled"
+        !contentBrowsePanel.isSortButtonEnabled();
+        and: "'Move' button should be disabled"
+        !contentBrowsePanel.isMoveButtonEnabled();
+        and: "'Delete' button should be disabled"
+        !contentBrowsePanel.isDeleteButtonEnabled();
     }
 }
