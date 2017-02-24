@@ -1,9 +1,12 @@
 package com.enonic.wem.uitest.content
+
+import com.enonic.autotests.pages.Application
+
 /**
  * Created on 2/21/2017.
  *
  * Tasks:
- * xp-ui-testing#10 Add Selenium tests for 'Shopping Cart' Icon on the toolbar
+ * xp-ui-testing #10 Add Selenium tests for 'Shopping Cart' Icon on the toolbar
  * https://github.com/enonic/xp-ui-testing/issues/10
  * */
 class ContentBrowsePanel_Cart_Spec
@@ -11,8 +14,11 @@ class ContentBrowsePanel_Cart_Spec
 {
     def "GIVEN existing folder  WHEN the row has been clicked THEN cart should be not active AND number should not be displayed in the cart"()
     {
+        given:"content grid is opened"
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+
         when: "checkbox is checked and existing content is selected"
-        contentBrowsePanel.selectRowByName(IMPORTED_FOLDER_NAME);
+        contentBrowsePanel.clickOnRowByName(IMPORTED_FOLDER_NAME);
 
         then: "the cart should be not active"
         !contentBrowsePanel.isCartActive();
@@ -26,7 +32,7 @@ class ContentBrowsePanel_Cart_Spec
         when: "checkbox is checked and existing content is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
 
-        then: "correct number of the selected content should be displayed"
+        then: "cart should be present on the toolbar"
         contentBrowsePanel.isCartDisplayed();
 
         and: "the cart should be not active"
@@ -54,9 +60,12 @@ class ContentBrowsePanel_Cart_Spec
         contentBrowsePanel.getNumberInCart() == "1";
     }
 
-    def "WHEN two contents were selected THEN correct number should be displayed in the cart AND in the 'Clear Selection' button"()
+    def "GIVEN content grid id opened WHEN two contents were selected THEN correct number should be displayed in the cart AND in the 'Clear Selection' button"()
     {
-        when: "checkbox is checked and existing content is selected"
+        given:"content grid is opened"
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+
+        when: "existing two contents is selected"
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
@@ -87,6 +96,5 @@ class ContentBrowsePanel_Cart_Spec
 
         and: "'Clear Selection' link should not be displayed"
         !itemsSelectionPanel.isClearSelectionLinkDisplayed();
-
     }
 }
