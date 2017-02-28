@@ -22,7 +22,7 @@ class InputTypesSpec
     String TEST_DATE_TIME = "2015-02-28 19:01";
 
 
-    def "GIVEN existing 'Date' content WHEN content is selected and 'Edit' button clicked THEN actual value and expected should be equals"()
+    def "GIVEN 'Date' content was added WHEN the content is opened THEN actual date and expected should be equals"()
     {
         given: "add a content with type 'Date'"
         Content dateContent = buildDate0_1_Content( TEST_DATE );
@@ -30,58 +30,58 @@ class InputTypesSpec
         contentBrowsePanel.doClearSelection();
 
 
-        when: "just created content selected and 'Edit' button clicked"
+        when: "the content is opened"
         findAndSelectContent( dateContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
-        then: "actual value and expected should be equals"
+        then: "actual 'Date' and expected should be equals"
         formViewPanel.getDateValue().equals( TEST_DATE )
     }
 
-    def "GIVEN existing 'DateTime' content WHEN content selected and 'Edit' button clicked THEN actual value and expected should be equals"()
+    def "GIVEN 'DateTime' content was added WHEN the content is opened THEN actual 'Date Time' and expected should be equals"()
     {
-        given: "add a content with type 'Date Time'"
+        given: "'DateTime' content was added"
         Content dateTimeContent = buildDateTime0_1_Content( TEST_DATE_TIME );
         selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData(
             dateTimeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "just created content selected and 'Edit' button clicked"
+        when: "the content is opened"
         findAndSelectContent( dateTimeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        then: "actual value and expected should be equals"
+        then: "actual 'Date Time' and expected should be equals"
         dateTimeFormViewPanel.getDateTimeValue().equals( TEST_DATE_TIME );
     }
 
-    def "GIVEN existing 'Time' content WHEN content selected and 'Edit' button clicked THEN actual and expected should be equals"()
+    def "GIVEN 'Time' content was added WHEN the content is opened THEN actual and expected time should be equals"()
     {
-        given: "add a content with type 'Time'"
+        given: "'Time' content was added"
         Content timeContent = buildTime0_0_Content( TEST_TIME );
         selectSitePressNew( timeContent.getContentTypeName() ).typeData( timeContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "just created content selected and 'Edit' button clicked"
+        when: "the content is opened"
         findAndSelectContent( timeContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
-        then: "actual and expected should be equals"
+        then: "actual and expected time should be equals"
         timeFormViewPanel.getTimeValue().equals( TEST_TIME );
     }
 
-    def "GIVEN existing 'checkbox' content WHEN content selected and 'Edit' button clicked THEN actual and expected should be equals"()
+    def "GIVEN 'checkbox' content with 'true' value was added WHEN the content is opened THEN checkbox should be checked"()
     {
-        given: "add a content with type 'checkbox'"
+        given: "'checkbox' content with 'true' value was added"
         Content checkBoxContent = buildCheckBoxContent( true );
         selectSitePressNew( checkBoxContent.getContentTypeName() ).typeData(
             checkBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "site expanded and just created content selected and 'Edit' button clicked"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( checkBoxContent )
+        when: "the content is opened"
+        findAndSelectContent( checkBoxContent.getName() );
         CheckBoxFormViewPanel checkBoxFormViewPanel = new CheckBoxFormViewPanel( getSession() );
 
-        then: "actual and expected should be equals"
+        then: "checkbox should be checked"
         checkBoxFormViewPanel.isChecked();
     }
 }

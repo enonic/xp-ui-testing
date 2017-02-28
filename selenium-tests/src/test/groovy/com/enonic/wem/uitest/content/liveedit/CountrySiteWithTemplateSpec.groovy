@@ -70,9 +70,9 @@ class CountrySiteWithTemplateSpec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing page-template WHEN the template is opened and the and 'country' part is added THEN correct page-sources should be present in the HTML"()
+    def "GIVEN existing page-template is opened WHEN the template is opened and the and 'country' part is added THEN correct page-sources should be present in the HTML"()
     {
-        given: "existing page-template"
+        given: "existing page-template is opened"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
@@ -98,8 +98,7 @@ class CountrySiteWithTemplateSpec
     def "GIVEN existing page-template with a 'country' part is opened WHEN the template opened and the 'city list' part inserted THEN correct page-sources should be present in the HTML"()
     {
         given: "existing page-template is opened"
-        filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit(); ;
 
         when: "'city list' part has been inserted"
         PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(

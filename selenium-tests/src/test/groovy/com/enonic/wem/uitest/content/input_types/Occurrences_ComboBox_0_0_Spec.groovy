@@ -62,7 +62,7 @@ class Occurrences_ComboBox_0_0_Spec
         contentBrowsePanel.doClearSelection();
 
         when: "content is opened"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
+        findAndSelectContent( comboBoxContent.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
@@ -85,7 +85,7 @@ class Occurrences_ComboBox_0_0_Spec
         contentBrowsePanel.doClearSelection();
 
         when: "content is opened"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
+        findAndSelectContent( COMBOBOX_0_0_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
@@ -103,15 +103,15 @@ class Occurrences_ComboBox_0_0_Spec
     def "GIVEN ComboBox-content (0:0) with three options and one option was removed and content saved WHEN content is opened THEN two selected options and buttons 'Remove' should be present on the page "()
     {
         given: "content with tree options opened for edit' and one option removed"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
+        ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_0_0_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "when content opened for edit again"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
+        when: "content has been opened again"
+        contentBrowsePanel.clickToolbarEdit();
 
-        then: "only two options are present in the form view"
+        then: "only two options should be present on the form view"
         List<String> optValues = formViewPanel.getSelectedOptionValues();
         saveScreenshot( "combo_removed_option" );
         optValues.size() == 2;
@@ -126,7 +126,7 @@ class Occurrences_ComboBox_0_0_Spec
         given: "existing new ComboBox 0:0 with options'"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
 
-        when: "type a data and 'save' and 'publish'"
+        when: "the content has been published"
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab();

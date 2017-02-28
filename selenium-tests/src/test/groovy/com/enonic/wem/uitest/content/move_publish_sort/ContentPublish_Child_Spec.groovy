@@ -112,7 +112,7 @@ class ContentPublish_Child_Spec
         then: "new added content has a 'Offline' status"
         contentBrowsePanel.getContentStatus( childContent2.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
     }
-
+    //verifies XP-4628
     def "GIVEN existing parent has 'online' and child contents is 'offline' WHEN parent folder selected and 'Delete' button pressed  THEN 'offline' child content removed, but parent folder and 'online' child content are 'Pending delete' "()
     {
         when: "parent 'online'-folder selected and 'Delete' button pressed"
@@ -131,9 +131,9 @@ class ContentPublish_Child_Spec
 
         and: "offline-child has been removed"
         !contentBrowsePanel.exists( childContent2.getName() );
-        //TODO  remove it when the "XP-4628 Add correct notification messages, when a parent folder with children has been removed or published" will be fixed
-        //and: "correct notification message is displayed"
-        // message == "1 items is deleted. 2 items are marked for deletion.";
+
+        and: "correct notification message is displayed"
+        message == "1 item is deleted. 2 items are marked for deletion.";
     }
     //verifies the "XP-4628 Add correct notification messages, when a parent folder with children has been removed or published"  will be fixed
     def "GIVEN existing parent folder with one child and status of both contents are 'PENDING_DELETE' WHEN parent folder selected and 'Publish' button pressed THEN parent folder not listed"()

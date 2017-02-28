@@ -170,8 +170,7 @@ public class DeleteContentDialog
     public List<String> getDisplayNamesToDelete()
     {
         List<String> names = new ArrayList<>();
-        List<WebElement> itemsToDelete = getDriver().findElements( By.xpath( ITEMS_TO_DELETE_BY_DISPLAY_NAME ) );
-
+        List<WebElement> itemsToDelete = findElements( By.xpath( ITEMS_TO_DELETE_BY_DISPLAY_NAME ) );
         for ( WebElement el : itemsToDelete )
         {
             names.add( el.getText() );
@@ -185,7 +184,7 @@ public class DeleteContentDialog
         String status = String.format( CONTENT_STATUS, displayName );
         if ( !isElementDisplayed( status ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_status_" + displayName );
+            saveScreenshot( "err_status_" + displayName );
             throw new TestFrameworkException( "status was not found! " + displayName );
         }
         return getDisplayedString( status );

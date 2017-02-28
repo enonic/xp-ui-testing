@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.application
 
+import com.enonic.autotests.pages.Application
 import org.openqa.selenium.Keys
 
 class ApplicationBrowsePanel_GridPanel_Spec
@@ -75,6 +76,7 @@ class ApplicationBrowsePanel_GridPanel_Spec
     def "GIVEN existing application is selected WHEN arrow down was pressed THEN next row should be selected"()
     {
         given:
+        applicationBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         applicationBrowsePanel.clickCheckboxAndSelectRow( 0 );
         Set<String> namesBefore = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 
@@ -92,7 +94,8 @@ class ApplicationBrowsePanel_GridPanel_Spec
 
     def "GIVEN existing application is selected WHEN arrow up was pressed THEN previous row should be selected"()
     {
-        given:"existin application is selected"
+        given:"existing application is selected"
+        applicationBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         applicationBrowsePanel.clickCheckboxAndSelectRow( 3 );
         Set<String> displayNamesBefore = applicationBrowsePanel.getDisplayNamesOfSelectedGridItems();
 

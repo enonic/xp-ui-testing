@@ -15,8 +15,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
- * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- */
+ * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards*/
 @Stepwise
 class Occurrences_CustomRelation_0_1_Spec
     extends Base_InputFields_Occurrences
@@ -92,7 +91,7 @@ class Occurrences_CustomRelation_0_1_Spec
     def "WHEN existing citation content with selected article is opened THEN correct article should be shown in selected options"()
     {
         when: "existing citation content is opened"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( RELATIONSHIP_CONTENT );
+        findAndSelectContent( RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
         saveScreenshot( "citation-with-article" );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
@@ -101,15 +100,13 @@ class Occurrences_CustomRelation_0_1_Spec
         names.get( 0 ).contains( TEST_ARTICLE_CONTENT.getName() );
     }
 
-    def "GIVEN the citation content with selected article selected in the grid WHEN 'Publish' button pressed THEN citation has a 'online' status"()
+    def "GIVEN the citation content is selected AND publish button pressed WHEN 'Approve' button pressed THEN citation should be with 'online' status"()
     {
-        given: "citation content opened for edit"
-        filterPanel.typeSearchText( RELATIONSHIP_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( RELATIONSHIP_CONTENT.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL );
+        given: "the citation content is selected and Publish dialog opened"
+        ContentPublishDialog contentPublishDialog = findAndSelectContent(
+            RELATIONSHIP_CONTENT.getName() ).clickToolbarPublish().waitUntilDialogShown( Application.EXPLICIT_NORMAL );
 
-        when:"content has been published"
+        when: "content has been published"
         contentPublishDialog.clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "citation-published" );

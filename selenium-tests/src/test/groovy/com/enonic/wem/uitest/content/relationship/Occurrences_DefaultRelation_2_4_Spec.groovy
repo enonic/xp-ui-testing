@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.relationship
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -14,8 +13,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
- * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- */
+ * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards*/
 @Stepwise
 class Occurrences_DefaultRelation_2_4_Spec
     extends Base_InputFields_Occurrences
@@ -30,7 +28,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        when:"data has been typed"
+        when: "data has been typed"
         wizard.typeData( relationship );
 
         then: "one selected file should be displayed"
@@ -41,7 +39,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         formViewPanel.getDisplayNamesOfSelectedFiles().get( 0 ).equals( NORD_IMAGE_DISPLAY_NAME );
 
         and: "content should be displayed as invalid, because only one option selected, but min required is 2"
-        wizard.isContentInvalid(  )
+        wizard.isContentInvalid()
     }
 
     def "GIVEN saving of content with type Default Relation(2:4) WHEN content saved and opened for edit THEN correct selected file should bedisplayed "()
@@ -51,9 +49,10 @@ class Occurrences_DefaultRelation_2_4_Spec
         ContentWizardPanel wizard = selectSitePressNew( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         wizard.typeData( TEST_RELATIONSHIP_CONTENT ).save().close( TEST_RELATIONSHIP_CONTENT.getDisplayName() );
+        contentBrowsePanel.doClearSelection();
 
-        when:"the content is opened"
-        contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
+        when: "the content is opened"
+        findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
 
         then: "one file should be selected in the form view"
         formViewPanel.getNumberOfSelectedFiles() == 1;
@@ -63,14 +62,14 @@ class Occurrences_DefaultRelation_2_4_Spec
 
     def "GIVEN existing content with one selected option is opened WHEN three options were added THEN 4 selected files should be displayed on the  wizard page"()
     {
-        given: "existing content with one selcted option is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
+        given: "existing content with one selected option is opened"
+        ContentWizardPanel wizard = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
-        and:"three options were added"
+        and: "three options were added"
         TEST_RELATIONSHIP_CONTENT.getData().addStrings( RelationshipFormView.RELATIONSHIPS_PROPERTY, BOOK_IMAGE_DISPLAY_NAME,
                                                         FL_IMAGE_DISPLAY_NAME,
                                                         MAN_IMAGE_DISPLAY_NAME )
-        when:"content has been saved"
+        when: "content has been saved"
         formViewPanel.type( TEST_RELATIONSHIP_CONTENT.getData() );
         wizard.save();
         saveScreenshot( "rel_4_opt" )
@@ -84,10 +83,10 @@ class Occurrences_DefaultRelation_2_4_Spec
     def "GIVEN content with type Default Relation(2:4) and four selected files is opened WHEN one selected option removed THEN option filter appears three options displayed"()
     {
         given: "content with type Default Relation(2:4) and four selected files is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
+        ContentWizardPanel wizard = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        when:"one target was removed"
+        when: "one target was removed"
         formViewPanel.removeSelectedFile( NORD_IMAGE_DISPLAY_NAME );
         wizard.save();
         saveScreenshot( "rel_3_opt" );
@@ -98,13 +97,13 @@ class Occurrences_DefaultRelation_2_4_Spec
         formViewPanel.isOptionFilterDisplayed();
 
         and: "red icon should not be displayed, because three  option are selected, and min required is 2"
-        !wizard.isContentInvalid(  );
+        !wizard.isContentInvalid();
     }
 
     def "WHEN existing content with three selected options opened THEN 'Publish' button is enabled"()
     {
         when: "existing content with three selected options opened"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
+        ContentWizardPanel wizard = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName(  ) ).clickToolbarEdit(  );
 
         then: "'Publish' button should be enabled, because content is valid"
         wizard.isPublishButtonEnabled();
@@ -113,13 +112,10 @@ class Occurrences_DefaultRelation_2_4_Spec
     def "GIVEN valid content selected in the grid and 'Publish' button on toolbar pressed WHEN content published THEN the content with 'online' status should be displayed"()
     {
         given: "content selected in the grid and opened"
-        filterPanel.typeSearchText( TEST_RELATIONSHIP_CONTENT.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( TEST_RELATIONSHIP_CONTENT.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL );
+        ContentPublishDialog contentPublishDialog = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarPublish();
+
         when: "'publish' button  was pressed"
         contentPublishDialog.clickOnPublishNowButton();
-        filterPanel.typeSearchText( TEST_RELATIONSHIP_CONTENT.getName() );
 
         then: "'Online' status should be displayed for this content"
         contentBrowsePanel.getContentStatus( TEST_RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
@@ -128,8 +124,9 @@ class Occurrences_DefaultRelation_2_4_Spec
     def "GIVEN content with three selected options opened for edit WHEN two selected options were removed THEN 'Publish' button should be disabled and content is invalid"()
     {
         given: "content with three selected options opened for edit"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_RELATIONSHIP_CONTENT );
-        when:
+        ContentWizardPanel wizard = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
+
+        when:"two selected options were removed"
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
         formViewPanel.removeSelectedFile( BOOK_IMAGE_DISPLAY_NAME );
         formViewPanel.removeSelectedFile( MAN_IMAGE_DISPLAY_NAME );
@@ -138,8 +135,8 @@ class Occurrences_DefaultRelation_2_4_Spec
         then: "'Publish' button should be disabled, because content is not valid"
         !wizard.isPublishButtonEnabled();
 
-        and:"red icon should be present on the wizard page"
-        wizard.isContentInvalid(  );
+        and: "red icon should be present on the wizard page"
+        wizard.isContentInvalid();
     }
 
     private Content buildDefaultRelation2_4_Content( String... names )

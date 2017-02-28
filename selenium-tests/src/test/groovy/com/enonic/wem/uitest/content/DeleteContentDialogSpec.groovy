@@ -73,7 +73,7 @@ class DeleteContentDialogSpec
         when: "'cancel' button on the top has been clicked"
         dialog.clickOnCancelTop();
 
-        then: "dialog is closing"
+        then: "dialog should be closed"
         !dialog.isOpened();
 
         and: "content should be present in the grid"
