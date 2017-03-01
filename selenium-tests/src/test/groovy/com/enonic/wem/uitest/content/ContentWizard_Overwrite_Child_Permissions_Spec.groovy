@@ -7,7 +7,6 @@ import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.SystemUserName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -16,7 +15,7 @@ import spock.lang.Stepwise
  *
  * Tasks:
  * XP-2845 Create selenium tests for "Overwrite child permission" feature(Edit Permissions Dialog)
- *
+ * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
  * Verifies:
  * XP-4932 Impossible to save changes when 'Overwrite child permissions' was set in true
  * XP-4930 Security wizard-step-form not refreshed in a child content, when permissions were changed in the parent content
@@ -65,7 +64,6 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         !wizard.isAlertPresent();
     }
     //verifies XP-4930 Security wizard-step-form not refreshed in a child content, when permissions were changed in the parent content
-    @Ignore
     def "GIVEN existing parent folder with a child is opened WHEN new permission as added in the parent AND 'Overwrite' is true THEN the permissions should be updated in the child folder"()
     {
         given: "existing parent folder with a child is opened"
@@ -79,7 +77,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         EditPermissionsDialog dialog = parent.clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         and: "'Overwrite child permissions' set in true for the parent folder AND new permission was added"
-        dialog.setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
+        dialog.setInheritPermissionsCheckbox( false ).setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
         and: "parent folder has been saved"
         parent.save();
         and: "navigate to the child wizard-tab"
