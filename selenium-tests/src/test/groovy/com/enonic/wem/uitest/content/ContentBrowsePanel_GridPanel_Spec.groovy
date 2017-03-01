@@ -5,7 +5,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
 import org.openqa.selenium.Keys
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -263,7 +262,7 @@ class ContentBrowsePanel_GridPanel_Spec
         then: "n+1 rows should be selected in the browse panel"
         contentBrowsePanel.getSelectedRowsNumber() == 4
     }
-    @Ignore
+
     //verifies  enonic/xp#4463 After a node is unhighlighted in the grid the toolbar action buttons are still active
     def "GIVEN row with the content is highlighted WHEN highlighting has been removed THEN 'Edit', 'Delete', 'Duplicate 'buttons  should be disabled on the toolbar"()
     {
