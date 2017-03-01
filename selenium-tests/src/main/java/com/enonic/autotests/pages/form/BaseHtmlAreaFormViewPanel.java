@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertAnchorModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertImageModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
@@ -21,6 +22,8 @@ public abstract class BaseHtmlAreaFormViewPanel
     private final String TOOLBAR_INSERT_MACRO_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert macro']";
 
     private final String TOOLBAR_INSERT_IMAGE_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert/edit image']";
+
+    private final String TOOLBAR_INSERT_ANCHOR_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Anchor']";
 
     private final String SOURCE_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Source code']";
 
@@ -60,6 +63,15 @@ public abstract class BaseHtmlAreaFormViewPanel
         InsertImageModalDialog insertImageModalDialog = new InsertImageModalDialog( getSession() );
         insertImageModalDialog.waitForOpened();
         return insertImageModalDialog;
+    }
+
+    public InsertAnchorModalDialog showToolbarAndClickOnInsertAnchorButton()
+    {
+        showToolbar();
+        getDisplayedElement( By.xpath( TOOLBAR_INSERT_ANCHOR_BUTTON ) ).click();
+        InsertAnchorModalDialog insertAnchorModalDialog = new InsertAnchorModalDialog( getSession() );
+        insertAnchorModalDialog.waitForOpened();
+        return insertAnchorModalDialog;
     }
 
 

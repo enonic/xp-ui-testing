@@ -37,7 +37,6 @@ public class InsertImageModalDialog
 
     private final String BUTTON_ALIGN_CENTER = "//button[contains(@class,'icon-paragraph-right')]";
 
-
     private final String IMAGE_CROPPING_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'ImageCroppingSelector')]";
 
     @FindBy(xpath = DIALOG_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT)

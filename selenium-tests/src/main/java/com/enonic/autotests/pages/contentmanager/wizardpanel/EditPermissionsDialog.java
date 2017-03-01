@@ -67,7 +67,6 @@ public class EditPermissionsDialog
 
     public EditPermissionsDialog setOverwriteChildPermissionsCheckbox( boolean value )
     {
-
         boolean isChecked = isOverwriteChildPermissionsCheckBoxChecked();
         if ( ( !isChecked && value ) || ( isChecked && !value ) )
         {

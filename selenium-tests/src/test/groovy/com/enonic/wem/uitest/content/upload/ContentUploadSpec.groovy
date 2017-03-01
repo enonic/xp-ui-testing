@@ -67,6 +67,4 @@ class ContentUploadSpec
         then: "correct name should be displayed on wizard-page"
         wizardPanel.getNameInputValue().equalsIgnoreCase( FILE_NAME );
     }
-
-
 }

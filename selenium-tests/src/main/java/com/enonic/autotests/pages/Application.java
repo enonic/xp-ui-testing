@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebElement;
@@ -208,5 +209,10 @@ public class Application
             getLogger().warn( "no such window: target window already closed" );
             return false;
         }
+    }
+    public void pressEscapeKey(  )
+    {
+        buildActions().sendKeys( Keys.ESCAPE ).build().perform();
+        sleep( 500 );
     }
 }

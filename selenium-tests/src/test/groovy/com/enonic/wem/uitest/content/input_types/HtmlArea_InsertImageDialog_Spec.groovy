@@ -64,7 +64,7 @@ class HtmlArea_InsertImageDialog_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         InsertImageModalDialog insertImageModalDialog = formViewPanel.showToolbarAndClickOnInsertImageButton();
 
-        when: "'Insert Image' button has been clicked"
+        when: "'Cancel' button has been clicked"
         insertImageModalDialog.clickOnCancelButton();
 
         then: "modal dialog should not be displayed"
