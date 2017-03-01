@@ -3,12 +3,13 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertImageModalDialog
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 
 /**
  * Created  on 2/28/2017.
  *
- * Tasks: xp-ui-testing#18 Add Selenium tests for InsertImage modal dialog
+ * Tasks:
+ * xp-ui-testing#18 Add Selenium tests for InsertImage modal dialog
+ * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
  * */
 class HtmlArea_InsertImageDialog_Spec
     extends Base_InputFields_Occurrences
@@ -38,14 +39,9 @@ class HtmlArea_InsertImageDialog_Spec
         and: "Image toolbar should not be displayed"
         !insertImageModalDialog.isToolbarDisplayed();
 
-        //TODO remove it when issue will be fixed
-        //and: "'Cancel top' button should be displayed"
-        //insertImageModalDialog.isCancelButtonTopDisplayed();
     }
-
-    //TODO when bug will be fixed
-    @Ignore
-    def "GIVEN  InsertImageModalDialog is opened WHEN 'Cancel Top' button has been clicked THEN modal dialog should not be displayed"()
+    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc
+    def "GIVEN  InsertImageModalDialog is opened WHEN 'Escape' key has been pressed THEN modal dialog should not be displayed"()
     {
         given: "wizard for html-area content is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
@@ -53,8 +49,8 @@ class HtmlArea_InsertImageDialog_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         InsertImageModalDialog insertImageModalDialog = formViewPanel.showToolbarAndClickOnInsertImageButton();
 
-        when: "'Insert Image' button has been clicked"
-        insertImageModalDialog.clickOnCancelTopButton();
+        when: "'Escape' key has been clicked"
+        insertImageModalDialog.pressEscapeKey();
 
         then: "modal dialog should not be displayed"
         insertImageModalDialog.waitForClosed();
