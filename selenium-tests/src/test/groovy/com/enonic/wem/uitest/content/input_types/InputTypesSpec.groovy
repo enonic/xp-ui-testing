@@ -78,7 +78,7 @@ class InputTypesSpec
         contentBrowsePanel.doClearSelection();
 
         when: "the content is opened"
-        findAndSelectContent( checkBoxContent.getName() );
+        findAndSelectContent( checkBoxContent.getName() ).clickToolbarEdit(  );
         CheckBoxFormViewPanel checkBoxFormViewPanel = new CheckBoxFormViewPanel( getSession() );
 
         then: "checkbox should be checked"

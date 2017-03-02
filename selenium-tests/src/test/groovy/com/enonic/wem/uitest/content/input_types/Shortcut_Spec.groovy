@@ -21,7 +21,7 @@ class Shortcut_Spec
     @Shared
     String TARGET_1 = "server";
 
-    def " creating of new shortcut WHEN name typed but target not selected AND AppHome button pressed THEN the content displayed in the grid as invalid "()
+    def "GIVEN creating of new shortcut WHEN name was typed but target is not selected AND AppHome button has been pressed THEN the content should be displayed as invalid"()
     {
         given:
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.shortcut() );
@@ -35,8 +35,7 @@ class Shortcut_Spec
         findAndSelectContent( name );
         saveScreenshot( "shortcut_in_grid_invalid" );
 
-        then: "red icon should be present on the wizard-tab"
-        filterPanel.typeSearchText( name );
+        then: "red icon should be present in the grid"
         contentBrowsePanel.isContentInvalid( name );
     }
 
@@ -47,23 +46,23 @@ class Shortcut_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SHORTCUT_CONTENT.getContentTypeName() );
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
-        when: "name and display name typed"
+        when: "name and display name was typed"
         wizard.typeName( SHORTCUT_CONTENT.getName() ).typeDisplayName( SHORTCUT_CONTENT.getDisplayName() ).save();
         saveScreenshot( "shortcut_validation_message" );
 
-        then: "red icon should be present on the wizard-tab"
+        then: "validation message should be displayed"
         formViewPanel.isValidationMessageDisplayed();
 
-        and: "validation message should appear"
+        and: "validation message should be displayed"
         formViewPanel.getValidationMessage() == "This field is required";
 
         and: "red icon should be present on the wizard-tab"
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing shortcut without selected target WHEN target was selected THEN red icon should not be displayed on the wizard tab"()
+    def "GIVEN existing shortcut without selected target is opened WHEN target was selected THEN red icon should not be displayed on the wizard tab"()
     {
-        given:
+        given:"existing shortcut without selected target is opened"
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
@@ -72,16 +71,16 @@ class Shortcut_Spec
         saveScreenshot( "shortcut_valid" );
         wizard.save();
 
-        then: "validation message not displayed"
+        then: "validation message should not be displayed"
         !formViewPanel.isValidationMessageDisplayed();
 
         and: "red icon should not be displayed on the wizard-tab"
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing shortcut with selected target WHEN target was removed THEN red icon appears  on the wizard tab"()
+    def "GIVEN existing shortcut with selected target is opened WHEN target was removed THEN red icon should be present on the wizard tab"()
     {
-        given:
+        given:"existing shortcut with selected target is opened"
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 

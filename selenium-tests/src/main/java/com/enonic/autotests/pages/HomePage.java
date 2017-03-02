@@ -22,7 +22,7 @@ public class HomePage
 {
     public static final String CONTENT_STUDIO_URL_PART = "content-studio";
 
-    public static final String USER_MANAGER_URL_PART = "user-manager";
+    public static final String USER_MANAGER_URL_PART = "users";
 
     public static final String APPLICATIONS_URL_PART = "applications";
 
