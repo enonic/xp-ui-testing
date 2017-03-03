@@ -94,7 +94,7 @@ class Restore_ComboBox_Spec
 
         and: "switch to wizard tab"
         def isRedIconInGrid = contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
-        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getName() )
+        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName(  ) )
 
         then: "the content is invalid in the grid as well"
         saveScreenshot( "combobox_not_valid_version" );
