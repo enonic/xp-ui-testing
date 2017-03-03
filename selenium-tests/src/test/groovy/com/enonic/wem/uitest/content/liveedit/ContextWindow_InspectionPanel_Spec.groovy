@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel
 import com.enonic.autotests.utils.TestUtils
@@ -66,10 +67,32 @@ class ContextWindow_InspectionPanel_Spec
 
         when: "Page controller has been changed to 'Country list'"
         inspectPanel.changePageController( COUNTRY_LIST_PAGE_CONTROLLER );
+
+        and: "'Yes' button on the Confirmation dialog has been pressed"
+        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
+        dialog.pressYesButton();
         saveScreenshot( "test-inspection-new-controller-selected" );
 
         then: "correct page controller displayed on the Inspect panel"
         inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;
+    }
+
+    def "GIVEN 'Inspect' panel is opened WHEN 'Automatic' renderer was selected THEN 'Confirmation Dialog' should be displayed"()
+    {
+        given: "'Inspect' panel is opened"
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit()
+        wizardPanel.showContextWindow().clickOnInspectLink();
+
+        when: "'Automatic' page-template has been selected"
+        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        inspectionPanel.selectRenderer( "Automatic" );
+
+        then: "'Confirmation Dialog' should be displayed "
+        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
+        dialog.isOpened();
+
+        and: "correct question should be displayed"
+        dialog.getQuestion() == "Switching to a page template will discard all of the custom changes made to the page. Are you sure?"
     }
     //verifies :XP-3993 Inspection Panel should be closed, when 'Page Controller' was removed (Automatic)
     def "GIVEN 'Inspect' panel is opened WHEN 'Automatic' renderer was selected THEN 'Context window' should be closed"()
@@ -81,6 +104,13 @@ class ContextWindow_InspectionPanel_Spec
         when: "'Automatic' page-template has been selected"
         ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
         inspectionPanel.selectRenderer( "Automatic" );
+
+        and: "'Confirmation Dialog' is displayed "
+        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
+        dialog.isOpened();
+
+        and: "Yes' button has been pressed"
+        dialog.pressYesButton();
         inspectionPanel.waitUntilPanelClosed( Application.EXPLICIT_NORMAL );
 
         then: "'Context window should be closed "

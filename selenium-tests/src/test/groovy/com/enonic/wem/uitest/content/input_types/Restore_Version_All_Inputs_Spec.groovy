@@ -113,10 +113,10 @@ class Restore_Version_All_Inputs_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "all_inputs_restored" );
 
-        and: "content opened"
+        and: "content is opened"
         contentBrowsePanel.clickToolbarEdit();
 
-        then: "correct values are present on the wizard"
+        then: "correct values should be present on the wizard"
         InputsFormViewPanel formView = new InputsFormViewPanel( getSession() );
         formView.geoPointFormViewPanel.getGeoPointValue() == GEO_POINT_V1;
 

@@ -15,7 +15,7 @@ public class ConfirmationDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'api.ui.dialog.ConfirmationDialog')]";
 
-    public final String YES_BUTTON_XPATH = DIALOG_CONTAINER + "//div[@class='dialog-buttons']//button/span[text()='Yes']";
+    public final String YES_BUTTON_XPATH = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Yes']]";
 
     public final String NO_BUTTON_XPATH = DIALOG_CONTAINER + "//div[@class='dialog-buttons']//button/span[text()='No']";
 
@@ -23,7 +23,7 @@ public class ConfirmationDialog
 
     public static final String QUESTION = "Are you sure you want to delete this content?";
 
-    private final String QUESTION_XPATH = DIALOG_CONTAINER + "//div[@class='question']";
+    private final String QUESTION_XPATH = DIALOG_CONTAINER + "//h6[@class='question']";
 
     @FindBy(xpath = YES_BUTTON_XPATH)
     private WebElement yesButton;
