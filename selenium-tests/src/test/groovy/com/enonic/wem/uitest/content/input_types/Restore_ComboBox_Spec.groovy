@@ -9,8 +9,7 @@ import spock.lang.Shared
 
 /**
  * Tasks:
- * XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- */
+ * XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards*/
 class Restore_ComboBox_Spec
     extends Base_InputFields_Occurrences
 {
@@ -61,9 +60,8 @@ class Restore_ComboBox_Spec
         contentBrowsePanel.isPublishButtonEnabled();
 
         and: "validation message should not be present on the form"
-        contentBrowsePanel.switchToBrowserTabByTitle(COMBOBOX_CONTENT.getDisplayName(  ));
+        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName() );
         !formViewPanel.isValidationMessagePresent();
-
     }
 
     def "GIVEN version of content with two images has been restored WHEN content opened THEN two options are displayed on the wizard"()
@@ -92,23 +90,16 @@ class Restore_ComboBox_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "combobox_not_valid_version" );
 
-        and: "switch to wizard tab"
-        def isRedIconInGrid = contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
-        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName(  ) )
-
-        then: "the content is invalid in the grid as well"
+        then: "the content should be displayed as invalid in the grid"
         saveScreenshot( "combobox_not_valid_version" );
         contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
 
         and: "red icon should appear on the wizard-tab"
-        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName(  ) );
+        contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName() );
         wizard.isContentInvalid();
 
         then: "red icon should be present on the wizard-tab"
         wizard.isContentInvalid();
-
-        and: "the content should be displayed as invalid in the grid"
-        isRedIconInGrid;
     }
 
     def "GIVEN version of content with one images is restored WHEN content opened THEN one image should be displayed on the wizard"()
