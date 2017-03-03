@@ -507,7 +507,7 @@ public abstract class BrowsePanel
         if ( !isLoaded )
         {
             saveScreenshot( NameHelper.uniqueName( "err_browse_panel" ) );
-            throw new TestFrameworkException( "browse panel not loaded" );
+            throw new TestFrameworkException( "browse panel was not loaded" );
         }
     }
 

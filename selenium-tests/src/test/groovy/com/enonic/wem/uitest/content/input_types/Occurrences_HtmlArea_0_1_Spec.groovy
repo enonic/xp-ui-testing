@@ -9,8 +9,9 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /*
-Tasks
+Tasks:
  XP-4746 Add selenium test to verify XP-4698
+ xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
  */
 @Stepwise
 class Occurrences_HtmlArea_0_1_Spec
@@ -132,6 +133,22 @@ class Occurrences_HtmlArea_0_1_Spec
 
         and: "correct message is displayed"
         insertLinkModalDialog.getValidationMessageForTextInput() == InsertLinkModalDialog.VALIDATION_MESSAGE;
+    }
+    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc
+    def "GIVEN InsertLinkModalDialog is opened WHEN 'Escape' key has been pressed THEN modal dialog should not be displayed"()
+    {
+        given: "wizard for html-area content is opened"
+        Content htmlAreaContent = buildHtmlArea0_1_Content( null );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        and: "InsertLinkModalDialog is opened"
+        InsertLinkModalDialog insertLinkModalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
+
+        when: "'Escape' key has been clicked"
+        insertLinkModalDialog.pressEscapeKey();
+
+        then: "modal dialog should not be displayed"
+        insertLinkModalDialog.waitForDialogClosed();
     }
     // verifies the XP-4698
     def "GIVEN 'Insert Link' modal dialog is opened WHEN the Text has been typed but the required 'URL' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog "()

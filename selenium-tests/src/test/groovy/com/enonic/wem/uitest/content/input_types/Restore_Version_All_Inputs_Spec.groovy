@@ -91,6 +91,7 @@ class Restore_Version_All_Inputs_Spec
         formView.getLongFormViewPanel().typeLongValue( LONG_V2 );
         formView.getDoubleFormViewPanel().typeDoubleValue( DOUBLE_V2 );
         formView.getGeoPointFormViewPanel().typeGeoPoint( GEO_POINT_V2 );
+        wizard.doScrollPanel( 250 );
         formView.getSingleSelectorRadioFormView().selectOption( RADIO_OPTION_V2 );
         formView.getTextLineFormViewPanel().typeText( TEXT_LINE_V2 );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();

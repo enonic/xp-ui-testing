@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.LauncherPanel
 import com.enonic.autotests.pages.LoginPage
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.BaseGebSpec
 import spock.lang.Shared
 
@@ -26,7 +25,7 @@ class LauncherPanel_Spec
 
         and: "Xp Tour modal dialog closed"
         NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
-        TestUtils.saveScreenshot( getSession(), "launcher-panel-test" );
+        saveScreenshot( "launcher-panel-test" );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
         then: "launcher panel displayed"

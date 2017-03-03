@@ -100,7 +100,6 @@ public class SchedulePublishDialog
         return this;
     }
 
-
     public SchedulePublishDialog typeOnlineFrom( String dateTime )
     {
         buildActions().moveToElement(onlineFromInput  ).click().build().perform();
@@ -115,7 +114,6 @@ public class SchedulePublishDialog
         sleep( 300 );
         return this;
     }
-
 
     public boolean isCancelTopButtonDisplayed()
     {

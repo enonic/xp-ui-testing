@@ -847,6 +847,4 @@ public class ContentWizardPanel
         }
         return entries;
     }
-
-
 }

@@ -187,4 +187,13 @@ public abstract class WizardPanel<T>
         sleep( 3000 );
         return this;
     }
+
+    public void doScrollPanel( int scrollTop )
+    {
+        String xpathPanel = "//div[contains(@id,'api.ui.panel.Panel') and contains(@class,'panel-strip-scrollable')]";
+        WebElement panel = getDisplayedElement( By.xpath( xpathPanel ) );
+        String id = panel.getAttribute( "id" );
+        String script = "document.getElementById(arguments[0]).scrollTop=arguments[1]";
+        getJavaScriptExecutor().executeScript( script, id, scrollTop );
+    }
 }
