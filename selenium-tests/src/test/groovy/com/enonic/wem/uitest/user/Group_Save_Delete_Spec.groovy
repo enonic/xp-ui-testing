@@ -20,7 +20,6 @@ class Group_Save_Delete_Spec
     @Shared
     String NEW_DISPLAY_NAME = "new display name";
 
-
     @Shared
     String NEW_NAME = "new_name";
 

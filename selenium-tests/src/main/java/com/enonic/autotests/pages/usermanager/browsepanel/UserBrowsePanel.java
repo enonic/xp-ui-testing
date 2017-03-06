@@ -46,7 +46,7 @@ public class UserBrowsePanel
 
     private final String USER_ITEMS_GRID = "//div[contains(@id,'UserItemsTreeGrid')]";
 
-    public final String USERS_BUTTON = "//button[contains(@id,'api.app.bar.HomeButton') and child::span[text()='Users']]";
+    public final String USERS_BUTTON = "//div[contains(@id,'AppIcon') and child::span[text()='Users']]";
 
     public final String NEW_BUTTON_XPATH =
         "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='New']]";
@@ -64,7 +64,7 @@ public class UserBrowsePanel
         "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Sync']]";
 
     @FindBy(xpath = USERS_BUTTON)
-    private WebElement userManagerButton;
+    private WebElement usersButton;
 
     @FindBy(xpath = NEW_BUTTON_XPATH)
     private WebElement newButton;
@@ -115,7 +115,7 @@ public class UserBrowsePanel
     @Override
     public UserBrowsePanel pressAppHomeButton()
     {
-        userManagerButton.click();
+        usersButton.click();
         sleep( 1000 );
         waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         return this;

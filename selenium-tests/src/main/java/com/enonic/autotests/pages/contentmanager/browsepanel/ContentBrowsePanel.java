@@ -40,7 +40,7 @@ public class ContentBrowsePanel
 
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
 
-    public static final String CONTENT_STUDIO_BUTTON = "//button[@id='api.app.bar.HomeButton' ]//span[text()='Content Studio']";
+    public static final String CONTENT_STUDIO_BUTTON = "//div[@id='AppIcon' ]//span[text()='Content Studio']";
 
     private final String BASE_PANEL_XPATH = "//div[contains(@id,'ContentBrowsePanel')]";
 
@@ -94,7 +94,7 @@ public class ContentBrowsePanel
     private WebElement duplicateButton;
 
     @FindBy(xpath = CONTENT_STUDIO_BUTTON)
-    private WebElement contentManagerButton;
+    private WebElement contentStudioButton;
 
     @FindBy(xpath = PREVIEW_BUTTON_XPATH)
     private WebElement previewButton;
@@ -370,7 +370,7 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel pressAppHomeButton()
     {
-        contentManagerButton.click();
+        contentStudioButton.click();
         sleep( 500 );
         waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         return this;
