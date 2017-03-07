@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.UserStore
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -34,10 +33,10 @@ class UserStore_Save_Delete_Spec
 
 
         then: "new 'user store' should be listed"
-        TestUtils.saveScreenshot( getSession(), "user-store-saved" );
+        saveScreenshot( "user-store-saved" );
         userBrowsePanel.exists( TEST_USER_STORE.getName() );
 
-        and: "correct notification message appears"
+        and: "correct notification message should appear"
         creatingMessage == USER_STORE_CREATED_MESSAGE;
     }
 
@@ -47,7 +46,7 @@ class UserStore_Save_Delete_Spec
         UserStoreWizardPanel userStoreWizardPanel = openUserStore( TEST_USER_STORE.getName() );
 
         then: "correct description is displayed"
-        TestUtils.saveScreenshot( getSession(), "test_user_store_description" );
+        saveScreenshot( "test_user_store_description" );
         userStoreWizardPanel.getDescriptionValue() == TEST_USER_STORE.getDescription();
     }
     //  INBOX-279
@@ -75,7 +74,7 @@ class UserStore_Save_Delete_Spec
         when: "user store selected and 'Delete' button pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( us.getName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        TestUtils.saveScreenshot( getSession(), "user-store-deleted" );
+        saveScreenshot( "user-store-deleted" );
 
         then: "the user store not displayed in a grid"
         !userBrowsePanel.exists( us.getName() );
@@ -95,7 +94,7 @@ class UserStore_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( NEW_DISPLAY_NAME );
 
         then: "role with new display name should be listed"
-        TestUtils.saveScreenshot( getSession(), "us-d-name-changed" );
+        saveScreenshot( "us-d-name-changed" );
         userBrowsePanel.exists( TEST_USER_STORE.getName() );
     }
 
@@ -111,44 +110,44 @@ class UserStore_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( NEW_NAME );
 
         then: "'user store' with new name should be listed"
-        TestUtils.saveScreenshot( getSession(), "us-name-changed" );
+        saveScreenshot( "us-name-changed" );
         userBrowsePanel.exists( NEW_NAME );
     }
 
-    def "GIVEN creating new 'user store' WHEN data saved and 'Delete' button on wizard-toolbar pressed THEN wizard closed and 'user store' not displayed in grid"()
+    def "GIVEN creating new 'user store' WHEN 'Delete' button on wizard-toolbar has been pressed THEN the 'user store' should not be displayed in the grid"()
     {
         given: "creating new 'user store'"
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
         UserStore userStore = buildUserStore( "user-store", "test-user-store", "delete wizard-toolbar" );
         userStoreWizardPanel.typeData( userStore ).save();
-        TestUtils.saveScreenshot( getSession(), "user-store-saved-in-wizard" );
+        saveScreenshot( "user-store-saved-in-wizard" );
 
-        when: "data saved and 'Delete' button on wizard-toolbar pressed"
+        when: "'Delete' button on wizard-toolbar has been pressed"
         ConfirmationDialog confirmationDialog = userStoreWizardPanel.clickToolbarDelete();
+        and: "deleting is confirmed"
         confirmationDialog.pressYesButton();
 
-
-        then: "wizard closed and the 'user store' not displayed in a grid"
-        TestUtils.saveScreenshot( getSession(), "user-store-deleted-from-wizard" );
+        then: "wizard closed and the 'user store' should not be displayed in the grid"
+        saveScreenshot( "user-store-deleted-from-wizard" );
         !userBrowsePanel.exists( userStore.getName() );
     }
 
-    def "GIVEN 'user store' wizard opened, data saved WHEN HomeButton pressed THEN new 'user store' displayed in grid"()
+    def "GIVEN 'user store' wizard opened, data saved WHEN HomeButton was pressed THEN new 'user store' should be displayed in the grid"()
     {
-        given: "'user store' wizard opened, data saved"
+        given: "'user store' wizard is opened, data is typed and saved"
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
         UserStore userStore = buildUserStore( "user-store", "test-user-store", "home button" );
         userStoreWizardPanel.typeData( userStore ).save();
 
-        when: "HomeButton pressed"
+        when: "HomeButton was pressed"
         userBrowsePanel.pressAppHomeButton();
 
-        then: "new 'user store' displayed in grid"
-        TestUtils.saveScreenshot( getSession(), "user-store-home-clicked" );
+        then: "new 'user store' should be displayed in the grid"
+        saveScreenshot( "user-store-home-clicked" );
         userBrowsePanel.exists( userStore.getName() );
     }
 
-    def "GIVEN adding of a new user-store WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
+    def "GIVEN adding of a new user-store WHEN data was typed and 'Save' button pressed AND page was refreshed in the browser THEN wizard should be displayed with a correct data"()
     {
         given: "start adding a new user"
         UserStore refreshWizardUserStore = buildUserStore( "store", "test-refresh-wizard", "description" );
@@ -157,15 +156,15 @@ class UserStore_Save_Delete_Spec
         when: "data typed and user saved"
         userStoreWizardPanel.typeData( refreshWizardUserStore ).save().waitNotificationMessage();
 
-        and: "page refreshed"
+        and: "page was refreshed"
         userBrowsePanel.refreshPanelInBrowser();
         sleep( 1000 );
-        TestUtils.saveScreenshot( getSession(), "user_store_wizard_refreshed" );
+        saveScreenshot( "user_store_wizard_refreshed" );
 
-        then: "wizard is opened"
+        then: "wizard should be opened"
         userStoreWizardPanel.isOpened();
 
-        and: "correct display name displayed"
+        and: "correct display name should be displayed"
         userStoreWizardPanel.getNameInputValue() == refreshWizardUserStore.getName();
     }
 

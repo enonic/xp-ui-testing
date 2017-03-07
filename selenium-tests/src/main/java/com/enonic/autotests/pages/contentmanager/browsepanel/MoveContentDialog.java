@@ -58,7 +58,7 @@ public class MoveContentDialog
     public MoveContentDialog selectDestinationAndClickOnMove( String destinationName )
     {
         selectDestination( destinationName );
-        sleep( 500 );
+        sleep( 1000 );
         moveButton.click();
         waitForClosed();
         return this;

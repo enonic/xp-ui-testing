@@ -9,7 +9,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardStepForm;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.ContentSettings;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -27,6 +26,8 @@ public class SettingsWizardStepForm
 
     private final String PRINCIPAL_FILTER_INPUT = PRINCIPAL_COMBOBOX + COMBOBOX_OPTION_FILTER_INPUT;
 
+    private final String OWNER_PRINCIPAL = "//div[contains(@id,'PrincipalSelectedOptionsView')]";
+
     private String NAME_ITEM = "//h6[contains(@class,'main-name') and text()='%s']";
 
     private String REMOVE_LANG_BUTTON = LOCALE_COMBOBOX +
@@ -39,6 +40,8 @@ public class SettingsWizardStepForm
 
     private String OWNER_TEXT =
         PRINCIPAL_COMBOBOX + "//div[contains(@class,'selected-options principal-selected-options-view')]" + H6_MAIN_NAME;
+
+    private final String REMOVED_OWNER = OWNER_PRINCIPAL + "//div[contains(@id,'RemovedPrincipalSelectedOptionView')]";
 
 
     @FindBy(xpath = LANGUAGE_FILTER_INPUT)
@@ -68,7 +71,7 @@ public class SettingsWizardStepForm
         String removeButtonXpath = String.format( REMOVE_LANG_BUTTON, language );
         if ( !isElementDisplayed( removeButtonXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + language );
+            saveScreenshot( "err_" + language );
             throw new TestFrameworkException( "language was not found in settings-form:  " + language );
         }
         getDisplayedElement( By.xpath( removeButtonXpath ) ).click();
@@ -80,7 +83,7 @@ public class SettingsWizardStepForm
         String removeButtonXpath = String.format( REMOVE_OWNER_BUTTON, owner );
         if ( !isElementDisplayed( removeButtonXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_" + owner );
+            saveScreenshot( "err_" + owner );
             throw new TestFrameworkException( "Owner was not found in settings-form:  " + owner );
         }
         getDisplayedElement( By.xpath( removeButtonXpath ) ).click();
@@ -91,11 +94,11 @@ public class SettingsWizardStepForm
     public void selectLanguage( String language )
     {
         clearAndType( languageFilterInput, language );
-        TestUtils.saveScreenshot( getSession(), "language_typed" );
+        saveScreenshot( "language_typed" );
         String optionItemXpath = LOCALE_COMBOBOX + "//div[contains(@class,'slick-cell')]" + String.format( NAME_ITEM, language );
         if ( findElements( By.xpath( optionItemXpath ) ).size() == 0 )
         {
-            TestUtils.saveScreenshot( getSession(), "err_language" );
+            saveScreenshot( "err_language" );
             throw new TestFrameworkException( "locale was not found!  " + language );
         }
         findElement( By.xpath( optionItemXpath ) ).click();
@@ -108,7 +111,7 @@ public class SettingsWizardStepForm
         String checkboxXpath = PRINCIPAL_COMBOBOX + String.format( NAME_ITEM, owner );
         if ( !isElementDisplayed( checkboxXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_select_" + owner );
+            saveScreenshot( "err_select_" + owner );
             throw new TestFrameworkException( "owner was not found!  " + owner );
         }
         getDisplayedElement( By.xpath( checkboxXpath ) ).click();
@@ -142,6 +145,11 @@ public class SettingsWizardStepForm
     public boolean isLanguageInputFilterPresent()
     {
         return isElementDisplayed( LANGUAGE_FILTER_INPUT );
+    }
+
+    public boolean isOwnerRemoved()
+    {
+        return isElementDisplayed( REMOVED_OWNER );
     }
 
 }

@@ -10,7 +10,6 @@ import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
@@ -46,7 +45,7 @@ class DetailsPanel_OwnerName_Spec
 
     def "setup: add a test user to the system user store"()
     {
-        setup: "User app is opened"
+        setup: "'User' app is opened"
         UserBrowsePanel userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
 
         and: "build new user with roles"
@@ -69,15 +68,15 @@ class DetailsPanel_OwnerName_Spec
 
     def "GIVEN SU user is logged in WHEN new folder was added THEN the folder should be listed in the grid"()
     {
-        setup: "SU is logged in"
+        setup: "'SU' is logged in"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "new folder added"
+        when: "new folder is added"
         FOLDER_TO_DUPLICATE = buildFolderContent( "folder", "owner_testing" );
         contentBrowsePanel.clickToolbarNew().selectContentType( FOLDER_TO_DUPLICATE.getContentTypeName() ).typeData(
             FOLDER_TO_DUPLICATE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "folder listed in the grid"
+        then: "folder should be listed in the grid"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
         contentBrowsePanel.exists( FOLDER_TO_DUPLICATE.getName() );
     }
@@ -110,7 +109,7 @@ class DetailsPanel_OwnerName_Spec
         when: "PropertiesWidgetItemView was opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        TestUtils.saveScreenshot( getSession(), "copied_folder_user_name" );
+        saveScreenshot( "copied_folder_user_name" );
 
         then: "correct 'owner' should be displayed"
         view.getOwner() == TEST_USER.getDisplayName();
@@ -118,7 +117,7 @@ class DetailsPanel_OwnerName_Spec
 
     def "GIVEN existing folder created by the user WHEN version history was opened THEN correct owner name should be displayed"()
     {
-        setup: "user is  'logged in'"
+        setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
