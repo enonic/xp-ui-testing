@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.contentmanager.SourceCodeMceWindow;
+import com.enonic.autotests.pages.contentmanager.SourceCodeDialog;
 
 /**
  * MCE toolbar on the LiveFormPanel
@@ -164,11 +164,18 @@ public class MceToolbar
         return isElementDisplayed( MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'code')]" );
     }
 
-    public SourceCodeMceWindow clickOnSourceCodeButton()
+    public SourceCodeDialog clickOnSourceCodeButton()
     {
         sourceCodeButton.click();
-        SourceCodeMceWindow window = new SourceCodeMceWindow( getSession() );
+        switchToDefaultWindow();
+        SourceCodeDialog window = new SourceCodeDialog( getSession() );
         window.waitForOpened();
         return window;
+    }
+
+    public void switchToDefaultWindow()
+    {
+        getDriver().switchTo().defaultContent();
+        getSession().setInLiveEditFrame( false );
     }
 }

@@ -11,24 +11,22 @@ import com.enonic.autotests.pages.Application;
 /**
  * Created on 20.10.2016.
  */
-public class SourceCodeMceWindow
+public class SourceCodeDialog
     extends Application
 {
     public static final String WINDOW_TITLE = "Source code";
 
-    private final String WINDOW = "//div[contains(@class,'mce-window')]";
+    private final String WINDOW = "//div[contains(@id,'htmlarea.dialog.CodeDialog')]";
 
-    private final String WINDOW_TITLE_XPATH = "//div[contains(@class,'mce-window-head')]//div[contains(@class,'mce-title')]";
-
-    private final String TITLE_XPATH = WINDOW + "//div[@class='mce-title']";
+    private final String TITLE_XPATH = WINDOW + "//div[contains(@id,'ModalDialogHeader')]//h2";
 
     private final String TEXT_AREA = WINDOW + "//textarea";
 
-    private final String BUTTON_OK = WINDOW + "//div[contains(@class,'mce-btn') and descendant::span[text()='Ok']]";
+    private final String BUTTON_OK = WINDOW + "//div[contains(@id,'DialogButton') and descendant::span[text()='Ok']]";
 
-    private final String BUTTON_CLOSE = WINDOW + "//button[contains(@class,'mce-close')]";
+    private final String BUTTON_CLOSE = WINDOW + "//div[contains(@class,'cancel-button-top')]";
 
-    private final String BUTTON_CANCEL = WINDOW + "//div[contains(@class,'mce-btn') and descendant::span[text()='Cancel']]";
+    private final String BUTTON_CANCEL = WINDOW + "//div[contains(@id,'DialogButton') and descendant::span[text()='Cancel']]";
 
     @FindBy(xpath = BUTTON_OK)
     WebElement buttonOk;
@@ -39,7 +37,7 @@ public class SourceCodeMceWindow
     @FindBy(xpath = BUTTON_CLOSE)
     WebElement buttonClose;
 
-    public SourceCodeMceWindow( final TestSession session )
+    public SourceCodeDialog( final TestSession session )
     {
         super( session );
     }
@@ -68,12 +66,12 @@ public class SourceCodeMceWindow
 
     public boolean isTitlePresent()
     {
-        return isElementDisplayed( WINDOW_TITLE_XPATH );
+        return isElementDisplayed( TITLE_XPATH );
     }
 
     public String getTitle()
     {
-        return getDisplayedString( WINDOW_TITLE_XPATH );
+        return getDisplayedString( TITLE_XPATH );
     }
 
     public boolean isButtonOkPresent()

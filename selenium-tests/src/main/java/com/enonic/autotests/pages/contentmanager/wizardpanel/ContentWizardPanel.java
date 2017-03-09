@@ -319,7 +319,7 @@ public class ContentWizardPanel
     }
 
     /**
-     * Types data and press the "Save" button from the toolbar.
+     * Types a content-data in the wizard.
      *
      * @param content
      */

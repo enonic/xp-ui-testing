@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.liveedit
 
-import com.enonic.autotests.pages.contentmanager.SourceCodeMceWindow
+import com.enonic.autotests.pages.contentmanager.SourceCodeDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.LiveEditComponentContextMenu
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
@@ -122,27 +122,27 @@ class TextComponent_MceToolbar_Spec
 
         when: "'Source Code' button clicked"
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
-        SourceCodeMceWindow sourceCodeMceWindow = mceToolbar.clickOnSourceCodeButton();
+        SourceCodeDialog sourceCodeDialog = mceToolbar.clickOnSourceCodeButton();
 
         then: "'source code' modal dialog should be opened"
-        sourceCodeMceWindow.isOpened();
+        sourceCodeDialog.isOpened();
 
         and: "correct text should be present in the window"
-        sourceCodeMceWindow.getText().contains( TEST_TEXT );
+        sourceCodeDialog.getText().contains( TEST_TEXT );
 
         and: "source code window has the correct title"
-        sourceCodeMceWindow.isTitlePresent();
+        sourceCodeDialog.isTitlePresent();
 
         and: "source code window has the correct title"
-        sourceCodeMceWindow.getTitle() == SourceCodeMceWindow.WINDOW_TITLE;
+        sourceCodeDialog.getTitle() == SourceCodeDialog.WINDOW_TITLE;
 
         and: "button Cancel should be present"
-        sourceCodeMceWindow.isButtonCancelPresent();
+        sourceCodeDialog.isButtonCancelPresent();
 
         and: "button Ok should be present"
-        sourceCodeMceWindow.isButtonOkPresent();
+        sourceCodeDialog.isButtonOkPresent();
 
         and: "button 'Close' should be present"
-        sourceCodeMceWindow.isButtonClosePresent();
+        sourceCodeDialog.isButtonClosePresent();
     }
 }

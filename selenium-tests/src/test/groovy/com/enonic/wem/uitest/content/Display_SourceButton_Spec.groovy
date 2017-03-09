@@ -22,16 +22,15 @@ import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Created  on 08.12.2016.
- * Task: XP-4658 Add selenium tests to verify displaying of the Source Button
+ * Tasks:
+ * xp-ui-testing#21 Up-to-date tests for SourceCode dialog
+ * XP-4658 Add selenium tests to verify displaying of the Source Button
  * */
-//TODO remove Ignore when the  XP-4681 SiteWizard -Page controller - drop down disappears, when permission was added
-@Ignore
 @Stepwise
 class Display_SourceButton_Spec
     extends BaseGebSpec
@@ -41,7 +40,6 @@ class Display_SourceButton_Spec
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;
-
 
     @Shared
     private String USER_NAME = NameHelper.uniqueName( "user" );
@@ -70,11 +68,11 @@ class Display_SourceButton_Spec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        when: "data typed and user saved"
+        when: "data was typed and user saved"
         userWizardPanel.typeData( USER ).save().close( USER.getDisplayName() );
         userBrowsePanel.getFilterPanel().typeSearchText( USER.getDisplayName() );
 
-        then: "new user present beneath a system store"
+        then: "new user should be present beneath a system store"
         userBrowsePanel.exists( USER.getDisplayName(), true );
     }
 
@@ -93,7 +91,7 @@ class Display_SourceButton_Spec
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).
             typeData( SITE ).selectPageDescriptor( "main region" ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "content listed in the grid"
+        then: "content should be listed in the grid"
         contentBrowsePanel.exists( SITE.getName() );
     }
 
@@ -115,18 +113,18 @@ class Display_SourceButton_Spec
         siteWizard.switchToDefaultWindow();
         pageComponentsView.doCloseDialog();
 
-        and: "site saved in the wizard"
+        and: "site was saved in the wizard"
         siteWizard.save();
         siteWizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "text component is displayed"
+        then: "text component should be displayed"
         siteWizard.switchToLiveEditFrame();
         liveFormPanel.isTextComponentPresent();
     }
 
-    def "GIVEN login with the User AND open te site WHEN user without required roles tries to edit the text component THEN Source Button is not displayed"()
+    def "GIVEN login with the User AND open te site WHEN user without required roles tries to edit the text component THEN Source Button should not be displayed"()
     {
-        given: "user manager opened"
+        given: "'users' is opened"
         go "admin"
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -136,11 +134,11 @@ class Display_SourceButton_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
 
-        when: "double click on the text component is performed"
+        when: "double click on the text component was performed"
         liveFormPanel.doubleClickOnTextComponent( "test text" );
         saveScreenshot( "text_component_edit_inline_mode" );
 
-        then: "'Source Button button is not displayed"
+        then: "'Source Button button should not be displayed"
         !mceToolbar.isSourceCodeButtonDisplayed();
     }
 
@@ -158,7 +156,7 @@ class Display_SourceButton_Spec
         saveScreenshot( "htmlarea_source_button_not_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        then: "'Source Button button is not displayed"
+        then: "'Source Button button should not be displayed"
         !htmlArea.isSourceCodeButtonDisplayed();
     }
 
@@ -172,15 +170,15 @@ class Display_SourceButton_Spec
         and: "existing user is found"
         userBrowsePanel.getFilterPanel().typeSearchText( USER.getDisplayName() );
 
-        and: "the user is selected and opened"
+        and: "the user is opened"
         userBrowsePanel.clickCheckboxAndSelectUser( USER.getDisplayName() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickToolbarEdit();
 
-        when: "required role added"
+        when: "required role was added"
         userWizardPanel.addRole( RoleName.CM_EXPERT.getValue() );
         userWizardPanel.save();
 
-        then: "new role is displayed on the wizard"
+        then: "new role should be displayed on the wizard"
         TestUtils.isContains( userWizardPanel.getRoleNames(), RoleName.CM_EXPERT.getValue() );
     }
 
@@ -200,13 +198,13 @@ class Display_SourceButton_Spec
         liveFormPanel.doubleClickOnTextComponent( "test text" );
         saveScreenshot( "text_component_edit_inline_mode" );
 
-        then: "'Source Button button is not displayed"
+        then: "'Source Button button should be displayed"
         mceToolbar.isSourceCodeButtonDisplayed();
     }
 
     def "GIVEN login with the User WHEN user with required roles tries to add a htmlArea content THEN 'Source Button' should be displayed on the htmlarea-toolbar"()
     {
-        given: "user manager opened"
+        given: "user manager is opened"
         go "admin"
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -218,10 +216,9 @@ class Display_SourceButton_Spec
         saveScreenshot( "htmlarea_source_button_should_be_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        then: "'Source Button button is not displayed"
+        then: "'Source Button button should be displayed"
         htmlArea.isSourceCodeButtonDisplayed();
     }
-
 
     protected Content buildSimpleSiteApp( List<ContentAclEntry> aclEntries )
     {
@@ -246,8 +243,6 @@ class Display_SourceButton_Spec
         {
             contentBrowsePanel.clickCheckboxAndSelectRow( name );
         }
-
         return contentBrowsePanel;
     }
-
 }

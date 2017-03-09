@@ -8,11 +8,14 @@ import org.openqa.selenium.interactions.Actions;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.SourceCodeDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertAnchorModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertImageModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
 import com.enonic.autotests.utils.NameHelper;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public abstract class BaseHtmlAreaFormViewPanel
     extends FormViewPanel
@@ -103,5 +106,12 @@ public abstract class BaseHtmlAreaFormViewPanel
     public boolean isSourceCodeButtonDisplayed()
     {
         return isElementDisplayed( SOURCE_BUTTON );
+    }
+
+    public SourceCodeDialog clickOnSourceButton()
+    {
+        findElement( By.xpath( SOURCE_BUTTON ) ).click();
+        sleep( 500 );
+        return new SourceCodeDialog( getSession() );
     }
 }
