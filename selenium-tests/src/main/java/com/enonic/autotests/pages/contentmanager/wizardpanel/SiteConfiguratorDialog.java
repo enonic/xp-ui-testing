@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.RichComboBoxInput;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
 import com.enonic.autotests.utils.NameHelper;
 
@@ -19,6 +20,9 @@ public class SiteConfiguratorDialog
     extends Application
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SiteConfiguratorDialog')]";
+
+    protected final String POSTS_OPTION_FILTER_INPUT =
+        DIALOG_CONTAINER + "//div[contains(@id,'LoaderComboBox') and @name='postsFolder']" + COMBOBOX_OPTION_FILTER_INPUT;
 
     private final String INSERT_LINK_BUTTON = "//div[@aria-label='Insert/edit link']";
 
@@ -38,6 +42,9 @@ public class SiteConfiguratorDialog
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     WebElement closeButton;
+
+    @FindBy(xpath = POSTS_OPTION_FILTER_INPUT)
+    protected WebElement postsOptionFilterInput;
 
     public boolean isCancelTopButtonPresent()
     {
@@ -62,6 +69,31 @@ public class SiteConfiguratorDialog
     public boolean isOpened()
     {
         return isElementDisplayed( DIALOG_CONTAINER );
+    }
+
+    public SiteConfiguratorDialog selectPostsFolder( String targetName )
+    {
+        typePostsFilter( targetName );
+        if ( isNoMatchingItemsForPostsFolder() )
+        {
+            return this;
+        }
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        richComboBoxInput.selectOption( targetName );
+        sleep( 400 );
+        return this;
+    }
+
+    public void typePostsFilter( String targetName )
+    {
+        clearAndType( postsOptionFilterInput, targetName );
+        sleep( 300 );
+    }
+
+    public boolean isNoMatchingItemsForPostsFolder()
+    {
+        String message = DIALOG_CONTAINER + "//div[@class='empty-options' and text()='No matching items']";
+        return isElementDisplayed( message );
     }
 
     public void doCancelDialog()

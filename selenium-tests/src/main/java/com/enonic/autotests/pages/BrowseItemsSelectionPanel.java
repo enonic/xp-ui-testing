@@ -1,8 +1,6 @@
 package com.enonic.autotests.pages;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,10 +53,6 @@ public abstract class BrowseItemsSelectionPanel
         }
         getDisplayedElement( By.xpath( removeButton ) ).click();
         sleep( 400 );
-
-        List<String> contentList = new ArrayList<>();
-        String[] aa = {"Agra", "Mysore", "Chandigarh", "Bhopal"};
-        contentList.addAll( Arrays.asList( aa ) );
         return this;
     }
 

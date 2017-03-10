@@ -6,8 +6,10 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
+/**
+ * Panel displayed, when an User-item was clicked and selected in the BrowsePanel
+ */
 public abstract class UserItemStatisticsPanel
     extends Application
 {
@@ -35,7 +37,7 @@ public abstract class UserItemStatisticsPanel
     {
         if ( !waitUntilVisibleNoException( By.xpath( HEADER ), Application.EXPLICIT_NORMAL ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_userItemStatisticPanel" );
+            saveScreenshot( "err_userItemStatisticPanel" );
             throw new TestFrameworkException( "UserItemStatisticsPanel was not showed!" );
         }
         return this;

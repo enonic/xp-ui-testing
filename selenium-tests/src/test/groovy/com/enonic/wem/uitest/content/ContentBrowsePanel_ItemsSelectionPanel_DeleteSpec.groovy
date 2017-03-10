@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
@@ -80,7 +79,7 @@ class ContentBrowsePanel_ItemsSelectionPanel_DeleteSpec
 
         when: "one selection item was removed"
         itemsSelectionPanel.removeItem( shortcut1.getName() );
-        TestUtils.saveScreenshot( getTestSession(), "one-selected-item-removed" );
+        saveScreenshot( "one-selected-item-removed" );
 
         then: "number of selected items in Selection Panel was reduced"
         beforeRemove - itemsSelectionPanel.getSelectedItemCount() == 1;
