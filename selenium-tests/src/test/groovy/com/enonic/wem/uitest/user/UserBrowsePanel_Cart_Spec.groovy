@@ -5,7 +5,11 @@ import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserStoreStatisticsPanel
 
 /**
- * Created on 3/10/2017.*/
+ * Created on 3/10/2017.
+ *
+ * Tasks:
+ * enonic/xp-ui-testing#22 Add selenium tests for UserBrowseItemsSelectionPanel
+ * */
 class UserBrowsePanel_Cart_Spec
     extends BaseUsersSpec
 {
