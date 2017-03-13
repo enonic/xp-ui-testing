@@ -83,6 +83,18 @@ public class UserBrowsePanel
 
     private UserBrowseFilterPanel userBrowseFilterPanel;
 
+    private UserBrowseItemsSelectionPanel userBrowseItemsSelectionPanel;
+
+    public UserBrowseItemsSelectionPanel getUserBrowseItemsSelectionPanel()
+    {
+
+        if ( userBrowseItemsSelectionPanel == null )
+        {
+            userBrowseItemsSelectionPanel = new UserBrowseItemsSelectionPanel( getSession() );
+        }
+        return userBrowseItemsSelectionPanel;
+    }
+
     public UserBrowseFilterPanel getUserBrowseFilterPanel()
     {
         if ( userBrowseFilterPanel == null )

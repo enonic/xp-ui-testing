@@ -6,7 +6,7 @@ class InstallAppDialog_Spec
     extends BaseApplicationSpec
 {
 
-    def "GIVEN application BrowsePanel WHEN install button on toolbar pressed THEN 'Install App Dialog' appears with correct control elements"()
+    def "GIVEN application BrowsePanel WHEN install button on toolbar was pressed THEN 'Install App Dialog' should appear with correct control elements"()
     {
         when:
         saveScreenshot( "test_toolbar_is_available5" );
@@ -17,7 +17,7 @@ class InstallAppDialog_Spec
         then: "'Install App' Dialog should appear"
         appDialog.isDisplayed();
 
-        and: "correct title is displayed on the dialog"
+        and: "correct title should be displayed on the dialog"
         appDialog.getHeader() == InstallAppDialog.HEADER;
 
         and: "'enonic market' panel should be present"
@@ -33,14 +33,14 @@ class InstallAppDialog_Spec
         appDialog.isCancelButtonDisplayed();
     }
 
-    def "GIVEN 'Install App Dialog' is opened WHEN 'cancel' button clicked THEN dialog not present"()
+    def "GIVEN 'Install App Dialog' is opened WHEN 'cancel' button was clicked THEN dialog should not be displayed"()
     {
         given: "'Install App Dialog' is opened "
         applicationBrowsePanel.clickOnToolbarInstall();
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
 
-        when: "'cancel' button clicked"
+        when: "'cancel' button was clicked"
         appDialog.clickOnCancelButton();
         appDialog.waitUntilDialogClosed();
         saveScreenshot( "cancel-install-dialog" );

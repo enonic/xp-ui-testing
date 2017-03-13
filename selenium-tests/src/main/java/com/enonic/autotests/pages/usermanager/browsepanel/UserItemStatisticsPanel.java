@@ -45,7 +45,7 @@ public abstract class UserItemStatisticsPanel
 
     public boolean isOpened( String displayName )
     {
-        return isElementDisplayed( HEADER_BY_DISPLAY_NAME );
+        return isElementDisplayed( String.format( HEADER_BY_DISPLAY_NAME, displayName ) );
     }
 
     public String getItemDisplayName()

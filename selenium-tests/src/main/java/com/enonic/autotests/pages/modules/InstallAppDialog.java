@@ -130,7 +130,7 @@ public class InstallAppDialog
             saveScreenshot( NameHelper.uniqueName( "err_install-dialog" ) );
             throw new TestFrameworkException( "Install app dialog not loaded!" );
         }
-        waitInvisibilityOfSpinner( 5 );
+        waitInvisibilityOfSpinner( 9 );
         waitUntilVisible( By.xpath( APP_VIEWER_DIV ) );
     }
 

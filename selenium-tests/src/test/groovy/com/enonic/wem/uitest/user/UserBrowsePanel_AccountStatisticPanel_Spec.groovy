@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.usermanager.browsepanel.AccountStatisticsPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
 import com.enonic.autotests.vo.usermanager.RoleDisplayName
 import com.enonic.autotests.vo.usermanager.RoleName
@@ -35,7 +34,7 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         TEST_GROUP = buildGroup( "gr-statistics", "st-panel", "for testing of statistic panel" );
         groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
 
-        then: "test group listed"
+        then: "test group should be listed"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         userBrowsePanel.exists( TEST_GROUP.getName() );
     }
@@ -45,26 +44,26 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         when:
         userBrowseFilterPanel.typeSearchText( "su" );
         userBrowsePanel.clickCheckboxAndSelectUser( "users/su" );
-        TestUtils.saveScreenshot( getSession(), "system-su-statistic-panel" );
+        saveScreenshot( "system-su-statistic-panel" );
         accountStatisticsPanel = new AccountStatisticsPanel( getSession() );
         List<String> roleDisplayNamesActual = accountStatisticsPanel.getRoleDisplayNames();
 
         then: "correct display name shown"
         accountStatisticsPanel.getItemDisplayName() == "Super User";
 
-        and: "correct email displayed"
+        and: "correct email should be displayed"
         accountStatisticsPanel.getEmail() == "";
 
-        and: "Administration Console Login role displayed"
+        and: "Administration Console Login role should be displayed"
         roleDisplayNamesActual.contains( RoleDisplayName.ADMIN_CONSOLE.getValue() );
 
-        and: "Administrator(system.admin) role displayed"
+        and: "Administrator(system.admin) role should be displayed"
         roleDisplayNamesActual.contains( RoleDisplayName.SYSTEM_ADMIN.getValue() );
     }
 
-    def "GIVEN a existing user with a role WHEN this user selected THEN correct user-info displayed"()
+    def "GIVEN a existing user with a role WHEN this user is selected THEN correct user-info displayed"()
     {
-        given: "a existing user with a role"
+        given: "existing user with a role"
         List<String> rolesExpected = new ArrayList<>();
         rolesExpected.add( TEST_ROLE_NAME );
 
@@ -74,30 +73,30 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         addUser( TEST_USER );
         userBrowsePanel.doClearSelection();
 
-        when: "user selected"
+        when: "user is selected"
         userBrowseFilterPanel.typeSearchText( TEST_USER.getDisplayName() );
         userBrowsePanel.clickCheckboxAndSelectUser( TEST_USER.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "user-statistic-panel" );
+        saveScreenshot( "user-statistic-panel" );
         List<String> roleNamesActual = accountStatisticsPanel.getRoleNames();
         List<String> groupsNamesActual = accountStatisticsPanel.getGroupNames();
 
-        then: "correct display name is shown in the statistics panel"
+        then: "correct display name should be shown on the statistics panel"
         accountStatisticsPanel.getItemDisplayName() == TEST_USER.getDisplayName();
 
-        and: "correct e-mail displayed"
+        and: "correct e-mail should be displayed"
         accountStatisticsPanel.getEmail() == TEST_USER.getEmail();
 
-        and: "one role, that was added is shown"
+        and: "one role should be shown"
         roleNamesActual.size() == 1;
 
         and: "correct role's display-name shown in the statistics panel"
         roleNamesActual.get( 0 ).contains( rolesExpected.get( 0 ) );
 
-        and: "correct group-name displayed as well"
+        and: "correct group-name should be displayed"
         groupsNamesActual.get( 0 ).contains( groupExpected.get( 0 ) );
     }
 
-    def "GIVEN a existing user with a role WHEN user opened AND role removed AND user saved AND wizard closed THEN removed role not present in the selections panel"()
+    def "GIVEN a existing user with a role WHEN user is opened AND role was removed AND user saved AND wizard closed THEN removed role should not be present on the selections panel"()
     {
         given: "a existing user with a role"
         userBrowseFilterPanel.typeSearchText( TEST_USER.getName() );
@@ -106,18 +105,18 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         when: "role was removed AND user saved AND wizard closed"
         wizardPanel.removeRoleByName( TEST_ROLE_NAME ).save().close( TEST_USER.getDisplayName() );
 
-        then: "removed role not displayed in the selections panel"
+        then: "removed role should not be displayed on the selections panel"
         accountStatisticsPanel.getRoleNames().size() == 0;
     }
 
-    def "WHEN 'Users' folder selected THEN correct info shown in statistics panel"()
+    def "WHEN 'Users' folder is selected THEN correct info should be shown on the statistics panel"()
     {
-        when: "Users folder selected"
+        when: "'Users' folder is selected"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.USERS_FOLDER );
         saveScreenshot( "users-folder-selected" );
 
-        then: "correct info shown in statistics panel"
+        then: "correct info shown should be displayed on the statistics panel"
         accountStatisticsPanel.getItemDisplayName() == "Users";
     }
 }

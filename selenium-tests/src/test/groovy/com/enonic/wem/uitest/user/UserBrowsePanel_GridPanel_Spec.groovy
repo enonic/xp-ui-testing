@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import org.openqa.selenium.Keys
 
 class UserBrowsePanel_GridPanel_Spec
@@ -35,7 +34,7 @@ class UserBrowsePanel_GridPanel_Spec
     {
         given:
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
-        TestUtils.saveScreenshot( getTestSession(), "spacebar-system1" );
+        saveScreenshot( "spacebar-system1" );
 
         when:
         userBrowsePanel.pressKeyOnRow( "system", Keys.SPACE );
