@@ -36,6 +36,7 @@ class Site_Publish_Spec
 
         when: "site has been published"
         findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
+        saveScreenshot( "site_published" );
 
         then: "'Online' status should be displayed in the grid"
         contentBrowsePanel.getContentStatus( SITE.getName() ) == ContentStatus.ONLINE.getValue();
