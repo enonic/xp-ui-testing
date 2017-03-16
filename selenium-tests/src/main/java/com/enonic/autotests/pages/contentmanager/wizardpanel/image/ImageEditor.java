@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -53,6 +54,7 @@ public class ImageEditor
     {
         if ( !isElementDisplayed( CROP_HANDLE ) )
         {
+            saveScreenshot( NameHelper.uniqueName( "crop_button" ) );
             throw new TestFrameworkException( "drag handler was not found" );
         }
         Actions builder = new Actions( getDriver() );
@@ -64,6 +66,7 @@ public class ImageEditor
     {
         if ( !isElementDisplayed( ZOOM_KNOB ) )
         {
+            saveScreenshot( NameHelper.uniqueName( "zoom_button" ) );
             throw new TestFrameworkException( "'zoom knob' was not found" );
         }
         Actions builder = new Actions( getDriver() );
