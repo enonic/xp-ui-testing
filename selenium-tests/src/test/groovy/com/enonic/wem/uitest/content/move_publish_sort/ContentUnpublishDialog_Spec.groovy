@@ -12,8 +12,6 @@ import spock.lang.Stepwise
 class ContentUnpublishDialog_Spec
     extends BaseContentSpec
 {
-
-
     @Shared
     Content PARENT_CONTENT;
 
@@ -167,16 +165,16 @@ class ContentUnpublishDialog_Spec
     //test verifies the XP-3584
     def "GIVEN two existing 'offline' contents WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"()
     {
-        given: "first content added"
+        given: "first content is added"
         Content first = buildFolderContent( "unpublish", "test unpublish menu item" );
         addContent( first );
-        and: "the second content added in ROOT"
+        and: "the second content is added in ROOT"
         Content second = buildFolderContent( "unpublish", "test unpublish menu item" );
         addContent( second );
         Content childForFirst = buildFolderContentWithParent( "child", "child for unpublishing", first.getName() );
 
         findAndSelectContent( first.getName() );
-        and: "child for the first content added"
+        and: "child for the first content is added"
         addContent( childForFirst );
         contentBrowsePanel.doClearSelection();
         filterPanel.clickOnCleanFilter();
@@ -186,7 +184,7 @@ class ContentUnpublishDialog_Spec
         contentBrowsePanel.showPublishMenu();
         saveScreenshot( "test_unpublish_item_disabled" );
 
-        then: "Publish-menu is disabled when two 'offline' contents are selected"
+        then: "Publish-menu should be enabled when two 'offline' contents are selected"
         contentBrowsePanel.isPublishMenuAvailable();
     }
 }

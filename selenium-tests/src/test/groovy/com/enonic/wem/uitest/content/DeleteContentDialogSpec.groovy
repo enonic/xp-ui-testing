@@ -29,41 +29,41 @@ class DeleteContentDialogSpec
         when: "content selected and 'Delete' button clicked"
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();
 
-        then: "delete dialog opened"
+        then: "delete dialog is opened"
         dialog.waitForOpened();
         saveScreenshot( "delete_content_dialog_elements" );
 
-        and: "'Cancel' button is present on the dialog"
+        and: "'Cancel' button should be present on the dialog"
         dialog.isCancelButtonPresent();
 
-        and: "'Delete' button is present on the dialog"
+        and: "'Delete' button should be present on the dialog"
         dialog.isDeleteButtonPresent();
 
-        and: "checkbox not displayed, because status of the content is 'offline'"
+        and: "checkbox should not be displayed, because the status of the content is 'New'"
         !dialog.isCheckboxForDeletePublishedItemsDisplayed();
 
         and:
-        dialog.getContentStatus( CONTENT1.getDisplayName() ) == ContentStatus.OFFLINE.getValue();
+        dialog.getContentStatus( CONTENT1.getDisplayName() ) == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN 'Delete Content' dialog opened WHEN 'Cancel' button pressed THEN dialog closed and content not removed from the grid"()
+    def "GIVEN 'Delete Content' dialog is opened WHEN 'Cancel' button was pressed THEN dialog closed and content was not removed "()
     {
         given: "content selected and 'Delete' button clicked"
         findAndSelectContent( CONTENT1.getName() );
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();
         dialog.waitForOpened();
 
-        when: "'cancel' button pressed"
+        when: "'cancel' button was pressed"
         dialog.clickOnCancelButton();
 
-        then: "dialog closing"
+        then: "dialog is closing"
         !dialog.isOpened();
 
-        and: "content not removed"
+        and: "content was not removed"
         contentBrowsePanel.exists( CONTENT1.getName() );
     }
 
-    def "GIVEN 'Delete Content' dialog opened WHEN 'Cancel' on Top pressed THEN dialog closed and content should not be removed from the grid"()
+    def "GIVEN 'Delete Content' dialog is opened WHEN 'Cancel' on Top was pressed THEN dialog closes and content should not be removed from the grid"()
     {
         given: "content is selected and Delete button clicked"
         findAndSelectContent( CONTENT1.getName() );
@@ -76,20 +76,20 @@ class DeleteContentDialogSpec
         then: "dialog should be closed"
         !dialog.isOpened();
 
-        and: "content should be present in the grid"
+        and: "content was not removed"
         contentBrowsePanel.exists( CONTENT1.getName() );
     }
 
-    def "GIVEN an existing content WHEN content selected and Delete button clicked THEN delete dialog with one content is displayed"()
+    def "GIVEN an existing content WHEN content was selected and Delete button clicked THEN delete dialog with one content should be displayed"()
     {
-        given: "an existing content"
+        given: "an existing content is selcted"
         findAndSelectContent( CONTENT1.getName() );
 
-        when: "'Delete Content' dialog opened"
+        when: "'Delete Content' dialog is opened"
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();
         dialog.waitForOpened();
 
-        then: "only one content is displayed"
+        then: "only one content should be displayed"
         List<String> displayNamesFromUI = dialog.getDisplayNamesToDelete();
         displayNamesFromUI.size() == 1;
         saveScreenshot( "one_content_in_dialog" );
@@ -101,34 +101,33 @@ class DeleteContentDialogSpec
 
     def "GIVEN existing published content WHEN content was selected and Delete button clicked THEN DeleteContentDialog with the checkbox appears AND the checkbox is not checked"()
     {
-        given: "content published"
+        given: "existing content is selected"
         findAndSelectContent( CONTENT1.getName() );
+        and: "the content has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton().waitForDialogClosed();
 
-        when: "modal dialog opened"
+        when: "the content is selected and 'Delete' button has been pressed"
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();
 
-        then:
+        then: "'Delete Content' dialog should appear"
         dialog.waitForOpened();
-        sleep( 300 );
         saveScreenshot( "delete_dialog_online_status" );
 
-        and: "checkbox appeared in the modal dialog"
+        and: "checkbox 'Instantly delete' should be present on the modal dialog"
         dialog.isCheckboxForDeletePublishedItemsDisplayed();
+        and: "'Instantly delete published items' checkbox is unchecked"
+        !dialog.isInstantlyDeleteCheckboxChecked();
 
         and: "the checkbox has correct label"
         dialog.getCheckboxLabelText() == DeleteContentDialog.CHECKBOX_LABEL_TEXT;
 
         and: "the content has 'online' status"
         dialog.getContentStatus( CONTENT1.getDisplayName() ) == ContentStatus.ONLINE.getValue();
-
-        and: "'Instantly delete published items' checkbox is unchecked"
-        !dialog.isInstantlyDeleteCheckboxChecked();
     }
 
     def "GIVEN two existing content WHEN delete dialog opened THEN two contents are present in the modal dialog"()
     {
-        given: "new folder added"
+        given: "new folder is added"
         CONTENT2 = buildFolderContent( NAME_PART, "folder-delete-dialog2" );
         addContent( CONTENT2 );
         filterPanel.typeSearchText( NAME_PART );
@@ -139,7 +138,7 @@ class DeleteContentDialogSpec
         List<String> displayNames = dialog.getDisplayNamesToDelete();
         saveScreenshot( "two_contents_in_dialog" );
 
-        then: "two correct display names are shown"
+        then: "two correct display names should be present on  the dialog"
         displayNames.contains( CONTENT1.getDisplayName() );
 
         and:
@@ -149,7 +148,7 @@ class DeleteContentDialogSpec
         displayNames.size() == 2;
     }
 
-    def "GIVEN existing published content WHEN content deleting AND 'instantly delete published items' checked THEN published content not listed in the grid"()
+    def "GIVEN existing published content WHEN content deleting AND 'instantly delete published items' was checked THEN published content should not be listed in the grid"()
     {
         given: "existing published content"
         findAndSelectContent( CONTENT1.getName() );
@@ -163,13 +162,13 @@ class DeleteContentDialogSpec
         dialog.doDelete();
         saveScreenshot( "delete_dialog_content_deleted" );
 
-        then: "dialog closed"
+        then: "dialog closes"
         !dialog.isOpened();
 
         and: "the content was with 'online' status"
         status == ContentStatus.ONLINE.getValue();
 
-        and: "content not listed in the grid"
+        and: "content should not be listed in the grid"
         !contentBrowsePanel.exists( CONTENT1.getName() );
     }
 }

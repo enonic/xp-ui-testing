@@ -33,7 +33,7 @@ class ContentPublishDialog_Spec
         ContentPublishDialog dialog = wizard.typeDisplayName( displayName ).clickOnWizardPublishButton();
 
         then:
-        dialog.getContentStatus( displayName ) == ContentStatus.OFFLINE.getValue();
+        dialog.getContentStatus( displayName ) == ContentStatus.NEW.getValue();
     }
 
     def "GIVEN existing folder without child in the root WHEN the folder was selected and 'Publish' button clicked THEN 'Content publish' should appear without 'Include child' icon"()
@@ -51,7 +51,7 @@ class ContentPublishDialog_Spec
         !contentPublishDialog.isIncludeChildTogglerDisplayed();
 
         and: "correct status of content is displayed"
-        contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.OFFLINE.getValue();
+        contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.NEW.getValue();
 
         and: "'remove' button should be disabled for this content"
         !contentPublishDialog.isPublishItemRemovable( folderContent.getDisplayName() )
@@ -234,7 +234,7 @@ class ContentPublishDialog_Spec
         then: "parent folder should be 'online'"
         contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.ONLINE.getValue();
 
-        and: "child folder should be 'offline'"
-        contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.OFFLINE.getValue();
+        and: "child folder should be 'New', because the dependant was removed"
+        contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.NEW.getValue();
     }
 }

@@ -32,7 +32,7 @@ class ContentBrowsePanel_PublishMenu_Spec
         contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    def "GIVEN existing not published root folder WHEN the folder has been published THEN 'Publish'-menu is available AND 'Unpablish' menu item enabled"()
+    def "GIVEN existing 'New' folder in the root WHEN the folder has been published THEN 'Publish'-menu is available AND 'Unpablish' menu item enabled"()
     {
         when: "the folder has been published"
         findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();

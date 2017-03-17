@@ -4,7 +4,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 public enum ContentInfoTerms
 {
     TYPE( "Type" ), APPLICATION( "Application" ), OWNER( "Owner" ), CREATED( "Created" ), MODIFIED( "Modified" ), ID(
-    "Id" ), PUBLISHED_FROM( "Publish From" ), PUBLISHED_TO( "Publish To" );
+    "Id" ), PUBLISHED_FROM( "Publish From" ), FIRST_PUBLISHED( "First Published" ), PUBLISHED_TO( "Publish To" );
 
 
     private String value;

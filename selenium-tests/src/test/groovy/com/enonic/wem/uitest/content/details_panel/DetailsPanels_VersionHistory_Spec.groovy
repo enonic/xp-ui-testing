@@ -43,15 +43,14 @@ class DetailsPanels_VersionHistory_Spec
         then: "two versions should be present on the versions panel"
         allVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
 
-        and: "first version should has 'offline' status"
-        allVersions.getFirst().getStatus() == ContentStatus.OFFLINE.getValue();
+        and: "first version should has 'New' status"
+        allVersions.getFirst().getStatus() == ContentStatus.NEW.getValue();
 
         and: "super user should be 'modifier'"
         allVersions.getFirst().getModifier() == "Super User";
 
         and: "correct 'modified time' should be displayed"
         allVersions.getFirst().getModified().contains( "minute ago" );
-
     }
 
     def "GIVEN existing content is selected WHEN the content has been published THEN the latest versions should has 'online' badge"()
@@ -93,7 +92,7 @@ class DetailsPanels_VersionHistory_Spec
         contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
-    def "GIVEN 'modified'-content was selected WHEN 'Delete' button on the toolbar was pressed THEN the newer one with a gray 'Pending delete' badge."()
+    def "GIVEN 'modified'-content was selected WHEN 'Delete' button on the toolbar was pressed THEN the newer one with a 'deleted' badge"()
     {
         given: "'modified' content was selected "
         findAndSelectContent( folderContent.getName() ).clickToolbarDelete().doDelete();
@@ -103,7 +102,7 @@ class DetailsPanels_VersionHistory_Spec
         saveScreenshot( "version_panel_pending" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
-        then: "the latest version has a 'pending delete' badge"
+        then: "the latest version has a 'deleted' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
     }
 }

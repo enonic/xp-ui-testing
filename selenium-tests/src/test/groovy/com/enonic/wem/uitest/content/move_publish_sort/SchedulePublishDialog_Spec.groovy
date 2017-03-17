@@ -105,9 +105,10 @@ class SchedulePublishDialog_Spec
         testTomorrowDateTime = TimeUtils.getTomorrowDateTime();
         schedulePublishDialog.typeOnlineFrom( testTomorrowDateTime ).hideTimePickerPopup().clickOnScheduleButton();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        sleep( 400 );
         saveScreenshot( "schedule_onlinefrom_typed" );
 
-        then: "'Online(Pending)' status is displayed for the folder"
+        then: "'Online(Pending)' status should be displayed for the folder"
         contentBrowsePanel.getContentStatus( TEST_FOLDER.getName() ).equals( ContentStatus.ONLINE_PENDING.getValue() );
     }
 
@@ -138,24 +139,23 @@ class SchedulePublishDialog_Spec
         and: "'online to' date time was typed and the content has been saved"
         wizard.typeOnlineTo( TEST_ONLINE_TO_VALUE ).save();
 
-        then: "correct 'online to' is displayed"
+        then: "correct 'online to' should be displayed on the wizard"
         wizard.getOnlineToDateTime() == TEST_ONLINE_TO_VALUE;
     }
 
     def "GIVEN existing 'Online (Pending)' folder WHEN the folder is selected AND Unpublish menu item clicked THEN the folders is getting 'offline'"()
     {
-
         given: "existing 'Online (Pending)' folder"
         findAndSelectContent( TEST_FOLDER.getName() );
 
-        when:
+        when: "the folder is selected AND Unpublish menu item clicked"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
         contentUnPublishDialog.clickOnUnpublishButton();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "pending_online_is_unpublished" );
 
-        then: "the folders is getting 'offline'"
-        contentBrowsePanel.getContentStatus( TEST_FOLDER.getName() ).equals( ContentStatus.OFFLINE.getValue() );
+        then: "the folders is getting 'New', because the previous state was 'Pending Delete' "
+        contentBrowsePanel.getContentStatus( TEST_FOLDER.getName() ).equals( ContentStatus.NEW.getValue() );
     }
 
 

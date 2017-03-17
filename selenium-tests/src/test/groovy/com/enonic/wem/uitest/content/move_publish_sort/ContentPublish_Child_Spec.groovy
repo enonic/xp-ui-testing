@@ -28,22 +28,22 @@ class ContentPublish_Child_Spec
 
     def "GIVEN existing parent folder with child WHEN parent content selected but 'Include child' checkbox unchecked and 'Publish' button on toolbar pressed THEN parent content has 'Online' status but child not published"()
     {
-        setup: "parent folder added"
+        setup: "parent folder is added"
         parentContent = buildFolderContent( "publish", "parent-folder" );
         addContent( parentContent );
 
-        and: "one child content added"
+        and: "one child content was added"
         findAndSelectContent( parentContent.getName() );
         childContent1 = buildFolderContentWithParent( "publish", "child-folder1", parentContent.getName() );
         addContent( childContent1 );
 
-        when: " 'publish' dialog opened and parent content has been published without a child "
+        when: "'publish' dialog is opened and parent content has been published without a child"
         contentBrowsePanel.clickToolbarPublish().includeChildren( false ).clickOnPublishNowButton(); ;
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then: "child content has 'offline' status"
+        then: "child content should be with 'New' status"
         filterPanel.typeSearchText( childContent1.getName() );
-        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
+        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.NEW.getValue() );
 
         and: "correct notification message is displayed"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, parentContent.getDisplayName() );
@@ -64,7 +64,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.isPublishMenuAvailable();
     }
 
-    def "GIVEN parent 'online' folder with not published child WHEN 'publish' menu expanded AND 'Publish Tree' selected THEN 'Publish Dialog' appears and correct name of child is displayed"()
+    def "GIVEN parent 'online' folder with one 'New' child WHEN 'publish' menu expanded AND 'Publish Tree' selected THEN 'Publish Dialog' appears and correct name of child is displayed"()
     {
         given: "parent folder with a not published child"
         findAndSelectContent( parentContent.getName() );
@@ -83,34 +83,34 @@ class ContentPublish_Child_Spec
         dependantList.get( 0 ).contains( childContent1.getName() );
     }
 
-    def "GIVEN parent 'online' folder with not published child WHEN 'Publish Tree' in the context menu selected THEN child content is 'online' now"()
+    def "GIVEN parent 'online' folder with one 'New'-child WHEN 'Publish Tree' in the context menu selected THEN child content should be 'online' now"()
     {
         given: "parent folder with a not published child"
         findAndSelectContent( parentContent.getName() );
 
-        when: "'publish tree' menu item selected"
+        when: "'publish tree' menu item is selected"
         ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeMenuItem();
 
-        and: "'publish' button on modal dialog clicked"
+        and: "'publish' button on modal dialog has been clicked"
         modalDialog.clickOnPublishNowButton();
 
-        then: "child content is 'online' now"
+        then: "child content should be 'online' now"
         filterPanel.typeSearchText( childContent1.getName() );
         contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
     }
 
     def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN the child content has a 'Offline' status"()
     {
-        given: "add one more content added for the published folder"
+        given: "add one more content is added to the published folder"
         findAndSelectContent( parentContent.getName() );
         childContent2 = buildFolderContentWithParent( "publish", "child-folder2", parentContent.getName() );
         addContent( childContent2 );
 
-        when: "the child content filtered"
+        when: "the name of the child content is typed"
         filterPanel.typeSearchText( childContent2.getName() );
 
-        then: "new added content has a 'Offline' status"
-        contentBrowsePanel.getContentStatus( childContent2.getName() ).equalsIgnoreCase( ContentStatus.OFFLINE.getValue() );
+        then: "new added content should be with 'New' status"
+        contentBrowsePanel.getContentStatus( childContent2.getName() ).equalsIgnoreCase( ContentStatus.NEW.getValue() );
     }
     //verifies XP-4628
     def "GIVEN existing parent has 'online' and child contents is 'offline' WHEN parent folder selected and 'Delete' button pressed  THEN 'offline' child content removed, but parent folder and 'online' child content are 'Pending delete' "()
@@ -148,5 +148,4 @@ class ContentPublish_Child_Spec
         and: "correct notification message is displayed"
         message == String.format( Application.PENDING_ITEMS_ARE_DELETED, "2" );
     }
-
 }
