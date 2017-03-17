@@ -124,10 +124,10 @@ class ContentPublish_Child_Spec
         saveScreenshot( "parent_child_are_pending" );
 
         then: "online-parent becomes 'pending-delete'"
-        contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+        contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
 
         and: "online-child becomes 'pending-delete'"
-        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
 
         and: "offline-child has been removed"
         !contentBrowsePanel.exists( childContent2.getName() );

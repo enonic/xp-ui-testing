@@ -137,7 +137,7 @@ class Occurrences_ComboBox_1_1_Spec
         filterPanel.typeSearchText( comboBox1_1.getName() );
         contentBrowsePanel.clickToolbarDelete().doDelete();
         then:
-        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
         and:
         contentBrowsePanel.isContentInvalid( comboBox1_1.getName() )
     }

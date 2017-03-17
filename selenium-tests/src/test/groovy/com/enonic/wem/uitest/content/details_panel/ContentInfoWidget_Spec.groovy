@@ -139,7 +139,7 @@ class ContentInfoWidget_Spec
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
     }
 
-    def "GIVEN existing folder with 'Modified' status  WHEN content deleted THEN 'Pending delete' status appears in the 'Detail Panel'"()
+    def "GIVEN existing folder with 'Modified' status  WHEN content deleted THEN 'Deleted' status appears in the 'Detail Panel'"()
     {
         given: "existing folder with 'Modified' status"
         filterPanel.typeSearchText( FOLDER.getName() )
@@ -148,10 +148,10 @@ class ContentInfoWidget_Spec
         contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickToolbarDelete().doDelete();
         contentBrowsePanel.clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
-        saveScreenshot( "det_panel_content_pending" )
+        saveScreenshot( "det_panel_content_deleted" )
 
-        then: "'Pending delete' status appears in the 'Detail Panel'"
-        contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+        then: "'Deleted' status appears in the 'Detail Panel'"
+        contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
     }
 
 }

@@ -46,25 +46,25 @@ class ContentPublishDelete_Spec
         String message = contentBrowsePanel.waitNotificationMessage();
 
         then: "content is getting 'Pending delete'"
-        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
         and: "correct notification message should be shown"
         message == Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE;
     }
 
-    def "GIVEN existing content with 'Pending Delete' status WHEN content is selected and 'Delete' button pressed THEN checkbox with label 'Instantly delete published items' should be checked"()
+    def "GIVEN existing content with 'Deleted' status WHEN content is selected and 'Delete' button pressed THEN 'Undo deleted' button should be displayed"()
     {
-        when: "existing content with 'Pending Delete' status"
+        when: "existing content with 'Deleted' status"
         filterPanel.typeSearchText( content.getName() )
-        DeleteContentDialog dialog = contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete();
-        saveScreenshot( "test_delete_dialog_checkbox" );
+        contentBrowsePanel.selectContentInTable( content.getName() );
+        saveScreenshot( "test_deleted_content" );
 
-        then: "checkbox with label 'Instantly delete published items' should be checked"
-        dialog.isInstantlyDeleteCheckboxChecked();
+        then: "'Undo deleted' button should be displayed"
+        contentBrowsePanel.isUndoDeleteButtonDisplayed();
     }
 
-    def "GIVEN existing content with 'Pending Delete' status WHEN content is selected and 'Publish' button pressed THEN content should not be listed in the browse panel"()
+    def "GIVEN existing content with 'Deleted' status WHEN content is selected and 'Publish' button pressed THEN content should not be listed in the browse panel"()
     {
-        when: "existing content with 'Pending Delete' status"
+        when: "existing content with 'Deleted' status"
         filterPanel.typeSearchText( content.getName() );
         and: "content is selected and 'Publish' button pressed"
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();

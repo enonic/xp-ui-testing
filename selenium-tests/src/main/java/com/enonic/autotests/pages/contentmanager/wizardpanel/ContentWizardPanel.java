@@ -83,7 +83,7 @@ public class ContentWizardPanel
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
         TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
 
-    private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+    private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
@@ -121,7 +121,6 @@ public class ContentWizardPanel
 
     @FindBy(xpath = ONLINE_TO_DATETIME_INPUT)
     private WebElement onlineToInput;
-
 
     /**
      * The constructor.

@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -90,28 +91,12 @@ class ContentWizard_PublishButton_Spec
         wizard.clickToolbarDelete().doDelete();
 
         then: "'pending delete' status is displayed on the wizard"
-        wizard.getStatus() == ContentStatus.PENDING_DELETE.getValue();
+        wizard.getStatus() == ContentStatus.DELETED.getValue();
 
         and: "'Publish' menu becomes enabled"
         wizard.isPublishButtonEnabled();
 
         and: "'publish-menu' is enabled"
         wizard.isPublishMenuAvailable();
-    }
-
-    def "GIVEN existing 'pending delete' content WHEN opened and 'Unpublish' menu item selected THEN the wizard closes AND the content not listed in the grid"()
-    {
-        given: "existing 'pending delete' content opened"
-        findAndSelectContent( CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
-
-        when: "'Unpublish' menu item selected"
-        wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
-        wizard.switchToBrowsePanelTab();
-        sleep( 400 );
-        saveScreenshot( "test_wizard_unpublish_of_pending_delete" );
-
-        then: "the content not listed in the grid"
-        !contentBrowsePanel.exists( CONTENT.getName() );
     }
 }

@@ -14,6 +14,7 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.contentmanager.ContentMenuItem;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
@@ -32,10 +33,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
-    public static final String PUBLISH_MENU_ITEM_LABEL = "Publish...";
-
-    public static final String UNPUBLISH_MENU_ITEM_LABEL = "Unpublish";
-
     public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
 
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
@@ -50,7 +47,7 @@ public class ContentBrowsePanel
 
     protected final String DISPLAY_NAMES_FROM_TREE_GRID_XPATH = CONTENT_TREE_GRID + H6_DISPLAY_NAME;
 
-    private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New']]";
+    private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New...']]";
 
     private final String DUPLICATE_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
@@ -58,28 +55,32 @@ public class ContentBrowsePanel
     private final String PREVIEW_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String MOVE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Move']]";
+    private final String MOVE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Move...']]";
 
     private final String EDIT_BUTTON_XPATH =
         CONTENT_BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
 
-    private final String DELETE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+    private final String DELETE_BUTTON_XPATH =
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
 
-    private final String SORT_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Sort']]";
+    private final String SORT_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Sort...']]";
 
     private final String MORE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'FoldButton')]";
 
     private final String PUBLISH_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...']]";
 
+    private final String UNDO_DELETE_BUTTON_XPATH =
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
+
     private final String PUBLISH_MENU_DROPDOWN_HANDLER =
         BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]//button[contains(@id,'DropdownHandle')]";
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'NonMobileDetailsPanelToggleButton')]";
 
-    private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
+    private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish...']";
 
-    private final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree']";
+    private final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree...']";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
@@ -114,6 +115,9 @@ public class ContentBrowsePanel
 
     @FindBy(xpath = DETAILS_TOGGLE_BUTTON)
     WebElement detailsToggleButton;
+
+    @FindBy(xpath = UNDO_DELETE_BUTTON_XPATH)
+    private WebElement undoDeleteButton;
 
     private ContentBrowseFilterPanel filterPanel;
 
@@ -735,7 +739,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "content was not found: " + contentName );
         }
         openContextMenu( contentName );
-        String deleteMenuItem = String.format( CONTEXT_MENU_ITEM, "Delete" );
+        String deleteMenuItem = String.format( CONTEXT_MENU_ITEM, "Delete..." );
         if ( !waitIsElementEnabled( findElement( By.xpath( deleteMenuItem ) ), 2 ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
@@ -751,7 +755,7 @@ public class ContentBrowsePanel
     {
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         openContextMenu( contentName );
-        String publishMenuItem = String.format( CONTEXT_MENU_ITEM, PUBLISH_MENU_ITEM_LABEL );
+        String publishMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.PUBLISH.getName() );
 
         if ( !isElementDisplayed( publishMenuItem ) )
         {
@@ -773,7 +777,7 @@ public class ContentBrowsePanel
     public ContentUnpublishDialog selectUnPublishFromContextMenu( String contentName )
     {
         openContextMenu( contentName );
-        String unpublishMenuItem = String.format( CONTEXT_MENU_ITEM, UNPUBLISH_MENU_ITEM_LABEL );
+        String unpublishMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.UNPUBLISH.getName() );
         if ( !isElementDisplayed( unpublishMenuItem ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_context-unpublish" ) );
@@ -797,7 +801,7 @@ public class ContentBrowsePanel
         getFilterPanel().clickOnCleanFilter().typeSearchText( contentName );
         sleep( 1000 );
         openContextMenu( contentName );
-        String duplicateMenuItem = String.format( CONTEXT_MENU_ITEM, "Duplicate" );
+        String duplicateMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.DUPLICATE.getName() );
         if ( !isElementDisplayed( duplicateMenuItem ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_context-duplicate" ) );
@@ -822,7 +826,7 @@ public class ContentBrowsePanel
     public ContentWizardPanel selectEditFromContextMenu( String contentName )
     {
         openContextMenu( contentName );
-        String editMenuItem = String.format( CONTEXT_MENU_ITEM, "Edit" );
+        String editMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.EDIT.getName() );
         if ( !isElementDisplayed( editMenuItem ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_context-edit" ) );
@@ -844,7 +848,7 @@ public class ContentBrowsePanel
     public SortContentDialog selectSortInContextMenu( String contentName )
     {
         openContextMenu( contentName );
-        String sortMenuItem = String.format( CONTEXT_MENU_ITEM, "Sort" );
+        String sortMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.SORT.getName() );
         if ( !waitUntilVisibleNoException( By.xpath( sortMenuItem ), Application.EXPLICIT_NORMAL ) )
         {
             throw new TestFrameworkException( "Sort item was not found in the context menu" );
@@ -854,7 +858,7 @@ public class ContentBrowsePanel
             saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
             throw new TestFrameworkException( "Sort context-menu item is disabled!" );
         }
-        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, "Sort" ) ) ).click();
+        findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, ContentMenuItem.SORT.getName() ) ) ).click();
         SortContentDialog sortContentDialog = new SortContentDialog( getSession() );
         sortContentDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
         return sortContentDialog;
@@ -887,12 +891,13 @@ public class ContentBrowsePanel
     public ContentBrowsePanel selectPreviewInContextMenu( String contentName )
     {
         openContextMenu( contentName );
-        if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, "Preview" ) ), Application.EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( String.format( CONTEXT_MENU_ITEM, ContentMenuItem.PREVIEW.getName() ) ),
+                                           Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_" + "preview" );
             throw new TestFrameworkException( "'Preview' menu item is not visible" );
         }
-        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, "Preview" ) ) ).get( 0 ).click();
+        findElements( By.xpath( String.format( CONTEXT_MENU_ITEM, ContentMenuItem.PREVIEW.getName() ) ) ).get( 0 ).click();
         return this;
     }
 
@@ -908,7 +913,7 @@ public class ContentBrowsePanel
         sleep( 1000 );
         openContextMenu( contentName );
         sleep( 500 );
-        String newMenuItem = String.format( CONTEXT_MENU_ITEM, "New" );
+        String newMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.NEW.getName() );
         if ( !isElementDisplayed( newMenuItem ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_context-edit" ) );
@@ -968,6 +973,11 @@ public class ContentBrowsePanel
     public boolean isEditButtonEnabled()
     {
         return editButton.isEnabled();
+    }
+
+    public boolean isUndoDeleteButtonDisplayed()
+    {
+        return undoDeleteButton.isDisplayed();
     }
 
     public boolean isPublishButtonEnabled()

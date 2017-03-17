@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.ContentMenuItem
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 
 class ContentBrowsePanel_ContextMenuImage_Spec
@@ -13,23 +14,23 @@ class ContentBrowsePanel_ContextMenuImage_Spec
         saveScreenshot( "image-context-menu" );
 
         then: "Delete menu item is enabled"
-        contentBrowsePanel.isContextMenuItemEnabled( "Delete" );
+        contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.DELETE.getName() );
         and: "Preview menu item is disabled"
-        !contentBrowsePanel.isContextMenuItemEnabled( "Preview" );
+        !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.PREVIEW.getName() );
         and: "Edit menu item is enabled"
-        contentBrowsePanel.isContextMenuItemEnabled( "Edit" );
+        contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.EDIT.getName() );
         and: "New menu item is disabled"
-        !contentBrowsePanel.isContextMenuItemEnabled( "New" );
+        !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.NEW.getName() );
         and: "Sort menu item is disabled"
-        !contentBrowsePanel.isContextMenuItemEnabled( "Sort" );
+        !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.SORT.getName() );
         and: "Duplicate menu item is enabled"
-        contentBrowsePanel.isContextMenuItemEnabled( "Duplicate" );
+        contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.DUPLICATE.getName() );
         and: "Move menu item is enabled"
-        contentBrowsePanel.isContextMenuItemEnabled( "Move" );
+        contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.MOVE.getName() );
         and: "Publish menu item is enabled"
-        contentBrowsePanel.isContextMenuItemEnabled( ContentBrowsePanel.PUBLISH_MENU_ITEM_LABEL );
+        contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.PUBLISH.getName() );
 
         and: "'unpublish'-item not present in the context menu, because content is 'offline'"
-        !contentBrowsePanel.isContextMenuItemDisplayed( "Unpublish" );
+        !contentBrowsePanel.isContextMenuItemDisplayed( ContentMenuItem.UNPUBLISH.getName() );
     }
 }

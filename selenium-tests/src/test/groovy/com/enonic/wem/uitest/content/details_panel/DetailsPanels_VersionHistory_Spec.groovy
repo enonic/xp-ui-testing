@@ -104,6 +104,6 @@ class DetailsPanels_VersionHistory_Spec
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the latest version has a 'pending delete' badge"
-        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.PENDING_DELETE.getValue() );
+        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
     }
 }

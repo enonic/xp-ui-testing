@@ -13,9 +13,9 @@ class SortContentDialogSpec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN existing folder with children is selcted WHEN 'Sort' button has been clicked THEN 'Sort Content' appears with correct control elements"()
+    def "GIVEN existing folder with children is selected WHEN 'Sort' button has been clicked THEN 'Sort Content' appears with correct control elements"()
     {
-        given: "existing folder with children is selcted"
+        given: "existing folder with children is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
 
         when:"'Sort' button has been clicked"
