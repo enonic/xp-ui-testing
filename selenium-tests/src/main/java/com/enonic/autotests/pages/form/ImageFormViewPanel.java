@@ -93,7 +93,7 @@ public class ImageFormViewPanel
             throw new TestFrameworkException( "button crop was not found" );
         }
         buttonCrop.click();
-        sleep( 300 );
+        sleep( 700 );
         return new ImageEditor( getSession() );
     }
 
