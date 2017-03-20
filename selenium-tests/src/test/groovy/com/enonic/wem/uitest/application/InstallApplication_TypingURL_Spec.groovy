@@ -25,6 +25,7 @@ class InstallApplication_TypingURL_Spec
 
         when: "wrong URL to an application was typed"
         appDialog.typeInApplicationInput( WRONG_APP_URL );
+        saveScreenshot( "install_dialog_validation_message" );
         String validationMessage = appDialog.getValidationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "wrong_app_url" )
 
