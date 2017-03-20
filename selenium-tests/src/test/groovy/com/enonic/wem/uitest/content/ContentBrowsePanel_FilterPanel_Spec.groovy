@@ -81,7 +81,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "content saved and the HomeButton clicked"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData(
             folder ).save();
-        wizardPanel.switchToBrowsePanelTab();
+        wizardPanel.switchToBrowsePanelTab().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         sleep( 1000 );
 
         then: "new ContentType-filter should be updated with new count"
