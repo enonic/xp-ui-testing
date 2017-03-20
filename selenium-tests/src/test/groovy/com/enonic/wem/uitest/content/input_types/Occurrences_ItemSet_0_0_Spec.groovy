@@ -161,7 +161,6 @@ class Occurrences_ItemSet_0_0_Spec
 
         and: "content should be valid, because all required inputs are filled"
         !wizard.isContentInvalid();
-
     }
 
     def "GIVEN existing ItemSet-content with saved data WHEN content opened THEN correct text is present in the text-line and html-area inputs"()

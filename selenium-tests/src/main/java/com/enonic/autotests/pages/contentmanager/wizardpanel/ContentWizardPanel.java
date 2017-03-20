@@ -55,6 +55,9 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
+    private final String TOOLBAR_UNDO_DELETE_BUTTON_XPATH =
+        TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
+
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
 
     private final String TOOLBAR_PUBLISH = "//div[contains(@id,'ContentWizardToolbarPublishControls')]";
@@ -110,6 +113,9 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
 
+    @FindBy(xpath = TOOLBAR_UNDO_DELETE_BUTTON_XPATH)
+    private WebElement toolbarUndoDeleteButton;
+
     @FindBy(xpath = INSPECTION_PANEL_TOGGLER)
     private WebElement toolbarShowContextWindow;
 
@@ -121,6 +127,7 @@ public class ContentWizardPanel
 
     @FindBy(xpath = ONLINE_TO_DATETIME_INPUT)
     private WebElement onlineToInput;
+
 
     /**
      * The constructor.
@@ -137,6 +144,21 @@ public class ContentWizardPanel
         publishMenuDropDownHandler.click();
         sleep( 400 );
         return this;
+    }
+
+    public boolean isDeleteButtonDisplayed()
+    {
+        return toolbarDeleteButton.isDisplayed();
+    }
+
+    public boolean isUndoDeleteButtonDisplayed()
+    {
+        return toolbarUndoDeleteButton.isDisplayed();
+    }
+
+    public boolean isSaveButtonDisplayed()
+    {
+        return toolbarSaveButton.isDisplayed();
     }
 
     /**
@@ -263,7 +285,6 @@ public class ContentWizardPanel
     }
 
     /**
-     *
      * @return true if red icon is displayed on the wizard page
      */
     public boolean isContentInvalid()

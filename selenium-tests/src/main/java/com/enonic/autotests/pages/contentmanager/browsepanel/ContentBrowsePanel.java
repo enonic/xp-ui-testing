@@ -795,6 +795,20 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public ContentBrowsePanel selectUndoDeleteFromContextMenu( String contentName )
+    {
+        openContextMenu( contentName );
+        String undoDeleteMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.UNDO_DELETE.getName() );
+        if ( !isElementDisplayed( undoDeleteMenuItem ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_context-undo-delete" ) );
+            throw new TestFrameworkException( "undo delete context-menu item is not visible!" );
+        }
+        getDisplayedElement( By.xpath( undoDeleteMenuItem ) ).click();
+        sleep( 500 );
+        return this;
+    }
+
 
     public ContentBrowsePanel selectDuplicateFromContextMenu( String contentName )
     {
