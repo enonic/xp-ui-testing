@@ -516,6 +516,14 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public ContentBrowsePanel clickToolbarUndodelete()
+    {
+        undoDeleteButton.click();
+        sleep( 500 );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        return this;
+    }
+
     public ContentBrowsePanel selectContentInTable( List<String> contentNames )
     {
         contentNames.stream().forEach( name -> selectContentInTable( name ) );

@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -29,7 +30,7 @@ class ContentWizard_UndoDelete_Spec
         when: "the folder has been published"
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
-        then: " 'Online' status should be displayed"
+        then: "'Online' status should be displayed"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
     }
 
@@ -58,5 +59,18 @@ class ContentWizard_UndoDelete_Spec
 
         and: "'undo delete' button was not displayed before the deleting"
         !isDisplayedBeforeDeleting;
+    }
+
+    def "GIVEN existing 'Deleted' content WHEN the content selected and 'Undo delete' has been pressed THEN the content should be 'Online'"()
+    {
+        when: "the content selected and 'Undo delete' has been pressed"
+        findAndSelectContent( CONTENT.getName() ).clickToolbarUndodelete();
+        saveScreenshot( "undo-delete-pressed-online" );
+
+        then: "the content is getting 'Online'"
+        contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+
+        and: "correct notification message should be displayed"
+        contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL ) == Application.ITEM_IS_UNDELETED;
     }
 }

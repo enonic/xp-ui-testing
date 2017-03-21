@@ -12,6 +12,10 @@ import spock.lang.Stepwise
 
 import java.time.LocalDate
 
+/**
+ *
+ * Tasks:
+ * xp-ui-testing#17 Add Selenium tests for "First Published" field in content*/
 @Stepwise
 class ContentInfoWidget_Spec
     extends BaseContentSpec
@@ -112,13 +116,13 @@ class ContentInfoWidget_Spec
         then: "'online' status should be displayed on the widget"
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
-        and: "'Published from' property should be displayed correctly"
+        and: "'Published from' property should be correctly displayed"
         props.get( ContentInfoTerms.PUBLISHED_FROM.getValue() ).contains( LocalDate.now().toString() );
         and: "'First Published' should be displayed"
         props.get( ContentInfoTerms.FIRST_PUBLISHED.getValue() ).contains( LocalDate.now().toString() );
     }
 
-    def "GIVEN existing folder with 'Online' status  WHEN content has been edited THEN content has got a 'Modified' status"()
+    def "GIVEN existing folder with 'Online' status  WHEN the folder has been edited THEN content has got a 'Modified' status"()
     {
         given: "existing folder with 'Online' status is opened"
         ContentWizardPanel wizard = findAndSelectContent( FOLDER.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -131,6 +135,9 @@ class ContentInfoWidget_Spec
 
         then: "status is getting 'modified'"
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
+
+        and: "'First Published' should be displayed"
+        contentInfo.getContentProperties().get( ContentInfoTerms.FIRST_PUBLISHED.getValue() ).contains( LocalDate.now().toString() );
     }
 
     def "GIVEN existing folder with 'Modified' status  WHEN content has been deleted THEN 'Deleted' status appears on the 'Detail Panel'"()
