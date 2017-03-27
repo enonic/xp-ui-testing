@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Stepwise
 
 @Stepwise
@@ -66,23 +65,23 @@ class ApplicationBrowsePanelToolbarSpec
         applicationBrowsePanel.isStartButtonEnabled()
     }
 
-    def "GIVEN one stopped application WHEN started and stopped are selected THEN 'Stop' and 'Start' buttons should be enabled"()
+    def "GIVEN one stopped application WHEN one started and one stopped applications are selected THEN 'Stop' and 'Start' buttons should be enabled"()
     {
-        when: " started and stopped are selected"
+        when: "one started and one stopped applications are selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FOURTH_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar4" );
+        saveScreenshot( "two_apps_selected_toolbar" );
 
-        then: "Stop button is enabled"
+        then: "'Stop' button should be enabled"
         applicationBrowsePanel.isStopButtonEnabled();
 
-        and: "'Start' button is disabled"
+        and: "'Start' button should be enabled"
         applicationBrowsePanel.isStartButtonEnabled()
     }
 
     def "GIVEN two started applications are selected WHEN 'stop' button on toolbar pressed THEN both applications are 'stopped'"()
     {
-        given: " started and stopped are selected"
+        given: "started and stopped are selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
 
@@ -102,12 +101,12 @@ class ApplicationBrowsePanelToolbarSpec
         when: " started and stopped are selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( SECOND_APP_DISPLAY_NAME );
-        TestUtils.saveScreenshot( getSession(), "test_app_toolbar_7" );
+        saveScreenshot( "test_app_toolbar_7" );
 
-        then: "Stop button is disabled"
+        then: "'Stop' button should be disabled"
         !applicationBrowsePanel.isStopButtonEnabled();
 
-        and: "'Start' button is enabled"
+        and: "'Start' button should be enabled"
         applicationBrowsePanel.isStartButtonEnabled()
     }
 }

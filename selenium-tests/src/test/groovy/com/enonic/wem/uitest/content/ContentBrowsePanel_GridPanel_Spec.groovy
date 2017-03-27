@@ -73,14 +73,14 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN existing content is selected WHEN 'Selection Controller' checkbox was clicked twice THEN row is no longer selected"()
+    def "GIVEN existing content is selected WHEN 'Selection Controller' checkbox was clicked THEN row is no longer selected"()
     {
         given:"existing content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
-        when:"'Selection Controller' checkbox was clicked twice"
-        contentBrowsePanel.doClearSelection();
+        when: "'Selection Controller' checkbox was clicked"
+        contentBrowsePanel.clickOnSelectionController();
 
         then:"row is no longer selected"
         contentBrowsePanel.getSelectedRowsNumber() == 0;

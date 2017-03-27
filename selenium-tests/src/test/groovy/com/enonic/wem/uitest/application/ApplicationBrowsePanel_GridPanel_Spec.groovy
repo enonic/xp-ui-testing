@@ -50,14 +50,14 @@ class ApplicationBrowsePanel_GridPanel_Spec
         applicationBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN existing application is selected WHEN 'Selection Controller' checkbos was clicked twice THEN row is no longer selected"()
+    def "GIVEN existing application is selected WHEN 'Selection Controller' checkbos was clicked THEN the row is no longer selected"()
     {
         given:"existign application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         int before = applicationBrowsePanel.getSelectedRowsNumber();
 
-        when: "'Selection Controller' checkbos was clicked twice"
-        applicationBrowsePanel.doClearSelection();
+        when: "'Selection Controller' checkbox was clicked"
+        applicationBrowsePanel.clickOnSelectionController();
 
         then: "row is no longer selected"
         applicationBrowsePanel.getSelectedRowsNumber() == 0 && before == 1;

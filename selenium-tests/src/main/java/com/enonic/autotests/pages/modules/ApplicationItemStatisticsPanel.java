@@ -20,6 +20,9 @@ public class ApplicationItemStatisticsPanel
 {
     private final String STATISTIC_PANEL_CONTAINER = "//div[contains(@id,'ApplicationItemStatisticsPanel')]";
 
+    private final String ITEM_STATISTIC_HEADER =
+        STATISTIC_PANEL_CONTAINER + "//div[contains(@id,'ItemStatisticsHeader')]//h1[@class='title']";
+
     private final String DATA_CONTAINER = "//div[@class='application-data-container']";
 
     private final String BUILD_DATE = DATA_CONTAINER + "//li[text()='Build date']/following-sibling::li";
@@ -69,6 +72,11 @@ public class ApplicationItemStatisticsPanel
     public ApplicationItemStatisticsPanel( TestSession session )
     {
         super( session );
+    }
+
+    public String getItemStatisticHeader()
+    {
+        return getDisplayedString( ITEM_STATISTIC_HEADER );
     }
 
     public boolean isLayoutHeaderPresent()
