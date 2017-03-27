@@ -9,51 +9,52 @@ class UserBrowsePanel_GridPanel_Spec
     extends BaseUsersSpec
 {
 
-    def "GIVEN user browse panel opened WHEN no selection THEN all rows are white"()
+    def "GIVEN user browse panel is opened WHEN no selection THEN all rows should be white"()
     {
-        given:
+        given: "user browse panel is opened"
         int rowNumber = userBrowsePanel.getRowsCount();
 
-        expect:
+        expect: "all rows should be white"
         userBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
 
         and: "refresh button is present on the tree grid toolbar"
         userBrowsePanel.isRefreshButtonDisplayed();
     }
 
-    def "GIVEN user browse panel opened WHEN first is clicked THEN first row is blue"()
+    def "GIVEN user browse panel is opened WHEN first row is clicked THEN first row is blue"()
     {
-        when:
+        when: "first row is clicked"
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
         then:
         userBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN a Content selected WHEN spacebar is typed THEN row is no longer selected"()
+    def "GIVEN one content is selected WHEN spacebar key pressed THEN the row is no longer selected"()
     {
-        given:
+        given: "one content is selected "
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
         saveScreenshot( "spacebar-system1" );
 
-        when:
+        when: "spacebar key pressed"
         userBrowsePanel.pressKeyOnRow( "system", Keys.SPACE );
 
-        then:
+        then: "the row is no longer selected"
         saveScreenshot( "spacebar-system2" );
         userBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN a 'system' folder selected WHEN 'Clear selection'-link is clicked THEN row is no longer selected"()
+    def "GIVEN 'system' folder is selected WHEN 'Selection Controller'-checkbox has been clicked  THEN row is no longer selected"()
     {
         given:
         List<String> userItemNames = userBrowsePanel.getItemsNameFromGrid();
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
 
-        when:
-        userBrowsePanel.doClearSelection();
+        when: "'Selection Controller'-checkbox has been clicked "
+        userBrowsePanel.clickOnSelectionController();
+        saveScreenshot( "sel_controller_clicked_1" )
 
-        then:
+        then: "the row is no longer selected"
         userBrowsePanel.getSelectedRowsNumber() == 0 && userItemNames.size() > 0;
     }
 

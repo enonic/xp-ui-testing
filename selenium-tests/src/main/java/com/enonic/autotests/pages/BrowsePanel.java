@@ -30,9 +30,9 @@ public abstract class BrowsePanel
 
     protected final String TREEGRID_TOOLBAR_XPATH = "//div[contains(@id,'TreeGridToolbar')]";
 
-    protected final String CART_TOOLBAR = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-cart') ]";
+    protected final String SELECTION_TOGGLER = TREEGRID_TOOLBAR_XPATH + "//button[contains(@id,'SelectionPanelToggler')]";
 
-    protected final String NUMBER_IN_CART = TREEGRID_TOOLBAR_XPATH + "//button[contains(@class,'icon-cart') ]/span";
+    protected final String NUMBER_IN_SELECTION_TOGGLER = SELECTION_TOGGLER + "/span";
 
     protected final String SHOW_FILTER_PANEL_BUTTON = BROWSE_TOOLBAR_XPATH + "//button[contains(@class, 'icon-search')]";
 
@@ -84,8 +84,8 @@ public abstract class BrowsePanel
     @FindBy(xpath = REFRESH_BUTTON)
     protected WebElement refreshButton;
 
-    @FindBy(xpath = CART_TOOLBAR)
-    protected WebElement cartIcon;
+    @FindBy(xpath = SELECTION_TOGGLER)
+    protected WebElement selectionToggler;
 
 
     /**
@@ -455,6 +455,7 @@ public abstract class BrowsePanel
     public void clickOnSelectionController()
     {
         selectionController.click();
+        sleep( 300 );
     }
 
     public void isGridEmpty( long timeout )
@@ -466,34 +467,39 @@ public abstract class BrowsePanel
         }
     }
 
-    public boolean isCartDisplayed()
+    public boolean isSelectionTogglerDisplayed()
     {
-        return isElementDisplayed( CART_TOOLBAR );
+        String classValue = findElement( By.xpath( SELECTION_TOGGLER ) ).getAttribute( "class" );
+        return classValue.contains( "size-1" );
     }
 
-    public boolean isCartActive()
+    public boolean isSelectionTogglerActive()
     {
-        return getDisplayedElement( By.xpath( CART_TOOLBAR ) ).getAttribute( "class" ).contains( "active" );
+        return getDisplayedElement( By.xpath( SELECTION_TOGGLER ) ).getAttribute( "class" ).contains( "active" );
     }
 
-    public boolean waitUntilCartActive()
+    public boolean waitUntilSelectionTogglerActive()
     {
-       return waitAndCheckAttrValue( findElement( By.xpath( CART_TOOLBAR ) ), "class", "active", Application.EXPLICIT_NORMAL );
+        return waitAndCheckAttrValue( findElement( By.xpath( SELECTION_TOGGLER ) ), "class", "active", Application.EXPLICIT_NORMAL );
     }
 
-    public BrowsePanel clickOnCart()
+    /**
+     * Clicks on the 'Selection Toggler' and shows all selected items in the grid
+     */
+    public BrowsePanel clickOnSelectionToggler()
     {
-        cartIcon.click();
+        selectionToggler.click();
         sleep( 300 );
         return this;
     }
 
-    public String getNumberInCart()
+    public String getNumberInSelectionToggler()
     {
-        if(!isElementDisplayed( NUMBER_IN_CART )){
+        if ( !isElementDisplayed( NUMBER_IN_SELECTION_TOGGLER ) )
+        {
             return "";
         }
-        return getDisplayedString( NUMBER_IN_CART );
+        return getDisplayedString( NUMBER_IN_SELECTION_TOGGLER );
     }
 
     /**
@@ -831,7 +837,7 @@ public abstract class BrowsePanel
         boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
         if ( !isPresent )
         {
-            TestUtils.saveScreenshot( getSession(), "err_checkbox_" + itemDisplayName );
+            saveScreenshot( "err_checkbox_" + itemDisplayName );
             throw new SaveOrUpdateException( "checkbox for item: " + itemDisplayName + "was not found" );
         }
         waitAndFindElement( By.xpath( itemCheckBoxXpath ) ).click();
@@ -852,6 +858,36 @@ public abstract class BrowsePanel
             number ).click();
         sleep( 200 );
         return (T) this;
+    }
+
+    public <T extends BrowsePanel> T clickCheckboxAndUnselectRow( String itemDisplayName )
+    {
+        String itemCheckBoxXpath = String.format( ROW_CHECKBOX_BY_DISPLAY_NAME, itemDisplayName );
+        getLogger().info( "Xpath of checkbox for item is :" + itemCheckBoxXpath );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
+        if ( !isPresent )
+        {
+            saveScreenshot( "err_checkbox_" + itemDisplayName );
+            throw new SaveOrUpdateException( "checkbox for item: " + itemDisplayName + "was not found" );
+        }
+        // By checkbox = By.xpath( SLICK_ROW_BY_DISPLAY_NAME + "//div[contains(@class,'slick-cell-checkboxsel selected')]//label" );
+        if ( !isCheckboxChecked( itemDisplayName ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_uncheck_checkbox" ) );
+            throw new TestFrameworkException( "checkbox is unchecked or was not found! " );
+        }
+        findElement( By.xpath( itemCheckBoxXpath ) ).click();
+        sleep( 1000 );
+        getLogger().info( "check box was selected, item: " + itemDisplayName );
+        return (T) this;
+    }
+
+    private boolean isCheckboxChecked( String itemDisplayName )
+    {
+        By checkbox = By.xpath( String.format( SLICK_ROW_BY_DISPLAY_NAME, itemDisplayName ) +
+                                    "//div[contains(@class,'slick-cell-checkboxsel selected')]//label" );
+        return isElementDisplayed( checkbox );
+
     }
 
     public BrowsePanel pressKeyOnRow( int number, Keys key )
