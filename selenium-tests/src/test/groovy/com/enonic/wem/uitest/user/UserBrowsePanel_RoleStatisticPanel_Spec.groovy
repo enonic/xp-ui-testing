@@ -120,7 +120,7 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
         given: "the new role selected"
         userBrowseFilterPanel.typeSearchText( ROLE_WITH_MEMBER.getName() );
         RoleWizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectRole( ROLE_WITH_MEMBER.getName() ).clickToolbarEdit();
-        TestUtils.saveScreenshot( getSession(), "before-member-removing" );
+        saveScreenshot( "before-member-removing" );
 
         when: "a member was removed and role saved"
         wizard.removeMember( SUPER_USER_DISPLAY_NAME ).save().close( ROLE_WITH_MEMBER.getDisplayName() );

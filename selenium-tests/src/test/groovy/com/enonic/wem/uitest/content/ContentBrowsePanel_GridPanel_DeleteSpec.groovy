@@ -1,5 +1,7 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
+import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
@@ -22,7 +24,11 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentList.add( content2.getName() );
 
         when: "both content are selected and delete button pressed AND deleting is confirmed"
-        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        DeleteContentDialog deleteContentDialog = contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete();
+        deleteContentDialog.clickOnDeleteButton();
+        and: "correct number of contents to delete is typed"
+        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
 
         then: "both folders should not be listed in the grid"
         !contentBrowsePanel.exists( content1.getName() ) && !contentBrowsePanel.exists( content2.getName() );
@@ -54,7 +60,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentList.add( contentToDelete.getName() );
 
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
-        contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable(
+            contentList ).clickToolbarDelete();
+        deleteContentDialog.clickOnDeleteButton();
+        and: "correct number of contents to delete is typed"
+        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
 
         then: "child Content is no longer listed beneath parent"
         !contentBrowsePanel.exists( contentToDelete.getName(), true );
@@ -89,7 +100,10 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentList.add( content1.getName() );
 
         when: "both contents selected in the grid and  deleted"
-        contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete().doDelete();
+        DeleteContentDialog deleteContentDialog = contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete();
+        deleteContentDialog.clickOnDeleteButton();
+        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
 
         then: "New-button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
