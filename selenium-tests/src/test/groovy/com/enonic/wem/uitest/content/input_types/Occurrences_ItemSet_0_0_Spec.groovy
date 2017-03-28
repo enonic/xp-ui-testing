@@ -209,7 +209,7 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing ItemSet-content with a several versions WHEN when the version with empty required fields is restored THEN ItemSet shown correctly"()
+    def "GIVEN existing ItemSet-content with a several versions WHEN when the version with empty required fields is restored THEN ItemSet should be shown correctly"()
     {
         given: "content added selected and version history opened"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();

@@ -49,7 +49,7 @@ class DeleteContentDialog_With_DependantList_Spec
         given: "parent content with a child is opened"
         ContentWizardPanel wizard = findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab(); ;
 
-        when: " 'Delete' button on the wizard-toolbar pressed"
+        when: "'Delete' button on the wizard-toolbar pressed"
         DeleteContentDialog modalDialog = wizard.clickToolbarDelete();
         List<String> items = modalDialog.getDisplayNamesToDelete();
         List<String> dependantNames = modalDialog.getDependantList();

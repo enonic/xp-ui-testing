@@ -80,9 +80,9 @@ class DeleteContentDialogSpec
         contentBrowsePanel.exists( CONTENT1.getName() );
     }
 
-    def "GIVEN an existing content WHEN content was selected and Delete button clicked THEN delete dialog with one content should be displayed"()
+    def "GIVEN existing content WHEN content was selected and 'Delete' button clicked THEN delete dialog with one content should be displayed"()
     {
-        given: "an existing content is selcted"
+        given: "existing content is selcted"
         findAndSelectContent( CONTENT1.getName() );
 
         when: "'Delete Content' dialog is opened"

@@ -20,6 +20,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
     {
         when: "existing svg-file is selected"
         findAndSelectContent( CIRCLES );
+        sleep( 400 );
 
         then: "'svg' displayed in the preview panel"
         contentItemPreviewPanel.isSVGDisplayed();
