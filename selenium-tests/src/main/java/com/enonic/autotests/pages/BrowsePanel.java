@@ -68,7 +68,6 @@ public abstract class BrowsePanel
     public String APP_BAR_TAB_MENU_ITEM =
         APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem') and descendant::span[contains(.,'%s')]]";
 
-
     protected String CONTEXT_MENU_ITEM =
         "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
 
@@ -372,7 +371,6 @@ public abstract class BrowsePanel
         return result;
     }
 
-
     private List<String> getGridItemNames()
     {
         List<WebElement> elements = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH +
@@ -418,9 +416,8 @@ public abstract class BrowsePanel
         return rows.get( 0 ).getAttribute( "class" ).contains( "selected" );
     }
 
-
     /**
-     * Check and Uncheck the 'Selection Controller' checkbox and removes all row-selections.
+     * clicks on the Selection Controller and clear all selections.
      */
     public BrowsePanel doClearSelection()
     {
@@ -430,20 +427,18 @@ public abstract class BrowsePanel
             saveScreenshot( NameHelper.uniqueName( "err_selection_controller_not_visible" ) );
             throw new TestFrameworkException( "'selection controller' was not found on the grid toolbar" );
         }
-        if ( isSelectionControllerChecked() )
+        if ( isSelectionPartial() || isSelectionControllerChecked() )
         {
             clickOnSelectionController();
-            waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-            sleep( 300 );
             return this;
         }
-        clickOnSelectionController();
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        sleep( 300 );
-        clickOnSelectionController();
-        sleep( 500 );
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return this;
+    }
+
+    public boolean isSelectionPartial()
+    {
+        return findElement( By.xpath( SELECTION_CONTROLLER_CHECKBOX + "//input[@type='checkbox']" ) ).getAttribute( "class" ).contains(
+            "partial" );
     }
 
     public boolean isSelectionControllerChecked()
@@ -870,8 +865,7 @@ public abstract class BrowsePanel
             saveScreenshot( "err_checkbox_" + itemDisplayName );
             throw new SaveOrUpdateException( "checkbox for item: " + itemDisplayName + "was not found" );
         }
-        // By checkbox = By.xpath( SLICK_ROW_BY_DISPLAY_NAME + "//div[contains(@class,'slick-cell-checkboxsel selected')]//label" );
-        if ( !isCheckboxChecked( itemDisplayName ) )
+        if ( !isRowCheckboxChecked( itemDisplayName ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_uncheck_checkbox" ) );
             throw new TestFrameworkException( "checkbox is unchecked or was not found! " );
@@ -882,7 +876,7 @@ public abstract class BrowsePanel
         return (T) this;
     }
 
-    private boolean isCheckboxChecked( String itemDisplayName )
+    private boolean isRowCheckboxChecked( String itemDisplayName )
     {
         By checkbox = By.xpath( String.format( SLICK_ROW_BY_DISPLAY_NAME, itemDisplayName ) +
                                     "//div[contains(@class,'slick-cell-checkboxsel selected')]//label" );
@@ -966,5 +960,4 @@ public abstract class BrowsePanel
         getLogger().info( "Notification message " + message );
         return message.trim();
     }
-
 }

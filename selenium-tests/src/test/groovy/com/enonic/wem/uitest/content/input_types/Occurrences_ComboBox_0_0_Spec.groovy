@@ -165,5 +165,4 @@ class Occurrences_ComboBox_0_0_Spec
             build();
         return comboboxContent;
     }
-
 }
