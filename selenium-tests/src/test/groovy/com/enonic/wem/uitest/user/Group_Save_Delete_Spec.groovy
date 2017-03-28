@@ -69,7 +69,7 @@ class Group_Save_Delete_Spec
         when: "group opened"
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
 
-        then: "correct description displayed"
+        then: "correct description should be displayed"
         groupWizardPanel.getDescription() == TEST_GROUP.getDescription();
     }
     //app bug
@@ -117,7 +117,6 @@ class Group_Save_Delete_Spec
         saveScreenshot( "group-is-deleted" );
 
         then: "group should not be displayed in the grid"
-        saveScreenshot( group.getName() );
         !userBrowsePanel.exists( group.getName() );
         and: "correct notification message should be displayed"
         message == String.format( GROUP_DELETING_NOTIFICATION_MESSAGE, group.getName() );
