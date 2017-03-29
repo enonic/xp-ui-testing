@@ -29,10 +29,10 @@ class ContentPublishDialog_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         String displayName = NameHelper.uniqueName( "test" );
 
-        when:
+        when: "'Publish' button on the wizard has been pressed"
         ContentPublishDialog dialog = wizard.typeDisplayName( displayName ).clickOnWizardPublishButton();
 
-        then:
+        then: "the content should be displayed with the 'New' status on the publishing-wizard"
         dialog.getContentStatus( displayName ) == ContentStatus.NEW.getValue();
     }
 
@@ -47,10 +47,10 @@ class ContentPublishDialog_Spec
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
 
-        then: "'Include Child' button should not be displayed displayed"
+        then: "'Include Child' button should not be displayed"
         !contentPublishDialog.isIncludeChildTogglerDisplayed();
 
-        and: "correct status of content is displayed"
+        and: "'New' status should be displayed"
         contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.NEW.getValue();
 
         and: "'remove' button should be disabled for this content"
@@ -77,6 +77,9 @@ class ContentPublishDialog_Spec
 
         then: "correct title should be displayed on the dialog"
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
+
+        and: "'Include offline items' checkbox should be displayed"
+        contentPublishDialog.isIncludeOfflineItemsCheckboxDisplayed();
 
         and: "'Publish' and 'Cancel' buttons should be displayed on the dialog"
         contentPublishDialog.isPublishNowButtonEnabled();

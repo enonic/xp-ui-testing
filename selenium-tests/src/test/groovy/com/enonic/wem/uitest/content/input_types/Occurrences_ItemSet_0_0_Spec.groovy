@@ -195,17 +195,17 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.getStatus() == ContentStatus.ONLINE.getValue();
     }
 
-    def "GIVEN existing ItemSet-content with saved valid data WHEN text in the htmlArea changed THEN 'modified' status is displayed"()
+    def "GIVEN existing ItemSet-content with saved valid data WHEN text in the htmlArea has been changed THEN 'modified' status is displayed"()
     {
         given: "existing ItemSet-content with saved valid data"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
-        when: "the content has been published"
+        when: "text in the htmlArea has been changed"
         itemSetViewPanel.typeTextInHtmlArea( NEW_TEXT_HTML_AREA );
         wizard.save().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "'online' status is displayed"
+        then: "'modified' status should be displayed"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
@@ -215,25 +215,25 @@ class Occurrences_ItemSet_0_0_Spec
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
 
-        and: "AppHome button was pressed"
+        and: "navigated to the browse panel"
         wizard.switchToBrowsePanelTab();
         and: "details panel is opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
 
-        when: "when the version with empty required fields is restored"
+        when: "when the version with empty required fields has been restored"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "item_set_text_reverted" );
 
-        and: "wizard-tab activated again"
+        and: "navigated to the wizard-tab again"
         contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() )
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
-        then: "correct text in the htmlArea is displayed"
+        then: "correct text in the htmlArea should be reverted"
         itemSetViewPanel.getInnerTextFromHtmlAreas().get( 0 ) == TEST_TEXT_HTML_AREA;
 
-        and: "correct text in the text-line is displayed"
+        and: "correct text in the text-line should be reverted"
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
 
         then: "'online' status is displayed"
@@ -248,5 +248,4 @@ class Occurrences_ItemSet_0_0_Spec
         PropertyTree data = build_ItemSet_Data( items );
         return buildItemSetContentWitData( data );
     }
-
 }
