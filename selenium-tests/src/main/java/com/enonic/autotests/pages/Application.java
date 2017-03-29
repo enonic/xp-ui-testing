@@ -26,6 +26,8 @@ public class Application
 
     public static String ITEM_IS_UNDELETED = "The item is successfully undeleted";
 
+    public static String ITEMS_IS_UNDELETED = "The items are successfully undeleted";
+
     public static String CONTENTS_MARKED_FOR_DELETION_MESSAGE = "%s items are marked for deletion";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
