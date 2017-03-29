@@ -113,11 +113,11 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.getContentStatus( childContent2.getName() ).equalsIgnoreCase( ContentStatus.NEW.getValue() );
     }
     //verifies XP-4628
-    def "GIVEN existing parent has 'online' and child contents is 'offline' WHEN parent folder selected and 'Delete' button pressed  THEN 'offline' child content removed, but parent folder and 'online' child content are 'Pending delete' "()
+    def "GIVEN existing parent has 'online' and child contents is 'offline' WHEN parent folder selected and 'Delete' button pressed  THEN 'offline' child content removed, but parent folder and 'online' child content are 'Deleted' "()
     {
-        when: "parent 'online'-folder selected and 'Delete' button pressed"
-        findAndSelectContent( parentContent.getName() ).clickToolbarDelete().doDelete();
-        String message = contentBrowsePanel.waitNotificationMessage()
+        when: "parent 'online'-folder is selected and 'Delete' button pressed AND number of contents typed"
+        findAndSelectContent( parentContent.getName() ).clickToolbarDelete().clickOnDeleteButtonAndConfirm( "3" );
+        String message = contentBrowsePanel.waitNotificationMessage();
 
         and: "parent folder has been expanded"
         contentBrowsePanel.expandItem( parentContent.getPath().toString() );

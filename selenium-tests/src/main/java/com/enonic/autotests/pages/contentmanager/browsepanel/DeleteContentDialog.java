@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog;
 import com.enonic.autotests.utils.TestUtils;
 
 /**
@@ -126,6 +127,15 @@ public class DeleteContentDialog
     {
         deleteButton.click();
         return this;
+    }
+
+    public void clickOnDeleteButtonAndConfirm( String numberOfContent )
+    {
+        deleteButton.click();
+        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        confirmContentDeleteDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        confirmContentDeleteDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
+            Application.EXPLICIT_NORMAL );
     }
 
     public DeleteContentDialog clickOnInstantlyCheckbox()
