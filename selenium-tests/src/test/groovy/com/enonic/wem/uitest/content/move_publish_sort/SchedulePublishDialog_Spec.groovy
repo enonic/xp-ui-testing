@@ -31,7 +31,7 @@ class SchedulePublishDialog_Spec
     @Shared
     String TEST_ONLINE_TO_VALUE = "2116-12-31 00:00";
 
-    def "GIVEN existing folder is selected WHEN show schedule button pressed THEN 'SchedulePublishDialog' dialog displayed"()
+    def "GIVEN existing folder is selected WHEN show schedule button pressed THEN 'SchedulePublishDialog' dialog should be displayed"()
     {
         given: "existing folder in root"
         TEST_FOLDER = buildFolderContent( "folder", "schedule dialog" );
@@ -42,19 +42,19 @@ class SchedulePublishDialog_Spec
         SchedulePublishDialog schedulePublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnShowScheduleButton();
 
-        then: "'SchedulePublishDialog' dialog is displayed"
+        then: "'SchedulePublishDialog' dialog should be displayed"
         schedulePublishDialog.isDisplayed();
 
-        and: "'Cancel Top' button is displayed"
+        and: "'Cancel Top' button should be displayed"
         schedulePublishDialog.isCancelTopButtonDisplayed();
 
-        and: "'Back' button is displayed"
+        and: "'Back' button should be displayed"
         schedulePublishDialog.isBackButtonDisplayed();
 
-        and: "'Online From' input is displayed"
+        and: "'Online From' input should be displayed"
         schedulePublishDialog.isOnlineFromInputDisplayed();
 
-        and: "'Online To' input is displayed"
+        and: "'Online To' input should be displayed"
         schedulePublishDialog.isOnlineToInputDisplayed();
     }
 
@@ -70,7 +70,7 @@ class SchedulePublishDialog_Spec
         schedulePublishDialog.clickOnBackButton();
         saveScreenshot( "schedule_dlg_back_pressed" );
 
-        then: "schedule dialog has been closed"
+        then: "schedule dialog should not be displayed"
         !schedulePublishDialog.isDisplayed();
     }
 
@@ -89,7 +89,7 @@ class SchedulePublishDialog_Spec
         then: "validation warning appears"
         schedulePublishDialog.isValidationMessagePresent();
 
-        and: "correct message is displayed"
+        and: "correct message should be displayed"
         schedulePublishDialog.getValidationMessage() == Application.REQUIRED_MESSAGE;
     }
 
@@ -117,19 +117,19 @@ class SchedulePublishDialog_Spec
         given: "existing 'Online (Pending)' folder"
         findAndSelectContent( TEST_FOLDER.getName() )
 
-        when: "the folder opened"
+        when: "the folder is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
 
-        then: "correct 'online from' is displayed"
+        then: "correct 'online from' date should be displayed"
         wizard.getOnlineFromDateTime() == testTomorrowDateTime
 
-        and: "'Online(Pending)' status is displayed on the wizard"
+        and: "'Online(Pending)' status should be displayed on the wizard"
         wizard.getStatus() == ContentStatus.ONLINE_PENDING.getValue();
     }
 
     def "GIVEN existing 'Online (Pending)' folder WHEN the content opened and 'online to' date time typed AND the content was saved THEN correct 'online to' is displayed"()
     {
-        given: " existing 'Online (Pending)' folder"
+        given: "existing 'Online (Pending)' folder"
         findAndSelectContent( TEST_FOLDER.getName() );
 
         when: "the content is opened"
@@ -141,11 +141,14 @@ class SchedulePublishDialog_Spec
 
         then: "correct 'online to' should be displayed on the wizard"
         wizard.getOnlineToDateTime() == TEST_ONLINE_TO_VALUE;
+
+        and: "status of content should be 'Modified (Pending)'"
+        wizard.getStatus() == ContentStatus.MODIFIED_PENDING
     }
 
-    def "GIVEN existing 'Online (Pending)' folder WHEN the folder is selected AND Unpublish menu item clicked THEN the folders is getting 'offline'"()
+    def "GIVEN existing 'Modified (Pending)' folder WHEN the folder is selected AND Unpublish menu item clicked THEN the folders is getting 'New'"()
     {
-        given: "existing 'Online (Pending)' folder"
+        given: "existing 'Modified (Pending)' folder"
         findAndSelectContent( TEST_FOLDER.getName() );
 
         when: "the folder is selected AND Unpublish menu item clicked"
@@ -154,9 +157,7 @@ class SchedulePublishDialog_Spec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "pending_online_is_unpublished" );
 
-        then: "the folders is getting 'New', because the previous state was 'Pending Delete' "
+        then: "the folders is getting 'New', because the previous state was 'Modified (Pending)' "
         contentBrowsePanel.getContentStatus( TEST_FOLDER.getName() ).equals( ContentStatus.NEW.getValue() );
     }
-
-
 }

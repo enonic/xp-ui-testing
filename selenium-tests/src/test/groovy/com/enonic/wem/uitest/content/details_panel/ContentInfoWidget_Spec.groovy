@@ -75,7 +75,7 @@ class ContentInfoWidget_Spec
         HashMap<String, String> props = contentInfo.getContentProperties();
         saveScreenshot( "info-widget-opened" );
 
-        then: "New status displayed"
+        then: "New status should be displayed on the 'ContentInfo' widget"
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.NEW.getValue() );
 
         and: "6 properties should be present on the details panel "

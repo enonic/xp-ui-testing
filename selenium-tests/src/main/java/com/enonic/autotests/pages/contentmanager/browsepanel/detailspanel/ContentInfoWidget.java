@@ -11,7 +11,6 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 public class ContentInfoWidget
     extends Application
@@ -33,7 +32,7 @@ public class ContentInfoWidget
     {
         if ( !isElementDisplayed( STATUS_TEXT ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_status" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_status" ) );
             throw new TestFrameworkException( "content info widget: status was not found!" );
         }
         return getDisplayedString( STATUS_TEXT );
