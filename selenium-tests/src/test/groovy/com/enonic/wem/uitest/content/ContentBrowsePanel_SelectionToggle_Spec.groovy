@@ -6,8 +6,7 @@ import com.enonic.autotests.pages.Application
  * Created on 2/21/2017.
  *
  * Tasks:
- * xp-ui-testing #10 Add Selenium tests for 'Shopping Cart' Icon on the toolbar
- * https://github.com/enonic/xp-ui-testing/issues/10
+ * enonic/xp-ui-testing#31 Add Selenium tests for 'Show Selected Items' button(grid toolbar)
  * */
 class ContentBrowsePanel_SelectionToggle_Spec
     extends BaseContentSpec
@@ -17,7 +16,7 @@ class ContentBrowsePanel_SelectionToggle_Spec
         given: "content grid is opened"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        when: "checkbox is checked and existing content is selected"
+        when: "the row has been clicked and content is selected"
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
 
         then: "the 'selection toggler' should not be displayed"
@@ -32,7 +31,7 @@ class ContentBrowsePanel_SelectionToggle_Spec
         then: "the 'selection toggler' should be displayed"
         contentBrowsePanel.isSelectionTogglerDisplayed();
 
-        and: "the cart should be not active"
+        and: "the 'selection toggler' should be not active"
         !contentBrowsePanel.isSelectionTogglerActive();
 
         and: "correct number of selected contents should be displayed"
@@ -43,15 +42,23 @@ class ContentBrowsePanel_SelectionToggle_Spec
     {
         when: "checkbox is checked and existing content is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
+        filterPanel.clickOnCleanFilter();
 
         then: "click on 'Show Selected Items' circle"
         contentBrowsePanel.clickOnSelectionToggler();
+        saveScreenshot( "show_selected_content" );
+        List<String> names = contentBrowsePanel.getContentNamesFromGrid();
 
         and: "the 'Show Selected Items' button should be active"
         contentBrowsePanel.waitUntilSelectionTogglerActive();
 
-        and: "correct number of selected contents should be displayed"
+        and: "correct number of selected contents should be displayed in the circle"
         contentBrowsePanel.getNumberInSelectionToggler() == "1";
+
+        and: "only one content should be present in the grid"
+        names.size() == 1;
+        and: "correct name should be displayed in the grid"
+        names.get( 0 ).contains( IMPORTED_FOLDER_NAME );
     }
 
     def "GIVEN content grid id opened WHEN two checkboxes have been clicked THEN correct number should be displayed in the 'circle'"()
@@ -70,15 +77,15 @@ class ContentBrowsePanel_SelectionToggle_Spec
         contentBrowsePanel.getNumberInSelectionToggler() == "2";
     }
 
-    def "GIVEN two contents were selected WHEN 'Selection Controller' checkbox has been clicked THEN 'Show Selected Items' button should not be displayed"()
+    def "GIVEN two contents were selected WHEN 'Select All Rows' checkbox has been clicked THEN 'Show Selected Items' button should not be displayed"()
     {
         given: "two contents were selected"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
-        when: "'Selection Controller' checkbox has been clicked"
-        !contentBrowsePanel.clickOnSelectionController();
+        when: "'Select All Rows' checkbox has been unchecked"
+        contentBrowsePanel.clickOnSelectionController();
 
         then: "the 'Show Selected Items' button should not be displayed"
         !contentBrowsePanel.isSelectionTogglerDisplayed();

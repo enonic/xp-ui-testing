@@ -9,7 +9,7 @@ import com.enonic.autotests.pages.usermanager.browsepanel.UserStoreStatisticsPan
  * Created on 3/10/2017.
  *
  * Tasks:
- * enonic/xp-ui-testing#22 Add selenium tests for UserBrowseItemsSelectionPanel
+ * enonic/xp-ui-testing#31 Add Selenium tests for 'Show Selected Items' button(grid toolbar)
  * */
 class UserBrowsePanel_SelectionPanelToggler_Spec
     extends BaseUsersSpec
@@ -108,5 +108,46 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
 
         then: "the 'selection toggler' circle should not be displayed"
         !userBrowsePanel.isSelectionTogglerDisplayed();
+    }
+
+    def "GIVEN checkbox for 'Roles' folders is checked WHEN 'Show Selected Item' has been clicked THEN only 'Roles' folder should be displayed in the grid"()
+    {
+        given: "checkbox for 'Roles' folders is checked"
+        userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+
+        when: "'Show Selected Item' has been clicked"
+        userBrowsePanel.clickOnSelectionToggler();
+
+        then: "only 'Roles' folder should be displayed in the grid"
+        userBrowsePanel.getRowsCount() == 1;
+
+        and: "'Selection Controller' checkbox should be checked"
+        userBrowsePanel.isSelectionControllerChecked();
+    }
+
+
+    def "GIVEN checkbox for 'Roles' folders is checked AND 'Show Selections' button has been clicked WHEN 'Hide Selection' button has been pressed THEN initial grid should be displayed"()
+    {
+        given: "checkbox for 'Roles' folders is checked"
+        userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+
+        and: "'Show Selected Item' has been clicked"
+        userBrowsePanel.clickOnSelectionToggler();
+
+        when: "'Hide Selection' button has been pressed"
+        userBrowsePanel.clickOnSelectionToggler();
+        saveScreenshot( "hide_selection_pressed" );
+        List<String> names = userBrowsePanel.getItemsNameFromGrid();
+
+        then: "initial grid should be displayed"
+        names.size() > 1;
+
+        and: "System folder should be displayed"
+        names.get( 0 ).contains( "system" );
+
+        and: "'Selection Controller' checkbox should be 'partial'"
+        userBrowsePanel.isSelectionPartial();
     }
 }
