@@ -64,18 +64,18 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN text component was removed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'modified' site  has been published WHEN text component was removed THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing 'online' site"
+        given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "text component was removed"
+        when: "text component has been removed"
         pageComponentsView.openMenu( TEST_TEXT ).selectMenuItem( "Remove" );
         pageComponentsView.doCloseDialog();
 
-        and: "site was saved in the wizard"
+        and: "site has been saved in the wizard"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
@@ -83,11 +83,11 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN display name was changed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'modified' site  has been published WHEN display name was changed THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing 'online' site"
+        given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
 
         when: "display name was changed"
         wizard.typeDisplayName( "new name" )
@@ -100,11 +100,11 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN language was changed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'modified' site  has been published WHEN language was changed THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing 'online' site"
+        given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         saveScreenshot( "site_published_in_wizard" );
 
         when: "language was changed"
@@ -120,11 +120,11 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN new part was inserted THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'modified' site  has been published WHEN new part was inserted THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing 'online' site"
+        given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "new part was inserted"

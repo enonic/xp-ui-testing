@@ -29,6 +29,8 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
+    private final String INCLUDE_OFFLINE_ITEMS = "//div[contains(@id,'Checkbox') and descendant::label[text()='Include offline items']]";
+
     private final String PUBLISH_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish')]]";
 
@@ -80,6 +82,10 @@ public class ContentPublishDialog
     @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
     private WebElement cancelButtonBottom;
 
+    @FindBy(xpath = INCLUDE_OFFLINE_ITEMS)
+    private WebElement includeOfflineItemsCheckbox;
+
+
     public ContentPublishDialog( final TestSession session )
     {
         super( session );
@@ -88,6 +94,18 @@ public class ContentPublishDialog
     public void clickOnCancelTopButton()
     {
         cancelButtonTop.click();
+        sleep( 200 );
+    }
+
+    public void clickOnIncludeOfflineItemsCheckbox()
+    {
+        includeOfflineItemsCheckbox.click();
+        sleep( 200 );
+    }
+
+    public void isIncludeOfflineItemsCheckboxDisplayed()
+    {
+        includeOfflineItemsCheckbox.isDisplayed();
         sleep( 200 );
     }
 
@@ -113,7 +131,7 @@ public class ContentPublishDialog
 
     public ContentPublishDialog removeDependant( String name )
     {
-        String removeButton = String.format(  REMOVE_DEPENDANT_ICON,name);
+        String removeButton = String.format( REMOVE_DEPENDANT_ICON, name );
         if ( !isElementDisplayed( removeButton ) )
         {
             saveScreenshot( "err_remove_dependant" );
@@ -167,7 +185,12 @@ public class ContentPublishDialog
         boolean isIncluded = isDependantsDisplayed();
         if ( !isIncluded && value || isIncluded && !value )
         {
-            findElements( By.xpath( INCLUDE_CHILD_TOGGLER ) ).get( 0 ).click();
+            if ( !isIncludeChildTogglerDisplayed() )
+            {
+                saveScreenshot( "err_include_children_toggler" );
+                throw new TestFrameworkException( "'include children toggler' is not displayed" );
+            }
+            getDisplayedElement( By.xpath( INCLUDE_CHILD_TOGGLER ) ).click();
         }
         sleep( 700 );
         return this;
