@@ -1,7 +1,10 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.browsepanel.*
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemPreviewPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -140,9 +143,6 @@ class BaseContentSpec
     ContentBrowseFilterPanel filterPanel;
 
     @Shared
-    ContentBrowseItemsSelectionPanel itemsSelectionPanel;
-
-    @Shared
     ContentDetailsPanel contentDetailsPanel;
 
     @Shared
@@ -154,7 +154,6 @@ class BaseContentSpec
         go "admin"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         filterPanel = contentBrowsePanel.getFilterPanel();
-        itemsSelectionPanel = contentBrowsePanel.getItemSelectionPanel();
         contentBrowseItemPanel = new ContentBrowseItemPanel( getSession() );
         contentItemPreviewPanel = contentBrowseItemPanel.getContentItemStatisticsPanel().getContentItemPreviewPanel();
         contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();

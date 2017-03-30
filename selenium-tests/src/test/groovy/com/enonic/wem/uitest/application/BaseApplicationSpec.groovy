@@ -69,10 +69,6 @@ class BaseApplicationSpec
     @Shared
     String APP_UPDATED_MESSAGE = "Application '%s' updated successfully";
 
-
-    @Shared
-    ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
-
     @Shared
     ApplicationItemStatisticsPanel applicationItemStatisticsPanel;
 
@@ -84,7 +80,6 @@ class BaseApplicationSpec
     {
         go "admin"
         applicationBrowsePanel = NavigatorHelper.openApplications( getTestSession() );
-        itemsSelectionPanel = applicationBrowsePanel.getItemSelectionPanel();
         applicationItemStatisticsPanel = applicationBrowsePanel.getItemStatisticPanel();
     }
 

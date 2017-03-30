@@ -121,8 +121,6 @@ public class ContentBrowsePanel
 
     private ContentBrowseFilterPanel filterPanel;
 
-    private ContentBrowseItemsSelectionPanel itemsSelectionPanel;
-
     private ContentBrowseItemPanel contentBrowseItemPanel;
 
     private ContentDetailsPanel contentDetailsPanel;
@@ -361,15 +359,6 @@ public class ContentBrowsePanel
             filterPanel = new ContentBrowseFilterPanel( getSession() );
         }
         return filterPanel;
-    }
-
-    public ContentBrowseItemsSelectionPanel getItemSelectionPanel()
-    {
-        if ( itemsSelectionPanel == null )
-        {
-            itemsSelectionPanel = new ContentBrowseItemsSelectionPanel( getSession() );
-        }
-        return itemsSelectionPanel;
     }
 
     public ContentBrowsePanel pressAppHomeButton()

@@ -26,8 +26,6 @@ public class ApplicationBrowsePanel
 
     public final String UNINSTALL_BUTTON = BROWSE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Uninstall']]";
 
-    private ApplicationBrowseItemsSelectionPanel itemsSelectionPanel;
-
     private ApplicationItemStatisticsPanel itemStatisticsPanel;
 
     @FindBy(xpath = START_BUTTON)
@@ -226,15 +224,6 @@ public class ApplicationBrowsePanel
             saveScreenshot( "err_" + appName );
             throw new TestFrameworkException( "application has not appeared in the grid after " + timeout + "seconds" + "app: " + appName );
         }
-    }
-
-    public ApplicationBrowseItemsSelectionPanel getItemSelectionPanel()
-    {
-        if ( itemsSelectionPanel == null )
-        {
-            itemsSelectionPanel = new ApplicationBrowseItemsSelectionPanel( getSession() );
-        }
-        return itemsSelectionPanel;
     }
 
     public ApplicationItemStatisticsPanel getItemStatisticPanel()

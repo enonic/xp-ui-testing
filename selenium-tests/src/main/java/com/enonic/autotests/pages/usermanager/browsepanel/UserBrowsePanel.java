@@ -1,7 +1,6 @@
 package com.enonic.autotests.pages.usermanager.browsepanel;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -82,18 +81,6 @@ public class UserBrowsePanel
     private WebElement syncButton;
 
     private UserBrowseFilterPanel userBrowseFilterPanel;
-
-    private UserBrowseItemsSelectionPanel userBrowseItemsSelectionPanel;
-
-    public UserBrowseItemsSelectionPanel getUserBrowseItemsSelectionPanel()
-    {
-
-        if ( userBrowseItemsSelectionPanel == null )
-        {
-            userBrowseItemsSelectionPanel = new UserBrowseItemsSelectionPanel( getSession() );
-        }
-        return userBrowseItemsSelectionPanel;
-    }
 
     public UserBrowseFilterPanel getUserBrowseFilterPanel()
     {
@@ -178,13 +165,7 @@ public class UserBrowsePanel
 
     public List<String> getItemsNameFromGrid()
     {
-        List<String> allNames = new ArrayList<>();
-        List<WebElement> rows = findElements( By.xpath( USER_ITEMS_GRID + P_NAME ) );
-        for ( WebElement row : rows )
-        {
-            allNames.add( row.getAttribute( "title" ) );
-        }
-        return allNames;
+        return getDisplayedStrings( By.xpath( USER_ITEMS_GRID + P_NAME ) );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectFolder( BrowseItemType itemType )

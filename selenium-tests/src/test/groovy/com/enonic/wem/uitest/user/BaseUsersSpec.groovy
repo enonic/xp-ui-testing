@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowseFilterPanel
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowseItemsSelectionPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
@@ -75,9 +74,6 @@ class BaseUsersSpec
     UserBrowseFilterPanel userBrowseFilterPanel;
 
     @Shared
-    UserBrowseItemsSelectionPanel userBrowseItemsSelectionPanel;
-
-    @Shared
     String ROLE_EXISTS = "A role with name %s already exists";
 
     @Shared
@@ -92,7 +88,6 @@ class BaseUsersSpec
         go "admin"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
         userBrowseFilterPanel = userBrowsePanel.getUserBrowseFilterPanel();
-        userBrowseItemsSelectionPanel = userBrowsePanel.getUserBrowseItemsSelectionPanel();
     }
 
     protected GroupWizardPanel openSystemGroupWizard()
