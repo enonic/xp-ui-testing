@@ -8,7 +8,7 @@ import com.enonic.autotests.pages.Application
  * Tasks:
  * enonic/xp-ui-testing#31 Add Selenium tests for 'Show Selected Items' button(grid toolbar)
  * */
-class ContentBrowsePanel_SelectionToggle_Spec
+class ContentBrowsePanel_SelectionToggler_Spec
     extends BaseContentSpec
 {
     def "GIVEN existing folder WHEN the row has been clicked THEN the 'selection toggler' should not be displayed"()
