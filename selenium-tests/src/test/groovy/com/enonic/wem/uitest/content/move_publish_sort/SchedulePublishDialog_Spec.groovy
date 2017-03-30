@@ -143,7 +143,7 @@ class SchedulePublishDialog_Spec
         wizard.getOnlineToDateTime() == TEST_ONLINE_TO_VALUE;
 
         and: "status of content should be 'Modified (Pending)'"
-        wizard.getStatus() == ContentStatus.MODIFIED_PENDING
+        wizard.getStatus() == ContentStatus.MODIFIED_PENDING.getValue();
     }
 
     def "GIVEN existing 'Modified (Pending)' folder WHEN the folder is selected AND Unpublish menu item clicked THEN the folders is getting 'New'"()
