@@ -1,7 +1,9 @@
 package com.enonic.autotests.pages.usermanager.browsepanel;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
