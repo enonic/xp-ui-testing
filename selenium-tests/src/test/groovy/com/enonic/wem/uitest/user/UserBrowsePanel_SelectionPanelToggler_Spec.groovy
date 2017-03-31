@@ -145,7 +145,7 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
         names.size() > 1;
 
         and: "System folder should be displayed"
-        names.get( 0 ).contains( "system" );
+        names.stream().anyMatch { s -> s.contains( "system" ) };
 
         and: "'Selection Controller' checkbox should be 'partial'"
         userBrowsePanel.isSelectionPartial();
