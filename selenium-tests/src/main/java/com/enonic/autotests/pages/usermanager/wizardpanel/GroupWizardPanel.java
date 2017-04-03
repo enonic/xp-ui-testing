@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -15,7 +16,6 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.usermanager.Group;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -29,15 +29,17 @@ public class GroupWizardPanel
 
     private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
 
-
     public final String TOOLBAR_SAVE_BUTTON = GROUP_WIZARD_PANEL + TOOLBAR +
-        "//*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Save']]";
+        "//*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
     private final String TOOLBAR_DELETE_BUTTON =
         GROUP_WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
     private final String DESCRIPTION_INPUT =
         GROUP_WIZARD_PANEL + "//div[contains(@id,'PrincipalDescriptionWizardStepForm')]//input[contains(@id,'TextInput')]";
+
+    private final String MEMBERS_OPTIONS_FILTER_INPUT = GROUP_WIZARD_PANEL +
+        "//div[contains(@id,'FormItem') and child::label[text()='Members']]" + COMBOBOX_OPTION_FILTER_INPUT;
 
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
@@ -47,6 +49,9 @@ public class GroupWizardPanel
 
     @FindBy(xpath = DESCRIPTION_INPUT)
     private WebElement descriptionInput;
+
+    @FindBy(xpath = MEMBERS_OPTIONS_FILTER_INPUT)
+    protected WebElement principalOptionsFilter;
 
     /**
      * The constructor.
@@ -70,7 +75,7 @@ public class GroupWizardPanel
         boolean isSaveButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON ), 2l );
         if ( !isSaveButtonEnabled )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_save_button" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
         toolbarSaveButton.click();
@@ -120,8 +125,33 @@ public class GroupWizardPanel
             getLogger().info( "types the description: " + group.getDescription() );
             clearAndType( descriptionInput, group.getDescription() );
         }
-        TestUtils.saveScreenshot( getSession(), group.getDisplayName() );
+        if ( group.getMemberDisplayNames() != null )
+        {
+            addMembers( group.getMemberDisplayNames() );
+        }
+        saveScreenshot( group.getDisplayName() );
         return this;
+    }
+
+    public GroupWizardPanel addMembers( List<String> displayNames )
+    {
+        displayNames.stream().forEach( memberDisplayName -> addMember( memberDisplayName ) );
+        return this;
+    }
+
+    public void addMember( String memberDisplayName )
+    {
+        clearAndType( principalOptionsFilter, memberDisplayName );
+        sleep( 1000 );
+        String rowCheckboxXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//label[child::input[@type='checkbox']]", memberDisplayName );
+        if ( !isElementDisplayed( By.xpath( rowCheckboxXpath ) ) )
+        {
+            saveScreenshot( "err_" + memberDisplayName );
+            throw new TestFrameworkException( "principal was not found! " + memberDisplayName );
+        }
+        findElement( By.xpath( rowCheckboxXpath ) ).click();
+        principalOptionsFilter.sendKeys( Keys.ENTER );
+        sleep( 300 );
     }
 
     public GroupWizardPanel typeDisplayName( String displayName )
@@ -162,6 +192,7 @@ public class GroupWizardPanel
         findElements( By.xpath( GROUP_WIZARD_PANEL ) );
         if ( !result )
         {
+            saveScreenshot( "err_group_wizard" );
             throw new TestFrameworkException( "UserWizard was not showed!" );
         }
         return this;

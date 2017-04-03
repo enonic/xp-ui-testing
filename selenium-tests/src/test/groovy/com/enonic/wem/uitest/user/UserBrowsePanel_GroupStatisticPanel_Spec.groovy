@@ -7,6 +7,9 @@ import com.enonic.autotests.vo.usermanager.Group
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks
+ * enonic/xp-ui-testing#23  Add selenium tests for displaying of members on the UserItemStatisticsPanel*/
 @Stepwise
 class UserBrowsePanel_GroupStatisticPanel_Spec
     extends BaseUsersSpec
@@ -20,21 +23,21 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
     @Shared
     String NEW_DISPLAY_NAME = "new display name";
 
-    def "WHEN 'Groups' folder selected THEN correct info shown in a statistics panel"()
+    def "WHEN 'Groups' folder is selected THEN correct info should be displayed on the statistics panel"()
     {
-        when: "'Groups' folder selected"
+        when: "'Groups' folder is selected"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.GROUPS_FOLDER );
-        saveScreenshot( "groups-statistic-panel" );
+        saveScreenshot( "groups-folder-selected" );
         groupStatisticsPanel = new GroupStatisticsPanel( getSession() );
 
-        then: "correct info shown in statistics panel"
+        then: "correct info should be displayed on the statistics panel"
         groupStatisticsPanel.getItemDisplayName() == "Groups";
     }
 
-    def "GIVEN a new added group WHEN the group selected THEN empty members displayed in a statistics panel"()
+    def "GIVEN new group has been added WHEN the group is selected THEN empty members should be displayed on the statistics panel"()
     {
-        given: "group saved and wizard closed"
+        given: "new group has been added"
         GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
         TEST_GROUP = buildGroup( "group", "empty-group-statistics", "description" );
         groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
@@ -44,7 +47,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
 
         when: "the group selected in a grid"
         userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() );
-        saveScreenshot( "empty-group-statistics" );
+        saveScreenshot( "empty-group-selected" );
 
         then: "empty members displayed in statistics panel"
         groupStatisticsPanel.getMemberDisplayNames().size() == 0;
@@ -53,17 +56,42 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         groupStatisticsPanel.getItemDisplayName() == TEST_GROUP.getDisplayName();
     }
 
-    def "GIVEN changing a display name of existing group WHEN the group selected THEN group with new display name displayed in a statistics panel"()
+    def "GIVEN existing group is opened WHEN display name of the group is changed THEN group with new display name should be displayed on the statistics panel"()
     {
-        given: "group saved and wizard closed"
+        given: "existing group is opened"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
 
-        when: "the group selected in a grid"
+        when: "display name of the group is changed"
         groupWizardPanel.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
-        saveScreenshot( "new-display-name-group-statistics" );
+        saveScreenshot( "new-display-name-group" );
 
-        then: "new display name of group is shown"
+        then: "group with new display name should be displayed"
         groupStatisticsPanel.getItemDisplayName() == NEW_DISPLAY_NAME;
+    }
+
+    //enonic/xp-ui-testing#23 Add selenium tests for displaying of members on the UserItemStatisticsPanel
+    def "GIVEN new group with a member has been added WHEN the group is selected THEN members should be displayed on the statistics panel"()
+    {
+        given: "new group has been added"
+        GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
+        List<String> memberDisplayNames = new ArrayList<>();
+        memberDisplayNames.add( SUPER_USER_DISPLAY_NAME );
+        Group group = buildGroupWithMembers( "group", "group with members", "description", memberDisplayNames );
+        groupWizardPanel.typeData( group ).save().close( group.getDisplayName() );
+        sleep( 500 );
+        and: "'Group' folder is expanded"
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
+        userBrowsePanel.doClearSelection();
+
+        when: "the group is selected"
+        userBrowsePanel.clickCheckboxAndSelectGroup( group.getName() );
+        saveScreenshot( "group-with-member-selected" );
+
+        then: "members should be displayed on the statistics panel"
+        groupStatisticsPanel.getMemberDisplayNames().size() == 0;
+
+        and: "'super user' should be displayed on the statistics panel"
+        groupStatisticsPanel.getMemberDisplayNames().contains( SUPER_USER_DISPLAY_NAME );
     }
 }

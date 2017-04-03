@@ -123,6 +123,13 @@ class BaseUsersSpec
         return Group.builder().displayName( displayName ).name( generated ).description( description ).build();
     }
 
+    protected Group buildGroupWithMembers( String name, String displayName, String description, List<String> members )
+    {
+        String generated = NameHelper.uniqueName( name );
+        return Group.builder().displayName( displayName ).name( generated ).description( description ).memberDisplayNames(
+            members ).build();
+    }
+
     protected Role buildRole( String name, String displayName, String description )
     {
         String generated = NameHelper.uniqueName( name );

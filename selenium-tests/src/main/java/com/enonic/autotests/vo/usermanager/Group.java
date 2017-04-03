@@ -62,9 +62,9 @@ public class Group
             return this;
         }
 
-        public Builder memberDisplayNames( String description )
+        public Builder memberDisplayNames( List<String> memberDisplayNames )
         {
-            this.description = description;
+            this.memberDisplayNames = memberDisplayNames;
             return this;
         }
 
