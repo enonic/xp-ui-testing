@@ -31,6 +31,7 @@ class ContentPublishDialog_Spec
 
         when: "'Publish' button on the wizard has been pressed"
         ContentPublishDialog dialog = wizard.typeDisplayName( displayName ).clickOnWizardPublishButton();
+        saveScreenshot( "unsaved_content_status" )
 
         then: "the content should be displayed with the 'New' status on the publishing-wizard"
         dialog.getContentStatus( displayName ) == ContentStatus.NEW.getValue();
