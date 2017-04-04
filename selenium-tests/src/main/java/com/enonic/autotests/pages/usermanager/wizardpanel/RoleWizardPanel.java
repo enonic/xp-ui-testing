@@ -152,7 +152,7 @@ public class RoleWizardPanel
         clearAndType( roleOptionsFilter, memberDisplayName );
         sleep( 1000 );
         String rowCheckboxXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//label[child::input[@type='checkbox']]", memberDisplayName );
-        if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
+        if ( !isElementDisplayed( By.xpath( rowCheckboxXpath ) ) )
         {
             saveScreenshot( "err_" + memberDisplayName );
             throw new TestFrameworkException( "Role was not found!" );

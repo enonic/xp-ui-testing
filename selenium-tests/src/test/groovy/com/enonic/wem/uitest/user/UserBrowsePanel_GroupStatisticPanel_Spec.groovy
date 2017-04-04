@@ -35,9 +35,9 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         groupStatisticsPanel.getItemDisplayName() == "Groups";
     }
 
-    def "GIVEN new group has been added WHEN the group is selected THEN empty members should be displayed on the statistics panel"()
+    def "GIVEN new group has been added(no members) WHEN the group is selected THEN empty members should be displayed on the statistics panel"()
     {
-        given: "new group has been added"
+        given: "new group has been added(no members)"
         GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
         TEST_GROUP = buildGroup( "group", "empty-group-statistics", "description" );
         groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
@@ -45,11 +45,11 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
         userBrowsePanel.doClearSelection();
 
-        when: "the group selected in a grid"
+        when: "the group is selected in the grid"
         userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() );
         saveScreenshot( "empty-group-selected" );
 
-        then: "empty members displayed in statistics panel"
+        then: "empty members should be displayed in the statistics panel"
         groupStatisticsPanel.getMemberDisplayNames().size() == 0;
 
         and: "correct display name of group is shown"
@@ -71,7 +71,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
     }
 
     //enonic/xp-ui-testing#23 Add selenium tests for displaying of members on the UserItemStatisticsPanel
-    def "GIVEN new group with a member has been added WHEN the group is selected THEN members should be displayed on the statistics panel"()
+    def "GIVEN new group with a member has been added WHEN the group is selected THEN one member should be displayed on the statistics panel"()
     {
         given: "new group has been added"
         GroupWizardPanel groupWizardPanel = openSystemGroupWizard();
@@ -88,8 +88,8 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         userBrowsePanel.clickCheckboxAndSelectGroup( group.getName() );
         saveScreenshot( "group-with-member-selected" );
 
-        then: "members should be displayed on the statistics panel"
-        groupStatisticsPanel.getMemberDisplayNames().size() == 0;
+        then: "one member should be displayed on the statistics panel"
+        groupStatisticsPanel.getMemberDisplayNames().size() == 1;
 
         and: "'super user' should be displayed on the statistics panel"
         groupStatisticsPanel.getMemberDisplayNames().contains( SUPER_USER_DISPLAY_NAME );
