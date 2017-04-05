@@ -56,7 +56,7 @@ class ContentUnpublishDialog_Spec
 
     def "GIVEN 'online' content is selected AND ContentUnpublishDialog opened WHEN cancel button on the top was pressed THEN dialog is closing AND status of the content should not be changed"()
     {
-        given:
+        given: "'online' content is selected"
         findAndSelectContent( PARENT_CONTENT.getName() );
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
 
@@ -123,6 +123,7 @@ class ContentUnpublishDialog_Spec
         CHILD_CONTENT = buildFolderContentWithParent( "child", "child for unpublishing", PARENT_CONTENT.getName() );
         findAndSelectContent( PARENT_CONTENT.getName() );
         addContent( CHILD_CONTENT );
+        and: "both contents has been published"
         contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
 
         when: "parent content was selected and 'Unpublish' menu item has been clicked"
@@ -147,6 +148,22 @@ class ContentUnpublishDialog_Spec
         contentBrowsePanel.isPublishMenuAvailable();
     }
 
+    def "GIVEN existing parent and child are 'online' WHEN the parent is selected and Unpublish dialog is opened THEN dependant item should be displayed on the dialog"()
+    {
+        given: "existing parent and child has been published"
+        findAndSelectContent( PARENT_CONTENT.getName() );
+        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
+
+        when: "the parent is selected and 'Unpublish' dialog is opened"
+        ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
+
+        then: "dependant list should be displayed"
+        contentUnPublishDialog.isDependantsDisplayed()
+
+        and: "dependant item should be displayed on the dialog"
+        contentUnPublishDialog.getDependantNames().get( 0 ).contains( CHILD_CONTENT.getName() );
+    }
+
     def "GIVEN existing 'pending delete' content WHEN the content has been 'unpublished' THEN content should be deleted from the grid"()
     {
         given: "existing 'pending delete' content"
@@ -163,7 +180,7 @@ class ContentUnpublishDialog_Spec
         !contentBrowsePanel.exists( content.getName() );
     }
     //test verifies the XP-3584
-    def "GIVEN two existing 'offline' contents WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"()
+    def "GIVEN two existing 'New' contents WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"()
     {
         given: "first content is added"
         Content first = buildFolderContent( "unpublish", "test unpublish menu item" );
@@ -184,7 +201,7 @@ class ContentUnpublishDialog_Spec
         contentBrowsePanel.showPublishMenu();
         saveScreenshot( "test_unpublish_item_disabled" );
 
-        then: "Publish-menu should be enabled when two 'offline' contents are selected"
+        then: "Publish-menu should be enabled when two 'New' contents are selected"
         contentBrowsePanel.isPublishMenuAvailable();
     }
 }

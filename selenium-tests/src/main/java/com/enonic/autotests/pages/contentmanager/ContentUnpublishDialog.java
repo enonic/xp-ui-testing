@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.contentmanager;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,11 +15,11 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentUnpublishDialog
     extends Application
 {
+    private final String DIALOG_CONTAINER = "//div[contains(@id,'ContentUnpublishDialog')]";
+
     public static final String HEADER_TEXT = "Unpublish item";
 
-    public static final String SUBHEADER_PART_TEXT = "Unpublishing selected item(s) will set status back to offline";
-
-    private final String DIALOG_CONTAINER = "//div[contains(@id,'ContentUnpublishDialog')]";
+    public static final String SUBHEADER_PART_TEXT = "Take offline? - Unpublishing selected item(s) will set status back to offline";
 
     private final String DIALOG_HEADER_H2 = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
@@ -32,6 +34,13 @@ public class ContentUnpublishDialog
 
     private String CONTENT_STATUS_BY_DISPLAY_NAME =
         DIALOG_CONTAINER + "//div[@class='browse-selection-item' and descendant::h6[text()='%s']]//div[contains(@class,'status equal')]";
+
+    private String DEPENDANTS_BLOCK = DIALOG_CONTAINER + "//div[@class='dependants']";
+
+    private String DEPENDANT_LIST = DEPENDANTS_BLOCK + "//ul[@class='dependant-list']";
+
+    private String DEPENDANT_ITEMS = DEPENDANT_LIST + "//div[contains(@id,'StatusSelectionItem')]";
+
 
     @FindBy(xpath = UNPUBLISH_BUTTON)
     private WebElement unPublishButton;
@@ -61,6 +70,16 @@ public class ContentUnpublishDialog
             throw new TestFrameworkException( "Content unpublish dialog was not shown!" );
         }
         return this;
+    }
+
+    public List<String> getDependantNames()
+    {
+        return getDisplayedStrings( By.xpath( DEPENDANT_ITEMS + H6_DISPLAY_NAME ) );
+    }
+
+    public boolean isDependantsDisplayed()
+    {
+        return isElementDisplayed( By.xpath( DEPENDANT_LIST ) );
     }
 
     public boolean waitForClosed()
