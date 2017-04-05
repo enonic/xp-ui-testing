@@ -79,9 +79,6 @@ class ContentPublishDialog_Spec
         then: "correct title should be displayed on the dialog"
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
 
-        and: "'Include offline items' checkbox should be displayed"
-        contentPublishDialog.isIncludeOfflineItemsCheckboxDisplayed();
-
         and: "'Publish' and 'Cancel' buttons should be displayed on the dialog"
         contentPublishDialog.isPublishNowButtonEnabled();
 

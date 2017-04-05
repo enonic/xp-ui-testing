@@ -29,7 +29,7 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-    private final String INCLUDE_OFFLINE_ITEMS = "//div[contains(@id,'Checkbox') and descendant::label[text()='Include offline items']]";
+    //private final String INCLUDE_OFFLINE_ITEMS = "//div[contains(@id,'Checkbox') and descendant::label[text()='Include offline items']]";
 
     private final String PUBLISH_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish')]]";
@@ -82,8 +82,8 @@ public class ContentPublishDialog
     @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
     private WebElement cancelButtonBottom;
 
-    @FindBy(xpath = INCLUDE_OFFLINE_ITEMS)
-    private WebElement includeOfflineItemsCheckbox;
+    //@FindBy(xpath = INCLUDE_OFFLINE_ITEMS)
+    // private WebElement includeOfflineItemsCheckbox;
 
 
     public ContentPublishDialog( final TestSession session )
@@ -97,17 +97,18 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
-    public void clickOnIncludeOfflineItemsCheckbox()
-    {
-        includeOfflineItemsCheckbox.click();
-        sleep( 200 );
-    }
+    //TODO checkbox is temporarily removed
+//    public void clickOnIncludeOfflineItemsCheckbox()
+//    {
+//        includeOfflineItemsCheckbox.click();
+//        sleep( 200 );
+//    }
 
-    public void isIncludeOfflineItemsCheckboxDisplayed()
-    {
-        includeOfflineItemsCheckbox.isDisplayed();
-        sleep( 200 );
-    }
+//    public void isIncludeOfflineItemsCheckboxDisplayed()
+//    {
+//        includeOfflineItemsCheckbox.isDisplayed();
+//        sleep( 200 );
+//    }
 
     public boolean isPublishItemRemovable( String itemDisplayName )
     {
