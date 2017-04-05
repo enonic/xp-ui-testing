@@ -26,7 +26,7 @@ public class UserWizardPanel
 {
     public static final String PASSWORD_ERROR_MESSAGE = "Password can not be empty.";
 
-    private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
+    private final String TOOLBAR = "//div[contains(@id,'Toolbar')]";
 
     public final String USER_WIZARD_PANEL = "//div[contains(@id,'UserWizardPanel') and not(contains(@style,'display: none'))]";
 

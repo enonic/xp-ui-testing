@@ -28,7 +28,7 @@ public class UserStoreWizardPanel
 {
     public final String WIZARD_PANEL = "//div[contains(@id,'UserStoreWizardPanel')]";
 
-    private final String TOOLBAR = "//div[contains(@id,'UserStoreWizardToolbar')]";
+    private final String TOOLBAR = "//div[contains(@id,'Toolbar')]";
 
     public final String TOOLBAR_SAVE_BUTTON = WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
@@ -43,7 +43,7 @@ public class UserStoreWizardPanel
     private final String ID_PROVIDER_OPTIONS_FILTER_INPUT = ID_PROVIDER_COMBOBOX + COMBOBOX_OPTION_FILTER_INPUT;
 
     private final String TOOLBAR_DELETE_BUTTON =
-        WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'api.ui.button.ActionButton') and child::span[text()='Delete']]";
+        WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
     private final String DESCRIPTION_INPUT = WIZARD_PANEL + "//div[@class='form-view']//input[contains(@id,'TextInput')]";
 
