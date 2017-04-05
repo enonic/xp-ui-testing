@@ -62,10 +62,8 @@ public class UserWizardPanel
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
     protected WebElement toolbarSaveButton;
 
-
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
-
 
     /**
      * The constructor.
@@ -240,13 +238,13 @@ public class UserWizardPanel
     @Override
     public boolean isDeleteButtonEnabled()
     {
-        return toolbarDeleteButton.isEnabled();
+        return getDisplayedElement( By.xpath( TOOLBAR_DELETE_BUTTON ) ).isEnabled();
     }
 
     @Override
     public ConfirmationDialog clickToolbarDelete()
     {
-        toolbarDeleteButton.click();
+        getDisplayedElement( By.xpath( TOOLBAR_DELETE_BUTTON ) ).click();
         sleep( 500 );
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
         return confirmationDialog;

@@ -85,7 +85,6 @@ public class ContentPublishDialog
     //@FindBy(xpath = INCLUDE_OFFLINE_ITEMS)
     // private WebElement includeOfflineItemsCheckbox;
 
-
     public ContentPublishDialog( final TestSession session )
     {
         super( session );

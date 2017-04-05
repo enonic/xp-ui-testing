@@ -205,7 +205,7 @@ public class UserStoreWizardPanel
         {
             selectIdProvider( userStore.getIdProviderDisplayName() );
         }
-        TestUtils.saveScreenshot( getSession(), userStore.getDisplayName() );
+        saveScreenshot( userStore.getDisplayName() );
 
         if ( userStore.getAclEntries() != null )
         {
