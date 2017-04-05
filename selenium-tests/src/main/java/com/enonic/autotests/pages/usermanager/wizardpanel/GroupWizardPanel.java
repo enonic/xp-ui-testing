@@ -27,7 +27,7 @@ public class GroupWizardPanel
 
     private final String MEMBERS_FORM = GROUP_WIZARD_PANEL + "//div[contains(@id,'GroupMembersWizardStepForm')]";
 
-    private final String TOOLBAR = "//div[contains(@id,'PrincipalWizardToolbar')]";
+    private final String TOOLBAR = "//div[contains(@id,'Toolbar')]";
 
     public final String TOOLBAR_SAVE_BUTTON = GROUP_WIZARD_PANEL + TOOLBAR +
         "//*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
