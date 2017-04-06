@@ -1,6 +1,7 @@
 package com.enonic.autotests.pages.form;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,9 +24,15 @@ public class PageTemplateFormViewPanel
 
     private ContentWizardPanel contentWizardPanel;
 
-    private final String SUPPORT_OPTION_FILTER_INPUT = FORM_VIEW + "//input[contains(@class,'option-filter-input')]";
+    private final String SUPPORT_OPTION_FILTER_INPUT =
+        FORM_VIEW + "//div[contains(@id,'ContentTypeFilter')]//input[contains(@class,'option-filter-input')]";
 
     private String PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT = "//div[contains(@id,'PageDescriptorDropdown')]" + DROPDOWN_OPTION_FILTER_INPUT;
+
+    private String SELECTED_OPTION_VIEW_BY_DISPLAY_NAME =
+        "//div[contains(@id,'ContentTypeSelectedOptionView') and descendant::h6[text()='%s']]";
+
+    private String REMOVE_BUTTON = SELECTED_OPTION_VIEW_BY_DISPLAY_NAME + "//a[@class='remove']";
 
     @FindBy(xpath = SUPPORT_OPTION_FILTER_INPUT)
     private WebElement optionFilterInput;
@@ -40,13 +47,21 @@ public class PageTemplateFormViewPanel
     public FormViewPanel type( final PropertyTree data )
     {
         String supports = data.getString( SUPPORTS );
-        selectSupportOption( supports );
+        if ( StringUtils.isNotEmpty( supports ) )
+        {
+            selectSupportOption( supports );
+        }
         sleep( 2000 );
         selectPageController( data.getString( PAGE_CONTROLLER ) );
         return this;
     }
 
-    private void selectSupportOption( String supports )
+    public boolean isSupportOptionFilterDisplayed()
+    {
+        return optionFilterInput.isDisplayed();
+    }
+
+    public void selectSupportOption( String supports )
     {
         optionFilterInput.sendKeys( supports );
         sleep( 500 );
@@ -59,6 +74,14 @@ public class PageTemplateFormViewPanel
         //select supports: portal:site
         getDisplayedElement( By.xpath( siteContentTypeGridItem ) ).click();
         sleep( 500 );
+    }
+
+    public PageTemplateFormViewPanel removeSupportOption( String optionName )
+    {
+        String xpath = String.format( REMOVE_BUTTON, optionName );
+        getDisplayedElement( By.xpath( xpath ) ).click();
+        sleep( 300 );
+        return this;
     }
 
     public void selectPageController( String pageName )
