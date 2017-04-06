@@ -23,7 +23,15 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class EditPermissionsDialog
     extends Application
 {
+    public static String HEADER = "Edit Permissions";
+
     private final String CONTAINER_XPATH = "//div[contains(@id,'EditPermissionsDialog')]";
+
+    private final String DIALOG_HEADER = CONTAINER_XPATH + "//div[contains(@id,'EditPermissionsDialogHeader')]";
+
+    private final String HEADER_TEXT = DIALOG_HEADER + "//h2[@class='title']";
+
+    private final String CONTENT_PATH = DIALOG_HEADER + "//p[@class='path']";
 
     private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@class,'inherit-perm')]";
 
@@ -63,6 +71,21 @@ public class EditPermissionsDialog
             throw new TestFrameworkException( "Edit Permissions Dialog was not opened!" );
         }
         return this;
+    }
+
+    public String getHeader()
+    {
+        return getDisplayedString( HEADER_TEXT );
+    }
+
+    public String getContentPath()
+    {
+        if ( !isElementDisplayed( By.xpath( CONTENT_PATH ) ) )
+        {
+            saveScreenshot( "err_dialog_path" );
+            throw new TestFrameworkException( "content's path was not found!" );
+        }
+        return getDisplayedString( CONTENT_PATH );
     }
 
     public EditPermissionsDialog setOverwriteChildPermissionsCheckbox( boolean value )

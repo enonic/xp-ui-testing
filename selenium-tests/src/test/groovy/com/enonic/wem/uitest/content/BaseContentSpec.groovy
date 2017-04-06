@@ -424,8 +424,10 @@ class BaseContentSpec
         String name = "template";
         PropertyTree data = new PropertyTree();
         data.addStrings( PageTemplateFormViewPanel.PAGE_CONTROLLER, pageDescriptorName );
-        data.addStrings( PageTemplateFormViewPanel.SUPPORTS, supports );
-
+        if ( supports != null )
+        {
+            data.addStrings( PageTemplateFormViewPanel.SUPPORTS, supports );
+        }
         Content pageTemplate = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).

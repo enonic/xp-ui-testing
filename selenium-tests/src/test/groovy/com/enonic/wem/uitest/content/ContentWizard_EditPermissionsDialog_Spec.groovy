@@ -3,14 +3,19 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
+import com.enonic.xp.schema.content.ContentTypeName
 import com.enonic.xp.security.PrincipalKey
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks:
+ * enonic/xp-ui-testing#36 Add Selenium tests for already fixed bugs*/
 @Stepwise
 class ContentWizard_EditPermissionsDialog_Spec
     extends BaseContentSpec
@@ -21,6 +26,24 @@ class ContentWizard_EditPermissionsDialog_Spec
 
     @Shared
     int DEFAULT_NUMBER_OF_ACL_ENTRIES = 3;
+
+    //verifies xp #4752 Edit Permissions Dialog shows incorrect content's name
+    def "GIVEN wizard for new folder is opened WHEN data has been typed and the content saved AND 'Edit Permissions' dialog is opened THEN correct name of folder should be present on the dialog"()
+    {
+        given: "wizard for new folder is opened"
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        def testName = NameHelper.uniqueName( "folder" );
+
+        when: "data has been typed and the content saved"
+        wizard.typeDisplayName( testName ).save();
+        and: " 'Edit Permissions' dialog is opened"
+        EditPermissionsDialog dialog = wizard.clickOnSecurityTabLink().clickOnEditPermissionsButton();
+
+        then: "correct header should be displayed"
+        dialog.getHeader() == EditPermissionsDialog.HEADER;
+        and: "correct name of folder should be present on the dialog"
+        dialog.getContentPath().contains( testName );
+    }
 
     def "WHEN 'Edit Permissions' button on the wizard panel pressed THEN modal dialog appears"()
     {
