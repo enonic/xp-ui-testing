@@ -160,7 +160,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         and: "'download' bar-item has been pressed AND data typed AND 'Insert' button pressed"
-        linkModalDialog.clickDownloadBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText(
+        linkModalDialog.clickDownloadBarItem().selectOption( WHALE_IMAGE_DISPLAY_NAME ).typeText(
             DOWNLOAD_TEXT ).pressInsertButton().waitForDialogClosed();
         saveScreenshot( "conf-dialog-download" );
         and: "'Apply' button on the SiteConfiguratorDialog has been pressed"
