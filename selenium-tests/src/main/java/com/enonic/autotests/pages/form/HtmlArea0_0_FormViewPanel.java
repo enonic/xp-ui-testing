@@ -46,8 +46,7 @@ public class HtmlArea0_0_FormViewPanel
         int i = 0;
         for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )
         {
-            Actions builder = new Actions( getDriver() );
-            builder.click( frames.get( i ) ).build().perform();
+            buildActions().click( frames.get( i ) ).build().perform();
             sleep( 500 );
             setTextIntoArea( frames.get( i ).getAttribute( "id" ), sourceString );
             sleep( 300 );
