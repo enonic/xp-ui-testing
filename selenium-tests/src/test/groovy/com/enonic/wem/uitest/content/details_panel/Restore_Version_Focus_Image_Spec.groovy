@@ -17,14 +17,14 @@ class Restore_Version_Focus_Image_Spec
 
     def "GIVEN existing image is opened WHEN focus was moved THEN new 'version history item' should appear in the version-view"()
     {
-        given:
+        given: "existing image is opened"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
 
         and: "version history panel has been opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
-        and: "image opened in the wizard"
+        and: "the image is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
@@ -46,9 +46,9 @@ class Restore_Version_Focus_Image_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing image with several versions WHEN version with original image is restored THEN button 'reset' is not present on the wizard page "()
+    def "GIVEN existing image with several versions is selcted WHEN version with the original image is restored THEN button 'reset' should not be present on the wizard page "()
     {
-        given: "existing image with several versions"
+        given: "existing image with several versions is selcted"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
 
         and: "version panel is opened"
@@ -65,14 +65,14 @@ class Restore_Version_Focus_Image_Spec
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
 
-        then: "red circle not displayed on the image-editor"
+        then: "red circle should not be displayed on the image-editor"
         !imageEditor.isFocusCircleDisplayed();
 
         and: "button 'reset' is not present on the wizard page"
         !formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing image with several versions WHEN version with focused image is restored THEN button 'reset' is present on the wizard page "()
+    def "GIVEN existing image with several versions is selected WHEN version with focused image is restored THEN button 'reset' should be present on the wizard page"()
     {
         given: "existing image with several versions"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
@@ -91,10 +91,10 @@ class Restore_Version_Focus_Image_Spec
         ImageEditor imageEditor = new ImageEditor( getSession() );
         saveScreenshot( "focused_image_restored" );
 
-        then: "red circle(focus) is displayed"
+        then: "red circle(focus) should be displayed"
         imageEditor.isFocusCircleDisplayed();
 
-        and: "button 'reset' should be present on the wizard page"
+        and: "button 'reset' should not be present on the wizard page"
         formViewPanel.isButtonResetPresent();
     }
 }

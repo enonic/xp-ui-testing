@@ -39,6 +39,7 @@ public class AllContentVersionsView
 
     public LinkedList<ContentVersion> getAllVersions()
     {
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
         return liElements.stream().map( e -> buildContentVersion( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
     }
