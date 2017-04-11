@@ -80,6 +80,16 @@ public class ImageSelectorFormViewPanel
         return this;
     }
 
+    public FormViewPanel selectOptionByPath( String imagePath, String imageDisplayName )
+    {
+        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        clearAndType( optionFilterInput, imagePath );
+        sleep( 700 );
+        richComboBoxInput.selectOption( imageDisplayName );
+        sleep( 400 );
+        return this;
+    }
+
     public boolean isRemoveButtonDisplayed()
     {
         return isElementDisplayed( REMOVE_BUTTON );

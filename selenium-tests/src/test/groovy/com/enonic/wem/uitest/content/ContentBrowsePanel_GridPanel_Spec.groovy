@@ -8,6 +8,13 @@ import org.openqa.selenium.Keys
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks:
+ * Add Selenium tests for already fixed bugs #36
+ *
+ * Verifies:
+ *   #4727 'Preview' button should be disabled, when 'Selection Controller' has been unchecked( 'Clear Selection')
+ * */
 @Stepwise
 class ContentBrowsePanel_GridPanel_Spec
     extends BaseContentSpec
@@ -60,29 +67,29 @@ class ContentBrowsePanel_GridPanel_Spec
 
     def "GIVEN existing Content is selected WHEN spacebar was pressed THEN row is no longer selected"()
     {
-        given:"existing Content is selected"
+        given: "existing Content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
         saveScreenshot( "test_spacebar_before" );
 
-        when:"spacebar was pressed"
+        when: "spacebar was pressed"
         contentBrowsePanel.pressKeyOnRow( ContentPath.from( contentNames.get( 0 ) ), Keys.SPACE );
 
-        then:"row is no longer selected"
+        then: "row is no longer selected"
         saveScreenshot( "test_spacebar_after" );
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
     def "GIVEN existing content is selected WHEN 'Selection Controller' checkbox was clicked THEN row is no longer selected"()
     {
-        given:"existing content is selected"
+        given: "existing content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
         when: "'Selection Controller' checkbox was clicked"
         contentBrowsePanel.clickOnSelectionController();
 
-        then:"row is no longer selected"
+        then: "row is no longer selected"
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
@@ -94,6 +101,38 @@ class ContentBrowsePanel_GridPanel_Spec
 
         then: "all rows should be selected"
         contentBrowsePanel.getRowsCount() == contentBrowsePanel.getSelectedRowsNumber();
+
+        and: "'Preview' button should be enabled"
+        contentBrowsePanel.isPreviewButtonEnabled();
+
+        and: "'Delete' button should be enabled"
+        contentBrowsePanel.isDeleteButtonEnabled();
+
+        and: "'New' button should be disabled"
+        !contentBrowsePanel.isNewButtonEnabled();
+    }
+    //#4727 'Preview' button should be disabled, when 'Selection Controller' has been unchecked( 'Clear Selection')
+    def "GIVEN 'Selection Controller' is checked WHEN click on the 'Selection Controller' and it getting is unchecked THEN 'Preview' button should be disabled"()
+    {
+        given:
+        contentBrowsePanel.clickOnSelectionController();
+        saveScreenshot( "test_select_all" );
+
+        when: "'Selection Controller ' has been checked"
+        contentBrowsePanel.clickOnSelectionController();
+        saveScreenshot( "test_unselect_all" );
+
+        then: "all rows should be white"
+        contentBrowsePanel.getSelectedRowsNumber() == 0;
+
+        and: "'Preview' button should be disabled"
+        !contentBrowsePanel.isPreviewButtonEnabled();
+
+        and: "'Delete' button should be disabled"
+        !contentBrowsePanel.isDeleteButtonEnabled();
+
+        and: "'New' button should be enabled"
+        contentBrowsePanel.isNewButtonEnabled();
     }
 
     def "GIVEN existing parent folder with a child WHEN the folder is selcted THEN 'expand icon' should be displayed for this folder"()
