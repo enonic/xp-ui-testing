@@ -102,9 +102,6 @@ class ContentBrowsePanel_GridPanel_Spec
         then: "all rows should be selected"
         contentBrowsePanel.getRowsCount() == contentBrowsePanel.getSelectedRowsNumber();
 
-        and: "'Preview' button should be enabled"
-        contentBrowsePanel.isPreviewButtonEnabled();
-
         and: "'Delete' button should be enabled"
         contentBrowsePanel.isDeleteButtonEnabled();
 
