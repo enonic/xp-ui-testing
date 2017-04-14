@@ -21,13 +21,13 @@ class UserStore_Save_Delete_Spec
     @Shared
     String NEW_NAME = "new_name";
 
-    def "GIVEN creating new user store WHEN user store saved and wizard closed THEN new user store should be listed"()
+    def "GIVEN creating of new user store WHEN user store was saved and wizard closed THEN new user store should be listed"()
     {
-        given: "creating new UserStore"
+        given: "creating of new UserStore"
         TEST_USER_STORE = buildUserStore( "us", "save-test-user-store", "save spec" );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
-        when: "'user store' saved and wizard closed"
+        when: "'user store' was saved and wizard closed"
         String creatingMessage = userStoreWizardPanel.typeData( TEST_USER_STORE ).save().waitNotificationMessage();
         userStoreWizardPanel.close( TEST_USER_STORE.getDisplayName() );
 
@@ -40,23 +40,23 @@ class UserStore_Save_Delete_Spec
         creatingMessage == USER_STORE_CREATED_MESSAGE;
     }
 
-    def "GIVEN existing user store WHEN the store opened THEN correct description displayed"()
+    def "GIVEN existing user store WHEN the store was opened THEN correct description should be present"()
     {
-        when: "existing store opened"
+        when: "existing store is opened"
         UserStoreWizardPanel userStoreWizardPanel = openUserStore( TEST_USER_STORE.getName() );
 
-        then: "correct description is displayed"
+        then: "correct description should be present"
         saveScreenshot( "test_user_store_description" );
         userStoreWizardPanel.getDescriptionValue() == TEST_USER_STORE.getDescription();
     }
     //  INBOX-279
     @Ignore
-    def "GIVEN a existing 'user store' WHEN creating new role with the same name THEN correct notification message appears"()
+    def "GIVEN existing 'user store' WHEN creating new role with the same name THEN correct notification message appears"()
     {
         given: "creating new 'user store'"
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
-        when: "saved and wizard closed"
+        when: "wizard was saved and closed"
         userStoreWizardPanel.typeData( TEST_USER_STORE ).save();
         String errorMessage = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
 
@@ -71,12 +71,12 @@ class UserStore_Save_Delete_Spec
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
         userStoreWizardPanel.typeData( us ).save().close( us.getDisplayName() );
 
-        when: "user store selected and 'Delete' button pressed"
+        when: "user store was selected and 'Delete' button pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( us.getName() ).clickToolbarDelete().doDelete();
         String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "user-store-deleted" );
 
-        then: "the user store not displayed in a grid"
+        then: "the user store should not be present in the grid"
         !userBrowsePanel.exists( us.getName() );
 
         and: "correct notification message appears"
@@ -84,12 +84,12 @@ class UserStore_Save_Delete_Spec
     }
     //INBOX-288
     @Ignore
-    def "GIVEN existing 'user store' WHEN display name changed THEN 'user store' with new display name should be listed"()
+    def "GIVEN existing 'user store' WHEN display name was changed THEN 'user store' with new display name should be listed"()
     {
-        given: "existing 'user store' opened"
+        given: "existing 'user store' is opened"
         UserStoreWizardPanel userStoreWizardPanel = openUserStore( TEST_USER_STORE.getName() );
 
-        when: "new name typed and saved, and wizard closed"
+        when: "new name was typed and saved, and wizard closed"
         userStoreWizardPanel.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
         userBrowseFilterPanel.typeSearchText( NEW_DISPLAY_NAME );
 
@@ -100,12 +100,12 @@ class UserStore_Save_Delete_Spec
 
     //app bug? currently impossible to change the UserStore's name, input is disabled now
     @Ignore
-    def "GIVEN existing 'user store' WHEN name changed THEN 'user store' with new name should be listed"()
+    def "GIVEN existing 'user store' WHEN name was changed THEN 'user store' with new name should be listed"()
     {
         given: "existing 'user store' opened"
         UserStoreWizardPanel userStoreWizardPanel = openUserStore( TEST_USER_STORE.getName() );
 
-        when: "new name typed and saved, and wizard closed"
+        when: "new name was typed and saved, and wizard closed"
         userStoreWizardPanel.typeName( NEW_NAME ).save().close( NEW_DISPLAY_NAME );
         userBrowseFilterPanel.typeSearchText( NEW_NAME );
 
@@ -114,9 +114,9 @@ class UserStore_Save_Delete_Spec
         userBrowsePanel.exists( NEW_NAME );
     }
 
-    def "GIVEN creating new 'user store' WHEN 'Delete' button on wizard-toolbar has been pressed THEN the 'user store' should not be displayed in the grid"()
+    def "GIVEN creating of new 'user store' WHEN 'Delete' button on wizard-toolbar has been pressed THEN the 'user store' should not be displayed in the grid"()
     {
-        given: "creating new 'user store'"
+        given: "creating of new 'user store'"
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
         UserStore userStore = buildUserStore( "user-store", "test-user-store", "delete wizard-toolbar" );
         userStoreWizardPanel.typeData( userStore ).save();
@@ -153,7 +153,7 @@ class UserStore_Save_Delete_Spec
         UserStore refreshWizardUserStore = buildUserStore( "store", "test-refresh-wizard", "description" );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
-        when: "data typed and user saved"
+        when: "data was typed and user saved"
         userStoreWizardPanel.typeData( refreshWizardUserStore ).save().waitNotificationMessage();
 
         and: "page was refreshed"
@@ -167,5 +167,4 @@ class UserStore_Save_Delete_Spec
         and: "correct display name should be displayed"
         userStoreWizardPanel.getNameInputValue() == refreshWizardUserStore.getName();
     }
-
 }

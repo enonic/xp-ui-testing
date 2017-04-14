@@ -32,6 +32,10 @@ public class User
         groups.add( group );
     }
 
+    public String getName()
+    {
+        return getDisplayName();
+    }
 
     public List<String> getRoles()
     {
@@ -71,7 +75,6 @@ public class User
     {
         return this.password;
     }
-
 
     public static class Builder
         extends Principal.Builder<Builder>

@@ -88,6 +88,7 @@ class BaseUsersSpec
         go "admin"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
         userBrowseFilterPanel = userBrowsePanel.getUserBrowseFilterPanel();
+        getSession().put( UserBrowsePanel.USER_ITEM_TYPE, null );
     }
 
     protected GroupWizardPanel openSystemGroupWizard()

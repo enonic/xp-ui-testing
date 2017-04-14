@@ -1,9 +1,7 @@
 package com.enonic.autotests.pages.usermanager.browsepanel;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -25,7 +23,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class UserBrowsePanel
     extends BrowsePanel
 {
-    public final String USER_ITEM_TYPE = "user_item_type";
+    public static final String USER_ITEM_TYPE = "user_item_type";
 
     public enum BrowseItemType
     {

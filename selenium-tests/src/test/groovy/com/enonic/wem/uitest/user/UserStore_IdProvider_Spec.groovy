@@ -52,5 +52,4 @@ class UserStore_IdProvider_Spec
         saveScreenshot( "test_user_store_provider_removed" );
         userStoreWizardPanel.isSelectorForIdProviderDisplayed();
     }
-
 }

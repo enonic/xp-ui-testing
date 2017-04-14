@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.user
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.usermanager.browsepanel.AccountStatisticsPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
@@ -39,25 +40,25 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         userBrowsePanel.exists( TEST_GROUP.getName() );
     }
 
-    def "WHEN 'super user' selected THEN correct info have been shown "()
+    def "WHEN 'super user' is selected THEN correct info should be displayed on the statistic panel "()
     {
-        when:
+        when: "'super user' is selected"
         userBrowseFilterPanel.typeSearchText( "su" );
         userBrowsePanel.clickCheckboxAndSelectUser( "users/su" );
         saveScreenshot( "system-su-statistic-panel" );
         accountStatisticsPanel = new AccountStatisticsPanel( getSession() );
         List<String> roleDisplayNamesActual = accountStatisticsPanel.getRoleDisplayNames();
 
-        then: "correct display name shown"
+        then: "correct display name should be displayed"
         accountStatisticsPanel.getItemDisplayName() == "Super User";
 
         and: "correct email should be displayed"
         accountStatisticsPanel.getEmail() == "";
 
-        and: "Administration Console Login role should be displayed"
+        and: "'Administration Console Login' role should be displayed"
         roleDisplayNamesActual.contains( RoleDisplayName.ADMIN_CONSOLE.getValue() );
 
-        and: "Administrator(system.admin) role should be displayed"
+        and: "'Administrator(system.admin)' role should be displayed"
         roleDisplayNamesActual.contains( RoleDisplayName.SYSTEM_ADMIN.getValue() );
     }
 
@@ -96,14 +97,16 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         groupsNamesActual.get( 0 ).contains( groupExpected.get( 0 ) );
     }
 
-    def "GIVEN a existing user with a role WHEN user is opened AND role was removed AND user saved AND wizard closed THEN removed role should not be present on the selections panel"()
+    def "GIVEN existing user with a role WHEN user is opened AND role was removed AND user saved AND wizard closed THEN removed role should not be present on the selections panel"()
     {
-        given: "a existing user with a role"
+        given: "existing user with a role"
         userBrowseFilterPanel.typeSearchText( TEST_USER.getName() );
         UserWizardPanel wizardPanel = userBrowsePanel.clickCheckboxAndSelectUser( TEST_USER.getName() ).clickToolbarEdit();
 
         when: "role was removed AND user saved AND wizard closed"
         wizardPanel.removeRoleByName( TEST_ROLE_NAME ).save().close( TEST_USER.getDisplayName() );
+        userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "user_role_removed_stat_panel" );
 
         then: "removed role should not be displayed on the selections panel"
         accountStatisticsPanel.getRoleNames().size() == 0;
