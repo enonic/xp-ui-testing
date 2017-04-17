@@ -22,7 +22,7 @@ class Occurrences_TextLine_0_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
-        and: ""
+        and: "display name has been typed"
         wizard.typeDisplayName( textLineContent.getDisplayName() );
 
         then: "one text input should be displayed on the form view"

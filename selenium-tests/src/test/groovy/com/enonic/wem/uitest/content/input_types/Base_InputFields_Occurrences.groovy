@@ -764,6 +764,38 @@ class Base_InputFields_Occurrences
         return data;
     }
 
+    protected Content build_TextArea0_1_Content( String text )
+    {
+        PropertyTree data = new PropertyTree();
+        if ( !text.isEmpty() )
+        {
+            data.addString( "text", text );
+        }
+        Content textAreaContent = Content.builder().
+            name( NameHelper.uniqueName( "textarea" ) ).
+            displayName( "text_area content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textarea0_1" ).data( data ).
+            build();
+        return textAreaContent;
+    }
+
+    protected Content build_TextArea1_1_Content( String text )
+    {
+        PropertyTree data = new PropertyTree();
+        if ( !text.isEmpty() )
+        {
+            data.addString( "text", text );
+        }
+        Content textAreaContent = Content.builder().
+            name( NameHelper.uniqueName( "textarea" ) ).
+            displayName( "text_area content" ).
+            parent( ContentPath.from( SITE_NAME ) ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textarea1_1" ).data( data ).
+            build();
+        return textAreaContent;
+    }
+
     protected TestItemSet buildItemSetValues( String textLine, String htmlareaText )
     {
         return TestItemSet.builder().textLineText( textLine ).htmlAreaText( htmlareaText ).build();

@@ -91,47 +91,49 @@ class ContentBrowsePanel_FilterPanel_Spec
         filterPanel.getLastModifiedCount( "day" ) - lastModifiedBeforeAdding == 1;
     }
 
-    def "GIVEN creating of a new content WHEN saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN filter panel is opened WHEN folder have saved and wizard closed THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
-        given: "creating of a new content"
+        given: "filter panel is opened"
         contentBrowsePanel.doShowFilterPanel();
         TEST_FOLDER = buildFolderContent( "folder", "last modified test 2" );
         saveScreenshot( "last-mod-day-before-adding" );
         int beforeAdding = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
+
+        and: "wizard for creating of new folder is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).
             typeData( TEST_FOLDER );
 
-        when: "content saved and wizard closed"
+        when: "content has been saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 1000 );
         saveScreenshot( "last-mod-day-increased" );
 
-        then: "folders count increased by 1"
+        then: "'folders' count should be increased by 1"
         filterPanel.getNumberAggregatedByContentType( "Folder" ) - beforeAdding == 1
 
-        and: "last modified count increased by 1"
+        and: "'last modified' count should be increased by 1"
         filterPanel.getLastModifiedCount( "day" ) - lastModifiedBeforeAdding == 1;
     }
 
-    def "GIVEN a content WHEN it deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN filter panel is opened WHEN a folder is deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
     {
-        given: "existing folder"
+        given: "filter panel is opened"
         contentBrowsePanel.doShowFilterPanel();
         saveScreenshot( "LastModified_filter_before_folder_deleting" );
         int beforeRemoving = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "day" );
         saveScreenshot( "test_LastModified_aggregation_before_deleting" );
 
-        when: "the folder deleted"
+        when: "the folder is deleted"
         contentBrowsePanel.selectContentInTable( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
         sleep( 2000 );
         saveScreenshot( "test_LastModified_aggregation_folder_deleted" )
 
-        then: "folders count reduced by 1"
+        then: "'folders' count should be reduced by 1"
         beforeRemoving - filterPanel.getNumberAggregatedByContentType( "Folder" ) == 1
 
-        and: "last modified count reduced by 1"
+        and: "'last modified' count should be reduced by 1"
         lastModifiedBeforeRemoving - filterPanel.getLastModifiedCount( "day" ) == 1;
     }
 
