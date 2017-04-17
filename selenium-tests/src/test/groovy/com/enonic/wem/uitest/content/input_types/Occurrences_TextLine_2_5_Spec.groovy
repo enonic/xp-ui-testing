@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -31,70 +30,59 @@ class Occurrences_TextLine_2_5_Spec
     String FIVES_TEST_TEXT = "fives test text 2:5";
 
 
-    def "WHEN wizard for adding a TextLine-content (2:5) opened THEN 2 text input present "()
+    def "WHEN wizard for adding a TextLine-content (2:5) is opened THEN 2 text-inputs should be present on the page"()
     {
-        when: "start to add a content with type 'TextLine 2:5'"
+        when: "wizard for adding a TextLine-content (2:5) is opened"
         Content textLineContent = buildTextLine2_5_Content();
         selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
 
-        then: "one text input should be displayed in the form view"
+        then: "two text-inputs should be displayed on the form view"
         formViewPanel.getNumberOfTextInputs() == 2;
-    }
 
-
-    def "WHEN wizard for adding a TextLine-content (2:5) opened THEN button 'Remove' not present on page "()
-    {
-        when: "start to add a content with type 'TextLine 2:5'"
-        Content textLineContent = buildTextLine2_5_Content();
-        selectSitePressNew( textLineContent.getContentTypeName() );
-        TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
-
-        then: "button 'Remove' not present on page"
+        and: "button 'Remove' should not be present on the page"
         formViewPanel.getNumberOfDisplayedRemoveButtons() == 0;
-    }
 
-    def "WHEN wizard for adding a TextLine-content (2:5) opened THEN button 'Add' present on page "()
-    {
-        when: "start to add a content with type 'TextLine 2:5'"
-        Content textLineContent = buildTextLine2_5_Content();
-        selectSitePressNew( textLineContent.getContentTypeName() );
-        TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
-
-        then: "button 'Add' present on page"
+        then: "button 'Add' should be present on the page"
         formViewPanel.isAddButtonPresent();
     }
 
-    def "GIVEN TextLine 2:5 wizard opened WHEN three text inputs added  THEN button 'Add' not present on the page "()
+    def "GIVEN wizard for adding a TextLine-content (2:5) is opened WHEN three text inputs were added THEN button 'Add' should not be present on the page "()
     {
-        when: "start to add a content with type 'TextLine 2:5'"
+        when: "wizard for adding a TextLine-content (2:5) is opened"
         Content textLineContent = buildTextLine2_5_Content();
-        selectSitePressNew( textLineContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
-        formViewPanel.clickOnAddButton();
-        formViewPanel.clickOnAddButton();
-        formViewPanel.clickOnAddButton();
+        wizard.typeDisplayName( textLineContent.getDisplayName() );
 
-        then: "button 'Add' not present on the page "
+        and: "3 text-line inputs were added"
+        formViewPanel.clickOnAddButton();
+        formViewPanel.clickOnAddButton();
+        formViewPanel.clickOnAddButton();
+        saveScreenshot( "five_textline_inputs" );
+
+        then: "button 'Add' should not be present on the page, because 5 inputs are present"
         !formViewPanel.isAddButtonPresent();
+
+        and: "red icon should not be present on the wizard page, default values are present in all text-lines"
+        !wizard.isContentInvalid();
     }
 
-    def "GIVEN TextLine 2:5 wizard opened WHEN three text inputs added  THEN default values are present in all inputs"()
+    def "GIVEN TextLine 2:5 wizard is opened WHEN three text inputs were added THEN default values should be present in all inputs"()
     {
-        when: "start to add a content with type 'TextLine 2:5'"
+        when: "TextLine 2:5 wizard is opened"
         Content textLineContent = buildTextLine2_5_Content();
         selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
+
+        and: "three text inputs were added"
         formViewPanel.clickOnAddButton();
         formViewPanel.clickOnAddButton();
         formViewPanel.clickOnAddButton();
         List<String> values = formViewPanel.getTextLineValues();
-        TestUtils.saveScreenshot( getSession(), "text_line_default_values" );
+        saveScreenshot( "text_line_default_values" );
 
-        then: "button 'Add' not present on the page "
-        !formViewPanel.isAddButtonPresent();
-
-        and:
+        then: "default values should be present in all inputs"
         values.size() == 5;
         and:
         values.get( 0 ) == "default text";
@@ -102,9 +90,9 @@ class Occurrences_TextLine_2_5_Spec
         values.get( 4 ) == "default text";
     }
 
-    def "GIVEN TextLine 2:5 wizard opened and 5 inputs showed on the page WHEN one input removed THEN button 'Add' appears on the page"()
+    def "GIVEN TextLine 2:5 wizard is opened and 3 inputs were added WHEN one input has been removed THEN button 'Add' should appear on the page"()
     {
-        given: "start to add a content with type 'TextLine 2:5' and add 3 text inputs"
+        given: "start to add a content with type 'TextLine 2:5' and 3 text inputs were added"
         Content textLineContent = buildTextLine2_5_Content();
         selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
@@ -112,27 +100,27 @@ class Occurrences_TextLine_2_5_Spec
         formViewPanel.clickOnAddButton();
         formViewPanel.clickOnAddButton();
 
-        when: "one input removed"
+        when: "one input has been removed"
         formViewPanel.clickOnLastRemoveButton();
 
-        then: "button 'Add' appears on the page "
+        then: "button 'Add' should appear on the page "
         formViewPanel.isAddButtonPresent();
     }
 
-
-    def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new text line Content should be listed AND saved text showed when content opened for edit"()
+    def "GIVEN TextLine 2:5 wizard is opened WHEN text was typed an all 5 inputs THEN expected strings should be displayed on the wizard when the content is opened"()
     {
-        given: "start to add a content with type 'TextLine 2:5'"
+        given: "TextLine 2:5 wizard is opened"
         Content textLineContent = buildTextLine2_5_Content();
-        ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
+        and: "3 inputs were added"
         formViewPanel.clickOnAddButton( 3 );
 
-        when:
-        contentWizardPanel.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
+        when: " all data has been typed"
+        wizard.typeData( textLineContent ).save().close( textLineContent.getDisplayName() );
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
 
-        then: "actual text in the text line should be equals as expected"
+        then: "expected strings should be displayed on the wizard when the content is opened"
         List<String> valuesFromUI = formViewPanel.getTextLineValues();
         and: "saved strings are present in the Content Wizard"
         valuesFromUI.contains( FIRST_TEST_TEXT );
@@ -144,45 +132,49 @@ class Occurrences_TextLine_2_5_Spec
         valuesFromUI.contains( FOURTH_TEST_TEXT );
         and:
         valuesFromUI.contains( FIVES_TEST_TEXT );
+
+        and: "red icon should not be displayed on the wizard page"
+        !wizard.isContentInvalid();
     }
 
-
-    def "GIVEN creating new TextLine2:5 on root WHEN data typed and 'Save' and  'Publish' are pressed THEN new content with status equals 'Online' listed"()
+    def "GIVEN wizard for creating of 'TextLine 2:5' is opened WHEN data was typed and the content has been published THEN the content should be 'Online'  in the grid"()
     {
-        given: "start to add a content with type 'TextLine 2:5'"
+        given: "wizard for creating of 'TextLine 2:5' is opened"
         Content textLineContent = buildTextLine2_5_Content();
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
 
-        when: "type a data and 'save' and 'publish'"
+        when: "data was typed and the content has been published"
         contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
 
-        then: "content has a 'online' status"
+        then: "content should be 'online'"
         contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and: "correct notification message was shown"
         publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, textLineContent.getDisplayName() );
     }
 
-    def "GIVEN creating new TextLine2:5 on root WHEN name typed but required text input is empty THEN content is invalid and the 'Publish' button is disabled"()
+    def "GIVEN wizard for creating of TextLine2:5 is opened WHEN name has been typed but required text-lines cleared THEN content is getting invalid and the 'Publish' button should be disabled"()
     {
         given: "start to add a content with type 'TextLine 2:5'"
         Content textLineContent = buildTextLine2_5_Content();
-        ContentWizardPanel contentWizardPanel = selectSitePressNew(
-            textLineContent.getContentTypeName() ); contentWizardPanel.typeDisplayName( textLineContent.getDisplayName() );
+        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
+        wizard.typeDisplayName( textLineContent.getDisplayName() );
         TextLine2_5_FormViewPanel formViewPanel = new TextLine2_5_FormViewPanel( getSession() );
 
-        when:
+        when: "default values in text-lines are cleared"
         formViewPanel.clearAllInputs();
-        TestUtils.saveScreenshot( getSession(), "text_lines_cleared" );
+        saveScreenshot( "text_lines_cleared" );
 
-        then: "'Publish' button is disabled"
-        !contentWizardPanel.isPublishButtonEnabled();
+        then: "'Publish' button should be disabled"
+        !wizard.isPublishButtonEnabled();
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and: "content is invalid"
-        // contentWizardPanel.isContentInvalid( textLineContent.getDisplayName() );
+        and: "content is getting invalid"
+        wizard.isContentInvalid();
+
+        and: "correct validation message should be displayed"
+        formViewPanel.getValidationMessage() == "Min 2 occurrences required";
     }
 
     private Content buildTextLine2_5_Content()

@@ -333,6 +333,7 @@ public class UserBrowsePanel
                 throw new TestFrameworkException( "unknown type of item!" );
         }
         wizard.waitUntilWizardOpened();
+        wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return wizard;
     }
 }

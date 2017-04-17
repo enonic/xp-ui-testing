@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilter
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemPreviewPanel
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -512,6 +513,16 @@ class BaseContentSpec
             parent( ContentPath.ROOT ).
             build();
         return content;
+    }
+
+    protected AllContentVersionsView openVersionPanel()
+    {
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
+        AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
+        contentItemVersionsPanel.waitUntilLoaded();
+        return contentItemVersionsPanel;
     }
 
     protected String buildFragmentName( String resourceDisplayName )

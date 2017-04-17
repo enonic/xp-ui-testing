@@ -28,30 +28,30 @@ class Occurrences_DateTime_1_1_Spec
 
         then: "'date time picker' popup dialog is displayed"
         picker.isDisplayed();
-        and: "time zone is displayed"
+        and: "time zone should be displayed"
         picker.getTimePickerPopup().isTimeZoneDisplayed();
     }
 
-    def "GIVEN wizard for adding a DateTime(1:1) opened WHEN name typed and dateTime was not typed THEN dateTime input is empty and content has a invalid status"()
+    def "GIVEN wizard for creating of 'DateTime'(one rquired input) is opened WHEN name was typed but dateTime not typed THEN wizard should be with red icon"()
     {
-        given: "start to adding a content with type 'DateTime(1:1)'"
+        given: "wizard for creating of 'DateTime'(one rquired input) is opened"
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-        when: "only a name typed and dateTime was not typed"
+        when: "only a name was typed but dateTime was not typed and 'Save' button was not pressed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        then: "date time input is present and enabled"
-        formViewPanel.isDateTimeInputDisplayed();
+        then: "red icon should be present on the wizard-page, because required input is empty"
+        wizard.isContentInvalid();
 
         and: "and date time input is empty"
         formViewPanel.getDateTimeValue().isEmpty();
     }
 
-    def "GIVEN 'date time'-wizard opened WHEN content without required 'date time' saved THEN wizard has a red icon"()
+    def "GIVEN 'date time'-wizard opened WHEN content without required 'date time' saved THEN wizard should be with red icon"()
     {
-        given: "new content with type date time added'"
+        given: "new content with type 'date time' was added'"
         Content dateTimeContent = buildDateTime1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
@@ -74,7 +74,7 @@ class Occurrences_DateTime_1_1_Spec
         filterPanel.typeSearchText( dateTimeContent.getName() );
         saveScreenshot( "date-time-not-valid-grid" )
 
-        then: "content should be invalid, because required field not filled"
+        then: "content should be invalid, because required input was not filled"
         contentBrowsePanel.isContentInvalid( dateTimeContent.getName() );
     }
 
@@ -84,18 +84,17 @@ class Occurrences_DateTime_1_1_Spec
         Content dateTimeContent = buildDateTime1_1_Content( TEST_DATE_TIME1 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-        when: "data typed and 'Save' and  'Publish' are pressed"
+        when: "data typed and 'Save' and  'Publish' has been pressed"
         contentWizardPanel.typeData( dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        contentWizardPanel.refreshInBrowser();
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
-
+        and: "the name of the content has been typed in the search input"
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
-        then: "status of content is 'online' now"
+        then: "status of content should be 'online'"
         contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
-        and: "correct notification was shown"
+        and: "correct notification should be shown"
         publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateTimeContent.getDisplayName() );
     }
 }

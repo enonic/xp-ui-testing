@@ -130,7 +130,6 @@ public class UserWizardPanel
 
     public UserWizardPanel removeRoleByName( String roleName )
     {
-
         String removeButtonXpath = String.format( REMOVE_ROLE_BUTTON, roleName );
         if ( !isElementDisplayed( removeButtonXpath ) )
         {

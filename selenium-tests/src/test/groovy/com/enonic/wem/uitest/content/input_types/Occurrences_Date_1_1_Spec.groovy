@@ -30,35 +30,34 @@ class Occurrences_Date_1_1_Spec
         picker.isDisplayed();
     }
 
-    def "GIVEN wizard for adding a Date(1:1) opened WHEN name typed and date was not typed THEN date input is empty and content has a invalid status"()
+    def "GIVEN wizard for adding a Date(1:1) opened WHEN name typed and date was not typed THEN red icon should be present on the wizard-page"()
     {
         given: "start to add a content with type 'Date(1:1)'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
 
-        when: "only a name typed and date was not typed"
+        when: "only a name was typed and date was not typed(the content is not saved)"
         wizard.typeDisplayName( dateContent.getDisplayName() );
-        DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
-        then: "option filter input is present and enabled"
-        formViewPanel.isDateInputDisplayed();
-
-        and: "date input is empty"
-        formViewPanel.getDateValue().isEmpty();
+        then: "red icon should be present on the wizard-page, because required input is empty"
+        wizard.isContentInvalid();
     }
 
-    def "GIVEN opened content wizard WHEN content without required 'date' saved THEN wizard has a red icon on wizard-tab"()
+    def "GIVEN opened content wizard WHEN content without required 'date' was saved THEN wizard has a red icon on wizard-tab"()
     {
         given: "new content with type date added'"
         Content dateContent = buildDate1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
-        when: "content without required 'date' saved"
+        when: "content without required 'date' was saved"
         wizard.save();
 
-        then: "content should be invalid, because required field not filled"
+        then: "validation message should be displayed"
         formViewPanel.isValidationMessagePresent();
+
+        and: "red icon should be present on the wizard-page, because required input is empty"
+        wizard.isContentInvalid();
     }
 
     def "GIVEN opened content wizard WHEN content saved without required 'date' and wizard closed THEN content displayed in a grid with a invalid status"()
@@ -72,26 +71,26 @@ class Occurrences_Date_1_1_Spec
         filterPanel.typeSearchText( dateContent.getName() );
         saveScreenshot( "date-not-valid" )
 
-        then: "content should be invalid, because required field not filled"
+        then: "content should be invalid, because required field is empty"
         contentBrowsePanel.isContentInvalid( dateContent.getName() );
     }
 
-    def "GIVEN creating new Date 1:1 on root WHEN data typed and 'Save' and  'Publish' are pressed THEN new content with status equals 'Online' listed"()
+    def "GIVEN creating new Date 1:1 on root WHEN data was typed and saved and the content has been published THEN new content with status equals 'Online' should be listed in the grid"()
     {
         given: "start to add a content with type 'Date'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
-        when: "data typed and 'Save' and  'Publish' are pressed"
+        when: "data was typed and saved and the content has been published"
         contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );
 
-        then: "content is 'online now'"
+        then: "content should be 'online'"
         contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
-        and: "correct notification message was shown "
+        and: "correct notification message should be shown "
         publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateContent.getDisplayName() );
     }
 }

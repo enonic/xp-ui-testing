@@ -15,69 +15,58 @@ class Occurrences_TextLine_0_1_Spec
     String TEST_TEXT = "test text 0:1";
 
 
-    def "WHEN wizard for adding a TextLine-content (0:1) opened THEN one text input present"()
+    def "WHEN wizard for adding a TextLine-content (0:1) is opened THEN one 'text input' should be present"()
     {
-        when: "start to add a content with type 'TextLine 0:1'"
+        when: "wizard for adding a TextLine-content (0:1) is opened"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
-        selectSitePressNew( textLineContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
-        then: "one text input should be displayed in the form view"
+        and: ""
+        wizard.typeDisplayName( textLineContent.getDisplayName() );
+
+        then: "one text input should be displayed on the form view"
         formViewPanel.getNumberOfTextInputs() == 1;
-    }
 
-    def "WHEN wizard for adding a TextLine-content (0:1) opened THEN button 'Remove' not present on the page "()
-    {
-        when: "start to add a content with type 'TextLine 0:1'"
-        Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
-        selectSitePressNew( textLineContent.getContentTypeName() );
-        TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
+        and: "button 'Add' should not be present on the page"
+        !formViewPanel.isAddButtonPresent();
 
-        then: "button 'Remove' not present on the page "
+        and: "red icon should not be displayed, because the text input is not required"
+        !wizard.isContentInvalid();
+
+        and: "button 'Remove' should not present on the page "
         formViewPanel.getNumberOfDisplayedRemoveButtons() == 0;
     }
 
-    def "WHEN wizard for adding a TextLine-content (0:1) opened THEN button 'Add' not present on page "()
+    def "GIVEN wizard for adding a TextLine-content (0:1) is opened WHEN data was saved and wizard closed THEN content should be listed AND saved text showed when the content is opened"()
     {
-        when: "start to add a content with type 'TextLine 0:1'"
-        Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
-        selectSitePressNew( textLineContent.getContentTypeName() );
-        TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
-
-        then: "button 'Add' not present on page"
-        !formViewPanel.isAddButtonPresent();
-    }
-
-    def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new text line Content should be listed AND saved text showed when content opened for edit"()
-    {
-        given: "start to add a content with type 'TextLine 0:1'"
+        given: "wizard for adding a TextLine-content (0:1) is opened"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
 
-        when:
+        when: "all data has been typed and saved"
         contentWizardPanel.typeData( textLineContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
 
-        then: "actual text in the text line should be equals as expected"
+        then: "actual text in the text line should be equals with the expected"
         String valueFromUI = formViewPanel.getTextLineValue();
         valueFromUI.equals( TEST_TEXT );
     }
 
     def "GIVEN creating new TextLine0:1 on root WHEN data typed and 'Save' and  'Publish' are pressed THEN new content with status equals 'Online' listed"()
     {
-        given: "start to add a content with type 'TextLine 0:1'"
+        given: "wizard for adding a TextLine-content (0:1) is opened"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
 
-        when: "type a data and 'save' and 'publish'"
+        when: "all data has been typed and the content published"
         contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );
 
-        then: "content has a 'online' status"
+        then: "the content of the status should be 'Online'"
         contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
     }
-
 }
