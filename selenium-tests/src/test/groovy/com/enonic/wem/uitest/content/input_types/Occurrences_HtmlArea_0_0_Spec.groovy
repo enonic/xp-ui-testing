@@ -38,16 +38,14 @@ class Occurrences_HtmlArea_0_0_Spec
     String EXPECTED_TEXT3 = "<div>" + TEST_TEXT3 + "</div>";
 
 
-    def "WHEN 'HtmlArea 0:0' content-type is selected THEN text area should be present AND 'Add' button should be displayed"()
+    def "WHEN wizard for 'HtmlArea 0:0' content-type is opened THEN html-area should be present AND 'Add' button should be displayed"()
     {
         when: "'HtmlArea 0:0' content-type is selected"
-        Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
-        selectSitePressNew( tinyMceContent.getContentTypeName() );
+        Content htmlAreaContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
 
-        then: "wizard with the form view should be opened"
-        formViewPanel.isOpened();
-        and: "one text area should be present"
+        then: "one text area should be present"
         formViewPanel.getNumberOfAreas() == 1;
         and: "'Add new area' button should be present"
         formViewPanel.isAddButtonPresent();
@@ -58,9 +56,9 @@ class Occurrences_HtmlArea_0_0_Spec
 
     def "GIVEN wizard for htmlArea-content is opened WHEN 'Source Button' has been pressed THEN 'Code Dialog' should appear"()
     {
-        given: "'HtmlArea 0:0' content is opened"
-        Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
-        selectSitePressNew( tinyMceContent.getContentTypeName() );
+        given: "wizard for htmlArea-content is opened"
+        Content htmlAreaContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
 
         when: "'Source Button' has been pressed"
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
@@ -78,7 +76,7 @@ class Occurrences_HtmlArea_0_0_Spec
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content is opened"
+        when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> actual = formViewPanel.getInnerHtmlFromAreas();
@@ -89,7 +87,7 @@ class Occurrences_HtmlArea_0_0_Spec
         actual.get( 0 ) == EXPECTED_TEXT1;
     }
 
-    def "GIVEN wizard for HtmlArea(0:0) is opened WHEN button 'Add' was clicked 3 times THEN tree text area should be present"()
+    def "GIVEN wizard for HtmlArea(0:0) is opened WHEN button 'Add' was clicked 3 times THEN three text area should be present"()
     {
         given: "wizard for HtmlArea(0:0) is opened"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );

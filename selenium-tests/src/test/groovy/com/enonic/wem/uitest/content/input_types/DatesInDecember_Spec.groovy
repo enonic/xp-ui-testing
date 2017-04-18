@@ -25,7 +25,7 @@ class DatesInDecember_Spec
     @Shared
     String NANSEN_BIRTH = "1861-10-10";
 
-    def "GIVEN wizard for adding a Date opened WHEN Nansen birth typed AND saved THEN correct value displayed in the wizard"()
+    def "GIVEN wizard a Date-content is opened WHEN Nansen birth typed AND saved THEN correct value should be displayed in the wizard"()
     {
         given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( NANSEN_BIRTH );

@@ -19,10 +19,11 @@ class Occurrences_ImageSelector_0_1_Spec
     {
         when: "wizard for 'Image Selector 0:1' content is opened"
         Content imageSelectorContent = buildImageSelector0_1_Content( NORD_IMAGE_DISPLAY_NAME );
-        selectSitePressNew( imageSelectorContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+        wizard.typeDisplayName( imageSelectorContent.getDisplayName() );
 
-        then: "option filter input should be displayed"
+        then: "'options filter' input should be displayed"
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "no one option is selected"
@@ -30,6 +31,9 @@ class Occurrences_ImageSelector_0_1_Spec
 
         and: "upload button should be enabled"
         formViewPanel.isUploaderButtonEnabled();
+
+        and: "the content should be valid, because an image is not required"
+        !wizard.isContentInvalid();
     }
 
     def "GIVEN existing 'Image Selector-content' (0:1) AND options were not selected WHEN content opened for edit THEN image not present on the page and content should be valid "()
@@ -55,6 +59,9 @@ class Occurrences_ImageSelector_0_1_Spec
 
         and: "'Publish' button on the wizard-toolbar should be enabled"
         wizard.isPublishButtonEnabled();
+
+        and: "the content should be valid, because an image is not required"
+        !wizard.isContentInvalid();
     }
 
     def "GIVEN saving of content with not required 'Image Selector' AND option is not selected WHEN 'Publish' button pressed THEN status of the content is getting 'Online'"()
@@ -71,13 +78,13 @@ class Occurrences_ImageSelector_0_1_Spec
         when: "name of the content is typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "content has online status in the browse panel"
+        then: "content should be with 'online' status"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
 
         and: "content is valid"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
 
-        and: "correct notification message was displayed"
+        and: "correct notification message should be displayed"
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
@@ -88,7 +95,7 @@ class Occurrences_ImageSelector_0_1_Spec
         selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
             TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content was opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> images = formViewPanel.getSelectedImages();
@@ -96,7 +103,7 @@ class Occurrences_ImageSelector_0_1_Spec
         then: "one image should be present on the page"
         images.size() == 1;
 
-        and: "option filter is getting hidden"
+        and: "option filter should not be displayed"
         !formViewPanel.isOptionFilterIsDisplayed();
 
         and: "image with correct name should be present on the page"

@@ -14,45 +14,45 @@ class Occurrences_ComboBox_2_4_Spec
     @Shared
     Content content_with_opt;
 
-    def "GIVEN  wizard for ComboBox-content(2:4) opened WHEN name typed but no options are selected THEN content is invalid and publish button is disabled"()
+    def "GIVEN wizard for ComboBox-content(2:4) is opened WHEN name was typed but options were not selected THEN content should be invalid and publish button is disabled"()
     {
         given: "start to add a content with type 'ComboBox 2:4'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
         ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
-        when: "only the name typed and no option were selected"
+        when: "only the name was typed and no option were selected"
         wizard.typeDisplayName( comboBoxContent.getDisplayName() );
 
-        then: "option filter input is present and enabled"
+        then: "'option filter' input should be present and enabled"
         formViewPanel.isOptionFilterInputEnabled();
 
-        and: " and no options selected on the page"
+        and: "no one option is selected on the page"
         formViewPanel.getSelectedOptionValues().size() == 0;
 
-        and: "content should be invalid, because required field- combobox2:4 not selected"
+        and: "content should be invalid, because required option was not selected"
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN existing ComboBox-content (2:4) without selected options WHEN content opened for edit THEN no one selected options present on page "()
+    def "GIVEN existing ComboBox-content (2:4) without selected options WHEN content is opened THEN no one selected options should be present on the page"()
     {
-        given: "new content with type ComboBox2_4 added'"
+        given: "new content with type ComboBox2_4 was added'"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "no options selected on the page"
+        then: "no one options is selected on the page"
         optValues.size() == 0;
 
         and: "options filter input is enabled"
         formViewPanel.isOptionFilterInputEnabled();
 
-        and: "content should be invalid, because required field- combobox2:4 not selected"
+        and: "content should be invalid, because required options were not selected"
         formViewPanel.isValidationMessagePresent();
     }
 
@@ -68,10 +68,10 @@ class Occurrences_ComboBox_2_4_Spec
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "two option value  present in form view"
+        then: "two options should be present in the form view"
         optValues.size() == 2;
 
-        and: "options with correct text present"
+        and: "options with correct text should be present"
         String[] options = ["option A", "option B"];
         optValues.containsAll( options.toList() );
 
@@ -122,19 +122,19 @@ class Occurrences_ComboBox_2_4_Spec
         !formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "WHEN content with 2 selected option saved and published THEN it content with 'Online'-status listed"()
+    def "WHEN content with 2 selected option has been published THEN the content should be with 'Online'-status"()
     {
-        when: "content without a selected option saved and published"
+        when: "content without options was saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
         ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        and: "wizard closed"
+        and: "wizard has been closed"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
-        then: "content has a 'online' status"
+        then: "the content should be with 'Online'-status"
         contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and:
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getDisplayName() );

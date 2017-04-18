@@ -50,11 +50,14 @@ class Occurrences_ImageSelector_2_4_Spec
 
         and: "options filter input should be displayed"
         formViewPanel.isOptionFilterIsDisplayed();
+
+        and: "red icon should be present on the wizard page"
+        wizard.isContentInvalid();
     }
 
-    def "GIVEN saving of 'Image Selector (2:4)' without required image WHEN content saved  THEN content should be displayed with red circle"()
+    def "WHEN 'Image Selector (2:4)' without required image has been added THEN content should be displayed with red circle"()
     {
-        when: "content without required image saved"
+        when: "content without required images was added"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
         selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
             imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -64,21 +67,21 @@ class Occurrences_ImageSelector_2_4_Spec
         contentBrowsePanel.isContentInvalid( imageSelectorContent.getName() );
     }
 
-    def "GIVEN saving of Image Selector-content (2:4) and 2 image selected WHEN content opened for edit THEN correct images present on page and option filter displayed"()
+    def "GIVEN 'Image Selector (2:4)' with 2 images has been added WHEN content is opened THEN correct images present on page and option filter should be displayed"()
     {
         given: "new content with type 'Image Selector2_4' added"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
             TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         sleep( 1000 );
         saveScreenshot( "image-selector-2-img" )
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> imagesActual = formViewPanel.getSelectedImages();
 
-        then: "two images present on the page"
+        then: "two images should be present on the page"
         imagesActual.size() == 2;
         and:
         formViewPanel.isOptionFilterIsDisplayed();
@@ -90,7 +93,7 @@ class Occurrences_ImageSelector_2_4_Spec
         imagesActual.get( 1 ) == BOOK_IMAGE_NAME;
     }
 
-    def "GIVEN Image Selector-content (2:4) with two selected images and one image removed and content saved WHEN content opened for edit THEN one image present on the page"()
+    def "GIVEN existing Image Selector-content  with two selected images AND one image was removed WHEN content is opened THEN one image should be present on the page"()
     {
         given: "content with one required option opened for edit' and one option removed"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
@@ -110,9 +113,12 @@ class Occurrences_ImageSelector_2_4_Spec
 
         and: "'Publish button' is disabled now"
         !wizard.isPublishButtonEnabled();
+
+        and: "red circle should be displayed on the wizard page"
+        wizard.isContentInvalid();
     }
 
-    def "WHEN content with 4 selected images saved and published THEN it content with 'Online'-status listed"()
+    def "WHEN content with 4 images has been added and published THEN the content should be 'Online'"()
     {
         when: "content with 4 selected images saved and published"
         IMAGE_SELECTOR_CONTENT_4_IMAGES =
@@ -123,11 +129,11 @@ class Occurrences_ImageSelector_2_4_Spec
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        and: "wizard closed"
+        and: "wizard has been closed"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() );
 
-        then: "content has a 'online' status"
+        then: " the content should be 'Online'"
         contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equalsIgnoreCase(
             ContentStatus.ONLINE.getValue() );
     }

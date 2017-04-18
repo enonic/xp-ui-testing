@@ -26,64 +26,61 @@ class Occurrences_HtmlArea_0_2_Spec
     @Shared
     String EXPECTED_TEXT2 = "<div>" + TEST_TEXT2 + "</div>";
 
-    def "WHEN wizard for adding a content with htmlArea(0:2) opened THEN text area is present "()
+    def "WHEN wizard for adding a content with htmlArea(0:2) is opened THEN one text area should be present "()
     {
         when: "start to add a content with type 'htmlArea 0:2'"
-        Content tinyMceContent = buildHtmlArea0_2_Content( 1, TEST_TEXT1 );
-        selectSitePressNew( tinyMceContent.getContentTypeName() );
+        Content htmlAreaContent = buildHtmlArea0_2_Content( 1, TEST_TEXT1 );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
+        wizard.typeDisplayName( htmlAreaContent.getDisplayName() );
 
-        then: "wizard with form view opened"
-        formViewPanel.isOpened();
-
-        and: "one text area present"
+        then: "one text area should be present"
         formViewPanel.getNumberOfAreas() == 1;
 
-        and: "'Add' button is present"
+        and: "'Add' button should be present"
         formViewPanel.isAddButtonPresent();
+
+        and: "content is valid, because area is not required"
+        !wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for adding a content with htmlArea(0:2) opened WHEN button 'Add' clicked THEN two text area is present and button 'Add' disappears "()
+    def "GIVEN wizard for htmlArea(0:2) is opened WHEN button 'Add' clicked THEN two text area should be present and button 'Add' is getting hidden"()
     {
-        given: "start to add a content with type 'htmlArea 0:2'"
-        Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
-        ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
+        given: "wizard for htmlArea(0:2) is opened"
+        Content htmlAreaContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
+        ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        wizard.typeName( tinyMceContent.getName() )
+        wizard.typeName( htmlAreaContent.getName() )
 
-        when: "clock on 'Add' button"
+        when: "'Add' button has been clicked"
         formViewPanel.clickOnAddButton();
         saveScreenshot( "add_button_hidden" );
 
-        then: "wait until the button 'add' disappears"
+        then: "wait until the button 'add' is getting hidden"
         formViewPanel.waitUntilAddButtonNotVisible()
 
-        and: "button 'Add' not present"
-        !formViewPanel.isAddButtonPresent();
-
-        and: "two text area present"
+        and: "two text areas should be present"
         formViewPanel.getNumberOfAreas() == 2;
     }
 
-    def "GIVEN wizard with two text area present WHEN one text area removed THEN one area present and button 'Add' appears "()
+    def "GIVEN wizard for htmlArea(0:2) is opened AND one more area has been added WHEN one text area was removed THEN one area should be present AND button 'Add' should appear"()
     {
         given: "start to add a content with type 'htmlArea 0:2'"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
-
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         wizard.typeName( tinyMceContent.getName() );
         formViewPanel.clickOnAddButton();
         int beforeRemoving = formViewPanel.getNumberOfAreas();
 
-        when: "remove the last text area"
+        when: "one html-area was removed"
         formViewPanel.removeLastTextArea();
         saveScreenshot( "one_htmlarea_removed" );
 
         then: "button 'Add' should be present on page"
         formViewPanel.isAddButtonPresent();
 
-        and: "one text area present"
+        and: "one text area should be present"
         formViewPanel.getNumberOfAreas() == 1;
 
         and:

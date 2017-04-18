@@ -47,9 +47,9 @@ class Occurrences_ItemSet_0_0_Spec
     @Shared
     String TEST_TEXT_TEXT_LINE = "text line 1";
 
-    def "WHEN wizard for adding of new ItemSet content is opened THEN 'Add ItemSet' button is displayed"()
+    def "WHEN wizard for ItemSet content is opened THEN 'Add ItemSet' button should be displayed"()
     {
-        when: "wizard for adding of new ItemSet content is opened"
+        when: "wizard for ItemSet content is opened"
         Content itemSetContent = buildItemSetContent();
         ContentWizardPanel wizard = selectSitePressNew( itemSetContent.getContentTypeName() );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
@@ -57,7 +57,7 @@ class Occurrences_ItemSet_0_0_Spec
         then: "required wizard's step is present "
         wizard.isWizardStepPresent( ITEM_SET_STEP );
 
-        and: "'Add ItemSet' button is displayed"
+        and: "'Add ItemSet' button should be displayed"
         itemSetViewPanel.isAddButtonPresent();
     }
 
@@ -84,10 +84,10 @@ class Occurrences_ItemSet_0_0_Spec
         and: "content should be not valid, because both required inputs are not filled"
         wizard.isContentInvalid();
 
-        and: "Publish button is disabled"
+        and: "Publish button should be disabled"
         !wizard.isPublishButtonEnabled();
 
-        and: "one Item Set is displayed"
+        and: "one Item Set should be displayed"
         itemSetViewPanel.getNumberOfSets() == 1;
     }
 

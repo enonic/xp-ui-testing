@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -45,7 +44,7 @@ public class ContentVersionInfoView
         String closeXpath = String.format( CLOSE_INFO_VIEW_BUTTON, versionId );
         if ( !isElementDisplayed( closeXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_close_version_info" );
+            saveScreenshot( "err_close_version_info" );
             throw new TestFrameworkException( "'close info' button not displayed! " + versionId );
         }
         getDisplayedElement( By.xpath( closeXpath ) ).click();
@@ -131,7 +130,7 @@ public class ContentVersionInfoView
         String status = String.format( ITEM_BY_ID + "/div[contains(@class,'status')]", versionId );
         if ( !isElementDisplayed( status ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_version_info_status" );
+            saveScreenshot( "err_version_info_status" );
             throw new TestFrameworkException( "status was not found!" );
         }
         return getDisplayedString( String.format( ITEM_BY_ID + "/div[contains(@class,'status')]", versionId ) );

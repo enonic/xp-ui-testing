@@ -42,9 +42,22 @@ class Occurrences_ImageSelector_0_0_Spec
         images.get( 0 ) == NORD_IMAGE_NAME;
     }
 
-    def "GIVEN saving of Image Selector-content (0:0) and two image selected WHEN content opened for edit THEN correct images should be present on the page "()
+    def "GIVEN wizard for Image Selector-content (0:0) is opened WHEN display name has been typed THEN red icon should not be displayed on the wizard page"()
     {
-        given: "new content with type Image Selector 0:0 was added'(2 images were selected)"
+        given: "wizard for Image Selector-content (0:0) is opened"
+        Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME );
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() );
+
+        when: "display name has been typed"
+        wizard.typeDisplayName( imageSelectorContent.getDisplayName() );
+
+        then: "red icon should not be displayed on the wizard page, because the input is not required"
+        !wizard.isContentInvalid();
+    }
+
+    def "GIVEN Image Selector-content (0:0) with two images has been added WHEN content is opened THEN correct images should be present on the page "()
+    {
+        given: "Image Selector-content (0:0) with two images has been added"
         Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
             imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -59,15 +72,15 @@ class Occurrences_ImageSelector_0_0_Spec
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "images are present with correct names"
+        and: "images should be present with correct names"
         images.get( 0 ) == NORD_IMAGE_NAME;
         and:
         images.get( 1 ) == BOOK_IMAGE_NAME;
     }
 
-    def "GIVEN saving of 'Image Selector-content' (0:0) and four images selected WHEN content opened for edit THEN correct images should be present on the page"()
+    def "GIVEN Image Selector-content (0:0) with four images has been added WHEN content opened for edit THEN correct images should be present on the page"()
     {
-        given: "new content with type Image Selector 0_0 added'"
+        given: "Image Selector-content (0:0) with four images has been added"
         TEST_IMAGE_SELECTOR_CONTENT =
             buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME, MAN_IMAGE_DISPLAY_NAME,
                                            FL_IMAGE_DISPLAY_NAME );
@@ -101,8 +114,9 @@ class Occurrences_ImageSelector_0_0_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "an image has been clicked"
-        formViewPanel.clickOnImage( MAN_IMAGE_NAME )
+        when: "image has been clicked"
+        formViewPanel.clickOnImage( MAN_IMAGE_NAME );
+        saveScreenshot( "img_selector_image_clicked" );
 
         then: "buttons 'Edit' and 'Remove' should be displayed"
         formViewPanel.isRemoveButtonDisplayed();
@@ -139,18 +153,18 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.getNumberFromRemoveButton() == 1;
     }
 
-    def "GIVEN content with 4 images opened for edit WHEN one of the images selected and 'Remove' button pressed THEN number of images reduced"()
+    def "GIVEN content with 4 images is opened WHEN one of the images was selected and 'Remove' button pressed THEN number of images should be reduced"()
     {
-        given: "content with an image-selector is opened(4 images is selected)"
+        given: "content with 4 images is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "an image has been clicked"
+        when: "one of the images was selected and 'Remove' button pressed"
         formViewPanel.clickOnImage( MAN_IMAGE_NAME );
         formViewPanel.clickOnRemoveButton();
         saveScreenshot( "img_sel_0_0_one_removed" );
 
-        then: "number of images reduced"
+        then: "number of images should be reduced"
         formViewPanel.getSelectedImages().size() == 3;
     }
 
@@ -162,11 +176,14 @@ class Occurrences_ImageSelector_0_0_Spec
         when: "data typed AND image not selected"
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
 
-        then: "'Publish' button on the wizard-toolbar is enabled"
+        then: "'Publish' button on the wizard-toolbar should be enabled, because image-inputs are not required"
         wizard.isPublishButtonEnabled();
+
+        and: "red icon should not be displayed on the wizard page"
+        !wizard.isContentInvalid();
     }
 
-    def "GIVEN creating of new content(0,0) AND no one image was selected WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
+    def "GIVEN creating of new content(0,0) AND no one image was selected WHEN 'Publish' button was pressed THEN the content should be with 'online' status"()
     {
         given: "creating of new content AND no one image was selected"
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
@@ -180,7 +197,7 @@ class Occurrences_ImageSelector_0_0_Spec
         when: "the name of the content was typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "the content has 'online' status"
+        then: "the content should be with 'online' status"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
         and: "the content is valid, because images are not required for this content"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
@@ -188,23 +205,21 @@ class Occurrences_ImageSelector_0_0_Spec
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 
-    def "GIVEN saving 'Image Selector 0:0' content with selected image WHEN 'Publish' button pressed THEN valid content with 'Online' status listed"()
+    def "GIVEN 'Image Selector 0:0' content with one image was saved WHEN 'Publish' button pressed THEN the content with 'Online' status should be listed"()
     {
         given: "new content with type 'Image Selector 0:0'"
         Content imageSelectorContent = buildImageSelector0_0_Content( BOOK_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
+
+        when: "the content has been published(from the wizard)"
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
-
-        when: "name of the content is typed in the search input"
+        and: "name of the content is typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "valid content with 'Online' status should be listed"
+        then: "the content with 'Online' status should be listed"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
-
-        and:
-        !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
 
         and: "correct notification message should be displayed"
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );

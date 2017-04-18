@@ -50,10 +50,10 @@ class DetailsPanel_Extended_VersionHistory_Spec
         String versionId = versionItem.getId();
         saveScreenshot( "version-history-expanded" );
 
-        then: "correct display name is shown"
+        then: "correct display name should be shown"
         versionItem.getDisplayName() == folderContent.getDisplayName();
 
-        and: "version-id is displayed"
+        and: "version-id should be present"
         !versionId.isEmpty();
 
         and: "close button for the version view should be displayed"
@@ -65,6 +65,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         and: "timestamp should be displayed on the info-view"
         String timestamp = versionItem.getTimeStamp( versionId );
         timestamp != null;
+
         and: "string successfully parsed to date time"
         LocalDateTime ldt = LocalDateTime.parse( timestamp, DateTimeFormatter.ofPattern( "yyy-MM-dd HH:mm:ss" ) );
     }
@@ -129,5 +130,4 @@ class DetailsPanel_Extended_VersionHistory_Spec
         saveScreenshot( "version-history-new-display-name" );
         versionItem.getDisplayName() == NEW_DISPLAY_NAME;
     }
-
 }

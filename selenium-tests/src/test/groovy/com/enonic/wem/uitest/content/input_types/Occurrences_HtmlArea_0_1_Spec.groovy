@@ -13,6 +13,7 @@ Tasks:
  XP-4746 Add selenium test to verify XP-4698
  xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
  */
+
 @Stepwise
 class Occurrences_HtmlArea_0_1_Spec
     extends Base_InputFields_Occurrences
@@ -27,7 +28,7 @@ class Occurrences_HtmlArea_0_1_Spec
     @Shared
     String NORWEGIAN_TEXT = "Hej og hå så kan det gå"
 
-    def "GIVEN creating of content with html-area WHEN link with norwegian text typed THEN correct string is present in the text area "()
+    def "GIVEN content with html-area was saved AND 'Link' inserted in the area WHEN the content is opened THEN correct link should be present in the html-area"()
     {
         given: "creating of content with html-area"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
@@ -39,44 +40,35 @@ class Occurrences_HtmlArea_0_1_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
 
-        when: "content opened for edit"
+        when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
         String text = formViewPanel.getInnerHtml();
 
-        then: "expected text present in the editor"
+        then: "expected link should be present in the editor"
         text.contains( NORWEGIAN_TEXT );
     }
 
-    def "WHEN wizard for adding a content with HtmlArea(0:1) opened THEN text area is present"()
+    def "WHEN wizard for HtmlArea(0:1) is opened THEN text area should be present"()
     {
-        when: "start to add a content with type 'HtmlArea 0:1'"
+        when: "wizard for HtmlArea(0:1) is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
-
         selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        then: "wizard with form view opened"
-        formViewPanel.isOpened();
-        and: "text area present"
-        formViewPanel.isEditorPresent();
+        then: "one html-area should be present"
+        formViewPanel.getNumberOfAreas() == 1;
+
+        and: "HtmlArea-toolbar should be hidden"
+        !formViewPanel.isEditorToolbarVisible();
     }
 
-    def "WHEN wizard opened AND the editor is not in edit mode THEN HtmlArea toolbar is hidden"()
+    def "GIVEN wizard for HtmlArea(0:1) is opened WHEN the editor in edit mode THEN HtmlArea-toolbar should be displayed"()
     {
-        when: "start to add a content with type 'HtmlArea 0:1'"
-        Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
-        selectSitePressNew( htmlAreaContent.getContentTypeName() );
-        HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-
-        then: "HtmlArea-toolbar is hidden"
-        !htmlAreaFormViewPanel.isEditorToolbarVisible();
-    }
-
-    def "WHEN wizard is opened AND the editor in edit mode THEN HtmlArea-toolbar should be displayed"()
-    {
-        when: "start to add a content with type 'HtmlArea 0:1'"
+        given: "start to add a content with type 'HtmlArea 0:1'"
         Content tinyMceContent = buildHtmlArea0_1_Content( TEST_TEXT );
         selectSitePressNew( tinyMceContent.getContentTypeName() );
+
+        when: "the editor in edit mode"
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         htmlAreaFormViewPanel.type( tinyMceContent.getData() );
 
@@ -84,14 +76,15 @@ class Occurrences_HtmlArea_0_1_Spec
         htmlAreaFormViewPanel.isEditorToolbarVisible();
     }
 
-    def "GIVEN existing content with HtmlArea editor (0:1) and text was saved WHEN content opened for edit THEN expected text should be present in the editor"()
+    def "GIVEN existing content with HtmlArea editor (0:1) is opened AND text was typed WHEN content opened again THEN expected text should be present in the editor"()
     {
-        given: "new content with type HtmlArea added'"
+        given: "existing content with HtmlArea editor (0:1) is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
+        and: "text has been typed"
         wizard.typeData( htmlAreaContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content is opened"
+        when: "content is opened again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         String text = htmlAreaFormViewPanel.getInnerHtml();
@@ -100,11 +93,12 @@ class Occurrences_HtmlArea_0_1_Spec
         text == EXPECTED_INNER_HTML;
     }
 
-    def "GIVEN existing content with HtmlArea editor (0:1) and text was not saved WHEN content opened for edit THEN text area should be empty"()
+    def "GIVEN wizard for content with HtmlArea editor (0:1) is opened and html-area is empty WHEN content opened for edit THEN text area should be empty"()
     {
-        given: "new content with type HtmlArea is added'"
+        given: "wizard for content with HtmlArea editor (0:1) is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
+        and: "the content saved, and html-area is empty"
         wizard.typeData( htmlAreaContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the content is opened"
