@@ -10,7 +10,7 @@ class TextArea_Spec
     extends Base_InputFields_Occurrences
 {
 
-    def "WHEN wizard for adding of TextArea-content is opened AND display name was typed THEN empty TextArea should be present AND Publish button should be disabled"()
+    def "WHEN wizard for adding of TextArea-content(not required) is opened AND display name was typed THEN empty TextArea should be present AND Publish button should be disabled"()
     {
         when: "wizard is opened(text area is not required )"
         Content textAreaContent = build_TextArea0_1_Content( "test" );
@@ -26,8 +26,8 @@ class TextArea_Spec
         and: "the content is valid, because the input is not required"
         !wizard.isContentInvalid();
 
-        and: "'Publish' button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        and: "'Publish' button should be enabled, because the input is not required"
+        wizard.isPublishButtonEnabled();
     }
 
     def "GIVEN wizard for TextArea-content(required) is opened WHEN display name was typed THEN red icon should be displayed on the wizard page, because the input is required"()
