@@ -1,6 +1,8 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -118,17 +120,40 @@ class PageTemplate_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing page-template WHEN page-template wizard is opened AND 'support'-option has been removed THEN the content should be displayed as invalid in the wizard"()
+    def "GIVEN existing page-template is opened WHEN 'support' has been removed THEN the content is getting not valid"()
     {
-        given: "site has been added"
+        given: "existing page-template is opened"
         ContentWizardPanel wizard = findAndSelectContent( TEST_TEMPLATE.getName() ).clickToolbarEdit();
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
         when: "'support'-option has been removed"
         formViewPanel.removeSupportOption( "Site" );
+        wizard.save();
         saveScreenshot( "support_option_removed" )
 
         then: "red icon should be displayed on the wizard, the content is invalid"
         wizard.isContentInvalid();
+    }
+
+    def "GIVEN existing page template with several versions WHEN the version with the selected 'support option' is restored THEN 'Site' content type should be selected"()
+    {
+        given: "existing page template with several versions"
+        ContentWizardPanel wizard = findAndSelectContent( TEST_TEMPLATE.getName() ).clickToolbarEdit();
+        PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
+        wizard.switchToBrowsePanelTab();
+
+        when: "version panel is opened"
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        and: "the version with selected 'support' option has been expanded"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        and: "the version is restored"
+        versionItem.doRestoreVersion( versionItem.getId() );
+        contentBrowsePanel.switchToBrowserTabByTitle( TEST_TEMPLATE.getDisplayName() );
+
+        then: "'support' option filter should be displayed"
+        formViewPanel.isSupportOptionFilterDisplayed();
+
+        and: "'Site' content type should be selected"
+        formViewPanel.getSelectedContentTypes().contains( "Site" );
     }
 }
