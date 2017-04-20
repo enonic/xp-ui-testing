@@ -17,9 +17,9 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
     @Shared
     UserStore TEST_USER_STORE;
 
-    def "WHEN 'System User Store' selected THEN correct header shown in statistics panel"()
+    def "WHEN 'System User Store' is selected THEN correct header shown in statistics panel"()
     {
-        when: "'System User Store' selected"
+        when: "'System User Store' is selected"
         userBrowsePanel.clickCheckboxAndSelectRow( SYSTEM_USER_STORE_NAME );
         saveScreenshot( "user-store-statistic-panel" );
         roleStatisticsPanel = new RoleStatisticsPanel( getSession() );
@@ -28,14 +28,14 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
         roleStatisticsPanel.getItemDisplayName() == SYSTEM_USER_STORE_DISPLAY_NAME;
     }
 
-    def "GIVEN creating new User Store WHEN saved and HomeButton clicked THEN correct display name shown in a statistics panel"()
+    def "GIVEN creating new User Store WHEN user was saved and HomeButton clicked THEN correct display name shown in a statistics panel"()
     {
         given: "creating new User Store"
         TEST_USER_STORE = buildUserStore( "us", "user-store-app-home", "selections spec" );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
         userStoreWizardPanel.typeData( TEST_USER_STORE );
 
-        when: "user store saved and HomeButton clicked"
+        when: "user store was saved and HomeButton clicked"
         userStoreWizardPanel.save();
         userBrowsePanel.pressAppHomeButton();
 
@@ -44,16 +44,16 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
         roleStatisticsPanel.getItemDisplayName().equals( TEST_USER_STORE.getDisplayName() );
     }
 
-    def "GIVEN existing user store WHEN display name changed THEN new display name displayed in a selections panel"()
+    def "GIVEN existing user store WHEN display name was changed THEN new display name should be displayed in the selections panel"()
     {
         given: "existing user store"
         UserStoreWizardPanel wizard = userBrowsePanel.clickOnRowByName( TEST_USER_STORE.getName() ).clickToolbarEdit();
 
-        when: "display name changed"
+        when: "display name was changed"
         String newDisplayName = NameHelper.uniqueName( "display-name" );
         wizard.typeDisplayName( newDisplayName ).save().close( newDisplayName );
 
-        then: "new display name displayed in a selections panel"
+        then: "new display name should be displayed in the selections panel"
         roleStatisticsPanel.getItemDisplayName().equals( newDisplayName );
     }
 }

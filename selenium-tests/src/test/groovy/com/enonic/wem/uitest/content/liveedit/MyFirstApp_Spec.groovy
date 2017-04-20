@@ -18,12 +18,12 @@ class MyFirstApp_Spec
     @Shared
     Content USA_CONTENT;
 
-    def "GIVEN creating of the new Site based on 'My First App' WHEN saved and wizard closed THEN new site should be listed"()
+    def "GIVEN wizard for new Site based on 'My First App' is opened WHEN data was saved and wizard closed THEN new site should be listed"()
     {
         given:
         MY_FIRST_SITE = buildMyFirstAppSite( "country-site" );
 
-        when: "data typed and saved and wizard closed"
+        when: "data was typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData(
             MY_FIRST_SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( "country_site_added" );

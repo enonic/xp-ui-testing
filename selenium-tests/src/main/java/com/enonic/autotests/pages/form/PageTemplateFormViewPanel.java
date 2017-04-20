@@ -1,6 +1,8 @@
 package com.enonic.autotests.pages.form;
 
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -24,6 +26,12 @@ public class PageTemplateFormViewPanel
 
     private ContentWizardPanel contentWizardPanel;
 
+    private final String SUPPORT_COMBO_BOX = "//div[contains(@id,'ContentTypeComboBox')]";
+
+    private final String SUPPORT_SELECTED_OPTION = SUPPORT_COMBO_BOX + "//div[contains(@id,'ContentTypeSelectedOptionView')]";
+
+    private final String SUPPORT_SELECTED_OPTION_DISPLAY_NAME = SUPPORT_SELECTED_OPTION + H6_DISPLAY_NAME;
+
     private final String SUPPORT_OPTION_FILTER_INPUT =
         FORM_VIEW + "//div[contains(@id,'ContentTypeFilter')]//input[contains(@class,'option-filter-input')]";
 
@@ -35,7 +43,7 @@ public class PageTemplateFormViewPanel
     private String REMOVE_BUTTON = SELECTED_OPTION_VIEW_BY_DISPLAY_NAME + "//a[@class='remove']";
 
     @FindBy(xpath = SUPPORT_OPTION_FILTER_INPUT)
-    private WebElement optionFilterInput;
+    private WebElement supportOptionFilterInput;
 
     public PageTemplateFormViewPanel( final TestSession session )
     {
@@ -58,12 +66,12 @@ public class PageTemplateFormViewPanel
 
     public boolean isSupportOptionFilterDisplayed()
     {
-        return optionFilterInput.isDisplayed();
+        return supportOptionFilterInput.isDisplayed();
     }
 
     public void selectSupportOption( String supports )
     {
-        optionFilterInput.sendKeys( supports );
+        supportOptionFilterInput.sendKeys( supports );
         sleep( 500 );
         String siteContentTypeGridItem = String.format( "//div[contains(@id,'NamesView')]/p[contains(.,'%s')]", supports );
         if ( !isElementDisplayed( siteContentTypeGridItem ) )
@@ -105,6 +113,10 @@ public class PageTemplateFormViewPanel
         saveScreenshot( NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
         waitUntilVisibleNoException( By.xpath( "//body[@data-portal-component-type='page']" ), Application.EXPLICIT_NORMAL );
+    }
 
+    public List<String> getSelectedContentTypes()
+    {
+        return getDisplayedStrings( By.xpath( SUPPORT_SELECTED_OPTION_DISPLAY_NAME ) );
     }
 }

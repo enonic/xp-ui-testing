@@ -30,7 +30,7 @@ class Restore_ComboBox_Spec
         formViewPanel.clickOnLastRemoveButton();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         then: "number of versions increased by one"
@@ -52,7 +52,7 @@ class Restore_ComboBox_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
 
-        then: "content displayed as valid in the grid"
+        then: "content should be displayed as valid in the grid"
         saveScreenshot( "combobox_valid_version" );
         !contentBrowsePanel.isContentInvalid( COMBOBOX_CONTENT.getName() );
 
@@ -64,17 +64,20 @@ class Restore_ComboBox_Spec
         !formViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN version of content with two images has been restored WHEN content opened THEN two options are displayed on the wizard"()
+    def "GIVEN version of content with two images has been restored WHEN content has been opened THEN two options should be displayed on the wizard"()
     {
         when: "version of content with two options has been restored and content opened"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
-        then: "two options are displayed in the form"
+        then: "two options should be displayed on the form"
         formViewPanel.getSelectedOptionValues().size() == 2;
 
-        and: "'publish' button is enabled"
+        and: "'publish' button is getting enabled"
         wizard.isPublishButtonEnabled();
+
+        and: "red icon should not be present on the wizard"
+        !wizard.isContentInvalid();
     }
 
     def "GIVEN existing combobox content with 3 versions WHEN version of content with one option has been restored THEN red icon should appear on the wizard-tab and in the grid"()
@@ -96,9 +99,6 @@ class Restore_ComboBox_Spec
 
         and: "red icon should appear on the wizard-tab"
         contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName() );
-        wizard.isContentInvalid();
-
-        then: "red icon should be present on the wizard-tab"
         wizard.isContentInvalid();
     }
 

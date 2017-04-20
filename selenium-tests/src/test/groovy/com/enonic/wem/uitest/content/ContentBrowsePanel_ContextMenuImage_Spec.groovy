@@ -1,19 +1,18 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.ContentMenuItem
-import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 
 class ContentBrowsePanel_ContextMenuImage_Spec
     extends BaseContentSpec
 {
     def "GIVEN an offline image WHEN context menu opened  THEN all menu-items have correct state"()
     {
-        when: "context menu opened"
+        when: "context menu is opened"
         filterPanel.typeSearchText( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.openContextMenu( IMPORTED_IMAGE_BOOK_NAME );
         saveScreenshot( "image-context-menu" );
 
-        then: "Delete menu item is enabled"
+        then: "Delete menu item should be enabled"
         contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.DELETE.getName() );
         and: "Preview menu item is disabled"
         !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.PREVIEW.getName() );

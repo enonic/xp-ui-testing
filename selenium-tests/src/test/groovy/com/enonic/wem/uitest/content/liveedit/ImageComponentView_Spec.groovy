@@ -23,9 +23,9 @@ class ImageComponentView_Spec
     @Shared
     String SITE_NAME;
 
-    def "GIVEN existing site is opened  WHEN  Image-component was inserted THEN Image Component View should be displayed on the page editor"()
+    def "GIVEN new site has been added and it opened WHEN  Image-component was inserted THEN Image Component View should be displayed on the page editor"()
     {
-        given: "adding of new site "
+        given: "new site has been added"
         SITE_NAME = NameHelper.uniqueName( "site" );
         addSiteWithAllInputTypes( SITE_NAME );
 
@@ -57,7 +57,7 @@ class ImageComponentView_Spec
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
 
-        when: "dropdown handler was clicked"
+        when: "drop-down handler was clicked"
         imageComponentView.clickOnTheDropDownHandler();
 
         then: "list of available options should be displayed"

@@ -75,11 +75,11 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         boolean beforeClean = contentBrowsePanel.exists( initialFolder.getName() );
 
-        when: "clicking clean filter "
+        when: "clicking on the 'clean filter' "
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "initial grid view displayed"
+        then: "initial grid view should be displayed"
         !beforeClean && contentBrowsePanel.exists( initialFolder.getName() );
     }
 
@@ -110,12 +110,12 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         saveScreenshot( "one-selection2" );
         boolean existsBeforeDeselect = contentBrowsePanel.exists( initialFolder.getName() );
 
-        when: "deselecting selection"
+        when: "deselecting of the selection"
         filterPanel.deselectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
         saveScreenshot( "one-selection-deselected" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
-        then: "initial grid view displayed"
+        then: "initial grid view should be displayed"
         !existsBeforeDeselect && contentBrowsePanel.exists( initialFolder.getName() );
     }
 
@@ -144,7 +144,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "filtered_text-search2" );
 
-        then: "initial grid view displayed"
+        then: "initial grid view should be displayed"
         contentBrowsePanel.getRowsCount() > 1 && contentBrowsePanel.exists( initialFolder.getName() );
     }
 }

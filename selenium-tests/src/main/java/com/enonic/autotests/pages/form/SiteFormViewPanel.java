@@ -13,7 +13,6 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDialog;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -37,8 +36,8 @@ public class SiteFormViewPanel
     private WebElement optionFilterInput;
 
     @FindBy(
-        xpath = "//div[contains(@id,'SiteConfiguratorComboBox' ) and contains(@class,'form-input composite-input rich-combobox')]//div[@class='dropdown-handle']")
-    private WebElement moduleSelectorComboBox;
+        xpath = "//div[contains(@id,'SiteConfiguratorComboBox' ) ]//button[@class='dropdown-handle']")
+    private WebElement appSelectorDropDownHandler;
 
 
     public SiteFormViewPanel( final TestSession session )
@@ -64,7 +63,7 @@ public class SiteFormViewPanel
         String checkboxXpath = FORM_VIEW + String.format( SLICK_ROW_BY_DISPLAY_NAME, appName ) + "//div[contains(@class,'checkboxsel')]";
         if ( !isElementDisplayed( checkboxXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_checkbox" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_app_checkbox" ) );
             throw new TestFrameworkException( "checkbox for application with name: " + appName + "  was not found!" );
         }
         findElement( By.xpath( checkboxXpath ) ).click();
@@ -72,7 +71,7 @@ public class SiteFormViewPanel
         boolean isVisible = waitUntilVisibleNoException( By.xpath( applyButtonXpath ), Application.EXPLICIT_NORMAL );
         if ( !isVisible )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_apply" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_app_apply" ) );
             throw new TestFrameworkException( "'apply' button for application with name: " + appName + "  was not found!" );
         }
         findElement( By.xpath( applyButtonXpath ) ).click();
@@ -85,7 +84,7 @@ public class SiteFormViewPanel
             FORM_VIEW + String.format( SITE_CONFIGURATOR_OPTION_BY_DISPLAY_NAME, appName ) + "//a[contains(@class,'remove')]";
         if ( !isElementDisplayed( removeButtonXpath ) )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_app_remove_btn" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_app_remove_btn" ) );
             throw new TestFrameworkException( "remove button for application with name: " + appName + "  was not found!" );
         }
         findElement( By.xpath( removeButtonXpath ) ).click();

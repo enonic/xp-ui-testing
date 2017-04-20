@@ -29,7 +29,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
         and: "child folder has been added"
         addContent( CHILD_FOLDER );
 
-        when: "Delete button is pressed and it confirmed"
+        when: "Delete button is pressed and deleting confirmed"
         contentBrowsePanel.clickToolbarDelete().clickOnDeleteButton();
 
         then: "confirmation dialog should be displayed"

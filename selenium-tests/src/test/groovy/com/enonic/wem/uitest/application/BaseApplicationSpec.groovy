@@ -1,6 +1,9 @@
 package com.enonic.wem.uitest.application
 
-import com.enonic.autotests.pages.modules.*
+import com.enonic.autotests.pages.modules.ApplicationBrowsePanel
+import com.enonic.autotests.pages.modules.ApplicationItemStatisticsPanel
+import com.enonic.autotests.pages.modules.InstallAppDialog
+import com.enonic.autotests.pages.modules.InstallAppDialog_MarketAppPanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.wem.uitest.BaseGebSpec
@@ -96,7 +99,7 @@ class BaseApplicationSpec
             InstallAppDialog_MarketAppPanel marketPanel = appDialog.getMarketAppPanel();
             marketPanel.doInstallApp( displayName );
             appDialog.clickOnCancelButton();
-            sleep( 4000 );
+            sleep( 8000 );
             applicationBrowsePanel.waitNewInstalledApplicationAppears( name, 10 );
             applicationBrowsePanel.waitApplicationStatus( name, "started" )
         }

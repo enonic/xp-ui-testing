@@ -28,9 +28,9 @@ class Occurrences_CustomRelation_0_1_Spec
     Content RELATIONSHIP_CONTENT;
 
 
-    def "setup: add a article content "()
+    def "setup: add a article content"()
     {
-        when: "article-content saved"
+        when: "article-content was added"
         TEST_ARTICLE_CONTENT = buildArticle_Content( "articletest", "title", "body" );
         selectSitePressNew( TEST_ARTICLE_CONTENT.getContentTypeName() ).typeData( TEST_ARTICLE_CONTENT ).save().close(
             TEST_ARTICLE_CONTENT.getDisplayName() );
@@ -39,22 +39,23 @@ class Occurrences_CustomRelation_0_1_Spec
         contentBrowsePanel.exists( TEST_ARTICLE_CONTENT.getName() );
     }
 
-    def "WHEN wizard for adding a content with Custom Relation(0:1) is opened THEN option filter should be present"()
+    def "WHEN wizard for a content with Custom Relation(0:1) is opened THEN option filter should be present"()
     {
-        when: "start to add a content with type 'Custom Relation 0:1'"
+        when: "wizard for a content with Custom Relation(0:1) is opened"
         Content relationship = buildCitationRelation0_1_Content( null );
-        selectSitePressNew( relationship.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
+        wizard.typeDisplayName( relationship.getDisplayName() );
         saveScreenshot( "wizard_custom_rel" );
 
-        then: "wizard with form view should be opened"
-        formViewPanel.isOpened();
-
-        and: "option filter should be displayed"
+        then: "option filter should be displayed"
         formViewPanel.isOptionFilterDisplayed();
 
-        and: "number of selcted files is 0"
+        and: "number of selected files is 0"
         formViewPanel.getNumberOfSelectedFiles() == 0;
+
+        and: "content should be valid, because the input is not required"
+        !wizard.isContentInvalid();
     }
 
     def "GIVEN saving of citation without selected article WHEN option was not selected THEN new content should be listed and it is valid"()
@@ -90,7 +91,7 @@ class Occurrences_CustomRelation_0_1_Spec
 
     def "WHEN existing citation content with selected article is opened THEN correct article should be shown in selected options"()
     {
-        when: "existing citation content is opened"
+        when: "existing 'citation' content is opened"
         findAndSelectContent( RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
         saveScreenshot( "citation-with-article" );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );

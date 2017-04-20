@@ -33,50 +33,50 @@ class FieldSet_Spec
 
     def "GIVEN adding a content with a fieldset WHEN all required fields are typed THEN content is valid in the grid"()
     {
-        given: "start to add a content with a 'fieldset'"
+        given: "'fieldset' content with all required values was added"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
         wizard.typeData( FIELDSET_CONTENT ).save();
 
-        when: "data typed"
+        when: "wizard was not closed and navigated to the grid"
         wizard.switchToBrowsePanelTab();
         saveScreenshot( "test_fieldset_valid" );
 
-        then: "red icon not present in the browse panel"
+        then: "red icon should not be present in the browse panel, because all required inputs is not empty"
         filterPanel.typeSearchText( FIELDSET_CONTENT.getName() );
         !contentBrowsePanel.isContentInvalid( FIELDSET_CONTENT.getName() );
     }
 
-    def "GIVEN adding a content with type fieldset WHEN required textline is empty THEN validation message is displayed under the textline"()
+    def "GIVEN wizard for 'fieldset' is opened WHEN required textline is empty THEN validation message should be displayed under the textline"()
     {
-        given: "start to add a content with a fieldset"
+        given: "wizard for 'fieldset' is opened"
         FIELDSET_CONTENT = build_FieldSet_Content( "", HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
 
-        when: "data typed"
+        when: "data was typed but required text-line is empty"
         wizard.typeData( FIELDSET_CONTENT ).save();
         saveScreenshot( "test_fieldset_textline_empty" );
         TextLine1_1_FormViewPanel textLine1_1_formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
-        then: "validation message is displayed under the textline"
+        then: "validation message should be displayed under the text-line"
         textLine1_1_formViewPanel.isValidationMessagePresent();
 
-        and: "correct message is displayed"
+        and: "correct message should be displayed"
         textLine1_1_formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE
     }
 
-    def "GIVEN adding a content with type fieldset WHEN required text in the HTML-area is empty THEN content is not valid in the wizard"()
+    def "GIVEN wizard for 'fieldset' is opened WHEN required text in the HTML-area is empty THEN content is not valid in the wizard"()
     {
-        given: "start to add a content with a fieldset"
+        given: "wizard for 'fieldset' is opened"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, "", TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
 
-        when: "data typed"
+        when: "data was typed but the html-area is empty"
         wizard.typeData( FIELDSET_CONTENT ).save();
         saveScreenshot( "test_fieldset_hmlarea_empty" );
         HtmlArea0_1_FormViewPanel htmlArea0_1_formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        then: "correct message is displayed"
+        then: "correct message should be displayed"
         htmlArea0_1_formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE
     }
 
@@ -86,12 +86,12 @@ class FieldSet_Spec
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, "", TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
 
-        when: "data typed"
+        when: "data was typed but required double value is empty"
         wizard.typeData( FIELDSET_CONTENT ).save();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
         saveScreenshot( "test_fieldset_double_is_empty" );
 
-        then: "correct message is displayed"
+        then: "correct message should be displayed"
         doubleFormViewPanel.getValidationMessage() == "Min 2 occurrences required";
     }
 
