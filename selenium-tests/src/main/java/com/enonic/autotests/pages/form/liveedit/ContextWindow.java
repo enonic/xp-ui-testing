@@ -214,7 +214,7 @@ public class ContextWindow
         Robot robot = getRobot();
         robot.setAutoWaitForIdle( true );
         int xOffset = calculateOffsetX( liveEditFrameX );
-        robot.mouseMove( mainDivX + xOffset, mainDivY + 20 );
+        robot.mouseMove( mainDivX + xOffset, mainDivY + 80 );
         sleep( 1000 );
         int yOffset = calculateOffsetY( toolbarHeight, liveEditFrameY, headers );
         robot.mouseMove( mainDivX + xOffset, mainDivY + yOffset );
