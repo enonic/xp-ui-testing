@@ -37,13 +37,13 @@ class ContentPublishDialog_Spec
         dialog.getContentStatus( displayName ) == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN existing folder without child in the root WHEN the folder was selected and 'Publish' button clicked THEN 'Content publish' should appear without 'Include child' icon"()
+    def "GIVEN folder has been added in root directory WHEN the folder was selected and 'Publish' button clicked THEN 'Content publish' should appear without 'Include child' icon"()
     {
-        given: "existing folder in root"
+        given: "folder has been added in root directory"
         Content folderContent = buildFolderContent( "no_child", "content publish dialog" );
         addContent( folderContent );
 
-        when: "the folder selected and 'Publish' button pressed"
+        when: "the folder has been selected and 'Publish' button pressed"
         findAndSelectContent( folderContent.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
@@ -54,17 +54,17 @@ class ContentPublishDialog_Spec
         and: "'New' status should be displayed"
         contentPublishDialog.getContentStatus( folderContent.getDisplayName() ) == ContentStatus.NEW.getValue();
 
-        and: "'remove' button should be disabled for this content"
+        and: "'remove' button should be disabled for this content, because only one item is selected."
         !contentPublishDialog.isPublishItemRemovable( folderContent.getDisplayName() )
     }
 
     def "GIVEN parent content with a child WHEN the parent content is selected and 'Publish' button clicked THEN 'Content publish' dialog should appear with correct control elements"()
     {
-        setup: "add a parent folder"
+        setup: "parent folder has been added"
         PARENT_FOLDER = buildFolderContent( "publish_dialog", "content publish dialog" );
         addContent( PARENT_FOLDER );
 
-        and: "add one child to the parent folder"
+        and: "child folder has been added"
         filterPanel.typeSearchText( PARENT_FOLDER.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() )
         CHILD_FOLDER = buildFolderContentWithParent( "publish_dialog", "child-folder1", PARENT_FOLDER.getName() );

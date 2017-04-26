@@ -24,7 +24,7 @@ public class LauncherPanel
 
     private final String USERS_LINK = PANEL_DIV + "//a[contains(@href,'users')]//p[@class='app-name']";
 
-    private final String CONTENT_STUDIO_LINK = PANEL_DIV + "//a[contains(@href,'content-studio')]//p[@class='app-name']";
+    private final String CONTENT_STUDIO_LINK = PANEL_DIV + "//a[contains(@href,'contentstudio')]//p[@class='app-name']";
 
     private final String HOME_LINK = PANEL_DIV + "//a[@href='/admin/tool']";
 

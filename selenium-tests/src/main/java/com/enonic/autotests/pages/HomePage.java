@@ -20,7 +20,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class HomePage
     extends Application
 {
-    public static final String CONTENT_STUDIO_URL_PART = "content-studio";
+    public static final String CONTENT_STUDIO_URL_PART = "contentstudio";
 
     public static final String USER_MANAGER_URL_PART = "users";
 
