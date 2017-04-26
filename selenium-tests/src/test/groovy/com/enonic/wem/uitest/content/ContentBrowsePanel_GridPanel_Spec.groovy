@@ -40,34 +40,34 @@ class ContentBrowsePanel_GridPanel_Spec
 
     def "GIVEN one content is selected in the root WHEN refresh button was pressed THEN the row stays should be selected"()
     {
-        given:
+        given: "one content is selected ( root directory)"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
-        when:
+        when: "refresh button has been pressed"
         contentBrowsePanel.clickOnRefreshButton();
         saveScreenshot( "test_refresh_button_clicked" );
 
-        then:
+        then: "the row should be selected"
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN existing contents in the root WHEN checkbox for the first content is checked THEN first row should be blue"()
+    def "GIVEN content grid is opened WHEN checkbox for the first content is checked THEN first row should be blue"()
     {
-        given:
+        given: "content grid is opened"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
 
-        when:
+        when: "the first row is checked"
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
         saveScreenshot( "test_first_row_selected" );
 
-        then:
+        then: "first row should be blue"
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN existing Content is selected WHEN spacebar was pressed THEN row is no longer selected"()
+    def "GIVEN existing content is selected WHEN spacebar was pressed THEN row is no longer selected"()
     {
-        given: "existing Content is selected"
+        given: "existing content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
         saveScreenshot( "test_spacebar_before" );
@@ -80,13 +80,13 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 0;
     }
 
-    def "GIVEN existing content is selected WHEN 'Selection Controller' checkbox was clicked THEN row is no longer selected"()
+    def "GIVEN existing content is selected WHEN 'Selection Controller' checkbox has been clicked THEN row is no longer selected"()
     {
         given: "existing content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
         contentBrowsePanel.clickCheckboxAndSelectRow( contentNames.get( 0 ) );
 
-        when: "'Selection Controller' checkbox was clicked"
+        when: "'Selection Controller' checkbox has been clicked"
         contentBrowsePanel.clickOnSelectionController();
 
         then: "row is no longer selected"
@@ -111,11 +111,11 @@ class ContentBrowsePanel_GridPanel_Spec
     //#4727 'Preview' button should be disabled, when 'Selection Controller' has been unchecked( 'Clear Selection')
     def "GIVEN 'Selection Controller' is checked WHEN click on the 'Selection Controller' THEN it should be unchecked AND 'Preview', 'Delete' and 'New' buttons should be disabled"()
     {
-        given:
+        given: "'Selection Controller' is checked"
         contentBrowsePanel.clickOnSelectionController();
         saveScreenshot( "test_select_all" );
 
-        when: "'Selection Controller ' has been checked"
+        when: "'Selection Controller ' has been clicked"
         contentBrowsePanel.clickOnSelectionController();
         saveScreenshot( "test_unselect_all" );
 
@@ -132,9 +132,9 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.isNewButtonEnabled();
     }
 
-    def "GIVEN existing parent folder with a child WHEN the folder is selcted THEN 'expand icon' should be displayed for this folder"()
+    def "GIVEN existing parent folder WHEN the child folder has been added THEN 'expand icon' should be displayed for the parent folder"()
     {
-        given: "existing folder"
+        given: "parent folder has been added and selected"
         PARENT_CONTENT = buildFolderContent( "parentfolder", "folder-test" );
         CHILD_CONTENT = buildFolderContentWithParent( "child-content", "child folder", PARENT_CONTENT.getName() );
         addContent( PARENT_CONTENT );
@@ -147,15 +147,15 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.isExpanderPresent( PARENT_CONTENT.getName() )
     }
 
-    def "GIVEN existing parent folder with a child WHEN 'expand icon' for the content has been clicked THEN child content should be listed"()
+    def "GIVEN existing parent folder with a child WHEN 'expand icon' for the content has been clicked THEN child content should be displayed"()
     {
         given: "existing parent folder with a child is selected"
         findAndSelectContent( PARENT_CONTENT.getName() )
 
-        when: "'expand icon' for the content has been clicked"
+        when: "'expand icon' for the parent folder has been clicked"
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
-        then: "child content should be listed"
+        then: "child content should be displayed"
         contentBrowsePanel.exists( CHILD_CONTENT.getName() );
     }
 
