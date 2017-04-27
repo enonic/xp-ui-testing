@@ -57,7 +57,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         findAndSelectContent( FOLDER2.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
-        when: ""
+        when: "'remove' icon has been clicked "
         contentPublishDialog.removeItem( FOLDER2.getDisplayName() );
         saveScreenshot( "publish_wizard_sibling_node_removed" );
 
@@ -75,7 +75,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         findAndSelectContent( FOLDER2.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
-        and: ""
+        and: "'remove' icon has been clicked "
         contentPublishDialog.removeItem( FOLDER2.getDisplayName() );
 
         when: "'Publish' button has been pressed and the dialog is closed"
