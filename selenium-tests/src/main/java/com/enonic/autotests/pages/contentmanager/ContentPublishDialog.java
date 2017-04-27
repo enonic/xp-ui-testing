@@ -29,8 +29,6 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-    //private final String INCLUDE_OFFLINE_ITEMS = "//div[contains(@id,'Checkbox') and descendant::label[text()='Include offline items']]";
-
     private final String PUBLISH_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish')]]";
 
@@ -135,6 +133,25 @@ public class ContentPublishDialog
         if ( !isElementDisplayed( removeButton ) )
         {
             saveScreenshot( "err_remove_dependant" );
+            throw new TestFrameworkException( "remove icon was not found on the publish dialog!" );
+        }
+        findElement( By.xpath( removeButton ) ).click();
+        sleep( 300 );
+        return this;
+    }
+
+    public ContentPublishDialog removeItem( String itemDisplayName )
+    {
+        String xpath = String.format( ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME, itemDisplayName );
+        if ( !isElementDisplayed( xpath ) )
+        {
+            throw new TestFrameworkException( "publish item was not found!" + itemDisplayName );
+        }
+
+        String removeButton = xpath + "//div[@class='icon remove']";
+        if ( !isElementDisplayed( removeButton ) )
+        {
+            saveScreenshot( "err_remove_item" );
             throw new TestFrameworkException( "remove icon was not found on the publish dialog!" );
         }
         findElement( By.xpath( removeButton ) ).click();

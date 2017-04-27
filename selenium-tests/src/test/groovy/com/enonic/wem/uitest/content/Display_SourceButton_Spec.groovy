@@ -104,7 +104,6 @@ class Display_SourceButton_Spec
         ContentWizardPanel siteWizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = siteWizard.showComponentView();
 
-
         when: "new text component has been inserted"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         siteWizard.switchToLiveEditFrame();

@@ -204,14 +204,14 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getChildNames().size() == 0;
     }
 
-    def "GIVEN existing content is selected WHEN arrow down has been pressed THEN next row should be selected"()
+    def "GIVEN existing content is selected WHEN 'arrow down' has been pressed THEN next row should be selected"()
     {
         given:
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
         saveScreenshot( "test_arrow_down_before" );
 
-        when: "arrow down has been pressed"
+        when: "'arrow down' key has been pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_DOWN );
         saveScreenshot( "test_arrow_down_after" );
         then: " next row should be selected"

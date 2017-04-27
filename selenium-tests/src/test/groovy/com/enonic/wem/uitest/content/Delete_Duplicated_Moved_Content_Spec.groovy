@@ -32,22 +32,22 @@ class Delete_Duplicated_Moved_Content_Spec
         and: "name of copy of the site is typed"
         findAndSelectContent( site.getName() + "-copy" );
 
-        then: "site-copy is exists and expander is displayed"
+        then: "the copy of the deleted site should be present(with expander-icon)"
         contentBrowsePanel.isExpanderPresent( site.getName() + "-copy" );
     }
 
     def "GIVEN first-folder with a child AND the empty folder WHEN the child content moved to the empty folder AND first folder has been deleted THEN moved content should not be deleted"()
     {
-        given: "folder with a child AND the empty folder"
+        given: "parent folder has been added"
         Content parentFolder = buildFolderContent( "parent", "parent folder" );
         addContent( parentFolder );
         Content childFolder = buildFolderContent( "child", "child folder" );
         findAndSelectContent( parentFolder.getName() );
 
-        and: "parent folder with the child were added"
+        and: "child folder has been added"
         addContent( childFolder );
 
-        and: "one empty folder added"
+        and: "one more empty folder has been added(in root)"
         Content emptyFolder = buildFolderContent( "empty", "empty folder" );
         contentBrowsePanel.doClearSelection();
         addContent( emptyFolder );
@@ -57,7 +57,7 @@ class Delete_Duplicated_Moved_Content_Spec
             emptyFolder.getName() ).selectDestinationAndClickOnMove( emptyFolder.getName() );
         contentBrowsePanel.doClearSelection();
 
-        and: "first folder has been deleted"
+        and: "the parent folder has been deleted"
         findAndSelectContent( parentFolder.getName() ).clickToolbarDelete().doDelete();
         filterPanel.typeSearchText( childFolder.getName() );
         saveScreenshot( "moved_content_was_not_deleted" )
@@ -73,5 +73,4 @@ class Delete_Duplicated_Moved_Content_Spec
         deleteContentDialog.clickOnDeleteButton();
         return new ConfirmContentDeleteDialog( getSession() );
     }
-
 }

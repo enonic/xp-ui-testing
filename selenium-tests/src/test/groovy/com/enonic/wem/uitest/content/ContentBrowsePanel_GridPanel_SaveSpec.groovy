@@ -14,7 +14,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN creating new Content on root WHEN saved and wizard closed THEN new Content should be listed"()
+    def "GIVEN wizard is opened and data typed WHEN saved and wizard closed THEN new content should be listed"()
     {
         given: "creating new Content on root"
         PARENT_FOLDER = buildFolderContent( "parent-folder", "test folder" );
@@ -24,28 +24,28 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         when: "saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "new Content should be listed"
+        then: "new content should be listed"
         contentBrowsePanel.exists( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating new Content on root WHEN content saved and tab with the grid is switched THEN new Content should be listed"()
+    def "GIVEN wizard for folder is opened WHEN data has been saved THEN the folder should be present in the grid"()
     {
-        given: "creating new Content on root"
+        given: "wizard for folder is opened"
         Content rootContent = buildFolderContent( "folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() ).
             typeData( rootContent );
 
-        when: "content saved and tab with the grid is switched"
+        when: "the data has been saved"
         wizard.save();
         wizard.switchToBrowsePanelTab();
-        and: "the name of the content was typed"
+        and: "the name of the content is typed on the search input"
         filterPanel.typeSearchText( rootContent.getName() );
 
-        then: "new Content should be listed"
+        then: "the folder should be present in the grid"
         contentBrowsePanel.exists( rootContent.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing unexpanded folder WHEN saved and wizard closed THEN parent should still be unexpanded"()
+    def "GIVEN creating new Content beneath an existing unexpanded folder WHEN saved and wizard closed THEN parent folder should be collapsed"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder1", PARENT_FOLDER.getName() );
@@ -54,10 +54,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
         wizard.typeData( childContent );
 
-        when: "content saved and wizard closed"
+        when: "content has been saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "parent should still be unexpanded"
+        then: "parent folder should be collapsed"
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
@@ -77,65 +77,47 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing expanded WHEN saved and wizard closed THEN new Content should be listed beneath parent"()
+    def "GIVEN existing expanded folder is selected WHEN new content was added and wizard closed THEN parent folder should be expanded"()
     {
-        given: "creating new Content beneath an existing expanded content"
+        given: "creating of new content beneath the existing expanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder3", PARENT_FOLDER.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
         contentBrowsePanel.expandContent( PARENT_FOLDER.getPath() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
         wizard.typeData( childContent );
 
-        when: "child content saved and wizard closed"
+        when: "child content has been saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "new Content should be listed beneath parent"
+        then: "the child should be listed beneath the parent"
         contentBrowsePanel.exists( childContent.getName() );
-        and: "parent folder is expanded"
+        and: "parent folder should be expanded"
         contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing expanded WHEN content saved and tab with the grid is opened THEN new Content should be listed beneath parent"()
+    def "GIVEN existing child content is opened WHEN the name has been changed THEN the content should be listed with its new name"()
     {
-        given: "creating new Content beneath an existing expanded folder"
-        Content childContent = buildFolderContentWithParent( "folder", "child-folder4", PARENT_FOLDER.getName() );
-        contentBrowsePanel.expandContent( PARENT_FOLDER.getPath() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() );
-        wizard.typeData( childContent );
-
-        when: "content saved and tab with the grid is opened"
-        wizard.save();
-        wizard.switchToBrowsePanelTab();
-
-        then: "new Content should be listed beneath parent"
-        contentBrowsePanel.exists( childContent.getName() )
-        and: "and parent folder is expanded"
-        contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
-    }
-
-    def "GIVEN changing name of an existing Content WHEN saved and wizard closed THEN Content is listed with it's new name"()
-    {
-        given: "changing name of an existing Content"
+        given: "new child content has been added"
         Content contentToEdit = buildFolderContentWithParent( "edit-name", "child-folder5", PARENT_FOLDER.getName() );
         findAndSelectContent( PARENT_FOLDER.getName() );
         addContent( contentToEdit );
         contentBrowsePanel.doClearSelection();
+        and: "the child is opened"
         ContentWizardPanel contentWizard = findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab();
         String newName = NameHelper.uniqueName( "newname" );
 
-        when: "new name saved and wizard closed"
+        when: "new name has been saved and wizard closed"
         contentWizard.typeName( newName ).save().closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( newName )
 
-        then: "Content is listed with it's new name"
+        then: "the content should be listed with its new name"
         saveScreenshot( "test_content_edit_name" );
         contentBrowsePanel.exists( newName, true );
     }
 
-    def "GIVEN changing displayName of an existing Content WHEN saved and wizard closed THEN Content is listed with its new displayName"()
+    def "GIVEN existing child content is opened WHEN saved and wizard closed THEN Content is listed with its new displayName"()
     {
-        given: "changing of displayName of an existing Content"
+        given: "existing child content is opened"
         Content contentToEdit = buildFolderContentWithParent( "edit-displayname", "child-folder6", PARENT_FOLDER.getName() );
         findAndSelectContent( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
@@ -143,13 +125,13 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         contentBrowsePanel.doClearSelection();
         String newDisplayName = NameHelper.uniqueName( "display-name" );
+        and: "the content is opened and new display name is typed"
         findAndSelectContent( contentToEdit.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName( newDisplayName );
 
-
-        when: "new display-name saved and wizard closed"
+        when: "new display-name has been saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "content is listed with its new displayName"
+        then: "the content should be listed with its new displayName"
         filterPanel.typeSearchText( newDisplayName );
         contentBrowsePanel.exists( contentToEdit.getName() );
     }
