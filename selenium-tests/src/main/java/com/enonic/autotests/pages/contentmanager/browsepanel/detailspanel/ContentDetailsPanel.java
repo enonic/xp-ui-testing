@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -22,13 +23,16 @@ public class ContentDetailsPanel
 
     private final String WIDGET_SELECTOR_DROPDOWN = DETAILS_PANEL + "//div[contains(@id,'WidgetSelectorDropdown')]";
 
-    private final String VERSION_HISTORY_OPTION = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Version history']";
+    private final String VERSION_HISTORY_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Version history']";
 
-    private final String DEPENDENCIES_OPTION = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Dependencies']";
+    private final String DETAILS_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Details']";
+
+    private final String WIDGET_SELECTOR_OPTIONS =
+        WIDGET_SELECTOR_DROPDOWN + "//div[contains(@class,'slick-cell')]//div[contains(@id,'DefaultOptionDisplayValueViewer')]";
+
+    private final String DEPENDENCIES_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Dependencies']";
 
     private final String WIDGET_SELECTOR_DROPDOWN_HANDLER = WIDGET_SELECTOR_DROPDOWN + "//button[contains(@id,'DropdownHandle')]";
-
-    private final String INFO_WIDGET_TOGGLE_BUTTON = DETAILS_PANEL + "//div[contains(@id,'InfoWidgetToggleButton')]";
 
     private UserAccessWidgetItemView userAccessWidgetItemView;
 
@@ -81,13 +85,14 @@ public class ContentDetailsPanel
         }
         else
         {
+            //click on drop down handler and show options
             widgetSelectorDropDownHandler.click();
-            if ( !isElementDisplayed( DEPENDENCIES_OPTION ) )
+            if ( !isElementDisplayed( DEPENDENCIES_OPTION_ITEM ) )
             {
                 saveScreenshot( NameHelper.uniqueName( "err_dependencies_option" ) );
                 throw new TestFrameworkException( "dependencies option was not found!" );
             }
-            getDisplayedElement( By.xpath( DEPENDENCIES_OPTION ) ).click();
+            getDisplayedElement( By.xpath( DEPENDENCIES_OPTION_ITEM ) ).click();
             sleep( 700 );
             return dependenciesWidgetItemView;
         }
@@ -96,32 +101,52 @@ public class ContentDetailsPanel
     public AllContentVersionsView openVersionHistory()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
+        if ( !isElementDisplayed( VERSION_HISTORY_OPTION_ITEM ) )
         {
+            //click on drop down handler and show options
             widgetSelectorDropDownHandler.click();
         }
-        if ( !isElementDisplayed( VERSION_HISTORY_OPTION ) )
+        if ( !isElementDisplayed( VERSION_HISTORY_OPTION_ITEM ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_history_opt" ) );
             throw new TestFrameworkException( "Version history option was not found!" );
         }
-        getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION ) ).click();
+        getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION_ITEM ) ).click();
         sleep( 700 );
         AllContentVersionsView versions = new AllContentVersionsView( getSession() );
         versions.waitUntilLoaded();
         return versions;
     }
 
-    public ContentInfoWidget openInfoWidget()
+    public List<String> getMenuOptions()
     {
-        if ( !isElementDisplayed( INFO_WIDGET_TOGGLE_BUTTON ) )
+        //click on drop down handler and show options
+        widgetSelectorDropDownHandler.click();
+        sleep( 300 );
+        return getDisplayedStrings( By.xpath( WIDGET_SELECTOR_OPTIONS ) );
+    }
+
+    public ContentInfoWidget openDetailsWidget()
+    {
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        ContentInfoWidget detailsWidget = new ContentInfoWidget( getSession() );
+        if ( detailsWidget.isDisplayed() )
         {
-            saveScreenshot( NameHelper.uniqueName( "err_info_opt" ) );
-            throw new TestFrameworkException( "Info widget was not opened!" );
+            return detailsWidget;
         }
-        getDisplayedElement( By.xpath( INFO_WIDGET_TOGGLE_BUTTON ) ).click();
+        if ( !isElementDisplayed( DETAILS_OPTION_ITEM ) )
+        {
+            //click on drop down handler and show options
+            widgetSelectorDropDownHandler.click();
+        }
+        if ( !isElementDisplayed( DETAILS_OPTION_ITEM ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_details_opt" ) );
+            throw new TestFrameworkException( "Details option was not found!" );
+        }
+        getDisplayedElement( By.xpath( DETAILS_OPTION_ITEM ) ).click();
         sleep( 700 );
-        return new ContentInfoWidget( getSession() );
+        return detailsWidget;
     }
 
     public boolean isOpened( String contentDisplayName )

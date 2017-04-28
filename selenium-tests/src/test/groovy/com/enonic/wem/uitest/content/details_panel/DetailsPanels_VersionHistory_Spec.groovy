@@ -20,10 +20,10 @@ class DetailsPanels_VersionHistory_Spec
         folderContent = buildFolderContent( "version_h_", "version_history_test" );
         addContent( folderContent );
 
-        and: "the content selected"
+        and: "the content is selected"
         findAndSelectContent( folderContent.getName() );
 
-        when: "'Version History' option was selected'"
+        when: "'Version History' option has been selected'"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         then: "panel with all versions of the content should be loaded"

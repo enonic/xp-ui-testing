@@ -12,20 +12,30 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 
+/**
+ * 'Details Info Widget' contains  Status view, User Access View,Properties View, Attachments View
+ */
 public class ContentInfoWidget
     extends Application
 {
-    private final String STATUS_TEXT = ContentDetailsPanel.DETAILS_PANEL + "//div[contains(@id,'StatusWidgetItemView')]/span";
+    private final String CONTAINER = "//div[contains(@id,WidgetView)]";
+
+    private final String STATUS_TEXT = CONTAINER + "//div[contains(@id,'StatusWidgetItemView')]/span";
 
     private final String PROPERTIES_DL = "//div[contains(@id,'PropertiesWidgetItemView')]/dl";
 
-    private final String PROPERTIES_DT = PROPERTIES_DL + "//dt";
+    private final String PROPERTIES_DT = CONTAINER + PROPERTIES_DL + "//dt";
 
-    private final String PROPERTIES_DD = PROPERTIES_DL + "//dd";
+    private final String PROPERTIES_DD = CONTAINER + PROPERTIES_DL + "//dd";
 
     public ContentInfoWidget( final TestSession session )
     {
         super( session );
+    }
+
+    public boolean isDisplayed()
+    {
+        return waitUntilVisibleNoException( By.xpath( CONTAINER ), 2 );
     }
 
     public String getContentStatus()

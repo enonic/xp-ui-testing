@@ -15,7 +15,9 @@ import java.time.LocalDate
 /**
  *
  * Tasks:
- * xp-ui-testing#17 Add Selenium tests for "First Published" field in content*/
+ * xp-ui-testing#17 Add Selenium tests for "First Published" field in content
+ * xp-ui-testing#44 Update tests for 'Details Panel' in order to new changes
+ * */
 @Stepwise
 class ContentInfoWidget_Spec
     extends BaseContentSpec
@@ -33,7 +35,7 @@ class ContentInfoWidget_Spec
         when: "details panel opened and widget is shown"
         filterPanel.typeSearchText( FOLDER.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickOnDetailsToggleButton();
-        ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "folder_info_widget_opened1" );
         HashMap<String, String> props = contentInfo.getContentProperties();
 
@@ -71,7 +73,7 @@ class ContentInfoWidget_Spec
         when: "details panel opened and widget is shown"
         filterPanel.typeSearchText( content.getName() );
         contentBrowsePanel.selectContentInTable( content.getName() ).clickOnDetailsToggleButton();
-        ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         HashMap<String, String> props = contentInfo.getContentProperties();
         saveScreenshot( "info-widget-opened" );
 
@@ -109,7 +111,7 @@ class ContentInfoWidget_Spec
         when: "the folder has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "info_widget-content-published" );
         HashMap<String, String> props = contentInfo.getContentProperties();
 
@@ -130,7 +132,7 @@ class ContentInfoWidget_Spec
         when: "content has been updated"
         wizard.typeDisplayName( "new display name" ).save().closeBrowserTab().switchToBrowsePanelTab()
         contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "info_widget_folder_modified" );
 
         then: "status is getting 'modified'"
@@ -140,7 +142,7 @@ class ContentInfoWidget_Spec
         contentInfo.getContentProperties().get( ContentInfoTerms.FIRST_PUBLISHED.getValue() ).contains( LocalDate.now().toString() );
     }
 
-    def "GIVEN existing folder with 'Modified' status  WHEN content has been deleted THEN 'Deleted' status appears on the 'Detail Panel'"()
+    def "GIVEN existing folder with 'Modified' status  WHEN content has been deleted THEN 'Deleted' status appears on the 'Details Panel'"()
     {
         given: "existing folder with 'Modified' status"
         filterPanel.typeSearchText( FOLDER.getName() )
@@ -148,7 +150,7 @@ class ContentInfoWidget_Spec
         when: "content has been deleted"
         contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickToolbarDelete().doDelete();
         contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentInfoWidget contentInfo = contentDetailsPanel.openInfoWidget();
+        ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "det_panel_content_deleted" )
 
         then: "'Deleted' status appears on the 'Detail Panel'"
