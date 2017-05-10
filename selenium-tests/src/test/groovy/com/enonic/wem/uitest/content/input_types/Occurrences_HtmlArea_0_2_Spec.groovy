@@ -21,10 +21,10 @@ class Occurrences_HtmlArea_0_2_Spec
     String TEST_TEXT2 = "htmlArea text2";
 
     @Shared
-    String EXPECTED_TEXT1 = "<div>" + TEST_TEXT1 + "</div>";
+    String DEFAULT_EXPECTED_TEXT1 = "<p>" + TEST_TEXT1 + "</p>";
 
     @Shared
-    String EXPECTED_TEXT2 = "<div>" + TEST_TEXT2 + "</div>";
+    String DEFAULT_EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
 
     def "WHEN wizard for adding a content with htmlArea(0:2) is opened THEN one text area should be present "()
     {
@@ -101,9 +101,9 @@ class Occurrences_HtmlArea_0_2_Spec
         List<String> strings = formViewPanel.getInnerHtmlFromAreas();
 
         then: "correct values of strings are showed in both text areas"
-        strings.contains( EXPECTED_TEXT1 );
+        strings.contains( DEFAULT_EXPECTED_TEXT1 );
         and:
-        strings.contains( EXPECTED_TEXT2 );
+        strings.contains( DEFAULT_EXPECTED_TEXT2 );
     }
 
     private Content buildHtmlArea0_2_Content( long numberOfEditors, String... text )

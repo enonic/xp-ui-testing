@@ -29,13 +29,13 @@ class Occurrences_HtmlArea_0_0_Spec
     String TEST_TEXT3 = "html area text3";
 
     @Shared
-    String EXPECTED_TEXT1 = "<div>" + TEST_TEXT1 + "</div>";
+    String DEFAULT_EXPECTED_TEXT1 = "<p>" + TEST_TEXT1 + "</p>";
 
     @Shared
-    String EXPECTED_TEXT2 = "<div>" + TEST_TEXT2 + "</div>";
+    String DEFAULT_EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
 
     @Shared
-    String EXPECTED_TEXT3 = "<div>" + TEST_TEXT3 + "</div>";
+    String DEFAULT_EXPECTED_TEXT3 = "<p>" + TEST_TEXT3 + "</p>";
 
 
     def "WHEN wizard for 'HtmlArea 0:0' content-type is opened THEN html-area should be present AND 'Add' button should be displayed"()
@@ -84,7 +84,7 @@ class Occurrences_HtmlArea_0_0_Spec
         then: "expected text should be present in the editor"
         actual.size() == 1;
         and:
-        actual.get( 0 ) == EXPECTED_TEXT1;
+        actual.get( 0 ) == DEFAULT_EXPECTED_TEXT1;
     }
 
     def "GIVEN wizard for HtmlArea(0:0) is opened WHEN button 'Add' was clicked 3 times THEN three text area should be present"()
@@ -117,7 +117,7 @@ class Occurrences_HtmlArea_0_0_Spec
         then: "one empty area present"
         strings.size() == 1;
         and: "area should be empty"
-        strings.get( 0 ) == BaseHtmlAreaFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
+        strings.get( 0 ) == BaseHtmlAreaFormViewPanel.DEFAULT_EMPTY_TEXT_AREA_CONTENT;
     }
 
     def "GIVEN new HtmlArea content with two areas was added WHEN content is opened THEN two editors with correct strings should be present"()
@@ -136,9 +136,9 @@ class Occurrences_HtmlArea_0_0_Spec
         then: "two areas with correct text should be displayed"
         strings.size() == 2;
         and:
-        strings.contains( EXPECTED_TEXT1 );
+        strings.contains( DEFAULT_EXPECTED_TEXT1 );
         and:
-        strings.contains( EXPECTED_TEXT2 );
+        strings.contains( DEFAULT_EXPECTED_TEXT2 );
     }
 
     def "GIVEN new HtmlArea content with three areas was added WHEN the content is opened THEN tree editors with correct strings should be present"()
@@ -157,11 +157,11 @@ class Occurrences_HtmlArea_0_0_Spec
         then: "three areas with correct text should be present"
         strings.size() == 3;
         and:
-        strings.contains( EXPECTED_TEXT1 );
+        strings.contains( DEFAULT_EXPECTED_TEXT1 );
         and:
-        strings.contains( EXPECTED_TEXT2 );
+        strings.contains( DEFAULT_EXPECTED_TEXT2 );
         and:
-        strings.contains( EXPECTED_TEXT3 );
+        strings.contains( DEFAULT_EXPECTED_TEXT3 );
     }
 
     private Content buildHtmlArea0_0_Content( long numberOfEditors, String... text )

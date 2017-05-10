@@ -30,7 +30,7 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     private final String SOURCE_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Source code']";
 
-    public static final String EMPTY_TEXT_AREA_CONTENT = "<div><br></div>";
+    public static final String DEFAULT_EMPTY_TEXT_AREA_CONTENT = "<p><br data-mce-bogus=\"1\"></p>";
 
     public static final String NUMBER_OF_EDITORS = "number-of-editors";
 

@@ -23,7 +23,7 @@ class Occurrences_HtmlArea_0_1_Spec
     String TEST_TEXT = "html area text";
 
     @Shared
-    String EXPECTED_INNER_HTML = "<div>" + TEST_TEXT + "</div>";
+    String DEFAULT_EXPECTED_INNER_HTML = "<p>" + TEST_TEXT + "</p>";
 
     @Shared
     String NORWEGIAN_TEXT = "Hej og hå så kan det gå"
@@ -90,7 +90,7 @@ class Occurrences_HtmlArea_0_1_Spec
         String text = htmlAreaFormViewPanel.getInnerHtml();
 
         then: "expected text should be present in the editor"
-        text == EXPECTED_INNER_HTML;
+        text == DEFAULT_EXPECTED_INNER_HTML;
     }
 
     def "GIVEN wizard for content with HtmlArea editor (0:1) is opened and html-area is empty WHEN content opened for edit THEN text area should be empty"()
@@ -106,7 +106,7 @@ class Occurrences_HtmlArea_0_1_Spec
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "text area should be empty"
-        htmlAreaFormViewPanel.getInnerHtml() == BaseHtmlAreaFormViewPanel.EMPTY_TEXT_AREA_CONTENT;
+        htmlAreaFormViewPanel.getInnerHtml() == BaseHtmlAreaFormViewPanel.DEFAULT_EMPTY_TEXT_AREA_CONTENT;
     }
     // verifies the XP-4698
     def "GIVEN 'Insert Link' modal dialog is opened WHEN the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog"()
