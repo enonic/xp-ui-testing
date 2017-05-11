@@ -144,7 +144,7 @@ public class LiveFormPanel
 
     public String getTextFromTextComponent()
     {
-        String textPath = "//section/div";
+        String textPath = "//section/p";
         if ( !isElementDisplayed( TEXT_COMPONENT_VIEW + textPath ) )
         {
             saveScreenshot( "err_text_component_not_found" );
