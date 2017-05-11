@@ -77,7 +77,7 @@ class Occurrences_HtmlArea_0_2_Spec
         formViewPanel.removeLastTextArea();
         saveScreenshot( "one_htmlarea_removed" );
 
-        then: "button 'Add' should be present on page"
+        then: "button 'Add' should be present on the page"
         formViewPanel.isAddButtonPresent();
 
         and: "one text area should be present"
@@ -87,15 +87,15 @@ class Occurrences_HtmlArea_0_2_Spec
         beforeRemoving == 2;
     }
 
-    def "GIVEN wizard opened and two strings typed into two text areas and content saved WHEN content opened for edit THEN both strings saved correctly"()
+    def "GIVEN content with type 'HtmlArea 0:2'  has been added and two string were typed WHEN the content is opened THEN both strings saved correctly"()
     {
-        given: "add a content with type 'HtmlArea 0:2'"
+        given: "content with type 'HtmlArea 0:2' has been added"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1, TEST_TEXT2 );
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( "area0_2_saved" )
 
-        when: "just created content opened"
+        when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getInnerHtmlFromAreas();

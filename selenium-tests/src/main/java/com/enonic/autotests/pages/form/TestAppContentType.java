@@ -9,12 +9,12 @@ public enum TestAppContentType
     ":textline2_5" ), TAG0_5( ":tag0_5" ), TAG2_5( ":tag2_5" ), TAG_UNLIM( ":tag_unlim" ), COMBOBOX0_0( ":combobox0_0" ), COMBOBOX0_1(
     ":combobox0_1" ), COMBOBOX1_1( ":combobox1_1" ), COMBOBOX2_4( ":combobox2_4" ), SINGLE_SELECTOR_COMBOBOX0_1(
     ":ss_combobox0_1" ), SINGLE_SELECTOR_COMBOBOX1_1( ":ss_combobox1_1" ), TEXT_AREA( ":textarea" ), RADIO_BUTTONS(
-    ":radiobutton" ), HTMLAREA0_1( ":htmlarea0_1" ), HTMLAREA0_2( ":htmlarea0_2" ), HTMLAREA0_0( ":htmlarea0_0" ), IMAGE_SELCTOR0_0(
-    ":imageselector0_0" ), IMAGE_SELCTOR0_1( ":imageselector0_1" ), IMAGE_SELCTOR1_1( ":imageselector1_1" ), IMAGE_SELCTOR2_4(
-    ":imageselector2_4" ), DEFAULT_RELATION0_1( ":default_relation0_1" ), DEFAULT_RELATION2_4( ":default_relation2_4" ), CUSTOM_RELATION0_1(
-    ":custom-relationship0_1" ), ARTICLE( ":article" ), COUNTRY( ":country" ), CITY( ":city" ), ALL_INPUTS( ":all-inputs" ), FIELD_SET(
-    ":fieldset" ), CUSTOM_SELECTOR0_2( "custom-selector0_2" ), CUSTOM_SELECTOR1_1( "custom-selector1_1" ), ITEM_SET(
-    ":item-set0_0" ), ATTACHMENT1_1( ":attachment1_1" ), ATTACHMENT2_4( ":attachment2_4" );
+    ":radiobutton" ), HTMLAREA0_1( ":htmlarea0_1" ), HTMLAREA0_2( ":htmlarea0_2" ), HTMLAREA0_0( ":htmlarea0_0" ), HTMLAREA_DIV(
+    ":htmlarea_div" ), IMAGE_SELCTOR0_0( ":imageselector0_0" ), IMAGE_SELCTOR0_1( ":imageselector0_1" ), IMAGE_SELCTOR1_1(
+    ":imageselector1_1" ), IMAGE_SELCTOR2_4( ":imageselector2_4" ), DEFAULT_RELATION0_1( ":default_relation0_1" ), DEFAULT_RELATION2_4(
+    ":default_relation2_4" ), CUSTOM_RELATION0_1( ":custom-relationship0_1" ), ARTICLE( ":article" ), COUNTRY( ":country" ), CITY(
+    ":city" ), ALL_INPUTS( ":all-inputs" ), FIELD_SET( ":fieldset" ), CUSTOM_SELECTOR0_2( "custom-selector0_2" ), CUSTOM_SELECTOR1_1(
+    "custom-selector1_1" ), ITEM_SET( ":item-set0_0" ), ATTACHMENT1_1( ":attachment1_1" ), ATTACHMENT2_4( ":attachment2_4" );
 
     private String name;
 

@@ -140,7 +140,8 @@ public class ContentWizardStepForm
             formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         }
         else if ( contentTypeName.contains( TestAppContentType.HTMLAREA0_0.getName() ) ||
-            contentTypeName.contains( TestAppContentType.HTMLAREA0_2.getName() ) )
+            contentTypeName.contains( TestAppContentType.HTMLAREA0_2.getName() ) ||
+            contentTypeName.contains( TestAppContentType.HTMLAREA_DIV.getName() ) )
         {
             formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         }
