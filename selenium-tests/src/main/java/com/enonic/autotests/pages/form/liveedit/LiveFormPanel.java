@@ -229,7 +229,7 @@ public class LiveFormPanel
 
     public LiveFormPanel doubleClickOnTextComponent( String text )
     {
-        String textComponentXpath = TEXT_COMPONENT_VIEW + String.format( "//div[contains(.,'%s')]", text );
+        String textComponentXpath = TEXT_COMPONENT_VIEW + String.format( "//p[contains(.,'%s')]", text );
         WebElement textComponent = getDisplayedElement( By.xpath( textComponentXpath ) );
         buildActions().click( textComponent ).build().perform();
         buildActions().doubleClick( textComponent ).build().perform();
