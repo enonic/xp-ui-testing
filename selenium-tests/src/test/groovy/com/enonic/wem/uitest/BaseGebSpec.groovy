@@ -24,6 +24,7 @@ class BaseGebSpec
     @Shared
     TestSession session;
 
+/**Run code after each test method*/
     @Override
     def cleanup()
     {
@@ -95,7 +96,7 @@ class BaseGebSpec
         }
         browser.driver.manage().window().setSize( new Dimension( 1700, 1100 ) )
     }
-
+/**Run code before each test method*/
     def setup()
     {
         if ( browser.baseUrl == null )

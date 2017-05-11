@@ -38,8 +38,8 @@ class Occurrences_ImageSelector_0_0_Spec
         List<String> images = formViewPanel.getSelectedImages();
         images.size() == 1;
 
-        and: "image should be present on the form panel"
-        images.get( 0 ) == NORD_IMAGE_NAME;
+        and: "image displaye name should be present on the form panel"
+        images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
     }
 
     def "GIVEN wizard for Image Selector-content (0:0) is opened WHEN display name has been typed THEN red icon should not be displayed on the wizard page"()
@@ -73,9 +73,9 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "images should be present with correct names"
-        images.get( 0 ) == NORD_IMAGE_NAME;
+        images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
         and:
-        images.get( 1 ) == BOOK_IMAGE_NAME;
+        images.get( 1 ) == BOOK_IMAGE_DISPLAY_NAME;
     }
 
     def "GIVEN Image Selector-content (0:0) with four images has been added WHEN content opened for edit THEN correct images should be present on the page"()
@@ -99,13 +99,13 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "images are present with correct names"
-        images.get( 0 ) == NORD_IMAGE_NAME;
+        images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
         and:
-        images.get( 1 ) == BOOK_IMAGE_NAME;
+        images.get( 1 ) == BOOK_IMAGE_DISPLAY_NAME;
         and:
-        images.get( 2 ) == MAN_IMAGE_NAME;
+        images.get( 2 ) == MAN_IMAGE_DISPLAY_NAME;
         and:
-        images.get( 3 ) == FL_IMAGE_NAME;
+        images.get( 3 ) == FL_IMAGE_DISPLAY_NAME;
     }
 
     def "GIVEN content with an image-selector is opened WHEN one of the images clicked THEN buttons 'Edit' and 'Remove' appears"()
@@ -115,7 +115,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "image has been clicked"
-        formViewPanel.clickOnImage( MAN_IMAGE_NAME );
+        formViewPanel.clickOnImage( MAN_IMAGE_DISPLAY_NAME );
         saveScreenshot( "img_selector_image_clicked" );
 
         then: "buttons 'Edit' and 'Remove' should be displayed"
@@ -130,8 +130,8 @@ class Occurrences_ImageSelector_0_0_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "an image has been clicked"
-        formViewPanel.clickOnImage( MAN_IMAGE_NAME );
+        when: "the image has been clicked"
+        formViewPanel.clickOnImage( MAN_IMAGE_DISPLAY_NAME );
         and: "keyboard shortcut to 'Save' is pressed"
         wizard.pressSaveKeyboardShortcut();
         String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
@@ -147,7 +147,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "the checkbox near the image has been clicked"
-        formViewPanel.clickOnCheckboxAndSelectImage( MAN_IMAGE_NAME );
+        formViewPanel.clickOnCheckboxAndSelectImage( MAN_IMAGE_DISPLAY_NAME );
 
         then: "label for button 'Remove' has a correct number"
         formViewPanel.getNumberFromRemoveButton() == 1;
@@ -160,7 +160,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "one of the images was selected and 'Remove' button pressed"
-        formViewPanel.clickOnImage( MAN_IMAGE_NAME );
+        formViewPanel.clickOnImage( MAN_IMAGE_DISPLAY_NAME );
         formViewPanel.clickOnRemoveButton();
         saveScreenshot( "img_sel_0_0_one_removed" );
 

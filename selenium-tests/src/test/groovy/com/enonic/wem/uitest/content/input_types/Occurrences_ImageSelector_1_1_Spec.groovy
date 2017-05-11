@@ -93,7 +93,7 @@ class Occurrences_ImageSelector_1_1_Spec
         !formViewPanel.isOptionFilterIsDisplayed();
 
         and: "correct image is present on the page"
-        images.get( 0 ) == NORD_IMAGE_NAME;
+        images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
     }
 
     def "GIVEN 'Image Selector' content (with an image) is opened WHEN the image has been clicked THEN buttons 'Edit' and 'Remove' should appear"()
@@ -103,7 +103,7 @@ class Occurrences_ImageSelector_1_1_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "the image has been clicked"
-        formViewPanel.clickOnImage( NORD_IMAGE_NAME )
+        formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME )
 
         then: "buttons 'Edit' and 'Remove' should appear"
         formViewPanel.isRemoveButtonDisplayed();
@@ -118,7 +118,7 @@ class Occurrences_ImageSelector_1_1_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "image was clicked and 'Remove' button pressed"
-        formViewPanel.clickOnImage( NORD_IMAGE_NAME );
+        formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME );
         formViewPanel.clickOnRemoveButton();
 
         then: "buttons 'Edit' and 'Remove' is getting hidden"

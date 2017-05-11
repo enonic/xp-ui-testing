@@ -124,30 +124,36 @@ public class ImageSelectorFormViewPanel
         TestUtils.setCheckboxChecked( getSession(), checkbox.getAttribute( "id" ), value );
     }
 
-    public ImageSelectorFormViewPanel clickOnImage( String name )
+    public ImageSelectorFormViewPanel clickOnImage( String displayName )
     {
         List<WebElement> views = findElements( By.xpath( SELECTED_IMAGE_VIEW ) );
-
+        boolean imageClicked = false;
         List<WebElement> elements = findElements( By.xpath( SELECTED_IMAGES_NAMES ) );
         for ( int i = 0; i < elements.size(); i++ )
         {
-            if ( getImageLabel( elements.get( i ) ).equals( name ) )
+            if ( getImageLabel( elements.get( i ) ).equals( displayName ) )
             {
                 views.get( i ).click();
+                imageClicked = true;
                 break;
             }
+        }
+        if ( !imageClicked )
+        {
+            saveScreenshot( "err_click_on_image" );
+            throw new TestFrameworkException( "Image was not clicked! " + displayName );
         }
         sleep( 500 );
         return this;
     }
 
-    public ImageSelectorFormViewPanel clickOnCheckboxAndSelectImage( String imageName )
+    public ImageSelectorFormViewPanel clickOnCheckboxAndSelectImage( String imageDisplayName )
     {
-        String checkBox = String.format( DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageName );
+        String checkBox = String.format( DIV_CHECKBOX_OF_SELECTED_BY_NAME_IMAGE, imageDisplayName );
         if ( !isElementDisplayed( checkBox ) )
         {
-            saveScreenshot( "err_checkbox_" + imageName );
-            throw new TestFrameworkException( "checkbox for " + imageName );
+            saveScreenshot( "err_checkbox_" + imageDisplayName );
+            throw new TestFrameworkException( "checkbox for " + imageDisplayName );
         }
         WebElement ch = getDisplayedElement( By.xpath( checkBox ) );
         Actions builder = new Actions( getDriver() );

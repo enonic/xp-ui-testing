@@ -87,10 +87,10 @@ class Occurrences_ImageSelector_2_4_Spec
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "correct image should be present on the page"
-        imagesActual.get( 0 ) == NORD_IMAGE_NAME;
+        imagesActual.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
 
         and:
-        imagesActual.get( 1 ) == BOOK_IMAGE_NAME;
+        imagesActual.get( 1 ) == BOOK_IMAGE_DISPLAY_NAME;
     }
 
     def "GIVEN existing Image Selector-content  with two selected images AND one image was removed WHEN content is opened THEN one image should be present on the page"()
@@ -98,7 +98,7 @@ class Occurrences_ImageSelector_2_4_Spec
         given: "content with one required option opened for edit' and one option removed"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
-        formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
+        formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME ).clickOnRemoveButton();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when content selected in the grid and opened for edit again"
@@ -156,7 +156,7 @@ class Occurrences_ImageSelector_2_4_Spec
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "the image has been removed"
-        formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
+        formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME ).clickOnRemoveButton();
         saveScreenshot( "img_sel_2_4_remove" )
 
         then: "option filter should appear"

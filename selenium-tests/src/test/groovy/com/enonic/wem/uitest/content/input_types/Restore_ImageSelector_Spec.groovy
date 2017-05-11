@@ -20,7 +20,7 @@ class Restore_ImageSelector_Spec
 
     def "GIVEN creating new ImageSelector-content 2:4 WHEN one image was removed THEN number of versions should be increased by one"()
     {
-        given: "new ImageSelector-content 2:4 added"
+        given: "new ImageSelector-content 2:4 has been added"
         IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT.getContentTypeName() );
         wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -29,13 +29,13 @@ class Restore_ImageSelector_Spec
         when: "content is opened and one image was removed"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
-        formViewPanel.clickOnImage( NORD_IMAGE_NAME ).clickOnRemoveButton();
+        formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME ).clickOnRemoveButton();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "number of versions should increase by one"
+        then: "number of versions should be increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
