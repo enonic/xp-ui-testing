@@ -19,8 +19,8 @@
               <occurrences minimum="1" maximum="1"/>
             </input>
             <item-set name="minimum3">
-              <label>Minimum 3</label>
-              <occurrences minimum="3" maximum="0"/>
+              <label>My Item-set</label>
+              <occurrences minimum="1" maximum="0"/>
               <items>
                 <input name="label" type="TextLine">
                   <label>Label</label>
@@ -28,13 +28,6 @@
                 </input>
                 <input name="myRelation" type="ContentSelector">
                   <label>A single DEFAULT relation to another content</label>
-                  <occurrences minimum="0" maximum="1"/>
-                  <config>
-                    <relationship-type>system:reference</relationship-type>
-                  </config>
-                </input>
-                <input name="myLikeRelation" type="ContentSelector">
-                  <label>A single LIKE relation to another content</label>
                   <occurrences minimum="0" maximum="1"/>
                   <config>
                     <relationship-type>system:reference</relationship-type>
@@ -64,7 +57,7 @@
         </option>
       </options>
     </option-set>
-    <option-set name="checkOptionSet">
+    <option-set name="checkBoxMulti">
       <label>Multi selection</label>
       <expanded>true</expanded>
       <help-text>Multi selection checkbox option set</help-text>
@@ -83,27 +76,17 @@
           <label>Option 3</label>
           <help-text>Help text for Option 3</help-text>
           <items>
+            <input name="htmlarea_0_0" type="HtmlArea">
+              <label>HTML content 0:0</label>
+              <occurrences minimum="0" maximum="0"/>
+              <help-text>HTML Area</help-text>
+            </input>
+
             <input name="imageselector" type="ImageSelector">
               <label>Image selector</label>
               <indexed>true</indexed>
               <occurrences minimum="1" maximum="1"/>
               <config/>
-            </input>
-          </items>
-        </option>
-        <option name="option_4">
-          <label>Option 4</label>
-          <help-text>Help text for Option 4</help-text>
-          <items>
-            <input name="double" type="Double">
-              <label>Double</label>
-              <indexed>true</indexed>
-              <occurrences minimum="1" maximum="1"/>
-            </input>
-            <input name="long" type="Long">
-              <label>Long</label>
-              <indexed>true</indexed>
-              <occurrences minimum="0" maximum="1"/>
             </input>
           </items>
         </option>

@@ -38,6 +38,7 @@ import com.enonic.autotests.pages.form.TextLine1_0_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine1_1_FormViewPanel;
 import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel;
 import com.enonic.autotests.pages.form.TimeFormViewPanel;
+import com.enonic.autotests.pages.form.optionset.OptionSetFormView;
 import com.enonic.xp.data.PropertyTree;
 import com.enonic.xp.schema.content.ContentTypeName;
 
@@ -105,6 +106,10 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( TestAppContentType.TEXTLINE0_1.getName() ) )
         {
             formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( TestAppContentType.TEXTLINE0_1.getName() ) )
+        {
+            formViewPanel = new OptionSetFormView( getSession() );
         }
         else if ( contentTypeName.contains( TestAppContentType.TEXTLINE2_5.getName() ) )
         {
