@@ -27,6 +27,7 @@ import com.enonic.autotests.pages.form.ItemSetViewPanel;
 import com.enonic.autotests.pages.form.LongFormViewPanel;
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel;
 import com.enonic.autotests.pages.form.RelationshipFormView;
+import com.enonic.autotests.pages.form.SetInSetFormView;
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel;
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView;
 import com.enonic.autotests.pages.form.SiteFormViewPanel;
@@ -107,9 +108,13 @@ public class ContentWizardStepForm
         {
             formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
         }
-        else if ( contentTypeName.contains( TestAppContentType.TEXTLINE0_1.getName() ) )
+        else if ( contentTypeName.contains( TestAppContentType.OPTION_SET.getName() ) )
         {
             formViewPanel = new OptionSetFormView( getSession() );
+        }
+        else if ( contentTypeName.contains( TestAppContentType.SET_IN_SET.getName() ) )
+        {
+            formViewPanel = new SetInSetFormView( getSession() );
         }
         else if ( contentTypeName.contains( TestAppContentType.TEXTLINE2_5.getName() ) )
         {

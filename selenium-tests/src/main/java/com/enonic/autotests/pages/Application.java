@@ -56,6 +56,8 @@ public class Application
 
     protected final String DATA_TIME_PICKER_INPUT = "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]";
 
+    protected final String TEXT_INPUT = "//input[contains(@id,'TextInput')]";
+
     protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
 
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";

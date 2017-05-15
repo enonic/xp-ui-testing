@@ -72,7 +72,6 @@ class BaseGebSpec
                 getDriver().close();
             }
         }
-        // session.put( HomePage.APP_TAB_HANDLE, null );
         getDriver().switchTo().window( homeHandle );
     }
 

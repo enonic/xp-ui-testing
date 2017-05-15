@@ -15,7 +15,7 @@ public enum TestAppContentType
     ":default_relation2_4" ), CUSTOM_RELATION0_1( ":custom-relationship0_1" ), ARTICLE( ":article" ), COUNTRY( ":country" ), CITY(
     ":city" ), ALL_INPUTS( ":all-inputs" ), FIELD_SET( ":fieldset" ), CUSTOM_SELECTOR0_2( "custom-selector0_2" ), CUSTOM_SELECTOR1_1(
     "custom-selector1_1" ), ITEM_SET( ":item-set0_0" ), ATTACHMENT1_1( ":attachment1_1" ), ATTACHMENT2_4( ":attachment2_4" ), OPTION_SET(
-    ":optionset" );
+    ":optionset" ), SET_IN_SET( ":set-in-set" );
 
     private String name;
 
