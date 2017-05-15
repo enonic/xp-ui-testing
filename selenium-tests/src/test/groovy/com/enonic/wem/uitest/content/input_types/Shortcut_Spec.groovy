@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.utils.NameHelper
@@ -32,8 +33,9 @@ class Shortcut_Spec
 
         and: "navigate to the grid"
         wizard.switchToBrowsePanelTab();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         findAndSelectContent( name );
-        saveScreenshot( "shortcut_in_grid_invalid" );
+        saveScreenshot( "shortcut_is_invalid_in_grid" );
 
         then: "red icon should be present in the grid"
         contentBrowsePanel.isContentInvalid( name );
@@ -62,13 +64,13 @@ class Shortcut_Spec
 
     def "GIVEN existing shortcut without selected target is opened WHEN target was selected THEN red icon should not be displayed on the wizard tab"()
     {
-        given:"existing shortcut without selected target is opened"
+        given: "existing shortcut without selected target is opened"
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
         when: "target was selected"
         formViewPanel.selectTarget( TARGET_1 );
-        saveScreenshot( "shortcut_valid" );
+        saveScreenshot( "shortcut_is_valid" );
         wizard.save();
 
         then: "validation message should not be displayed"
@@ -80,7 +82,7 @@ class Shortcut_Spec
 
     def "GIVEN existing shortcut with selected target is opened WHEN target was removed THEN red icon should be present on the wizard tab"()
     {
-        given:"existing shortcut with selected target is opened"
+        given: "existing shortcut with selected target is opened"
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
