@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -170,8 +170,8 @@ public class MacroModalDialog
         WebElement optionsInput = getDisplayedElement( By.xpath( DIALOG_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) );
         clearAndType( optionsInput, macroName.getValue() );
         sleep( 500 );
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( macroName.getValue() );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( macroName.getValue() );
         switch ( macroName )
         {
             case TWITTER:

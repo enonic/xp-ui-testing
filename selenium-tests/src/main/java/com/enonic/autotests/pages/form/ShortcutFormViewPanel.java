@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -63,8 +63,8 @@ public class ShortcutFormViewPanel
     {
         clearAndType( optionFilterInput, targetName );
         sleep( 300 );
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( targetName );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( targetName );
         sleep( 300 );
         return this;
     }

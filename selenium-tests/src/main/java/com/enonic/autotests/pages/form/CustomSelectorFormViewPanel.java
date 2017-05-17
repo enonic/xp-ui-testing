@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -56,10 +56,10 @@ public class CustomSelectorFormViewPanel
 
     public void selectOption( String optionName )
     {
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         clearAndType( optionFilterInput, optionName );
         sleep( 400 );
-        richComboBoxInput.selectOption( optionName );
+        loaderComboBox.selectOption( optionName );
         sleep( 300 );
     }
 

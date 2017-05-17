@@ -11,7 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.LiveEditComponentContextMenu;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -136,8 +136,8 @@ public class LiveFormPanel
     {
         WebElement optionFilterInput = findElement( By.xpath( FRAGMENT_COMPONENT_VIEW + COMBOBOX_OPTION_FILTER_INPUT ) );
         clearAndType( optionFilterInput, fragmentDisplayName );
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( fragmentDisplayName );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( fragmentDisplayName );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return this;
     }

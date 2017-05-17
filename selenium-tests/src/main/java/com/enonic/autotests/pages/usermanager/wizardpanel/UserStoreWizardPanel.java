@@ -12,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
@@ -91,8 +91,8 @@ public class UserStoreWizardPanel
         getDisplayedElement( By.xpath( ID_PROVIDER_COMBOBOX_DROPDOWN_HANDLER ) ).click();
         clearAndType( idProviderOptiosnFilterInput, providerName );
         sleep( 2000 );
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( providerName );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( providerName );
         return this;
     }
 
@@ -135,8 +135,8 @@ public class UserStoreWizardPanel
     {
         clearAndType( principalsOptionsFilterInput, principalDisplayName );
         sleep( 400 );
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( principalDisplayName );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( principalDisplayName );
         sleep( 500 );
         return this;
     }

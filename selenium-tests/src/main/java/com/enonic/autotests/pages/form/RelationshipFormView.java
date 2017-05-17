@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -41,14 +41,14 @@ public class RelationshipFormView
     public FormViewPanel type( final PropertyTree data )
     {
         List<String> alreadySelected = getDisplayNamesOfSelectedFiles();
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         for ( final String imageDisplayName : data.getStrings( RELATIONSHIPS_PROPERTY ) )
         {
             if ( !alreadySelected.contains( imageDisplayName ) )
             {
                 clearAndType( optionFilterInput, imageDisplayName );
                 sleep( 700 );
-                richComboBoxInput.selectOption( imageDisplayName );
+                loaderComboBox.selectOption( imageDisplayName );
                 sleep( 300 );
             }
         }

@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.LoaderComboBox;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
  * Created on 5/12/2017.
@@ -11,7 +14,10 @@ import com.enonic.autotests.pages.Application;
 public class MultiSelectionOptionSetView
     extends Application
 {
-    private String CSS_CONTAINER = "div[id^='api.form.FormView'] div[id^='FormOptionSetOptionView']:has(div:contains('Multi selection'))";
+    private final String CONTAINER =
+        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::div[text()='Multi selection']]";
+
+    private final String OPTION_CHECKBOX = CONTAINER + CHECKBOX_ELEMENT;
 
     public MultiSelectionOptionSetView( final TestSession session )
     {
@@ -20,7 +26,26 @@ public class MultiSelectionOptionSetView
 
     public boolean isOpened()
     {
-        return findElements( By.cssSelector( CSS_CONTAINER ) ).size() > 0;
+        return isElementDisplayed( CONTAINER );
     }
 
+    public MultiSelectionOptionSetView clickOnCheckbox( int number )
+    {
+        if ( getDisplayedElements( By.xpath( OPTION_CHECKBOX ) ).size() >= number )
+        {
+            getDisplayedElements( By.xpath( OPTION_CHECKBOX ) ).get( number ).click();
+            sleep( 1000 );
+        }
+        return this;
+    }
+
+    public MultiSelectionOptionSetView selectImage( String imageName )
+    {
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        clearAndType( getDisplayedElement( By.xpath( COMBOBOX_OPTION_FILTER_INPUT ) ), imageName );
+        sleep( 700 );
+        loaderComboBox.selectOption( imageName );
+        sleep( 300 );
+        return this;
+    }
 }

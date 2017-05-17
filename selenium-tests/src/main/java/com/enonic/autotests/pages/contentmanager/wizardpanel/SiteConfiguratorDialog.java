@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.MacroModalDialog;
 import com.enonic.autotests.utils.NameHelper;
 
@@ -78,8 +78,8 @@ public class SiteConfiguratorDialog
         {
             return this;
         }
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( targetName );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( targetName );
         sleep( 400 );
         return this;
     }

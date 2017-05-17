@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -106,8 +106,8 @@ public class InsertLinkModalDialog
         WebElement optionsInput = getDisplayedElement( By.xpath( CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) );
         clearAndType( optionsInput, name );
         sleep( 500 );
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
-        richComboBoxInput.selectOption( name );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( name );
         return this;
     }
 

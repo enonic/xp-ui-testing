@@ -12,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.RichComboBoxInput;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.xp.data.PropertyTree;
 
@@ -69,12 +69,12 @@ public class ImageSelectorFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         for ( final String imageName : data.getStrings( IMAGES_PROPERTY ) )
         {
             clearAndType( optionFilterInput, imageName );
             sleep( 700 );
-            richComboBoxInput.selectOption( imageName );
+            loaderComboBox.selectOption( imageName );
             sleep( 300 );
         }
         return this;
@@ -82,10 +82,10 @@ public class ImageSelectorFormViewPanel
 
     public FormViewPanel selectOptionByPath( String imagePath, String imageDisplayName )
     {
-        RichComboBoxInput richComboBoxInput = new RichComboBoxInput( getSession() );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         clearAndType( optionFilterInput, imagePath );
         sleep( 700 );
-        richComboBoxInput.selectOption( imageDisplayName );
+        loaderComboBox.selectOption( imageDisplayName );
         sleep( 400 );
         return this;
     }

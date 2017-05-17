@@ -30,6 +30,7 @@ class Shortcut_Spec
 
         when: "name and display name has been typed"
         wizard.typeDisplayName( name ).save();
+        sleep( 1000 );
 
         and: "navigate to the grid"
         wizard.switchToBrowsePanelTab();
