@@ -9,6 +9,8 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 /**
  * Created  on 2/28/2017.
  */
@@ -70,7 +72,7 @@ public class InsertImageModalDialog
         return header.getText();
     }
 
-    public void selectImage( String displayName )
+    public InsertImageModalDialog selectImage( String displayName )
     {
         clearAndType( optionFilterInput, displayName );
         By imageBy = By.xpath( String.format( DIALOG_CONTAINER + H6_DISPLAY_NAME, displayName ) );
@@ -79,6 +81,8 @@ public class InsertImageModalDialog
             throw new TestFrameworkException( "image was not found! : " + displayName );
         }
         findElement( imageBy ).click();
+        sleep( 700 );
+        return this;
     }
 
     public InsertImageModalDialog waitForOpened()
@@ -118,9 +122,16 @@ public class InsertImageModalDialog
         return this;
     }
 
+    public InsertImageModalDialog clickOnInsertButton()
+    {
+        insertButton.click();
+        return this;
+    }
+
+
     public boolean waitForClosed()
     {
-        return waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), 2 );
+        return waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean isInsertButtonDisplayed()

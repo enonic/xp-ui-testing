@@ -15,7 +15,8 @@ import spock.lang.Stepwise
 /**
  * Tasks:
  * XP-4643 Add selenium tests to verify XP-3893
- * verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed , when site with inserted images was selected*/
+ * verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed , when site with inserted images was selected
+ * */
 @Stepwise
 class DetailsPanel_DependenciesWidgetItemView_Spec
     extends BaseContentSpec

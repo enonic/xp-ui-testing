@@ -10,6 +10,9 @@ import com.enonic.autotests.vo.contentmanager.Content
  * Tasks:
  * xp-ui-testing#18 Add Selenium tests for InsertImage modal dialog
  * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
+ *
+ * verifies:
+ * Error appears in the console when an Image has been inserted into HtmlArea #4957
  * */
 class HtmlArea_InsertImageDialog_Spec
     extends Base_InputFields_Occurrences
@@ -71,7 +74,7 @@ class HtmlArea_InsertImageDialog_Spec
         insertImageModalDialog.waitForClosed();
     }
 
-    def "GIVEN  InsertImageModalDialog is opened WHEN an image was inserted THEN Image toolbar should be displayed"()
+    def "GIVEN InsertImageModalDialog is opened WHEN an image was inserted THEN Image toolbar should be displayed"()
     {
         given: "InsertImageModalDialog is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
@@ -79,7 +82,7 @@ class HtmlArea_InsertImageDialog_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         InsertImageModalDialog insertImageModalDialog = formViewPanel.showToolbarAndClickOnInsertImageButton();
 
-        when: "image was inserted"
+        when: "image has been inserted"
         insertImageModalDialog.selectImage( "book" );
 
         then: "'Image toolbar' should be displayed"
@@ -102,5 +105,38 @@ class HtmlArea_InsertImageDialog_Spec
 
         and: "'Image Cropping' selector should be displayed"
         insertImageModalDialog.isCroppingSelectorDisplayed();
+    }
+    //verifies Error appears in the console when an Image has been inserted into HtmlArea #4957
+    def "GIVEN InsertImageModalDialog is opened WHEN an image has been inserted AND 'Insert' button pressed THEN InsertImageModalDialog should be closed"()
+    {
+        given: "InsertImageModalDialog is opened"
+        Content htmlAreaContent = buildHtmlArea0_1_Content( null );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        InsertImageModalDialog insertImageModalDialog = formViewPanel.showToolbarAndClickOnInsertImageButton();
+
+        when: "image has been inserted"
+        insertImageModalDialog.selectImage( "book" ).clickOnInsertButton();
+
+        then: "the dialog should be closed"
+        insertImageModalDialog.waitForClosed();
+    }
+    //verifies Error appears in the console when an Image has been inserted into HtmlArea #4957
+    def "GIVEN InsertImageModalDialog is opened ADN text is inserted WHEN an image has been inserted AND 'Insert' button pressed THEN InsertImageModalDialog should be closed"()
+    {
+        given: "creating of a HtmlArea content"
+        Content htmlAreaContent = buildHtmlArea0_1_Content( "test text" );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
+        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        and: "text has been typed"
+        formViewPanel.type( htmlAreaContent.getData() );
+        and: "InsertImageModalDialog is opened"
+        InsertImageModalDialog insertImageModalDialog = formViewPanel.showToolbarAndClickOnInsertImageButton();
+
+        when: "image has been inserted"
+        insertImageModalDialog.selectImage( "book" ).clickOnInsertButton();
+
+        then: "the dialog should be closed"
+        insertImageModalDialog.waitForClosed();
     }
 }
