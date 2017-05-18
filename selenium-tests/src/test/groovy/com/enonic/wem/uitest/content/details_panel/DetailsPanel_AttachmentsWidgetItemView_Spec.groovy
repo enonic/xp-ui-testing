@@ -15,7 +15,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
         contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
 
-        then: "Attachments Widget is displayed"
+        then: "'Attachments Widget' should be displayed"
         view.isDisplayed();
         and:
         view.isHasAttachments();
@@ -42,13 +42,13 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
         contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
 
-        then: "Attachments Widget is displayed"
+        then: "Attachments Widget should be displayed"
         view.isDisplayed();
 
-        and: "view has no any attachments"
+        and: "the view has no any attachments"
         !view.isHasAttachments();
 
-        and: "correct message displayed in the widget"
+        and: "correct message should be displayed in the widget"
         view.getMessage() == AttachmentsWidgetItemView.NO_ATTACHMENTS_MESSAGE;
     }
 }

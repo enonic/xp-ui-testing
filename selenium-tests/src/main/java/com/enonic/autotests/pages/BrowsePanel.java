@@ -97,6 +97,12 @@ public abstract class BrowsePanel
         super( session );
     }
 
+    public boolean isNoSelectionMessageDisplayed()
+    {
+        String xpath = "//div[@class='no-selection-container' and text()='You are wasting this space - select something!']";
+        return isElementDisplayed( xpath );
+    }
+
     public abstract BrowsePanel pressAppHomeButton();
 
     public abstract <T extends WizardPanel> T clickToolbarEdit();
@@ -701,7 +707,7 @@ public abstract class BrowsePanel
 
     public Long getViewportScrollTopValue()
     {
-        return (Long) ( (JavascriptExecutor) getDriver() ).executeScript(
+        return (Long) getJavaScriptExecutor().executeScript(
             "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
     }
 

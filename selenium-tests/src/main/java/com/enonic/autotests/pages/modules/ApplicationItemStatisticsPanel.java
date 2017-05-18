@@ -1,16 +1,13 @@
 package com.enonic.autotests.pages.modules;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.application.ApplicationInfo;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -126,8 +123,7 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getParts()
     {
-        return findElements( By.xpath( PARTS ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect(
-            Collectors.toList() );
+        return getDisplayedStrings( By.xpath( PARTS ) );
     }
 
     public boolean isPageHeaderPresent()
@@ -147,7 +143,7 @@ public class ApplicationItemStatisticsPanel
 
     public void scrollPanelToTop()
     {
-        ( (JavascriptExecutor) getDriver() ).executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
+        getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
         sleep( 1000 );
     }
 
@@ -184,22 +180,20 @@ public class ApplicationItemStatisticsPanel
             scrollTopValue += scrollTopValue;
         }
         getLogger().info( "header was not found! " + itemXpath );
-        TestUtils.saveScreenshot( getSession(), "scrolled_" + NameHelper.resolveScreenshotName( "panel" ) );
+        saveScreenshot( "scrolled_" + NameHelper.resolveScreenshotName( "panel" ) );
         return false;
     }
 
     public Long getPanelScrollTopValue( String panelId )
     {
-        return (Long) ( (JavascriptExecutor) getDriver() ).executeScript(
-            String.format( "return document.getElementById('%s').scrollTop", panelId ) );
+        return (Long) getJavaScriptExecutor().executeScript( String.format( "return document.getElementById('%s').scrollTop", panelId ) );
     }
 
     public long doScrollPanel( int value )
     {
         String id = getPanelId();
-        WebElement panel =
-            findElements( By.xpath( STATISTIC_PANEL_CONTAINER ) ).stream().filter( WebElement::isDisplayed ).findFirst().get();
-        ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollTop=arguments[1]", panel, value );
+        WebElement panel = getDisplayedElement( By.xpath( STATISTIC_PANEL_CONTAINER ) );
+        getJavaScriptExecutor().executeScript( "arguments[0].scrollTop=arguments[1]", panel, value );
         return getPanelScrollTopValue( id );
     }
 
@@ -218,10 +212,8 @@ public class ApplicationItemStatisticsPanel
 
     public int getScrollHeight( String applicationItemStatisticsPanelId )
     {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-
         String script = String.format( "return document.getElementById('%s').scrollHeight", applicationItemStatisticsPanelId );
-        Object obj = executor.executeScript( script );
+        Object obj = getJavaScriptExecutor().executeScript( script );
         int scrollHeight = Integer.valueOf( obj.toString() );
         return scrollHeight;
     }
@@ -236,7 +228,7 @@ public class ApplicationItemStatisticsPanel
 
     public List<String> getRelationShipTypes()
     {
-        return findElements( By.xpath( RELATIONSHIP_TYPES ) ).stream().map( WebElement::getText ).collect( Collectors.toList() );
+        return getDisplayedStrings( By.xpath( RELATIONSHIP_TYPES ) );
     }
 
     public List<String> getContentTypes()
@@ -257,27 +249,27 @@ public class ApplicationItemStatisticsPanel
 
     public boolean isVersionPresent()
     {
-        return findElements( By.xpath( VERSION ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( VERSION );
     }
 
     public boolean isKeyPresent()
     {
-        return findElements( By.xpath( KEY ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( KEY );
     }
 
     public boolean isSystemRequiredPresent()
     {
-        return findElements( By.xpath( SYSTEM_REQUIRED ) ).stream().filter( WebElement::isDisplayed ).count() > 0;
+        return isElementDisplayed( SYSTEM_REQUIRED );
     }
 
     public String getBuildDate()
     {
-        return findElements( By.xpath( BUILD_DATE ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
+        return getDisplayedString( BUILD_DATE );
     }
 
     public String getVersion()
     {
-        return findElements( By.xpath( VERSION ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
+        return getDisplayedString( VERSION );
     }
 
     public String getKey()
@@ -287,12 +279,16 @@ public class ApplicationItemStatisticsPanel
 
     public String getSystemRequired()
     {
-        return findElements( By.xpath( SYSTEM_REQUIRED ) ).stream().filter( WebElement::isDisplayed ).findFirst().get().getText();
-
+        return getDisplayedString( SYSTEM_REQUIRED );
     }
 
     public ApplicationInfo getApplicationInfo()
     {
         return ApplicationInfo.builder().buildDate( getBuildDate() ).version( getVersion() ).key( getKey() ).build();
+    }
+
+    public boolean isDisplayed()
+    {
+        return isElementDisplayed( STATISTIC_PANEL_CONTAINER );
     }
 }

@@ -3,6 +3,11 @@ package com.enonic.wem.uitest.application
 import com.enonic.autotests.pages.modules.UninstallApplicationDialog
 import spock.lang.Stepwise
 
+/**
+ * Tasks:
+ * xp-ui-testing#47 Add selenium test for XP #4842
+ *
+ * verifies : XP #4842*/
 @Stepwise
 class UninstallApplicationDialog_Spec
     extends BaseApplicationSpec
@@ -17,7 +22,7 @@ class UninstallApplicationDialog_Spec
         UninstallApplicationDialog dialog = applicationBrowsePanel.clickOnToolbarUninstall();
         dialog.waitUntilDialogLoaded();
 
-        then: "dialog is displayed"
+        then: "dialog should be displayed"
         dialog.isDisplayed();
 
         and: "correct header should be displayed"
@@ -66,7 +71,7 @@ class UninstallApplicationDialog_Spec
         and: "the application should not be uninstalled"
         applicationBrowsePanel.exists( GOOGLE_ANALYTICS_APP_NAME );
     }
-
+// verifies : XP #4842
     def "GIVEN 'UnInstallDialog' is opened WHEN 'Yes' button pressed THEN 'UnInstallDialog' not displayed AND the application should be uninstalled"()
     {
         given: "'UnInstallDialog' is opened"
@@ -82,5 +87,11 @@ class UninstallApplicationDialog_Spec
 
         and: "the application should be uninstalled"
         !applicationBrowsePanel.exists( GOOGLE_ANALYTICS_APP_NAME );
+
+        and: "Item statistic should not be displayed"
+        !applicationItemStatisticsPanel.isDisplayed();
+
+        and: "'You are wasting this space - select something' should be displayed"
+        applicationBrowsePanel.isNoSelectionMessageDisplayed();
     }
 }

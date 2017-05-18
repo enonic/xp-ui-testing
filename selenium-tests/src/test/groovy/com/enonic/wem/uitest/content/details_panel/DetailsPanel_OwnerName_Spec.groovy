@@ -58,7 +58,7 @@ class DetailsPanel_OwnerName_Spec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        when: "data typed and user saved"
+        when: "data typed and new user has been saved"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );
         userBrowsePanel.getFilterPanel().typeSearchText( TEST_USER.getDisplayName() );
 
@@ -98,7 +98,7 @@ class DetailsPanel_OwnerName_Spec
 
     def "GIVEN existing folder created by the the user WHEN details panel was opened THEN correct 'user name' is shown in the PropertiesWidgetItemView "()
     {
-        setup: "user is  'logged in'"
+        setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
@@ -121,7 +121,7 @@ class DetailsPanel_OwnerName_Spec
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        and: "just was copied folder is selected"
+        and: "just added folder is selected"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.clickOnDetailsToggleButton();
@@ -131,7 +131,7 @@ class DetailsPanel_OwnerName_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         String versionId = versionItem.getId();
 
-        then:"correct owner name should be displayed"
+        then: "correct 'owner name' should be displayed"
         saveScreenshot( "test_owner_version-history_user_name" );
         versionItem.getOwnerName( versionId ) == TEST_USER.getDisplayName();
     }
@@ -149,7 +149,7 @@ class DetailsPanel_OwnerName_Spec
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
         saveScreenshot( "test_owner_wizard" );
 
-        then: "correct owner should be shown in settings"
+        then: "correct 'owner' should be shown in settings"
         form.getOwner() == TEST_USER.getDisplayName();
     }
 

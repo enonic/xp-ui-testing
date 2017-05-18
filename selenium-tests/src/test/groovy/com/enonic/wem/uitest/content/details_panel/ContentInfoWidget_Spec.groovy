@@ -51,13 +51,13 @@ class ContentInfoWidget_Spec
         and: "correct value for 'application' present"
         props.get( ContentInfoTerms.APPLICATION.getValue() ).equals( "base" );
 
-        and: "correct owner is shown"
+        and: "correct owner should be displayed"
         props.get( ContentInfoTerms.OWNER.getValue() ).equals( "su" );
 
         and: "id value is not a null"
         props.get( ContentInfoTerms.ID.getValue() ) != null;
 
-        and: "correct modified and created dates are shown"
+        and: "correct modified and created dates should be shown"
         props.get( ContentInfoTerms.MODIFIED.getValue() ).contains( LocalDate.now().toString() );
 
         and:
@@ -153,7 +153,7 @@ class ContentInfoWidget_Spec
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "det_panel_content_deleted" )
 
-        then: "'Deleted' status appears on the 'Detail Panel'"
+        then: "'Deleted' status should appear on the 'Detail Panel'"
         contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
     }
 }

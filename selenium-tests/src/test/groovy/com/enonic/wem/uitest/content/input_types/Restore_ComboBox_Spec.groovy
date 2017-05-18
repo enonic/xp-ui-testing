@@ -33,7 +33,7 @@ class Restore_ComboBox_Spec
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "number of versions increased by one"
+        then: "number of versions should increase by one"
         allContentVersionsView.getAllVersions().size() == INITIAL_NUMBER_OF_VERSIONS + 1;
     }
 

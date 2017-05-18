@@ -17,14 +17,14 @@ class Restore_Version_Focus_Image_Spec
 
     def "GIVEN existing image is opened WHEN focus was moved THEN new 'version history item' should appear in the version-view"()
     {
-        given: "existing image is opened"
+        given: "existing image is selected"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
 
         and: "version history panel has been opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
-        and: "the image is opened"
+        and: "'Edit' button has been pressed"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
@@ -42,13 +42,13 @@ class Restore_Version_Focus_Image_Spec
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_increased_after_focus_moved" );
 
-        then: "number of version should be increased by 1"
+        then: "number of version should increase by 1"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing image with several versions is selcted WHEN version with the original image is restored THEN button 'reset' should not be present on the wizard page "()
+    def "GIVEN existing image with several versions is selected WHEN version with the original image is restored THEN button 'reset' should not be present on the wizard page "()
     {
-        given: "existing image with several versions is selcted"
+        given: "existing image with several versions is selected"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
 
         and: "version panel is opened"
@@ -63,7 +63,6 @@ class Restore_Version_Focus_Image_Spec
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
         ImageEditor imageEditor = new ImageEditor( getSession() );
-
 
         then: "red circle should not be displayed on the image-editor"
         !imageEditor.isFocusCircleDisplayed();

@@ -30,46 +30,46 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
     @Shared
     String TEST_SITE_NAME = NameHelper.uniqueName( "site" );
 
-    def "WHEN image content selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget is displayed and has attachments"()
+    def "WHEN image is selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget is displayed and has attachments"()
     {
-        when: "image content selected"
+        when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         saveScreenshot( "test_dependencies_widget_opened" );
 
-        then: "Dependencies Widget is displayed"
+        then: "'Dependencies Widget' should be displayed"
         dependencies.isDisplayed();
     }
 
-    def "WHEN folder content selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget displayed without dependencies"()
+    def "WHEN folder is selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget displayed without dependencies"()
     {
-        when: "image content selected"
+        when: "folder content has been selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         saveScreenshot( "test_dependencies_widget_no_dependencies" );
 
-        then: "Dependencies Widget is displayed"
+        then: "Dependencies Widget should be displayed"
         dependencies.isDisplayed();
 
-        and: "'show outbound dependencies' not displayed"
+        and: "'show outbound dependencies' should not be displayed"
         !dependencies.isShowOutboundButtonDisplayed();
 
-        and: "'show inbound dependencies' not displayed"
+        and: "'show inbound dependencies' should not be displayed"
         !dependencies.isShowInboundButtonDisplayed();
     }
 
-    def "GIVEN existing shortcut AND target is an image WHEN Dependencies Widget opened THEN 'show outbound'- button is displayed"()
+    def "GIVEN existing shortcut AND target is an image WHEN Dependencies Widget is opened THEN 'show outbound'- button should be displayed"()
     {
-        given:
+        given: "existing shortcut has been selected"
         SHORTCUT_CONTENT = buildShortcutWithTarget( "shortcut", null, "shortcut display name", WHALE_IMAGE_DISPLAY_NAME );
         addContent( SHORTCUT_CONTENT );
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
 
-        when: "display name of the folder changed"
+        when: "Dependencies Widget is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         saveScreenshot( "dependencies_shortcut_selected" );
 
-        then: "'show outbound'- button is displayed"
+        then: "'show outbound'- button should be displayed"
         dependencies.isShowOutboundButtonDisplayed();
     }
 
@@ -97,11 +97,11 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         and: "correct target is filtered in the grid"
         names.contains( TARGET_IMG );
 
-        and: "one content displayed in the grid"
+        and: "one content should be displayed in the grid"
         names.size() == 1;
     }
 
-    def "GIVEN Dependencies Widget opened WHEN button 'close' on the section pressed THEN Dependencies Section closes"()
+    def "GIVEN shortcut is selected AND Dependencies Widget opened WHEN button 'close' on the section pressed THEN Dependencies Section closes"()
     {
         given:
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
@@ -111,7 +111,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: " button 'close' on the section pressed"
         filterPanel.doCloseDependenciesSection();
 
-        then: "Dependencies Section closes"
+        then: "'Dependencies Section' should be closed"
         !filterPanel.isDependenciesSectionDisplayed();
     }
 
@@ -132,7 +132,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         and: "correct label for dependencies is displayed"
         filterPanel.getDependenciesSectionTitle() == ContentBrowseFilterPanel.DEPENDENCIES_SECTION_INBOUND_TITLE;
 
-        and: "one content displayed in the grid"
+        and: "one content should be displayed in the grid"
         names.size() == 1;
 
         and: "correct target is filtered in the grid"
@@ -141,10 +141,10 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
     def "GIVEN existing content with an 'image-selector' AND the test image is selected in its content WHEN dependencies for image is opened THEN two correct inbound dependencies are displayed"()
     {
-        given: "add a site with all content types"
+        given: "site has been added"
         addSiteWithAllInputTypes( TEST_SITE_NAME );
 
-        and: "content with 'image-selector' added"
+        and: "the site is selected and new content with 'image-selector' added"
         Content imageSelector = buildImageSelector1_1_Content( TEST_SITE_NAME, TARGET_IMG )
         findAndSelectContent( TEST_SITE_NAME ).clickToolbarNew().selectContentType( imageSelector.getContentTypeName() ).typeData(
             imageSelector ).save().closeBrowserTab().switchToBrowsePanelTab();
