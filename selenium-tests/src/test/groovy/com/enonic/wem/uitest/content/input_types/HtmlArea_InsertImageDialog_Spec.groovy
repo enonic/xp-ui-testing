@@ -117,6 +117,7 @@ class HtmlArea_InsertImageDialog_Spec
 
         when: "image has been inserted"
         insertImageModalDialog.selectImage( "book" ).clickOnInsertButton();
+        saveScreenshot( "insert_image_button_pressed1" );
 
         then: "the dialog should be closed"
         insertImageModalDialog.waitForClosed();
@@ -135,6 +136,7 @@ class HtmlArea_InsertImageDialog_Spec
 
         when: "image has been inserted"
         insertImageModalDialog.selectImage( "book" ).clickOnInsertButton();
+        saveScreenshot( "insert_image_button_pressed2" );
 
         then: "the dialog should be closed"
         insertImageModalDialog.waitForClosed();
