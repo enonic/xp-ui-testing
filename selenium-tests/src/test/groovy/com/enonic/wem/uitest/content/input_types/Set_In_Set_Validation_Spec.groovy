@@ -120,6 +120,31 @@ class Set_In_Set_Validation_Spec
         contentBrowsePanel.isContentInvalid( SET_IN_SET.getName() );
     }
 
+    def "GIVEN existing valid 'Set in Set' content is opened WHEN required  image has been added AND Save button pressed THEN red icon should not be displayed on the wizard"()
+    {
+        given: "existing valid 'Set in Set' content is opened"
+        ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET.getName() ).clickToolbarEdit();
+        SetInSetFormView setInSetFormView = new SetInSetFormView( getSession() );
+
+        when: "'Add Phone Number' button has been pressed"
+        setInSetFormView.selectImage( "seng" );
+        and: "'Save' button has been pressed"
+        wizard.save();
+        saveScreenshot( "required_image_added" )
+
+        then: "red icon should not be present on the wizard page, because required inputs are filled"
+        !wizard.isContentInvalid();
+    }
+
+    def "GIVEN existing 'Set in Set' content WHEN required inputs are filled THEN the content should be displayed as valid"()
+    {
+        when: "existing 'Set in Set' content is selected (required 'phone number'-Item Set is not filled)"
+        findAndSelectContent( SET_IN_SET.getName() );
+
+        then: "the content should be valid"
+        !contentBrowsePanel.isContentInvalid( SET_IN_SET.getName() );
+    }
+
     private Content build_Set_In_Set_Content( String firstName, String lastName )
     {
         PropertyTree data = new PropertyTree();

@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -95,6 +96,16 @@ public class SetInSetFormView
         }
         getDisplayedElement( By.xpath( ADD_PHONE_NUMBERS_BUTTON ) ).click();
         sleep( 400 );
+        return this;
+    }
+
+    public SetInSetFormView selectImage( String imageName )
+    {
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        clearAndType( getDisplayedElement( By.xpath( COMBOBOX_OPTION_FILTER_INPUT ) ), imageName );
+        sleep( 800 );
+        loaderComboBox.selectOption( imageName );
+        sleep( 300 );
         return this;
     }
 

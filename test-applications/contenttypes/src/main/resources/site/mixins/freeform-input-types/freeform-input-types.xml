@@ -18,9 +18,6 @@
             <input name="src" type="ImageSelector">
               <label>src</label>
               <occurrences minimum="0" maximum="1"/>
-              <config>
-                <allowPath>./*</allowPath>
-              </config>
             </input>
             <input type="TextLine" name="scale">
               <label>scale</label>
