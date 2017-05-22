@@ -150,7 +150,7 @@ class CreateSiteWithLayoutSpec
 
     def "GIVEN page-template is opened and 'Page Components' is opened WHEN menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image should be present in the left region"()
     {
-        given: "template is opened "
+        given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel templateWizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         and: "and 'Page Components' view is opened"

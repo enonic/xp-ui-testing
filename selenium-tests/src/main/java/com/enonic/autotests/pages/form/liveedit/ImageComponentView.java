@@ -49,7 +49,7 @@ public class ImageComponentView
             throw new TestFrameworkException( "ImageComponentView: options filter input was not found!" );
         }
         getDisplayedElement( By.xpath( EMPTY_IMAGE_COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) ).sendKeys( imageName );
-        sleep( 300 );
+        sleep( 500 );
         clickOnOption( imageName );
     }
 
