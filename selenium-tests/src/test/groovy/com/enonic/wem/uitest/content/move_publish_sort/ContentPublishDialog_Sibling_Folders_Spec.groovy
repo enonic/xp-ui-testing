@@ -31,7 +31,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         addContent( FOLDER1 );
         addContent( FOLDER2 );
 
-        when: "oth folders was selected and 'Publish' button clicked"
+        when: "Both folders were selected and 'Publish' button clicked"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
@@ -50,9 +50,9 @@ class ContentPublishDialog_Sibling_Folders_Spec
         contentPublishDialog.getContentStatus( FOLDER2.getDisplayName() ) == ContentStatus.NEW.getValue();
     }
 
-    def "two existing folders are selected AND Publish Wizard opened WHEN 'remove' icon has been clicked THEN one folder should be removed from the wizard"()
+    def "GIVEN two existing folders are selected AND Publish Wizard opened WHEN 'remove' icon has been clicked THEN one folder should be removed from the wizard"()
     {
-        given: "oth folders was selected and 'Publish' button clicked"
+        given: "Both folders were selected and 'Publish' button clicked"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
@@ -68,9 +68,9 @@ class ContentPublishDialog_Sibling_Folders_Spec
         contentPublishDialog.getNamesOfContentsToPublish().get( 0 ).contains( FOLDER1.getName() );
     }
 
-    def "two existing folders(New) are selected AND Publish Wizard opened WHEN 'remove' icon has been clicked THEN one folder shoould be removed from the wizard"()
+    def "GIVEN two existing folders(New) are selected AND Publish Wizard opened WHEN 'remove' icon has been clicked THEN one folder should be removed from the wizard"()
     {
-        given: "oth folders was selected and 'Publish' button clicked"
+        given: "Both folders were selected and 'Publish' button clicked"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(

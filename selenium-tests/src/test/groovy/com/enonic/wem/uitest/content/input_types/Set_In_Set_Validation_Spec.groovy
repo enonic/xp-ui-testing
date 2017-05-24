@@ -23,7 +23,7 @@ class Set_In_Set_Validation_Spec
     @Shared
     Content SET_IN_SET;
 
-    def "GIVEN wizard for 'Set in Set' content is opened WHEN name has been typed AND  'Save' button pressed THEN red circle should be present on the wizard page"()
+    def "GIVEN wizard for 'Set in Set' content is opened WHEN name has been typed AND 'Save' button pressed THEN red circle should be present on the wizard page"()
     {
         given: "'HtmlArea content has been added and 'div' is wrapper element"
         SET_IN_SET = build_Set_In_Set_Content( null, null );
@@ -120,7 +120,7 @@ class Set_In_Set_Validation_Spec
         contentBrowsePanel.isContentInvalid( SET_IN_SET.getName() );
     }
 
-    def "GIVEN existing valid 'Set in Set' content is opened WHEN required  image has been added AND Save button pressed THEN red icon should not be displayed on the wizard"()
+    def "GIVEN existing valid 'Set in Set' content is opened WHEN required image has been added AND Save button pressed THEN red icon should not be displayed on the wizard"()
     {
         given: "existing valid 'Set in Set' content is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET.getName() ).clickToolbarEdit();
