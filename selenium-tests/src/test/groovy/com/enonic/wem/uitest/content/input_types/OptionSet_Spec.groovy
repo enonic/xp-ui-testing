@@ -49,7 +49,7 @@ class OptionSet_Spec
         contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing OptionSet content(not valid) is opened WHEN required option in the 'Single Selection' is has been clicked THEN the content should be valid in the wizard"()
+    def "GIVEN existing OptionSet content(not valid) is opened WHEN required option in the 'Single Selection' is clicked THEN the content should be valid in the wizard"()
     {
 
         given: "existing OptionSet content(not valid) is opened"
@@ -67,7 +67,7 @@ class OptionSet_Spec
         !wizardPanel.isContentInvalid();
     }
 
-    def "GIVEN existing 'Option Set' content with selected options WHEN it selected in the grid THEN the content should be displayed as valid"()
+    def "GIVEN existing 'Option Set' content with selected options WHEN it is selected in the grid THEN the content should be displayed as valid"()
     {
         when: "existing 'Option Set' content with selected options"
         findAndSelectContent( OPTION_SET.getName() );
@@ -76,7 +76,7 @@ class OptionSet_Spec
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing valid 'Option Set' content WHEN it opened AND first radio button clicked AND requred input has been filled THEN the content should be displayed as valid"()
+    def "GIVEN existing valid 'Option Set' content WHEN it is opened AND first radio button clicked AND required input has been filled THEN the content should be displayed as valid"()
     {
         given: "existing 'Option Set' content with selected options"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
@@ -91,7 +91,7 @@ class OptionSet_Spec
         !wizardPanel.isContentInvalid();
     }
 
-    def "GIVEN existing 'Option Set' content (option was changed) WHEN it selected in the grid THEN the content should be displayed as valid"()
+    def "GIVEN existing 'Option Set' content (option was changed) WHEN it is selected in the grid THEN the content should be displayed as valid"()
     {
         when: "existing 'Option Set' content with selected options"
         findAndSelectContent( OPTION_SET.getName() );
@@ -100,7 +100,7 @@ class OptionSet_Spec
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing 'Option Set' content is opened WHEN option in 'Multi selection' has been clicked AND it saved without required inputs THEN red icon should be displayed on the wizard page"()
+    def "GIVEN existing 'Option Set' content is opened WHEN option in 'Multi selection' has been clicked AND it is saved without required inputs THEN red icon should be displayed on the wizard page"()
     {
         given: "existing 'Option Set' content is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
