@@ -44,7 +44,7 @@ class Occurrences_HtmlArea_0_2_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for htmlArea(0:2) is opened WHEN button 'Add' clicked THEN two text area should be present and button 'Add' is getting hidden"()
+    def "GIVEN wizard for htmlArea(0:2) is opened WHEN button 'Add' clicked THEN two text areas should be present and button 'Add' is getting hidden"()
     {
         given: "wizard for htmlArea(0:2) is opened"
         Content htmlAreaContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
@@ -87,7 +87,7 @@ class Occurrences_HtmlArea_0_2_Spec
         beforeRemoving == 2;
     }
 
-    def "GIVEN content with type 'HtmlArea 0:2'  has been added and two string were typed WHEN the content is opened THEN both strings saved correctly"()
+    def "GIVEN content with type 'HtmlArea 0:2'  has been added and two strings were typed WHEN the content is opened THEN both strings saved correctly"()
     {
         given: "content with type 'HtmlArea 0:2' has been added"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1, TEST_TEXT2 );
