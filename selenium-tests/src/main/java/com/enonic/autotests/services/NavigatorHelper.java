@@ -130,6 +130,54 @@ public class NavigatorHelper
         throw new TestFrameworkException( "tab was not found!" + titlePart );
     }
 
+    public static boolean isWindowPresent( TestSession session, String titlePart )
+    {
+        WebDriver driver = session.getDriver();
+        Set<String> windowHandles = driver.getWindowHandles();
+        if ( !windowHandles.isEmpty() )
+        {
+            for ( String windowHandle : windowHandles )
+            {
+                try
+                {
+                    if ( driver.switchTo().window( windowHandle ).getTitle().contains( titlePart ) )
+                    {
+                        return true;
+                    }
+                }
+                catch ( NoSuchWindowException e )
+                {
+                    throw new TestFrameworkException( "NoSuchWindowException- wrong handle" );
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int countWindowTabsByTitle( TestSession session, String titlePart )
+    {
+        WebDriver driver = session.getDriver();
+        int count = 0;
+        Set<String> windowHandles = driver.getWindowHandles();
+        if ( !windowHandles.isEmpty() )
+        {
+            for ( String windowHandle : windowHandles )
+            {
+                try
+                {
+                    if ( driver.switchTo().window( windowHandle ).getTitle().contains( titlePart ) )
+                    {
+                        count++;
+                    }
+                }
+                catch ( NoSuchWindowException e )
+                {
+                    throw new TestFrameworkException( "NoSuchWindowException- wrong handle" );
+                }
+            }
+        }
+        return count;
+    }
 
     public static HomePage loginAndOpenHomePage( TestSession testSession )
     {

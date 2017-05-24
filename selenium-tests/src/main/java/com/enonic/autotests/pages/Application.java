@@ -22,6 +22,10 @@ public class Application
 {
     public static final String NO_SELECTION_MESSAGE = "You are wasting this space - select something!";
 
+    public static final String CONTENT_STUDIO_TITLE = "Content Studio - Enonic XP Admin";
+
+    public static final String ERROR_MESSAGE_404 = "404 Not Found";
+
     public static final String CONTENT_STUDIO_TAB_HANDLE = "content_studio_window_id_key";
 
     public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion";
@@ -141,7 +145,8 @@ public class Application
 
     protected String getDisplayedString( String xpath )
     {
-        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().get();
+        return findElements( By.xpath( xpath ) ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).findFirst().orElse(
+            "" );
     }
 
     public void waitsForSpinnerNotVisible()

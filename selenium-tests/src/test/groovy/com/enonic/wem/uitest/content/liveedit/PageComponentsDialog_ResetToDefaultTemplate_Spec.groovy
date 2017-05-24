@@ -120,7 +120,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         LinkedList<String> after = liveFormPanel.getImageNames();
         saveScreenshot( "page_comp_view_images-swapped" );
 
-        then: "images swapped"
+        then: "images should be swapped"
         before.getFirst() == TEST_IMAGE_NAME_SWAP;
         and: "components should be displayed in the new order"
         after.getFirst() == IMAGE_NAME_FOR_TEMPLATE;

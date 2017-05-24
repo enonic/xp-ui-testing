@@ -101,6 +101,8 @@ public class ContentWizardPanel
 
     private String COMPONENT_VIEW_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-clipboard')]";
 
+    private final String HOME_BUTTON = "//div[contains(@id,'AppIcon') and contains(@class,'home-button')]";
+
     @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
     private WebElement toolbarPublishButton;
 
@@ -128,6 +130,9 @@ public class ContentWizardPanel
     @FindBy(xpath = ONLINE_TO_DATETIME_INPUT)
     private WebElement onlineToInput;
 
+    @FindBy(xpath = HOME_BUTTON)
+    private WebElement homeButton;
+
 
     /**
      * The constructor.
@@ -144,6 +149,17 @@ public class ContentWizardPanel
         publishMenuDropDownHandler.click();
         sleep( 400 );
         return this;
+    }
+
+    public void clickOnHomeButton()
+    {
+        homeButton.click();
+    }
+
+    public boolean isHomeButtonClickable()
+    {
+        return waitAndCheckAttrValue( homeButton, "class", "clickable", Application.EXPLICIT_NORMAL );
+        //return homeButton.getAttribute( "class" ).contains( "clickable" );
     }
 
     public boolean isDeleteButtonDisplayed()

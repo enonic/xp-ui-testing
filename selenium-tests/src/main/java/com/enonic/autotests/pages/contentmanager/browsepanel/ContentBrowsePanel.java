@@ -502,6 +502,7 @@ public class ContentBrowsePanel
         publishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return dialog;
     }
 
@@ -720,6 +721,11 @@ public class ContentBrowsePanel
         NavigatorHelper.switchToBrowserTabByTitle( getSession(), contentDisplayName );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return new ContentWizardPanel( getSession() );
+    }
+
+    public boolean is_404_TabWindowPresent()
+    {
+        return NavigatorHelper.isWindowPresent( getSession(), Application.ERROR_MESSAGE_404 );
     }
 
     /**
