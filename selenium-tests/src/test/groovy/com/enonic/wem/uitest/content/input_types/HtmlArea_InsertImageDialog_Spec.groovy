@@ -123,7 +123,7 @@ class HtmlArea_InsertImageDialog_Spec
         insertImageModalDialog.waitForClosed();
     }
     //verifies Error appears in the console when an Image has been inserted into HtmlArea #4957
-    def "GIVEN InsertImageModalDialog is opened ADN text is inserted WHEN an image has been inserted AND 'Insert' button pressed THEN InsertImageModalDialog should be closed"()
+    def "GIVEN InsertImageModalDialog is opened AND text is inserted WHEN an image has been inserted AND 'Insert' button pressed THEN InsertImageModalDialog should be closed"()
     {
         given: "creating of a HtmlArea content"
         Content htmlAreaContent = buildHtmlArea0_1_Content( "test text" );
