@@ -63,7 +63,6 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-
     def "GIVEN the site is opened AND one image was replaced WHEN root element in page component dialog was selected and 'Reset' menu item selected THEN site should be reset to default template"()
     {
         given: "site opened for edit  and site saved"
@@ -124,7 +123,6 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         before.getFirst() == TEST_IMAGE_NAME_SWAP;
         and: "components should be displayed in the new order"
         after.getFirst() == IMAGE_NAME_FOR_TEMPLATE;
-
     }
 
     private LiveFormPanel addImageComponent( String imageName )

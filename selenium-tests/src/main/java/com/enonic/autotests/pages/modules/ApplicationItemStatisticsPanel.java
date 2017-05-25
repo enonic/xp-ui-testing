@@ -22,7 +22,7 @@ public class ApplicationItemStatisticsPanel
 
     private final String DATA_CONTAINER = "//div[@class='application-data-container']";
 
-    private final String BUILD_DATE = DATA_CONTAINER + "//li[text()='Build date']/following-sibling::li";
+    private final String BUILD_DATE = DATA_CONTAINER + "//li[text()='Build Date']/following-sibling::li";
 
     private final String VERSION = DATA_CONTAINER + "//li[text()='Version']/following-sibling::li";
 
