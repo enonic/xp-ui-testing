@@ -31,14 +31,14 @@ class FieldSet_Spec
     String TEST_DOUBLE = "123.4";
 
 
-    def "GIVEN adding a content with a fieldset WHEN all required fields are typed THEN content is valid in the grid"()
+    def "GIVEN adding a content with a fieldset WHEN all required fields are typed THEN content should be displayed as valid"()
     {
         given: "'fieldset' content with all required values was added"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
         wizard.typeData( FIELDSET_CONTENT ).save();
 
-        when: "wizard was not closed and navigated to the grid"
+        when: "wizard was not closed but navigate to the grid"
         wizard.switchToBrowsePanelTab();
         saveScreenshot( "test_fieldset_valid" );
 

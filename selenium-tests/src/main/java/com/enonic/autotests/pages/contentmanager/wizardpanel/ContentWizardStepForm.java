@@ -18,6 +18,7 @@ import com.enonic.autotests.pages.form.DateTimeFormViewPanel;
 import com.enonic.autotests.pages.form.DoubleFormViewPanel;
 import com.enonic.autotests.pages.form.FieldSetFormViewPanel;
 import com.enonic.autotests.pages.form.FormViewPanel;
+import com.enonic.autotests.pages.form.FreeFormViewPanel;
 import com.enonic.autotests.pages.form.GeoPointFormViewPanel;
 import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel;
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel;
@@ -144,6 +145,10 @@ public class ContentWizardStepForm
         else if ( contentTypeName.contains( TestAppContentType.FIELD_SET.getName() ) )
         {
             formViewPanel = new FieldSetFormViewPanel( getSession() );
+        }
+        else if ( contentTypeName.contains( TestAppContentType.FREE_FORM_SET.getName() ) )
+        {
+            formViewPanel = new FreeFormViewPanel( getSession() );
         }
         else if ( contentTypeName.contains( TestAppContentType.HTMLAREA0_1.getName() ) )
         {
