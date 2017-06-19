@@ -32,19 +32,19 @@ class BaseUsersSpec
     String ROLE_DELETED_MESSAGE = "Principal [role:%s] deleted!";
 
     @Shared
-    String USER_CREATED_MESSAGE = "User was created!";
+    String USER_CREATED_MESSAGE = "User was created";
 
     @Shared
-    String GROUP_CREATED_MESSAGE = "Group was created!"
+    String GROUP_CREATED_MESSAGE = "Group was created"
 
     @Shared
-    String ROLE_CREATED_MESSAGE = "Role was created!";
+    String ROLE_CREATED_MESSAGE = "Role was created";
 
     @Shared
-    String USER_STORE_CREATED_MESSAGE = "UserStore was created!";
+    String USER_STORE_CREATED_MESSAGE = "UserStore was created";
 
     @Shared
-    String USER_STORE_DELETED_MESSAGE = "UserStore [%s] deleted!";
+    String USER_STORE_DELETED_MESSAGE = "UserStore [%s] deleted";
 
     @Shared
     String SUPER_USER_DISPLAY_NAME = "Super User";

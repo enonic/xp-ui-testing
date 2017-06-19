@@ -18,7 +18,7 @@ public class AccountStatisticsPanel
     private final String GROUP_NAMES = ROLES_AND_GROUPS_DATA_GROUP + "//ul[@class='data-list' and child::li[text()='Groups']]" + P_NAME;
 
 
-    private final String EMAIL = USER_INFO + "//ul[@class='data-list' and child::li[text()='E-mail']]//li[2]";
+    private final String EMAIL = USER_INFO + "//ul[@class='data-list' and child::li[text()='Email']]//li[2]";
 
     public AccountStatisticsPanel( final TestSession session )
     {

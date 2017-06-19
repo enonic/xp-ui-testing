@@ -19,16 +19,16 @@ class UserStoreWizardPanel_TabMenuSpec
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
         UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
 
-        then: "item with title 'New User Store' is present "
+        then: "title 'New User Store' should be present on the wizard page"
         userBrowsePanel.isTabMenuItemPresent( USERSTORE_TAB_TITLE );
 
-        and: "options filter input for ID provider is displayed"
+        and: "options filter input for ID provider should be displayed"
         wizard.isSelectorForIdProviderDisplayed();
 
-        and: "options filter input for Principals is displayed"
+        and: "options filter input for Principals should be displayed"
         wizard.isPermissionsSelectorDisplayed();
 
-        and: "input for description is displayed"
+        and: "input for description should be displayed"
         wizard.isDescriptionInputDisplayed();
     }
 
