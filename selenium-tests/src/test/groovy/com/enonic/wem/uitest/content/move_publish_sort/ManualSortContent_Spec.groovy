@@ -2,30 +2,29 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 
 class ManualSortContent_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN sort dialog opened  WHEN two contents swapped by drag and drop THEN content sorted correctly in the dialog-grid and 'Manually Sorted' selected in the sort menu"()
+    def "GIVEN sort dialog is opened WHEN two contents has been swapped (by drag and drop) THEN contents should be correctly sorted in the dialog-grid and 'Manually Sorted' displayed in the sort menu"()
     {
         given: "folder with contents selected and 'sort' dialog opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
             SortMenuItem.MODIFIED_DESCENDING.getValue() );
         LinkedList<String> defaultSortingList = sortContentDialog.getContentNames();
-        TestUtils.saveScreenshot( getSession(), "manual_sort_before" );
+        saveScreenshot( "manual_sort_before" );
 
-        when:
+        when: "two contents has been swapped"
         sortContentDialog.dragAndSwapItems( "nord.jpg", "whale.jpg" )
         LinkedList<String> manuallySortedList = sortContentDialog.getContentNames();
-        TestUtils.saveScreenshot( getSession(), "manual_sort_swapped" );
+        saveScreenshot( "manual_sort_swapped" );
 
-        then: "'SortContent' dialog displayed"
+        then: "contents should be correctly sorted in the dialog-grid"
         defaultSortingList.indexOf( "nord.jpg" ) == manuallySortedList.indexOf( "whale.jpg" );
-        and:
+        and: "'Manually Sorted' should be current sorting name"
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MANUALLY_SORTED.getValue();
     }
 

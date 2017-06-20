@@ -80,6 +80,8 @@ public class ContentBrowsePanel
 
     private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish...']";
 
+    private final String CREATE_ISSUE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Create Issue...']";
+
     private final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree...']";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
@@ -224,6 +226,19 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public ContentUnpublishDialog selectCreateIssueMenuItem()
+    {
+        if ( !isUnPublishMenuItemEnabled() )
+        {
+            saveScreenshot( "err_create_issue_menu_item" );
+            throw new TestFrameworkException( "menu item was not found!" );
+        }
+        getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ).click();
+        ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
+
     public boolean isPublishMenuAvailable()
     {
         if ( !isElementDisplayed( PUBLISH_MENU_DROPDOWN_HANDLER ) )
@@ -254,6 +269,17 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
+    }
+
+    public boolean isCreateIssueMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( CREATE_ISSUE_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_unpublish_menu_item_not_visible " );
+            throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
             "disabled" );
     }
 
@@ -621,6 +647,11 @@ public class ContentBrowsePanel
         sleep( 500 );
     }
 
+    public boolean isMoreButtonPresent()
+    {
+        return isElementDisplayed( MORE_BUTTON_XPATH );
+    }
+
     public MoveContentDialog clickToolbarMove()
     {
         if ( !isElementDisplayed( MOVE_BUTTON_XPATH ) )
@@ -985,6 +1016,11 @@ public class ContentBrowsePanel
     public boolean isMoveButtonEnabled()
     {
         return moveButton.isEnabled();
+    }
+
+    public boolean isMoveButtonDisplayed()
+    {
+        return moveButton.isDisplayed();
     }
 
     public boolean isEditButtonEnabled()

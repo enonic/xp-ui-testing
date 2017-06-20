@@ -21,7 +21,7 @@ public class ContentPublishDialog
 
     public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
 
-    public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid item(s) prevent publish";
+    public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid item(s) prevent publishing";
 
     public static final String DIALOG_TITLE = "Publishing Wizard";
 
@@ -29,8 +29,7 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-    private final String PUBLISH_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish')]]";
+    private final String PUBLISH_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'Button') and child::span[contains(.,'Publish')]]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 

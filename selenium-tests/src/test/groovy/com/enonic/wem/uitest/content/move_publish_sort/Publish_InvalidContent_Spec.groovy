@@ -37,7 +37,7 @@ class Publish_InvalidContent_Spec
 
     def "GIVEN existing content without a displayName WHEN it content was selected and 'Publish' button on grid toolbar was pressed THEN 'Publish' button on the dialog should be disabled and warning message should be present on dialog"()
     {
-        given: " existing content without a displayName"
+        given: "existing content without a displayName"
         filterPanel.typeSearchText( invalidFolder.getName() );
         saveScreenshot( "publish_invalid_folder" )
 
@@ -65,7 +65,7 @@ class Publish_InvalidContent_Spec
 
     def "GIVEN existing parent folder with not valid child WHEN parent content was selected and 'Publish' button clicked THEN 'Publish' button on the 'Content publish' dialog should be disabled"()
     {
-        setup: "add a valid parent folder"
+        setup: "parent folder has been added"
         Content parentFolder = buildFolderContent( "folder", "publish not valid content" );
         addContent( parentFolder );
 
