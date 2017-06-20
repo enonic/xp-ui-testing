@@ -32,7 +32,6 @@ public class XpTourDialog
     @FindBy(xpath = SKIP_TOUR_BUTTON)
     private WebElement nextButton;
 
-
     public XpTourDialog( final TestSession session )
     {
         super( session );

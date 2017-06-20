@@ -23,7 +23,7 @@ public class SaveBeforeCloseDialog
 
     private final String CANCEL_BUTTON_XPATH = DIALOG_DIV + "//div[contains(@class,'cancel-button')]";
 
-    public final String TITLE_XPATH = DIALOG_DIV + "//h2[text()='Close wizard']";
+    public final String WARNING_MESSAGE = DIALOG_DIV + "//h6[text()='There are unsaved changes, do you want to save them before closing?']";
 
     /**
      * The constructor
@@ -93,7 +93,7 @@ public class SaveBeforeCloseDialog
      */
     public boolean waitForPresent( long timeout )
     {
-        return waitUntilVisibleNoException( By.xpath( TITLE_XPATH ), timeout );
+        return waitUntilVisibleNoException( By.xpath( WARNING_MESSAGE ), timeout );
     }
 
     /**
@@ -106,6 +106,6 @@ public class SaveBeforeCloseDialog
 
     public boolean isDisplayed()
     {
-        return isElementDisplayed( TITLE_XPATH );
+        return isElementDisplayed( WARNING_MESSAGE );
     }
 }

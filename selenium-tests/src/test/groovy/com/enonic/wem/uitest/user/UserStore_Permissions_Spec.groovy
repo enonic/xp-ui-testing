@@ -61,8 +61,8 @@ class UserStore_Permissions_Spec
         saveScreenshot( "test_user_store_permission_added" );
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
 
-        then: "correct notification message appears"
-        message == "UserStore was created!"
+        then: "correct notification message should appear"
+        message == USER_STORE_CREATED_MESSAGE;
 
         and: "three permissions are displayed "
         entries.size() == 3;

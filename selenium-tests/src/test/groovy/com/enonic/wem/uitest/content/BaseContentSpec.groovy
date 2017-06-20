@@ -300,11 +300,16 @@ class BaseContentSpec
     public ContentBrowsePanel findAndSelectContent( String name )
     {
         filterPanel.typeSearchText( name );
+        selectContentByName( name );
+        return contentBrowsePanel;
+    }
+
+    protected ContentBrowsePanel selectContentByName( String name )
+    {
         if ( !contentBrowsePanel.isRowSelected( name ) )
         {
             contentBrowsePanel.clickCheckboxAndSelectRow( name );
         }
-
         return contentBrowsePanel;
     }
 

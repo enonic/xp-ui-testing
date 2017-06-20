@@ -63,8 +63,8 @@ public abstract class WizardPanel<T>
         status = verifyCloseAction( By.xpath( getWizardDivXpath() ) );
         if ( status == null )
         {
-            saveScreenshot( NameHelper.uniqueName( "err_close" ) );
-            throw new TestFrameworkException( "ContentWizard was not closed and Modal dialog not present!" );
+            saveScreenshot( NameHelper.uniqueName( "err_save_before_close" ) );
+            throw new TestFrameworkException( "ContentWizard was not closed and Modal dialog is not displayed!" );
         }
         else if ( status.equals( CloseStatus.MODAL_DIALOG ) )
         {
@@ -81,10 +81,10 @@ public abstract class WizardPanel<T>
 
     protected abstract String getWizardDivXpath();
 
-    private CloseStatus verifyCloseAction( By by )
+    private CloseStatus verifyCloseAction( By wizardPanel )
     {
         sleep( 100 );
-        boolean isWizardClosed = findElements( by ).size() == 0;
+        boolean isWizardClosed = !isElementDisplayed( wizardPanel );
         if ( isWizardClosed )
         {
             return CloseStatus.CLOSED;

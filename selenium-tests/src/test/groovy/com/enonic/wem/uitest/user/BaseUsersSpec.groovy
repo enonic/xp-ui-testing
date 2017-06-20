@@ -41,10 +41,10 @@ class BaseUsersSpec
     String ROLE_CREATED_MESSAGE = "Role was created";
 
     @Shared
-    String USER_STORE_CREATED_MESSAGE = "UserStore was created";
+    String USER_STORE_CREATED_MESSAGE = "User store was created";
 
     @Shared
-    String USER_STORE_DELETED_MESSAGE = "UserStore [%s] deleted";
+    String USER_STORE_DELETED_MESSAGE = "User store [%s] deleted";
 
     @Shared
     String SUPER_USER_DISPLAY_NAME = "Super User";

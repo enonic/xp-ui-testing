@@ -6,62 +6,62 @@ import com.enonic.autotests.vo.usermanager.User
 class UserWizardPanel_Toolbar_Spec
     extends BaseUsersSpec
 {
-    def "WHEN user wizard opened THEN all buttons on toolbar have correct state"()
+    def "WHEN user wizard is opened THEN all buttons on toolbar should have correct state"()
     {
         when: "user wizard opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
 
-        then: "'Delete' button enabled"
+        then: "'Delete' button should be disabled"
         !wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save' button disabled"
+        and: "'Save' button should be disabled"
         !wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN user wizard opened WHEN name typed THEN save button is enabled AND delete button is disabled"()
+    def "GIVEN user wizard is opened WHEN name typed THEN 'save' button should be enabled AND delete button is disabled"()
     {
-        given: "user wizard opened"
+        given: "user wizard is opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
 
-        when: "name typed"
+        when: "name has been typed"
         wizardPanel.typeDisplayName( "display name" );
 
-        then: "'Delete' button disabled"
+        then: "'Delete' button should be disabled"
         !wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save' button enabled"
+        and: "'Save' button should be enabled"
         wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN user wizard opened WHEN all data typed THEN save button is enabled AND delete button is disabled"()
+    def "GIVEN user wizard is opened WHEN all data typed THEN save button is enabled AND delete button is disabled"()
     {
-        given: "user wizard opened"
+        given: "user wizard is opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
         User validUser = buildUser( "valid-user", "password" );
 
-        when: "all data typed"
+        when: "all data has been typed"
         wizardPanel.typeData( validUser );
 
-        then: "'Delete' button disabled"
+        then: "'Delete' button should be disabled"
         !wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save' button enabled"
+        and: "'Save' button should be enabled"
         wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN user wizard opened WHEN data typed and saved THEN button delete is enabled"()
+    def "GIVEN user wizard is opened WHEN data has been typed and saved THEN button delete should be enabled"()
     {
-        given: "user wizard opened"
+        given: "user wizard is opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();
         User validUser = buildUser( "valid-user", "password" );
 
-        when: "data typed and saved"
+        when: "data has been typed and saved"
         wizardPanel.typeData( validUser ).save();
 
-        then: "'Delete' button enabled"
+        then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save' button enabled"
+        and: "'Save' button should be enabled"
         wizardPanel.isSaveButtonEnabled();
     }
 }

@@ -18,7 +18,7 @@ public class DeleteUserItemDialog
         "//div[contains(@id,'ConfirmationDialog')]//div[contains(@id,'ModalDialogHeader') and child::h2[text()='Confirmation']]";
 
     private final String YES_BUTTON_XPATH =
-        "//div[contains(@id,'ModalDialogButtonRow')]//button[contains(@id,'DialogButton') and child::span[text()='Yes']]";
+        "//div[contains(@id,'ButtonRow')]//button[contains(@id,'DialogButton') and child::span[text()='Yes']]";
 
     @FindBy(xpath = YES_BUTTON_XPATH)
     private WebElement yesButton;
@@ -31,7 +31,6 @@ public class DeleteUserItemDialog
     public DeleteUserItemDialog( TestSession session )
     {
         super( session );
-
     }
 
     public void doDelete()

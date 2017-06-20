@@ -12,9 +12,9 @@ class GroupWizardPanel_TabMenuSpec
     @Shared
     String GROUP_TAB_TITLE = "<Unnamed Group>"
 
-    def "WHEN 'System' folder, is expanded AND 'Grpoup' is selcted AND 'New' button has been pressed THEN new tab with the name 'New Role' is added "()
+    def "WHEN 'System' folder is expanded AND 'Group' is selected AND 'New' button has been pressed THEN new tab with the name 'New Role' is added "()
     {
-        when: "'System' folder, is expanded"
+        when: "'System' folder is expanded"
         userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
         saveScreenshot( "system_folder_expanded" );
 
@@ -22,7 +22,7 @@ class GroupWizardPanel_TabMenuSpec
         userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        then: "new tab with name 'New Role' is added "
+        then: "new tab with name 'New Role' should be present"
         userBrowsePanel.isTabMenuItemPresent( GROUP_TAB_TITLE );
     }
 
@@ -33,11 +33,11 @@ class GroupWizardPanel_TabMenuSpec
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        when: "no any data typed and 'close' button pressed"
+        when: "no any data was typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.close( GROUP_TAB_TITLE );
         saveScreenshot( "gr_wizard_closed" );
 
-        then: "close dialog should not be showed"
+        then: "close dialog should not be present"
         dialog == null;
     }
 
@@ -49,7 +49,7 @@ class GroupWizardPanel_TabMenuSpec
         WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
 
-        when: "'Close' button clicked"
+        when: "'Close' button has been clicked"
         SaveBeforeCloseDialog dialog = wizard.close( displayName );
         saveScreenshot( "gr_wizard_closed2" );
 

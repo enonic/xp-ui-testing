@@ -58,7 +58,7 @@ class FreeFormNestedSet_Spec
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
         freeForm.clickOnButtonRadioButton();
-        // browser.driver.manage().window().setSize( new Dimension( 1000, 800 ) );
+
         and: "the content has been saved"
         wizard.save();
         saveScreenshot( "freeform_should_be_valid" );

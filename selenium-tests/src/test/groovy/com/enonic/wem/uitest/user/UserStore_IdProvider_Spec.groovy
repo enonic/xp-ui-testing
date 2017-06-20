@@ -23,8 +23,8 @@ class UserStore_IdProvider_Spec
         String message = userStoreWizardPanel.typeData( USERSTORE_WITH_ID_PROVIDER ).save().waitNotificationMessage();
         saveScreenshot( "test_user_store_provider_selected" );
 
-        then: "correct notification message appears"
-        message == "UserStore was created!"
+        then: "correct notification message should appear"
+        message == USER_STORE_CREATED_MESSAGE;
     }
 
     def "GIVEN existing store with id-provider WHEN the store is opened THEN correct id-provider should be displayed"()
