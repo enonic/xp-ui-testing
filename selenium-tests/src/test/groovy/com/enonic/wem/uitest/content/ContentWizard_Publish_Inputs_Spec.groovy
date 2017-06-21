@@ -110,7 +110,7 @@ class ContentWizard_Publish_Inputs_Spec
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
 
         when: "the folder has been unpublished"
-        SchedulePublishDialog schedulePublishDialog = wizard.clickOnWizardPublishButton().clickOnShowScheduleButton();
+        SchedulePublishDialog schedulePublishDialog = wizard.clickOnWizardPublishButton().showPublishMenu().clickOnScheduleMenuItem();
         schedulePublishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).hideTimePickerPopup().clickOnScheduleButton();
 
         then: "status is getting 'Offline'"

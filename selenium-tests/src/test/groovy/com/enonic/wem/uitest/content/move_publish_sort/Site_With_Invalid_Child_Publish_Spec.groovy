@@ -43,7 +43,7 @@ class Site_With_Invalid_Child_Publish_Spec
         saveScreenshot( "site_with_not_valid_child" );
 
         then: "'Publish' button should be disabled, because child is not valid"
-        !publishWizard.isPublishNowButtonEnabled();
+        !publishWizard.isPublishButtonEnabled();
 
         and: "correct warning should be displayed on the wizard"
         publishWizard.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
@@ -63,7 +63,7 @@ class Site_With_Invalid_Child_Publish_Spec
         saveScreenshot( "not_valid_child_removed" );
 
         then: "'Publish' button should be enabled, because child was removed from the items to publish"
-        publishWizard.isPublishNowButtonEnabled();
+        publishWizard.isPublishButtonEnabled();
     }
 
     def "GIVEN existing site with not valid child  AND Publish wizard opened WHEN 'Include Child' icon has been clicked twice THEN 'Publish' button should be enabled"()
@@ -80,6 +80,6 @@ class Site_With_Invalid_Child_Publish_Spec
         saveScreenshot( "not_valid_child_unexpanded" );
 
         then: "'Publish' button should be enabled, because child was not included to publish"
-        publishWizard.isPublishNowButtonEnabled();
+        publishWizard.isPublishButtonEnabled();
     }
 }

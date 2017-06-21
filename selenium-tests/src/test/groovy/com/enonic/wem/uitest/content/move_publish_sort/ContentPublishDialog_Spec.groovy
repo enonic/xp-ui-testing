@@ -80,7 +80,7 @@ class ContentPublishDialog_Spec
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
 
         and: "'Publish' and 'Cancel' buttons should be displayed on the dialog"
-        contentPublishDialog.isPublishNowButtonEnabled();
+        contentPublishDialog.isPublishButtonEnabled();
 
         and: "'Cancel' button on the bottom should be enabled"
         contentPublishDialog.isCancelButtonBottomEnabled();

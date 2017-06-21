@@ -50,7 +50,7 @@ class Publish_InvalidContent_Spec
         contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
 
         and: "'publish' button should be disabled"
-        !contentPublishDialog.isPublishNowButtonEnabled();
+        !contentPublishDialog.isPublishButtonEnabled();
 
         and: "dependency list should not be present"
         !contentPublishDialog.isDependenciesListHeaderDisplayed();
@@ -82,7 +82,7 @@ class Publish_InvalidContent_Spec
         contentPublishDialog.includeChildren( true );
 
         then: "'Publish' button on the 'Content publish' dialog should be disabled"
-        !contentPublishDialog.isPublishNowButtonEnabled();
+        !contentPublishDialog.isPublishButtonEnabled();
 
         and: "warning message should be displayed"
         contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;

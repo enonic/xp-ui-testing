@@ -37,10 +37,10 @@ class SchedulePublishDialog_Spec
         TEST_FOLDER = buildFolderContent( "folder", "schedule dialog" );
         addContent( TEST_FOLDER );
 
-        when: "show schedule button pressed"
+        when: "Drop down has been clicked and 'Schedule' menu item selected"
         findAndSelectContent( TEST_FOLDER.getName() )
         SchedulePublishDialog schedulePublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL ).clickOnShowScheduleButton();
+            Application.EXPLICIT_NORMAL ).showPublishMenu().clickOnScheduleMenuItem();
 
         then: "'SchedulePublishDialog' dialog should be displayed"
         schedulePublishDialog.isDisplayed();
@@ -63,7 +63,7 @@ class SchedulePublishDialog_Spec
         given: "SchedulePublish dialog is opened"
         findAndSelectContent( TEST_FOLDER.getName() )
         SchedulePublishDialog schedulePublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL ).clickOnShowScheduleButton();
+            Application.EXPLICIT_NORMAL ).showPublishMenu().clickOnScheduleMenuItem();
         saveScreenshot( "schedule_dlg_displayed" );
 
         when: "'Back' button was pressed"
@@ -79,8 +79,7 @@ class SchedulePublishDialog_Spec
         given: "SchedulePublish dialog is opened AND 'online from' is empty"
         findAndSelectContent( TEST_FOLDER.getName() )
         SchedulePublishDialog schedulePublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL ).clickOnShowScheduleButton();
-        saveScreenshot( "schedule_dlg_displayed" );
+            Application.EXPLICIT_NORMAL ).showPublishMenu().clickOnScheduleMenuItem();
 
         when: "'Schedule' button was pressed"
         schedulePublishDialog.clickOnScheduleButton();
@@ -98,8 +97,7 @@ class SchedulePublishDialog_Spec
         given: "SchedulePublish dialog is opened AND 'online from' is empty"
         findAndSelectContent( TEST_FOLDER.getName() )
         SchedulePublishDialog schedulePublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL ).clickOnShowScheduleButton();
-        saveScreenshot( "schedule_dlg_displayed" );
+            Application.EXPLICIT_NORMAL ).showPublishMenu().clickOnScheduleMenuItem();
 
         when: "'Schedule' button was pressed"
         testTomorrowDateTime = TimeUtils.getTomorrowDateTime();

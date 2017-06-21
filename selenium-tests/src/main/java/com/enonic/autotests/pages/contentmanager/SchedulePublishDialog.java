@@ -21,12 +21,11 @@ public class SchedulePublishDialog
 
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SchedulePublishDialog')]";
 
-    private final String DIALOG_HEADER_XPATH =DIALOG_CONTAINER+ "//div[contains(@id,'ModalDialogHeader')]//h2";
+    private final String DIALOG_HEADER_XPATH = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
-    private final String BACK_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom') and child::span[text()='Back']]";
+    private final String BACK_BUTTON = DIALOG_CONTAINER + "//a[@class='back-button']";
 
     private final String SCHEDULE_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'schedule')]";
 
@@ -102,7 +101,7 @@ public class SchedulePublishDialog
 
     public SchedulePublishDialog typeOnlineFrom( String dateTime )
     {
-        buildActions().moveToElement(onlineFromInput  ).click().build().perform();
+        buildActions().moveToElement( onlineFromInput ).click().build().perform();
         clearAndType( onlineFromInput, dateTime );
         sleep( 300 );
         return this;

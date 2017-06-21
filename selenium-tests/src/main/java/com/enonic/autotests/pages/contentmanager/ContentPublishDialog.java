@@ -29,7 +29,8 @@ public class ContentPublishDialog
 
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
-    private final String PUBLISH_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'Button') and child::span[contains(.,'Publish')]]";
+    private final String PUBLISH_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@id,'ActionButton') and child::span[contains(.,'Publish')]]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
@@ -65,10 +66,15 @@ public class ContentPublishDialog
     private String STATUS_OF_CONTENT = ITEM_LIST +
         "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]/div[contains(@class,'status')][2]";
 
-    private final String SHOW_SCHEDULE_DIALOG_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'show-schedule')]";
+    private final String CREATE_ISSUE_MENU_ITEM = DIALOG_CONTAINER + "//ul[contains(@id,'Menu')]//li[contains(.,'Create Issue...')]";
 
-    @FindBy(xpath = SHOW_SCHEDULE_DIALOG_BUTTON)
-    private WebElement showScheduleButton;
+    private final String SCHEDULE_MENU_ITEM = DIALOG_CONTAINER + "//ul[contains(@id,'Menu')]//li[contains(.,'Schedule...')]";
+
+    private final String PUBLISH_MENU_DROPDOWN_HANDLER =
+        DIALOG_CONTAINER + "//div[contains(@id,'MenuButton')]//button[contains(@id,'DropdownHandle')]";
+
+    @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
+    private WebElement publishMenuDropDownHandler;
 
     @FindBy(xpath = PUBLISH_BUTTON)
     private WebElement publishButton;
@@ -78,9 +84,6 @@ public class ContentPublishDialog
 
     @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
     private WebElement cancelButtonBottom;
-
-    //@FindBy(xpath = INCLUDE_OFFLINE_ITEMS)
-    // private WebElement includeOfflineItemsCheckbox;
 
     public ContentPublishDialog( final TestSession session )
     {
@@ -93,18 +96,40 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
-    //TODO checkbox is temporarily removed
-//    public void clickOnIncludeOfflineItemsCheckbox()
-//    {
-//        includeOfflineItemsCheckbox.click();
-//        sleep( 200 );
-//    }
+    /**
+     * Clicks on the drop down handler and shows :'Create Issue' and 'Schedule' menu items
+     */
+    public ContentPublishDialog showPublishMenu()
+    {
+        publishMenuDropDownHandler.click();
+        sleep( 400 );
+        return this;
+    }
 
-//    public void isIncludeOfflineItemsCheckboxDisplayed()
-//    {
-//        includeOfflineItemsCheckbox.isDisplayed();
-//        sleep( 200 );
-//    }
+    public SchedulePublishDialog clickOnScheduleMenuItem()
+    {
+        if ( !isScheduleMenuItemEnabled() )
+        {
+            saveScreenshot( "err_schedule_menu_item" );
+            throw new TestFrameworkException( "menu item was not found!" );
+        }
+        getDisplayedElement( By.xpath( SCHEDULE_MENU_ITEM ) ).click();
+        SchedulePublishDialog dialog = new SchedulePublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
+
+    public boolean isScheduleMenuItemEnabled()
+    {
+        findElements( By.xpath( SCHEDULE_MENU_ITEM ) );
+        if ( !isElementDisplayed( SCHEDULE_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_schedule_menu_item_not_visible " );
+            throw new TestFrameworkException( "'schedule' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( SCHEDULE_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
+    }
 
     public boolean isPublishItemRemovable( String itemDisplayName )
     {
@@ -223,16 +248,6 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
-    public SchedulePublishDialog clickOnShowScheduleButton()
-    {
-        showScheduleButton.click();
-        sleep( 200 );
-        SchedulePublishDialog dialog = new SchedulePublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        return dialog;
-
-    }
-
     public ContentPublishDialog clickOnPublishNowButton()
     {
         sleep( 500 );
@@ -285,9 +300,10 @@ public class ContentPublishDialog
         return this;
     }
 
-    public boolean isPublishNowButtonEnabled()
+    public boolean isPublishButtonEnabled()
     {
-        return publishButton.isEnabled();
+        //button is disabled( has opacity: 0.5 and pointer-events: none) when Dialog is locked
+        return !getDisplayedElement( By.xpath( DIALOG_CONTAINER ) ).getAttribute( "class" ).contains( "locked" );
     }
 
     public void waitUntilPublishButtonEnabled( long timeout )
