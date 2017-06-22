@@ -7,6 +7,7 @@ import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.SystemUserName
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -34,6 +35,20 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
     @Shared
     String USER_ADMIN_ROLE = "/roles/system.user.admin";
 
+    //verifies 'Edit Permissions Dialog - 'Overwrite child permissions' checkbox is always disabled #5165"
+    def "GIVEN 'Edit Permissions Dialog' is opened WHEN 'Overwrite child permissions' has been clicked THEN 'Apply' button on the dialog should be enabled"()
+    {
+        given: "Content wizard is opened"
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        and: "'Edit Permissions Dialog' is opened"
+        EditPermissionsDialog dialog = wizard.clickOnSecurityTabLink().clickOnEditPermissionsButton();
+
+        when: "'Overwrite child permissions' has been clicked"
+        dialog.setOverwriteChildPermissionsCheckbox( true );
+
+        then: "Apply button should be enabled"
+        dialog.isApplyButtonEnabled();
+    }
     //verifies XP-4932 Impossible to save changes when 'Overwrite child permissions' was set to true
     def "GIVEN existing parent folder with a child WHEN 'Edit Permissions' dialog for the parent folder is opened AND 'Overwrite child permissions' was set to true THEN checkbox should be checked when dialog is opened in the second time"()
     {
@@ -77,7 +92,8 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         EditPermissionsDialog dialog = parent.clickOnSecurityTabLink().clickOnEditPermissionsButton();
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         and: "'Overwrite child permissions' set in true for the parent folder AND new permission was added"
-        dialog.setInheritPermissionsCheckbox( false ).setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
+        dialog.setInheritPermissionsCheckbox( false ).setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox(
+            anonymousEntry ).clickOnApply();
         and: "parent folder has been saved"
         parent.save();
         and: "navigate to the child wizard-tab"

@@ -70,11 +70,17 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         and: "'Overwrite child permissions' checkbox should be unchecked"
         !modalDialog.isOverwriteChildPermissionsCheckBoxChecked();
+
+        and: "'Apply' button should be disabled"
+        !modalDialog.isApplyButtonEnabled();
+
+        and: "'Cancel' button should be enabled"
+        modalDialog.isCancelButtonEnabled();
     }
 
     def "GIVEN 'Edit Permissions' dialog is opened WHEN 'inherit permissions' has been unchecked THEN options filter input should appear"()
     {
-        given: "content selected and 'Edit Permissions' dialog opened"
+        given: "content was selected and 'Edit Permissions' dialog is opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
             content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
 

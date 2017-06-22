@@ -49,6 +49,8 @@ public class EditPermissionsDialog
 
     private final String APPLY_BUTTON_XPATH = "//button[contains(@id,'DialogButton') and child::span[text()='Apply']]";
 
+    private final String CANCEL_BUTTON_XPATH = "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']]";
+
     private String ACL_ENTRY_ROW =
         "//div[contains(@class,'access-control-entry') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
@@ -57,6 +59,12 @@ public class EditPermissionsDialog
 
     @FindBy(xpath = OVERWRITE_CHILD_PERMISSIONS_CHECKBOX_LABEL)
     WebElement overwritePermissionsCheckbox;
+
+    @FindBy(xpath = APPLY_BUTTON_XPATH)
+    WebElement applyButton;
+
+    @FindBy(xpath = CANCEL_BUTTON_XPATH)
+    WebElement cancelButton;
 
     public EditPermissionsDialog( TestSession session )
     {
@@ -95,6 +103,7 @@ public class EditPermissionsDialog
         {
             overwritePermissionsCheckbox.click();
         }
+        sleep( 300 );
         return this;
     }
 
@@ -279,5 +288,15 @@ public class EditPermissionsDialog
             entries.add( builder.build() );
         }
         return entries;
+    }
+
+    public boolean isApplyButtonEnabled()
+    {
+        return applyButton.isEnabled();
+    }
+
+    public boolean isCancelButtonEnabled()
+    {
+        return cancelButton.isEnabled();
     }
 }
