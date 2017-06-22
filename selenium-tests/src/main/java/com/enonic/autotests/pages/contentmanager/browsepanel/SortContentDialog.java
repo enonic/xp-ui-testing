@@ -148,7 +148,7 @@ public class SortContentDialog
 
     public String getCurrentSortingName()
     {
-        return getDisplayedString( SORT_CONTENT_MENU_BUTTON + "//span[@class='label']" );
+        return getDisplayedString( SORT_CONTENT_MENU_BUTTON + "//a[@class='label']" );
     }
 
     public SortContentDialog clickOnSaveButton()
