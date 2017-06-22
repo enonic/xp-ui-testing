@@ -37,7 +37,6 @@ public class InstallAppDialog
 
     private final String APPLICATION_UPLOADER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
 
-
     private final String VALIDATION_MESSAGE = INSTALL_DIALOG_DIV +
         "//div[contains(@id,'ModalDialogContentPanel')]//div[contains(@class,'status-message') and contains(@class,'failed')]";
 
@@ -128,7 +127,7 @@ public class InstallAppDialog
         if ( !isLoaded )
         {
             saveScreenshot( NameHelper.uniqueName( "err_install-dialog" ) );
-            throw new TestFrameworkException( "Install app dialog not loaded!" );
+            throw new TestFrameworkException( "Install app dialog was not loaded!" );
         }
         waitInvisibilityOfSpinner( 9 );
         waitUntilVisible( By.xpath( APP_VIEWER_DIV ) );
@@ -144,7 +143,6 @@ public class InstallAppDialog
         }
     }
 
-
     public InstallAppDialog clickOnCancelButton()
     {
         cancelButton.click();
@@ -157,12 +155,10 @@ public class InstallAppDialog
         return isElementDisplayed( HEADER_XPATH );
     }
 
-
     public boolean isEnonicMarketPanelPresent()
     {
         return getMarketAppPanel().isDisplayed();
     }
-
 
     public boolean isApplicationInputDisplayed( String path )
     {

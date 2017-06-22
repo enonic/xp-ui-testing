@@ -52,14 +52,6 @@ public class TimeFormViewPanel
         return popup;
     }
 
-    public TimePickerPopup clickOnClockIconAndShowPicker()
-    {
-        iconClockButton.click();
-        TimePickerPopup popup = new TimePickerPopup( getSession() );
-        popup.waitUntilDialogLoaded();
-        return popup;
-    }
-
     public boolean isTimeInvalid()
     {
         return waitAndCheckAttrValue( timeInput, "class", "invalid", 1l );

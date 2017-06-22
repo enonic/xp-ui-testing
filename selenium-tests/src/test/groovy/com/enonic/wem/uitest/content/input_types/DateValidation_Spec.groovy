@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.date.TimePickerPopu
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class DateValidation_Spec
@@ -26,7 +25,7 @@ class DateValidation_Spec
 
     def "GIVEN wizard for adding a Time opened WHEN time input was clicked THEN 'time picker popup' dialog is displayed"()
     {
-        given: "wizard for adding a Time opened"
+        given: "Time-content wizard is opened"
         Content dateContent = buildTime0_0_Content( CORRECT_TIME );
         selectSitePressNew( dateContent.getContentTypeName() );
 
@@ -35,30 +34,10 @@ class DateValidation_Spec
         TimePickerPopup picker = formViewPanel.clickOnInputAndShowPicker();
         saveScreenshot( "time-picker-popup" );
 
-        then: "'time picker' popup dialog is displayed"
+        then: "'time picker' popup dialog should be displayed"
         picker.isDisplayed();
 
-        and: "time zone not displayed"
-        !picker.isTimeZoneDisplayed();
-    }
-
-    // Icon is turn off since 6.9.0
-    @Ignore
-    def "GIVEN wizard for adding a Time opened WHEN icon-clock has been clicked THEN 'time picker popup' dialog is displayed"()
-    {
-        given: "wizard for adding a Time opened"
-        Content dateContent = buildTime0_0_Content( CORRECT_TIME );
-        selectSitePressNew( dateContent.getContentTypeName() );
-
-        when: "icon-clock has been clicked"
-        TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
-        TimePickerPopup picker = formViewPanel.clickOnClockIconAndShowPicker();
-        saveScreenshot( "test_time_picker_icon" );
-
-        then: "'time picker' popup dialog is displayed"
-        picker.isDisplayed();
-
-        and: "time zone not displayed"
+        and: "time zone should not be displayed"
         !picker.isTimeZoneDisplayed();
     }
 
@@ -69,14 +48,14 @@ class DateValidation_Spec
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
 
-        when: "time with wrong format typed "
+        when: "time with wrong format was typed "
         wizard.typeData( timeContent );
         saveScreenshot( "test_wrong_time" );
 
-        then: "'Publish' button enabled, because input is not required"
+        then: "'Publish' button should be enabled, because input is not required"
         wizard.isPublishButtonEnabled();
 
-        and: "time input has a red border"
+        and: "time input should be displayed with the red border"
         formViewPanel.isTimeInvalid();
     }
 
@@ -90,24 +69,24 @@ class DateValidation_Spec
         when: "correct time typed "
         wizard.typeData( timeContent );
 
-        then: "'Publish' button enabled"
+        then: "'Publish' button should be enabled"
         wizard.isPublishButtonEnabled();
 
-        and: "time input is not red"
+        and: "time input should not be with red border"
         !formViewPanel.isTimeInvalid();
     }
 
-    def "GIVEN saving of content with type 'Time 1:1' WHEN time not typed THEN 'Publish' button disabled"()
+    def "GIVEN saving of content with type 'Time 1:1' WHEN time was not typed THEN 'Publish' button should be disabled"()
     {
         given: "start to add a content with type 'Time 1:1'"
         Content timeContent = buildTime1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
 
-        when: "correct time typed "
+        when: "correct time has been typed "
         wizard.typeDisplayName( timeContent.getDisplayName() );
         saveScreenshot( "required-time-publish-disabled" );
 
-        then: "'Publish' button disabled, because required input not filled"
+        then: "'Publish' button should be disabled, because required input not filled"
         !wizard.isPublishButtonEnabled();
     }
 
@@ -118,18 +97,18 @@ class DateValidation_Spec
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        when: "date time with wrong format typed "
+        when: "date time with wrong format has been typed "
         wizard.typeData( dateTimeContent );
         saveScreenshot( "wrong-date-time" );
 
         then: "'Publish' button should be disabled, because wrong datetime typed in the required input"
         !wizard.isPublishButtonEnabled();
 
-        and: "time input is red"
+        and: "time input should be with the red border"
         formViewPanel.isDateTimeInvalid();
     }
 
-    def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN correct date-time typed THEN 'Publish' button is enabled"()
+    def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN correct date-time has been typed THEN 'Publish' button is enabled"()
     {
         given: "start to add a content with type 'DateTime(1:1)'"
         Content dateTimeContent = buildDateTime1_1_Content( CORRECT_DATE_TIME );
@@ -140,7 +119,7 @@ class DateValidation_Spec
         wizard.typeData( dateTimeContent );
         saveScreenshot( "correct-date-time" );
 
-        then: "'Publish' button is enabled"
+        then: "'Publish' button should be enabled"
         wizard.isPublishButtonEnabled();
 
         and: "time input is not red"
@@ -153,11 +132,11 @@ class DateValidation_Spec
         Content dateTimeContent = buildDateTime2_4_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-        when: "only the 'name' typed and datetime not typed"
+        when: "only the 'name' was typed and datetime not typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
         saveScreenshot( "required-date-time" );
 
-        then: "'Publish' button disabled"
+        then: "'Publish' button should be disabled"
         !wizard.isPublishButtonEnabled();
     }
 }

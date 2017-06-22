@@ -22,11 +22,11 @@ public class SourceCodeDialog
 
     private final String TEXT_AREA = WINDOW + "//textarea";
 
-    private final String BUTTON_OK = WINDOW + "//div[contains(@id,'DialogButton') and descendant::span[text()='Ok']]";
+    private final String BUTTON_OK = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='Ok']]";
 
     private final String BUTTON_CLOSE = WINDOW + "//div[contains(@class,'cancel-button-top')]";
 
-    private final String BUTTON_CANCEL = WINDOW + "//div[contains(@id,'DialogButton') and descendant::span[text()='Cancel']]";
+    private final String BUTTON_CANCEL = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='Cancel']]";
 
     @FindBy(xpath = BUTTON_OK)
     WebElement buttonOk;

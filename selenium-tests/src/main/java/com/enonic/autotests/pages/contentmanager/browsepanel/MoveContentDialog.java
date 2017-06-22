@@ -16,7 +16,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class MoveContentDialog
     extends Application
 {
-    public static String DIALOG_TITLE = "Move item with children";
+    public static String DIALOG_TITLE = "Move item(s) with children";
 
     public static String NO_MATCHING_ITEMS = "No matching items";
 

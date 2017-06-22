@@ -31,12 +31,12 @@ class ContextWindow_InsertPanel_Spec
         !wizardPanel.isInspectionPanelTogglerDisplayed()
     }
 
-    def "GIVEN existing site without selected page controller WHEN page controller is  selected THEN toggler buttons for 'Components View' and 'Inspection Panel' should be displayed"()
+    def "GIVEN existing site without a controller is opened WHEN page controller has been selected THEN toggler buttons for 'Components View' and 'Inspection Panel' should be displayed"()
     {
-        given: "existing site without selected page controller is opened"
+        given: "existing site without a controller is opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
-        when: "page controller is not selected"
+        when: "page controller has been selected"
         siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
         saveScreenshot( "test-site-controller-selected" );
 
@@ -47,17 +47,17 @@ class ContextWindow_InsertPanel_Spec
         siteWizard.isInspectionPanelTogglerDisplayed()
     }
 
-    def "GIVEN existing site is opened WHEN 'Insert' link clicked THEN 'Insertables' panel is displayed AND all available components should be present on the panel"()
+    def "GIVEN existing site is opened WHEN 'Insert' link has been clicked THEN 'Insertables' panel should be displayed AND all available components should be present on the panel"()
     {
         given: "'Page Editor' for the existing site opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
-        when: "'Inspect' link was clicked"
+        when: "'Insert' link has been clicked"
         ContextWindowPageInsertablesPanel insertablesPanel = new ContextWindowPageInsertablesPanel( getSession() );
         siteWizard.showContextWindow().clickOnInsertLink();
         saveScreenshot( "insertables-panel-opened" );
 
-        then: "'inspect panel' should be displayed"
+        then: "'Insertables panel' should be displayed"
         insertablesPanel.isDisplayed();
         List<String> components = insertablesPanel.getAvailableComponents();
 
@@ -82,5 +82,4 @@ class ContextWindow_InsertPanel_Spec
         and: "correct description is displayed"
         insertablesPanel.getTitle() == ContextWindowPageInsertablesPanel.TITLE
     }
-
 }
