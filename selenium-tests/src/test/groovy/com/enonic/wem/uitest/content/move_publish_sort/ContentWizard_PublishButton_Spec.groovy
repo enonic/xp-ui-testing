@@ -56,7 +56,7 @@ class ContentWizard_PublishButton_Spec
         wizard.isPublishMenuAvailable();
     }
 
-    def "GIVEN existing 'modified' content WHEN the content opened AND 'unpublish' button was pressed THEN 'offline' status for this content is displayed on the wizard"()
+    def "GIVEN existing 'modified' content WHEN the content opened AND 'unpublish' button was pressed THEN 'offline' status for this content should be displayed on the wizard"()
     {
         given: "existing 'modified' content"
         findAndSelectContent( CONTENT.getName() );
@@ -74,8 +74,8 @@ class ContentWizard_PublishButton_Spec
         and: "'Publish' menu becomes enabled"
         wizard.isPublishButtonEnabled();
 
-        and: "'publish-menu' becomes disabled"
-        !wizard.isPublishMenuAvailable();
+        and: "'publish-menu' should be enabled, because 'Create Issue' should be available"
+        wizard.isPublishMenuAvailable();
     }
 
     def "GIVEN existing 'online' content WHEN 'Delete' button on the wizard-toolbar pressed AND content deleted THEN 'pending delete' status is displayed on the wizard"()
@@ -91,10 +91,10 @@ class ContentWizard_PublishButton_Spec
         then: "'pending delete' status is displayed on the wizard"
         wizard.getStatus() == ContentStatus.DELETED.getValue();
 
-        and: "'Publish' menu becomes enabled"
+        and: "'Publish' button should be enabled"
         wizard.isPublishButtonEnabled();
 
-        and: "'publish-menu' is enabled"
+        and: "'publish-menu' should be enabled"
         wizard.isPublishMenuAvailable();
     }
 }

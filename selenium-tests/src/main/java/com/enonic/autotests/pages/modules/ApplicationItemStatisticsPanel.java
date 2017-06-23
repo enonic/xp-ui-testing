@@ -50,7 +50,7 @@ public class ApplicationItemStatisticsPanel
 
     private final String MIXINS = MIXINS_HEADER + LIST_ITEMS;
 
-    private final String RELATIONSHIP_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='RelationshipTypes']";
+    private final String RELATIONSHIP_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Relationship Types']";
 
     private final String PAGE_HEADER = DATA_CONTAINER + "//div[contains(@class,'descriptors')]//li[text()='Page']";
 

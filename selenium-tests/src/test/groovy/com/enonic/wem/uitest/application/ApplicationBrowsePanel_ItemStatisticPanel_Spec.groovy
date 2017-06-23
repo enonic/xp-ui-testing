@@ -64,6 +64,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     {
         when: "application started and it selected in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
+        saveScreenshot( "id_provider" );
 
         then: "build date has a correct value"
         applicationItemStatisticsPanel.getBuildDate() == "TBA";
@@ -120,7 +121,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
     def "WHEN existing stopped application is selected THEN mixins should not be displayed on the statistic panel"()
     {
-        when: "stopped application havs been selected"
+        when: "stopped application has been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
 
         then: "mixins should not be displayed"
