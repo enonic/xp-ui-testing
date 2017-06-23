@@ -29,8 +29,6 @@ public class InstallAppDialog
 
     public static final String INSTALL_DIALOG_DIV = "//div[contains(@id,'InstallAppDialog')]";
 
-    private final String HEADER_XPATH = INSTALL_DIALOG_DIV + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
-
     private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + "//div[contains(@class,'cancel-button-top')]";
 
     private final String APPLICATION_INPUT = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
@@ -70,11 +68,6 @@ public class InstallAppDialog
     public InstallAppDialog( final TestSession session )
     {
         super( session );
-    }
-
-    public String getHeader()
-    {
-        return getDisplayedString( HEADER_XPATH );
     }
 
     public InstallAppDialog typeInApplicationInput( String url )
@@ -123,7 +116,7 @@ public class InstallAppDialog
 
     public void waitUntilDialogLoaded()
     {
-        boolean isLoaded = waitUntilVisibleNoException( By.xpath( HEADER_XPATH ), 10 );
+        boolean isLoaded = waitUntilVisibleNoException( By.xpath( APPLICATION_INPUT ), Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
             saveScreenshot( NameHelper.uniqueName( "err_install-dialog" ) );
@@ -135,7 +128,7 @@ public class InstallAppDialog
 
     public void waitUntilDialogClosed()
     {
-        boolean isPresent = waitsElementNotVisible( By.xpath( HEADER_XPATH ), Application.EXPLICIT_NORMAL );
+        boolean isPresent = waitsElementNotVisible( By.xpath( APPLICATION_INPUT ), Application.EXPLICIT_NORMAL );
         if ( !isPresent )
         {
             saveScreenshot( NameHelper.uniqueName( "err_dialog-not-closed" ) );
@@ -152,7 +145,7 @@ public class InstallAppDialog
 
     public boolean isDisplayed()
     {
-        return isElementDisplayed( HEADER_XPATH );
+        return isElementDisplayed( APPLICATION_INPUT );
     }
 
     public boolean isEnonicMarketPanelPresent()

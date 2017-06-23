@@ -32,7 +32,7 @@ public class ConfirmContentDeleteDialog
 
     private final String DIALOG_CONTENT_PANEL = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogContentPanel')]";
 
-    private final String NUMBER_OF_CONTENT_TO_DELETE = DIALOG_CONTENT_PANEL + "//span[contains(@class,'confirm-delete-text-number')]";
+    private final String NUMBER_OF_CONTENT_TO_DELETE = DIALOG_CONTENT_PANEL + "//span[contains(@class,'confirm-delete-number')]";
 
     private final String INPUT_FOR_CONFIRM_NUMBER = DIALOG_CONTENT_PANEL + "//input[contains(@id,'TextInput')]";
 
@@ -95,7 +95,7 @@ public class ConfirmContentDeleteDialog
     {
         if ( !isElementDisplayed( NUMBER_OF_CONTENT_TO_DELETE ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_number_content_input" );
+            saveScreenshot( "err_number_content_input" );
             throw new TestFrameworkException( "input for number of content to delete was not found!" );
         }
         return Integer.valueOf( getDisplayedString( NUMBER_OF_CONTENT_TO_DELETE ) );

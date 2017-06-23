@@ -17,9 +17,6 @@ class InstallAppDialog_Spec
         then: "'Install App' Dialog should appear"
         appDialog.isDisplayed();
 
-        and: "correct title should be displayed on the dialog"
-        appDialog.getHeader() == InstallAppDialog.HEADER;
-
         and: "'enonic market' panel should be present"
         appDialog.isEnonicMarketPanelPresent();
 
