@@ -25,9 +25,6 @@ class UninstallApplicationDialog_Spec
         then: "dialog should be displayed"
         dialog.isDisplayed();
 
-        and: "correct header should be displayed"
-        dialog.getHeader() == UninstallApplicationDialog.HEADER_TEXT;
-
         and:
         dialog.isYesButtonDisplayed();
 

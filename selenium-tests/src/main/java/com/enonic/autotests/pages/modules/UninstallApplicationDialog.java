@@ -9,14 +9,11 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 
 public class UninstallApplicationDialog
     extends Application
 {
     private final String DIV_CONTAINER = "//div[contains(@id,'UninstallApplicationDialog')]";
-
-    private final String HEADER_XPATH = DIV_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]/h2";
 
     public static final String HEADER_TEXT = "Uninstall Applications";
 
@@ -46,7 +43,7 @@ public class UninstallApplicationDialog
 
     public boolean isDisplayed()
     {
-        return isElementDisplayed( HEADER_XPATH );
+        return isElementDisplayed( DIALOG_CONTENT );
     }
 
     public ApplicationBrowsePanel clickOnYesButton()
@@ -63,10 +60,10 @@ public class UninstallApplicationDialog
 
     public void waitUntilDialogLoaded()
     {
-        boolean isLoaded = waitUntilVisibleNoException( By.xpath( HEADER_XPATH ), Application.EXPLICIT_NORMAL );
+        boolean isLoaded = waitUntilVisibleNoException( By.xpath( DIALOG_CONTENT ), Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_confirm-uninstall" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_uninstall_load" ) );
             throw new TestFrameworkException( "UninstallApplicationDialog was dialog not loaded!" );
         }
     }
@@ -76,14 +73,9 @@ public class UninstallApplicationDialog
         boolean isPresent = waitsElementNotVisible( By.xpath( HEADER_TEXT ), Application.EXPLICIT_NORMAL );
         if ( !isPresent )
         {
-            TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "err_confirm-uninstall-not-closed" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_uninstall_close" ) );
             throw new TestFrameworkException( "UninstallApplicationDialog dialog not closed!" );
         }
-    }
-
-    public String getHeader()
-    {
-        return getDisplayedString( HEADER_XPATH );
     }
 
     public boolean isYesButtonDisplayed()
