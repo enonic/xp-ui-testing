@@ -55,11 +55,6 @@ public class SortContentDialog
         super( session );
     }
 
-    public boolean isOpened()
-    {
-        return findElements( By.xpath( DIALOG_CONTAINER ) ).size() > 0;
-    }
-
     public SortContentDialog waitForLoaded( long timeout )
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )

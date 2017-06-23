@@ -111,7 +111,7 @@ public class Application
 
     public static final long PAGE_LOAD_TIMEOUT = 15l;
 
-    public static final long EXPLICIT_LONG = 5l;
+    public static final long EXPLICIT_LONG = 6l;
 
     public static final long EXPLICIT_NORMAL = 3;
 

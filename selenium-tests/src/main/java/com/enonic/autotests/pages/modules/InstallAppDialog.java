@@ -123,7 +123,7 @@ public class InstallAppDialog
 
     public void waitUntilDialogLoaded()
     {
-        boolean isLoaded = waitUntilVisibleNoException( By.xpath( HEADER_XPATH ), Application.EXPLICIT_NORMAL );
+        boolean isLoaded = waitUntilVisibleNoException( By.xpath( HEADER_XPATH ), Application.EXPLICIT_LONG );
         if ( !isLoaded )
         {
             saveScreenshot( NameHelper.uniqueName( "err_install-dialog" ) );
