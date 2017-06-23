@@ -875,7 +875,7 @@ public class ContentWizardPanel
         for ( WebElement el : principalViews )
         {
             String principalName = el.findElement( By.xpath( "." + P_NAME ) ).getText();
-            String suite = el.findElement( By.xpath( "." + "//div[contains(@id,'TabMenuButton')]//span[@class='label']" ) ).getText();
+            String suite = el.findElement( By.xpath( "." + "//div[contains(@id,'TabMenuButton')]//a[@class='label']" ) ).getText();
             builder = ContentAclEntry.builder();
             builder.principalName( principalName );
             builder.suite( PermissionSuite.getSuite( suite ) );
