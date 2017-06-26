@@ -16,7 +16,6 @@ import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.vo.contentmanager.security.UserStoreAccess;
 import com.enonic.autotests.vo.contentmanager.security.UserStoreAclEntry;
 import com.enonic.autotests.vo.usermanager.UserStore;
@@ -100,7 +99,7 @@ public class UserStoreWizardPanel
     {
         if ( !isRemoveSelectedIdProviderButtonDisplayed( idProviderDisplayName ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_remove_provider_button" );
+            saveScreenshot( "err_remove_provider_button" );
             throw new TestFrameworkException( "remove button for " + idProviderDisplayName + "was not found!" );
         }
         String removeButtonXpath = String.format( REMOVE_SELECTED_ID_PROVIDER_BUTTON, idProviderDisplayName );
@@ -114,7 +113,7 @@ public class UserStoreWizardPanel
         String removeEntryButton = String.format( SELECTED_ACE_ITEM_BY_DISPLAY_NAME + "//a[@class='icon-close']", principalDisplayName );
         if ( !isElementDisplayed( removeEntryButton ) )
         {
-            TestUtils.saveScreenshot( getSession(), "err_remove_acl_entry" );
+            saveScreenshot( "err_remove_acl_entry" );
             throw new TestFrameworkException( "button 'remove acl-entry' was not found!" );
         }
         getDisplayedElement( By.xpath( removeEntryButton ) ).click();
@@ -166,7 +165,7 @@ public class UserStoreWizardPanel
     {
         String principalName = itemView.findElement( By.xpath( "." + H6_DISPLAY_NAME ) ).getText();
         String userStoreAccess =
-            itemView.findElement( By.xpath( "." + "//div[contains(@id,'UserStoreAccessSelector')]//span[@class='label']" ) ).getText();
+            itemView.findElement( By.xpath( "." + "//div[contains(@id,'UserStoreAccessSelector')]//a[@class='label']" ) ).getText();
         UserStoreAccess access = UserStoreAccess.findByValue( userStoreAccess );
         return UserStoreAclEntry.builder().principalName( principalName ).access( access ).build();
     }

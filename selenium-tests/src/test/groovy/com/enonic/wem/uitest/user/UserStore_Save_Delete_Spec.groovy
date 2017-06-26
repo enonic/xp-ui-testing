@@ -21,9 +21,9 @@ class UserStore_Save_Delete_Spec
     @Shared
     String NEW_NAME = "new_name";
 
-    def "GIVEN creating of new user store WHEN user store was saved and wizard closed THEN new user store should be listed"()
+    def "GIVEN 'user store' wizard is opened WHEN user store was saved and wizard closed THEN new user store should be listed"()
     {
-        given: "creating of new UserStore"
+        given: "'user store' wizard is opened"
         TEST_USER_STORE = buildUserStore( "us", "save-test-user-store", "save spec" );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
@@ -49,18 +49,17 @@ class UserStore_Save_Delete_Spec
         saveScreenshot( "test_user_store_description" );
         userStoreWizardPanel.getDescriptionValue() == TEST_USER_STORE.getDescription();
     }
-    //  INBOX-279
-    @Ignore
-    def "GIVEN existing 'user store' WHEN creating new role with the same name THEN correct notification message appears"()
+
+    def "GIVEN user store wizard is opened WHEN the name that already in use has been typed THEN correct notification message should be present"()
     {
-        given: "creating new 'user store'"
+        given: "'user store' wizard is opened"
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
-        when: "wizard was saved and closed"
+        when: "the name that already in use has been typed"
         userStoreWizardPanel.typeData( TEST_USER_STORE ).save();
         String errorMessage = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then: "message that role with it  name already exists"
+        then: "correct notification message should be present"
         errorMessage == String.format( USER_STORE_EXISTS, TEST_USER_STORE.getName() );
     }
 
@@ -82,7 +81,7 @@ class UserStore_Save_Delete_Spec
         and: "correct notification message appears"
         message == String.format( USER_STORE_DELETED_MESSAGE, us.getName() );
     }
-    //INBOX-288
+    //Impossible to filter an User store
     @Ignore
     def "GIVEN existing 'user store' WHEN display name was changed THEN 'user store' with new display name should be listed"()
     {
@@ -96,22 +95,6 @@ class UserStore_Save_Delete_Spec
         then: "role with new display name should be listed"
         saveScreenshot( "us-d-name-changed" );
         userBrowsePanel.exists( TEST_USER_STORE.getName() );
-    }
-
-    //app bug? currently impossible to change the UserStore's name, input is disabled now
-    @Ignore
-    def "GIVEN existing 'user store' WHEN name was changed THEN 'user store' with new name should be listed"()
-    {
-        given: "existing 'user store' opened"
-        UserStoreWizardPanel userStoreWizardPanel = openUserStore( TEST_USER_STORE.getName() );
-
-        when: "new name was typed and saved, and wizard closed"
-        userStoreWizardPanel.typeName( NEW_NAME ).save().close( NEW_DISPLAY_NAME );
-        userBrowseFilterPanel.typeSearchText( NEW_NAME );
-
-        then: "'user store' with new name should be listed"
-        saveScreenshot( "us-name-changed" );
-        userBrowsePanel.exists( NEW_NAME );
     }
 
     def "GIVEN creating of new 'user store' WHEN 'Delete' button on wizard-toolbar has been pressed THEN the 'user store' should not be displayed in the grid"()
@@ -132,7 +115,7 @@ class UserStore_Save_Delete_Spec
         !userBrowsePanel.exists( userStore.getName() );
     }
 
-    def "GIVEN 'user store' wizard opened, data saved WHEN HomeButton was pressed THEN new 'user store' should be displayed in the grid"()
+    def "GIVEN 'user store' wizard is opened, data saved WHEN HomeButton was pressed THEN new 'user store' should be displayed in the grid"()
     {
         given: "'user store' wizard is opened, data is typed and saved"
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
@@ -147,9 +130,9 @@ class UserStore_Save_Delete_Spec
         userBrowsePanel.exists( userStore.getName() );
     }
 
-    def "GIVEN adding of a new user-store WHEN data was typed and 'Save' button pressed AND page was refreshed in the browser THEN wizard should be displayed with a correct data"()
+    def "GIVEN 'user store' wizard is opened WHEN data was typed and 'Save' button pressed AND page was refreshed in the browser THEN wizard should be displayed with a correct data"()
     {
-        given: "start adding a new user"
+        given: "'user store' wizard is opened"
         UserStore refreshWizardUserStore = buildUserStore( "store", "test-refresh-wizard", "description" );
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 

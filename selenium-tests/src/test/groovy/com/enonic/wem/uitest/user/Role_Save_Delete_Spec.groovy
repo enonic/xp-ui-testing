@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Role
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -71,11 +70,10 @@ class Role_Save_Delete_Spec
         RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
 
         then: "correct description displayed"
-        TestUtils.saveScreenshot( getSession(), "check-role-description" );
+        saveScreenshot( "check-role-description" );
         roleWizardPanel.getDescription() == TEST_ROLE.getDescription();
     }
-    //app bug INBOX-279
-    @Ignore
+
     def "GIVEN a existing role WHEN creating new role with the same name THEN correct notification message appears"()
     {
         given: "creating new role"
@@ -95,7 +93,7 @@ class Role_Save_Delete_Spec
         Role role = buildRole( "role", "test-role", "description" );
         roleWizardPanel.typeData( role ).save().close( role.getDisplayName() );
 
-        when: "role selected and 'Delete' button pressed"
+        when: "role was selected and 'Delete' button pressed"
         userBrowsePanel.doClearSelection();
         userBrowseFilterPanel.typeSearchText( role.getName() );
         userBrowsePanel.clickCheckboxAndSelectRole( role.getName() ).clickToolbarDelete().doDelete();
@@ -109,36 +107,19 @@ class Role_Save_Delete_Spec
         message == String.format( ROLE_DELETED_MESSAGE, role.getName() );
     }
 
-    def "GIVEN existing role WHEN display name changed THEN role with new display name should be listed"()
+    def "GIVEN existing role WHEN display name has been changed THEN role with new display name should be listed"()
     {
         given: "existing role opened"
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
         RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
 
-        when: "new name typed and saved, and wizard closed"
+        when: "display name has been changed, and wizard closed"
         roleWizardPanel.typeDisplayName( NEW_DISPLAY_NAME ).save().close( NEW_DISPLAY_NAME );
         userBrowseFilterPanel.typeSearchText( NEW_DISPLAY_NAME );
 
         then: "role with new display name should be listed"
         TestUtils.saveScreenshot( getSession(), "role-d-name-changed" );
         userBrowsePanel.exists( TEST_ROLE.getName() );
-    }
-
-    //app bug
-    @Ignore
-    def "GIVEN existing role is opened WHEN name was changed THEN role with new name should be listed"()
-    {
-        given: "existing role is opened"
-        userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
-        RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
-
-        when: "new name typed and saved, and wizard closed"
-        roleWizardPanel.typeName( NEW_NAME ).save().close( NEW_DISPLAY_NAME );
-        userBrowseFilterPanel.typeSearchText( NEW_NAME );
-
-        then: "role with new name should be listed"
-        TestUtils.saveScreenshot( getSession(), "name-changed" );
-        userBrowsePanel.exists( NEW_NAME );
     }
 
     def "GIVEN creating new role WHEN data saved and 'Delete' button on wizard-toolbar pressed THEN wizard closes and role should not be displayed in the grid"()
@@ -158,14 +139,14 @@ class Role_Save_Delete_Spec
         !userBrowsePanel.exists( role.getName() );
     }
 
-    def "GIVEN role wizard opened, data saved WHEN HomeButton pressed THEN new role should be displayed in the grid"()
+    def "GIVEN role wizard is opened, data saved WHEN HomeButton has been pressed THEN new role should be displayed in the grid"()
     {
         given: "role wizard opened, data saved"
         RoleWizardPanel roleWizardPanel = openRoleWizard();
         Role testRole = buildRole( "role", "test-role", "description" );
         roleWizardPanel.typeData( testRole ).save();
 
-        when: "HomeButton pressed"
+        when: "HomeButton has been pressed"
         userBrowsePanel.pressAppHomeButton();
 
         then: "new role should be displayed in the grid"

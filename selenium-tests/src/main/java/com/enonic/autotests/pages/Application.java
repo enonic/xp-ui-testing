@@ -129,7 +129,7 @@ public class Application
         "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-content')]//span[contains(.,'%s')]";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and @class='notification error']//span";
+        "//div[contains(@id,'NotificationMessage') and @class='notification error']//div[contains(@class,'notification-content')]/span";
 
     public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";

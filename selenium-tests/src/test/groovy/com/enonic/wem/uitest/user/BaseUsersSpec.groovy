@@ -23,13 +23,13 @@ class BaseUsersSpec
     String STANDARD_ID_PROVIDER = "Standard ID Provider";
 
     @Shared
-    String USER_DELETING_NOTIFICATION_MESSAGE = "Principal [user:system:%s] deleted!";
+    String USER_DELETING_NOTIFICATION_MESSAGE = "Principal \"user:system:%s\" is deleted";
 
     @Shared
-    String GROUP_DELETING_NOTIFICATION_MESSAGE = "Principal [group:system:%s] deleted!";
+    String GROUP_DELETING_NOTIFICATION_MESSAGE = "Principal \"group:system:%s\" is deleted";
 
     @Shared
-    String ROLE_DELETED_MESSAGE = "Principal [role:%s] deleted!";
+    String ROLE_DELETED_MESSAGE = "Principal \"role:%s\" is deleted";
 
     @Shared
     String USER_CREATED_MESSAGE = "User was created";
@@ -44,7 +44,7 @@ class BaseUsersSpec
     String USER_STORE_CREATED_MESSAGE = "User store was created";
 
     @Shared
-    String USER_STORE_DELETED_MESSAGE = "User store [%s] deleted";
+    String USER_STORE_DELETED_MESSAGE = "User Store \"%s\" is deleted";
 
     @Shared
     String SUPER_USER_DISPLAY_NAME = "Super User";
@@ -74,10 +74,10 @@ class BaseUsersSpec
     UserBrowseFilterPanel userBrowseFilterPanel;
 
     @Shared
-    String ROLE_EXISTS = "A role with name %s already exists";
+    String ROLE_EXISTS = "Principal [%s] could not be created. A principal with that name already exists";
 
     @Shared
-    String USER_STORE_EXISTS = "A user store with name %s already exists";
+    String USER_STORE_EXISTS = "User Store [%s] could not be created. A User Store with that name already exists";
 
     @Shared
     String GROUP_EXISTS = "A group with that name already exists";
