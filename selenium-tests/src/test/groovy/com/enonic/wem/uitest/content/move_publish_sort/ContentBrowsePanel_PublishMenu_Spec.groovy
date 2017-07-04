@@ -45,8 +45,8 @@ class ContentBrowsePanel_PublishMenu_Spec
         saveScreenshot( "test_publish_menu_online_content" );
         contentBrowsePanel.isUnPublishMenuItemEnabled();
 
-        and: "'Create Issue' menu item should be present and disabled"
-        !contentBrowsePanel.isCreateIssueMenuItemEnabled();
+        and: "'Create Issue' menu item should be present and enabled"
+        contentBrowsePanel.isCreateIssueMenuItemEnabled();
 
         and: "'Publish Tree' menu item should be present and disabled"
         !contentBrowsePanel.isPublishTreeMenuItemEnabled();

@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.user
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Shared
 
 class UserStoreWizardPanel_TabMenuSpec
@@ -40,7 +39,7 @@ class UserStoreWizardPanel_TabMenuSpec
 
         when: "no any data typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.close( USERSTORE_TAB_TITLE );
-        TestUtils.saveScreenshot( getTestSession(), "user_store_closed" );
+        saveScreenshot( "user_store_closed" );
 
 
         then: "close dialog should not be showed"
@@ -56,7 +55,7 @@ class UserStoreWizardPanel_TabMenuSpec
 
         when: "'Close' clicked"
         SaveBeforeCloseDialog dialog = wizard.close( displayName );
-        TestUtils.saveScreenshot( getTestSession(), "user_store_not_closed" );
+        saveScreenshot( "user_store_not_closed" );
 
         then: "'SaveBeforeClose' dialog showed"
         dialog != null;

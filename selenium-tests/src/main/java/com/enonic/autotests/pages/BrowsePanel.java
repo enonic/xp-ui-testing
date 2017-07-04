@@ -781,7 +781,7 @@ public abstract class BrowsePanel
             {
                 name = itemName;
             }
-            TestUtils.saveScreenshot( getSession(), name );
+            saveScreenshot( name );
         }
         return result;
     }
