@@ -30,17 +30,18 @@ class Occurrences_HtmlArea_0_1_Spec
 
     def "GIVEN content with html-area was saved AND 'Link' inserted in the area WHEN the content is opened THEN correct link should be present in the html-area"()
     {
-        given: "creating of content with html-area"
+        given: "html-area content has been added"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        and: "Link with norwgian text has been added"
         InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
         modalDialog.clickURLBarItem().typeText( NORWEGIAN_TEXT ).typeURL( "http://enonic.com" ).pressInsertButton().waitForDialogClosed();
+        and: "the wizard has been closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-
-        when: "content is opened"
+        when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
         String text = formViewPanel.getInnerHtml();
 

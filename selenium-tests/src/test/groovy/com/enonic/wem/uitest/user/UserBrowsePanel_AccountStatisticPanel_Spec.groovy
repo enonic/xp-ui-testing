@@ -102,6 +102,7 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         given: "existing user with a role"
         userBrowseFilterPanel.typeSearchText( TEST_USER.getName() );
         UserWizardPanel wizardPanel = userBrowsePanel.clickCheckboxAndSelectUser( TEST_USER.getName() ).clickToolbarEdit();
+        sleep( 1000 );
 
         when: "role was removed AND user saved AND wizard closed"
         wizardPanel.removeRoleByName( TEST_ROLE_NAME ).save().close( TEST_USER.getDisplayName() );

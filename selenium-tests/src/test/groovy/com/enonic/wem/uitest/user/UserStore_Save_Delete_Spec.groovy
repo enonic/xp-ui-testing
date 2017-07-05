@@ -63,7 +63,7 @@ class UserStore_Save_Delete_Spec
         errorMessage == String.format( USER_STORE_EXISTS, TEST_USER_STORE.getName() );
     }
 
-    def "GIVEN existing 'user store' WHEN 'user store' selected and 'Delete' button pressed THEN 'user store' not displayed in a grid"()
+    def "GIVEN existing 'user store' WHEN 'user store' selected and 'Delete' button pressed THEN 'user store' should not be displayed in the grid"()
     {
         given: "existing 'user store'"
         UserStore us = buildUserStore( "us", "save-test-user-store", "store to delete" );
