@@ -102,6 +102,8 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         given: "existing user with a role"
         userBrowseFilterPanel.typeSearchText( TEST_USER.getName() );
         UserWizardPanel wizardPanel = userBrowsePanel.clickCheckboxAndSelectUser( TEST_USER.getName() ).clickToolbarEdit();
+        wizardPanel.waitUntilWizardOpened();
+        wizardPanel.clickOnRolesAndGroupsTabLink();
         sleep( 1000 );
 
         when: "role was removed AND user saved AND wizard closed"

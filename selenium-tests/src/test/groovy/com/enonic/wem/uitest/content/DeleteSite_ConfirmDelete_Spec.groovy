@@ -22,11 +22,11 @@ class DeleteSite_ConfirmDelete_Spec
 
     def "GIVEN existing site WHEN site selected AND 'Delete'-toolbar button pressed AND 'Delete' on the dialog clicked THEN 'Confirm delete' dialog appears"()
     {
-        given: "existing site selected AND delete button pressed"
+        given: "existing site is selected AND delete button pressed"
         SITE = buildSiteWithNameAndDispalyNameAndDescription( "site", "confirm delete", "description" );
         addContent( SITE );
 
-        when: "'confirm delete site' dialog opened"
+        when: "'confirm delete site' dialog has been opened"
         ConfirmContentDeleteDialog confirmDialog = openConfirmDeleteDialog( SITE.getName() );
         saveScreenshot( "test_confirm_delete_site" );
 
@@ -51,25 +51,25 @@ class DeleteSite_ConfirmDelete_Spec
         confirmDialog.clickOnCancelBottomButton();
         saveScreenshot( "test_confirm_delete_dialog_cancel_clicked" );
 
-        then: "modal dialog closed"
+        then: "modal dialog should be closed"
         confirmDialog.waitUntilDialogClosed( Application.EXPLICIT_NORMAL );
 
-        and: "site listed in the grid"
+        and: "site should be listed in the grid"
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN existing site WHEN new child content to the site added AND 'Confirm delete' has been opened THEN number of content to delete increased"()
+    def "GIVEN existing site WHEN new child content for the site has been added AND 'Confirm delete' has been opened THEN number of content to delete should be increased"()
     {
         given: "existing site selected AND delete button pressed"
         Content child = buildFolderContentWithParent( "child", "child content", SITE.getName() );
         findAndSelectContent( SITE.getName() );
         addContent( child );
 
-        when:
+        when: "'Confirm delete' has been opened"
         ConfirmContentDeleteDialog confirmDialog = openConfirmDeleteDialog( SITE.getName() );
         saveScreenshot( "test_number_to_delete_increased" );
 
-        then:
+        then: "number of content to delete should be increased"
         confirmDialog.getNumberOfContentToDelete() == INITIAL_NUMBER_TO_DELETE + 1;
     }
 

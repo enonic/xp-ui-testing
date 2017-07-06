@@ -30,6 +30,8 @@ public class UserWizardPanel
 
     public final String USER_WIZARD_PANEL = "//div[contains(@id,'UserWizardPanel') and not(contains(@style,'display: none'))]";
 
+    public static final String ROLES_AND_GROUPS_LINK_TEXT = "Roles & Groups";
+
     public final String TOOLBAR_SAVE_BUTTON = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
     private final String TOOLBAR_DELETE_BUTTON = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
@@ -128,6 +130,18 @@ public class UserWizardPanel
         names.stream().forEach( roleName -> addRole( roleName ) );
     }
 
+    public UserWizardPanel clickOnRolesAndGroupsTabLink()
+    {
+        String rolesAndGroupsTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, ROLES_AND_GROUPS_LINK_TEXT );
+        if ( !isElementDisplayed( rolesAndGroupsTabXpath ) )
+        {
+            saveScreenshot( "err_" + SECURITY_LINK_TEXT );
+            throw new TestFrameworkException( "step was not found! " + ROLES_AND_GROUPS_LINK_TEXT );
+        }
+        findElement( By.xpath( rolesAndGroupsTabXpath ) ).click();
+        sleep( 500 );
+        return this;
+    }
     public UserWizardPanel removeRoleByName( String roleName )
     {
         String removeButtonXpath = String.format( REMOVE_ROLE_BUTTON, roleName );

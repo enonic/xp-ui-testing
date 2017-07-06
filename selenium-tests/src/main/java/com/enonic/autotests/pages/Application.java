@@ -66,6 +66,8 @@ public class Application
 
     protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
 
+    protected final String TEXT_AREA_INPUT = "//textarea[contains(@id,'TextArea')]";
+
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
     protected final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";

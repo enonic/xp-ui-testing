@@ -68,15 +68,14 @@ class Attachments_Content_Spec
         when: "'Save draft' button has been pressed but the required attachment not selected"
         wizard.typeName( NameHelper.uniqueName( "attachments" ) ).save();
 
-        then: "validation message is not displayed"
+        then: "validation message should not be displayed"
         attachmentsFormView.isValidationMessagePresent();
 
         and: "correct validation message is displayed"
         attachmentsFormView.getValidationMessage() == String.format( Application.MIN_OCCURRENCES_REQUIRED_MESSAGE, 2 );
 
-        and: "'Publish' button is disabled"
+        and: "'Publish' button should be disabled"
         !wizard.isPublishButtonEnabled();
-
     }
 
 }
