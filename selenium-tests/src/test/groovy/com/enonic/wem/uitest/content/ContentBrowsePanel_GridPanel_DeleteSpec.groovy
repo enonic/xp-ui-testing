@@ -73,7 +73,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( parent.getName() ) );
     }
 
-    def "GIVEN existing folder WHEN the folder is selcted and deleted THEN New-button should be enabled"()
+    def "GIVEN existing folder WHEN the folder is selected and deleted THEN New-button should be enabled"()
     {
         given: "folder content was added at the root"
         Content folder = buildFolderContent( "folder", "folder-to-delete" );

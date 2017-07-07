@@ -34,7 +34,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         and: "both contents are published"
         contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
 
-        when: "Delete button is pressed and it confirmed"
+        when: "Delete button has been pressed and the deleting confirmed"
         contentBrowsePanel.clickToolbarDelete().clickOnDeleteButton();
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
@@ -45,6 +45,25 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
 
         and: "child folder should be 'Deleted'"
         findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.DELETED.getValue();
+    }
+
+    def "GIVEN existing 'deleted' folder WHEN the content has been selected THEN only two toolbar's items should be displayed"()
+    {
+        when: "existing 'deleted' folder is selected"
+        findAndSelectContent( PARENT_FOLDER.getName() );
+        saveScreenshot( "deleted_content_selected" )
+
+        then: "Delete button should not be displayed"
+        !contentBrowsePanel.isDeleteButtonDisplayed();
+
+        and: "Edit button should not be displayed"
+        !contentBrowsePanel.isEditButtonDisplayed();
+
+        and: "Move button should not be displayed"
+        !contentBrowsePanel.isMoveButtonDisplayed();
+
+        and: "Duplicate button should not be displayed"
+        !contentBrowsePanel.isDuplicateButtonDisplayed();
     }
 
     def "GIVEN parent 'Deleted' folder is selected WHEN 'Undo delete' button was pressed THEN both folders are getting 'Online'"()

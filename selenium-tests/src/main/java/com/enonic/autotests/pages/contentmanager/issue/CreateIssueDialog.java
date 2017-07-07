@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.issue;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,6 +9,9 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.LoaderComboBox;
+
+import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
  * Created on 7/5/2017.
@@ -16,16 +21,31 @@ public class CreateIssueDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'CreateIssueDialog')]";
 
+    protected final String ASSIGNEES_OPTION_FILTER_INPUT =
+        DIALOG_CONTAINER + "//div[contains(@id,'LoaderComboBox') and @name='principalSelector']" + COMBOBOX_OPTION_FILTER_INPUT;
+
+    protected final String ITEMS_OPTION_FILTER_INPUT =
+        DIALOG_CONTAINER + "//div[contains(@id,'LoaderComboBox') and @name='contentSelector']" + COMBOBOX_OPTION_FILTER_INPUT;
+
+
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'button-bottom')]";
 
     private final String CREATE_ISSUE_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child:span[text()='Create Issue']";
+        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Create Issue']]";
 
     private final String TITLE_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Title']]//input[@type='text']";
 
+    private final String TITLE_INPUT_ERROR_MESSAGE =
+        "//div[contains(@id,'FormItem') and child::label[text()='Title']]" + VALIDATION_RECORDING_VIEWER;
+
+    private final String ASSIGNEES_INPUT_ERROR_MESSAGE =
+        DIALOG_CONTAINER + "//div[contains(@id,'FormItem') and child::label[text()='Assignees']]" + VALIDATION_RECORDING_VIEWER;
+
     private final String DESCRIPTION_TEXT_AREA = DIALOG_CONTAINER + TEXT_AREA_INPUT;
+
+    private final String DISPLAY_NAMES_ITEMS_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogItemList')]" + H6_DISPLAY_NAME;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
@@ -33,18 +53,66 @@ public class CreateIssueDialog
     @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
     private WebElement cancelButtonBottom;
 
-    @FindBy(xpath = CREATE_ISSUE_BUTTON)
+    @FindBy(xpath = DESCRIPTION_TEXT_AREA)
     private WebElement descriptionTextArea;
 
-    @FindBy(xpath = DESCRIPTION_TEXT_AREA)
+    @FindBy(xpath = CREATE_ISSUE_BUTTON)
     private WebElement createIssueButton;
 
     @FindBy(xpath = TITLE_INPUT)
     private WebElement titleTextInput;
 
+    @FindBy(xpath = ASSIGNEES_OPTION_FILTER_INPUT)
+    protected WebElement assigneesOptionFilterInput;
+
+    @FindBy(xpath = ITEMS_OPTION_FILTER_INPUT)
+    protected WebElement itemsOptionFilterInput;
+
+
     public CreateIssueDialog( final TestSession session )
     {
         super( session );
+    }
+
+    public List<String> getDisplayNameOfSelectedItems()
+    {
+        return getDisplayedStrings( By.xpath( DISPLAY_NAMES_ITEMS_LIST ) );
+    }
+
+    public CreateIssueDialog selectAssignee( String itemDisplayName )
+    {
+        typeInAssigneesFilter( itemDisplayName );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( itemDisplayName );
+        sleep( 400 );
+        return this;
+    }
+
+    public CreateIssueDialog selectItems( List<String> itemNames )
+    {
+        itemNames.stream().forEach( itemDisplayName -> selectItem( itemDisplayName ) );
+        return this;
+    }
+
+    public CreateIssueDialog selectItem( String itemDisplayName )
+    {
+        typeInItemsFilter( itemDisplayName );
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        loaderComboBox.selectOption( itemDisplayName );
+        sleep( 400 );
+        return this;
+    }
+
+    public void typeInAssigneesFilter( String itemDisplayName )
+    {
+        clearAndType( assigneesOptionFilterInput, itemDisplayName );
+        sleep( 300 );
+    }
+
+    public void typeInItemsFilter( String itemName )
+    {
+        clearAndType( itemsOptionFilterInput, itemName );
+        sleep( 400 );
     }
 
     public CreateIssueDialog typeDescription( String text )
@@ -59,6 +127,24 @@ public class CreateIssueDialog
         return this;
     }
 
+    public String getValidationMessageForTitleInput()
+    {
+        if ( isElementDisplayed( TITLE_INPUT_ERROR_MESSAGE ) )
+        {
+            return getDisplayedString( TITLE_INPUT_ERROR_MESSAGE );
+        }
+        return "";
+    }
+
+    public String getValidationMessageForAssigneesInput()
+    {
+        if ( isElementDisplayed( ASSIGNEES_INPUT_ERROR_MESSAGE ) )
+        {
+            return getDisplayedString( ASSIGNEES_INPUT_ERROR_MESSAGE );
+        }
+        return "";
+    }
+
     public void waitForOpened()
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL ) )
@@ -67,4 +153,68 @@ public class CreateIssueDialog
             throw new TestFrameworkException( "'Create Issue' dialog was not opened!" );
         }
     }
+
+    public boolean waitForClosed()
+    {
+        boolean result = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            saveScreenshot( "create_issue_not_closed" );
+        }
+        return result;
+    }
+
+    public boolean isAssigneesOptionFilterDisplayed()
+    {
+        return assigneesOptionFilterInput.isDisplayed();
+    }
+
+    public boolean isItemsOptionFilterDisplayed()
+    {
+        return assigneesOptionFilterInput.isDisplayed();
+    }
+
+    public boolean isCreateIssueButtonDisplayed()
+    {
+        return createIssueButton.isDisplayed();
+    }
+
+    public void clickOnCreateIssueButton()
+    {
+        createIssueButton.click();
+        sleep( 500 );
+    }
+
+    public boolean isCancelButtonBottomDisplayed()
+    {
+        return cancelButtonBottom.isDisplayed();
+    }
+
+    public boolean isTitleInputDisplayed()
+    {
+        return titleTextInput.isDisplayed();
+    }
+
+    public boolean isDescriptionTextAreaDisplayed()
+    {
+        return descriptionTextArea.isDisplayed();
+    }
+
+    public boolean isCancelTopButtonDisplayed()
+    {
+        return cancelButtonTop.isDisplayed();
+    }
+
+    public void clickOnCancelTopButton()
+    {
+        cancelButtonTop.click();
+        sleep( 500 );
+    }
+
+    public void clickOnCancelBottomButton()
+    {
+        cancelButtonBottom.click();
+        sleep( 500 );
+    }
+
 }

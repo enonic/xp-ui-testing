@@ -18,6 +18,7 @@ import com.enonic.autotests.pages.contentmanager.ContentMenuItem;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
+import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -226,16 +227,16 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public ContentUnpublishDialog selectCreateIssueMenuItem()
+    public CreateIssueDialog selectCreateIssueMenuItem()
     {
-        if ( !isUnPublishMenuItemEnabled() )
+        if ( !isCreateIssueMenuItemEnabled() )
         {
             saveScreenshot( "err_create_issue_menu_item" );
-            throw new TestFrameworkException( "menu item was not found!" );
+            throw new TestFrameworkException( "menu item is disabled!" );
         }
         getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ).click();
-        ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        CreateIssueDialog dialog = new CreateIssueDialog( getSession() );
+        dialog.waitForOpened();
         return dialog;
     }
 
@@ -996,6 +997,21 @@ public class ContentBrowsePanel
     public boolean isDeleteButtonEnabled()
     {
         return deleteButton.isEnabled();
+    }
+
+    public boolean isDeleteButtonDisplayed()
+    {
+        return deleteButton.isDisplayed();
+    }
+
+    public boolean isEditButtonDisplayed()
+    {
+        return editButton.isDisplayed();
+    }
+
+    public boolean isDuplicateButtonDisplayed()
+    {
+        return duplicateButton.isDisplayed();
     }
 
     public boolean isNewButtonEnabled()
