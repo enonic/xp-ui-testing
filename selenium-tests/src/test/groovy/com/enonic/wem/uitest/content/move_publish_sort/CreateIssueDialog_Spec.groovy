@@ -52,25 +52,12 @@ class CreateIssueDialog_Spec
         dialog.getDisplayNameOfSelectedItems().get( 0 ) == CONTENT.getDisplayName();
     }
 
-    def "GIVEN existing 'New' content is selected AND Create Issue dialog opened WHEN 'Create Issue' button pressed THEN validation messages should be displayed"()
+    def "GIVEN Create Issue dialog is opened WHEN Required inputs are empty and Create Issue button has been pressed THEN validation messages should be displayed"()
     {
-        given:
+        given: "Create Issue dialog is opened"
         CreateIssueDialog dialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
-        when: ""
-        dialog.clickOnCreateIssueButton();
 
-        then: "correct notification message should be present"
-        dialog.getValidationMessageForTitleInput() == Application.REQUIRED_MESSAGE;
-
-        and: "correct notification message should be present"
-        dialog.getValidationMessageForAssigneesInput() == Application.REQUIRED_MESSAGE;
-    }
-
-    def "GIVEN Create Issue dialog is opened WHEN 'Cancel' top button has been pressed THEN the dialog should be closed"()
-    {
-        given:
-        CreateIssueDialog dialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
-        when: ""
+        when: "Required inputs are empty and Create Issue button has been pressed"
         dialog.clickOnCreateIssueButton();
 
         then: "correct notification message should be present"
@@ -84,7 +71,7 @@ class CreateIssueDialog_Spec
     {
         given:
         CreateIssueDialog dialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
-        when: "Cancel Bottom button has been pressed"
+        when: "'Cancel Bottom' button has been pressed"
         dialog.clickOnCancelBottomButton();
 
         then: "dialog should be closed"
@@ -95,7 +82,7 @@ class CreateIssueDialog_Spec
     {
         given:
         CreateIssueDialog dialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
-        when: "Cancel Top button has been pressed"
+        when: "'Cancel Top' button has been pressed"
         dialog.clickOnCancelTopButton();
 
         then: "dialog should be closed"
