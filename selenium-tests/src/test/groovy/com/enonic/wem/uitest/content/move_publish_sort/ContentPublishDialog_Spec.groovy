@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -12,6 +13,9 @@ import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks:
+ * enonic/xp-ui-testing#56  Add Selenium tests for 'Create Issue' menu item in the publish-menu*/
 @Stepwise
 class ContentPublishDialog_Spec
     extends BaseContentSpec
@@ -95,7 +99,7 @@ class ContentPublishDialog_Spec
         contentPublishDialog.isDependantItemRemovable( CHILD_FOLDER.getName() );
     }
 
-    def "GIVEN 'Content Publish' dialog shown WHEN the cancel button on the bottom was clicked THEN dialog is closing"()
+    def "GIVEN 'Content Publish' dialog is opened WHEN the cancel button on the bottom was clicked THEN dialog is closing"()
     {
         given: "parent content is selected and 'Publish' button pressed"
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -107,6 +111,37 @@ class ContentPublishDialog_Spec
 
         then: "dialog is closing"
         !contentPublishDialog.isOpened();
+    }
+
+    def "GIVEN 'Content Publish' dialog is opened WHEN 'show menu' button has been clicked THEN 'Create Issue' menu item should be present"()
+    {
+        given: "parent content is selected and 'Publish' button pressed"
+        findAndSelectContent( PARENT_FOLDER.getName() );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
+            Application.EXPLICIT_NORMAL );
+
+        when: "'show menu' button has been clicked"
+        contentPublishDialog.showPublishMenu();
+
+        then: "'create issue' menu item should be displayed"
+        contentPublishDialog.isCreateIssueMenuItemDisplayed();
+
+        and: "'schedule' menu item should be displayed"
+        contentPublishDialog.isScheduleMenuItemDisplayed();
+    }
+
+    def "GIVEN 'Content Publish' dialog is opened WHEN 'Create Issue' menu item has been clicked THEN 'Create Issue' dialog should be present"()
+    {
+        given: "parent content is selected and 'Publish' button pressed"
+        findAndSelectContent( PARENT_FOLDER.getName() );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
+            Application.EXPLICIT_NORMAL );
+
+        when: "'Create Issue' menu item has been clicked"
+        CreateIssueDialog dialog = contentPublishDialog.showPublishMenu().clickOnCreateIssueMenuItem();
+
+        then: "'create issue' dialog should be displayed"
+        dialog.waitForOpened();
     }
 
     def "GIVEN 'Content Publish' dialog is opened WHEN the button cancel on the top was clicked THEN dialog is closing"()

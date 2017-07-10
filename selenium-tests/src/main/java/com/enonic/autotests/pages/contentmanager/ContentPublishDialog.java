@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog;
 import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -119,6 +120,28 @@ public class ContentPublishDialog
         return dialog;
     }
 
+    public CreateIssueDialog clickOnCreateIssueMenuItem()
+    {
+        if ( !isCreateIssueMenuItemDisplayed() )
+        {
+            saveScreenshot( "err_create_issue_menu_item" );
+            throw new TestFrameworkException( "'create issue' menu item was not found!" );
+        }
+        getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ).click();
+        CreateIssueDialog dialog = new CreateIssueDialog( getSession() );
+        dialog.waitForOpened();
+        return dialog;
+    }
+
+    public boolean isCreateIssueMenuItemDisplayed()
+    {
+        return isElementDisplayed( CREATE_ISSUE_MENU_ITEM );
+    }
+
+    public boolean isScheduleMenuItemDisplayed()
+    {
+        return isElementDisplayed( SCHEDULE_MENU_ITEM );
+    }
     public boolean isScheduleMenuItemEnabled()
     {
         findElements( By.xpath( SCHEDULE_MENU_ITEM ) );
