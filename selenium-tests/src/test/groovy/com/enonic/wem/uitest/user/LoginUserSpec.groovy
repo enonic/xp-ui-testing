@@ -136,7 +136,6 @@ class LoginUserSpec
 
         and: "'Home' link is displayed"
         launcherPanel.isHomeLinkDisplayed();
-
     }
 
     def "GIVEN just created user 'logged in' WHEN user opened a content with CAN_WRITE permission and typed new 'display name' THEN 'save draft' button is enabled"()

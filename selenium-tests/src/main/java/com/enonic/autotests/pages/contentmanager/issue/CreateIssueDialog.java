@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.contentmanager.issue;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +11,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.LoaderComboBox;
+import com.enonic.autotests.vo.contentmanager.Issue;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -79,6 +81,28 @@ public class CreateIssueDialog
         return getDisplayedStrings( By.xpath( DISPLAY_NAMES_ITEMS_LIST ) );
     }
 
+    public CreateIssueDialog typeData( Issue issue )
+    {
+        if ( StringUtils.isNotEmpty( issue.getTitle() ) )
+        {
+            typeTitle( issue.getTitle() );
+        }
+        if ( StringUtils.isNotEmpty( issue.getDescription() ) )
+        {
+            typeDescription( issue.getDescription() );
+        }
+        if ( issue.getAssignees() != null )
+        {
+            selectAssignees( issue.getAssignees() );
+        }
+        if ( issue.getItemsToPublish() != null )
+        {
+            selectItemsToPublish( issue.getItemsToPublish() );
+        }
+
+        return this;
+    }
+
     public CreateIssueDialog selectAssignee( String itemDisplayName )
     {
         typeInAssigneesFilter( itemDisplayName );
@@ -88,7 +112,13 @@ public class CreateIssueDialog
         return this;
     }
 
-    public CreateIssueDialog selectItems( List<String> itemNames )
+    public CreateIssueDialog selectAssignees( List<String> userDisplayNames )
+    {
+        userDisplayNames.stream().forEach( userDisplayName -> selectAssignee( userDisplayName ) );
+        return this;
+    }
+
+    public CreateIssueDialog selectItemsToPublish( List<String> itemNames )
     {
         itemNames.stream().forEach( itemDisplayName -> selectItem( itemDisplayName ) );
         return this;

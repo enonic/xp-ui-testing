@@ -299,6 +299,7 @@ class BaseContentSpec
 
     public ContentBrowsePanel findAndSelectContent( String name )
     {
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         filterPanel.typeSearchText( name );
         selectContentByName( name );
         return contentBrowsePanel;

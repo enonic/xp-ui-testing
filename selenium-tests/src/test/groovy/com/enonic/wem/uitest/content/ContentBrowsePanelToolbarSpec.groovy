@@ -1,7 +1,8 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.utils.TestUtils
-
+/**
+ * Tasks:
+ * xp-ui-testing#63  Add Selenium tests for 'Show Issue' button on the contentBrowse-toolbar*/
 class ContentBrowsePanelToolbarSpec
     extends BaseContentSpec
 {
@@ -31,6 +32,12 @@ class ContentBrowsePanelToolbarSpec
 
         and: "Move button should be disabled"
         !contentBrowsePanel.isMoveButtonEnabled();
+
+        and: "'Show Issues' button should be disabled"
+        contentBrowsePanel.isShowIssuesButtonDisplayed();
+
+        and: "SU can not has assigned issues"
+        !contentBrowsePanel.hasAssignedIssues();
     }
 
     def "GIVEN Content BrowsePanel WHEN one content selected THEN Publish button should be enabled"()

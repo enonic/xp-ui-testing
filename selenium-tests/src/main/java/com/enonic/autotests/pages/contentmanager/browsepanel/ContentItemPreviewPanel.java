@@ -9,6 +9,8 @@ import com.enonic.autotests.pages.Application;
 public class ContentItemPreviewPanel
     extends Application
 {
+    private final String PREVIEW_PANEL = "//div[contains(@id,'ContentItemPreviewPanel')]";
+
     private String NO_PREVIEW = "//div[contains(@id,'ContentItemPreviewPanel') and contains(@class,'no-preview')]";
 
     private String IMAGE_PREVIEW = "//div[contains(@id,'ContentItemPreviewPanel') and contains(@class,'image-preview')]";
@@ -23,6 +25,10 @@ public class ContentItemPreviewPanel
         super( session );
     }
 
+    public boolean isDisplayed()
+    {
+        return isElementDisplayed( PREVIEW_PANEL );
+    }
     public boolean isPreviewNotAvailAble()
     {
         return isElementDisplayed( NO_PREVIEW );

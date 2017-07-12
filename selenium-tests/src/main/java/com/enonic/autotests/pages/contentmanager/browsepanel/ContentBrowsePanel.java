@@ -19,6 +19,7 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog;
+import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -34,6 +35,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
+    public static final String UNCLOSED_ISSUES_MESSAGE = "You have unclosed Publishing Issues";
+
     public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
 
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
@@ -49,6 +52,8 @@ public class ContentBrowsePanel
     protected final String DISPLAY_NAMES_FROM_TREE_GRID_XPATH = CONTENT_TREE_GRID + H6_DISPLAY_NAME;
 
     private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New...']]";
+
+    private final String SHOW_ISSUE_DIALOG_BUTTON = BROWSE_TOOLBAR_XPATH + "//button[contains(@id,'ShowIssuesDialogButton')]";
 
     private final String DUPLICATE_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
@@ -115,6 +120,8 @@ public class ContentBrowsePanel
     @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
     private WebElement publishMenuDropDownHandler;
 
+    @FindBy(xpath = SHOW_ISSUE_DIALOG_BUTTON)
+    private WebElement showIssuesButton;
 
     @FindBy(xpath = DETAILS_TOGGLE_BUTTON)
     WebElement detailsToggleButton;
@@ -143,6 +150,11 @@ public class ContentBrowsePanel
         publishMenuDropDownHandler.click();
         sleep( 400 );
         return this;
+    }
+
+    public boolean hasAssignedIssues()
+    {
+        return waitAndCheckAttrValue( showIssuesButton, "class", "has-assigned-issues", 1l );
     }
 
     /**
@@ -721,6 +733,14 @@ public class ContentBrowsePanel
         return clickToolbarEditAndSwitchToWizardTab();
     }
 
+    public IssueListDialog clickOnToolbarShowIssues()
+    {
+        showIssuesButton.click();
+        IssueListDialog issueListDialog = new IssueListDialog( getSession() );
+        issueListDialog.waitForOpened();
+        return issueListDialog;
+    }
+
     public ContentWizardPanel clickToolbarEditAndSwitchToWizardTab()
     {
         boolean isEditButtonEnabled = waitUntilElementEnabledNoException( By.xpath( EDIT_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
@@ -1037,6 +1057,11 @@ public class ContentBrowsePanel
     public boolean isMoveButtonDisplayed()
     {
         return moveButton.isDisplayed();
+    }
+
+    public boolean isShowIssuesButtonDisplayed()
+    {
+        return showIssuesButton.isDisplayed();
     }
 
     public boolean isEditButtonEnabled()
