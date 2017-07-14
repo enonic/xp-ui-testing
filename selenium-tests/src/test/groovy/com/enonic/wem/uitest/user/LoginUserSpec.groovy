@@ -155,7 +155,7 @@ class LoginUserSpec
         wizard.isSaveButtonEnabled()
     }
 
-    def "GIVEN just created user 'logged in' WHEN user opened a content without 'CAN_WRITE' permission and typed new 'display name' THEN 'save draft' button is disabled"()
+    def "GIVEN just created user is 'logged in' WHEN user has 'CAN_READ' for the content THEN 'Edit' button should be disabled"()
     {
         given: "just created user is 'logged in'"
         go "admin"
@@ -164,15 +164,14 @@ class LoginUserSpec
         saveScreenshot( "logged_" + USER_NAME );
 
         when: "user opened a content without 'CAN_WRITE' permission and typed new display name"
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentCanNotWrite.getName() ).clickToolbarEdit();
-        wizard.typeDisplayName( "content updated" );
-        saveScreenshot( "test_perm_save_disabled" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( contentCanNotWrite.getName() )
+        saveScreenshot( "test_perm_edit_disabled" );
 
-        then: "'save draft' button is disabled"
-        !wizard.isSaveButtonEnabled()
+        then: "'Edit' button should be disabled"
+        !contentBrowsePanel.isEditButtonEnabled();
     }
 
-    def "GIVEN user-wizard opened WHEN 'change password' button pressed THEN modal dialog appears"()
+    def "GIVEN user-wizard opened WHEN 'change password' button has been pressed THEN 'change password' dialog should appear"()
     {
         given: "admin opens a user in the wizard"
         go "admin"
@@ -186,10 +185,10 @@ class LoginUserSpec
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
         saveScreenshot( "test_open_change_password_dialog" );
 
-        then: "modal dialog appears"
+        then: "'change password' dialog should appear"
         dialog.isOpened();
 
-        and: "'change' and 'cancel' buttons are present"
+        and: "'change' and 'cancel' buttons should be present"
         dialog.isCancelButtonDisplayed();
 
         and:
