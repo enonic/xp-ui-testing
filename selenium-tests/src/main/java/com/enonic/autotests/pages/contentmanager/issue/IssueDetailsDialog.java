@@ -8,6 +8,8 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 /**
  * Created on 7/6/2017.
  */
@@ -28,6 +30,8 @@ public class IssueDetailsDialog
 
     private final String OPENED_BY = DIALOG_CONTAINER + "//span[@class='creator']";
 
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[@class='cancel-button-top']";
+
     @FindBy(xpath = ISSUE_STATUS_SELECTOR)
     private WebElement issueStatusSelector;
 
@@ -40,6 +44,9 @@ public class IssueDetailsDialog
     @FindBy(xpath = BACK_BUTTON)
     private WebElement backButton;
 
+    @FindBy(xpath = CANCEL_BUTTON_TOP)
+    private WebElement cancelButtonTop;
+
     public IssueDetailsDialog( final TestSession session )
     {
         super( session );
@@ -48,6 +55,12 @@ public class IssueDetailsDialog
     public boolean isEditIssueButtonDisplayed()
     {
         return editIssueButton.isDisplayed();
+    }
+
+    public void clickOnCancelButtonTop()
+    {
+        cancelButtonTop.click();
+        sleep( 300 );
     }
 
     public void waitForLoaded()
@@ -96,6 +109,24 @@ public class IssueDetailsDialog
     public boolean isPublishButtonPresent()
     {
         return publishButton.isDisplayed();
+    }
+
+    public IssueListDialog clickOnPublishButton()
+    {
+        publishButton.click();
+        IssueListDialog issueListDialog = new IssueListDialog( getSession() );
+        issueListDialog.waitForOpened();
+        return issueListDialog;
+    }
+
+    public boolean waitForClosed()
+    {
+        boolean result = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            saveScreenshot( "issue_details_not_closed" );
+        }
+        return result;
     }
 
 }

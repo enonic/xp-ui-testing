@@ -48,6 +48,12 @@ public class Application
 
     public static String PENDING_ITEMS_ARE_DELETED = "%s items are deleted";
 
+    public static String ISSUE_IS_CLOSED_MESSAGE = "The issue is closed.";
+
+    public static String ISSUE_IS_CREATED_MESSAGE = "New issue created successfully.";
+
+    public static String ISSUE_IS_CLOSED = "Issue \"%s\" is closed.";
+
     public static String CONTENT_SAVED = "\"%s\" saved";
 
     public static String CONTENT_DELETED_MESSAGE = "The item is deleted";

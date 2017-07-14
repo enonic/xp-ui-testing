@@ -14,7 +14,10 @@ import com.enonic.autotests.vo.usermanager.User
 import spock.lang.Shared
 
 /**
- * Created on 7/10/2017.*/
+ * Created on 7/10/2017.
+ *
+ * Tasks: xp-ui-testing#62 Add selenium tests for IssueDetailsDialog
+ * */
 class IssueDetailsDialog_Spec
     extends BaseIssueSpec
 {

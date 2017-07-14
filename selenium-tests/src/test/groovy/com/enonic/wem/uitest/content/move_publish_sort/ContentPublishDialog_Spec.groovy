@@ -15,7 +15,7 @@ import spock.lang.Stepwise
 
 /**
  * Tasks:
- * enonic/xp-ui-testing#56  Add Selenium tests for 'Create Issue' menu item in the publish-menu*/
+ * xp-ui-testing#56  Add Selenium tests for 'Create Issue' menu item in the publish-menu*/
 @Stepwise
 class ContentPublishDialog_Spec
     extends BaseContentSpec
@@ -112,7 +112,7 @@ class ContentPublishDialog_Spec
         then: "dialog is closing"
         !contentPublishDialog.isOpened();
     }
-
+    //'Create Issue'
     def "GIVEN 'Content Publish' dialog is opened WHEN 'show menu' button has been clicked THEN 'Create Issue' menu item should be present"()
     {
         given: "parent content is selected and 'Publish' button pressed"
@@ -129,7 +129,7 @@ class ContentPublishDialog_Spec
         and: "'schedule' menu item should be displayed"
         contentPublishDialog.isScheduleMenuItemDisplayed();
     }
-
+    //'Create Issue'
     def "GIVEN 'Content Publish' dialog is opened WHEN 'Create Issue' menu item has been clicked THEN 'Create Issue' dialog should be present"()
     {
         given: "parent content is selected and 'Publish' button pressed"

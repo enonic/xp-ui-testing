@@ -26,10 +26,18 @@ public class IssueListDialog
 
     private String ISSUE_BY_TITLE = ISSUES_LIST + NAMES_VIEW_BY_DISPLAY_NAME;
 
+    private final String OPEN_TAB_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and descendant::a[contains(.,'Open')]]";
+
+    private final String CLOSED_TAB_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and descendant::a[contains(.,'Closed')]]";
+
     private final String NEW_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='New Issue...']]";
 
     private final String ASSIGNED_TO_ME_CHECKBOX = "//div[contains(@id,'Checkbox') and descendant::label[contains(.,'Assigned to Me')]]";
+
+    private final String MY_ISSUES_CHECKBOX = "//div[contains(@id,'Checkbox') and descendant::label[contains(.,'My Issues')]]";
+
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[@class='cancel-button-top']";
 
     @FindBy(xpath = NEW_ISSUE_BUTTON)
     private WebElement newIssueButton;
@@ -37,9 +45,27 @@ public class IssueListDialog
     @FindBy(xpath = ASSIGNED_TO_ME_CHECKBOX)
     private WebElement assignedToMeCheckbox;
 
+    @FindBy(xpath = MY_ISSUES_CHECKBOX)
+    private WebElement myIssuesCheckbox;
+
+    @FindBy(xpath = OPEN_TAB_ITEM)
+    private WebElement openTab;
+
+    @FindBy(xpath = CLOSED_TAB_ITEM)
+    private WebElement closedTab;
+
+    @FindBy(xpath = CANCEL_BUTTON_TOP)
+    private WebElement cancelButtonTop;
+
     public IssueListDialog( final TestSession session )
     {
         super( session );
+    }
+
+    public void clickOnCancelButtonTop()
+    {
+        cancelButtonTop.click();
+        sleep( 300 );
     }
 
     public void waitForOpened()
@@ -51,12 +77,60 @@ public class IssueListDialog
         }
     }
 
+    public boolean isAssignedToMeCheckboxDisabled()
+    {
+        return waitAndCheckAttrValue( assignedToMeCheckbox, "class", "disabled", 1 );
+    }
+
+    public boolean isIssuePresent( String displayName )
+    {
+        String xpath = String.format( ISSUE_BY_TITLE, displayName );
+        return isElementDisplayed( By.xpath( xpath ) );
+    }
+
+    public boolean isMyIssuesCheckboxDisabled()
+    {
+        return waitAndCheckAttrValue( myIssuesCheckbox, "class", "disabled", 1 );
+    }
+
+    public boolean isOpenTabPresent()
+    {
+        return isElementDisplayed( OPEN_TAB_ITEM );
+    }
+
+    public boolean isClosedTabPresent()
+    {
+        return isElementDisplayed( CLOSED_TAB_ITEM );
+    }
+
+    public boolean isOpenTabActive()
+    {
+        return waitAndCheckAttrValue( findElement( By.xpath( OPEN_TAB_ITEM ) ), "class", "active", 1 );
+    }
+
+    public boolean isClosedTabActive()
+    {
+        return waitAndCheckAttrValue( findElement( By.xpath( CLOSED_TAB_ITEM ) ), "class", "active", 1 );
+    }
+
+    public IssueListDialog clickOnOpenTab()
+    {
+        openTab.click();
+        return this;
+    }
+
+    public IssueListDialog clickOnClosedTab()
+    {
+        closedTab.click();
+        return this;
+    }
+
     public IssueListDialog setAssignedToMeCheckbox( boolean checked )
     {
         String id = assignedToMeCheckbox.getAttribute( "id" );
         String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s')" + ".setChecked(%b)", id, checked );
         getJavaScriptExecutor().executeScript( script );
-        sleep( 500 );
+        sleep( 700 );
         return this;
     }
 
@@ -82,5 +156,15 @@ public class IssueListDialog
     public List<String> getIssueTitles()
     {
         return getDisplayedStrings( By.xpath( ISSUES_TITLES ) );
+    }
+
+    public boolean waitForClosed()
+    {
+        boolean result = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
+            saveScreenshot( "issue_list_not_closed" );
+        }
+        return result;
     }
 }
