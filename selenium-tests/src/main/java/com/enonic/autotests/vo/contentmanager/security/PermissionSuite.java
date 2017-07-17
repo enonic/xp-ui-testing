@@ -24,6 +24,8 @@ public enum PermissionSuite
                 return PermissionSuite.FULL_ACCESS;
             case "Can Read":
                 return PermissionSuite.CAN_READ;
+            case "Can Publish":
+                return PermissionSuite.CAN_PUBLISH;
             default:
                 return PermissionSuite.CUSTOM;
         }
