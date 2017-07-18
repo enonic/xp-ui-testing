@@ -22,7 +22,7 @@ public class SourceCodeDialog
 
     private final String TEXT_AREA = WINDOW + "//textarea";
 
-    private final String BUTTON_OK = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='Ok']]";
+    private final String BUTTON_OK = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='OK']]";
 
     private final String BUTTON_CLOSE = WINDOW + "//div[contains(@class,'cancel-button-top')]";
 

@@ -74,7 +74,7 @@ class Occurrences_ImageSelector_1_1_Spec
         contentBrowsePanel.isContentInvalid( imageSelectorContent.getName() );
     }
 
-    def "GIVEN Image Selector-content (1:1) content has been added(without an image) WHEN the content is opened THEN correct image should be present on the page and option filter should not be displayed"()
+    def "GIVEN Image Selector-content (1:1) with an image has been added WHEN the content is opened THEN correct image should be present on the page and option filter should not be displayed"()
     {
         given: "Image Selector-content (1:1) content has been added(without an image)"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector1_1_Content( NORD_IMAGE_DISPLAY_NAME );
