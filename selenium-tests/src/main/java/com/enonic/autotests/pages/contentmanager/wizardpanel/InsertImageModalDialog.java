@@ -78,6 +78,7 @@ public class InsertImageModalDialog
         By imageBy = By.xpath( String.format( DIALOG_CONTAINER + H6_DISPLAY_NAME, displayName ) );
         if ( !waitUntilVisibleNoException( imageBy, EXPLICIT_QUICK ) )
         {
+            saveScreenshot( "err_img_selector" );
             throw new TestFrameworkException( "image was not found! : " + displayName );
         }
         findElement( imageBy ).click();
