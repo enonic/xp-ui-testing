@@ -21,8 +21,9 @@ public class IssueDetailsDialog
     private final String EDIT_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Edit Issue']]";
 
-    private final String ISSUE_STATUS_SELECTOR =
-        DIALOG_CONTAINER + "//div[contains(@id,'IssueStatusSelector')]//div[contains(@id,'TabMenuButton')]/a";
+    private final String ISSUE_STATUS_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'IssueStatusSelector')]";
+
+    private final String ISSUE_STATUS = ISSUE_STATUS_SELECTOR + "//div[contains(@id,'TabMenuButton')]/a";
 
     private final String PUBLISH_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'publish-action')]";
 
@@ -31,6 +32,14 @@ public class IssueDetailsDialog
     private final String OPENED_BY = DIALOG_CONTAINER + "//span[@class='creator']";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[@class='cancel-button-top']";
+
+    private final String STOP_ISSUE_BUTTON = "//li[contains(@id,'TabMenuItem') and child::a[text()='Closed']]";
+
+    private final String START_ISSUE_BUTTON = "//li[contains(@id,'TabMenuItem') and child::a[text()='Open']]";
+
+    private final String STATUS_INFO = DIALOG_CONTAINER + "//span[@class='status-info']";
+
+    private final String CREATOR = DIALOG_CONTAINER + "//span[@class='creator']";
 
     @FindBy(xpath = ISSUE_STATUS_SELECTOR)
     private WebElement issueStatusSelector;
@@ -83,9 +92,41 @@ public class IssueDetailsDialog
         return this;
     }
 
+    public boolean isStopButtonActive()
+    {
+        WebElement stopButton = findElement( By.xpath( STOP_ISSUE_BUTTON ) );
+        return waitAndCheckAttrValue( stopButton, "class", "active", 1 );
+    }
+
+    public IssueDetailsDialog doStopIssue()
+    {
+        if ( isStopButtonActive() )
+        {
+            saveScreenshot( "err_stop_issue" );
+            throw new TestFrameworkException( "stop button should be not 'active'" );
+        }
+        getDisplayedElement( By.xpath( STOP_ISSUE_BUTTON ) ).click();
+        return this;
+    }
+
+    public boolean waitForClosedStatus()
+    {
+        return waitAndCheckAttrValue( issueStatusSelector, "class", "closed", 1 );
+    }
+
+    public String getStatusInfo()
+    {
+        return getDisplayedString( STATUS_INFO );
+    }
+
+    public String getCreator()
+    {
+        return getDisplayedString( CREATOR );
+    }
+
     public String getIssueStatus()
     {
-        return getDisplayedString( ISSUE_STATUS_SELECTOR );
+        return getDisplayedString( ISSUE_STATUS );
     }
 
     public boolean isBackButtonDisplayed()
@@ -128,5 +169,4 @@ public class IssueDetailsDialog
         }
         return result;
     }
-
 }

@@ -24,6 +24,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.Content;
 import com.enonic.xp.content.ContentPath;
 
@@ -155,6 +156,11 @@ public class ContentBrowsePanel
     public boolean hasAssignedIssues()
     {
         return waitAndCheckAttrValue( showIssuesButton, "class", "has-assigned-issues", 1l );
+    }
+
+    protected boolean waitForAssignedIssuesIconNotVisible()
+    {
+        return WaitHelper.waitAttrHasNoValue( getDriver(), showIssuesButton, "class", "has-assigned-issues", Application.EXPLICIT_NORMAL );
     }
 
     /**

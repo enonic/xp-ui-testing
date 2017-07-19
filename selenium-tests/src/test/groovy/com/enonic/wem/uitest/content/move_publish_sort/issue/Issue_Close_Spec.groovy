@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.move_publish_sort.issue
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog
@@ -16,12 +15,10 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
- * Created on 7/12/2017.
- *
- * Tasks: xp-ui-testing#64 Add selenium tests for Issue List dialog
+ * Created on 7/17/2017.
  * */
 @Stepwise
-class IssueListDialog_Spec
+class Issue_Close_Spec
     extends BaseIssueSpec
 {
     @Shared
@@ -63,7 +60,7 @@ class IssueListDialog_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN create issue dialog is opened WHEN data has been typed AND 'Create' button has been pressed THEN Issue Details dialog should be correctly displayed"()
+    def "GIVEN existing user WHEN when an issue created and assigned to him THEN issue should be listed"()
     {
         setup: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -77,12 +74,10 @@ class IssueListDialog_Spec
         assigneesList.add( TEST_USER.getName() );
 
         and: "create issue dialog is opened and data has been typed"
-        TEST_ISSUE = buildIssue( "issue 1", assigneesList, null );
+        TEST_ISSUE = buildIssue( "issue to close", assigneesList, null );
         CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
         createIssueDialog.clickOnCreateIssueButton();
-        String message = contentBrowsePanel.waitNotificationMessage();
-        saveScreenshot( "issue_created_issue_list" )
 
         when: "'Create' button has been pressed"
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
@@ -90,89 +85,65 @@ class IssueListDialog_Spec
 
         then: "Issue details dialog should be closed"
         issueDetailsDialog.waitForClosed();
-
-        and: "'New issue created successfully.' message should be displayed"
-        message == Application.ISSUE_IS_CREATED_MESSAGE;
     }
 
-    def "GIVEN issue is assigned to the user WHEN 'show Issues Dialog' button has been pressed THEN Issues List dialog should be displayed"()
-    {
-        given: "Content Studio is opened"
-        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-
-        when:
-        IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
-
-        then: "Closed-tab should be present"
-        dialog.isClosedTabPresent();
-
-        and: "Open-tab should be present"
-        dialog.isOpenTabActive();
-
-        and: "'Assigned to Me' checkbox should be disabled"
-        dialog.isAssignedToMeCheckboxDisabled();
-
-        and: "'My Issues' checkbox should be enabled"
-        !dialog.isMyIssuesCheckboxDisabled();
-
-        and: "'New Issue' should be present"
-        dialog.isNewIssueButtonDisplayed();
-
-        and: "just added issue should be present in the list"
-        dialog.isIssuePresent( TEST_ISSUE.getTitle() );
-    }
-
-    def "GIVEN Issue List dialog is opened WHEN Cancel-button-top has been pressed THEN the dialog should be closed"()
-    {
-        given: "Issue List dialog is opened"
-        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
-
-        when: "Cancel button top has been clicked"
-        dialog.clickOnCancelButtonTop();
-
-        then: "the dialog should be closed"
-        dialog.waitForClosed();
-    }
-
-    def "GIVEN existing user is logged in WHEN the user has opened 'Issue List' dialog AND clicked on the 'Assigned to Me' checkbox THEN one issue should be present in the list"()
+    def "GIVEN the user is logged in WHEN the user has opened 'Issue Details' THEN 'Creator' should be displayed correctly"()
     {
         given: "existing assigned user is logged in"
         getTestSession().setUser( TEST_USER );
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
-
-        when: "'Assigned to Me' checkbox has been checked"
         dialog.setAssignedToMeCheckbox( true );
-        List<String> titles = dialog.getIssueTitles();
 
-        then: "one issue should be present in the list"
-        titles.size() == 1;
+        when: "issue has been clicked"
+        IssueDetailsDialog issueDetailsDialog = dialog.clickOnIssue( TEST_ISSUE.getTitle() );
+        saveScreenshot( "issue_creator_su" )
+
+        then: "status of the issue should be 'Stopped'"
+        issueDetailsDialog.getCreator() == "user:system:su";
 
         and: ""
-        titles.get( 0 ).contains( TEST_ISSUE.getTitle() );
+        issueDetailsDialog.getStatusInfo().contains( "Opened by user:system:su" );
     }
 
-    def "GIVEN existing user is logged in WHEN assigned issue has been clicked AND it has been published THEN the issue should be 'closed' AND 'closed'-tab should be opened"()
+    def "GIVEN the user is logged in WHEN the user has opened 'Issue Details' and stopped the issue THEN the issue should be 'Stopped' on the dialog"()
     {
         given: "existing assigned user is logged in"
         getTestSession().setUser( TEST_USER );
         NavigatorHelper.openContentStudioApp( getTestSession() );
+        IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        dialog.setAssignedToMeCheckbox( true );
+
+        when: "issue has been clicked"
+        IssueDetailsDialog issueDetailsDialog = dialog.clickOnIssue( TEST_ISSUE.getTitle() );
+
+        and: "issue has been stopped"
+        issueDetailsDialog.clickOnStatusSelectorMenu().doStopIssue();
+
+        then: "status of the issue should be 'Stopped'"
+        issueDetailsDialog.waitForClosedStatus();
+        saveScreenshot( "issue_stopped_by_user" );
+
+        and: "correct notification message should be displayed"
+        contentBrowsePanel.waitNotificationMessage() == "The issue is closed.";
+
+        and: "'Has Assigned issues' icon should not be displayed"
+        contentBrowsePanel.waitForAssignedIssuesIconNotVisible();
+        saveScreenshot( "issue_stopped_icon_hidden" );
+    }
+
+    def "GIVEN existing issue closed by the user AND SU is logged in WHEN issue details dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
+    {
+        given: "SU is logged in"
+        getTestSession().setUser( null );
+        NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.setAssignedToMeCheckbox( true );
+        issueListDialog.clickOnClosedTab();
 
-        when: "the issue has been clicked"
-        issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
-        IssueDetailsDialog details = new IssueDetailsDialog( getSession() );
-        and: "'Publish' button has been pressed"
-        details.clickOnPublishButton();
+        when: "issue details dialog has been opened"
+        IssueDetailsDialog issueDetailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() )
 
-        then: "'Closed'-tab should be opened"
-        issueListDialog.isClosedTabActive();
-        saveScreenshot( "issue_published" );
-        and: "'Issue  is closed' notification message should be displayed"
-        contentBrowsePanel.waitExpectedNotificationMessage( String.format( Application.ISSUE_IS_CLOSED, TEST_ISSUE.getTitle() ), 1 );
-        and: "the issue should be present in the 'Closed'-tab"
-        issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
+        then: "correct user-name should be present in the 'Closed by'"
+        issueDetailsDialog.getStatusInfo().contains( String.format( "Closed by user:system:%s", TEST_USER.getName() ) );
     }
 }
