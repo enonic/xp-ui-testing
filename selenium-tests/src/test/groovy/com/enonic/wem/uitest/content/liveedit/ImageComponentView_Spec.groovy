@@ -13,6 +13,7 @@ import spock.lang.Shared
  *
  * Tasks:
  * XP-4945 Add ui-test to verify the XP-4944
+ * xp-ui-testing#66 Add selenium tests for expanding of a tree in the ImageSelector drop-down list
  * Verifies:
  * XP-4944 ImageComponentView - NullPointerException and Upload does not add new file
  * (NullPointerException thrown when dropdownHandler was clicked  when dropdownHandler was clicked)
@@ -67,7 +68,8 @@ class ImageComponentView_Spec
         !imageComponentView.isErrorMessageDisplayed();
     }
 
-    //verifies the XP-4944 -NullPointerException thrown when dropdownHandler was clicked  when dropdownHandler was clicked
+    //verifies the XP-4944 -NullPointerException thrown when dropdownHandler was clicked
+    //xp-ui-testing#66 Add selenium tests for expanding of a tree in the ImageSelector drop-down list
     def "GIVEN existing site with a controller is opened WHEN Image component was inserted AND an image has been selected from the list of options THEN "()
     {
         given: "existing site is opened"
@@ -79,17 +81,17 @@ class ImageComponentView_Spec
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
 
-        when: "dropdown handler was clicked"
-        imageComponentView.clickOnTheDropDownHandler();
+        when: "dropdown handler has been clicked and the folder with images has been expanded"
+        imageComponentView.clickOnTheDropDownHandler().clickOnExpanderInDropDownList( "imagearchive" );
         saveScreenshot( "img_comp_view_dropdown_handler" );
 
         and: "image has been selected from the list of options"
-        imageComponentView.clickOnOption( "enterprise" );
+        imageComponentView.clickOnOption( "geek" );
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         wizard.switchToLiveEditFrame();
 
         then: "new image should be added on the page"
         LinkedList<String> images = liveFormPanel.getImageNames();
-        images.contains( "enterprise.png" )
+        images.contains( "geek.png" )
     }
 }

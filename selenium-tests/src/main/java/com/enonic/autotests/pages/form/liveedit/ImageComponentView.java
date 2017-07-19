@@ -25,6 +25,9 @@ public class ImageComponentView
 
     private final String ERROR_IN_COMPONENT_MESSAGE = IMAGE_COMPONENT_VIEW + "//div[contains(@class,'error-container')]";
 
+    private String DROP_DOWN_ITEM_EXPANDER =
+        NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
+
     @FindBy(xpath = DROPDOWN_HANDLER)
     private WebElement dropDownHandler;
 
@@ -80,6 +83,32 @@ public class ImageComponentView
         }
         getDisplayedElement( By.xpath( optionXpath ) ).click();
         return this;
+    }
+
+    public ImageComponentView clickOnExpanderInDropDownList( String folderName )
+    {
+        boolean isExpanderPresent = isExpanderPresent( folderName );
+        if ( !isExpanderPresent )
+        {
+            saveScreenshot( "err_expander_icon" );
+            throw new TestFrameworkException( "expander was not found in the dropdown" );
+        }
+        String expanderIcon = String.format( DROP_DOWN_ITEM_EXPANDER, folderName );
+        findElements( By.xpath( expanderIcon ) ).get( 0 ).click();
+        sleep( 500 );
+        return this;
+    }
+
+    private boolean isExpanderPresent( String folderName )
+    {
+        String expanderElement = String.format( DROP_DOWN_ITEM_EXPANDER, folderName );
+        boolean isPresent = isDynamicElementPresent( By.xpath( expanderElement ), 2 );
+        if ( !isPresent )
+        {
+            getLogger().info( "expander for folder:" + folderName + " was not found! " );
+            return false;
+        }
+        return true;
     }
 
     public List<String> getDisplayedOptions()
