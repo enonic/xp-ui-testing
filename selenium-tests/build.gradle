@@ -116,14 +116,12 @@ tasks.withType( Test ) {
 
 task testContentStudio( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
-    include '**/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
+    include '**/content/**/*Spec.class'
     exclude '**/content/upload/**Spec.class'
     exclude '**/content/relationship/**Spec.class'
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
-    exclude '**/content/move_publish_sort/**Spec.class'
+    exclude '**/content/move_publish_sort/**/*Spec.class'
     exclude '**/content/details_panel/**Spec.class'
     exclude '**/content/volume_testing/**Spec.class'
     forkEvery = null
@@ -131,12 +129,11 @@ task testContentStudio( type: Test, dependsOn: [buildApplications, deleteFolders
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
+
 task testInputTypes( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
     include '**/content/input_types/*Spec.class'
     include '**/content/relationship/**Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
     exclude '**/content/upload/**Spec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
@@ -147,10 +144,8 @@ task testInputTypes( type: Test, dependsOn: [buildApplications, deleteFolders, s
 
 task testPublishMoveSortDeatailsPanel( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     scanForTestClasses = false
-    include '**/content/move_publish_sort/*Spec.class'
+    include '**/content/move_publish_sort/**/*Spec.class'
     include '**/content/details_panel/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
@@ -160,19 +155,13 @@ task testPublishMoveSortDeatailsPanel( type: Test, dependsOn: [buildApplications
 task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
     scanForTestClasses = false
     include '**/user/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/application/**'
     forkEvery = null
     startServer.shouldRunAfter deleteFolders
 }
 
 task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    println "XP_HOME is:"
-    println System.getenv( "XP_HOME" );
     scanForTestClasses = false
     include '**/application/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/user/**'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
@@ -184,11 +173,8 @@ task testApplicationFirefox( type: Test, dependsOn: [buildApplications, deleteFo
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
     systemProperty 'geb.env', System.getProperty( 'geb.env' );
-
     scanForTestClasses = false
     include '**/application/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/user/**'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
@@ -202,10 +188,8 @@ task testPublishMoveSortDeatailsPanelFirefox( type: Test,
     //set required JvmOption:
     systemProperty 'geb.env', System.getProperty( 'geb.env' );
     scanForTestClasses = false
-    include '**/content/move_publish_sort/*Spec.class'
+    include '**/content/move_publish_sort/**Spec.class'
     include '**/content/details_panel/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
     exclude '**/content/move_publish_sort/ManualSortContent_Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
@@ -218,11 +202,8 @@ task testUserFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
     systemProperty 'geb.env', System.getProperty( 'geb.env' );
-
     scanForTestClasses = false
     include '**/user/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/application/**'
     forkEvery = null
     startServer.shouldRunAfter deleteFolders
 }
@@ -236,8 +217,6 @@ task testInputTypesFirefox( type: Test, dependsOn: [buildApplications, deleteFol
     scanForTestClasses = false
     include '**/content/input_types/*Spec.class'
     include '**/content/relationship/**Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
     exclude '**/content/upload/**Spec.class'
     exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
@@ -251,11 +230,8 @@ task testContentStudioFirefox( type: Test, dependsOn: [buildApplications, delete
     System.setProperty 'geb.env', 'firefox';
     //set required JvmOption:
     systemProperty 'geb.env', System.getProperty( 'geb.env' );
-
     scanForTestClasses = false
-    include '**/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
+    include '**/content/*Spec.class'
     exclude '**/content/upload/**Spec.class'
     exclude '**/content/relationship/**Spec.class'
     exclude '**/content/liveedit/**Spec.class'
@@ -270,8 +246,6 @@ task testContentStudioFirefox( type: Test, dependsOn: [buildApplications, delete
 
 task testPageEditor( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyMyFirstApp, copySimplePageApp] ) {
     scanForTestClasses = false
-    exclude '**/application/**'
-    exclude '**/user/**'
     include '**/content/liveedit/**Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
@@ -282,8 +256,6 @@ task testPageEditor( type: Test, dependsOn: [buildApplications, deleteFolders, s
 
 task testUploadContent( type: Test, dependsOn: [deleteFolders, buildApplications, startServer, copyContentTypes] ) {
     scanForTestClasses = false
-    exclude '**/application/**'
-    exclude '**/user/**'
     include '**/content/upload/**Spec.class'
     forkEvery = null
     copyContentTypes.shouldRunAfter startServer
@@ -292,18 +264,12 @@ task testUploadContent( type: Test, dependsOn: [deleteFolders, buildApplications
 task testUserLocal( type: Test ) {
     scanForTestClasses = false
     include '**/user/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/application/**'
     forkEvery = null
 }
 
 task testApplicationLocal( type: Test ) {
-    println "XP_HOME is:"
-    println System.getenv( "XP_HOME" );
     scanForTestClasses = false
     include '**/application/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/user/**'
     forkEvery = null
 }
 
@@ -314,8 +280,6 @@ task testApplicationBrowserStackFirefox( type: Test ) {
     systemProperty 'geb.env', System.getProperty( 'geb.env' );
     scanForTestClasses = false
     include '**/application/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/user/**'
     forkEvery = null
 }
 task testApplicationBrowserStackChrome( type: Test ) {
@@ -325,33 +289,24 @@ task testApplicationBrowserStackChrome( type: Test ) {
     systemProperty 'geb.env', System.getProperty( 'geb.env' );
     scanForTestClasses = false
     include '**/application/*Spec.class'
-    exclude '**/content/**'
-    exclude '**/user/**'
     forkEvery = null
 }
 task testPublishMoveSortDeatailsPanelLocal( type: Test ) {
     scanForTestClasses = false
-    include '**/content/move_publish_sort/*Spec.class'
-    include '**/content/relationship/**Spec.class'
+    include '**/content/move_publish_sort/**/*Spec.class'
     include '**/content/details_panel/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
     forkEvery = null
 }
+
 task testInputTypesLocal( type: Test ) {
     scanForTestClasses = false
     include '**/content/input_types/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
-    exclude '**/content/ContentUploadSpec.class'
-    exclude '**/content/liveedit/**Spec.class'
     forkEvery = null
 }
+
 task testContentStudioLocal( type: Test ) {
     scanForTestClasses = false
-    include '**/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
+    include '**/content/**/*Spec.class'
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
@@ -366,22 +321,12 @@ task testContentStudioPerformance( type: Test,
                                    dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes, copyPerfomanceApp] ) {
 
     scanForTestClasses = false
-    include '**/*Spec.class'
-    exclude '**/application/**'
-    exclude '**/user/**'
-    exclude '**/content/upload/**Spec.class'
-    exclude '**/content/relationship/**Spec.class'
-    exclude '**/content/liveedit/**Spec.class'
-    exclude '**/content/input_types/*Spec.class'
-    exclude '**/content/move_publish_sort/**Spec.class'
-    exclude '**/content/details_panel/**Spec.class'
-    include '**/content/upload/**Spec.class'
+    include '**/content/volume_testing/*Spec.class'
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
     copyPerfomanceApp.mustRunAfter copyContentTypes
-
 }
 
 testApplication.finalizedBy = ['stopServer']
