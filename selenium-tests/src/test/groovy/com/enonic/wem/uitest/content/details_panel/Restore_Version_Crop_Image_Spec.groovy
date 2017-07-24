@@ -54,7 +54,7 @@ class Restore_Version_Crop_Image_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing image with several versions is selcted WHEN version with original image is restored THEN button 'reset' is not present on the wizard page "()
+    def "GIVEN existing image with several versions is selected WHEN version with original image is restored THEN button 'reset' is not present on the wizard page "()
     {
         given: "existing image with several versions is selected"
         findAndSelectContent( IMPORTED_MAN_IMAGE );

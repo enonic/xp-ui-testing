@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.move_publish_sort.issue
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog
+import com.enonic.autotests.pages.contentmanager.issue.UpdateIssueDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
@@ -12,12 +13,16 @@ import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 /**
  * Created on 7/10/2017.
  *
- * Tasks: xp-ui-testing#62 Add selenium tests for IssueDetailsDialog
+ * Tasks:
+ * xp-ui-testing#62 Add selenium tests for IssueDetailsDialog
+ * xp-ui-testing#67 Add Selenium tests for 'UpdateIssueDialog'
  * */
+@Stepwise
 class IssueDetailsDialog_Spec
     extends BaseIssueSpec
 {
@@ -33,6 +38,9 @@ class IssueDetailsDialog_Spec
 
     @Shared
     Issue TEST_ISSUE;
+
+    @Shared
+    String NEW_TITLE = "new issue-title";
 
     def setup()
     {
@@ -165,5 +173,102 @@ class IssueDetailsDialog_Spec
 
         then: "Issue List dialog should be loaded"
         listDialog.waitForOpened();
+    }
+
+    def "GIVEN 'Issue details dialog' is opened WHEN 'Edit' button has been pressed THEN 'Update Issue Dialog' should be loaded"()
+    {
+        given: "existing assigned user is logged in"
+        getTestSession().setUser( TEST_USER );
+        NavigatorHelper.openContentStudioApp( getTestSession() );
+        and: "'Assigned to Me' has been checked"
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        issueListDialog.setAssignedToMeCheckbox( true );
+        IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
+
+        when: "'Edit' button has been pressed"
+        UpdateIssueDialog updateIssueDialog = detailsDialog.clickOnEditButton();
+        saveScreenshot( "update_issue_dialog" );
+
+        then: "'Update Issue Dialog' should be loaded"
+        updateIssueDialog.waitForOpened();
+
+        and: "correct title of the issue should be displayed"
+        updateIssueDialog.getTitle() == TEST_ISSUE.getTitle();
+
+        and: "correct description of the issue should be displayed"
+        updateIssueDialog.getDescription() == TEST_ISSUE.getDescription();
+
+        and: "correct assignees  should be displayed"
+        List<String> assignees = updateIssueDialog.getAssignees();
+        assignees.size() == 1;
+
+        and: "correct assignees  should be displayed"
+        assignees.contains( TEST_USER.getName() );
+
+        and: "correct name of the item should be displayed"
+        List<String> items = updateIssueDialog.getItemNames();
+        items.size() == 1;
+
+        and: ""
+        items.get( 0 ).contains( CONTENT.getName() );
+    }
+
+    def "GIVEN existing issue WHEN the issue has been updated THEN new tittle should be displayed on the details-dialog"()
+    {
+        given: "existing assigned user is logged in"
+        getTestSession().setUser( TEST_USER );
+        NavigatorHelper.openContentStudioApp( getTestSession() );
+        and: "'Assigned to Me' has been checked"
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        issueListDialog.setAssignedToMeCheckbox( true );
+        IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
+        UpdateIssueDialog updateIssueDialog = detailsDialog.clickOnEditButton();
+
+        when: "new title has been typed"
+        updateIssueDialog.typeTitle( NEW_TITLE );
+        saveScreenshot( "updated_issue_dialog" );
+
+        and: "'Save' button has been pressed"
+        updateIssueDialog.clickOnSaveIssueButton();
+        detailsDialog.waitForLoaded();
+
+        then: "required title should be loaded"
+        detailsDialog.waitForTitle( NEW_TITLE )
+    }
+
+    def "GIVEN 'UpdateIssueDialog' is opened WHEN 'cancel-bottom' button has been pressed THEN Issue Details dialog should be loaded"()
+    {
+        given: "existing assigned user is logged in"
+        getTestSession().setUser( TEST_USER );
+        NavigatorHelper.openContentStudioApp( getTestSession() );
+        and: "'Assigned to Me' has been checked"
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        issueListDialog.setAssignedToMeCheckbox( true );
+        IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( NEW_TITLE );
+        UpdateIssueDialog updateIssueDialog = detailsDialog.clickOnEditButton();
+
+        when: "'Cancel' button on the UpdateIssue dialog has been pressed"
+        updateIssueDialog.clickOnCancelBottomButton();
+
+        then: "'Issue Details' dialog should be loaded"
+        detailsDialog.waitForLoaded();
+    }
+
+    def "GIVEN 'UpdateIssueDialog' is opened WHEN 'cancel-top' button has been pressed THEN Issue Details dialog should be loaded"()
+    {
+        given: "existing assigned user is logged in"
+        getTestSession().setUser( TEST_USER );
+        NavigatorHelper.openContentStudioApp( getTestSession() );
+        and: "'Assigned to Me' has been checked"
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        issueListDialog.setAssignedToMeCheckbox( true );
+        IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( NEW_TITLE );
+        UpdateIssueDialog updateIssueDialog = detailsDialog.clickOnEditButton();
+
+        when: "'Cancel-top' button on the UpdateIssue dialog has been pressed"
+        updateIssueDialog.clickOnCancelTopButton();
+
+        then: "'Issue Details' dialog should be loaded"
+        detailsDialog.waitForLoaded();
     }
 }

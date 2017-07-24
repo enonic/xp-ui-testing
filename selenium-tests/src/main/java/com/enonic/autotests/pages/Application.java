@@ -76,6 +76,8 @@ public class Application
 
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
+    protected final String PRINCIPAL_SELECTED_OPTION = "//div[contains(@id,'PrincipalSelectedOptionView')]";
+
     protected final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";
 
     protected String NAMES_VIEW_BY_NAME = "//div[contains(@id,'NamesView') and child::p[contains(@class,'sub-name') and contains(.,'%s')]]";

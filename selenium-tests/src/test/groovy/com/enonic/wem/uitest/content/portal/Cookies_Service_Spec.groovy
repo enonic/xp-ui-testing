@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.portal
 
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 
@@ -16,13 +15,13 @@ class Cookies_Service_Spec
     @Shared
     String APPLICATION_NAME = ALL_CONTENT_TYPES_APP_NAME;
 
-    def "GIVEN existing app-service that returns a cookie WHEN request was sent to service THEN correct cookie present in the response"()
+    def "GIVEN existing app-service that returns a cookie WHEN request was sent to service THEN correct cookie should be present in the response"()
     {
         when: "request to service was sent"
         getService( COOKIES_SERVICE, APPLICATION_NAME );
-        TestUtils.saveScreenshot( getSession(), "cookie_service" );
+        saveScreenshot( "cookie_service" );
 
-        then: "correct cookie present in the response"
+        then: "correct cookie should be present in the response"
         driver.manage().getCookieNamed( COOKIE_NAME ) != null;
     }
 }

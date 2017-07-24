@@ -155,7 +155,7 @@ class IssueListDialog_Spec
 
     def "GIVEN existing user is logged in WHEN assigned issue has been clicked AND it has been published THEN the issue should be 'closed' AND 'closed'-tab should be opened"()
     {
-        given: "existing assigned user is logged in"
+        given: "existing user(assigned to the issue) is logged in"
         getTestSession().setUser( TEST_USER );
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();

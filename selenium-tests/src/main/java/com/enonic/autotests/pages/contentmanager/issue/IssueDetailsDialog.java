@@ -18,6 +18,10 @@ public class IssueDetailsDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'IssueDetailsDialog')]";
 
+    private final String REQ_TITLE = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title' and contains(.,'%s')]";
+
+    private final String TITLE = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
+
     private final String EDIT_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Edit Issue']]";
 
@@ -79,6 +83,17 @@ public class IssueDetailsDialog
             saveScreenshot( "err_issue_details_dialog" );
             throw new TestFrameworkException( "'Issue Details' dialog was not opened!" );
         }
+    }
+
+    public boolean waitForTitle( String text )
+    {
+        String reqTitleXpath = String.format( REQ_TITLE, text );
+        return waitUntilVisibleNoException( By.xpath( reqTitleXpath ), 3 );
+    }
+
+    public String getTitle()
+    {
+        return getDisplayedString( TITLE );
     }
 
     public String getOpenedBy()
@@ -146,6 +161,15 @@ public class IssueDetailsDialog
     {
         return editIssueButton.isDisplayed();
     }
+
+    public UpdateIssueDialog clickOnEditButton()
+    {
+        editIssueButton.click();
+        UpdateIssueDialog updateIssueDialog = new UpdateIssueDialog( getSession() );
+        updateIssueDialog.waitForOpened();
+        return updateIssueDialog;
+    }
+
 
     public boolean isPublishButtonPresent()
     {
