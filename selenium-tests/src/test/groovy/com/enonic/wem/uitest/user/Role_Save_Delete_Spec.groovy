@@ -32,7 +32,7 @@ class Role_Save_Delete_Spec
         when: "data typed and role saved"
         roleWizardPanel.typeData( refreshWizardRole ).save().waitNotificationMessage();
         userBrowsePanel.refreshPanelInBrowser();
-        TestUtils.saveScreenshot( getSession(), "role_wizard_refreshed" );
+        saveScreenshot( "role_wizard_refreshed" );
 
         then: "wizard is opened"
         roleWizardPanel.isOpened();
@@ -54,7 +54,7 @@ class Role_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
 
         then: "new role should be listed"
-        TestUtils.saveScreenshot( getSession(), "role-added" );
+        saveScreenshot( "role-added" );
         userBrowsePanel.exists( TEST_ROLE.getName() );
 
         and: "correct notification message appears"

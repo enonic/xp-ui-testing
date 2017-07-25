@@ -14,6 +14,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class LoginPage
     extends Application
 {
+    public final String HOME_CONTAINER = "//div[contains(@class,'home-main-container')]";
 
     public static final String TITLE = "Enonic XP - Login";
 
@@ -21,6 +22,9 @@ public class LoginPage
 
     private String loginButtonXpath = "//div[@class='password-container']//button[contains(@class,'login-button')]";
 
+    private String ERROR_LOGIN_MESSAGE = HOME_CONTAINER + "//div[contains(@id,'message-container')]";
+
+    public static final String LOGIN_FAILED = "Login failed!";
 
     @FindBy(xpath = EMAIL_INPUT_XPATH)
     private WebElement usernameInput;
@@ -94,5 +98,15 @@ public class LoginPage
     public String getTitle()
     {
         return getDriver().getTitle();
+    }
+
+    public boolean isErrorMessageDisplayed()
+    {
+        return isElementDisplayed( ERROR_LOGIN_MESSAGE );
+    }
+
+    public String getErrorMessage()
+    {
+        return getDisplayedString( ERROR_LOGIN_MESSAGE );
     }
 }

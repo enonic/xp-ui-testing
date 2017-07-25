@@ -1,7 +1,5 @@
 package com.enonic.wem.uitest
 
-import com.enonic.autotests.utils.TestUtils
-
 class LoginSpec
     extends BaseGebSpec
 {
@@ -11,13 +9,13 @@ class LoginSpec
         getTestSession();
     }
 
-    def "Given login page When both username and password fields is empty Then Login Button must not  be disabled"()
+    def "GIVEN login page When both username and password fields are empty THEN Login Button must not be displayed"()
     {
         expect:
         !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
     }
 
-    def "Given login page When only username field have value Then Login Button must not be disabled"()
+    def "GIVEN login page AND only username field have value THEN 'Login Button' must not be displayed"()
     {
         when:
         $( 'input', placeholder: 'userid or e-mail' ) << 'user';
@@ -27,7 +25,7 @@ class LoginSpec
         !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
     }
 
-    def "Given login page When only password field have value Then Login Button must not  be disabled"()
+    def "GIVEN login page is opened AND only password field have value Then 'Login Button' must not be displayed"()
     {
         when:
         $( 'input', placeholder: 'password' ) << 'password';
@@ -38,26 +36,26 @@ class LoginSpec
         !$( 'button', class: contains( 'login-button' ) ).isDisplayed();
     }
 
-    def "Given login page When both username and password fields have value Then Login Button must be enabled"()
+    def "GIVEN login page is opened AND both username and password fields have value THEN 'Login Button' must be displayed"()
     {
 
         when:
         $( 'input', placeholder: 'userid or e-mail' ) << 'su';
         $( 'input', placeholder: 'password' ) << 'password';
-        TestUtils.saveScreenshot( getSession(), "login_pass" )
+        saveScreenshot( "login_pass" )
 
         then:
         waitFor { $( 'button', class: contains( 'login-button' ) ).isDisplayed() };
     }
 
-    def "Given login page When wrong username or password typed Then error message appears"()
+    def "GIVEN login page is opened WHEN wrong username or password have been typed THEN error message should appear"()
     {
         when:
         $( 'input', placeholder: 'userid or e-mail' ) << 'su';
         $( 'input', placeholder: 'password' ) << 'password1';
         $( 'button', class: contains( 'login-button' ) ).click();
 
-        then:
+        then: "error message should be displayed"
         waitFor { $( 'div.message-container' ).text() == 'Login failed!' }
     }
 }

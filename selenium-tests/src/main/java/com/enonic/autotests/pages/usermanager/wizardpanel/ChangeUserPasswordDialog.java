@@ -18,12 +18,23 @@ public class ChangeUserPasswordDialog
 
     private final String PASSWORD_INPUT = "//input[contains(@id,'PasswordInput')]";
 
-    private final String CHANGE_PASSWORD_BUTTON = "//button[contains(@id,'DialogButton')]/span[text()='Change Password']";
+    private final String CHANGE_PASSWORD_BUTTON = "//button[contains(@id,'DialogButton') and child::span[text()='Change Password']]";
 
     private final String CANCEL_BUTTON = "//button[contains(@id,'DialogButton')]/span[text()='Cancel']";
 
+    private final String SHOW_PASSWORD_LINK = DIALOG_CONTAINER + "//a[contains(@class,'show-link')]";
+
+    private final String GENERATE_LINK = DIALOG_CONTAINER + "//a[text()='Generate']";
+
+
     @FindBy(xpath = DIALOG_CONTAINER + PASSWORD_INPUT)
     WebElement passwordInput;
+
+    @FindBy(xpath = SHOW_PASSWORD_LINK)
+    WebElement showPasswordLink;
+
+    @FindBy(xpath = GENERATE_LINK)
+    WebElement generatePasswordLink;
 
     @FindBy(xpath = CHANGE_PASSWORD_BUTTON)
     WebElement changeButton;
@@ -51,9 +62,60 @@ public class ChangeUserPasswordDialog
         return this;
     }
 
-    public UserWizardPanel doChangePassword( String newPassword )
+    public ChangeUserPasswordDialog typePassword( String newPassword )
     {
         passwordInput.sendKeys( newPassword );
+        sleep( 300 );
+        return this;
+    }
+
+    public boolean isPasswordInputDisplayed()
+    {
+        return passwordInput.isDisplayed();
+    }
+
+    public String getPasswordInputValue()
+    {
+        return passwordInput.getAttribute( "value" );
+    }
+
+    public boolean isShowPasswordLinkDisplayed()
+    {
+        return showPasswordLink.isDisplayed();
+    }
+
+    public ChangeUserPasswordDialog clickOnShowLink()
+    {
+        showPasswordLink.click();
+        sleep( 300 );
+        return this;
+    }
+
+    public ChangeUserPasswordDialog clickOnGenerateLink()
+    {
+        generatePasswordLink.click();
+        sleep( 300 );
+        return this;
+    }
+
+    public boolean isHideTextDisplayed()
+    {
+        return waitAndCheckAttrValue( showPasswordLink, "data-i18n", "Hide", 1 );
+    }
+
+    public boolean isShowTextDisplayed()
+    {
+        return waitAndCheckAttrValue( showPasswordLink, "data-i18n", "Show", 1 );
+    }
+
+    public boolean isGenerateLinkDisplayed()
+    {
+        return generatePasswordLink.isDisplayed();
+    }
+
+    public UserWizardPanel doChangePassword( String newPassword )
+    {
+        typePassword( newPassword );
         sleep( 500 );
         changeButton.click();
         return new UserWizardPanel( getSession() );
@@ -69,9 +131,9 @@ public class ChangeUserPasswordDialog
         return cancelButton.isDisplayed();
     }
 
-    public boolean isChangeButtonEnabled()
+    public boolean isChangeButtonDisabled()
     {
-        return changeButton.isEnabled();
+        return isAttributePresent( changeButton, "disabled", 1 );
     }
 
 }

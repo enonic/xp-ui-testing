@@ -40,6 +40,8 @@ public class Application
 
     public static String GROUP_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
+    public static String GROUP_CREATED_MESSAGE = "Group was created";
+
     public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is unpublished";
 
     public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";

@@ -18,8 +18,14 @@ import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
+
+/**
+ * Tasks: xp-ui-testing#70 Add Selenium tests to verify #5368(ChangePassword dialog)
+ *
+ **/
 
 @Stepwise
 class LoginUserSpec
@@ -62,15 +68,15 @@ class LoginUserSpec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        when: "data typed and user saved"
+        when: "data has been typed and user saved"
         userWizardPanel.typeData( USER_ADMIN_CONSOLE ).save().close( USER_ADMIN_CONSOLE.getDisplayName() );
         userBrowsePanel.getFilterPanel().typeSearchText( USER_ADMIN_CONSOLE.getDisplayName() );
 
-        then: "new user present beneath a system store"
+        then: "new user should be present beneath the system store"
         userBrowsePanel.exists( USER_ADMIN_CONSOLE.getDisplayName(), true );
     }
 
-    def "WHEN new content with permissions for just created user added THEN Content is listed in BrowsePanel"()
+    def "WHEN new content with permissions for just created user was added THEN Content is listed in BrowsePanel"()
     {
         given:
         ContentAclEntry entry = ContentAclEntry.builder().principalName( USER_NAME ).suite( PermissionSuite.CAN_WRITE ).build();
@@ -87,15 +93,15 @@ class LoginUserSpec
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "new content with permissions CAN_READ for user  saved"
+        when: "new content with CAN_READ-permissions for the user has been saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( contentCanWrite ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "content listed in the grid"
+        then: "content should be listed in the grid"
         contentBrowsePanel.exists( contentCanWrite.getName() );
     }
 
-    def "WHEN new content without any permissions for just created user added THEN Content is listed in BrowsePanel"()
+    def "WHEN new content without any permissions for the just created user has been added THEN the content should be listed in the BrowsePanel"()
     {
         given: "new content without any permissions for just created user added"
         contentCanNotWrite = Content.builder().
@@ -108,50 +114,50 @@ class LoginUserSpec
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "new content with permissions CAN_READ for user  saved"
+        when: "new content with permissions CAN_READ for user has been added"
         contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() ).
             typeData( contentCanNotWrite ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "content listed in the grid"
+        then: "content should be listed in the grid"
         contentBrowsePanel.exists( contentCanNotWrite.getName() );
     }
 
-    def "GIVEN existing user with role 'Content Manager App' WHEN user logged in THEN correct user's display name shown AND 'Applications' and 'Users' links are not present on the launcher"()
+    def "GIVEN existing user with the role 'Content Manager App' WHEN user is logged in THEN correct user's display name shown AND 'Applications' and 'Users' links should not be displayed on the launcher"()
     {
-        given:
+        given: "the user is logged in"
         go "admin"
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
 
-        when:
+        when: "the user navigated to the 'Home Page'"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
         saveScreenshot( "logged_home" + USER_NAME );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
-        then: "'Applications' link not displayed"
+        then: "'Applications' link should not be displayed, because the user has no required role"
         !launcherPanel.isApplicationsLinkDisplayed();
 
-        and: "'Users' link not displayed"
+        and: "'Users' link should not be displayed, because the user has no required role"
         !launcherPanel.isUsersLinkDisplayed();
 
-        and: "'Home' link is displayed"
+        and: "'Home' link should be displayed"
         launcherPanel.isHomeLinkDisplayed();
     }
 
-    def "GIVEN just created user 'logged in' WHEN user opened a content with CAN_WRITE permission and typed new 'display name' THEN 'save draft' button is enabled"()
+    def "GIVEN just created user is 'logged in' WHEN user has opened a content with CAN_WRITE permission and typed new 'display name' THEN 'save draft' button should be enabled"()
     {
-        given: "user manager opened"
+        given: "navigated to Content Studio"
         go "admin"
         getTestSession().setUser( USER_ADMIN_CONSOLE );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
 
-        when: "user opened a content with CAN_WRITE permission and typed new 'display name'"
+        when: "user has opened a content with CAN_WRITE permission and typed new 'display name'"
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( contentCanWrite.getName() ).clickToolbarEdit();
         wizard.typeDisplayName( "content updated" );
         saveScreenshot( "save_enabled" );
 
-        then: "'save draft' button is enabled"
+        then: "'save draft' button should be  enabled, because the content has CAN_WRITE permissions for the user"
         wizard.isSaveButtonEnabled()
     }
 
@@ -163,11 +169,11 @@ class LoginUserSpec
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
 
-        when: "user opened a content without 'CAN_WRITE' permission and typed new display name"
+        when: "user has opened a content with 'CAN_READ' permission and typed new display name"
         contentBrowsePanel.clickCheckboxAndSelectRow( contentCanNotWrite.getName() )
         saveScreenshot( "test_perm_edit_disabled" );
 
-        then: "'Edit' button should be disabled"
+        then: "'Edit' button should be disabled, because the user has no rights to change the content"
         !contentBrowsePanel.isEditButtonEnabled();
     }
 
@@ -181,23 +187,99 @@ class LoginUserSpec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
             USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
 
-        when: "'change password' button pressed"
+        when: "'change password' button has been pressed"
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
         saveScreenshot( "test_open_change_password_dialog" );
 
         then: "'change password' dialog should appear"
         dialog.isOpened();
 
-        and: "'change' and 'cancel' buttons should be present"
+        and: "'cancel' button should be present"
         dialog.isCancelButtonDisplayed();
 
-        and:
-        dialog.isChangeButtonDisplayed();
+        and: "'Generate'-password link should be displayed"
+        dialog.isGenerateLinkDisplayed();
+
+        and: "Password Input' should be displayed"
+        dialog.isPasswordInputDisplayed();
+
+        and: "the input should be empty"
+        dialog.getPasswordInputValue() == "";
+
+        and: "'Show password' link should be displayed"
+        dialog.isShowPasswordLinkDisplayed();
+
+        and: "'Change' button should be disabled"
+        dialog.isChangeButtonDisabled();
     }
 
-    def "GIVEN user-wizard opened WHEN changing a password for existing user AND wizard closed THEN user browse panel shown "()
+    def "GIVEN 'Change Password' dialog is opened WHEN new password typed THEN 'Change Password' button should be enabled"()
     {
-        given: "user-wizard opened"
+        given: "admin opens a user in the wizard"
+        go "admin"
+        getTestSession().setUser( null );
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
+        userBrowsePanel.expandUsersFolder( "system" );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
+            USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
+
+        and: "'change password' button has been pressed"
+        ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
+
+        when: "new password has been typed"
+        dialog.typePassword( "test-password" );
+        saveScreenshot( "change-password-enabled" );
+
+        then: "'Change' button should be enabled"
+        !dialog.isChangeButtonDisabled();
+    }
+    //TODO remove it when #5368(ChangePassword dialog) will be fixed
+    @Ignore
+    def "GIVEN 'Change Password' dialog is opened AND new password has been typed WHEN 'Show' link has been clicked THEN 'Hide' link should be displayed"()
+    {
+        given: "admin opens a user in the wizard"
+        go "admin"
+        getTestSession().setUser( null );
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
+        userBrowsePanel.expandUsersFolder( "system" );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
+            USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
+
+        and: "'change password' button has been pressed"
+        ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
+        dialog.typePassword( "test-password" );
+
+        when: "'Show' link has been clicked"
+        dialog.clickOnShowLink();
+        saveScreenshot( "change-password-enabled" );
+
+        then: "'Hide' link should be displayed"
+        dialog.isHideTextDisplayed();
+    }
+
+
+    def "GIVEN 'Change Password' dialog is opened WHEN 'Generate' link has been pressed THEN secret text should be inserted in the input"()
+    {
+        given: "admin opens a user in the wizard"
+        go "admin"
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
+        userBrowsePanel.expandUsersFolder( "system" );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
+            USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
+
+        when: "'change password' button has been pressed"
+        ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
+        and: "Generate link has been clicked"
+        dialog.clickOnGenerateLink();
+        saveScreenshot( "change-password-generate" );
+
+        then: "secret text should be inserted in the input"
+        dialog.getPasswordInputValue() != "";
+    }
+
+    def "GIVEN user-wizard is opened WHEN user's password has been changed AND wizard closed THEN user browse panel should be shown "()
+    {
+        given: "user-wizard is opened"
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -205,19 +287,20 @@ class LoginUserSpec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
             USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
 
-        when: "user's password was changed by administrator"
+        when: "user's password was changed by the administrator"
         ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
         dialog.doChangePassword( NEW_USER_PASSWORD );
-        saveScreenshot( "test_password_for_user_changed" )
+        saveScreenshot( "test_password_for_user_changed" );
+        and: "wizard has been closed"
         userWizardPanel.save().close( USER_ADMIN_CONSOLE.getDisplayName() );
 
-        then: "user-browse panel shown"
+        then: "user-browse panel should be shown"
         userBrowsePanel.waitUntilPageLoaded( 2 );
     }
 
-    def "WHEN login page opened and old password typed THEN old password should not work for login"()
+    def "WHEN login page is opened and old password has been typed THEN 'Login failed!' message should be displayed"()
     {
-        when: "login page opened and old password typed"
+        when: "login page opened and old password has been typed"
         go "admin"
         User user = User.builder().displayName( USER_NAME ).password( USER_PASSWORD ).build();
         getTestSession().setUser( user );
@@ -225,20 +308,22 @@ class LoginUserSpec
         LoginPage loginPage = new LoginPage( getSession() );
         saveScreenshot( "test_login_old_password" );
 
-        then: "old password should not work for login, login page should still displayed"
-        loginPage.isDisplayed();
+        then: "old password should not work for login, error message should be displayed"
+        loginPage.isErrorMessageDisplayed();
+        and: "error message should be displayed"
+        loginPage.getErrorMessage() == LoginPage.LOGIN_FAILED;
     }
 
-    def "WHEN user 'logged in' with the new password THEN home page loaded"()
+    def "WHEN user is 'logged in' with the new password THEN home page should be loaded"()
     {
-        when: "login page opened and new password typed"
+        when: "login page is opened and new password has been typed"
         go "admin"
         User user = User.builder().displayName( USER_NAME ).password( NEW_USER_PASSWORD ).build();
         getTestSession().setUser( user );
         HomePage home = NavigatorHelper.loginAndOpenHomePage( getTestSession() );
         saveScreenshot( "test_login_with_new_pass" );
 
-        then: "home page successfully loaded"
+        then: "home page should be loaded"
         home.isDisplayed();
     }
 }
