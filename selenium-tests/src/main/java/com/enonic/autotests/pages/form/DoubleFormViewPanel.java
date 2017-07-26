@@ -28,6 +28,10 @@ public class DoubleFormViewPanel
         super( session );
     }
 
+    public static void main( String args[] )
+    {
+        System.out.print( Double.MAX_VALUE );
+    }
     @Override
     public FormViewPanel type( final PropertyTree data )
     {

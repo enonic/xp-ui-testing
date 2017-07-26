@@ -15,6 +15,12 @@ class Occurrences_Double_Spec
     @Shared
     String WRONG_DOUBLE = "-111111111111111111111111";
 
+    @Shared
+    String DOUBLE_MAX_VALUE = "9007199254740991"
+
+    @Shared
+    String DOUBLE_MORE_THAN_MAX_VALUE = "9007199254740992"
+
     def "GIVEN wizard for 'double' content(not required) is opened WHEN invalid value has been typed THEN input should be with red border BUT red icon should not be shown on the wizard page"()
     {
         given: " wizard for 'double' content(not required) is opened"
@@ -34,6 +40,48 @@ class Occurrences_Double_Spec
 
         and: "red icon should not be present on the wizard page, because the value is not required"
         !wizard.isContentInvalid();
+    }
+
+    def "GIVEN 'double'-wizard content(required) is opened WHEN MAX value has been typed THEN validation message should not be displayed AND Publish button should be enabled"()
+    {
+        given: " wizard for 'double' content(required) is opened"
+        Content doubleContent = buildDouble1_1_Content( DOUBLE_MAX_VALUE );
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
+
+        when: "invalid long value was typed"
+        wizard.typeData( doubleContent );
+        saveScreenshot( "test_double_max_req" );
+
+        then: "input should be with the green border"
+        doubleFormViewPanel.isValueInInputValid( 0 );
+
+        and: "'Publish' button on the wizard-toolbar should be enabled"
+        wizard.isPublishButtonEnabled();
+
+        and: "red icon should not be present on the wizard page, because the value is allowed"
+        !wizard.isContentInvalid();
+    }
+
+    def "GIVEN 'double'-wizard content(required) is opened WHEN more than MAX value has been typed THEN validation message should be displayed AND Publish button should be disabled"()
+    {
+        given: " wizard for 'double' content(required) is opened"
+        Content doubleContent = buildDouble1_1_Content( DOUBLE_MORE_THAN_MAX_VALUE );
+        ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
+        DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
+
+        when: "invalid long value was typed"
+        wizard.typeData( doubleContent );
+        saveScreenshot( "test_double_more_max_req" );
+
+        then: "input should be with the green border"
+        !doubleFormViewPanel.isValueInInputValid( 0 );
+
+        and: "'Publish' button on the wizard-toolbar should be disabled, because the field is required"
+        !wizard.isPublishButtonEnabled();
+
+        and: "red icon should not be present on the wizard page, because the value is not allowed"
+        wizard.isContentInvalid();
     }
 
     def "GIVEN creating of 'Double' content WHEN the content opened THEN correct Double value should be present on the wizard AND content is valid"()
