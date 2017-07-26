@@ -131,9 +131,14 @@ public class ChangeUserPasswordDialog
         return cancelButton.isDisplayed();
     }
 
+    public void clickOnCancelButton()
+    {
+        cancelButton.click();
+        sleep( 500 );
+    }
+
     public boolean isChangeButtonDisabled()
     {
         return isAttributePresent( changeButton, "disabled", 1 );
     }
-
 }

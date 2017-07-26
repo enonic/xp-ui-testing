@@ -25,6 +25,9 @@ import spock.lang.Stepwise
 /**
  * Tasks: xp-ui-testing#70 Add Selenium tests to verify #5368(ChangePassword dialog)
  *
+ * Verifies:
+ * -Change Password Dialog - 'Show' text should be in the link, when the dialog is opened · Issue #5374
+ * -text in the link under the password input is not correctly updated #5368
  **/
 
 @Stepwise
@@ -215,7 +218,7 @@ class LoginUserSpec
 
     def "GIVEN 'Change Password' dialog is opened WHEN new password typed THEN 'Change Password' button should be enabled"()
     {
-        given: "admin opens a user in the wizard"
+        given: "the user is opened"
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -233,11 +236,10 @@ class LoginUserSpec
         then: "'Change' button should be enabled"
         !dialog.isChangeButtonDisabled();
     }
-    //TODO remove it when #5368(ChangePassword dialog) will be fixed
-    @Ignore
+
     def "GIVEN 'Change Password' dialog is opened AND new password has been typed WHEN 'Show' link has been clicked THEN 'Hide' link should be displayed"()
     {
-        given: "admin opens a user in the wizard"
+        given: "the user is opened"
         go "admin"
         getTestSession().setUser( null );
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -255,6 +257,33 @@ class LoginUserSpec
 
         then: "'Hide' link should be displayed"
         dialog.isHideTextDisplayed();
+    }
+    //TODO remove it when #5374(Show-Hide) will be fixed
+    //verifies https://github.com/enonic/xp/issues/5374
+    @Ignore
+    def "GIVEN 'Change Password' dialog is opened AND 'Show' link has been pressed WHEN the dialog opened in the second time THEN 'Show' link should be displayed"()
+    {
+        given: "the user is opened"
+        go "admin"
+        userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
+        userBrowsePanel.expandUsersFolder( "system" );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectUser(
+            USER_ADMIN_CONSOLE.getDisplayName() ).clickToolbarEdit().waitUntilWizardOpened();
+
+        and: "'change password' button has been pressed"
+        ChangeUserPasswordDialog dialog = userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
+
+        and: "'Show' link has been pressed"
+        dialog.clickOnShowLink();
+        and: "Cancel button has been pressed(dialog closes)"
+        dialog.clickOnCancelButton();
+
+        when: "ChangeUserPasswordDialog has been opened"
+        userWizardPanel.clickOnChangePassword().waitForLoaded( 2 );
+        saveScreenshot( "show_link_required" );
+
+        then: "'Show' link should be displayed"
+        dialog.isShowTextDisplayed();
     }
 
 
