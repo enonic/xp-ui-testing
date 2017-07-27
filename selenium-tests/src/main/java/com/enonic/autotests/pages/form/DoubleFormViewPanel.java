@@ -32,6 +32,7 @@ public class DoubleFormViewPanel
     {
         System.out.print( Double.MAX_VALUE );
     }
+
     @Override
     public FormViewPanel type( final PropertyTree data )
     {

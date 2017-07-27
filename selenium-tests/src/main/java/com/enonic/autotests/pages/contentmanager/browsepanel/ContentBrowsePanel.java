@@ -742,6 +742,7 @@ public class ContentBrowsePanel
     public IssueListDialog clickOnToolbarShowIssues()
     {
         showIssuesButton.click();
+        sleep( 500 );
         IssueListDialog issueListDialog = new IssueListDialog( getSession() );
         issueListDialog.waitForOpened();
         return issueListDialog;

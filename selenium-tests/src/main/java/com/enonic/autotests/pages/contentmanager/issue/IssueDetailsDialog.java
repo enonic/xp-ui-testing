@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.contentmanager.issue;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,6 +47,10 @@ public class IssueDetailsDialog
 
     private final String CREATOR = DIALOG_CONTAINER + "//span[@class='creator']";
 
+    private final String DEPENDANT_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
+
+    private final String DEPENDANT_LIST_NAMES = DEPENDANT_LIST + H6_MAIN_NAME;
+
     @FindBy(xpath = ISSUE_STATUS_SELECTOR)
     private WebElement issueStatusSelector;
 
@@ -74,6 +80,11 @@ public class IssueDetailsDialog
     {
         cancelButtonTop.click();
         sleep( 300 );
+    }
+
+    public List<String> getDependantNames()
+    {
+        return getDisplayedStrings( By.xpath( DEPENDANT_LIST_NAMES ) );
     }
 
     public void waitForLoaded()
@@ -165,6 +176,7 @@ public class IssueDetailsDialog
     public UpdateIssueDialog clickOnEditButton()
     {
         editIssueButton.click();
+        sleep( 1000 );
         UpdateIssueDialog updateIssueDialog = new UpdateIssueDialog( getSession() );
         updateIssueDialog.waitForOpened();
         return updateIssueDialog;

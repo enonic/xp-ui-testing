@@ -7,6 +7,7 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -97,7 +98,8 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
     }
-
+    //temporarily is ignored
+    @Ignore
     def "GIVEN site with 2 image-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()
     {
         given: "site with 2 image-components is opened"

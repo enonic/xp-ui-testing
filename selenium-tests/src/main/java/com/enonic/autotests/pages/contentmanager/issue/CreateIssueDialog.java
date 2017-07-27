@@ -49,6 +49,8 @@ public class CreateIssueDialog
 
     private final String DISPLAY_NAMES_ITEMS_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogItemList')]" + H6_DISPLAY_NAME;
 
+    private final String INCLUDE_CHILDREN_TOGGLER = DIALOG_CONTAINER + "//div[contains(@id,'IncludeChildrenToggler')]";
+
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
 
@@ -99,7 +101,6 @@ public class CreateIssueDialog
         {
             selectItemsToPublish( issue.getItemsToPublish() );
         }
-
         return this;
     }
 
@@ -213,6 +214,13 @@ public class CreateIssueDialog
     {
         createIssueButton.click();
         sleep( 500 );
+    }
+
+    public CreateIssueDialog clickOnIncludeChildrenToggler()
+    {
+        getDisplayedElement( By.xpath( INCLUDE_CHILDREN_TOGGLER ) ).click();
+        sleep( 300 );
+        return this;
     }
 
     public boolean isCancelButtonBottomDisplayed()

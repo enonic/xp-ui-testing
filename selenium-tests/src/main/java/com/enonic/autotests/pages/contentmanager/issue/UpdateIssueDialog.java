@@ -50,6 +50,15 @@ public class UpdateIssueDialog
 
     private final String DISPLAY_NAMES_ITEMS_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogItemList')]" + H6_DISPLAY_NAME;
 
+    private final String DEPENDANTS_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
+
+    private final String DEPENDANT_LIST_NAMES = DEPENDANTS_LIST + H6_MAIN_NAME;
+
+    private String DEPENDANT_ITEM_BY_NAME = DEPENDANTS_LIST +
+        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
+
+    private String REMOVE_DEPENDANT_ICON = DEPENDANT_ITEM_BY_NAME + "//div[contains(@class,'icon remove')]";
+
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
 
@@ -77,6 +86,11 @@ public class UpdateIssueDialog
         super( session );
     }
 
+    public List<String> getDependantNames()
+    {
+        return getDisplayedStrings( By.xpath( DEPENDANT_LIST_NAMES ) );
+    }
+
     public List<String> getDisplayNameOfSelectedItems()
     {
         return getDisplayedStrings( By.xpath( DISPLAY_NAMES_ITEMS_LIST ) );
@@ -90,6 +104,19 @@ public class UpdateIssueDialog
     public String getDescription()
     {
         return descriptionTextArea.getAttribute( "value" );
+    }
+
+    public UpdateIssueDialog removeDependantItem( String itemName )
+    {
+        String removeButton = String.format( REMOVE_DEPENDANT_ICON, itemName );
+        if ( !isElementDisplayed( removeButton ) )
+        {
+            saveScreenshot( "err_remove_dependant_item" );
+            throw new TestFrameworkException( "remove icon was not found on the Update Issue dialog!" );
+        }
+        findElement( By.xpath( removeButton ) ).click();
+        sleep( 300 );
+        return this;
     }
 
     public UpdateIssueDialog removeAssignee( String userDisplayName )
@@ -173,5 +200,4 @@ public class UpdateIssueDialog
         cancelButtonBottom.click();
         sleep( 500 );
     }
-
 }

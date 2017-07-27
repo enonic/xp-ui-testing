@@ -143,6 +143,7 @@ public class IssueListDialog
             throw new TestFrameworkException( "issue was not found: " + tittle );
         }
         getDisplayedElement( By.xpath( issue ) ).click();
+        sleep( 700 );
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
         issueDetailsDialog.waitForLoaded();
         return issueDetailsDialog;
