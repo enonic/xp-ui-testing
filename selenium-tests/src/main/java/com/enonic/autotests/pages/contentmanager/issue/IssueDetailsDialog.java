@@ -89,7 +89,7 @@ public class IssueDetailsDialog
 
     public void waitForLoaded()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( EDIT_ISSUE_BUTTON ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_issue_details_dialog" );
             throw new TestFrameworkException( "'Issue Details' dialog was not opened!" );
@@ -181,7 +181,6 @@ public class IssueDetailsDialog
         updateIssueDialog.waitForOpened();
         return updateIssueDialog;
     }
-
 
     public boolean isPublishButtonPresent()
     {

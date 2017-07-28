@@ -91,7 +91,6 @@ class Issue_Dependant_List_Spec
         and: "'Include Children' link has been pressed"
         createIssueDialog.clickOnIncludeChildrenToggler()
 
-
         when: "'Create' button has been pressed"
         createIssueDialog.clickOnCreateIssueButton();
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
@@ -120,20 +119,47 @@ class Issue_Dependant_List_Spec
         dependantsNames.get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
-    def "GIVEN existing issue AND one item was removed on the UpdateIssue dialog and it did not saved WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
+    def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and it did not saved WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
     {
-        setup: "existing issue"
+        given: "existing issue"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueDetailsDialog issueDetailsDialog = contentBrowsePanel.clickOnToolbarShowIssues().clickOnIssue( TEST_ISSUE.getTitle() );
+        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
+        updateIssueDialog.removeDependantItem( DOUBLE_CONTENT.getName() );
+
+        and: "'Cancel' button on the 'UpdateIssue dialog' has been pressed and the dialog closed"
+        updateIssueDialog.clickOnCancelBottomButton();
 
         when: "'Update issue' dialog has been opened"
-        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
-        saveScreenshot( "update_issue_dlg_removed_item" )
+        issueDetailsDialog.clickOnEditButton();
+        saveScreenshot( "update_issue_dlg_removed_item_canceled" )
 
-        then: "one item has been removed from the dependants list"
+        then: "the number of dependants should not be changed, because the changes were not saved"
         updateIssueDialog.getDependantNames().size() == 2;
 
-        and: "the removed content should be present in the dependants list of the 'Details Dialog', because 'Cancel' button was pressed"
+        and: "the removed content should be present in the dependants list of the 'UpdateIssue Dialog', because 'Cancel' button was pressed"
         updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
+    }
+
+    def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and Save button has been pressed WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
+    {
+        given: "existing issue"
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
+        IssueDetailsDialog issueDetailsDialog = contentBrowsePanel.clickOnToolbarShowIssues().clickOnIssue( TEST_ISSUE.getTitle() );
+        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
+        updateIssueDialog.removeDependantItem( DOUBLE_CONTENT.getName() );
+
+        and: "'Save' button on the 'UpdateIssue dialog' has been pressed and the dialog closed"
+        updateIssueDialog.clickOnSaveIssueButton();
+
+        when: "'Update issue' dialog has been opened again"
+        issueDetailsDialog.clickOnEditButton();
+        saveScreenshot( "update_issue_dlg_removed_item_saved" )
+
+        then: "the number of dependants should be changed, because the changes were saved"
+        updateIssueDialog.getDependantNames().size() == 1;
+
+        and: "the removed content should not be present in the 'dependants list' of the 'UpdateIssue Dialog', because 'Save' button was pressed"
+        !updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 }
