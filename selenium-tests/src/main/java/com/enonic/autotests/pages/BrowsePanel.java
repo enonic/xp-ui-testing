@@ -121,7 +121,8 @@ public abstract class BrowsePanel
             saveScreenshot( NameHelper.uniqueName( "err_show_filter" ) );
             throw new TestFrameworkException( "button 'show filter panel' not clickable" );
         }
-        getDisplayedElement( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).click();
+        waitForClickableAndClick( By.xpath( SHOW_FILTER_PANEL_BUTTON ) );
+        //getDisplayedElement( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).click();
         sleep( 700 );
         return this;
     }
