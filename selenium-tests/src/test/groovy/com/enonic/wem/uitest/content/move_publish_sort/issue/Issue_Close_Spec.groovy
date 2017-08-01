@@ -132,7 +132,7 @@ class Issue_Close_Spec
         saveScreenshot( "issue_stopped_icon_hidden" );
     }
 
-    def "GIVEN existing issue closed by the user AND SU is logged in WHEN issue details dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
+    def "GIVEN existing issue is closed by the user AND SU is 'logged in' WHEN 'issue details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
     {
         given: "SU is logged in"
         getTestSession().setUser( null );
