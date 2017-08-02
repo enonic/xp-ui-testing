@@ -299,4 +299,9 @@ public class EditPermissionsDialog
     {
         return cancelButton.isEnabled();
     }
+
+    public void clickOnCancelButton()
+    {
+        cancelButton.click();
+    }
 }

@@ -96,7 +96,7 @@ public class SiteConfiguratorDialog
         return isElementDisplayed( message );
     }
 
-    public void doCancelDialog()
+    public void clickOnCancelButton()
     {
         boolean result = waitUntilVisibleNoException( By.xpath( CANCEL_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !result )

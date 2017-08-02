@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
 import com.enonic.autotests.vo.contentmanager.Content
@@ -17,6 +18,8 @@ import spock.lang.Stepwise
  * Tasks:
  * XP-2845 Create selenium tests for "Overwrite child permission" feature(Edit Permissions Dialog)
  * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
+ * xp-ui-testing#54 Add selenium tests to verify xp#5063
+ *
  * Verifies:
  * XP-4932 Impossible to save changes when 'Overwrite child permissions' was set in true
  * XP-4930 Security wizard-step-form not refreshed in a child content, when permissions were changed in the parent content
@@ -149,5 +152,23 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
 
         then: "permissions should be the same as in the parent folder"
         !childWizard.getAclEntries().contains( entryToRemove );
+    }
+    //verifies xp5400 (Confirmation Dialog should appear)
+    def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel' button pressed THEN Confirmation Dialog should appear"()
+    {
+        given: "Content wizard is opened"
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        and: "'Edit Permissions Dialog' is opened"
+        EditPermissionsDialog editPermissionsButton = wizard.clickOnSecurityTabLink().clickOnEditPermissionsButton();
+        and: ""
+        editPermissionsButton.setOverwriteChildPermissionsCheckbox( true );
+
+        when: "'Cancel' button has been pressed"
+        editPermissionsButton.clickOnCancelButton();
+        saveScreenshot( "edit_perm_confirmation_dialog" );
+
+        then: "Confirmation Dialog should appear"
+        ConfirmationDialog confirm = new ConfirmationDialog( getSession() );
+        confirm.isOpened();
     }
 }

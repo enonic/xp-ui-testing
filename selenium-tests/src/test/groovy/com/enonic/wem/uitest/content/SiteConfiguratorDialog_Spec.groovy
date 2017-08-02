@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SiteConfiguratorDialog
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
@@ -8,6 +9,10 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
+/**
+ * Tasks: xp-ui-testing#54  Add selenium tests to verify xp#5063
+ *
+ **/
 class SiteConfiguratorDialog_Spec
     extends BaseContentSpec
 {
@@ -89,5 +94,26 @@ class SiteConfiguratorDialog_Spec
 
         then: "correct background color present in the page-editor"
         liveFormPanel.getBackgroundColor().contains( BACKGROUND_RED_COLOR_VALUE );
+    }
+
+    //verifies xp#5063 (Confirmation Dialog should appear)
+    def "GIVEN configurator dialog is opened WHEN if something is changed and 'Cancel' button has been pressed THEN 'Confirmation Dialog' should be present"()
+    {
+        given: "site was opened and configurator dialog is opened"
+        filterPanel.typeSearchText( SITE.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
+
+        when: "red color for background was selected "
+        dialog.selectBackgroundColor( "Blue" );
+
+        and: "Cancel button has been pressed"
+        dialog.clickOnCancelButton();
+        saveScreenshot( "site_config_confirm_dlg" );
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+
+        then: "'Confirmation Dialog' should be present"
+        confirmationDialog.isOpened();
     }
 }
