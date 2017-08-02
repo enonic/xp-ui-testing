@@ -101,38 +101,38 @@ class IssueListDialog_Spec
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
         when:
-        IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
         then: "Closed-tab should be present"
-        dialog.isClosedTabPresent();
+        issueListDialog.isClosedTabPresent();
 
         and: "Open-tab should be present"
-        dialog.isOpenTabActive();
+        issueListDialog.isOpenTabActive();
 
         and: "'Assigned to Me' checkbox should be disabled"
-        dialog.isAssignedToMeCheckboxDisabled();
+        issueListDialog.isAssignedToMeCheckboxDisabled();
 
         and: "'My Issues' checkbox should be enabled"
-        !dialog.isMyIssuesCheckboxDisabled();
+        !issueListDialog.isMyIssuesCheckboxDisabled();
 
         and: "'New Issue' should be present"
-        dialog.isNewIssueButtonDisplayed();
+        issueListDialog.isNewIssueButtonDisplayed();
 
         and: "just added issue should be present in the list"
-        dialog.isIssuePresent( TEST_ISSUE.getTitle() );
+        issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
     }
 
     def "GIVEN Issue List dialog is opened WHEN Cancel-button-top has been pressed THEN the dialog should be closed"()
     {
         given: "Issue List dialog is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
         when: "Cancel button top has been clicked"
-        dialog.clickOnCancelButtonTop();
+        issueListDialog.clickOnCancelButtonTop();
 
         then: "the dialog should be closed"
-        dialog.waitForClosed();
+        issueListDialog.waitForClosed();
     }
 
     def "GIVEN existing user is logged in WHEN the user has opened 'Issue List' dialog AND clicked on the 'Assigned to Me' checkbox THEN one issue should be present in the list"()
@@ -140,11 +140,11 @@ class IssueListDialog_Spec
         given: "existing assigned user is logged in"
         getTestSession().setUser( TEST_USER );
         NavigatorHelper.openContentStudioApp( getTestSession() );
-        IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
         when: "'Assigned to Me' checkbox has been checked"
-        dialog.setAssignedToMeCheckbox( true );
-        List<String> titles = dialog.getIssueTitles();
+        issueListDialog.setAssignedToMeCheckbox( true );
+        List<String> titles = issueListDialog.getIssueTitles();
 
         then: "one issue should be present in the list"
         titles.size() == 1;

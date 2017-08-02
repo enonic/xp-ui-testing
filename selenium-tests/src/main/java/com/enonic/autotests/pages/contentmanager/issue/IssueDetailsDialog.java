@@ -47,6 +47,8 @@ public class IssueDetailsDialog
 
     private final String CREATOR = DIALOG_CONTAINER + "//span[@class='creator']";
 
+    private final String DESCRIPTION = DIALOG_CONTAINER + "//p[@class='description-text']";
+
     private final String DEPENDANT_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
 
     private final String DEPENDANT_LIST_NAMES = DEPENDANT_LIST + H6_MAIN_NAME;
@@ -80,6 +82,11 @@ public class IssueDetailsDialog
     {
         cancelButtonTop.click();
         sleep( 300 );
+    }
+
+    public String getDescription()
+    {
+        return getDisplayedString( DESCRIPTION );
     }
 
     public List<String> getDependantNames()

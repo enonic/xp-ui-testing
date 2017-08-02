@@ -52,6 +52,8 @@ public class Application
 
     public static String ISSUE_IS_CLOSED_MESSAGE = "The issue is closed.";
 
+    public static String ISSUE_ITEM_DELETED = "One or more items from the issue cannot be found.";
+
     public static String ISSUE_IS_CREATED_MESSAGE = "New issue created successfully.";
 
     public static String ISSUE_IS_CLOSED = "Issue \"%s\" is closed.";

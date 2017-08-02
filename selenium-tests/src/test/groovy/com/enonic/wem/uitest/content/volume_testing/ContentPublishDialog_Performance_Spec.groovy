@@ -30,7 +30,7 @@ class ContentPublishDialog_Performance_Spec
     {
         given:
         contentBrowsePanel.doSelectAll();
-        TestUtils.saveScreenshot( getSession(), "test_performance_all_selected" );
+        saveScreenshot( "volume_testing_all_selected" );
 
         when:
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish();
@@ -41,7 +41,8 @@ class ContentPublishDialog_Performance_Spec
 
         then: "modal dialog has been closed"
         contentPublishDialog.waitForDialogClosed();
-        and: "correct notification message appears"
-        contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        //and: "correct notification message appears"
+        //message == "1434 items were unpublished"
     }
 }

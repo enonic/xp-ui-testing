@@ -90,7 +90,7 @@ class IssueDetailsDialog_Spec
         when: "'Create' button has been pressed"
         createIssueDialog.clickOnCreateIssueButton();
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
-        saveScreenshot( "issue_created_details" )
+        saveScreenshot( "issue_details_dialog" )
 
         then: "Issue details dialog should be displayed"
         issueDetailsDialog.waitForLoaded();
@@ -101,9 +101,11 @@ class IssueDetailsDialog_Spec
         issueDetailsDialog.isPublishButtonPresent();
         and: "Back button should be present"
         issueDetailsDialog.isBackButtonDisplayed();
-
         and: "status of the issue should be 'Open'"
         issueDetailsDialog.getIssueStatus() == "Open"
+
+        and: "correct description should be displayed"
+        issueDetailsDialog.getDescription().contains( TEST_ISSUE.getDescription() );
     }
 
     def "GIVEN existing user and an issue was assigned to him WHEN the user is logged in THEN 'You have unclosed Publishing Issues' message should be present on the toolbar"()
@@ -137,7 +139,7 @@ class IssueDetailsDialog_Spec
         titles.get( 0 ).contains( TEST_ISSUE.getTitle() );
     }
 
-    def "GIVEN existing user and an issue was assigned to him AND Issue List dialog is opened WHEN issue has been clicked THEN 'Issue details dialog' should be opened"()
+    def "GIVEN existing user and an issue was assigned to him AND 'Issue List' dialog is opened WHEN issue has been clicked THEN 'Issue details dialog' should be opened"()
     {
         given: "existing assigned user is logged in"
         getTestSession().setUser( TEST_USER );

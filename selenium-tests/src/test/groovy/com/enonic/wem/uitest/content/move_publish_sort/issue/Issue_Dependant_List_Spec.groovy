@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort.issue
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
 import com.enonic.autotests.pages.contentmanager.issue.UpdateIssueDialog
@@ -11,6 +12,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -19,6 +21,7 @@ import spock.lang.Stepwise
  *
  * Tasks:
  * xp-ui-testing#73  Add Selenium tests for an Issue with dependants-list
+ * xp-ui-testing#68 Add Selenium tests for an issue without an item(deleted)
  * */
 @Stepwise
 class Issue_Dependant_List_Spec
@@ -141,6 +144,7 @@ class Issue_Dependant_List_Spec
         updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
+    @Ignore
     def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and Save button has been pressed WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
     {
         given: "existing issue"
@@ -161,5 +165,23 @@ class Issue_Dependant_List_Spec
 
         and: "the removed content should not be present in the 'dependants list' of the 'UpdateIssue Dialog', because 'Save' button was pressed"
         !updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
+    }
+
+    def "GIVEN existing issue and the item to publish has been deleted WHEN 'UpdateIssue' dialog has been opened THEN no any items to publish should be on the dialog"()
+    {
+        given: "existing issue and the item to publish has been deleted"
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
+        openConfirmDeleteDialog( SITE.getName() ).typeNumber( "3" ).clickOnConfirmButton();
+
+        when: "'UpdateIssue' dialog has been opened"
+        IssueDetailsDialog issueDetailsDialog = contentBrowsePanel.clickOnToolbarShowIssues().clickOnIssue( TEST_ISSUE.getTitle() );
+        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
+        saveScreenshot( "item_to_publish_was removed" );
+
+        then: "no any items to publish should be on the dialog"
+        updateIssueDialog.getItemNames().size() == 0;
+
+        and: "'One or more items from the issue cannot be found' - notification should be displayed"
+        contentBrowsePanel.waitExpectedNotificationMessage( Application.ISSUE_ITEM_DELETED, 1 );
     }
 }
