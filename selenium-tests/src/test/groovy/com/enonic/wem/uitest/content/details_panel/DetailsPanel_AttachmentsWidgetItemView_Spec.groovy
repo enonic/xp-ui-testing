@@ -1,16 +1,21 @@
 package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AttachmentsWidgetItemView
+import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class DetailsPanel_AttachmentsWidgetItemView_Spec
     extends BaseContentSpec
 {
-    def "WHEN image content selected and details panel opened THEN AttachmentsWidgetItemView is displayed and has attachments"()
+    @Shared
+    Content SITE;
+
+    def "WHEN image content is selected and details panel opened THEN AttachmentsWidgetItemView is displayed and has attachments"()
     {
-        when: "image content selected"
+        when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
@@ -29,7 +34,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
         List<String> attachmentNames = view.getAttachmentNames();
 
-        then: "correct attachment name displayed in the widget"
+        then: "correct attachment's name should be displayed in the widget"
         attachmentNames.size() == 1;
         and:
         attachmentNames.get( 0 ) == IMPORTED_IMAGE_BOOK_NAME;

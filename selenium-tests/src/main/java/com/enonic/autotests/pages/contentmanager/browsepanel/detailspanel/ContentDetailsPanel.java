@@ -38,6 +38,8 @@ public class ContentDetailsPanel
 
     private AttachmentsWidgetItemView attachmentsWidgetItemView;
 
+    private PageTemplateWidgetItemView pageTemplateWidgetItemView;
+
     private PropertiesWidgetItemView propertiesWidgetItemView;
 
 
@@ -74,6 +76,15 @@ public class ContentDetailsPanel
             return new AttachmentsWidgetItemView( getSession() );
         }
         return attachmentsWidgetItemView;
+    }
+
+    public PageTemplateWidgetItemView getPageTemplateWidgetItemView()
+    {
+        if ( pageTemplateWidgetItemView == null )
+        {
+            return new PageTemplateWidgetItemView( getSession() );
+        }
+        return pageTemplateWidgetItemView;
     }
 
     public DependenciesWidgetItemView openDependenciesWidget()
