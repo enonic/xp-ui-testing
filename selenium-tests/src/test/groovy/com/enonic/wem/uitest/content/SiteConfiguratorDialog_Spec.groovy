@@ -109,7 +109,7 @@ class SiteConfiguratorDialog_Spec
         dialog.selectBackgroundColor( "Blue" );
 
         and: "Cancel button has been pressed"
-        dialog.clickOnCancelButton();
+        dialog.clickOnCancelButtonTop();
         saveScreenshot( "site_config_confirm_dlg" );
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
 

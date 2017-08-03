@@ -154,21 +154,39 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         !childWizard.getAclEntries().contains( entryToRemove );
     }
     //verifies xp5400 (Confirmation Dialog should appear)
+    def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel'-top button pressed THEN Confirmation Dialog should appear"()
+    {
+        given: "Content wizard is opened"
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        and: "'Edit Permissions Dialog' is opened"
+        EditPermissionsDialog editPermissionsButton = wizard.clickOnSecurityTabLink().clickOnEditPermissionsButton();
+        and: "changes is made"
+        editPermissionsButton.setOverwriteChildPermissionsCheckbox( true );
+
+        when: "'Cancel'-top button has been pressed"
+        editPermissionsButton.clickOnCancelButtonTop();
+        saveScreenshot( "edit_perm_confirmation_dialog" );
+
+        then: "Confirmation Dialog should appear"
+        ConfirmationDialog confirm = new ConfirmationDialog( getSession() );
+        confirm.isOpened();
+    }
+
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel' button pressed THEN Confirmation Dialog should appear"()
     {
         given: "Content wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         and: "'Edit Permissions Dialog' is opened"
         EditPermissionsDialog editPermissionsButton = wizard.clickOnSecurityTabLink().clickOnEditPermissionsButton();
-        and: ""
+        and: "changes is made"
         editPermissionsButton.setOverwriteChildPermissionsCheckbox( true );
 
-        when: "'Cancel' button has been pressed"
+        when: "'Cancel'-bottom button has been pressed"
         editPermissionsButton.clickOnCancelButton();
         saveScreenshot( "edit_perm_confirmation_dialog" );
 
-        then: "Confirmation Dialog should appear"
+        then: "Confirmation Dialog should not appear"
         ConfirmationDialog confirm = new ConfirmationDialog( getSession() );
-        confirm.isOpened();
+        !confirm.isOpened();
     }
 }

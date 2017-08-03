@@ -51,6 +51,8 @@ public class EditPermissionsDialog
 
     private final String CANCEL_BUTTON_XPATH = "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']]";
 
+    private final String CANCEL_BUTTON_TOP = CONTAINER_XPATH + "//div[contains(@class,'cancel-button-top')]";
+
     private String ACL_ENTRY_ROW =
         "//div[contains(@class,'access-control-entry') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
@@ -65,6 +67,9 @@ public class EditPermissionsDialog
 
     @FindBy(xpath = CANCEL_BUTTON_XPATH)
     WebElement cancelButton;
+
+    @FindBy(xpath = CANCEL_BUTTON_TOP)
+    WebElement cancelButtonTop;
 
     public EditPermissionsDialog( TestSession session )
     {
@@ -278,8 +283,8 @@ public class EditPermissionsDialog
         List<WebElement> principals = findElements( By.xpath( CONTAINER_XPATH + "//div[@class='access-control-entry']" + P_NAME ) );
 
         List<String> principalNames = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
-        List<String> suiteNames = getDisplayedStrings( By.xpath(
-            CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'TabMenuButton')]//a[@class='label']" ) );
+        List<String> suiteNames = getDisplayedStrings(
+            By.xpath( CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'TabMenuButton')]//a[@class='label']" ) );
         for ( int i = 0; i < principalNames.size(); i++ )
         {
             builder = ContentAclEntry.builder();
@@ -303,5 +308,15 @@ public class EditPermissionsDialog
     public void clickOnCancelButton()
     {
         cancelButton.click();
+    }
+
+    public void clickOnCancelButtonTop()
+    {
+        cancelButtonTop.click();
+    }
+
+    public boolean isCancelButtonTopDisplayed()
+    {
+        return cancelButtonTop.isDisplayed();
     }
 }

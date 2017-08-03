@@ -131,18 +131,6 @@ public class SiteConfiguratorDialog
         return isDialogInvisible;
     }
 
-    public void doClose()
-    {
-        boolean isCancelButtonPresent = waitUntilVisibleNoException( By.xpath( CANCEL_BUTTON_TOP ), Application.EXPLICIT_NORMAL );
-        if ( !isCancelButtonPresent )
-        {
-            saveScreenshot( "err_close-site-config" );
-            throw new TestFrameworkException( "button 'close' on 'site-config-dialog' was not found!" );
-        }
-        closeButton.click();
-        sleep( 500 );
-    }
-
     public SiteConfiguratorDialog waitForOpened()
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), EXPLICIT_LONG ) )
@@ -227,6 +215,11 @@ public class SiteConfiguratorDialog
         return text;
     }
 
+    public void clickOnCancelButtonTop()
+    {
+        closeButton.click();
+        sleep( 200 );
+    }
     public void setTextIntoArea( String text )
     {
         String script = "document.getElementById('tinymce').contentDocument.body.innerHTML=arguments[0];";

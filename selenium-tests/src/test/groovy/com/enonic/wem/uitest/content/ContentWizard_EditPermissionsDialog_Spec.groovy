@@ -74,8 +74,11 @@ class ContentWizard_EditPermissionsDialog_Spec
         and: "'Apply' button should be disabled"
         !modalDialog.isApplyButtonEnabled();
 
-        and: "'Cancel' button should be enabled"
+        and: "'Cancel'-bottom button should be enabled"
         modalDialog.isCancelButtonEnabled();
+
+        and: "'Cancel'-top button should be displayed"
+        modalDialog.isCancelButtonTopDisplayed();
     }
 
     def "GIVEN 'Edit Permissions' dialog is opened WHEN 'inherit permissions' has been unchecked THEN options filter input should appear"()
