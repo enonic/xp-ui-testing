@@ -1,9 +1,12 @@
 package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PageTemplateWidgetItemView
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import com.enonic.xp.content.ContentPath
 import spock.lang.Shared
 
 /**
@@ -18,7 +21,19 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
     Content SITE;
 
     @Shared
+    Content PAGE_TEMPLATE;
+
+    @Shared
+    String COUNTRY_LIST = "country-list";
+
+    @Shared
     String COUNTRY_REGION_TITLE = "Country Region";
+
+    @Shared
+    String TEMPLATE_DISPLAY_NAME = "widget template";
+
+    @Shared
+    String SUPPORT = "site";
 
     def "WHEN image content is selected and details panel opened THEN PageTemplateWidgetItemView is displayed and 'Page Template is not used' should be present"()
     {
@@ -51,5 +66,40 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
 
         and: "'Custom' template should be displayed"
         view.getTemplateType() == "Custom";
+    }
+
+    def "GIVEN existing site with a controller AND new page template is added AND the template has been selected on the Inspection panel WHEN the site has been selected THEN correct controller should be present on the widget"()
+    {
+        given: "existing site with a controller"
+        findAndSelectContent( SITE.getName() );
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_LIST, SUPPORT, TEMPLATE_DISPLAY_NAME,
+                                           SITE.getName() );
+        and: "new page template has been added"
+        contentBrowsePanel.clickOnRowByName( "_templates" ).clickToolbarNew().selectContentType(
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
+
+        and: "Inspection panel has been opened"
+        ContentWizardPanel siteWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        siteWizard.showContextWindow().clickOnInspectLink();
+        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        saveScreenshot( "page_templ_widget1" );
+        and: "new added page template has been selected in the dropdown-options"
+        inspectionPanel.selectRendererByDisplayName( TEMPLATE_DISPLAY_NAME );
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+        and: "changes has been confirmed"
+        confirmationDialog.pressYesButton();
+        siteWizard.close( SITE.getDisplayName() );
+
+        when: "the details panel has been opened opened"
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        PageTemplateWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPageTemplateWidgetItemView();
+        saveScreenshot( "page_templ_widget2" );
+
+        then: "correct controller should be displayed"
+        view.getControllerTextLink() == TEMPLATE_DISPLAY_NAME;
+
+        and:
+        view.getTemplateType() == "Page Template";
     }
 }

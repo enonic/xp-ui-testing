@@ -61,6 +61,27 @@ public class ContextWindowPageInspectionPanel
             throw new TestFrameworkException( "option was not found!  " + templateName );
         }
         getDisplayedElement( By.xpath( optionItemXpath ) ).click();
+        sleep( 500 );
+        return this;
+    }
+
+    public ContextWindowPageInspectionPanel selectRendererByDisplayName( String templateDisplayName )
+    {
+        if ( !isElementDisplayed( RENDERER_DROPDOWN_HANDLER ) )
+        {
+            saveScreenshot( "err_dropdown_renderer" );
+            throw new TestFrameworkException( "dropdown handler was not found!  " + templateDisplayName );
+        }
+        getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
+        sleep( 400 );
+        String optionItemXpath = RENDERER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateDisplayName );
+        if ( !isElementDisplayed( optionItemXpath ) )
+        {
+            saveScreenshot( "err_renderer" );
+            throw new TestFrameworkException( "option was not found!  " + templateDisplayName );
+        }
+        getDisplayedElement( By.xpath( optionItemXpath ) ).click();
+        sleep( 500 );
         return this;
     }
 

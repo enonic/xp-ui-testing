@@ -19,6 +19,8 @@ public class PageTemplateWidgetItemView
 
     private final String CONTROLLER_NAME = DIV_CONTAINER + P_NAME + "//span";
 
+    private final String CONTROLLER_LINK = DIV_CONTAINER + P_NAME + "//a";
+
     private final String TEMPLATE_TYPE = DIV_CONTAINER + H6_DISPLAY_NAME;
 
     public PageTemplateWidgetItemView( final TestSession session )
@@ -29,6 +31,11 @@ public class PageTemplateWidgetItemView
     public String getControllerName()
     {
         return getDisplayedString( CONTROLLER_NAME );
+    }
+
+    public String getControllerTextLink()
+    {
+        return getDisplayedString( CONTROLLER_LINK );
     }
 
     public String getTemplateType()
