@@ -22,6 +22,9 @@ public class Application
 {
     public static final String NO_SELECTION_MESSAGE = "You are wasting this space - select something!";
 
+    public static final String SWITCHING_TEMPLATE_MESSAGE =
+        "Switching to a page template will discard all of the custom changes made to the page. Are you sure?";
+
     public static final String CONTENT_STUDIO_TITLE = "Content Studio - Enonic XP Admin";
 
     public static final String ERROR_MESSAGE_404 = "404 Not Found";

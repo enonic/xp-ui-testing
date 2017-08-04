@@ -49,7 +49,7 @@ class Add_User_Spec
         then: "wizard should be closed "
         !isWizardOpened;
 
-        and: "the user should be listed"
+        and: "the user should be listed in the grid"
         userBrowseFilterPanel.typeSearchText( USER.getDisplayName() );
         userBrowsePanel.exists( USER.getDisplayName(), true );
 
@@ -70,7 +70,7 @@ class Add_User_Spec
         userBrowsePanel.expandUsersFolder( "system" );
         saveScreenshot( "user_removed" );
 
-        then: "the user not listed in the grid"
+        then: "the user should not be listed in the grid"
         !userBrowsePanel.exists( USER.getDisplayName(), true );
 
         and: "correct notification message is displayed"
@@ -85,17 +85,17 @@ class Add_User_Spec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
             UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
-        when: "data typed and user saved"
+        when: "data has been typed and the user saved"
         userWizardPanel.typeData( refreshWizardUser ).save().waitNotificationMessage();
 
         and: "page has been refreshed in the browser"
         userBrowsePanel.refreshPanelInBrowser();
         saveScreenshot( "user_wizard_refreshed" );
 
-        then: "wizard is opened"
+        then: "wizard should be  opened"
         userWizardPanel.isOpened();
 
-        and: "correct display name is displayed"
+        and: "correct display name should be displayed"
         userWizardPanel.getNameInputValue() == refreshWizardUser.getDisplayName();
     }
 }

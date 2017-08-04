@@ -171,7 +171,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         ConfirmationDialog confirm = new ConfirmationDialog( getSession() );
         confirm.isOpened();
     }
-
+    //verifies xp5400 (Confirmation Dialog should appear)
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel' button pressed THEN Confirmation Dialog should appear"()
     {
         given: "Content wizard is opened"

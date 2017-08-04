@@ -71,19 +71,19 @@ class ContentBrowsePanelToolbarSpec
         !contentBrowsePanel.isPreviewButtonEnabled();
     }
 
-    def "GIVEN a content that not allowing children WHEN content selected THEN Sort button is  disabled for content types not allowing children"()
+    def "GIVEN a content that not allowing children WHEN content has been selected THEN 'Sort' button should be  disabled"()
     {
         when: "image content selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         saveScreenshot( "children_not_allow" );
 
-        then: "sort button is disabled"
+        then: "sort button should be disabled"
         !contentBrowsePanel.isSortButtonEnabled();
 
-        and: "New button is disabled"
+        and: "New button should be disabled"
         !contentBrowsePanel.isNewButtonEnabled();
 
-        and: "Delete button should be enabled"
+        and: "'Delete' button should be enabled"
         contentBrowsePanel.isDeleteButtonEnabled();
     }
 }

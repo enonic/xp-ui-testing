@@ -1012,12 +1012,6 @@ public class ContentBrowsePanel
         return message;
     }
 
-    public boolean waitExpectedNotificationMessage( String message, long timeout )
-    {
-        String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
-        return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
-    }
-
     /**
      * @return true if 'Delete' button enabled, otherwise false.
      */

@@ -16,27 +16,28 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
     def "GIVEN wizard is opened and data typed WHEN saved and wizard closed THEN new content should be listed"()
     {
-        given: "creating new Content on root"
+        given: "wizard is opened and data typed"
         PARENT_FOLDER = buildFolderContent( "parent-folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         wizard.typeData( PARENT_FOLDER );
 
-        when: "saved and wizard closed"
+        when: "the content has been saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new content should be listed"
         contentBrowsePanel.exists( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN wizard for folder is opened WHEN data has been saved THEN the folder should be present in the grid"()
+    def "GIVEN wizard is opened WHEN data has been saved THEN the folder should be present in the grid"()
     {
-        given: "wizard for folder is opened"
+        given: "wizard is opened"
         Content rootContent = buildFolderContent( "folder", "test folder" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() ).
             typeData( rootContent );
 
         when: "the data has been saved"
         wizard.save();
+        and: "go to browse panel"
         wizard.switchToBrowsePanelTab();
         and: "the name of the content is typed on the search input"
         filterPanel.typeSearchText( rootContent.getName() );
@@ -45,7 +46,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( rootContent.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing unexpanded folder WHEN saved and wizard closed THEN parent folder should be collapsed"()
+    def "GIVEN creating of new child beneath an existing unexpanded folder WHEN Save has been pressed AND wizard closed THEN parent folder should be collapsed"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder1", PARENT_FOLDER.getName() );
@@ -61,7 +62,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating new Content beneath an existing unexpanded WHEN content saved and tab with the grid is switched THEN parent should still be unexpanded"()
+    def "GIVEN creating of new child beneath an existing unexpanded WHEN content has been saved THEN parent should still be unexpanded"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder2", PARENT_FOLDER.getName() );
@@ -71,13 +72,14 @@ class ContentBrowsePanel_GridPanel_SaveSpec
 
         when: "child content saved and tab with the grid is switched"
         wizard.save();
+        and: "go to browse panel"
         wizard.switchToBrowsePanelTab();
 
-        then: "parent should still be unexpanded"
+        then: "parent should be unexpanded"
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN existing expanded folder is selected WHEN new content was added and wizard closed THEN parent folder should be expanded"()
+    def "GIVEN existing expanded folder is selected WHEN child content was added and wizard closed THEN parent folder should be expanded"()
     {
         given: "creating of new content beneath the existing expanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder3", PARENT_FOLDER.getName() );

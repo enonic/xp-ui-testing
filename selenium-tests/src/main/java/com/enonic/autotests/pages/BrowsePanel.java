@@ -708,8 +708,7 @@ public abstract class BrowsePanel
 
     public Long getViewportScrollTopValue()
     {
-        return (Long) getJavaScriptExecutor().executeScript(
-            "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
+        return (Long) getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
     }
 
     public void scrollViewPortToTop()
@@ -966,5 +965,11 @@ public abstract class BrowsePanel
         String message = findElement( By.xpath( ERROR_NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Notification message " + message );
         return message.trim();
+    }
+
+    public boolean waitExpectedNotificationMessage( String message, long timeout )
+    {
+        String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
+        return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
 }
