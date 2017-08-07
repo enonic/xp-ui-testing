@@ -161,7 +161,7 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.doCloseDialog();
         templateWizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( TEST_IMAGE_DISPLAY_NAME )
+        imageComponentView.selectImageFromOptions( TEST_IMAGE_DISPLAY_NAME )
 
         and: "the template is saved"
         templateWizard.save();
@@ -190,7 +190,7 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( SECOND_TEST_IMAGE_COMPONENT_NAME );
+        imageComponentView.selectImageFromOptions( SECOND_TEST_IMAGE_COMPONENT_NAME );
 
         and: "the template is saved"
         wizard.save();
@@ -215,7 +215,7 @@ class CreateSiteWithLayoutSpec
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( THIRD_TEST_IMAGE_COMPONENT_NAME );
+        imageComponentView.selectImageFromOptions( THIRD_TEST_IMAGE_COMPONENT_NAME );
 
         and: "the template is saved"
         wizard.save();

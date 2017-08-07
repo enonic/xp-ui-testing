@@ -183,7 +183,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         and: "image has been selected from the options list"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( HAND_IMAGE_DISPLAY_NAME );
+        imageComponentView.selectImageFromOptions( HAND_IMAGE_DISPLAY_NAME );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site with the component was selected in the grid and dependency widget is opened"

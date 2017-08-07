@@ -25,8 +25,6 @@ public class ImageComponentView
 
     private final String ERROR_IN_COMPONENT_MESSAGE = IMAGE_COMPONENT_VIEW + "//div[contains(@class,'error-container')]";
 
-    private String DROP_DOWN_ITEM_EXPANDER =
-        NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
 
     @FindBy(xpath = DROPDOWN_HANDLER)
     private WebElement dropDownHandler;
@@ -39,7 +37,7 @@ public class ImageComponentView
         super( session );
     }
 
-    public LiveFormPanel selectImageItemFromList( String imageName )
+    public LiveFormPanel selectImageFromOptions( String imageName )
     {
         selectOptionsItem( imageName );
         return new LiveFormPanel( getSession() );
@@ -56,7 +54,7 @@ public class ImageComponentView
         clickOnOption( imageName );
     }
 
-    public ImageComponentView clickOnTheDropDownHandler()
+    public ImageComponentView clickOnDropDownHandler()
     {
         dropDownHandler.click();
         sleep( 400 );

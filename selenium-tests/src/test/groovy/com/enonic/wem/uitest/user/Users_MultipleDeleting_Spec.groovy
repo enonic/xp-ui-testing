@@ -39,14 +39,12 @@ class Users_MultipleDeleting_Spec
         userBrowsePanel.clickCheckboxAndSelectRow( USER1.getDisplayName() ).clickCheckboxAndSelectRow( USER2.getDisplayName() );
         userBrowsePanel.clickToolbarDelete().doDelete();
 
-        then:
+        then: "correct notification message should be displayed"
+        userBrowsePanel.waitExpectedNotificationMessage( "2 users was deleted", 2 );
+
+        and:
         !userBrowsePanel.exists( USER1.getDisplayName() );
         and: ""
         !userBrowsePanel.exists( USER2.getDisplayName() );
-
-        //TODO message for this operation is not added yet
-        //and:"correct notification message should be displayed"
-        //userBrowsePanel.waitExpectedNotificationMessage(  )
     }
-
 }

@@ -11,6 +11,9 @@ public abstract class UIComponent
 
     public static String NAMES_ICON_VIEW = "//div[contains(@id,'NamesAndIconView')]//h6[contains(@class,'main-name') and text()='%s']";
 
+    protected String DROP_DOWN_ITEM_EXPANDER =
+        NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-cell')]/span[contains(@class,'collapse') or contains(@class,'expand')]";
+
     private ContentWizardPanel contentWizardPanel;
 
     public UIComponent( final TestSession session )
@@ -18,6 +21,10 @@ public abstract class UIComponent
         super( session );
         contentWizardPanel = new ContentWizardPanel( session );
     }
+
+    protected abstract UIComponent clickOnDropDownHandler();
+
+    protected abstract UIComponent clickOnExpanderInDropDownList( String folderName );
 
     ContentWizardPanel getContentWizardPanel()
     {

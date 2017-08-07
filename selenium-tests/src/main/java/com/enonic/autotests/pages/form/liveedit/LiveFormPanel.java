@@ -7,12 +7,10 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.LoaderComboBox;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.LiveEditComponentContextMenu;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -39,11 +37,6 @@ public class LiveFormPanel
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
     private final String FRAGMENT_COMPONENT_VIEW = "//div[contains(@id,'FragmentComponentView')]";
-
-    private final String FRAGMENT_DROPDOWN_HANDLER = FRAGMENT_COMPONENT_VIEW + "//button[contains(@id,'DropdownHandle')]";
-
-    @FindBy(xpath = FRAGMENT_DROPDOWN_HANDLER)
-    private WebElement fragmentDropDownHandler;
 
     private LayoutComponentView layoutComponentView;
 
@@ -136,23 +129,6 @@ public class LiveFormPanel
     {
         String columns = FRAGMENT_COMPONENT_VIEW + "//div[contains(@class,'col-sm')]";
         return getNumberOfElements( By.xpath( columns ) );
-    }
-
-    public LiveFormPanel selectFragment( String fragmentDisplayName )
-    {
-        WebElement optionFilterInput = findElement( By.xpath( FRAGMENT_COMPONENT_VIEW + COMBOBOX_OPTION_FILTER_INPUT ) );
-        clearAndType( optionFilterInput, fragmentDisplayName );
-        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
-        loaderComboBox.selectOption( fragmentDisplayName );
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        return this;
-    }
-
-    public LiveFormPanel clickOnFragmentDropDownHandler()
-    {
-        fragmentDropDownHandler.click();
-        sleep( 400 );
-        return this;
     }
 
     public String getTextFromTextComponent()

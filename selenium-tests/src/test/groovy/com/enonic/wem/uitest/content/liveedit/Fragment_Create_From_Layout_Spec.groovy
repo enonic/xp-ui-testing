@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.LayoutInspectionPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ComponentMenuItems
+import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LayoutComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -16,6 +17,7 @@ import spock.lang.Shared
  * Tasks:
  * XP-4817 Add selenium test for creating fragments from a layout
  * XP-4818 Add selenium test for switching between layouts
+ * xp-ui-testing#71 Add new tests for Fragments
  * */
 class Fragment_Create_From_Layout_Spec
     extends BaseContentSpec
@@ -59,7 +61,7 @@ class Fragment_Create_From_Layout_Spec
         then: "fragment-wizard should be opened in the new browser tab"
         wizard.getNameInputValue() == buildFragmentName( LAYOUT_3_COL_DISPLAY_NAME );
 
-        and:"'Fragment' wizard's step should be present"
+        and: "'Fragment' wizard's step should be present"
         wizard.isWizardStepPresent( "Fragment" );
 
         and: "Preview button should be enabled"
@@ -152,5 +154,32 @@ class Fragment_Create_From_Layout_Spec
 
         and: "fragment-component should have 3 columns"
         liveFormPanel.getNumberOfColumnInFragment() == 3;
+    }
+
+    def "GIVEN fragment(layout) is opened WHEN an image has been inserted into the fragment THEN one image should be displayed on the fragment"()
+    {
+        given: "existing fragment is opened "
+        ContentWizardPanel fragmentWizard = findAndSelectContent( LAYOUT_3_COL_DISPLAY_NAME ).clickToolbarEdit();
+        and: "PageComponentsView has been opened"
+        PageComponentsViewDialog pageComponentsView = fragmentWizard.showComponentView();
+
+        when: "Insert Image menu item has been clicked"
+        pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.doCloseDialog();
+        fragmentWizard.switchToLiveEditFrame();
+        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
+
+        and: "drop-down handler has been clicked"
+        imageComponentView.clickOnDropDownHandler();
+        imageComponentView.clickOnExpanderInDropDownList( "imagearchive" ).selectImageFromOptions( "enterprise" );
+
+        and: "the fragment has been saved"
+        fragmentWizard.save();
+        saveScreenshot( "image_in_fragment_inserted" );
+
+        then: "new image should be present in the left-region "
+        fragmentWizard.switchToLiveEditFrame();
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        liveFormPanel.getNumberImagesInLayout() == 1;
     }
 }

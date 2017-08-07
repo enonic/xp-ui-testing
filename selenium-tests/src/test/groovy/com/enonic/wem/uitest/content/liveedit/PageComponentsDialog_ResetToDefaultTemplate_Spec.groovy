@@ -81,7 +81,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
         and: "new image was inserted"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( TEST_IMAGE );
+        imageComponentView.selectImageFromOptions( TEST_IMAGE );
 
         and: "the content was saved"
         wizard.save();
@@ -135,7 +135,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( imageName );
+        imageComponentView.selectImageFromOptions( imageName );
         sleep( 1000 );
         return new LiveFormPanel( getSession() );
     }

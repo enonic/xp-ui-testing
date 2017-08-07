@@ -12,7 +12,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -22,6 +21,10 @@ import spock.lang.Stepwise
  * Tasks:
  * xp-ui-testing#73  Add Selenium tests for an Issue with dependants-list
  * xp-ui-testing#68 Add Selenium tests for an issue without an item(deleted)
+ *
+ * verifies:
+ *  Issue Dialog - handle removed assignee #5391
+ *  List of dependant items is not refreshed after deletion in the Issue Dialog #5372
  * */
 @Stepwise
 class Issue_Dependant_List_Spec
@@ -122,6 +125,7 @@ class Issue_Dependant_List_Spec
         dependantsNames.get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
+    //verifies: List of dependant items is not refreshed after deletion in the Issue Dialog #5372
     def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and it did not saved WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
     {
         given: "existing issue"
@@ -144,7 +148,6 @@ class Issue_Dependant_List_Spec
         updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
-    @Ignore
     def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and Save button has been pressed WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
     {
         given: "existing issue"

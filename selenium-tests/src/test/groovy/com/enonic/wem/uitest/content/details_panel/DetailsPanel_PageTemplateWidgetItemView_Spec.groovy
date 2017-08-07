@@ -84,9 +84,11 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         siteWizard.showContextWindow().clickOnInspectLink();
         ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
         saveScreenshot( "page_templ_widget1" );
+
         and: "new added page template has been selected in the dropdown-options"
         inspectionPanel.selectRendererByDisplayName( TEMPLATE_DISPLAY_NAME );
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
+
         and: "changes has been confirmed"
         confirmationDialog.pressYesButton();
         siteWizard.close( SITE.getDisplayName() );

@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Depend
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ComponentMenuItems
+import com.enonic.autotests.pages.form.liveedit.FragmentComponentView
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -17,6 +18,9 @@ import spock.lang.Stepwise
  * Tasks:
  *   XP-4814 Add selenium tests for creating of fragment from an image
  *   XP-4851 Add selenium tests for checking of outbound, inbound dependencies (Image Fragment)
+ *   xp-ui-testing#71 Add new tests for Fragments
+ *
+ *   Verifies: Fragment Selector - Fragments are not shown in the dropdown #5371
  * */
 @Stepwise
 class Fragment_Create_From_Image_Spec
@@ -41,7 +45,7 @@ class Fragment_Create_From_Image_Spec
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageItemFromList( HAND_IMAGE_DISPLAY_NAME );
+        imageComponentView.selectImageFromOptions( HAND_IMAGE_DISPLAY_NAME );
         wizard.save();
 
         when: "click on the image-component and click on 'create fragment' menu item"
@@ -129,7 +133,7 @@ class Fragment_Create_From_Image_Spec
         wizard.isWizardStepPresent( "Fragment" );
     }
 
-    def "GIVEN existing image-fragment is selected WHEN Dependencies Section is opened AND Inbound button has been pressed THEN the parent site should be filtered in the grid"()
+    def "GIVEN existing image-fragment is selected WHEN 'Dependencies Section' is opened AND Inbound button has been pressed THEN the parent site should be filtered in the grid"()
     {
         given: "existing image-fragment is filtered"
         contentBrowsePanel.doShowFilterPanel();
@@ -193,26 +197,51 @@ class Fragment_Create_From_Image_Spec
         fragments.size() == 0;
     }
 
-    def "GIVEN page component view is opened WHEN 'main' region is selected AND fragment component has been inserted THEN the fragment should be present on the the page"()
+    def "GIVEN page component view is opened WHEN menu for 'main' region is opened AND fragment component has been inserted THEN the fragment should be present on the the page"()
     {
         given: "existing site with the fragment, that was removed, is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-
-        and: "Page Component View is opened"
+        and: "'Page Component View' is opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-
-        when: "root component in the  view is selected AND Insert Fragment menu item has been clicked"
+        when: "menu for 'main' region is opened AND 'Insert Fragment' menu-item has been clicked"
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Fragment" );
         pageComponentsView.doCloseDialog();
         saveScreenshot( "fragment_inserted_in_component_view" );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
 
-        and: "existing fragment has been selected in the options menu"
-        liveFormPanel.selectFragment( FRAGMENT_DISPLAY_NAME );
+        and: "existing fragment has been selected from the options"
+        FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
+        fragmentComponentView.selectFragment( FRAGMENT_DISPLAY_NAME );
 
-        then: "new added fragment is present on the page"
+        then: "new added fragment should be present on the page"
+        liveFormPanel.getNumberOfFragments() == 1;
+    }
+    //verifies Fragment Selector - Fragments are not shown in the dropdown #5371
+    def "GIVEN existing site is opened(Fragment was removed) WHEN fragment-component has been inserted AND drop-down handler clicked AND required fragment selected THEN the fragment should be present on the page "()
+    {
+        given: "existing site with the fragment is opened"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        and: "page component view is opened"
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
+        and: "fragment has been removed"
+        pageComponentsView.openMenu( FRAGMENT_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.REMOVE.getValue() );
+        sleep( 1000 );
+
+        when: "menu has been opened and Fragment menu-item selected"
+        pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Fragment" );
+        pageComponentsView.doCloseDialog();
+        wizard.switchToLiveEditFrame();
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
+        and: "'DropDown handler' has been clicked"
+        fragmentComponentView.clickOnDropDownHandler().clickOnExpanderInDropDownList( SITE.getName() );
+        and: "required option has been selected"
+        fragmentComponentView.clickOnOption( FRAGMENT_DISPLAY_NAME );
+        saveScreenshot( "fragment_option_selected" )
+
+        then: "the fragment should be present on the page"
         liveFormPanel.getNumberOfFragments() == 1;
     }
 }

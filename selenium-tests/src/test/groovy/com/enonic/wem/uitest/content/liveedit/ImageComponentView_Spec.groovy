@@ -59,7 +59,7 @@ class ImageComponentView_Spec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
 
         when: "drop-down handler was clicked"
-        imageComponentView.clickOnTheDropDownHandler();
+        imageComponentView.clickOnDropDownHandler();
 
         then: "list of available options should be displayed"
         imageComponentView.getDisplayedOptions().size() > 0
@@ -82,7 +82,7 @@ class ImageComponentView_Spec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
 
         when: "dropdown handler has been clicked and the folder with images has been expanded"
-        imageComponentView.clickOnTheDropDownHandler().clickOnExpanderInDropDownList( "imagearchive" );
+        imageComponentView.clickOnDropDownHandler().clickOnExpanderInDropDownList( "imagearchive" );
         saveScreenshot( "img_comp_view_dropdown_handler" );
 
         and: "image has been selected from the list of options"
