@@ -68,7 +68,7 @@ public class FragmentComponentView
     public FragmentComponentView clickOnDropDownHandler()
     {
         dropDownHandler.click();
-        sleep( 400 );
+        sleep( 700 );
         return this;
     }
 

@@ -5,11 +5,13 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.LongFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 /**
  * Tasks:
  * XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
  **/
+@Stepwise
 class Occurrences_Long_Spec
     extends Base_InputFields_Occurrences
 {

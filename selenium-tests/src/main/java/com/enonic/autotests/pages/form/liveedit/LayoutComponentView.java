@@ -25,7 +25,6 @@ public class LayoutComponentView
     @FindBy(xpath = DROPDOWN_HANDLER)
     private WebElement dropDownHandler;
 
-
     public LayoutComponentView( final TestSession session )
     {
         super( session );
