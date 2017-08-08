@@ -154,6 +154,14 @@ public class IssueListDialog
         return newIssueButton.isDisplayed();
     }
 
+    public CreateIssueDialog clickOnNewIssueDialog()
+    {
+        newIssueButton.click();
+        CreateIssueDialog createIssueDialog = new CreateIssueDialog( getSession() );
+        createIssueDialog.waitForOpened();
+        return createIssueDialog;
+    }
+
     public List<String> getIssueTitles()
     {
         return getDisplayedStrings( By.xpath( ISSUES_TITLES ) );

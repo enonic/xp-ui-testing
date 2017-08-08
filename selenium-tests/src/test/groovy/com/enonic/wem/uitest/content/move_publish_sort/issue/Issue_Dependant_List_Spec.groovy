@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.move_publish_sort.issue
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
+import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog
 import com.enonic.autotests.pages.contentmanager.issue.UpdateIssueDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
@@ -12,6 +13,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -25,6 +27,7 @@ import spock.lang.Stepwise
  * verifies:
  *  Issue Dialog - handle removed assignee #5391
  *  List of dependant items is not refreshed after deletion in the Issue Dialog #5372
+ *  Create Issue dialog - Error message appears when a text has been typed in the items-option filter #5435
  * */
 @Stepwise
 class Issue_Dependant_List_Spec
@@ -44,6 +47,9 @@ class Issue_Dependant_List_Spec
 
     @Shared
     Issue TEST_ISSUE;
+
+    @Shared
+        FOLDER_NAME = "all-content-types-images";
 
     def setup()
     {
@@ -84,6 +90,7 @@ class Issue_Dependant_List_Spec
 
         and: "double content(not valid) has been added"
         DOUBLE_CONTENT = buildDouble1_1_Content( null );
+        and: "child content has been added"
         findAndSelectContent( SITE.getName() );
         addContent( DOUBLE_CONTENT );
 
@@ -95,7 +102,7 @@ class Issue_Dependant_List_Spec
         CreateIssueDialog createIssueDialog = contentBrowsePanel.showPublishMenu().selectCreateIssueMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
         and: "'Include Children' link has been pressed"
-        createIssueDialog.clickOnIncludeChildrenToggler()
+        createIssueDialog.clickOnIncludeChildrenToggler();
 
         when: "'Create' button has been pressed"
         createIssueDialog.clickOnCreateIssueButton();
@@ -158,6 +165,7 @@ class Issue_Dependant_List_Spec
 
         and: "'Save' button on the 'UpdateIssue dialog' has been pressed and the dialog closed"
         updateIssueDialog.clickOnSaveIssueButton();
+        sleep( 1000 );
 
         when: "'Update issue' dialog has been opened again"
         issueDetailsDialog.clickOnEditButton();
@@ -186,5 +194,31 @@ class Issue_Dependant_List_Spec
 
         and: "'One or more items from the issue cannot be found' - notification should be displayed"
         contentBrowsePanel.waitExpectedNotificationMessage( Application.ISSUE_ITEM_DELETED, 1 );
+    }
+    //verifies: Create Issue dialog - Error message appears when a text has been typed in the items-option filter #5435
+    @Ignore
+    def "GIVEN existing user AND no any content is selected WHEN when an issue has been created and it assigned to the user THEN items to publish should be present on the Issue Details"()
+    {
+        setup: "Content Studio is opened"
+        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
+        List<String> assigneesList = new ArrayList<>();
+        assigneesList.add( TEST_USER.getName() );
+        List<String> itemsList = new ArrayList<>();
+        itemsList.add( FOLDER_NAME );
+        and: "no any content is selected"
+        Issue issue = buildIssue( "select items", assigneesList, itemsList );
+        and: "'Show Issues' button has been pressed"
+        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
+        issueListDialog.waitForOpened();
+        CreateIssueDialog createIssueDialog = issueListDialog.clickOnNewIssueDialog();
+        and: "data has been typed and folder's name has been typed in the options-filter and item to publish selected"
+        createIssueDialog.typeData( issue );
+
+        when: "'Create' button has been pressed"
+        createIssueDialog.clickOnCreateIssueButton();
+        IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
+
+        then: "Item to publish should be present on the 'Details Dialog'"
+        issueDetailsDialog.getNamesOfItemToPublish().get( 0 ).contains( "All Content types images" )
     }
 }

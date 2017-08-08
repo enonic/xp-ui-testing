@@ -295,8 +295,8 @@ public class ContentBrowsePanel
     {
         if ( !isElementDisplayed( CREATE_ISSUE_MENU_ITEM ) )
         {
-            saveScreenshot( "err_unpublish_menu_item_not_visible " );
-            throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
+            saveScreenshot( "err_create_issue_menu_item_not_visible " );
+            throw new TestFrameworkException( "'create issue' menu item is not visible!" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
             "disabled" );

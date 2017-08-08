@@ -24,6 +24,9 @@ public class IssueDetailsDialog
 
     private final String TITLE = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
+    private final String ITEM_TO_PUBLISH_NAMES =
+        DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogItemList')]//div[contains(@id,'PublicStatusSelectionItem']" + H6_DISPLAY_NAME;
+
     private final String EDIT_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Edit Issue']]";
 
@@ -103,6 +106,10 @@ public class IssueDetailsDialog
         }
     }
 
+    public List<String> getNamesOfItemToPublish()
+    {
+        return getDisplayedStrings( By.xpath( ITEM_TO_PUBLISH_NAMES ) );
+    }
     public boolean waitForTitle( String text )
     {
         String reqTitleXpath = String.format( REQ_TITLE, text );
