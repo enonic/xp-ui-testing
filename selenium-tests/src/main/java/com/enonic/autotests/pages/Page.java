@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.google.common.base.Predicate;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
 
@@ -327,7 +328,7 @@ public abstract class Page
             catch ( WebDriverException f )
             {
                 logger.info( "[getElementByXpath] FluentWait findElement threw exception:\n\n" + f + "\n\n" );
-
+                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "icon_search" ) );
                 throw new WebDriverException( "Unable to find element " + by.toString() );
             }
         }
