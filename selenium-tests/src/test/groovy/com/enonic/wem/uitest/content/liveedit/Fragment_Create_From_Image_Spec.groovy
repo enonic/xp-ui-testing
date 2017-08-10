@@ -101,7 +101,7 @@ class Fragment_Create_From_Image_Spec
         and: "'Insert' should be displayed"
         pageComponentsView.isMenuItemPresent( ComponentMenuItems.INSERT.getValue() );
 
-        and: "'Insert' should be displayed"
+        and: "'Inspect' should be displayed"
         pageComponentsView.isMenuItemPresent( ComponentMenuItems.INSPECT.getValue() );
 
         and: "'Remove' should be displayed"

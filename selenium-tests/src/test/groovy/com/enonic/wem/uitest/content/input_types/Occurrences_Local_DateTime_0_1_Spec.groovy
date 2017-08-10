@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class Occurrences_Local_DateTime_0_1_Spec
@@ -34,7 +33,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         !picker.getTimePickerPopup().isTimeZoneDisplayed();
     }
 
-    def "GIVEN wizard for adding a Local DateTime(0:1) opened WHEN name typed and dateTime was not typed THEN dateTime input is empty and content has a valid status"()
+    def "GIVEN wizard for DateTime(not required) is opened WHEN only name has been typed THEN dateTime input is empty and content has a valid status"()
     {
         given: "start to add a content with type local 'DateTime(0:1)'"
         Content dateTimeContent = buildDateTime0_1_Content( VALID_DATE_TIME1 );
@@ -57,16 +56,16 @@ class Occurrences_Local_DateTime_0_1_Spec
         formViewPanel.getDateTimeValue().isEmpty();
     }
 
-    def "GIVEN wizard for adding a Local DateTime(0:1) opened WHEN not valid dateTime typed THEN content has a invalid status"()
+    def "GIVEN wizard for a Local DateTime(not required) is opened WHEN not valid dateTime has been typed THEN the content should be valid, because the input is not required"()
     {
-        given: "start to add a content with type local 'DateTime(0:1)'"
+        given: "start to add a content with type local 'DateTime(not required)'"
         Content dateTimeNotValid = buildDateTime0_1_Content( NOT_VALID_DATE_TIME );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeNotValid.getContentTypeName() );
 
-        when: "all data typed"
+        when: "all data has been typed"
         wizard.typeData( dateTimeNotValid );
 
-        then: "content should be invalid, because 'datetime' is not valid"
+        then: "the content should be valid, because the input is not required"
         !wizard.isContentInvalid(  );
     }
 

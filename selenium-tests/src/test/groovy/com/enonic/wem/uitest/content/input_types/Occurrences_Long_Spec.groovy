@@ -53,7 +53,7 @@ class Occurrences_Long_Spec
 
     def "GIVEN creating of content with type 'long'(not required) WHEN invalid value for long typed THEN input should be displayed with a red border AND red icon should not shown on the wizard tab"()
     {
-        given: "wizard for creating of long content(not required) is opened"
+        given: "wizard for 'long' content(not required) is opened"
         Content longContent = buildLong0_1_Content( INVALID_LONG1 );
         ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
@@ -99,15 +99,15 @@ class Occurrences_Long_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN creating a long content with a required input WHEN name was typed AND save button pressed THEN 'confirmation' dialog should not appears"()
+    def "GIVEN wizard for long content with required input WHEN name was typed AND 'save' button pressed THEN 'confirmation' dialog should not appears"()
     {
-        given: "adding of long content with empty value"
+        given: "wizard for a long content with required input"
         Content longContent = buildLong1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened().typeData( longContent );
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
 
-        when: "content was saved"
+        when: "Save button has been pressed"
         wizard.save();
         saveScreenshot( "test_long_save_confirm1" );
 
@@ -121,7 +121,7 @@ class Occurrences_Long_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for creating of long content(required) is opened WHEN MAX_SAFE value was typed THEN red icon should not be displayed on the wizard page"()
+    def "GIVEN wizard for 'long' content(required) is opened WHEN MAX_SAFE value was typed THEN red icon should not be displayed on the wizard page"()
     {
         given: "wizard for creating of long content(required) is opened"
         Content doubleContent = buildLong1_1_Content( MAX_SAFE_INTEGER );
@@ -142,9 +142,9 @@ class Occurrences_Long_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for creating of long content is opened WHEN value is more than MAX_SAFE THEN red icon should be present on the wizard page"()
+    def "GIVEN wizard for 'long' content is opened WHEN value is more than MAX_SAFE THEN red icon should be present on the wizard page"()
     {
-        given: "wizard for creating of long content(required) is opened"
+        given: "wizard for 'long' content(required) is opened"
         Content longContent = buildLong1_1_Content( MORE_MAX_SAFE_INTEGER );
         ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
@@ -160,9 +160,9 @@ class Occurrences_Long_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for creating of long content is opened WHEN MIN_SAFE value was typed THEN red icon should not be displayed on the wizard page"()
+    def "GIVEN wizard for 'long' content is opened WHEN MIN_SAFE value was typed THEN red icon should not be displayed on the wizard page"()
     {
-        given: "wizard for creating of long content is opened"
+        given: "wizard for long content is opened"
         MIN_SAFE_CONTENT = buildLong1_1_Content( MIN_SAFE_INTEGER );
         ContentWizardPanel wizard = selectSitePressNew( MIN_SAFE_CONTENT.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
