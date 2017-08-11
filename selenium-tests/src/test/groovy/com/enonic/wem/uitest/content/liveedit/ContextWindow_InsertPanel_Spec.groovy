@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInsertablesPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInsertablesPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -53,7 +53,7 @@ class ContextWindow_InsertPanel_Spec
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
         when: "'Insert' link has been clicked"
-        ContextWindowPageInsertablesPanel insertablesPanel = new ContextWindowPageInsertablesPanel( getSession() );
+        PageInsertablesPanel insertablesPanel = new PageInsertablesPanel( getSession() );
         siteWizard.showContextWindow().clickOnInsertLink();
         saveScreenshot( "insertables-panel-opened" );
 
@@ -80,6 +80,6 @@ class ContextWindow_InsertPanel_Spec
         components.contains( "Fragment" );
 
         and: "correct description is displayed"
-        insertablesPanel.getTitle() == ContextWindowPageInsertablesPanel.TITLE
+        insertablesPanel.getTitle() == PageInsertablesPanel.TITLE
     }
 }

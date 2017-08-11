@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -27,7 +27,7 @@ class ContextWindow_InspectionPanel_Spec
 
         when: "Context window opened and 'Inspect' link was pressed"
         wizardPanel.showContextWindow().clickOnInspectLink();
-        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
         saveScreenshot( "test-inspection-tab-activated" );
 
         then: "Inspection tab is opened"
@@ -63,7 +63,7 @@ class ContextWindow_InspectionPanel_Spec
 
         and: "'Inspect tab' has been opened"
         wizardPanel.showContextWindow().clickOnInspectLink();
-        ContextWindowPageInspectionPanel inspectPanel = new ContextWindowPageInspectionPanel( getSession() );
+        PageInspectionPanel inspectPanel = new PageInspectionPanel( getSession() );
 
         when: "Page controller has been changed to 'Country list'"
         inspectPanel.changePageController( COUNTRY_LIST_PAGE_CONTROLLER );
@@ -84,7 +84,7 @@ class ContextWindow_InspectionPanel_Spec
         wizardPanel.showContextWindow().clickOnInspectLink();
 
         when: "'Automatic' page-template has been selected"
-        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
         inspectionPanel.selectRenderer( "Automatic" );
 
         then: "'Confirmation Dialog' should be displayed "
@@ -102,7 +102,7 @@ class ContextWindow_InspectionPanel_Spec
         wizardPanel.showContextWindow().clickOnInspectLink();
 
         when: "'Automatic' page-template has been selected"
-        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
         inspectionPanel.selectRenderer( "Automatic" );
 
         and: "'Confirmation Dialog' is displayed "

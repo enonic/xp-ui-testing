@@ -14,7 +14,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel;
 import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -35,7 +35,7 @@ public class ContextWindow
     private final String GRID_ITEM =
         INSERTABLES_GRID + "//div[contains(@class,'grid-row') and descendant::div[@data-portal-component-type ='%s']]";
 
-    private ContextWindowPageInspectionPanel inspectionPanel;
+    private PageInspectionPanel inspectionPanel;
 
     ContentWizardPanel contentWizardPanel;
 
@@ -276,11 +276,11 @@ public class ContextWindow
         return robot;
     }
 
-    public ContextWindowPageInspectionPanel getInspectionPanel()
+    public PageInspectionPanel getInspectionPanel()
     {
         if ( inspectionPanel == null )
         {
-            return new ContextWindowPageInspectionPanel( getSession() );
+            return new PageInspectionPanel( getSession() );
         }
         return inspectionPanel;
     }

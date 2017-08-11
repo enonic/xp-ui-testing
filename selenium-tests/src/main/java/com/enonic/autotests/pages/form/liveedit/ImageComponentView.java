@@ -19,7 +19,7 @@ public class ImageComponentView
 
     private final String IMAGE_COMPONENT_VIEW = "//div[contains(@id,'ImageComponentView')]";
 
-    private final String DROPDOWN_HANDLER = IMAGE_COMPONENT_VIEW + "//button[contains(@id,'DropdownHandle')]";
+    private final String DROPDOWN_HANDLER = IMAGE_COMPONENT_VIEW + DROP_DOWN_HANDLE_BUTTON;
 
     private final String UPLOAD_BUTTON = IMAGE_COMPONENT_VIEW + "//div[contains(@class,'upload-button')]";
 

@@ -81,7 +81,7 @@ public class ContentBrowsePanel
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
 
     private final String PUBLISH_MENU_DROPDOWN_HANDLER =
-        BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]//button[contains(@id,'DropdownHandle')]";
+        BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]" + DROP_DOWN_HANDLE_BUTTON;
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'NonMobileDetailsPanelToggleButton')]";
 

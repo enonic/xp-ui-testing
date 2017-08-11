@@ -71,8 +71,7 @@ public class ContentPublishDialog
 
     private final String SCHEDULE_MENU_ITEM = DIALOG_CONTAINER + "//ul[contains(@id,'Menu')]//li[contains(.,'Schedule...')]";
 
-    private final String PUBLISH_MENU_DROPDOWN_HANDLER =
-        DIALOG_CONTAINER + "//div[contains(@id,'MenuButton')]//button[contains(@id,'DropdownHandle')]";
+    private final String PUBLISH_MENU_DROPDOWN_HANDLER = DIALOG_CONTAINER + "//div[contains(@id,'MenuButton')]" + DROP_DOWN_HANDLE_BUTTON;
 
     @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
     private WebElement publishMenuDropDownHandler;
@@ -142,6 +141,7 @@ public class ContentPublishDialog
     {
         return isElementDisplayed( SCHEDULE_MENU_ITEM );
     }
+
     public boolean isScheduleMenuItemEnabled()
     {
         findElements( By.xpath( SCHEDULE_MENU_ITEM ) );

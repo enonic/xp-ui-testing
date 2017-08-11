@@ -17,7 +17,7 @@ function handleGet(req) {
                     start: 0,
                     count: 25,
                     contentTypes: [
-                            app.name + ':city'
+                        app.name + ':city'
                     ],
                     "sort": "geoDistance('data.cityLocation','" + city.data.cityLocation + "')",
                     "query": "_name != '" + currentCityName + "'"
@@ -35,7 +35,7 @@ function handleGet(req) {
                 start: 0,
                 count: 25,
                 contentTypes: [
-                        app.name + ':city'
+                    app.name + ':city'
                 ]
             }
         );
@@ -46,10 +46,14 @@ function handleGet(req) {
         path: content._path
     });
 
+    var part = portal.getComponent();
+    var title = part.config.title || '<please configure title>';
+
     var params = {
-        cities: cities.contents,
+        cities: cities.hits,
         currentCity: currentCityName,
-        currentPage: currentPage
+        currentPage: currentPage,
+        title: title
     };
     var body = thymeleaf.render(view, params);
 
@@ -57,13 +61,13 @@ function handleGet(req) {
         var result = contentSvc.query({
                 count: 1,
                 contentTypes: [
-                        app.name + ':city'
+                    app.name + ':city'
                 ],
                 "query": "_name = '" + cityName + "'"
             }
         );
 
-        return result.contents[0];
+        return result.hits[0];
     }
 
     return {

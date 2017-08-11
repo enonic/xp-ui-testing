@@ -32,7 +32,7 @@ public class ContentDetailsPanel
 
     private final String DEPENDENCIES_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Dependencies']";
 
-    private final String WIDGET_SELECTOR_DROPDOWN_HANDLER = WIDGET_SELECTOR_DROPDOWN + "//button[contains(@id,'DropdownHandle')]";
+    private final String WIDGET_SELECTOR_DROPDOWN_HANDLER = WIDGET_SELECTOR_DROPDOWN + DROP_DOWN_HANDLE_BUTTON;
 
     private UserAccessWidgetItemView userAccessWidgetItemView;
 

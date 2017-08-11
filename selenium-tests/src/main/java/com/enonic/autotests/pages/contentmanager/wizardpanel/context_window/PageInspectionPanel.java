@@ -1,4 +1,4 @@
-package com.enonic.autotests.pages.contentmanager.wizardpanel;
+package com.enonic.autotests.pages.contentmanager.wizardpanel.context_window;
 
 
 import org.openqa.selenium.By;
@@ -11,7 +11,7 @@ import com.enonic.autotests.pages.Application;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class ContextWindowPageInspectionPanel
+public class PageInspectionPanel
     extends Application
 {
     private final String CONTAINER = "//div[contains(@id,'PageInspectionPanel')]";
@@ -29,7 +29,7 @@ public class ContextWindowPageInspectionPanel
     @FindBy(xpath = PAGE_CONTROLLER_OPTION_FILTER_INPUT)
     protected WebElement pageControllerOptionFilterInput;
 
-    public ContextWindowPageInspectionPanel( final TestSession session )
+    public PageInspectionPanel( final TestSession session )
     {
         super( session );
     }
@@ -45,7 +45,7 @@ public class ContextWindowPageInspectionPanel
     /**
      * Clicks on the drop down handler and selects the required renderer(page-template)
      */
-    public ContextWindowPageInspectionPanel selectRenderer( String templateName )
+    public PageInspectionPanel selectRenderer( String templateName )
     {
         if ( !isElementDisplayed( RENDERER_DROPDOWN_HANDLER ) )
         {
@@ -53,7 +53,7 @@ public class ContextWindowPageInspectionPanel
             throw new TestFrameworkException( "dropdown handler was not found!  " + templateName );
         }
         getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
-        sleep( 300 );
+        sleep( 400 );
         String optionItemXpath = RENDERER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
@@ -65,7 +65,7 @@ public class ContextWindowPageInspectionPanel
         return this;
     }
 
-    public ContextWindowPageInspectionPanel selectRendererByDisplayName( String templateDisplayName )
+    public PageInspectionPanel selectRendererByDisplayName( String templateDisplayName )
     {
         if ( !isElementDisplayed( RENDERER_DROPDOWN_HANDLER ) )
         {
@@ -73,7 +73,7 @@ public class ContextWindowPageInspectionPanel
             throw new TestFrameworkException( "dropdown handler was not found!  " + templateDisplayName );
         }
         getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
-        sleep( 400 );
+        sleep( 500 );
         String optionItemXpath = RENDERER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateDisplayName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
@@ -88,7 +88,7 @@ public class ContextWindowPageInspectionPanel
     /**
      * Types the display name of controller and selects the required controller
      */
-    public ContextWindowPageInspectionPanel selectPageController( String controllerName )
+    public PageInspectionPanel selectPageController( String controllerName )
     {
         clearAndType( pageControllerOptionFilterInput, controllerName );
         sleep( 300 );
@@ -106,7 +106,7 @@ public class ContextWindowPageInspectionPanel
     /**
      * clicks on the drop down handler and selects new controller
      */
-    public ContextWindowPageInspectionPanel changePageController( String controllerName )
+    public PageInspectionPanel changePageController( String controllerName )
     {
         if ( !isElementDisplayed( PAGE_CONTROLLER_DROPDOWN_HANDLER ) )
         {

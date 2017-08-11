@@ -83,6 +83,8 @@ public class Application
 
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
+    protected final String DROP_DOWN_HANDLE_BUTTON = "//button[contains(@id,'DropdownHandle')]";
+
     protected final String PRINCIPAL_SELECTED_OPTION = "//div[contains(@id,'PrincipalSelectedOptionView')]";
 
     protected final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";

@@ -180,18 +180,6 @@ public abstract class BrowsePanel
         return this;
     }
 
-    public BrowsePanel clickOnTab( String displayName )
-    {
-        String tabXpath = String.format( APP_BAR_TAB_MENU_ITEM, displayName );
-        if ( !isElementDisplayed( tabXpath ) )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_tab_" + displayName ) );
-            throw new TestFrameworkException( "tab menu item was not found: " + displayName );
-        }
-        getDisplayedElement( By.xpath( tabXpath ) ).click();
-        return this;
-    }
-
     public BrowsePanel doHideFilterPanel()
     {
         if ( getFilterPanel().isFilterPanelDisplayed() )

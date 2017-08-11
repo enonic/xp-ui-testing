@@ -1,4 +1,4 @@
-package com.enonic.autotests.pages.contentmanager.wizardpanel;
+package com.enonic.autotests.pages.contentmanager.wizardpanel.context_window;
 
 import java.util.List;
 
@@ -6,13 +6,14 @@ import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.EmulatorResolution;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
  * Created on 29.08.2016.
  */
-public class ContextWindowPageEmulatorPanel
+public class PageEmulatorPanel
     extends Application
 {
 
@@ -26,7 +27,7 @@ public class ContextWindowPageEmulatorPanel
 
     private String RESOLUTION_ROW = "//div[contains(@class,'slick-row') and descendant::h5[text()='%s']]";
 
-    public ContextWindowPageEmulatorPanel( final TestSession session )
+    public PageEmulatorPanel( final TestSession session )
     {
         super( session );
     }
@@ -46,7 +47,7 @@ public class ContextWindowPageEmulatorPanel
         return getDisplayedString( CONTAINER + "/p" );
     }
 
-    public ContextWindowPageEmulatorPanel selectResolution( EmulatorResolution resolution )
+    public PageEmulatorPanel selectResolution( EmulatorResolution resolution )
     {
         String resolutionXpath = String.format( RESOLUTION_ROW, resolution.getValue() );
         if ( !isElementDisplayed( resolutionXpath ) )

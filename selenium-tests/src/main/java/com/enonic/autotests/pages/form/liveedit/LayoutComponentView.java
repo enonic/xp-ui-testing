@@ -17,7 +17,7 @@ public class LayoutComponentView
 
     public static String REGION_XPATH = "//div[contains(@id,'RegionView') and descendant::p[contains(.,'%s')]]";
 
-    private final String DROPDOWN_HANDLER = LAYOUT_COMPONENT_CONTAINER + "//button[contains(@id,'DropdownHandle')]";
+    private final String DROPDOWN_HANDLER = LAYOUT_COMPONENT_CONTAINER + DROP_DOWN_HANDLE_BUTTON;
 
     @FindBy(xpath = LAYOUT_COMPONENT_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT)
     private WebElement optionFilterInput;

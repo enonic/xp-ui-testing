@@ -206,7 +206,7 @@ public abstract class Page
     }
 
 
-    protected Boolean waitElementExist( final String xpath, long timeout )
+    protected Boolean waitForElementExist( final String xpath, long timeout )
     {
         return WaitHelper.waitElementExist( getDriver(), xpath, timeout );
     }

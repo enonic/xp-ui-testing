@@ -1,8 +1,8 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageEmulatorPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EmulatorResolution
+import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageEmulatorPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -39,14 +39,14 @@ class ContextWindow_EmulatorPanel_Spec
 
         when: "When context window opened and 'Emulator' link has been clicked"
         siteWizard.showContextWindow().clickOnEmulatorLink();
-        ContextWindowPageEmulatorPanel emulatorPanel = new ContextWindowPageEmulatorPanel( getSession() );
+        PageEmulatorPanel emulatorPanel = new PageEmulatorPanel( getSession() );
         saveScreenshot( "emulator-panel-activated" );
 
         then: "emulator panel is displayed"
         emulatorPanel.isDisplayed();
 
         and: "correct title is displayed"
-        emulatorPanel.getTitle() == ContextWindowPageEmulatorPanel.TITLE;
+        emulatorPanel.getTitle() == PageEmulatorPanel.TITLE;
 
         and: "8 available resolutions are present"
         emulatorPanel.getAvailableResolutions().size() == 8;
@@ -57,7 +57,7 @@ class ContextWindow_EmulatorPanel_Spec
         given: "Emulator Panel is opened "
         ContentWizardPanel wizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
         wizard.showContextWindow().clickOnEmulatorLink();
-        ContextWindowPageEmulatorPanel emulatorPanel = new ContextWindowPageEmulatorPanel( getSession() );
+        PageEmulatorPanel emulatorPanel = new PageEmulatorPanel( getSession() );
 
         when: "Medium resolution selected"
         emulatorPanel.selectResolution( EmulatorResolution.MEDIUM_PHONE );
@@ -75,7 +75,7 @@ class ContextWindow_EmulatorPanel_Spec
         given: "Emulator Panel is opened "
         ContentWizardPanel wizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
         wizard.showContextWindow().clickOnEmulatorLink();
-        ContextWindowPageEmulatorPanel emulatorPanel = new ContextWindowPageEmulatorPanel( getSession() );
+        PageEmulatorPanel emulatorPanel = new PageEmulatorPanel( getSession() );
 
         when: "Medium resolution selected"
         emulatorPanel.selectResolution( EmulatorResolution.LARGE_TELEPHONE );

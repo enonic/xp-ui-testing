@@ -16,7 +16,7 @@ public class PartComponentView
 {
     private final String COMPONENT_CONTAINER = "//div[contains(@id,'PartComponentView')]";
 
-    private final String DROPDOWN_HANDLER = COMPONENT_CONTAINER + "//button[contains(@id,'DropdownHandle')]";
+    private final String DROPDOWN_HANDLER = COMPONENT_CONTAINER + DROP_DOWN_HANDLE_BUTTON;
 
     public static String PART_XPATH = "//div[contains(@id,'PartDescriptorViewer') and descendant::p[contains(.,'%s')]]";
 

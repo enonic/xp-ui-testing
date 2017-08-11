@@ -320,6 +320,22 @@ class BaseContentSpec
         return contentBrowsePanel.clickCheckboxAndSelectRow( siteName ).clickToolbarNew().selectContentType( contentTypeName );
     }
 
+    protected Content buildSiteBasedOnFirstApp()
+    {
+        String name = NameHelper.uniqueName( "site" );
+        PropertyTree data = new PropertyTree();
+        data.addStrings( SiteFormViewPanel.APP_KEY, "First Selenium App" );
+        data.addStrings( "description", "site based on the First App " )
+        Content site = Content.builder().
+            parent( ContentPath.ROOT ).
+            name( name ).
+            displayName( "sample site" ).
+            parent( ContentPath.ROOT ).
+            contentType( ContentTypeName.site() ).data( data ).
+            build();
+        return site;
+    }
+
     protected Content buildMyFirstAppSite( String siteName )
     {
         PropertyTree data = new PropertyTree();

@@ -1,4 +1,4 @@
-package com.enonic.autotests.pages.contentmanager.wizardpanel;
+package com.enonic.autotests.pages.contentmanager.wizardpanel.context_window;
 
 
 import java.util.List;
@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
 
-public class ContextWindowPageInsertablesPanel
+public class PageInsertablesPanel
     extends Application
 {
     public static final String TITLE = "Drag and drop components into the page";
@@ -19,7 +19,7 @@ public class ContextWindowPageInsertablesPanel
 
     private String GRID_AVAILABLE_COMPONENTS = "//div[contains(@class,'grid-row')]//div[contains(@class,'comp ui-draggable')]//h5";
 
-    public ContextWindowPageInsertablesPanel( final TestSession session )
+    public PageInsertablesPanel( final TestSession session )
     {
         super( session );
     }

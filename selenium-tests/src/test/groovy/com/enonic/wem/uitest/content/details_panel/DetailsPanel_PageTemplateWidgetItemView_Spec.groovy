@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content.details_panel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PageTemplateWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ContextWindowPageInspectionPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
@@ -82,7 +82,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         and: "Inspection panel has been opened"
         ContentWizardPanel siteWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         siteWizard.showContextWindow().clickOnInspectLink();
-        ContextWindowPageInspectionPanel inspectionPanel = new ContextWindowPageInspectionPanel( getSession() );
+        PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
         saveScreenshot( "page_templ_widget1" );
 
         and: "new added page template has been selected in the dropdown-options"
