@@ -210,6 +210,7 @@ public class UserStoreWizardPanel
         {
             userStore.getAclEntries().stream().forEach( entry -> addPrincipal( entry.getPrincipalDisplayName() ) );
         }
+        sleep( 500 );
         return this;
     }
 

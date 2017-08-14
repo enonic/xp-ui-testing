@@ -17,16 +17,17 @@ import spock.lang.Stepwise
 class Move_Parent_With_Child_Spec
     extends BaseContentSpec
 {
-    def "GIVEN existing folder is selected AND 'Move' button pressed WHEN name of the folder is typed THEN 'No matching items' message appears"()
+    def "GIVEN existing folder is selected AND 'Move' button pressed WHEN own name of the folder has been typed THEN 'No matching items' message appears"()
     {
         given: "existing folder is selected AND 'Move' button pressed"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
-        when: "name of the folder is typed"
-        dialog.typeSearchText( IMPORTED_FOLDER_NAME )
+        when: "own name of the folder has been typed"
+        dialog.typeSearchText( IMPORTED_FOLDER_NAME );
+        sleep( 500 );
 
-        then: "'No matching items' message appears"
+        then: "'No matching items' message should be diaplayed"
         saveScreenshot( "is_destination_present" );
         dialog.isNoMatchingItemsMessageDisplayed();
 
@@ -53,17 +54,17 @@ class Move_Parent_With_Child_Spec
         !dialog.isDestinationMatches( IMPORTED_FOLDER_NAME )
     }
 
-    def "GIVEN new created folder is selected AND 'Move' pressed WHEN match destination typed THEN filtered destination is displayed "()
+    def "GIVEN new created folder is selected AND 'Move' pressed WHEN matched destination has been typed THEN filtered destination should be displayed"()
     {
         given: "new created folder is selected is selected AND 'Move' pressed"
         Content folder = buildFolderContent( "move-test", "folder to move" );
         addContent( folder );
         MoveContentDialog dialog = findAndSelectContent( folder.getName() ).clickToolbarMove()
 
-        when: "match destination typed"
+        when: "matched destination has been typed"
         dialog.typeSearchText( IMPORTED_FOLDER_NAME );
 
-        then: "filtered destination is displayed"
+        then: "filtered destination should be displayed"
         dialog.isDestinationMatches( IMPORTED_FOLDER_NAME );
     }
 }
