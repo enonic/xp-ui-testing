@@ -33,8 +33,15 @@ public class PageComponentsViewDialog
     private String COMPONENT_ITEM = DIALOG_CONTAINER + COMPONENTS_GRID +
         "//div[contains(@id,'PageComponentsItemViewer') and descendant::h6[contains(@class,'main-name')  and text()='%s']]";
 
+    private String TOGGLE_ICON = DIALOG_CONTAINER + COMPONENTS_GRID +
+        "//div[contains(@class,'slick-cell') and descendant::h6[contains(@class,'main-name')  and text()='%s']]/span[@class='toggle icon']";
+
     private String LAYOUT_BY_DISPLAY_NAME = DIALOG_CONTAINER +
         "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-layout')]]" + NAMES_VIEW_BY_DISPLAY_NAME;
+
+    private String FRAGMENT_BY_DISPLAY_NAME = DIALOG_CONTAINER +
+        "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" +
+        NAMES_VIEW_BY_DISPLAY_NAME;
 
     private String FRAGMENT_DISPLAY_NAMES = DIALOG_CONTAINER +
         "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" + H6_DISPLAY_NAME;
@@ -183,7 +190,18 @@ public class PageComponentsViewDialog
         {
             saveScreenshot( "layout was not found" );
             throw new TestFrameworkException( "layout was not found: " + layoutDisplayName );
+        }
+        getDisplayedElement( By.xpath( xpath ) ).click();
+        return this;
+    }
 
+    public PageComponentsViewDialog clickOnFragment( String fragmentDisplayName )
+    {
+        String xpath = String.format( FRAGMENT_BY_DISPLAY_NAME, fragmentDisplayName );
+        if ( !isElementDisplayed( xpath ) )
+        {
+            saveScreenshot( "fragment was not found" );
+            throw new TestFrameworkException( "fragment was not found: " + fragmentDisplayName );
         }
         getDisplayedElement( By.xpath( xpath ) ).click();
         return this;

@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -25,6 +27,8 @@ public class FragmentInspectionPanel
         PANEL_CONTAINER + "//div[contains(@id,'SelectedOptionView')]" + H6_DISPLAY_NAME;
 
     private final String FRAGMENT_DROPDOWN_OPTIONS = PANEL_CONTAINER + SLICK_ROW + H6_DISPLAY_NAME;
+
+    private String FRAGMENT_DROPDOWN_OPTION_BY_DISPLAY_NAME = PANEL_CONTAINER + SLICK_ROW_BY_DISPLAY_NAME;
 
     @FindBy(xpath = FRAGMENT_DROPDOWN_HANDLE)
     protected WebElement fragmentDropdownHandle;
@@ -53,6 +57,28 @@ public class FragmentInspectionPanel
     {
         fragmentDropdownHandle.click();
         sleep( 400 );
+        return this;
+    }
+
+    public FragmentInspectionPanel clickOnDropdownOption( String fragmentDisplayName )
+    {
+        if ( !isDropdownListExpanded() )
+        {
+            saveScreenshot( "err_fragment_options" );
+            throw new TestFrameworkException( "Drop Down options are not expanded!" );
+        }
+        String xpath = String.format( FRAGMENT_DROPDOWN_OPTION_BY_DISPLAY_NAME, fragmentDisplayName );
+        getDisplayedElement( By.xpath( xpath ) ).click();
+        return this;
+    }
+
+    public FragmentInspectionPanel waitForOpened()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( PANEL_CONTAINER ), EXPLICIT_NORMAL ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err-open-inspection" ) );
+            throw new TestFrameworkException( "Fragment Inspection Panel was was not opened!" );
+        }
         return this;
     }
 }

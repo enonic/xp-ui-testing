@@ -30,7 +30,8 @@ class BaseGebSpec
     {
         if ( session != null )
         {
-            session.setLoggedIn( false )
+            session.setLoggedIn( false );
+            session.setInLiveEditFrame( false );
         }
         if ( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) != null )
         {

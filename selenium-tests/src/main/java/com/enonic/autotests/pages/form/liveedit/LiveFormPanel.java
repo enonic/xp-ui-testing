@@ -2,6 +2,7 @@ package com.enonic.autotests.pages.form.liveedit;
 
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -37,6 +38,9 @@ public class LiveFormPanel
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
     private final String FRAGMENT_COMPONENT_VIEW = "//div[contains(@id,'FragmentComponentView')]";
+
+    private final String FRAGMENT_DISOLAY_NAMES = FRAGMENT_COMPONENT_VIEW + "//div[contains(@id,'FragmentComponentView')]";
+
 
     private LayoutComponentView layoutComponentView;
 
@@ -123,6 +127,11 @@ public class LiveFormPanel
     public long getNumberOfFragments()
     {
         return getNumberOfElements( By.xpath( FRAGMENT_COMPONENT_VIEW ) );
+    }
+
+    public List<String> getFragmentDisplayNames()
+    {
+        return getDisplayedStrings( By.xpath( FRAGMENT_COMPONENT_VIEW ) );
     }
 
     public long getNumberOfColumnInFragment()
