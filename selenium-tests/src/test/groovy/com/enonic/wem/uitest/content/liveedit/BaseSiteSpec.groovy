@@ -27,6 +27,9 @@ class BaseSiteSpec
     String COUNTRY_REGION_TITLE = "Country Region";
 
     @Shared
+    String COUNTRY_LIST_CONTROLLER = "country-list";
+
+    @Shared
     String COUNTRY_REGION_HEADER = "Country"
 
     @Shared

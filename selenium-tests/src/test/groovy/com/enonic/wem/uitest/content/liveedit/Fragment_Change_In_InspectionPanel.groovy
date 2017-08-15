@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 /**
  * Created on 8/9/2017.
@@ -20,6 +21,7 @@ import spock.lang.Shared
  * XP#5443 Inspection Panel - fragments from another sites should be available in the FragmentDropdown selector
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created
  * */
+@Stepwise
 class Fragment_Change_In_InspectionPanel
     extends BaseContentSpec
 {
@@ -191,5 +193,4 @@ class Fragment_Change_In_InspectionPanel
         partComponentView.selectItem( partName );
         siteWizard.switchToDefaultWindow();
     }
-
 }

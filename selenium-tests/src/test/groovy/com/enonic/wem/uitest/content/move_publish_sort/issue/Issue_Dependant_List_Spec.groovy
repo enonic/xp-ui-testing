@@ -13,7 +13,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -49,7 +48,7 @@ class Issue_Dependant_List_Spec
     Issue TEST_ISSUE;
 
     @Shared
-        FOLDER_NAME = "all-content-types-images";
+    String FOLDER_DISPLAY_NAME = "All Content types images";
 
     def setup()
     {
@@ -196,7 +195,6 @@ class Issue_Dependant_List_Spec
         contentBrowsePanel.waitExpectedNotificationMessage( Application.ISSUE_ITEM_DELETED, 1 );
     }
     //verifies: Create Issue dialog - Error message appears when a text has been typed in the items-option filter #5435
-    @Ignore
     def "GIVEN existing user AND no any content is selected WHEN when an issue has been created and it assigned to the user THEN items to publish should be present on the Issue Details"()
     {
         setup: "Content Studio is opened"
@@ -204,7 +202,7 @@ class Issue_Dependant_List_Spec
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
         List<String> itemsList = new ArrayList<>();
-        itemsList.add( FOLDER_NAME );
+        itemsList.add( FOLDER_DISPLAY_NAME );
         and: "no any content is selected"
         Issue issue = buildIssue( "select items", assigneesList, itemsList );
         and: "'Show Issues' button has been pressed"

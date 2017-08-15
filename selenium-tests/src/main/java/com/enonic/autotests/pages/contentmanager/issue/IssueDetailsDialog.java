@@ -25,7 +25,7 @@ public class IssueDetailsDialog
     private final String TITLE = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
     private final String ITEM_TO_PUBLISH_NAMES =
-        DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogItemList')]//div[contains(@id,'PublicStatusSelectionItem']" + H6_DISPLAY_NAME;
+        DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogItemList')]//div[contains(@id,'PublicStatusSelectionItem')]" + H6_DISPLAY_NAME;
 
     private final String EDIT_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Edit Issue']]";

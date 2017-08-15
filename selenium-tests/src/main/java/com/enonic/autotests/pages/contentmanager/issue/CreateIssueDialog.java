@@ -128,9 +128,10 @@ public class CreateIssueDialog
     public CreateIssueDialog selectItem( String itemDisplayName )
     {
         typeInItemsFilter( itemDisplayName );
+        sleep( 300 );
         LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
-        loaderComboBox.selectOption( itemDisplayName );
-        sleep( 400 );
+        loaderComboBox.selectOption( itemDisplayName, DIALOG_CONTAINER );
+        sleep( 300 );
         return this;
     }
 
@@ -143,7 +144,7 @@ public class CreateIssueDialog
     public void typeInItemsFilter( String itemName )
     {
         clearAndType( itemsOptionFilterInput, itemName );
-        sleep( 400 );
+        sleep( 500 );
     }
 
     public CreateIssueDialog typeDescription( String text )

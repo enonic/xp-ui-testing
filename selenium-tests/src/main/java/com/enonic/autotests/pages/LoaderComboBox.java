@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
@@ -19,9 +20,18 @@ public class LoaderComboBox
         super( session );
     }
 
-    public void selectOption( String option )
+    public void selectOption( String option, String div )
     {
-        String optionXpath = String.format( LOADER_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, option );
+        String optionXpath = null;
+        if ( StringUtils.isEmpty( div ) )
+        {
+            optionXpath = String.format( LOADER_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, option );
+        }
+        else
+        {
+            optionXpath = String.format( div + LOADER_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME, option );
+        }
+
         boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), Application.EXPLICIT_NORMAL );
         sleep( 400 );
         if ( !isVisible )
@@ -30,5 +40,10 @@ public class LoaderComboBox
             throw new TestFrameworkException( "option was not found! " + option );
         }
         getDisplayedElement( By.xpath( optionXpath ) ).click();
+    }
+
+    public void selectOption( String option )
+    {
+        selectOption( option, null );
     }
 }
