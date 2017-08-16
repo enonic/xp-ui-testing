@@ -206,4 +206,16 @@ public class PageComponentsViewDialog
         getDisplayedElement( By.xpath( xpath ) ).click();
         return this;
     }
+
+    public PageComponentsViewDialog clickOnComponent( String itemName )
+    {
+        String xpath = String.format( DIALOG_CONTAINER + H6_DISPLAY_NAME, itemName );
+        if ( !isElementDisplayed( xpath ) )
+        {
+            saveScreenshot( "component was not found" );
+            throw new TestFrameworkException( "component was not found: " + itemName );
+        }
+        getDisplayedElement( By.xpath( xpath ) ).click();
+        return this;
+    }
 }

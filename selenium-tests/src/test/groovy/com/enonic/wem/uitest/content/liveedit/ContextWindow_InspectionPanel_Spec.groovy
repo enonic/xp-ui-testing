@@ -37,7 +37,10 @@ class ContextWindow_InspectionPanel_Spec
         inspectionPanel.isPageTemplateSelectorDisplayed();
 
         and: "page controller is displayed, because page controller was selected"
-        inspectionPanel.isPageControllerSelectorDisplayed()
+        inspectionPanel.isPageControllerSelectorDisplayed();
+
+        and: "'Save as Template' button should be present"
+        inspectionPanel.isSaveAsTemplateButtonDisplayed();
     }
 
     def "GIVEN the site with 'page controller' is opened WHEN 'Preview' button pressed THEN page-sources are correct and correct header present as well"()

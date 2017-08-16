@@ -85,6 +85,8 @@ public class Application
 
     protected final String DROP_DOWN_HANDLE_BUTTON = "//button[contains(@id,'DropdownHandle')]";
 
+    protected final String ACTION_BUTTON = "//button[contains(@id,'ActionButton') and child::span[contains(.,'%s')]]";
+
     protected final String PRINCIPAL_SELECTED_OPTION = "//div[contains(@id,'PrincipalSelectedOptionView')]";
 
     protected final String COMBOBOX_OPTION_FILTER_INPUT = "//input[contains(@id,'ComboBoxOptionFilterInput')]";

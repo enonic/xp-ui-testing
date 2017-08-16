@@ -26,6 +26,8 @@ public class PageInspectionPanel
 
     private final String PAGE_CONTROLLER_DROPDOWN_HANDLER = PAGE_CONTROLLER_SELECTOR + "//button[contains(@id,'DropdownHandle')]";
 
+    private final String SAVE_AS_TEMPLATE_BUTTON = String.format( ACTION_BUTTON, "Save as Template" );
+
     @FindBy(xpath = PAGE_CONTROLLER_OPTION_FILTER_INPUT)
     protected WebElement pageControllerOptionFilterInput;
 
@@ -151,5 +153,28 @@ public class PageInspectionPanel
     public void waitUntilPanelClosed( long timeout )
     {
         waitInvisibilityOfElement( By.xpath( CONTAINER ), timeout );
+    }
+
+    public boolean isSaveAsTemplateButtonDisplayed()
+    {
+        return isElementDisplayed( SAVE_AS_TEMPLATE_BUTTON );
+    }
+
+    public PageInspectionPanel clickOnSaveAsTemplateButton()
+    {
+        getDisplayedElement( By.xpath( SAVE_AS_TEMPLATE_BUTTON ) ).click();
+        sleep( 1000 );
+        return this;
+    }
+
+    public void waitForLoaded()
+    {
+
+        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL ) )
+        {
+            saveScreenshot( "err_open_inspection_panel" );
+            throw new TestFrameworkException( "PageInspectionPanel was not loaded!" );
+        }
+
     }
 }

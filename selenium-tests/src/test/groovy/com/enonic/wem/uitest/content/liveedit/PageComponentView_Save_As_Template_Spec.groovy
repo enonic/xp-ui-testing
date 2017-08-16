@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
 import com.enonic.autotests.pages.form.liveedit.ComponentMenuItems
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
@@ -46,9 +47,9 @@ class PageComponentView_Save_As_Template_Spec
         pageComponentsView.isMenuItemPresent( ComponentMenuItems.RESET.getValue() );
     }
 
-    def "GIVEN existing site WHEN wizard for page-template has been opened"()
+    def "GIVEN existing site WHEN wizard for page-template has been opened THEN 'Save as Template' menu item should not be displayed"()
     {
-        given:
+        given: "existing site"
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
 
@@ -58,7 +59,7 @@ class PageComponentView_Save_As_Template_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template ).save();
 
-        when: ""
+        when: "Page Component View has been opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView().openMenu( COUNTRY_LIST_CONTROLLER );
         saveScreenshot( "context_menu_template" );
 
@@ -70,5 +71,44 @@ class PageComponentView_Save_As_Template_Spec
 
         and: "'Reset' menu item should be displayed"
         pageComponentsView.isMenuItemPresent( ComponentMenuItems.RESET.getValue() );
+    }
+
+    def "GIVEN existing site is opened AND PageComponentView is opened WHEN 'Save as Template' menu item has been clicked THEN new template should be added"()
+    {
+        given: "existing site is opened AND PageComponentView is opened"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
+        and: "context menu for the controller has been opened"
+        pageComponentsView.openMenu( COUNTRY_LIST_CONTROLLER );
+
+        when: "'the 'country list' component has been selected and  Save as Template' menu-item clicked"
+        pageComponentsView.selectMenuItem( ComponentMenuItems.SAVE_AS_TEMPLATE.getValue() );
+        and: "go to the browse panel"
+        wizard.switchToBrowsePanelTab();
+
+        then: "new template should be listed in the grid"
+        saveScreenshot( "saved_template" );
+        contentBrowsePanel.exists( "template-" + SITE.getName() );
+    }
+
+    def "GIVEN existing site is opened AND PageComponentView is opened AND component is selected AND Inspection Panel is opened WHEN 'Save as Template' button has been clicked THEN new template should be added"()
+    {
+        given: "existing site is opened AND PageComponentView is opened"
+        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
+        and: "select the controller on the PageComponentView"
+        pageComponentsView.clickOnComponent( COUNTRY_LIST_CONTROLLER );
+
+        when: "PageInspectionPanel is loaded"
+        PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
+        inspectionPanel.waitForLoaded();
+        and: "'Save as Template' button has been clicked"
+        inspectionPanel.clickOnSaveAsTemplateButton();
+        and: "go to the browse panel"
+        wizard.switchToBrowsePanelTab();
+
+        then: "new template should be listed in the grid"
+        saveScreenshot( "saved_template2" );
+        contentBrowsePanel.exists( "template-" + SITE.getName() + "-1" );
     }
 }
