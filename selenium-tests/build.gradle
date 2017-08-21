@@ -2,8 +2,6 @@ import com.enonic.uitest.server.ServerInstance
 
 apply plugin: 'groovy'
 
-
-
 configurations {
     distro
 }
@@ -18,6 +16,28 @@ ext {
     xpHome = "$distroDir${File.separator}home"
 }
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "ru.d10xa:gradle-allure-plugin:0.5.5"
+    }
+}
+
+apply plugin: 'ru.d10xa.allure'
+
+allure {
+//    aspectjweaver = true
+
+    // Choose your test framework.
+    junit = false
+    testNG = false
+    spock = true
+
+    // Choose if you're using Geb for web tests
+    geb = true
+}
 dependencies {
     compile 'org.seleniumhq.selenium:selenium-java:3.0.1'
     compile 'com.google.guava:guava:18.0'
@@ -26,7 +46,7 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.6'
     compile 'org.spockframework:spock-core:1.0-groovy-2.4'
     compile 'org.gebish:geb-spock:0.13.1'
-
+    compile "ru.d10xa:gradle-allure-plugin:0.5.5"
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
 task copyContentTypes( type: Copy ) {
@@ -328,6 +348,7 @@ task testContentStudioPerformance( type: Test,
     copyContentTypes.mustRunAfter startServer
     copyPerfomanceApp.mustRunAfter copyContentTypes
 }
+tasks.withType( Test )*.finalizedBy allureReport
 
 testApplication.finalizedBy = ['stopServer']
 testPageEditor.finalizedBy = ['stopServer']
