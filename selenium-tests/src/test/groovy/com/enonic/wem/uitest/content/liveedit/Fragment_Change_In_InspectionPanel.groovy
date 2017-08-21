@@ -10,6 +10,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
+import spock.lang.Title
 
 /**
  * Created on 8/9/2017.
@@ -22,6 +23,7 @@ import spock.lang.Stepwise
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created
  * */
 @Stepwise
+@Title("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 class Fragment_Change_In_InspectionPanel
     extends BaseContentSpec
 {
@@ -40,7 +42,7 @@ class Fragment_Change_In_InspectionPanel
     @Shared
     String PART_CITIES_DISTANCE_FACET = "Cities Distance Facet";
 
-
+    //@Step
     def "GIVEN site wizard is opened and new part inserted WHEN new fragment has been created from the part THEN the fragment should be present in options on the Inspection Panel"()
     {
         given: "site wizard  is opened and the controller has been selected"

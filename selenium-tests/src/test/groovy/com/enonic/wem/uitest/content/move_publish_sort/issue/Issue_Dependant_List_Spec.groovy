@@ -24,9 +24,10 @@ import spock.lang.Stepwise
  * xp-ui-testing#68 Add Selenium tests for an issue without an item(deleted)
  *
  * verifies:
- *  Issue Dialog - handle removed assignee #5391
- *  List of dependant items is not refreshed after deletion in the Issue Dialog #5372
- *  Create Issue dialog - Error message appears when a text has been typed in the items-option filter #5435
+ *  xp#5391 Issue Dialog - handle removed assignee
+ *  xp#5372 List of dependant items is not refreshed after deletion in the Issue Dialog
+ *  xp#5435 Create Issue dialog - Error message appears when a text has been typed in the items-option filter
+ *  xp#5383  Update Issue Dialog - Excluded items are not removed from the list after save
  * */
 @Stepwise
 class Issue_Dependant_List_Spec
@@ -154,7 +155,8 @@ class Issue_Dependant_List_Spec
         updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
-    def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and Save button has been pressed WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
+    //verifies the xp#5383 Update Issue Dialog - Excluded items are not removed from the list after save
+    def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and Save button has been pressed WHEN UpdateIssue dialog has been opened THEN the removed content should not be present in the 'dependants list'"()
     {
         given: "existing issue"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
