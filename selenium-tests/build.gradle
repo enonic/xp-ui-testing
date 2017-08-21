@@ -49,7 +49,7 @@ dependencies {
     //compile 'ru.yandex.qatools.allure:allure-spock-1.0-adaptor:1.0'
     // compile 'ru.yandex.qatools.allure:allure-commons:1.5.0'
     // compile 'ru.yandex.qatools.allure:allure-java-adaptor-api:1.4.22'
-    compile "ru.d10xa:gradle-allure-plugin:0.5.5"
+    //compile "ru.d10xa:gradle-allure-plugin:0.5.5"
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
 task copyContentTypes( type: Copy ) {
