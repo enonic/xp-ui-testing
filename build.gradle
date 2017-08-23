@@ -25,6 +25,7 @@ allprojects {
             url 'http://repo.enonic.com/public'
         }
     }
+
     uploadArchives {
         repositories {
             mavenDeployer {

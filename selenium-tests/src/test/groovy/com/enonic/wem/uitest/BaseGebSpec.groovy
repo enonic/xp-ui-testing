@@ -145,7 +145,8 @@ class BaseGebSpec
             input = new FileInputStream( "tests.properties" )
             // load a properties file
             defaultProperties.load( input );
-            println defaultProperties.getProperty( "base.url" )
+            println defaultProperties.getProperty( "base.url" );
+            System.setProperty( "geb.build.baseUrl", defaultProperties.getProperty( "base.url" ) );
 
         }
         catch ( IOException ex )
