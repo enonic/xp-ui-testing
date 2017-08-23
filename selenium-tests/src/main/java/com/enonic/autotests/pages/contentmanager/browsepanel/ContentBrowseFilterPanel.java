@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
@@ -43,6 +42,8 @@ public class ContentBrowseFilterPanel
 
     private String LAST_MODIFIED_AGGREGATION_ENTRY_BY_NAME =
         "//div[@class='aggregation-group-view']/h2[text()='Last Modified']/..//div[contains(@class,'checkbox') and child::label]//label[contains(.,'%s')]";
+
+    private final String SHOW_RESULTS_LINK = "//span[contains(@class,'show-filter-results-button') and text()='Show results']";
 
     public enum ContentTypeDisplayNames
     {
@@ -236,9 +237,8 @@ public class ContentBrowseFilterPanel
 
     public List<String> getSelectedValuesFromContentTypesAggregationView()
     {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         WebElement filterPanel = getDisplayedElement( By.xpath( FILTER_PANEL_DIV ) );
-        List list = (ArrayList) executor.executeScript(
+        List list = (ArrayList) getJavaScriptExecutor().executeScript(
             "return window.api.dom.ElementRegistry.getElementById(arguments[0]).getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')",
             filterPanel.getAttribute( "id" ) );
         Iterator it = list.iterator();
@@ -270,5 +270,15 @@ public class ContentBrowseFilterPanel
             return 0;
         }
         return TestUtils.getNumberFromFilterLabel( elems.get( 0 ).getText() );
+    }
+
+    public boolean isShowResultsLinkDisplayed()
+    {
+        return isElementDisplayed( SHOW_RESULTS_LINK );
+    }
+
+    public void clickOnShowResultsLink()
+    {
+        getDisplayedElement( By.xpath( SHOW_RESULTS_LINK ) ).click();
     }
 }
