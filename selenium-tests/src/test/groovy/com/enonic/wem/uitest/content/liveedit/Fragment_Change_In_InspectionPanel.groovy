@@ -10,7 +10,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
-import spock.lang.Title
 
 /**
  * Created on 8/9/2017.
@@ -23,7 +22,6 @@ import spock.lang.Title
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created
  * */
 @Stepwise
-@Title("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 class Fragment_Change_In_InspectionPanel
     extends BaseContentSpec
 {
