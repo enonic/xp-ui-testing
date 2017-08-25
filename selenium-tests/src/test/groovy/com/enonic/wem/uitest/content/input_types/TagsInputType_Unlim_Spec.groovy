@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
@@ -32,7 +31,6 @@ class TagsInputType_Unlim_Spec
         contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
     }
 
-
     def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN one tag added and 'Save' button pressed and just created content opened THEN only one Tag with correct name present on wizard "()
     {
         given: "start to add a content with type 'Tag unlimited'"
@@ -49,7 +47,6 @@ class TagsInputType_Unlim_Spec
         and:
         formViewPanel.getTagsText().contains( TAG_1 );
     }
-
 
     def "GIVEN wizard for adding a tag opened and 6 tags have been added WHEN one tags removed THEN number of tags reduced "()
     {
@@ -80,7 +77,6 @@ class TagsInputType_Unlim_Spec
         formViewPanel.isTagsInputDisplayed();
     }
 
-
     def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN six tags added and 'Save' button pressed and just created content opened THEN six Tags with correct name are present in the wizard page"()
     {
         given: "start to add a content with type 'Tag unlimited'"
@@ -92,7 +88,7 @@ class TagsInputType_Unlim_Spec
 
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
-        TestUtils.saveScreenshot( getSession(), "tags-unlim_bug" )
+        saveScreenshot( "tags-unlim_bug" )
 
         then: "six Tags with correct name are present in the wizard page"
         formViewPanel.getNumberOfTags() == 6;
@@ -100,7 +96,6 @@ class TagsInputType_Unlim_Spec
         String[] tags = [TAG_1, TAG_2, TAG_3, TAG_4, TAG_5, TAG_6];
         formViewPanel.getTagsText().containsAll( tags.toList() );
     }
-
 
     private PropertyTree buildUnlimTagData( int numberOfTags )
     {
@@ -135,8 +130,6 @@ class TagsInputType_Unlim_Spec
                 break;
             default:
                 throw new TestFrameworkException( "data not implemented" );
-
-
         }
         return data;
     }

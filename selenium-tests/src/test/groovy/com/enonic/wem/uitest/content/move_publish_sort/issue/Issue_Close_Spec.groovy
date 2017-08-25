@@ -106,6 +106,7 @@ class Issue_Close_Spec
         issueDetailsDialog.getStatusInfo().contains( "Opened by user:system:su" );
     }
 
+    //verifies the xp#5300 Notification about unclosed issues doesn't disappear after publishing of the last open issue
     def "GIVEN the user is logged in WHEN the user has opened 'Issue Details' and stopped the issue THEN the issue should be 'Stopped' on the dialog"()
     {
         given: "existing assigned user is logged in"

@@ -40,7 +40,6 @@ class Fragment_Change_In_InspectionPanel
     @Shared
     String PART_CITIES_DISTANCE_FACET = "Cities Distance Facet";
 
-    //@Step
     def "GIVEN site wizard is opened and new part inserted WHEN new fragment has been created from the part THEN the fragment should be present in options on the Inspection Panel"()
     {
         given: "site wizard  is opened and the controller has been selected"
