@@ -117,10 +117,10 @@ public class MoveContentDialog
         return this;
     }
 
-    public boolean isDestinationMatches( String name )
+    public boolean isDestinationDisabled( String name )
     {
-        String destinationXpath = DIALOG_CONTAINER + String.format( NAMES_VIEW_BY_NAME, name );
-        return isElementDisplayed( destinationXpath );
+        String xpath = String.format( DIALOG_CONTAINER + SLICK_ROW_BY_NAME, name );
+        return getDisplayedElement( By.xpath( xpath ) ).getAttribute( "class" ).contains( "readonly" );
     }
 
     public boolean isNoMatchingItemsMessageDisplayed()

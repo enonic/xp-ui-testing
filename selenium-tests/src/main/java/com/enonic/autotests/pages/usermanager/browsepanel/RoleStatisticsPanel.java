@@ -9,8 +9,7 @@ import com.enonic.autotests.TestSession;
 public class RoleStatisticsPanel
     extends UserItemStatisticsPanel
 {
-    private final String MEMBER_DISPLAY_NAMES =
-        MEMBERS_DATA_GROUP + "//ul[@class='data-list' and child::li[text()='Members']]" + H6_DISPLAY_NAME;
+    private final String MEMBER_DISPLAY_NAMES = MEMBERS_DATA_GROUP + "//ul[@class='data-list' ]//li" + H6_DISPLAY_NAME;
 
     private final String MEMBER_NAMES = MEMBERS_DATA_GROUP + "//ul[@class='data-list' and child::li[text()='Members']]" + P_NAME;
 

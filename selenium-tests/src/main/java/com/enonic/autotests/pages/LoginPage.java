@@ -18,7 +18,7 @@ public class LoginPage
 
     public static final String TITLE = "Enonic XP - Login";
 
-    private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'userid or e-mail']";
+    private final String EMAIL_INPUT_XPATH = "//input[@placeholder = 'user id or email']";
 
     private String loginButtonXpath = "//div[@class='password-container']//button[contains(@class,'login-button')]";
 

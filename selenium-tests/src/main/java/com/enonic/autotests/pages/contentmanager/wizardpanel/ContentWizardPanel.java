@@ -399,25 +399,6 @@ public class ContentWizardPanel
         return this;
     }
 
-    public ContentWizardPanel clickOnWizardStep( String stepName )
-    {
-        if ( !isWizardStepPresent( stepName ) )
-        {
-            saveScreenshot( "err_" + stepName );
-            throw new TestFrameworkException( "step was not found! " + stepName );
-        }
-        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, stepName );
-        findElement( By.xpath( securityTabXpath ) ).click();
-        sleep( 100 );
-        return this;
-    }
-
-    public boolean isWizardStepPresent( String stepName )
-    {
-        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, stepName );
-        return isElementDisplayed( securityTabXpath );
-    }
-
     public SecurityWizardStepForm clickOnSecurityTabLink()
     {
         String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SECURITY_LINK_TEXT );

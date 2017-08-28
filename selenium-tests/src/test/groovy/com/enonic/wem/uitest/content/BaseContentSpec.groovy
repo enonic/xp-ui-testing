@@ -54,6 +54,9 @@ class BaseContentSpec
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
 
     @Shared
+    String IMPORTED_FOLDER_NAME2 = "imagearchive";
+
+    @Shared
     String IMAGES_FOLDER_DISPLAY_NAME = "All Content types images";
 
     @Shared

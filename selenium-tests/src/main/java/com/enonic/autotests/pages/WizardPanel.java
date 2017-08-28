@@ -78,6 +78,24 @@ public abstract class WizardPanel<T>
         }
     }
 
+    public WizardPanel clickOnWizardStep( String stepName )
+    {
+        if ( !isWizardStepPresent( stepName ) )
+        {
+            saveScreenshot( "err_" + stepName );
+            throw new TestFrameworkException( "step was not found! " + stepName );
+        }
+        String stetName = String.format( NAVIGATOR_TAB_ITEM_LINK, stepName );
+        findElement( By.xpath( stetName ) ).click();
+        sleep( 100 );
+        return this;
+    }
+
+    public boolean isWizardStepPresent( String stepName )
+    {
+        String tabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, stepName );
+        return isElementDisplayed( tabXpath );
+    }
 
     protected abstract String getWizardDivXpath();
 

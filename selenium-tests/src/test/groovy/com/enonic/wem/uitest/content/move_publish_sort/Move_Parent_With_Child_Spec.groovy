@@ -27,12 +27,9 @@ class Move_Parent_With_Child_Spec
         dialog.typeSearchText( IMPORTED_FOLDER_NAME );
         sleep( 500 );
 
-        then: "'No matching items' message should be diaplayed"
-        saveScreenshot( "is_destination_present" );
-        dialog.isNoMatchingItemsMessageDisplayed();
-
-        and: "no matching contents were found"
-        !dialog.isDestinationMatches( IMPORTED_FOLDER_NAME )
+        then: "the option should be disabled"
+        saveScreenshot( "destination_should_be_disabled1" );
+        dialog.isDestinationDisabled( IMPORTED_FOLDER_NAME )
     }
 
     def "GIVEN parent folder and its child are selected AND 'Move' button pressed WHEN name of parent folder is typed THEN 'No matching items' message appears"()
@@ -43,15 +40,12 @@ class Move_Parent_With_Child_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_IMAGE_BOOK_NAME );
         MoveContentDialog dialog = contentBrowsePanel.clickToolbarMove();
 
-        when: "name of parent folder is typed"
+        when: "name of the parent folder has been typed"
         dialog.typeSearchText( IMPORTED_FOLDER_NAME )
 
-        then: "'No matching items' message appears"
-        saveScreenshot( "is_destination_present" );
-        dialog.isNoMatchingItemsMessageDisplayed();
-
-        and: "no matching contents were found"
-        !dialog.isDestinationMatches( IMPORTED_FOLDER_NAME )
+        then: "the filtered option should be disabled"
+        saveScreenshot( "destination_should_be_disabled2" );
+        dialog.isDestinationDisabled( IMPORTED_FOLDER_NAME )
     }
 
     def "GIVEN new created folder is selected AND 'Move' pressed WHEN matched destination has been typed THEN filtered destination should be displayed"()
@@ -63,8 +57,9 @@ class Move_Parent_With_Child_Spec
 
         when: "matched destination has been typed"
         dialog.typeSearchText( IMPORTED_FOLDER_NAME );
+        saveScreenshot( "destination_should_be_enabled" );
 
-        then: "filtered destination should be displayed"
-        dialog.isDestinationMatches( IMPORTED_FOLDER_NAME );
+        then: "filtered destination should be enabled"
+        !dialog.isDestinationDisabled( IMPORTED_FOLDER_NAME );
     }
 }

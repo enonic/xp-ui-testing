@@ -69,6 +69,8 @@ public class Application
 
     public static final String CAN_READ = "Can Read";
 
+    public static final String CAN_PUBLISH = "Can Publish";
+
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
     protected final String GRID_CANVAS = "//div[@class='grid-canvas']";
