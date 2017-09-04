@@ -29,7 +29,7 @@ class ContentBrowsePanel_GridPanel_Spec
         given:
         int rowNumber = contentBrowsePanel.getRowsCount();
 
-        expect:
+        expect: "all rows should be white(unselected)"
         contentBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
 
         and: "refresh button should be present on the tree grid toolbar"

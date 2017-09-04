@@ -43,7 +43,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         when: "the folder was selected and 'Delete' button on toolbar  pressed and 'Yes' pressed on confirm dialog "
         findAndSelectContent( content.getName() ).clickToolbarDelete().doDelete();
 
-        then: "deleted folder is no longer listed at the root"
+        then: "deleted folder is no longer listed in the root"
         !contentBrowsePanel.exists( content.getName() );
     }
 
@@ -67,7 +67,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
 
-        then: "child Content is no longer listed beneath parent"
+        then: "child Content is no longer listed beneath the parent"
         !contentBrowsePanel.exists( contentToDelete.getName(), true );
         and: "expand-icon is no longer shown for the parent folder"
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( parent.getName() ) );
@@ -75,7 +75,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
     def "GIVEN existing folder WHEN the folder is selected and deleted THEN New-button should be enabled"()
     {
-        given: "folder content was added at the root"
+        given: "folder content was added in the root"
         Content folder = buildFolderContent( "folder", "folder-to-delete" );
         addContent( folder );
 

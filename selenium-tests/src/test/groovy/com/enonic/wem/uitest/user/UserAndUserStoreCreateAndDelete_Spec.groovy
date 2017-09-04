@@ -36,7 +36,7 @@ class UserAndUserStoreCreateAndDelete_Spec
         userStoreWizardPanel.getStoreNameInputValue() == userStore.getName();
     }
 
-    def "GIVEN creating of new UserStore WHEN data typed and 'Save' button pressed THEN new User Store should be listed"()
+    def "GIVEN UserStore wizard is opened WHEN data has been typed and 'Save' button pressed THEN new User Store should be listed"()
     {
         given: "creating of new UserStore"
         TEST_USER_STORE = buildUserStore( "us", "test-user-store", "test user store" );
@@ -46,6 +46,7 @@ class UserAndUserStoreCreateAndDelete_Spec
         userStoreWizardPanel.typeData( TEST_USER_STORE )
         String message = userStoreWizardPanel.save().waitNotificationMessage();
         userStoreWizardPanel.close( TEST_USER_STORE.getDisplayName() );
+        saveScreenshot( "store_should_be_listed" );
 
         then: "new User Store should be listed"
         userBrowsePanel.exists( TEST_USER_STORE.getName() );
@@ -114,7 +115,6 @@ class UserAndUserStoreCreateAndDelete_Spec
         userBrowseFilterPanel.typeSearchText( user.getDisplayName() );
         !userBrowsePanel.exists( USER_NAME, true );
     }
-
 
     def "GIVEN existing 'User Store', WHEN 'User Store' selected and 'Delete' button pressed THEN the User Store should not be listed at the root"()
     {

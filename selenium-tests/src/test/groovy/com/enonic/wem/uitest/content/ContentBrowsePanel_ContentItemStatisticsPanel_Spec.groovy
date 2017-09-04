@@ -50,7 +50,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
             template.getContentTypeName() ).showPageEditor().typeData( template ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "the template is selected"
+        when: "the template has been selected"
         findAndSelectContent( template.getName() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "page_preview_statistic_panel" )

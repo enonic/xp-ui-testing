@@ -75,13 +75,13 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
     def "GIVEN search-input is empty WHEN existing name of folder has been typed THEN one content should be present in the grid"()
     {
-        when: "adding text-search in filter panel"
+        when: "existing name of folder has been typed in the Filter Panel"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
+        filterPanel.typeSearchText( IMAGES_FOLDER_DISPLAY_NAME );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "ne content should be present in the grid"
-        contentBrowsePanel.exists( IMAGES_FOLDER_DISPLAY_NAME );
+        then: "one content should be present in the grid"
+        contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
         and: ""
         contentBrowsePanel.getRowsCount() == 1;
     }

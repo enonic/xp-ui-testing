@@ -5,7 +5,7 @@ import com.enonic.autotests.pages.contentmanager.ContentMenuItem
 class ContentBrowsePanel_ContextMenuImage_Spec
     extends BaseContentSpec
 {
-    def "GIVEN an offline image WHEN context menu opened  THEN all menu-items have correct state"()
+    def "GIVEN existing offline image WHEN context menu opened  THEN all menu-items should have correct state"()
     {
         when: "context menu is opened"
         filterPanel.typeSearchText( IMPORTED_IMAGE_BOOK_NAME );
@@ -14,17 +14,17 @@ class ContentBrowsePanel_ContextMenuImage_Spec
 
         then: "Delete menu item should be enabled"
         contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.DELETE.getName() );
-        and: "Preview menu item is disabled"
+        and: "Preview menu item should be disabled"
         !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.PREVIEW.getName() );
-        and: "Edit menu item is enabled"
+        and: "Edit menu item should be enabled"
         contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.EDIT.getName() );
-        and: "New menu item is disabled"
+        and: "New menu item should be disabled"
         !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.NEW.getName() );
-        and: "Sort menu item is disabled"
+        and: "Sort menu item should be disabled"
         !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.SORT.getName() );
-        and: "Duplicate menu item is enabled"
+        and: "Duplicate menu item should be enabled"
         contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.DUPLICATE.getName() );
-        and: "Move menu item is enabled"
+        and: "Move menu item should be enabled"
         contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.MOVE.getName() );
         and: "Publish menu item is enabled"
         contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.PUBLISH.getName() );

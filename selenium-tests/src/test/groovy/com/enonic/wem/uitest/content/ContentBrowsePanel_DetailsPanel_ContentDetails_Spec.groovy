@@ -57,7 +57,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         contentBrowsePanel.clickOnDetailsToggleButton();
         saveScreenshot( "detail-panel-closed" );
 
-        then: "'Content Details Panel' not displayed"
+        then: "'Content Details Panel' should not be displayed"
         !contentBrowsePanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
     }
 }
