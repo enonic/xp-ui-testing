@@ -16,7 +16,7 @@ class UserWizardPanel_TabMenuSpec
     {
         when: "'Users' folder was selected and 'New' button has been pressed and 'user wizard' is opened"
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickToolbarNew( UserItemName.USERS_FOLDER )
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew( UserItemName.USERS_FOLDER )
 
         then: "new tab with 'New User' title should be present on the tab menu"
         userBrowsePanel.isTabMenuItemPresent( USER_TAB_TITLE );

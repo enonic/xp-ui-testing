@@ -24,8 +24,8 @@ class Users_MultipleDeleting_Spec
         given: "'System' was expanded AND first user has been selected "
         USER1 = buildUser( "user", "password" );
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserItemName.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
         userWizardPanel.typeData( USER1 ).save().close( USER1.getDisplayName() );
 
         and: "second user has been added"
