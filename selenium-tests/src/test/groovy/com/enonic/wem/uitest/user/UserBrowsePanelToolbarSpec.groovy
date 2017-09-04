@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.user
 
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 
 class UserBrowsePanelToolbarSpec
     extends BaseUsersSpec
@@ -24,7 +24,7 @@ class UserBrowsePanelToolbarSpec
     def "GIVEN user BrowsePanel WHEN 'System' folder selected THEN 'Edit' button should be enabled"()
     {
         when:
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.UserItemName.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.SYSTEM );
 
         then: "Edit button on the toolbar is enabled, when system store is selected"
         userBrowsePanel.isEditButtonEnabled();

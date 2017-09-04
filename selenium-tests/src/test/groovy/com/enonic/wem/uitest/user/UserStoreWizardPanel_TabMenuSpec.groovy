@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.NewPrincipalDialog
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import spock.lang.Shared
 
@@ -16,7 +16,7 @@ class UserStoreWizardPanel_TabMenuSpec
     def "WHEN started adding a 'User Store' and Wizard opened THEN new tab with name '[New User Store]' is present"()
     {
         when: "the 'New' button on toolbar pressed and the 'user store' wizard opened"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() )
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() )
         NewPrincipalDialog newPrincipalDialog = userBrowsePanel.clickOnToolbarNew( null );
         UserStoreWizardPanel wizard = newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
 
@@ -36,7 +36,7 @@ class UserStoreWizardPanel_TabMenuSpec
     def "GIVEN 'user store' Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
     {
         given: "'user store' wizard was opened ad AppBarTabMenu clicked"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() )
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() )
         NewPrincipalDialog newPrincipalDialog = userBrowsePanel.clickOnToolbarNew( null );
         UserStoreWizardPanel wizard = newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
 
@@ -53,7 +53,7 @@ class UserStoreWizardPanel_TabMenuSpec
     {
         given: "'user store' Wizard opened and name is typed"
         String displayName = "testname";
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
         NewPrincipalDialog newPrincipalDialog = userBrowsePanel.clickOnToolbarNew( null );
         UserStoreWizardPanel wizard = newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
         wizard.typeDisplayName( displayName );

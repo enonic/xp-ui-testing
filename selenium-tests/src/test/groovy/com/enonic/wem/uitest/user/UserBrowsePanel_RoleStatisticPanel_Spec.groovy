@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.RoleStatisticsPanel
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
 import com.enonic.autotests.vo.usermanager.Role
 import com.enonic.autotests.vo.usermanager.RoleName
@@ -27,8 +27,8 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
     def "WHEN 'Roles' folder is selected THEN correct info should be shown on the statistics panel"()
     {
         when: "'Roles' folder is selected"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.UserItemName.ROLES_FOLDER );
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.ROLES_FOLDER );
         saveScreenshot( "roles-statistic-panel" );
         roleStatisticsPanel = new RoleStatisticsPanel( getSession() );
 
