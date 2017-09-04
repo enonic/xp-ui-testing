@@ -93,11 +93,11 @@ class GroupWizardPanel_SaveBeforeCloseDialog_Spec
         GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
         SaveBeforeCloseDialog dialog = groupWizardPanel.typeDisplayName( "cancel test" ).close( "cancel test" );
 
-        when:
+        when: "'Cancel' button on the modal dialog has been pressed"
         dialog.clickCancelButton();
         saveScreenshot( "SaveBeforeCloseDialog-cancel-clicked" );
 
-        then:
+        then: "the wizard should not be closed"
         groupWizardPanel.isOpened();
     }
 }

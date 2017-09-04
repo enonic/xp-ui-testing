@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Role
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -20,22 +19,22 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
     @Shared
     String NO_BUTTON_PRESSED = "no button selected";
 
-    def "GIVEN a unchanged role WHEN closing THEN SaveBeforeCloseDialog must not appear"()
+    def "GIVEN role is opened and new changes have been saved WHEN 'Close tab' button has been pressed  THEN SaveBeforeCloseDialog must not appear"()
     {
         given:
         RoleWizardPanel roleWizardPanel = openRoleWizard();
         TEST_ROLE = buildRole( "role", "test-role", "description" );
         roleWizardPanel.typeData( TEST_ROLE ).save();
 
-        when:
+        when: "'Close tab' button has been pressed"
         SaveBeforeCloseDialog dialog = roleWizardPanel.close( TEST_ROLE.getDisplayName() );
-        TestUtils.saveScreenshot( getSession(), "role-saved-closed" );
+        saveScreenshot( "role-saved-closed" );
 
-        then:
+        then: "'Save Before Dialog'  should not be shown, because all changes were saved"
         dialog == null;
     }
 
-    def " GIVEN a changed role WHEN closing THEN SaveBeforeCloseDialog must appear"()
+    def "GIVEN 'role wizard' is opened and changes are not saved WHEN 'Close tab' button has been pressed THEN SaveBeforeCloseDialog must appear"()
     {
         given: "wizard opened data typed and 'Save' pressed AND displayName changed"
         RoleWizardPanel roleWizardPanel = openRoleWizard();
@@ -43,24 +42,24 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
         roleWizardPanel.typeData( role ).save();
         roleWizardPanel.typeDisplayName( newDisplayName );
 
-        when: "'Close' button pressed"
+        when: "'Close' button has been pressed"
         SaveBeforeCloseDialog dialog = roleWizardPanel.close( newDisplayName )
         saveScreenshot( "SaveBeforeCloseDialog-role" );
 
-        then: "modal dialog should appear"
+        then: "modal dialog should appear, because changes were not saved"
         dialog != null;
     }
 
-    def "GIVEN changing name of an existing role and wizard closing WHEN Yes is chosen THEN role is listed in BrowsePanel with it's new name"()
+    def "GIVEN role wizard is opened and changes are not saved AND wizard closing WHEN 'Yes' is chosen THEN role is listed in BrowsePanel with it's new name"()
     {
-        given:
+        given: "role wizard is opened and changes are not saved"
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
         RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
         roleWizardPanel.typeDisplayName( newDisplayName ).close( newDisplayName );
         SaveBeforeCloseDialog dialog = new SaveBeforeCloseDialog( getSession() );
         dialog.waitForPresent();
 
-        when: "Yes was chosen"
+        when: "'Yes' was chosen"
         dialog.clickYesButton();
 
         then: "Content should be listed in BrowsePanel with it's new name"
@@ -93,7 +92,7 @@ class RoleWizardPanel_SaveBeforeCloseDialog_Spec
         given: "changing of an existing role"
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
         RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
-        and: "Close button has been pressed"
+        and: "'Close' button has been pressed"
         SaveBeforeCloseDialog dialog = roleWizardPanel.typeDisplayName( "cancel test" ).close( "cancel test" );
 
         when: "'Cancel' on the 'save before close' has been pressed"

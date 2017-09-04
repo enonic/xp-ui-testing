@@ -33,35 +33,35 @@ class RoleWizardPanel_Toolbar_Spec
         wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN role wizard opened WHEN all data typed THEN save button is enabled AND delete button is disabled"()
+    def "GIVEN role wizard is opened WHEN all data has been typed THEN 'save' button should be enabled BUT delete button is disabled"()
     {
-        given: "role wizard opened"
+        given: "role wizard is opened"
         RoleWizardPanel wizardPanel = openRoleWizard();
         Role validUser = buildRole( "valid-role1", "display name", "description" );
 
         when: "all data typed, but not saved"
         wizardPanel.typeData( validUser );
 
-        then: "'Delete' button disabled"
+        then: "'Delete' button should be disabled, because data was not saved yet"
         !wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save' button enabled"
+        and: "'Save' button should be enabled"
         wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN role wizard opened WHEN data typed and saved THEN button delete is enabled"()
+    def "GIVEN role wizard is opened WHEN data has been typed and saved THEN button delete should be enabled"()
     {
-        given: "role wizard opened"
+        given: "role wizard is opened"
         RoleWizardPanel wizardPanel = openRoleWizard();
         Role validUser = buildRole( "valid-role2", "display name", "description" );
 
-        when: "data typed and saved"
+        when: "data has been typed and saved"
         wizardPanel.typeData( validUser ).save();
 
-        then: "'Delete' button enabled"
+        then: "'Delete' button should be enabled, because the data is saved"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save' button enabled"
+        and: "'Save' button should be enabled"
         wizardPanel.isSaveButtonEnabled();
     }
 }

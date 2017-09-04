@@ -29,7 +29,7 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "one row has been clicked and 'System User Store' is selected"
-        userBrowsePanel.clickOnRowByName( "/" + UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        userBrowsePanel.clickOnRowByName( "/" + UserBrowsePanel.UserItemName.SYSTEM.getValue() );
 
         then: "the 'selection toggler' should not be displayed"
         !userBrowsePanel.isSelectionTogglerDisplayed();
@@ -41,7 +41,7 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "checkbox is checked and 'System User Store' is selected"
-        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
         saveScreenshot( "system_user_store_selected" );
 
         then: "the 'selection toggler' should be displayed"
@@ -59,10 +59,10 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "checkbox is checked and 'System User Store' is selected"
-        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
 
         and: "'Roles' folder is selected"
-        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.UserItemName.ROLES_FOLDER.getValue() );
         saveScreenshot( "user_store_and_roles_selected" );
 
         then: "the 'selection toggler' should be not active"
@@ -80,8 +80,8 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
     {
         given: "'System User Store' and 'Roles' folders are selected"
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.UserItemName.ROLES_FOLDER.getValue() );
 
         when: "checkbox is checked and 'System User Store' is selected"
         userBrowsePanel.clickCheckboxAndUnselectRow( "Roles" );
@@ -99,8 +99,8 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
     {
         given: "'System User Store' and 'Roles' folders are selected"
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectUserStore( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.UserItemName.ROLES_FOLDER.getValue() );
 
         when: "'SelectionController' checkbox has been clicked"
         userBrowsePanel.doClearSelection();
@@ -114,7 +114,7 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
     {
         given: "checkbox for 'Roles' folders is checked"
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.UserItemName.ROLES_FOLDER.getValue() );
 
         when: "'Show Selected Item' has been clicked"
         userBrowsePanel.clickOnSelectionToggler();
@@ -131,7 +131,7 @@ class UserBrowsePanel_SelectionPanelToggler_Spec
     {
         given: "checkbox for 'Roles' folders is checked"
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectRole( UserBrowsePanel.UserItemName.ROLES_FOLDER.getValue() );
 
         and: "'Show Selected Item' has been clicked"
         userBrowsePanel.clickOnSelectionToggler();

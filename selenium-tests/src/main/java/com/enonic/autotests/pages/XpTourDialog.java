@@ -17,7 +17,7 @@ public class XpTourDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'ModalDialog') and contains(@class,'xp-tour-dialog')]";
 
-    private final String CANCEL_BUTTON = DIALOG_CONTAINER + "//div[@class='cancel-button-top']";
+    private final String CANCEL_BUTTON = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     private final String SKIP_TOUR_BUTTON = "//button[contains(@id,'DialogButton')]/span[text()='Skip Tour']";
 

@@ -37,7 +37,7 @@ public class IssueListDialog
 
     private final String MY_ISSUES_CHECKBOX = "//div[contains(@id,'Checkbox') and descendant::label[contains(.,'My Issues')]]";
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[@class='cancel-button-top']";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     @FindBy(xpath = NEW_ISSUE_BUTTON)
     private WebElement newIssueButton;

@@ -75,6 +75,8 @@ public class Application
 
     protected final String GRID_CANVAS = "//div[@class='grid-canvas']";
 
+    protected final String APP_CANCEL_BUTTON_TOP = "//div[contains(@class,'cancel-button-top')]";
+
     protected final String DATA_TIME_PICKER_INPUT = "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]";
 
     protected final String TEXT_INPUT = "//input[contains(@id,'TextInput')]";

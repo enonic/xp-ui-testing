@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
 import com.enonic.autotests.pages.WizardPanel
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import spock.lang.Shared
 
 class UserWizardPanel_TabMenuSpec
@@ -15,9 +15,8 @@ class UserWizardPanel_TabMenuSpec
     def "WHEN 'User' Wizard is opened THEN new tab with 'New User' title should be present on the tab menu"()
     {
         when: "'Users' folder was selected and 'New' button has been pressed and 'user wizard' is opened"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickToolbarNew( UserItemName.USERS_FOLDER )
 
         then: "new tab with 'New User' title should be present on the tab menu"
         userBrowsePanel.isTabMenuItemPresent( USER_TAB_TITLE );
@@ -25,10 +24,10 @@ class UserWizardPanel_TabMenuSpec
 
     def "GIVEN user Wizard is opened WHEN TabmenuItem(close) has been clicked THEN wizard should be closed and BrowsePanel is shown"()
     {
-        given: "group wizard was opened ad AppBarTabMenu clicked"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        given: "group wizard is opened ad AppBarTabMenu clicked"
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() )
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
 
         when: "'close' button has been pressed"
         SaveBeforeCloseDialog dialog = wizard.close( USER_TAB_TITLE );
@@ -43,9 +42,10 @@ class UserWizardPanel_TabMenuSpec
     {
         given: "user Wizard is opened and name has been typed"
         String displayName = "testname";
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        WizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
+        wizard.waitUntilWizardOpened().typeDisplayName( displayName );
 
         when: "TabmenuItem(close) has been clicked"
         SaveBeforeCloseDialog dialog = wizard.close( displayName );

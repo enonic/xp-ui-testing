@@ -60,7 +60,7 @@ public class SortContentDialog
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
         {
             saveScreenshot( "err_open_sort_dlg" );
-            throw new TestFrameworkException( "SortContentDialog was not shown!" );
+            throw new TestFrameworkException( "SortContentDialog was not loaded!" );
         }
         return this;
     }

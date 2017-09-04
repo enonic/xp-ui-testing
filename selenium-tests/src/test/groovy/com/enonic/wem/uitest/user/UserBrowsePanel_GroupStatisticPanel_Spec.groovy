@@ -26,8 +26,8 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
     def "WHEN 'Groups' folder is selected THEN correct info should be displayed on the statistics panel"()
     {
         when: "'Groups' folder is selected"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.GROUPS_FOLDER );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.UserItemName.GROUPS_FOLDER );
         saveScreenshot( "groups-folder-selected" );
         groupStatisticsPanel = new GroupStatisticsPanel( getSession() );
 
@@ -42,7 +42,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         TEST_GROUP = buildGroup( "group", "empty-group-statistics", "description" );
         groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
         sleep( 500 );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.GROUP.getValue() );
         userBrowsePanel.doClearSelection();
 
         when: "the group is selected in the grid"
@@ -81,7 +81,7 @@ class UserBrowsePanel_GroupStatisticPanel_Spec
         groupWizardPanel.typeData( group ).save().close( group.getDisplayName() );
         sleep( 500 );
         and: "'Group' folder is expanded"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.GROUP.getValue() );
         userBrowsePanel.doClearSelection();
 
         when: "the group is selected"

@@ -1,9 +1,7 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 import org.openqa.selenium.Keys
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -159,20 +157,15 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.exists( CHILD_CONTENT.getName() );
     }
 
-    def "GIVEN existing content without children WHEN listed THEN 'expand icon' should not be displayed for this content"()
+    def "GIVEN existing folder without children EXPECT 'expand icon' should not be displayed for the content"()
     {
-        given: "existing content without children"
-        String name = NameHelper.uniqueName( "unstructured" );
-        Content unstructured = Content.builder().
-            name( name ).
-            displayName( "unstructured" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.unstructured() ).
-            build();
-        addContent( unstructured );
+        given: "existing folder without children"
+        Content folder = buildFolderContent( "folder", "expander-test" )
+        addContent( folder );
+        filterPanel.typeSearchText( folder.getName() );
 
-        expect: "'expand icon' should not be displayed for this content"
-        !contentBrowsePanel.isExpanderPresent( ContentPath.from( name ) );
+        expect: "'expand icon' should not be displayed for the content"
+        !contentBrowsePanel.isExpanderPresent( ContentPath.from( folder.getName() ) );
     }
 
     def "GIVEN existing collapsed folder WHEN 'expand icon' has been clicked THEN child content should be displayed"()
@@ -221,14 +214,6 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN existing content is selected WHEN arrow up has been pressed THEN previous row should be selected"()
     {
         given:
-        String name = NameHelper.uniqueName( "unstructured" );
-        Content content = Content.builder().
-            name( name ).
-            displayName( "unstructured_arrow" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.unstructured() ).
-            build();
-        addContent( content );
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
         saveScreenshot( "test_arrow_up_before" );
@@ -242,14 +227,14 @@ class ContentBrowsePanel_GridPanel_Spec
         !contentBrowsePanel.isRowSelected( PARENT_CONTENT.getPath().toString() ) && contentBrowsePanel.getSelectedRowsNumber() == before;
     }
 
-    def "GIVEN a selected and expanded content and  WHEN arrow left is typed THEN folder becomes collapsed"()
+    def "GIVEN existing content is selected and expanded WHEN arrow left has been pressed THEN the folder becomes collapsed"()
     {
-        given: "a selected and expanded folder(content)"
+        given: "existing content is selected and expanded"
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
         saveScreenshot( "test_arrow_left_before" );
 
-        when: "arrow left pressed"
+        when: "arrow left has ben pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_LEFT );
         saveScreenshot( "test_arrow_left_after" );
 
@@ -257,12 +242,12 @@ class ContentBrowsePanel_GridPanel_Spec
         !contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
     }
 
-    def "GIVEN a selected and collapsed content and  WHEN arrow right is typed THEN folder is getting expanded"()
+    def "GIVEN existing content is selected and collapsed WHEN arrow right has been pressed THEN folder is getting expanded"()
     {
-        given: "a selected and collapsed folder"
+        given: " existing content is selected and collapsed"
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
 
-        when: "arrow right pressed"
+        when: "arrow right has been pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_RIGHT );
         saveScreenshot( "content_arrow_right" );
 
@@ -270,32 +255,32 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
     }
 
-    def "GIVEN selected content and WHEN hold a shift and arrow down pressed 3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN one content is selected WHEN hold the 'shift' and arrow down has been pressed 3-times THEN 4 selected rows should be in the grid"()
     {
-        given: "one content has been selected "
+        given: "one content is selected"
         contentBrowsePanel.selectContentInTable( IMPORTED_FOLDER_NAME );
         saveScreenshot( "test_arrow_down_shift_before" );
 
-        when: "arrow down was pressed 3 times"
+        when: "hold the 'shift' and arrow down has been pressed 3-times"
         contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_DOWN );
         saveScreenshot( "test_arrow_down_shift_after" );
 
-        then: "n+1 rows should be selected in the browse panel"
+        then: "4 selected rows should be in the grid"
         contentBrowsePanel.getSelectedRowsNumber() == 4
     }
 
-    def "GIVEN one selected content WHEN hold a shift + arrow up pressed 3-times THEN 4 selected rows appears in the grid "()
+    def "GIVEN one content is selected WHEN hold the 'shift' + arrow up has been pressed 3-times THEN 4 selected rows should be in the grid "()
     {
-        given: "one content has been selected "
+        given: "one content has been selected"
         sleep( 500 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 4 );
         saveScreenshot( "test_arrow_up_shift_before2" );
 
-        when: "arrow up was pressed 3 times"
+        when: "hold the 'shift' + arrow up has been pressed 3-times"
         contentBrowsePanel.holdShiftAndPressArrow( 3, Keys.ARROW_UP );
         saveScreenshot( "test_arrow_up_shift_after" );
 
-        then: "n+1 rows should be selected in the browse panel"
+        then: "4 rows should be selected in the browse panel"
         contentBrowsePanel.getSelectedRowsNumber() == 4
     }
 
@@ -305,7 +290,7 @@ class ContentBrowsePanel_GridPanel_Spec
         given: "row with the content is highlighted"
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
 
-        when: "node is unhighlighted"
+        when: "click on the content and unhighlight it "
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
 
         then: "'Edit' button should be disabled"

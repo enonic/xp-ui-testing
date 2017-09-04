@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.LoginPage
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.ChangeUserPasswordDialog
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
@@ -67,9 +68,9 @@ class LoginUserSpec
         USER_ADMIN_CONSOLE = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( USER_PASSWORD ).roles(
             roles.toList() ).build();
 
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
 
         when: "data has been typed and user saved"
         userWizardPanel.typeData( USER_ADMIN_CONSOLE ).save().close( USER_ADMIN_CONSOLE.getDisplayName() );

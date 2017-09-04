@@ -69,7 +69,7 @@ public abstract class BrowsePanel
         APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem') and descendant::span[contains(.,'%s')]]";
 
     protected String CONTEXT_MENU_ITEM =
-        "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'api.ui.menu.MenuItem') and text()='%s']";
+        "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'api.ui.menu.MenuItem') and contains(.,'%s')]";
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
     protected WebElement showFilterPanelButton;

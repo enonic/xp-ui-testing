@@ -33,7 +33,7 @@ public class ContentPublishDialog
     private final String PUBLISH_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@id,'ActionButton') and child::span[contains(.,'Publish')]]";
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 

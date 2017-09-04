@@ -175,18 +175,6 @@ class BaseContentSpec
         return content;
     }
 
-    public Content buildUnstructuredContent( String name, String displayName )
-    {
-        String generated = NameHelper.uniqueName( name );
-        Content content = Content.builder().
-            name( generated ).
-            displayName( displayName ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.unstructured() ).
-            build();
-        return content;
-    }
-
     protected Content buildShortcut( String name, String parentName, String displayName )
     {
         ContentPath parent = null;
@@ -415,26 +403,6 @@ class BaseContentSpec
             contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
-    }
-
-    protected Content buildUnstructured( String name, String parentName, String displayName )
-    {
-        ContentPath parent = null;
-        if ( parentName != null )
-        {
-            parent = ContentPath.from( parentName )
-        }
-        else
-        {
-            parent = ContentPath.ROOT;
-        }
-        Content unstructured = Content.builder().
-            name( NameHelper.uniqueName( name ) ).
-            displayName( displayName ).
-            parent( parent ).
-            contentType( ContentTypeName.unstructured() ).
-            build();
-        return unstructured;
     }
 
     protected void addSite( Content site )

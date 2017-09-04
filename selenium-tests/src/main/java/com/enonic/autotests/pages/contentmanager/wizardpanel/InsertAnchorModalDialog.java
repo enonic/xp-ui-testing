@@ -27,7 +27,7 @@ public class InsertAnchorModalDialog
 
     private final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     @FindBy(xpath = HEADER)
     WebElement header;

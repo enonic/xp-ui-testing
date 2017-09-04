@@ -27,7 +27,7 @@ public class InsertImageModalDialog
 
     private final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     private final String IMAGE_TOOLBAR = DIALOG_CONTAINER + "//div[contains(@id,'ImageToolbar')]";
 

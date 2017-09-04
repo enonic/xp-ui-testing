@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.user
 
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.vo.usermanager.User
@@ -34,8 +34,8 @@ class Delete_UserStore_With_User
         and: "the store is expanded"
         userBrowsePanel.clickOnExpander( USER_STORE.getName() );
         and: "'Users' folder has been selected"
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
 
         when: "new user has been added in the store"
         USER = buildUser( "user", "password" );

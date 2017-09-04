@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.usermanager.browsepanel.AccountStatisticsPanel
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.vo.usermanager.Group
@@ -118,8 +118,8 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
     def "WHEN 'Users' folder is selected THEN correct info should be shown on the statistics panel"()
     {
         when: "'Users' folder is selected"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.USERS_FOLDER );
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER );
         saveScreenshot( "users-folder-selected" );
 
         then: "correct info shown should be displayed on the statistics panel"

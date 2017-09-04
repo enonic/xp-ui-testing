@@ -76,7 +76,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         then:"application's name should be 'media'"
         view.getApplicationName() == MEDIA_APP_NAME;
 
-        and: "'executable' type is displayed"
+        and: "'executable' type should be displayed"
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
@@ -134,7 +134,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         and: "correct application-name should be displayed"
         view.getApplicationName() == BASE_APP_NAME;
 
-        and: "correct owner displayed"
+        and: "correct owner should be displayed"
         view.getOwner() == "su";
 
         and: "correct type should be displayed"
@@ -162,9 +162,9 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getApplicationName() == MEDIA_APP_NAME;
     }
 
-    def "GIVEN existing content with owner opened WHEN owner changed  THEN new owner shown in the widget"()
+    def "GIVEN existing content with owner is opened WHEN owner has been changed in the wizard  THEN new owner shown in the widget"()
     {
-        given: "when content is opened"
+        given: "existing content with owner is opened "
         ContentWizardPanel wizard = findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
@@ -182,14 +182,14 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getOwner() == "anonymous";
     }
 
-    def "GIVEN shortcut content was added and it selected in the grid WHEN details panel is opened THEN correct type of the content should be displayed"()
+    def "GIVEN existing shortcut has been selected WHEN details panel is opened THEN correct type of the content should be displayed"()
     {
-        given: "shortcut content was added and it selected in the grid"
+        given: "existing shortcut has been selected"
         Content shortcut = buildShortcut( "shortcut", null, "test-properties" );
         addContent( shortcut );
         findAndSelectContent( shortcut.getName() );
 
-        when: "details panel is opened"
+        when: "details panel has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "shortcut_info_properties" );
@@ -204,35 +204,13 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getApplicationName() == BASE_APP_NAME;
     }
 
-    def "GIVEN unstructured content was added and it selected in the grid WHEN details panel was opened THEN correct type of the content should be displayed"()
+    def "GIVEN existing site has been selected WHEN details panel is opened THEN correct type of the content should be displayed"()
     {
-        given: "unstructured content was added and it selected in the grid"
-        Content unstructured = buildUnstructured( "unstructured", null, "test-unstructured" );
-        addContent( unstructured );
-        findAndSelectContent( unstructured.getName() );
-
-        when: "details panel is opened"
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-        saveScreenshot( "unstructured_info_properties" );
-
-        then: "Properties Widget should be displayed"
-        view.isDisplayed();
-
-        and: "correct type of the content should be displayed"
-        view.getType() == "unstructured";
-
-        and: "correct application-name should be displayed"
-        view.getApplicationName() == BASE_APP_NAME;
-    }
-
-    def "GIVEN site content was added and it selected in the grid WHEN details panel is opened THEN correct type of the content should be displayed"()
-    {
-        given: "site content was added and it selected in the grid WHEN details panel is opened"
+        given: "existing site has been selected"
         Content site = buildSiteWithNameAndDispalyNameAndDescription( "site", "test-site", "properties test" );
         addContent( site );
         findAndSelectContent( site.getName() );
-        when: "details panel is opened"
+        when: "details panel has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "site_info_properties" );

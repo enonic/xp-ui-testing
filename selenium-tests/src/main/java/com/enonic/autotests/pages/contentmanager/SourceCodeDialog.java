@@ -24,7 +24,7 @@ public class SourceCodeDialog
 
     private final String BUTTON_OK = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='OK']]";
 
-    private final String BUTTON_CLOSE = WINDOW + "//div[contains(@class,'cancel-button-top')]";
+    private final String BUTTON_CLOSE = WINDOW + APP_CANCEL_BUTTON_TOP;
 
     private final String BUTTON_CANCEL = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='Cancel']]";
 

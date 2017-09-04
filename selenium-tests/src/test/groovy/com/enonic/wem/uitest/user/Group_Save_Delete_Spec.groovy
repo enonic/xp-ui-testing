@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
@@ -51,7 +51,7 @@ class Group_Save_Delete_Spec
         String groupCreatingMessage = groupWizardPanel.typeData( TEST_GROUP ).save().waitNotificationMessage();
         groupWizardPanel.close( TEST_GROUP.getDisplayName() );
         sleep( 500 );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUPS_FOLDER.getValue() );
+        userBrowsePanel.clickOnExpander( UserItemName.GROUPS_FOLDER.getValue() );
 
         then: "new Group should be listed"
         saveScreenshot( "group-was-added" );
@@ -149,7 +149,7 @@ class Group_Save_Delete_Spec
         when: "data saved and 'Delete' button on wizard-toolbar pressed"
         ConfirmationDialog confirmationDialog = groupWizardPanel.clickToolbarDelete();
         confirmationDialog.pressYesButton();
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
+        userBrowsePanel.clickOnExpander( UserItemName.GROUP.getValue() );
 
         then: "wizard closed and group not displayed in grid"
         saveScreenshot( "group-deleted-from-wizard" );

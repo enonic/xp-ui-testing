@@ -40,7 +40,7 @@ public class IssueDetailsDialog
 
     private final String OPENED_BY = DIALOG_CONTAINER + "//span[@class='creator']";
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[@class='cancel-button-top']";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     private final String STOP_ISSUE_BUTTON = "//li[contains(@id,'TabMenuItem') and child::a[text()='Closed']]";
 

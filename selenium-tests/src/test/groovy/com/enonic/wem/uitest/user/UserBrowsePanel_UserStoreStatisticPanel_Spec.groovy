@@ -39,7 +39,7 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
         userStoreWizardPanel.save();
         userBrowsePanel.pressAppHomeButton();
 
-        then: "correct display name shown in a statistics panel"
+        then: "correct display name should be shown on the statistics panel"
         userBrowsePanel.clickCheckboxAndSelectUserStore( TEST_USER_STORE.getName() );
         roleStatisticsPanel.getItemDisplayName().equals( TEST_USER_STORE.getDisplayName() );
     }

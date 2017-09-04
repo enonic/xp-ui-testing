@@ -2,9 +2,8 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Role
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -50,7 +49,7 @@ class Role_Save_Delete_Spec
         when: "role saved and wizard closed"
         String roleCreatingMessage = roleWizardPanel.typeData( TEST_ROLE ).save().waitNotificationMessage();
         roleWizardPanel.close( TEST_ROLE.getDisplayName() );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowsePanel.clickOnExpander( UserItemName.ROLES_FOLDER.getValue() );
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
 
         then: "new role should be listed"
@@ -61,25 +60,25 @@ class Role_Save_Delete_Spec
         roleCreatingMessage == ROLE_CREATED_MESSAGE;
     }
 
-    def "GIVEN existing role WHEN role opened THEN correct description displayed"()
+    def "GIVEN existing role WHEN the role has been opened THEN correct description should be isplayed"()
     {
         given: "existing role"
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
 
-        when: "role opened"
+        when: "the role has been opened"
         RoleWizardPanel roleWizardPanel = userBrowsePanel.clickCheckboxAndSelectRole( TEST_ROLE.getName() ).clickToolbarEdit();
 
-        then: "correct description displayed"
+        then: "correct description should be displayed"
         saveScreenshot( "check-role-description" );
         roleWizardPanel.getDescription() == TEST_ROLE.getDescription();
     }
 
     def "GIVEN a existing role WHEN creating new role with the same name THEN correct notification message appears"()
     {
-        given: "creating new role"
+        given: "creating of new role"
         RoleWizardPanel roleWizardPanel = openRoleWizard();
 
-        when: "role saved and wizard closed"
+        when: "role has been saved and wizard closed"
         roleWizardPanel.typeData( TEST_ROLE ).save();
         String errorMessage = userBrowsePanel.waitErrorNotificationMessage( Application.EXPLICIT_NORMAL );
         then: "message, that role with it name already exists"
@@ -118,7 +117,7 @@ class Role_Save_Delete_Spec
         userBrowseFilterPanel.typeSearchText( NEW_DISPLAY_NAME );
 
         then: "role with new display name should be listed"
-        TestUtils.saveScreenshot( getSession(), "role-d-name-changed" );
+        saveScreenshot( "role-d-name-changed" );
         userBrowsePanel.exists( TEST_ROLE.getName() );
     }
 
@@ -132,7 +131,7 @@ class Role_Save_Delete_Spec
         when: "data was saved and 'Delete' button on wizard-toolbar has been pressed"
         ConfirmationDialog confirmationDialog = roleWizardPanel.clickToolbarDelete();
         confirmationDialog.pressYesButton();
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.ROLES_FOLDER.getValue() );
+        userBrowsePanel.clickOnExpander( UserItemName.ROLES_FOLDER.getValue() );
 
         then: "wizard closes and role should not be displayed in the grid"
         saveScreenshot( "role-was-deleted-from-wizard" );

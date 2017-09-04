@@ -18,73 +18,75 @@ class ContentBrowsePanel_FilterPanel_Spec
     @Shared
     Content TEST_FOLDER
 
-    def "GIVEN no selections in filter WHEN Selecting one entry in any filter THEN Clean Filter link should appear"()
+    @Shared
+    Content TEST_FOLDER1
+
+    def "GIVEN no selections in the filter panel WHEN the 'shortcut' checkbox has been checked THEN number of rows in the grid should be equals to number for the checkbox"()
     {
-        given:
-        Content content = buildUnstructuredContent( "unstructured", "filter-panel-test" )
+        given: "'Filter panel' is opened"
+        Content content = buildShortcut( "shortcut", null, "filter panel test" )
         addContent( content );
         contentBrowsePanel.doShowFilterPanel();
 
-        when:
-        saveScreenshot( "filter_panel_unstructured_before_selecting" );
-        String label = filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        saveScreenshot( "filter_panel_unstructured_selected" );
+        when: "'Shortcut' checkbox has been checked"
+        String label = filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
+        saveScreenshot( "filter_panel_shortcut_selected" );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then:
+        then: "number of rows in the grid should be equals to number for the checkbox"
         contentBrowsePanel.getRowsCount() == TestUtils.getNumberFromFilterLabel( label );
     }
 
     def "GIVEN selections in any filter WHEN clicking CleanFilter THEN CleanFilter link should disappears"()
     {
-        given: "selections in any filter"
+        given: "'Shortcut' checkbox is checked on the Filter Panel"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         boolean visibleBefore = filterPanel.waitForClearFilterLinkVisible();
 
-        when: "clicking CleanFilter"
+        when: "'Clear' link has been clicked"
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "clear_filter_link_not_displayed" );
 
-        then: "CleanFilter link should disappears"
+        then: "'Clear' link should not be disaplayed"
         filterPanel.waitForClearFilterLinkNotVisible();
 
-        and: "link was visible when selection was in any filter"
+        and: "the link was visible before the clicking"
         visibleBefore;
     }
 
-    def "GIVEN selections in any filter WHEN clicking 'CleanFilter' THEN all selections should disappear"()
+    def "GIVEN filter Panel is opened and Shortcut checkbox is checked WHEN clicking 'Clear' THEN no one checkbox on the Panel should not be checked"()
     {
         given: "Selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         saveScreenshot( "test_cleanFilter_entry_selected" );
 
-        when: "clicking CleanFilter"
+        when: "clicking on 'Clear'"
         contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "test_cleanFilter_pressed" );
+        saveScreenshot( "test_clear_filter_pressed" );
 
-        then: "all selections should disappear"
+        then: "no one checkbox on the Panel should not be checked"
         !contentBrowsePanel.getFilterPanel().isAnySelectionPresent();
     }
 
-    def "GIVEN creating new content WHEN saved and HomeButton clicked THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN new folder has been saved WHEN HomeButton has been clicked THEN 'Folder' and LastModified-filter should be updated with new count"()
     {
-        given:
-        Content folder = buildFolderContent( "folder", "last modified test" );
+        given: "Filter Panel is opened"
+        TEST_FOLDER1 = buildFolderContent( "folder", "last modified test" );
         contentBrowsePanel.doShowFilterPanel();
         int beforeAdding = filterPanel.getNumberAggregatedByContentType( "Folder" );
         int lastModifiedBeforeAdding = filterPanel.getLastModifiedCount( "day" );
 
-        when: "content saved and the HomeButton clicked"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( folder.getContentTypeName() ).typeData(
-            folder ).save();
+        when: "the content has been saved and the HomeButton clicked"
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType(
+            TEST_FOLDER1.getContentTypeName() ).typeData( TEST_FOLDER1 ).save();
         wizardPanel.switchToBrowsePanelTab().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         sleep( 1000 );
 
-        then: "new ContentType-filter should be updated with new count"
+        then: "number of 'Folder' should be updated with new count"
         filterPanel.getNumberAggregatedByContentType( "Folder" ) - beforeAdding == 1
 
         and: "LastModified-filter should be updated with new count"
@@ -116,7 +118,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         filterPanel.getLastModifiedCount( "day" ) - lastModifiedBeforeAdding == 1;
     }
 
-    def "GIVEN filter panel is opened WHEN a folder is deleted THEN new ContentType-filter and LastModified-filter should be updated with new count"()
+    def "GIVEN filter panel is opened WHEN one folder has been deleted THEN number of 'Folder' and LastModified-filter should be updated with new count"()
     {
         given: "filter panel is opened"
         contentBrowsePanel.doShowFilterPanel();
@@ -125,7 +127,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         int lastModifiedBeforeRemoving = filterPanel.getLastModifiedCount( "day" );
         saveScreenshot( "test_LastModified_aggregation_before_deleting" );
 
-        when: "the folder is deleted"
+        when: "the folder has been deleted"
         contentBrowsePanel.selectContentInTable( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
         sleep( 2000 );
         saveScreenshot( "test_LastModified_aggregation_folder_deleted" )
@@ -137,15 +139,13 @@ class ContentBrowsePanel_FilterPanel_Spec
         lastModifiedBeforeRemoving - filterPanel.getLastModifiedCount( "day" ) == 1;
     }
 
-    def "GIVEN no selections or text-search WHEN adding text-search THEN all filters should be updated to only contain entries with matches in text-search"()
+    def "GIVEN FilterPanel is opened and no selections or text-search WHEN the name of the content has been typed THEN all filters should be updated to only contain entries with matches in text-search"()
     {
-        given: "folder-content added and no selections or text-search"
+        given: "FilterPanel is opened nd no selections or text-search"
         contentBrowsePanel.doShowFilterPanel();
-        TEST_FOLDER = buildFolderContent( "folder", "filtering test" );
-        addContent( TEST_FOLDER );
 
-        when: "folder's name typed in the text input"
-        filterPanel.typeSearchText( TEST_FOLDER.getName() );
+        when: "folder's name  has been typed in the search-input"
+        filterPanel.typeSearchText( TEST_FOLDER1.getName() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "test_aggregation_searchText_typed" );
 
@@ -156,10 +156,10 @@ class ContentBrowsePanel_FilterPanel_Spec
         filterPanel.getLastModifiedCount( "hour" ) == 1;
     }
     //verifies the "XP-3586 Content not correctly filtered, when filter panel has been hidden"
-    def "GIVEN existing folder WHEN name of folder typed in the filter panel AND filter panel has been hidden AND new folder has been added THEN only one folder with matches in text-search is displayed"()
+    def "GIVEN  filter panel is opened WHEN name of folder has been typed in the search-input AND filter panel has been hidden AND new folder has been added THEN only one folder with matches in text-search should be displayed"()
     {
-        given: "the name of existing folder typed"
-        filterPanel.typeSearchText( TEST_FOLDER.getName() );
+        given: "FilterPanel is opened AND the name of existing folder has been typed"
+        filterPanel.typeSearchText( TEST_FOLDER1.getName() );
 
         when: "filter panel has been hidden"
         contentBrowsePanel.doHideFilterPanel();
@@ -169,11 +169,11 @@ class ContentBrowsePanel_FilterPanel_Spec
         addContent( newFolder );
         saveScreenshot( "test_text_typed_filter_panel_hidden" );
 
-        then: "only one folder with matches in text-search is displayed"
+        then: "only one folder with matches in text-search should be displayed"
         contentBrowsePanel.getRowsCount() == 1; ;
     }
 
-    def "GIVEN no selections in filter WHEN selecting one entry in ContentTypes-aggregation THEN no changes in ContentTypes-aggregation"()
+    def "GIVEN no selections in the filter panel WHEN selecting one entry in ContentTypes-aggregation THEN no changes should be in ContentTypes-aggregation"()
     {
         given: "no selections in filter and filter panel shown"
         contentBrowsePanel.doShowFilterPanel();
@@ -182,7 +182,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         when: "selecting one entry in ContentTypes-filter"
         filterPanel.selectContentTypeInAggregationView( "Folder" );
 
-        then: "no changes in ContentTypes-filter"
+        then: "no changes should be in ContentTypes-filter"
         List<String> afterSelect = filterPanel.getContentTypesAggregationValues();
         beforeSelect.equals( afterSelect );
     }
@@ -214,7 +214,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         Integer numberOfFoldersBefore = TestUtils.getNumberFromFilterLabel( label );
 
         when: "adding text-search"
-        filterPanel.typeSearchText( TEST_FOLDER.getName() );
+        filterPanel.typeSearchText( TEST_FOLDER1.getName() );
         saveScreenshot( "test_aggregation_selected_content_name_typed" );
 
         then: "all filters should be updated to only contain entries with selection"

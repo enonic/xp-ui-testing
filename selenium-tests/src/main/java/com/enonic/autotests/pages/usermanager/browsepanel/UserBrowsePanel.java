@@ -25,42 +25,22 @@ public class UserBrowsePanel
 {
     public static final String USER_ITEM_TYPE = "user_item_type";
 
-    public enum BrowseItemType
-    {
-        USERS_FOLDER( "users" ), USER( "user" ), GROUPS_FOLDER( "groups" ), GROUP( "group" ), ROLES_FOLDER( "roles" ), ROLE(
-        "role" ), SYSTEM( "system" ), USER_STORE( "user_store" );
-
-        private BrowseItemType( String type )
-        {
-            this.value = type;
-        }
-
-        private String value;
-
-        public String getValue()
-        {
-            return this.value;
-        }
-    }
+    private final String USER_BROWSE_TOOLBAR = "//div[contains(@id,'UserBrowseToolbar')]";
 
     private final String USER_ITEMS_GRID = "//div[contains(@id,'UserItemsTreeGrid')]";
 
     public final String USERS_BUTTON = "//div[contains(@id,'AppIcon') and child::span[text()='User']]";
 
-    public final String NEW_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='New']]";
+    public final String NEW_BUTTON_XPATH = USER_BROWSE_TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[contains(.,'New')]]";
 
     public final String DUPLICATE_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
+        USER_BROWSE_TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
 
-    protected final String EDIT_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
+    protected final String EDIT_BUTTON_XPATH = USER_BROWSE_TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
 
-    protected final String DELETE_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
+    protected final String DELETE_BUTTON_XPATH = USER_BROWSE_TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
 
-    protected final String SYNC_BUTTON_XPATH =
-        "//div[contains(@id,'UserBrowseToolbar')]/*[contains(@id, 'ActionButton') and child::span[text()='Sync']]";
+    protected final String SYNC_BUTTON_XPATH = USER_BROWSE_TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Sync']]";
 
     @FindBy(xpath = USERS_BUTTON)
     private WebElement usersButton;
@@ -126,7 +106,7 @@ public class UserBrowsePanel
         sleep( 700 );
         clickOnRowByName( "users" );
         sleep( 500 );
-        getSession().put( USER_ITEM_TYPE, BrowseItemType.USERS_FOLDER );
+        getSession().put( USER_ITEM_TYPE, UserItemName.USERS_FOLDER );
         return this;
     }
 
@@ -137,7 +117,7 @@ public class UserBrowsePanel
         // pressKeyOnRow( storeName, Keys.ARROW_RIGHT );
         clickOnRowByName( "groups" );
         sleep( 500 );
-        getSession().put( USER_ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
+        getSession().put( USER_ITEM_TYPE, UserItemName.GROUPS_FOLDER );
         return this;
     }
 
@@ -168,7 +148,7 @@ public class UserBrowsePanel
         return getDisplayedStrings( By.xpath( USER_ITEMS_GRID + P_NAME ) );
     }
 
-    public UserBrowsePanel clickCheckboxAndSelectFolder( BrowseItemType itemType )
+    public UserBrowsePanel clickCheckboxAndSelectFolder( UserItemName itemType )
     {
         getSession().put( USER_ITEM_TYPE, itemType );
         return clickCheckboxAndSelectRow( itemType.getValue() );
@@ -176,25 +156,25 @@ public class UserBrowsePanel
 
     public UserBrowsePanel clickCheckboxAndSelectUser( String userAppItemName )
     {
-        getSession().put( USER_ITEM_TYPE, BrowseItemType.USER );
+        getSession().put( USER_ITEM_TYPE, UserItemName.USER );
         return clickCheckboxAndSelectRow( userAppItemName );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectUserStore( String userAppItemName )
     {
-        getSession().put( USER_ITEM_TYPE, BrowseItemType.USER_STORE );
+        getSession().put( USER_ITEM_TYPE, UserItemName.USER_STORE );
         return clickCheckboxAndSelectRow( userAppItemName );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectGroup( String groupName )
     {
-        getSession().put( USER_ITEM_TYPE, BrowseItemType.GROUP );
+        getSession().put( USER_ITEM_TYPE, UserItemName.GROUP );
         return clickCheckboxAndSelectRow( groupName );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectRole( String roleName )
     {
-        getSession().put( USER_ITEM_TYPE, BrowseItemType.ROLE );
+        getSession().put( USER_ITEM_TYPE, UserItemName.ROLE );
         return clickCheckboxAndSelectRow( roleName );
     }
 
@@ -204,7 +184,7 @@ public class UserBrowsePanel
         {
             clickOnExpander( userStoreName );
         }
-        getSession().put( USER_ITEM_TYPE, BrowseItemType.GROUPS_FOLDER );
+        getSession().put( USER_ITEM_TYPE, UserItemName.GROUPS_FOLDER );
         return clickOnRowAndSelectGroupInUserStore( userStoreName );
     }
 
@@ -233,29 +213,50 @@ public class UserBrowsePanel
         return isElementDisplayed( USERS_BUTTON );
     }
 
-    /**
-     * Clicks on 'New' button and opens a user, group or role wizard
-     *
-     * @return {@link WizardPanel} instance.
-     */
-    public WizardPanel clickToolbarNew()
+    public NewPrincipalDialog clickToolbarNew()
     {
         newButton.click();
         sleep( 500 );
+        NewPrincipalDialog newPrincipalDialog = new NewPrincipalDialog( getSession() );
+        newPrincipalDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
+        return newPrincipalDialog;
+    }
 
-        BrowseItemType selectedItem = (BrowseItemType) getSession().get( USER_ITEM_TYPE );
+    /**
+     * Clicks on 'New...' button and opens a user, group or role wizard
+     *
+     * @return {@link WizardPanel} instance.
+     */
+    public Application clickOnToolbarNew( UserItemName selectedItem )
+    {
+        newButton.click();
+        sleep( 500 );
+        NewPrincipalDialog newPrincipalDialog = new NewPrincipalDialog( getSession() );
+        //UserItemName selectedItem = (UserItemName) getSession().get( USER_ITEM_TYPE );
         if ( selectedItem == null )
         {
-            return new UserStoreWizardPanel( getSession() );
+            return newPrincipalDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
         }
         switch ( selectedItem )
         {
             case ROLES_FOLDER:
-                return new RoleWizardPanel( getSession() );
+            {
+                RoleWizardPanel roleWizardPanel = new RoleWizardPanel( getSession() );
+                return roleWizardPanel.waitUntilWizardOpened();
+            }
+
             case GROUPS_FOLDER:
-                return new GroupWizardPanel( getSession() );
+            {
+                GroupWizardPanel groupWizardPanel = new GroupWizardPanel( getSession() );
+                return groupWizardPanel.waitUntilWizardOpened();
+            }
+
             case USERS_FOLDER:
-                return new UserWizardPanel( getSession() );
+            {
+                UserWizardPanel userWizardPanel = new UserWizardPanel( getSession() );
+                return userWizardPanel.waitUntilWizardOpened();
+            }
+
             default:
                 throw new TestFrameworkException( "unknown type of principal!" );
         }
@@ -265,6 +266,9 @@ public class UserBrowsePanel
     {
         sleep( 500 );
         newButton.click();
+        NewPrincipalDialog newPrincipalDialog = new NewPrincipalDialog( getSession() );
+        newPrincipalDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
+        newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
         sleep( 500 );
         UserStoreWizardPanel wizard = new UserStoreWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
@@ -308,7 +312,7 @@ public class UserBrowsePanel
 
         WizardPanel wizard = null;
         editButton.click();
-        BrowseItemType selectedItem = (BrowseItemType) getSession().get( USER_ITEM_TYPE );
+        UserItemName selectedItem = (UserItemName) getSession().get( USER_ITEM_TYPE );
         if ( selectedItem == null )
         {
             wizard = new UserStoreWizardPanel( getSession() );

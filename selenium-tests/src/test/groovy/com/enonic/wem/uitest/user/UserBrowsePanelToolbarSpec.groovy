@@ -6,25 +6,25 @@ class UserBrowsePanelToolbarSpec
     extends BaseUsersSpec
 {
 
-    def "GIVEN user BrowsePanel WHEN no selected content THEN all button on the grid-toolbar have correct state"()
+    def "GIVEN user BrowsePanel is opened WHEN no selected content THEN all button on the grid-toolbar have correct state"()
     {
-        expect: "Delete button is disabled"
+        expect: "'Delete' button should be disabled"
         !userBrowsePanel.isDeleteButtonEnabled();
 
-        and: "New button is enabled"
+        and: "'New' button should be enabled"
         userBrowsePanel.isNewButtonEnabled();
 
-        and: "Edit button is disabled"
+        and: "'Edit' button should be disabled"
         !userBrowsePanel.isEditButtonEnabled();
 
-        and: "Sync button is disabled"
+        and: "'Sync' button should be disabled"
         !userBrowsePanel.isSyncEnabled();
     }
 
     def "GIVEN user BrowsePanel WHEN 'System' folder selected THEN 'Edit' button should be enabled"()
     {
         when:
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.SYSTEM );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.UserItemName.SYSTEM );
 
         then: "Edit button on the toolbar is enabled, when system store is selected"
         userBrowsePanel.isEditButtonEnabled();

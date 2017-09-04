@@ -17,7 +17,7 @@ public class AboutDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'ModalDialog') and contains(@class,'xp-about')]";
 
-    private final String CANCEL_BUTTON = DIALOG_CONTAINER + "//div[@class='cancel-button-top']";
+    private final String CANCEL_BUTTON = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButtonTop;

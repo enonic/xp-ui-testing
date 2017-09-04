@@ -24,7 +24,7 @@ public class ConfirmContentDeleteDialog
 
     private final String DIALOG_HEADER_XPATH = "div[contains(@id,'ModalDialogHeader')]";
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 

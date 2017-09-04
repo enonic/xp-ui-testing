@@ -54,9 +54,9 @@ class DetailsPanel_OwnerName_Spec
         TEST_USER = User.builder().displayName( generatedName ).email( generatedName + "@gmail.com" ).password( USER_PASSWORD ).roles(
             roles.toList() ).build();
 
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+            UserBrowsePanel.UserItemName.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "data typed and new user has been saved"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );

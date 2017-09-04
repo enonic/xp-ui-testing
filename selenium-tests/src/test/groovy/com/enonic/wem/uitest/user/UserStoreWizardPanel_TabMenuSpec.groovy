@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.SaveBeforeCloseDialog
+import com.enonic.autotests.pages.usermanager.browsepanel.NewPrincipalDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import spock.lang.Shared
@@ -15,8 +16,9 @@ class UserStoreWizardPanel_TabMenuSpec
     def "WHEN started adding a 'User Store' and Wizard opened THEN new tab with name '[New User Store]' is present"()
     {
         when: "the 'New' button on toolbar pressed and the 'user store' wizard opened"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
-        UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() )
+        NewPrincipalDialog newPrincipalDialog = userBrowsePanel.clickOnToolbarNew( null );
+        UserStoreWizardPanel wizard = newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
 
         then: "title 'New User Store' should be present on the wizard page"
         userBrowsePanel.isTabMenuItemPresent( USERSTORE_TAB_TITLE );
@@ -34,15 +36,16 @@ class UserStoreWizardPanel_TabMenuSpec
     def "GIVEN 'user store' Wizard opened, no any data typed WHEN TabmenuItem(close) clicked THEN wizard closed and BrowsePanel showed"()
     {
         given: "'user store' wizard was opened ad AppBarTabMenu clicked"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() )
-        UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() )
+        NewPrincipalDialog newPrincipalDialog = userBrowsePanel.clickOnToolbarNew( null );
+        UserStoreWizardPanel wizard = newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
 
         when: "no any data typed and 'close' button pressed"
         SaveBeforeCloseDialog dialog = wizard.close( USERSTORE_TAB_TITLE );
         saveScreenshot( "user_store_closed" );
 
 
-        then: "close dialog should not be showed"
+        then: "close dialog should not be shown"
         dialog == null;
     }
 
@@ -50,8 +53,10 @@ class UserStoreWizardPanel_TabMenuSpec
     {
         given: "'user store' Wizard opened and name is typed"
         String displayName = "testname";
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        UserStoreWizardPanel wizard = userBrowsePanel.clickToolbarNew().waitUntilWizardOpened().typeDisplayName( displayName );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
+        NewPrincipalDialog newPrincipalDialog = userBrowsePanel.clickOnToolbarNew( null );
+        UserStoreWizardPanel wizard = newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
+        wizard.typeDisplayName( displayName );
 
         when: "'Close' clicked"
         SaveBeforeCloseDialog dialog = wizard.close( displayName );

@@ -23,7 +23,7 @@ public class UninstallApplicationDialog
 
     private final String NO_BUTTON = DIV_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='No']";
 
-    private final String CANCEL_BUTTON = DIV_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON = DIV_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     private final String DIALOG_CONTENT = DIV_CONTAINER + "//div[contains(@id,'ModalDialogContentPanel')]/h6";
 

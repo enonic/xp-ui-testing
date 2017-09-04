@@ -2,149 +2,87 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel.ContentTypeDisplayNames
-import com.enonic.autotests.utils.NameHelper
-import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
 class ContentBrowsePanel_GridPanel_FilterSpec
     extends BaseContentSpec
 {
-    @Shared
-    Content initialFolder;
 
-
-    def "add initial content"()
+    def "GIVEN grid panel is opened WHEN button 'show filter' has been clicked THEN filter panel should be present"()
     {
-        when:
-        initialFolder = buildFolderContent( "initcontent", "filter tests" );
-        addContent( initialFolder );
-
-        then:
-        filterPanel.typeSearchText( initialFolder.getName() )
-        contentBrowsePanel.exists( initialFolder.getName() );
-    }
-
-    def "GIVEN browse panel opened WHEN filter panel not displayed AND button 'show filter' clicked THEN filter panel appears"()
-    {
-        given: 'check for filter panel displayed'
+        given: "grid panel is opened"
         def displayed = filterPanel.isFilterPanelDisplayed();
 
-        when: "panel not displayed adn button 'show filter panel' clicked"
-        displayed || contentBrowsePanel.doShowFilterPanel();
-        saveScreenshot( "filter_panel_shown" )
+        when: "button 'show filter' has been clicked "
+        contentBrowsePanel.doShowFilterPanel();
 
-        then: "filter panel displayed"
+        then: "filter panel should be displayed"
         filterPanel.isFilterPanelDisplayed();
     }
 
-    def "GIVEN No selections in filter WHEN Selecting one entry in ContentTypes-filter THEN all existing Content of the selected type should be listed in gridPanel"()
-    {
-        given: "No selections in filter"
-        String name = NameHelper.uniqueName( "unstructured" );
-        Content content = Content.builder().
-            name( name ).
-            displayName( "unstructured" ).
-            parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.unstructured() ).
-            build();
-        contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData(
-            content ).save().closeBrowserTab().switchToBrowsePanelTab();
-
-        and: "filter panel is opened"
-        contentBrowsePanel.doShowFilterPanel();
-
-        when: "Selecting one entry in ContentTypes-filter"
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "filtered_unstructured" )
-
-        then: "all existing Content of the selected type should be listed in gridPanel"
-        Integer numberOfFilteredContent = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        numberOfFilteredContent == contentBrowsePanel.getRowsCount();
-    }
-
-    def "GIVEN selections in any filter WHEN clicking clean filter THEN initial grid view displayed"()
+    def "GIVEN 'Filter Panel' is opened and 'Shortcut' checkbox is checked WHEN 'Clear' link has been clicked THEN initial grid view should be displayed"()
     {
         given: "selections in any filter"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        boolean beforeClean = contentBrowsePanel.exists( initialFolder.getName() );
+        boolean beforeClean = contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
 
-        when: "clicking on the 'clean filter' "
+        when: "'Clear' link has been clicked"
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "initial grid view should be displayed"
-        !beforeClean && contentBrowsePanel.exists( initialFolder.getName() );
+        !beforeClean && contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
     }
 
-    def "GIVEN one selection in ContentTypes-filter WHEN selecting one additional entry in ContentTypes-filter THEN all existing content of the both selected types should be listed in gridPanel"()
+    def "GIVEN 'Shortcut' checkbox is checked WHEN 'Folder' checkbox has been checked THEN all content should be correctly filtered"()
     {
-        given: "one selection in ContentTypes-filter"
+        given: "'Shortcut' checkbox is checked"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        Integer numberOfData = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        Integer numberOfData = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.SHORTCUT.getValue() );
 
-        when: "selecting one additional entry in ContentTypes-filter"
+        when: "'Folder' checkbox has been checked "
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.FOLDER.getValue() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "filtering_one-selection1" );
 
-        then: "all existing content of the both selected types should be listed in gridPanel"
+        then: "all content in the grid should be correctly filtered"
         Integer numberOfFolder = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
         ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowsCount();
     }
 
-    def "GIVEN one selection in any filter WHEN deselecting selection THEN initial grid view displayed"()
+    def "GIVEN 'Shortcut' checkbox is checked WHEN 'Shortcut' checkbox has been unchecked THEN initial grid should be displayed"()
     {
-        given: "one selection in any filter"
+        given: "'Shortcut' checkbox is checked"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "one-selection2" );
-        boolean existsBeforeDeselect = contentBrowsePanel.exists( initialFolder.getName() );
+        saveScreenshot( "deselection_test1" );
+        boolean existsBeforeDeselect = contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
 
-        when: "deselecting of the selection"
-        filterPanel.deselectContentTypeInAggregationView( ContentTypeDisplayNames.UNSTRUCTURED.getValue() );
-        saveScreenshot( "one-selection-deselected" );
+        when: "'Shortcut' checkbox has been unchecked"
+        filterPanel.deselectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
+        saveScreenshot( "deselection_test2" );
         contentBrowsePanel.waitsForSpinnerNotVisible();
 
         then: "initial grid view should be displayed"
-        !existsBeforeDeselect && contentBrowsePanel.exists( initialFolder.getName() );
+        !existsBeforeDeselect && contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
     }
 
-    def "GIVEN empty text-search WHEN adding text-search THEN all Content matching the text-search should be listed in gridPanel"()
+    def "GIVEN search-input is empty WHEN existing name of folder has been typed THEN one content should be present in the grid"()
     {
         when: "adding text-search in filter panel"
         contentBrowsePanel.doShowFilterPanel();
-        filterPanel.typeSearchText( initialFolder.getName() );
-        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "filtered_text-search1" );
-
-        then: "all Content matching the text-search should be listed in gridPanel"
-        contentBrowsePanel.exists( initialFolder.getName() );
-    }
-
-    def "GIVEN any value in text-search WHEN clicking clean filter THEN initial grid view displayed"()
-    {
-        given: "any value in text-search"
-        contentBrowsePanel.doShowFilterPanel();
-        Content folder = buildFolderContent( "folder", "filter test" )
-        filterPanel.typeSearchText( folder.getName() );
+        filterPanel.typeSearchText( IMPORTED_FOLDER_NAME );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        when: "clicking clean filter"
-        filterPanel.clickOnCleanFilter();
-        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "filtered_text-search2" );
-
-        then: "initial grid view should be displayed"
-        contentBrowsePanel.getRowsCount() > 1 && contentBrowsePanel.exists( initialFolder.getName() );
+        then: "ne content should be present in the grid"
+        contentBrowsePanel.exists( IMAGES_FOLDER_DISPLAY_NAME );
+        and: ""
+        contentBrowsePanel.getRowsCount() == 1;
     }
 }

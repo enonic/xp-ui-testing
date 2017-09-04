@@ -86,10 +86,10 @@ class UserStore_Permissions_Spec
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
         saveScreenshot( "test_user_store_permission_removed" );
 
-        then: "number of permissions has been reduced"
+        then: "number of permissions should be reduced by one"
         entries.size() == 2;
 
-        and: "removed permission is not displayed on the wizard panel"
+        and: "removed permission should not be displayed on the wizard panel"
         !userStoreWizardPanel.isPermissionDisplayed( RoleDisplayName.USERS_ADMINISTRATOR.getValue() );
     }
 }

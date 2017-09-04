@@ -27,7 +27,7 @@ public class UpdateIssueDialog
         DIALOG_CONTAINER + "//div[contains(@id,'LoaderComboBox') and @name='contentSelector']" + COMBOBOX_OPTION_FILTER_INPUT;
 
 
-    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'button-bottom')]";
 

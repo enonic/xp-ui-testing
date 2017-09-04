@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.DeleteUserItemDialog
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.utils.NameHelper
@@ -77,7 +78,8 @@ class UserAndUserStoreCreateAndDelete_Spec
         given: "existing a User Store"
         user = buildTestUser( USER_NAME );
         and: "the User Store is expanded and 'Users' folder selected"
-        UserWizardPanel userWizardPanel = userBrowsePanel.expandStoreAndSelectUsers( TEST_USER_STORE.getName() ).clickToolbarNew();
+        UserWizardPanel userWizardPanel = userBrowsePanel.expandStoreAndSelectUsers( TEST_USER_STORE.getName() ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
 
         when: "user-name has been typed and 'Save' pressed"
         userWizardPanel.typeData( user ).save().close( user.getDisplayName() );

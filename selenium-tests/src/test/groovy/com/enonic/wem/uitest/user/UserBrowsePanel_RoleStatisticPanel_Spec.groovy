@@ -27,8 +27,8 @@ class UserBrowsePanel_RoleStatisticPanel_Spec
     def "WHEN 'Roles' folder is selected THEN correct info should be shown on the statistics panel"()
     {
         when: "'Roles' folder is selected"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.ROLES_FOLDER );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
+        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.UserItemName.ROLES_FOLDER );
         saveScreenshot( "roles-statistic-panel" );
         roleStatisticsPanel = new RoleStatisticsPanel( getSession() );
 

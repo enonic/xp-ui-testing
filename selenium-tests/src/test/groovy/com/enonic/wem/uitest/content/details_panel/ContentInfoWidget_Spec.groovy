@@ -26,9 +26,9 @@ class ContentInfoWidget_Spec
     @Shared
     Content FOLDER;
 
-    def "GIVEN a existing folder WHEN content selected and Details panel opened THEN correct status and actual content-properties should be present"()
+    def "GIVEN existing folder WHEN the folder has been selected and Details panel opened THEN correct status and actual content-properties should be present"()
     {
-        given: "folder content is added "
+        given: "existing folder"
         FOLDER = buildFolderContent( "folder", "info_widget_test" );
         addContent( FOLDER );
 
@@ -45,7 +45,7 @@ class ContentInfoWidget_Spec
         and: "6 properties should be present on the details panel "
         props.size() == 6;
 
-        and: "correct type present"
+        and: "correct type should be present"
         props.get( ContentInfoTerms.TYPE.getValue() ).equals( ContentTypeName.folder().getLocalName() );
 
         and: "correct value for 'application' present"
@@ -64,15 +64,15 @@ class ContentInfoWidget_Spec
         props.get( ContentInfoTerms.CREATED.getValue() ).contains( LocalDate.now().toString() );
     }
 
-    def "GIVEN a existing 'unstructured' WHEN content selected and Details panel opened THEN correct status and actual content-properties are present"()
+    def "GIVEN existing 'folder' WHEN folder has been selected and Details panel opened THEN correct status and actual content-properties should be displayed"()
     {
-        given: "folder content is added"
-        Content content = buildUnstructuredContent( "unstructured", "infowidget test" );
-        addContent( content );
+        given: "existing 'folder'"
+        Content folder = buildFolderContent( "folder", "infowidget test" );
+        addContent( folder );
 
-        when: "details panel opened and widget is shown"
-        filterPanel.typeSearchText( content.getName() );
-        contentBrowsePanel.selectContentInTable( content.getName() ).clickOnDetailsToggleButton();
+        when: "details panel has been opened and widget is shown"
+        filterPanel.typeSearchText( folder.getName() );
+        contentBrowsePanel.selectContentInTable( folder.getName() ).clickOnDetailsToggleButton();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         HashMap<String, String> props = contentInfo.getContentProperties();
         saveScreenshot( "info-widget-opened" );
@@ -84,7 +84,7 @@ class ContentInfoWidget_Spec
         props.size() == 6;
 
         and: "correct type should be displayed"
-        props.get( ContentInfoTerms.TYPE.getValue() ).equals( ContentTypeName.unstructured().getLocalName() );
+        props.get( ContentInfoTerms.TYPE.getValue() ).equals( ContentTypeName.folder().getLocalName() );
 
         and: "correct value for 'application' should be displayed"
         props.get( ContentInfoTerms.APPLICATION.getValue() ).equals( "base" );

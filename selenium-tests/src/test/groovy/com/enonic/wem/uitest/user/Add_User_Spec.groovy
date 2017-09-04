@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.vo.usermanager.User
 import spock.lang.Shared
@@ -18,9 +18,9 @@ class Add_User_Spec
     {
         given: "'System' was expanded AND 'User' is selected"
         User userEmptyPassword = buildUser( "user", null );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
 
         when: "user-data typed but the  password is empty and 'Save' button pressed"
         String errorMessage = userWizardPanel.typeData( userEmptyPassword ).save().waitNotificationError( Application.EXPLICIT_NORMAL );
@@ -34,9 +34,9 @@ class Add_User_Spec
     {
         given: "'System' was expanded AND 'User' is selected  and 'New' pressed"
         USER = buildUser( "user", "password" );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
 
         when: "correct user-data is typed and 'Save' button pressed"
         String creatingMessage = userWizardPanel.typeData( USER ).save().waitNotificationMessage();
@@ -81,9 +81,9 @@ class Add_User_Spec
     {
         given: "'System' was expanded AND 'User' is selected  and 'New' pressed"
         User refreshWizardUser = buildUser( "user", "password" );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
 
         when: "data has been typed and the user saved"
         userWizardPanel.typeData( refreshWizardUser ).save().waitNotificationMessage();

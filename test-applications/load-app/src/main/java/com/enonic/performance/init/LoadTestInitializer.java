@@ -109,7 +109,7 @@ public class LoadTestInitializer
 
         logImport( nodeImportResult );
         createFoldersTree();
-        createUnstructuredTree();
+        //createUnstructuredTree();
         createSites();
         // set permissions
         final Content demoContent = contentService.getByPath( performanceSitePath );
@@ -161,37 +161,6 @@ public class LoadTestInitializer
         }
     }
 
-    private void createUnstructuredTree()
-    {
-        final ContentPath largeTreePath = ContentPath.from( "/unstructured-tree" );
-        if ( !hasContent( largeTreePath ) )
-        {
-            contentService.create( makeUnstructured().
-                name( "unstructured-tree" ).
-                displayName( "Unstructured tree" ).
-                parent( ContentPath.ROOT ).
-                permissions( PERMISSIONS ).
-                inheritPermissions( false ).
-                build() );
-
-            for ( int i = 1; i <= 5; i++ )
-            {
-                Content parent = contentService.create( makeUnstructured().
-                    displayName( "unstructured-tree-node-" + i ).
-                    displayName( "unstructured tree node " + i ).
-                    parent( largeTreePath ).build() );
-
-                for ( int j = 1; j <= 100; j++ )
-                {
-                    contentService.create( makeUnstructured().
-                        displayName( "unstructured-tree-node-" + i + "-" + j ).
-                        displayName( "unstructured tree node " + i + "-" + j ).
-                        parent( parent.getPath() ).build() );
-                }
-            }
-        }
-    }
-
     private void createSites()
     {
         for ( int j = 1; j <= 20; j++ )
@@ -213,15 +182,6 @@ public class LoadTestInitializer
             owner( PrincipalKey.ofAnonymous() ).
             contentData( new PropertyTree() ).
             type( ContentTypeName.folder() ).
-            inheritPermissions( true );
-    }
-
-    private CreateContentParams.Builder makeUnstructured()
-    {
-        return CreateContentParams.create().
-            owner( PrincipalKey.ofAnonymous() ).
-            contentData( new PropertyTree() ).
-            type( ContentTypeName.unstructured() ).
             inheritPermissions( true );
     }
 

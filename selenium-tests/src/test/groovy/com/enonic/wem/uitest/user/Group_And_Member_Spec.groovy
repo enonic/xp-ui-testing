@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.GroupStatisticsPanel
-import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.vo.usermanager.Group
@@ -27,7 +27,7 @@ class Group_And_Member_Spec
         TEST_GROUP = buildGroup( "group", "group-for-user", "description" );
         groupWizardPanel.typeData( TEST_GROUP ).save().close( TEST_GROUP.getDisplayName() );
         sleep( 500 );
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.GROUP.getValue() );
+        userBrowsePanel.clickOnExpander( UserItemName.GROUP.getValue() );
 
         then: "new Group should be listed in the grid"
         saveScreenshot( "group-for-adding-user" );

@@ -94,6 +94,7 @@ public class SiteFormViewPanel
     private void selectApp( String appName )
     {
         clearAndType( optionFilterInput, appName );
+        sleep( 1000 );
         String moduleGridItem = String.format( NAMES_VIEW_BY_DISPLAY_NAME, appName );
         if ( !isElementDisplayed( moduleGridItem ) )
         {

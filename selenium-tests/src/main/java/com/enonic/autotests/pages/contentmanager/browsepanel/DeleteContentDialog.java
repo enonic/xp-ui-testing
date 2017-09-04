@@ -55,7 +55,7 @@ public class DeleteContentDialog
 
     protected final String CANCEL_BUTTON = CONTAINER_DIV + "//button/span[text()='Cancel']";
 
-    private final String CANCEL_BUTTON_TOP = CONTAINER_DIV + "//div[@class='cancel-button-top']";
+    private final String CANCEL_BUTTON_TOP = CONTAINER_DIV + APP_CANCEL_BUTTON_TOP;
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     private WebElement deleteButton;

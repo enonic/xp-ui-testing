@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.user
 
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowseFilterPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
+import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
@@ -93,9 +94,8 @@ class BaseUsersSpec
 
     protected GroupWizardPanel openSystemGroupWizard()
     {
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        return userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.GROUPS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        return userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.GROUPS_FOLDER ).clickOnToolbarNew( UserItemName.GROUPS_FOLDER );
     }
 
     protected UserStoreWizardPanel openUserStore( String userStoreName )
@@ -107,15 +107,13 @@ class BaseUsersSpec
 
     protected UserWizardPanel openSystemUserWizard()
     {
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        return userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        return userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
     }
 
     protected RoleWizardPanel openRoleWizard()
     {
-        return userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.ROLES_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+        return userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.ROLES_FOLDER ).clickOnToolbarNew( UserItemName.ROLES_FOLDER );
     }
 
     protected Group buildGroup( String name, String displayName, String description )
@@ -196,8 +194,9 @@ class BaseUsersSpec
 
     protected void addUser( User user )
     {
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
-        userBrowsePanel.clickCheckboxAndSelectFolder( UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().typeData(
-            user ).save().close( user.getDisplayName() );
+        userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
+        UserWizardPanel wizard = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+            UserItemName.USERS_FOLDER );
+        wizard.typeData( user ).save().close( user.getDisplayName() );
     }
 }

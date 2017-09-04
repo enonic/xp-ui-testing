@@ -51,7 +51,7 @@ public class EditPermissionsDialog
 
     private final String CANCEL_BUTTON_XPATH = "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']]";
 
-    private final String CANCEL_BUTTON_TOP = CONTAINER_XPATH + "//div[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON_TOP = CONTAINER_XPATH + APP_CANCEL_BUTTON_TOP;
 
     private String ACL_ENTRY_ROW =
         "//div[contains(@class,'access-control-entry') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";

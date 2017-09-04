@@ -29,7 +29,7 @@ public class InstallAppDialog
 
     public static final String INSTALL_DIALOG_DIV = "//div[contains(@id,'InstallAppDialog')]";
 
-    private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + "//div[contains(@class,'cancel-button-top')]";
+    private final String CANCEL_BUTTON = INSTALL_DIALOG_DIV + APP_CANCEL_BUTTON_TOP;
 
     private final String APPLICATION_INPUT = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationInput')]/input";
 

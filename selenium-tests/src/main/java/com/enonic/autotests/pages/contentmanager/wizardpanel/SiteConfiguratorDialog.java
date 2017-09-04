@@ -32,7 +32,7 @@ public class SiteConfiguratorDialog
 
     public final String APPLY_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Apply']]";
 
-    public final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + "//div[contains(@class,'cancel-button-top')]";
+    public final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     @FindBy(xpath = CANCEL_BUTTON)
     WebElement cancelButton;

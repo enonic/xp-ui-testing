@@ -66,9 +66,9 @@ class Issue_Dependant_List_Spec
         TEST_USER =
             User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( "1q2w3e" ).roles( roles.toList() ).build();
         and: "select the Users-folder"
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+            UserBrowsePanel.UserItemName.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "data was typed and user saved"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );

@@ -180,7 +180,7 @@ public class UserStoreWizardPanel
     public WizardPanel<UserStore> save()
     {
         toolbarSaveButton.click();
-        sleep( 1000 );
+        sleep( 1500 );
         return this;
     }
 
@@ -281,7 +281,7 @@ public class UserStoreWizardPanel
         if ( !result )
         {
             saveScreenshot( NameHelper.uniqueName( "err_us_wizard" ) );
-            throw new TestFrameworkException( "UserStoreWizard was not showed!" );
+            throw new TestFrameworkException( "UserStoreWizard was not shown!" );
         }
         return this;
     }

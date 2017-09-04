@@ -64,9 +64,9 @@ class Display_SourceButton_Spec
         USER = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( USER_PASSWORD ).roles(
             roles.toList() ).build();
 
-        userBrowsePanel.clickOnExpander( UserBrowsePanel.BrowseItemType.SYSTEM.getValue() );
+        userBrowsePanel.clickOnExpander( UserBrowsePanel.UserItemName.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder(
-            UserBrowsePanel.BrowseItemType.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
+            UserBrowsePanel.UserItemName.USERS_FOLDER ).clickToolbarNew().waitUntilWizardOpened();
 
         when: "data was typed and user saved"
         userWizardPanel.typeData( USER ).save().close( USER.getDisplayName() );
