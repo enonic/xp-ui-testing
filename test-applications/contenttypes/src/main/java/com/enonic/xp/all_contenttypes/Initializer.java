@@ -43,6 +43,8 @@ public class Initializer
 
     private static final String FOLDER_NAME = "all-content-types-images";
 
+    private static final String SHORTCUT_NAME = "shortcut-imported";
+
     private static final String TEST_FOLDER_NAME = "selenium-tests-folder";
 
     private static final String TEST_FOLDER_DISPLAY_NAME = "folder for selenium tests";
@@ -149,6 +151,7 @@ public class Initializer
             inheritPermissions( true );
     }
 
+
     private boolean hasContent( final ContentPath path )
     {
         try
@@ -227,19 +230,35 @@ public class Initializer
                 }
             }
             addSHContent( testFolderPath );
-
             addEXEContent( testFolderPath );
-
             createSVG_Content( testFolderPath );
-
             createPPTX_Content( testFolderPath );
-
             createTXT_Content( testFolderPath );
             createPDF_Content( testFolderPath );
+            addShortcut( testFolderPath );
         }
 
     }
 
+    private void addShortcut( final ContentPath parent )
+    {
+        contentService.create( makeShortcut().
+            name( SHORTCUT_NAME ).
+            displayName( SHORTCUT_NAME ).
+            parent( parent ).
+            permissions( PERMISSIONS ).
+            inheritPermissions( false ).
+            build() );
+    }
+
+    private CreateContentParams.Builder makeShortcut()
+    {
+        return CreateContentParams.create().
+            owner( PrincipalKey.ofAnonymous() ).
+            contentData( new PropertyTree() ).
+            type( ContentTypeName.shortcut() ).
+            inheritPermissions( true );
+    }
     private void createCODE_Content( final ContentPath parent )
         throws Exception
     {

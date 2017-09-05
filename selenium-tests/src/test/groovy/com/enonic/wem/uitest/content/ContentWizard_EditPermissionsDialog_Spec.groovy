@@ -210,11 +210,11 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         String principalPath2 = PrincipalKey.ofRole( RoleName.SYSTEM_ADMIN.getValue() ).toPath().toString();
         path = principalPath2.substring( principalPath2.indexOf( "/roles" ) );
-        entry = ContentAclEntry.builder().principalName( path ).suite( PermissionSuite.CAN_PUBLISH ).build();
+        entry = ContentAclEntry.builder().principalName( path ).suite( PermissionSuite.FULL_ACCESS ).build();
         entries.add( entry );
         String principalPath3 = PrincipalKey.ofRole( RoleName.CONTENT_MANAGER_ADMINISTRATOR.getValue() ).toPath().toString();
         path = principalPath3.substring( principalPath3.indexOf( "/roles" ) );
-        entry = ContentAclEntry.builder().principalName( path ).suite( PermissionSuite.CAN_PUBLISH ).build();
+        entry = ContentAclEntry.builder().principalName( path ).suite( PermissionSuite.FULL_ACCESS ).build();
         entries.add( entry );
 
         String principalPath4 = PrincipalKey.ofRole( RoleName.SYSTEM_USER_MANAGER.getValue() ).toPath().toString();

@@ -11,7 +11,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
     def "GIVEN grid panel is opened WHEN button 'show filter' has been clicked THEN filter panel should be present"()
     {
-        given: "grid panel is opened"
+        given: "content-grid is opened"
         def displayed = filterPanel.isFilterPanelDisplayed();
 
         when: "button 'show filter' has been clicked "
@@ -23,7 +23,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
     def "GIVEN 'Filter Panel' is opened and 'Shortcut' checkbox is checked WHEN 'Clear' link has been clicked THEN initial grid view should be displayed"()
     {
-        given: "selections in any filter"
+        given: "'Filter Panel' is opened and 'Shortcut' checkbox is checked"
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
