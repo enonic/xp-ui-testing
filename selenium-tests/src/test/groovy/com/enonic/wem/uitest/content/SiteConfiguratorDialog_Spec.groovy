@@ -10,7 +10,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
 /**
- * Tasks: xp-ui-testing#54  Add selenium tests to verify xp#5063
+ * Tasks:
  *
  **/
 class SiteConfiguratorDialog_Spec
@@ -96,8 +96,7 @@ class SiteConfiguratorDialog_Spec
         liveFormPanel.getBackgroundColor().contains( BACKGROUND_RED_COLOR_VALUE );
     }
 
-    //verifies xp#5063 (Confirmation Dialog should appear)
-    def "GIVEN configurator dialog is opened WHEN if something is changed and 'Cancel' button has been pressed THEN 'Confirmation Dialog' should be present"()
+    def "GIVEN configurator dialog is opened WHEN if something is changed and 'Cancel' button has been pressed THEN 'Confirmation Dialog' should not be present"()
     {
         given: "site was opened and configurator dialog is opened"
         filterPanel.typeSearchText( SITE.getName() );
@@ -113,7 +112,7 @@ class SiteConfiguratorDialog_Spec
         saveScreenshot( "site_config_confirm_dlg" );
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
 
-        then: "'Confirmation Dialog' should be present"
-        confirmationDialog.isOpened();
+        then: "'Confirmation Dialog' should not be present"
+        !confirmationDialog.isOpened();
     }
 }
