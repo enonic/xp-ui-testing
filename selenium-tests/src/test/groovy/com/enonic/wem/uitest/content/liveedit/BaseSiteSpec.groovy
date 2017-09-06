@@ -44,6 +44,9 @@ class BaseSiteSpec
     @Shared
     String MY_FIRST_APP_NAME = "com.enonic.myfirstapp";
 
+    @Shared
+    String SUPPORT_SITE = "site";
+
     protected ContentWizardPanel selectSitePressNew( String contentTypeName, String siteName )
     {
         filterPanel.typeSearchText( siteName );

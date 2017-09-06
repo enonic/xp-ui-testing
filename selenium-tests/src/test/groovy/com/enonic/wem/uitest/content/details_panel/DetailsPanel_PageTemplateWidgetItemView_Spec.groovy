@@ -33,7 +33,8 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
     String TEMPLATE_DISPLAY_NAME = "widget template";
 
     @Shared
-    String SUPPORT = "site";
+    String SUPPORT_SITE = "site";
+
 
     def "WHEN image content is selected and details panel opened THEN PageTemplateWidgetItemView is displayed and 'Page Template is not used' should be present"()
     {
@@ -73,7 +74,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         given: "existing site with a controller"
         findAndSelectContent( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_LIST, SUPPORT, TEMPLATE_DISPLAY_NAME,
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_LIST, SUPPORT_SITE, TEMPLATE_DISPLAY_NAME,
                                            SITE.getName() );
         and: "new page template has been added"
         contentBrowsePanel.clickOnRowByName( "_templates" ).clickToolbarNew().selectContentType(
