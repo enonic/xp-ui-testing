@@ -469,7 +469,7 @@ class BaseContentSpec
             site ).save().closeBrowserTab().switchToBrowsePanelTab();
     }
 
-    private Content buildSiteWithAllTypes( String siteName )
+    protected Content buildSiteWithAllTypes( String siteName )
     {
         PropertyTree data = new PropertyTree();
         data.addString( SiteFormViewPanel.APP_KEY, APP_CONTENT_TYPES_DISPLAY_NAME );

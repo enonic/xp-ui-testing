@@ -32,7 +32,7 @@ class Image_Change_In_InspectionPanel_Spec
     def "GIVEN site wizard is opened WHEN new image component has been inserted THEN the image should be present in the 'selected option' on the Inspection Panel"()
     {
         given: "site wizard  is opened and the controller has been selected"
-        SITE1 = buildSiteBasedOnFirstApp();
+        SITE1 = buildSiteWithAllTypes( "inspect" );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE1.getContentTypeName() ).typeData(
             SITE1 ).selectPageDescriptor( "main region" ).save();
         and: "'Page Component View' has been opened"

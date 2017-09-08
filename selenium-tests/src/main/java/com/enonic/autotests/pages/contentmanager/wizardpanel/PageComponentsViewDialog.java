@@ -87,7 +87,7 @@ public class PageComponentsViewDialog
             throw new TestFrameworkException( "menu button was not found for  " + componentName );
         }
         getDisplayedElement( By.xpath( menuButton ) ).click();
-        sleep( 400 );
+        sleep( 500 );
         return this;
     }
 

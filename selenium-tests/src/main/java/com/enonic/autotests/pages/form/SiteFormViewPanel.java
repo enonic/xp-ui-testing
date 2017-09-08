@@ -95,14 +95,14 @@ public class SiteFormViewPanel
     {
         clearAndType( optionFilterInput, appName );
         sleep( 1000 );
-        String moduleGridItem = String.format( NAMES_VIEW_BY_DISPLAY_NAME, appName );
-        if ( !isElementDisplayed( moduleGridItem ) )
+        String appGridItem = String.format( NAMES_VIEW_BY_DISPLAY_NAME, appName );
+        if ( !isElementDisplayed( appGridItem ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_app_" ) );
             throw new TestFrameworkException( "application with name: " + appName + "  was not found!" );
         }
         //else select application from options.
-        findElement( By.xpath( moduleGridItem ) ).click();
+        findElement( By.xpath( appGridItem ) ).click();
         sleep( 500 );
     }
 
