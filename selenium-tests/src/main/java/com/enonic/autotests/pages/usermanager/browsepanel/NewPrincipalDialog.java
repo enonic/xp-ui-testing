@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.usermanager.browsepanel;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,6 +24,14 @@ public class NewPrincipalDialog
     extends Application
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'NewPrincipalDialog')]";
+
+    private final String HEADER = DIALOG_CONTAINER + "//h2[@class='title']";
+
+    private final String PATH = DIALOG_CONTAINER + "//p[@class='path']";
+
+    public static String HEADER_TEXT = "Create New";
+
+    public final String USER_ITEM_NAMES = DIALOG_CONTAINER + "//div[contains(@id,'UserTypesTreeGridItemViewer')]" + H6_DISPLAY_NAME;
 
     private final String CANCEL_BUTTON = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
@@ -121,7 +131,6 @@ public class NewPrincipalDialog
                 wizard = new UserStoreWizardPanel( getSession() );
                 break;
             }
-
             default:
                 throw new TestFrameworkException( "unknown type of item!" );
         }
@@ -147,5 +156,25 @@ public class NewPrincipalDialog
         getDisplayedElement( By.xpath( expanderIcon ) ).click();
         sleep( 500 );
         return this;
+    }
+
+    public String getHeader()
+    {
+        return getDisplayedString( HEADER );
+    }
+
+    public String getPath()
+    {
+        return getDisplayedString( PATH );
+    }
+
+    public boolean isCancelButtonTopDisplayed()
+    {
+        return isElementDisplayed( By.xpath( CANCEL_BUTTON ) );
+    }
+
+    public List<String> getItemNames()
+    {
+        return getDisplayedStrings( By.xpath( USER_ITEM_NAMES ) );
     }
 }
