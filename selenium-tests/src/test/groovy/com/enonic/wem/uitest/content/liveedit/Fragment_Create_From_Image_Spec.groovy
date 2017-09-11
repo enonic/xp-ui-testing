@@ -236,7 +236,7 @@ class Fragment_Create_From_Image_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
         and: "'DropDown handler' has been clicked"
-        fragmentComponentView.clickOnDropDownHandler().clickOnExpanderInDropDownList( SITE.getName() );
+        fragmentComponentView.clickOnDropDownHandler();
         and: "required option has been selected"
         fragmentComponentView.clickOnOption( FRAGMENT_DISPLAY_NAME );
         saveScreenshot( "fragment_option_selected" )
