@@ -235,7 +235,6 @@ public class Application
         try
         {
             getDriver().switchTo().alert();
-            ///getDriver().switchTo().defaultContent();
             return true;
         }
         catch ( NoAlertPresentException var3 )

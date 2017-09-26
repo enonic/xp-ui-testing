@@ -29,7 +29,7 @@ public class UserBrowsePanel
 
     private final String USER_ITEMS_GRID = "//div[contains(@id,'UserItemsTreeGrid')]";
 
-    public final String USERS_BUTTON = "//div[contains(@id,'AppIcon') and child::span[text()='User']]";
+    public final String USERS_BUTTON = "//div[contains(@id,'AppIcon') and child::span[text()='Users']]";
 
     public final String NEW_BUTTON_XPATH = USER_BROWSE_TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[contains(.,'New')]]";
 
