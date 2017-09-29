@@ -224,6 +224,10 @@ public class Initializer
                 {
                     createBatContent( testFolderPath, fileName );
                 }
+                catch ( Exception e )
+                {
+                    LOG.info( "Error when creating bat-content" + e.getMessage() );
+                }
                 finally
                 {
                     LOG.info( "Initialized content for 'All content types'" );
@@ -259,6 +263,7 @@ public class Initializer
             type( ContentTypeName.shortcut() ).
             inheritPermissions( true );
     }
+
     private void createCODE_Content( final ContentPath parent )
         throws Exception
     {

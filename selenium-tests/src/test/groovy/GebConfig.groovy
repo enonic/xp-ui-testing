@@ -1,6 +1,7 @@
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.firefox.MarionetteDriver
@@ -43,7 +44,9 @@ driver = {
 
     }
 
-    def driver = new ChromeDriver();
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments( "--lang=en" );
+    ChromeDriver driver = new ChromeDriver( options );
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
     println "default configuration";

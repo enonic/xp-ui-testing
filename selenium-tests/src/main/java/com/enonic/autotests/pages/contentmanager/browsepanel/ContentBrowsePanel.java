@@ -240,6 +240,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "menu item was not found!" );
         }
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
+        sleep( 300 );
         ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
