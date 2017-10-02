@@ -19,15 +19,22 @@ public class ImageComponentView
 
     private final String IMAGE_COMPONENT_VIEW = "//div[contains(@id,'ImageComponentView')]";
 
+    private final String IMAGE_CONTENT_SELECTOR = IMAGE_COMPONENT_VIEW + "//div[@name='imageContentSelector']";
+
     private final String DROPDOWN_HANDLER = IMAGE_COMPONENT_VIEW + DROP_DOWN_HANDLE_BUTTON;
 
     private final String UPLOAD_BUTTON = IMAGE_COMPONENT_VIEW + "//div[contains(@class,'upload-button')]";
 
     private final String ERROR_IN_COMPONENT_MESSAGE = IMAGE_COMPONENT_VIEW + "//div[contains(@class,'error-container')]";
 
+    private final String DROP_DOWN_MODE_TOGGLER = IMAGE_CONTENT_SELECTOR + "//button[contains(@id,'ModeTogglerButton')]";
+
 
     @FindBy(xpath = DROPDOWN_HANDLER)
     private WebElement dropDownHandler;
+
+    @FindBy(xpath = DROP_DOWN_MODE_TOGGLER)
+    private WebElement dropDownModeToogler;
 
     @FindBy(xpath = UPLOAD_BUTTON)
     private WebElement uploadButton;
@@ -60,6 +67,14 @@ public class ImageComponentView
         sleep( 400 );
         return this;
     }
+
+    public ImageComponentView clickOnDropDownModeToggler()
+    {
+        dropDownModeToogler.click();
+        sleep( 500 );
+        return this;
+    }
+
 
     public boolean isDropDownHandlerDisplayed()
     {
