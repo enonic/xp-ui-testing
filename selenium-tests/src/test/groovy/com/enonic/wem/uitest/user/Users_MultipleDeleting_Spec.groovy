@@ -40,7 +40,7 @@ class Users_MultipleDeleting_Spec
         userBrowsePanel.clickToolbarDelete().doDelete();
 
         then: "correct notification message should be displayed"
-        userBrowsePanel.waitExpectedNotificationMessage( "2 users was deleted", 2 );
+        userBrowsePanel.waitExpectedNotificationMessage( "2 users were deleted", 2 );
 
         and:
         !userBrowsePanel.exists( USER1.getDisplayName() );
