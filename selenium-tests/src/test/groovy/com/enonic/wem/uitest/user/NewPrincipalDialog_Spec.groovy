@@ -9,6 +9,7 @@ import spock.lang.Ignore
  * Created on 31.08.2017.
  *
  * Tasks:xp-ui-testing#84  Add Selenium tests for NewPrincipalDialog
+ * verifies the xp #5604 Incorrect label for the New-button on the toolbar, when several items was selected
  * */
 class NewPrincipalDialog_Spec
     extends BaseUsersSpec
@@ -64,9 +65,8 @@ class NewPrincipalDialog_Spec
         and: "path should be in 'System User Store'"
         newPrincipalDialog.getPath() == "System User Store"
     }
-    //TODO remove @Ignore
+
     // verifies the xp #5604 Incorrect label for the New-button on the toolbar, when several items was selected
-    @Ignore
     def "GIVEN several items are selected WHEN 'New' button has been pressed THEN NewPrincipalDialog should be appears"()
     {
         given:
@@ -77,13 +77,13 @@ class NewPrincipalDialog_Spec
 
         when: "New button has been clicked"
         userBrowsePanel.clickToolbarNew();
-        saveScreenshot()
+        saveScreenshot( "users_several_items_selected" );
 
         then: "NewPrincipal dialog should appear"
         NewPrincipalDialog newPrincipalDialog = new NewPrincipalDialog( getSession() );
         newPrincipalDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
 
-        //and:""
-
+        and: "4 items to select should be displayed on the dialog"
+        newPrincipalDialog.getItemNames().size() == 4;
     }
 }

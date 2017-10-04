@@ -194,7 +194,7 @@ class Issue_Dependant_List_Spec
         updateIssueDialog.getItemNames().size() == 0;
 
         and: "'One or more items from the issue cannot be found' - notification should be displayed"
-        contentBrowsePanel.waitExpectedNotificationMessage( Application.ISSUE_ITEM_DELETED, 1 );
+        contentBrowsePanel.waitExpectedNotificationMessage( Application.ISSUE_ITEM_DELETED, 2 );
     }
     //verifies: Create Issue dialog - Error message appears when a text has been typed in the items-option filter #5435
     def "GIVEN existing user AND no any content is selected WHEN when an issue has been created and it assigned to the user THEN items to publish should be present on the Issue Details"()
