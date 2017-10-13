@@ -233,10 +233,10 @@ class Occurrences_ItemSet_0_0_Spec
         then: "correct text in the htmlArea should be reverted"
         itemSetViewPanel.getInnerTextFromHtmlAreas().get( 0 ) == TEST_TEXT_HTML_AREA;
 
-        and: "correct text in the text-line should be reverted"
+        and: "required text should be reverted in the text-line"
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
 
-        then: "'online' status is displayed"
+        then: "'online' status should be displayed"
         wizard.getStatus() == ContentStatus.ONLINE.getValue();
     }
 

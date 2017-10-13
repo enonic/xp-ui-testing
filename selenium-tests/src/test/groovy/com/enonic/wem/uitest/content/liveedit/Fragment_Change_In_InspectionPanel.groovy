@@ -180,7 +180,7 @@ class Fragment_Change_In_InspectionPanel
 
         then: "fragments from the first site should be available in the second site"
         List<String> options = fragmentInspectionPanel.getDropdownOptions();
-        options.contains( CITY_CREATION_PART );
+        !options.contains( CITY_CREATION_PART );
     }
 
     private void insertPart( PageComponentsViewDialog pageComponentsView, ContentWizardPanel siteWizard, String partName )

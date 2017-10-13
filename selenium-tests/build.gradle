@@ -7,7 +7,7 @@ configurations {
 }
 
 ext {
-    xpVersion = '6.12.0-SNAPSHOT'
+    xpVersion = '6.13.0-SNAPSHOT'
     unpackDir = "$buildDir${File.separator}install"
     screenshotsDir = "$buildDir${File.separator}screenshots"
     reportsDir = "$buildDir${File.separator}repots"
@@ -317,7 +317,7 @@ task testContentStudioLocal( type: Test ) {
     exclude '**/content/ContentUploadSpec.class'
     exclude '**/content/liveedit/**Spec.class'
     exclude '**/content/input_types/*Spec.class'
-    exclude '**/content/move_publish_sort/**Spec.class'
+    exclude '**/content/move_publish_sort/**/**Spec.class'
     exclude '**/content/relationship/**Spec.class'
     exclude '**/content/details_panel/**Spec.class'
     exclude '**/content/volume_testing/**Spec.class'

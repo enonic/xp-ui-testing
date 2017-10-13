@@ -50,7 +50,7 @@ class Group_And_Member_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName() );
     }
 
-    def "WHEN existing user was added to a group and this group is opened THEN correct display name of user is shown on members-form"()
+    def "WHEN existing user was added to the group and this group is opened THEN correct display name of user is shown on members-form"()
     {
         when: "the group has been selected and opened"
         userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
