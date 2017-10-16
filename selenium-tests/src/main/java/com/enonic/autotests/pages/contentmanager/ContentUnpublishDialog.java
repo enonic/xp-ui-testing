@@ -32,8 +32,8 @@ public class ContentUnpublishDialog
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 
-    private String CONTENT_STATUS_BY_DISPLAY_NAME =
-        DIALOG_CONTAINER + "//div[@class='browse-selection-item' and descendant::h6[text()='%s']]//div[contains(@class,'status equal')]";
+    private String CONTENT_STATUS_BY_DISPLAY_NAME = DIALOG_CONTAINER +
+        "//div[contains(@id,'StatusSelectionItem') and descendant::h6[text()='%s']]//div[contains(@class,'status') and not(contains(@class,'summary'))]";
 
     private String DEPENDANTS_BLOCK = DIALOG_CONTAINER + "//div[@class='dependants']";
 

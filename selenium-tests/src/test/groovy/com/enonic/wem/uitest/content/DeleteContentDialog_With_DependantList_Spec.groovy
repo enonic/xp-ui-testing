@@ -4,7 +4,9 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class DeleteContentDialog_With_DependantList_Spec
     extends BaseContentSpec
 {

@@ -29,11 +29,11 @@ class UserWizardPanel_Toolbar_Spec
         then: "'Delete' button should be disabled"
         !wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        and: "'Save' button should be disabled, because e-mail and password are empty"
+        !wizardPanel.isSaveButtonEnabled();
     }
 
-    def "GIVEN user wizard is opened WHEN all data typed THEN save button is enabled AND delete button is disabled"()
+    def "GIVEN user wizard is opened WHEN all data typed THEN save button should be enabled AND delete button is disabled"()
     {
         given: "user wizard is opened"
         UserWizardPanel wizardPanel = openSystemUserWizard();

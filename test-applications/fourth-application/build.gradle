@@ -1,20 +1,15 @@
 buildscript {
-    repositories {
-        mavenLocal()
-        jcenter()
-        maven {
-            url 'http://repo.enonic.net/public'
-        }
+    ext {
+        xpVersion = '6.13.0-SNAPSHOT'
     }
 
-    dependencies {
-        classpath 'com.enonic.xp:gradle-plugin:6.13.0-SNAPSHOT'
-    }
 }
-
-apply plugin: 'maven'
-apply plugin: 'com.enonic.xp.app'
-
+plugins {
+    id 'maven'
+    id 'com.enonic.defaults' version '1.0.3'
+    id 'com.enonic.xp.app' version '1.0.13'
+}
+version = '2.0.0'
 app {
     name = 'com.enonic.xp.testing.fourth_app'
     displayName = 'Fourth Selenium App'

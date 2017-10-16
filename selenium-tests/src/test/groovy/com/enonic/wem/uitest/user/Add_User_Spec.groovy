@@ -14,20 +14,19 @@ class Add_User_Spec
     @Shared
     User USER;
 
-    def "GIVEN 'System' was expanded AND 'User' is selected  and 'New' pressed WHEN user-data typed but the  password is empty and 'Save' button pressed THEN error notification message should appear"()
+    def "GIVEN 'System' was expanded AND 'User' is selected  and 'New' pressed WHEN user-data typed but the  password is empty  THEN Save button should be disabled"()
     {
         given: "'System' was expanded AND 'User' is selected"
         User userEmptyPassword = buildUser( "user", null );
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+        UserWizardPanel userWizard = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
             UserItemName.USERS_FOLDER );
 
-        when: "user-data typed but the  password is empty and 'Save' button pressed"
-        String errorMessage = userWizardPanel.typeData( userEmptyPassword ).save().waitNotificationError( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "user_error_message1" );
+        when: "user-data has been typed but the  password is empty"
+        userWizard.typeData( userEmptyPassword );
 
-        then: "error notification message should appear"
-        errorMessage == UserWizardPanel.PASSWORD_ERROR_MESSAGE;
+        then: "Save button should be disabled, because password input is empty"
+        !userWizard.isSaveButtonEnabled();
     }
 
     def "GIVEN start adding a new user WHEN data typed  and 'Save' button pressed THEN correct notification message is displayed and user listed in the grid"()
