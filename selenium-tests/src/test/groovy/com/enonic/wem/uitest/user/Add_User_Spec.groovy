@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.user
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.vo.usermanager.User
@@ -14,7 +13,7 @@ class Add_User_Spec
     @Shared
     User USER;
 
-    def "GIVEN 'System' was expanded AND 'User' is selected  and 'New' pressed WHEN user-data typed but the  password is empty  THEN Save button should be disabled"()
+    def "GIVEN 'System' was expanded AND 'User' is selected  and 'New' pressed WHEN user-data typed but the  password is empty and 'Save' button pressed THEN error notification message should appear"()
     {
         given: "'System' was expanded AND 'User' is selected"
         User userEmptyPassword = buildUser( "user", null );

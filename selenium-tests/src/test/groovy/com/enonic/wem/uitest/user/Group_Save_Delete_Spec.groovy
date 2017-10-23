@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
-import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.usermanager.Group
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -168,7 +167,7 @@ class Group_Save_Delete_Spec
 
         then: "new group displayed in grid"
         userBrowseFilterPanel.typeSearchText( testGroup.getName() );
-        TestUtils.saveScreenshot( getSession(), "app-home-clicked" );
+        saveScreenshot( "app-home-clicked" );
         userBrowsePanel.exists( testGroup.getName() );
     }
 }

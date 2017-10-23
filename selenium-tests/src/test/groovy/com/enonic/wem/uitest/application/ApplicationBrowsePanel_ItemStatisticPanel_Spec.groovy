@@ -25,7 +25,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     String RELATIONSHIP_TYPE_NAME = "citation";
 
     @Shared
-    String VERSION_OF_TEST_APPLICATION = "2.0.0.SNAPSHOT";
+    String VERSION_OF_TEST_APPLICATION = "2.0.0";
 
     def "set up: start all applications"()
     {
