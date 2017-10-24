@@ -106,7 +106,7 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         wizardPanel.clickOnRolesAndGroupsTabLink();
         sleep( 1000 );
 
-        when: "role was removed AND user saved AND wizard closed"
+        when: "role has been removed AND user saved AND wizard closed"
         wizardPanel.removeRoleByName( TEST_ROLE_NAME ).save().close( TEST_USER.getDisplayName() );
         userBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "user_role_removed_stat_panel" );

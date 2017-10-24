@@ -274,6 +274,12 @@ task testUserLocal( type: Test ) {
     forkEvery = null
 }
 
+task testPageEditorLocal( type: Test ) {
+    scanForTestClasses = false
+    include '**/content/liveedit/**Spec.class'
+    forkEvery = null
+}
+
 task testApplicationLocal( type: Test ) {
     scanForTestClasses = false
     include '**/application/*Spec.class'
