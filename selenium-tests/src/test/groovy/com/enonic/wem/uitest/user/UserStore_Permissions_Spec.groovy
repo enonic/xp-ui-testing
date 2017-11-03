@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.user
 
+import com.enonic.autotests.pages.LoaderComboBox
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel
 import com.enonic.autotests.vo.contentmanager.security.UserStoreAccess
 import com.enonic.autotests.vo.contentmanager.security.UserStoreAclEntry
@@ -38,7 +39,7 @@ class UserStore_Permissions_Spec
         and: "default permissions displayed with correct values"
         entries.get( 1 ).getPrincipalDisplayName() == RoleDisplayName.SYSTEM_ADMIN.getValue();
 
-        and: "default permissions displayed with correct values"
+        and: "default permissions should be displayed with correct values"
         entries.get( 1 ).getUserStoreAccess().getValue() == UserStoreAccess.ADMINISTRATOR.getValue();
 
         and: "default permissions displayed with correct values"
@@ -91,5 +92,27 @@ class UserStore_Permissions_Spec
 
         and: "removed permission should not be displayed on the wizard panel"
         !userStoreWizardPanel.isPermissionDisplayed( RoleDisplayName.USERS_ADMINISTRATOR.getValue() );
+    }
+    //verifies
+    // https://github.com/enonic/lib-admin-ui/issues/147
+    def "GIVEN principal's name has been typed and the principal selected WHEN the option filter has been cleared and drop-down handler clicked THEN initial list of options should be displayed"()
+    {
+        given: "existing store is opened"
+        UserStoreWizardPanel userStoreWizardPanel = openUserStore( USER_STORE_WITH_PERMISSIONS.getName() );
+        userStoreWizardPanel.clickOnWizardStep( "Permissions" );
+        sleep( 500 );
+        and: "New permission has been added"
+        userStoreWizardPanel.addPrincipal( RoleDisplayName.EVERYONE.getValue() );
+
+        when: "Principal options filter has been cleared"
+        userStoreWizardPanel.clearPrincipalOptionsFilterInput();
+        and: "drop-down handle has been clicked"
+        userStoreWizardPanel.clickOnPrincipalComboBoxDropDownHandle();
+        saveScreenshot( "test_user_store_permission_removed" );
+
+        then: "initial options should be present in the list"
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
+        List<String> options = loaderComboBox.getOptionDisplayNames();
+        options.size() > 1;
     }
 }

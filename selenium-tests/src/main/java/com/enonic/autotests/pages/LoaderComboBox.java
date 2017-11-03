@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 
@@ -14,6 +16,8 @@ public class LoaderComboBox
 {
     public String LOADER_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME =
         "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
+
+    public String LOADER_COMBOBOX_OPTION_DISPLAY_NAMES = "//div[@class='slick-viewport']" + H6_DISPLAY_NAME;
 
     public LoaderComboBox( final TestSession session )
     {
@@ -45,5 +49,10 @@ public class LoaderComboBox
     public void selectOption( String option )
     {
         selectOption( option, null );
+    }
+
+    public List<String> getOptionDisplayNames()
+    {
+        return getDisplayedStrings( By.xpath( LOADER_COMBOBOX_OPTION_DISPLAY_NAMES ) );
     }
 }

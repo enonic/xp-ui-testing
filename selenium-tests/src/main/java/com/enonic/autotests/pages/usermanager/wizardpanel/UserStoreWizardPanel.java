@@ -39,6 +39,8 @@ public class UserStoreWizardPanel
 
     private final String ID_PROVIDER_COMBOBOX_DROPDOWN_HANDLER = ID_PROVIDER_COMBOBOX + "//button[contains(@id,'DropdownHandle')]";
 
+    private final String PRINCIPAL_COMBOBOX_DROPDOWN_HANDLE = PRINCIPAL_SELECTOR + "//button[contains(@id,'DropdownHandle')]";
+
     private final String ID_PROVIDER_OPTIONS_FILTER_INPUT = ID_PROVIDER_COMBOBOX + COMBOBOX_OPTION_FILTER_INPUT;
 
     private final String TOOLBAR_DELETE_BUTTON =
@@ -74,6 +76,9 @@ public class UserStoreWizardPanel
 
     @FindBy(xpath = PRINCIPALS_OPTIONS_FILTER_INPUT)
     protected WebElement principalsOptionsFilterInput;
+
+    @FindBy(xpath = PRINCIPAL_COMBOBOX_DROPDOWN_HANDLE)
+    protected WebElement principalComboBoxDropDownHandle;
 
     /**
      * The constructor.
@@ -137,6 +142,19 @@ public class UserStoreWizardPanel
         LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         loaderComboBox.selectOption( principalDisplayName );
         sleep( 500 );
+        return this;
+    }
+
+    public UserStoreWizardPanel clearPrincipalOptionsFilterInput()
+    {
+        principalsOptionsFilterInput.clear();
+        return this;
+    }
+
+    public UserStoreWizardPanel clickOnPrincipalComboBoxDropDownHandle()
+    {
+        principalComboBoxDropDownHandle.click();
+        sleep( 200 );
         return this;
     }
 

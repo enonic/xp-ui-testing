@@ -256,7 +256,7 @@ class IssueDetailsDialog_Spec
         detailsDialog.waitForLoaded();
     }
 
-    def "GIVEN 'UpdateIssueDialog' is opened WHEN 'cancel-top' button has been pressed THEN Issue Details dialog should be loaded"()
+    def "GIVEN 'UpdateIssueDialog' is opened WHEN 'cancel-top' button has been pressed THEN 'Issue Details' dialog should be cloased as well"()
     {
         given: "existing assigned user is logged in"
         getTestSession().setUser( TEST_USER );
@@ -270,7 +270,7 @@ class IssueDetailsDialog_Spec
         when: "'Cancel-top' button on the UpdateIssue dialog has been pressed"
         updateIssueDialog.clickOnCancelTopButton();
 
-        then: "'Issue Details' dialog should be loaded"
-        detailsDialog.waitForLoaded();
+        then: "'Issue Details' dialog should be closed as well"
+        detailsDialog.waitForClosed();
     }
 }
