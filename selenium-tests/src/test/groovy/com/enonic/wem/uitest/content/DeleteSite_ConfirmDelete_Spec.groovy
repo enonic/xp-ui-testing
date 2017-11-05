@@ -127,7 +127,10 @@ class DeleteSite_ConfirmDelete_Spec
         confirmDialog.typeNumber( "2" ).clickOnConfirmButton();
         saveScreenshot( "test_confirm_delete_site_online" );
 
-        then: "site successfully deleted"
+        then: ""
+        contentBrowsePanel.waitExpectedNotificationMessage( "The item is deleted", 1 );
+
+        and: "site successfully deleted"
         !contentBrowsePanel.exists( onlineSite.getName() );
     }
 

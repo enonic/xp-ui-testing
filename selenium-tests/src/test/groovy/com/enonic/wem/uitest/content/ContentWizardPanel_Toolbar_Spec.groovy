@@ -113,6 +113,6 @@ class ContentWizardPanel_Toolbar_Spec
 
         then: "content should not be present in the grid"
         filterPanel.typeSearchText( folderContent.getName() );
-        !contentBrowsePanel.exists( folderContent.getName() )
+        !contentBrowsePanel.exists( folderContent.getName() );
     }
 }

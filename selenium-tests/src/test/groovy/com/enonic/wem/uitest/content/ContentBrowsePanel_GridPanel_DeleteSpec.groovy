@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -84,6 +85,9 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         then: "New-button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
+
+        and:
+        contentBrowsePanel.waitNotificationMessage( 1 ) == Application.CONTENT_DELETED_MESSAGE;
     }
 
     def "GIVEN two existing folders in the root WHEN both folders were deleted THEN New-button should be enabled"()

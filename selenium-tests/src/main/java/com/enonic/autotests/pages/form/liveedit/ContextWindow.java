@@ -242,7 +242,7 @@ public class ContextWindow
 
     private int calculateOffsetY( int toolbarHeight, int liveEditFrameY, String... elements )
     {
-        WebElement mainDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) ).get( 0 );
+        WebElement mainDiv = findElements( By.xpath( "//div[contains(@id,'RegionPlaceholder')]" ) ).get( 0 );
         int mainOffsetY = mainDiv.getSize().getHeight() / 2;
         int height = 0;
         for ( int i = 0; i < elements.length; i++ )
@@ -256,7 +256,7 @@ public class ContextWindow
 
     private int calculateOffsetX( int liveEditFrameX )
     {
-        WebElement mainDiv = findElements( By.xpath( "//div[contains(@id,'api.liveedit.RegionPlaceholder')]" ) ).get( 0 );
+        WebElement mainDiv = findElements( By.xpath( "//div[contains(@id,'RegionPlaceholder')]" ) ).get( 0 );
         int mainOffsetX = mainDiv.getSize().getWidth() / 2;
         int xOffset = liveEditFrameX + mainOffsetX;
         return xOffset;
