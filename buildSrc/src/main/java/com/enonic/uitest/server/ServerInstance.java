@@ -44,7 +44,7 @@ public final class ServerInstance
         }
         catch ( InvocationTargetException e )
         {
-            // System.out.println( e.getMessage() );
+            System.out.println( e.getMessage() );
         }
         this.instance.getClass().getMethod( "start" ).invoke( this.instance );
 
