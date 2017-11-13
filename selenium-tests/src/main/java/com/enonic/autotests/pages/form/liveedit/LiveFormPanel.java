@@ -158,7 +158,7 @@ public class LiveFormPanel
 
     public int getLayoutColumnNumber()
     {
-        return findElements( By.xpath( LAYOUT_COMPONENT + "//div[contains(@id,'liveedit.RegionView')]" ) ).size();
+        return findElements( By.xpath( LAYOUT_COMPONENT + "//div[contains(@id,'RegionView')]" ) ).size();
     }
 
     public boolean isShaderDisplayed()
