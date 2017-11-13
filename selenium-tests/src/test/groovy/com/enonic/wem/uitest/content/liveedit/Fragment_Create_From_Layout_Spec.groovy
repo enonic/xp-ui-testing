@@ -171,7 +171,7 @@ class Fragment_Create_From_Layout_Spec
 
         and: "drop-down handler has been clicked"
         imageComponentView.clickOnDropDownHandler();
-        imageComponentView.clickOnDropDownModeToggler().clickOnExpanderInDropDownList( "imagearchive" ).clickOnOption( "enterprise" );
+        imageComponentView.clickOnExpanderInDropDownList( "imagearchive" ).clickOnOption( "enterprise" );
 
         and: "the fragment has been saved"
         fragmentWizard.save();
