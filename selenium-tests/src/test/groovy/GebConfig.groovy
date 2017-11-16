@@ -117,6 +117,7 @@ environments {
             FirefoxProfile profile = new FirefoxProfile();
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setCapability( FirefoxDriver.PROFILE, profile );
+            capabilities.setCapability( "headless", true );
             capabilities.setCapability( "marionette", true );
             def driver = new MarionetteDriver( capabilities );
             driver.setLogLevel( Level.INFO )
