@@ -46,6 +46,14 @@ driver = {
 
     ChromeOptions options = new ChromeOptions();
     options.addArguments( "--lang=en" );
+
+    def headless = System.getProperty( "chrome.headless" )
+
+    if (headless != null && headless.equals( "true" ))
+    {
+        options.addArguments( "--headless", "--disable-gpu", "--no-sandbox" );
+    }
+
     ChromeDriver driver = new ChromeDriver( options );
     println "screen height is " + driver.manage().window().getSize().height;
     println "screen width is " + driver.manage().window().getSize().width;
