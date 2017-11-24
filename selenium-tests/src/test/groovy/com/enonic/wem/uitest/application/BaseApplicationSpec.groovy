@@ -81,11 +81,8 @@ class BaseApplicationSpec
 
     def setup()
     {
-        println "Starting setup";
-        go "admin";
+        go "admin"
         applicationBrowsePanel = NavigatorHelper.openApplications( getTestSession() );
-        println "Application status : " + applicationBrowsePanel.getApplicationStatus( );
-        println "Application description : " + applicationBrowsePanel.getApplicationDescription( );
         applicationItemStatisticsPanel = applicationBrowsePanel.getItemStatisticPanel();
     }
 
