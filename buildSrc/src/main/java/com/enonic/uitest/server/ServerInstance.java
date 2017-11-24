@@ -51,6 +51,21 @@ public final class ServerInstance
         Thread.sleep( this.startupDelay );
     }
 
+    public static void main( String[] args )
+    {
+        System.out.println( "Starting....!" );
+        ServerInstance inst = new ServerInstance();
+        try
+        {
+            inst.setInstallDir( new File( "." ) );
+            inst.start();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+    }
+
     public void stop()
         throws Exception
     {

@@ -28,7 +28,8 @@ public class HtmlArea0_1_FormViewPanel
             buildActions().click( htmlArea ).build().perform();
             sleep( 500 );
             setTextIntoArea( htmlArea.getAttribute( "id" ), text );
-            sleep( 300 );
+            buildActions().click( htmlArea ).build().perform();
+            sleep( 1000 );
         }
         return this;
     }

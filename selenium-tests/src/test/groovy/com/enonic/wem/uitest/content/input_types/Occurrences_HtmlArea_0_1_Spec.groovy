@@ -35,7 +35,7 @@ class Occurrences_HtmlArea_0_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         wizard.typeData( htmlAreaContent );
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        and: "Link with norwgian text has been added"
+        and: "Link with norwegian text has been added"
         InsertLinkModalDialog modalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
         modalDialog.clickURLBarItem().typeText( NORWEGIAN_TEXT ).typeURL( "http://enonic.com" ).pressInsertButton().waitForDialogClosed();
         and: "the wizard has been closed"

@@ -73,25 +73,25 @@ class UserBrowsePanel_GridPanel_Spec
         userBrowsePanel.isExpanderPresent( UserItemName.SYSTEM.getValue() )
     }
 
-    def "GIVEN a 'system' folder on root  WHEN folder expanded THEN 'Users' and 'Groups' shown"()
+    def "GIVEN 'System' folder on root  WHEN folder expanded THEN 'Users' and 'Groups' shown"()
     {
-        when: " a 'system' folder expanded"
+        when: "'System' folder expanded"
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
 
-        then: "'users' should be shown"
+        then: "'users folder' should be present"
         userBrowsePanel.exists( "users", true );
     }
 
-    def "GIVEN a 'roles' folder on root  WHEN folder expanded THEN 'ea' enterprise administrator shown"()
+    def "GIVEN 'Roles' folder on root WHEN Roles has been expanded THEN 'ea' enterprise administrator should be present"()
     {
-        when: " a 'roles' folder expanded"
+        when: "'Roles' folder has been expanded"
         userBrowsePanel.clickOnExpander( UserItemName.ROLES_FOLDER.getValue() );
 
-        then: "'ea' - enterprise administrator should be shown"
+        then: "'ea' - enterprise administrator should be present"
         userBrowsePanel.exists( "system.admin", true );
     }
 
-    def "GIVEN a 'system' folder with an open expander WHEN closed THEN no children are listed beneath"()
+    def "GIVEN 'System' folder with an open expander WHEN closed THEN no children are listed beneath"()
     {
         given:
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
@@ -118,7 +118,7 @@ class UserBrowsePanel_GridPanel_Spec
         !userBrowsePanel.isRowSelected( UserItemName.SYSTEM.getValue() ) && userBrowsePanel.getSelectedRowsNumber() == before;
     }
 
-    def "GIVEN a 'roles' selected WHEN arrow up is typed THEN another row should be selected"()
+    def "GIVEN 'Roles' selected WHEN arrow up is typed THEN another row should be selected"()
     {
         given: "'roles folder is selected'"
         userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.ROLES_FOLDER );
