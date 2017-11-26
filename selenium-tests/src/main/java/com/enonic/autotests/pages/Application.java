@@ -77,6 +77,8 @@ public class Application
 
     protected final String APP_CANCEL_BUTTON_TOP = "//div[contains(@class,'cancel-button-top')]";
 
+    protected String OPTION_IMAGE_SELECTOR_VIEW = "//div[contains(@id,'ImageSelectorViewer') and contains(@title,'%s')]";
+
     protected final String DATA_TIME_PICKER_INPUT = "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]";
 
     protected final String TEXT_INPUT = "//input[contains(@id,'TextInput')]";

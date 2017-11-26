@@ -170,7 +170,12 @@ public class SiteConfiguratorDialog
             throw new TestFrameworkException( "ImageContentComboBox option filter was not found!" );
         }
         getDisplayedElement( By.xpath( optionFilter ) ).sendKeys( imageName );
-        String imageXpath = DIALOG_CONTAINER + String.format( NAMES_VIEW_BY_DISPLAY_NAME, imageName );
+        String imageXpath = DIALOG_CONTAINER + String.format( OPTION_IMAGE_SELECTOR_VIEW, imageName );
+        if ( !isElementDisplayed( imageXpath ) )
+        {
+            saveScreenshot( "img_file_not_found" );
+            throw new TestFrameworkException( "wrong xpath:  " + imageName + "  " + imageXpath );
+        }
         getDisplayedElement( By.xpath( imageXpath ) ).click();
         return this;
     }
@@ -220,6 +225,7 @@ public class SiteConfiguratorDialog
         closeButton.click();
         sleep( 200 );
     }
+
     public void setTextIntoArea( String text )
     {
         String script = "document.getElementById('tinymce').contentDocument.body.innerHTML=arguments[0];";

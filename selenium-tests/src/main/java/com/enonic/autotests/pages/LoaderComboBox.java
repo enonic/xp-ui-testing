@@ -14,8 +14,9 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class LoaderComboBox
     extends Application
 {
-    public String LOADER_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@id,'NamesView')]//h6[text()='%s']";
+    public String CONTAINER = "//div[contains(@id,'LoaderComboBox')]";
+
+    public String LOADER_COMBOBOX_OPTIONS_ITEM_BY_DISPLAY_NAME = CONTAINER + SLICK_ROW_BY_DISPLAY_NAME;
 
     public String LOADER_COMBOBOX_OPTION_DISPLAY_NAMES = "//div[@class='slick-viewport']" + H6_DISPLAY_NAME;
 
@@ -41,7 +42,7 @@ public class LoaderComboBox
         if ( !isVisible )
         {
             saveScreenshot( NameHelper.uniqueName( "err_option" ) );
-            throw new TestFrameworkException( "option was not found! " + option );
+            throw new TestFrameworkException( "option was not found! " + optionXpath );
         }
         getDisplayedElement( By.xpath( optionXpath ) ).click();
     }
