@@ -108,8 +108,10 @@ task startServer( dependsOn: unpackDistro ) {
     }
 }
 
-task stopServer << {
-    xpServer.stop()
+task stopServer {
+    doLast {
+        xpServer.stop()
+    }
 }
 
 tasks.withType( Test ) {
