@@ -115,7 +115,7 @@ public class UserStoreWizardPanel
 
     public UserStoreWizardPanel removePermission( String principalDisplayName )
     {
-        String removeEntryButton = String.format( SELECTED_ACE_ITEM_BY_DISPLAY_NAME + "//a[@class='icon-close']", principalDisplayName );
+        String removeEntryButton = String.format( SELECTED_ACE_ITEM_BY_DISPLAY_NAME + ICON_REMOVE, principalDisplayName );
         if ( !isElementDisplayed( removeEntryButton ) )
         {
             saveScreenshot( "err_remove_acl_entry" );

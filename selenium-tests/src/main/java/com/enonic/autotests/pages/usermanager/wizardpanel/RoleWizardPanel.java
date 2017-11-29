@@ -134,7 +134,8 @@ public class RoleWizardPanel
     public RoleWizardPanel removeMember( String displayName )
     {
         String removeButton = String.format( MEMBERS_FORM +
-                                                 "//div[contains(@class,'principal-selected-options-view') and descendant::h6[contains(@class,'main-name') and text()='%s']]//a[@class='icon-close']",
+                                                 "//div[contains(@class,'principal-selected-options-view') and descendant::h6[contains(@class,'main-name') and text()='%s']]" +
+                                                 ICON_REMOVE,
                                              displayName );
 
         if ( !isElementDisplayed( removeButton ) )

@@ -31,10 +31,10 @@ public class SettingsWizardStepForm
     private String NAME_ITEM = "//h6[contains(@class,'main-name') and text()='%s']";
 
     private String REMOVE_LANG_BUTTON = LOCALE_COMBOBOX +
-        "//div[contains(@class,'selected-options locale-selected-options-view') and descendant::h6[text()='%s']]//a[@class='icon-close']";
+        "//div[contains(@id,'LocaleSelectedOptionView') and descendant::h6[text()='%s']]" + ICON_REMOVE;
 
     private String REMOVE_OWNER_BUTTON = PRINCIPAL_COMBOBOX +
-        "//div[contains(@class,'selected-options principal-selected-options-view') and descendant::h6[text()='%s']]//a[@class='icon-close']";
+        "//div[contains(@class,'selected-options principal-selected-options-view') and descendant::h6[text()='%s']]" + ICON_REMOVE;
 
     private String LOCALE_TEXT = LOCALE_COMBOBOX + "//div[contains(@class,'selected-options locale-selected-options-view')]" + H6_MAIN_NAME;
 

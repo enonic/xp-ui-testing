@@ -30,10 +30,6 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.6'
     compile 'org.spockframework:spock-core:1.0-groovy-2.4'
     compile 'org.gebish:geb-spock:0.13.1'
-    //compile 'ru.yandex.qatools.allure:allure-spock-1.0-adaptor:1.0'
-    // compile 'ru.yandex.qatools.allure:allure-commons:1.5.0'
-    // compile 'ru.yandex.qatools.allure:allure-java-adaptor-api:1.4.22'
-    //compile "ru.d10xa:gradle-allure-plugin:0.5.5"
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
 task copyContentTypes( type: Copy ) {

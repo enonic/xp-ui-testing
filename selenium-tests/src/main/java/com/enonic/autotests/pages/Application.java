@@ -122,6 +122,8 @@ public class Application
 
     protected final String P_SUB_NAME = "//p[contains(@class,'sub-name')]";
 
+    protected final String ICON_REMOVE = "//a[@class='remove']";
+
     protected final String H6_DISPLAY_NAME = NAMES_VIEW + H6_MAIN_NAME;
 
     protected final String P_NAME = NAMES_VIEW + P_SUB_NAME;

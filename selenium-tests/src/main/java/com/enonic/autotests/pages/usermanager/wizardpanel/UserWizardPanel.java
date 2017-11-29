@@ -44,8 +44,10 @@ public class UserWizardPanel
 
     private final String ROLE_COMBOBOX = "//div[contains(@id,'PrincipalComboBox')]";
 
+    private final String APPLY_ROLE_BUTTON = ROLE_COMBOBOX + "//span[text()='Apply']";
+
     private String REMOVE_ROLE_BUTTON = ROLE_COMBOBOX +
-        "//div[contains(@class,'principal-selected-option-view') and descendant::p[contains(.,'%s')]]//a[@class='icon-close']";
+        "//div[contains(@class,'principal-selected-option-view') and descendant::p[contains(.,'%s')]]" + ICON_REMOVE;
 
     private final String ALL_ROLES = USER_WIZARD_PANEL + "//div[contains(@id,'PrincipalSelectedOptionsView')]" + P_NAME;
 
@@ -87,7 +89,7 @@ public class UserWizardPanel
     public WizardPanel<User> save()
     {
         toolbarSaveButton.click();
-        sleep( 1000 );
+        sleep( 2000 );
         return this;
     }
 
@@ -142,8 +144,11 @@ public class UserWizardPanel
         sleep( 500 );
         return this;
     }
+
     public UserWizardPanel removeRoleByName( String roleName )
     {
+        clickOnRolesAndGroupsTabLink();
+        sleep( 500 );
         String removeButtonXpath = String.format( REMOVE_ROLE_BUTTON, roleName );
         if ( !isElementDisplayed( removeButtonXpath ) )
         {
@@ -190,8 +195,10 @@ public class UserWizardPanel
         if ( !isRoleOrGroupAlreadySelected( roleName ) )
         {
             findElement( By.xpath( rowCheckboxXpath ) ).click();
-            roleOptionsFilter.sendKeys( Keys.ENTER );
+            //roleOptionsFilter.sendKeys( Keys.ENTER );
             sleep( 300 );
+            getDisplayedElement( By.xpath( APPLY_ROLE_BUTTON ) ).click();
+            sleep( 1500 );
         }
     }
 

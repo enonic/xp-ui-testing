@@ -163,7 +163,7 @@ public class EditPermissionsDialog
 
     public EditPermissionsDialog removeAclEntry( String principalName )
     {
-        String principalXpath = CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + "//a[@class='icon-close']";
+        String principalXpath = CONTAINER_XPATH + String.format( ACL_ENTRY_ROW, principalName ) + ICON_REMOVE;
         if ( findElements( By.xpath( principalXpath ) ).size() == 0 )
         {
             saveScreenshot( "err_principal_" + principalName );
