@@ -280,11 +280,12 @@ public class EditPermissionsDialog
     {
         ContentAclEntry.Builder builder;
         List<ContentAclEntry> entries = new ArrayList<>();
-        List<WebElement> principals = findElements( By.xpath( CONTAINER_XPATH + "//div[@class='access-control-entry']" + P_NAME ) );
+        List<WebElement> principals =
+            findElements( By.xpath( CONTAINER_XPATH + "//div[contains(@class,'access-control-entry')]" + P_NAME ) );
 
         List<String> principalNames = principals.stream().map( WebElement::getText ).collect( Collectors.toList() );
-        List<String> suiteNames = getDisplayedStrings(
-            By.xpath( CONTAINER_XPATH + "//div[@class='access-control-entry']//div[contains(@id,'TabMenuButton')]//a[@class='label']" ) );
+        List<String> suiteNames = getDisplayedStrings( By.xpath(
+            CONTAINER_XPATH + "//div[contains(@class,'access-control-entry')]//div[contains(@id,'TabMenuButton')]//a[@class='label']" ) );
         for ( int i = 0; i < principalNames.size(); i++ )
         {
             builder = ContentAclEntry.builder();
