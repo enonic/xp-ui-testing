@@ -59,8 +59,8 @@ class TextArea_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
 
-        then: "the content with 'online' status should be displayed"
-        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
+        then: "the content with 'Published' status should be displayed"
+        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
     def "GIVEN wizard for TextArea-content(required) is opened WHEN text was typed and the content has been published THEN the content with status 'online' should be displayed"()
@@ -75,8 +75,8 @@ class TextArea_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
 
-        then: "the content with 'online' status should be displayed"
-        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
+        then: "the content with 'Published' status should be displayed"
+        contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
     def "GIVEN TextArea-content content with the text was added WHEN the content is opened THEN correct text should be present in the text area"()

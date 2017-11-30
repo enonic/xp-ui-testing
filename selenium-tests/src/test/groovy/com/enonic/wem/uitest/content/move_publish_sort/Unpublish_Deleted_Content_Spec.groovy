@@ -28,7 +28,7 @@ class Unpublish_Deleted_Content_Spec
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
         then: "'Online' status should be displayed"
-        contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN existing 'Online' content AND opened and 'Delete' button pressed WHEN the content has been 'unpublished' THEN wizard closes AND the content should not be listed in the grid"()

@@ -38,8 +38,8 @@ class Site_Publish_Spec
         findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
         saveScreenshot( "site_published" );
 
-        then: "'Online' status should be displayed in the grid"
-        contentBrowsePanel.getContentStatus( SITE.getName() ) == ContentStatus.ONLINE.getValue();
+        then: "'Published' status should be displayed in the grid"
+        contentBrowsePanel.getContentStatus( SITE.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN existing 'online' site WHEN text component was added THEN status on the wizard-page is getting 'Modified'"()

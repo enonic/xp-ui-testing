@@ -115,8 +115,8 @@ class ContentInfoWidget_Spec
         saveScreenshot( "info_widget-content-published" );
         HashMap<String, String> props = contentInfo.getContentProperties();
 
-        then: "'online' status should be displayed on the widget"
-        contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "'published' status should be displayed on the widget"
+        contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "'Published from' property should be correctly displayed"
         props.get( ContentInfoTerms.PUBLISHED_FROM.getValue() ).contains( LocalDate.now().toString() );

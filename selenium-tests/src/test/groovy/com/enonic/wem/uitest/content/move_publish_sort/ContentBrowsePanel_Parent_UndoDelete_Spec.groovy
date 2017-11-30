@@ -81,11 +81,11 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         then: "correct notification should be present"
         message == Application.ITEMS_IS_UNDELETED;
 
-        and: "parent folder should be 'online'"
-        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.ONLINE.getValue();
+        and: "parent folder should be 'Published'"
+        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "child folder should be 'online'"
-        findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.ONLINE.getValue();
+        findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN parent folder and child are 'Deleted' WHEN child folder is selected and 'Undo delete' pressed THEN both folders are getting 'Online'"()
@@ -103,10 +103,10 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         then: "correct notification should be present"
         message == Application.ITEMS_IS_UNDELETED;
 
-        and: "child folder should be 'online'"
-        contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.ONLINE.getValue();
+        and: "child folder should be 'Published'"
+        contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "parent folder should be 'online'"
-        findAndSelectContent( PARENT_FOLDER.getName() ).getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.ONLINE.getValue();
+        findAndSelectContent( PARENT_FOLDER.getName() ).getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 }

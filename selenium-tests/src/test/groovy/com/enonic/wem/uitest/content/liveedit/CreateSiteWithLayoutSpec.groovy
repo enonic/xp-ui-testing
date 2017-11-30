@@ -145,7 +145,7 @@ class CreateSiteWithLayoutSpec
         modalDialog.waitForDialogClosed();
 
         and: "correct status should be displayed on the wizard-page"
-        wizard.getStatus() == ContentStatus.ONLINE.getValue();
+        wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN page-template is opened and 'Page Components' is opened WHEN menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image should be present in the left region"()

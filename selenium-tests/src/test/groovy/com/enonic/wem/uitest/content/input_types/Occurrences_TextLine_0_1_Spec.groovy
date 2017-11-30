@@ -66,7 +66,7 @@ class Occurrences_TextLine_0_1_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );
 
-        then: "the content of the status should be 'Online'"
-        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
+        then: "the content of the status should be 'Published'"
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 }

@@ -64,9 +64,9 @@ class ContentBrowsePanel_PublishMenu_Spec
         modalDialog.clickOnUnpublishButton();
         String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then: "content has 'offline' status"
+        then: "content has 'Unpublished' status"
         saveScreenshot( "test_content_unpublished" );
-        contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
+        contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.UNPUBLISHED.getValue();
 
         and: "correct notification message appears"
         message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, FOLDER_CONTENT.getDisplayName() );

@@ -117,8 +117,8 @@ class Occurrences_DefaultRelation_2_4_Spec
         when: "'publish' button  was pressed"
         contentPublishDialog.clickOnPublishNowButton();
 
-        then: "'Online' status should be displayed for this content"
-        contentBrowsePanel.getContentStatus( TEST_RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "'Published' status should be displayed for this content"
+        contentBrowsePanel.getContentStatus( TEST_RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     def "GIVEN content with three selected options opened for edit WHEN two selected options were removed THEN 'Publish' button should be disabled and content is invalid"()

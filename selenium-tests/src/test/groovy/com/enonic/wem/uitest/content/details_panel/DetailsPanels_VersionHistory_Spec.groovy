@@ -67,8 +67,8 @@ class DetailsPanels_VersionHistory_Spec
         then: "the number of versions should be increased by 1"
         contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 1;
 
-        and: "latest version should has 'online' status"
-        contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        and: "latest version should has 'published' status"
+        contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     def "GIVEN existing 'online' content was changed and content is getting 'Modified' WHEN versions panel is opened THEN three versions should be present. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
@@ -88,8 +88,8 @@ class DetailsPanels_VersionHistory_Spec
         and: "the latest version has a 'modified' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
 
-        and: "previous version has a 'online' badge"
-        contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        and: "previous version has a 'published' badge"
+        contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     def "GIVEN 'modified'-content was selected WHEN 'Delete' button on the toolbar was pressed THEN the newer one with a 'deleted' badge"()

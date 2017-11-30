@@ -60,7 +60,7 @@ class Occurrences_RadioButtons_Spec
         filterPanel.typeSearchText( radioButtonsContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( radioButtonsContent.getName() ).equals( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( radioButtonsContent.getName() ).equals( ContentStatus.PUBLISHED.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( radioButtonsContent.getName() );
         and: "correct publish message was present"

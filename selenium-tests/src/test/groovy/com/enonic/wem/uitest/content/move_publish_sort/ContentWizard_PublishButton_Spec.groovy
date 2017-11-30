@@ -27,8 +27,8 @@ class ContentWizard_PublishButton_Spec
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "folder should be 'online' now"
-        wizard.getStatus() == ContentStatus.ONLINE.getValue();
+        then: "folder should be 'Published' now"
+        wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
 
         and: "'publish' button should be disabled"
         !wizard.isPublishButtonEnabled();
@@ -68,8 +68,8 @@ class ContentWizard_PublishButton_Spec
         modalDialog.clickOnUnpublishButton();
         sleep( 1000 );
 
-        then: "folder should be 'offline' now"
-        wizard.getStatus() == ContentStatus.OFFLINE.getValue();
+        then: "folder should be 'Unpublished' now"
+        wizard.getStatus() == ContentStatus.UNPUBLISHED.getValue();
 
         and: "'Publish' menu becomes enabled"
         wizard.isPublishButtonEnabled();

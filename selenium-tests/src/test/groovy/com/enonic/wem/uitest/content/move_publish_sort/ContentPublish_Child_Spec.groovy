@@ -96,7 +96,7 @@ class ContentPublish_Child_Spec
 
         then: "child content should be 'online' now"
         filterPanel.typeSearchText( childContent1.getName() );
-        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     def "GIVEN existing published parent folder with child WHEN one more child content added into a folder  THEN the child content has a 'Offline' status"()

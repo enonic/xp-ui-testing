@@ -93,8 +93,8 @@ class ContentWizard_Publish_Inputs_Spec
         when: "the folder has been unpublished"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
 
-        then: "status is getting 'Offline'"
-        wizard.waitStatus( ContentStatus.OFFLINE, Application.EXPLICIT_NORMAL );
+        then: "status is getting 'Unpublished'"
+        wizard.waitStatus( ContentStatus.UNPUBLISHED, Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_wizard_unpublished" )
 
         and: "'Online from' input disappears"
@@ -113,8 +113,8 @@ class ContentWizard_Publish_Inputs_Spec
         SchedulePublishDialog schedulePublishDialog = wizard.clickOnWizardPublishButton().showPublishMenu().clickOnScheduleMenuItem();
         schedulePublishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).hideTimePickerPopup().clickOnScheduleButton();
 
-        then: "status is getting 'Offline'"
-        wizard.waitStatus( ContentStatus.ONLINE_PENDING, Application.EXPLICIT_NORMAL );
+        then: "status is getting 'Published(Pending)'"
+        wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_wizard_online_pending" )
     }
     //TODO add tests for Online (Expired), when  https://youtrack.enonic.net/issue/INBOX-615 will be fixed

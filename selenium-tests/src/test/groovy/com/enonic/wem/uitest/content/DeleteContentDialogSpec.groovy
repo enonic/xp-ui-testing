@@ -121,8 +121,8 @@ class DeleteContentDialogSpec
         and: "the checkbox has correct label"
         dialog.getCheckboxLabelText() == DeleteContentDialog.CHECKBOX_LABEL_TEXT;
 
-        and: "the content has 'online' status"
-        dialog.getContentStatus( CONTENT1.getDisplayName() ) == ContentStatus.ONLINE.getValue();
+        and: "the content has 'published' status"
+        dialog.getContentStatus( CONTENT1.getDisplayName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN two existing content WHEN delete dialog opened THEN two contents are present in the modal dialog"()
@@ -165,8 +165,8 @@ class DeleteContentDialogSpec
         then: "dialog closes"
         !dialog.isOpened();
 
-        and: "the content was with 'online' status"
-        status == ContentStatus.ONLINE.getValue();
+        and: "the content was with 'published' status"
+        status == ContentStatus.PUBLISHED.getValue();
 
         and: "content should not be listed in the grid"
         !contentBrowsePanel.exists( CONTENT1.getName() );

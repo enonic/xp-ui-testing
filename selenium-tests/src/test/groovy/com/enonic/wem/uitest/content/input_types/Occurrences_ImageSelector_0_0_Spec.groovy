@@ -197,8 +197,8 @@ class Occurrences_ImageSelector_0_0_Spec
         when: "the name of the content was typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "the content should be with 'online' status"
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "the content should be with 'Published' status"
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         and: "the content is valid, because images are not required for this content"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
         and: "correct notification message was displayed"
@@ -218,8 +218,8 @@ class Occurrences_ImageSelector_0_0_Spec
         and: "name of the content is typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "the content with 'Online' status should be listed"
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "the content with 'Published' status should be listed"
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message should be displayed"
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );

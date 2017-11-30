@@ -132,8 +132,8 @@ class Occurrences_ComboBox_0_0_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.clickOnCleanFilter().typeSearchText( COMBOBOX_0_0_CONTENT.getName() );
 
-        then: "content's  status is getting 'Online'"
-        contentBrowsePanel.getContentStatus( COMBOBOX_0_0_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "content's  status is getting 'Published'"
+        contentBrowsePanel.getContentStatus( COMBOBOX_0_0_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     def "GIVEN creating of a new ComboBox 0:0 without options WHEN content was saved and 'Publish' on toolbar pressed THEN the content should be displayed with 'Online' status"()
@@ -150,8 +150,8 @@ class Occurrences_ComboBox_0_0_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
-        then: "the content should be displayed with 'Online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "the content should be displayed with 'Published' status"
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     private Content buildComboBox0_0_Content( int numberOptions )

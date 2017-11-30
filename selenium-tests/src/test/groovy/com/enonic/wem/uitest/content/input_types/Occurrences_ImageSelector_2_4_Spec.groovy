@@ -133,9 +133,9 @@ class Occurrences_ImageSelector_2_4_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() );
 
-        then: " the content should be 'Online'"
+        then: " the content should be 'Published'"
         contentBrowsePanel.getContentStatus( IMAGE_SELECTOR_CONTENT_4_IMAGES.getName() ).equalsIgnoreCase(
-            ContentStatus.ONLINE.getValue() );
+            ContentStatus.PUBLISHED.getValue() );
     }
 
     def "WHEN content with 4 selected images opened THEN option filter should not be displayed"()

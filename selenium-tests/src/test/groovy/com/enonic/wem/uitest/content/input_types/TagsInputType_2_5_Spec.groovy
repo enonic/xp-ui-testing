@@ -23,8 +23,8 @@ class TagsInputType_2_5_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( tagContent.getName() );
 
-        then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
+        then: "content has a 'Published' status"
+        contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
     def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN 'Publish button is disabled and content is invalid'"()

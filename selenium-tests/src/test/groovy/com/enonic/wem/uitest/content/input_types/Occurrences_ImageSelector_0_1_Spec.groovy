@@ -78,8 +78,8 @@ class Occurrences_ImageSelector_0_1_Spec
         when: "name of the content is typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "content should be with 'online' status"
-        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "content should be with 'Published' status"
+        contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "content is valid"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );

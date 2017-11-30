@@ -27,7 +27,7 @@ class Content_Online_Modified_Spec
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "snotification message should appear and content is getting 'Online'"
-        contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message should be displayed"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getDisplayName() );
@@ -75,7 +75,7 @@ class Content_Online_Modified_Spec
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "status of content is 'online'"
-        contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message appears"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );

@@ -91,8 +91,8 @@ class Occurrences_DateTime_1_1_Spec
         and: "the name of the content has been typed in the search input"
         filterPanel.typeSearchText( dateTimeContent.getName() );
 
-        then: "status of content should be 'online'"
-        contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "status of content should be 'Published'"
+        contentBrowsePanel.getContentStatus( dateTimeContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification should be shown"
         publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateTimeContent.getDisplayName() );

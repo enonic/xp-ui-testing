@@ -98,7 +98,7 @@ class ContentWizardPanel_Toolbar_Spec
         !wizardPanel.isPublishButtonEnabled();
 
         and: "content status should be 'online'"
-        wizardPanel.getStatus() == ContentStatus.ONLINE.getValue();
+        wizardPanel.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN existing content is opened WHEN delete button pressed and deleting was confirmed THEN wizard closes and content should not be present in the grid"()

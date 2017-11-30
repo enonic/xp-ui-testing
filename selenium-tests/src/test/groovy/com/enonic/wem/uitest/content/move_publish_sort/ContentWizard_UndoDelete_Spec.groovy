@@ -31,7 +31,7 @@ class ContentWizard_UndoDelete_Spec
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
         then: "'Online' status should be displayed"
-        contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN existing 'online' folder is opened  WHEN 'Delete' button has been pressed and confirmed THEN 'Undo delete' button should be present on the toolbar"()
@@ -68,7 +68,7 @@ class ContentWizard_UndoDelete_Spec
         saveScreenshot( "undo-delete-pressed-online" );
 
         then: "the content is getting 'Online'"
-        contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "correct notification message should be displayed"
         contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL ) == Application.ITEM_IS_UNDELETED;

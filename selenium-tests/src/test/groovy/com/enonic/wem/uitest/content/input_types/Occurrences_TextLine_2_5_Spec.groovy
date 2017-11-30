@@ -149,8 +149,8 @@ class Occurrences_TextLine_2_5_Spec
         contentWizardPanel.close( textLineContent.getDisplayName() );
         filterPanel.typeSearchText( textLineContent.getName() );
 
-        then: "content should be 'online'"
-        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "content should be 'Published'"
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         and: "correct notification message was shown"
         publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, textLineContent.getDisplayName() );
     }

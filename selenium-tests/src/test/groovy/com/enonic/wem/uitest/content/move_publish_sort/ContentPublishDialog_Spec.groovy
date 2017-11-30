@@ -267,8 +267,8 @@ class ContentPublishDialog_Spec
         contentPublishDialog.clickOnPublishNowButton().waitForDialogClosed();
         saveScreenshot( "dependant_not_published" );
 
-        then: "parent folder should be 'online'"
-        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.ONLINE.getValue();
+        then: "parent folder should be 'Published'"
+        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "child folder should be 'New', because the dependant was removed"
         contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.NEW.getValue();

@@ -88,6 +88,6 @@ class ContentPublishDialog_Sibling_Folders_Spec
         and: "the first folder should be 'Online'"
         findAndSelectContent( FOLDER1.getName() );
         saveScreenshot( "publish_wizard_status_for_first_folder" );
-        contentBrowsePanel.getContentStatus( FOLDER1.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( FOLDER1.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 }

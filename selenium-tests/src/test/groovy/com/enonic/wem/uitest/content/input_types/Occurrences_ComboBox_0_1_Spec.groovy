@@ -81,8 +81,8 @@ class Occurrences_ComboBox_0_1_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab(); ;
         filterPanel.typeSearchText( content_with_opt.getName() );
 
-        then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "content has a 'Published' status"
+        contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     def "GIVEN wizard for ComboBox-content (0:1) with one selected option is opened and the option was removed and content saved WHEN content is opened THEN options should not be selected on the page"()
@@ -118,8 +118,8 @@ class Occurrences_ComboBox_0_1_Spec
         when:"the content is filtered"
         filterPanel.typeSearchText( comboBoxContent.getName() );
 
-        then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "content has a 'Published' status"
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     private Content buildComboBox0_1_Content( int numberOptions )

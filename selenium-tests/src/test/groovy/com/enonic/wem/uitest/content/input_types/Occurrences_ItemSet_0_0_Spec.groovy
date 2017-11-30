@@ -191,8 +191,8 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
 
-        then: "'online' status is displayed"
-        wizard.getStatus() == ContentStatus.ONLINE.getValue();
+        then: "'Published' status should be displayed"
+        wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN existing ItemSet-content with saved valid data WHEN text in the htmlArea has been changed THEN 'modified' status is displayed"()
@@ -236,8 +236,8 @@ class Occurrences_ItemSet_0_0_Spec
         and: "required text should be reverted in the text-line"
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
 
-        then: "'online' status should be displayed"
-        wizard.getStatus() == ContentStatus.ONLINE.getValue();
+        then: "'Published' status should be displayed"
+        wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
     private Content buildItemSetWithOneTextLineAndHtmlArea()

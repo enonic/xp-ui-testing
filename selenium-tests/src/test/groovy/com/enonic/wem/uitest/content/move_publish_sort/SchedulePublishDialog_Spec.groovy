@@ -106,8 +106,8 @@ class SchedulePublishDialog_Spec
         sleep( 400 );
         saveScreenshot( "schedule_onlinefrom_typed" );
 
-        then: "'Online(Pending)' status should be displayed for the folder"
-        contentBrowsePanel.getContentStatus( TEST_FOLDER.getName() ).equals( ContentStatus.ONLINE_PENDING.getValue() );
+        then: "'Published(Pending)' status should be displayed for the folder"
+        contentBrowsePanel.getContentStatus( TEST_FOLDER.getName() ).equals( ContentStatus.PUBLISHED_PENDING.getValue() );
     }
 
     def "GIVEN existing 'Online (Pending)' folder WHEN the folder opened THEN 'online from' input is present AND correct date time is displayed"()
@@ -121,8 +121,8 @@ class SchedulePublishDialog_Spec
         then: "correct 'online from' date should be displayed"
         wizard.getOnlineFromDateTime() == testTomorrowDateTime
 
-        and: "'Online(Pending)' status should be displayed on the wizard"
-        wizard.getStatus() == ContentStatus.ONLINE_PENDING.getValue();
+        and: "'Published(Pending)' status should be displayed on the wizard"
+        wizard.getStatus() == ContentStatus.PUBLISHED_PENDING.getValue();
     }
 
     def "GIVEN existing 'Online (Pending)' folder WHEN the content opened and 'online to' date time typed AND the content was saved THEN correct 'online to' is displayed"()

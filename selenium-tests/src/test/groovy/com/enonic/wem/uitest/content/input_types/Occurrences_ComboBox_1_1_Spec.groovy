@@ -134,8 +134,8 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBox1_1.getName() );
 
-        then: "content should be with 'online' status"
-        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "content should be with 'Published' status"
+        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         and:
         publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBox1_1.getDisplayName() );
     }

@@ -27,8 +27,8 @@ class TagsInputType_Unlim_Spec
         contentWizardPanel.close( tagContent.getDisplayName() );
         filterPanel.typeSearchText( tagContent.getName() );
 
-        then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
+        then: "content has a 'Published' status"
+        contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
     def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN one tag added and 'Save' button pressed and just created content opened THEN only one Tag with correct name present on wizard "()

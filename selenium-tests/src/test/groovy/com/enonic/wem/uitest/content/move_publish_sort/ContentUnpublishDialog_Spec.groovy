@@ -51,7 +51,7 @@ class ContentUnpublishDialog_Spec
         contentUnPublishDialog.getSubHeader().contains( ContentUnpublishDialog.SUBHEADER_PART_TEXT );
 
         and: "status of the content should be 'online' on the dialog"
-        contentUnPublishDialog.getContentStatus( PARENT_CONTENT.getDisplayName() ) == ContentStatus.ONLINE.getValue();
+        contentUnPublishDialog.getContentStatus( PARENT_CONTENT.getDisplayName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN 'online' content is selected AND ContentUnpublishDialog opened WHEN cancel button on the top was pressed THEN dialog is closing AND status of the content should not be changed"()
@@ -67,7 +67,7 @@ class ContentUnpublishDialog_Spec
         !contentUnPublishDialog.isOpened();
 
         and: "content still has 'online' status"
-        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "publish button on the toolbar should be disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
@@ -86,8 +86,8 @@ class ContentUnpublishDialog_Spec
         then: "'ContentUnPublishDialog' dialog is closing"
         !contentUnPublishDialog.isOpened();
 
-        and: "content still has 'online' status"
-        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.ONLINE.getValue();
+        and: "content still has 'Published' status"
+        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "publish button on the toolbar should be disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
@@ -107,8 +107,8 @@ class ContentUnpublishDialog_Spec
         contentUnPublishDialog.waitForClosed();
         def message = contentBrowsePanel.waitNotificationMessage();
 
-        and: "the content is getting 'offline'"
-        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
+        and: "the content is getting 'Unpublished'"
+        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.UNPUBLISHED.getValue();
 
         and: "publish button on the toolbar should be enabled"
         contentBrowsePanel.isPublishButtonEnabled();
@@ -133,10 +133,10 @@ class ContentUnpublishDialog_Spec
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
         then: "parent content is getting 'offline'"
-        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
+        contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.UNPUBLISHED.getValue();
 
         and: "child content is getting 'offline'"
-        contentBrowsePanel.getContentStatus( CHILD_CONTENT.getName() ) == ContentStatus.OFFLINE.getValue();
+        contentBrowsePanel.getContentStatus( CHILD_CONTENT.getName() ) == ContentStatus.UNPUBLISHED.getValue();
 
         and: "correct notification message should be shown"
         isMessageAppeared;

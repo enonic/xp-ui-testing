@@ -87,8 +87,8 @@ class Occurrences_TextLine_1_1_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );
 
-        then: "the content's status should be 'Online' (in the grid)"
-        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
+        then: "the content's status should be 'Published' (in the grid)"
+        contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
     def "GIVEN wizard for creating of TextLine1:1 is opened WHEN required text input is empty THEN content is invalid and the 'Publish' button is disabled"()

@@ -2,7 +2,6 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -32,7 +31,7 @@ class ContentPublishDelete_Spec
 
         then: "Online status should be displayed in the grid"
         filterPanel.typeSearchText( content.getName() )
-        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
     }
 

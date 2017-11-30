@@ -87,8 +87,8 @@ class Occurrences_Date_1_1_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );
 
-        then: "content should be 'online'"
-        contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        then: "content should be 'Published'"
+        contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message should be shown "
         publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateContent.getDisplayName() );

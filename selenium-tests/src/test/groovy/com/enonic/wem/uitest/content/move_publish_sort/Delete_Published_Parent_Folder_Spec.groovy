@@ -34,7 +34,7 @@ class Delete_Published_Parent_Folder_Spec
         saveScreenshot( "parent_with_child_published" );
 
         then:
-        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() );
+        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message should be displayed"
         message == String.format( Application.CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE, "2" );

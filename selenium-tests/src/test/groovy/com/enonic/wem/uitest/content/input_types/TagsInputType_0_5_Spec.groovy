@@ -25,8 +25,8 @@ class TagsInputType_0_5_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( tagContent.getName() );
 
-        then: "content has a 'online' status"
-        contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.ONLINE.getValue() )
+        then: "content has a 'Published' status"
+        contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
 
