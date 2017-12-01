@@ -137,7 +137,7 @@ public class UserWizardPanel
         String rolesAndGroupsTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, ROLES_AND_GROUPS_LINK_TEXT );
         if ( !isElementDisplayed( rolesAndGroupsTabXpath ) )
         {
-            saveScreenshot( "err_" + SECURITY_LINK_TEXT );
+            saveScreenshot( "err_roles_groups_link" );
             throw new TestFrameworkException( "step was not found! " + ROLES_AND_GROUPS_LINK_TEXT );
         }
         findElement( By.xpath( rolesAndGroupsTabXpath ) ).click();
