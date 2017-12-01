@@ -14,7 +14,7 @@ class DateTime_April_Spec
 {
 
     @Shared
-    String DATE_TIME_1 = "2016-03-01 00:00";
+    String DATE_TIME_1 = "2016-03-01 11:11";
 
     @Shared
     String DATE_TIME_2 = "2016-04-01 00:00"

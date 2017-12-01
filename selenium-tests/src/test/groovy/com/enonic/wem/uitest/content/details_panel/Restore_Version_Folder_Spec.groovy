@@ -98,7 +98,7 @@ class Restore_Version_Folder_Spec
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         findAndSelectContent( FOLDER_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
-        SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
+        SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         modalDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
         sleep( 1000 );
@@ -111,7 +111,7 @@ class Restore_Version_Folder_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
 
         then: "and this role not present after restoring of version without this role"
-        !contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        !contentBrowsePanel.clickToolbarEdit().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
 
         and: "required role was present before restoring"
         beforeRestoring.contains( "Anonymous User" );
@@ -128,7 +128,7 @@ class Restore_Version_Folder_Spec
         versionItem.doRestoreVersion( versionItem.getId() );
 
         then: "new role present after restoring of the latest version"
-        contentBrowsePanel.clickToolbarEdit().clickOnSecurityTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        contentBrowsePanel.clickToolbarEdit().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
     }
 
 }

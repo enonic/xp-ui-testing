@@ -23,7 +23,7 @@ public abstract class WizardPanel<T>
 
     public static String NAVIGATOR_TAB_ITEM_LINK = TABS_NAVIGATOR_LINK + "//li[child::a[text()='%s']]";
 
-    public static final String SECURITY_LINK_TEXT = "Security";
+    public static final String ACCESS_LINK_TEXT = "Access";
 
     public static final String SETTINGS_LINK_TEXT = "Settings";
 

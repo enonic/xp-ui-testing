@@ -37,7 +37,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         when: "data has been typed and the content saved"
         wizard.typeDisplayName( testName ).save();
         and: " 'Edit Permissions' dialog is opened"
-        EditPermissionsDialog dialog = wizard.clickOnSecurityTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
 
         then: "correct header should be displayed"
         dialog.getHeader() == EditPermissionsDialog.HEADER;
@@ -53,7 +53,7 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         when: "'Edit Permissions' button on the wizard panel pressed"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().clickOnEditPermissionsButton();
         saveScreenshot( "test_edit_perm_dialog_default" );
 
         then: "modal dialog should be opened"
@@ -85,7 +85,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "content was selected and 'Edit Permissions' dialog is opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().clickOnEditPermissionsButton();
 
         when: "'inherit permissions' has been unchecked"
         modalDialog.setInheritPermissionsCheckbox( false );
@@ -101,7 +101,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         when: "content selected and 'Edit Permissions' dialog has been opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().clickOnEditPermissionsButton();
         List<String> principals = modalDialog.getPrincipalNames();
         saveScreenshot( "test_default_acl_entries" );
 
@@ -117,7 +117,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "'Edit Permissions' dialog is opened"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
-        SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
+        SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
@@ -141,7 +141,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "'Edit Permissions' dialog is opened"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
-        SecurityWizardStepForm securityForm = wizard.clickOnSecurityTabLink();
+        SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
 
         and: "one Role was removed"
@@ -161,7 +161,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "'Edit Permissions' dialog is opened"
         SecurityWizardStepForm securityForm = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSecurityTabLink();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
 
         when: "one Role was removed"

@@ -390,7 +390,7 @@ public class ContentWizardPanel
 
         if ( content.getAclEntries() != null )
         {
-            SecurityWizardStepForm securityWizardStepForm = clickOnSecurityTabLink();
+            SecurityWizardStepForm securityWizardStepForm = clickOnAccessTabLink();
             securityWizardStepForm.waitUntilButtonEditPermissionsClickable().clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
                 content.getAclEntries() ).clickOnApply();
             sleep( 700 );
@@ -399,13 +399,13 @@ public class ContentWizardPanel
         return this;
     }
 
-    public SecurityWizardStepForm clickOnSecurityTabLink()
+    public SecurityWizardStepForm clickOnAccessTabLink()
     {
-        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SECURITY_LINK_TEXT );
+        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, ACCESS_LINK_TEXT );
         if ( !isElementDisplayed( securityTabXpath ) )
         {
-            saveScreenshot( "err_" + SECURITY_LINK_TEXT );
-            throw new TestFrameworkException( "step was not found! " + SECURITY_LINK_TEXT );
+            saveScreenshot( "err_" + ACCESS_LINK_TEXT );
+            throw new TestFrameworkException( "step was not found! " + ACCESS_LINK_TEXT );
         }
         findElement( By.xpath( securityTabXpath ) ).click();
         sleep( 500 );

@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.form;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -43,14 +44,33 @@ public class DateTimeFormViewPanel
         // type a date time
         if ( !Strings.isNullOrEmpty( dateTime ) )
         {
-            dateTimeInput.sendKeys( dateTime );
+            typeDateTime( dateTime );
             sleep( 300 );
         }
-
         return this;
     }
 
-    public void typeDateTime( String datetime )
+    private void typeDateTime( String dateTime )
+    {
+        dateTimeInput.clear();
+        sleep( 300 );
+        String[] parts = dateTime.split( " " );
+        String date = parts[0];
+        String time = parts[1];
+        dateTimeInput.sendKeys( date );
+        sleep( 300 );
+        buildActions().click( dateTimeInput ).build().perform();
+        dateTimeInput.sendKeys( " " );
+        sleep( 300 );
+        dateTimeInput.sendKeys( time );
+    }
+
+    protected JavascriptExecutor getJavaScriptExecutor()
+    {
+        return (JavascriptExecutor) getDriver();
+    }
+
+    public void typeDateTime1( String datetime )
     {
         clearAndType( dateTimeInput, datetime );
         sleep( 500 );
