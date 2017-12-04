@@ -4,13 +4,18 @@ buildscript {
     }
 
 }
+
 plugins {
     id 'maven'
     id 'com.enonic.defaults' version '1.0.3'
     id 'com.enonic.xp.app' version '1.0.13'
 }
-version = '2.0.0'
 
+enonic {
+    publishRepo = 'inhouse'
+}
+
+version = '2.0.0'
 app {
     name = 'com.enonic.myfirstapp'
     displayName = 'My First App'

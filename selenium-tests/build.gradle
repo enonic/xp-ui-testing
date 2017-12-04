@@ -1,6 +1,21 @@
 import com.enonic.uitest.server.ServerInstance
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id 'maven'
+    id 'com.enonic.defaults' version '1.0.3'
+}
+
 apply plugin: 'groovy'
+
+enonic {
+    publishRepo = 'inhouse'
+}
 
 configurations {
     distro
@@ -10,17 +25,32 @@ ext {
     xpVersion = '6.13.0-SNAPSHOT'
     unpackDir = "$buildDir${File.separator}install"
     screenshotsDir = "$buildDir${File.separator}screenshots"
-    reportsDir = "$buildDir${File.separator}repots"
+    reportsDir = "$buildDir${File.separator}reports"
     distroDir = "$unpackDir${File.separator}enonic-xp-$xpVersion"
     deployDir = "$distroDir${File.separator}home${File.separator}deploy"
     xpHome = "$distroDir${File.separator}home"
 }
 
-buildscript {
-    repositories {
-        jcenter()
-    }
+task zipScreenshots( type: Zip ) {
+    from screenshotsDir
+    include '*'
+    include '*/*'
+    classifier 'screenshots'
 }
+
+task zipTestReports( type: Zip ) {
+    from reportsDir
+    include '*'
+    include '*/*'
+    classifier 'testReports'
+}
+
+artifacts {
+    archives zipScreenshots
+    archives zipTestReports
+}
+
+jar.enabled = true
 
 dependencies {
     compile 'org.seleniumhq.selenium:selenium-java:3.0.1'
@@ -32,6 +62,7 @@ dependencies {
     compile 'org.gebish:geb-spock:0.13.1'
     distro "com.enonic.xp:distro:$xpVersion@zip"
 }
+
 task copyContentTypes( type: Copy ) {
     from '../test-applications/contenttypes/build/libs/'
     from '../test-applications/simple-page/build/libs/'

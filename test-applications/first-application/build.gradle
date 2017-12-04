@@ -4,11 +4,16 @@ plugins {
     id 'com.enonic.xp.app' version '1.0.13'
 }
 
+enonic {
+    publishRepo = 'inhouse'
+}
+
 app {
-    name = 'com.enonic.xp.testing.first_app'
+    name = 'com.enonic.xp.ui_testing.first_app'
     displayName = 'First Selenium App'
 }
 version = '2.0.0'
+
 dependencies {
     compile 'com.google.guava:guava:18.0'
     compile "com.enonic.xp:core-api:6.13.0-SNAPSHOT"

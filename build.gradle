@@ -1,10 +1,9 @@
 apply plugin: 'java-base'
 apply plugin: 'build-dashboard'
 
-
-
 allprojects {
-    group = 'com.enonic.xp'
+    group = 'com.enonic.xp.ui_testing'
+    version = '1.0'
 
     repositories {
         mavenLocal()
