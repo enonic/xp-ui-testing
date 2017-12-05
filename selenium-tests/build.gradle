@@ -22,6 +22,7 @@ configurations {
 }
 
 ext {
+    testName = 'general'
     xpVersion = '6.13.0-SNAPSHOT'
     unpackDir = "$buildDir${File.separator}install"
     screenshotsDir = "$buildDir${File.separator}screenshots"
@@ -35,14 +36,14 @@ task zipScreenshots( type: Zip ) {
     from screenshotsDir
     include '*'
     include '*/*'
-    classifier 'screenshots'
+    classifier "${testName}screenshots"
 }
 
 task zipTestReports( type: Zip ) {
     from reportsDir
     include '*'
     include '*/**'
-    classifier 'testReports'
+    classifier "${testName}testReports"
 }
 
 artifacts {
@@ -381,6 +382,7 @@ testPublishMoveSortDeatailsPanelFirefox.finalizedBy = ['stopServer']
 testApplicationFirefox.finalizedBy = ['stopServer']
 
 task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+    testName = 'testApplicationsAppChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -397,6 +399,7 @@ task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplication
 
 task testContentStudioPublishMoveSortChromeHeadless( type: Test,
                                                      dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+    testName = 'testContentStudioPublishMoveSortChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -413,6 +416,7 @@ task testContentStudioPublishMoveSortChromeHeadless( type: Test,
 
 task testContentStudioDetailsPanelChromeHeadless( type: Test,
                                                   dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+    testName = 'testContentStudioDetailsPanelChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
