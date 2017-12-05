@@ -5,6 +5,6 @@
   <to-semantic>cited by</to-semantic>
   <allowed-from-types/>
   <allowed-to-types>
-    <content-type>com.enonic.xp.testing.contenttypes:article</content-type>
+    <content-type>com.enonic.xp.ui_testing.contenttypes:article</content-type>
   </allowed-to-types>
 </relationship-type>

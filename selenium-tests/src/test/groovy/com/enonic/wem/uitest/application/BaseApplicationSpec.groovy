@@ -16,7 +16,7 @@ class BaseApplicationSpec
     String SYSTEM_REQUIRED = ">= 6.0.0 and < 7.0.0";
 
     @Shared
-    String FIRST_APP_KEY = "com.enonic.xp.testing.first_app";
+    String FIRST_APP_KEY = "com.enonic.xp.ui_testing.first_app";
 
     @Shared
     String FIRST_APP_DISPLAY_NAME = "First Selenium App";
@@ -31,7 +31,7 @@ class BaseApplicationSpec
     String TEST_DESCRIPTION = "Test application for ui-testing";
 
     @Shared
-    String FOURTH_APP_NAME = "com.enonic.xp.testing.fourth_app";
+    String FOURTH_APP_NAME = "com.enonic.xp.ui_testing.fourth_app";
 
     @Shared
     String FOURTH_APP_DISPLAY_NAME = "Fourth Selenium App";

@@ -10,7 +10,7 @@
       <help-text/>
       <occurrences minimum="0" maximum="1"/>
       <config>
-        <relationship-type>com.enonic.xp.testing.contenttypes:citation</relationship-type>
+        <relationship-type>com.enonic.xp.ui_testing.contenttypes:citation</relationship-type>
       </config>
     </input>
   </form>

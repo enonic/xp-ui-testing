@@ -152,7 +152,7 @@ class Display_SourceButton_Spec
 
         when: "double click on the text component is performed"
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType(
-            "com.enonic.xp.testing.simple_page:htmlarea" );
+            "com.enonic.xp.ui_testing.simple_page:htmlarea" );
         saveScreenshot( "htmlarea_source_button_not_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
 
@@ -212,7 +212,7 @@ class Display_SourceButton_Spec
 
         when: "double click on the text component is performed"
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType(
-            "com.enonic.xp.testing.simple_page:htmlarea" );
+            "com.enonic.xp.ui_testing.simple_page:htmlarea" );
         saveScreenshot( "htmlarea_source_button_should_be_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
 
