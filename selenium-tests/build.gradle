@@ -398,7 +398,7 @@ task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplication
 //testApplicationsAppChromeHeadless.finalizedBy = ['stopServer']
 
 task testContentStudioPublishMoveSortChromeHeadless( type: Test,
-                                                     dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+                                                     dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     testName = 'testContentStudioPublishMoveSortChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
@@ -415,7 +415,7 @@ task testContentStudioPublishMoveSortChromeHeadless( type: Test,
 //testContentStudioPublishMoveSortChromeHeadless.finalizedBy = ['stopServer']
 
 task testContentStudioDetailsPanelChromeHeadless( type: Test,
-                                                  dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+                                                  dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     testName = 'testContentStudioDetailsPanelChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
@@ -426,7 +426,7 @@ task testContentStudioDetailsPanelChromeHeadless( type: Test,
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
-    copyTestApplications.mustRunAfter startServer
+    copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
 //testContentStudioDetailsPanelChromeHeadless.finalizedBy = ['stopServer']
