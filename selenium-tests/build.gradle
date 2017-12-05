@@ -380,7 +380,7 @@ testContentStudioFirefox.finalizedBy = ['stopServer']
 testPublishMoveSortDeatailsPanelFirefox.finalizedBy = ['stopServer']
 testApplicationFirefox.finalizedBy = ['stopServer']
 
-task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -390,13 +390,13 @@ task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplication
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
-    copyTestApplications.mustRunAfter startServer
+    copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
 //testApplicationsAppChromeHeadless.finalizedBy = ['stopServer']
 
 task testContentStudioPublishMoveSortChromeHeadless( type: Test,
-                                                     dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+                                                     dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -406,7 +406,7 @@ task testContentStudioPublishMoveSortChromeHeadless( type: Test,
     forkEvery = null
     deleteFolders.mustRunAfter buildApplications
     startServer.mustRunAfter deleteFolders
-    copyTestApplications.mustRunAfter startServer
+    copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
 //testContentStudioPublishMoveSortChromeHeadless.finalizedBy = ['stopServer']
