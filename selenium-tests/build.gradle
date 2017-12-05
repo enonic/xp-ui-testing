@@ -17,6 +17,10 @@ enonic {
     publishRepo = 'inhouse'
 }
 
+configurations {
+    distro
+}
+
 ext {
     xpVersion = '6.13.0-SNAPSHOT'
     unpackDir = "$buildDir${File.separator}install"
