@@ -41,7 +41,7 @@ task zipScreenshots( type: Zip ) {
 task zipTestReports( type: Zip ) {
     from reportsDir
     include '*'
-    include '*/*'
+    include '*/**'
     classifier 'testReports'
 }
 
