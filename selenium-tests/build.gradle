@@ -27,23 +27,33 @@ ext {
     unpackDir = "$buildDir${File.separator}install"
     screenshotsDir = "$buildDir${File.separator}screenshots"
     reportsDir = "$buildDir${File.separator}reports"
+    reportsTestsDir = "$reportsDir${File.separator}tests"
     distroDir = "$unpackDir${File.separator}enonic-xp-$xpVersion"
     deployDir = "$distroDir${File.separator}home${File.separator}deploy"
     xpHome = "$distroDir${File.separator}home"
 }
 
-task zipScreenshots( type: Zip ) {
+task updateTestDir {
+    def testDir;
+    def reports = file(reportsTestsDir);
+    if (reports.exists()) {
+        reports.eachDir() { testDir = file(it) }
+        testName = testDir.exists() ? testDir.getName() : testName;
+    }
+}
+
+task zipScreenshots( type: Zip, dependsOn: updateTestDir ) {
     from screenshotsDir
     include '*'
     include '*/*'
-    classifier "${testName}screenshots"
+    classifier "${testName}Screenshots"
 }
 
-task zipTestReports( type: Zip ) {
+task zipTestReports( type: Zip, dependsOn: updateTestDir ) {
     from reportsDir
     include '*'
     include '*/**'
-    classifier "${testName}testReports"
+    classifier "${testName}TestReports"
 }
 
 artifacts {
@@ -382,7 +392,6 @@ testPublishMoveSortDeatailsPanelFirefox.finalizedBy = ['stopServer']
 testApplicationFirefox.finalizedBy = ['stopServer']
 
 task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    testName = 'testApplicationsAppChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -395,11 +404,10 @@ task testApplicationsAppChromeHeadless( type: Test, dependsOn: [buildApplication
     copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
-//testApplicationsAppChromeHeadless.finalizedBy = ['stopServer']
+testApplicationsAppChromeHeadless.finalizedBy = ['stopServer']
 
 task testContentStudioPublishMoveSortChromeHeadless( type: Test,
                                                      dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
-    testName = 'testContentStudioPublishMoveSortChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -412,11 +420,10 @@ task testContentStudioPublishMoveSortChromeHeadless( type: Test,
     copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
-//testContentStudioPublishMoveSortChromeHeadless.finalizedBy = ['stopServer']
+testContentStudioPublishMoveSortChromeHeadless.finalizedBy = ['stopServer']
 
 task testContentStudioDetailsPanelChromeHeadless( type: Test,
                                                   dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
-    testName = 'testContentStudioDetailsPanelChromeHeadless'
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -429,4 +436,4 @@ task testContentStudioDetailsPanelChromeHeadless( type: Test,
     copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
-//testContentStudioDetailsPanelChromeHeadless.finalizedBy = ['stopServer']
+testContentStudioDetailsPanelChromeHeadless.finalizedBy = ['stopServer']
