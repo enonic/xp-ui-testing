@@ -444,21 +444,6 @@ task testInputTypesChrHeadless( type: Test, dependsOn: [buildApplications, delet
 //Stop server is not necessary when run in a Docker container.
 testInputTypesChrHeadless.finalizedBy = ['stopServer']
 
-task testUploadContentChrHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
-    //set system property
-    System.setProperty 'chrome.headless', 'true'
-    //set required JvmOption:
-    systemProperty 'chrome.headless', System.getProperty( 'chrome.headless' )
-    scanForTestClasses = false
-    include '**/content/upload/**Spec.class'
-    forkEvery = null
-    deleteFolders.mustRunAfter buildApplications
-    startServer.mustRunAfter deleteFolders
-    copyContentTypes.mustRunAfter startServer
-}
-//Stop server is not necessary when run in a Docker container.
-testUploadContentChrHeadless.finalizedBy = ['stopServer']
-
 task testPageEditorChrHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'chrome.headless', 'true'
