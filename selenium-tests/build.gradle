@@ -458,3 +458,20 @@ task testPageEditorChrHeadless( type: Test, dependsOn: [buildApplications, delet
 }
 //Stop server is not necessary when run in a Docker container.
 testPageEditorChrHeadless.finalizedBy = ['stopServer']
+
+task testContentStudioChrHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+    //set system property
+    System.setProperty 'chrome.headless', 'true'
+    //set required JvmOption:
+    systemProperty 'chrome.headless', System.getProperty( 'chrome.headless' )
+    scanForTestClasses = false
+    include '**/content/*Spec.class'
+    include '**/content/portal/**Spec.class'
+    include '**/content/responsive/**Spec.class'
+    forkEvery = null
+    deleteFolders.mustRunAfter buildApplications
+    startServer.mustRunAfter deleteFolders
+    copyContentTypes.mustRunAfter startServer
+}
+//Stop server is not necessary when run in a Docker container.
+testContentStudioChrHeadless.finalizedBy = ['stopServer']
