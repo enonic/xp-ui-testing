@@ -47,7 +47,7 @@ public class Application
 
     public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is unpublished.";
 
-    public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";
+    public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished.";
 
     public static String ONE_PENDING_ITEM_IS_DELETED = "The item is deleted.";
 

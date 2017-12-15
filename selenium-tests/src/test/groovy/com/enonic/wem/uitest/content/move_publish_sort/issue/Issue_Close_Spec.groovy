@@ -126,7 +126,7 @@ class Issue_Close_Spec
         saveScreenshot( "issue_stopped_by_user" );
 
         and: "correct notification message should be displayed"
-        contentBrowsePanel.waitNotificationMessage() == "The issue is closed.";
+        contentBrowsePanel.waitNotificationMessage() == "The issue is Closed.";
 
         and: "'Has Assigned issues' icon should not be displayed"
         contentBrowsePanel.waitForAssignedIssuesIconNotVisible();
