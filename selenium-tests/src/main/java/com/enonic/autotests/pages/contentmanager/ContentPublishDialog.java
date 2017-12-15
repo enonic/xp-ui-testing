@@ -18,7 +18,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentPublishDialog
     extends Application
 {
-    public static final String OTHER_ITEMS_WILL_BE_PUBLISHED = "Other items that will be published";
+    public static final String OTHER_ITEMS_WILL_BE_PUBLISHED = "Other items that will be published.";
 
     public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
 

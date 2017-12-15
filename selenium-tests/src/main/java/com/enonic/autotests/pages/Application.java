@@ -31,7 +31,7 @@ public class Application
 
     public static final String CONTENT_STUDIO_TAB_HANDLE = "content_studio_window_id_key";
 
-    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion";
+    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion.";
 
     public static String ITEM_IS_UNDELETED = "The item is successfully undeleted";
 
@@ -49,9 +49,9 @@ public class Application
 
     public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";
 
-    public static String ONE_PENDING_ITEM_IS_DELETED = "The item is deleted";
+    public static String ONE_PENDING_ITEM_IS_DELETED = "The item is deleted.";
 
-    public static String PENDING_ITEMS_ARE_DELETED = "%s items are deleted";
+    public static String PENDING_ITEMS_ARE_DELETED = "%s items are deleted.";
 
     public static String ISSUE_IS_CLOSED_MESSAGE = "The issue is closed.";
 
@@ -63,7 +63,7 @@ public class Application
 
     public static String CONTENT_SAVED = "\"%s\" saved";
 
-    public static String CONTENT_DELETED_MESSAGE = "The item is deleted";
+    public static String CONTENT_DELETED_MESSAGE = "The item is deleted.";
 
     public static final String FULL_ACCESS = "Full Access";
 
@@ -135,9 +135,9 @@ public class Application
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
 
-    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is published";
+    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is published.";
 
-    public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published";
+    public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published.";
 
     public static final long PAGE_LOAD_TIMEOUT = 15l;
 
