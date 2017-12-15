@@ -16,7 +16,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class LiveEditComponentContextMenu
     extends Application
 {
-    private final String MENU_DIV = "//div[contains(@id,'api.liveedit.ItemViewContextMenu')]";
+    private final String MENU_DIV = "//div[contains(@id,'ItemViewContextMenu')]";
 
     private final String MENU_TITLE = MENU_DIV + "//div[contains(@id,'ComponentViewContextMenuTitle')]";
 
