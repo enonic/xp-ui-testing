@@ -45,7 +45,7 @@ public class Application
 
     public static String GROUP_CREATED_MESSAGE = "Group was created";
 
-    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is unpublished";
+    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is unpublished.";
 
     public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";
 
@@ -77,7 +77,8 @@ public class Application
 
     protected final String APP_CANCEL_BUTTON_TOP = "//div[contains(@class,'cancel-button-top')]";
 
-    protected String OPTION_IMAGE_SELECTOR_VIEW = "//div[contains(@id,'ImageSelectorViewer') and descendant::img[contains(@title,'%s')]]";
+    protected String OPTION_IMAGE_SELECTOR_VIEW_BY_NAME = "//div[contains(@id,'ImageSelectorViewer') and descendant::img[contains(@title,'%s')]]";
+    protected String OPTION_IMAGE_SELECTOR_VIEW = "//div[contains(@id,'ImageSelectorViewer') ]//img[contains(@title,'%s')]]";
 
     protected final String DATA_TIME_PICKER_INPUT = "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]";
 

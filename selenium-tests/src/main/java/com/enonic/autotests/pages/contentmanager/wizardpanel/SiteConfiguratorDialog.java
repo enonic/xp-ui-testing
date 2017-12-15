@@ -170,7 +170,7 @@ public class SiteConfiguratorDialog
             throw new TestFrameworkException( "ImageContentComboBox option filter was not found!" );
         }
         getDisplayedElement( By.xpath( optionFilter ) ).sendKeys( imageName );
-        String imageXpath = DIALOG_CONTAINER + String.format( OPTION_IMAGE_SELECTOR_VIEW, imageName );
+        String imageXpath = DIALOG_CONTAINER + String.format( OPTION_IMAGE_SELECTOR_VIEW_BY_NAME, imageName );
         if ( !isElementDisplayed( imageXpath ) )
         {
             saveScreenshot( "img_file_not_found" );

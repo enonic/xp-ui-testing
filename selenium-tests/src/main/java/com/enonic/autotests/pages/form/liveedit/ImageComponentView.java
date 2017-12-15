@@ -88,7 +88,7 @@ public class ImageComponentView
 
     public ImageComponentView clickOnOption( String imageName )
     {
-        String optionXpath = String.format( IMAGE_CONTENT_SELECTOR + OPTION_IMAGE_SELECTOR_VIEW, imageName );
+        String optionXpath = String.format( IMAGE_CONTENT_SELECTOR + OPTION_IMAGE_SELECTOR_VIEW_BY_NAME, imageName );
         if ( !isElementDisplayed( optionXpath ) )
         {
             saveScreenshot( "img_comp_file_not_found" );
@@ -126,7 +126,7 @@ public class ImageComponentView
 
     public List<String> getDisplayedOptions()
     {
-        String optionsDisplayName = IMAGE_COMPONENT_VIEW + H6_DISPLAY_NAME;
+        String optionsDisplayName = IMAGE_COMPONENT_VIEW + OPTION_IMAGE_SELECTOR_VIEW;
         return getDisplayedStrings( By.xpath( optionsDisplayName ) );
     }
 

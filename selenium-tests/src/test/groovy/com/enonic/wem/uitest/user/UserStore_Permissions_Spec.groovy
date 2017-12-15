@@ -80,7 +80,7 @@ class UserStore_Permissions_Spec
         given: "existing store with added permission is opened"
         UserStoreWizardPanel userStoreWizardPanel = openUserStore( USER_STORE_WITH_PERMISSIONS.getName() );
         userStoreWizardPanel.clickOnWizardStep( "Permissions" );
-        sleep( 500 );
+        sleep( 1500 );
 
         when: "remove permission button clicked"
         userStoreWizardPanel.removePermission( RoleDisplayName.USERS_ADMINISTRATOR.getValue() );
