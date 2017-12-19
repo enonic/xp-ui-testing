@@ -221,7 +221,5 @@ class Occurrences_ImageSelector_0_0_Spec
         then: "the content with 'Published' status should be listed"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
-        and: "correct notification message should be displayed"
-        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
     }
 }
