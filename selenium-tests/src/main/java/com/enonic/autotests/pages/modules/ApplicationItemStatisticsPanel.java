@@ -22,7 +22,7 @@ public class ApplicationItemStatisticsPanel
 
     private final String DATA_CONTAINER = "//div[@class='application-data-container']";
 
-    private final String BUILD_DATE = DATA_CONTAINER + "//li[text()='Build Date']/following-sibling::li";
+    private final String INSTALLED = DATA_CONTAINER + "//li[text()='Installed']/following-sibling::li";
 
     private final String VERSION = DATA_CONTAINER + "//li[text()='Version']/following-sibling::li";
 
@@ -38,29 +38,29 @@ public class ApplicationItemStatisticsPanel
 
     private final String PROVIDERS_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'providers')]";
 
-    private final String PROVIDERS_DATA_LIST = PROVIDERS_DATA_GROUP + "//li[@class='list-header' and text()='Key']";
+    private final String PROVIDERS_DATA_LIST = PROVIDERS_DATA_GROUP + "//li[@class='list-header' and text()='Mode']";
 
     private final String DESCRIPTORS_DATA_GROUP = "//div[contains(@id,'ItemDataGroup') and contains(@class,'descriptors')]";
 
-    private final String CONTENT_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Content Types']";
+    private final String CONTENT_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'site')]//li[text()='Content Types']";
 
     private final String CONTENT_TYPES = CONTENT_TYPES_HEADER + LIST_ITEMS;
 
-    private final String MIXINS_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Mixins']";
+    private final String MIXINS_HEADER = DATA_CONTAINER + "//div[contains(@class,'site')]//li[text()='Mixins']";
 
     private final String MIXINS = MIXINS_HEADER + LIST_ITEMS;
 
-    private final String RELATIONSHIP_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'schemas')]//li[text()='Relationship Types']";
+    private final String RELATIONSHIP_TYPES_HEADER = DATA_CONTAINER + "//div[contains(@class,'site')]//li[text()='Relationship Types']";
 
     private final String PAGE_HEADER = DATA_CONTAINER + "//div[contains(@class,'descriptors')]//li[text()='Page']";
 
     private final String PAGES = PAGE_HEADER + LIST_ITEMS;
 
-    private final String PART_HEADER = DATA_CONTAINER + "//div[contains(@class,'descriptors')]//li[text()='Part']";
+    private final String PART_HEADER = DATA_CONTAINER + "//div[contains(@class,'site')]//li[text()='Part']";
 
     private final String PARTS = PART_HEADER + LIST_ITEMS;
 
-    private final String LAYOUT_HEADER = DATA_CONTAINER + "//div[contains(@class,'descriptors')]//li[text()='Layout']";
+    private final String LAYOUT_HEADER = DATA_CONTAINER + "//div[contains(@class,'site')]//li[text()='Layout']";
 
     private final String LAYOUTS = LAYOUT_HEADER + LIST_ITEMS;
 
@@ -242,9 +242,9 @@ public class ApplicationItemStatisticsPanel
         return getDisplayedStrings( By.xpath( MIXINS ) );
     }
 
-    public boolean isBuildDatePresent()
+    public boolean isInstalledDatePresent()
     {
-        return isElementDisplayed( BUILD_DATE );
+        return isElementDisplayed( INSTALLED );
     }
 
     public boolean isVersionPresent()
@@ -262,9 +262,9 @@ public class ApplicationItemStatisticsPanel
         return isElementDisplayed( SYSTEM_REQUIRED );
     }
 
-    public String getBuildDate()
+    public String getInstalledDate()
     {
-        return getDisplayedString( BUILD_DATE );
+        return getDisplayedString( INSTALLED );
     }
 
     public String getVersion()
@@ -284,7 +284,7 @@ public class ApplicationItemStatisticsPanel
 
     public ApplicationInfo getApplicationInfo()
     {
-        return ApplicationInfo.builder().buildDate( getBuildDate() ).version( getVersion() ).key( getKey() ).build();
+        return ApplicationInfo.builder().buildDate( getInstalledDate() ).version( getVersion() ).key( getKey() ).build();
     }
 
     public boolean isDisplayed()

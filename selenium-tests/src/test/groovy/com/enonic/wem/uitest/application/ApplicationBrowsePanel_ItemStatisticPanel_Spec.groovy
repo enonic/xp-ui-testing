@@ -3,11 +3,14 @@ package com.enonic.wem.uitest.application
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+import java.time.LocalDate
+
 /*
  Tasks:
   XP-3944 Add selenium test for verifying of "XP-3932 Show idproviders in application panel"
 
   */
+
 @Stepwise
 class ApplicationBrowsePanel_ItemStatisticPanel_Spec
     extends BaseApplicationSpec
@@ -48,7 +51,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         saveScreenshot( "test_app_stopped" );
 
         then: "'build date' should be shown"
-        applicationItemStatisticsPanel.isBuildDatePresent();
+        applicationItemStatisticsPanel.isInstalledDatePresent();
 
         and: "application's version should be shown"
         applicationItemStatisticsPanel.isVersionPresent();
@@ -65,9 +68,10 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         when: "application started and it selected in browse panel"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         saveScreenshot( "id_provider" );
+        LocalDate today = LocalDate.now();
 
         then: "build date has a correct value"
-        applicationItemStatisticsPanel.getBuildDate() == "TBA";
+        applicationItemStatisticsPanel.getInstalledDate().contains( ""+today.getYear() );
 
         and: "version has a correct value"
         applicationItemStatisticsPanel.getVersion() == VERSION_OF_TEST_APPLICATION;
@@ -87,7 +91,7 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
     def "GIVEN existing started application is selected WHEN the application has been stopped THEN content types should not be displayed on the statistic panel"()
     {
-        given:"existing started application is selected"
+        given: "existing started application is selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
 
         when: "application was stopped"
@@ -102,15 +106,11 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
 
         and: "content types should not be present on the panel"
         applicationItemStatisticsPanel.getContentTypes().size() == 0;
-
-        and: "'Info data group' should be displayed"
-        applicationItemStatisticsPanel.isInfoDataGroupDisplayed();
+        LocalDate today = LocalDate.now();
 
         and: "correct 'Build date' should be displayed"
-        applicationItemStatisticsPanel.getBuildDate() == "TBA";
+        applicationItemStatisticsPanel.getInstalledDate().contains( ""+today.getYear() );
 
-        and: "'schema data group' should not be displayed"
-        !applicationItemStatisticsPanel.isSchemaDataGroupDisplayed();
 
         and: "'descriptors data group' should not be displayed"
         !applicationItemStatisticsPanel.isDescriptorsDataGroupDisplayed();
@@ -169,20 +169,14 @@ class ApplicationBrowsePanel_ItemStatisticPanel_Spec
         applicationItemStatisticsPanel.isProvidersDataGroupDisplayed();
     }
 
-    def "GIVEN Application that was stopped and started again WHEN the application have been selected THEN mixins should be displayed on the panel"()
+    def "GIVEN Application that was stopped and started again WHEN the application have been selected THEN application's status is 'started"()
     {
         when: "stopped and started again application have been selected"
         applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( FIRST_APP_DISPLAY_NAME );
         saveScreenshot( "stopped_started_mixins" )
-        List<String> mixins = applicationItemStatisticsPanel.getMixins();
 
-        then: "detail page should show all its mixins"
-        mixins.size() > 0;
 
-        and: "required mixin should be present"
-        mixins.contains( MIXIN_ADDRESS_NAME );
-
-        and: "application's status is 'started'"
+        then: "application's status is 'started'"
         applicationBrowsePanel.findAppByDisplayNameAndGetStatus( FIRST_APP_DISPLAY_NAME ) == STARTED_STATE;
     }
 
