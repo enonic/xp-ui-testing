@@ -50,5 +50,15 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
 
         then: "the folder should not be listed"
         !contentBrowsePanel.exists( PARENT_FOLDER.getName() );
+
+        and:"Delete button should be disabled"
+        !contentBrowsePanel.isDeleteButtonEnabled(  );
+
+        and:"Move button should be disabled"
+        !contentBrowsePanel.isMoveButtonEnabled(  );
+
+        and:"Publish button should be disabled"
+        !contentBrowsePanel.isPublishButtonEnabled(  );;
+
     }
 }
