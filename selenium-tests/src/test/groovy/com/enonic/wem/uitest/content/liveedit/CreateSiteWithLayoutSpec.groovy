@@ -165,7 +165,7 @@ class CreateSiteWithLayoutSpec
 
         and: "the template is saved"
         templateWizard.save();
-        sleep( 300 );
+        sleep( 700 );
         String statusAfterInsertingImage = templateWizard.getStatus();
         saveScreenshot( "image_in_left_inserted" );
 

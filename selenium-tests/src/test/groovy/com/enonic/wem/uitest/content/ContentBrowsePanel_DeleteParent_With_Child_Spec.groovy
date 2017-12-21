@@ -37,6 +37,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
         confirmContentDeleteDialog.isOpened();
     }
 
+    //verifies the xp-apps#398 (buttons on the toolbar)
     def "GIVEN existing parent folder with a child WHEN ConfirmContentDeleteDialog is opened AND correct number typed THEN confirmation dialog with input for number of contents to delete should be displayed"()
     {
         given: "existing parent folder"
@@ -59,6 +60,5 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
 
         and:"Publish button should be disabled"
         !contentBrowsePanel.isPublishButtonEnabled(  );;
-
     }
 }
