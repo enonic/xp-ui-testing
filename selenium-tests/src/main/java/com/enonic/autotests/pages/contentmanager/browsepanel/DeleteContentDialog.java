@@ -33,7 +33,8 @@ public class DeleteContentDialog
 
     private final String DEPENDANT_LIST = CONTAINER_DIV + "//ul[contains(@id,'DialogDependantList')]";
 
-    private final String DEPENDANT_HEADER_TEXT = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header']";
+    private final String HIDE_DEPENDANT_ITEM_LINK = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header']";
+    private final String OTHER_ITEMS_WILL_DELETED = CONTAINER_DIV + "//div[@class='dependants-body']";
 
     private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]" + H6_MAIN_NAME;
 
@@ -200,14 +201,15 @@ public class DeleteContentDialog
         return getDisplayedString( status );
     }
 
-    public String getDependantHeader()
+    public boolean isHideDependantItemsLinkDisplayed()
     {
-        if ( !isElementDisplayed( DEPENDANT_HEADER_TEXT ) )
-        {
-            saveScreenshot( "err_delete_dialog_subheader" );
-            throw new TestFrameworkException( "Header element was not found!" );
-        }
-        return getDisplayedString( DEPENDANT_HEADER_TEXT );
+        return  isElementDisplayed( HIDE_DEPENDANT_ITEM_LINK ) ;
+
+    }
+    public boolean isDependantListDisplayed()
+    {
+        return  isElementDisplayed( OTHER_ITEMS_WILL_DELETED ) ;
+
     }
 
     public String getTitle()
