@@ -35,8 +35,7 @@ public class InstallAppDialog
 
     private final String APPLICATION_UPLOADER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
 
-    private final String VALIDATION_MESSAGE = INSTALL_DIALOG_DIV +
-        "//div[contains(@id,'ModalDialogContentPanel')]//div[contains(@class,'status-message') and contains(@class,'failed')]";
+    private final String VALIDATION_MESSAGE = INSTALL_DIALOG_DIV + "//div[contains(@class,'status-message') and contains(@class,'failed')]";
 
     private final String APP_VIEWER_DIV = INSTALL_DIALOG_DIV + "//div[contains(@id,'MarketAppViewer')]";
 
