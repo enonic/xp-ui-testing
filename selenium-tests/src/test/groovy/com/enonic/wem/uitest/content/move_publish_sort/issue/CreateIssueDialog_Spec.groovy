@@ -62,9 +62,6 @@ class CreateIssueDialog_Spec
 
         then: "correct notification message should be present"
         dialog.getValidationMessageForTitleInput() == Application.REQUIRED_MESSAGE;
-
-        and: "correct notification message should be present"
-        dialog.getValidationMessageForAssigneesInput() == Application.REQUIRED_MESSAGE;
     }
 
     def "GIVEN Create Issue dialog is opened WHEN 'Cancel' bottom-button has been pressed THEN the dialog should be closed"()

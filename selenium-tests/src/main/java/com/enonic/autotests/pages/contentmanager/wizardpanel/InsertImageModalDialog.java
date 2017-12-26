@@ -8,6 +8,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.pages.LoaderComboBox;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -74,14 +75,9 @@ public class InsertImageModalDialog
 
     public InsertImageModalDialog selectImage( String displayName )
     {
+        LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         clearAndType( optionFilterInput, displayName );
-        By imageBy = By.xpath( String.format( DIALOG_CONTAINER + H6_DISPLAY_NAME, displayName ) );
-        if ( !waitUntilVisibleNoException( imageBy, EXPLICIT_QUICK ) )
-        {
-            saveScreenshot( "err_img_selector" );
-            throw new TestFrameworkException( "image was not found! : " + displayName );
-        }
-        findElement( imageBy ).click();
+        loaderComboBox.selectOption( displayName );
         sleep( 700 );
         return this;
     }

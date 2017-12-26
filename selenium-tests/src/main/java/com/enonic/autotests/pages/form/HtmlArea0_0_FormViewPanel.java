@@ -50,6 +50,7 @@ public class HtmlArea0_0_FormViewPanel
             sleep( 500 );
             setTextIntoArea( frames.get( i ).getAttribute( "id" ), sourceString );
             sleep( 300 );
+            buildActions().click( frames.get( i ) ).build().perform();
             i++;
             if ( i >= numberOfEditors )
             {
