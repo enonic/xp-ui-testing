@@ -57,6 +57,7 @@ public class FieldSetFormViewPanel
             WebElement areaElement = findElement( By.xpath( TINY_MCE ) );
             buildActions().click( findElement( By.xpath( TINY_MCE ) ) ).build().perform();
             setTextIntoArea( areaElement.getAttribute( "id" ), text );
+            buildActions().click( findElement( By.xpath( TINY_MCE ) ) ).build().perform();
             sleep( 300 );
         }
         return this;

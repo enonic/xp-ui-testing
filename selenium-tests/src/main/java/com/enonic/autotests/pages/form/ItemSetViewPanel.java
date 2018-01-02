@@ -31,7 +31,7 @@ public class ItemSetViewPanel
 
     private final String OCCURRENCE_VIEW = FORM_ITEM_SET_VIEW + "//div[contains(@id,'FormItemSetOccurrenceView')]";
 
-    private final String DRAG_HANDLER = OCCURRENCE_VIEW + "//span[@class='drag-handle']";
+    private final String DRAG_HANDLER = OCCURRENCE_VIEW + "//div[@class='drag-control']";
 
     private final String TEXT_LINE_INPUTS = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
 
@@ -89,6 +89,7 @@ public class ItemSetViewPanel
         while ( it.hasNext() )
         {
             typeInHtmlArea( frames.get( i ), it.next() );
+
             i++;
         }
         return this;
@@ -167,6 +168,7 @@ public class ItemSetViewPanel
         builder.click( areaElement ).build().perform();
         setTextIntoArea( areaElement.getAttribute( "id" ), text );
         sleep( 300 );
+        builder.click( areaElement ).build().perform();
     }
 
     public long getNumberOfSets()
