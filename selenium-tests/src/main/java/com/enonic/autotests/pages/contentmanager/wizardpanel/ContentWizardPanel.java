@@ -58,7 +58,7 @@ public class ContentWizardPanel
     private final String TOOLBAR_UNDO_DELETE_BUTTON_XPATH =
         TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
 
-    private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
+    private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
     private final String TOOLBAR_PUBLISH = "//div[contains(@id,'ContentWizardToolbarPublishControls')]";
 
