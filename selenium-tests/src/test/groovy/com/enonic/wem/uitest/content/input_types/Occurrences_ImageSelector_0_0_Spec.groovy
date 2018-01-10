@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
@@ -129,8 +130,10 @@ class Occurrences_ImageSelector_0_0_Spec
         given: "content with a image-selector is opened(4 images is selected)"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+        SettingsWizardStepForm settingsWizardStepForm = new SettingsWizardStepForm(getSession(  ));
 
         when: "the image has been clicked"
+        settingsWizardStepForm.selectLanguage("English (en)");
         formViewPanel.clickOnImage( MAN_IMAGE_DISPLAY_NAME );
         and: "keyboard shortcut to 'Save' is pressed"
         wizard.pressSaveKeyboardShortcut();

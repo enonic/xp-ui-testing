@@ -102,6 +102,7 @@ public class SettingsWizardStepForm
             throw new TestFrameworkException( "locale was not found!  " + language );
         }
         findElement( By.xpath( optionItemXpath ) ).click();
+        sleep( 500 );
     }
 
     public void selectOwner( String owner )
