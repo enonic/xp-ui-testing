@@ -61,6 +61,7 @@ public class PageTemplateFormViewPanel
         }
         sleep( 2000 );
         selectPageController( data.getString( PAGE_CONTROLLER ) );
+        contentWizardPanel.switchToDefaultWindow();
         return this;
     }
 

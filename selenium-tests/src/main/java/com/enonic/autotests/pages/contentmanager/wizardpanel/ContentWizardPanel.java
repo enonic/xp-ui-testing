@@ -59,6 +59,7 @@ public class ContentWizardPanel
         TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
 
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
+    private final String TOOLBAR_SAVED_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Saved']]";
 
     private final String TOOLBAR_PUBLISH = "//div[contains(@id,'ContentWizardToolbarPublishControls')]";
 
@@ -444,6 +445,10 @@ public class ContentWizardPanel
         {
             switchToDefaultWindow();
         }
+        if(isElementDisplayed( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ) )){
+            //button Saved is present, that means the content is saved already
+            return this;
+        }
         boolean isSaveButtonEnabled =
             waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isSaveButtonEnabled )
@@ -480,6 +485,11 @@ public class ContentWizardPanel
     public boolean isSaveButtonEnabled()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
+    public boolean isSavedButtonEnabled()
+    {
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean isPublishButtonEnabled()

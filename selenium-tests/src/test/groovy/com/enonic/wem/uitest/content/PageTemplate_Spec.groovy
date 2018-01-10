@@ -67,11 +67,14 @@ class PageTemplate_Spec
             ContentTypeName.pageTemplate() );
 
         when: "display name has been typed"
-        wizard.typeData( TEST_TEMPLATE ).save();
-        saveScreenshot( "support_not_selected" )
+        wizard.typeData( TEST_TEMPLATE );
+        saveScreenshot( "support_not_selected" );
 
         then: "red icon should be displayed on the wizard, the content is not valid"
         wizard.isContentInvalid();
+
+        and:"Save button should be disabled, because auto-saving should be performed when the controller has been selected"
+        !wizard.isSaveButtonEnabled(  );
     }
 
     def "GIVEN existing page-template('support' is not selected) EXPECT the template should be displayed in the grid as not valid"()

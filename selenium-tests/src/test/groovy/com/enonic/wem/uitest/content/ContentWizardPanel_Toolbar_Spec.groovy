@@ -9,7 +9,7 @@ import com.enonic.xp.schema.content.ContentTypeName
 class ContentWizardPanel_Toolbar_Spec
     extends BaseContentSpec
 {
-    def "WHEN content wizard is opened AND all inputs are empty THEN all buttons on toolbar have correct state"()
+    def "WHEN folder-wizard is opened AND all inputs are empty THEN all buttons on toolbar have correct state"()
     {
         when: "content wizard is opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
@@ -17,8 +17,8 @@ class ContentWizardPanel_Toolbar_Spec
         then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save draft' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        and: "'Save' button should be disabled, because name input is empty"
+        !wizardPanel.isSaveButtonEnabled();
 
         and: "'Publish' button should be disabled"
         !wizardPanel.isPublishButtonEnabled();
@@ -54,7 +54,7 @@ class ContentWizardPanel_Toolbar_Spec
         wizardPanel.getStatus() == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN content wizard opened WHEN data typed and content saved THEN all buttons on toolbar have correct state"()
+    def "GIVEN folder-wizard opened WHEN data typed and content saved THEN all buttons on toolbar have correct state"()
     {
         given: "content wizard is opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
@@ -65,8 +65,8 @@ class ContentWizardPanel_Toolbar_Spec
         then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save draft' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        and: "'Saved' button should be disabled"
+        !wizardPanel.isSaveButtonEnabled();
 
         and: "'Publish' button should be enabled"
         wizardPanel.isPublishButtonEnabled();
@@ -78,9 +78,9 @@ class ContentWizardPanel_Toolbar_Spec
         wizardPanel.getStatus() == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN content wizard opened WHEN content saved AND published THEN 'online' status appears in the wizard AND publish-button should be disabled now"()
+    def "GIVEN folder wizard is opened WHEN content saved AND published THEN 'online' status appears in the wizard AND publish-button should be disabled now"()
     {
-        given: "content wizard opened"
+        given: "folder wizard is opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
@@ -91,8 +91,8 @@ class ContentWizardPanel_Toolbar_Spec
         then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save draft' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        and: "'Saved' button should be disabled"
+        !wizardPanel.isSavedButtonEnabled();
 
         and: "'Publish' button should be disabled"
         !wizardPanel.isPublishButtonEnabled();
@@ -101,7 +101,7 @@ class ContentWizardPanel_Toolbar_Spec
         wizardPanel.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN existing content is opened WHEN delete button pressed and deleting was confirmed THEN wizard closes and content should not be present in the grid"()
+    def "GIVEN existing folder is opened WHEN delete button has been pressed and deleting confirmed THEN wizard closes and content should not be present in the grid"()
     {
         given: "existing content is opened"
         Content folderContent = buildFolderContent( "folder", "wizard_toolbar" );

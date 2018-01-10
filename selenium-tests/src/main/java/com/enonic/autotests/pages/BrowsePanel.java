@@ -303,19 +303,23 @@ public abstract class BrowsePanel
         else
         {
             //scroll and count
-            long scrollTopBefore;
-            long scrollTopAfter;
-            long valueForScroll = getViewportHeight();
+            Number scrollTopBefore;
+            Number scrollTopAfter;
+            Number valueForScroll = getViewportHeight();
             for ( ; ; )
             {
+                int j=1;
                 scrollTopBefore = getViewportScrollTopValue();
                 scrollTopAfter = doScrollViewport( valueForScroll );
                 names.addAll( getNamesOfSelectedGridItem() );
-                if ( scrollTopBefore == scrollTopAfter )
+                if ( scrollTopBefore.intValue() == scrollTopAfter.intValue() )
                 {
                     break;
                 }
-                valueForScroll += valueForScroll;
+                //valueForScroll += valueForScroll;
+                j++;
+                valueForScroll =valueForScroll.intValue()*j;
+
             }
             return names.size();
         }
@@ -520,24 +524,26 @@ public abstract class BrowsePanel
             return names.size();
         }
         // else, do scroll and add values.
-        long newScrollTop = getViewportHeight();
-        long scrollTopBefore;
-        long scrollTopAfter;
+        Number newScrollTop = getViewportHeight();
+        Number scrollTopBefore;
+        Number scrollTopAfter;
         for ( ; ; )
         {
+            int j=1;
             scrollTopBefore = getViewportScrollTopValue();
             scrollTopAfter = doScrollViewport( newScrollTop );
-            if ( scrollTopBefore == scrollTopAfter )
+            if ( scrollTopBefore.intValue() == scrollTopAfter.intValue() )
             {
                 break;
             }
-            newScrollTop += newScrollTop;
+            j++;
+            newScrollTop =newScrollTop.intValue()*j;
             names.addAll( getGridItemNames() );
         }
         return names.size();
     }
 
-    protected Long doScrollViewport( long step )
+    protected Number doScrollViewport( Number step )
     {
         if ( findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).size() != 0 )
         {
@@ -694,9 +700,9 @@ public abstract class BrowsePanel
         return Integer.valueOf( scrollHeight.toString() );
     }
 
-    public Long getViewportScrollTopValue()
+    public Number getViewportScrollTopValue()
     {
-        return (Long) getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
+        return (Number) getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
     }
 
     public void scrollViewPortToTop()
@@ -720,8 +726,8 @@ public abstract class BrowsePanel
             return false;
         }
         int scrollTopValue = getViewportHeight();
-        long scrollTopBefore;
-        long scrollTopAfter;
+        Number scrollTopBefore;
+        Number scrollTopAfter;
         for ( ; ; )
         {
             scrollTopBefore = getViewportScrollTopValue();
@@ -732,7 +738,7 @@ public abstract class BrowsePanel
                 getLogger().info( "content was found: " + gridItemName );
                 return true;
             }
-            if ( scrollTopBefore == scrollTopAfter )
+            if ( scrollTopBefore.intValue() == scrollTopAfter.intValue() )
             {
                 break;
             }

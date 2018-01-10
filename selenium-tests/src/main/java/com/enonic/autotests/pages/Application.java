@@ -186,7 +186,7 @@ public class Application
         do
         {
             isDisplayed = isElementDisplayed( SPINNER_XPATH );
-            sleep( 100 );
+            sleep( 300 );
             i++;
             if ( i == 5 )
             {
