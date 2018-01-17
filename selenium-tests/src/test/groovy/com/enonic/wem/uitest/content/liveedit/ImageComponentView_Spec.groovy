@@ -60,6 +60,7 @@ class ImageComponentView_Spec
 
         when: "drop-down handler was clicked"
         imageComponentView.clickOnDropDownHandler();
+        saveScreenshot( "img_component_options" );
 
         then: "list of available options should be displayed"
         imageComponentView.getDisplayedOptions().size() > 0

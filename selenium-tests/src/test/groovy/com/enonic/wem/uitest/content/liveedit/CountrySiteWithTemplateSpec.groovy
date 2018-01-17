@@ -77,10 +77,9 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "the template is opened and the 'country region' controller selected and 'country' part inserted"
-        PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionView",
-                                                                                                                             LIVE_EDIT_FRAME_SITE_HEADER );
-        and: "'country' part has been inserted"
-        partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
+        PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
+        insertPart( pageComponentsView, "country", contentWizard, "country" );
+
         and: "Preview button is pressed"
         contentWizard.save().clickToolbarPreview();
         saveScreenshot( "country_part_added" );
@@ -101,11 +100,10 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel contentWizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit(); ;
 
         when: "'city list' part has been inserted"
-        PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
-            "PartComponentView", LIVE_EDIT_FRAME_SITE_HEADER );
-        partComponentView.selectItem( "City list" );
+        PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
+        insertPart( pageComponentsView, "country", contentWizard, "City list" );
         contentWizard.save().clickToolbarPreview();
-        saveScreenshot( "city_part_added" );
+        saveScreenshot( "city_list_part_added" );
 
         then: "page sources should not be empty"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
@@ -232,7 +230,7 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site was opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -261,8 +259,8 @@ class CountrySiteWithTemplateSpec
         and:
         components.get( 1 ).getType().equals( "region" ) && components.get( 1 ).getName().equals( "country" );
         and:
-        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( COUNTRY_PART_DEFAULT_NAME );
+        components.get( 3 ).getType().equals( "part" ) && components.get( 3 ).getName().equals( COUNTRY_PART_DEFAULT_NAME );
         and:
-        components.get( 3 ).getType().equals( "part" ) && components.get( 3 ).getName().equals( "City list" );
+        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( "City list" );
     }
 }
