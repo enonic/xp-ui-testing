@@ -77,6 +77,7 @@ class Site_Publish_Spec
 
         and: "site has been saved in the wizard"
         wizard.save();
+        sleep( 500 );
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"

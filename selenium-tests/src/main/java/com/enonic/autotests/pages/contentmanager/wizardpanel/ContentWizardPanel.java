@@ -165,17 +165,17 @@ public class ContentWizardPanel
 
     public boolean isDeleteButtonDisplayed()
     {
-        return toolbarDeleteButton.isDisplayed();
+        return isElementDisplayed( By.xpath( TOOLBAR_DELETE_BUTTON_XPATH ) );
     }
 
     public boolean isUndoDeleteButtonDisplayed()
     {
-        return toolbarUndoDeleteButton.isDisplayed();
+        return isElementDisplayed( By.xpath( TOOLBAR_UNDO_DELETE_BUTTON_XPATH ) );
     }
 
     public boolean isSaveButtonDisplayed()
     {
-        return toolbarSaveButton.isDisplayed();
+        return isElementDisplayed( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ) );
     }
 
     /**

@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.HomePage
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.CityCreationPage
 import com.enonic.autotests.pages.form.CityFormView
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
@@ -76,9 +77,8 @@ class PortalContentCreating_Spec
         ContentWizardPanel wizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: " 'country region' controller selected and 'country' part inserted"
-        PartComponentView partComponentView = wizard.showPageEditor().showContextWindow().clickOnInsertLink().insertPartByDragAndDrop(
-            "RegionView", LIVE_EDIT_FRAME_SITE_HEADER );
-        partComponentView.selectItem( "City Creation" );
+        PageComponentsViewDialog componentView = wizard.showComponentView();
+        insertPart( componentView, "country", wizard, "City Creation" );
 
         and: "'Preview' button has been pressed"
         wizard.save().clickToolbarPreview();
@@ -114,7 +114,7 @@ class PortalContentCreating_Spec
         filterPanel.typeSearchText( "Norway" );
         contentBrowsePanel.expandContent( NOR_CONTENT.getPath() );
         saveScreenshot( "norway-expanded" );
-        and: "Oslo sity should be present beneath the Norway"
+        and: "Oslo city should be present beneath the Norway"
         contentBrowsePanel.exists( OSLO_CITY_NAME );
     }
 

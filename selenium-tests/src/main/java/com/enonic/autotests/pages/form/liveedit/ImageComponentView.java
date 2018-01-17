@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -91,7 +92,8 @@ public class ImageComponentView
         String optionXpath = String.format( IMAGE_CONTENT_SELECTOR + OPTION_IMAGE_SELECTOR_VIEW_BY_NAME, imageName );
         if ( !isElementDisplayed( optionXpath ) )
         {
-            saveScreenshot( "img_comp_file_not_found" );
+            String name = NameHelper.uniqueName( "err_option" );
+            saveScreenshot( name );
             throw new TestFrameworkException( "Image with name:  " + imageName + "  was not found!" );
         }
         getDisplayedElement( By.xpath( optionXpath ) ).click();
