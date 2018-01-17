@@ -45,9 +45,6 @@ class BaseGebSpec
     def setupSpec()
     {
         initializeBaseUrl();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String userAgent = (String) js.executeScript( "return navigator.userAgent;" );
-        println "user agent is : " + userAgent;
     }
 
     def closeAlerts()
