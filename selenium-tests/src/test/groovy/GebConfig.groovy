@@ -4,7 +4,6 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxProfile
-import org.openqa.selenium.firefox.MarionetteDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 
@@ -12,7 +11,6 @@ import java.util.logging.Level
 
 // chrome driver by default
 driver = {
-
     def path = System.getProperty( "webdriver.chrome.driver" )
 
     if ( path == null )
@@ -49,7 +47,7 @@ driver = {
 
     def headless = System.getProperty( "chrome.headless" )
 
-    if (headless != null && headless.equals( "true" ))
+    if ( headless != null && headless.equals( "true" ) )
     {
         options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1920,1100" );
     }
@@ -100,10 +98,18 @@ environments {
     }
     firefox {
         driver = {
+            println "Firefox Configuration!"
             Properties props = new Properties()
             File propsFile = new File( 'tests.properties' )
             props.load( propsFile.newDataInputStream() )
             def pathToDriver;
+            def headless = System.getProperty( "firefox.headless" )
+
+            if ( headless != null && headless.equals( "true" ) )
+            {
+                options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1920,1100" );
+            }
+
             if ( Platform.current.is( Platform.WINDOWS ) )
             {
                 pathToDriver = props.getProperty( 'windows.gecko.path' )
@@ -123,13 +129,15 @@ environments {
             }
             System.setProperty( "webdriver.gecko.driver", pathToDriver );
             FirefoxProfile profile = new FirefoxProfile();
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability( FirefoxDriver.PROFILE, profile );
+            capabilities.setCapability( FirefoxDriver.Options, profile );
             capabilities.setCapability( "marionette", true );
-            def driver = new MarionetteDriver( capabilities );
+            FirefoxDriver driver = new FirefoxDriver( capabilities );
+
             driver.setLogLevel( Level.INFO )
             driver.manage().window().maximize()
-            println "firefox configuration"
+            println "The end of firefox configuration";
             return driver
         }
     }

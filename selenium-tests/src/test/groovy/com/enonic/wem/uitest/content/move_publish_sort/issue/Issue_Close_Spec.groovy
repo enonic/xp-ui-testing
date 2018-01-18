@@ -139,7 +139,7 @@ class Issue_Close_Spec
         getTestSession().setUser( null );
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.clickOnClosedTab();
+        issueListDialog.clickOnShowClosedIssues();
 
         when: "issue details dialog has been opened"
         IssueDetailsDialog issueDetailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() )

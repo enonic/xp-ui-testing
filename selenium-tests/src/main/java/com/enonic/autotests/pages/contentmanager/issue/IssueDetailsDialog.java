@@ -34,7 +34,7 @@ public class IssueDetailsDialog
 
     private final String ISSUE_STATUS = ISSUE_STATUS_SELECTOR + "//div[contains(@id,'TabMenuButton')]/a";
 
-    private final String PUBLISH_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'publish-action')]";
+    private final String ITEMS_TAB_BAR_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem')]/a[contains(.,'Items')]";
 
     private final String BACK_BUTTON = DIALOG_CONTAINER + "//a[@class='back-button']";
 
@@ -62,8 +62,8 @@ public class IssueDetailsDialog
     @FindBy(xpath = EDIT_ISSUE_BUTTON)
     private WebElement editIssueButton;
 
-    @FindBy(xpath = PUBLISH_BUTTON)
-    private WebElement publishButton;
+    @FindBy(xpath = ITEMS_TAB_BAR_ITEM)
+    private WebElement itemsTabBarItem;
 
     @FindBy(xpath = BACK_BUTTON)
     private WebElement backButton;
@@ -196,17 +196,25 @@ public class IssueDetailsDialog
         return updateIssueDialog;
     }
 
-    public boolean isPublishButtonPresent()
+    public boolean isItemsTabBarItemDisplayed()
     {
-        return publishButton.isDisplayed();
+        return itemsTabBarItem.isDisplayed();
     }
 
-    public IssueListDialog clickOnPublishButton()
+    /**
+     * click on the links and opens IssueListDialog
+     */
+    public IssueListDialog clickOnItemsTabBarItem()
     {
-        publishButton.click();
+        itemsTabBarItem.click();
         IssueListDialog issueListDialog = new IssueListDialog( getSession() );
         issueListDialog.waitForOpened();
         return issueListDialog;
+    }
+
+    public IssueDetailsDialog clickOnPublishButton()
+    {
+        return this;
     }
 
     public boolean waitForClosed()

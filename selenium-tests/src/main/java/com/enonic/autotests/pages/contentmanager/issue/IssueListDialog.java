@@ -28,7 +28,8 @@ public class IssueListDialog
 
     private final String OPEN_TAB_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and descendant::a[contains(.,'Open')]]";
 
-    private final String CLOSED_TAB_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and descendant::a[contains(.,'Closed')]]";
+    private final String SHOW_CLOSED_ISSUES_LINK =
+        DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and descendant::a[contains(.,'Show closed issues')]]";
 
     private final String NEW_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='New Issue...']]";
@@ -51,8 +52,8 @@ public class IssueListDialog
     @FindBy(xpath = OPEN_TAB_ITEM)
     private WebElement openTab;
 
-    @FindBy(xpath = CLOSED_TAB_ITEM)
-    private WebElement closedTab;
+    @FindBy(xpath = SHOW_CLOSED_ISSUES_LINK)
+    private WebElement showClosedIssuesLink;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
@@ -100,7 +101,7 @@ public class IssueListDialog
 
     public boolean isClosedTabPresent()
     {
-        return isElementDisplayed( CLOSED_TAB_ITEM );
+        return isElementDisplayed( SHOW_CLOSED_ISSUES_LINK );
     }
 
     public boolean isOpenTabActive()
@@ -110,7 +111,7 @@ public class IssueListDialog
 
     public boolean isClosedTabActive()
     {
-        return waitAndCheckAttrValue( findElement( By.xpath( CLOSED_TAB_ITEM ) ), "class", "active", 1 );
+        return waitAndCheckAttrValue( findElement( By.xpath( SHOW_CLOSED_ISSUES_LINK ) ), "class", "active", 1 );
     }
 
     public IssueListDialog clickOnOpenTab()
@@ -119,9 +120,9 @@ public class IssueListDialog
         return this;
     }
 
-    public IssueListDialog clickOnClosedTab()
+    public IssueListDialog clickOnShowClosedIssues()
     {
-        closedTab.click();
+        showClosedIssuesLink.click();
         return this;
     }
 

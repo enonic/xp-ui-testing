@@ -80,6 +80,9 @@ class ContentPublishDialog_Spec
         and: "'include children' has been clicked"
         contentPublishDialog.includeChildren( true );
 
+        and: ""
+        contentPublishDialog.clickOnShowDependentItemsLink();
+
         then: "correct title should be displayed on the dialog"
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
 
@@ -185,14 +188,13 @@ class ContentPublishDialog_Spec
 
         when: "'include child' icon was pressed"
         contentPublishDialog.includeChildren( true );
+        and: "Show Dependant Items link has been clicked"
+        contentPublishDialog.clickOnShowDependentItemsLink();
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies" );
 
-        then: "The header of 'Dependencies list' should be displayed"
-        contentPublishDialog.isDependenciesListHeaderDisplayed();
-
-        and: "correct text should be shown in the header"
-        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
+        then: "'Other items that will be published' message should be displayed"
+        contentPublishDialog.getDependenciesListMessage() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED_TEXT;
 
         and: "one correct dependant should be present"
         dependant.size() == 1;
@@ -210,6 +212,7 @@ class ContentPublishDialog_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( CHILD_FOLDER.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
+        contentPublishDialog.clickOnShowDependentItemsLink();
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies-child" );
 
@@ -217,7 +220,7 @@ class ContentPublishDialog_Spec
         contentPublishDialog.isDependenciesListHeaderDisplayed();
 
         and: "correct text should be shown in the header"
-        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
+        contentPublishDialog.getDependenciesListMessage() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED_TEXT;
 
         and: "one dependency should be shown on the dialog"
         dependant.size() == 1;

@@ -164,7 +164,10 @@ class IssueListDialog_Spec
         when: "the issue has been clicked"
         issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
         IssueDetailsDialog details = new IssueDetailsDialog( getSession() );
-        and: "'Publish' button has been pressed"
+        and: "'Items' button has been pressed"
+        details.clickOnItemsTabBarItem();
+
+        and:
         details.clickOnPublishButton();
 
         then: "'Closed'-tab should be opened"
