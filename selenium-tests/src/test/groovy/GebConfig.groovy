@@ -2,6 +2,7 @@ import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.firefox.FirefoxBinary
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.firefox.FirefoxProfile
@@ -106,10 +107,7 @@ environments {
             def pathToDriver;
             def headless = System.getProperty( "firefox.headless" )
             FirefoxOptions options = new FirefoxOptions();
-            if ( headless != null && headless.equals( "true" ) )
-            {
-                options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1920,1100" );
-            }
+
 
             if ( Platform.current.is( Platform.WINDOWS ) )
             {
@@ -129,12 +127,26 @@ environments {
                 throw new RuntimeException( "Unsupported operating system [${Platform.current}]" )
             }
             System.setProperty( "webdriver.gecko.driver", pathToDriver );
-            FirefoxProfile profile = new FirefoxProfile();
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability( FirefoxDriver.PROFILE, profile );
-            //capabilities.setCapability( FirefoxDriver.BINARY, options );
-            capabilities.setCapability( "marionette", true );
-            FirefoxDriver driver = new FirefoxDriver( capabilities );
+//            FirefoxProfile profile = new FirefoxProfile();
+//            DesiredCapabilities capabilities = new DesiredCapabilities();
+//            capabilities.setCapability( FirefoxDriver.PROFILE, profile );
+//            capabilities.setCapability( "marionette", true );
+//            FirefoxDriver driver = new FirefoxDriver( capabilities );
+
+            FirefoxBinary firefoxBinary = new FirefoxBinary();
+            if ( headless != null && headless.equals( "true" ) )
+            {
+                firefoxBinary.addCommandLineOptions( "--headless" );
+                firefoxBinary.addCommandLineOptions( "--disable-gpu" );
+                firefoxBinary.addCommandLineOptions( "window-size=1920,1100" );
+
+            }
+
+            System.setProperty( "webdriver.gecko.driver", pathToDriver );
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setBinary( firefoxBinary );
+            FirefoxDriver driver = new FirefoxDriver( firefoxOptions );
+
             driver.setLogLevel( Level.INFO )
             driver.manage().window().maximize()
             println "The end of firefox configuration";

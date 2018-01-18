@@ -465,11 +465,12 @@ task testContentStudioChrHeadless( type: Test, dependsOn: [buildApplications, de
 task testContentStudioFirefoxHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox'
+    System.setProperty 'firefox.headless', 'true'
     //set required JvmOption:
     systemProperty 'geb.env', System.getProperty( 'geb.env' )
     systemProperty 'firefox.headless', System.getProperty( 'firefox.headless' )
     scanForTestClasses = false
-    //include '**/content/*Spec.class'
+    include '**/content/*Spec.class'
     include '**/content/portal/**Spec.class'
     include '**/content/responsive/**Spec.class'
     forkEvery = null
