@@ -60,6 +60,19 @@ class BaseGebSpec
         }
     }
 
+    def acceptAlerts()
+    {
+        try
+        {
+            Alert alert = getDriver().switchTo().alert();
+            alert.accept();
+        }
+        catch ( Exception e )
+        {
+            println "no alerts";
+        }
+    }
+
     def closeAllTabs( String homeHandle )
     {
         for ( String handle : driver.getWindowHandles() )
@@ -68,6 +81,7 @@ class BaseGebSpec
             {
                 getDriver().switchTo().window( handle );
                 getDriver().close();
+                acceptAlerts();
             }
         }
         getDriver().switchTo().window( homeHandle );
