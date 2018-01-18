@@ -274,26 +274,6 @@ public abstract class Page
         return getDriver().findElement( by );
     }
 
-//        FluentWait<By> fluentWait = new FluentWait<By>( by );
-//        fluentWait.pollingEvery( 500, TimeUnit.MILLISECONDS );
-//        fluentWait.withTimeout( Application.EXPLICIT_LONG, TimeUnit.SECONDS );
-//        fluentWait.until( new Predicate<By>()
-//        {
-//            public boolean apply( By by )
-//            {
-//                try
-//                {
-//                    return getDriver().findElement( by ).isDisplayed();
-//                }
-//                catch ( NoSuchElementException ex )
-//                {
-//                    return false;
-//                }
-//            }
-//        } );
-//        return getDriver().findElement( by );
-    // }
-
     protected WebElement findElement( By by )
     {
         return getDriver().findElement( by );

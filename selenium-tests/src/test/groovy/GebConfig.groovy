@@ -3,6 +3,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -104,7 +105,7 @@ environments {
             props.load( propsFile.newDataInputStream() )
             def pathToDriver;
             def headless = System.getProperty( "firefox.headless" )
-
+            FirefoxOptions options = new FirefoxOptions();
             if ( headless != null && headless.equals( "true" ) )
             {
                 options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1920,1100" );
@@ -131,10 +132,9 @@ environments {
             FirefoxProfile profile = new FirefoxProfile();
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability( FirefoxDriver.PROFILE, profile );
-            capabilities.setCapability( FirefoxDriver.Options, profile );
+            //capabilities.setCapability( FirefoxDriver.BINARY, options );
             capabilities.setCapability( "marionette", true );
             FirefoxDriver driver = new FirefoxDriver( capabilities );
-
             driver.setLogLevel( Level.INFO )
             driver.manage().window().maximize()
             println "The end of firefox configuration";
