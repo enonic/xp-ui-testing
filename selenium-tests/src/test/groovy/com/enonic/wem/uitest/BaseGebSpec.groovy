@@ -32,11 +32,12 @@ class BaseGebSpec
         {
             session.setLoggedIn( false );
             session.setInLiveEditFrame( false );
-        }
-        if ( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) != null )
-        {
-            closeAlerts();
-            closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
+
+            if ( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) != null )
+            {
+                closeAlerts();
+                closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
+            }
         }
 
         resetBrowser();
