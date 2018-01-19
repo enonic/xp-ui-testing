@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
@@ -44,6 +45,7 @@ class ImageEditor_Crop_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
     //verifies XP-4167 Impossible to save changes and close the Wizard after an image was cropped
+    @Ignore
     def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image cropped  AND save button pressed AND wizard closed THEN 'save before close' dialog does not appear"()
     {
         given: "'Image Editor' dialog opened"
@@ -95,6 +97,7 @@ class ImageEditor_Crop_Reset_Spec
         !imageFormViewPanel.isButtonResetPresent();
     }
 
+    @Ignore
     def "GIVEN existing cropped image opened WHEN  'Reset' button has been pressed AND 'Save' button pressed AND tab with the wizard has been closed THEN Alert dialog should not appear"()
     {
         given: "existing cropped image"

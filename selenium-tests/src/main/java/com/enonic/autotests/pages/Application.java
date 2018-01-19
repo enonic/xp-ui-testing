@@ -240,7 +240,7 @@ public class Application
     {
         try
         {
-            getDriver().switchTo().alert();
+            getDriver().switchTo().alert().accept();
             return true;
         }
         catch ( NoAlertPresentException var3 )

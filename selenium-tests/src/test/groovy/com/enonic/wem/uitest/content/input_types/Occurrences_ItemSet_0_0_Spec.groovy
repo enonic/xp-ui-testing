@@ -10,6 +10,7 @@ import com.enonic.autotests.pages.form.ItemSetViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.TestItemSet
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -125,6 +126,7 @@ class Occurrences_ItemSet_0_0_Spec
         itemSetViewPanel.isAddButtonPresent();
     }
     //Verifies Bug: XP-4422 ItemSet content wizard - 'save before close' should appear, when there are unsaved changes
+    @Ignore
     def "GIVEN existing content with one added ItemSet WHEN the ItemSet has been removed AND close button pressed THEN 'Save Before Close' dialog should appear"()
     {
         given: "existing ItemSet content with one added set"

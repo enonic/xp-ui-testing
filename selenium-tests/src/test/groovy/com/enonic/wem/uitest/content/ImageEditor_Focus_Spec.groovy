@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
@@ -41,6 +42,7 @@ class ImageEditor_Focus_Spec
         formViewPanel.isButtonResetPresent();
     }
 
+    @Ignore
     def "GIVEN 'Image Editor' dialog is opened WHEN focus was changed AND 'Save' button has been pressed THEN 'save before close dialog' does not appear"()
     {
         given: "'Image Editor' dialog opened"

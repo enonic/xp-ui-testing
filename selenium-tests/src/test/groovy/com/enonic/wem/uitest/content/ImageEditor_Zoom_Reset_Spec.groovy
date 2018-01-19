@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
@@ -40,6 +41,7 @@ class ImageEditor_Zoom_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
 
+    @Ignore
     def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND 'Close' button pressed THEN 'Alert' dialog with warning messages should appear"()
     {
         given: "'Image Editor' dialog opened"
@@ -63,6 +65,7 @@ class ImageEditor_Zoom_Reset_Spec
         wizard.isAlertPresent();
     }
 
+    @Ignore
     def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN Alert modal dialog should not appear"()
     {
         given: "'Image Editor' dialog opened"
@@ -96,6 +99,7 @@ class ImageEditor_Zoom_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
 
+    @Ignore
     def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button was pressed AND 'close' button pressed THEN 'Alert' dialog with warning messages should appear"()
     {
         given: "existing zoomed image"
@@ -113,6 +117,7 @@ class ImageEditor_Zoom_Reset_Spec
         wizard.waitIsAlertDisplayed();
     }
 
+    @Ignore
     def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button pressed AND 'close' button pressed AND 'save' pressed THEN 'Alert' dialog should not appear"()
     {
         given: "existing zoomed image"

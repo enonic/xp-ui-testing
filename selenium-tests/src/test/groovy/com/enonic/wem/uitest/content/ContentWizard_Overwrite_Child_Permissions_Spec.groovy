@@ -9,6 +9,7 @@ import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.SystemUserName
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -53,6 +54,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         dialog.isApplyButtonEnabled();
     }
     //verifies XP-4932 Impossible to save changes when 'Overwrite child permissions' was set to true
+    @Ignore
     def "GIVEN existing parent folder with a child WHEN 'Edit Permissions' dialog for the parent folder is opened AND 'Overwrite child permissions' was set to true THEN checkbox should be checked when dialog is opened in the second time"()
     {
         given: "parent folder has been added"

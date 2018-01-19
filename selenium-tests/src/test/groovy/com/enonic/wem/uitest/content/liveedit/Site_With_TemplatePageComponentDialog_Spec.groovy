@@ -7,6 +7,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 
 class Site_With_TemplatePageComponentDialog_Spec
@@ -84,6 +85,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         contextMenu.isOpened();
     }
 
+    @Ignore
     def "GIVEN existing site is opened and 'customize' menu item was selected WHEN wizard has been closed THEN 'save before close dialog' should be displayed"()
     {
         given: "existing site is opened"
