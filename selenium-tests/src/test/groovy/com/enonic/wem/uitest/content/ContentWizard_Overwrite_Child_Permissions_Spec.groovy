@@ -54,7 +54,6 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         dialog.isApplyButtonEnabled();
     }
     //verifies XP-4932 Impossible to save changes when 'Overwrite child permissions' was set to true
-    @Ignore
     def "GIVEN existing parent folder with a child WHEN 'Edit Permissions' dialog for the parent folder is opened AND 'Overwrite child permissions' was set to true THEN checkbox should be checked when dialog is opened in the second time"()
     {
         given: "parent folder has been added"
@@ -78,7 +77,6 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         wizard.save();
         and: "wizard is closing"
         wizard.executeCloseWizardScript();
-        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' with warning message should not be displayed"
         !wizard.isAlertPresent();

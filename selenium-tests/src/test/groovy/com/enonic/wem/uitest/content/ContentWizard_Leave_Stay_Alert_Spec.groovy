@@ -60,7 +60,6 @@ class ContentWizard_Leave_Stay_Alert_Spec
         deleteContentDialog.getTitle() == "Delete item"
     }
 
-    @Ignore
     def "GIVEN content wizard is opened AND typed data was not saved AND wizard is closing WHEN 'Leave' has been pressed THEN content with the name not listed in the grid"()
     {
         given: "content wizard is opened AND typed data was not saved"
@@ -77,7 +76,6 @@ class ContentWizard_Leave_Stay_Alert_Spec
         !contentBrowsePanel.exists( name )
     }
 
-    @Ignore
     def "GIVEN  content wizard is opened AND typed data was not saved AND wizard is closing WHEN 'Stay' is selected THEN wizard has not been closed"()
     {
         given: "content wizard is opened AND typed data was not saved"

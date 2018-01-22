@@ -2,6 +2,7 @@ package com.enonic.autotests.pages;
 
 import java.util.ArrayList;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -240,7 +241,8 @@ public class Application
     {
         try
         {
-            getDriver().switchTo().alert().accept();
+            Alert alert = getDriver().switchTo().alert();
+            alert.accept();
             return true;
         }
         catch ( NoAlertPresentException var3 )

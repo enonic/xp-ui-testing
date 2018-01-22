@@ -178,6 +178,11 @@ public class ContentWizardPanel
         return isElementDisplayed( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ) );
     }
 
+    public boolean isSavedButtonDisplayed()
+    {
+        return isElementDisplayed( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ) );
+    }
+
     /**
      * Keyboard shortcut to 'Edit selected content'
      */

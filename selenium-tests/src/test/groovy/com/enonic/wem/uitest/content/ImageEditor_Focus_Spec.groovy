@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.HomePage
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
@@ -42,7 +43,7 @@ class ImageEditor_Focus_Spec
         formViewPanel.isButtonResetPresent();
     }
 
-    @Ignore
+
     def "GIVEN 'Image Editor' dialog is opened WHEN focus was changed AND 'Save' button has been pressed THEN 'save before close dialog' does not appear"()
     {
         given: "'Image Editor' dialog opened"
@@ -54,12 +55,11 @@ class ImageEditor_Focus_Spec
         imageEditor.doDragAndChangeFocus( -50 );
         imageEditor.getToolbar().clickOnApplyButton();
 
-        and: "'Save' button was pressed "
+        and: "'Save' button has been pressed "
         wizard.save();
 
         and: "wizard has been closed"
         wizard.executeCloseWizardScript();
-        wizard.switchToBrowsePanelTab();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();
@@ -74,7 +74,7 @@ class ImageEditor_Focus_Spec
         when: "the image opened"
         contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
 
-        then: "'Reset' button displayed on the Image Editor"
+        then: "'Reset' button should be displayed on the Image Editor"
         formViewPanel.isButtonResetPresent();
     }
 
@@ -93,7 +93,7 @@ class ImageEditor_Focus_Spec
         !imageFormViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing image with changed focus WHEN 'Reset' button has been pressed AND 'Save' button pressed AND 'Close' button pressed THEN the wizard closes"()
+    def "GIVEN existing image with changed focus WHEN 'Reset' button has been pressed AND 'Save' button pressed AND 'Close' button pressed THEN Alert dialog should not be present"()
     {
         given: "existing image"
         ContentWizardPanel wizard = findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();
@@ -110,10 +110,15 @@ class ImageEditor_Focus_Spec
         imageFormViewPanel.clickOnResetButton();
 
         and: "'close' wizard button pressed"
-        wizard.save().executeCloseWizardScript();
-        wizard.switchToBrowsePanelTab();
+        wizard.executeCloseWizardScript();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();
+
+    }
+
+    def cleanup()
+    {
+        acceptAlerts();
     }
 }

@@ -82,7 +82,6 @@ class BaseGebSpec
             {
                 getDriver().switchTo().window( handle );
                 getDriver().close();
-                acceptAlerts();
             }
         }
         getDriver().switchTo().window( homeHandle );

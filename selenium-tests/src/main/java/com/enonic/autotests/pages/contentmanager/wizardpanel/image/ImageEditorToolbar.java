@@ -70,7 +70,7 @@ public class ImageEditorToolbar
     public void clickOnApplyButton()
     {
         applyButton.click();
-        sleep( 500 );
+        sleep( 700 );
     }
 
     public void clickOnCloseButton()

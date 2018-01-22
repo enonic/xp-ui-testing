@@ -45,7 +45,6 @@ class ImageEditor_Crop_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
     //verifies XP-4167 Impossible to save changes and close the Wizard after an image was cropped
-    @Ignore
     def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image cropped  AND save button pressed AND wizard closed THEN 'save before close' dialog does not appear"()
     {
         given: "'Image Editor' dialog opened"
@@ -57,12 +56,11 @@ class ImageEditor_Crop_Reset_Spec
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
         imageEditor.getToolbar().clickOnApplyButton();
 
-        and: "Save button pressed "
+        and: "Save button has been pressed "
         wizard.save();
 
         and: "wizard has been closed"
         wizard.executeCloseWizardScript();
-        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' with warning message should not be displayed"
         !wizard.isAlertPresent();
@@ -97,7 +95,7 @@ class ImageEditor_Crop_Reset_Spec
         !imageFormViewPanel.isButtonResetPresent();
     }
 
-    @Ignore
+
     def "GIVEN existing cropped image opened WHEN  'Reset' button has been pressed AND 'Save' button pressed AND tab with the wizard has been closed THEN Alert dialog should not appear"()
     {
         given: "existing cropped image"
@@ -114,8 +112,7 @@ class ImageEditor_Crop_Reset_Spec
         imageFormViewPanel.clickOnResetButton();
 
         and: "tab with wizard has been closed"
-        wizard.save().executeCloseWizardScript();
-        wizard.switchToBrowsePanelTab();
+        wizard.executeCloseWizardScript();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();
