@@ -60,7 +60,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         when: "data was saved and wizard closed"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
-        wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER ).save().closeBrowserTab().switchToBrowsePanelTab();
+        wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER ).closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );

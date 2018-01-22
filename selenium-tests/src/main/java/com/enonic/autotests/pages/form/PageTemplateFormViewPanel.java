@@ -102,7 +102,7 @@ public class PageTemplateFormViewPanel
             throw new TestFrameworkException( "page controller: DropdownOptionFilterInput was not found" );
         }
         getDisplayedElement( By.xpath( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) ).sendKeys( pageName );
-        sleep( 1000 );
+        sleep( 700 );
         //select a 'page name'
         String pageItemXpath = String.format( "//div[contains(@id,'PageDescriptorDropdown')]//h6[text()='%s']", pageName );
         boolean isClickable = waitUntilClickableNoException( By.xpath( pageItemXpath ), Application.EXPLICIT_NORMAL );
@@ -113,7 +113,7 @@ public class PageTemplateFormViewPanel
         }
         saveScreenshot( NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
-        waitUntilVisibleNoException( By.xpath( "//body[@data-portal-component-type='page']" ), Application.EXPLICIT_NORMAL );
+        sleep( 1000 );
     }
 
     public List<String> getSelectedContentTypes()
