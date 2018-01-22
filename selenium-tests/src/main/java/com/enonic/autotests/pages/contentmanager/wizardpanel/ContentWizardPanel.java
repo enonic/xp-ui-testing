@@ -445,17 +445,14 @@ public class ContentWizardPanel
         {
             switchToDefaultWindow();
         }
-        if(isElementDisplayed( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ) )){
-            //button Saved is present, that means the content is saved already
-            return this;
-        }
-        boolean isSaveButtonEnabled =
-            waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !isSaveButtonEnabled )
+        boolean isSaveButtonPresent = waitUntilVisibleNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isSaveButtonPresent )
         {
+
             saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
             throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
         }
+
         toolbarSaveButton.click();
         sleep( 800 );
         return this;
