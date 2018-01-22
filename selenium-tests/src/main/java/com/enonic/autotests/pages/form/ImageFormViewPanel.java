@@ -114,6 +114,7 @@ public class ImageFormViewPanel
     {
         buttonReset.click();
         waitsElementNotVisible( By.xpath( BUTTON_RESET ), EXPLICIT_NORMAL );
+        sleep( 1000 );
         return this;
     }
 

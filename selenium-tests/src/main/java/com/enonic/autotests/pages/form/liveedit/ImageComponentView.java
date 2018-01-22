@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
+import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -90,7 +91,8 @@ public class ImageComponentView
     public ImageComponentView clickOnOption( String imageName )
     {
         String optionXpath = String.format( IMAGE_CONTENT_SELECTOR + OPTION_IMAGE_SELECTOR_VIEW_BY_NAME, imageName );
-        if ( !isElementDisplayed( optionXpath ) )
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), Application.EXPLICIT_NORMAL );
+        if ( !isVisible )
         {
             String name = NameHelper.uniqueName( "err_option" );
             saveScreenshot( name );
