@@ -30,6 +30,7 @@ class PublishingWizard_Excluding_NotParent_Spec
 
         when: "the shortcut is selected AND publishing wizard is opened"
         ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
+        dialog.clickOnShowDependentItemsLink();
 
         then: "the image should be displayed with the 'remove' icon"
         dialog.isDependantItemRemovable( TEST_IMAGE_DISPLAY_NAME )
