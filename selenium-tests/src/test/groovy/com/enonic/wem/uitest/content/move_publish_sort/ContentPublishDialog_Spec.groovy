@@ -238,6 +238,7 @@ class ContentPublishDialog_Spec
             Application.EXPLICIT_NORMAL );
         and: "'include children' has been clicked"
         contentPublishDialog.includeChildren( true );
+        contentPublishDialog.clickOnShowDependentItemsLink();
 
         when: "'remove' button has been clicked and the dependant is removed"
         contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );
@@ -262,6 +263,8 @@ class ContentPublishDialog_Spec
             Application.EXPLICIT_NORMAL );
         and: "'include children' has been clicked"
         contentPublishDialog.includeChildren( true );
+        contentPublishDialog.clickOnShowDependentItemsLink();
+
 
         when: "'remove' button has been clicked and the dependant was removed"
         contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );

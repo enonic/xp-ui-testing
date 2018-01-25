@@ -174,11 +174,9 @@ class Restore_Version_Site_Spec
 
         when: "page controller selected from the combobox-options"
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
+        sleep( 500 );
         saveScreenshot( "site_version_controller_added_wizard" );
 
-        and: "the site saved"
-        wizard.save();
-        sleep( 500 );
 
         and: "home button clicked"
         wizard.switchToBrowsePanelTab();

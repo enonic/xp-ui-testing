@@ -176,7 +176,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         def name = NameHelper.uniqueName( "site" );
         addSiteWithAllInputTypes( name );
         ContentWizardPanel wizard = findAndSelectContent( name ).clickToolbarEdit();
-        PageComponentsViewDialog pageComponentsViewDialog = wizard.selectPageDescriptor( "Page" ).save().showComponentView();
+        PageComponentsViewDialog pageComponentsViewDialog = wizard.selectPageDescriptor( "Page" ).showComponentView();
         pageComponentsViewDialog.openMenu( "main" ).selectMenuItem( "Insert", "Image" );
         pageComponentsViewDialog.doCloseDialog();
         wizard.switchToLiveEditFrame();

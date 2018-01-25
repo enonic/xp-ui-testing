@@ -56,7 +56,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         given: "existing site with a controller"
         SITE = buildMyFirstAppSite( "site" );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
-        wizardPanel.typeData( SITE ).selectPageDescriptor( COUNTRY_REGION_TITLE ).save().closeBrowserTab().switchToBrowsePanelTab();
+        wizardPanel.typeData( SITE ).selectPageDescriptor( COUNTRY_REGION_TITLE ).closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when the site has been selected and the details panel opened"
         findAndSelectContent( SITE.getName() ).clickOnDetailsToggleButton();
@@ -78,7 +78,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
                                            SITE.getName() );
         and: "new page template has been added"
         contentBrowsePanel.clickOnRowByName( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).close( PAGE_TEMPLATE.getDisplayName() );
 
         and: "Inspection panel has been opened"
         ContentWizardPanel siteWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
