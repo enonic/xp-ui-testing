@@ -30,6 +30,10 @@ public class IssueDetailsDialog
     private final String EDIT_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Edit Issue']]";
 
+    private final String CLOSE_ISSUE_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Close Issue']]";
+
+
     private final String ISSUE_STATUS_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'IssueStatusSelector')]";
 
     private final String ISSUE_STATUS = ISSUE_STATUS_SELECTOR + "//div[contains(@id,'TabMenuButton')]/a";
@@ -50,7 +54,7 @@ public class IssueDetailsDialog
 
     private final String CREATOR = DIALOG_CONTAINER + "//span[@class='creator']";
 
-    private final String DESCRIPTION = DIALOG_CONTAINER + "//p[@class='description-text']";
+    private final String DESCRIPTION = DIALOG_CONTAINER + "//p[@class='description']";
 
     private final String DEPENDANT_LIST = DIALOG_CONTAINER + "//ul[contains(@id,'PublishDialogDependantList')]";
 
@@ -61,6 +65,10 @@ public class IssueDetailsDialog
 
     @FindBy(xpath = EDIT_ISSUE_BUTTON)
     private WebElement editIssueButton;
+
+    @FindBy(xpath = CLOSE_ISSUE_BUTTON)
+    private WebElement closeIssueButton;
+
 
     @FindBy(xpath = ITEMS_TAB_BAR_ITEM)
     private WebElement itemsTabBarItem;
@@ -79,6 +87,11 @@ public class IssueDetailsDialog
     public boolean isEditIssueButtonDisplayed()
     {
         return editIssueButton.isDisplayed();
+    }
+
+    public boolean isCloseIssueButtonPresent()
+    {
+        return closeIssueButton.isDisplayed();
     }
 
     public void clickOnCancelButtonTop()
@@ -110,6 +123,7 @@ public class IssueDetailsDialog
     {
         return getDisplayedStrings( By.xpath( ITEM_TO_PUBLISH_NAMES ) );
     }
+
     public boolean waitForTitle( String text )
     {
         String reqTitleXpath = String.format( REQ_TITLE, text );

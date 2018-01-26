@@ -103,11 +103,8 @@ class IssueListDialog_Spec
         when:
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
-        then: "Closed-tab should be present"
-        issueListDialog.isClosedTabPresent();
-
-        and: "Open-tab should be present"
-        issueListDialog.isOpenTabActive();
+        then: "Show Closed Issues link should be present"
+        issueListDialog.isShowClosedIssuesLinkVisible();
 
         and: "'Assigned to Me' checkbox should be disabled"
         issueListDialog.isAssignedToMeCheckboxDisabled();

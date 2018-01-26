@@ -99,7 +99,7 @@ public class IssueListDialog
         return isElementDisplayed( OPEN_TAB_ITEM );
     }
 
-    public boolean isClosedTabPresent()
+    public boolean isShowClosedIssuesLinkVisible()
     {
         return isElementDisplayed( SHOW_CLOSED_ISSUES_LINK );
     }

@@ -171,6 +171,7 @@ class ContentUnpublishDialog_Spec
         addContent( content );
         findAndSelectContent( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         contentBrowsePanel.clickToolbarDelete().doDelete();
+        sleep( 400 );
 
         when: "the content has been 'unpublished'"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();

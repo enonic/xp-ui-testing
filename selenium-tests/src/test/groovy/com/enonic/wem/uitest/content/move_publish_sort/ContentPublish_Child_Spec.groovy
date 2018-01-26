@@ -71,6 +71,7 @@ class ContentPublish_Child_Spec
 
         when: "modal dialog has been opened"
         ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeMenuItem();
+        modalDialog.clickOnShowDependentItemsLink();
         List<String> dependantList = modalDialog.getDependantList();
 
         then: "Dependants should be displayed"

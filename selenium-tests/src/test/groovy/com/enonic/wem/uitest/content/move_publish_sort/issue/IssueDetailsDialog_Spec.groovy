@@ -97,9 +97,9 @@ class IssueDetailsDialog_Spec
 
         and: "'Edit' button should be present"
         issueDetailsDialog.isEditIssueButtonDisplayed();
-        and: "Publish button should be present"
-        issueDetailsDialog.isPublishButtonPresent();
-        and: "Back button should be present"
+        and: "'Close Issue' button should be present"
+        issueDetailsDialog.isCloseIssueButtonPresent();
+        and: "'Back' button should be present"
         issueDetailsDialog.isBackButtonDisplayed();
         and: "status of the issue should be 'Open'"
         issueDetailsDialog.getIssueStatus() == "Open"
@@ -113,7 +113,7 @@ class IssueDetailsDialog_Spec
         given: "existing assigned user"
         getTestSession().setUser( TEST_USER );
 
-        when: "the user is logged in"
+        when: "the user is 'logged in'"
         NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_home" + USER_NAME );
 

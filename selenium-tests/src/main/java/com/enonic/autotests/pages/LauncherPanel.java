@@ -9,6 +9,9 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
+
 public class LauncherPanel
     extends Application
 {
@@ -118,6 +121,7 @@ public class LauncherPanel
             saveScreenshot( NameHelper.uniqueName( "err_content_studio_link" ) );
             throw new TestFrameworkException( "content-studio link is not displayed" );
         }
+        sleep( 400 );
         contentStudioLink.click();
         return this;
     }
