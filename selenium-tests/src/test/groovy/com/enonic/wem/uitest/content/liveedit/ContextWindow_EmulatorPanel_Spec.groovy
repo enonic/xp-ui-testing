@@ -35,7 +35,7 @@ class ContextWindow_EmulatorPanel_Spec
         TEST_SITE = buildMyFirstAppSite( "emulator_panel" );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
             TEST_SITE ).save();
-        siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
+        siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER );
 
         when: "When context window opened and 'Emulator' link has been clicked"
         siteWizard.showContextWindow().clickOnEmulatorLink();

@@ -62,7 +62,7 @@ class CountrySiteWithTemplateSpec
         when: "'Templates' folder selected and new page-template is added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
         then: "new page-template should be listed"
@@ -78,10 +78,11 @@ class CountrySiteWithTemplateSpec
 
         when: "the template is opened and the 'country region' controller selected and 'country' part inserted"
         PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
+        and: "Part has been inserted(the site should be saved automatically)"
         insertPart( pageComponentsView, "country", contentWizard, "country" );
 
-        and: "Preview button is pressed"
-        contentWizard.save().clickToolbarPreview();
+        and: "Preview button has been pressed"
+        contentWizard.clickToolbarPreview();
         saveScreenshot( "country_part_added" );
 
         then: "sources should not be empty"
@@ -102,7 +103,7 @@ class CountrySiteWithTemplateSpec
         when: "'city list' part has been inserted"
         PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
         insertPart( pageComponentsView, "country", contentWizard, "City list" );
-        contentWizard.save().clickToolbarPreview();
+        contentWizard.clickToolbarPreview();
         saveScreenshot( "city_list_part_added" );
 
         then: "page sources should not be empty"
@@ -132,7 +133,7 @@ class CountrySiteWithTemplateSpec
         given: "new USA-content has been added"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, SITE.getName() );
         ContentWizardPanel wizard = selectSitePressNew( USA_CONTENT.getContentTypeName(), SITE.getName() );
-        wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
+        wizard.typeData( USA_CONTENT ).save();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         and: "child city-content for USA was added "
@@ -149,9 +150,10 @@ class CountrySiteWithTemplateSpec
 
         when: "country-content is selected in the grid and the 'Preview' button pressed"
         findAndSelectContent( USA_CONTENT.getName() );
-        sleep( 2000 );
+        sleep( 1000 );
         saveScreenshot( "USA_City" )
         contentBrowsePanel.clickToolbarPreview();
+        sleep( 1000 );
 
         then: "correct headers "
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );

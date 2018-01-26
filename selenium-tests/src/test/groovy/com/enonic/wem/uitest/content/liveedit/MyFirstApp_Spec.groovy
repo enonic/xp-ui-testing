@@ -29,6 +29,7 @@ class MyFirstApp_Spec
         saveScreenshot( "country_site_added" );
 
         then: "new site should be listed"
+        filterPanel.typeSearchText( MY_FIRST_SITE.getName() );
         contentBrowsePanel.exists( MY_FIRST_SITE.getName() );
     }
 
@@ -97,7 +98,8 @@ class MyFirstApp_Spec
         given: "'country' content is opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( USA_CONTENT.getName() ).clickToolbarEdit();
-        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).save();
+        wizard.showPageEditor().selectPageDescriptor( COUNTRY_REGION_TITLE ).switchToDefaultWindow();
+        sleep( 500 )
 
         when: "the 'Preview' button pressed on the wizard-toolbar"
         saveScreenshot( "page_descriptor_added_in_country_content" );
@@ -128,8 +130,7 @@ class MyFirstApp_Spec
         PartComponentView partComponentView = new PartComponentView( getSession() );
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
         saveScreenshot( "part_country_added" );
-        wizard.save();
-
+        wizard.switchToDefaultWindow();
         and: "'Preview' button on the wizard-toolbar has been pressed"
         wizard.clickToolbarPreview();
 

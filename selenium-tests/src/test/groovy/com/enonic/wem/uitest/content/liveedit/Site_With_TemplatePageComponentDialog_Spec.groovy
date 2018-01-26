@@ -9,7 +9,9 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 
+@Stepwise
 class Site_With_TemplatePageComponentDialog_Spec
     extends BaseContentSpec
 {
@@ -31,7 +33,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).close( PAGE_TEMPLATE.getDisplayName() );
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
 
         then: "template should be listed in the grid"

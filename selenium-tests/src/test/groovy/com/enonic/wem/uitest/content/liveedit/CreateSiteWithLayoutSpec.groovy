@@ -59,6 +59,7 @@ class CreateSiteWithLayoutSpec
             SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be listed in the grid"
+        filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
 
@@ -72,7 +73,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().closeBrowserTab().switchToBrowsePanelTab();
+            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).closeBrowserTab().switchToBrowsePanelTab();
 
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );

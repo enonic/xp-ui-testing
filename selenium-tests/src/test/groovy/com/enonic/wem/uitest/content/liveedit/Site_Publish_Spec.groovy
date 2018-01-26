@@ -32,7 +32,7 @@ class Site_Publish_Spec
         given: "data typed and saved and wizard closed"
         SITE = buildMyFirstAppSite( "site" );
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).selectPageDescriptor(
-            COUNTRY_REGION_PAGE_CONTROLLER ).save().closeBrowserTab().switchToBrowsePanelTab();
+            COUNTRY_REGION_PAGE_CONTROLLER ).closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site has been published"
         findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
@@ -137,7 +137,7 @@ class Site_Publish_Spec
         saveScreenshot( "site_modified_in_wizard" );
 
         and: "site saved in the wizard"
-        wizard.save();
+        wizard.switchToDefaultWindow();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"

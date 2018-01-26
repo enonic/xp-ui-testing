@@ -45,7 +45,7 @@ class Fragment_Change_In_InspectionPanel
         given: "site wizard  is opened and the controller has been selected"
         SITE1 = buildSiteBasedOnFirstApp();
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE1.getContentTypeName() ).typeData(
-            SITE1 ).selectPageDescriptor( "main region" ).save();
+            SITE1 ).selectPageDescriptor( "main region" );
         and: "'Component View' has been opened"
         PageComponentsViewDialog pageComponentsView = siteWizard.showComponentView();
 
@@ -161,7 +161,7 @@ class Fragment_Change_In_InspectionPanel
         given: "site wizard  is opened and the controller has been selected"
         SITE2 = buildSiteBasedOnFirstApp();
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE2.getContentTypeName() ).typeData(
-            SITE2 ).selectPageDescriptor( "main region" ).save();
+            SITE2 ).selectPageDescriptor( "main region" );
 
         and: "'Component View' has been opened"
         PageComponentsViewDialog pageComponentsView = siteWizard.showComponentView();

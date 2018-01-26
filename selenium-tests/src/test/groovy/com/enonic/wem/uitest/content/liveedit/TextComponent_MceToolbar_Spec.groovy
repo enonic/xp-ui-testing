@@ -34,7 +34,7 @@ class TextComponent_MceToolbar_Spec
         given: "Page Components View is opened"
         SITE = buildSimpleSiteApp();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
-            SITE ).selectPageDescriptor( MAIN_REGION_PAGE_DESCRIPTOR_NAME ).save();
+            SITE ).selectPageDescriptor( MAIN_REGION_PAGE_DESCRIPTOR_NAME );
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "new text component is inserted"

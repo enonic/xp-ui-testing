@@ -63,7 +63,7 @@ class PortalContentCreating_Spec
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
 
         and: "the template is saved"
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
         then: "new page-template should be listed"
@@ -81,7 +81,7 @@ class PortalContentCreating_Spec
         insertPart( componentView, "country", wizard, "City Creation" );
 
         and: "'Preview' button has been pressed"
-        wizard.save().clickToolbarPreview();
+        wizard.switchToDefaultWindow().clickToolbarPreview();
         saveScreenshot( "country_part_added2" );
 
         then: "correct page-sources are present in the HTML"
@@ -95,7 +95,7 @@ class PortalContentCreating_Spec
         NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", SITE.getName() );
 
         ContentWizardPanel wizard = selectSitePressNew( NOR_CONTENT.getContentTypeName(), SITE.getName() );
-        wizard.typeData( NOR_CONTENT ).save().waitNotificationMessage();
+        wizard.typeData( NOR_CONTENT ).save();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the submit button pressed and new city-content added as child into the country"

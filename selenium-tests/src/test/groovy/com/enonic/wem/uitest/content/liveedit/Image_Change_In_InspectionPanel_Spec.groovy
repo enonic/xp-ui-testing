@@ -34,7 +34,7 @@ class Image_Change_In_InspectionPanel_Spec
         given: "site wizard  is opened and the controller has been selected"
         SITE1 = buildSiteWithAllTypes( "inspect" );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE1.getContentTypeName() ).typeData(
-            SITE1 ).selectPageDescriptor( "main region" ).save();
+            SITE1 ).selectPageDescriptor( "main region" );
         and: "'Page Component View' has been opened"
         PageComponentsViewDialog pageComponentsView = siteWizard.showComponentView();
 

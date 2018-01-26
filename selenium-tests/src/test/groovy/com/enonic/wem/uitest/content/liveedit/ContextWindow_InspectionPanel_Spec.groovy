@@ -23,7 +23,7 @@ class ContextWindow_InspectionPanel_Spec
         given: "creating of new site"
         TEST_SITE = buildMyFirstAppSite( "test-inspection-panel" );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
-            TEST_SITE ).selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
+            TEST_SITE ).selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER );
 
         when: "Context window opened and 'Inspect' link was pressed"
         wizardPanel.showContextWindow().clickOnInspectLink();
@@ -46,7 +46,7 @@ class ContextWindow_InspectionPanel_Spec
     def "GIVEN the site with 'page controller' is opened WHEN 'Preview' button pressed THEN page-sources are correct and correct header present as well"()
     {
         given: "the site with a 'page controller' is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
         when: "'Preview' button pressed"
         wizardPanel.clickToolbarPreview();
@@ -62,7 +62,7 @@ class ContextWindow_InspectionPanel_Spec
     def "GIVEN 'Custom' renderer is selected WHEN Page controller has been changed to 'Country list' THEN correct page controller displayed in the selector"()
     {
         given: "existing site with the selected page controller is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
         and: "'Inspect tab' has been opened"
         wizardPanel.showContextWindow().clickOnInspectLink();
@@ -83,7 +83,7 @@ class ContextWindow_InspectionPanel_Spec
     def "GIVEN 'Inspect' panel is opened WHEN 'Automatic' renderer was selected THEN 'Confirmation Dialog' should be displayed"()
     {
         given: "'Inspect' panel is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit()
+        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
         wizardPanel.showContextWindow().clickOnInspectLink();
 
         when: "'Automatic' page-template has been selected"
@@ -101,7 +101,7 @@ class ContextWindow_InspectionPanel_Spec
     def "GIVEN 'Inspect' panel is opened WHEN 'Automatic' renderer was selected THEN 'Context window' should be closed"()
     {
         given: "'Inspect' panel is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit()
+        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
         wizardPanel.showContextWindow().clickOnInspectLink();
 
         when: "'Automatic' page-template has been selected"

@@ -29,7 +29,7 @@ class PageComponentView_Save_As_Template_Spec
         given:
         SITE = buildMyFirstAppSite( "site" );
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE ).selectPageDescriptor(
-            COUNTRY_LIST_CONTROLLER ).save().closeBrowserTab().switchToBrowsePanelTab();
+            COUNTRY_LIST_CONTROLLER ).closeBrowserTab().switchToBrowsePanelTab();
 
         when: "Page Component View has been opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -58,7 +58,7 @@ class PageComponentView_Save_As_Template_Spec
         Content template = buildPageTemplate( COUNTRY_LIST_CONTROLLER, TEMPLATE_SUPPORTS_SITE, "test statistics template",
                                               SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).showPageEditor().typeData( template ).save();
+            template.getContentTypeName() ).showPageEditor().typeData( template );
 
         when: "Page Component View has been opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView().openMenu( COUNTRY_LIST_CONTROLLER );

@@ -38,7 +38,7 @@ class ContextWindow_InsertPanel_Spec
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
         when: "page controller has been selected"
-        siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).save();
+        siteWizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).switchToDefaultWindow(); ;
         saveScreenshot( "test-site-controller-selected" );
 
         then: "'Components View' toggler should be displayed"

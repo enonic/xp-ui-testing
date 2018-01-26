@@ -269,6 +269,10 @@ public class ContentWizardPanel
      */
     public ContextWindow showContextWindow()
     {
+        if ( isInLiveEditFrame() )
+        {
+            switchToDefaultWindow();
+        }
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.isContextWindowPresent() )
         {
@@ -292,7 +296,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "button Preview disabled, but expected is enabled" );
         }
         toolbarPreviewButton.click();
-        sleep( 1000 );
+        sleep( 1500 );
         return this;
     }
 
@@ -589,6 +593,10 @@ public class ContentWizardPanel
      */
     public PageComponentsViewDialog showComponentView()
     {
+        if ( isInLiveEditFrame() )
+        {
+            switchToDefaultWindow();
+        }
         if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_component-view-button" );
@@ -635,7 +643,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "drop-down-option-filter: item was not found: " + pageDescriptorDisplayName );
         }
         getDisplayedElement( By.xpath( pageDescriptor ) ).click();
-        sleep( 1000 );
+        sleep( 1100 );
         return this;
     }
 

@@ -39,7 +39,7 @@ class PageTemplate_Fragments_Spec
                                            SITE.getName() );
         and: "new page template has been added"
         contentBrowsePanel.clickOnRowByName( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).close( PAGE_TEMPLATE.getDisplayName() );
 
         when: "the name of the page template has been typed"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );

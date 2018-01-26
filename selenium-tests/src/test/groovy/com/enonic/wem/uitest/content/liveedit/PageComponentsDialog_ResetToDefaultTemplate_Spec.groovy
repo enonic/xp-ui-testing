@@ -51,6 +51,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         given: "existing Site based on 'My First App'"
         SITE = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
         addSite( SITE );
+        filterPanel.typeSearchText( SITE.getName() )
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, TEMPLATE_DISPLAY_NAME,
                                            SITE.getName() );
@@ -147,6 +148,6 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         wizard.switchToDefaultWindow();
         wizard.showComponentView();
         addImageComponent( imageName );
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
     }
 }
