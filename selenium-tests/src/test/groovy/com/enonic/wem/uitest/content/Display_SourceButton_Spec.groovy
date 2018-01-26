@@ -90,7 +90,7 @@ class Display_SourceButton_Spec
 
         when: "new site with permissions 'Full Access' for the user has been saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).
-            typeData( SITE ).selectPageDescriptor( "main region" ).save().closeBrowserTab().switchToBrowsePanelTab();
+            typeData( SITE ).selectPageDescriptor( "main region" ).closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content should be listed in the grid"
         contentBrowsePanel.exists( SITE.getName() );
