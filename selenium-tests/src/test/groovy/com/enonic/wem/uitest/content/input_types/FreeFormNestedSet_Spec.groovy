@@ -67,6 +67,7 @@ class FreeFormNestedSet_Spec
         !wizard.isContentInvalid();
     }
 
+    @Ignore
     def "GIVEN existing not valid 'FreeForm' content is opened WHEN required inputs are not filled THEN red icon should be present on the wizard page"()
     {
         given: "wizard for FreeForm is opened"

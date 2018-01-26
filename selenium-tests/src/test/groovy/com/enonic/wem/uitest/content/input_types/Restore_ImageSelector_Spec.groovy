@@ -22,7 +22,8 @@ class Restore_ImageSelector_Spec
     {
         given: "new ImageSelector-content 2:4 has been added"
         IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
-        ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT.getContentTypeName() );
+        ContentWizardPanel wizard = findAndSelectContent( SITE_NAME ).clickToolbarNew().selectContentType(
+            IMAGE_SELECTOR_CONTENT.getContentTypeName() );
         wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
