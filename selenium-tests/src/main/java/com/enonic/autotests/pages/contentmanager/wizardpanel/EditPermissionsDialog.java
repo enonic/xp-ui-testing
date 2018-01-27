@@ -209,6 +209,7 @@ public class EditPermissionsDialog
             throw new TestFrameworkException( "principal was not found! : " + principalName );
         }
         findElement( principalCheckbox ).click();
+        sleep( 300 );
         //click on apply button, that appears in principal-selector
         findElement( By.xpath( "//div[@name='principalSelector']//button/span[text()='Apply']" ) ).click();
         sleep( 500 );
