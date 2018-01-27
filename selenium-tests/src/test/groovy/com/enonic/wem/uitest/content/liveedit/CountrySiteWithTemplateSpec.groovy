@@ -62,6 +62,7 @@ class CountrySiteWithTemplateSpec
         when: "'Templates' folder selected and new page-template is added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
+        sleep( 500 );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 

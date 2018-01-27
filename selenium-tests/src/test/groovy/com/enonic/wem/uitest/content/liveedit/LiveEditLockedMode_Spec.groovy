@@ -62,7 +62,7 @@ class LiveEditLockedMode_Spec
         when: "the site should be listed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).typeData( template );
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
         then: "new page-template should be listed"
