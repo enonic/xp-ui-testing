@@ -43,16 +43,16 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        Integer numberOfData = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.SHORTCUT.getValue() );
+        Integer numberOfShortcuts = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.SHORTCUT.getValue() );
 
         when: "'Folder' checkbox has been checked "
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.FOLDER.getValue() );
-        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "filtering_one-selection1" );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.IMAGE.getValue() );
+        sleep( 1000 );
+        saveScreenshot( "folder_shortcut_aggregated" );
 
         then: "all content in the grid should be correctly filtered"
-        Integer numberOfFolder = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
-        ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowsCount();
+        Integer numberOfImages = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.IMAGE.getValue() );
+        ( numberOfImages + numberOfShortcuts ) == contentBrowsePanel.getRowsCount();
     }
 
     def "GIVEN 'Shortcut' checkbox is checked WHEN 'Shortcut' checkbox has been unchecked THEN initial grid should be displayed"()

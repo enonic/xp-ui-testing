@@ -98,7 +98,7 @@ class Issue_Dependant_List_Spec
         assigneesList.add( TEST_USER.getName() );
 
         and: "create issue dialog is opened and data has been typed"
-        TEST_ISSUE = buildIssue( "issue to close", assigneesList, null );
+        TEST_ISSUE = buildIssue( "description: issue to close", assigneesList, null );
         CreateIssueDialog createIssueDialog = contentBrowsePanel.showPublishMenu().selectCreateIssueMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
         and: "'Include Children' link has been pressed"
@@ -106,10 +106,14 @@ class Issue_Dependant_List_Spec
 
         when: "'Create' button has been pressed"
         createIssueDialog.clickOnCreateIssueButton();
+
+        and: "Items- link hqs been clicked"
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
+        issueDetailsDialog.clickOnItemsTabBarItem();
+        sleep( 400 );
         List<String> dependantsNames = issueDetailsDialog.getDependantNames();
 
-        then: "the content should be present in the dependants list of the 'Details Dialog'"
+        then: "the content should be present in the dependants list of the 'Issue Details Dialog'"
         dependantsNames.get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
@@ -126,6 +130,7 @@ class Issue_Dependant_List_Spec
 
         and: "Cancel button on the UpdateIssue dialog has been pressed"
         updateIssueDialog.clickOnCancelBottomButton();
+        issueDetailsDialog.clickOnItemsTabBarItem();
         List<String> dependantsNames = issueDetailsDialog.getDependantNames();
 
         then: "the removed content should be present in the dependants list of the 'Details Dialog', because 'Cancel' button was pressed"

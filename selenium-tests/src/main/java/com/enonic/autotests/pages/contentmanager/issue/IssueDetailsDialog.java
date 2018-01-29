@@ -38,7 +38,7 @@ public class IssueDetailsDialog
 
     private final String ISSUE_STATUS = ISSUE_STATUS_SELECTOR + "//div[contains(@id,'TabMenuButton')]/a";
 
-    private final String ITEMS_TAB_BAR_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem')]/a[contains(.,'Items')]";
+    private final String ITEMS_TAB_BAR_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and child::a[contains(.,'Items')]]";
 
     private final String BACK_BUTTON = DIALOG_CONTAINER + "//a[@class='back-button']";
 
@@ -218,12 +218,11 @@ public class IssueDetailsDialog
     /**
      * click on the links and opens IssueListDialog
      */
-    public IssueListDialog clickOnItemsTabBarItem()
+    public IssueDetailsDialog clickOnItemsTabBarItem()
     {
         itemsTabBarItem.click();
-        IssueListDialog issueListDialog = new IssueListDialog( getSession() );
-        issueListDialog.waitForOpened();
-        return issueListDialog;
+        sleep( 400 );
+        return this;
     }
 
     public IssueDetailsDialog clickOnPublishButton()

@@ -47,7 +47,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
         contentBrowsePanel.expandContent( ContentPath.from( site.getName() ) );
         and:"new template has been added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).showPageEditor().typeData( template ).save().closeBrowserTab().switchToBrowsePanelTab();
+            template.getContentTypeName() ).showPageEditor().typeData( template ).closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
         when: "the template has been selected"

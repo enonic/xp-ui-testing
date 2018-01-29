@@ -47,7 +47,7 @@ public class ContentBrowseFilterPanel
 
     public enum ContentTypeDisplayNames
     {
-        FOLDER( "Folder" ), SITE( "Site" ), SHORTCUT( "Shortcut" );
+        FOLDER( "Folder" ), SITE( "Site" ), SHORTCUT( "Shortcut" ), IMAGE( "Image" );
 
         private String value;
 
