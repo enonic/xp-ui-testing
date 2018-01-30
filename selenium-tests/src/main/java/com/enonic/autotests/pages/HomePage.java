@@ -79,7 +79,16 @@ public class HomePage
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         checkLauncher();
-        launcherPanel.clickOnContentStudio();
+        try
+        {
+            launcherPanel.clickOnContentStudio();
+        }
+        catch ( Exception e )
+        {
+            saveScreenshot( NameHelper.uniqueName( "issue" ) );
+            throw new TestFrameworkException( "Error when 'Content Studio' link was clicked " + e.getMessage() );
+        }
+
         sleep( 1000 );
         switchToContentBrowseTab();
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
