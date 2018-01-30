@@ -55,7 +55,7 @@ public class XpTourDialog
     public void clickOnCancelButton()
     {
         cancelButtonTop.click();
-        sleep( 500 );
+        sleep( 700 );
     }
 
     public void clickOnSkipTourButton()
