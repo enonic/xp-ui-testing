@@ -85,20 +85,20 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
     def "GIVEN existing parent folder with a child is opened WHEN new permission as added in the parent AND 'Overwrite' is true THEN the permissions should be updated in the child folder"()
     {
         given: "existing parent folder with a child is opened"
-        ContentWizardPanel parent = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarEdit()
-        parent.switchToBrowsePanelTab();
+        ContentWizardPanel parentWizard = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarEdit()
+        parentWizard.switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
         ContentWizardPanel childFolder = findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarEdit();
         contentBrowsePanel.switchToBrowserTabByTitle( PARENT_FOLDER.getDisplayName() );
 
         when: " Anonymous acl-entry was added in the parent wizard"
-        EditPermissionsDialog dialog = parent.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = parentWizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         and: "'Overwrite child permissions' set in true for the parent folder AND new permission was added"
         dialog.setInheritPermissionsCheckbox( false ).setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox(
             anonymousEntry ).clickOnApply();
         and: "parent folder has been saved"
-        parent.save();
+        parentWizard.save();
         and: "navigate to the child wizard-tab"
         contentBrowsePanel.switchToBrowserTabByTitle( CHILD_FOLDER.getDisplayName() );
         saveScreenshot( "inherit_perm_true_child_permissions_updated" );

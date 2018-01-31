@@ -85,7 +85,7 @@ public class HomePage
         }
         catch ( Exception e )
         {
-            saveScreenshot( NameHelper.uniqueName( "issue" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_body_mask" ) );
             throw new TestFrameworkException( "Error when 'Content Studio' link was clicked " + e.getMessage() );
         }
 
