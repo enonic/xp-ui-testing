@@ -118,6 +118,7 @@ public class SiteConfiguratorDialog
         }
         buildActions().moveToElement( applyButton ).click().build().perform();
         waitForDialogClosed();
+        sleep( 700 );
     }
 
     public boolean waitForDialogClosed()

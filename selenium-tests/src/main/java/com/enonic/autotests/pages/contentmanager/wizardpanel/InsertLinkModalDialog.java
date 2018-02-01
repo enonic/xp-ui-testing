@@ -115,6 +115,7 @@ public class InsertLinkModalDialog
     {
         WebElement textInput = getDisplayedElement( By.xpath( LINK_TEXT_INPUT ) );
         clearAndType( textInput, text );
+        sleep( 300 );
         return this;
     }
 
@@ -122,12 +123,14 @@ public class InsertLinkModalDialog
     {
         WebElement textInput = getDisplayedElement( By.xpath( EMAIL_SUBJECT_INPUT ) );
         clearAndType( textInput, subject );
+        sleep( 500 );
         return this;
     }
 
     public InsertLinkModalDialog pressInsertButton()
     {
         getDisplayedElement( By.xpath( INSERT_OR_UPDATE_BUTTON ) ).click();
+        sleep( 1000 );
         return this;
     }
 
