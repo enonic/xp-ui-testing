@@ -2,11 +2,16 @@ package com.enonic.autotests.services;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -43,14 +48,43 @@ public class NavigatorHelper
     {
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
+        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
+        {
+            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
+            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
+        }
         ContentBrowsePanel cmPage = home.openContentStudioApplication();
         return cmPage;
+    }
+
+    private static boolean waitInvisibilityOfElement( By by, long timeout, TestSession testSession )
+    {
+        //WebDriverWait wait = new WebDriverWait(driver, 15);
+        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//input[@id='text4']")));
+        Wait<WebDriver> wait =
+            new FluentWait<WebDriver>( testSession.getDriver() ).withTimeout( timeout, TimeUnit.MILLISECONDS ).pollingEvery( 400,
+                                                                                                                             TimeUnit.MILLISECONDS ).ignoring(
+                NoSuchElementException.class );
+        try
+        {
+            wait.until( ExpectedConditions.invisibilityOfElementLocated( by ) );
+            return true;
+        }
+        catch ( Exception e )
+        {
+            return false;
+        }
     }
 
     public static UserBrowsePanel openUsersApp( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
+        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
+        {
+            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
+            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
+        }
         UserBrowsePanel userBrowsePanel = home.openUsersApplication();
         userBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         return userBrowsePanel;
@@ -60,6 +94,11 @@ public class NavigatorHelper
     {
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
+        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
+        {
+            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
+            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
+        }
         ApplicationBrowsePanel userBrowsePanel = home.openApplications();
         return userBrowsePanel;
     }
