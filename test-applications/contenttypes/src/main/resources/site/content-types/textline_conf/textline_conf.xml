@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>Text Line</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <!-- Example using regex validation and a default value. -->
+    <input name="socialSecurityNumber" type="TextLine">
+      <label>SSN</label>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <max-length>11</max-length>
+      </config>
+      <default>000-00-0000</default>
+    </input>
+  </form>
+</content-type>

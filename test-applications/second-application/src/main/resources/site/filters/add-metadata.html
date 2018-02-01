@@ -1,0 +1,26 @@
+<div data-th-remove="tag">
+    <meta data-th-if="${testRobots}" name="test-robots" content="noindex,nofollow"/>
+    <link data-th-if="${canonical}" data-th-attr="rel=canonical" data-th-href="${url}"/>
+    <meta data-th-if="${siteVerification}" name="google-site-verification" content="" data-th-attr="content=${siteVerification}"/>
+    <meta name="description" data-th-attr="content=${description}"/>
+    <meta property="og:title" data-th-attr="content=${title}"/>
+    <meta property="og:description" data-th-attr="content=${description}"/>
+    <meta property="og:site_name" data-th-attr="content=${siteName}"/>
+    <meta property="og:url" data-th-attr="content=${url}"/>
+    <meta property="og:type" data-th-attr="content=${type}"/>
+    <meta property="og:locale" data-th-attr="content=${locale}"/>
+    <div data-th-if="${image}" data-th-remove="tag">
+        <meta property="og:image" data-th-attr="content=${image}"/>
+        <meta property="og:image:width" data-th-attr="content=${imageWidth}"/>
+        <meta property="og:image:height" data-th-attr="content=${imageHeight}"/>
+    </div>
+    <div data-th-if="${twitterUserName}" data-th-remove="tag">
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" data-th-attr="content=${title}"/>
+        <meta name="twitter:description" data-th-attr="content=${description}"/>
+        <div data-th-if="${image}" data-th-remove="tag">
+            <meta name="twitter:image:src" data-th-attr="content=${image}"/>
+        </div>
+        <meta name="twitter:site" data-th-attr="content=${twitterUserName}"/>
+    </div>
+</div>

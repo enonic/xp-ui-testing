@@ -43,7 +43,6 @@ class ImageEditor_Focus_Spec
         formViewPanel.isButtonResetPresent();
     }
 
-
     def "GIVEN 'Image Editor' dialog is opened WHEN focus was changed AND 'Save' button has been pressed THEN 'save before close dialog' does not appear"()
     {
         given: "'Image Editor' dialog opened"
@@ -114,7 +113,6 @@ class ImageEditor_Focus_Spec
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();
-
     }
 
     def cleanup()
