@@ -1,5 +1,4 @@
 import com.enonic.uitest.server.ServerInstance
-import org.apache.xalan.xsltc.compiler.Copy
 
 buildscript {
     repositories {
@@ -145,7 +144,7 @@ ext {
     xpServer = new ServerInstance()
 }
 
-task startServer( dependsOn: unpackDistro, copyConfig ) {
+task startServer( dependsOn: [unpackDistro, copyConfig] ) {
     doLast {
         // logging.captureStandardOutput LogLevel.INFO
         // ext.xpServer = new ServerInstance()
