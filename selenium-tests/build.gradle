@@ -31,6 +31,7 @@ ext {
     distroDir = "$unpackDir${File.separator}enonic-xp-$xpVersion"
     deployDir = "$distroDir${File.separator}home${File.separator}deploy"
     xpHome = "$distroDir${File.separator}home"
+    configDir = "$xpHome${File.separator}config"
 }
 
 task updateTestDir {
@@ -133,11 +134,17 @@ task unpackDistro( type: Copy ) {
     into file( unpackDir )
 }
 
+task copyConfig( type: Copy ) {
+    from '../test-applications/common-config/'
+    include '**.*.cfg'
+    into file (configDir)
+}
+
 ext {
     xpServer = new ServerInstance()
 }
 
-task startServer( dependsOn: unpackDistro ) {
+task startServer( dependsOn: [unpackDistro, copyConfig] ) {
     doLast {
         // logging.captureStandardOutput LogLevel.INFO
         // ext.xpServer = new ServerInstance()
