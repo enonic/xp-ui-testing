@@ -114,7 +114,7 @@ class PageTemplate_Fragments_Spec
         wizard.switchToDefaultWindow().showComponentView();
         pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME );
 
-        then: "'Create Fragment' menu item should not be displayed, because it is the page-template"
-        !pageComponentsView.isMenuItemPresent( ComponentMenuItems.CREATE_FRAGMENT.getValue() );
+        then: "'Save as Fragment' menu item should not be displayed, because it is the page-template"
+        !pageComponentsView.isMenuItemPresent( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
     }
 }

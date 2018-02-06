@@ -80,7 +80,8 @@ public class NewContentDialog
 
     public boolean isMostPopularBlockDisplayed()
     {
-        return isElementDisplayed( MOST_POPULAR_BLOCK );
+        return waitUntilVisibleNoException( By.xpath( MOST_POPULAR_BLOCK ), Application.EXPLICIT_NORMAL );
+        //return isElementDisplayed( MOST_POPULAR_BLOCK );
     }
 
     public List<String> getContentTypesNames()
