@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
   <config/>
-  <x-data mixin="meta-data"/>
+	<x-data mixin="meta-data"/>
+	<filters>
+		<response-filter name="add-metadata" order="10"/>
+	</filters>
 </site>

@@ -18,9 +18,6 @@ class InstallApplication_Spec
     String APP_DISPLAY_NAME = "application for installing";
 
     @Shared
-    String APP_NAME = "install_app";
-
-    @Shared
     String LOCAL_APP_DISPLAY_NAME = "Second Selenium App";
 
     @Shared
@@ -28,27 +25,6 @@ class InstallApplication_Spec
 
     @Shared
     String CONTENT_VIEWER_APP_INSTALLED_NAME = "Inspect your content object JSON";
-
-    @Ignore
-    def "GIVEN 'install app' dialog opened  WHEN an application has been uploaded THEN new application should be listed in the grid"()
-    {
-        given: "'install app' dialog opened AND 'upload' tab activated"
-        applicationBrowsePanel.clickOnToolbarInstall();
-        InstallAppDialog appDialog = new InstallAppDialog( getSession() );
-        appDialog.waitUntilDialogLoaded();
-
-
-        when: "the application has been uploaded"
-        appDialog.duUploadApplication( LOCAL_PATH_TO_APP );
-        String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "local_app_installed" );
-
-        then: "new application should be listed in the grid"
-        applicationBrowsePanel.exists( APP_NAME );
-
-        and: "actual notification message and expected should be identical"
-        notificationMessage == String.format( APP_INSTALLED_MESSAGE, APP_DISPLAY_NAME )
-    }
 
     def "GIVEN existing 'local' application EXPECTED the application should be displayed with 'local'-icon"()
     {
@@ -66,57 +42,6 @@ class InstallApplication_Spec
 
         then: "'uninstall' button should be disabled"
         !applicationBrowsePanel.isUninstallButtonEnabled();
-    }
-
-    //TODO remove Ignore, when the 'updating' message will bew added in XP
-    @Ignore
-    def "GIVEN 'install app' dialog opened WHEN an application, that already installed, uploaded again THEN correct notification message appears "()
-    {
-        given:
-        applicationBrowsePanel.clickOnToolbarInstall();
-        InstallAppDialog appDialog = new InstallAppDialog( getSession() );
-        appDialog.waitUntilDialogLoaded();
-
-        when: "an application uploaded"
-        appDialog.duUploadApplication( LOCAL_PATH_TO_APP );
-        String appUpdatedMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "app_was_uploaded" )
-
-        then: "updated application listed in the grid"
-        applicationBrowsePanel.exists( APP_NAME );
-
-        and: "actual notification message and expected are identical"
-        appUpdatedMessage == String.format( APP_UPDATED_MESSAGE, APP_DISPLAY_NAME )
-    }
-
-
-    @Ignore
-    def "WHEN one local application and one not local application are selected THEN 'uninstall' button is disabled"()
-    {
-        when:
-        applicationBrowsePanel.clickCheckboxAndSelectRow( APP_NAME );
-        applicationBrowsePanel.clickCheckboxAndSelectRowByDisplayName( LOCAL_APP_DISPLAY_NAME );
-
-        then:
-        !applicationBrowsePanel.isUninstallButtonEnabled();
-    }
-
-    @Ignore
-    def "GIVEN existing not local application selected WHEN 'uninstall' button pressed THEN application not listed AND correct notification appears"()
-    {
-        given: "existing not local application selected"
-        applicationBrowsePanel.clickOnRowByName( APP_NAME )
-
-        when: "'uninstall' button pressed"
-        String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(
-            Application.EXPLICIT_NORMAL );
-        saveScreenshot( "app_uninstalled" );
-
-        then: "application not listed"
-        !applicationBrowsePanel.exists( APP_NAME );
-
-        and: "correct notification appears"
-        message == String.format( APP_UNINSTALLED, APP_DISPLAY_NAME );
     }
 
     def "GIVEN 'install app' dialog is opened WHEN an application has been installed from the 'Enonic Market' THEN new application should be listed in the browse panel "()
@@ -149,7 +74,7 @@ class InstallApplication_Spec
         applicationBrowsePanel.waitApplicationStatus( CONTENT_VIEWER_APP_INSTALLED_NAME, STARTED_STATE );
     }
 
-    def "GIVEN existing installed from the market application WHEN ;Install App; Dialog is opened THEN the application should be disabled on the dialog"()
+    def "GIVEN existing installed from the market application WHEN 'Install App' Dialog is opened THEN the application should be disabled in the dialog"()
     {
         when: "Install App Dialog is opened"
         applicationBrowsePanel.clickOnToolbarInstall();
