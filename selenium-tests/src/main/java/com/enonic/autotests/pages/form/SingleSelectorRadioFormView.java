@@ -47,6 +47,7 @@ public class SingleSelectorRadioFormView
             throw new TestFrameworkException( "option was not found! " + label );
         }
         getDisplayedElement( By.xpath( radioInputXpath ) ).click();
+        sleep( 1000 );
         return this;
     }
 

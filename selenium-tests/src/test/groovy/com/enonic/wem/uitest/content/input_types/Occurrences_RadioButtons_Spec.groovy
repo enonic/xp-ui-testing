@@ -17,7 +17,7 @@ class Occurrences_RadioButtons_Spec
     Content content_wit_opt;
 
 
-    def "WHEN wizard for  'Radio Buttons'-content is opened THEN radio buttons are present on page AND options are not selected"()
+    def "WHEN wizard for  'Radio Buttons'-content is opened THEN radio buttons should be present on the page AND options should not be selected"()
     {
         when: "start to add a content with type 'Radio Buttons'"
         String option = null;
@@ -67,15 +67,15 @@ class Occurrences_RadioButtons_Spec
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, radioButtonsContent.getDisplayName() );
     }
 
-    def "GIVEN saving of not required 'Single Selector Radio-content' with  selected option WHEN content opened for edit THEN correct selected option  present in form view"()
+    def "GIVEN saving of not required 'Single Selector Radio-content' with  selected option WHEN content is opened THEN correct selected option  present in form view"()
     {
-        given: "new content with type 'Single Selector Radio'"
+        given: "new content with type 'Single Selector Radio' is saved"
         String option = "option A";
         content_wit_opt = buildRadioButtonsContent( option );
         selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData(
             content_wit_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
@@ -83,19 +83,19 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption() == option;
     }
 
-    def "GIVEN a not required 'Single Selector Radio-content' with selected option WHEN content opened and option changed THEN new option displayed"()
+    def "GIVEN a not required 'Single Selector Radio-content' with selected option WHEN content opened and option changed THEN new option should be selected"()
     {
-        given: "a content with type 'Single Selector Radio' opened for edit"
+        given: "content with type 'Single Selector Radio' is opened"
         String newOption = "option B";
         ContentWizardPanel contentWizardPanel = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
-        when: "new option selected"
+        when: "new option has been selected"
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
         formViewPanel.selectOption( newOption );
         contentWizardPanel.save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
 
-        then: "new selected option displayed"
+        then: "new selected option should be displayed"
         formViewPanel.getSelectedOption() == newOption;
     }
 }
