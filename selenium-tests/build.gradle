@@ -1,5 +1,4 @@
 import com.enonic.uitest.server.ServerInstance
-import org.apache.xalan.xsltc.compiler.Copy
 
 buildscript {
     repositories {
@@ -469,6 +468,29 @@ task testContentStudioChrHeadless( type: Test, dependsOn: [buildApplications, de
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
+//Stop server is not necessary when run in a Docker container.
+testContentStudioChrHeadless.finalizedBy = ['stopServer']
+
+//
+// Firefox tests
+//
+
+task testApplicationsAppFirefoxHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
+    //set system property
+    System.setProperty 'geb.env', 'firefox'
+    System.setProperty 'firefox.headless', 'true'
+    //set required JvmOption:
+    systemProperty 'geb.env', System.getProperty( 'geb.env' )
+    systemProperty 'firefox.headless', System.getProperty( 'firefox.headless' )
+    scanForTestClasses = false
+    include '**/application/*Spec.class'
+    forkEvery = null
+    deleteFolders.mustRunAfter buildApplications
+    startServer.mustRunAfter deleteFolders
+    copyContentTypes.mustRunAfter startServer
+}
+//Stop server is not necessary when run in a Docker container.
+testApplicationsAppFirefoxHeadless.finalizedBy = ['stopServer']
 
 task testContentStudioFirefoxHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
@@ -487,4 +509,4 @@ task testContentStudioFirefoxHeadless( type: Test, dependsOn: [buildApplications
     copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
-testContentStudioChrHeadless.finalizedBy = ['stopServer']
+testContentStudioFirefoxHeadless.finalizedBy = ['stopServer']
