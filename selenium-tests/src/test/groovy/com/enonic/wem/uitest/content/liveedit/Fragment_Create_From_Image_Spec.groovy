@@ -50,7 +50,7 @@ class Fragment_Create_From_Image_Spec
 
         when: "click on the image-component and click on 'create fragment' menu item"
         wizard.showComponentView();
-        pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 1000 );
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( HAND_IMAGE_DISPLAY_NAME );
