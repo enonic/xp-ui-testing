@@ -8,12 +8,14 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 /**
  * Create on 8/3/2017.
  *
  * Tasks:xp-ui-testing#72 Add Selenium tests for PageTemplateWidgetItemView(Det. Panel)
  * */
+@Stepwise
 class DetailsPanel_PageTemplateWidgetItemView_Spec
     extends BaseContentSpec
 {
