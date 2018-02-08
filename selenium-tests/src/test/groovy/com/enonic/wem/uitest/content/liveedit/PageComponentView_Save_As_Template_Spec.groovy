@@ -65,7 +65,7 @@ class PageComponentView_Save_As_Template_Spec
         saveScreenshot( "context_menu_template" );
 
         then: "'Save as Template' menu item should be displayed"
-        pageComponentsView.isMenuItemPresent( ComponentMenuItems.SAVE_AS_TEMPLATE.getValue() );
+        !pageComponentsView.isMenuItemPresent( ComponentMenuItems.SAVE_AS_TEMPLATE.getValue() );
 
         and: "'Inspect' menu item should be displayed"
         pageComponentsView.isMenuItemPresent( ComponentMenuItems.INSPECT.getValue() );
