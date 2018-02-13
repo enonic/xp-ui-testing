@@ -130,11 +130,12 @@ public class PageComponentsViewDialog
 
     public PageComponentsViewDialog waitForOpened()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), EXPLICIT_LONG ) )
+        if ( !waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'PageComponentsTreeGrid')]" ), EXPLICIT_LONG ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err-page-comp-dialog" ) );
             throw new TestFrameworkException( "Page Components Dialog was not opened!" );
         }
+        sleep( 200 );
         return this;
     }
 

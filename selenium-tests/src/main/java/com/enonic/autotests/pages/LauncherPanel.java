@@ -121,7 +121,6 @@ public class LauncherPanel
             saveScreenshot( NameHelper.uniqueName( "err_content_studio_link" ) );
             throw new TestFrameworkException( "content-studio link is not displayed" );
         }
-        sleep( 500 );
         contentStudioLink.click();
         return this;
     }

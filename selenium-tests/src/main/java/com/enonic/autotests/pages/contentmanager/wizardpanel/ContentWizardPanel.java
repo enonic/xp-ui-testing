@@ -336,6 +336,7 @@ public class ContentWizardPanel
     public ItemViewContextMenu showItemViewContextMenu()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        sleep( 1500 );
         clickOnPageView();
         sleep( 500 );
         return new ItemViewContextMenu( getSession() );
@@ -359,7 +360,7 @@ public class ContentWizardPanel
     private void clickOnPageView()
     {
         switchToLiveEditFrame();
-        WebElement body = findElements( By.xpath( "//body" ) ).get( 0 );
+        WebElement body = findElements( By.xpath( "//div[@data-portal-component-type='region']" ) ).get( 0 );
         Actions builder = new Actions( getDriver() );
         builder.click( body ).build().perform();
     }
