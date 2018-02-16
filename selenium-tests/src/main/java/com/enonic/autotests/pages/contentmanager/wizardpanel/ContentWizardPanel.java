@@ -336,9 +336,9 @@ public class ContentWizardPanel
     public ItemViewContextMenu showItemViewContextMenu()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        sleep( 1500 );
+        sleep( 1400 );
         clickOnPageView();
-        sleep( 500 );
+        sleep( 900 );
         return new ItemViewContextMenu( getSession() );
     }
 
