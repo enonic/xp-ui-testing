@@ -339,7 +339,9 @@ public class ContentWizardPanel
         sleep( 1400 );
         clickOnPageView();
         sleep( 900 );
-        return new ItemViewContextMenu( getSession() );
+        ItemViewContextMenu menu = new ItemViewContextMenu( getSession() );
+        menu.waitForMenuOpened();
+        return menu;
     }
 
     public ContentWizardPanel unlockPageEditorAndSwitchToContentStudio()

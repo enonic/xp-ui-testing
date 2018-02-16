@@ -33,6 +33,14 @@ public class ItemViewContextMenu
             throw new TestFrameworkException( "Unlock LiveEdit: Customize menu-item not displayed!" );
         }
         getDisplayedElement( By.xpath( CUSTOMIZE_MENU_ITEM ) ).click();
+    }
 
+    public void waitForMenuOpened()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_DIV ), Application.EXPLICIT_NORMAL ) )
+        {
+            saveScreenshot( "err_load_item_view_context_menu" );
+            throw new TestFrameworkException( "InsertLink dialog was not opened!" );
+        }
     }
 }
