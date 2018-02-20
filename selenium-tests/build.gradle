@@ -137,6 +137,7 @@ task unpackDistro( type: Copy ) {
 task copyConfig( type: Copy ) {
     from '../test-applications/common-config/'
     include '**.*.cfg'
+    include '**.*.properties'
     into file (configDir)
 }
 
