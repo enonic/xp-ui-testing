@@ -139,7 +139,7 @@ task copyConfig( type: Copy ) {
     //include '**.*.cfg'
     //include '**.*.properties'
 
-    include '**.*.cfg', '**/*.properties'
+    include '**.*.cfg', '**.properties'
     into file (configDir)
 }
 
