@@ -136,10 +136,8 @@ task unpackDistro( type: Copy ) {
 
 task copyConfig( type: Copy ) {
     from '../test-applications/common-config/'
-    //include '**.*.cfg'
-    //include '**.*.properties'
-
-    include '**.*.cfg', '*.properties'
+    include '**.*.cfg'
+    include '*.properties'
     into file (configDir)
 }
 
@@ -155,6 +153,7 @@ task startServer( dependsOn: [unpackDistro, copyConfig] ) {
         xpServer.startupDelay = 40000
         xpServer.start()
     }
+    copyConfig.mustRunAfter unpackDistro
 }
 
 task stopServer {
