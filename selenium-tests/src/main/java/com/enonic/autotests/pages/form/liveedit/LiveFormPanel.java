@@ -39,7 +39,7 @@ public class LiveFormPanel
 
     private final String FRAGMENT_COMPONENT_VIEW = "//div[contains(@id,'FragmentComponentView')]";
 
-    private final String FRAGMENT_DISOLAY_NAMES = FRAGMENT_COMPONENT_VIEW + "//div[contains(@id,'FragmentComponentView')]";
+    private final String FRAGMENT_DISPLAY_NAMES = FRAGMENT_COMPONENT_VIEW + "//div[contains(@id,'FragmentComponentView')]";
 
 
     private LayoutComponentView layoutComponentView;

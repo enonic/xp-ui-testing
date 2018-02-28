@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -163,7 +164,8 @@ class ContentUnpublishDialog_Spec
         and: "dependant item should be displayed on the dialog"
         contentUnPublishDialog.getDependantNames().get( 0 ).contains( CHILD_CONTENT.getName() );
     }
-
+    //this test is ignored, because Unpublish menu item is not available for Deleted content
+    @Ignore
     def "GIVEN existing 'pending delete' content WHEN the content has been 'unpublished' THEN content should be deleted from the grid"()
     {
         given: "existing 'pending delete' content"
