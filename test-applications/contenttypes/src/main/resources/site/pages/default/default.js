@@ -27,7 +27,7 @@ function handleGet(req) {
 
         var bodyClass = '';
         var backgroundImage;
-        if (siteConfig.backgroundImage) {
+        if (siteConfig && siteConfig.backgroundImage) {
             var bgImageUrl = portal.imageUrl({
                 id: siteConfig.backgroundImage,
                 scale: '(1,1)',

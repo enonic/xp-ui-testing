@@ -48,6 +48,7 @@ public class FreeFormViewPanel
     public FreeFormViewPanel clickOnInputRadioButton()
     {
         getDisplayedElement( By.xpath( INPUT_RADIO_BUTTON ) ).click();
+        sleep( 1000 );
         return this;
     }
 

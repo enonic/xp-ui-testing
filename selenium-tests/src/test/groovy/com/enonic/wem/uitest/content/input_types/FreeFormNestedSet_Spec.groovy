@@ -39,15 +39,14 @@ class FreeFormNestedSet_Spec
         then: "red icon should be present on the wizard page, because required inputs are not filled"
         wizard.isContentInvalid()
     }
-    //TODO remove it when bug  https://github.com/enonic/xp/issues/4830 will be fixed
-    @Ignore
+
     def "GIVEN existing not valid 'FreeForm' content WHEN the content has been selected THEN the content should be displayed as invalid(in the grid)"()
     {
         when: "'FreeForm' content is selected"
         findAndSelectContent( SET_IN_SET_CONTENT.getName() );
 
         then: "the content should be displayed as invalid, because required inputs are not filled"
-        contentBrowsePanel.isContentInvalid()
+        contentBrowsePanel.isContentInvalid( SET_IN_SET_CONTENT.getName() )
     }
 
     def "GIVEN existing not valid 'FreeForm' content is opened WHEN required radio button has been selected THEN red icon should not be present on the wizard page"()
@@ -61,13 +60,13 @@ class FreeFormNestedSet_Spec
 
         and: "the content has been saved"
         wizard.save();
-        saveScreenshot( "freeform_should_be_valid" );
+        saveScreenshot( "freeform_should_be_valid1" );
 
         then: "red icon should not be displayed on  the wizard page"
         !wizard.isContentInvalid();
     }
 
-    @Ignore
+
     def "GIVEN existing not valid 'FreeForm' content is opened WHEN required inputs are not filled THEN red icon should be present on the wizard page"()
     {
         given: "wizard for FreeForm is opened"
@@ -75,24 +74,22 @@ class FreeFormNestedSet_Spec
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
-        freeForm.clickOnButtonRadioButton();
+        freeForm.clickOnInputRadioButton();
         and: "the content has been saved"
         wizard.save();
-        saveScreenshot( "freeform_should_be_valid" );
+        saveScreenshot( "freeform_should_be_invalid" );
 
-        then: "red icon should not be displayed on  the wizard page"
-        !wizard.isContentInvalid();
+        then: "red icon should be displayed on  the wizard page"
+        wizard.isContentInvalid();
     }
 
-    //TODO remove it when bug  https://github.com/enonic/xp/issues/4830 will be fixed
-    @Ignore
     def "GIVEN updated not valid 'FreeForm' content WHEN the content has been selected THEN the content should be displayed as invalid(in the grid)"()
     {
         when: "'FreeForm' content is selected"
         findAndSelectContent( SET_IN_SET_CONTENT.getName() );
 
         then: "the content should be displayed as invalid, because required inputs are not filled"
-        contentBrowsePanel.isContentInvalid()
+        contentBrowsePanel.isContentInvalid( SET_IN_SET_CONTENT.getName() )
     }
     //OptionSet -Error appears when 'upload' button in the ImageSelector was pressed #4813
     //insert an image in the nested set.
@@ -106,7 +103,7 @@ class FreeFormNestedSet_Spec
         freeForm.clickOnInputRadioButton().clickOnImageRadioButton().selectImage( "nord" );
         and: "the content has been saved"
         wizard.save();
-        saveScreenshot( "freeform_should_be_valid" );
+        saveScreenshot( "freeform_should_be_valid2" );
 
         then: "red icon should not be displayed on  the wizard page"
         !wizard.isContentInvalid();
