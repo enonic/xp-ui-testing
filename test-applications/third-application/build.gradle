@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        xpVersion = '6.14.0-SNAPSHOT'
+        xpVersion = '6.15.0-SNAPSHOT'
     }
 }
 
