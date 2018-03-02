@@ -40,7 +40,7 @@ public class ItemViewContextMenu
         if ( !waitUntilVisibleNoException( By.xpath( CONTAINER_DIV ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_load_item_view_context_menu" );
-            throw new TestFrameworkException( "Item view context menu not opened!" );
+            throw new TestFrameworkException( "Item view context menu should be opened!" );
         }
     }
 }
