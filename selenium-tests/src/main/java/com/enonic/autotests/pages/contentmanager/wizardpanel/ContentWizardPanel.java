@@ -59,6 +59,7 @@ public class ContentWizardPanel
         TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
 
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
+
     private final String TOOLBAR_SAVED_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Saved']]";
 
     private final String TOOLBAR_PUBLISH = "//div[contains(@id,'ContentWizardToolbarPublishControls')]";
@@ -450,6 +451,18 @@ public class ContentWizardPanel
         return this;
     }
 
+    public ContentWizardPanel waitForSaveButtonClickable()
+    {
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_QUICK );
+        boolean isEnabled = isSaveButtonEnabled();
+        if ( !isVisible || !isEnabled )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
+            throw new TestFrameworkException( "Save button should be visible on the wizard-toolbar" );
+        }
+        return this;
+    }
+
     @Override
     public ContentWizardPanel save()
     {
@@ -457,16 +470,9 @@ public class ContentWizardPanel
         {
             switchToDefaultWindow();
         }
-        boolean isSaveButtonPresent = waitUntilVisibleNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !isSaveButtonPresent )
-        {
-
-            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
-            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
-        }
-
+        waitForSaveButtonClickable();
         toolbarSaveButton.click();
-        sleep( 800 );
+        sleep( 500 );
         return this;
     }
 
@@ -520,7 +526,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), 10l );
+        boolean result = waitUntilVisibleNoException( By.xpath( "//input[@name='displayName']" ), 10l );
         if ( !result )
         {
             saveScreenshot( NameHelper.uniqueName( "err_wizard" ) );

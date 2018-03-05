@@ -90,5 +90,6 @@ public class RelationshipFormView
             throw new TestFrameworkException( "Button remove for " + fileName + " was not found!" );
         }
         getDisplayedElement( By.xpath( CONTAINER_DIV + removeButtonXpath ) ).click();
+        sleep( 500 );
     }
 }
