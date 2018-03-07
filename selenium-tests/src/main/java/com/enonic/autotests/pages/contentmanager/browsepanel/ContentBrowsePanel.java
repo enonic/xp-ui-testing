@@ -38,8 +38,6 @@ public class ContentBrowsePanel
 {
     public static final String UNCLOSED_ISSUES_MESSAGE = "You have unclosed Publishing Issues";
 
-    public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
-
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
 
     public static final String CONTENT_STUDIO_BUTTON = "//div[@id='AppIcon' ]//span[text()='Content Studio']";
@@ -352,15 +350,6 @@ public class ContentBrowsePanel
     public boolean isFilterPanelShown()
     {
         return getFilterPanel().isFilterPanelDisplayed();
-    }
-
-    public String waitForNotificationMessage()
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE ), Application.EXPLICIT_NORMAL ) )
-        {
-            return null;
-        }
-        return getDisplayedString( NOTIFICATION_MESSAGE );
     }
 
     public boolean isContentInvalid( String contentName )

@@ -76,8 +76,6 @@ class ContentBrowsePanel_480_800_Spec
         contentItemPreviewPanel.isDisplayed();
     }
 
-    //TODO remove it  when https://github.com/enonic/xp/issues/5023 will be fixed
-    @Ignore
     def "GIVEN image content opened AND 'Crop' button was pressed THEN image was cropped THEN 'Reset Mask' link appears on the toolbar "()
     {
         given: "content wizard opened"
@@ -102,7 +100,6 @@ class ContentBrowsePanel_480_800_Spec
         and: "'Close' button is present"
         toolbar.isCloseButtonDisplayed();
     }
-
 }
 
 

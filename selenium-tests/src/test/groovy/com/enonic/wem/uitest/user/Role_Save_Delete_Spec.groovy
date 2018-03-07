@@ -96,7 +96,7 @@ class Role_Save_Delete_Spec
         userBrowsePanel.doClearSelection();
         userBrowseFilterPanel.typeSearchText( role.getName() );
         userBrowsePanel.clickCheckboxAndSelectRole( role.getName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = userBrowsePanel.waitForNotificationMessage();
         saveScreenshot( "role-was-deleted" );
 
         then: "role should not be displayed in the grid"

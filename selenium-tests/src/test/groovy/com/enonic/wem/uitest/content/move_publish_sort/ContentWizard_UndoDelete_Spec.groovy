@@ -71,6 +71,6 @@ class ContentWizard_UndoDelete_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "correct notification message should be displayed"
-        contentBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL ) == Application.ITEM_IS_UNDELETED;
+        contentBrowsePanel.waitForNotificationMessage() == Application.ITEM_IS_UNDELETED;
     }
 }

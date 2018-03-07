@@ -72,7 +72,7 @@ class UserStore_Save_Delete_Spec
 
         when: "user store was selected and 'Delete' button pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( us.getName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = userBrowsePanel.waitForNotificationMessage();
         saveScreenshot( "user-store-deleted" );
 
         then: "the user store should not be present in the grid"
@@ -81,8 +81,7 @@ class UserStore_Save_Delete_Spec
         and: "correct notification message appears"
         message == String.format( USER_STORE_DELETED_MESSAGE, us.getName() );
     }
-    //Impossible to filter an User store
-    @Ignore
+
     def "GIVEN existing 'user store' WHEN display name was changed THEN 'user store' with new display name should be listed"()
     {
         given: "existing 'user store' is opened"

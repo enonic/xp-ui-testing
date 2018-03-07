@@ -42,7 +42,7 @@ public class Application
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
-    public static String GROUP_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
+    public static String GROUP_ALREADY_IN_USE_WARNING = "Principal [%s] could not be created. A principal with that name already exists";
 
     public static String GROUP_CREATED_MESSAGE = "Group was created";
 
@@ -78,7 +78,8 @@ public class Application
 
     protected final String APP_CANCEL_BUTTON_TOP = "//div[contains(@class,'cancel-button-top')]";
 
-    protected String OPTION_IMAGE_SELECTOR_VIEW_BY_NAME = "//div[contains(@id,'ImageSelectorViewer') and descendant::img[contains(@title,'%s')]]";
+    protected String OPTION_IMAGE_SELECTOR_VIEW_BY_NAME =
+        "//div[contains(@id,'ImageSelectorViewer') and descendant::img[contains(@title,'%s')]]";
 
     protected String OPTION_IMAGE_SELECTOR_VIEW = "//div[contains(@id,'ImageSelectorViewer') ]//img";
 

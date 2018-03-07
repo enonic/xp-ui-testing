@@ -62,7 +62,7 @@ class Add_User_Spec
 
         when: "user is selected and 'Delete' button has been pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( USER.getDisplayName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitForNotificationMessage( 2l );
+        String message = userBrowsePanel.waitForNotificationMessage();
         saveScreenshot( "user_removed_message" );
         userBrowseFilterPanel.clickOnCleanFilter();
         userBrowsePanel.expandUsersFolder( "system" );

@@ -97,6 +97,18 @@ public abstract class WizardPanel<T>
         return isElementDisplayed( tabXpath );
     }
 
+    public String waitForNotificationMessage()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), Application.EXPLICIT_NORMAL ) )
+        {
+            return null;
+        }
+        String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
+        getLogger().info( "Notification message " + message );
+        return message.trim();
+    }
+
+
     protected abstract String getWizardDivXpath();
 
     private CloseStatus verifyCloseAction( By wizardPanel )

@@ -309,7 +309,7 @@ public abstract class BrowsePanel
             Number valueForScroll = getViewportHeight();
             for ( ; ; )
             {
-                int j=1;
+                int j = 1;
                 scrollTopBefore = getViewportScrollTopValue();
                 scrollTopAfter = doScrollViewport( valueForScroll );
                 names.addAll( getNamesOfSelectedGridItem() );
@@ -319,7 +319,7 @@ public abstract class BrowsePanel
                 }
                 //valueForScroll += valueForScroll;
                 j++;
-                valueForScroll =valueForScroll.intValue()*j;
+                valueForScroll = valueForScroll.intValue() * j;
 
             }
             return names.size();
@@ -530,7 +530,7 @@ public abstract class BrowsePanel
         Number scrollTopAfter;
         for ( ; ; )
         {
-            int j=1;
+            int j = 1;
             scrollTopBefore = getViewportScrollTopValue();
             scrollTopAfter = doScrollViewport( newScrollTop );
             if ( scrollTopBefore.intValue() == scrollTopAfter.intValue() )
@@ -538,7 +538,7 @@ public abstract class BrowsePanel
                 break;
             }
             j++;
-            newScrollTop =newScrollTop.intValue()*j;
+            newScrollTop = newScrollTop.intValue() * j;
             names.addAll( getGridItemNames() );
         }
         return names.size();
@@ -940,13 +940,13 @@ public abstract class BrowsePanel
         return this;
     }
 
-    public String waitForNotificationMessage( long timeout )
+    public String waitForNotificationMessage()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), Application.EXPLICIT_NORMAL ) )
         {
             return null;
         }
-        String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
+        String message = getDisplayedString( NOTIFICATION_MESSAGE_XPATH );
         getLogger().info( "Notification message " + message );
         return message.trim();
     }

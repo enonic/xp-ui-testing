@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.usermanager.Group
 import spock.lang.Ignore
 import spock.lang.Shared
@@ -20,7 +21,7 @@ class Group_Save_Delete_Spec
     String NEW_DISPLAY_NAME = "new display name";
 
     @Shared
-    String NEW_NAME = "new_name";
+    String NEW_NAME = NameHelper.uniqueName( "group" );
 
     def "GIVEN adding of a new group WHEN data typed  and 'Save' button pressed  AND page refreshed in the browser THEN wizard shown with a correct data"()
     {
@@ -71,8 +72,7 @@ class Group_Save_Delete_Spec
         then: "correct description should be displayed"
         groupWizardPanel.getDescription() == TEST_GROUP.getDescription();
     }
-    //app bug
-    @Ignore
+
     def "GIVEN a existing group  WHEN creating new group with the same name THEN "()
     {
         given: "creating new Group in System User Store"
@@ -112,30 +112,13 @@ class Group_Save_Delete_Spec
         userBrowsePanel.doClearSelection();
         userBrowseFilterPanel.typeSearchText( group.getName() );
         userBrowsePanel.clickCheckboxAndSelectGroup( group.getName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = userBrowsePanel.waitForNotificationMessage();
         saveScreenshot( "group-is-deleted" );
 
         then: "group should not be displayed in the grid"
         !userBrowsePanel.exists( group.getName() );
         and: "correct notification message should be displayed"
         message == String.format( GROUP_DELETING_NOTIFICATION_MESSAGE, group.getName() );
-    }
-
-    //app bug
-    @Ignore
-    def "GIVEN existing group in System User Store WHEN name was changed THEN group with new name should be listed"()
-    {
-        given: "existing group is opened"
-        userBrowseFilterPanel.typeSearchText( TEST_GROUP.getName() );
-        GroupWizardPanel groupWizardPanel = userBrowsePanel.clickCheckboxAndSelectGroup( TEST_GROUP.getName() ).clickToolbarEdit();
-
-        when: "new name typed and saved, and wizard closed"
-        groupWizardPanel.typeName( NEW_NAME ).save().close( NEW_DISPLAY_NAME );
-        userBrowseFilterPanel.typeSearchText( NEW_NAME );
-
-        then: "group with new display name should be listed"
-        saveScreenshot( "name-changed" );
-        userBrowsePanel.exists( NEW_NAME );
     }
 
     def "GIVEN creating new group in System User Store WHEN data saved and 'Delete' button on wizard-toolbar pressed THEN wizard closed and group not displayed in grid"()
