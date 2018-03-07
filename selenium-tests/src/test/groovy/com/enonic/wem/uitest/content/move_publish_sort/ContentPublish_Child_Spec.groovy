@@ -118,7 +118,7 @@ class ContentPublish_Child_Spec
     {
         when: "parent 'online'-folder is selected and 'Delete' button pressed AND number of contents typed"
         findAndSelectContent( parentContent.getName() ).clickToolbarDelete().clickOnDeleteButtonAndConfirm( "3" );
-        String message = contentBrowsePanel.waitNotificationMessage();
+        String message = contentBrowsePanel.waitForNotificationMessage();
 
         and: "parent folder has been expanded"
         contentBrowsePanel.expandItem( parentContent.getPath().toString() );
@@ -141,7 +141,7 @@ class ContentPublish_Child_Spec
     {
         when:
         findAndSelectContent( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton();
-        String message = contentBrowsePanel.waitNotificationMessage();
+        String message = contentBrowsePanel.waitForNotificationMessage();
 
         then: "parent folder not listed"
         !contentBrowsePanel.exists( parentContent.getName() );

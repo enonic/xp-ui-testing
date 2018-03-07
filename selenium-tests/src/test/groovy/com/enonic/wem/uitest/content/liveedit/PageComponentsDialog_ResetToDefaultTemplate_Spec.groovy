@@ -84,20 +84,28 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( TEST_IMAGE );
 
-        and: "the content was saved"
-        wizard.save();
+        and: "the content should be automatically saved"
         saveScreenshot( "new-image-set" );
+        wizard.switchToDefaultWindow();
+        String message1 = contentBrowsePanel.waitForNotificationMessage();
 
         when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
         wizard.showComponentView();
         pageComponentsView.openMenu( PAGE_CONTROLLER_NAME ).selectMenuItem( "Reset" );
-        sleep( 4000 );
+        String message2 = contentBrowsePanel.waitForNotificationMessage();
+        sleep( 3000 );
         saveScreenshot( "image-reset-to-template" );
 
         then: "site has been reset to default template, image from the template appeared in the page editor"
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
+
+        and: "correct notification message should be displayed"
+        message1 == "\"my-site\" saved.";
+        and: "correct notification message should be displayed"
+        message2 == "\"my-site\" saved.";
+
     }
     //temporarily is ignored
     @Ignore

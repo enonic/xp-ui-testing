@@ -48,7 +48,7 @@ class Delete_Published_Parent_Folder_Spec
         when: "'Unpublish' menu item was selected"
         ContentUnpublishDialog modalDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
         modalDialog.clickOnUnpublishButton();
-        String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = contentBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "correct notification message appears"
         message == String.format( Application.CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE, "2" );

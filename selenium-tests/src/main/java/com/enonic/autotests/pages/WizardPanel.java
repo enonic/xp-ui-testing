@@ -156,21 +156,7 @@ public abstract class WizardPanel<T>
         return nameInput.getAttribute( "value" );
     }
 
-    /**
-     * Gets notification message, that appears at
-     * the bottom of the WizardPage. <br>
-     *
-     * @return notification message or null.
-     */
-    public String waitNotificationMessage()
-    {
-        String message =
-            TestUtils.waitNotification( By.xpath( "//div[@class='notification-content']/span" ), getDriver(), Application.EXPLICIT_NORMAL );
-        getLogger().info( "Notification message " + message );
-        return message;
-    }
-
-    public String waitNotificationError( long timeout )
+    public String waitForNotificationError( long timeout )
     {
         if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_ERROR ), timeout ) )
         {

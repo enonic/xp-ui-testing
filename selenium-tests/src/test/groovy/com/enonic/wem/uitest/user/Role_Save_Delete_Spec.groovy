@@ -29,7 +29,7 @@ class Role_Save_Delete_Spec
         Role refreshWizardRole = buildRole( "role", "test-wizard-role", "refresh wizard page" );
 
         when: "data typed and role saved"
-        roleWizardPanel.typeData( refreshWizardRole ).save().waitNotificationMessage();
+        roleWizardPanel.typeData( refreshWizardRole ).save().waitForNotificationMessage();
         userBrowsePanel.refreshPanelInBrowser();
         saveScreenshot( "role_wizard_refreshed" );
 
@@ -47,7 +47,7 @@ class Role_Save_Delete_Spec
         TEST_ROLE = buildRole( "role", "test-role", "description" );
 
         when: "role saved and wizard closed"
-        String roleCreatingMessage = roleWizardPanel.typeData( TEST_ROLE ).save().waitNotificationMessage();
+        String roleCreatingMessage = roleWizardPanel.typeData( TEST_ROLE ).save().waitForNotificationMessage();
         roleWizardPanel.close( TEST_ROLE.getDisplayName() );
         userBrowsePanel.clickOnExpander( UserItemName.ROLES_FOLDER.getValue() );
         userBrowseFilterPanel.typeSearchText( TEST_ROLE.getName() );
@@ -96,7 +96,7 @@ class Role_Save_Delete_Spec
         userBrowsePanel.doClearSelection();
         userBrowseFilterPanel.typeSearchText( role.getName() );
         userBrowsePanel.clickCheckboxAndSelectRole( role.getName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = userBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "role-was-deleted" );
 
         then: "role should not be displayed in the grid"

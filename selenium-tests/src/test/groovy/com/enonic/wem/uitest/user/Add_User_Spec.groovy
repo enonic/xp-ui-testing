@@ -37,7 +37,7 @@ class Add_User_Spec
             UserItemName.USERS_FOLDER );
 
         when: "correct user-data is typed and 'Save' button pressed"
-        String creatingMessage = userWizardPanel.typeData( USER ).save().waitNotificationMessage();
+        String creatingMessage = userWizardPanel.typeData( USER ).save().waitForNotificationMessage();
 
         and: "'Close' button has been pressed"
         userWizardPanel.close( USER.getDisplayName() );
@@ -62,7 +62,7 @@ class Add_User_Spec
 
         when: "user is selected and 'Delete' button has been pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( USER.getDisplayName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitNotificationMessage( 2l );
+        String message = userBrowsePanel.waitForNotificationMessage( 2l );
         saveScreenshot( "user_removed_message" );
         userBrowseFilterPanel.clickOnCleanFilter();
         userBrowsePanel.expandUsersFolder( "system" );
@@ -84,7 +84,7 @@ class Add_User_Spec
             UserItemName.USERS_FOLDER );
 
         when: "data has been typed and the user saved"
-        userWizardPanel.typeData( refreshWizardUser ).save().waitNotificationMessage();
+        userWizardPanel.typeData( refreshWizardUser ).save().waitForNotificationMessage();
 
         and: "page has been refreshed in the browser"
         userBrowsePanel.refreshPanelInBrowser();

@@ -173,12 +173,11 @@ class Fragment_Create_From_Layout_Spec
         imageComponentView.clickOnDropDownHandler();
         imageComponentView.clickOnDropDownModeToggler().clickOnExpanderInDropDownList( "imagearchive" ).clickOnOption( "enterprise" );
 
-        and: "the fragment has been saved"
-        fragmentWizard.save();
+        and: "the fragment should be automatically saved"
+        fragmentWizard.switchToLiveEditFrame();
         saveScreenshot( "image_in_fragment_inserted" );
 
         then: "new image should be present in the left-region "
-        fragmentWizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 1;
     }

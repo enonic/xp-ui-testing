@@ -40,7 +40,7 @@ class MyFirstApp_Spec
         ContentWizardPanel wizard = selectSitePressNew( USA_CONTENT.getContentTypeName(), MY_FIRST_SITE.getName() );
 
         when: "all data was typed and saved and wizard closed"
-        wizard.typeData( USA_CONTENT ).save().waitNotificationMessage();
+        wizard.typeData( USA_CONTENT ).save().waitForNotificationMessage();
         saveScreenshot( "usa_content_added" );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 

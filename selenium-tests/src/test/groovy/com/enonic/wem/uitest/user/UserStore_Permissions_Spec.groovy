@@ -58,7 +58,7 @@ class UserStore_Permissions_Spec
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "data typed and user store saved"
-        String message = userStoreWizardPanel.typeData( USER_STORE_WITH_PERMISSIONS ).save().waitNotificationMessage();
+        String message = userStoreWizardPanel.typeData( USER_STORE_WITH_PERMISSIONS ).save().waitForNotificationMessage();
         saveScreenshot( "test_user_store_permission_added" );
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
 

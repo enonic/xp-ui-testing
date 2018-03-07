@@ -87,23 +87,6 @@ class Site_With_TemplatePageComponentDialog_Spec
         contextMenu.isOpened();
     }
 
-    @Ignore
-    def "GIVEN existing site is opened and 'customize' menu item was selected WHEN wizard has been closed THEN 'save before close dialog' should be displayed"()
-    {
-        given: "existing site is opened"
-        filterPanel.typeSearchText( SITE.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit(); ;
-
-        and: "'Page Components View' is shown"
-        wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
-
-        when: "wizard has been closed"
-        wizard.executeCloseWizardScript();
-
-        then: "Alert dialog should appear, because renderer was changed"
-        wizard.waitIsAlertDisplayed();
-    }
-
     def "GIVEN 'Page Components' view is opened WHEN button 'close' was clicked THEN dialog should not be present"()
     {
         given: "'Page Components' view opened"

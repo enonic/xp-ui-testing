@@ -354,7 +354,7 @@ public class ContentBrowsePanel
         return getFilterPanel().isFilterPanelDisplayed();
     }
 
-    public String waitNotificationMessage()
+    public String waitForNotificationMessage()
     {
         if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE ), Application.EXPLICIT_NORMAL ) )
         {

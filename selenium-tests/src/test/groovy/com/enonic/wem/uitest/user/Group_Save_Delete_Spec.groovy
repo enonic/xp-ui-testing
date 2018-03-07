@@ -29,7 +29,7 @@ class Group_Save_Delete_Spec
         Group refreshGroupRole = buildGroup( "group", "test-wizard-group", "refresh wizard page" );
 
         when: "data typed and group saved"
-        groupWizardPanel.typeData( refreshGroupRole ).save().waitNotificationMessage();
+        groupWizardPanel.typeData( refreshGroupRole ).save().waitForNotificationMessage();
         userBrowsePanel.refreshPanelInBrowser();
         saveScreenshot( "role_wizard_was_refreshed" );
 
@@ -47,7 +47,7 @@ class Group_Save_Delete_Spec
         TEST_GROUP = buildGroup( "group", "test-group", "description" );
 
         when: " saved and wizard closed"
-        String groupCreatingMessage = groupWizardPanel.typeData( TEST_GROUP ).save().waitNotificationMessage();
+        String groupCreatingMessage = groupWizardPanel.typeData( TEST_GROUP ).save().waitForNotificationMessage();
         groupWizardPanel.close( TEST_GROUP.getDisplayName() );
         sleep( 500 );
         userBrowsePanel.clickOnExpander( UserItemName.GROUPS_FOLDER.getValue() );
@@ -112,7 +112,7 @@ class Group_Save_Delete_Spec
         userBrowsePanel.doClearSelection();
         userBrowseFilterPanel.typeSearchText( group.getName() );
         userBrowsePanel.clickCheckboxAndSelectGroup( group.getName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = userBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "group-is-deleted" );
 
         then: "group should not be displayed in the grid"

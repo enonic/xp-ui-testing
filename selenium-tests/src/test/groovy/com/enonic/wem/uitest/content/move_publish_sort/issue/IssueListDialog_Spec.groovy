@@ -81,7 +81,7 @@ class IssueListDialog_Spec
         CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
         createIssueDialog.clickOnCreateIssueButton();
-        String message = contentBrowsePanel.waitNotificationMessage();
+        String message = contentBrowsePanel.waitForNotificationMessage();
         saveScreenshot( "issue_created_issue_list" )
 
         when: "'Create' button has been pressed"

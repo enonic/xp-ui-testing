@@ -194,12 +194,12 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( SECOND_TEST_IMAGE_COMPONENT_NAME );
 
-        and: "the template is saved"
-        wizard.save();
+        and: "the template should be automatically saved"
+        wizard.switchToLiveEditFrame();
         saveScreenshot( "center_region_inserted" );
 
         then: "new image should be present in the center-region "
-        wizard.switchToLiveEditFrame();
+
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 2;
     }

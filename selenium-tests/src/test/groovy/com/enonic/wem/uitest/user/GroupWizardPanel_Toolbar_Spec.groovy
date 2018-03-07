@@ -44,7 +44,7 @@ class GroupWizardPanel_Toolbar_Spec
         wizardPanel.typeData( group ).save();
 
         and: "correct notification message should be displayed"
-        wizardPanel.waitNotificationMessage() == Application.GROUP_CREATED_MESSAGE;
+        wizardPanel.waitForNotificationMessage() == Application.GROUP_CREATED_MESSAGE;
 
         then: "button 'delete' is getting enabled"
         wizardPanel.isDeleteButtonEnabled();

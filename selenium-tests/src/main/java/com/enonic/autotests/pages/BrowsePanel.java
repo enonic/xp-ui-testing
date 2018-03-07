@@ -940,7 +940,7 @@ public abstract class BrowsePanel
         return this;
     }
 
-    public String waitNotificationMessage( long timeout )
+    public String waitForNotificationMessage( long timeout )
     {
         if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), timeout ) )
         {

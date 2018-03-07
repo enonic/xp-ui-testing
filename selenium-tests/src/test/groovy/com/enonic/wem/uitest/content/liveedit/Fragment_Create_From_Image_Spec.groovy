@@ -46,7 +46,6 @@ class Fragment_Create_From_Image_Spec
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( HAND_IMAGE_DISPLAY_NAME );
-        wizard.save();
 
         when: "click on the image-component and click on 'create fragment' menu item"
         wizard.showComponentView();
@@ -209,11 +208,10 @@ class Fragment_Create_From_Image_Spec
         pageComponentsView.doCloseDialog();
         saveScreenshot( "fragment_inserted_in_component_view" );
         wizard.switchToLiveEditFrame();
-        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
 
         and: "existing fragment has been selected from the options"
         FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
-        fragmentComponentView.selectFragment( FRAGMENT_DISPLAY_NAME );
+        LiveFormPanel liveFormPanel = fragmentComponentView.selectFragment( FRAGMENT_DISPLAY_NAME );
 
         then: "new added fragment should be present on the page"
         liveFormPanel.getNumberOfFragments() == 1;

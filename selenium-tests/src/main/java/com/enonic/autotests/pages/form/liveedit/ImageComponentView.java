@@ -99,6 +99,7 @@ public class ImageComponentView
             throw new TestFrameworkException( "Image with name:  " + imageName + "  was not found!" );
         }
         getDisplayedElement( By.xpath( optionXpath ) ).click();
+        sleep( 700 );
         return this;
     }
 

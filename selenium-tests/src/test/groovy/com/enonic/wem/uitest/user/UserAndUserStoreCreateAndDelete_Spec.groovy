@@ -44,7 +44,7 @@ class UserAndUserStoreCreateAndDelete_Spec
 
         when: "name typed and 'Save' pressed"
         userStoreWizardPanel.typeData( TEST_USER_STORE )
-        String message = userStoreWizardPanel.save().waitNotificationMessage();
+        String message = userStoreWizardPanel.save().waitForNotificationMessage();
         userStoreWizardPanel.close( TEST_USER_STORE.getDisplayName() );
         saveScreenshot( "store_should_be_listed" );
 

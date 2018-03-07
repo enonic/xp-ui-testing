@@ -20,7 +20,7 @@ class UserStore_IdProvider_Spec
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "data typed and user store saved"
-        String message = userStoreWizardPanel.typeData( USERSTORE_WITH_ID_PROVIDER ).save().waitNotificationMessage();
+        String message = userStoreWizardPanel.typeData( USERSTORE_WITH_ID_PROVIDER ).save().waitForNotificationMessage();
         saveScreenshot( "test_user_store_provider_selected" );
 
         then: "correct notification message should appear"

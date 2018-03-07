@@ -76,7 +76,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         saveScreenshot( "parent_child_undodeleted" );
 
         and: "wait the notification message"
-        String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = contentBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "correct notification should be present"
         message == Application.ITEMS_IS_UNDELETED;
@@ -98,7 +98,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarUndodelete();
 
         and: "wait the notification message"
-        String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = contentBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "correct notification should be present"
         message == Application.ITEMS_IS_UNDELETED;

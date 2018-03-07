@@ -55,7 +55,7 @@ class InstallApplication_Spec
 
         when: "application has been installed from the 'Enonic Market'"
         marketPanel.doInstallApp( CONTENT_VIEWER_APP_DISPLAY_NAME );
-        String notificationMessage = applicationBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String notificationMessage = applicationBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "app_installed_notification_message" );
         appDialog.clickOnCancelButton();
         sleep( 1000 );
@@ -119,7 +119,7 @@ class InstallApplication_Spec
         applicationBrowsePanel.clickOnRowByName( CONTENT_VIEWER_APP_INSTALLED_NAME );
 
         when: "'uninstall' button has been pressed"
-        String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitNotificationMessage(
+        String message = applicationBrowsePanel.clickOnToolbarUninstall().clickOnYesButton().waitForNotificationMessage(
             Application.EXPLICIT_NORMAL );
         saveScreenshot( "enonic_app_uninstalled" );
 

@@ -28,7 +28,7 @@ class UserStore_Save_Delete_Spec
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "'user store' was saved and wizard closed"
-        String creatingMessage = userStoreWizardPanel.typeData( TEST_USER_STORE ).save().waitNotificationMessage();
+        String creatingMessage = userStoreWizardPanel.typeData( TEST_USER_STORE ).save().waitForNotificationMessage();
         userStoreWizardPanel.close( TEST_USER_STORE.getDisplayName() );
 
 
@@ -72,7 +72,7 @@ class UserStore_Save_Delete_Spec
 
         when: "user store was selected and 'Delete' button pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( us.getName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = userBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "user-store-deleted" );
 
         then: "the user store should not be present in the grid"
@@ -137,7 +137,7 @@ class UserStore_Save_Delete_Spec
         UserStoreWizardPanel userStoreWizardPanel = userBrowsePanel.openUserStoreWizard();
 
         when: "data was typed and user saved"
-        userStoreWizardPanel.typeData( refreshWizardUserStore ).save().waitNotificationMessage();
+        userStoreWizardPanel.typeData( refreshWizardUserStore ).save().waitForNotificationMessage();
 
         and: "page was refreshed"
         userBrowsePanel.refreshPanelInBrowser();
