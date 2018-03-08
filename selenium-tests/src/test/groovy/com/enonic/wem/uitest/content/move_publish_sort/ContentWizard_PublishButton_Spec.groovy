@@ -45,6 +45,7 @@ class ContentWizard_PublishButton_Spec
         when: "display name has been changed"
         ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEdit();
         wizard.typeDisplayName( "new display name" ).save();
+        sleep( 700 );
 
         then: "folder should be 'modified' now"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();

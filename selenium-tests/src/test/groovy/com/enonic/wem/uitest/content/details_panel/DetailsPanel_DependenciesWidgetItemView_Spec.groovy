@@ -158,16 +158,14 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_two_inbound_contents" );
 
-        then: "two contents are displayed in the grid"
+        then: "two contents should be displayed in the grid"
         names.size() == 2;
 
-        and: "correct contents are filtered in the grid"
+        and: "required contents should be filtered in the grid"
         TestUtils.isContains( names, SHORTCUT_CONTENT.getName() )
 
-
-        and: "correct contents are filtered in the grid"
+        and: "required contents should be filtered in the grid"
         TestUtils.isContains( names, imageSelector.getName() )
-
     }
     // verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed, when site with inserted images was selected
     def "GIVEN existing site with inserted Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency should be displayed"()
@@ -185,7 +183,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         and: "image has been selected from the options list"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( HAND_IMAGE_DISPLAY_NAME );
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site with the component was selected in the grid and dependency widget is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
