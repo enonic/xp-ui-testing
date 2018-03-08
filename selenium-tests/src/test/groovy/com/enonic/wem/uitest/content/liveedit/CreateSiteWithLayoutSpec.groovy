@@ -164,9 +164,10 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( TEST_IMAGE_DISPLAY_NAME )
 
-        and: "the template is saved"
-        templateWizard.save();
-        sleep( 700 );
+        and: "the template should be saved automatically"
+        //need to wait for updating of status;
+        sleep( 1000 );
+        templateWizard.switchToDefaultWindow();
         String statusAfterInsertingImage = templateWizard.getStatus();
         saveScreenshot( "image_in_left_inserted" );
 
@@ -219,12 +220,10 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( THIRD_TEST_IMAGE_COMPONENT_NAME );
 
-        and: "the template is saved"
-        wizard.save();
+        and: "the template should be saved automatically"
         saveScreenshot( "right_region_inserted" );
 
         then: "new image should be displayed on the right-region"
-        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 3;
     }

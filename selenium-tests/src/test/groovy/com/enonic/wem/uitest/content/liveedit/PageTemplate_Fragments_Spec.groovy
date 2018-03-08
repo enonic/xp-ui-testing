@@ -65,7 +65,7 @@ class PageTemplate_Fragments_Spec
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( ELEPHANT_IMAGE_DISPLAY_NAME );
-        wizard.save();
+        wizard.switchToDefaultWindow();
         and: "and new fragment has been created"
         wizard.showComponentView();
         pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );

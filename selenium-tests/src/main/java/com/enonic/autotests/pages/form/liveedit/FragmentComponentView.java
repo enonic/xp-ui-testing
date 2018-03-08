@@ -41,6 +41,7 @@ public class FragmentComponentView
         clearAndType( optionFilterInput, fragmentDisplayName );
         LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         loaderComboBox.selectOption( fragmentDisplayName );
+        sleep( 1000 );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return new LiveFormPanel( getSession() );
     }

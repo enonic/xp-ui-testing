@@ -48,7 +48,7 @@ class Fragment_Create_From_Layout_Spec
         wizard.switchToLiveEditFrame();
         LayoutComponentView layoutComponentView = new LayoutComponentView( getSession() );
         layoutComponentView.selectLayout( LAYOUT_3_COL_DISPLAY_NAME );
-        wizard.save();
+        wizard.switchToDefaultWindow();
 
         when: "click on the image-component and 'create fragment' menu item is selected"
         wizard.showComponentView();
