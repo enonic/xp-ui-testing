@@ -95,6 +95,7 @@ class PageTemplate_Spec
         when: "'site' has been selected from the support options"
         formViewPanel.selectSupportOption( TEMPLATE_SUPPORTS_SITE );
         wizard.save().switchToBrowsePanelTab().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        sleep( 1000 );
 
         then: "the template should be displayed in the grid as valid"
         !contentBrowsePanel.isContentInvalid( TEST_TEMPLATE.getName() );
