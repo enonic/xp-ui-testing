@@ -22,7 +22,7 @@ import spock.lang.Stepwise
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created
  * */
 @Stepwise
-class Fragment_Change_In_InspectionPanel
+class Fragment_Change_In_InspectionPanel_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -54,7 +54,7 @@ class Fragment_Change_In_InspectionPanel
 
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
-        pageComponentsView.openMenu( PART_FRAGMENT_CITY_LIST ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( PART_FRAGMENT_CITY_LIST ).selectMenuItem( "Save as Fragment" );
         saveScreenshot( "fragment_inspection_panel1" )
 
         when: "'Dropdown handle' has been clicked"
@@ -82,7 +82,7 @@ class Fragment_Change_In_InspectionPanel
 
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
-        pageComponentsView.openMenu( PART_FRAGMENT_CITY_CREATION ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( PART_FRAGMENT_CITY_CREATION ).selectMenuItem( "Save as Fragment" );
         saveScreenshot( "fragment_inspection_panel2" )
 
         when: "'Dropdown handle' has been clicked"
@@ -171,7 +171,7 @@ class Fragment_Change_In_InspectionPanel
 
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
-        pageComponentsView.openMenu( PART_CITIES_DISTANCE_FACET ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( PART_CITIES_DISTANCE_FACET ).selectMenuItem( "Save as Fragment" );
         saveScreenshot( "fragment_cities_distance" )
 
         when: "'Dropdown handle' has been clicked"
