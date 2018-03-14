@@ -17,8 +17,8 @@ class UserBrowsePanelToolbarSpec
         and: "'Edit' button should be disabled"
         !userBrowsePanel.isEditButtonEnabled();
 
-        and: "'Sync' button should be disabled"
-        !userBrowsePanel.isSyncEnabled();
+        //and: "'Sync' button should be disabled"
+        //!userBrowsePanel.isSyncEnabled();
     }
 
     def "GIVEN user BrowsePanel WHEN 'System' folder selected THEN 'Edit' button should be enabled"()

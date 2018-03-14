@@ -80,8 +80,8 @@ class UserBrowsePanel_ContextMenu_Spec
         userBrowsePanel.openContextMenu( "users/su" );
         saveScreenshot( "system-su-context-menu" );
 
-        then: "Delete menu item should be enabled"
-        userBrowsePanel.isContextMenuItemEnabled( "Delete" );
+        then: "Delete menu item should be disabled"
+        !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item should be enabled"
         userBrowsePanel.isContextMenuItemEnabled( "Edit" );

@@ -93,6 +93,7 @@ class Display_SourceButton_Spec
             typeData( SITE ).selectPageDescriptor( "main region" ).closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content should be listed in the grid"
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
 

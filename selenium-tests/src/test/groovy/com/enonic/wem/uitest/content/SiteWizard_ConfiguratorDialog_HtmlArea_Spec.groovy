@@ -63,6 +63,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         wizardPanel.typeData( SITE ).selectPageDescriptor( PAGE_CONTROLLER ).closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
     //xp-ui-testing#6 Add selenium tests for allowPath, allowType properties from the ContentSelector

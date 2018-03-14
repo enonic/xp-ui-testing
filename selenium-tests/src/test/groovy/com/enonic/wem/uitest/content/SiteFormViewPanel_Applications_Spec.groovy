@@ -23,6 +23,7 @@ class SiteFormViewPanel_Applications_Spec
             SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
 

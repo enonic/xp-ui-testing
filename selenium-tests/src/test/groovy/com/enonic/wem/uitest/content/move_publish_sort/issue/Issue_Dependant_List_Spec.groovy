@@ -13,6 +13,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -117,6 +118,7 @@ class Issue_Dependant_List_Spec
         dependantsNames.get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
+    @Ignore
     def "GIVEN existing issue AND 'Update issue' dialog is opened WHEN one item has been removed from the dependants list AND Cancel button pressed THEN the changes should not be saved"()
     {
         setup: "existing issue"
@@ -138,6 +140,7 @@ class Issue_Dependant_List_Spec
     }
 
     //verifies: List of dependant items is not refreshed after deletion in the Issue Dialog #5372
+    @Ignore
     def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and it did not saved WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
     {
         given: "existing issue"
@@ -161,6 +164,7 @@ class Issue_Dependant_List_Spec
     }
 
     //verifies the xp#5383 Update Issue Dialog - Excluded items are not removed from the list after save
+    @Ignore
     def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and Save button has been pressed WHEN UpdateIssue dialog has been opened THEN the removed content should not be present in the 'dependants list'"()
     {
         given: "existing issue"
@@ -184,6 +188,7 @@ class Issue_Dependant_List_Spec
         !updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
     }
 
+    @Ignore
     def "GIVEN existing issue and the item to publish has been deleted WHEN 'UpdateIssue' dialog has been opened THEN no any items to publish should be on the dialog"()
     {
         given: "existing issue and the item to publish has been deleted"
@@ -202,6 +207,7 @@ class Issue_Dependant_List_Spec
         contentBrowsePanel.waitExpectedNotificationMessage( Application.ISSUE_ITEM_DELETED, 2 );
     }
     //verifies: Create Issue dialog - Error message appears when a text has been typed in the items-option filter #5435
+    @Ignore
     def "GIVEN existing user AND no any content is selected WHEN when an issue has been created and it assigned to the user THEN items to publish should be present on the Issue Details"()
     {
         setup: "Content Studio is opened"
