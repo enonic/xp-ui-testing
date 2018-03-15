@@ -33,8 +33,8 @@ class Attachments_Content_Spec
         and: "Upload' button should be displayed"
         attachmentsFormView.isUploadButtonDisplayed();
 
-        and: "validation message should  be displayed"
-        attachmentsFormView.isValidationMessagePresent();
+        and: "validation message should not be displayed"
+        !attachmentsFormView.isValidationMessagePresent();
     }
 
     def "GIVEN attachments wizard is opened WHEN 'Save' button has been pressed AND the required attachment is not selected THEN validation message should be present"()

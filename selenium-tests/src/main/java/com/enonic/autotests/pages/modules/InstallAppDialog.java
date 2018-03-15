@@ -6,6 +6,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -72,7 +73,9 @@ public class InstallAppDialog
     public InstallAppDialog typeInApplicationInput( String url )
     {
         clearAndType( applicationInput, url );
-        sleep( 2000 );
+        sleep( 1000 );
+        applicationInput.sendKeys( Keys.ENTER );
+        sleep( 500 );
         return this;
     }
 
