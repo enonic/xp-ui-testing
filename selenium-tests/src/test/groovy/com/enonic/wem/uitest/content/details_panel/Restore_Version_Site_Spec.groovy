@@ -41,7 +41,7 @@ class Restore_Version_Site_Spec
         saveScreenshot( "versions_before_changing_dname_site" );
 
 
-        when: "display name of the site changed"
+        when: "display name of the site has been changed"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
             NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
@@ -54,27 +54,27 @@ class Restore_Version_Site_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing site with updated 'display name' WHEN the site selected AND previous version restored THEN correct display name appears in the grid"()
+    def "GIVEN site with updated 'display name' is selected WHEN the site selected AND previous version restored THEN correct display name appears in the grid"()
     {
-        given: "existing site with updated 'display name'"
+        given: "site with updated 'display name' is selcted"
         findAndSelectContent( SITE.getName() );
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the site selected AND previous version restored"
+        when: "the previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "site_display_name_restored" );
 
-        then: "correct display name appears in the grid"
+        then: "previous display name should appear in the grid"
         filterPanel.typeSearchText( INITIAL_DISPLAY_NAME );
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN new acl-entry added for the site WHEN previous version restored THEN acl entry not present in the content wizard"()
+    def "GIVEN new acl-entry has been added WHEN previous version has been restored THEN acl entry should not be present in the content wizard"()
     {
-        given: "new acl entry added and folder saved"
+        given: "new acl entry has been added and Save pressed"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         findAndSelectContent( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
@@ -85,34 +85,34 @@ class Restore_Version_Site_Spec
         List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "the previous version was restored"
+        when: "the previous version has been restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
 
-        then: "and this role not present after restoring of version without this role"
+        then: "acl-entry must not be diasplayed after the restoring of version without this role"
         !contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains(
             "Anonymous User" );
 
-        and: "required role was present before restoring"
+        and: "the entry was present before the restoring"
         beforeRestoring.contains( "Anonymous User" );
     }
 
-    def "GIVEN version panel opened for the folder WHEN version with the acl-entry restored THEN acl-entry present again in the content wizard"()
+    def "GIVEN the site is selected AND version panel is opened WHEN version with the acl-entry restored THEN acl-entry should appear again in the content wizard"()
     {
         given: "new acl entry added and folder saved"
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
 
-        when: "the latest version is restored"
+        when: "the latest version has been restored"
         versionItem.doRestoreVersion( versionItem.getId() );
 
-        and: "security tab opened"
+        and: "navigate to the security tab"
         SecurityWizardStepForm form = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
         saveScreenshot( "version_acl_site_application_restored" );
 
-        then: "new role present after restoring of the latest version"
+        then: "the role should appear after the restoring of the latest version"
         form.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
     }
 
@@ -125,10 +125,10 @@ class Restore_Version_Site_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel siteFormViewPanel = new SiteFormViewPanel( getSession() );
 
-        when: "application removed"
+        when: "application has been removed"
         siteFormViewPanel.removeApp( MY_FIRST_APP );
         saveScreenshot( "app_removed_from_wizard" );
-        and: "the site saved"
+        and: "the site has been saved"
         wizard.save();
         sleep( 1000 );
 
@@ -136,31 +136,31 @@ class Restore_Version_Site_Spec
         wizard.switchToBrowsePanelTab();
         saveScreenshot( "version_site_app_removed" );
 
-        then: "number of versions increased after the removing of application in wizard"
+        then: "number of versions should be increased after the removing"
         allContentVersionsView.getAllVersions().size() - before == 1;
     }
 
-    def "GIVEN existing site without an application opened WHEN version of site with the application was restored THEN application present in the 'application selector'"()
+    def "GIVEN version of the site without an application is opened WHEN the version  with application has been restored THEN application should appear in the 'application selector'"()
     {
-        given: "existing site without an application opened"
+        given: "version of site without an application is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel siteFormViewPanel = new SiteFormViewPanel( getSession() );
         wizard.switchToBrowsePanelTab();
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version with an application restored"
+        when: "version with one application has been restored restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         saveScreenshot( "version_site_application_restored" );
 
-        then: "application present in the 'application selector'"
-        siteFormViewPanel.getAppDisplayNames().get( 0 ) == MY_FIRST_APP;
-
-        and: "one application displayed"
+        then: "one application should be present in 'Applications selector'"
         siteFormViewPanel.getAppDisplayNames().size() == 1;
+
+        and: "required application name should be displayed in the 'application selector'"
+        siteFormViewPanel.getAppDisplayNames().get( 0 ) == MY_FIRST_APP;
     }
 
     def "GIVEN existing site WHEN page controller selected THEN a number of versions increased"()
