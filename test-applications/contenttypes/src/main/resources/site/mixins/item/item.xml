@@ -1,0 +1,80 @@
+<mixin>
+  <display-name>Item core properties</display-name>
+  <items>
+    <input type="ContentSelector" name="itemCategory">
+      <label>Category</label>
+      <occurrences minimum="0" maximum="1"/>
+      <config>
+        <relationship-type>system:reference</relationship-type>
+        <allow-content-type>item-category</allow-content-type>
+        <allowPath>${site}/categories/</allowPath>
+      </config>
+    </input>
+    <input type="TextLine" name="title">
+      <label>Title</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="TextArea" name="ingress">
+      <label>Ingress</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="TextLine" name="titleShort">
+      <label>List Title</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input type="TextArea" name="ingressShort">
+      <label>List Ingress</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input type="imageSelector" name="titleImage">
+      <label>Image</label>
+      <help-text>imageSelector1,imageSelector1,imageSelector1</help-text>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="TextLine" name="imageCaption">
+      <label>Image caption</label>
+      <help-text>Image caption,Image caption,Image caption</help-text>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input type="imageSelector" name="listImage">
+      <label>List Image</label>
+      <help-text>imageSelector,imageSelector,imageSelector</help-text>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input type="ContentSelector" name="author">
+      <label>Author</label>
+      <occurrences minimum="1" maximum="0"/>
+      <config>
+        <relationship-type>system:reference</relationship-type>
+        <allow-content-type>author</allow-content-type>
+        <allowPath>${site}/authors/</allowPath>
+      </config>
+    </input>
+    <input type="HtmlArea" name="body">
+      <label>Body</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="Tag" name="tags">
+      <label>Tags</label>
+      <help-text>TAGS</help-text>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="itemStyle" type="ComboBox">
+      <label>Item style</label>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <option value="item__light">Light</option>
+        <option value="item__dark">Darkula</option>
+      </config>
+      <default>item__light</default>
+    </input>
+    <input type="ContentSelector" name="relatedContent">
+      <label>Related content</label>
+      <help-text>relatedContent</help-text>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <relationship-type>system:reference</relationship-type>
+      </config>
+    </input>
+  </items>
+</mixin>

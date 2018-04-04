@@ -9,10 +9,9 @@
 </head>
 
 <body data-portal-component-type="page" data-th-class="${editable}? 'edit'">
+<h1>Simple Site</h1>
 
-<div data-th-include="com.enonic.xp.ui_testing.first_app:/site/view/fragments/menu.html :: siteMenu" data-th-remove="tag">Footer</div>
-
-<div id="mainRegion" data-portal-region="main">
+<div id="mainRegion" data-portal-region="main" data-portal-component-type="region">
     Components in main:
     <div data-th-if="${reqContent.page.regions['main']}" data-th-remove="tag">
         <div data-th-each="component : ${reqContent.page.regions['main'].components}" data-th-remove="tag">
@@ -20,6 +19,5 @@
         </div>
     </div>
 </div>
-<div data-th-include="com.enonic.xp.ui_testing.first_app:/site/view/fragments/footer.html :: copy">Footer</div>
 </body>
 </html>

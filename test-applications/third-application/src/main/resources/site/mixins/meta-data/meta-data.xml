@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mixin>
+  <display-name>SEO Metadata</display-name>
+  <items>
+    <input name="seoTitle" type="TextLine">
+      <label>Override "Title"</label>
+      <help-text>Normally we use each content's displayName to generate the title tag, but if you want you can override it here on a per
+        content basis.
+      </help-text>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input name="seoDescription" type="TextArea">
+      <label>Override "Description"</label>
+      <help-text>Like with titles you can for each content set a custom description used for SEO. We try to extract this data automatically
+        from suitable existing fields on this content, consult the Github readme for details.
+      </help-text>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input name="blockRobots" type="CheckBox">
+      <label>Hide from external search engines?</label>
+      <help-text>Checking this will tell external search engines to skip this particular page. Note: The page is not hidden and can still be
+        accessed via URL or links, but search engines will try and not list it in their search results.
+      </help-text>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+  </items>
+</mixin>

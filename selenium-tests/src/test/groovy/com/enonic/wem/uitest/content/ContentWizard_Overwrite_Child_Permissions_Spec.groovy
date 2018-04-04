@@ -99,6 +99,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
             anonymousEntry ).clickOnApply();
         and: "parent folder has been saved"
         parentWizard.save();
+        sleep( 500 );
         and: "navigate to the child wizard-tab"
         contentBrowsePanel.switchToBrowserTabByTitle( CHILD_FOLDER.getDisplayName() );
         saveScreenshot( "inherit_perm_true_child_permissions_updated" );
