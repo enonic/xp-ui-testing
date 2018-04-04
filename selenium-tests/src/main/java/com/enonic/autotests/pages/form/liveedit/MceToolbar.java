@@ -167,7 +167,7 @@ public class MceToolbar
     public SourceCodeDialog clickOnSourceCodeButton()
     {
         sourceCodeButton.click();
-        switchToDefaultWindow();
+        //switchToDefaultWindow();
         SourceCodeDialog window = new SourceCodeDialog( getSession() );
         window.waitForOpened();
         return window;

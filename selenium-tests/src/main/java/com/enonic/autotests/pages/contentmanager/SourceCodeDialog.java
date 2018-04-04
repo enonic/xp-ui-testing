@@ -16,17 +16,17 @@ public class SourceCodeDialog
 {
     public static final String WINDOW_TITLE = "Source code";
 
-    private final String WINDOW = "//div[contains(@id,'htmlarea.dialog.CodeDialog')]";
+    private final String WINDOW = "//div[contains(@class,'mce-reset') and descendant::div[contains(.,'Source code')]]";
 
-    private final String TITLE_XPATH = WINDOW + "//div[contains(@id,'ModalDialogHeader')]//h2";
+    private final String TITLE_XPATH = WINDOW + "//div[contains(@class,'mce-title')]";
 
     private final String TEXT_AREA = WINDOW + "//textarea";
 
-    private final String BUTTON_OK = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='OK']]";
+    private final String BUTTON_OK = WINDOW + "//button[contains(@id,'button') and descendant::span[text()='Ok']]";
 
-    private final String BUTTON_CLOSE = WINDOW + APP_CANCEL_BUTTON_TOP;
+    private final String BUTTON_CLOSE = WINDOW + "//button[contains(@class,'mce-close')]";
 
-    private final String BUTTON_CANCEL = WINDOW + "//button[contains(@id,'DialogButton') and descendant::span[text()='Cancel']]";
+    private final String BUTTON_CANCEL = WINDOW + "//button[contains(@id,'button') and descendant::span[text()='Cancel']]";
 
     @FindBy(xpath = BUTTON_OK)
     WebElement buttonOk;
