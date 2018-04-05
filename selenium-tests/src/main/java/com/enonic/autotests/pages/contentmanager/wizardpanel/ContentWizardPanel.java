@@ -164,6 +164,13 @@ public class ContentWizardPanel
         //return homeButton.getAttribute( "class" ).contains( "clickable" );
     }
 
+    public ContentWizardPanel clickOnMinimizeEditIcon()
+    {
+        String minimizeEditIcon = "//div[@class='minimize-edit']";
+        findElement( By.xpath( minimizeEditIcon ) ).click();
+        return this;
+    }
+
     public boolean isDeleteButtonDisplayed()
     {
         return isElementDisplayed( By.xpath( TOOLBAR_DELETE_BUTTON_XPATH ) );
