@@ -14,6 +14,8 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog;
 import com.enonic.autotests.utils.TestUtils;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 /**
  * This Dialog appears, when user tries to delete a content.
  */
@@ -34,6 +36,10 @@ public class DeleteContentDialog
     private final String DEPENDANT_LIST = CONTAINER_DIV + "//ul[contains(@id,'DialogDependantList')]";
 
     private final String HIDE_DEPENDANT_ITEM_LINK = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header']";
+
+    private final String SHOW_DEPENDANT_ITEM_LINK =
+        CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header' and contains(.,'Show dependent items')]";
+
     private final String OTHER_ITEMS_WILL_DELETED = CONTAINER_DIV + "//div[@class='dependants-body']";
 
     private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]" + H6_MAIN_NAME;
@@ -124,6 +130,18 @@ public class DeleteContentDialog
         return new ContentBrowsePanel( getSession() );
     }
 
+    public DeleteContentDialog clickOnShowDependentItemsLink()
+    {
+        if ( !isShowDependantItemsLinkDisplayed() )
+        {
+            this.saveScreenshot( "err_show_dependents_items_link" );
+            throw new TestFrameworkException( "'Show dependent items' link is not displayed " );
+        }
+        getDisplayedElement( By.xpath( SHOW_DEPENDANT_ITEM_LINK ) ).click();
+        sleep( 1000 );
+        return this;
+    }
+
     public DeleteContentDialog clickOnDeleteButton()
     {
         deleteButton.click();
@@ -203,12 +221,19 @@ public class DeleteContentDialog
 
     public boolean isHideDependantItemsLinkDisplayed()
     {
-        return  isElementDisplayed( HIDE_DEPENDANT_ITEM_LINK ) ;
+        return isElementDisplayed( HIDE_DEPENDANT_ITEM_LINK );
 
     }
+
+    public boolean isShowDependantItemsLinkDisplayed()
+    {
+        return isElementDisplayed( SHOW_DEPENDANT_ITEM_LINK );
+
+    }
+
     public boolean isDependantListDisplayed()
     {
-        return  isElementDisplayed( OTHER_ITEMS_WILL_DELETED ) ;
+        return isElementDisplayed( OTHER_ITEMS_WILL_DELETED );
 
     }
 

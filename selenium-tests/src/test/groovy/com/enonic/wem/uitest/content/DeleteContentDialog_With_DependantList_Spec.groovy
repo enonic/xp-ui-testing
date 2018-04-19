@@ -29,6 +29,9 @@ class DeleteContentDialog_With_DependantList_Spec
 
         when: "parent content selected and 'Delete' on the toolbar pressed"
         DeleteContentDialog modalDialog = contentBrowsePanel.clickToolbarDelete();
+
+        and: "'Show dependent items' link has been clicked"
+        modalDialog.clickOnShowDependentItemsLink();
         List<String> items = modalDialog.getDisplayNamesToDelete();
         List<String> dependantNames = modalDialog.getDependantList();
         saveScreenshot( "delete_dialog_dependant1" );
@@ -57,6 +60,9 @@ class DeleteContentDialog_With_DependantList_Spec
 
         when: "'Delete' button on the wizard-toolbar pressed"
         DeleteContentDialog modalDialog = wizard.clickToolbarDelete();
+
+        and: "'Show dependent items' link has been clicked"
+        modalDialog.clickOnShowDependentItemsLink();
         List<String> items = modalDialog.getDisplayNamesToDelete();
         List<String> dependantNames = modalDialog.getDependantList();
         saveScreenshot( "delete_dialog_dependant2" );
