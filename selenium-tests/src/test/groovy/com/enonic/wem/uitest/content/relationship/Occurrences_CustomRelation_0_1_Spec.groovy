@@ -116,8 +116,9 @@ class Occurrences_CustomRelation_0_1_Spec
         contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message should be displayed"
-        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
-            message.contains( "items are published" );
+        message == 'Published 2 items.';
+        //message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
+        //   message.contains( "items are published" );
 
     }
 

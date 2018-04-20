@@ -91,6 +91,7 @@ class Occurrences_Date_1_1_Spec
         contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message should be shown "
-        publishMessage == '2 items are published.'
+        //publishMessage == '2 items are published.'
+        publishMessage == 'Published 2 items.';
     }
 }

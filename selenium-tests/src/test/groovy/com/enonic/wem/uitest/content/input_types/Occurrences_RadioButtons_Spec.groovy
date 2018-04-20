@@ -64,7 +64,9 @@ class Occurrences_RadioButtons_Spec
         and:
         !contentBrowsePanel.isContentInvalid( radioButtonsContent.getName() );
         and: "correct publish message was present"
-        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, radioButtonsContent.getDisplayName() );
+        //publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, radioButtonsContent.getDisplayName() );
+        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP,
+                                           "/" + SITE_NAME + "/" + radioButtonsContent.getName() );
     }
 
     def "GIVEN saving of not required 'Single Selector Radio-content' with  selected option WHEN content is opened THEN correct selected option  present in form view"()

@@ -205,7 +205,8 @@ class Occurrences_ImageSelector_0_0_Spec
         and: "the content is valid, because images are not required for this content"
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
         and: "correct notification message was displayed"
-        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getDisplayName() );
+        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP,
+                                           "/" + SITE_NAME + "/" + imageSelectorContent.getName() );
     }
 
     def "GIVEN 'Image Selector 0:0' content with one image was saved WHEN 'Publish' button pressed THEN the content with 'Online' status should be listed"()
