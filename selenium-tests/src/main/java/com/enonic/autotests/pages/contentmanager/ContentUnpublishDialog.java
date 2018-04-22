@@ -110,7 +110,7 @@ public class ContentUnpublishDialog
     public void clickOnUnpublishButton()
     {
         unPublishButton.click();
-        sleep( 800 );
+        sleep( 1200 );
     }
 
     public void clickOnCancelBottomButton()
