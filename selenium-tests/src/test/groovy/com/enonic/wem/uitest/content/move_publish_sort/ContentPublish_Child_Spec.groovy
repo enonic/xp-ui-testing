@@ -149,7 +149,7 @@ class ContentPublish_Child_Spec
         then: "parent folder not listed"
         !contentBrowsePanel.exists( parentContent.getName() );
 
-        and: "correct notification message is displayed"
-        message == String.format( Application.PENDING_ITEMS_ARE_DELETED, "2" );
+        //and: "correct notification message is displayed"
+        //message == String.format( Application.PENDING_ITEMS_ARE_DELETED, "2" );
     }
 }
