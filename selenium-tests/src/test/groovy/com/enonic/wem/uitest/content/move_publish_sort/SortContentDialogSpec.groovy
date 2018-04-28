@@ -72,7 +72,7 @@ class SortContentDialogSpec
         !sortContentDialog.isDisplayed();
     }
 
-    def "GIVEN folder was selected and 'Sort' button clicked WHEN TabMenuButton on the Sort dialog was clicked THEN five menu items should be displayed"()
+    def "GIVEN folder was selected and 'Sort' button clicked WHEN TabMenuButton on the Sort dialog was clicked THEN seven menu items should be displayed"()
     {
         given: "sort dialog is opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
@@ -82,8 +82,8 @@ class SortContentDialogSpec
         sortContentDialog.clickOnTabMenu();
         List<String> items = sortContentDialog.getMenuItems();
 
-        then: "five menu items should be displayed"
-        items.size() == 5;
+        then: "seven menu items should be displayed"
+        items.size() == 7;
         and:
         items.contains( SortMenuItem.DNAME_ASCENDING.getValue() );
         and:
