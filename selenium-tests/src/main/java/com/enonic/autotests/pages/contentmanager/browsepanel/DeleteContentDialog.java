@@ -113,6 +113,7 @@ public class DeleteContentDialog
     {
         deleteButton.click();
         waitForClosed();
+        sleep( 1000 );
     }
 
     /**
