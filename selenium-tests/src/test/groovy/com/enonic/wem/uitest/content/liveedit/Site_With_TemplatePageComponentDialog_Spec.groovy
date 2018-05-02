@@ -74,6 +74,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         given: "existing site is opened"
         filterPanel.typeSearchText( SITE.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        sleep( 2000 );
 
         and: "'Page Components View' is shown"
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();

@@ -52,7 +52,7 @@ class PageTemplate_Fragments_Spec
     {
         given: "existing site is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        sleep( 1000 );
+        sleep( 2000 );
 
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
