@@ -143,7 +143,7 @@ public class SortContentDialog
 
     public String getCurrentSortingName()
     {
-        return getDisplayedString( SORT_CONTENT_MENU_BUTTON + "//a[@class='label']" );
+        return getDisplayedString( SORT_CONTENT_MENU_BUTTON + "/a" );
     }
 
     public SortContentDialog clickOnSaveButton()
@@ -221,16 +221,23 @@ public class SortContentDialog
         return getViewportScrollTopValue( findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 ) );
     }
 
-    public SortContentDialog selectSortMenuItem( String itemName )
+    public SortContentDialog doSort( String by, SortOrder order  )
     {
         String menuItem =
-            DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem') and child::a[text()='%s']]", itemName );
-        if ( !isElementDisplayed( menuItem ) )
+            DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem') and child::a[text()='%s']]", by );
+        String selector = null;
+        if(order.equals(SortOrder.ASCENDING)){
+           selector = menuItem +"//button[@title='Sort in ascending order']";
+        }else{
+            selector =menuItem +"//button[@title='Sort in descending order']";
+        }
+
+        if ( !isElementDisplayed( selector ) )
         {
             saveScreenshot( "err_sort_menu" );
             throw new TestFrameworkException( "sort menu item was not found!" );
         }
-        getDisplayedElement( By.xpath( menuItem ) ).click();
+        getDisplayedElement( By.xpath( selector ) ).click();
         sleep( 1000 );
         return this;
     }

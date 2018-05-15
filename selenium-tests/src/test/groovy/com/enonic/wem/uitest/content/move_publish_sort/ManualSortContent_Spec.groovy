@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
+import com.enonic.autotests.pages.contentmanager.browsepanel.SortOrder
 import com.enonic.wem.uitest.content.BaseContentSpec
 
 class ManualSortContent_Spec
@@ -12,8 +13,8 @@ class ManualSortContent_Spec
     {
         given: "folder with contents selected and 'sort' dialog opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
-        SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
-            SortMenuItem.MODIFIED_DESCENDING.getValue() );
+        SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().doSort(
+            SortMenuItem.MODIFIED_DATE.getValue() ,SortOrder.DESCENDING);
         LinkedList<String> defaultSortingList = sortContentDialog.getContentNames();
         saveScreenshot( "manual_sort_before" );
 
@@ -32,8 +33,8 @@ class ManualSortContent_Spec
     {
         given: "one selected content"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
-        SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().selectSortMenuItem(
-            SortMenuItem.MODIFIED_DESCENDING.getValue() );
+        SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().doSort(
+            SortMenuItem.MODIFIED_DATE.getValue() ,SortOrder.DESCENDING);
         LinkedList<String> defaultSortingList = sortContentDialog.getContentNames();
 
         when:
