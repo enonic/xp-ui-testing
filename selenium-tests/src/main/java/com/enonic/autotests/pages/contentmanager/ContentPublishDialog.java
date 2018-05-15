@@ -103,6 +103,7 @@ public class ContentPublishDialog
 
     public void clickOnShowDependentItemsLink()
     {
+        waitUntilVisible(By.xpath(SHOW_DEPENDANT_ITEMS_LINK));
         showDependantItemsLink.click();
         sleep( 400 );
     }

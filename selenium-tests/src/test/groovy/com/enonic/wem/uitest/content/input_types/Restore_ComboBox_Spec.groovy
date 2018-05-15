@@ -51,6 +51,7 @@ class Restore_ComboBox_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
+        sleep(1000);
 
         then: "content should be displayed as valid in the grid"
         saveScreenshot( "combobox_valid_version" );

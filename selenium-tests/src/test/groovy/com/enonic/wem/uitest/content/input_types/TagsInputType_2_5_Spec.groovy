@@ -36,12 +36,11 @@ class TagsInputType_2_5_Spec
         when: "data typed and number of tags less, than required"
         contentWizardPanel.typeData( tagContent );
 
-        then: "'Publish' button disabled"
+        then: "'Publish' button should be disabled"
         !contentWizardPanel.isPublishButtonEnabled();
 
-        //TODO add test check for validation in the wizard( when the feature will be implemented)
-        //and: "content is invalid"
-        //contentWizardPanel.isContentInvalid( tagContent.getDisplayName() );
+        and: "content should be invalid"
+        contentWizardPanel.isContentInvalid(  );
     }
 
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()

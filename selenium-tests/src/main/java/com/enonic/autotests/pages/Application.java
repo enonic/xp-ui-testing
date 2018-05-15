@@ -38,7 +38,8 @@ public class Application
 
     public static String ITEMS_IS_UNDELETED = "The items are successfully undeleted";
 
-    public static String CONTENTS_MARKED_FOR_DELETION_MESSAGE = "%s items are marked for deletion";
+    public static String CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE = "Deleted %s items ( Marked for deletion: %s ).";
+    public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE ="Published %s items ( Deleted: %s )";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
@@ -46,9 +47,9 @@ public class Application
 
     public static String GROUP_CREATED_MESSAGE = "Group was created";
 
-    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is unpublished.";
+    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" was unpublished.";
 
-    public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished.";
+    public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "Unpublished %s items";
 
     public static String ONE_PENDING_ITEM_IS_DELETED = "The item is deleted.";
 
@@ -140,9 +141,10 @@ public class Application
 
     public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is published.";
 
-    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP = "Item \"%s\" was published.";
+    public static String
+            ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP = "Item \"%s\" was published.";
 
-    public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published.";
+    public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "Published %s items.";//"%s items are published.";
 
     public static final long PAGE_LOAD_TIMEOUT = 15l;
 

@@ -29,8 +29,8 @@ class Content_Online_Modified_Spec
         then: "notification message should appear and content is getting 'Online'"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
-        //and: "correct notification message should be displayed"
-        //message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getDisplayName() );
+        and: "correct notification message should be displayed"
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, CONTENT.getName() );
     }
 
     def "GIVEN existing root content with 'Online' status  WHEN content edited THEN content becomes 'Modified' in the BrowsePanel"()
@@ -77,9 +77,8 @@ class Content_Online_Modified_Spec
         then: "status of content is 'online'"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
-        // TODO uncomment it when issue will be fixed
-        //and: "correct notification message appears"
-        //message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
+        and: "correct notification message should appears"
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, CONTENT.getName() );
 
         and: "Publish button on the BrowsePanel-toolbar becomes disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
