@@ -83,15 +83,13 @@ class SortContentDialogSpec
         List<String> items = sortContentDialog.getMenuItems();
 
         then: "seven menu items should be displayed"
-        items.size() == 7;
+        items.size() == 4;
         and:
-        items.contains( SortMenuItem.DNAME_ASCENDING.getValue() );
+        items.contains( SortMenuItem.DISPLAY_NAME.getValue() );
         and:
-        items.contains( SortMenuItem.DNAME_DESCENDING.getValue() );
+        items.contains( SortMenuItem.MODIFIED_DATE.getValue() );
         and:
-        items.contains( SortMenuItem.MODIFIED_ASCENDING.getValue() );
-        and:
-        items.contains( SortMenuItem.MODIFIED_DESCENDING.getValue() );
+        items.contains( SortMenuItem.PUBLISHED_DATE.getValue() );
         and:
         items.contains( SortMenuItem.MANUALLY_SORTED.getValue() );
     }
@@ -140,7 +138,7 @@ class SortContentDialogSpec
         saveScreenshot( "default_sorting" );
 
         then: "default sorting should be present on the dialog"
-        sortContentDialog.getCurrentSortingName() == SortMenuItem.MODIFIED_DESCENDING.getValue();
+        sortContentDialog.getCurrentSortingName() == SortMenuItem.MODIFIED_DATE.getValue();
     }
 
 }
