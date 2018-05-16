@@ -48,7 +48,7 @@ class ContentPublishDelete_Spec
         then: "content is getting 'Pending delete'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
         and: "correct notification message should be shown"
-        message == Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE;
+        message == String.format(Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE,content.getName()) ;
     }
 
     def "GIVEN existing content with 'Deleted' status WHEN content is selected and 'Delete' button pressed THEN 'Undo deleted' button should be displayed"()

@@ -297,7 +297,7 @@ public class ContentPublishDialog
             throw new TestFrameworkException( "publish button is disabled!" );
         }
         publishButton.click();
-        sleep( 1000 );
+        sleep( 1400 );
         return this;
     }
 

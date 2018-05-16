@@ -32,7 +32,7 @@ public class Application
 
     public static final String CONTENT_STUDIO_TAB_HANDLE = "content_studio_window_id_key";
 
-    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion.";
+    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" was marked for deletion.";
 
     public static String ITEM_IS_UNDELETED = "The item is successfully undeleted";
 
