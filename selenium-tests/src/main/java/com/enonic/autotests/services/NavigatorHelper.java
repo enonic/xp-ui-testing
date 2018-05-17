@@ -32,10 +32,10 @@ public class NavigatorHelper
     public static void closeXpTourDialogIfPresent( TestSession testSession )
     {
         XpTourDialog xpTourDialog = new XpTourDialog( testSession );
-//        if ( xpTourDialog.waitForDialogVisible( 1 ) )
-//        {
-//            xpTourDialog.clickOnCancelButton();
-//        }
+        if ( xpTourDialog.isOpened() )
+        {
+            xpTourDialog.clickOnCancelButton();
+        }
     }
 
     /**
@@ -48,20 +48,19 @@ public class NavigatorHelper
     {
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
-        waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3000, testSession );
-        if ( testSession.getDriver().findElements( By.xpath( "//div[contains(@id,'BodyMask')]" ) ).stream().filter(
-            WebElement::isDisplayed ).count() > 0 )
+        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
         {
             TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
             throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
         }
-
         ContentBrowsePanel cmPage = home.openContentStudioApplication();
         return cmPage;
     }
 
     private static boolean waitInvisibilityOfElement( By by, long timeout, TestSession testSession )
     {
+        //WebDriverWait wait = new WebDriverWait(driver, 15);
+        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//input[@id='text4']")));
         Wait<WebDriver> wait =
             new FluentWait<WebDriver>( testSession.getDriver() ).withTimeout( timeout, TimeUnit.MILLISECONDS ).pollingEvery( 400,
                                                                                                                              TimeUnit.MILLISECONDS ).ignoring(
