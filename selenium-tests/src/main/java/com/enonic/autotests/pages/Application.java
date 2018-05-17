@@ -65,7 +65,7 @@ public class Application
 
     public static String CONTENT_SAVED = "\"%s\" saved";
 
-    public static String CONTENT_DELETED_MESSAGE = "The item is deleted.";
+    public static String ITEM_WAS_DELETED = "Item \"%s\" was deleted.";
 
     public static final String FULL_ACCESS = "Full Access";
 

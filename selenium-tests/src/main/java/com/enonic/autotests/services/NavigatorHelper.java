@@ -32,10 +32,10 @@ public class NavigatorHelper
     public static void closeXpTourDialogIfPresent( TestSession testSession )
     {
         XpTourDialog xpTourDialog = new XpTourDialog( testSession );
-        if ( xpTourDialog.isOpened() )
-        {
-            xpTourDialog.clickOnCancelButton();
-        }
+//        if ( xpTourDialog.waitForDialogVisible( 1 ) )
+//        {
+//            xpTourDialog.clickOnCancelButton();
+//        }
     }
 
     /**
@@ -48,28 +48,20 @@ public class NavigatorHelper
     {
         HomePage home = loginAndOpenHomePage( testSession );
         closeXpTourDialogIfPresent( testSession );
-        testSession.getDriver().manage().timeouts().implicitlyWait( 1, TimeUnit.SECONDS );
+        waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3000, testSession );
         if ( testSession.getDriver().findElements( By.xpath( "//div[contains(@id,'BodyMask')]" ) ).stream().filter(
             WebElement::isDisplayed ).count() > 0 )
         {
             TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
             throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
         }
-        testSession.getDriver().manage().timeouts().implicitlyWait( Application.EXPLICIT_QUICK, TimeUnit.SECONDS );
 
-//        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 1, testSession ) )
-//        {
-//            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
-//            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
-//        }
         ContentBrowsePanel cmPage = home.openContentStudioApplication();
         return cmPage;
     }
 
     private static boolean waitInvisibilityOfElement( By by, long timeout, TestSession testSession )
     {
-        //WebDriverWait wait = new WebDriverWait(driver, 15);
-        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//input[@id='text4']")));
         Wait<WebDriver> wait =
             new FluentWait<WebDriver>( testSession.getDriver() ).withTimeout( timeout, TimeUnit.MILLISECONDS ).pollingEvery( 400,
                                                                                                                              TimeUnit.MILLISECONDS ).ignoring(
