@@ -83,7 +83,7 @@ class SortContentDialogSpec
         List<String> items = sortContentDialog.getMenuItems();
 
         then: "seven menu items should be displayed"
-        items.size() == 4;
+        items.size() == 5;
         and:
         items.contains( SortMenuItem.DISPLAY_NAME.getValue() );
         and:
@@ -92,6 +92,8 @@ class SortContentDialogSpec
         items.contains( SortMenuItem.PUBLISHED_DATE.getValue() );
         and:
         items.contains( SortMenuItem.MANUALLY_SORTED.getValue() );
+        and:
+        items.contains( SortMenuItem.CREATED_DATE.getValue() );
     }
 
     def "GIVEN sort dialog is opened WHEN 'cancel' button on the top was clicked THEN dialog should not be displayed"()
