@@ -2,7 +2,7 @@ package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
 public enum SortMenuItem {
-    DISPLAY_NAME("Display name"), MODIFIED_DATE("Modified date"), PUBLISHED_DATE("Published date"), MANUALLY_SORTED("Manually sorted");
+    DISPLAY_NAME("Display name"), MODIFIED_DATE("Modified date"),CREATED_DATE("Created date"), PUBLISHED_DATE("Published date"), MANUALLY_SORTED("Manually sorted");
 
     private String value;
 
