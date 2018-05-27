@@ -79,7 +79,7 @@ class ContentWizard_PublishButton_Spec
         wizard.isPublishMenuAvailable();
     }
 
-    def "GIVEN existing 'online' content WHEN 'Delete' button on the wizard-toolbar pressed AND content deleted THEN 'Deleted' status is displayed on the wizard"()
+    def "GIVEN existing 'online' content WHEN 'Delete' button on the wizard-toolbar pressed AND content deleted THEN 'Deleted' status should be displayed on the wizard"()
     {
         given: "existing 'online' content"
         findAndSelectContent( CONTENT.getName() );
@@ -93,6 +93,7 @@ class ContentWizard_PublishButton_Spec
         wizard.getStatus() == ContentStatus.DELETED.getValue();
 
         and: "'Publish' button should be enabled"
+        saveScreenshot("wizard_online_content_was_deleted");
         wizard.isPublishButtonEnabled();
 
         and: "'publish-menu' should be enabled"

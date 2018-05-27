@@ -82,8 +82,8 @@ class DetailsPanels_VersionHistory_Spec
         saveScreenshot( "version_history_content-modified" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
-        then: "number of versions is increased by 1"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 2;
+        then: "number of versions should be increased by 1"
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 1;
 
         and: "the latest version has a 'modified' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
