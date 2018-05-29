@@ -37,8 +37,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
  * 'Content Studio' application, Content Wizard page.
  */
 public class ContentWizardPanel
-    extends WizardPanel<Content>
-{
+        extends WizardPanel<Content> {
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
     public static final String ONLINE_TO_VALIDATION_MESSAGE = "\"Online to\" date/time cannot be in the past";
@@ -53,10 +52,10 @@ public class ContentWizardPanel
 
     private final String CONTENT_STATUS = "//span[@class='content-status']/span";
 
-    private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
+    private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate...']]";
 
     private final String TOOLBAR_UNDO_DELETE_BUTTON_XPATH =
-        TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
+            TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
 
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
@@ -69,24 +68,24 @@ public class ContentWizardPanel
     private final String SCHEDULE_WIZARD_STEP = "//div[contains(@id,'ScheduleWizardStepForm')]";
 
     private final String ONLINE_FROM_DATETIME_INPUT =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" + DATA_TIME_PICKER_INPUT;
+            SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" + DATA_TIME_PICKER_INPUT;
 
     private final String ONLINE_TO_DATETIME_INPUT =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + DATA_TIME_PICKER_INPUT;
+            SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + DATA_TIME_PICKER_INPUT;
 
     private final String ONLINE_TO_INPUT_ERROR_MESSAGE =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" +
-            "//div[contains(@id,'ValidationRecordingViewer')]//li";
+            SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" +
+                    "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
     private final String ONLINE_FROM_INPUT_ERROR_MESSAGE =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" +
-            "//div[contains(@id,'ValidationRecordingViewer')]//li";
+            SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" +
+                    "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
     private final String UNPUBLISH_MENU_ITEM =
-        TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
+            TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
+            TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
 
     private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
 
@@ -141,70 +140,57 @@ public class ContentWizardPanel
      *
      * @param session
      */
-    public ContentWizardPanel( TestSession session )
-    {
-        super( session );
+    public ContentWizardPanel(TestSession session) {
+        super(session);
     }
 
-    public ContentWizardPanel showPublishMenu()
-    {
+    public ContentWizardPanel showPublishMenu() {
         publishMenuDropDownHandler.click();
-        sleep( 400 );
+        sleep(400);
         return this;
     }
 
-    public void clickOnHomeButton()
-    {
+    public void clickOnHomeButton() {
         homeButton.click();
     }
 
-    public boolean isHomeButtonClickable()
-    {
-        return waitAndCheckAttrValue( homeButton, "class", "clickable", Application.EXPLICIT_NORMAL );
+    public boolean isHomeButtonClickable() {
+        return waitAndCheckAttrValue(homeButton, "class", "clickable", Application.EXPLICIT_NORMAL);
         //return homeButton.getAttribute( "class" ).contains( "clickable" );
     }
 
-    public ContentWizardPanel clickOnMinimizeEditIcon()
-    {
+    public ContentWizardPanel clickOnMinimizeEditIcon() {
         String minimizeEditIcon = "//div[@class='minimize-edit']";
-        findElement( By.xpath( minimizeEditIcon ) ).click();
+        findElement(By.xpath(minimizeEditIcon)).click();
         return this;
     }
 
-    public boolean isDeleteButtonDisplayed()
-    {
-        return isElementDisplayed( By.xpath( TOOLBAR_DELETE_BUTTON_XPATH ) );
+    public boolean isDeleteButtonDisplayed() {
+        return isElementDisplayed(By.xpath(TOOLBAR_DELETE_BUTTON_XPATH));
     }
 
-    public boolean isUndoDeleteButtonDisplayed()
-    {
-        return isElementDisplayed( By.xpath( TOOLBAR_UNDO_DELETE_BUTTON_XPATH ) );
+    public boolean isUndoDeleteButtonDisplayed() {
+        return isElementDisplayed(By.xpath(TOOLBAR_UNDO_DELETE_BUTTON_XPATH));
     }
 
-    public boolean isSaveButtonDisplayed()
-    {
-        return isElementDisplayed( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ) );
+    public boolean isSaveButtonDisplayed() {
+        return isElementDisplayed(By.xpath(TOOLBAR_SAVE_BUTTON_XPATH));
     }
 
-    public boolean isSavedButtonDisplayed()
-    {
-        return isElementDisplayed( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ) );
+    public boolean isSavedButtonDisplayed() {
+        return isElementDisplayed(By.xpath(TOOLBAR_SAVED_BUTTON_XPATH));
     }
 
     /**
      * Keyboard shortcut to 'Edit selected content'
      */
-    public ContentWizardPanel pressSaveKeyboardShortcut()
-    {
-        String os = System.getProperty( "os.name" ).toLowerCase();
+    public ContentWizardPanel pressSaveKeyboardShortcut() {
+        String os = System.getProperty("os.name").toLowerCase();
 
-        if ( os.indexOf( "mac" ) >= 0 )
-        {
-            buildActions().sendKeys( Keys.chord( Keys.COMMAND, "s" ) ).build().perform();
-        }
-        else
-        {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, "s" ) ).build().perform();
+        if (os.indexOf("mac") >= 0) {
+            buildActions().sendKeys(Keys.chord(Keys.COMMAND, "s")).build().perform();
+        } else {
+            buildActions().sendKeys(Keys.chord(Keys.CONTROL, "s")).build().perform();
         }
         return this;
     }
@@ -212,17 +198,13 @@ public class ContentWizardPanel
     /**
      * Keyboard shortcut to 'Save and close'  Ctrl+Enter  or Cmd+Enter
      */
-    public ContentWizardPanel pressSaveAndCloseKeyboardShortcut()
-    {
-        String os = System.getProperty( "os.name" ).toLowerCase();
+    public ContentWizardPanel pressSaveAndCloseKeyboardShortcut() {
+        String os = System.getProperty("os.name").toLowerCase();
 
-        if ( os.indexOf( "mac" ) >= 0 )
-        {
-            buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.ENTER ) ).build().perform();
-        }
-        else
-        {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.ENTER ) ).build().perform();
+        if (os.indexOf("mac") >= 0) {
+            buildActions().sendKeys(Keys.chord(Keys.COMMAND, Keys.ENTER)).build().perform();
+        } else {
+            buildActions().sendKeys(Keys.chord(Keys.CONTROL, Keys.ENTER)).build().perform();
         }
         return this;
     }
@@ -230,90 +212,76 @@ public class ContentWizardPanel
     /**
      * Keyboard shortcut to 'Close'  Alt+W
      */
-    public ContentWizardPanel pressCloseKeyboardShortcut()
-    {
-        buildActions().sendKeys( Keys.chord( Keys.ALT, "w" ) ).build().perform();
+    public ContentWizardPanel pressCloseKeyboardShortcut() {
+        buildActions().sendKeys(Keys.chord(Keys.ALT, "w")).build().perform();
         return this;
     }
 
 
-    public boolean isPublishMenuAvailable()
-    {
-        if ( !isElementDisplayed( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ) )
-        {
-            saveScreenshot( "err_publish_dropdown_handler_wizard" );
-            throw new TestFrameworkException( "dropdown handler for publish menu is not displayed" );
+    public boolean isPublishMenuAvailable() {
+        if (!isElementDisplayed(TOOLBAR_PUBLISH_DROPDOWN_HANDLER)) {
+            saveScreenshot("err_publish_dropdown_handler_wizard");
+            throw new TestFrameworkException("dropdown handler for publish menu is not displayed");
         }
-        return !getAttribute( getDisplayedElement( By.xpath( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ) ), "class",
-                              Application.EXPLICIT_NORMAL ).contains( "disabled" );
+        return !getAttribute(getDisplayedElement(By.xpath(TOOLBAR_PUBLISH_DROPDOWN_HANDLER)), "class",
+                Application.EXPLICIT_NORMAL).contains("disabled");
     }
 
-    public ContentUnpublishDialog selectUnPublishMenuItem()
-    {
-        if ( !isUnPublishMenuItemEnabled() )
-        {
-            saveScreenshot( "err_unpublish_menu_item" );
-            throw new TestFrameworkException( "menu item was not found!" + "unpublish_item" );
+    public ContentUnpublishDialog selectUnPublishMenuItem() {
+        if (!isUnPublishMenuItemEnabled()) {
+            saveScreenshot("err_unpublish_menu_item");
+            throw new TestFrameworkException("menu item was not found!" + "unpublish_item");
         }
-        getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
-        ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        getDisplayedElement(By.xpath(UNPUBLISH_MENU_ITEM)).click();
+        ContentUnpublishDialog dialog = new ContentUnpublishDialog(getSession());
+        dialog.waitUntilDialogShown(Application.EXPLICIT_NORMAL);
         return dialog;
     }
 
-    public boolean isUnPublishMenuItemEnabled()
-    {
-        if ( !isElementDisplayed( UNPUBLISH_MENU_ITEM ) )
-        {
-            saveScreenshot( "err_unpublish_menu_item_not_visible " );
-            throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
+    public boolean isUnPublishMenuItemEnabled() {
+        if (!isElementDisplayed(UNPUBLISH_MENU_ITEM)) {
+            saveScreenshot("err_unpublish_menu_item_not_visible ");
+            throw new TestFrameworkException("'unpublish' menu item is not visible!");
         }
-        return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
-            "disabled" );
+        return !getAttribute(getDisplayedElement(By.xpath(UNPUBLISH_MENU_ITEM)), "class", Application.EXPLICIT_NORMAL).contains(
+                "disabled");
     }
 
     /*
      * clicks on the toggler for 'Inspection Panel' and waits until the panel is shown
      */
-    public ContextWindow showContextWindow()
-    {
-        if ( isInLiveEditFrame() )
-        {
+    public ContextWindow showContextWindow() {
+        if (isInLiveEditFrame()) {
             switchToDefaultWindow();
         }
-        ContextWindow cw = new ContextWindow( getSession() );
-        if ( !cw.isContextWindowPresent() )
-        {
-            if ( !isElementDisplayed( INSPECTION_PANEL_TOGGLER ) )
-            {
-                saveScreenshot( NameHelper.uniqueName( "err_icon-cog" ) );
-                throw new TestFrameworkException( "button with 'icon-cog' was not found" );
+        ContextWindow cw = new ContextWindow(getSession());
+        if (!cw.isContextWindowPresent()) {
+            if (!isElementDisplayed(INSPECTION_PANEL_TOGGLER)) {
+                saveScreenshot(NameHelper.uniqueName("err_icon-cog"));
+                throw new TestFrameworkException("button with 'icon-cog' was not found");
             }
-            getDisplayedElement( By.xpath( INSPECTION_PANEL_TOGGLER ) ).click();
-            cw.waitUntilWindowLoaded( 1l );
+            getDisplayedElement(By.xpath(INSPECTION_PANEL_TOGGLER)).click();
+            cw.waitUntilWindowLoaded(1l);
         }
         return cw;
     }
 
-    public ContentWizardPanel clickToolbarPreview()
-    {
-        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), 1 );
-        if ( !isEnabled )
-        {
-            saveScreenshot( "err_preview_button_status" );
-            throw new TestFrameworkException( "button Preview disabled, but expected is enabled" );
+    public ContentWizardPanel clickToolbarPreview() {
+        boolean isEnabled = waitUntilElementEnabledNoException(By.xpath(TOOLBAR_PREVIEW_BUTTON_XPATH), 1);
+        if (!isEnabled) {
+            saveScreenshot("err_preview_button_status");
+            throw new TestFrameworkException("button Preview disabled, but expected is enabled");
         }
         toolbarPreviewButton.click();
-        sleep( 1500 );
+        sleep(1500);
         return this;
     }
 
     @Override
-    public DeleteContentDialog clickToolbarDelete()
-    {
+    public DeleteContentDialog clickToolbarDelete() {
         toolbarDeleteButton.click();
-        sleep( 1000 );
-        DeleteContentDialog deleteContentDialog = new DeleteContentDialog( getSession() );
+        sleep(1000);
+        DeleteContentDialog deleteContentDialog = new DeleteContentDialog(getSession());
         deleteContentDialog.waitForOpened();
         return deleteContentDialog;
     }
@@ -321,58 +289,51 @@ public class ContentWizardPanel
     /**
      * @return true if red icon is displayed on the wizard page
      */
-    public boolean isContentInvalid()
-    {
+    public boolean isContentInvalid() {
 
-        if ( !isElementDisplayed( By.xpath( THUMBNAIL_UPLOADER ) ) )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_thumbnail)" ) );
-            throw new TestFrameworkException( "thumbnail icon was not found" );
+        if (!isElementDisplayed(By.xpath(THUMBNAIL_UPLOADER))) {
+            saveScreenshot(NameHelper.uniqueName("err_thumbnail)"));
+            throw new TestFrameworkException("thumbnail icon was not found");
         }
-        return waitAndCheckAttrValue( getDisplayedElement( By.xpath( THUMBNAIL_UPLOADER ) ), "class", "invalid",
-                                      Application.EXPLICIT_NORMAL );
+        return waitAndCheckAttrValue(getDisplayedElement(By.xpath(THUMBNAIL_UPLOADER)), "class", "invalid",
+                Application.EXPLICIT_NORMAL);
     }
 
-    public boolean isLiveEditLocked()
-    {
+    public boolean isLiveEditLocked() {
         switchToLiveEditFrame();
-        LiveFormPanel liveEdit = new LiveFormPanel( getSession() );
+        LiveFormPanel liveEdit = new LiveFormPanel(getSession());
         boolean result = liveEdit.isShaderDisplayed();
         return result;
     }
 
-    public ItemViewContextMenu showItemViewContextMenu()
-    {
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        sleep( 1400 );
+    public ItemViewContextMenu showItemViewContextMenu() {
+        waitInvisibilityOfSpinner(Application.EXPLICIT_NORMAL);
+        sleep(1400);
         clickOnPageView();
-        sleep( 900 );
-        ItemViewContextMenu menu = new ItemViewContextMenu( getSession() );
+        sleep(900);
+        ItemViewContextMenu menu = new ItemViewContextMenu(getSession());
         menu.waitForMenuOpened();
         return menu;
     }
 
-    public ContentWizardPanel unlockPageEditorAndSwitchToContentStudio()
-    {
+    public ContentWizardPanel unlockPageEditorAndSwitchToContentStudio() {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
         switchToDefaultWindow();
         return this;
     }
 
-    public ContentWizardPanel unlockPageEditor()
-    {
+    public ContentWizardPanel unlockPageEditor() {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
         return this;
     }
 
-    private void clickOnPageView()
-    {
+    private void clickOnPageView() {
         switchToLiveEditFrame();
-        WebElement body = findElements( By.xpath( "//div[@data-portal-component-type='region']" ) ).get( 0 );
-        Actions builder = new Actions( getDriver() );
-        builder.click( body ).build().perform();
+        WebElement body = findElements(By.xpath("//div[@data-portal-component-type='region']")).get(0);
+        Actions builder = new Actions(getDriver());
+        builder.click(body).build().perform();
     }
 
     /**
@@ -381,502 +342,418 @@ public class ContentWizardPanel
      * @param content
      */
     @Override
-    public ContentWizardPanel typeData( Content content )
-    {
+    public ContentWizardPanel typeData(Content content) {
         // 1. type a data: 'name' and 'Display Name'.
         //waitUntilElementEnabledNoException( By.name( "displayName" ), 2 );
-        if ( content.getDisplayName() != null )
-        {
-            getLogger().info( "types displayName: " + content.getDisplayName() );
-            clearAndType( displayNameInput, content.getDisplayName() );
-            sleep( 100 );
+        if (content.getDisplayName() != null) {
+            getLogger().info("types displayName: " + content.getDisplayName());
+            clearAndType(displayNameInput, content.getDisplayName());
+            sleep(100);
         }
-        if ( StringUtils.isNotEmpty( content.getName() ) )
-        {
-            waitElementClickable( By.name( "name" ), 2 );
-            getLogger().info( "types name: " + content.getName() );
-            clearAndType( nameInput, content.getName().trim() );
+        if (StringUtils.isNotEmpty(content.getName())) {
+            waitElementClickable(By.name("name"), 2);
+            getLogger().info("types name: " + content.getName());
+            clearAndType(nameInput, content.getName().trim());
         }
         // 2. populate main tab
-        if ( content.getData() != null )
-        {
-            ContentWizardStepForm stepForm = new ContentWizardStepForm( getSession() );
-            stepForm.type( content.getData(), content.getContentTypeName() );
+        if (content.getData() != null) {
+            ContentWizardStepForm stepForm = new ContentWizardStepForm(getSession());
+            stepForm.type(content.getData(), content.getContentTypeName());
         }
-        if ( content.getContentSettings() != null )
-        {
-            SettingsWizardStepForm settings = new SettingsWizardStepForm( getSession() );
-            settings.typeSettings( content.getContentSettings() );
+        if (content.getContentSettings() != null) {
+            SettingsWizardStepForm settings = new SettingsWizardStepForm(getSession());
+            settings.typeSettings(content.getContentSettings());
         }
 
-        if ( content.getAclEntries() != null )
-        {
+        if (content.getAclEntries() != null) {
             SecurityWizardStepForm securityWizardStepForm = clickOnAccessTabLink();
             securityWizardStepForm.waitUntilButtonEditPermissionsClickable().clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
-                content.getAclEntries() ).clickOnApply();
-            sleep( 700 );
-            saveScreenshot( NameHelper.uniqueName( "acl_" + content.getName() ) );
+                    content.getAclEntries()).clickOnApply();
+            sleep(700);
+            saveScreenshot(NameHelper.uniqueName("acl_" + content.getName()));
         }
         return this;
     }
 
-    public SecurityWizardStepForm clickOnAccessTabLink()
-    {
-        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, ACCESS_LINK_TEXT );
-        if ( !isElementDisplayed( securityTabXpath ) )
-        {
-            saveScreenshot( "err_" + ACCESS_LINK_TEXT );
-            throw new TestFrameworkException( "step was not found! " + ACCESS_LINK_TEXT );
+    public SecurityWizardStepForm clickOnAccessTabLink() {
+        String securityTabXpath = String.format(NAVIGATOR_TAB_ITEM_LINK, ACCESS_LINK_TEXT);
+        if (!isElementDisplayed(securityTabXpath)) {
+            saveScreenshot("err_" + ACCESS_LINK_TEXT);
+            throw new TestFrameworkException("step was not found! " + ACCESS_LINK_TEXT);
         }
-        findElement( By.xpath( securityTabXpath ) ).click();
-        sleep( 500 );
-        return new SecurityWizardStepForm( getSession() );
+        findElement(By.xpath(securityTabXpath)).click();
+        sleep(500);
+        return new SecurityWizardStepForm(getSession());
     }
 
-    public SettingsWizardStepForm clickOnSettingsTabLink()
-    {
-        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SETTINGS_LINK_TEXT );
-        if ( findElements( By.xpath( securityTabXpath ) ).size() == 0 )
-        {
-            saveScreenshot( "err_settings_tab" );
-            throw new TestFrameworkException( "settings tab was not found!" );
+    public SettingsWizardStepForm clickOnSettingsTabLink() {
+        String securityTabXpath = String.format(NAVIGATOR_TAB_ITEM_LINK, SETTINGS_LINK_TEXT);
+        if (findElements(By.xpath(securityTabXpath)).size() == 0) {
+            saveScreenshot("err_settings_tab");
+            throw new TestFrameworkException("settings tab was not found!");
         }
-        findElement( By.xpath( securityTabXpath ) ).click();
-        sleep( 500 );
-        return new SettingsWizardStepForm( getSession() );
+        findElement(By.xpath(securityTabXpath)).click();
+        sleep(500);
+        return new SettingsWizardStepForm(getSession());
     }
 
-    public ContentWizardPanel typeName( String name )
-    {
-        clearAndType( nameInput, name );
+    public ContentWizardPanel typeName(String name) {
+        clearAndType(nameInput, name);
         return this;
     }
 
-    public ContentWizardPanel typeDisplayName( String displayName )
-    {
-        clearAndType( displayNameInput, displayName );
+    public ContentWizardPanel typeDisplayName(String displayName) {
+        clearAndType(displayNameInput, displayName);
         return this;
     }
 
-    public ContentWizardPanel waitForSaveButtonClickable()
-    {
-        boolean isVisible = waitUntilVisibleNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_QUICK );
+    public ContentWizardPanel waitForSaveButtonClickable() {
+        boolean isVisible = waitUntilVisibleNoException(By.xpath(TOOLBAR_SAVE_BUTTON_XPATH), Application.EXPLICIT_QUICK);
         boolean isEnabled = isSaveButtonEnabled();
-        if ( !isVisible || !isEnabled )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
-            throw new TestFrameworkException( "Save button should be visible on the wizard-toolbar" );
+        if (!isVisible || !isEnabled) {
+            saveScreenshot(NameHelper.uniqueName("err_save_button"));
+            throw new TestFrameworkException("Save button should be visible on the wizard-toolbar");
         }
         return this;
     }
 
     @Override
-    public ContentWizardPanel save()
-    {
-        if ( isInLiveEditFrame() )
-        {
+    public ContentWizardPanel save() {
+        if (isInLiveEditFrame()) {
             switchToDefaultWindow();
         }
         waitForSaveButtonClickable();
         toolbarSaveButton.click();
-        sleep( 500 );
+        sleep(500);
         return this;
     }
 
-    public boolean waitExpectedNotificationMessage( String message, long timeout )
-    {
-        String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
-        return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
+    public boolean waitExpectedNotificationMessage(String message, long timeout) {
+        String expectedMessage = String.format(EXPECTED_NOTIFICATION_MESSAGE_XPATH, message);
+        return waitUntilVisibleNoException(By.xpath(expectedMessage), timeout);
     }
 
-    public ContentPublishDialog clickOnWizardPublishButton()
-    {
-        if ( !isElementDisplayed( TOOLBAR_PUBLISH_BUTTON_XPATH ) )
-        {
-            saveScreenshot( "err_toolbar_publish" );
-            throw new TestFrameworkException( "publish button was not found in the wizard" );
+    public ContentPublishDialog clickOnWizardPublishButton() {
+        if (!isElementDisplayed(TOOLBAR_PUBLISH_BUTTON_XPATH)) {
+            saveScreenshot("err_toolbar_publish");
+            throw new TestFrameworkException("publish button was not found in the wizard");
         }
         toolbarPublishButton.click();
-        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        dialog.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        ContentPublishDialog dialog = new ContentPublishDialog(getSession());
+        dialog.waitUntilDialogShown(Application.EXPLICIT_NORMAL);
+        dialog.waitInvisibilityOfSpinner(Application.EXPLICIT_NORMAL);
         return dialog;
     }
 
     @Override
-    public boolean isSaveButtonEnabled()
-    {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    public boolean isSaveButtonEnabled() {
+        return waitUntilElementEnabledNoException(By.xpath(TOOLBAR_SAVE_BUTTON_XPATH), Application.EXPLICIT_NORMAL);
     }
 
-    public boolean isSavedButtonEnabled()
-    {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    public boolean isSavedButtonEnabled() {
+        return waitUntilElementEnabledNoException(By.xpath(TOOLBAR_SAVED_BUTTON_XPATH), Application.EXPLICIT_NORMAL);
     }
 
-    public boolean isPublishButtonEnabled()
-    {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    public boolean isPublishButtonEnabled() {
+        return waitUntilElementEnabledNoException(By.xpath(TOOLBAR_PUBLISH_BUTTON_XPATH), Application.EXPLICIT_NORMAL);
     }
 
-    public boolean isPreviewButtonEnabled()
-    {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    public boolean isPreviewButtonEnabled() {
+        return waitUntilElementEnabledNoException(By.xpath(TOOLBAR_PREVIEW_BUTTON_XPATH), Application.EXPLICIT_NORMAL);
     }
 
     @Override
-    public boolean isOpened()
-    {
-        return isElementDisplayed( TOOLBAR );
+    public boolean isOpened() {
+        return isElementDisplayed(TOOLBAR);
     }
 
     @Override
-    public ContentWizardPanel waitUntilWizardOpened()
-    {
-        boolean result = waitUntilVisibleNoException( By.xpath( "//input[@name='displayName']" ), 10l );
-        if ( !result )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_wizard" ) );
-            throw new TestFrameworkException( "ContentWizard was not loaded!" );
+    public ContentWizardPanel waitUntilWizardOpened() {
+        boolean result = waitUntilVisibleNoException(By.xpath("//input[@name='displayName']"), 10l);
+        if (!result) {
+            saveScreenshot(NameHelper.uniqueName("err_wizard"));
+            throw new TestFrameworkException("ContentWizard was not loaded!");
         }
         return this;
     }
 
     @Override
-    public SaveBeforeCloseDialog close( String displayName )
-    {
+    public SaveBeforeCloseDialog close(String displayName) {
         closeBrowserTab().switchToBrowsePanelTab();
         return null;
     }
 
-    public ContentWizardPanel waitUntilWizardClosed()
-    {
-        boolean result = waitsElementNotVisible( By.xpath( DIV_CONTENT_WIZARD_PANEL ), Application.EXPLICIT_NORMAL );
-        if ( !result )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_close_wizard" ) );
-            throw new TestFrameworkException( "ContentWizard was not closed!" );
+    public ContentWizardPanel waitUntilWizardClosed() {
+        boolean result = waitsElementNotVisible(By.xpath(DIV_CONTENT_WIZARD_PANEL), Application.EXPLICIT_NORMAL);
+        if (!result) {
+            saveScreenshot(NameHelper.uniqueName("err_close_wizard"));
+            throw new TestFrameworkException("ContentWizard was not closed!");
         }
         return this;
     }
 
     @Override
-    public String getWizardDivXpath()
-    {
+    public String getWizardDivXpath() {
         return DIV_CONTENT_WIZARD_PANEL;
     }
 
     /**
      * closes the Page Editor if it displayed
      */
-    public ContentWizardPanel showPageEditor()
-    {
-        if ( isLiveEditFrameDisplayed() )
-        {
+    public ContentWizardPanel showPageEditor() {
+        if (isLiveEditFrameDisplayed()) {
             return this;
         }
-        if ( !waitUntilVisibleNoException( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ), Application.EXPLICIT_NORMAL ) )
-        {
-            saveScreenshot( "err-show-button" );
-            throw new TestFrameworkException( "The 'toggle Page Editor' button not displayed!" );
+        if (!waitUntilVisibleNoException(By.xpath(TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON), Application.EXPLICIT_NORMAL)) {
+            saveScreenshot("err-show-button");
+            throw new TestFrameworkException("The 'toggle Page Editor' button not displayed!");
         }
-        getDisplayedElement( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
-        sleep( 700 );
+        getDisplayedElement(By.xpath(TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON)).click();
+        sleep(700);
         return this;
     }
 
     /**
      * checks if LiveEdit frame is displayed if it not displayed, clicks on the toggler for Page Editor and opens the editor
      */
-    public ContentWizardPanel hidePageEditor()
-    {
-        if ( !isLiveEditFrameDisplayed() )
-        {
+    public ContentWizardPanel hidePageEditor() {
+        if (!isLiveEditFrameDisplayed()) {
             return this;
         }
-        if ( !isElementDisplayed( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) )
-        {
-            saveScreenshot( "err-hide-button" );
-            throw new TestFrameworkException( "The 'Hide Page Editor' button was not found!" );
+        if (!isElementDisplayed(TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON)) {
+            saveScreenshot("err-hide-button");
+            throw new TestFrameworkException("The 'Hide Page Editor' button was not found!");
         }
-        getDisplayedElement( By.xpath( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON ) ).click();
-        sleep( 500 );
+        getDisplayedElement(By.xpath(TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON)).click();
+        sleep(500);
         return this;
     }
 
     /**
      * clicks on the "Show Component View" toggler and waits until the view is displayed
      */
-    public PageComponentsViewDialog showComponentView()
-    {
-        if ( isInLiveEditFrame() )
-        {
+    public PageComponentsViewDialog showComponentView() {
+        if (isInLiveEditFrame()) {
             switchToDefaultWindow();
         }
-        if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
-        {
-            saveScreenshot( "err_component-view-button" );
-            throw new TestFrameworkException( "The 'Show Component View' button was not found!" );
+        if (!waitUntilVisibleNoException(By.xpath(COMPONENT_VIEW_TOGGLER), Application.EXPLICIT_NORMAL)) {
+            saveScreenshot("err_component-view-button");
+            throw new TestFrameworkException("The 'Show Component View' button was not found!");
         }
-        getDisplayedElement( By.xpath( COMPONENT_VIEW_TOGGLER ) ).click();
-        PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
+        getDisplayedElement(By.xpath(COMPONENT_VIEW_TOGGLER)).click();
+        PageComponentsViewDialog dialog = new PageComponentsViewDialog(getSession());
         dialog.waitForOpened();
-        sleep( 200 );
+        sleep(200);
         return dialog;
     }
 
     /**
      * return true if button "Show Component View" is displayed
      */
-    public boolean isComponentViewTogglerDisplayed()
-    {
-        return isElementDisplayed( COMPONENT_VIEW_TOGGLER );
+    public boolean isComponentViewTogglerDisplayed() {
+        return isElementDisplayed(COMPONENT_VIEW_TOGGLER);
     }
 
     /**
      * return true if button "Show Inspection Panel" is displayed
      */
-    public boolean isInspectionPanelTogglerDisplayed()
-    {
-        return isElementDisplayed( INSPECTION_PANEL_TOGGLER );
+    public boolean isInspectionPanelTogglerDisplayed() {
+        return isElementDisplayed(INSPECTION_PANEL_TOGGLER);
     }
 
-    public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
-    {
-        if ( !isInLiveEditFrame() )
-        {
+    public ContentWizardPanel selectPageDescriptor(String pageDescriptorDisplayName) {
+        if (!isInLiveEditFrame()) {
             switchToLiveEditFrame();
         }
-        if ( !isElementDisplayed( DROPDOWN_OPTION_FILTER_INPUT ) )
-        {
-            saveScreenshot( "err_content_wizard_dropdown_not_displayed" );
-            throw new TestFrameworkException( "option filter input was not found" );
+        if (!isElementDisplayed(DROPDOWN_OPTION_FILTER_INPUT)) {
+            saveScreenshot("err_content_wizard_dropdown_not_displayed");
+            throw new TestFrameworkException("option filter input was not found");
         }
-        findElement( By.xpath( DROPDOWN_OPTION_FILTER_INPUT ) ).sendKeys( pageDescriptorDisplayName );
-        String pageDescriptor = String.format( "//h6[contains(@class,'main-name') and text()='%s']", pageDescriptorDisplayName );
-        if ( !waitUntilVisibleNoException( By.xpath( pageDescriptor ), Application.EXPLICIT_NORMAL ) )
-        {
-            saveScreenshot( "err_" + pageDescriptorDisplayName );
-            throw new TestFrameworkException( "drop-down-option-filter: item was not found: " + pageDescriptorDisplayName );
+        findElement(By.xpath(DROPDOWN_OPTION_FILTER_INPUT)).sendKeys(pageDescriptorDisplayName);
+        String pageDescriptor = String.format("//h6[contains(@class,'main-name') and text()='%s']", pageDescriptorDisplayName);
+        if (!waitUntilVisibleNoException(By.xpath(pageDescriptor), Application.EXPLICIT_NORMAL)) {
+            saveScreenshot("err_" + pageDescriptorDisplayName);
+            throw new TestFrameworkException("drop-down-option-filter: item was not found: " + pageDescriptorDisplayName);
         }
-        getDisplayedElement( By.xpath( pageDescriptor ) ).click();
-        sleep( 1100 );
+        getDisplayedElement(By.xpath(pageDescriptor)).click();
+        sleep(1100);
         return this;
     }
 
     /**
      * switches to the LiveEdit frame and checks if input for filtering of options is displayed
      */
-    public boolean isPageDescriptorOptionsFilterDisplayed()
-    {
+    public boolean isPageDescriptorOptionsFilterDisplayed() {
         switchToLiveEditFrame();
-        return isElementDisplayed( DROPDOWN_OPTION_FILTER_INPUT );
+        return isElementDisplayed(DROPDOWN_OPTION_FILTER_INPUT);
     }
 
-    public boolean isLiveEditFrameDisplayed()
-    {
-        return isElementDisplayed( Application.LIVE_EDIT_FRAME );
+    public boolean isLiveEditFrameDisplayed() {
+        return isElementDisplayed(Application.LIVE_EDIT_FRAME);
     }
 
     /**
      * return true if toggler "Show Page Editor" is displayed
      */
-    public boolean isShowPageEditorButtonDisplayed()
-    {
-        String button = String.format( TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE );
-        return waitUntilVisibleNoException( By.xpath( button ), Application.EXPLICIT_NORMAL );
+    public boolean isShowPageEditorButtonDisplayed() {
+        String button = String.format(TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON, SHOW_PAGE_EDITOR_BUTTON_TITLE);
+        return waitUntilVisibleNoException(By.xpath(button), Application.EXPLICIT_NORMAL);
     }
 
     @Override
-    public boolean isDeleteButtonEnabled()
-    {
+    public boolean isDeleteButtonEnabled() {
         return toolbarDeleteButton.isEnabled();
     }
 
-    public boolean isDuplicateButtonEnabled()
-    {
+    public boolean isDuplicateButtonEnabled() {
         return toolbarDuplicateButton.isEnabled();
     }
 
-    public String getStatus()
-    {
-        return getDisplayedString( CONTENT_STATUS );
+    public String getStatus() {
+        return getDisplayedString(CONTENT_STATUS);
     }
 
-    public void waitStatus( ContentStatus status, long timeout )
-    {
-        String expectedStatus = String.format( CONTENT_STATUS + "[text()='%s']", status.getValue() );
-        boolean result = waitUntilVisibleNoException( By.xpath( expectedStatus ), timeout );
-        if ( !result )
-        {
-            saveScreenshot( "err_wizard_status" );
-            throw new TestFrameworkException( "expected status was not found" );
+    public void waitStatus(ContentStatus status, long timeout) {
+        String expectedStatus = String.format(CONTENT_STATUS + "[text()='%s']", status.getValue());
+        boolean result = waitUntilVisibleNoException(By.xpath(expectedStatus), timeout);
+        if (!result) {
+            saveScreenshot("err_wizard_status");
+            throw new TestFrameworkException("expected status was not found");
         }
     }
 
-    public LiveFormPanel switchToLiveEditFrame()
-    {
-        if ( !isInLiveEditFrame() )
-        {
-            List<WebElement> liveEditFrames = findElements( By.xpath( LIVE_EDIT_FRAME ) );
-            if ( liveEditFrames.size() == 0 )
-            {
-                throw new TestFrameworkException( "Unable to switch to the live-edit iframe " );
+    public LiveFormPanel switchToLiveEditFrame() {
+        if (!isInLiveEditFrame()) {
+            List<WebElement> liveEditFrames = findElements(By.xpath(LIVE_EDIT_FRAME));
+            if (liveEditFrames.size() == 0) {
+                throw new TestFrameworkException("Unable to switch to the live-edit iframe ");
             }
             //switch to 'live edit' frame
-            getDriver().switchTo().frame( liveEditFrames.get( 0 ) );
-            setInLiveEditFrame( true );
+            getDriver().switchTo().frame(liveEditFrames.get(0));
+            setInLiveEditFrame(true);
         }
-        return new LiveFormPanel( getSession() );
+        return new LiveFormPanel(getSession());
     }
 
-    public int getHeightOfPageEditor()
-    {
-        if ( isInLiveEditFrame() )
-        {
+    public int getHeightOfPageEditor() {
+        if (isInLiveEditFrame()) {
             switchToDefaultWindow();
         }
-        String height = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "height" );
-        return Integer.valueOf( height.substring( 0, height.indexOf( "px" ) ) );
+        String height = getDisplayedElement(By.xpath(LIVE_EDIT_FRAME)).getCssValue("height");
+        return Integer.valueOf(height.substring(0, height.indexOf("px")));
     }
 
-    public int getWidthOfPageEditor()
-    {
-        if ( isInLiveEditFrame() )
-        {
+    public int getWidthOfPageEditor() {
+        if (isInLiveEditFrame()) {
             switchToDefaultWindow();
         }
-        String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
-        return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
+        String width = getDisplayedElement(By.xpath(LIVE_EDIT_FRAME)).getCssValue("width");
+        return Integer.valueOf(width.substring(0, width.indexOf("px")));
     }
 
-    public ContentBrowsePanel switchToBrowsePanelTab()
-    {
-        getDriver().switchTo().window( getHandleForContentBrowseTab() );
-        return new ContentBrowsePanel( getSession() );
+    public ContentBrowsePanel switchToBrowsePanelTab() {
+        getDriver().switchTo().window(getHandleForContentBrowseTab());
+        return new ContentBrowsePanel(getSession());
     }
 
-    public ContentWizardPanel switchToDefaultWindow()
-    {
+    public ContentWizardPanel switchToDefaultWindow() {
         getDriver().switchTo().defaultContent();
-        setInLiveEditFrame( false );
+        setInLiveEditFrame(false);
         return this;
     }
 
-    public ContentWizardPanel closeBrowserTab()
-    {
+    public ContentWizardPanel closeBrowserTab() {
         getDriver().close();
-        sleep( 300 );
+        sleep(300);
         return this;
     }
 
-    public ContentWizardPanel executeCloseWizardScript()
-    {
-        getJavaScriptExecutor().executeScript( "window.close();" );
+    public ContentWizardPanel executeCloseWizardScript() {
+        getJavaScriptExecutor().executeScript("window.close();");
         return this;
     }
 
-    private String getHandleForContentBrowseTab()
-    {
-        String contentBrowseTabHandle = (String) getSession().get( CONTENT_STUDIO_TAB_HANDLE );
-        if ( contentBrowseTabHandle == null )
-        {
-            throw new TestFrameworkException( "Handle for content browse panel was not set" );
+    private String getHandleForContentBrowseTab() {
+        String contentBrowseTabHandle = (String) getSession().get(CONTENT_STUDIO_TAB_HANDLE);
+        if (contentBrowseTabHandle == null) {
+            throw new TestFrameworkException("Handle for content browse panel was not set");
         }
         return contentBrowseTabHandle;
     }
 
-    public boolean waitIsAlertDisplayed()
-    {
-        return waitIsAlertPresent( Application.EXPLICIT_NORMAL );
+    public boolean waitIsAlertDisplayed() {
+        return waitIsAlertPresent(Application.EXPLICIT_NORMAL);
     }
 
-    public void acceptAlertAndLeavePage()
-    {
-        if ( !waitIsAlertDisplayed() )
-        {
-            throw new TestFrameworkException( "Expected Alert dialog was not displayed!" );
+    public void acceptAlertAndLeavePage() {
+        if (!waitIsAlertDisplayed()) {
+            throw new TestFrameworkException("Expected Alert dialog was not displayed!");
         }
         Alert alert = getDriver().switchTo().alert();
         alert.accept();
         switchToBrowsePanelTab();
     }
 
-    private boolean waitIsAlertPresent( long timeout )
-    {
-        return WaitHelper.waitUntilAlertPresentNoException( getDriver(), timeout );
+    private boolean waitIsAlertPresent(long timeout) {
+        return WaitHelper.waitUntilAlertPresentNoException(getDriver(), timeout);
     }
 
-    public void dismissAlertAndStayOnPage()
-    {
-        if ( !waitIsAlertDisplayed() )
-        {
-            throw new TestFrameworkException( "Expected Alert dialog was not displayed!" );
+    public void dismissAlertAndStayOnPage() {
+        if (!waitIsAlertDisplayed()) {
+            throw new TestFrameworkException("Expected Alert dialog was not displayed!");
         }
         Alert alert = getDriver().switchTo().alert();
         alert.dismiss();
     }
 
-    public boolean isInLiveEditFrame()
-    {
+    public boolean isInLiveEditFrame() {
         return getSession().isInLiveEditFrame();
     }
 
-    public void setInLiveEditFrame( boolean value )
-    {
-        getSession().setInLiveEditFrame( value );
+    public void setInLiveEditFrame(boolean value) {
+        getSession().setInLiveEditFrame(value);
     }
 
-    public boolean isOnlineFromInputDisplayed()
-    {
-        return isElementDisplayed( ONLINE_FROM_DATETIME_INPUT );
+    public boolean isOnlineFromInputDisplayed() {
+        return isElementDisplayed(ONLINE_FROM_DATETIME_INPUT);
     }
 
-    public boolean isOnlineToInputDisplayed()
-    {
-        return isElementDisplayed( ONLINE_TO_DATETIME_INPUT );
+    public boolean isOnlineToInputDisplayed() {
+        return isElementDisplayed(ONLINE_TO_DATETIME_INPUT);
     }
 
-    public String getOnlineFromDateTime()
-    {
-        if ( !isElementDisplayed( ONLINE_FROM_DATETIME_INPUT ) )
-        {
-            saveScreenshot( "err_online_from_input_not_present" );
-            throw new TestFrameworkException( "Online From input was not found!" );
+    public String getOnlineFromDateTime() {
+        if (!isElementDisplayed(ONLINE_FROM_DATETIME_INPUT)) {
+            saveScreenshot("err_online_from_input_not_present");
+            throw new TestFrameworkException("Online From input was not found!");
         }
-        return onlineFromInput.getAttribute( "value" );
+        return onlineFromInput.getAttribute("value");
     }
 
-    public String getOnlineToDateTime()
-    {
-        if ( !isElementDisplayed( ONLINE_TO_DATETIME_INPUT ) )
-        {
-            saveScreenshot( "err_online_to_input_not_present" );
-            throw new TestFrameworkException( "Online to input was not found!" );
+    public String getOnlineToDateTime() {
+        if (!isElementDisplayed(ONLINE_TO_DATETIME_INPUT)) {
+            saveScreenshot("err_online_to_input_not_present");
+            throw new TestFrameworkException("Online to input was not found!");
         }
-        return onlineToInput.getAttribute( "value" );
+        return onlineToInput.getAttribute("value");
     }
 
-    public ContentWizardPanel typeOnlineFrom( String dateTime )
-    {
-        clearAndType( onlineFromInput, dateTime );
+    public ContentWizardPanel typeOnlineFrom(String dateTime) {
+        clearAndType(onlineFromInput, dateTime);
         return this;
     }
 
-    public ContentWizardPanel typeOnlineTo( String dateTime )
-    {
-        clearAndType( onlineToInput, dateTime );
+    public ContentWizardPanel typeOnlineTo(String dateTime) {
+        clearAndType(onlineToInput, dateTime);
         return this;
     }
 
-    public String getOnlineToValidationMessage()
-    {
-        return getDisplayedString( ONLINE_TO_INPUT_ERROR_MESSAGE );
+    public String getOnlineToValidationMessage() {
+        return getDisplayedString(ONLINE_TO_INPUT_ERROR_MESSAGE);
     }
 
-    public String getOnlineFromValidationMessage()
-    {
-        return getDisplayedString( ONLINE_FROM_INPUT_ERROR_MESSAGE );
+    public String getOnlineFromValidationMessage() {
+        return getDisplayedString(ONLINE_FROM_INPUT_ERROR_MESSAGE);
     }
 
     /**
@@ -884,20 +761,18 @@ public class ContentWizardPanel
      *
      * @return
      */
-    public List<ContentAclEntry> getAclEntries()
-    {
+    public List<ContentAclEntry> getAclEntries() {
         ContentAclEntry.Builder builder;
         List<ContentAclEntry> entries = new ArrayList<>();
         List<WebElement> principalViews =
-            findElements( By.xpath( DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'AccessControlEntryView')]" ) );
-        for ( WebElement el : principalViews )
-        {
-            String principalName = el.findElement( By.xpath( "." + P_NAME ) ).getText();
-            String suite = el.findElement( By.xpath( "." + "//div[contains(@id,'TabMenuButton')]//a[@class='label']" ) ).getText();
+                findElements(By.xpath(DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'AccessControlEntryView')]"));
+        for (WebElement el : principalViews) {
+            String principalName = el.findElement(By.xpath("." + P_NAME)).getText();
+            String suite = el.findElement(By.xpath("." + "//div[contains(@id,'TabMenuButton')]//a[@class='label']")).getText();
             builder = ContentAclEntry.builder();
-            builder.principalName( principalName );
-            builder.suite( PermissionSuite.getSuite( suite ) );
-            entries.add( builder.build() );
+            builder.principalName(principalName);
+            builder.suite(PermissionSuite.getSuite(suite));
+            entries.add(builder.build());
         }
         return entries;
     }
