@@ -92,6 +92,7 @@ class DetailsPanel_OwnerName_Spec
         when: "the folder was duplicated"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() ).clickToolbarDuplicate();
+
         and:"Duplicate button on the dialog has been pressed"
         DuplicateContentDialog dialog = new DuplicateContentDialog(getSession(  ));
         dialog.waitForOpened(  ).clickOnDuplicateButton(  ).waitForClosed(  );
