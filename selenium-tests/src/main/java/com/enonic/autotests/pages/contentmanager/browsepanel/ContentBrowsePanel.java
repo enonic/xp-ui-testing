@@ -17,6 +17,7 @@ import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.contentmanager.ContentMenuItem;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
+import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog;
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog;
@@ -861,6 +862,15 @@ public class ContentBrowsePanel
         return this;
     }
 
+    public ContentBrowsePanel doDuplicateContent( String contentName )
+    {
+        this.selectDuplicateFromContextMenu( contentName );
+        DuplicateContentDialog dialog = new DuplicateContentDialog(getSession());
+        dialog.waitForOpened();
+        dialog.clickOnDuplicateButton();
+        dialog.waitForClosed();
+        return this;
+    }
 
     public ContentBrowsePanel selectDuplicateFromContextMenu( String contentName )
     {
