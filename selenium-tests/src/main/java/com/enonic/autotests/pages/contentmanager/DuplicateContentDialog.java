@@ -32,13 +32,14 @@ public class DuplicateContentDialog
         super( session );
     }
 
-    public void waitForOpened()
+    public DuplicateContentDialog waitForOpened()
     {
         if ( !waitUntilVisibleNoException( By.xpath( CONTAINER ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_open_duplicate_dialog" );
             throw new TestFrameworkException( "'Duplicate' dialog was not opened!" );
         }
+        return this;
     }
 
     public boolean isOpened()

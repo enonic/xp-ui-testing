@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
@@ -91,6 +92,9 @@ class DetailsPanel_OwnerName_Spec
         when: "the folder was duplicated"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() ).clickToolbarDuplicate();
+        and:"Duplicate button on the dialog has been pressed"
+        DuplicateContentDialog dialog = new DuplicateContentDialog(getSession(  ));
+        dialog.waitForOpened(  ).clickOnDuplicateButton(  ).waitForClosed(  );
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
 
         then: "new folder should be listed in the grid"
