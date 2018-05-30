@@ -13,7 +13,7 @@ public class ImageInfoFormViewPanel
     extends FormViewPanel
 {
     private final String IMAGE_INFO_STEP_FORM =
-        "//div[contains(@id,'ContentWizardStepForm') and preceding-sibling::h2[text()='Image Info']]";
+        "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Image Info']]]";
 
     private final String SIZE_PIXELS_LONG_INPUT = IMAGE_INFO_STEP_FORM + "//input[contains(@name,'pixelSize')]";
 
