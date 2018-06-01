@@ -42,14 +42,14 @@ public class XpTourDialog
         return isElementDisplayed( DIALOG_CONTAINER );
     }
 
-    public boolean waitForDialogVisible( long timeout )
+    public XpTourDialog waitUntilDialogShown( long timeout )
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
         {
-            saveScreenshot( "xp_tour_not_visible" );
-            return false;
+            saveScreenshot( "err_xp_tour" );
+            throw new TestFrameworkException( "Xp Tour dialog was not shown!" );
         }
-        return true;
+        return this;
     }
 
     public void clickOnCancelButton()

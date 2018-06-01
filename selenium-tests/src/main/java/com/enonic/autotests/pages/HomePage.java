@@ -187,9 +187,7 @@ public class HomePage
         xpTourLink.click();
         sleep( 200 );
         XpTourDialog dialog = new XpTourDialog( getSession() );
-        if(!dialog.waitForDialogVisible( Application.EXPLICIT_NORMAL )){
-            throw new TestFrameworkException( "XP tour dialog should appear!" );
-        }
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
     }
 
