@@ -53,7 +53,7 @@ public class ContentBrowsePanel
 
     private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New...']]";
 
-    private final String SHOW_ISSUE_DIALOG_BUTTON = BROWSE_TOOLBAR_XPATH + "//button[contains(@id,'ShowIssuesDialogButton')]";
+    private final String SHOW_ISSUE_DIALOG_BUTTON = TREEGRID_TOOLBAR_XPATH + "//button[contains(@id,'ShowIssuesDialogButton')]";
 
     private final String DUPLICATE_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Duplicate...']]";
