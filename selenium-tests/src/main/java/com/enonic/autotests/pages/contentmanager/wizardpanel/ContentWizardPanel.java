@@ -701,6 +701,7 @@ public class ContentWizardPanel
 
     public String getStatus()
     {
+        this.waitUntilVisible( By.xpath( CONTENT_STATUS ) );
         return getDisplayedString( CONTENT_STATUS );
     }
 
