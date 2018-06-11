@@ -162,6 +162,11 @@ public class ContentBrowsePanel
         return WaitHelper.waitAttrHasNoValue( getDriver(), showIssuesButton, "class", "has-assigned-issues", Application.EXPLICIT_NORMAL );
     }
 
+    public String getTextInIssuesButton()
+    {
+        return getDisplayedString("//button[contains(@id,'ShowIssuesDialogButton')]//span" );
+    }
+
     /**
      * Keyboard shortcut to open the 'New content' dialog
      *

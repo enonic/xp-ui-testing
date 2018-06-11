@@ -127,10 +127,10 @@ class Issue_Close_Spec
 
         and: "correct notification message should be displayed"
         contentBrowsePanel.waitForNotificationMessage() == "The issue is Closed.";
+        saveScreenshot( "last_issue_closed" );
 
         and: "'Has Assigned issues' icon should not be displayed"
-        contentBrowsePanel.waitForAssignedIssuesIconNotVisible();
-        saveScreenshot( "issue_stopped_icon_hidden" );
+        contentBrowsePanel.getTextInIssuesButton()=="No open issues";
     }
 
     def "GIVEN existing issue is closed by the user AND SU is 'logged in' WHEN 'issue details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
