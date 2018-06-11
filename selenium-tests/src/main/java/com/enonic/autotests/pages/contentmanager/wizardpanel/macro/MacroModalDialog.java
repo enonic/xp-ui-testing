@@ -32,9 +32,9 @@ public class MacroModalDialog
 
     private final String TAB_BAR = DIALOG_CONTAINER + "//ul[contains(@id,'TabBar')]";
 
-    private final String CONFIG_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::a[@title='Configuration']]";
+    private final String CONFIG_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and @title='Configuration']";
 
-    private final String PREVIEW_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and child::a[@title='Preview']]";
+    private final String PREVIEW_TAB_BAR_ITEM = TAB_BAR + "//li[contains(@id,'TabBarItem') and @title='Preview']";
 
     private final String MACRO_SELECTED_DISPLAY_NAME = MACRO_SELECTED_VIEW + H6_DISPLAY_NAME;
 
