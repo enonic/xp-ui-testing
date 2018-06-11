@@ -51,7 +51,7 @@ public class ContentWizardPanel
 
     private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
-    private final String CONTENT_STATUS = "//span[@class='content-status']/span";
+    private final String CONTENT_STATUS = "//div[@class='content-status-wrapper']/span[contains(@class,'status')]";
 
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
         TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate...']]";
