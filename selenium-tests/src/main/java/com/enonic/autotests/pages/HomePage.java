@@ -89,7 +89,7 @@ public class HomePage
             throw new TestFrameworkException( "Error when 'Content Studio' link was clicked " + e.getMessage() );
         }
 
-        sleep( 1000 );
+        sleep( 700 );
         switchToContentBrowseTab();
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );

@@ -47,7 +47,7 @@ public class NavigatorHelper
     public static ContentBrowsePanel openContentStudioApp( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
-        closeXpTourDialogIfPresent( testSession );
+        //closeXpTourDialogIfPresent( testSession );
         if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
         {
             TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );

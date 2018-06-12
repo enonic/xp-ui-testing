@@ -357,6 +357,7 @@ public class ContentWizardPanel
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
+        sleep( 500 );
         switchToDefaultWindow();
         return this;
     }
