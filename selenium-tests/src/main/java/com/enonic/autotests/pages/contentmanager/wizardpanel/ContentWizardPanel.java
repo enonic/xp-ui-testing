@@ -345,7 +345,7 @@ public class ContentWizardPanel
     public ItemViewContextMenu showItemViewContextMenu()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        sleep( 1400 );
+        sleep( 1000 );
         clickOnPageView();
         sleep( 900 );
         ItemViewContextMenu menu = new ItemViewContextMenu( getSession() );
@@ -362,17 +362,10 @@ public class ContentWizardPanel
         return this;
     }
 
-    public ContentWizardPanel unlockPageEditor()
-    {
-        ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
-        itemViewContextMenu.clickOnCustomizeMenuItem();
-        return this;
-    }
-
     private void clickOnPageView()
     {
         switchToLiveEditFrame();
-        WebElement body = findElements( By.xpath( "//div[@data-portal-component-type='region']" ) ).get( 0 );
+        WebElement body = getDisplayedElement( By.xpath( "//body[@data-portal-component-type='page']" ) );
         Actions builder = new Actions( getDriver() );
         builder.click( body ).build().perform();
     }

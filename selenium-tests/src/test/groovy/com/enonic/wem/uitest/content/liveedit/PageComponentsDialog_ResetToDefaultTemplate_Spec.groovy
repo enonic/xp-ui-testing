@@ -70,7 +70,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         given: "site opened for edit  and site saved"
         filterPanel.typeSearchText( SITE.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
-        wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
+        wizard.unlockPageEditorAndSwitchToContentStudio();
+        saveScreenshot( "image-reset-to-template" );
+        wizard.showComponentView();
         saveScreenshot( "image-from-template" );
 
         and: "and an image has been removed"
