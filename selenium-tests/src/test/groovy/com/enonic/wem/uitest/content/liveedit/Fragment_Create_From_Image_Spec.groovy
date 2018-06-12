@@ -65,7 +65,7 @@ class Fragment_Create_From_Image_Spec
         wizard.isPreviewButtonEnabled();
     }
 
-    def "GIVEN existing site with the fragment is opened WHEN page component view opened THEN fragment with correct display name should be present"()
+    def "GIVEN existing site with a fragment is opened WHEN page component view opened THEN fragment with correct display name should be present"()
     {
         given: "existing site with the fragment is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -196,7 +196,7 @@ class Fragment_Create_From_Image_Spec
         fragments.size() == 0;
     }
 
-    def "GIVEN page component view is opened WHEN menu for 'main' region is opened AND fragment component has been inserted THEN the fragment should be present on the the page"()
+    def "GIVEN existing site without fragments WHEN fragment component has been inserted THEN the site should be automatically saved"()
     {
         given: "existing site with the fragment, that was removed, is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -211,9 +211,24 @@ class Fragment_Create_From_Image_Spec
 
         and: "existing fragment has been selected from the options"
         FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
-        LiveFormPanel liveFormPanel = fragmentComponentView.selectFragment( FRAGMENT_DISPLAY_NAME );
+        fragmentComponentView.selectFragment( FRAGMENT_DISPLAY_NAME );
+        wizard.switchToDefaultWindow();
 
-        then: "new added fragment should be present on the page"
+        then: "site should be automatically saved"
+        !wizard.isSaveButtonEnabled();
+    }
+
+    def "WHEN site with a fragment is opened THEN one fragment should be present on the the page"()
+    {
+        given: "existing site with the fragment"
+        findAndSelectContent( SITE.getName() );
+
+        when: "the site is opened"
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        wizard.switchToLiveEditFrame();
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+
+        then: "one fragment should be present on the the page"
         liveFormPanel.getNumberOfFragments() == 1;
     }
     //verifies Fragment Selector - Fragments are not shown in the dropdown #5371
@@ -239,7 +254,7 @@ class Fragment_Create_From_Image_Spec
         fragmentComponentView.clickOnOption( FRAGMENT_DISPLAY_NAME );
         saveScreenshot( "fragment_option_selected" )
 
-        then: "the fragment should be present on the page"
-        liveFormPanel.getNumberOfFragments() == 1;
+        then: "site should be automatically saved"
+        !wizard.isSaveButtonEnabled();
     }
 }
