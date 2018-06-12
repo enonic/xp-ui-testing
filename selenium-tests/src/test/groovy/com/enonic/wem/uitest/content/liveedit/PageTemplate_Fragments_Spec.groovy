@@ -92,8 +92,8 @@ class PageTemplate_Fragments_Spec
         FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
         fragmentComponentView.selectFragment( ELEPHANT_IMAGE_DISPLAY_NAME );
 
-        then: "new fragment should be added on the page-template"
-        liveFormPanel.getNumberOfFragments() == 1;
+        then: "template should be automatically saved"
+        !wizard.isSaveButtonEnabled(  );
     }
 
     def "GIVEN existing page template is opened WHEN image has been clicked on the PageComponentView and context menu opened THEN 'Create Fragment' menu item should not be present "()
@@ -109,7 +109,7 @@ class PageTemplate_Fragments_Spec
         and: "image has been selected in options"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( ELEPHANT_IMAGE_DISPLAY_NAME );
-        wizard.save();
+       // wizard.save();
 
         when: "the image has been clicked on the PageComponentView and context menu opened"
         wizard.switchToDefaultWindow().showComponentView();
