@@ -63,6 +63,7 @@ class ImageInfo_Wizard_Spec
 
         and: " image opened again"
         contentBrowsePanel.clickToolbarEdit();
+        wizard.clickOnWizardStep( "Image Info" );
 
         then: "correct description displayed on the page"
         imageInfoFormViewPanel.getDescription() == TEST_DESCRIPTION;
