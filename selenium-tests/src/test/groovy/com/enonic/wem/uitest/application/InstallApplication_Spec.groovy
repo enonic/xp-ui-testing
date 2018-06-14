@@ -81,7 +81,7 @@ class InstallApplication_Spec
         InstallAppDialog appDialog = new InstallAppDialog( getSession() );
         appDialog.waitUntilDialogLoaded();
         InstallAppDialog_MarketAppPanel marketPanel = new InstallAppDialog_MarketAppPanel( getSession() );
-        sleep( 1000 );
+        sleep( 2000 );
         saveScreenshot( "test_app_installed_in_dialog" );
 
         then: "install button should be disabled for application that was already installed"
