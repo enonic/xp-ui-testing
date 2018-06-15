@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -35,7 +36,7 @@ class Publish_InvalidContent_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing content without a displayName WHEN it content was selected and 'Publish' button on grid toolbar was pressed THEN 'Publish' button on the dialog should be disabled and warning message should be present on dialog"()
+    def "GIVEN existing content without a displayName WHEN the content has been selected  THEN 'Publish' button on toolbar should be disabled"()
     {
         given: "existing content without a displayName"
         filterPanel.typeSearchText( invalidFolder.getName() );
@@ -43,24 +44,9 @@ class Publish_InvalidContent_Spec
 
         when: "parent content selected and 'Publish' button pressed"
         contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL );
 
-        then: "warning message should be displayed"
-        contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
-
-        and: "'publish' button should be disabled"
-        !contentPublishDialog.isPublishButtonEnabled();
-
-        and: "dependency list should not be present"
-        !contentPublishDialog.isDependenciesListHeaderDisplayed();
-
-        and: "one item should be in the list"
-        List<String> itemList = contentPublishDialog.getNamesOfContentsToPublish();
-        itemList.size() == 1;
-
-        and: "correct name of content should be shown"
-        contentPublishDialog.getNamesOfContentsToPublish().get( 0 ) == invalidFolder.getPath().toString();
+        then: "'Publish' button on toolbar should be disabled"
+        !contentBrowsePanel.isPublishButtonEnabled(  );
     }
 
     def "GIVEN existing parent folder with not valid child WHEN parent content was selected and 'Publish' button clicked THEN 'Publish' button on the 'Content publish' dialog should be disabled"()
