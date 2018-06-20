@@ -32,7 +32,7 @@ class ContentPublishDelete_Spec
         then: "Online status should be displayed in the grid"
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
-        and:"correct notification message should be displayed"
+        and: "correct notification message should be displayed"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, content.getName() );
     }
 
@@ -48,7 +48,7 @@ class ContentPublishDelete_Spec
         then: "content is getting 'Pending delete'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
         and: "correct notification message should be shown"
-        message == String.format(Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE,content.getName()) ;
+        message == String.format( Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE, content.getName() );
     }
 
     def "GIVEN existing content with 'Deleted' status WHEN content is selected and 'Delete' button pressed THEN 'Undo deleted' button should be displayed"()
@@ -74,6 +74,6 @@ class ContentPublishDelete_Spec
         !contentBrowsePanel.exists( content.getName() );
 
         and: "correct notification message should be displayed"
-        message == Application.ONE_PENDING_ITEM_IS_DELETED;
+        message == String.format( Application.ONE_PENDING_ITEM_IS_DELETED, content.getName() );
     }
 }
