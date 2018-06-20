@@ -212,14 +212,14 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    @Ignore
+
     def "GIVEN city content changed and content is not 'Published' now WHEN site opened in 'master', through the portal THEN old data for city-content should be displayed"()
     {
         given: "city content was changed and content was not 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.save();//.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site was opened in the master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -228,14 +228,15 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "Population: " + SF_POPULATION );
     }
-    @Ignore
+    //@Ignore
     def "GIVEN city content was changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitForNotificationMessage();
-        wizard.closeBrowserTab().switchToBrowsePanelTab();
+        sleep( 1000 );
+        //wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site was opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -244,7 +245,7 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
-    @Ignore
+    //@Ignore
     def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all added components should be displayed"()
     {
         given: "existing country content is opened"
