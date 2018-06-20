@@ -10,6 +10,7 @@ import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -211,6 +212,7 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
+    @Ignore
     def "GIVEN city content changed and content is not 'Published' now WHEN site opened in 'master', through the portal THEN old data for city-content should be displayed"()
     {
         given: "city content was changed and content was not 'Published'"
@@ -226,7 +228,7 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "Population: " + SF_POPULATION );
     }
-
+    @Ignore
     def "GIVEN city content was changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
     {
         given: "city content changed and 'Published'"
@@ -242,7 +244,7 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
-
+    @Ignore
     def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all added components should be displayed"()
     {
         given: "existing country content is opened"
