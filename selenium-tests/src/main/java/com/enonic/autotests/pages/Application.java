@@ -34,9 +34,9 @@ public class Application
 
     public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" was marked for deletion.";
 
-    public static String ITEM_IS_UNDELETED = "The item is successfully undeleted";
+    public static String ITEM_IS_UNDELETED = "Item is undeleted";
 
-    public static String ITEMS_IS_UNDELETED = "The items are successfully undeleted";
+    public static String ITEMS_IS_UNDELETED = "Items are undeleted";
 
     public static String CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE = "Deleted %s items ( Marked for deletion: %s ).";
     public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE ="Published %s items ( Deleted: %s )";
