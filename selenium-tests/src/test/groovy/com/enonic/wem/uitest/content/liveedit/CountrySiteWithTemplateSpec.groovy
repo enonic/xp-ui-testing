@@ -236,7 +236,6 @@ class CountrySiteWithTemplateSpec
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitForNotificationMessage();
         sleep( 1000 );
-        //wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site was opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
