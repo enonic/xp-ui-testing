@@ -30,6 +30,8 @@ public abstract class BrowsePanel
 
     protected final String TREEGRID_TOOLBAR_XPATH = "//div[contains(@id,'TreeGridToolbar')]";
 
+    protected final String APP_BAR="//div[contains(@id,'AppBar')]";
+
     protected final String SELECTION_TOGGLER = TREEGRID_TOOLBAR_XPATH + "//button[contains(@id,'SelectionPanelToggler')]";
 
     protected final String NUMBER_IN_SELECTION_TOGGLER = SELECTION_TOGGLER + "/span";
