@@ -130,7 +130,7 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.clickOnImage(MAN_IMAGE_DISPLAY_NAME);
         and: "keyboard shortcut to 'Save' is pressed"
         wizard.pressSaveKeyboardShortcut();
-        String expectedMessage = String.format(Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getDisplayName());
+        String expectedMessage = String.format(Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getName());
 
         then: "correct notification message should appear"
         wizard.waitExpectedNotificationMessage(expectedMessage, Application.EXPLICIT_NORMAL);
