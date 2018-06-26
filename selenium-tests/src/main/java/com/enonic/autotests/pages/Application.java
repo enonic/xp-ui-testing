@@ -32,14 +32,15 @@ public class Application
 
     public static final String CONTENT_STUDIO_TAB_HANDLE = "content_studio_window_id_key";
 
-    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" was marked for deletion.";
+    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" is marked for deletion.";
 
     public static String ITEM_IS_UNDELETED = "Item is undeleted";
 
     public static String ITEMS_IS_UNDELETED = "Items are undeleted";
 
     public static String CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE = "Deleted %s items ( Marked for deletion: %s ).";
-    public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE ="Published %s items ( Deleted: %s )";
+
+    public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE = "%s items are published ( %s deleted ).";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
@@ -47,9 +48,9 @@ public class Application
 
     public static String GROUP_CREATED_MESSAGE = "Group was created";
 
-    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" was unpublished.";
+    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is unpublished.";
 
-    public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "Unpublished %s items";
+    public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";
 
     public static String ONE_PENDING_ITEM_IS_DELETED = "Item \"%s\" was deleted.";
 
@@ -63,9 +64,9 @@ public class Application
 
     public static String ISSUE_IS_CLOSED = "Issue \"%s\" is closed.";
 
-    public static String CONTENT_SAVED = "\"%s\" saved";
+    public static String CONTENT_SAVED = "Item \"%s\" is saved.";
 
-    public static String ITEM_WAS_DELETED = "Item \"%s\" was deleted.";
+    public static String ITEM_IS_DELETED = "Item \"%s\" is deleted.";
 
     public static final String FULL_ACCESS = "Full Access";
 
@@ -141,10 +142,9 @@ public class Application
 
     public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is published.";
 
-    public static String
-            ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP = "Item \"%s\" was published.";
+    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP = "Item \"%s\" was published.";
 
-    public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "Published %s items.";//"%s items are published.";
+    public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published.";
 
     public static final long PAGE_LOAD_TIMEOUT = 15l;
 

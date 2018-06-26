@@ -87,7 +87,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.isNewButtonEnabled();
 
         and:
-        String mess = String.format(Application.ITEM_WAS_DELETED, folder.getName());
+        String mess = String.format(Application.ITEM_IS_DELETED, folder.getName());
         contentBrowsePanel.waitExpectedNotificationMessage(mess, 1)
     }
 
