@@ -127,7 +127,7 @@ class ContentPublish_Child_Spec
         !contentBrowsePanel.exists(childContent2.getName());
 
         and:
-        message == "Deleted 3 items ( Marked for deletion: 2 ).";
+        message == "3 items are deleted ( 2 are marked for deletion ).";
     }
     //verifies the "XP-4628 Add correct notification messages, when a parent folder with children has been removed or published"  will be fixed
     def "GIVEN existing parent folder with one child and status of both contents are 'PENDING_DELETE' WHEN parent folder selected and 'Publish' button pressed THEN parent folder not listed"() {
@@ -139,6 +139,6 @@ class ContentPublish_Child_Spec
         !contentBrowsePanel.exists(parentContent.getName());
 
         and: "correct notification message is displayed"
-        message == "Published 2 items ( Deleted: 2 ).";
+        message == "2 items are published ( 2 deleted ).";
     }
 }
