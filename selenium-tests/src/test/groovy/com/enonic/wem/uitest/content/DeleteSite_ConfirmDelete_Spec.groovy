@@ -120,7 +120,7 @@ class DeleteSite_ConfirmDelete_Spec
         saveScreenshot("test_confirm_delete_site_online");
 
         then: "correct notification message should appears"
-        contentBrowsePanel.waitExpectedNotificationMessage("Item \"" + onlineSite.getName() + "\" was deleted.", 1)
+        contentBrowsePanel.waitExpectedNotificationMessage("Item \"" + onlineSite.getName() + "\" is deleted.", 1)
 
 
         and: "site successfully deleted"
