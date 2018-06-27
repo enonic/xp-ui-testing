@@ -87,6 +87,7 @@ class LiveEditLockedMode_Spec
         when: "site is opened"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
+        sleep( 2000 );
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
         then: "context menu for the page should appear"
@@ -98,6 +99,7 @@ class LiveEditLockedMode_Spec
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
+        sleep( 2000 );
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
         when: "the 'Customize' menu item was clicked"
