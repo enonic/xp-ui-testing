@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.liveedit
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
@@ -16,7 +17,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     extends BaseContentSpec
 {
     @Shared
-    String SITE_WITH_COMPONENTS_NAME = "page-component-reset";
+    String SITE_WITH_COMPONENTS_NAME = "site-component";
 
     @Shared
     String PAGE_CONTROLLER_NAME = "Country Region";
@@ -104,9 +105,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
 
         and: "correct notification message should be displayed"
-        message1 == "\"my-site\" saved.";
+        message1 == String.format( Application.CONTENT_SAVED,SITE.getName() );
         and: "correct notification message should be displayed"
-        message2 == "\"my-site\" saved.";
+        message2 == String.format( Application.CONTENT_SAVED,SITE.getName() );
 
     }
     //temporarily is ignored

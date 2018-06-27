@@ -62,10 +62,7 @@ class Fragment_Change_In_InspectionPanel_Spec
         FragmentInspectionPanel fragmentInspectionPanel = new FragmentInspectionPanel( getSession() );
         fragmentInspectionPanel.clickOnFragmentDropdownHandle();
 
-        then: "drop down list should be expanded"
-        fragmentInspectionPanel.isDropdownListExpanded();
-
-        and: "one option should be present in the list"
+        then: "one option should be present in the list"
         List<String> options = fragmentInspectionPanel.getDropdownOptions();
         options.size() == 1;
         and: "correct display name of fragment should be present"
