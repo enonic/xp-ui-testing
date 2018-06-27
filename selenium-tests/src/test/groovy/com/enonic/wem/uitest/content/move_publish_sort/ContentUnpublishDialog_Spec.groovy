@@ -123,7 +123,7 @@ class ContentUnpublishDialog_Spec
 
         when: "parent content was selected and 'Unpublish' menu item has been clicked"
         contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
-        boolean isMessageAppeared = contentBrowsePanel.waitExpectedNotificationMessage("Unpublished 2 items",
+        boolean isMessageAppeared = contentBrowsePanel.waitExpectedNotificationMessage("2 items are unpublished",
                 Application.EXPLICIT_NORMAL);
         contentBrowsePanel.expandContent(PARENT_CONTENT.getPath());
 

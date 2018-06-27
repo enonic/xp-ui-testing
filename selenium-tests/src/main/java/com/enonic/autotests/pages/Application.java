@@ -38,7 +38,7 @@ public class Application
 
     public static String ITEMS_IS_UNDELETED = "Items are undeleted";
 
-    public static String CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE = "Deleted %s items ( Marked for deletion: %s ).";
+    public static String CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE = "%s items are deleted ( %s are marked for deletion ).";
 
     public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE = "%s items are published ( %s deleted ).";
 
@@ -52,7 +52,7 @@ public class Application
 
     public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";
 
-    public static String ONE_PENDING_ITEM_IS_DELETED = "Item \"%s\" was deleted.";
+    public static String ONE_PENDING_ITEM_IS_DELETED = "Item \"%s\" is deleted.";
 
     public static String PENDING_ITEMS_ARE_DELETED = "%s items are deleted.";
 
