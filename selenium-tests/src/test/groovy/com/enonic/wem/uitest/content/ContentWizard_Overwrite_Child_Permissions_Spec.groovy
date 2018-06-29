@@ -173,7 +173,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         !confirm.isOpened();
     }
 
-    def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel' button pressed THEN Confirmation Dialog should appear"()
+    def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel' button pressed THEN Confirmation Dialog should not appear"()
     {
         given: "Content wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );

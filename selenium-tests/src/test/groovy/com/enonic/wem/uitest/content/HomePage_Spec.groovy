@@ -35,9 +35,6 @@ class HomePage_Spec
         then:
         homePage.isDashboardToolbarDisplayed();
 
-        //and: "'XP Tour' link present"
-        //homePage.isXP_Tour_Displayed();
-
         and: "'Docs' link present"
         homePage.isDocs_Displayed();
 

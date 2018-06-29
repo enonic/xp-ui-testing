@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
@@ -12,7 +13,7 @@ import spock.lang.Stepwise
  * Task: XP-4093 Create tests to verify that multiple content with same letter name, but different case is illegal name of new content.
  * */
 @Stepwise
-class Content_Upper_Lower_Case
+class Content_Upper_Lower_Case_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -38,7 +39,7 @@ class Content_Upper_Lower_Case
         wizard.save();
 
         then: "correct notification message appears"
-        String message = String.format( "\"%s\" saved", FOLDER_NAME_IN_LOWER_CASE );
+        String message = String.format( Application.CONTENT_SAVED, FOLDER_NAME_IN_LOWER_CASE );
         contentBrowsePanel.waitExpectedNotificationMessage( message, 2 );
     }
 

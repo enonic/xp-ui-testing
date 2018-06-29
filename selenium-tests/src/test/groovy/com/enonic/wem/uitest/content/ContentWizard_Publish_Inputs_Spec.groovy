@@ -117,6 +117,5 @@ class ContentWizard_Publish_Inputs_Spec
         wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_wizard_online_pending" )
     }
-    //TODO add tests for Online (Expired), when  https://youtrack.enonic.net/issue/INBOX-615 will be fixed
 
 }
