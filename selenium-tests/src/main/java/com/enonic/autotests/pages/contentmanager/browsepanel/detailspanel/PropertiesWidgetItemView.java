@@ -109,7 +109,5 @@ public class PropertiesWidgetItemView
     {
         return getDisplayedString( LANGUAGE_PROPERTY );
     }
-
-
 }
 

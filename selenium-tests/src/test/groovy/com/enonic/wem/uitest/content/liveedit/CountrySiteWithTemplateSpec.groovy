@@ -219,7 +219,8 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
-        wizard.save();//.closeBrowserTab().switchToBrowsePanelTab();
+        wizard.save();
+        sleep(1000);
 
         when: "site was opened in the master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
