@@ -129,7 +129,7 @@ class CountrySiteWithTemplateSpec
         then: "correct page controller should be displayed on the panel"
         name == PAGE_CONTROLLER_NAME;
     }
-
+    @Ignore
     def "GIVEN new USA-content has been added AND child city-content for USA was added  WHEN USA-content selected AND 'Preview' button is pressed THEN correct text should be present on the page-source "()
     {
         given: "new USA-content has been added"
@@ -164,7 +164,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
 
     }
-
+    @Ignore
     def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' should be present in the sources"()
     {
         given: "site not published and opened in the 'master'"
@@ -176,7 +176,7 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "404" );
     }
-
+    @Ignore
     def "WHEN site is not published yet AND site opened in 'draft', through the portal THEN correct data should be present in page sources"()
     {
         when: "site not published and opened in the 'master'"
@@ -191,7 +191,7 @@ class CountrySiteWithTemplateSpec
         and: "correct description shown"
         source.contains( USA_DESCRIPTION );
     }
-
+    @Ignore
     def "WHEN site has been published AND site opened through the portal THEN correct description and population should be present in page sources"()
     {
         given: "site has been 'published'"
