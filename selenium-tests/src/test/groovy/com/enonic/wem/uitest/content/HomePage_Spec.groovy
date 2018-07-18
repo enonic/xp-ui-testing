@@ -46,6 +46,8 @@ class HomePage_Spec
 
         and: "'About' link present"
         homePage.isAbout_Displayed();
+        and: "'XP Tour' link should not be present, because 'tourDisabled = true' is configured"
+        !homePage.isXP_Tour_Displayed();
     }
 
     @Ignore
