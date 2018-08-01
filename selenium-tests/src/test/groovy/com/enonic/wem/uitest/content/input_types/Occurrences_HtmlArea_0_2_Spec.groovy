@@ -7,6 +7,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -98,12 +99,12 @@ class Occurrences_HtmlArea_0_2_Spec
         when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
+        List<String> strings = formViewPanel.getDataFromCKEAreas();
 
         then: "correct values of strings are showed in both text areas"
-        strings.contains( DEFAULT_EXPECTED_TEXT1 );
+        strings.get( 0 ).contains( DEFAULT_EXPECTED_TEXT1 );
         and:
-        strings.contains( DEFAULT_EXPECTED_TEXT2 );
+        strings.get( 1 ).contains( DEFAULT_EXPECTED_TEXT2 );
     }
 
     private Content buildHtmlArea0_2_Content( long numberOfEditors, String... text )

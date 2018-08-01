@@ -183,7 +183,7 @@ public class SiteConfiguratorDialog
 
     public InsertLinkModalDialog clickOnHtmlAreaInsertLinkButton()
     {
-        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
+        WebElement textArea = getDisplayedElement( By.xpath( CKE_TEXT_AREA ) );
         buildActions().moveToElement( textArea ).click( textArea ).build().perform();
         textArea.sendKeys( "  " );
         if ( !isElementDisplayed( INSERT_LINK_BUTTON ) )
@@ -204,14 +204,14 @@ public class SiteConfiguratorDialog
 
     private void showToolbar()
     {
-        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
+        WebElement textArea = getDisplayedElement( By.xpath( CKE_TEXT_AREA ) );
         buildActions().moveToElement( textArea ).click( textArea ).build().perform();
         textArea.sendKeys( "  " );
     }
 
     public String getTextFromArea()
     {
-        WebElement frame = findElement( By.xpath( TEXT_AREA ) );
+        WebElement frame = findElement( By.xpath( CKE_TEXT_AREA ) );
         String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
         String contentStudioWHandle = getDriver().getWindowHandle();
         getDriver().switchTo().frame( frame );

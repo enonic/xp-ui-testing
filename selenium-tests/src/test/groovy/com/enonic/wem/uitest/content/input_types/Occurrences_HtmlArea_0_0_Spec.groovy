@@ -8,6 +8,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
@@ -51,7 +52,7 @@ class Occurrences_HtmlArea_0_0_Spec
         formViewPanel.isAddButtonPresent();
 
         and: "'Source Button button should be displayed"
-        formViewPanel.isSourceCodeButtonDisplayed();
+        !formViewPanel.isSourceCodeButtonDisplayed();
     }
 
     def "GIVEN wizard for htmlArea-content is opened WHEN 'Source Button' has been pressed THEN 'Code Dialog' should appear"()
@@ -62,6 +63,7 @@ class Occurrences_HtmlArea_0_0_Spec
 
         when: "'Source Button' has been pressed"
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
+        formViewPanel.showToolbar();
         SourceCodeDialog codeDialog = formViewPanel.clickOnSourceButton();
         saveScreenshot( "code_dialog_htmlarea" );
 
@@ -79,12 +81,12 @@ class Occurrences_HtmlArea_0_0_Spec
         when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> actual = formViewPanel.getInnerHtmlFromAreas();
+        List<String> actual = formViewPanel.getDataFromCKEAreas();
 
         then: "expected text should be present in the editor"
         actual.size() == 1;
         and:
-        actual.get( 0 ) == DEFAULT_EXPECTED_TEXT1;
+        actual.get( 0 ).trim() == DEFAULT_EXPECTED_TEXT1;
     }
 
     def "GIVEN wizard for HtmlArea(0:0) is opened WHEN button 'Add' was clicked 3 times THEN three text area should be present"()
@@ -112,12 +114,12 @@ class Occurrences_HtmlArea_0_0_Spec
         when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
+        List<String> strings = formViewPanel.getDataFromCKEAreas();
 
         then: "one empty area present"
         strings.size() == 1;
         and: "area should be empty"
-        strings.get( 0 ) == BaseHtmlAreaFormViewPanel.DEFAULT_EMPTY_TEXT_AREA_CONTENT;
+        strings.get( 0 ) == "";
     }
 
     def "GIVEN new HtmlArea content with two areas was added WHEN content is opened THEN two editors with correct strings should be present"()
@@ -131,7 +133,7 @@ class Occurrences_HtmlArea_0_0_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         saveScreenshot( "html_editor_2" );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
+        List<String> strings = formViewPanel.getDataFromCKEAreas();
 
         then: "two areas with correct text should be displayed"
         strings.size() == 2;
@@ -152,7 +154,7 @@ class Occurrences_HtmlArea_0_0_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContentContent );
         saveScreenshot( "area_3" );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
+        List<String> strings = formViewPanel.getDataFromCKEAreas();
 
         then: "three areas with correct text should be present"
         strings.size() == 3;

@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.form;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -38,27 +39,35 @@ public class HtmlArea0_0_FormViewPanel
             numberOfEditors = data.getLong( NUMBER_OF_EDITORS );
             addEditors( numberOfEditors );
         }
-        List<WebElement> frames = findElements( By.xpath( TINY_MCE ) );
-        if ( frames.size() == 0 )
+        typeInCKE(numberOfEditors,data);
+        sleep( 300 );
+        return this;
+    }
+
+    private void typeInCKE(long numberOfEditors, final PropertyTree data){
+        List<WebElement> editors = findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+        if ( editors.size() == 0 )
         {
             throw new TestFrameworkException( "no one text input was not found" );
         }
+        //Iterator<String> it = data.getStrings( STRINGS_PROPERTY ).iterator();
+        //editors.forEach( el->setTextInCKE(el.getAttribute( "id" ),it.next()) );
+        //sleep( 300 );
+
         int i = 0;
         for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )
         {
-            buildActions().click( frames.get( i ) ).build().perform();
+            //buildActions().click( frames.get( i ) ).build().perform();
             sleep( 500 );
-            setTextIntoArea( frames.get( i ).getAttribute( "id" ), sourceString );
+            setTextInCKE( editors.get( i ).getAttribute( "id" ), sourceString );
             sleep( 300 );
-            buildActions().click( frames.get( i ) ).build().perform();
+            buildActions().click( editors.get( i ) ).build().perform();
             i++;
             if ( i >= numberOfEditors )
             {
                 break;
             }
         }
-        sleep( 300 );
-        return this;
     }
 
     public void addEditors( long numberOfEditors )

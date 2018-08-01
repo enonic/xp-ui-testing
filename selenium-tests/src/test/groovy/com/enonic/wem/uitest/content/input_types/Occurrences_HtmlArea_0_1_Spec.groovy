@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertLinkModalDial
 import com.enonic.autotests.pages.form.BaseHtmlAreaFormViewPanel
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -43,10 +44,10 @@ class Occurrences_HtmlArea_0_1_Spec
 
         when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
-        String text = formViewPanel.getInnerHtml();
+        List<String> strings = formViewPanel.getDataFromCKEAreas();
 
         then: "expected link should be present in the editor"
-        text.contains( NORWEGIAN_TEXT );
+        strings.get( 0 ).contains( NORWEGIAN_TEXT );
     }
 
     def "WHEN wizard for HtmlArea(0:1) is opened THEN text area should be present"()
@@ -63,17 +64,17 @@ class Occurrences_HtmlArea_0_1_Spec
         !formViewPanel.isEditorToolbarVisible();
     }
 
-    def "GIVEN wizard for HtmlArea(0:1) is opened WHEN the editor in edit mode THEN HtmlArea-toolbar should be displayed"()
+    def "GIVEN wizard for HtmlArea(0:1) is opened WHEN mose click in the editor THEN HtmlArea-toolbar should appear"()
     {
         given: "start to add a content with type 'HtmlArea 0:1'"
-        Content tinyMceContent = buildHtmlArea0_1_Content( TEST_TEXT );
-        selectSitePressNew( tinyMceContent.getContentTypeName() );
+        Content htmlAreaContent = buildHtmlArea0_1_Content( TEST_TEXT );
+        selectSitePressNew( htmlAreaContent.getContentTypeName() );
 
-        when: "the editor in edit mode"
+        when: "mose click in the editor"
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        htmlAreaFormViewPanel.type( tinyMceContent.getData() );
+        htmlAreaFormViewPanel.showToolbar();
 
-        then: "HtmlArea-toolbar should be displayed"
+        then: "HtmlArea-toolbar should appear"
         htmlAreaFormViewPanel.isEditorToolbarVisible();
     }
 
@@ -88,10 +89,10 @@ class Occurrences_HtmlArea_0_1_Spec
         when: "content is opened again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        String text = htmlAreaFormViewPanel.getInnerHtml();
+        List<String> strings = htmlAreaFormViewPanel.getDataFromCKEAreas();
 
         then: "expected text should be present in the editor"
-        text == DEFAULT_EXPECTED_INNER_HTML;
+        strings.get( 0 ) == DEFAULT_EXPECTED_INNER_HTML;
     }
 
     def "GIVEN wizard for content with HtmlArea editor (0:1) is opened and html-area is empty WHEN content opened for edit THEN text area should be empty"()
@@ -104,10 +105,12 @@ class Occurrences_HtmlArea_0_1_Spec
 
         when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( htmlAreaContent );
+        sleep(500);
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
+        List<String> strings = htmlAreaFormViewPanel.getDataFromCKEAreas();
 
         then: "text area should be empty"
-        htmlAreaFormViewPanel.getInnerHtml() == BaseHtmlAreaFormViewPanel.DEFAULT_EMPTY_TEXT_AREA_CONTENT;
+        strings.get( 0 ) == "";
     }
     // verifies the XP-4698
     def "GIVEN 'Insert Link' modal dialog is opened WHEN the URL has been typed but the required 'text' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog"()
@@ -138,6 +141,7 @@ class Occurrences_HtmlArea_0_1_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         and: "InsertLinkModalDialog is opened"
         InsertLinkModalDialog insertLinkModalDialog = formViewPanel.showToolbarAndClickOnInsertLinkButton();
+        insertLinkModalDialog.waitForOpened(  );
 
         when: "'Escape' key has been clicked"
         insertLinkModalDialog.pressEscapeKey();

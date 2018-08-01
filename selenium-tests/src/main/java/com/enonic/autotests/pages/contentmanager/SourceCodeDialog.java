@@ -16,7 +16,7 @@ public class SourceCodeDialog
 {
     public static final String WINDOW_TITLE = "Source code";
 
-    private final String WINDOW = "//div[contains(@class,'mce-reset') and descendant::div[contains(.,'Source code')]]";
+    private final String WINDOW = "//div[contains(@id,'api.util.htmlarea.dialog.CodeDialog') and descendant::h2[contains(.,'Source code')]]";
 
     private final String TITLE_XPATH = WINDOW + "//div[contains(@class,'mce-title')]";
 

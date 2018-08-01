@@ -1,6 +1,9 @@
 package com.enonic.autotests.pages.form;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -24,11 +27,14 @@ public class HtmlArea0_1_FormViewPanel
         String text = data.getString( STRING_PROPERTY );
         if ( text != null )
         {
-            WebElement htmlArea = findElement( By.xpath( TINY_MCE ) );
+            //WebElement htmlArea = findElement( By.xpath( TINY_MCE ) );
+            WebElement htmlArea =
+                findElement( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
             buildActions().click( htmlArea ).build().perform();
             sleep( 500 );
-            setTextIntoArea( htmlArea.getAttribute( "id" ), text );
-            buildActions().click( htmlArea ).build().perform();
+            //setTextIntoArea( htmlArea.getAttribute( "id" ), text );
+            setTextInCKE( htmlArea.getAttribute( "id" ), text );
+            //buildActions().click( htmlArea ).build().perform();
             sleep( 1000 );
         }
         return this;
@@ -36,12 +42,7 @@ public class HtmlArea0_1_FormViewPanel
 
     public boolean isEditorToolbarVisible()
     {
-        return isElementDisplayed( "//div[contains(@id,'HtmlArea')]//div[contains(@class,'mce-toolbar')]" );
-    }
-
-    public boolean isEditorPresent()
-    {
-        return findElements( By.xpath( TINY_MCE ) ).size() > 0;
+        return isElementDisplayed( "//span[@class='cke_toolbar']" );
     }
 
     public boolean isOpened()
@@ -51,11 +52,13 @@ public class HtmlArea0_1_FormViewPanel
 
     public String getInnerHtml()
     {
-        return getInnerHtmlFromArea( findElement( By.xpath( TEXT_AREA ) ) );
+        return "";//getInnerHtmlFromArea( findElement( By.xpath( CKE_TEXT_AREA ) ) );
     }
 
     public String getInnerText()
     {
-        return getInnerTextFromArea( findElement( By.xpath( TEXT_AREA ) ) );
+        WebElement editor =
+            findElement( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+        return getCKEData( editor.getAttribute( "id" ) );
     }
 }

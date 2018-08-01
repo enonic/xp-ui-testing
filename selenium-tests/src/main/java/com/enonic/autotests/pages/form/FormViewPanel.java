@@ -27,13 +27,13 @@ public abstract class FormViewPanel
 
     public static String VALIDATION_MESSAGE_OCCURRENCE = "This field is required";
 
-    protected final String INNER_HTML_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
-
-    protected final String INNER_TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerText";
-
     protected final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
     protected final String SCRIPT_SET_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";
+
+    protected final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
+
+    protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
 
     public FormViewPanel( final TestSession session )
     {
@@ -58,11 +58,6 @@ public abstract class FormViewPanel
         sleep( 500 );
     }
 
-    protected String getInnerHtmlFromArea( WebElement htmlAreaFrame )
-    {
-        return executeScriptInHtmlArea( htmlAreaFrame, INNER_HTML_IN_AREA_SCRIPT );
-    }
-
     protected String executeScriptInHtmlArea( WebElement htmlAreaFrame, String script )
     {
         String wHandle = getDriver().getWindowHandle();
@@ -73,20 +68,27 @@ public abstract class FormViewPanel
         return text;
     }
 
-    protected String getInnerTextFromArea( WebElement htmlAreaFrame )
+    public List<String> getDataFromCKEAreas()
     {
-        return executeScriptInHtmlArea( htmlAreaFrame, INNER_TEXT_IN_AREA_SCRIPT );
+        List<WebElement> editors =
+            findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+        return editors.stream().map( e -> getCKEData( e.getAttribute( "id" ) ) ).collect( Collectors.toList() );
     }
 
-    public List<String> getInnerHtmlFromAreas()
-    {
-        List<WebElement> frames = findElements( By.xpath( TEXT_AREA ) );
-        return frames.stream().map( e -> getInnerHtmlFromArea( e ) ).collect( Collectors.toList() );
-    }
 
     protected void setTextIntoArea( String id, String text )
     {
         getJavaScriptExecutor().executeScript( SCRIPT_SET_INNERHTML, id, text );
+    }
+
+    protected void setTextInCKE( String id, String text )
+    {
+        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
+    }
+
+    protected String getCKEData( String id )
+    {
+        return ((String) getJavaScriptExecutor().executeScript( SCRIPT_DATA_CKE, id )).trim();
     }
 
     public boolean isValidationMessagePresent()

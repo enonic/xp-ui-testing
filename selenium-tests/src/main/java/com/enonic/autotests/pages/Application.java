@@ -89,7 +89,7 @@ public class Application
 
     protected final String TEXT_INPUT = "//input[contains(@id,'TextInput')]";
 
-    protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
+    protected final String CKE_TEXT_AREA = "//div[contains(@id,'cke_api.ui.text.TextArea')]";
 
     protected final String TEXT_AREA_INPUT = "//textarea[contains(@id,'TextArea')]";
 

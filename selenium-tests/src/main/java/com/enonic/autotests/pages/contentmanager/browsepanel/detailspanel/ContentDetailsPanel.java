@@ -17,7 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    private final String SPLIT_PANEL_WITH_DETAILS_PANEL = "//div[contains(@class,'split-panel-with-details')]";
+    private final String SPLIT_PANEL_WITH_DETAILS_PANEL = "//div[contains(@id,'DetailsSplitPanel')]";
 
     public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
 

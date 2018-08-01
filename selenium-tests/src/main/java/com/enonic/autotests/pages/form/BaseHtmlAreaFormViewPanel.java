@@ -20,17 +20,17 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BaseHtmlAreaFormViewPanel
     extends FormViewPanel
 {
-    private final String TOOLBAR_INSERT_LINK_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert/edit link']";
+    private final String TOOLBAR_INSERT_LINK_BUTTON = "//a[contains(@class,'cke_button') and contains(@title,'Link')]";
 
-    private final String TOOLBAR_INSERT_MACRO_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert macro']";
+    private final String TOOLBAR_INSERT_MACRO_BUTTON = "//a[contains(@class,'cke_button') and @title='Insert macro']";
 
-    private final String TOOLBAR_INSERT_IMAGE_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert/edit image']";
+    private final String TOOLBAR_INSERT_IMAGE_BUTTON = "//a[contains(@class,'cke_button') and contains(@title,'Image')]";
 
-    private final String TOOLBAR_INSERT_ANCHOR_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Anchor']";
+    private final String TOOLBAR_INSERT_ANCHOR_BUTTON = "//a[contains(@class,'cke_button') and @title='Anchor']";
 
-    private final String SOURCE_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Source code']";
+    private final String SOURCE_BUTTON = "//a[contains(@class,'cke_button__sourcedialog') and contains(@href,'Source')]";
 
-    public static final String DEFAULT_EMPTY_TEXT_AREA_CONTENT = "<p><br data-mce-bogus=\"1\"></p>";
+    //public static final String DEFAULT_EMPTY_TEXT_AREA_CONTENT = "<p><br data-mce-bogus=\"1\"></p>";
 
     public static final String NUMBER_OF_EDITORS = "number-of-editors";
 
@@ -40,7 +40,8 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[text()='Html Area']]";
 
-    protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
+    protected final String CKE = FORM_VIEW + "//div[contains(@id,'cke_api.ui.text.TextArea')]//div[contains(@class,'cke_contents')]";
+
 
     public BaseHtmlAreaFormViewPanel( final TestSession session )
     {
@@ -49,7 +50,7 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     public int getNumberOfAreas()
     {
-        return findElements( By.xpath( TINY_MCE ) ).size();
+        return findElements( By.xpath( CKE ) ).size();
     }
 
     public InsertLinkModalDialog showToolbarAndClickOnInsertLinkButton()
@@ -77,7 +78,6 @@ public abstract class BaseHtmlAreaFormViewPanel
         return insertAnchorModalDialog;
     }
 
-
     public MacroModalDialog showToolbarAndClickOnInsertMacroButton()
     {
         showToolbar();
@@ -85,17 +85,17 @@ public abstract class BaseHtmlAreaFormViewPanel
         return new MacroModalDialog( getSession() );
     }
 
-    private void showToolbar()
+    public void showToolbar()
     {
         Actions builder = new Actions( getDriver() );
-        if ( !waitUntilVisibleNoException( By.xpath( TEXT_AREA ), Application.EXPLICIT_NORMAL ) )
+        if ( !waitUntilVisibleNoException( By.xpath( CKE_TEXT_AREA ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_textarea" ) );
             throw new TestFrameworkException( "Html Area was not found!" );
         }
-        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
+        WebElement textArea = getDisplayedElement( By.xpath( CKE_TEXT_AREA ) );
         builder.moveToElement( textArea ).click( textArea ).build().perform();
-        textArea.sendKeys( " " );
+        sleep(500);
         if ( !isElementDisplayed( TOOLBAR_INSERT_LINK_BUTTON ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_html_toolbar" ) );

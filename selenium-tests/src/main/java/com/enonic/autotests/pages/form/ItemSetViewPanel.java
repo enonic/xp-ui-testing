@@ -35,7 +35,7 @@ public class ItemSetViewPanel
 
     private final String TEXT_LINE_INPUTS = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
 
-    protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
+    protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ;//"//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
 
     protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//button/span[text()='Add ItemSet']";
 
@@ -89,7 +89,6 @@ public class ItemSetViewPanel
         while ( it.hasNext() )
         {
             typeInHtmlArea( frames.get( i ), it.next() );
-
             i++;
         }
         return this;
@@ -98,7 +97,9 @@ public class ItemSetViewPanel
     public List<String> getInnerTextFromHtmlAreas()
     {
         List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
-        return frames.stream().map( e -> getInnerTextFromArea( e ) ).collect( Collectors.toList() );
+        //List<WebElement> editors =
+           // findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+        return frames.stream().map( e -> getCKEData( e.getAttribute( "id" ) ) ).collect( Collectors.toList() );
     }
 
     public ItemSetViewPanel typeTextInTextLines( final Iterable<String> stringsForTextLines )
