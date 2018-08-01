@@ -21,6 +21,10 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
+    protected final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
+
+    protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
+
     public static final String NO_SELECTION_MESSAGE = "You are wasting this space - select something!";
 
     public static final String SWITCHING_TEMPLATE_MESSAGE =

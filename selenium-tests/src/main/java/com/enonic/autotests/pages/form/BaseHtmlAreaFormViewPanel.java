@@ -30,8 +30,6 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     private final String SOURCE_BUTTON = "//a[contains(@class,'cke_button__sourcedialog') and contains(@href,'Source')]";
 
-    //public static final String DEFAULT_EMPTY_TEXT_AREA_CONTENT = "<p><br data-mce-bogus=\"1\"></p>";
-
     public static final String NUMBER_OF_EDITORS = "number-of-editors";
 
     public static String STRING_PROPERTY = "string";

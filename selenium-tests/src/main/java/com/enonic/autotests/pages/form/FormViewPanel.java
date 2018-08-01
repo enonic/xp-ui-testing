@@ -31,10 +31,6 @@ public abstract class FormViewPanel
 
     protected final String SCRIPT_SET_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";
 
-    protected final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
-
-    protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
-
     public FormViewPanel( final TestSession session )
     {
         super( session );

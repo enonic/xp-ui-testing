@@ -22,7 +22,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class LiveFormPanel
     extends Application
 {
-    private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).innerHTML=arguments[1];";
 
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'LayoutComponentView')]";
 
@@ -31,7 +30,6 @@ public class LiveFormPanel
     public final String SHADER_PAGE = "//div[@class='xp-page-editor-shader xp-page-editor-page']";
 
     public static final String LIVE_FORM_PANEL = "//div[contains(@id,'LiveFormPanel')]";
-
 
     private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'ImageComponentView')]";
 
@@ -43,8 +41,6 @@ public class LiveFormPanel
 
 
     private LayoutComponentView layoutComponentView;
-
-    private MceToolbar mceToolbar;
 
     public LiveFormPanel( final TestSession session )
     {
@@ -60,15 +56,6 @@ public class LiveFormPanel
         return layoutComponentView;
     }
 
-    public MceToolbar getMceToolbar()
-    {
-        if ( mceToolbar == null )
-        {
-            mceToolbar = new MceToolbar( getSession() );
-        }
-        return mceToolbar;
-    }
-
     public void setLayoutComponentView( LayoutComponentView layoutComponentView )
     {
         this.layoutComponentView = layoutComponentView;
@@ -82,9 +69,9 @@ public class LiveFormPanel
 
     public LiveFormPanel typeTextInTextComponent( String text )
     {
-        String input = TEXT_COMPONENT_VIEW + "//div[@class='tiny-mce-here mce-content-body mce-edit-focus']";
+        String input = "//div[contains(@id,'TextComponentView') and contains(@title,'Rich Text Editor')]";
         String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
-        setTextIntoArea( id, text );
+        setTextInCke( id, text );
         sleep( 500 );
         return this;
     }
@@ -99,9 +86,9 @@ public class LiveFormPanel
         return contextMenu;
     }
 
-    private void setTextIntoArea( String id, String text )
+    private void setTextInCke( String id, String text )
     {
-        getJavaScriptExecutor().executeScript( SET_TINY_MCE_INNERHTML, id, text );
+        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
     }
 
     /**

@@ -12,71 +12,73 @@ import com.enonic.autotests.pages.contentmanager.SourceCodeDialog;
  * MCE toolbar on the LiveFormPanel
  * Created on 19.10.2016.
  */
-public class MceToolbar
+public class CkeToolbar
     extends Application
 {
-    private final String MCE_TOOLBAR_CONTAINER = "//div[contains(@class,'mce-toolbar-container')]";
+    private final String TOOLBAR_CONTAINER = "//div[contains(@class,'mce-toolbar-container')]";
+    private final String SOURCE_CODE_BUTTON= "//a[contains(@class,'cke_button__sourcedialog') and contains(@href,'Source')]";
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/span[text()='Formats']")
+    @FindBy(xpath = "//button/span[text()='Formats']")
     private WebElement formatsButtonMenu;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'alignleft')]")
+    @FindBy(xpath = "//button/i[contains(@class,'alignleft')]")
     private WebElement alignLeftButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'aligncenter')]")
+    @FindBy(xpath = "//button/i[contains(@class,'aligncenter')]")
     private WebElement alignCenterButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'alignright')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'alignright')]")
     private WebElement alignRightButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'alignjustify')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'alignjustify')]")
     private WebElement alignJustifyButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'bullist')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'bullist')]")
     private WebElement bulListButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'numlist')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'numlist')]")
     private WebElement numListButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'outdent')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'outdent')]")
     private WebElement outdentButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'indent')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'indent')]")
     private WebElement indentButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'charmap')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'charmap')]")
     private WebElement specialCharacterButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'anchor')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'anchor')]")
     private WebElement anchorButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'image')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'image')]")
     private WebElement insertImageButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'media')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'media')]")
     private WebElement insertMacroButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'link')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'link')]")
     private WebElement insertLinkButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'unlink')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'unlink')]")
     private WebElement removeLinkButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'table')]")
+    @FindBy(xpath = TOOLBAR_CONTAINER + "//button/i[contains(@class,'table')]")
     private WebElement insertTableButton;
 
-    @FindBy(xpath = MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'code')]")
+    @FindBy(xpath = SOURCE_CODE_BUTTON)
+    //fullScreen: `//a[contains(@class,'cke_button__fullscreen_)  and contains(@href,'Fullscreen')]\``,)
     private WebElement sourceCodeButton;
 
 
-    public MceToolbar( final TestSession session )
+    public CkeToolbar( final TestSession session )
     {
         super( session );
     }
 
     public boolean isDisplayed()
     {
-        return isElementDisplayed( MCE_TOOLBAR_CONTAINER );
+        return isElementDisplayed( "//a[contains(@class,'cke_button')]" );
     }
 
     public boolean isFormatsMenuDisplayed()
@@ -161,7 +163,7 @@ public class MceToolbar
 
     public boolean isSourceCodeButtonDisplayed()
     {
-        return isElementDisplayed( MCE_TOOLBAR_CONTAINER + "//button/i[contains(@class,'code')]" );
+        return isElementDisplayed( SOURCE_CODE_BUTTON );
     }
 
     public SourceCodeDialog clickOnSourceCodeButton()
