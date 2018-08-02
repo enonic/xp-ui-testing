@@ -135,7 +135,7 @@ class MoveContentDialogSpec
 
         when: "the 'Esc' key pressed"
         dialog.closeByClickingOnEsc();
-        saveScreenshot( "test_move_dialog_esc_after" );
+        saveScreenshot( "move_dialog_escaped" );
 
         then: "dialog should be closed"
         !dialog.isOpened()

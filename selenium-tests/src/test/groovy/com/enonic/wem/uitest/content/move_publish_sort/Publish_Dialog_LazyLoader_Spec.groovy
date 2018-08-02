@@ -16,18 +16,19 @@ class Publish_Dialog_LazyLoader_Spec
 {
     def "GIVEN existing folder with children WHEN the folder selected AND 'Publish Tree' menu item is selected AND 'Include child items' is unchecked AND dialog closed WHEN Publish Tree menu item clicked again THEN children are loaded on the modal dialog"()
     {
-
         given: "existing folder with children is selected and 'Publish Tree' menu item was clicked"
         ContentPublishDialog contentPublishDialog = findAndSelectContent( IMPORTED_FOLDER_NAME ).selectPublishTreeMenuItem();
+        contentPublishDialog.clickOnShowDependentItemsLink();
         def numberOfChild = contentPublishDialog.getDependantList().size();
 
         when: "'Include child items' is unchecked and ContentPublishDialog has been closed"
         contentPublishDialog.includeChildren( false ).clickOnCancelTopButton();
 
-        and: "Publish Tree menu item clicked again"
+        and: "Publish Tree menu item has been clicked  and the dialog is opened again"
         contentBrowsePanel.selectPublishTreeMenuItem();
+        contentPublishDialog.clickOnShowDependentItemsLink();
 
-        then: "children are loaded on the modal dialog"
+        then: "children should be loaded on the modal dialog"
         contentPublishDialog.getDependantList().size() == numberOfChild;
     }
 }
