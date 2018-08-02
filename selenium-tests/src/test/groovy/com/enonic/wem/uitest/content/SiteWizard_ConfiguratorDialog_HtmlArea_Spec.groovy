@@ -103,7 +103,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         saveScreenshot( "conf-dialog-with-url" );
 
         then: "correct text should be present in the HtmlArea"
-        configurationDialog.getTextFromArea().contains( URL );
+        configurationDialog.getTextFromCKE().contains( URL );
     }
 
     def "GIVEN existing site is opened WHEN preview button was pressed THEN correct links should be present in page-source"()
@@ -146,7 +146,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         saveScreenshot( "conf-dialog-with-content" );
 
         then: "correct text should be present in HtmlArea"
-        configurationDialog.getTextFromArea().contains( CONTENT_TEXT );
+        configurationDialog.getTextFromCKE().contains( CONTENT_TEXT );
     }
 
     def "GIVEN site configurator dialog opened WHEN Download-resource selected, and changes applied THEN correct text should be present in HtmlArea"()
@@ -171,7 +171,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
         then: "correct text present should be displayed in the HtmlArea"
-        configurationDialog.getTextFromArea().contains( DOWNLOAD_TEXT );
+        configurationDialog.getTextFromCKE().contains( DOWNLOAD_TEXT );
     }
 
     def "GIVEN site configurator dialog is opened WHEN Email-link inserted, and changes applied THEN correct text should be present in HtmlArea"()
@@ -195,7 +195,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         saveScreenshot( "conf-dialog-email-inserted" );
 
         then: "correct text should be present in HtmlArea"
-        configurationDialog.getTextFromArea().contains( EMAIL_TEXT );
+        configurationDialog.getTextFromCKE().contains( EMAIL_TEXT );
     }
 
     def "GIVEN site configurator dialog is opened WHEN Image for the background was selected and changes applied THEN correct image file should be present in a page-source"()
