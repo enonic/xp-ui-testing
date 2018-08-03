@@ -48,6 +48,7 @@ public class DuplicateContentDialog
     }
 
     public DuplicateContentDialog clickOnDuplicateButton(){
+        waitUntilElementEnabledNoException( By.xpath( BUTTON_DUPLICATE ) ,Application.EXPLICIT_NORMAL);
         duplicateButton.click();
         return this;
     }

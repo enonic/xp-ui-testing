@@ -24,8 +24,8 @@ class UserStore_Permissions_Spec
         List<UserStoreAclEntry> entries = userStoreWizardPanel.getPermissions();
         saveScreenshot( "test_user_store_default_permission" );
 
-        then: "two readonly permissions are displayed"
-        entries.size() == 2;
+        then: "three permissions should be present"
+        entries.size() == 3;
 
         and:
         entries.get( 0 ).getPrincipalDisplayName() == RoleDisplayName.SYSTEM_AUTHENTICATED.getValue();
