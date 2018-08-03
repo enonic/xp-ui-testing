@@ -268,4 +268,8 @@ public class Application
         buildActions().sendKeys( Keys.ESCAPE ).build().perform();
         sleep( 500 );
     }
+    public void setTextInCKE( String id, String text )
+    {
+        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
+    }
 }

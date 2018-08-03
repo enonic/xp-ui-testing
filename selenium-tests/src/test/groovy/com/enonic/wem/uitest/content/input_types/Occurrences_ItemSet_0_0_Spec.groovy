@@ -40,7 +40,7 @@ class Occurrences_ItemSet_0_0_Spec
     Content ITEM_SET_WITH_DATA;
 
     @Shared
-    String TEST_TEXT_HTML_AREA = "text for htmlArea 1"
+    String TEST_TEXT_HTML_AREA = "<p>text for htmlArea 1</p>"
 
     @Shared
     String NEW_TEXT_HTML_AREA = "new text for htmlArea 1"
@@ -244,7 +244,7 @@ class Occurrences_ItemSet_0_0_Spec
 
     private Content buildItemSetWithOneTextLineAndHtmlArea()
     {
-        TestItemSet itemSet1 = buildItemSetValues( TEST_TEXT_TEXT_LINE, TEST_TEXT_HTML_AREA );
+        TestItemSet itemSet1 = buildItemSetValues( TEST_TEXT_TEXT_LINE, "text for htmlArea 1" );
         List<TestItemSet> items = new ArrayList<>();
         items.add( itemSet1 );
         PropertyTree data = build_ItemSet_Data( items );

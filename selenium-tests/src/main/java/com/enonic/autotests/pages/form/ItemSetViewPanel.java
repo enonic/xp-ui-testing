@@ -35,7 +35,7 @@ public class ItemSetViewPanel
 
     private final String TEXT_LINE_INPUTS = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
 
-    protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ;//"//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
+    protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//textarea[contains(@id,'api.ui.text.TextArea')]";
 
     protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//button/span[text()='Add ItemSet']";
 
@@ -88,7 +88,7 @@ public class ItemSetViewPanel
         int i = 0;
         while ( it.hasNext() )
         {
-            typeInHtmlArea( frames.get( i ), it.next() );
+            typeTextInHtmlArea( frames.get( i ), it.next() );
             i++;
         }
         return this;
@@ -98,7 +98,7 @@ public class ItemSetViewPanel
     {
         List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
         //List<WebElement> editors =
-           // findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+        // findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
         return frames.stream().map( e -> getCKEData( e.getAttribute( "id" ) ) ).collect( Collectors.toList() );
     }
 
@@ -152,25 +152,24 @@ public class ItemSetViewPanel
     /**
      * Types a string  the first htmlArea.
      */
-    public ItemSetViewPanel typeTextInHtmlArea( String text )
+    protected ItemSetViewPanel typeTextInHtmlArea( WebElement areaElement, String text )
+    {
+        setTextInCKE( areaElement.getAttribute( "id" ), text );
+        return this;
+    }
+
+    protected ItemSetViewPanel typeTextInHtmlArea( String text )
     {
         List<WebElement> frames = findElements( By.xpath( HTML_AREA_INPUTS ) );
         if ( frames.size() == 0 )
         {
             throw new TestFrameworkException( "Html areas were not found on the page" );
         }
-        typeInHtmlArea( frames.get( 0 ), text );
+        setTextInCKE( frames.get( 0 ).getAttribute( "id" ), text );
         return this;
     }
 
-    private void typeInHtmlArea( WebElement areaElement, String text )
-    {
-        Actions builder = buildActions();
-        builder.click( areaElement ).build().perform();
-        setTextIntoArea( areaElement.getAttribute( "id" ), text );
-        sleep( 300 );
-        builder.click( areaElement ).build().perform();
-    }
+//
 
     public long getNumberOfSets()
     {

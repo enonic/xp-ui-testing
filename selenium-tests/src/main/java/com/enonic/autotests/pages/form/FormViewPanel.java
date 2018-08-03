@@ -77,10 +77,6 @@ public abstract class FormViewPanel
         getJavaScriptExecutor().executeScript( SCRIPT_SET_INNERHTML, id, text );
     }
 
-    protected void setTextInCKE( String id, String text )
-    {
-        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
-    }
 
     protected String getCKEData( String id )
     {
