@@ -37,9 +37,9 @@ class MacroModalDialog_EmbedIFrame_Spec
         saveScreenshot( "test_embedded_iframe_macro_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
-        formViewPanel.getInnerHtml().contains( "[embed]" );
+        formViewPanel.getTextInCKE().contains( "[embed]" );
         and:
-        formViewPanel.getInnerHtml().contains( "http://www.enonic.com" );
+        formViewPanel.getTextInCKE().contains( "http://www.enonic.com" );
     }
 
 

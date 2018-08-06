@@ -50,15 +50,11 @@ public class HtmlArea0_1_FormViewPanel
         return waitUntilVisibleNoException( By.xpath( STEP_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
-    public String getInnerHtml()
-    {
-        return "";//getInnerHtmlFromArea( findElement( By.xpath( CKE_TEXT_AREA ) ) );
-    }
 
-    public String getInnerText()
+    public String getTextInCKE()
     {
         WebElement editor =
-            findElement( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+            findElement( By.xpath( "//div[contains(@id,'api.form.FormView')]"+TEXT_AREA_INPUT ) );
         return getCKEData( editor.getAttribute( "id" ) );
     }
 }

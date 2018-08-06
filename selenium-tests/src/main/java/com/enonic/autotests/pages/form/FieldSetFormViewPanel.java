@@ -22,7 +22,7 @@ public class FieldSetFormViewPanel
 
     private final String HTML_AREA = FORM_VIEW + "//div[contains(@id,'TextLine')]";
 
-    protected final String CKE_HTML_AREA = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]" + CKE_TEXT_AREA;
+    protected final String CKE_HTML_AREA = FORM_VIEW + "//div[contains(@id,'HtmlArea')]" + CKE_TEXT_AREA;
 
     @FindBy(xpath = TEXT_LINE)
     private WebElement textLineInput;

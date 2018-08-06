@@ -71,9 +71,9 @@ class ItemSet_Swap_Values_Spec
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         then: "correct data is displayed on both sets"
-        itemSetViewPanel.getInnerTextFromHtmlAreas().contains( HTML_AREA_TEXT1 )
+        itemSetViewPanel.getInnerTextFromHtmlAreas().contains( "<p>"+HTML_AREA_TEXT1 +"</p>")
         and:
-        itemSetViewPanel.getInnerTextFromHtmlAreas().contains( HTML_AREA_TEXT2 );
+        itemSetViewPanel.getInnerTextFromHtmlAreas().contains("<p>"+ HTML_AREA_TEXT2 +"</p>");
         and:
         itemSetViewPanel.getTextFromTextLines().contains( TEXT_LINE_TEXT1 );
         and:
