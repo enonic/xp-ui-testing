@@ -89,6 +89,7 @@ class ItemSet_Swap_Values_Spec
 
         when: "sets have been swapped"
         itemSetViewPanel.doSwapItems();
+        saveScreenshot( "item_set_area_swapped" );
 
         then: "texts displayed in correct order"
         itemSetViewPanel.getTextFromTextLines().get( 1 ) == TEXT_LINE_TEXT1;
