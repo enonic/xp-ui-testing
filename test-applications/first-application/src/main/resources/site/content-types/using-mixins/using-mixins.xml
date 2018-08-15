@@ -2,6 +2,7 @@
 <content-type>
   <display-name>Using Mixins</display-name>
   <super-type>base:structured</super-type>
+  <x-data name="address"/>
   <form>
     <item-set name="addresses">
       <label>Addresses</label>
@@ -11,8 +12,8 @@
           <occurrences minimum="0" maximum="1"/>
           <help-text>Give this address a label</help-text>
         </input>
-        <inline mixin="com.enonic.xp.ui_testing.first_app:address"/>
-        <inline mixin="com.enonic.xp.ui_testing.first_app:norwegian-county"/>
+        <mixin name="com.enonic.xp.ui_testing.first_app:address"/>
+        <mixin name="com.enonic.xp.ui_testing.first_app:norwegian-county"/>
       </items>
       <occurrences minimum="0" maximum="0"/>
     </item-set>
