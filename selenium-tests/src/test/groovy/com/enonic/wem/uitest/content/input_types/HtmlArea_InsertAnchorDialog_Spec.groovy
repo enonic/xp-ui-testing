@@ -80,7 +80,7 @@ class HtmlArea_InsertAnchorDialog_Spec
         InsertAnchorModalDialog insertAnchorModalDialog = formViewPanel.showToolbarAndClickOnInsertAnchorButton();
 
         when: "'Escape' key has been clicked"
-        insertAnchorModalDialog.typeText( "test anchor" );
+        insertAnchorModalDialog.typeText( "test_anchor" );
         saveScreenshot( "anchor_text_typed" );
         and: "'Insert' button has been pressed"
         insertAnchorModalDialog.clickOnInsertButton();

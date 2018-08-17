@@ -17,7 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    private final String SPLIT_PANEL_WITH_DETAILS_PANEL = "//div[contains(@id,'DetailsSplitPanel')]";
+    private final String SPLIT_PANEL_WITH_DETAILS_PANEL = "//div[contains(@id,'DockedDetailsPanel')]";
 
     public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
 
@@ -170,10 +170,11 @@ public class ContentDetailsPanel
      */
     public boolean isDisplayed()
     {
-        WebElement splitPanel = getDisplayedElement( By.xpath( SPLIT_PANEL_WITH_DETAILS_PANEL ) );
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        return !(Boolean) executor.executeScript(
-            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).isSecondPanelHidden()", splitPanel.getAttribute( "id" ) );
+//        WebElement splitPanel = getDisplayedElement( By.xpath( SPLIT_PANEL_WITH_DETAILS_PANEL ) );
+//        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+//        return !(Boolean) executor.executeScript(
+//            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).isSecondPanelHidden()", splitPanel.getAttribute( "id" ) );
+        return isElementDisplayed( SPLIT_PANEL_WITH_DETAILS_PANEL );
     }
 
     public String getContentDisplayName()
