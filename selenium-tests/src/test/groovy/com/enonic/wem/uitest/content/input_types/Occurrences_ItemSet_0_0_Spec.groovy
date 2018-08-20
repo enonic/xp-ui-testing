@@ -220,8 +220,8 @@ class Occurrences_ItemSet_0_0_Spec
 
         and: "navigated to the browse panel"
         wizard.switchToBrowsePanelTab();
-        //and: "details panel is opened"
-        //contentBrowsePanel.clickOnDetailsToggleButton();
+        and: "details panel is opened"
+        contentBrowsePanel.openContentDetailsPanel();
 
         when: "when the version with empty required fields has been restored"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
