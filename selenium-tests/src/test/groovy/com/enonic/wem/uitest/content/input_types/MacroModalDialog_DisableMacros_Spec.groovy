@@ -40,8 +40,8 @@ class MacroModalDialog_DisableMacros_Spec
         wizard.save();
         saveScreenshot( "test_disable_macros_inserted" );
 
-        then: "correct macro is displayed in the htmlarea"
-        htmlAreaFormViewPanel.getInnerText().contains( DISABLE_MACROS_RESULT );
+        then: "correct text should be displayed in the htmlarea"
+        htmlAreaFormViewPanel.getTextInCKE().contains( DISABLE_MACROS_RESULT );
     }
 
     def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()

@@ -67,7 +67,7 @@ public class ItemSetViewPanel
         WebElement sourceElement = findElements( By.xpath( DRAG_HANDLER ) ).get( 1 );
 
         Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( sourceElement ).moveByOffset( 0, -50 ).release().perform();
+        builder.clickAndHold( sourceElement ).moveByOffset( 0, -60 ).release().perform();
         sleep( 1000 );
     }
 
@@ -155,6 +155,7 @@ public class ItemSetViewPanel
     protected ItemSetViewPanel typeTextInHtmlArea( WebElement areaElement, String text )
     {
         setTextInCKE( areaElement.getAttribute( "id" ), text );
+        sleep(500);
         return this;
     }
 
@@ -166,6 +167,7 @@ public class ItemSetViewPanel
             throw new TestFrameworkException( "Html areas were not found on the page" );
         }
         setTextInCKE( frames.get( 0 ).getAttribute( "id" ), text );
+        sleep(500);
         return this;
     }
 

@@ -205,6 +205,7 @@ class Occurrences_ItemSet_0_0_Spec
 
         when: "text in the htmlArea has been changed"
         itemSetViewPanel.typeTextInHtmlArea( NEW_TEXT_HTML_AREA );
+        sleep( 700 );
         wizard.save().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "'modified' status should be displayed"
@@ -219,8 +220,8 @@ class Occurrences_ItemSet_0_0_Spec
 
         and: "navigated to the browse panel"
         wizard.switchToBrowsePanelTab();
-        and: "details panel is opened"
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        //and: "details panel is opened"
+        //contentBrowsePanel.clickOnDetailsToggleButton();
 
         when: "when the version with empty required fields has been restored"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();

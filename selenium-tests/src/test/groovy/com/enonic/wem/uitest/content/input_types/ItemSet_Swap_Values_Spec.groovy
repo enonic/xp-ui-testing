@@ -47,7 +47,7 @@ class ItemSet_Swap_Values_Spec
         itemSetViewPanel.clickOnAddButton();
         itemSetViewPanel.clickOnAddButton();
 
-        and: "data typed"
+        and: "data has been typed"
         wizard.typeData( ITEM_SET_WITH_DATA );
 
         and: "Save button pressed"
@@ -86,12 +86,13 @@ class ItemSet_Swap_Values_Spec
         given: "existing itemSet content is opened"
         findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
+        sleep(3000);
 
-        when: "sets have been swapped"
+        when: "2 sets have been swapped"
         itemSetViewPanel.doSwapItems();
         saveScreenshot( "item_set_area_swapped" );
 
-        then: "texts displayed in correct order"
+        then: "texts should be displayed correct order"
         itemSetViewPanel.getTextFromTextLines().get( 1 ) == TEXT_LINE_TEXT1;
 
         and: ""
