@@ -436,7 +436,7 @@ class BaseContentSpec
 
     protected DependenciesWidgetItemView openDependenciesWidgetView()
     {
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         DependenciesWidgetItemView dependenciesWidget = contentDetailsPanel.openDependenciesWidget();
         return dependenciesWidget;

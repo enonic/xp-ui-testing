@@ -13,8 +13,6 @@ import spock.lang.Shared
 
 /**
  *
- * TASKS:
- * xp-ui-testing#21 Up-to-date tests for SourceCode dialog
  * */
 class Occurrences_HtmlArea_0_0_Spec
     extends Base_InputFields_Occurrences
