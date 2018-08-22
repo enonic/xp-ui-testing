@@ -105,13 +105,11 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
 
         and: "correct notification message should be displayed"
-        message1 == String.format( Application.CONTENT_SAVED,SITE.getName() );
+        message1 == String.format( Application.CONTENT_SAVED, SITE.getName() );
         and: "correct notification message should be displayed"
-        message2 == String.format( Application.CONTENT_SAVED,SITE.getName() );
-
+        message2 == String.format( Application.CONTENT_SAVED, SITE.getName() );
     }
-    //temporarily is ignored
-    @Ignore
+
     def "GIVEN site with 2 image-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()
     {
         given: "site with 2 image-components is opened"
