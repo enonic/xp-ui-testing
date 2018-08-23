@@ -23,6 +23,8 @@ public class Application
 {
     protected final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
 
+    protected final String CKE_HTML_AREA = "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
+
     protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
 
     public static final String NO_SELECTION_MESSAGE = "You are wasting this space - select something!";

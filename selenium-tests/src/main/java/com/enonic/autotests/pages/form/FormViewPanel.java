@@ -29,8 +29,6 @@ public abstract class FormViewPanel
 
     protected final String ADD_BUTTON_XPATH = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
-    protected final String SCRIPT_SET_INNERHTML = "document.getElementById(arguments[0]).contentDocument.body.innerHTML=arguments[1];";
-
     public FormViewPanel( final TestSession session )
     {
         super( session );
@@ -70,13 +68,6 @@ public abstract class FormViewPanel
             findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
         return editors.stream().map( e -> getCKEData( e.getAttribute( "id" ) ) ).collect( Collectors.toList() );
     }
-
-
-    protected void setTextIntoArea( String id, String text )
-    {
-        getJavaScriptExecutor().executeScript( SCRIPT_SET_INNERHTML, id, text );
-    }
-
 
     protected String getCKEData( String id )
     {

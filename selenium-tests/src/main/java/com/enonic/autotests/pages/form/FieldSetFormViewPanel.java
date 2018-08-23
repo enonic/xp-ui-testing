@@ -20,10 +20,6 @@ public class FieldSetFormViewPanel
 
     private final String TEXT_LINE = FORM_VIEW + "//input[contains(@id,'TextInput')]";
 
-    private final String HTML_AREA = FORM_VIEW + "//div[contains(@id,'TextLine')]";
-
-    protected final String CKE_HTML_AREA = FORM_VIEW + "//div[contains(@id,'HtmlArea')]" + CKE_TEXT_AREA;
-
     @FindBy(xpath = TEXT_LINE)
     private WebElement textLineInput;
 
@@ -55,9 +51,7 @@ public class FieldSetFormViewPanel
         if ( text != null )
         {
             WebElement areaElement = findElement( By.xpath( CKE_HTML_AREA ) );
-            buildActions().click( findElement( By.xpath( CKE_HTML_AREA ) ) ).build().perform();
-            setTextIntoArea( areaElement.getAttribute( "id" ), text );
-            buildActions().click( findElement( By.xpath( CKE_HTML_AREA ) ) ).build().perform();
+            setTextInCKE( areaElement.getAttribute( "id" ), text );
             sleep( 300 );
         }
         return this;

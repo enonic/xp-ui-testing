@@ -21,7 +21,7 @@ public class SiteConfiguratorDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SiteConfiguratorDialog')]";
 
-    private final String HTM_AREA = DIALOG_CONTAINER + "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
+    protected final String HTML_AREA = DIALOG_CONTAINER + "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
 
     protected final String POSTS_OPTION_FILTER_INPUT =
         DIALOG_CONTAINER + "//div[contains(@id,'LoaderComboBox') and @name='postsFolder']" + COMBOBOX_OPTION_FILTER_INPUT;
@@ -216,7 +216,7 @@ public class SiteConfiguratorDialog
 
     public String getTextFromCKE()
     {
-        WebElement htmlArea = findElement( By.xpath( HTM_AREA ) );
+        WebElement htmlArea = findElement( By.xpath( HTML_AREA ) );
         return getCKEData( htmlArea.getAttribute( "id" ) );
     }
 
