@@ -69,7 +69,7 @@ public class LiveFormPanel
 
     public LiveFormPanel typeTextInTextComponent( String text )
     {
-        String input = "//div[contains(@id,'TextComponentView') and contains(@title,'Rich Text Editor')]";
+        String input = "//div[contains(@id,'TextComponentView') and contains(@class,'editor-focused')]//div[contains(@id,'TextComponentView')]";
         String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
         setTextInCke( id, text );
         sleep( 500 );

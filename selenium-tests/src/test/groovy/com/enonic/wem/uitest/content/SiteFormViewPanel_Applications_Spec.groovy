@@ -44,7 +44,7 @@ class SiteFormViewPanel_Applications_Spec
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
         saveScreenshot( "app_swapped2" );
 
-        then: "new order of applications present in form-panel"
+        then: "new order of applications should be present on the form-panel"
         namesBefore.getFirst() == namesAfter.getLast();
     }
 

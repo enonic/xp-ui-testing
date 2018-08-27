@@ -171,6 +171,7 @@ class Fragment_Change_In_InspectionPanel_Spec
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
         pageComponentsView.openMenu( PART_CITIES_DISTANCE_FACET ).selectMenuItem( "Save as Fragment" );
+        sleep(1000);
         saveScreenshot( "fragment_cities_distance" )
 
         when: "'Dropdown handle' has been clicked"
