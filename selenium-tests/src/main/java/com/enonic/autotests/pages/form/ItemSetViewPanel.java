@@ -67,7 +67,7 @@ public class ItemSetViewPanel
         WebElement sourceElement = findElements( By.xpath( DRAG_HANDLER ) ).get( 1 );
 
         Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( sourceElement ).moveByOffset( 0, -60 ).release().perform();
+        builder.clickAndHold( sourceElement ).moveByOffset( 0, -260 ).release().perform();
         sleep( 1000 );
     }
 
