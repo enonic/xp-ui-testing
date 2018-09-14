@@ -69,7 +69,8 @@ public class LiveFormPanel
 
     public LiveFormPanel typeTextInTextComponent( String text )
     {
-        String input = "//div[contains(@id,'TextComponentView') and contains(@class,'editor-focused')]//div[contains(@id,'TextComponentView')]";
+        String input =
+            "//div[contains(@id,'TextComponentView') and contains(@class,'editor-focused')]//div[contains(@id,'TextComponentView')]";
         String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
         setTextInCke( id, text );
         sleep( 500 );
@@ -127,7 +128,7 @@ public class LiveFormPanel
         return getNumberOfElements( By.xpath( columns ) );
     }
 
-    public String getTextFromTextComponent()
+    public List<String> getTextFromTextComponents()
     {
         String textPath = "//section/p";
         if ( !isElementDisplayed( TEXT_COMPONENT_VIEW + textPath ) )
@@ -135,7 +136,7 @@ public class LiveFormPanel
             saveScreenshot( "err_text_component_not_found" );
             throw new TestFrameworkException( "text in the component was not found!" );
         }
-        return getDisplayedString( TEXT_COMPONENT_VIEW + textPath );
+        return getDisplayedStrings( By.xpath( TEXT_COMPONENT_VIEW + textPath ) );
     }
 
     public boolean isLayoutComponentPresent()

@@ -106,7 +106,7 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.isTextComponentPresent();
 
         and: "correct text should be displayed in the text-component"
-        liveFormPanel.getTextFromTextComponent().equals( TEXT_COMPONENT_TEXT );
+        liveFormPanel.getTextFromTextComponents().get( 0 ) == ( TEXT_COMPONENT_TEXT );
     }
 
     def "GIVEN 'Page Components' is opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout should be present on the live edit frame"()

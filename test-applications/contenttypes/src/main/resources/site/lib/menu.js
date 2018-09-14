@@ -63,5 +63,5 @@ exports.getSiteMenu = function (levels) {
         return [];
     }
 
-    return getChildMenuItems(site, levels);
+    return [];//getChildMenuItems(site, levels);
 };
