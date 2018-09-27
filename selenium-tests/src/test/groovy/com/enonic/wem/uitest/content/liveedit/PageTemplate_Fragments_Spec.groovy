@@ -109,7 +109,6 @@ class PageTemplate_Fragments_Spec
         and: "image has been selected in options"
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( ELEPHANT_IMAGE_DISPLAY_NAME );
-       // wizard.save();
 
         when: "the image has been clicked on the PageComponentView and context menu opened"
         wizard.switchToDefaultWindow().showComponentView();

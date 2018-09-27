@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <x-data>
   <display-name>Norwegian counties</display-name>
-  <allowContentType>base:folder</allowContentType>
   <items>
     <input type="RadioButton" name="norwegianCounty">
       <label>Norwegian county</label>
@@ -29,6 +28,12 @@
         <option value="18">Troms</option>
         <option value="19">Finnmark</option>
       </config>
+    </input>
+    <input name="imageselector_min2_max4" type="ImageSelector">
+      <label>Min 2, Max 4</label>
+      <indexed>true</indexed>
+      <occurrences minimum="2" maximum="4"/>
+      <config/>
     </input>
   </items>
 </x-data>

@@ -82,7 +82,7 @@ class Restore_Version_Crop_Image_Spec
 
     def "GIVEN existing image with several versions WHEN version with cropped size is restored THEN button 'reset' is present on the wizard page "()
     {
-        given: "existing image with several versions is selcted"
+        given: "existing image with several versions is selected"
         findAndSelectContent( IMPORTED_MAN_IMAGE );
 
         and: "version panel was opened"
@@ -146,7 +146,7 @@ class Restore_Version_Crop_Image_Spec
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
-        then: "'Reset' button should appears"
+        then: "'Reset' button should appear"
         formViewPanel.isButtonResetPresent();
     }
 }

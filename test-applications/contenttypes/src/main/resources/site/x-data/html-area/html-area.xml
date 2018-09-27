@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<x-data>
+  <display-name>Html Area x-data</display-name>
+  <items>
+    <input name="htmlarea_1_2" type="HtmlArea">
+      <label>HTML content 0:2</label>
+      <occurrences minimum="1" maximum="2"/>
+    </input>
+  </items>
+</x-data>

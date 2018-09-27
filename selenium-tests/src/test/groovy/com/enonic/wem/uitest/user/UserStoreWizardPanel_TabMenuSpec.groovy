@@ -49,7 +49,7 @@ class UserStoreWizardPanel_TabMenuSpec
         dialog == null;
     }
 
-    def "GIVEN 'user store' Wizard opened and name is typed WHEN 'Close' on the tab clicked THEN 'SaveBeforeClose' dialog showed"()
+    def "GIVEN 'user store' Wizard opened and name is typed WHEN 'Close' on the tab clicked THEN 'SaveBeforeClose' dialog should appear"()
     {
         given: "'user store' Wizard opened and name is typed"
         String displayName = "testname";
@@ -62,7 +62,7 @@ class UserStoreWizardPanel_TabMenuSpec
         SaveBeforeCloseDialog dialog = wizard.close( displayName );
         saveScreenshot( "user_store_not_closed" );
 
-        then: "'SaveBeforeClose' dialog showed"
+        then: "'SaveBeforeClose' dialog should appear"
         dialog != null;
     }
 }

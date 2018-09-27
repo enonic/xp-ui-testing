@@ -59,14 +59,14 @@ class Site_With_TemplatePageComponentDialog_Spec
         dialog.isOpened();
 
         and: "correct title should be displayed on the view"
-        dialog.getTextFromHeader().equals( PageComponentsViewDialog.DIALOG_HEADER );
+        dialog.getTextFromHeader() == PageComponentsViewDialog.DIALOG_HEADER;
 
         and: "one component should be displayed"
         components.size() == 2;
         and: "correct 'page template' should be displayed"
         components.get( 0 ).getName().equals( PAGE_TEMPLATE.getDisplayName() );
         and: "correct component's name should be displayed"
-        components.get( 1 ).getName().equals( "country" )
+        components.get( 1 ).getName().equals( "country" );
     }
 
     def "GIVEN existing site is opened WHEN 'Page Component View' shown AND menu-button clicked THEN context menu should be present"()

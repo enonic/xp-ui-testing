@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <x-data>
   <display-name>Menu</display-name>
-  <allowContentType>base:folder</allowContentType>
   <items>
     <input type="Checkbox" name="menuItem">
       <label>Menu item</label>

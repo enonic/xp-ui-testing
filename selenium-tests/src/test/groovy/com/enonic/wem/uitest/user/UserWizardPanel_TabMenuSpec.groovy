@@ -33,7 +33,7 @@ class UserWizardPanel_TabMenuSpec
         SaveBeforeCloseDialog dialog = wizard.close( USER_TAB_TITLE );
         saveScreenshot( "user_tab_closed" );
 
-        then: "close dialog should not be shown"
+        then: "close dialog should not be present"
         dialog == null;
 
     }

@@ -61,7 +61,7 @@ class ContentPublish_Child_Spec
         contentBrowsePanel.isPublishMenuAvailable();
     }
 
-    def "GIVEN parent 'online' folder with one 'New' child WHEN 'publish' menu expanded AND 'Publish Tree' selected THEN 'Publish Dialog' appears and correct name of child is displayed"() {
+    def "GIVEN parent 'online' folder with one 'New' child WHEN 'publish' menu expanded AND 'Publish Tree' selected THEN 'Publish Dialog' appears and correct name of child should be displayed"() {
         given: "parent folder with a not published child"
         findAndSelectContent(parentContent.getName());
 

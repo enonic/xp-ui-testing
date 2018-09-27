@@ -28,7 +28,7 @@ class UserBrowsePanel_UserStoreStatisticPanel_Spec
         roleStatisticsPanel.getItemDisplayName() == SYSTEM_USER_STORE_DISPLAY_NAME;
     }
 
-    def "GIVEN creating new User Store WHEN user was saved and HomeButton clicked THEN correct display name shown in a statistics panel"()
+    def "GIVEN creating of new User Store WHEN user-store has been saved and HomeButton clicked AND the store is selected THEN the store should be shown in the statistics panel"()
     {
         given: "creating new User Store"
         TEST_USER_STORE = buildUserStore( "us", "user-store-app-home", "selections spec" );
