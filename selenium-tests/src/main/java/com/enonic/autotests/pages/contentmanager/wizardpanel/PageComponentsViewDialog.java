@@ -80,7 +80,7 @@ public class PageComponentsViewDialog
 
     public PageComponentsViewDialog openMenu( String componentName )
     {
-        String menuButton = String.format( COMPONENT_ITEM + "/../..//div[@class='menu-icon']", componentName );
+        String menuButton = String.format( COMPONENT_ITEM + "/../..//div[contains(@class,'menu-icon')]", componentName );
         if ( !isElementDisplayed( menuButton ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err-comp_view_menu" ) );
