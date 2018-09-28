@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Depend
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
+import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -82,9 +83,10 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "'show outbound'- button has been clicked"
         dependencies.clickOnShowOutboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession(  ) );
         saveScreenshot( "outbound_image_shortcut" );
 
-        then: "Dependencies Section appears on the filter panel"
+        then: "Dependencies Section should appear in the filter panel"
         filterPanel.isDependenciesSectionDisplayed();
         List<String> names = contentBrowsePanel.getContentDisplayNamesFromGrid();
 
@@ -108,8 +110,9 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowOutboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession(  ) );
 
-        when: " button 'close' on the section pressed"
+        when: "button 'close' on the section has been pressed"
         filterPanel.doCloseDependenciesSection();
 
         then: "'Dependencies Section' should be closed"
@@ -124,6 +127,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "'show inbound'- button has been clicked"
         dependencies.clickOnShowInboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession(  ) );
         saveScreenshot( "test_inbound_image_shortcut" );
 
         then: "Dependencies Section appears on the filter panel"
@@ -155,6 +159,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         findAndSelectContent( TARGET_IMG );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowInboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession(  ) );
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_two_inbound_contents" );
 
@@ -188,6 +193,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "site with the component was selected in the grid and dependency widget is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowOutboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession(  ) );
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_dependencies_site_with_component" );
 
