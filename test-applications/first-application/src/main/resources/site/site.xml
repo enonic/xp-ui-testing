@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <x-data name="select-image"/>
   <config/>
+  <x-data name="select-image" optional="true" allowContentTypes="base:folder"/>
 </site>
