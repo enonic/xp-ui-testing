@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewD
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.FragmentInspectionPanel
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
+import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -148,6 +149,7 @@ class Fragment_Change_In_InspectionPanel_Spec
 
         when: "'Show Outbound' button has been pressed"
         dependenciesWidget.clickOnShowOutboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession(  ) );
 
         then: "required fragment should be filtered"
         contentBrowsePanel.getContentDisplayNamesFromGrid().size() == 1;
