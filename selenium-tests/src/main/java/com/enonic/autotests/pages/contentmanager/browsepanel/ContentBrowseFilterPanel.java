@@ -84,6 +84,7 @@ public class ContentBrowseFilterPanel
 
     public void doCloseDependenciesSection()
     {
+        waitUntilVisibleNoException( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ),Application.EXPLICIT_NORMAL );
         getDisplayedElement( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ) ).click();
     }
 
