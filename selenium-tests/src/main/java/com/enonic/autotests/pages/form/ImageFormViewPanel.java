@@ -52,10 +52,10 @@ public class ImageFormViewPanel
         FORM_VIEW + "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//input[@type='text']";
 
     private final String ARTISTS_TAGS = FORM_VIEW +
-        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Artist']]//ul/li[contains(@id,'api.ui.tags.Tag')]/span";
+        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Artist']]//ul/li[contains(@id,'Tag')]/span";
 
     private final String TAGS = FORM_VIEW +
-        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//ul/li[contains(@id,'api.ui.tags.Tag')]/span";
+        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//ul/li[contains(@id,'Tag')]/span";
 
     @FindBy(xpath = CAPTION_TEXTAREA)
     private WebElement captionTextArea;
