@@ -84,11 +84,12 @@ class HtmlArea_InsertImageDialog_Spec
 
         when: "image has been inserted"
         insertImageModalDialog.selectImage( "book" );
+        saveScreenshot( "insert_image_button_dialog" );
 
-        then: "'Image toolbar' should be displayed"
-        insertImageModalDialog.isToolbarDisplayed();
+        //then: "'Image toolbar' should be displayed"
+        //insertImageModalDialog.isToolbarDisplayed();
 
-        and: "Justify button should be displayed"
+        then: "Justify button should be displayed"
         insertImageModalDialog.isJustifyButtonDisplayed();
 
         and: "Justify button should be displayed"
