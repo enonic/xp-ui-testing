@@ -127,6 +127,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "'show inbound'- button has been clicked"
         dependencies.clickOnShowInboundButton();
+        sleep( 1000 );
         NavigatorHelper.switchToNextTab( getTestSession(  ) );
         saveScreenshot( "test_inbound_image_shortcut" );
 
