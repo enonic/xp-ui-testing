@@ -160,6 +160,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         findAndSelectContent( TARGET_IMG );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowInboundButton();
+        sleep(2000);
         NavigatorHelper.switchToNextTab( getTestSession(  ) );
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_two_inbound_contents" );
