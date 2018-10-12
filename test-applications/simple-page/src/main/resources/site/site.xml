@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site>
-  <config>
+<site xmlns="urn:enonic:xp:model:1.0">
+  <form>
     <input name="backgroundColor" type="RadioButton">
       <label>Page background</label>
       <occurrences minimum="0" maximum="1"/>
@@ -11,7 +11,7 @@
         <option value="red">Red</option>
       </config>
     </input>
-  </config>
+  </form>
 
   <filters>
     <response-filter name="bgcolor-filter" order="10"/>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site>
-  <config>
+<site xmlns="urn:enonic:xp:model:1.0">
+  <form>
     <input type="TextLine" name="trackingId">
       <label>Tracking Id</label>
       <occurrences minimum="1" maximum="1"/>
     </input>
-  </config>
+  </form>
 </site>

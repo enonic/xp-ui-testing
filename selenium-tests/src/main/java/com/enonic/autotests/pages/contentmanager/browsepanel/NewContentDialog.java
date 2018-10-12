@@ -44,7 +44,7 @@ public class NewContentDialog
 
     public static final String LIST_ITEMS_SITES = "//div[contains(@id,'NewContentDialog')]//ul/li[@class='content-types-list-item site']";
 
-    public static final String SEARCH_INPUT = "//div[contains(@id,'api.ui.text.FileInput')]/input";
+    public static final String SEARCH_INPUT = CONTAINER+ "//div[contains(@id,'FileInput')]/input";
 
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";

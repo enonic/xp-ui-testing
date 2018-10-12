@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<x-data>
+<x-data xmlns="urn:enonic:xp:model:1.0">
   <display-name>SEO Metadata</display-name>
-  <items>
+  <form>
     <input name="seoTitle" type="TextLine">
       <label>Override "Title"</label>
       <help-text>Normally we use each content's displayName to generate the title tag, but if you want you can override it here on a per
@@ -23,5 +23,5 @@
       </help-text>
       <occurrences minimum="0" maximum="1"/>
     </input>
-  </items>
+  </form>
 </x-data>

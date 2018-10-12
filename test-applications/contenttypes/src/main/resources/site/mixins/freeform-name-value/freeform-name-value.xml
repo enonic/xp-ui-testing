@@ -1,6 +1,6 @@
-<mixin>
+<mixin xmlns="urn:enonic:xp:model:1.0">
   <display-name>name / value</display-name>
-  <items>
+  <form>
     <input type="TextLine" name="name">
       <label>Name</label>
       <help-text></help-text>
@@ -11,5 +11,5 @@
       <help-text></help-text>
       <occurrences minimum="0" maximum="1"/>
     </input>
-  </items>
+  </form>
 </mixin>

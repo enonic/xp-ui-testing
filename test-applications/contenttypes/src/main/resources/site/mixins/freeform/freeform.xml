@@ -1,6 +1,6 @@
-<mixin>
+<mixin xmlns="urn:enonic:xp:model:1.0">
   <display-name>Freeform</display-name>
-  <items>
+  <form>
     <item-set name="freeform">
       <label>Form config</label>
       <occurrences minimum="1" maximum="1"/>
@@ -106,5 +106,5 @@
         </item-set>
       </items>
     </item-set>
-  </items>
+  </form>
 </mixin>

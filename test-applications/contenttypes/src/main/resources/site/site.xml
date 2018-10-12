@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<site>
-  <config>
+<site xmlns="urn:enonic:xp:model:1.0">
+  <x-data name="text-area" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double0_0"/>
+  <x-data name="radio" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double2_4"/>
+  <x-data name="item-set" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:date1_1"/>
+  <x-data name="optionset" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double1_1"/>
+  <x-data name="norwegian-county" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double0_0"/>
+  <x-data name="menu-item" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:article"/>
+  <x-data name="html-area" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:article"/>
+  <x-data name="html-area" optional="true" allowContentTypes="portal:site"/>
+  <form>
     <input type="ImageSelector" name="backgroundImage">
       <label>Background image</label>
       <occurrences minimum="0" maximum="1"/>
@@ -35,10 +43,7 @@
       <label>Disallow login</label>
       <occurrences minimum="0" maximum="1"/>
     </input>
-  </config>
-  <x-data name="text-area" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:date0_1"/>
-  <x-data name="norwegian-county" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double0_0"/>
-  <x-data name="menu-item" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:article"/>
-  <x-data name="html-area" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:article"/>
+  </form>
+
 
 </site>

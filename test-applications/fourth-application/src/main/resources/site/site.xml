@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <config>
+  <form>
     <input type="ImageSelector" name="backgroundImage">
       <label>Background image</label>
       <occurrences minimum="0" maximum="1"/>
@@ -19,5 +19,5 @@
         <option value="DESC">Newest on top</option>
       </config>
     </input>
-  </config>
+  </form>
 </site>

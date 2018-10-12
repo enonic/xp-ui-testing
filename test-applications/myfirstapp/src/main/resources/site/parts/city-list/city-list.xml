@@ -1,6 +1,6 @@
-<part>
+<part xmlns="urn:enonic:xp:model:1.0">
   <display-name>City list</display-name>
-  <config>
+  <form>
     <input type="ComboBox" name="mapType">
       <label>Map type</label>
       <occurrences minimum="0" maximum="1"/>
@@ -15,5 +15,5 @@
       <label>Zoom level 1-15</label>
       <occurrences minimum="0" maximum="1"/>
     </input>
-  </config>
+  </form>
 </part>

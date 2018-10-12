@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site>
-  <config/>
-	<x-data name="meta-data" optional="false" allowContentTypes="portal:site"/>
-	<filters>
-		<response-filter name="add-metadata" order="10"/>
-	</filters>
+<site xmlns="urn:enonic:xp:model:1.0">
+  <x-data name="meta-data" optional="false" allowContentTypes="portal:site"/>
+  <form/>
 </site>

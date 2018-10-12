@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <id-provider xmlns="urn:enonic:xp:model:1.0">
   <mode>MIXED</mode>
-  <config>
+  <form>
 
     <field-set name="client">
       <label>Client</label>
@@ -169,5 +169,5 @@
         </field-set>
       </items>
     </field-set>
-  </config>
+  </form>
 </id-provider>

@@ -1,6 +1,6 @@
-<page>
+<page xmlns="urn:enonic:xp:model:1.0">
   <display-name>Country Region</display-name>
-  <config/>
+  <form/>
   <regions>
     <region name="country"/>
   </regions>

@@ -1,6 +1,6 @@
-<mixin>
+<mixin xmlns="urn:enonic:xp:model:1.0">
   <display-name>Item core properties</display-name>
-  <items>
+  <form>
     <input type="ContentSelector" name="itemCategory">
       <label>Category</label>
       <occurrences minimum="0" maximum="1"/>
@@ -76,5 +76,5 @@
         <relationship-type>system:reference</relationship-type>
       </config>
     </input>
-  </items>
+  </form>
 </mixin>

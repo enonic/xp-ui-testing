@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<x-data>
+<x-data xmlns="urn:enonic:xp:model:1.0">
   <display-name>Norwegian counties</display-name>
-  <items>
+  <form>
     <input type="RadioButton" name="norwegianCounty">
       <label>Norwegian county</label>
       <custom-text/>
@@ -35,5 +35,5 @@
       <occurrences minimum="2" maximum="4"/>
       <config/>
     </input>
-  </items>
+  </form>
 </x-data>

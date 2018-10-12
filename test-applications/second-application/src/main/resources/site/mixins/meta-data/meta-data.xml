@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mixin>
+<mixin xmlns="urn:enonic:xp:model:1.0">
   <display-name>Test Metadata</display-name>
-  <items>
+  <form>
     <input name="testTitle" type="TextLine">
       <label>Override "Title"</label>
       <help-text>Normally we use each content's displayName to generate the title tag, but if you want you can override it here on a per
@@ -23,5 +23,5 @@
       </help-text>
       <occurrences minimum="1" maximum="1"/>
     </input>
-  </items>
+  </form>
 </mixin>

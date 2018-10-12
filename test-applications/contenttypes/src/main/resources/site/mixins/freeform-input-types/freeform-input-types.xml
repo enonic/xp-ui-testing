@@ -1,6 +1,6 @@
-<mixin>
+<mixin xmlns="urn:enonic:xp:model:1.0">
   <display-name>Input types</display-name>
-  <items>
+  <form>
     <option-set name="type">
       <label>input type</label>
       <expanded>false</expanded>
@@ -53,5 +53,5 @@
         </option>
       </options>
     </option-set>
-  </items>
+  </form>
 </mixin>
