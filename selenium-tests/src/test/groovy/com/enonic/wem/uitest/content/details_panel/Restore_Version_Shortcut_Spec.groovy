@@ -94,7 +94,7 @@ class Restore_Version_Shortcut_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "the shortcut selected AND previous version restored"
@@ -104,7 +104,7 @@ class Restore_Version_Shortcut_Spec
         saveScreenshot( "shortcut_target_restored" );
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
-        then: "correct target displayed in the wizard"
+        then: "expected target should be displayed in the wizard"
         formViewPanel.getTargetDisplayName() == TARGET_1
     }
 }

@@ -37,14 +37,15 @@ public final class ServerInstance
 
         final ClassLoader loader = createClassLoader();
         final Constructor constructor = Class.forName( LAUNCHER_CLASS, true, loader ).getConstructor( String[].class );
-        System.out.println( constructor.toString() );
+        System.out.println( "ServerInstance: constructor name is " + constructor.toString() );
         try
         {
             this.instance = constructor.newInstance( new Object[]{LAUNCHER_ARGS} );
         }
         catch ( InvocationTargetException e )
         {
-            System.out.println( e.getMessage() );
+            System.out.println("ERROR when try to create 'New Instance' of LauncherImpl" + e.getMessage() + "  " + e);
+            e.printStackTrace();
         }
         this.instance.getClass().getMethod( "start" ).invoke( this.instance );
 
