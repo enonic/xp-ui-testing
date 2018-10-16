@@ -12,13 +12,13 @@ public final class ServerInstance
 {
     private final static String LAUNCHER_CLASS = "com.enonic.xp.launcher.impl.LauncherImpl";
 
-    private final static String[] LAUNCHER_ARGS = {"clean"};
+    private final static String[] LAUNCHER_ARGS = {"clean","-Dmapper.allow_dots_in_name=true"};
 
     private File installDir;
 
     private Object instance;
 
-    private long startupDelay = 20000;
+    private long startupDelay = 700000;
 
     public void setInstallDir( final File value )
     {
