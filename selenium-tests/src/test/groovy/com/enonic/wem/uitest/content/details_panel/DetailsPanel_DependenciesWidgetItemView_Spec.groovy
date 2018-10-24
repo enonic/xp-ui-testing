@@ -195,6 +195,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "site with the component was selected in the grid and dependency widget is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowOutboundButton();
+        sleep(1000);
         NavigatorHelper.switchToNextTab( getTestSession(  ) );
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_dependencies_site_with_component" );
