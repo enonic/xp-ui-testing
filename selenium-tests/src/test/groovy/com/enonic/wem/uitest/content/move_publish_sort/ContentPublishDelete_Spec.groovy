@@ -44,6 +44,7 @@ class ContentPublishDelete_Spec
         when: "content was selected and 'Delete' button pressed"
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().doDelete();
         String message = contentBrowsePanel.waitForNotificationMessage();
+        saveScreenshot("content_should_be_pending");
 
         then: "content is getting 'Pending delete'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );

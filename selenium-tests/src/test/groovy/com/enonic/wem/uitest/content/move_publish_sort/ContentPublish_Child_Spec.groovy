@@ -112,6 +112,7 @@ class ContentPublish_Child_Spec
         when: "parent 'online'-folder is selected and 'Delete' button pressed AND number of contents typed"
         findAndSelectContent(parentContent.getName()).clickToolbarDelete().clickOnDeleteButtonAndConfirm("3");
         String message = contentBrowsePanel.waitForNotificationMessage();
+        sleep(1000);
 
         and: "parent folder has been expanded"
         contentBrowsePanel.expandItem(parentContent.getPath().toString());
