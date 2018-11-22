@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x-data xmlns="urn:enonic:xp:model:1.0">
+  <display-name>X-data (image selector)</display-name>
+  <form>
+    <input name="imageselector_0_1" type="ImageSelector">
+      <label>One not required</label>
+      <indexed>true</indexed>
+      <occurrences minimum="0" maximum="1"/>
+      <config/>
+    </input>
+  </form>
+</x-data>
