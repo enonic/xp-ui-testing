@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <site xmlns="urn:enonic:xp:model:1.0">
   <x-data name="text-area" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double0_0"/>
-  <!--<x-data name="radio" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double2_4"/> -->
+  <x-data name="image-selector" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double1_1"/>
   <!--<x-data name="item-set" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:date1_1"/> -->
   <!--<x-data name="optionset" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double1_1"/> -->
   <!-- <x-data name="norwegian-county" optional="true" allowContentTypes="com.enonic.xp.ui_testing.contenttypes:double0_0"/> -->

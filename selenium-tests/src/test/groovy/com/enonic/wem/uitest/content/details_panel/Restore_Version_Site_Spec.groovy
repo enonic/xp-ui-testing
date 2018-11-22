@@ -83,7 +83,7 @@ class Restore_Version_Site_Spec
         modalDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
         sleep( 1000 );
         List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the previous version has been restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
