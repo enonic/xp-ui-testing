@@ -55,8 +55,8 @@ class UserBrowsePanel_AccountStatisticPanel_Spec
         and: "correct email should be displayed"
         accountStatisticsPanel.getEmail() == "";
 
-        and: "'Administration Console Login' role should be displayed"
-        roleDisplayNamesActual.contains( RoleDisplayName.ADMIN_CONSOLE.getValue() );
+        //and: "'Administration Console Login' role should be displayed"
+        //roleDisplayNamesActual.contains( RoleDisplayName.ADMIN_CONSOLE.getValue() );
 
         and: "'Administrator(system.admin)' role should be displayed"
         roleDisplayNamesActual.contains( RoleDisplayName.SYSTEM_ADMIN.getValue() );

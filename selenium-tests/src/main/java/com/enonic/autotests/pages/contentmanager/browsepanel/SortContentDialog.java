@@ -90,6 +90,7 @@ public class SortContentDialog
         return findElements( By.xpath( DIALOG_CONTAINER + "//h2[@class='title']" ) ).get( 0 ).getText();
     }
 
+    //clicks on the button and expand menu-options()
     public SortContentDialog clickOnTabMenu()
     {
         sortMenuButton.click();
