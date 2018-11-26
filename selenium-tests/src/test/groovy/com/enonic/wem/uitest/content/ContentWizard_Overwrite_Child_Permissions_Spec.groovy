@@ -73,8 +73,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
 
         and: "'Overwrite child permissions' is checked"
         dialog.setOverwriteChildPermissionsCheckbox( true ).clickOnApply();
-        and: "the content is saved"
-        wizard.save();
+
         and: "wizard is closing"
         wizard.executeCloseWizardScript();
 
@@ -97,9 +96,8 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         and: "'Overwrite child permissions' set in true for the parent folder AND new permission was added"
         dialog.setInheritPermissionsCheckbox( false ).setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox(
             anonymousEntry ).clickOnApply();
-        and: "parent folder has been saved"
-        parentWizard.save();
         sleep( 1000 );
+
         and: "navigate to the child wizard-tab"
         contentBrowsePanel.switchToBrowserTabByTitle( CHILD_FOLDER.getDisplayName() );
         saveScreenshot( "inherit_perm_true_child_permissions_updated" );
@@ -125,7 +123,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
             PermissionSuite.CAN_READ ).build();
 
         and: "child folder has been saved"
-        childWizard.save();
+        //childWizard.save();
         saveScreenshot( "inherit_perm_false_perm_changed" );
 
         then: "expected role should be present on the Security form in the wizard"
@@ -148,7 +146,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         and: "the content has been saved"
         ContentAclEntry entryToRemove = ContentAclEntry.builder().principalName( USER_ADMIN_ROLE ).suite(
             PermissionSuite.CAN_READ ).build();
-        childWizard.save();
+        //childWizard.save();
         saveScreenshot( "inherit_perm_true_initial_perm_restored" );
 
         then: "permissions should be the same as in the parent folder"

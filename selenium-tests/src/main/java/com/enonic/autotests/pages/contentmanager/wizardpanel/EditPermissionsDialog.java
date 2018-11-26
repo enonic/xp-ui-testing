@@ -159,7 +159,7 @@ public class EditPermissionsDialog
             //when operations not specified, CAN_READ will be applied by default
             selectOperations( entry.getPrincipalName(), entry.getPermissionSuite() );
         }
-        sleep( 500 );
+        sleep( 700 );
         return this;
     }
 

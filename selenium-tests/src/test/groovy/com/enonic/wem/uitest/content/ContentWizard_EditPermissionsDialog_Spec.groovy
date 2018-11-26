@@ -125,8 +125,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         modalDialog.setInheritPermissionsCheckbox( false ).addPermissionByClickingCheckbox( entry ).clickOnApply();
         sleep( 500 );
 
-        and: "the content has been saved"
-        wizard.save();
+        and: "dialog has been opened again"
         modalDialog = securityForm.clickOnEditPermissionsButton();
 
         then: "number of ACL-entries on the modal dialog should be increased"
@@ -149,12 +148,13 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         and: "Apply button has been pressed"
         modalDialog.clickOnApply();
+        sleep( 700 );
 
         when: "shortcut to 'Close' has been pressed"
         wizard.pressCloseKeyboardShortcut();
 
-        then: "'Alert' dialog with warning message should appear"
-        wizard.waitIsAlertDisplayed();
+        then: "'Alert' dialog should not appear"
+        !wizard.isAlertPresent();
     }
 
     def "GIVEN 'Edit Permissions' dialog is opened WHEN one acl entry was removed THEN number of entries on the modal dialog should be reduced"()
@@ -165,20 +165,18 @@ class ContentWizard_EditPermissionsDialog_Spec
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
 
         when: "one Role was removed"
-        modalDialog.removeAclEntry( RoleName.SYSTEM_USER_MANAGER.getValue() );
+        modalDialog.removeAclEntry( RoleName.SYSTEM_ADMIN.getValue() );
         saveScreenshot( "content-wizard-role-was-removed" );
         and: "Apply button has been pressed"
         modalDialog.clickOnApply();
 
-        and: "dialog is opened again"
-        modalDialog = securityForm.clickOnEditPermissionsButton();
+        and: "dialog has been opened again"
+        securityForm.clickOnEditPermissionsButton();
 
         then: "number of entries on the modal dialog should be reduced"
         List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
-        aclEntries.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
+        aclEntries.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES - 1;
 
-        and: "actual entries should contain expected entries"
-        aclEntries.containsAll( getExpectedDefaultPermissions() );
     }
 
     private List<ContentAclEntry> getExpectedDefaultPermissions()
