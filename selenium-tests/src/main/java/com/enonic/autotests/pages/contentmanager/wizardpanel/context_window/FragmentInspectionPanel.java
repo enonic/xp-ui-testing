@@ -57,7 +57,7 @@ public class FragmentInspectionPanel
     {
         waitUntilVisibleNoException( By.xpath( FRAGMENT_DROPDOWN_HANDLE ), Application.EXPLICIT_NORMAL );
         fragmentDropdownHandle.click();
-        sleep( 400 );
+        sleep( 900 );
         return this;
     }
 

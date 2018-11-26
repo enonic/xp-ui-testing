@@ -82,7 +82,7 @@ class Fragment_Change_In_InspectionPanel_Spec
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
         pageComponentsView.openMenu( PART_FRAGMENT_CITY_CREATION ).selectMenuItem( "Save as Fragment" );
-        sleep( 1000 );
+        sleep( 2500 );
         saveScreenshot( "fragment_inspection_panel2" )
 
         when: "'Dropdown handle' has been clicked"
