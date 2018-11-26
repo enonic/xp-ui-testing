@@ -7,6 +7,9 @@ import com.enonic.autotests.pages.form.liveedit.ComponentMenuItems
 import com.enonic.autotests.pages.form.liveedit.FragmentComponentView
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
+import com.enonic.autotests.services.NavigatorHelper
+import com.enonic.autotests.utils.NameHelper
+import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -146,6 +149,8 @@ class Fragment_Create_From_Image_Spec
 
         and: "'Show Inbound' button has been pressed"
         dependencies.clickOnShowInboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession() );
+        sleep( 1000 );
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
 
         then: "only one inbound dependency should be filtered"
