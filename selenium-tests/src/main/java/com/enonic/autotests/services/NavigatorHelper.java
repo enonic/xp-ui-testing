@@ -87,7 +87,7 @@ public class NavigatorHelper
             throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
         }
         UserBrowsePanel userBrowsePanel = home.openUsersApplication();
-        userBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
+        userBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_LONG );
         return userBrowsePanel;
     }
 
@@ -130,7 +130,7 @@ public class NavigatorHelper
             throw new TestFrameworkException( "tab was not found!" );
         }
 
-        session.getDriver().switchTo().window( windowHandles.get( windowHandles.size()-1 ) );
+        session.getDriver().switchTo().window( windowHandles.get( windowHandles.size() - 1 ) );
 
     }
 

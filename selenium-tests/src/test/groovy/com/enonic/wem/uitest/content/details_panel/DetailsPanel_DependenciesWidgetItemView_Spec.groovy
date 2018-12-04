@@ -84,6 +84,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "'show outbound'- button has been clicked"
         dependencies.clickOnShowOutboundButton();
         NavigatorHelper.switchToNextTab( getTestSession(  ) );
+        sleep(2000);
         saveScreenshot( "outbound_image_shortcut" );
 
         then: "Dependencies Section should appear in the filter panel"

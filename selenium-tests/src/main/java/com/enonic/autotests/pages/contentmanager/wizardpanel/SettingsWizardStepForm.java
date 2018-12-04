@@ -30,11 +30,12 @@ public class SettingsWizardStepForm
 
     private String NAME_ITEM = "//h6[contains(@class,'main-name') and text()='%s']";
 
-    private String REMOVE_LANG_BUTTON = LOCALE_COMBOBOX +
-        "//div[contains(@id,'LocaleSelectedOptionView') and descendant::h6[text()='%s']]" + ICON_REMOVE;
+    private String REMOVE_LANG_BUTTON =
+        LOCALE_COMBOBOX + "//div[contains(@id,'LocaleSelectedOptionView') and descendant::h6[text()='%s']]" + ICON_REMOVE;
 
-    private String REMOVE_OWNER_BUTTON = PRINCIPAL_COMBOBOX +
-        "//div[contains(@class,'selected-options principal-selected-options-view') and descendant::h6[text()='%s']]" + ICON_REMOVE;
+    private String REMOVE_OWNER_BUTTON =
+        PRINCIPAL_COMBOBOX + "//div[contains(@class,'selected-options principal-selected-options-view') and descendant::h6[text()='%s']]" +
+            ICON_REMOVE;
 
     private String LOCALE_TEXT = LOCALE_COMBOBOX + "//div[contains(@class,'selected-options locale-selected-options-view')]" + H6_MAIN_NAME;
 
@@ -94,8 +95,9 @@ public class SettingsWizardStepForm
     public void selectLanguage( String language )
     {
         clearAndType( languageFilterInput, language );
-        saveScreenshot( "language_typed" );
         String optionItemXpath = LOCALE_COMBOBOX + "//div[contains(@class,'slick-cell')]" + String.format( NAME_ITEM, language );
+        this.waitUntilVisibleNoException( By.xpath( optionItemXpath ), Application.EXPLICIT_NORMAL );
+        saveScreenshot( "language_typed" );
         if ( findElements( By.xpath( optionItemXpath ) ).size() == 0 )
         {
             saveScreenshot( "err_language" );
