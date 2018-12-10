@@ -22,10 +22,6 @@ class LauncherPanel_Spec
     {
         when: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-
-        and: "Xp Tour modal dialog closed"
-        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
-        saveScreenshot( "launcher-panel-test" );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
         then: "launcher panel displayed"
@@ -57,10 +53,6 @@ class LauncherPanel_Spec
     {
         when: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-
-        and: "'Xp Tour' dialog closed"
-        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
-        saveScreenshot( "launcher-panel-test" );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
         then: "'Home' link is active on 'Launcher Panel'"
@@ -71,7 +63,6 @@ class LauncherPanel_Spec
     {
         when: "'content studio' opened"
         NavigatorHelper.openContentStudioApp( getTestSession() );
-        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
 
         and: "toggler pressed and launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
@@ -98,7 +89,6 @@ class LauncherPanel_Spec
     {
         when: "'Users' app opened"
         NavigatorHelper.openUsersApp( getTestSession() );
-        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
 
         and: "launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
@@ -113,7 +103,6 @@ class LauncherPanel_Spec
     {
         given: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
         when: "close button pressed"
@@ -135,7 +124,6 @@ class LauncherPanel_Spec
     {
         given: "home page opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
 
         when: "'Log out' link clicked"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );

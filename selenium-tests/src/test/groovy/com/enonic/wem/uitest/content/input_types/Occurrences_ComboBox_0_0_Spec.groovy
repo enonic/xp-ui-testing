@@ -33,15 +33,15 @@ class Occurrences_ComboBox_0_0_Spec
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
-    def "GIVEN saving of Combobox-content (0:0) without options WHEN content opened for edit THEN no one selected options present in form view"()
+    def "GIVEN saving of Combobox-content (0:0) without options WHEN content has been opened THEN options should not be selected"()
     {
-        given: "new content with type Combobbox0_0 was added'"
+        given: "new Combobbox0_0 is added'"
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "combobox content is opened"
+        when: "combobox content has been opened"
         findAndSelectContent( comboBoxContent.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();

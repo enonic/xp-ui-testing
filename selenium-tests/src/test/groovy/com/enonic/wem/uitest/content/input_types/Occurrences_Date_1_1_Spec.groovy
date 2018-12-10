@@ -15,6 +15,9 @@ class Occurrences_Date_1_1_Spec
     @Shared
     String TEST_DATE = "2016-01-11";
 
+    @Shared
+    Content TEST_CONTENT;
+
     def "GIVEN wizard for adding a Date opened WHEN date input was clicked THEN 'date picker popup' dialog is displayed"()
     {
         given: "wizard for adding a Date opened"
@@ -30,9 +33,9 @@ class Occurrences_Date_1_1_Spec
         picker.isDisplayed();
     }
 
-    def "GIVEN wizard for adding a Date(1:1) opened WHEN name typed and date was not typed THEN red icon should be present on the wizard-page"()
+    def "GIVEN wizard for new 'Date(1:1)' is opened WHEN name typed but date is not typed THEN red icon should be present on the wizard-page"()
     {
-        given: "start to add a content with type 'Date(1:1)'"
+        given: "wizard for new 'Date(1:1)' is opened"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
 
@@ -43,14 +46,14 @@ class Occurrences_Date_1_1_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN opened content wizard WHEN content without required 'date' was saved THEN wizard has a red icon on wizard-tab"()
+    def "GIVEN wizard for Date(1:1) is opened WHEN required 'date' is empty AND the content has been saved THEN red icon should be present on the wizard"()
     {
-        given: "new content with type date added'"
-        Content dateContent = buildDate1_1_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
+        given: "wizard for Date(1:1) is opened"
+        TEST_CONTENT = buildDate1_1_Content( null );
+        ContentWizardPanel wizard = selectSitePressNew( TEST_CONTENT.getContentTypeName() ).typeData( TEST_CONTENT );
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
-        when: "content without required 'date' was saved"
+        when: "content without required 'date' has been saved"
         wizard.save();
 
         then: "validation message should be displayed"
@@ -60,22 +63,17 @@ class Occurrences_Date_1_1_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN opened content wizard WHEN content saved without required 'date' and wizard closed THEN content displayed in a grid with a invalid status"()
+    def "GIVEN existing Date(1:1) AND date is not selected WHEN content has been selected THEN red icon should be present near the content in the grid"()
     {
-        given: "new content with type date time added'"
-        Content dateContent = buildDate1_1_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
-
-        when: "content saved without required 'date' and wizard closed"
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-        filterPanel.typeSearchText( dateContent.getName() );
+        when: "existing Date(1:1) has been selected(date is not selected)"
+        filterPanel.typeSearchText( TEST_CONTENT.getName() );
         saveScreenshot( "date-not-valid" )
 
         then: "content should be invalid, because required field is empty"
-        contentBrowsePanel.isContentInvalid( dateContent.getName() );
+        contentBrowsePanel.isContentInvalid( TEST_CONTENT.getName() );
     }
 
-    def "GIVEN creating new Date 1:1 on root WHEN data was typed and saved and the content has been published THEN new content with status equals 'Online' should be listed in the grid"()
+    def "WHEN new Data(1:1) content has been published THEN status  of the content should be 'Online'"()
     {
         given: "start to add a content with type 'Date'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
@@ -89,8 +87,5 @@ class Occurrences_Date_1_1_Spec
 
         then: "content should be 'Published'"
         contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
-
-        and: "correct notification message should be shown "
-        publishMessage == '2 items are published.'
     }
 }

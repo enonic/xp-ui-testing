@@ -452,7 +452,7 @@ public abstract class BrowsePanel
     public void clickOnSelectionController()
     {
         selectionController.click();
-        sleep( 300 );
+        sleep( 500 );
     }
 
     public void isGridEmpty( long timeout )

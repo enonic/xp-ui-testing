@@ -27,9 +27,9 @@ class Occurrences_HtmlArea_0_2_Spec
     @Shared
     String DEFAULT_EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
 
-    def "WHEN wizard for adding a content with htmlArea(0:2) is opened THEN one text area should be present "()
+    def "WHEN wizard for new htmlArea(0:2) content is opened THEN one text area should be present "()
     {
-        when: "start to add a content with type 'htmlArea 0:2'"
+        when: "wizard for new htmlArea(0:2) content is opened"
         Content htmlAreaContent = buildHtmlArea0_2_Content( 1, TEST_TEXT1 );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );

@@ -108,8 +108,7 @@ class ContentBrowsePanel_GridPanel_Spec
         and: "'New' button should be disabled"
         !contentBrowsePanel.isNewButtonEnabled();
     }
-    //#4727 'Preview' button should be disabled, when 'Selection Controller' has been unchecked( 'Clear Selection')
-    @Ignore
+
     def "GIVEN 'Selection Controller' is checked WHEN click on the 'Selection Controller' THEN it should be unchecked AND 'Preview', 'Delete' and 'New' buttons should be disabled"()
     {
         given: "'Selection Controller' is checked"

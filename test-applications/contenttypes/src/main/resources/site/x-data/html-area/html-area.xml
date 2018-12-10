@@ -3,7 +3,7 @@
   <display-name>Html Area x-data</display-name>
   <form>
     <input name="htmlarea_1_2" type="HtmlArea">
-      <label>HTML content 0:2</label>
+      <label>HTML content 1:2</label>
       <occurrences minimum="1" maximum="2"/>
     </input>
   </form>

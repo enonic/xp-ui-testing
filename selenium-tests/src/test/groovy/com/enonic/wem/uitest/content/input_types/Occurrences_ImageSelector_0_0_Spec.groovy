@@ -37,7 +37,7 @@ class Occurrences_ImageSelector_0_0_Spec
         List<String> images = formViewPanel.getSelectedImages();
         images.size() == 1;
 
-        and: "image displaye name should be present on the form panel"
+        and: "display name of the image should be present on the form panel"
         images.get(0) == NORD_IMAGE_DISPLAY_NAME;
     }
 

@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.SourceCodeDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.BaseHtmlAreaFormViewPanel
 import com.enonic.autotests.pages.form.HtmlArea0_0_FormViewPanel
@@ -51,22 +50,6 @@ class Occurrences_HtmlArea_0_0_Spec
 
         and: "'Source Button button should be displayed"
         !formViewPanel.isSourceCodeButtonDisplayed();
-    }
-
-    def "GIVEN wizard for htmlArea-content is opened WHEN 'Source Button' has been pressed THEN 'Code Dialog' should appear"()
-    {
-        given: "wizard for htmlArea-content is opened"
-        Content htmlAreaContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
-        selectSitePressNew( htmlAreaContent.getContentTypeName() );
-
-        when: "'Source Button' has been pressed"
-        HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        formViewPanel.showToolbar();
-        SourceCodeDialog codeDialog = formViewPanel.clickOnSourceButton();
-        saveScreenshot( "code_dialog_htmlarea" );
-
-        then: "'Code Dialog' should be displayed"
-        codeDialog.isOpened();
     }
 
     def "GIVEN HtmlArea(0:0) content with a text was added WHEN the content is opened THEN expected text should be present in the editor"()
