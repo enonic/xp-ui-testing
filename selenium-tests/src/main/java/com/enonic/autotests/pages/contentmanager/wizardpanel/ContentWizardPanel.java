@@ -645,7 +645,7 @@ public class ContentWizardPanel
         if ( !isElementDisplayed( DROPDOWN_OPTION_FILTER_INPUT ) )
         {
             saveScreenshot( "err_content_wizard_dropdown_not_displayed" );
-            throw new TestFrameworkException( "option filter input was not found" );
+            throw new TestFrameworkException( "ContentWizard -tried to select page descriptor: option filter input was not found" );
         }
         findElement( By.xpath( DROPDOWN_OPTION_FILTER_INPUT ) ).sendKeys( pageDescriptorDisplayName );
         String pageDescriptor = String.format( "//h6[contains(@class,'main-name') and text()='%s']", pageDescriptorDisplayName );
