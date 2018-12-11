@@ -164,7 +164,7 @@ public class ContentBrowsePanel
 
     public String getTextInIssuesButton()
     {
-        return getDisplayedString("//button[contains(@id,'ShowIssuesDialogButton')]//span" );
+        return getDisplayedString( "//button[contains(@id,'ShowIssuesDialogButton')]//span" );
     }
 
     /**
@@ -417,8 +417,7 @@ public class ContentBrowsePanel
      */
     public List<String> getContentNamesFromGrid()
     {
-        List<WebElement> rows = findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
-        return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
+        return this.getDisplayedStrings( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
     }
 
     public List<String> getContentDisplayNamesFromGrid()
@@ -870,7 +869,7 @@ public class ContentBrowsePanel
     public ContentBrowsePanel doDuplicateContent( String contentName )
     {
         this.selectDuplicateFromContextMenu( contentName );
-        DuplicateContentDialog dialog = new DuplicateContentDialog(getSession());
+        DuplicateContentDialog dialog = new DuplicateContentDialog( getSession() );
         dialog.waitForOpened();
         dialog.clickOnDuplicateButton();
         dialog.waitForClosed();

@@ -296,7 +296,15 @@ public abstract class Page
 
     protected List<String> getDisplayedStrings( By by )
     {
-        return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+        try
+        {
+            return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+        }
+        catch ( StaleElementReferenceException e )
+        {
+            sleep( 1000 );
+            return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+        }
     }
 
 
