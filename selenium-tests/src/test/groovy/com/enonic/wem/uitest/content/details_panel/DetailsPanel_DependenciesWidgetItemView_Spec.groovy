@@ -83,8 +83,8 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         when: "'show outbound'- button has been clicked"
         dependencies.clickOnShowOutboundButton();
-        NavigatorHelper.switchToNextTab( getTestSession(  ) );
-        sleep(2000);
+        NavigatorHelper.switchToNextTab( getTestSession() );
+        sleep( 2000 );
         saveScreenshot( "outbound_image_shortcut" );
 
         then: "Dependencies Section should appear in the filter panel"
@@ -111,7 +111,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowOutboundButton();
-        NavigatorHelper.switchToNextTab( getTestSession(  ) );
+        NavigatorHelper.switchToNextTab( getTestSession() );
 
         when: "button 'close' on the section has been pressed"
         filterPanel.doCloseDependenciesSection();
@@ -129,7 +129,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "'show inbound'- button has been clicked"
         dependencies.clickOnShowInboundButton();
         sleep( 1000 );
-        NavigatorHelper.switchToNextTab( getTestSession(  ) );
+        NavigatorHelper.switchToNextTab( getTestSession() );
         saveScreenshot( "test_inbound_image_shortcut" );
 
         then: "Dependencies Section appears on the filter panel"
@@ -161,8 +161,8 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         findAndSelectContent( TARGET_IMG );
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowInboundButton();
-        sleep(2000);
-        NavigatorHelper.switchToNextTab( getTestSession(  ) );
+        sleep( 2000 );
+        NavigatorHelper.switchToNextTab( getTestSession() );
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_two_inbound_contents" );
 
@@ -196,8 +196,9 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "site with the component was selected in the grid and dependency widget is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowOutboundButton();
-        sleep(1000);
-        NavigatorHelper.switchToNextTab( getTestSession(  ) );
+        sleep( 1000 );
+        NavigatorHelper.switchToNextTab( getTestSession() );
+        contentBrowsePanel.waitsForSpinnerNotVisible();
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_dependencies_site_with_component" );
 
