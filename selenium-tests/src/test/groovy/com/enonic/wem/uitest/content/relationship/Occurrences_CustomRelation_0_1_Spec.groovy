@@ -11,11 +11,13 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.input_types.Base_InputFields_Occurrences
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards*/
+@Ignore
 @Stepwise
 class Occurrences_CustomRelation_0_1_Spec
     extends Base_InputFields_Occurrences

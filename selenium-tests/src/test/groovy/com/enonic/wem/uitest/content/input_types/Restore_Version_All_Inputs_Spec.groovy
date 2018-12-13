@@ -8,9 +8,11 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+@Ignore
 @Stepwise
 class Restore_Version_All_Inputs_Spec
     extends Base_InputFields_Occurrences
@@ -147,7 +149,7 @@ class Restore_Version_All_Inputs_Spec
         addRadioData( data, RADIO_OPTION_V1 );
         addCheckboxData( data, true );
         addImageSelectorData( data, BOOK_IMAGE_DISPLAY_NAME )
-        addRelationshipData( data, EXECUTABLE_BAT_DISPLAY_NAME )
+        addRelationshipData( data, "Templates" )
         Content content = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
