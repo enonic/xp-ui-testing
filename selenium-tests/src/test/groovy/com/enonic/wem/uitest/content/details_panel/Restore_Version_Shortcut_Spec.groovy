@@ -6,9 +6,11 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+@Ignore
 @Stepwise
 class Restore_Version_Shortcut_Spec
     extends BaseVersionHistorySpec
