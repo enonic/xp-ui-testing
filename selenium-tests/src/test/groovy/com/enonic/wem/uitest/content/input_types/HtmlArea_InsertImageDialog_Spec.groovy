@@ -86,10 +86,10 @@ class HtmlArea_InsertImageDialog_Spec
         insertImageModalDialog.selectImage( "book" );
         saveScreenshot( "insert_image_button_dialog" );
 
-        //then: "'Image toolbar' should be displayed"
-        //insertImageModalDialog.isToolbarDisplayed();
+        then: "'Image Dialog toolbar' should be displayed"
+        insertImageModalDialog.isToolbarDisplayed();
 
-        then: "Justify button should be displayed"
+        and: "Justify button should be displayed"
         insertImageModalDialog.isJustifyButtonDisplayed();
 
         and: "Justify button should be displayed"
@@ -104,8 +104,8 @@ class HtmlArea_InsertImageDialog_Spec
         and: "Align Right button should be displayed"
         insertImageModalDialog.isAlignRightButtonDisplayed();
 
-        and: "'Image Cropping' selector should be displayed"
-        insertImageModalDialog.isCroppingSelectorDisplayed();
+        and: "'Apply style' selector should be displayed"
+        insertImageModalDialog.isApplyStyleSelectorDisplayed();
     }
     //verifies Error appears in the console when an Image has been inserted into HtmlArea #4957
     def "GIVEN InsertImageModalDialog is opened WHEN an image has been inserted AND 'Insert' button pressed THEN InsertImageModalDialog should be closed"()

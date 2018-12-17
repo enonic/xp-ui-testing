@@ -30,7 +30,7 @@ public class InsertImageModalDialog
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
-    private final String IMAGE_TOOLBAR = DIALOG_CONTAINER + "//div[contains(@id,'ImageToolbar')]";
+    private final String IMAGE_TOOLBAR = DIALOG_CONTAINER + "//div[contains(@id,'ImageDialogToolbar')]";
 
     private final String BUTTON_JUSTIFY = "//button[contains(@class,'icon-paragraph-justify')]";
 
@@ -40,7 +40,7 @@ public class InsertImageModalDialog
 
     private final String BUTTON_ALIGN_CENTER = "//button[contains(@class,'icon-paragraph-right')]";
 
-    private final String IMAGE_CROPPING_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'ImageCroppingSelector')]";
+    private final String APPLY_STYLE_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'ImageStyleSelector')]";
 
     @FindBy(xpath = DIALOG_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT)
     WebElement optionFilterInput;
@@ -141,9 +141,9 @@ public class InsertImageModalDialog
         return isElementDisplayed( IMAGE_TOOLBAR );
     }
 
-    public boolean isCroppingSelectorDisplayed()
+    public boolean isApplyStyleSelectorDisplayed()
     {
-        return isElementDisplayed( IMAGE_CROPPING_SELECTOR );
+        return isElementDisplayed( APPLY_STYLE_SELECTOR );
     }
 
     public boolean isJustifyButtonDisplayed()
