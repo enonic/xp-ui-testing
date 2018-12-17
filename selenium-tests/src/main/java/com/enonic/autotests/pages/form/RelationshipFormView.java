@@ -55,6 +55,12 @@ public class RelationshipFormView
         return this;
     }
 
+    public FormViewPanel typeNameInOptionFilter( String displayName )
+    {
+        clearAndType( optionFilterInput, displayName );
+        return this;
+    }
+
     public boolean isOpened()
     {
         return waitUntilVisibleNoException( By.xpath( STEP_XPATH ), Application.EXPLICIT_NORMAL );
@@ -91,5 +97,10 @@ public class RelationshipFormView
         }
         getDisplayedElement( By.xpath( CONTAINER_DIV + removeButtonXpath ) ).click();
         sleep( 500 );
+    }
+    public boolean isNoMatchingItemsVisible()
+    {
+        String message = CONTAINER_DIV + "//div[@class='empty-options' and text()='No matching items']";
+        return waitUntilVisibleNoException(By.xpath( message ) ,Application.EXPLICIT_NORMAL );
     }
 }
