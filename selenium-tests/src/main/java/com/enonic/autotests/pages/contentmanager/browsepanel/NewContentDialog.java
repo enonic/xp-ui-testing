@@ -248,8 +248,9 @@ public class NewContentDialog
     public ContentWizardPanel selectContentType( String contentTypeName )
     {
         String searchString = contentTypeName.substring( contentTypeName.indexOf( ":" ) + 1 );
-        waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
-        clearAndType( searchInput, searchString );
+        //waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
+        buildActions().sendKeys( searchString).build().perform();
+        //clearAndType( searchInput, searchString );
         sleep( 700 );
         String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
         boolean isContentTypePresent = isElementDisplayed( ctypeXpath );
@@ -302,5 +303,9 @@ public class NewContentDialog
             getLogger().info( "list of content types is empty" );
         }
         return findElements( By.xpath( LIST_ITEMS_SITES ) ).size();
+    }
+    public NewContentDialog showSearchInput(){
+        buildActions().sendKeys( "a").build().perform();
+        return this;
     }
 }
