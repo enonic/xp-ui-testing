@@ -87,10 +87,10 @@ class Restore_Version_Site_Spec
 
         when: "the previous version has been restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
 
-        then: "acl-entry must not be diasplayed after the restoring of version without this role"
+        then: "acl-entry must not be displayed after the restoring of version without this role"
         !contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains(
             "Anonymous User" );
 
@@ -100,12 +100,12 @@ class Restore_Version_Site_Spec
 
     def "GIVEN the site is selected AND version panel is opened WHEN version with the acl-entry restored THEN acl-entry should appear again in the content wizard"()
     {
-        given: "new acl entry added and folder saved"
+        given: "the site is selected AND version panel is opened"
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
 
-        when: "the latest version has been restored"
+        when: "the previous version has been restored"
         versionItem.doRestoreVersion( versionItem.getId() );
 
         and: "navigate to the security tab"
@@ -163,22 +163,22 @@ class Restore_Version_Site_Spec
         siteFormViewPanel.getAppDisplayNames().get( 0 ) == MY_FIRST_APP;
     }
 
-    def "GIVEN existing site WHEN page controller selected THEN a number of versions increased"()
+    def "GIVEN existing site WHEN page controller has been selected THEN the number of versions should be increased"()
     {
-        given: "existing site with selected application opened"
+        given: "existing site with selected application is opened"
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int before = allContentVersionsView.getAllVersions().size();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         PageTemplateFormViewPanel pageTemplateFormViewPanel = new PageTemplateFormViewPanel( getSession() );
 
-        when: "page controller selected from the combobox-options"
+        when: "page controller has been selected"
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
         sleep( 500 );
         saveScreenshot( "site_version_controller_added_wizard" );
 
 
-        and: "home button clicked"
+        and: "home button has been clicked"
         wizard.switchToBrowsePanelTab();
         saveScreenshot( "version_site_controller_added" );
 
@@ -202,7 +202,7 @@ class Restore_Version_Site_Spec
         sleep( 700 );
         saveScreenshot( "test_version_without_selected_controller" );
 
-        then: "page controller not selected in the page editor and option filter input should be displayed"
+        then: "page controller should be not selected and 'option filter' input should be displayed"
         wizard.isPageDescriptorOptionsFilterDisplayed();
     }
 

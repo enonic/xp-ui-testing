@@ -72,7 +72,7 @@ class Restore_Version_Folder_Spec
         findAndSelectContent( FOLDER_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
-        and: "language was changed"
+        and: "language is changed"
         form.removeLanguage( NORSK_LANGUAGE ).selectLanguage( ENGLISH_LANGUAGE );
         saveScreenshot( "folder_language_changed" );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
@@ -92,43 +92,30 @@ class Restore_Version_Folder_Spec
         form.getLanguage() == NORSK_LANGUAGE;
     }
 
-    def "GIVEN new acl-entry was added in the folder wizard WHEN previous version of folder is restored THEN the acl entry should not be present on the content wizard"()
+    def "GIVEN new acl-entry is  added in the folder wizard WHEN versions widget has been opened THEN number of versions should not be changed"()
     {
-        given: "new acl entry added and folder saved"
+        given: "new acl entry is added and folder saved"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         findAndSelectContent( FOLDER_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
         modalDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
-        sleep( 1000 );
-        List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
+        sleep( 500 );
+        List<String> aclNames = wizard.clickOnAccessTabLink().getDisplayNamesOfAclEntries();
+        and: "wizard closes"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "the previous version is restored"
+        when: "version panel for the content is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        int numberOfVersions = allContentVersionsView.getAllVersions().size();
+        saveScreenshot( "versions_number_permissions_updated" );
 
-        then: "and this role not present after restoring of version without this role"
-        !contentBrowsePanel.clickToolbarEdit().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        then: "number of versions should not be changed, because only permissions were changed"
+        numberOfVersions == 4;
 
-        and: "required role was present before restoring"
-        beforeRestoring.contains( "Anonymous User" );
+        and: "new ACL entry is present"
+        aclNames.contains( "Anonymous User" );
+
     }
-
-    def "GIVEN folder is selected and version panel is opened WHEN version with the acl-entry restored THEN acl-entry present again in the content wizard"()
-    {
-        given: "new acl entry added and folder saved"
-        findAndSelectContent( FOLDER_CONTENT.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-
-        when: "the latest version is restored"
-        versionItem.doRestoreVersion( versionItem.getId() );
-
-        then: "new role present after restoring of the latest version"
-        contentBrowsePanel.clickToolbarEdit().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains( "Anonymous User" );
-    }
-
 }
