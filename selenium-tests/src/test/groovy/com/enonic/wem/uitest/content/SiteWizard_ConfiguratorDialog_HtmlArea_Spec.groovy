@@ -136,7 +136,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         and: "select the 'Content' bar item AND select a folder in the 'target' "
-        linkModalDialog.clickContentBarItem().selectOption( IMPORTED_IMAGE_NORD_NAME ).typeText(
+        linkModalDialog.clickContentBarItem().selectOption( "Templates" ).typeText(
             CONTENT_TEXT ).pressInsertButton().waitForDialogClosed(); ;
         saveScreenshot( "conf-dialog-content" );
         configurationDialog.doApply();
