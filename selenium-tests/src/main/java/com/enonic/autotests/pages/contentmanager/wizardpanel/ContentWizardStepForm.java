@@ -56,7 +56,7 @@ public class ContentWizardStepForm
     public ContentWizardStepForm type( PropertyTree data, String contentTypeName )
     {
         FormViewPanel formViewPanel = null;
-        if ( contentTypeName.equals( ContentTypeName.site().toString() ) )
+        if ( contentTypeName.equals( "Site" ) )
         {
             formViewPanel = new SiteFormViewPanel( getSession() );
         }

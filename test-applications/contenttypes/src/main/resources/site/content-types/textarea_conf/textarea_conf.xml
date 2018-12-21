@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Text Area</display-name>
+  <display-name>textarea_conf</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="textarea" type="TextArea">

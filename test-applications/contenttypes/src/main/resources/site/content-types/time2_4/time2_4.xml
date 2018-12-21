@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Time</display-name>
+  <display-name>time2_4</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="time2_4" type="Time">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Image selector</display-name>
+  <display-name>imageselector2_4</display-name>
   <super-type>base:structured</super-type>
   <allow-child-content>true</allow-child-content>
   <form>

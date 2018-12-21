@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Using Mixins</display-name>
+  <display-name>using-mixins</display-name>
   <super-type>base:structured</super-type>
   <form>
     <item-set name="images">

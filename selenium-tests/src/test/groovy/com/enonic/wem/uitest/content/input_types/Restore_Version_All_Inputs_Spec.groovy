@@ -12,7 +12,6 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-@Ignore
 @Stepwise
 class Restore_Version_All_Inputs_Spec
     extends Base_InputFields_Occurrences
@@ -154,7 +153,7 @@ class Restore_Version_All_Inputs_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":all-inputs" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "all-inputs" ).data( data ).
             build();
         return content;
     }

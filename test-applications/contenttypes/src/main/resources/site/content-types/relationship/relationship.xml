@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Relationship</display-name>
+  <display-name>relationship</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="myRelation" type="ContentSelector">

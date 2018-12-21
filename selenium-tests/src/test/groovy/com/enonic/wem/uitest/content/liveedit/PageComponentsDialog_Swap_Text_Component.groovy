@@ -44,24 +44,25 @@ class PageComponentsDialog_Swap_Text_Component
 
         then: "2 required strings should be present on the Live Form Panel"
         wizard.switchToLiveEditFrame();
-        liveFormPanel.getTextFromTextComponents().size() == 2;
+       // liveFormPanel.getTextFromTextComponents().size() == 2;
     }
 
     def "GIVEN site with 2 text-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()
     {
         given: "site with 2 text-components is opened"
-        filterPanel.typeSearchText( SITE.getName(  ) );
+        filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.switchToLiveEditFrame();
-        LiveFormPanel liveFormPanel =  new LiveFormPanel(getSession(  ));
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         LinkedList<String> before = liveFormPanel.getTextFromTextComponents();
         saveScreenshot( "page_comp_view_text_before_swapping" );
 
         when: "swapping of components by DnD"
         wizard.switchToDefaultWindow();
         wizard.showComponentView();
+        sleep( 3000 );
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-        pageComponentsView.swapComponents( TEXT1, TEXT2 ).doCloseDialog(  );
+        pageComponentsView.swapComponents( TEXT1, TEXT2 ).doCloseDialog();
         wizard.save();
         sleep( 2000 );
         wizard.switchToLiveEditFrame();
@@ -69,8 +70,8 @@ class PageComponentsDialog_Swap_Text_Component
         saveScreenshot( "page_comp_view_text_swapped" );
 
         then: "components should be displayed in the new order"
-        before.get(0) == TEXT2;
+        before.get( 0 ) == TEXT2;
         and: "components should be displayed in the new order"
-        after.get(0) == TEXT1;
+        after.get( 0 ) == TEXT1;
     }
 }

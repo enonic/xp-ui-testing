@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Text Line</display-name>
+  <display-name>textline1_0</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="TextLine_1_0" type="TextLine">

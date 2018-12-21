@@ -32,7 +32,7 @@ class CreateSiteWithLayoutSpec
     String SITE_DISPLAY_NAME = "layout-page-template";
 
     @Shared
-    String SUPPORTS = ContentTypeName.site().toString();
+    String SUPPORTS = "site";
 
     @Shared
     String TEST_IMAGE_DISPLAY_NAME = "telk";

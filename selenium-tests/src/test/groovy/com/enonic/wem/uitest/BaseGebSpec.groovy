@@ -19,7 +19,7 @@ class BaseGebSpec
     String APP_CONTENT_TYPES_DISPLAY_NAME = "All Content Types App";
 
     @Shared
-    String ALL_CONTENT_TYPES_APP_NAME = "com.enonic.xp.ui_testing.contenttypes";
+    String ALL_CONTENT_TYPES_APP_NAME = "";
 
     @Shared
     TestSession session;

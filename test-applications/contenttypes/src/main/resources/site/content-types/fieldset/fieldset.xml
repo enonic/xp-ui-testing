@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>FieldSet</display-name>
+  <display-name>fieldset</display-name>
   <super-type>base:structured</super-type>
   <form>
     <field-set name="documentFieldSet">

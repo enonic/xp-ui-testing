@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Checkbox</display-name>
+  <display-name>checkbox</display-name>
   <super-type>base:structured</super-type>
+  <description>test:checkbox</description>
   <form>
     <input name="checkbox0_1" type="Checkbox">
       <label>To Check</label>

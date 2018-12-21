@@ -161,7 +161,7 @@ class Occurrences_ComboBox_0_0_Spec
             name( NameHelper.uniqueName( "cbox0_0_" ) ).
             displayName( "combobox0_0 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "combobox0_0" ).data( data ).
             build();
         return comboboxContent;
     }

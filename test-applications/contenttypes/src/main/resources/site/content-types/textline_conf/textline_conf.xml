@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Text Line</display-name>
+  <display-name>textline_conf</display-name>
   <super-type>base:structured</super-type>
   <form>
     <!-- Example using regex validation and a default value. -->

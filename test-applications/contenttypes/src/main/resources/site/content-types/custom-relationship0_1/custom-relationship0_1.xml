@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
   <!-- This content type references custom relationship-types. -->
-  <display-name>Custom Relationship</display-name>
+  <display-name>custom-relationship0_1</display-name>
   <super-type>base:structured</super-type>
+  <description>test:custom-relationship0_1</description>
   <form>
     <input name="cited-in" type="ContentSelector">
       <label>Cited In</label>

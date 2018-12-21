@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>All the Input Types</display-name>
+  <display-name>all-inputs</display-name>
   <super-type>base:structured</super-type>
+  <description></description>
   <form>
     <input name="myCheckbox" type="Checkbox">
       <label>Checkbox</label>

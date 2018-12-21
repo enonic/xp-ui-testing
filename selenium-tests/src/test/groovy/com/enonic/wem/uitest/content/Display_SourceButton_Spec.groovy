@@ -233,7 +233,7 @@ class Display_SourceButton_Spec
             name( name ).
             displayName( "simple site" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).aclEntries( aclEntries ).
+            contentType( "Site" ).data( data ).aclEntries( aclEntries ).
             build();
         return site;
     }

@@ -298,7 +298,7 @@ public class ContentWizardPanel
 
     public ContentWizardPanel clickToolbarPreview()
     {
-        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), 1 );
+        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), 3 );
         if ( !isEnabled )
         {
             saveScreenshot( "err_preview_button_status" );

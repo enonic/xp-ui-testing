@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Combo box</display-name>
+  <display-name>combobox0_0</display-name>
   <super-type>base:structured</super-type>
+  <description>test:combobox0_0</description>
   <form>
     <input name="combobox_min0_max0" type="ComboBox">
       <label>combobox 0:0</label>

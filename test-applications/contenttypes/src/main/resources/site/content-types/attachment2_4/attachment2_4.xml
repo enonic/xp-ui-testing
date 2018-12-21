@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
   <super-type>base:structured</super-type>
-  <display-name>Attachments</display-name>
+  <display-name>attachment2_4</display-name>
+  <description>attachment2_4</description>
   <form>
     <input name="attachment2_4" type="AttachmentUploader">
       <label>Multiple attachments (min 2, max 4)</label>

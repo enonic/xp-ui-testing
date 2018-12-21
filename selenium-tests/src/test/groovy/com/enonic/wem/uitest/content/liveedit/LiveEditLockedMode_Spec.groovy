@@ -128,7 +128,7 @@ class LiveEditLockedMode_Spec
             name( siteName ).
             displayName( "locked-mode-test" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }

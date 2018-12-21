@@ -107,7 +107,7 @@ class FieldSet_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( "fieldset content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":fieldset" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "fieldset" ).data( data ).
             build();
         return textLineContent;
     }

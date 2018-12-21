@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Set In Set</display-name>
+  <display-name>set-in-set</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="first_name" type="TextLine">

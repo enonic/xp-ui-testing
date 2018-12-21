@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>OptionSet</display-name>
+  <display-name>optionset</display-name>
   <super-type>base:structured</super-type>
   <form>
     <option-set name="radioOptionSet">

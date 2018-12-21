@@ -49,8 +49,9 @@ public class NewContentDialog
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
 
-    public static String CONTENT_TYPE_NAME =
-        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[contains(@class,'sub-name') and text()='%s']]";
+    public static String CONTENT_TYPE_DISPLAY_NAME =
+        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::h6[contains(@class,'main-name') and text()='%s']]";
+    public static String CONTENT_TYPE_BY_DESCRIPTION =CONTAINER+"//li[contains(@class,'content-types-list-item') and descendant::p[contains(@class,'sub-name') and text()='%s']]";
 
     private final String AVAILABLE_CONTENT_TYPES = CONTAINER + "//ul[contains(@id,'FilterableItemsList')]" + "//li" + P_NAME;
 
@@ -241,23 +242,23 @@ public class NewContentDialog
     }
 
     /**
-     * Select content type by name.
+     * Select content type by name or description.
      *
-     * @param contentTypeName the name of a content type.
+     * @param type the name of a content type.
      */
-    public ContentWizardPanel selectContentType( String contentTypeName )
+    public ContentWizardPanel selectContentType( String type )
     {
-        String searchString = contentTypeName.substring( contentTypeName.indexOf( ":" ) + 1 );
+        //String searchString = contentTypeDisplayName.substring( contentTypeDisplayName.indexOf( ":" ) + 1 );
         //waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
-        buildActions().sendKeys( searchString).build().perform();
+        buildActions().sendKeys( type).build().perform();
         //clearAndType( searchInput, searchString );
         sleep( 700 );
-        String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
+        String ctypeXpath = String.format( CONTENT_TYPE_DISPLAY_NAME, type );
         boolean isContentTypePresent = isElementDisplayed( ctypeXpath );
         if ( !isContentTypePresent )
         {
             saveScreenshot( NameHelper.uniqueName( "err_type" ) );
-            throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
+            throw new TestFrameworkException( "content type with name " + type + " was not found!" );
         }
         getDisplayedElement( By.xpath( ctypeXpath ) ).click();
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );

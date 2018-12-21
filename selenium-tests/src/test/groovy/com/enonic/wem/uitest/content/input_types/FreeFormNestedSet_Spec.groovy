@@ -115,7 +115,7 @@ class FreeFormNestedSet_Spec
             name( NameHelper.uniqueName( "freeform" ) ).
             displayName( "freeform content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":freeform" ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "freeform" ).
             build();
         return tinyMceContent;
     }

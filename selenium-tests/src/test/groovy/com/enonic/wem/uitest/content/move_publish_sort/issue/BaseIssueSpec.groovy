@@ -108,7 +108,7 @@ class BaseIssueSpec
             name( siteName ).
             displayName( "site-contenttypes-based" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }

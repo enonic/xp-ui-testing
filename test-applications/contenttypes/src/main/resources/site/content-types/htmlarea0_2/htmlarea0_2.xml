@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Html Area</display-name>
+  <display-name>htmlarea0_2</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="htmlarea_0_2" type="HtmlArea">

@@ -172,7 +172,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
+            contentType( "Folder" ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -193,7 +193,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( parent ).
-            contentType( ContentTypeName.shortcut() ).
+            contentType( "Shortcut" ).
             build();
         return shortcut;
     }
@@ -220,7 +220,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( parent ).
-            contentType( ContentTypeName.shortcut() ).settings( settings ).data( data ).build();
+            contentType( "Shortcut" ).settings( settings ).data( data ).build();
         return shortcut;
     }
 
@@ -245,7 +245,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( parent ).
-            contentType( ContentTypeName.shortcut() ).data( data ).build();
+            contentType( "Shortcut" ).data( data ).build();
         return shortcut;
     }
 
@@ -255,7 +255,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
+            contentType( "Folder" ).
             parent( ContentPath.ROOT ).settings( settings ).
             build();
         return content;
@@ -266,7 +266,7 @@ class BaseContentSpec
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().
             name( generated ).
-            contentType( ContentTypeName.folder() ).
+            contentType( "Folder" ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -278,7 +278,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
+            contentType( "Folder" ).
             parent( ContentPath.from( parentName ) ).
             build();
         return content;
@@ -325,7 +325,7 @@ class BaseContentSpec
             name( name ).
             displayName( "sample site" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }
@@ -340,7 +340,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( siteName ) ).
             displayName( "my-site" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }
@@ -356,7 +356,7 @@ class BaseContentSpec
             name( name ).
             displayName( "simple site" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }
@@ -372,7 +372,7 @@ class BaseContentSpec
             name( name ).
             displayName( "test site " ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }
@@ -388,7 +388,7 @@ class BaseContentSpec
             name( name ).
             displayName( displayName ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).settings( settings ).
+            contentType( "Site" ).data( data ).settings( settings ).
             build();
         return site;
     }
@@ -403,7 +403,7 @@ class BaseContentSpec
             name( siteName ).
             displayName( displayName ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }
@@ -429,7 +429,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( ContentTypeName.pageTemplate() ).data( data ).
+            contentType( "Template" ).data( data ).
             build();
         return pageTemplate;
     }
@@ -478,7 +478,7 @@ class BaseContentSpec
             name( siteName ).
             displayName( "site with all content types" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).
+            contentType( "Site" ).data( data ).
             build();
         return site;
     }
@@ -495,7 +495,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( "img1_1_" ) ).
             displayName( "img_sel 1_1" ).
             parent( ContentPath.from( siteName ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "imageselector1_1" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -505,7 +505,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( name ).
             displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
+            contentType( "Folder" ).
             parent( ContentPath.ROOT ).
             build();
         return content;
