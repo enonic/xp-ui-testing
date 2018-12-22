@@ -40,7 +40,7 @@ class PageTemplate_Spec
         contentBrowsePanel.expandContent( ContentPath.from( TEST_SITE.getName() ) );
         and: "_templates folder is selected and 'New' button pressed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            ContentTypeName.pageTemplate() );
+            "Page Template" );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
         when: "'Support' combobox should be displayed"
@@ -64,7 +64,7 @@ class PageTemplate_Spec
         TEST_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, null, "not-valid",
                                            TEST_SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            ContentTypeName.pageTemplate() );
+            "Page Template" );
 
         when: "display name has been typed"
         wizard.typeData( TEST_TEMPLATE );
@@ -112,7 +112,7 @@ class PageTemplate_Spec
 
         and: "_templates folder is selected and 'New' button pressed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            ContentTypeName.pageTemplate() );
+            "Page Template" );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
         when: "display name has been typed"

@@ -89,7 +89,7 @@ public class ContentWizardStepForm
             formViewPanel = new CheckBoxFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.equals( ContentTypeName.pageTemplate().toString() ) )
+        else if ( contentTypeName.equals( "Page Template" ) )
         {
             formViewPanel = new PageTemplateFormViewPanel( getSession() );
         }

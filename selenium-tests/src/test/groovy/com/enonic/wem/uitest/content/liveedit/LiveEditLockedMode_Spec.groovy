@@ -144,7 +144,7 @@ class LiveEditLockedMode_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( ContentTypeName.pageTemplate() ).data( data ).
+            contentType( "Page Template" ).data( data ).
             build();
         return pageTemplate;
     }
