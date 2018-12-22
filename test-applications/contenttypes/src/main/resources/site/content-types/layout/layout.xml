@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Layout</display-name>
+  <display-name>layout</display-name>
   <super-type>base:structured</super-type>
   <form>
     <field-set name="nameOfLayoutDoesNotAffectPathOfChildFormItems">

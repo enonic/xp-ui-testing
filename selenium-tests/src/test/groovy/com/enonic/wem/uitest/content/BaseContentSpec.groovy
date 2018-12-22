@@ -429,7 +429,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( "Template" ).data( data ).
+            contentType( "Page Template" ).data( data ).
             build();
         return pageTemplate;
     }

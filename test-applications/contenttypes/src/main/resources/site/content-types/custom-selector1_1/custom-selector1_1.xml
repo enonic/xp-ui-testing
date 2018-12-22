@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>custom-selector0_2</display-name>
+  <display-name>custom-selector1_1</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="my-custom-selector-1" type="CustomSelector">

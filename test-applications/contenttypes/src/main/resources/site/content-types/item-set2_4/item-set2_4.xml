@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>Item set</display-name>
+  <display-name>item-set2_4</display-name>
   <super-type>base:structured</super-type>
   <form>
     <item-set name="myItemSet">

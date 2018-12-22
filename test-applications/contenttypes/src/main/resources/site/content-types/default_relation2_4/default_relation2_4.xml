@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>default_relation0_1</display-name>
+  <display-name>default_relation2_4</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="defRelation" type="ContentSelector">
