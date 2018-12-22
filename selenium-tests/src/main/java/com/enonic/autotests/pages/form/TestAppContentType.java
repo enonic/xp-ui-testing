@@ -12,7 +12,7 @@ public enum TestAppContentType
     "radiobutton" ), HTMLAREA0_1( "htmlarea0_1" ), HTMLAREA0_2( "htmlarea0_2" ), HTMLAREA0_0( "htmlarea0_0" ), HTMLAREA_DIV(
     "htmlarea_div" ), IMAGE_SELCTOR0_0( "imageselector0_0" ), IMAGE_SELCTOR0_1( "imageselector0_1" ), IMAGE_SELCTOR1_1(
     "imageselector1_1" ), IMAGE_SELCTOR2_4( "imageselector2_4" ), DEFAULT_RELATION0_1( "default_relation0_1" ), DEFAULT_RELATION2_4(
-    "default_relation2_4" ), CUSTOM_RELATION0_1( "custom-relationship0_1" ), ARTICLE( "article" ), COUNTRY( "country" ), CITY(
+    "default_relation2_4" ), CUSTOM_RELATION0_1( "custom-relationship0_1" ), ARTICLE( "article" ), COUNTRY( "Country" ), CITY(
     "city" ), ALL_INPUTS( "all-inputs" ), FIELD_SET( "fieldset" ), CUSTOM_SELECTOR0_2( "custom-selector0_2" ), CUSTOM_SELECTOR1_1(
     "custom-selector1_1" ), ITEM_SET( "item-set0_0" ), ATTACHMENT1_1( "attachment1_1" ), ATTACHMENT2_4( "attachment2_4" ), OPTION_SET(
     "optionset" ), SET_IN_SET( "set-in-set" ), FREE_FORM_SET( "freeform" );
