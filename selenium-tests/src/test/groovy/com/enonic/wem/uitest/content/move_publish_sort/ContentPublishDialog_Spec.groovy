@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
@@ -9,7 +10,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -30,7 +30,7 @@ class ContentPublishDialog_Spec
     def "GIVEN creating of new content WHEN data typed and 'Publish' button was pressed  THEN correct status of content is displayed on the modal dialog"()
     {
         given:
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         String displayName = NameHelper.uniqueName( "test" );
 
         when: "'Publish' button on the wizard has been pressed"

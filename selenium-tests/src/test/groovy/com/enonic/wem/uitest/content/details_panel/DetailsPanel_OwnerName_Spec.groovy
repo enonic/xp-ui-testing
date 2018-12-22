@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
@@ -17,7 +18,6 @@ import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -165,7 +165,7 @@ class DetailsPanel_OwnerName_Spec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
+            contentType( BaseContentType.FOLDER.getDisplayName(  ) ).
             parent( ContentPath.ROOT ).
             build();
         return content;

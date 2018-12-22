@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.schema.content.ContentTypeName
 
 class ContentWizardPanel_Toolbar_Spec
     extends BaseContentSpec
@@ -12,7 +12,7 @@ class ContentWizardPanel_Toolbar_Spec
     def "WHEN folder-wizard is opened AND all inputs are empty THEN all buttons on toolbar have correct state"()
     {
         when: "content wizard is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
 
         then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
@@ -33,8 +33,7 @@ class ContentWizardPanel_Toolbar_Spec
     def "GIVEN content wizard is opened WHEN data was typed but not saved yet THEN all buttons on toolbar have correct state"()
     {
         given: "content wizard is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
-
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ));
         when: "display name is typed"
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) );
 
@@ -56,10 +55,10 @@ class ContentWizardPanel_Toolbar_Spec
 
     def "GIVEN folder-wizard opened WHEN data typed and content saved THEN all buttons on toolbar have correct state"()
     {
-        given: "content wizard is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        given: "wizard is opened"
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
 
-        when: "display name was typed and saved"
+        when: "display name has been typed and saved"
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
         then: "'Delete' button should be enabled"
@@ -80,8 +79,8 @@ class ContentWizardPanel_Toolbar_Spec
 
     def "GIVEN folder wizard is opened WHEN content saved AND published THEN 'online' status appears in the wizard AND publish-button should be disabled now"()
     {
-        given: "folder wizard is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        given: "wizard is opened"
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
         when: "content has been published"

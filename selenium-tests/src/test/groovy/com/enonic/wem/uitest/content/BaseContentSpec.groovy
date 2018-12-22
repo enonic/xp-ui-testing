@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
@@ -20,7 +21,6 @@ import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 
 class BaseContentSpec
@@ -172,7 +172,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( "Folder" ).
+            contentType( BaseContentType.FOLDER.getDisplayName(  ) ).
             parent( ContentPath.ROOT ).
             build();
         return content;

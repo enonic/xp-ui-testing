@@ -6,8 +6,8 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
-import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.pages.form.liveedit.CkeToolbar
+import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
@@ -22,7 +22,6 @@ import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -152,8 +151,7 @@ class Display_SourceButton_Spec
         saveScreenshot( "logged_" + USER_NAME );
 
         when: "double click on the text component is performed"
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType(
-            "com.enonic.xp.ui_testing.simple_page:htmlarea" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "htmlarea" );
         saveScreenshot( "htmlarea_source_button_not_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
 

@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.relationship
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.RelationshipFormView
 import com.enonic.autotests.utils.NameHelper
@@ -7,8 +8,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.input_types.Base_InputFields_Occurrences
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -166,7 +165,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
+            contentType( BaseContentType.FOLDER.getDisplayName(  )).
             parent( ContentPath.ROOT ).
             build();
         return content;

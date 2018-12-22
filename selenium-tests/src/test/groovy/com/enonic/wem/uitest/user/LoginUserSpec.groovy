@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.user
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.HomePage
 import com.enonic.autotests.pages.LauncherPanel
 import com.enonic.autotests.pages.LoginPage
@@ -18,8 +19,6 @@ import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -87,7 +86,7 @@ class LoginUserSpec
                 name(NameHelper.uniqueName("folder-login")).
                 displayName("folder").
                 parent(ContentPath.ROOT).
-                contentType(ContentTypeName.folder()).
+                contentType( BaseContentType.FOLDER.getDisplayName(  )).
                 aclEntries(aclEntries).
                 build();
 
@@ -95,7 +94,7 @@ class LoginUserSpec
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp(getTestSession());
 
         when: "new content with CAN_READ-permissions for the user has been saved"
-        contentBrowsePanel.clickToolbarNew().selectContentType(ContentTypeName.folder().toString()).
+        contentBrowsePanel.clickToolbarNew().selectContentType(BaseContentType.FOLDER.getDisplayName(  )).
                 typeData(contentCanWrite).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content should be listed in the grid"
@@ -108,14 +107,14 @@ class LoginUserSpec
                 name(NameHelper.uniqueName("folder-login")).
                 displayName("folder").
                 parent(ContentPath.ROOT).
-                contentType(ContentTypeName.folder()).
+                contentType(BaseContentType.FOLDER.getDisplayName(  )).
                 build();
 
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp(getTestSession());
 
         when: "new content with permissions CAN_READ for user has been added"
-        contentBrowsePanel.clickToolbarNew().selectContentType(ContentTypeName.folder().toString()).
+        contentBrowsePanel.clickToolbarNew().selectContentType(BaseContentType.FOLDER.getDisplayName(  )).
                 typeData(contentCanNotWrite).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content should be listed in the grid"

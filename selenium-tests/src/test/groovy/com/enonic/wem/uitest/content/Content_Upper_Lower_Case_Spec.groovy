@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
@@ -32,7 +33,7 @@ class Content_Upper_Lower_Case_Spec
     def "GIVEN creating new folder on root with the name in lower cases WHEN saved  THEN correct notification message appears"()
     {
         given: "creating new folder on root"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         wizard.typeDisplayName( FOLDER_NAME_IN_LOWER_CASE );
 
         when: "'Save' button pressed"
@@ -60,7 +61,7 @@ class Content_Upper_Lower_Case_Spec
     def "GIVEN creating new folder on root with the same name in mixed cases WHEN saved THEN warning message appears"()
     {
         given: "creating new folder on root with the name in mixed cases"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         wizard.typeDisplayName( FOLDER_NAME_MIXED_CASE );
 
         when: "'Save' button pressed"
@@ -70,7 +71,7 @@ class Content_Upper_Lower_Case_Spec
         String message = String.format( WARNING_MESSAGE, FOLDER_NAME_IN_LOWER_CASE );
         contentBrowsePanel.waitExpectedNotificationMessage( message, 2 );
     }
-    //only one folder was created:
+
     def "WHEN name of folder typed in the search input typed THEN only one content displayed in the grid"()
     {
         when:

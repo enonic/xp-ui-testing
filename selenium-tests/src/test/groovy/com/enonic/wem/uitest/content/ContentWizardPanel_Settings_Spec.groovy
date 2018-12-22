@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -19,7 +19,7 @@ class ContentWizardPanel_Settings_Spec
     def "WHEN content wizard is opened THEN language should be not selected AND option filter-input should be present"()
     {
         when: "content wizard is opened"
-        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
 
         then: "language 'option filter' is present"

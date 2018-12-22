@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
@@ -9,7 +10,6 @@ import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.SystemUserName
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -43,7 +43,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN 'Overwrite child permissions' has been clicked THEN 'Apply' button on the dialog should be enabled"()
     {
         given: "Content wizard is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         and: "'Edit Permissions Dialog' is opened"
         EditPermissionsDialog dialog = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
 
@@ -156,7 +156,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel'-top button pressed THEN Confirmation Dialog should not appear"()
     {
         given: "Content wizard is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         and: "'Edit Permissions Dialog' is opened"
         EditPermissionsDialog editPermissionsButton = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
         and: "changes is made"

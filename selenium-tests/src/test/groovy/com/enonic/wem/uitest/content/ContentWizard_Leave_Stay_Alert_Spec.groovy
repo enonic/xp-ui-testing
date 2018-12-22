@@ -1,10 +1,9 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
-import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 
 /**
  * TASK: XP-4570 Add selenium tests for Alert, that appears where there are unsaved changes in the wizard
@@ -12,10 +11,10 @@ import spock.lang.Ignore
 class ContentWizard_Leave_Stay_Alert_Spec
     extends BaseContentSpec
 {
-    def "GIVEN content-wizard opened AND data typed and content not saved WHEN 'delete content' dialog opened AND 'Delete' pressed THEN wizard closed and content not listed in the grid"()
+    def "GIVEN folder-wizard is opened AND data typed but the folder is not saved WHEN 'delete content' dialog opened AND 'Delete' pressed THEN wizard closed and content not listed in the grid"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         String displayName = NameHelper.uniqueName( "delete-dialog" );
 
         when: "display name typed and Delete button pressed"
@@ -30,7 +29,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
     def "GIVEN content-wizard opened AND data typed and content not saved WHEN 'delete content' dialog opened AND 'Cancel' pressed THEN wizard still present AND modal dialog closed"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         String displayName = NameHelper.uniqueName( "delete-dialog" );
 
         when: "display name typed and Delete button pressed"
@@ -48,7 +47,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
     def "GIVEN content-wizard opened AND data typed and content not saved WHEN delete button pressed THEN 'delete content dialog' appears"()
     {
         given: "content wizard opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
 
         when: "display name typed and Delete button pressed"
         DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).clickToolbarDelete();
@@ -63,7 +62,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
     def "GIVEN content wizard is opened AND typed data was not saved AND wizard is closing WHEN 'Leave' has been pressed THEN content with the name not listed in the grid"()
     {
         given: "content wizard is opened AND typed data was not saved"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         String name = NameHelper.uniqueName( "folder" );
         and: "try to close the wizard with unsaved changes"
         wizardPanel.typeDisplayName( name ).executeCloseWizardScript();
@@ -79,7 +78,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
     def "GIVEN  content wizard is opened AND typed data was not saved AND wizard is closing WHEN 'Stay' is selected THEN wizard has not been closed"()
     {
         given: "content wizard is opened AND typed data was not saved"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         String name = NameHelper.uniqueName( "folder" );
         wizardPanel.typeDisplayName( name ).executeCloseWizardScript();
 

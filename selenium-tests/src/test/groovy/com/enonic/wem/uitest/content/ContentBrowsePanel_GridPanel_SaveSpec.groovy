@@ -1,9 +1,9 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -18,7 +18,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     {
         given: "wizard is opened and data typed"
         PARENT_FOLDER = buildFolderContent( "parent-folder", "test folder" );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         wizard.typeData( PARENT_FOLDER );
 
         when: "the content has been saved and wizard closed"

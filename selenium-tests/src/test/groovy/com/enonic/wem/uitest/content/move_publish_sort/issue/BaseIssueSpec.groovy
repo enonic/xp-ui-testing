@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort.issue
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
@@ -15,7 +16,6 @@ import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 
 /**
@@ -65,7 +65,7 @@ class BaseIssueSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( ContentTypeName.folder() ).
+            contentType( BaseContentType.FOLDER.getDisplayName(  )).
             parent( ContentPath.ROOT ).
             build();
         return content;
