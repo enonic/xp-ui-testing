@@ -21,7 +21,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     Content SITE;
 
     @Shared
-    String URL = "http://test-site.com";
+    String URL = "http://test-link.com";
 
     @Shared
     String LINK_TEXT = "link-text";
@@ -37,6 +37,8 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
     @Shared
     String PAGE_CONTROLLER = "Page"
+    @Shared
+    String MAIN_REGION_PAGE_CONTROLLER = "main region"
 
     @Shared
     String EMAIL = "user1@gmail.com";
@@ -115,7 +117,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         contentWizard.clickToolbarPreview();
 
         then: "page source of new opened tab in a browser is not empty"
-        String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
+        String source = TestUtils.getPageSource( getSession(), "Home Page" );
         source != null;
 
         and: "correct text for the link should be displayed"

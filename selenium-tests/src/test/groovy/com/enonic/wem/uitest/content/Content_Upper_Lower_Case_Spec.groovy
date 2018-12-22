@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -47,7 +46,7 @@ class Content_Upper_Lower_Case_Spec
     def "GIVEN creating new folder on root with the same name in upper cases WHEN saved THEN warning message appears"()
     {
         given: "creating new folder on root with the name in upper cases"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ));
         wizard.typeDisplayName( FOLDER_NAME_IN_UPPER_CASE );
 
         when: "'Save' button pressed"

@@ -370,7 +370,7 @@ class BaseContentSpec
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
-            displayName( "test site " ).
+            displayName( name ).
             parent( ContentPath.ROOT ).
             contentType( "Site" ).data( data ).
             build();

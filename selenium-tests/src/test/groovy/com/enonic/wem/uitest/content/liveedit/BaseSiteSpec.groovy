@@ -69,7 +69,7 @@ class BaseSiteSpec
             name( NameHelper.uniqueName( countryName.toLowerCase() ) ).
             displayName( countryName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( MY_FIRST_APP_NAME + ":country" ).data( data ).
+            contentType( "Country" ).data( data ).
             build();
         return dateContent;
     }
@@ -88,7 +88,7 @@ class BaseSiteSpec
             name( NameHelper.uniqueName( cityName.toLowerCase() ) ).
             displayName( cityName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( MY_FIRST_APP_NAME + ":city" ).data( data ).
+            contentType( "City" ).data( data ).
             build();
         return dateContent;
     }

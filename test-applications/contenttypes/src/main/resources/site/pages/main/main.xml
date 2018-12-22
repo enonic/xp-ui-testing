@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<page  xmlns="urn:enonic:xp:model:1.0">
+<page>
   <display-name>main region</display-name>
-  <form>
-  </form>
+  <config>
+  </config>
   <regions>
     <region name="main"/>
   </regions>

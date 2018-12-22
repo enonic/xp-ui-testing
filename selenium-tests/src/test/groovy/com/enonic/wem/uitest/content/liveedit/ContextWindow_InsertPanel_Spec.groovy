@@ -50,7 +50,7 @@ class ContextWindow_InsertPanel_Spec
 
     def "GIVEN existing site is opened WHEN 'Insert' link has been clicked THEN 'Insertables' panel should be displayed AND all available components should be present on the panel"()
     {
-        given: "'Page Editor' for the existing site opened"
+        given: "existing site is opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
         when: "'Insert' link has been clicked"

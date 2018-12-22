@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
-    <title>Test theme</title>
+    <title>Home Page</title>
 
 
     <style type="text/css">.recentcomments a {
@@ -29,7 +29,7 @@
                                           data-th-text="${site.displayName}">Theme Preview</a>
                 </h1>
 
-                <h2 class="site-description" data-th-text="${site.data.description}">Superhero WordPress theme for Enonic XP</h2>
+                <h2 class="site-description" data-th-text="${site.data.description}">Test site</h2>
             </hgroup>
 
             <nav role="navigation" class="site-navigation main-navigation">
@@ -62,28 +62,22 @@
 
             <div class="clearfix"></div>
         </header>
-        <!-- #masthead .site-header -->
     </div>
-    <!-- #masthead-wrap -->
 
-    <!-- new .main -->
     <div data-portal-region="main">
         <div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
             <div data-portal-component="${component.path}" data-th-remove="tag"/>
         </div>
     </div>
-    <!-- .site-main .main -->
 
     <div id="colophon-wrap">
         <footer id="colophon" class="site-footer" role="contentinfo">
             <div class="site-info" data-th-utext="${footerText}">
-
             </div>
-            <!-- .site-info -->
+
         </footer>
         <!-- #colophon .site-footer -->
     </div>
-    <!-- #colophon-wrap -->
 </div>
 
 </body>
