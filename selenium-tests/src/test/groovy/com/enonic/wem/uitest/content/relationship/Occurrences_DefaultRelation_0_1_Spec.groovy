@@ -26,7 +26,7 @@ class Occurrences_DefaultRelation_0_1_Spec
     def "Preconditions: child folder should be added for the site"()
     {
         given: "wizard for new folder is opened"
-        ContentWizardPanel wizard = selectSitePressNew( "base:folder" );
+        ContentWizardPanel wizard = selectSitePressNew( "Folder" );
         wizard.typeDisplayName( FOLDER_RELATION_NAME );
 
         when: "child folder has been saved"
