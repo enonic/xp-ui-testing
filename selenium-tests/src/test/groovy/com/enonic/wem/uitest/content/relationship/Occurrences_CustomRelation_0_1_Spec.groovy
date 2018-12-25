@@ -11,10 +11,8 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.input_types.Base_InputFields_Occurrences
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
-
 
 @Stepwise
 class Occurrences_CustomRelation_0_1_Spec
@@ -147,7 +145,7 @@ class Occurrences_CustomRelation_0_1_Spec
             name( NameHelper.uniqueName( "article" ) ).
             displayName( name ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":article" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "article" ).data( data ).
             build();
         return imageSelectorContent;
     }
