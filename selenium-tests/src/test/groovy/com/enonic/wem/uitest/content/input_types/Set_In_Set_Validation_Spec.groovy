@@ -161,7 +161,7 @@ class Set_In_Set_Validation_Spec
             name( NameHelper.uniqueName( "se-in-set" ) ).
             displayName( "set in set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":set-in-set" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "set-in-set" ).data( data ).
             build();
         return tinyMceContent;
     }
