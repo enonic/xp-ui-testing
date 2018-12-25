@@ -42,7 +42,6 @@ import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel;
 import com.enonic.autotests.pages.form.TimeFormViewPanel;
 import com.enonic.autotests.pages.form.optionset.OptionSetFormView;
 import com.enonic.xp.data.PropertyTree;
-import com.enonic.xp.schema.content.ContentTypeName;
 
 public class ContentWizardStepForm
     extends WizardStepForm
@@ -180,7 +179,7 @@ public class ContentWizardStepForm
             formViewPanel = new CustomSelectorFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.contains( "base:shortcut" ) )
+        else if ( contentTypeName.contains( "Shortcut" ) )
         {
             formViewPanel = new ShortcutFormViewPanel( getSession() );
         }
