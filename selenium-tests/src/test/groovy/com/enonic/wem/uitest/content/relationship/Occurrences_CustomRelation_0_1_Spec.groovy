@@ -126,7 +126,7 @@ class Occurrences_CustomRelation_0_1_Spec
             name( NameHelper.uniqueName( "citation_rel_" ) ).
             displayName( "citation_rel_0_1" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":custom-relationship0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "custom-relationship0_1" ).data( data ).
             build();
         return imageSelectorContent;
     }
