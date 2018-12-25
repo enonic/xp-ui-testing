@@ -84,7 +84,7 @@ class BaseIssueSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
             parent( ContentPath.ROOT ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "double1_1" ).data( data ).
             build();
         return dateContent;
     }
