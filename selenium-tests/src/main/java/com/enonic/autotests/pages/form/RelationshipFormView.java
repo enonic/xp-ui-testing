@@ -24,7 +24,7 @@ public class RelationshipFormView
 
     protected final String OPTION_FILTER_INPUT = CONTAINER_DIV + COMBOBOX_OPTION_FILTER_INPUT;
 
-    protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[contains(.,'Relationship')]]";
+    protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[contains(.,'default_relation')]]";
 
     private String REMOVE_TARGET_BUTTON =
         "//div[contains(@id,'ContentSelectedOptionView') and descendant::h6[contains(@class,'main-name') and text()='%s']]//a[@class='remove']";
