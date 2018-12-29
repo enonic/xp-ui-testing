@@ -71,7 +71,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         view.getTemplateType() == "Custom";
     }
 
-    def "GIVEN existing site with a controller AND new page template is added AND the template has been selected on the Inspection panel WHEN the site has been selected THEN correct controller should be present on the widget"()
+    def "GIVEN existing site with a controller AND new page template is added AND the template has been selected on the Inspection panel WHEN the site has been selected THEN new controller should be present on the widget"()
     {
         given: "existing site with a controller"
         findAndSelectContent( SITE.getName() );
