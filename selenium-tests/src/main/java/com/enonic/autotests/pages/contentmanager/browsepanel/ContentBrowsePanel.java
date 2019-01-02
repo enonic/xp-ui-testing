@@ -625,7 +625,8 @@ public class ContentBrowsePanel
         boolean isLoaded = newContentDialog.waitUntilDialogLoaded( Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
-            throw new TestFrameworkException( "NewContentDialog dialog was not loaded!" );
+            saveScreenshot( "err_open_new_content_dialog" );
+            throw new TestFrameworkException( "NewContentDialog dialog is not loaded!" );
         }
         return newContentDialog;
     }

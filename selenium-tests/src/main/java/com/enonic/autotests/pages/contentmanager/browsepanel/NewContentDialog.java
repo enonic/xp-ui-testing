@@ -174,6 +174,11 @@ public class NewContentDialog
         clearAndType( searchInput, text );
         return this;
     }
+    public NewContentDialog typeSearchTextInHiddenInput( String text )
+    {
+        buildActions().sendKeys( text).build().perform();
+        return this;
+    }
 
     public boolean isUploadButtonEnabled()
     {
