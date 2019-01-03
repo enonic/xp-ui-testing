@@ -12,7 +12,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.SaveBeforeCloseDialog;
@@ -347,7 +346,7 @@ public class ContentWizardPanel
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         sleep( 2000 );
         clickOnPageView();
-        sleep( 900 );
+        sleep( 300 );
         ItemViewContextMenu menu = new ItemViewContextMenu( getSession() );
         menu.waitForMenuOpened();
         return menu;
@@ -365,6 +364,7 @@ public class ContentWizardPanel
     private void clickOnPageView()
     {
         switchToLiveEditFrame();
+        waitUntilVisibleNoException( By.xpath( "//body[@data-portal-component-type='page']" ), Application.EXPLICIT_NORMAL );
         WebElement body = getDisplayedElement( By.xpath( "//body[@data-portal-component-type='page']" ) );
         Actions builder = new Actions( getDriver() );
         builder.click( body ).build().perform();
