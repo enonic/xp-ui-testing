@@ -73,7 +73,7 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.15'
     compile 'org.spockframework:spock-core:1.1-groovy-2.4'
     compile 'org.gebish:geb-spock:2.1'
-    distro "com.enonic.xp:distro:$xpVersion@zip"
+    distro "com.enonic.xp:enonic-xp-generic:$xpVersion@zip"
 }
 
 task copyContentTypes( type: Copy ) {
