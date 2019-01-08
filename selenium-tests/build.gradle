@@ -456,7 +456,7 @@ task testPageEditorChrHeadless( type: Test, dependsOn: [buildApplications, delet
 //Stop server is not necessary when run in a Docker container.
 testPageEditorChrHeadless.finalizedBy = ['stopServer']
 
-task testContentStudioChrHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
+task testBaseWizardGridChrHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'chrome.headless', 'true'
     //set required JvmOption:
@@ -471,7 +471,7 @@ task testContentStudioChrHeadless( type: Test, dependsOn: [buildApplications, de
     copyContentTypes.mustRunAfter startServer
 }
 //Stop server is not necessary when run in a Docker container.
-testContentStudioChrHeadless.finalizedBy = ['stopServer']
+testBaseWizardGridChrHeadless.finalizedBy = ['stopServer']
 
 //
 // Firefox tests
