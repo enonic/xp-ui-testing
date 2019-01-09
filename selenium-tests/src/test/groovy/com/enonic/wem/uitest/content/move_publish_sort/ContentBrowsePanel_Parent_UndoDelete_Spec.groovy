@@ -99,6 +99,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
 
         and: "wait the notification message"
         String message = contentBrowsePanel.waitForNotificationMessage();
+        sleep(1000);
 
         then: "correct notification should be present"
         message == Application.ITEMS_IS_UNDELETED;
