@@ -210,7 +210,7 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing ItemSet-content with a several versions WHEN when the version with empty required fields is restored THEN ItemSet should be shown correctly"()
+    def "GIVEN existing ItemSet-content with a several versions WHEN when the previous version is restored THEN expected ItemSet-data should be displayed AND status should be Published"()
     {
         given: "content added selected and version history opened"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
@@ -221,14 +221,15 @@ class Occurrences_ItemSet_0_0_Spec
         and: "details panel is opened"
         contentBrowsePanel.openContentDetailsPanel();
 
-        when: "when the version with empty required fields has been restored"
+        when: "when the previous version has been restored"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        saveScreenshot( "item_set_text_reverted" );
 
         and: "navigated to the wizard-tab again"
-        contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() )
+        contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() );
+        sleep(1000);
+        saveScreenshot( "item_set_text_reverted" );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         then: "correct text in the htmlArea should be reverted"
