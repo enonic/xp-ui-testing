@@ -94,7 +94,8 @@ public class SiteConfiguratorDialog
 
     public boolean isNoMatchingItemsForPostsFolder()
     {
-        String message = DIALOG_CONTAINER + "//div[@class='empty-options' and text()='No matching items']";
+        String message = DIALOG_CONTAINER + "//div[contains(@id,'InputView') and descendant::div[text()='Posts folder']]" +
+            "//div[@class='empty-options' and text()='No matching items']";
         return isElementDisplayed( message );
     }
 

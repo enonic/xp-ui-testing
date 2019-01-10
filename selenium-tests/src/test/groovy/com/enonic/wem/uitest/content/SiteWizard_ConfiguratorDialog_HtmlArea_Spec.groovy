@@ -37,6 +37,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
     @Shared
     String PAGE_CONTROLLER = "Page"
+
     @Shared
     String MAIN_REGION_PAGE_CONTROLLER = "main region"
 
@@ -125,6 +126,23 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         and: "correct URL should be present"
         source.contains( URL )
     }
+    def "WHEN try to select external resource in 'Content' tab THEN 'No matching items' message should appear, because the dialog is limited to current site content"()
+    {
+        given: "site configurator dialog is opened"
+        findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
+        SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        and: "'Site Configurator' dialog is opened"
+        SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
+
+        and: "InsertLinkModalDialog is opened"
+        InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
+        sleep( 700 );
+        when: "try to select external resource in 'Content' tab"
+        linkModalDialog.clickContentBarItem().doFilterComboBoxOption( WHALE_IMAGE_DISPLAY_NAME );
+        saveScreenshot( "conf-dialog-content-external" );
+        then: "'No matching items' message should appear, because the dialog is limited to current site content"
+        linkModalDialog.isNoMatchingItemsInComboBox();
+    }
 
     def "GIVEN site configurator dialog is opened WHEN 'Insert Link' dialog is opened AND folder selected as target THEN correct text should be present in HtmlArea"()
     {
@@ -137,8 +155,8 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         when: "'Insert Link' dialog is opened"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        and: "select the 'Content' bar item AND select a folder in the 'target' "
-        linkModalDialog.clickContentBarItem().selectOption( "Templates" ).typeText(
+        and: "select the 'Content' bar item AND select a child folder in the 'target' "
+        linkModalDialog.clickContentBarItem().selectComboBoxOption( "Templates" ).typeText(
             CONTENT_TEXT ).pressInsertButton().waitForDialogClosed(); ;
         saveScreenshot( "conf-dialog-content" );
         configurationDialog.doApply();
@@ -151,7 +169,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.getTextFromCKE().contains( CONTENT_TEXT );
     }
 
-    def "GIVEN site configurator dialog opened WHEN Download-resource selected, and changes applied THEN correct text should be present in HtmlArea"()
+    def "WHEN try to select external resource in Download tab THEN 'No matching items' message should appear, because the dialog is limited to current site content"()
     {
         given: "site configurator dialog is opened"
         findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -159,21 +177,14 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         and: "'Site Configurator' dialog is opened"
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        when: "InsertLinkModalDialog was opened"
+        and: "InsertLinkModalDialog is opened"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
-        and: "'download' bar-item has been pressed AND data typed AND 'Insert' button pressed"
-        linkModalDialog.clickDownloadBarItem().selectOption( WHALE_IMAGE_DISPLAY_NAME ).typeText(
-            DOWNLOAD_TEXT ).pressInsertButton().waitForDialogClosed();
+        when: "try to select external resource in Download tab"
+        linkModalDialog.clickDownloadBarItem().doFilterComboBoxOption( WHALE_IMAGE_DISPLAY_NAME );
         saveScreenshot( "conf-dialog-download" );
-        and: "'Apply' button on the SiteConfiguratorDialog has been pressed"
-        configurationDialog.doApply();
-
-        and: "and the configurationDialog is opened again"
-        configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
-
-        then: "correct text present should be displayed in the HtmlArea"
-        configurationDialog.getTextFromCKE().contains( DOWNLOAD_TEXT );
+        then: "'No matching items' message should appear, because the dialog is limited to current site content"
+        linkModalDialog.isNoMatchingItemsInComboBox();
     }
 
     def "GIVEN site configurator dialog is opened WHEN Email-link inserted, and changes applied THEN correct text should be present in HtmlArea"()

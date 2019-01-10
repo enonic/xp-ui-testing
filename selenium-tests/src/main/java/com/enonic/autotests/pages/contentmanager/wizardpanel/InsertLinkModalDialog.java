@@ -101,10 +101,23 @@ public class InsertLinkModalDialog
         return this;
     }
 
-    public InsertLinkModalDialog selectOption( String name )
+    public InsertLinkModalDialog doFilterComboBoxOption( String name )
     {
         WebElement optionsInput = getDisplayedElement( By.xpath( CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) );
         clearAndType( optionsInput, name );
+        return this;
+    }
+
+    public boolean isNoMatchingItemsInComboBox()
+    {
+        String message =
+            CONTAINER + "//div[contains(@id,'ContentComboBox')]" + "//div[@class='empty-options' and text()='No matching items']";
+        return isElementDisplayed( message );
+    }
+
+    public InsertLinkModalDialog selectComboBoxOption( String name )
+    {
+        doFilterComboBoxOption( name );
         sleep( 500 );
         LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         loaderComboBox.selectOption( name );
