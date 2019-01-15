@@ -15,7 +15,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class GpsInfoFormViewPanel
     extends FormViewPanel
 {
-    private final String GPS_INFO_STEP_FORM = "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Gps Info']]]";
+    private final String GPS_INFO_STEP_FORM = "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Location']]]";
 
     private final String ALTITUDE = GPS_INFO_STEP_FORM + "//input[contains(@name,'altitude')]";
 

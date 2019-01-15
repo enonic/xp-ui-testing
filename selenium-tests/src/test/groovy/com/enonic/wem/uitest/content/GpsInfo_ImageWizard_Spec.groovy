@@ -27,7 +27,7 @@ class GpsInfo_ImageWizard_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
 
         when: "'Gps Info' step was clicked"
-        wizard.clickOnWizardStep( "Gps Info" );
+        wizard.clickOnWizardStep( "Location" );
         GpsInfoFormViewPanel gpsInfoFormViewPanel = new GpsInfoFormViewPanel( getSession() );
         saveScreenshot( "image_gps_info_empty" )
 
@@ -45,7 +45,7 @@ class GpsInfo_ImageWizard_Spec
     {
         given: "content wizard is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
-        wizard.clickOnWizardStep( "Gps Info" );
+        wizard.clickOnWizardStep( "Location" );
         GpsInfoFormViewPanel gpsInfoFormViewPanel = new GpsInfoFormViewPanel( getSession() );
 
         when: "gps info has been typed"
@@ -58,7 +58,7 @@ class GpsInfo_ImageWizard_Spec
 
         and: "image is opened again"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
-        wizard.clickOnWizardStep( "Gps Info" );
+        wizard.clickOnWizardStep( "Location" );
         saveScreenshot( "test_gps_info_saved" );
 
         then: "correct value for 'altitude' should be displayed"
