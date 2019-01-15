@@ -27,7 +27,7 @@ class ImageWizard_Spec
     @Shared
     String TAG2 = "tag2";
 
-    def "WHEN image content opened THEN all control elemnts are present"()
+    def "WHEN image content is opened THEN expected elements should be present"()
     {
         when: "content wizard opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab().waitUntilWizardOpened();
@@ -36,13 +36,13 @@ class ImageWizard_Spec
         then: "Caption text area is present"
         imageFormViewPanel.isCaptionTextAreaPresent();
 
-        and: "'Gps Info' tab bar item is present"
+        and: "'Location' tab bar item is present"
         imageFormViewPanel.isGpsInfoTabBarItemPresent();
 
-        and: "'Image Info' tab bar item is present"
+        and: "'Properties' tab bar item is present"
         imageFormViewPanel.isImageInfoTabBarItemPresent();
 
-        and: "'Photo Info' tab bar item is present"
+        and: "'Photo' tab bar item is present"
         imageFormViewPanel.isPhotoInfoTabBarItemPresent();
 
         and: "Image uploader is present"
@@ -61,7 +61,7 @@ class ImageWizard_Spec
         imageFormViewPanel.isArtistTagInputPresent();
     }
 
-    def "GIVEN existing image content WHEN the content opened and caption was typed AND content saved THEN correct text present in the text area"()
+    def "WHEN existing image is opened and caption has been typed AND content saved THEN caption should be saved"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
@@ -81,7 +81,7 @@ class ImageWizard_Spec
         imageFormViewPanel.getCaptionText() == CAPTION_TEXT;
     }
 
-    def "GIVEN existing image content WHEN the content opened and 'copyright' text was typed AND content saved THEN correct text present in the input"()
+    def "WHEN existing image is opened and 'copyright' text has been typed AND content saved THEN 'copyright' should be present in the input"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
@@ -101,7 +101,7 @@ class ImageWizard_Spec
         imageFormViewPanel.getTextFromCopyright() == COPYRIGHT_TEXT;
     }
 
-    def "GIVEN existing image content WHEN the content opened and 'Artists' tags added AND content saved THEN tags are presnt in the input"()
+    def "WHEN existing image is opened and 'Artists' tags added AND content saved THEN tags should be present in the input"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
@@ -124,7 +124,7 @@ class ImageWizard_Spec
         imageFormViewPanel.getArtistsTagsText().contains( ARTIST_TAG2 );
     }
 
-    def "GIVEN existing image content WHEN the content opened AND two tags added AND content saved THEN tags are present on the page"()
+    def "WHEN existing image is opened AND two tags added AND content saved THEN tags are present on the page"()
     {
         given: "content wizard opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
