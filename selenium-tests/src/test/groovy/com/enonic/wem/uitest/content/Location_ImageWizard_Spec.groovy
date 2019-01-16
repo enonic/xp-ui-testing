@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.GpsInfoFormViewPanel
+import com.enonic.autotests.pages.form.LocationFormViewPanel
 import spock.lang.Shared
 
 /**
@@ -9,7 +9,7 @@ import spock.lang.Shared
  *
  * Created on 27.09.2016.
  * */
-class GpsInfo_ImageWizard_Spec
+class Location_ImageWizard_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -28,7 +28,7 @@ class GpsInfo_ImageWizard_Spec
 
         when: "'Gps Info' step was clicked"
         wizard.clickOnWizardStep( "Location" );
-        GpsInfoFormViewPanel gpsInfoFormViewPanel = new GpsInfoFormViewPanel( getSession() );
+        LocationFormViewPanel gpsInfoFormViewPanel = new LocationFormViewPanel( getSession() );
         saveScreenshot( "image_gps_info_empty" )
 
         then: "input for 'direction' should be present"
@@ -46,7 +46,7 @@ class GpsInfo_ImageWizard_Spec
         given: "content wizard is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
         wizard.clickOnWizardStep( "Location" );
-        GpsInfoFormViewPanel gpsInfoFormViewPanel = new GpsInfoFormViewPanel( getSession() );
+        LocationFormViewPanel gpsInfoFormViewPanel = new LocationFormViewPanel( getSession() );
 
         when: "gps info has been typed"
         gpsInfoFormViewPanel.typeAltitude( TEST_ALTITUDE );

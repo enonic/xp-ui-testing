@@ -81,7 +81,7 @@ public abstract class WizardPanel<T>
     {
         if ( !isWizardStepPresent( stepName ) )
         {
-            saveScreenshot( "err_" + stepName );
+            saveScreenshot( "err_wizard_step" + stepName );
             throw new TestFrameworkException( "step was not found! " + stepName );
         }
         String stetName = String.format( NAVIGATOR_TAB_ITEM_LINK, stepName );

@@ -16,7 +16,7 @@ public class PhotoInfoFormViewPanel
     extends FormViewPanel
 {
     private final String PHOTO_INFO_STEP_FORM =
-        "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Photo Info']]]";
+        "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Photo']]]";
 
     private final String LENS_INPUT = PHOTO_INFO_STEP_FORM + "//input[contains(@name,'lens')]";
 

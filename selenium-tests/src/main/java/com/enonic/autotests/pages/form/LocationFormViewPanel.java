@@ -12,7 +12,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 /**
  * Created on 26.09.2016.
  */
-public class GpsInfoFormViewPanel
+public class LocationFormViewPanel
     extends FormViewPanel
 {
     private final String GPS_INFO_STEP_FORM = "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Location']]]";
@@ -34,7 +34,7 @@ public class GpsInfoFormViewPanel
     private WebElement geoPointInput;
 
 
-    public GpsInfoFormViewPanel( final TestSession session )
+    public LocationFormViewPanel( final TestSession session )
     {
         super( session );
     }
@@ -42,7 +42,7 @@ public class GpsInfoFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        throw new TestFrameworkException( "method not implemented  in GpsInfoFormViewPanel" );
+        throw new TestFrameworkException( "method is not implemented in LocationFormViewPanel" );
     }
 
     public void typeAltitude( String altitude )
