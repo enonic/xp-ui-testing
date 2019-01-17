@@ -8,6 +8,7 @@ buildscript {
 
 plugins {
     id 'maven'
+    id 'java'
     id 'com.enonic.defaults' version '1.0.3'
 }
 
@@ -24,6 +25,7 @@ configurations {
 ext {
     testName = 'general'
     xpVersion = '7.0.0-SNAPSHOT'
+    csVersion = '1.0.0-SNAPSHOT'
     unpackDir = "$buildDir${File.separator}install"
     screenshotsDir = "$buildDir${File.separator}screenshots"
     reportsDir = "$buildDir${File.separator}reports"
@@ -32,6 +34,8 @@ ext {
     deployDir = "$distroDir${File.separator}home${File.separator}deploy"
     xpHome = "$distroDir${File.separator}home"
     configDir = "$xpHome${File.separator}config"
+    contentStudioFile = "$deployDir${File.separator}app-contentstudio-${csVersion}.jar"
+    contentStudioAppUrl = "http://repo.enonic.com/public/com/enonic/app/app-contentstudio/${csVersion}/app-contentstudio-${csVersion}.jar"
 }
 
 task updateTestDir {
@@ -134,6 +138,26 @@ task unpackDistro( type: Copy ) {
     into file( unpackDir )
 }
 
+task deployContentStudio( type: DefaultTask ) {
+    doLast {
+        println 'Retrieving Content Studio App from:'
+        println contentStudioAppUrl
+        println 'Deploying to:'
+        println contentStudioFile
+
+        def f = new File( contentStudioFile )
+        if ( !f.exists() )
+        {
+            new URL( contentStudioAppUrl ).withInputStream { i -> f.withOutputStream { it << i } }
+            println 'Content Studio App is downloaded.'
+        }
+        else
+        {
+            println 'Content Studio App already exists.'
+        }
+    }
+}
+
 task copyConfig( type: Copy ) {
     from '../test-applications/common-config/'
     include '**.*.cfg'
@@ -145,7 +169,7 @@ ext {
     xpServer = new ServerInstance()
 }
 
-task startServer( dependsOn: [unpackDistro, copyConfig] ) {
+task startServer( dependsOn: [unpackDistro, copyConfig, deployContentStudio] ) {
     doLast {
         // logging.captureStandardOutput LogLevel.INFO
         // ext.xpServer = new ServerInstance()
@@ -154,6 +178,7 @@ task startServer( dependsOn: [unpackDistro, copyConfig] ) {
         xpServer.start()
     }
     copyConfig.mustRunAfter unpackDistro
+    deployContentStudio.mustRunAfter unpackDistro
 }
 
 task stopServer {
