@@ -170,5 +170,8 @@ class DeleteContentDialogSpec
 
         and: "content should not be listed in the grid"
         !contentBrowsePanel.exists( CONTENT1.getName() );
+
+        and:"Delete button disabled after the deleting"
+        !contentBrowsePanel.isDeleteButtonEnabled(  );
     }
 }

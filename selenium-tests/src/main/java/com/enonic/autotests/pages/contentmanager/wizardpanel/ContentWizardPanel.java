@@ -86,7 +86,7 @@ public class ContentWizardPanel
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
+        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...' or text()='#action.publishMore#']]";
 
     private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
 

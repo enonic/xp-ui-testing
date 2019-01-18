@@ -126,6 +126,7 @@ public class ContentDetailsPanel
         sleep( 700 );
         AllContentVersionsView versions = new AllContentVersionsView( getSession() );
         versions.waitUntilLoaded();
+        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return versions;
     }
 
