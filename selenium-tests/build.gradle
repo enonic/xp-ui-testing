@@ -30,7 +30,7 @@ ext {
     screenshotsDir = "$buildDir${File.separator}screenshots"
     reportsDir = "$buildDir${File.separator}reports"
     reportsTestsDir = "$reportsDir${File.separator}tests"
-    distroDir = "$unpackDir${File.separator}enonic-xp-$xpVersion"
+    distroDir = "$unpackDir${File.separator}enonic-xp-generic-$xpVersion"
     deployDir = "$distroDir${File.separator}home${File.separator}deploy"
     xpHome = "$distroDir${File.separator}home"
     configDir = "$xpHome${File.separator}config"
