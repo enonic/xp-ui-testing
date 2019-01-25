@@ -2,7 +2,7 @@
 <content-type>
   <display-name>combobox1_1</display-name>
   <super-type>base:structured</super-type>
-  <description>test:combobox1_1</description>
+  <description>one required combobox</description>
   <form>
     <input name="combobox_min1_max1" type="ComboBox">
       <label>Required ONE</label>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <part xmlns="urn:enonic:xp:model:1.0">
   <display-name>City Creation</display-name>
+  <description>city creation form</description>
   <form>
   </form>
 </part>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
   <display-name>article</display-name>
+  <description>article with 2 text lines and one text area</description>
   <content-display-name-script>$('title')</content-display-name-script>
   <super-type>base:structured</super-type>
   <form>

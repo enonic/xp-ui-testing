@@ -1,5 +1,6 @@
 <part xmlns="urn:enonic:xp:model:1.0">
   <display-name>City list</display-name>
+  <description>city list</description>
   <form>
     <input type="ComboBox" name="mapType">
       <label>Map type</label>
