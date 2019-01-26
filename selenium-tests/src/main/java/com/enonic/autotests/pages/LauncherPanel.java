@@ -17,7 +17,7 @@ public class LauncherPanel
 {
     public static final String PANEL_DIV = "//div[contains(@class,'launcher-panel')]";
 
-    public static final String CLOSE_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button toggled')]";
+    public static final String CLOSE_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button')]";
 
     private final String ACTIVE_ROW_TEXT = PANEL_DIV + "//div[@class='app-row active']//p[@class='app-name']";
 
