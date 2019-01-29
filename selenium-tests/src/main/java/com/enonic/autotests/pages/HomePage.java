@@ -67,7 +67,7 @@ public class HomePage
             saveScreenshot( NameHelper.uniqueName( "err_home_load" ) );
             throw new TestFrameworkException( "home page was not loaded" );
         }
-        return result;
+        return true;
     }
 
     public boolean isDashboardToolbarDisplayed()
@@ -109,24 +109,24 @@ public class HomePage
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         checkLauncher();
         launcherPanel.clickOnUsers();
-        sleep( 1000 );
+        sleep( 700 );
         switchToUsersTab();
         UserBrowsePanel panel = new UserBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
         panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        getLogger().info( "User Manger App loaded" );
+        getLogger().info( "User App loaded" );
         return panel;
     }
 
     public boolean checkLauncher()
     {
-        Boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 2 );
+        boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 2 );
         if ( !isLauncherPresent )
         {
-            saveScreenshot( NameHelper.uniqueName( "err_launcher_display" ) );
+            //saveScreenshot( NameHelper.uniqueName( "err_launcher_display" ) );
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
-        return isLauncherPresent;
+        return true;
     }
 
     public ApplicationBrowsePanel openApplications()

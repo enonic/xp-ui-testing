@@ -711,7 +711,7 @@ public abstract class BrowsePanel
     public void scrollViewPortToTop()
     {
         getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
-        sleep( 1000 );
+        sleep( 500 );
     }
 
     public boolean doScrollAndFindGridItem( String gridItemName, long timeout )

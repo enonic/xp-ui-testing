@@ -87,7 +87,7 @@ public class LoginPage
             saveScreenshot( NameHelper.uniqueName( "err_load_login_page" ) );
             throw new TestFrameworkException( "login page was not loaded!" );
         }
-        return isLoginPageLoaded;
+        return true;
     }
 
     public boolean isDisplayed()
