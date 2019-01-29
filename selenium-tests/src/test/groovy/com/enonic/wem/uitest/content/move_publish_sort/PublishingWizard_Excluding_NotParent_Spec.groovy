@@ -21,14 +21,14 @@ class PublishingWizard_Excluding_NotParent_Spec
     String TEST_IMAGE_DISPLAY_NAME = "seng"
 
     //XP-4890 Publishing Wizard - Enable excluding any item from the dependants list if it's not a parent to other items in the list
-    def "GIVEN shortcut to an image was added in the root WHEN the shortcut is selected AND publishing wizard is opened THEN the image should be displayed with the 'remove' icon"()
+    def "GIVEN shortcut to an image has benn added in the root WHEN the shortcut has been selected AND publishing wizard opened THEN the image should be displayed with the 'remove' icon"()
     {
         given: " shortcut to an image was added in the root WHEN the shortcut is selected"
         SHORTCUT_CONTENT = buildShortcutWithTarget( "shortcut", null, "shortcut display name", TEST_IMAGE_DISPLAY_NAME );
         addContent( SHORTCUT_CONTENT );
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
 
-        when: "the shortcut is selected AND publishing wizard is opened"
+        when: "the shortcut has been selected AND publishing wizard is opened"
         ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
         dialog.clickOnShowDependentItemsLink();
 

@@ -19,7 +19,7 @@ class Image_Change_And_Publish_Spec
     extends BaseContentSpec
 {
     //verifies status on the wizard page
-    def "GIVEN existing 'online' image WHEN the image has been zoomed AND changes were applied THEN status is getting 'Modified'"()
+    def "GIVEN existing 'Published' image WHEN the image has been zoomed AND changes were applied THEN status is getting 'Modified'"()
     {
         given: "existing 'online' image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_ELEPHANT_IMAGE ).clickToolbarEdit();
@@ -43,7 +43,7 @@ class Image_Change_And_Publish_Spec
         wizard.waitStatus( ContentStatus.MODIFIED, Application.EXPLICIT_NORMAL );
     }
     //verifies status in the Grid
-    def "GIVEN online image that has been zoomed WHEN the image is selected in the grid THEN 'Modified' status is displayed"()
+    def "GIVEN 'Published' image that has been zoomed WHEN the image has been selected in the grid THEN 'Modified' status should be displayed in grid"()
     {
         when: "online image that has been zoomed is selected"
         findAndSelectContent( IMPORTED_ELEPHANT_IMAGE );

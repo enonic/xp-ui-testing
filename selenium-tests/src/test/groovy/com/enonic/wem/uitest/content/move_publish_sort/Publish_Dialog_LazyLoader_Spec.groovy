@@ -14,7 +14,7 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 class Publish_Dialog_LazyLoader_Spec
     extends BaseContentSpec
 {
-    def "GIVEN existing folder with children WHEN the folder selected AND 'Publish Tree' menu item is selected AND 'Include child items' is unchecked AND dialog closed WHEN Publish Tree menu item clicked again THEN children are loaded on the modal dialog"()
+    def "GIVEN existing folder with children WHEN the folder has been selected AND 'Publish Tree' menu item clicked AND 'Include child items' is unchecked AND dialog closed WHEN Publish Tree menu item clicked again THEN children should be visible on the modal dialog"()
     {
         given: "existing folder with children is selected and 'Publish Tree' menu item was clicked"
         ContentPublishDialog contentPublishDialog = findAndSelectContent( IMPORTED_FOLDER_NAME ).selectPublishTreeMenuItem();

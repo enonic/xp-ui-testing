@@ -20,7 +20,7 @@ class Delete_Published_Parent_Folder_Spec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN existing root folder with a child WHEN parent content selected and 'Publish' button on toolbar pressed THEN notification message appears and content have got 'Online' status"()
+    def "GIVEN existing root folder with a child WHEN parent content selected and 'Publish' button on toolbar pressed THEN notification message appears and content is getting 'Published'"()
     {
         given:
         PARENT_FOLDER = buildFolderContent( "publish", "parent folder" );
@@ -41,7 +41,7 @@ class Delete_Published_Parent_Folder_Spec
         message == String.format( Application.CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE, "2" );
     }
 
-    def "GIVEN existing online-parent folder with a child WHEN parent folder was selected AND 'Unpublish' menu item was selected THEN correct notification message appears "()
+    def "GIVEN existing 'Published'-parent folder with a child WHEN parent folder has been selected AND 'Unpublish' menu item has been clicked THEN expected notification message appears"()
     {
         given:
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -55,7 +55,7 @@ class Delete_Published_Parent_Folder_Spec
         message == String.format( Application.CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE, "2" );
     }
 
-    def "GIVEN existing online-folder with a child WHEN the folder selected AND 'Delete button item clicked THEN correct notification message is displayed'"()
+    def "GIVEN existing 'Published'-folder with a child WHEN the folder has been selected AND 'Delete button item has been clicked THEN expected notification message is displayed'"()
     {
         given: "existing online-folder with a child"
         findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
@@ -69,17 +69,17 @@ class Delete_Published_Parent_Folder_Spec
         contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
 
-    def "GIVEN existing pending-folder with a child WHEN the folder selected AND 'Unpublish menu item clicked THEN correct notification message is displayed'"()
+    def "GIVEN existing pending-folder with a child WHEN the folder has been selected AND 'Unpublish' menu item has been clicked THEN expected notification message is displayed"()
     {
         given: "existing online-folder with a child"
         ContentPublishDialog dialog = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true );
         sleep( 1000 );
 
-        when: "the folder selected AND 'Unpublish menu item clicked"
+        when: "the folder selected AND 'Unpublish' menu item has been clicked"
         dialog.clickOnPublishNowButton();
         def expectedMessage = String.format( Application.CONTENTS_PUBLISHED_AND_DELETED_MESSAGE, "2", "2" );
 
-        then: "correct notification message should be displayed'"
+        then: "expected notification message should be displayed'"
         contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
 }

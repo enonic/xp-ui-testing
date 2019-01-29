@@ -13,12 +13,12 @@ class SortContentDialogSpec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN existing folder with children is selected WHEN 'Sort' button has been clicked THEN 'Sort Content' appears with correct control elements"()
+    def "GIVEN existing folder with children is selected WHEN 'Sort' button has been clicked THEN 'Sort Content' appears with expected control elements"()
     {
         given: "existing folder with children is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
 
-        when:"'Sort' button has been clicked"
+        when: "'Sort' button has been clicked"
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
         then: "'SortContent' dialog should be displayed"
@@ -33,7 +33,7 @@ class SortContentDialogSpec
         sortContentDialog.isSortMenuButtonEnabled();
     }
 
-    def "GIVEN sort dialog is opened WHEN 'Save' button was clicked THEN dialog should not be displayed"()
+    def "GIVEN sort dialog is opened WHEN 'Save' button on the modal dialog has been clicked THEN the dialog should be closed"()
     {
         given: "sort dialog is opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
@@ -42,33 +42,33 @@ class SortContentDialogSpec
         when: "'Save' has been clicked"
         sortContentDialog.clickOnSaveButton();
 
-        then:"the dialog should not be displayed"
+        then: "the dialog should be closed"
         !sortContentDialog.isDisplayed();
     }
 
-    def "GIVEN sort dialog is opened WHEN 'Cancel' button was clicked THEN dialog should not be displayed"()
+    def "GIVEN sort dialog is opened WHEN 'Cancel' button has been clicked THEN the modal dialog should be closed"()
     {
         given: "sort dialog is opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
-        when: "'Cancel' button was clicked"
+        when: "'Cancel' button has been clicked"
         sortContentDialog.clickOnCancelButton();
 
-        then: "dialog should not be displayed"
+        then: "the modal dialog should be closed"
         !sortContentDialog.isDisplayed();
     }
 
-    def "GIVEN sort dialog is opened WHEN 'Cancel' on top button was clicked THEN dialog should not be displayed"()
+    def "GIVEN sort dialog is opened WHEN 'Cancel' on top button has been clicked THEN the modal dialog should be closed"()
     {
         given: "sort dialog is opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
-        when: "'Cancel' on top was clicked"
+        when: "'Cancel' on top has been clicked"
         sortContentDialog.clickOnCancelOnTop();
 
-        then: "dialog should not be displayed"
+        then: "the modal dialog should be closed"
         !sortContentDialog.isDisplayed();
     }
 
@@ -126,16 +126,16 @@ class SortContentDialogSpec
     def "GIVEN parent folder is selected WHEN sort dialog is opened THEN default sorting should be present on the dialog"()
     {
         given: "the parent folder is selected"
-        findAndSelectContent( PARENT_FOLDER.getName(  ) );
+        findAndSelectContent( PARENT_FOLDER.getName() );
         Content childFolder = buildFolderContent( "child-folder", "child folder" );
 
-        and:"child content has been added"
+        and: "child content has been added"
         addContent( childFolder );
-        contentBrowsePanel.doClearSelection(  );
+        contentBrowsePanel.doClearSelection();
 
         when: "parent folder has been selected and 'Sort' dialog is opened"
         findAndSelectContent( PARENT_FOLDER.getName() );
-        and:"and 'Sort' dialog is opened"
+        and: "and 'Sort' dialog is opened"
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
         saveScreenshot( "default_sorting" );
 

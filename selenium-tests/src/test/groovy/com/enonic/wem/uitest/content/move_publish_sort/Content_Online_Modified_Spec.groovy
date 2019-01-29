@@ -16,13 +16,13 @@ class Content_Online_Modified_Spec
     @Shared
     Content CONTENT;
 
-    def "GIVEN existing root content WHEN content is selected and 'Publish' button on toolbar pressed THEN notification message should appear and content is getting 'Online'"()
+    def "GIVEN existing root content WHEN content is selected and 'Publish' button on toolbar pressed THEN expected notification message should appear and content is getting 'Published'"()
     {
         given: "existing content in root"
         CONTENT = buildFolderContent( "publish", "folder-content" );
         addContent( CONTENT );
 
-        when: "the content have been published"
+        when: "the content has been published"
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
@@ -33,7 +33,7 @@ class Content_Online_Modified_Spec
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, CONTENT.getName() );
     }
 
-    def "GIVEN existing root content with 'Online' status  WHEN content edited THEN content becomes 'Modified' in the BrowsePanel"()
+    def "GIVEN existing 'Published'-content in root  WHEN the content has been changed THEN content becomes 'Modified' in the grid"()
     {
         given: "existing root content with 'Online' status is opened"
         ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab(); ;
@@ -45,45 +45,45 @@ class Content_Online_Modified_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
     }
 
-    def "GIVEN existing root content with 'Online' status  WHEN content edited THEN content becomes 'Modified' in the Wizard"()
+    def "GIVEN existing 'Published'-content with in root WHEN the content has been changed THEN content becomes 'Modified' in the Wizard"()
     {
-        given: "existing root content with 'Online' status opened for edit"
+        given: "existing root content with 'Published' status is opened"
         Content content = buildFolderContent( "publish", "folder-content" );
         addContent( content );
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
 
-        when: "new display name typed"
+        when: "new display name has ben typed"
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save();
         saveScreenshot( "content_is_modified_wizard" );
 
-        then: "status of content is 'modified'"
+        then: "content is getting 'modified'"
         wizard.getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
 
         and: "Publish button is enabled on the wizard-toolbar"
         wizard.isPublishButtonEnabled();
 
-        and: "Publish menu is enabled on the wizard-toolbar"
+        and: "Publish menu should be enabled on the wizard-toolbar"
         wizard.isPublishMenuAvailable();
     }
 
-    def "GIVEN existing root content with 'Modified' status  WHEN content selected and 'Publish' button pressed THEN content has got a 'Online' status"()
+    def "GIVEN existing 'Modified'-content in root WHEN the content has been selected and published THEN content has got a 'Published' status"()
     {
-        when: "modified content has been published again"
+        when: "modified content has been published"
         findAndSelectContent( CONTENT.getName() ).
             clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then: "status of content is 'online'"
+        then: "content-status is getting 'Published'"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
-        and: "correct notification message should appears"
+        and: "expected notification message should appears"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, CONTENT.getName() );
 
         and: "Publish button on the BrowsePanel-toolbar becomes disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
 
-        and: "Publish-menu on the BrowsePanel-toolbar is enabled"
+        and: "Publish-menu on the BrowsePanel-toolbar should be enabled"
         contentBrowsePanel.isPublishMenuAvailable();
     }
 

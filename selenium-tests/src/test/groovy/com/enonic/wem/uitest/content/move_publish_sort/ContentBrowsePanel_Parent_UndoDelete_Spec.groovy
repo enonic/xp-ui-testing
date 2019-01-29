@@ -88,7 +88,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN parent folder and child are 'Deleted' WHEN child folder is selected and 'Undo delete' pressed THEN both folders are getting 'Online'"()
+    def "GIVEN parent folder and child are 'Deleted' WHEN child folder is selected and 'Undo delete' pressed THEN both folders are getting 'Published'"()
     {
         given: "both contents are published"
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -107,7 +107,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         and: "child folder should be 'Published'"
         contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
 
-        and: "parent folder should be 'online'"
+        and: "parent folder should be 'Published'"
         findAndSelectContent( PARENT_FOLDER.getName() ).getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 }
