@@ -17,20 +17,18 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    private final String SPLIT_PANEL_WITH_DETAILS_PANEL = "//div[contains(@id,'DockedDetailsPanel')]";
-
-    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
+    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DockedContextPanel')]";
 
     private final String WIDGET_SELECTOR_DROPDOWN = DETAILS_PANEL + "//div[contains(@id,'WidgetSelectorDropdown')]";
 
-    private final String VERSION_HISTORY_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Version history']";
+    private final String VERSION_HISTORY_OPTION_ITEM =
+        WIDGET_SELECTOR_DROPDOWN + String.format( NAMES_VIEW_BY_DISPLAY_NAME, "Version history" );
 
     private final String DETAILS_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Details']";
 
-    private final String WIDGET_SELECTOR_OPTIONS =
-        WIDGET_SELECTOR_DROPDOWN + "//div[contains(@class,'slick-cell')]//div[contains(@id,'DefaultOptionDisplayValueViewer')]";
+    private final String WIDGET_SELECTOR_OPTIONS = WIDGET_SELECTOR_DROPDOWN + H6_DISPLAY_NAME;
 
-    private final String DEPENDENCIES_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Dependencies']";
+    private final String DEPENDENCIES_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + String.format( NAMES_VIEW_BY_DISPLAY_NAME, "Dependencies" );
 
     private final String WIDGET_SELECTOR_DROPDOWN_HANDLER = WIDGET_SELECTOR_DROPDOWN + DROP_DOWN_HANDLE_BUTTON;
 
@@ -175,16 +173,16 @@ public class ContentDetailsPanel
 //        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
 //        return !(Boolean) executor.executeScript(
 //            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).isSecondPanelHidden()", splitPanel.getAttribute( "id" ) );
-        return isElementDisplayed( SPLIT_PANEL_WITH_DETAILS_PANEL );
+        return isElementDisplayed( DETAILS_PANEL );
     }
 
     public String getContentDisplayName()
     {
-        if ( !isElementDisplayed( DETAILS_PANEL + H6_DISPLAY_NAME ) )
+        if ( !isElementDisplayed( DETAILS_PANEL + CONTENT_SUMMARY_VIEWER + H6_DISPLAY_NAME ) )
         {
             saveScreenshot( "err_det_panel_displayname" );
             throw new TestFrameworkException( "display name was not found on the details panel!" );
         }
-        return getDisplayedString( DETAILS_PANEL + H6_DISPLAY_NAME );
+        return getDisplayedString( DETAILS_PANEL +CONTENT_SUMMARY_VIEWER+ H6_DISPLAY_NAME );
     }
 }
