@@ -106,7 +106,9 @@ class PortalContentCreating_Spec
         cityCreationPage.typeCityLocation( OSLO_LOCATION ).typeCityName( OSLO_CITY_NAME ).typeCityPopulation( OSLO_POPULATION );
         saveScreenshot( "oslo-creation-page" );
         cityCreationPage.clickSubmit();
+        sleep(2000);
         openHomePage();
+        sleep(700);
         HomePage homePage = new HomePage( getSession() );
         homePage.openContentStudioApplication();
 
@@ -137,9 +139,11 @@ class PortalContentCreating_Spec
         openResourceInDraft( SITE.getName() + "/" + NOR_CONTENT.getName() );
         CityCreationPage cityCreationPage = new CityCreationPage( getSession() );
         cityCreationPage.typeCityName( "oslo" ).typeCityPopulation( NEW_OSLO_POPULATION ).typeCityLocation( OSLO_LOCATION ).clickSubmit();
+        sleep(1000);
 
         when: "navigate to Content Studio and Oslo-content is opened"
         openHomePage();
+        sleep(700);
         HomePage homePage = new HomePage( getSession() );
         homePage.openContentStudioApplication();
         findAndSelectContent( "oslo" ).clickToolbarEdit();

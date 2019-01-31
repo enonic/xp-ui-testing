@@ -444,12 +444,12 @@ class BaseContentSpec
 
     protected void openResourceInMaster( String resource )
     {
-        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/master/" + resource );
+        getDriver().navigate().to( browser.baseUrl + "admin/site/preview/default/master/" + resource );
     }
 
     protected void openResourceInDraft( String resource )
     {
-        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/draft/" + resource );
+        getDriver().navigate().to( browser.baseUrl + "admin/site/preview/default/draft/" + resource );
     }
 
     protected void getService( String serviceName, String appName )
