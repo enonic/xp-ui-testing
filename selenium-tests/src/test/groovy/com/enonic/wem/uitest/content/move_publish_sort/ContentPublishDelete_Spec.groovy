@@ -18,27 +18,27 @@ class ContentPublishDelete_Spec
     @Shared
     Content content;
 
-    def "GIVEN existing content WHEN content was selected and 'Publish' button on toolbar was pressed THEN notification message should appear and content is getting 'Online'"()
+    def "GIVEN new folder is added WHEN the folder has been selected and 'Publish' button on toolbar pressed THEN notification message should appear and content is getting 'Published'"()
     {
-        given: "existing content"
+        given: "new folder is added"
         content = buildFolderContent( "publish", DISPLAY_NAME );
         addContent( content );
 
-        when: "content is published"
+        when: "the folder has been published"
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then: "Online status should be displayed in the grid"
+        then: "'Published' status should be displayed in the grid"
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         and: "correct notification message should be displayed"
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, content.getName() );
     }
 
-    def "GIVEN existing content with 'Online' status WHEN content was selected and 'Delete' button pressed THEN content is getting 'Pending delete'"()
+    def "GIVEN existing content with 'Published' status WHEN the content has been selected and 'Delete' button pressed THEN content is getting 'Deleted'"()
     {
-        given: "existing content with 'Online' status"
+        given: "existing content with 'Published' status"
         filterPanel.typeSearchText( content.getName() )
 
         when: "content was selected and 'Delete' button pressed"
@@ -46,9 +46,9 @@ class ContentPublishDelete_Spec
         String message = contentBrowsePanel.waitForNotificationMessage();
         saveScreenshot("content_should_be_pending");
 
-        then: "content is getting 'Pending delete'"
+        then: "content is getting 'Deleted'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
-        and: "correct notification message should be shown"
+        and: "expected notification message should be displayed"
         message == String.format( Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE, content.getName() );
     }
 

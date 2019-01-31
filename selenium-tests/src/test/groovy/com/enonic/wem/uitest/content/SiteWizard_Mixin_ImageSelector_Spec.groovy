@@ -10,9 +10,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 18.10.2016.
- * Task: XP-4295 Add selenium tests to verify XP-4278
- * Verifies 'XP-4278 A mixin with image selector crashes the Content Wizard"
- *
  * */
 @Stepwise
 class SiteWizard_Mixin_ImageSelector_Spec
@@ -21,30 +18,30 @@ class SiteWizard_Mixin_ImageSelector_Spec
     @Shared
     Content SITE;
 
-    def "GIVEN creating a site WHEN application with 'selected-image'-mixin selected THEN image selector appears on the page"()
+    def "GIVEN site wizard is opened WHEN application with 'selected-image'-mixin has been selected THEN image-selector should appear appears in the wizard"()
     {
-        given: "creating a site"
+        given: "site wizard is opened "
         SITE = buildSiteWithApps( FIRST_TEST_APP_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType(
             SITE.getContentTypeName() ).waitUntilWizardOpened();
         ImageSelectorFormViewPanel imageSelectorFormViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "application with 'select-image mixin' selected"
+        when: "application with 'select-image mixin' has been selected"
         wizard.typeData( SITE ).save();
 
-        then: "option filter input for a selecting an image appears on the wizard's page"
+        then: "option filter input for a selecting an image should appear in the wizard's page"
         imageSelectorFormViewPanel.isOptionFilterIsDisplayed();
 
-        and: "'Selected Image' wizard step is present"
+        and: "'Selected Image' wizard step should be added on the toolbar"
         wizard.isWizardStepPresent( "Selected image" );
     }
-    //verifies: XP-4278 A mixin with image selector crashes the Content Wizard
-    def "GIVEN existing site with mixin(image-selector) WHEN site opened THEN spinner disappears after a few seconds "()
+
+    def "GIVEN existing site with mixin(image-selector) WHEN site has been opened THEN spinner disappears after a few seconds"()
     {
         given: "existing site with mixin(image-selector)"
         findAndSelectContent( SITE.getName() );
 
-        when: "site opened"
+        when: "site has been opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         saveScreenshot( "site_mixin_imageselector_opened" );
 
@@ -52,25 +49,25 @@ class SiteWizard_Mixin_ImageSelector_Spec
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
-    def "GIVEN existing site with mixin(image-selector) WHEN site opened AND image selected AND site saved THEN image is displayed on te page"()
+    def "GIVEN existing site with mixin(image-selector) WHEN site has been opened AND image selected AND site saved THEN image shoukld be displayed in hte wizard"()
     {
         given: "existing site with mixin(image-selector)"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel imageSelectorFormViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        when: "image selected"
+        when: "image has been selected(in mixin)"
         PropertyTree data = new PropertyTree();
         data.addStrings( ImageSelectorFormViewPanel.IMAGES_PROPERTY, IMPORTED_IMAGE_BOOK_DISPLAY_NAME );
         imageSelectorFormViewPanel.type( data );
 
-        and: "site saved"
+        and: "site has been saved"
         wizard.save();
         saveScreenshot( "site_mixin_image_selected" );
 
-        then: "image is displayed on the page"
+        then: "image should be present in the form"
         imageSelectorFormViewPanel.isOptionSelected();
 
-        and: "option filter input for image-selector not displayed"
+        and: "option filter input for image-selector should not be displayed"
         !imageSelectorFormViewPanel.isOptionFilterIsDisplayed();
     }
 }

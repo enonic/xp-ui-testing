@@ -22,9 +22,9 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
     @Shared
     Content CHILD_FOLDER
 
-    def "GIVEN existing parent folder with a child WHEN the parent is selected AND 'Delete' button has been pressed THEN confirmation dialog with input for number of contents to delete should be displayed"()
+    def "GIVEN existing parent folder with a child WHEN the parent has been selected AND 'Delete' button has been pressed THEN confirmation dialog with input for number of contents to delete should be displayed"()
     {
-        given: "existing parent folder"
+        given: "parent folder has been added"
         PARENT_FOLDER = buildFolderContent( "folder", "undo delete parent with child" );
         CHILD_FOLDER = buildFolderContent( "folder", "undo delete child content" );
         addContent( PARENT_FOLDER );
@@ -78,7 +78,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         and: "wait the notification message"
         String message = contentBrowsePanel.waitForNotificationMessage();
 
-        then: "correct notification should be present"
+        then: "expected notification should be present"
         message == Application.ITEMS_IS_UNDELETED;
 
         and: "parent folder should be 'Published'"
@@ -88,7 +88,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN parent folder and child are 'Deleted' WHEN child folder is selected and 'Undo delete' pressed THEN both folders are getting 'Published'"()
+    def "GIVEN parent folder and child are 'Deleted' WHEN child folder has been selected and 'Undo delete' pressed THEN both folders are getting 'Published'"()
     {
         given: "both contents are published"
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -97,11 +97,11 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         when: "child is selected AND 'Undo delete' button has been pressed"
         findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarUndodelete();
 
-        and: "wait the notification message"
+        and: "wait for the notification message"
         String message = contentBrowsePanel.waitForNotificationMessage();
         sleep(1000);
 
-        then: "correct notification should be present"
+        then: "expected notification should be present"
         message == Application.ITEMS_IS_UNDELETED;
 
         and: "child folder should be 'Published'"

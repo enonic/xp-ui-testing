@@ -16,9 +16,9 @@ class Content_Online_Modified_Spec
     @Shared
     Content CONTENT;
 
-    def "GIVEN existing root content WHEN content is selected and 'Publish' button on toolbar pressed THEN expected notification message should appear and content is getting 'Published'"()
+    def "GIVEN new folder added in root WHEN the folder has been selected and 'Publish' button on toolbar pressed THEN expected notification message should appear and content is getting 'Published'"()
     {
-        given: "existing content in root"
+        given: "new folder added in root"
         CONTENT = buildFolderContent( "publish", "folder-content" );
         addContent( CONTENT );
 
@@ -33,7 +33,7 @@ class Content_Online_Modified_Spec
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, CONTENT.getName() );
     }
 
-    def "GIVEN existing 'Published'-content in root  WHEN the content has been changed THEN content becomes 'Modified' in the grid"()
+    def "GIVEN existing 'Published'-content in root WHEN the content has been changed THEN content becomes 'Modified' in the grid"()
     {
         given: "existing root content with 'Online' status is opened"
         ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab(); ;
@@ -67,7 +67,7 @@ class Content_Online_Modified_Spec
         wizard.isPublishMenuAvailable();
     }
 
-    def "GIVEN existing 'Modified'-content in root WHEN the content has been selected and published THEN content has got a 'Published' status"()
+    def "GIVEN existing 'Modified'-folder in root WHEN the content has been selected and published THEN folder has got a 'Published' status"()
     {
         when: "modified content has been published"
         findAndSelectContent( CONTENT.getName() ).

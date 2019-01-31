@@ -18,9 +18,9 @@ class Occurrences_Date_1_1_Spec
     @Shared
     Content TEST_CONTENT;
 
-    def "GIVEN wizard for adding a Date opened WHEN date input was clicked THEN 'date picker popup' dialog is displayed"()
+    def "GIVEN wizard for new Date(1:1) is opened WHEN date input was clicked THEN 'date picker popup' dialog should appear"()
     {
-        given: "wizard for adding a Date opened"
+        given: "wizard for new Date(1:1) is opened"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         selectSitePressNew( dateContent.getContentTypeName() );
 
@@ -29,17 +29,17 @@ class Occurrences_Date_1_1_Spec
         DatePickerPopup picker = formViewPanel.showPicker();
         saveScreenshot( "date-picker-popup" );
 
-        then: "'date picker' popup dialog is displayed"
+        then: "'date picker' popup dialog should appear"
         picker.isDisplayed();
     }
 
-    def "GIVEN wizard for new 'Date(1:1)' is opened WHEN name typed but date is not typed THEN red icon should be present on the wizard-page"()
+    def "GIVEN wizard for new 'Date(1:1)' is opened WHEN name has been typed AND date input is empty THEN red icon should be present on the wizard-page(date input is required)"()
     {
         given: "wizard for new 'Date(1:1)' is opened"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
 
-        when: "only a name was typed and date was not typed(the content is not saved)"
+        when: "only a name was typed and date input is empty(the content is not saved)"
         wizard.typeDisplayName( dateContent.getDisplayName() );
 
         then: "red icon should be present on the wizard-page, because required input is empty"

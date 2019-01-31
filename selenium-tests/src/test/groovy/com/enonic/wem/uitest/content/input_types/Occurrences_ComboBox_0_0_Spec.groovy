@@ -20,20 +20,20 @@ class Occurrences_ComboBox_0_0_Spec
     @Shared
     Content COMBOBOX_0_0_CONTENT;
 
-    def "WHEN wizard for adding a Combo box-content(0:0) opened THEN option filter input is present "()
+    def "WHEN wizard for Combo box-content(0:0) is opened THEN option filter input should be present"()
     {
         when: "start to add a content with type 'ComboBox 0:0'"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
         selectSitePressNew( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
-        then: "option filter input is present and enabled"
+        then: "option filter input should be present and enabled"
         formViewPanel.isOptionFilterInputEnabled();
         and:
         formViewPanel.getSelectedOptionValues().size() == 0;
     }
 
-    def "GIVEN saving of Combobox-content (0:0) without options WHEN content has been opened THEN options should not be selected"()
+    def "GIVEN new Combobox-content (0:0) without options is added WHEN content has been opened THEN options should not be selected"()
     {
         given: "new Combobbox0_0 is added'"
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
@@ -53,7 +53,7 @@ class Occurrences_ComboBox_0_0_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN saving of  Combobox-content (0:0) with one option WHEN content is opened THEN one selected option and button 'Remove' should be present in the form view"()
+    def "GIVEN new Combobox-content(0:0) with one option is added WHEN the content is opened THEN one selected option and button 'Remove' should be present in the form view"()
     {
         given: "new content with type ComboBox 0_0 was added"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
@@ -61,7 +61,7 @@ class Occurrences_ComboBox_0_0_Spec
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "content is opened"
+        when: "content has been opened"
         findAndSelectContent( comboBoxContent.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -76,15 +76,15 @@ class Occurrences_ComboBox_0_0_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN saving of ComboBox-content (0:0) with three options WHEN content opened for edit THEN three options should be displayed  and button 'Remove' should be present on page "()
+    def "GIVEN new ComboBox-content (0:0) with three options is added WHEN content has been opened THEN three options should be displayed and button 'Remove' should be present on page "()
     {
-        given: "new content with type ComboBox0_0 was added'"
+        given: "new content with type ComboBox0_0 is added'"
         COMBOBOX_0_0_CONTENT = buildComboBox0_0_Content( 3 );
         selectSitePressNew( COMBOBOX_0_0_CONTENT.getContentTypeName() ).typeData(
             COMBOBOX_0_0_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "content is opened"
+        when: "content has been opened"
         findAndSelectContent( COMBOBOX_0_0_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -96,19 +96,19 @@ class Occurrences_ComboBox_0_0_Spec
         String[] options = ["option A", "option B", "option C"];
         optValues.containsAll( options.toList() );
 
-        and: "options filter input is enabled"
+        and: "options filter input should be enabled"
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN ComboBox-content (0:0) with three options and one option was removed and content saved WHEN content is opened THEN two selected options and buttons 'Remove' should be present on the page "()
+    def "GIVEN existing ComboBox-content (0:0) with three options is opened AND one option has been removed and content saved WHEN content has been reopened THEN two selected options and buttons 'Remove' should be present on the page "()
     {
-        given: "content with tree options opened for edit' and one option removed"
+        given: "content with tree options is opened AND one option has been removed"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_0_0_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         formViewPanel.clickOnLastRemoveButton();
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content has been opened again"
+        when: "content has been reopened"
         contentBrowsePanel.clickToolbarEdit();
 
         then: "only two options should be present on the form view"
@@ -116,12 +116,12 @@ class Occurrences_ComboBox_0_0_Spec
         saveScreenshot( "combo_removed_option" );
         optValues.size() == 2;
 
-        and: "correct text should be displayed in both options"
+        and: "expected text should be displayed in both options"
         String[] options = ["option A", "option B"];
         optValues.containsAll( options.toList() );
     }
 
-    def "GIVEN existing ComboBox 0:0 with options  WHEN content is opened and 'Publish' on toolbar has been pressed THEN content's  status is getting 'Online'"()
+    def "GIVEN existing ComboBox 0:0 with options is opened WHEN the content has been published THEN content's  status is getting 'Online'"()
     {
         given: "existing new ComboBox 0:0 with options'"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
@@ -136,9 +136,9 @@ class Occurrences_ComboBox_0_0_Spec
         contentBrowsePanel.getContentStatus( COMBOBOX_0_0_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN creating of a new ComboBox 0:0 without options WHEN content was saved and 'Publish' on toolbar pressed THEN the content should be displayed with 'Online' status"()
+    def "GIVEN new ComboBox 0:0 without options is added WHEN the content has been published THEN the content should be displayed with 'Published' status"()
     {
-        given: "ComboBox 0:0 content was added"
+        given: "ComboBox 0:0 content is added"
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
         filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(

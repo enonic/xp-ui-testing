@@ -23,7 +23,7 @@ class DateValidation_Spec
     @Shared
     String WRONG_DATE_TIME = "015-02-28 19:01";
 
-    def "GIVEN wizard for adding a Time opened WHEN time input was clicked THEN 'time picker popup' dialog is displayed"()
+    def "GIVEN new Time wizard is opened WHEN time input has been clicked THEN 'time picker popup' dialog should appear"()
     {
         given: "Time-content wizard is opened"
         Content dateContent = buildTime0_0_Content( CORRECT_TIME );
@@ -41,14 +41,14 @@ class DateValidation_Spec
         !picker.isTimeZoneDisplayed();
     }
 
-    def "GIVEN saving of content with type 'Time 0:0' WHEN value of time is wrong THEN 'Publish' button should be enabled, because input is not required"()
+    def "GIVEN wizard for not required 'Time 0:0' is opened WHEN time with wrong format has been typed THEN 'Publish' button should be enabled, because the input is not required"()
     {
-        given: "start to add a content with type 'Time 0:0'"
+        given: "wizard for not required 'Time 0:0' is opened"
         Content timeContent = buildTime0_0_Content( WRONG_TIME );
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
 
-        when: "time with wrong format was typed "
+        when: "time with wrong format has been typed"
         wizard.typeData( timeContent );
         saveScreenshot( "test_wrong_time" );
 
@@ -59,9 +59,9 @@ class DateValidation_Spec
         formViewPanel.isTimeInvalid();
     }
 
-    def "GIVEN saving of content with type 'Time 0:0' WHEN value of time is correct THEN 'Publish' button enabled"()
+    def "GIVEN wizard for not required 'Time 0:0' is opened WHEN value of time is correct THEN 'Publish' button should be enabled"()
     {
-        given: "start to add a content with type 'Time 0:0'"
+        given: "wizard for not required 'Time 0:0' is opened"
         Content timeContent = buildTime0_0_Content( CORRECT_TIME );
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
@@ -76,13 +76,13 @@ class DateValidation_Spec
         !formViewPanel.isTimeInvalid();
     }
 
-    def "GIVEN saving of content with type 'Time 1:1' WHEN time was not typed THEN 'Publish' button should be disabled"()
+    def "GIVEN wizard for required 'Time 1:1' is opened WHEN name has been typed BUT time input is clear THEN 'Publish' button should be disabled"()
     {
         given: "start to add a content with type 'Time 1:1'"
         Content timeContent = buildTime1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
 
-        when: "correct time has been typed "
+        when: "Display name has been typed "
         wizard.typeDisplayName( timeContent.getDisplayName() );
         saveScreenshot( "required-time-publish-disabled" );
 
@@ -90,25 +90,25 @@ class DateValidation_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN saving of content with type 'DateTime 1:1' and value of datetime is wrong WHEN invalid datetime THEN 'Publish' button should be disabled, because wrong datetime typed in the required input"()
+    def "GIVEN wizard for required 'DateTime 1:1' is opened WHEN datetime is not correct THEN 'Publish' button should be disabled, because incorrect datetime typed in the required input"()
     {
-        given: "saving of content with type 'DateTime 1:1'"
+        given: "wizard for required 'DateTime 1:1' is opened"
         Content dateTimeContent = buildDateTime1_1_Content( WRONG_DATE_TIME );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        when: "date time with wrong format has been typed "
+        when: "date-time with wrong format has been typed "
         wizard.typeData( dateTimeContent );
         saveScreenshot( "wrong-date-time" );
 
-        then: "'Publish' button should be disabled, because wrong datetime typed in the required input"
+        then: "'Publish' button should be disabled, because wrong datetime was typed in the required input"
         !wizard.isPublishButtonEnabled();
 
-        and: "time input should be with the red border"
+        and: "time input should be with red border"
         formViewPanel.isDateTimeInvalid();
     }
 
-    def "GIVEN wizard for adding a required DateTime(1:1) opened WHEN correct date-time has been typed THEN 'Publish' button is enabled"()
+    def "GIVEN wizard for required 'DateTime 1:1' is opened WHEN correct date-time has been typed THEN 'Publish' button should be enabled"()
     {
         given: "start to add a content with type 'DateTime(1:1)'"
         Content dateTimeContent = buildDateTime1_1_Content( CORRECT_DATE_TIME );
@@ -122,17 +122,17 @@ class DateValidation_Spec
         then: "'Publish' button should be enabled"
         wizard.isPublishButtonEnabled();
 
-        and: "time input is not red"
+        and: "DateTime input should be without red border"
         !formViewPanel.isDateTimeInvalid();
     }
 
-    def "GIVEN wizard for adding a required DateTime(2:4) opened WHEN name typed but dateTime not typed  THEN 'Publish' button is disabled"()
+    def "GIVEN wizard for required 'DateTime 2:4' is opened WHEN name has been typed but dateTime input is empty THEN 'Publish' button should be disabled"()
     {
-        given: "start to add a content with type 'DateTime(2:4)'"
+        given: "wizard for required 'DateTime 2:4' is opened"
         Content dateTimeContent = buildDateTime2_4_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-        when: "only the 'name' was typed and datetime not typed"
+        when: "only a 'name' has been typed BUT datetime input is empty"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
         saveScreenshot( "required-date-time" );
 

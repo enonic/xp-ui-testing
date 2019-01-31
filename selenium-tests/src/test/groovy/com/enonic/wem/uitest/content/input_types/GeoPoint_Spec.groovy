@@ -35,12 +35,12 @@ class GeoPoint_Spec
         given: "value of 'Geo Location' is not within range"
         Content notValidContent = buildGeoPoint0_0_Content( WRONG_GEO_LOCATION );
 
-        and: "data  has been typed and the content saved"
+        and: "data has been typed and the content saved"
         selectSitePressNew( notValidContent.getContentTypeName() ).typeData(
             notValidContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "the content is opened"
+        when: "the content has been reopened"
         findAndSelectContent( notValidContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
@@ -58,7 +58,7 @@ class GeoPoint_Spec
         wizard.typeData( notValidContent );
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
-        then: "input should be with red border"
+        then: "input should be displayed with red border"
         !geoPointFormViewPanel.isGeoLocationValid();
 
         and: "red icon should be present on the wizard"
@@ -98,7 +98,7 @@ class GeoPoint_Spec
         !contentBrowsePanel.isContentInvalid( validContent.getName() );
     }
 
-    def "GIVEN wizard is opened  WHEN and the valid data has been typed THEN red icon should not be present on the wizard "()
+    def "GIVEN wizard for new geoPoint is opened WHEN and the valid data has been typed THEN red icon should not be present on the wizard "()
     {
         when: "wizard opened and the valid data has been typed"
         Content validContent = buildGeoPoint1_1_Content( TEST_GEO_LOCATION );

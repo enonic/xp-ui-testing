@@ -22,7 +22,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         !contentDetailsPanel.isDisplayed();
     }
 
-    def "WHEN content selected THEN correct display name shown in the Detail Panel"()
+    def "WHEN a content has been selected THEN expected display name should be shown in the Detail Panel"()
     {
         given: "folder has been added"
         folderContent = buildFolderContent( "details_p", "details_panel_test" );
@@ -32,7 +32,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         when: "when the folder is selected in the 'Browse Panel'"
         findAndSelectContent( folderContent.getName() );
 
-        then: "correct display name should be shown on the Details Panel"
+        then: "expected display name should be shown on the Details Panel"
         contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
         and: "menu options is opened"
         List<String> widgetMenuOptions = contentDetailsPanel.getMenuOptions();
@@ -46,18 +46,18 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         widgetMenuOptions.contains( "Version history" );
     }
 
-    def "GIVEN 'Content Details Panel' opened WHEN Toggle Content Details button clicked THEN 'Content Details Panel' hidden"()
+    def "GIVEN a content is selected AND 'Content Details Panel' is opened WHEN Toggle Content Details button has been clicked THEN 'Content Details Panel' should be closed"()
     {
-        given: "content selected and the 'Content Details Panel' shown"
+        given: "content has been selected and the 'Content Details Panel' is opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.clickOnDetailsToggleButton();
         saveScreenshot( "detail-panel-opened" );
 
-        when: "'Toggle' button clicked"
+        when: "'Toggle' button has been clicked"
         contentBrowsePanel.clickOnDetailsToggleButton();
         saveScreenshot( "detail-panel-closed" );
 
-        then: "'Content Details Panel' should not be displayed"
+        then: "'Content Details Panel' should be closed"
         !contentBrowsePanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
     }
 }

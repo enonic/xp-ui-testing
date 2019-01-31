@@ -19,7 +19,7 @@ class Occurrences_CustomSelector_0_2
     @Shared
     String OPTION_2 = "Option number 2";
 
-    def "WHEN wizard for new 'Custom Selector'-content(0:2) opened THEN option filter input should be present AND content should be valid"()
+    def "WHEN wizard for new 'Custom Selector'-content(0:2) is opened THEN option filter input should be present AND content should be valid"()
     {
         when: "wizard for new 'Custom Selector'-content(0:2) opened"
         Content customSelector = buildCustomSelector0_2_Content( null );

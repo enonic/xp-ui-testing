@@ -23,17 +23,17 @@ class Occurrences_ComboBox_1_1_Spec
     @Shared
     Content comboBox1_1
 
-    def "GIVEN wizard for new ComboBox-content(1:1) is opened WHEN name typed and no options selected on the page THEN option filter input should be present"()
+    def "GIVEN wizard for new ComboBox-content(1:1) is opened WHEN name has been typed THEN red icon should be present in the wizard, because the input is required"()
     {
         given: "wizard for new ComboBox-content(1:1) is opened"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
         ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() );
 
-        when: "only the name typed and no option selected"
+        when: "a name has been typed and no option selected"
         wizard.typeDisplayName( comboBoxContent.getDisplayName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
-        then: "option filter input is present and enabled"
+        then: "option filter input should be present and enabled"
         formViewPanel.isOptionFilterInputEnabled();
 
         and: "and there are no selected options on the page"
@@ -43,14 +43,14 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN ComboBox-content (1:1) without options is saved WHEN content has been opened THEN no one option should be selected and red circle should be displayed"()
+    def "GIVEN ComboBox-content(1:1) without options is saved WHEN content has been opened THEN no one option should be selected and red circle should be displayed"()
     {
-        given: "new content with type ComboBox1_1 added'"
+        given: "new content with type ComboBox1_1 added"
         Content comboBoxContent = buildComboBox1_1_Content( 0 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content is opened"
+        when: "content has been opened"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -71,14 +71,14 @@ class Occurrences_ComboBox_1_1_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN ComboBox-content (1:1) with one option is saved WHEN the content is opened THEN one selected option  should be present and options filter input is disabled"()
+    def "GIVEN ComboBox-content (1:1) with one option is saved WHEN the content has been opened THEN one selected option should be present and options filter input is disabled"()
     {
         given: "ComboBox-content (1:1) with one option has been added"
         content_with_opt = buildComboBox1_1_Content( 1 );
         selectSitePressNew( content_with_opt.getContentTypeName() ).typeData(
             content_with_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content is opened"
+        when: "content has been opened"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -95,11 +95,11 @@ class Occurrences_ComboBox_1_1_Spec
         and: "content is valid, because option is selected"
         !formViewPanel.isValidationMessagePresent();
 
-        and: "red circle should not be displayed on the page"
+        and: "red circle should not be displayed on the page, because the required option is selected"
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing ComboBox-content (1:1) is opened and one option removed  WHEN content has been opened THEN no options selected on the page"()
+    def "GIVEN existing ComboBox-content(1:1) is opened and one option removed WHEN content has been opened THEN no options selected on the page"()
     {
         given: "content is opened and one option removed"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -120,11 +120,11 @@ class Occurrences_ComboBox_1_1_Spec
         and: "validation message should be displayed, because the option is required"
         formViewPanel.isValidationMessagePresent();
 
-        and: "red circle should be displayed"
+        and: "red circle should be displayed, because required option is not selected"
         wizard.isContentInvalid();
     }
 
-    def "WHEN content with selected option has been published THEN the content with status equals 'Online' should be displayed"()
+    def "WHEN content with selected option has been published THEN the content with status equals 'Published' should be displayed"()
     {
         when: "content with selected option has been published"
         comboBox1_1 = buildComboBox1_1_Content( 1 );

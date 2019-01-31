@@ -6,8 +6,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 
 /**
  * Created  on 3/1/2017.
- * Tasks:
- * xp-ui-testing#19 Add Selenium tests for 'InsertAnchor' modal dialog
  *
  * verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc
  * */
@@ -38,7 +36,7 @@ class HtmlArea_InsertAnchorDialog_Spec
         insertAnchorDialog.isAnchorInputDisplayed();
     }
 
-    def "GIVEN  InsertAnchorModalDialog is opened WHEN 'Cancel' button has been clicked THEN modal dialog should not be displayed"()
+    def "GIVEN InsertAnchorModalDialog is opened WHEN 'Cancel' button has been clicked THEN modal dialog should not be displayed"()
     {
         given: "InsertImageModalDialog is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );

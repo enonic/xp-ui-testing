@@ -21,7 +21,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
 
     def "GIVEN existing parent folder with a child WHEN the parent is selected AND 'Delete' button has been pressed THEN confirmation dialog with input for number of contents to delete should be displayed"()
     {
-        given: "existing parent folder"
+        given: "parent folder has been created"
         PARENT_FOLDER = buildFolderContent( "folder", "delete parent with child" );
         CHILD_FOLDER = buildFolderContent( "folder", "child content" );
         addContent( PARENT_FOLDER );
@@ -37,10 +37,9 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
         confirmContentDeleteDialog.isOpened();
     }
 
-    //verifies the xp-apps#398 (buttons on the toolbar)
-    def "GIVEN existing parent folder with a child WHEN ConfirmContentDeleteDialog is opened AND correct number typed THEN confirmation dialog with input for number of contents to delete should be displayed"()
+    def "GIVEN existing parent folder is selected WHEN ConfirmContentDeleteDialog is opened AND correct number typed THEN confirmation dialog with input for number of contents to delete should be displayed"()
     {
-        given: "existing parent folder"
+        given: "existing parent folder is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
 
         when: "Delete button is pressed and it confirmed"

@@ -14,9 +14,9 @@ class Occurrences_ComboBox_2_4_Spec
     @Shared
     Content content_with_opt;
 
-    def "GIVEN wizard for ComboBox-content(2:4) is opened WHEN name was typed but options were not selected THEN content should be invalid and publish button is disabled"()
+    def "GIVEN wizard for ComboBox-content(2:4) is opened WHEN name has been typed but options are not selected THEN content should be invalid and publish button should be disabled"()
     {
-        given: "start to add a content with type 'ComboBox 2:4'"
+        given: "wizard for ComboBox-content(2:4) is opened"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
         ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
@@ -34,14 +34,14 @@ class Occurrences_ComboBox_2_4_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN existing ComboBox-content (2:4) without selected options WHEN content is opened THEN no one selected options should be present on the page"()
+    def "GIVEN new ComboBox2_4 is added (options are not selected) WHEN content has been opened THEN no one selected options should be present on the page"()
     {
-        given: "new content with type ComboBox2_4 was added'"
+        given: "new ComboBox2_4 is added"
         Content comboBoxContent = buildComboBox2_4_Content( 0 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content is opened"
+        when: "content has been opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -49,21 +49,21 @@ class Occurrences_ComboBox_2_4_Spec
         then: "no one options is selected on the page"
         optValues.size() == 0;
 
-        and: "options filter input is enabled"
+        and: "options filter input should be enabled"
         formViewPanel.isOptionFilterInputEnabled();
 
         and: "content should be invalid, because required options were not selected"
         formViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN saving of ComboBox-content (2:4) with two option WHEN content opened for edit THEN two selected options present on page and options filter input is enabled"()
+    def "GIVEN new ComboBox-content(2:4) with two option is created WHEN content has been opened THEN two selected options should be present on the page"()
     {
-        given: "new content with type ComboBox2_4 added'"
+        given: "new ComboBox2_4 is added'"
         content_with_opt = buildComboBox2_4_Content( 2 );
         selectSitePressNew( content_with_opt.getContentTypeName() ).typeData(
             content_with_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content has been opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -79,7 +79,7 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN ComboBox-content (2:4) with two selected options and one option removed and content saved WHEN content opened for edit THEN one option selected on the page "()
+    def "GIVEN existing ComboBox-content(2:4) with two selected options is opened AND one option has been removed,the  content has been saved WHEN content has been opened THEN one option selected on the page "()
     {
         given: "content with one required option opened for edit' and one option removed"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
@@ -99,7 +99,7 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN saving of ComboBox-content (2:4) with four options WHEN content opened for edit THEN four selected options present on page and 'filter input' is disabled"()
+    def "GIVEN new ComboBox-content(2:4) with four options is created WHEN content has been opened THEN four selected options present on page and 'filter input' is disabled"()
     {
         given: "new content ComboBox2_4 is added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
@@ -122,7 +122,7 @@ class Occurrences_ComboBox_2_4_Spec
         !formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "WHEN content with 2 selected option has been published THEN the content should be with 'Online'-status"()
+    def "WHEN content with 2 selected option has been published THEN the content should be with 'Published'-status"()
     {
         when: "content without options was saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );

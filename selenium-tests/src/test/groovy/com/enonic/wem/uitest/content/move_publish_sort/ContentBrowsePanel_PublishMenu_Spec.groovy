@@ -52,23 +52,23 @@ class ContentBrowsePanel_PublishMenu_Spec
         !contentBrowsePanel.isPublishTreeMenuItemEnabled();
     }
 
-    def "GIVEN existing 'online' folder WHEN the folder selected AND 'Unpublish' clicked in the menu THEN 'the folder becomes is 'offline' "()
+    def "GIVEN existing 'Published' folder WHEN the folder selected AND 'Unpublish' clicked in the menu THEN the folder becomes is 'Unpublished' "()
     {
-        given: "existing published folder"
+        given: "existing published folder is selected"
         findAndSelectContent( FOLDER_CONTENT.getName() )
 
-        when: "the folder selected AND 'Unpublish' clicked"
+        when: " 'Unpublish' menu item has been clicked"
         ContentUnpublishDialog modalDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
 
         and: "'unpublish' button on the modal dialog pressed"
         modalDialog.clickOnUnpublishButton();
         String message = contentBrowsePanel.waitForNotificationMessage();
 
-        then: "content has 'Unpublished' status"
+        then: "the content is getting 'Unpublished'"
         saveScreenshot( "test_content_unpublished" );
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.UNPUBLISHED.getValue();
 
-        and: "correct notification message appears"
+        and: "expected notification message appears"
         message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, FOLDER_CONTENT.getName() );
 
         and: "'Publish' on the toolbar is enabled now"
