@@ -18,76 +18,76 @@ class LauncherPanel_Spec
         go "admin"
     }
 
-    def "WHEN home page opened THEN 'Launcher Panel' is displayed AND all control elements are present"()
+    def "WHEN home page has been opened THEN 'Launcher Panel' is displayed AND all expected control elements should be present on the page"()
     {
-        when: "home page opened"
+        when: "home page has been opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
-        then: "launcher panel displayed"
+        then: "launcher panel should be displayed"
         launcherPanel.isDisplayed();
 
-        and: "Applications link present"
+        and: "'Applications link' should be present"
         launcherPanel.isApplicationsLinkDisplayed();
 
-        and: "Users link present"
+        and: "'Users link' should be present"
         launcherPanel.isUsersLinkDisplayed();
 
-        and: "Content Studio link present"
+        and: "'Content Studio' link should be present"
         launcherPanel.isContentStudioLinkDisplayed();
 
-        and: "Home link present"
+        and: "Home link should be present"
         launcherPanel.isHomeLinkDisplayed();
 
-        and: "Logout link present"
+        and: "Logout link should be  present"
         launcherPanel.isLogoutLinkDisplayed();
 
-        and: "correct user's display name shown"
+        and: "expected user's display name should be shown"
         launcherPanel.getUserDisplayName() == "Super User";
 
-        and: "'close' button present on panel"
-        launcherPanel.isCloseButtonDisplayed();
+        and: "button with 'close' icon should be present on the panel"
+        launcherPanel.iButtonCloseLauncherDisplayed();
     }
 
-    def "WHEN home page opened THEN 'Home' link is active on 'Launcher Panel'"()
+    def "WHEN home page has been opened THEN 'Home' link should be active on 'Launcher Panel'"()
     {
-        when: "home page opened"
+        when: "home page has been opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
-        then: "'Home' link is active on 'Launcher Panel'"
+        then: "'Home' link should be active on 'Launcher Panel'"
         launcherPanel.getActiveLink() == "Home";
     }
 
-    def "WHEN 'content studio' opened  THEN 'Content Studio' link is active in 'Launcher Panel'"()
+    def "WHEN 'content studio' has been opened THEN 'Content Studio' link should be active in 'Launcher Panel'"()
     {
-        when: "'content studio' opened"
+        when: "'content studio' has been opened"
         NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        and: "toggler pressed and launcher panel opened"
+        and: "toggler has been pressed and launcher panel is opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
 
-        then:
+        then: "'Content Studio' link should be active in 'Launcher Panel'"
         launcherPanel.getActiveLink() == "Content Studio";
     }
 
-    def "WHEN 'Applications' opened  THEN 'Applications' link is active in 'Launcher Panel'"()
+    def "WHEN 'Applications' has bee opened THEN 'Applications' link should be active in 'Launcher Panel'"()
     {
-        when: "'Applications' app opened "
+        when: "'Applications' has been opened "
         NavigatorHelper.openApplications( getTestSession() );
 
         and: "toggler pressed and launcher panel opened"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
 
-        then:
+        then: "'Applications' link should be active in 'Launcher Panel'"
         launcherPanel.getActiveLink() == "Applications";
     }
 
-    def "WHEN 'Users' app opened  THEN 'Users' link is active in 'Launcher Panel'"()
+    def "WHEN 'Users' has been opened THEN 'Users' link should be active in 'Launcher Panel'"()
     {
-        when: "'Users' app opened"
+        when: "'Users' has been opened"
         NavigatorHelper.openUsersApp( getTestSession() );
 
         and: "launcher panel opened"
@@ -99,41 +99,41 @@ class LauncherPanel_Spec
         launcherPanel.getActiveLink() == "Users";
     }
 
-    def "GIVEN home page opened WHEN button 'close' clicked THEN 'Launcher Panel' not displayed AND button with lines appears"()
+    def "GIVEN home page is opened WHEN button 'close' has been clicked THEN 'Launcher Panel' should close AND button with lines appears"()
     {
-        given: "home page opened"
+        given: "home page is opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
-        when: "close button pressed"
+        when: "close button has been pressed"
         launcherPanel.clickOnCloseButton();
         sleep( 500 );
 
-        then: "'Launcher Panel' not displayed"
+        then: "'Launcher Panel' should not be displayed"
         launcherPanel.waitUntilLauncherClosed();
 
         and: "button with 'lines' appears"
         launcherPanel.isOpenLauncherButtonPresent();
         saveScreenshot( "launcher-closed-home-page" );
 
-        and: "button 'close' not displayed now"
-        !launcherPanel.isCloseButtonDisplayed();
+        and: " button with 'close' icon should not be displayed"
+        !launcherPanel.iButtonCloseLauncherDisplayed();
     }
 
-    def "GIVEN home page opened WHEN 'Log out' link clicked THEN 'login page' appears AND correct title displayed"()
+    def "GIVEN home page is opened WHEN 'Log out' link has been clicked THEN 'login page' should appear AND expected title should be displayed"()
     {
-        given: "home page opened"
+        given: "home page is opened"
         NavigatorHelper.loginAndOpenHomePage( getTestSession() );
 
-        when: "'Log out' link clicked"
+        when: "'Log out' link has been clicked"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.clickOnLogout();
         LoginPage loginPage = new LoginPage( getSession() );
 
-        then: "login page loaded"
+        then: "login page should be loaded"
         loginPage.isPageLoaded();
 
-        and: "correct title displayed"
-        loginPage.getTitle().equals( LoginPage.TITLE );
+        and: "expected title should be displayed"
+        loginPage.getTitle() == LoginPage.TITLE;
     }
 }
