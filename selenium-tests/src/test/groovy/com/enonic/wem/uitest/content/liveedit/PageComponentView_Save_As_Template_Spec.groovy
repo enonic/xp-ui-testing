@@ -24,7 +24,7 @@ class PageComponentView_Save_As_Template_Spec
     @Shared
     Content SITE
 
-    def "GIVEN existing site with a controller AND the site has been opened and PageComponent shown WHEN the controller has been clicked THEN 'Save as Template' menu item should be displayed"()
+    def "GIVEN existing site with a controller is opened AND PageComponent is opened WHEN the controller in PageComponentView has been clicked THEN 'Save as Template' menu item should be displayed"()
     {
         given:
         SITE = buildMyFirstAppSite( "site" );
@@ -48,7 +48,7 @@ class PageComponentView_Save_As_Template_Spec
         pageComponentsView.isMenuItemPresent( ComponentMenuItems.RESET.getValue() );
     }
 
-    def "GIVEN existing site WHEN wizard for page-template has been opened THEN 'Save as Template' menu item should not be displayed"()
+    def "GIVEN wizard for page-template is opened WHEN root item in PageComponentView has been clicked  THEN 'Save as Template' menu item should not be displayed"()
     {
         given: "existing site"
         filterPanel.typeSearchText( SITE.getName() );

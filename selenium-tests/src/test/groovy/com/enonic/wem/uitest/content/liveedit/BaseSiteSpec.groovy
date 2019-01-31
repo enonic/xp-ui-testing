@@ -29,7 +29,7 @@ class BaseSiteSpec
     String COUNTRY_REGION_TITLE = "Country Region";
 
     @Shared
-    String COUNTRY_LIST_CONTROLLER = "country-list";
+    String COUNTRY_LIST_CONTROLLER = "Country List";
 
     @Shared
     String COUNTRY_REGION_HEADER = "Country"

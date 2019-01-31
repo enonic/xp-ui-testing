@@ -48,7 +48,7 @@ class BaseContentSpec
     String MAIN_REGION_PAGE_DESCRIPTOR_NAME = "main region";
 
     @Shared
-    String COUNTRY_LIST_PAGE_CONTROLLER = "country-list";
+    String COUNTRY_LIST_PAGE_CONTROLLER = "Country List";
 
     @Shared
     String IMPORTED_FOLDER_NAME = "all-content-types-images";

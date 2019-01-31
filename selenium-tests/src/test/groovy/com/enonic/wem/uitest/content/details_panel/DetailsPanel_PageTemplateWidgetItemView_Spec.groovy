@@ -12,8 +12,6 @@ import spock.lang.Stepwise
 
 /**
  * Create on 8/3/2017.
- *
- * Tasks:xp-ui-testing#72 Add Selenium tests for PageTemplateWidgetItemView(Det. Panel)
  * */
 @Stepwise
 class DetailsPanel_PageTemplateWidgetItemView_Spec
@@ -26,7 +24,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
     Content PAGE_TEMPLATE;
 
     @Shared
-    String COUNTRY_LIST = "country-list";
+    String COUNTRY_LIST_CONTROLLER = "Country List";
 
     @Shared
     String COUNTRY_REGION_TITLE = "Country Region";
@@ -76,7 +74,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         given: "existing site with a controller"
         findAndSelectContent( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_LIST, SUPPORT_SITE, TEMPLATE_DISPLAY_NAME,
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_LIST_CONTROLLER, SUPPORT_SITE, TEMPLATE_DISPLAY_NAME,
                                            SITE.getName() );
         and: "new page template has been added"
         contentBrowsePanel.clickOnRowByName( "_templates" ).clickToolbarNew().selectContentType(
