@@ -3,7 +3,7 @@
   <mode>MIXED</mode>
   <form>
 
-    <field-set name="client">
+    <field-set>
       <label>Client</label>
       <items>
         <input name="appDomain" type="TextLine">
@@ -23,7 +23,7 @@
         </input>
       </items>
     </field-set>
-    <field-set name="groups">
+    <field-set>
       <label>Groups</label>
       <items>
         <input name="defaultPrincipals" type="PrincipalSelector">
@@ -36,10 +36,10 @@
         </input>
       </items>
     </field-set>
-    <field-set name="options">
+    <field-set>
       <label>Widget options</label>
       <items>
-        <field-set name="display">
+        <field-set>
           <label>Display</label>
           <items>
             <input name="allowedConnections" type="TextLine">
@@ -91,7 +91,7 @@
             </input>
           </items>
         </field-set>
-        <field-set name="theme">
+        <field-set>
           <label>Theme</label>
           <items>
             <input name="labeledSubmitButton" type="Checkbox">
@@ -112,7 +112,7 @@
             </input>
           </items>
         </field-set>
-        <field-set name="social">
+        <field-set>
           <label>Social</label>
           <items>
             <input name="socialButtonStyle" type="ComboBox">
@@ -127,7 +127,7 @@
             </input>
           </items>
         </field-set>
-        <field-set name="database">
+        <field-set>
           <label>Database</label>
           <items>
             <input name="allowLogin" type="Checkbox">
