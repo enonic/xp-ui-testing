@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <layout xmlns="urn:enonic:xp:model:1.0">
   <display-name>3-col</display-name>
+  <description>3 column layout</description>
   <form/>
   <regions>
     <region name="left"/>
