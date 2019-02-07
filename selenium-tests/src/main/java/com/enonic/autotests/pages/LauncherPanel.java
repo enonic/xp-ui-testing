@@ -175,7 +175,7 @@ public class LauncherPanel
 
     public boolean iButtonCloseLauncherDisplayed()
     {
-        return closePanelButton.getAttribute("class"  ).equals( "launcher-button dark toggled" );
+        return closePanelButton.getAttribute("class"  ).equals( "launcher-button toggled" );
     }
 
     public String getUserDisplayName()
@@ -190,7 +190,7 @@ public class LauncherPanel
 
     public boolean isOpenLauncherButtonPresent()
     {
-        return closePanelButton.getAttribute("class"  ).equals( "launcher-button dark" );
+        return closePanelButton.getAttribute("class"  ).equals( "launcher-button" );
     }
 
     public LauncherPanel openPanel()
