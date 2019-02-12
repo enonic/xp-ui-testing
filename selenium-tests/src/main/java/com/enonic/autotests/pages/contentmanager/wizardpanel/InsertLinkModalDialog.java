@@ -101,10 +101,23 @@ public class InsertLinkModalDialog
         return this;
     }
 
-    public InsertLinkModalDialog selectOption( String name )
+    public InsertLinkModalDialog doFilterComboBoxOption( String name )
     {
         WebElement optionsInput = getDisplayedElement( By.xpath( CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) );
         clearAndType( optionsInput, name );
+        return this;
+    }
+
+    public boolean isNoMatchingItemsInComboBox()
+    {
+        String message =
+            CONTAINER + "//div[contains(@id,'ContentComboBox')]" + "//div[@class='empty-options' and text()='No matching items']";
+        return isElementDisplayed( message );
+    }
+
+    public InsertLinkModalDialog selectComboBoxOption( String name )
+    {
+        doFilterComboBoxOption( name );
         sleep( 500 );
         LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         loaderComboBox.selectOption( name );
@@ -115,6 +128,7 @@ public class InsertLinkModalDialog
     {
         WebElement textInput = getDisplayedElement( By.xpath( LINK_TEXT_INPUT ) );
         clearAndType( textInput, text );
+        sleep( 300 );
         return this;
     }
 
@@ -122,12 +136,14 @@ public class InsertLinkModalDialog
     {
         WebElement textInput = getDisplayedElement( By.xpath( EMAIL_SUBJECT_INPUT ) );
         clearAndType( textInput, subject );
+        sleep( 500 );
         return this;
     }
 
     public InsertLinkModalDialog pressInsertButton()
     {
         getDisplayedElement( By.xpath( INSERT_OR_UPDATE_BUTTON ) ).click();
+        sleep( 1000 );
         return this;
     }
 

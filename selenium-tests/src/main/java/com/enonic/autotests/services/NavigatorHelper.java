@@ -1,5 +1,6 @@
 package com.enonic.autotests.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -177,6 +178,19 @@ public class NavigatorHelper
             }
         }
         return count;
+    }
+    public static void switchToNextTab( TestSession session )
+    {
+
+        ArrayList<String> windowHandles = new ArrayList<String>( session.getDriver().getWindowHandles() );
+        if ( windowHandles.size() == 0 )
+        {
+            TestUtils.saveScreenshot( session, NameHelper.uniqueName( "err_switch_tab" ) );
+            throw new TestFrameworkException( "tab was not found!" );
+        }
+
+        session.getDriver().switchTo().window( windowHandles.get( windowHandles.size() - 1 ) );
+
     }
 
     public static HomePage loginAndOpenHomePage( TestSession testSession )

@@ -48,7 +48,7 @@ public class LoginPage
         LoginPage loginPage = new LoginPage( getSession() );
         loginPage.typeNameAndPassword( username, password );
         getSession().setLoggedIn( true );
-        sleep( 700 );
+        sleep( 500 );
         return new HomePage( getSession() );
     }
 

@@ -115,6 +115,6 @@ class PageTemplate_Fragments_Spec
         pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME );
 
         then: "'Create Fragment' menu item should not be displayed, because it is the page-template"
-        !pageComponentsView.isMenuItemPresent( ComponentMenuItems.CREATE_FRAGMENT.getValue() );
+        !pageComponentsView.isMenuItemPresent( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
     }
 }
