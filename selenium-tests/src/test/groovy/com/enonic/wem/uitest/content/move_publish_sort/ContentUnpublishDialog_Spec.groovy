@@ -105,7 +105,7 @@ class ContentUnpublishDialog_Spec
 
         then: "wait until the dialog closed"
         contentUnPublishDialog.waitForClosed();
-        def message = contentBrowsePanel.waitNotificationMessage();
+        def message = contentBrowsePanel.waitForNotificationMessage();
 
         and: "the content is getting 'Unpublished'"
         contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.UNPUBLISHED.getValue();
@@ -113,8 +113,8 @@ class ContentUnpublishDialog_Spec
         and: "publish button on the toolbar should be enabled"
         contentBrowsePanel.isPublishButtonEnabled();
 
-        and: "correct notification message should appear"
-        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, NEW_DISPLAY_NAME );
+        and: "expected notification message should appear"
+        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, PARENT_CONTENT.getName() );
     }
 
     def "GIVEN parent and child content are 'online' WHEN parent content was selected and 'Unpublish' menu item clicked THEN parent and child contents are getting 'offline'"()
@@ -157,28 +157,13 @@ class ContentUnpublishDialog_Spec
         when: "the parent is selected and 'Unpublish' dialog is opened"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
 
-        then: "dependant list should be displayed"
-        contentUnPublishDialog.isDependantsDisplayed()
+        then: "dependant list should be hidden"
+        !contentUnPublishDialog.isDependantsDisplayed()
 
-        and: "dependant item should be displayed on the dialog"
-        contentUnPublishDialog.getDependantNames().get( 0 ).contains( CHILD_CONTENT.getName() );
+        //and: "dependant item should be displayed on the dialog"
+        //contentUnPublishDialog.getDependantNames().get( 0 ).contains( CHILD_CONTENT.getName() );
     }
 
-    def "GIVEN existing 'pending delete' content WHEN the content has been 'unpublished' THEN content should be deleted from the grid"()
-    {
-        given: "existing 'pending delete' content"
-        Content content = buildFolderContent( "folder", "unpublish of pending delete content" );
-        addContent( content );
-        findAndSelectContent( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
-        contentBrowsePanel.clickToolbarDelete().doDelete();
-
-        when: "the content has been 'unpublished'"
-        ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
-        contentUnPublishDialog.clickOnUnpublishButton();
-
-        then: "content should be deleted from the grid"
-        !contentBrowsePanel.exists( content.getName() );
-    }
     //test verifies the XP-3584
     def "GIVEN two existing 'New' contents WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"()
     {

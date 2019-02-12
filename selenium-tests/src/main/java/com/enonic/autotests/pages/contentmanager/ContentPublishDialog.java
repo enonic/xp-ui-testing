@@ -18,7 +18,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentPublishDialog
     extends Application
 {
-    public static final String OTHER_ITEMS_WILL_BE_PUBLISHED = "Other items that will be published.";
+    public static final String OTHER_ITEMS_WILL_BE_PUBLISHED_TEXT = "Other items that will be published";
 
     public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
 
@@ -43,13 +43,15 @@ public class ContentPublishDialog
 
     private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]" + H6_MAIN_NAME;
 
-    private final String DEPENDENCIES_LIST_HEADER = DIALOG_CONTAINER + "//h6[@class='dependants-header']";
+    private final String OTHER_ITEMS_WILL_BE_PUBLISHED = DIALOG_CONTAINER + "//p[@class='dependants-desc']";
 
     private final String ITEM_LIST = "//ul[contains(@id,'PublishDialogItemList')]";
 
     private final String DISPLAY_NAMES_OF_CONTENTS_TO_PUBLISH = DIALOG_CONTAINER + ITEM_LIST + H6_DISPLAY_NAME;
 
     private final String NAMES_OF_CONTENTS_TO_PUBLISH = DIALOG_CONTAINER + ITEM_LIST + P_NAME;
+
+    private final String SHOW_DEPENDANT_ITEMS_LINK = DIALOG_CONTAINER + "//div[@class='dependants']/h6[contains(.,'Show dependent items')]";
 
     private String ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME =
         ITEM_LIST + "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
@@ -64,7 +66,7 @@ public class ContentPublishDialog
     private final String DIALOG_INVALID_SUB_HEADER_XPATH =
         DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='sub-title']";
 
-    private String STATUS_OF_CONTENT = ITEM_LIST +
+    private final String STATUS_OF_CONTENT = ITEM_LIST +
         "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]/div[contains(@class,'status')][2]";
 
     private final String CREATE_ISSUE_MENU_ITEM = DIALOG_CONTAINER + "//ul[contains(@id,'Menu')]//li[contains(.,'Create Issue...')]";
@@ -85,6 +87,9 @@ public class ContentPublishDialog
     @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
     private WebElement cancelButtonBottom;
 
+    @FindBy(xpath = SHOW_DEPENDANT_ITEMS_LINK)
+    private WebElement showDependantItemsLink;
+
     public ContentPublishDialog( final TestSession session )
     {
         super( session );
@@ -94,6 +99,13 @@ public class ContentPublishDialog
     {
         cancelButtonTop.click();
         sleep( 200 );
+    }
+
+    public void clickOnShowDependentItemsLink()
+    {
+        waitUntilVisible( By.xpath( SHOW_DEPENDANT_ITEMS_LINK ) );
+        showDependantItemsLink.click();
+        sleep( 400 );
     }
 
     /**
@@ -262,7 +274,7 @@ public class ContentPublishDialog
 
     public boolean isDependantsDisplayed()
     {
-        return isElementDisplayed( DEPENDENCIES_LIST_HEADER );
+        return isElementDisplayed( OTHER_ITEMS_WILL_BE_PUBLISHED );
     }
 
     public void clickOnCancelBottomButton()
@@ -285,7 +297,7 @@ public class ContentPublishDialog
             throw new TestFrameworkException( "publish button is disabled!" );
         }
         publishButton.click();
-        sleep( 1000 );
+        sleep( 1400 );
         return this;
     }
 
@@ -318,7 +330,7 @@ public class ContentPublishDialog
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
         {
             saveScreenshot( "err_publish_dialog_opening" );
-            throw new TestFrameworkException( "Content publish dialog was not shown!" );
+            throw new TestFrameworkException( "Content publish dialog was not loaded!" );
         }
         return this;
     }
@@ -344,14 +356,14 @@ public class ContentPublishDialog
         return cancelButtonTop.isEnabled();
     }
 
-    public String getDependenciesListHeader()
+    public String getDependenciesListMessage()
     {
-        return getDisplayedElement( By.xpath( DEPENDENCIES_LIST_HEADER ) ).getText();
+        return getDisplayedElement( By.xpath( OTHER_ITEMS_WILL_BE_PUBLISHED ) ).getText();
     }
 
     public boolean isDependenciesListHeaderDisplayed()
     {
-        return isElementDisplayed( DEPENDENCIES_LIST_HEADER );
+        return isElementDisplayed( OTHER_ITEMS_WILL_BE_PUBLISHED );
     }
 
     public List<String> getDependantList()

@@ -21,12 +21,14 @@ public class SiteConfiguratorDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SiteConfiguratorDialog')]";
 
+    protected final String HTML_AREA = DIALOG_CONTAINER + "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
+
     protected final String POSTS_OPTION_FILTER_INPUT =
         DIALOG_CONTAINER + "//div[contains(@id,'LoaderComboBox') and @name='postsFolder']" + COMBOBOX_OPTION_FILTER_INPUT;
 
-    private final String INSERT_LINK_BUTTON = "//div[@aria-label='Insert/edit link']";
+    private final String INSERT_LINK_BUTTON = "//a[contains(@class,'cke_button') and contains(@title,'Link')]";
 
-    private final String TOOLBAR_INSERT_MACRO_BUTTON = "//div[contains(@class,'mce-btn') and @aria-label='Insert macro']";
+    private final String TOOLBAR_INSERT_MACRO_BUTTON = "//a[contains(@class,'cke_button') and @title='Insert macro']";
 
     public final String CANCEL_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']]";
 
@@ -92,7 +94,8 @@ public class SiteConfiguratorDialog
 
     public boolean isNoMatchingItemsForPostsFolder()
     {
-        String message = DIALOG_CONTAINER + "//div[@class='empty-options' and text()='No matching items']";
+        String message = DIALOG_CONTAINER + "//div[contains(@id,'InputView') and descendant::div[text()='Posts folder']]" +
+            "//div[@class='empty-options' and text()='No matching items']";
         return isElementDisplayed( message );
     }
 
@@ -118,6 +121,7 @@ public class SiteConfiguratorDialog
         }
         buildActions().moveToElement( applyButton ).click().build().perform();
         waitForDialogClosed();
+        sleep( 700 );
     }
 
     public boolean waitForDialogClosed()
@@ -182,10 +186,14 @@ public class SiteConfiguratorDialog
 
     public InsertLinkModalDialog clickOnHtmlAreaInsertLinkButton()
     {
-        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( CKE_TEXT_AREA ), Application.EXPLICIT_NORMAL );
+        if ( !isPresent )
+        {
+            throw new TestFrameworkException( "CKE_AREA is not visible!" );
+        }
+        WebElement textArea = getDisplayedElement( By.xpath( CKE_TEXT_AREA ) );
         buildActions().moveToElement( textArea ).click( textArea ).build().perform();
-        textArea.sendKeys( "  " );
-        if ( !isElementDisplayed( INSERT_LINK_BUTTON ) )
+        if ( !waitUntilVisibleNoException( By.xpath( INSERT_LINK_BUTTON ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_insert_link" );
             throw new TestFrameworkException( "insert-link menu item not present!" );
@@ -203,21 +211,14 @@ public class SiteConfiguratorDialog
 
     private void showToolbar()
     {
-        WebElement textArea = getDisplayedElement( By.xpath( TEXT_AREA ) );
+        WebElement textArea = getDisplayedElement( By.xpath( CKE_TEXT_AREA ) );
         buildActions().moveToElement( textArea ).click( textArea ).build().perform();
-        textArea.sendKeys( "  " );
     }
 
-    public String getTextFromArea()
+    public String getTextFromCKE()
     {
-        WebElement frame = findElement( By.xpath( TEXT_AREA ) );
-        String TEXT_IN_AREA_SCRIPT = "return document.getElementById('tinymce').innerHTML";
-        String contentStudioWHandle = getDriver().getWindowHandle();
-        getDriver().switchTo().frame( frame );
-        Object obj = ( (JavascriptExecutor) getSession().getDriver() ).executeScript( TEXT_IN_AREA_SCRIPT );
-        String text = obj.toString();
-        getDriver().switchTo().window( contentStudioWHandle );
-        return text;
+        WebElement htmlArea = findElement( By.xpath( HTML_AREA ) );
+        return getCKEData( htmlArea.getAttribute( "id" ) );
     }
 
     public void clickOnCancelButtonTop()
@@ -226,9 +227,8 @@ public class SiteConfiguratorDialog
         sleep( 200 );
     }
 
-    public void setTextIntoArea( String text )
+    public String getCKEData( String id )
     {
-        String script = "document.getElementById('tinymce').contentDocument.body.innerHTML=arguments[0];";
-        ( (JavascriptExecutor) getSession().getDriver() ).executeScript( script, text );
+        return ( (String) getJavaScriptExecutor().executeScript( SCRIPT_DATA_CKE, id ) ).trim();
     }
 }

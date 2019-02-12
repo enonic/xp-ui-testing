@@ -12,7 +12,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.SaveBeforeCloseDialog;
@@ -51,14 +50,17 @@ public class ContentWizardPanel
 
     private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
-    private final String CONTENT_STATUS = "//span[@class='content-status']/span";
+    private final String CONTENT_STATUS = "//div[@class='content-status-wrapper']/span[contains(@class,'status')]";
 
-    private final String TOOLBAR_DUPLICATE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
+    private final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
+        TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate...']]";
 
     private final String TOOLBAR_UNDO_DELETE_BUTTON_XPATH =
         TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
 
-    private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save draft']]";
+    private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
+
+    private final String TOOLBAR_SAVED_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Saved']]";
 
     private final String TOOLBAR_PUBLISH = "//div[contains(@id,'ContentWizardToolbarPublishControls')]";
 
@@ -84,7 +86,7 @@ public class ContentWizardPanel
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
+        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...' or text()='#action.publishMore#']]";
 
     private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
 
@@ -162,19 +164,31 @@ public class ContentWizardPanel
         //return homeButton.getAttribute( "class" ).contains( "clickable" );
     }
 
+    public ContentWizardPanel clickOnMinimizeEditIcon()
+    {
+        String minimizeEditIcon = "//div[@class='minimize-edit']";
+        findElement( By.xpath( minimizeEditIcon ) ).click();
+        return this;
+    }
+
     public boolean isDeleteButtonDisplayed()
     {
-        return toolbarDeleteButton.isDisplayed();
+        return isElementDisplayed( By.xpath( TOOLBAR_DELETE_BUTTON_XPATH ) );
     }
 
     public boolean isUndoDeleteButtonDisplayed()
     {
-        return toolbarUndoDeleteButton.isDisplayed();
+        return isElementDisplayed( By.xpath( TOOLBAR_UNDO_DELETE_BUTTON_XPATH ) );
     }
 
     public boolean isSaveButtonDisplayed()
     {
-        return toolbarSaveButton.isDisplayed();
+        return isElementDisplayed( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ) );
+    }
+
+    public boolean isSavedButtonDisplayed()
+    {
+        return isElementDisplayed( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ) );
     }
 
     /**
@@ -263,6 +277,10 @@ public class ContentWizardPanel
      */
     public ContextWindow showContextWindow()
     {
+        if ( isInLiveEditFrame() )
+        {
+            switchToDefaultWindow();
+        }
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.isContextWindowPresent() )
         {
@@ -279,14 +297,14 @@ public class ContentWizardPanel
 
     public ContentWizardPanel clickToolbarPreview()
     {
-        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), 1 );
+        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PREVIEW_BUTTON_XPATH ), 3 );
         if ( !isEnabled )
         {
             saveScreenshot( "err_preview_button_status" );
             throw new TestFrameworkException( "button Preview disabled, but expected is enabled" );
         }
         toolbarPreviewButton.click();
-        sleep( 1000 );
+        sleep( 1500 );
         return this;
     }
 
@@ -326,30 +344,28 @@ public class ContentWizardPanel
     public ItemViewContextMenu showItemViewContextMenu()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        sleep( 2000 );
         clickOnPageView();
-        sleep( 500 );
-        return new ItemViewContextMenu( getSession() );
+        sleep( 300 );
+        ItemViewContextMenu menu = new ItemViewContextMenu( getSession() );
+        menu.waitForMenuOpened();
+        return menu;
     }
 
     public ContentWizardPanel unlockPageEditorAndSwitchToContentStudio()
     {
         ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
         itemViewContextMenu.clickOnCustomizeMenuItem();
+        sleep( 500 );
         switchToDefaultWindow();
-        return this;
-    }
-
-    public ContentWizardPanel unlockPageEditor()
-    {
-        ItemViewContextMenu itemViewContextMenu = showItemViewContextMenu();
-        itemViewContextMenu.clickOnCustomizeMenuItem();
         return this;
     }
 
     private void clickOnPageView()
     {
         switchToLiveEditFrame();
-        WebElement body = findElements( By.xpath( "//body" ) ).get( 0 );
+        waitUntilVisibleNoException( By.xpath( "//body[@data-portal-component-type='page']" ), Application.EXPLICIT_NORMAL );
+        WebElement body = getDisplayedElement( By.xpath( "//body[@data-portal-component-type='page']" ) );
         Actions builder = new Actions( getDriver() );
         builder.click( body ).build().perform();
     }
@@ -437,6 +453,18 @@ public class ContentWizardPanel
         return this;
     }
 
+    public ContentWizardPanel waitForSaveButtonClickable()
+    {
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_QUICK );
+        boolean isEnabled = isSaveButtonEnabled();
+        if ( !isVisible || !isEnabled )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
+            throw new TestFrameworkException( "Save button should be visible on the wizard-toolbar" );
+        }
+        return this;
+    }
+
     @Override
     public ContentWizardPanel save()
     {
@@ -444,15 +472,9 @@ public class ContentWizardPanel
         {
             switchToDefaultWindow();
         }
-        boolean isSaveButtonEnabled =
-            waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !isSaveButtonEnabled )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_save_button" ) );
-            throw new SaveOrUpdateException( "Impossible to save, button 'Save' is not available!!" );
-        }
+        waitForSaveButtonClickable();
         toolbarSaveButton.click();
-        sleep( 800 );
+        sleep( 500 );
         return this;
     }
 
@@ -482,6 +504,11 @@ public class ContentWizardPanel
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
+    public boolean isSavedButtonEnabled()
+    {
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
     public boolean isPublishButtonEnabled()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
@@ -501,7 +528,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( DIV_CONTENT_WIZARD_PANEL ), 10l );
+        boolean result = waitUntilVisibleNoException( By.xpath( "//input[@name='displayName']" ), 10l );
         if ( !result )
         {
             saveScreenshot( NameHelper.uniqueName( "err_wizard" ) );
@@ -577,6 +604,10 @@ public class ContentWizardPanel
      */
     public PageComponentsViewDialog showComponentView()
     {
+        if ( isInLiveEditFrame() )
+        {
+            switchToDefaultWindow();
+        }
         if ( !waitUntilVisibleNoException( By.xpath( COMPONENT_VIEW_TOGGLER ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_component-view-button" );
@@ -585,6 +616,7 @@ public class ContentWizardPanel
         getDisplayedElement( By.xpath( COMPONENT_VIEW_TOGGLER ) ).click();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         dialog.waitForOpened();
+        sleep( 200 );
         return dialog;
     }
 
@@ -613,7 +645,7 @@ public class ContentWizardPanel
         if ( !isElementDisplayed( DROPDOWN_OPTION_FILTER_INPUT ) )
         {
             saveScreenshot( "err_content_wizard_dropdown_not_displayed" );
-            throw new TestFrameworkException( "option filter input was not found" );
+            throw new TestFrameworkException( "ContentWizard -tried to select page descriptor: option filter input was not found" );
         }
         findElement( By.xpath( DROPDOWN_OPTION_FILTER_INPUT ) ).sendKeys( pageDescriptorDisplayName );
         String pageDescriptor = String.format( "//h6[contains(@class,'main-name') and text()='%s']", pageDescriptorDisplayName );
@@ -623,7 +655,7 @@ public class ContentWizardPanel
             throw new TestFrameworkException( "drop-down-option-filter: item was not found: " + pageDescriptorDisplayName );
         }
         getDisplayedElement( By.xpath( pageDescriptor ) ).click();
-        sleep( 1000 );
+        sleep( 1100 );
         return this;
     }
 
@@ -663,6 +695,7 @@ public class ContentWizardPanel
 
     public String getStatus()
     {
+        this.waitUntilVisible( By.xpath( CONTENT_STATUS ) );
         return getDisplayedString( CONTENT_STATUS );
     }
 

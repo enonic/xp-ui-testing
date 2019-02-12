@@ -87,7 +87,7 @@ public abstract class WizardPanel<T>
         }
         String stetName = String.format( NAVIGATOR_TAB_ITEM_LINK, stepName );
         findElement( By.xpath( stetName ) ).click();
-        sleep( 100 );
+        sleep( 200 );
         return this;
     }
 

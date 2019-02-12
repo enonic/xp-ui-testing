@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
@@ -79,6 +80,9 @@ class ContentPublishDialog_Spec
             Application.EXPLICIT_NORMAL );
         and: "'include children' has been clicked"
         contentPublishDialog.includeChildren( true );
+
+        and: ""
+        contentPublishDialog.clickOnShowDependentItemsLink();
 
         then: "correct title should be displayed on the dialog"
         contentPublishDialog.getTitle() == ContentPublishDialog.DIALOG_TITLE
@@ -185,14 +189,13 @@ class ContentPublishDialog_Spec
 
         when: "'include child' icon was pressed"
         contentPublishDialog.includeChildren( true );
+        and: "Show Dependant Items link has been clicked"
+        contentPublishDialog.clickOnShowDependentItemsLink();
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies" );
 
-        then: "The header of 'Dependencies list' should be displayed"
-        contentPublishDialog.isDependenciesListHeaderDisplayed();
-
-        and: "correct text should be shown in the header"
-        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
+        then: "'Other items that will be published' message should be displayed"
+        contentPublishDialog.getDependenciesListMessage() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED_TEXT;
 
         and: "one correct dependant should be present"
         dependant.size() == 1;
@@ -210,6 +213,7 @@ class ContentPublishDialog_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( CHILD_FOLDER.getName() );
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
+        contentPublishDialog.clickOnShowDependentItemsLink();
         List<String> dependant = contentPublishDialog.getDependantList();
         saveScreenshot( "publish-dialog-dependencies-child" );
 
@@ -217,7 +221,7 @@ class ContentPublishDialog_Spec
         contentPublishDialog.isDependenciesListHeaderDisplayed();
 
         and: "correct text should be shown in the header"
-        contentPublishDialog.getDependenciesListHeader() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED;
+        contentPublishDialog.getDependenciesListMessage() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED_TEXT;
 
         and: "one dependency should be shown on the dialog"
         dependant.size() == 1;
@@ -235,6 +239,7 @@ class ContentPublishDialog_Spec
             Application.EXPLICIT_NORMAL );
         and: "'include children' has been clicked"
         contentPublishDialog.includeChildren( true );
+        contentPublishDialog.clickOnShowDependentItemsLink();
 
         when: "'remove' button has been clicked and the dependant is removed"
         contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );
@@ -259,6 +264,8 @@ class ContentPublishDialog_Spec
             Application.EXPLICIT_NORMAL );
         and: "'include children' has been clicked"
         contentPublishDialog.includeChildren( true );
+        contentPublishDialog.clickOnShowDependentItemsLink();
+
 
         when: "'remove' button has been clicked and the dependant was removed"
         contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );

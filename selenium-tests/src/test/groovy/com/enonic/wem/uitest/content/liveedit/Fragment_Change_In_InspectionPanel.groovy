@@ -45,7 +45,7 @@ class Fragment_Change_In_InspectionPanel
         given: "site wizard  is opened and the controller has been selected"
         SITE1 = buildSiteBasedOnFirstApp();
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE1.getContentTypeName() ).typeData(
-            SITE1 ).selectPageDescriptor( "main region" ).save();
+            SITE1 ).selectPageDescriptor( "main region" );
         and: "'Component View' has been opened"
         PageComponentsViewDialog pageComponentsView = siteWizard.showComponentView();
 
@@ -54,7 +54,7 @@ class Fragment_Change_In_InspectionPanel
 
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
-        pageComponentsView.openMenu( PART_FRAGMENT_CITY_LIST ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( PART_FRAGMENT_CITY_LIST ).selectMenuItem( "Save as Fragment" );
         saveScreenshot( "fragment_inspection_panel1" )
 
         when: "'Dropdown handle' has been clicked"
@@ -82,7 +82,7 @@ class Fragment_Change_In_InspectionPanel
 
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
-        pageComponentsView.openMenu( PART_FRAGMENT_CITY_CREATION ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( PART_FRAGMENT_CITY_CREATION ).selectMenuItem( "Save as Fragment" );
         saveScreenshot( "fragment_inspection_panel2" )
 
         when: "'Dropdown handle' has been clicked"
@@ -171,7 +171,7 @@ class Fragment_Change_In_InspectionPanel
 
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
-        pageComponentsView.openMenu( PART_CITIES_DISTANCE_FACET ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( PART_CITIES_DISTANCE_FACET ).selectMenuItem( "Save as Fragment" );
         saveScreenshot( "fragment_cities_distance" )
 
         when: "'Dropdown handle' has been clicked"

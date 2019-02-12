@@ -34,7 +34,7 @@ class ContentWizard_Keyboard_Shortcuts_Spec
 
         when: "shortcut to 'Save' has been pressed"
         wizard.pressSaveKeyboardShortcut();
-        String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_FOLDER.getDisplayName() );
+        String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_FOLDER.getName() );
         saveScreenshot( "wizard_keyboard_shortcut_save" );
 
         then: "correct notification message should be displayed"

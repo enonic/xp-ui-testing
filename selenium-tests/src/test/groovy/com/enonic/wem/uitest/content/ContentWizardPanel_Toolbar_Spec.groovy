@@ -17,8 +17,8 @@ class ContentWizardPanel_Toolbar_Spec
         then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save draft' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        and: "'Save' button should be disabled, because name input is empty"
+        !wizardPanel.isSaveButtonEnabled();
 
         and: "'Publish' button should be disabled"
         !wizardPanel.isPublishButtonEnabled();
@@ -61,12 +61,13 @@ class ContentWizardPanel_Toolbar_Spec
 
         when: "display name was typed and saved"
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
+        sleep(500);
 
         then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save draft' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        and: "'Saved' button should be displayed"
+        wizardPanel.isSavedButtonDisplayed(  );
 
         and: "'Publish' button should be enabled"
         wizardPanel.isPublishButtonEnabled();
@@ -91,8 +92,8 @@ class ContentWizardPanel_Toolbar_Spec
         then: "'Delete' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
-        and: "'Save draft' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        and: "'Saved' button should be displayed"
+        wizardPanel.isSavedButtonDisplayed(  );
 
         and: "'Publish' button should be disabled"
         !wizardPanel.isPublishButtonEnabled();

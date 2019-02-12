@@ -1,8 +1,10 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.CityFormView
 import com.enonic.autotests.pages.form.CountryFormView
+import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -89,5 +91,14 @@ class BaseSiteSpec
             contentType( MY_FIRST_APP_NAME + ":city" ).data( data ).
             build();
         return dateContent;
+    }
+    protected void insertPart( PageComponentsViewDialog pageComponentsView, String target, ContentWizardPanel siteWizard, String partName )
+    {
+        pageComponentsView.openMenu( target ).selectMenuItem( "Insert", "Part" );
+        pageComponentsView.doCloseDialog();
+        siteWizard.switchToLiveEditFrame();
+        PartComponentView partComponentView = new PartComponentView( getSession() );
+        partComponentView.selectItem( partName );
+        siteWizard.switchToDefaultWindow();
     }
 }

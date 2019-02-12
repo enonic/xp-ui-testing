@@ -20,6 +20,14 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
+    protected final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
+
+    protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
+
+    protected final String CKE_TEXT_AREA = "//div[contains(@id,'cke_api.ui.text.TextArea')]";
+
+    protected final String CKE_HTML_AREA = "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
+
     public static final String NO_SELECTION_MESSAGE = "You are wasting this space - select something!";
 
     public static final String SWITCHING_TEMPLATE_MESSAGE =
@@ -35,9 +43,10 @@ public class Application
 
     public static String ITEM_IS_UNDELETED = "The item is successfully undeleted";
 
-    public static String ITEMS_IS_UNDELETED = "The items are successfully undeleted";
+    public static String ITEMS_IS_UNDELETED = "Items are undeleted";
 
     public static String CONTENTS_MARKED_FOR_DELETION_MESSAGE = "%s items are marked for deletion";
+    public static String CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" is marked for deletion.";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
@@ -45,11 +54,13 @@ public class Application
 
     public static String GROUP_CREATED_MESSAGE = "Group was created";
 
-    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is unpublished.";
+    public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE ="Item \"%s\" is unpublished.";
 
     public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished.";
 
     public static String ONE_PENDING_ITEM_IS_DELETED = "The item is deleted.";
+
+    public static String ITEM_IS_DELETED = "Item \"%s\" is deleted.";
 
     public static String PENDING_ITEMS_ARE_DELETED = "%s items are deleted.";
 
@@ -61,7 +72,7 @@ public class Application
 
     public static String ISSUE_IS_CLOSED = "Issue \"%s\" is closed.";
 
-    public static String CONTENT_SAVED = "\"%s\" saved";
+    public static String CONTENT_SAVED = "Item \"%s\" is saved.";
 
     public static String CONTENT_DELETED_MESSAGE = "The item is deleted.";
 
@@ -77,8 +88,10 @@ public class Application
 
     protected final String APP_CANCEL_BUTTON_TOP = "//div[contains(@class,'cancel-button-top')]";
 
-    protected String OPTION_IMAGE_SELECTOR_VIEW_BY_NAME = "//div[contains(@id,'ImageSelectorViewer') and descendant::img[contains(@title,'%s')]]";
-    protected String OPTION_IMAGE_SELECTOR_VIEW = "//div[contains(@id,'ImageSelectorViewer') ]//img[contains(@title,'%s')]]";
+    protected String OPTION_IMAGE_SELECTOR_VIEW_BY_NAME =
+        "//div[contains(@id,'ImageSelectorViewer') and descendant::img[contains(@title,'%s')]]";
+
+    protected String OPTION_IMAGE_SELECTOR_VIEW = "//div[contains(@id,'ImageSelectorViewer') ]//img[contains(@title,'%s')]";
 
     protected final String DATA_TIME_PICKER_INPUT = "//div[contains(@id,'DateTimePicker')]//input[contains(@id,'TextInput')]";
 
@@ -135,7 +148,7 @@ public class Application
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
 
-    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "\"%s\" is published.";
+    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is published.";
 
     public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published.";
 
@@ -257,5 +270,10 @@ public class Application
     {
         buildActions().sendKeys( Keys.ESCAPE ).build().perform();
         sleep( 500 );
+    }
+
+    public void setTextInCKE( String id, String text )
+    {
+        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
     }
 }

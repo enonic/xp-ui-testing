@@ -29,10 +29,9 @@ class ContentPublishDelete_Spec
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
-        then: "Online status should be displayed in the grid"
-        filterPanel.typeSearchText( content.getName() )
+        then: "Published status should be displayed in the grid"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
-        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, DISPLAY_NAME );
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, content.getName(  ) );
     }
 
     def "GIVEN existing content with 'Online' status WHEN content was selected and 'Delete' button pressed THEN content is getting 'Pending delete'"()
@@ -42,12 +41,12 @@ class ContentPublishDelete_Spec
 
         when: "content was selected and 'Delete' button pressed"
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().doDelete();
-        String message = contentBrowsePanel.waitNotificationMessage();
+        String message = contentBrowsePanel.waitForNotificationMessage();
 
         then: "content is getting 'Pending delete'"
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
         and: "correct notification message should be shown"
-        message == Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE;
+        message == String.format( Application.CONTENT_MARKED_FOR_DELETION_MESSAGE, content.getName());
     }
 
     def "GIVEN existing content with 'Deleted' status WHEN content is selected and 'Delete' button pressed THEN 'Undo deleted' button should be displayed"()
@@ -67,12 +66,12 @@ class ContentPublishDelete_Spec
         filterPanel.typeSearchText( content.getName() );
         and: "content is selected and 'Publish' button pressed"
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
-        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = contentBrowsePanel.waitPublishNotificationMessage(Application.EXPLICIT_NORMAL);
 
         then: "content should not be listed in the browse panel"
         !contentBrowsePanel.exists( content.getName() );
 
         and: "correct notification message should be displayed"
-        message == Application.ONE_PENDING_ITEM_IS_DELETED;
+        message == String.format(Application.ITEM_IS_DELETED, content.getName(  ));
     }
 }

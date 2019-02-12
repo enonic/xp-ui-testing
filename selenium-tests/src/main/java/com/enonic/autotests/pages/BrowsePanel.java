@@ -30,6 +30,8 @@ public abstract class BrowsePanel
 
     protected final String TREEGRID_TOOLBAR_XPATH = "//div[contains(@id,'TreeGridToolbar')]";
 
+    protected final String APP_BAR="//div[contains(@id,'AppBar')]";
+
     protected final String SELECTION_TOGGLER = TREEGRID_TOOLBAR_XPATH + "//button[contains(@id,'SelectionPanelToggler')]";
 
     protected final String NUMBER_IN_SELECTION_TOGGLER = SELECTION_TOGGLER + "/span";
@@ -121,7 +123,8 @@ public abstract class BrowsePanel
             saveScreenshot( NameHelper.uniqueName( "err_show_filter" ) );
             throw new TestFrameworkException( "button 'show filter panel' not clickable" );
         }
-        waitForClickableAndClick( By.xpath( SHOW_FILTER_PANEL_BUTTON ) );
+        sleep( 300 );
+        showFilterPanelButton.click();
         //getDisplayedElement( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).click();
         sleep( 700 );
         return this;
@@ -303,19 +306,23 @@ public abstract class BrowsePanel
         else
         {
             //scroll and count
-            long scrollTopBefore;
-            long scrollTopAfter;
-            long valueForScroll = getViewportHeight();
+            Number scrollTopBefore;
+            Number scrollTopAfter;
+            Number valueForScroll = getViewportHeight();
             for ( ; ; )
             {
+                int j = 1;
                 scrollTopBefore = getViewportScrollTopValue();
                 scrollTopAfter = doScrollViewport( valueForScroll );
                 names.addAll( getNamesOfSelectedGridItem() );
-                if ( scrollTopBefore == scrollTopAfter )
+                if ( scrollTopBefore.intValue() == scrollTopAfter.intValue() )
                 {
                     break;
                 }
-                valueForScroll += valueForScroll;
+                //valueForScroll += valueForScroll;
+                j++;
+                valueForScroll = valueForScroll.intValue() * j;
+
             }
             return names.size();
         }
@@ -445,7 +452,7 @@ public abstract class BrowsePanel
     public void clickOnSelectionController()
     {
         selectionController.click();
-        sleep( 300 );
+        sleep( 500 );
     }
 
     public void isGridEmpty( long timeout )
@@ -520,24 +527,26 @@ public abstract class BrowsePanel
             return names.size();
         }
         // else, do scroll and add values.
-        long newScrollTop = getViewportHeight();
-        long scrollTopBefore;
-        long scrollTopAfter;
+        Number newScrollTop = getViewportHeight();
+        Number scrollTopBefore;
+        Number scrollTopAfter;
         for ( ; ; )
         {
+            int j = 1;
             scrollTopBefore = getViewportScrollTopValue();
             scrollTopAfter = doScrollViewport( newScrollTop );
-            if ( scrollTopBefore == scrollTopAfter )
+            if ( scrollTopBefore.intValue() == scrollTopAfter.intValue() )
             {
                 break;
             }
-            newScrollTop += newScrollTop;
+            j++;
+            newScrollTop = newScrollTop.intValue() * j;
             names.addAll( getGridItemNames() );
         }
         return names.size();
     }
 
-    protected Long doScrollViewport( long step )
+    protected Number doScrollViewport( Number step )
     {
         if ( findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).size() != 0 )
         {
@@ -694,15 +703,15 @@ public abstract class BrowsePanel
         return Integer.valueOf( scrollHeight.toString() );
     }
 
-    public Long getViewportScrollTopValue()
+    public Number getViewportScrollTopValue()
     {
-        return (Long) getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
+        return (Number) getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop" );
     }
 
     public void scrollViewPortToTop()
     {
         getJavaScriptExecutor().executeScript( "return document.getElementsByClassName('slick-viewport')[0].scrollTop=0" );
-        sleep( 1000 );
+        sleep( 500 );
     }
 
     public boolean doScrollAndFindGridItem( String gridItemName, long timeout )
@@ -720,8 +729,8 @@ public abstract class BrowsePanel
             return false;
         }
         int scrollTopValue = getViewportHeight();
-        long scrollTopBefore;
-        long scrollTopAfter;
+        Number scrollTopBefore;
+        Number scrollTopAfter;
         for ( ; ; )
         {
             scrollTopBefore = getViewportScrollTopValue();
@@ -732,7 +741,7 @@ public abstract class BrowsePanel
                 getLogger().info( "content was found: " + gridItemName );
                 return true;
             }
-            if ( scrollTopBefore == scrollTopAfter )
+            if ( scrollTopBefore.intValue() == scrollTopAfter.intValue() )
             {
                 break;
             }
@@ -933,13 +942,13 @@ public abstract class BrowsePanel
         return this;
     }
 
-    public String waitNotificationMessage( long timeout )
+    public String waitForNotificationMessage()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), timeout ) )
+        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), Application.EXPLICIT_NORMAL ) )
         {
             return null;
         }
-        String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
+        String message = getDisplayedString( NOTIFICATION_MESSAGE_XPATH );
         getLogger().info( "Notification message " + message );
         return message.trim();
     }

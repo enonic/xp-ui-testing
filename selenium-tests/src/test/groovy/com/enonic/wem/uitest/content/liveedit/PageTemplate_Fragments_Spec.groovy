@@ -67,7 +67,7 @@ class PageTemplate_Fragments_Spec
         wizard.save();
         and: "and new fragment has been created"
         wizard.showComponentView();
-        pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME ).selectMenuItem( "Create Fragment" );
+        pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME ).selectMenuItem( "Save as Fragment" );
         sleep( 2000 )
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( ELEPHANT_IMAGE_DISPLAY_NAME );
 

@@ -80,14 +80,25 @@ public class LiveFormPanel
         return new ContentWizardPanel( getSession() );
     }
 
+//    public LiveFormPanel typeTextInTextComponent( String text )
+//    {
+//        String input = TEXT_COMPONENT_VIEW + "//div[@class='tiny-mce-here mce-content-body mce-edit-focus']";
+//        String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
+//        setTextIntoArea( id, text );
+//        sleep( 500 );
+//        return this;
+//    }
+
     public LiveFormPanel typeTextInTextComponent( String text )
     {
-        String input = TEXT_COMPONENT_VIEW + "//div[@class='tiny-mce-here mce-content-body mce-edit-focus']";
+        String input =
+            "//div[contains(@id,'TextComponentView') and contains(@class,'editor-focused')]//div[contains(@id,'TextComponentView')]";
         String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
-        setTextIntoArea( id, text );
+        setTextInCke( id, text );
         sleep( 500 );
         return this;
     }
+
 
     public LiveEditComponentContextMenu clickOnTextComponentAndShowContextMenu()
     {
@@ -234,4 +245,9 @@ public class LiveFormPanel
         sleep( 2000 );
         return this;
     }
+    private void setTextInCke( String id, String text )
+    {
+        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
+    }
+
 }

@@ -73,15 +73,15 @@ class UserBrowsePanel_ContextMenu_Spec
         userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
-    def "GIVEN system 'super user' is selected WHEN context menu has been opened  THEN all menu-items have correct state"()
+    def "GIVEN system 'super user' is selected WHEN context menu has been opened  THEN Delete menu item should be disabled"()
     {
         when: "context menu has been opened"
         userBrowseFilterPanel.typeSearchText( "su" );
         userBrowsePanel.openContextMenu( "users/su" );
         saveScreenshot( "system-su-context-menu" );
 
-        then: "Delete menu item should be enabled"
-        userBrowsePanel.isContextMenuItemEnabled( "Delete" );
+        then: "Delete menu item should be disabled"
+        !userBrowsePanel.isContextMenuItemEnabled( "Delete" );
 
         and: "Edit menu item should be enabled"
         userBrowsePanel.isContextMenuItemEnabled( "Edit" );
@@ -90,7 +90,7 @@ class UserBrowsePanel_ContextMenu_Spec
         userBrowsePanel.isContextMenuItemEnabled( "New" );
     }
 
-    def "WHEN existing role is selected and context menu opened THEN all menu-items have correct state"()
+    def "WHEN existing role is selected and context menu opened THEN New, Delete, Edit items should be enabled"()
     {
         when: "a role selected and context menu opened"
         userBrowseFilterPanel.typeSearchText( RoleName.SYSTEM_USER_MANAGER.getValue() );

@@ -58,11 +58,12 @@ class ImageInfo_Wizard_Spec
         ImageInfoFormViewPanel imageInfoFormViewPanel = new ImageInfoFormViewPanel( getSession() );
         imageInfoFormViewPanel.typeDescription( TEST_DESCRIPTION );
 
-        and: "save button pressed and wizard closed"
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        and: "wizard closed"
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
-        and: " image opened again"
+        and: "image opened again"
         contentBrowsePanel.clickToolbarEdit();
+        wizard.clickOnWizardStep( "Image Info" );
 
         then: "correct description displayed on the page"
         imageInfoFormViewPanel.getDescription() == TEST_DESCRIPTION;

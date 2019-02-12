@@ -29,6 +29,9 @@ class DeleteContentDialog_With_DependantList_Spec
 
         when: "parent content selected and 'Delete' on the toolbar pressed"
         DeleteContentDialog modalDialog = contentBrowsePanel.clickToolbarDelete();
+
+        and: "'Show dependent items' link has been clicked"
+        modalDialog.clickOnShowDependentItemsLink();
         List<String> items = modalDialog.getDisplayNamesToDelete();
         List<String> dependantNames = modalDialog.getDependantList();
         saveScreenshot( "delete_dialog_dependant1" );
@@ -39,11 +42,14 @@ class DeleteContentDialog_With_DependantList_Spec
         and: "one item present in the dependant list"
         dependantNames.size() == 1;
 
-        and: "only one item to delete is displayed"
+        and: "only one item to delete should be displayed"
         items.get( 0 ) == PARENT_CONTENT.getDisplayName();
 
-        and: "correct subtitles are displayed"
-        modalDialog.getDependantHeader() == DeleteContentDialog.OTHER_ITEMS_WILL_BE_DELETED_TEXT;
+        and: "'Hide Dependant items' link should be displayed"
+        modalDialog.isHideDependantItemsLinkDisplayed();
+
+        and: "block of dependant-list 'Other items that will be deleted'  should be displayed"
+        modalDialog.isDependantListDisplayed();
     }
 
     def "GIVEN parent content with a child is opened WHEN 'delete' button on the wizard-toolbar pressed THEN 'Delete Content' dialog with dependant list appeared"()
@@ -53,6 +59,9 @@ class DeleteContentDialog_With_DependantList_Spec
 
         when: "'Delete' button on the wizard-toolbar pressed"
         DeleteContentDialog modalDialog = wizard.clickToolbarDelete();
+
+        and: "'Show dependent items' link has been clicked"
+        modalDialog.clickOnShowDependentItemsLink();
         List<String> items = modalDialog.getDisplayNamesToDelete();
         List<String> dependantNames = modalDialog.getDependantList();
         saveScreenshot( "delete_dialog_dependant2" );
@@ -66,7 +75,10 @@ class DeleteContentDialog_With_DependantList_Spec
         and: "only one item to delete is displayed"
         items.get( 0 ) == PARENT_CONTENT.getDisplayName();
 
-        and: "correct subtitles are displayed"
-        modalDialog.getDependantHeader() == DeleteContentDialog.OTHER_ITEMS_WILL_BE_DELETED_TEXT;
+        and: "'Hide Dependant items' link should be displayed"
+        modalDialog.isHideDependantItemsLinkDisplayed();
+
+        and: "block of dependant-list 'Other items that will be deleted'  should be displayed"
+        modalDialog.isDependantListDisplayed();
     }
 }

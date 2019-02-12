@@ -56,7 +56,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         given: "existing site with a controller"
         SITE = buildMyFirstAppSite( "site" );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
-        wizardPanel.typeData( SITE ).selectPageDescriptor( COUNTRY_REGION_TITLE ).save().closeBrowserTab().switchToBrowsePanelTab();
+        wizardPanel.typeData( SITE ).selectPageDescriptor( COUNTRY_REGION_TITLE ).closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when the site has been selected and the details panel opened"
         findAndSelectContent( SITE.getName() ).clickOnDetailsToggleButton();

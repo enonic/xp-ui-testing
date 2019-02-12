@@ -64,8 +64,8 @@ class DetailsPanels_VersionHistory_Spec
         saveScreenshot( "history_panel_content_was_published" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
-        then: "the number of versions should be increased by 1"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 1;
+        then: "the number of versions should not be increased"
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS ;
 
         and: "latest version should has 'published' status"
         contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
@@ -83,7 +83,7 @@ class DetailsPanels_VersionHistory_Spec
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "number of versions is increased by 1"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 2;
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 1;
 
         and: "the latest version has a 'modified' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );

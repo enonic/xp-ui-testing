@@ -34,7 +34,7 @@ class ImageComponentView_Spec
         ContentWizardPanel wizard = findAndSelectContent( SITE_NAME ).clickToolbarEdit();
 
         when: "image component has been inserted"
-        PageComponentsViewDialog pageComponentsViewDialog = wizard.selectPageDescriptor( "Page" ).save().showComponentView();
+        PageComponentsViewDialog pageComponentsViewDialog = wizard.selectPageDescriptor( "Page" ).showComponentView();
         pageComponentsViewDialog.openMenu( "main" ).selectMenuItem( "Insert", "Image" );
         pageComponentsViewDialog.doCloseDialog();
         wizard.switchToLiveEditFrame();

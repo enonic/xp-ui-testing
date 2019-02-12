@@ -1,20 +1,16 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
 
-public enum SortMenuItem
-{
-    DNAME_ASCENDING( "DisplayName - Ascending" ), DNAME_DESCENDING( "DisplayName - Descending" ), MODIFIED_ASCENDING(
-    "Modified - Ascending" ), MODIFIED_DESCENDING( "Modified - Descending (default)" ), MANUALLY_SORTED( "Manually Sorted" );
+public enum SortMenuItem {
+    DISPLAY_NAME("Display name"), MODIFIED_DATE("Modified date"),CREATED_DATE("Created date"), PUBLISHED_DATE("Published date"), MANUALLY_SORTED("Manually sorted");
 
     private String value;
 
-    public String getValue()
-    {
+    public String getValue() {
         return value;
     }
 
-    private SortMenuItem( String value )
-    {
+    private SortMenuItem(String value) {
         this.value = value;
     }
 }

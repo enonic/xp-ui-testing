@@ -49,7 +49,7 @@ class PageTemplate_Spec
         then: "Live Edit frame should be displayed on the wizard page"
         wizard.isLiveEditFrameDisplayed();
         and: "Page-template step should be present"
-        wizard.isWizardStepPresent( "Page-template" );
+        wizard.isWizardStepPresent( "Page Template" );
     }
 
     def "GIVEN existing site WHEN 'page template' wizard is opened AND display name typed AND Save button pressed THEN red icon should be displayed on the wizard"()

@@ -124,21 +124,21 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.isEditButtonDisplayed();
     }
     //Verifies XP-4863 Content Wizard - Mod+S won't save content when image selector has focus
-    def "GIVEN content is opened WHEN image has been clicked AND keyboard shortcut to 'Save' is pressed THEN correct notification message should appear"()
-    {
-        given: "content with a image-selector is opened(4 images is selected)"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
-        ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
-
-        when: "the image has been clicked"
-        formViewPanel.clickOnImage( MAN_IMAGE_DISPLAY_NAME );
-        and: "keyboard shortcut to 'Save' is pressed"
-        wizard.pressSaveKeyboardShortcut();
-        String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
-
-        then: "correct notification message should appear"
-        wizard.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
-    }
+//    def "GIVEN content is opened WHEN image has been clicked AND keyboard shortcut to 'Save' is pressed THEN correct notification message should appear"()
+//    {
+//        given: "content with a image-selector is opened(4 images is selected)"
+//        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
+//        ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
+//
+//        when: "the image has been clicked"
+//        formViewPanel.clickOnImage( MAN_IMAGE_DISPLAY_NAME );
+//        and: "keyboard shortcut to 'Save' is pressed"
+//        wizard.pressSaveKeyboardShortcut();
+//        String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getDisplayName() );
+//
+//        then: "correct notification message should appear"
+//        wizard.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
+//    }
 
     def "GIVEN content with an image-selector is opened WHEN checkbox for one of the images was clicked THEN label for button 'Remove' has a correct number"()
     {

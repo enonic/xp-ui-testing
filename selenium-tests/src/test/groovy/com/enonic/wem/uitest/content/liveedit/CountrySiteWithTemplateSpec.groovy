@@ -77,12 +77,12 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "the template is opened and the 'country region' controller selected and 'country' part inserted"
-        PartComponentView partComponentView = contentWizard.showContextWindow().clickOnInsertLink().insertPartByDragAndDrop( "RegionView",
-                                                                                                                             LIVE_EDIT_FRAME_SITE_HEADER );
-        and: "'country' part has been inserted"
-        partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
-        and: "Preview button is pressed"
-        contentWizard.save().clickToolbarPreview();
+        PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
+        and: "Part has been inserted(the site should be saved automatically)"
+        insertPart( pageComponentsView, "country", contentWizard, "country" );
+
+        and: "Preview button has been pressed"
+        contentWizard.clickToolbarPreview();
         saveScreenshot( "country_part_added" );
 
         then: "sources should not be empty"

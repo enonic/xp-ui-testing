@@ -62,14 +62,14 @@ class ContentBrowsePanel_PublishMenu_Spec
 
         and: "'unpublish' button on the modal dialog pressed"
         modalDialog.clickOnUnpublishButton();
-        String message = contentBrowsePanel.waitNotificationMessage( Application.EXPLICIT_NORMAL );
+        String message = contentBrowsePanel.waitForNotificationMessage(  );
 
         then: "content has 'Unpublished' status"
         saveScreenshot( "test_content_unpublished" );
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.UNPUBLISHED.getValue();
 
         and: "correct notification message appears"
-        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, FOLDER_CONTENT.getDisplayName() );
+        message == String.format( Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, FOLDER_CONTENT.getName() );
 
         and: "'Publish' on the toolbar is enabled now"
         contentBrowsePanel.isPublishButtonEnabled();

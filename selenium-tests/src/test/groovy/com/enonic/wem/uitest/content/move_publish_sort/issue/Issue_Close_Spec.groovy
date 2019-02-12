@@ -126,11 +126,12 @@ class Issue_Close_Spec
         saveScreenshot( "issue_stopped_by_user" );
 
         and: "correct notification message should be displayed"
-        contentBrowsePanel.waitNotificationMessage() == "The issue is Closed.";
+        contentBrowsePanel.waitForNotificationMessage() == "The issue is Closed.";
+        sleep( 2000 );
+        saveScreenshot( "last_issue_closed" );
 
         and: "'Has Assigned issues' icon should not be displayed"
-        contentBrowsePanel.waitForAssignedIssuesIconNotVisible();
-        saveScreenshot( "issue_stopped_icon_hidden" );
+        contentBrowsePanel.getTextInIssuesButton() == "No open issues";
     }
 
     def "GIVEN existing issue is closed by the user AND SU is 'logged in' WHEN 'issue details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
@@ -139,7 +140,6 @@ class Issue_Close_Spec
         getTestSession().setUser( null );
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.clickOnClosedTab();
 
         when: "issue details dialog has been opened"
         IssueDetailsDialog issueDetailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() )

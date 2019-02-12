@@ -6,8 +6,8 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
+import com.enonic.autotests.pages.form.liveedit.CkeToolbar
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
-import com.enonic.autotests.pages.form.liveedit.MceToolbar
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel
 import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
@@ -90,9 +90,10 @@ class Display_SourceButton_Spec
 
         when: "new site with permissions 'Full Access' for the user has been saved"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).
-            typeData( SITE ).selectPageDescriptor( "main region" ).save().closeBrowserTab().switchToBrowsePanelTab();
+            typeData( SITE ).selectPageDescriptor( "main region" ).closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content should be listed in the grid"
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
 
@@ -132,14 +133,14 @@ class Display_SourceButton_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
+        CkeToolbar ckeToolbar = new CkeToolbar(getSession(  ));
 
         when: "double click on the text component was performed"
         liveFormPanel.doubleClickOnTextComponent( "test text" );
         saveScreenshot( "text_component_edit_inline_mode" );
 
         then: "'Source Button button should not be displayed"
-        !mceToolbar.isSourceCodeButtonDisplayed();
+        !ckeToolbar.isSourceCodeButtonDisplayed();
     }
 
     def "GIVEN login with the User WHEN user without required roles tries to add a htmlArea content THEN Source Button should not be displayed on the htmlarea-toolbar"()
@@ -151,8 +152,7 @@ class Display_SourceButton_Spec
         saveScreenshot( "logged_" + USER_NAME );
 
         when: "double click on the text component is performed"
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType(
-            "com.enonic.xp.ui_testing.simple_page:htmlarea" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "com.enonic.xp.ui_testing.simple_page:htmlarea" );
         saveScreenshot( "htmlarea_source_button_not_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
 
@@ -192,14 +192,14 @@ class Display_SourceButton_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        MceToolbar mceToolbar = liveFormPanel.getMceToolbar();
+        CkeToolbar ckeToolbar = new CkeToolbar(getSession(  ));
 
         when: "double click on the text component is performed"
         liveFormPanel.doubleClickOnTextComponent( "test text" );
         saveScreenshot( "text_component_edit_inline_mode" );
 
         then: "'Source Button button should be displayed"
-        mceToolbar.isSourceCodeButtonDisplayed();
+        ckeToolbar.isSourceCodeButtonDisplayed();
     }
 
     def "GIVEN login with the User WHEN user with required roles tries to add a htmlArea content THEN 'Source Button' should be displayed on the htmlarea-toolbar"()
@@ -211,10 +211,10 @@ class Display_SourceButton_Spec
         saveScreenshot( "logged_" + USER_NAME );
 
         when: "double click on the text component is performed"
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType(
-            "com.enonic.xp.ui_testing.simple_page:htmlarea" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "com.enonic.xp.ui_testing.simple_page:htmlarea" );
         saveScreenshot( "htmlarea_source_button_should_be_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
+        htmlArea.showToolbar(  );
 
         then: "'Source Button button should be displayed"
         htmlArea.isSourceCodeButtonDisplayed();
@@ -231,7 +231,7 @@ class Display_SourceButton_Spec
             name( name ).
             displayName( "simple site" ).
             parent( ContentPath.ROOT ).
-            contentType( ContentTypeName.site() ).data( data ).aclEntries( aclEntries ).
+            contentType( ContentTypeName.site()  ).data( data ).aclEntries( aclEntries ).
             build();
         return site;
     }

@@ -20,10 +20,6 @@ public class FieldSetFormViewPanel
 
     private final String TEXT_LINE = FORM_VIEW + "//input[contains(@id,'TextInput')]";
 
-    private final String HTML_AREA = FORM_VIEW + "//div[contains(@id,'TextLine')]";
-
-    protected final String TINY_MCE = FORM_VIEW + "//div[contains(@class,'mce-edit-area')]" + TEXT_AREA;
-
     @FindBy(xpath = TEXT_LINE)
     private WebElement textLineInput;
 
@@ -54,9 +50,8 @@ public class FieldSetFormViewPanel
     {
         if ( text != null )
         {
-            WebElement areaElement = findElement( By.xpath( TINY_MCE ) );
-            buildActions().click( findElement( By.xpath( TINY_MCE ) ) ).build().perform();
-            setTextIntoArea( areaElement.getAttribute( "id" ), text );
+            WebElement areaElement = findElement( By.xpath( CKE_HTML_AREA ) );
+            setTextInCKE( areaElement.getAttribute( "id" ), text );
             sleep( 300 );
         }
         return this;

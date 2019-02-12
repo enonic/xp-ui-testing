@@ -177,7 +177,7 @@ class Restore_Version_Site_Spec
         saveScreenshot( "site_version_controller_added_wizard" );
 
         and: "the site saved"
-        wizard.save();
+        //wizard.save();
         sleep( 500 );
 
         and: "home button clicked"

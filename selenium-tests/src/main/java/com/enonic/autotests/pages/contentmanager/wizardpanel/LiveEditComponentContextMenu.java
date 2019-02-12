@@ -34,7 +34,7 @@ public class LiveEditComponentContextMenu
 
     private final String SELECT_PARENT_MENU_ITEM = MENU_DIV + "//dt[contains(@id,'TreeMenuItem') and text()='Select Parent']";
 
-    private final String CREATE_FRAGMENT_MENU_ITEM = MENU_DIV + "//dt[contains(@id,'TreeMenuItem') and text()='Create Fragment']";
+    private final String CREATE_FRAGMENT_MENU_ITEM = MENU_DIV + "//dt[contains(@id,'TreeMenuItem') and text()='Save as Fragment']";
 
 
     public LiveEditComponentContextMenu( final TestSession session )

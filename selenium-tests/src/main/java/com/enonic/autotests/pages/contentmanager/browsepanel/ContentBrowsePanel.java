@@ -14,6 +14,7 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.DuplicateContentDialog;
 import com.enonic.autotests.pages.contentmanager.ContentMenuItem;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
@@ -38,8 +39,6 @@ public class ContentBrowsePanel
 {
     public static final String UNCLOSED_ISSUES_MESSAGE = "You have unclosed Publishing Issues";
 
-    public final String NOTIFICATION_MESSAGE = "//div[contains(@id,'NotificationContainer')]//div[@class='notification-content']//span";
-
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
 
     public static final String CONTENT_STUDIO_BUTTON = "//div[@id='AppIcon' ]//span[text()='Content Studio']";
@@ -54,10 +53,10 @@ public class ContentBrowsePanel
 
     private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New...']]";
 
-    private final String SHOW_ISSUE_DIALOG_BUTTON = BROWSE_TOOLBAR_XPATH + "//button[contains(@id,'ShowIssuesDialogButton')]";
+    private final String SHOW_ISSUE_DIALOG_BUTTON = APP_BAR + "//button[contains(@id,'ShowIssuesDialogButton')]";
 
     private final String DUPLICATE_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Duplicate']]";
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Duplicate...']]";
 
     private final String PREVIEW_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
@@ -75,7 +74,7 @@ public class ContentBrowsePanel
     private final String MORE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'FoldButton')]";
 
     private final String PUBLISH_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...']]";
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...' or text()='#action.publishMore#']]";
 
     private final String UNDO_DELETE_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
@@ -148,6 +147,7 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel showPublishMenu()
     {
+
         publishMenuDropDownHandler.click();
         sleep( 400 );
         return this;
@@ -161,6 +161,11 @@ public class ContentBrowsePanel
     protected boolean waitForAssignedIssuesIconNotVisible()
     {
         return WaitHelper.waitAttrHasNoValue( getDriver(), showIssuesButton, "class", "has-assigned-issues", Application.EXPLICIT_NORMAL );
+    }
+
+    public String getTextInIssuesButton()
+    {
+        return getDisplayedString( "//button[contains(@id,'ShowIssuesDialogButton')]//span" );
     }
 
     /**
@@ -354,15 +359,6 @@ public class ContentBrowsePanel
         return getFilterPanel().isFilterPanelDisplayed();
     }
 
-    public String waitNotificationMessage()
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE ), Application.EXPLICIT_NORMAL ) )
-        {
-            return null;
-        }
-        return getDisplayedString( NOTIFICATION_MESSAGE );
-    }
-
     public boolean isContentInvalid( String contentName )
     {
         String contentInGrid = String.format( CONTENT_SUMMARY_VIEWER, contentName );
@@ -422,8 +418,7 @@ public class ContentBrowsePanel
      */
     public List<String> getContentNamesFromGrid()
     {
-        List<WebElement> rows = findElements( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
-        return rows.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
+        return this.getDisplayedStrings( By.xpath( ALL_CONTENT_NAMES_FROM_TREE_GRID_XPATH ) );
     }
 
     public List<String> getContentDisplayNamesFromGrid()
@@ -631,7 +626,8 @@ public class ContentBrowsePanel
         boolean isLoaded = newContentDialog.waitUntilDialogLoaded( Application.EXPLICIT_NORMAL );
         if ( !isLoaded )
         {
-            throw new TestFrameworkException( "NewContentDialog dialog was not loaded!" );
+            saveScreenshot( "err_open_new_content_dialog" );
+            throw new TestFrameworkException( "NewContentDialog dialog is not loaded!" );
         }
         return newContentDialog;
     }
@@ -872,6 +868,15 @@ public class ContentBrowsePanel
         return this;
     }
 
+    public ContentBrowsePanel doDuplicateContent( String contentName )
+    {
+        this.selectDuplicateFromContextMenu( contentName );
+        DuplicateContentDialog dialog = new DuplicateContentDialog( getSession() );
+        dialog.waitForOpened();
+        dialog.clickOnDuplicateButton();
+        dialog.waitForClosed();
+        return this;
+    }
 
     public ContentBrowsePanel selectDuplicateFromContextMenu( String contentName )
     {

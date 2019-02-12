@@ -7,6 +7,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -26,9 +27,9 @@ class Occurrences_HtmlArea_0_2_Spec
     @Shared
     String DEFAULT_EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
 
-    def "WHEN wizard for adding a content with htmlArea(0:2) is opened THEN one text area should be present "()
+    def "WHEN wizard for new htmlArea(0:2) content is opened THEN one text area should be present "()
     {
-        when: "start to add a content with type 'htmlArea 0:2'"
+        when: "wizard for new htmlArea(0:2) content is opened"
         Content htmlAreaContent = buildHtmlArea0_2_Content( 1, TEST_TEXT1 );
         ContentWizardPanel wizard = selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
@@ -98,12 +99,12 @@ class Occurrences_HtmlArea_0_2_Spec
         when: "the content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
-        List<String> strings = formViewPanel.getInnerHtmlFromAreas();
+        List<String> strings = formViewPanel.getDataFromCKEAreas();
 
         then: "correct values of strings are showed in both text areas"
-        strings.contains( DEFAULT_EXPECTED_TEXT1 );
+        strings.get( 0 ).contains( DEFAULT_EXPECTED_TEXT1 );
         and:
-        strings.contains( DEFAULT_EXPECTED_TEXT2 );
+        strings.get( 1 ).contains( DEFAULT_EXPECTED_TEXT2 );
     }
 
     private Content buildHtmlArea0_2_Content( long numberOfEditors, String... text )
@@ -119,7 +120,7 @@ class Occurrences_HtmlArea_0_2_Spec
             name( NameHelper.uniqueName( "html0_2_" ) ).
             displayName( "html0_2 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":htmlarea0_2" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "htmlarea0_2" ).data( data ).
             build();
         return tinyMceContent;
     }
