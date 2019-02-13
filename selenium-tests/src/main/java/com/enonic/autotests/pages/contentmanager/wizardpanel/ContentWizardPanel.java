@@ -484,9 +484,14 @@ public class ContentWizardPanel
         return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
 
+    public boolean waitForPublishButtonVisible( long timeout )
+    {
+        return waitUntilVisibleNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), timeout );
+    }
+
     public ContentPublishDialog clickOnWizardPublishButton()
     {
-        if ( !isElementDisplayed( TOOLBAR_PUBLISH_BUTTON_XPATH ) )
+        if ( !waitForPublishButtonVisible( Application.EXPLICIT_QUICK ) )
         {
             saveScreenshot( "err_toolbar_publish" );
             throw new TestFrameworkException( "publish button was not found in the wizard" );

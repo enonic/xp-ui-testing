@@ -160,6 +160,8 @@ public class Application
 
     public static final long EXPLICIT_QUICK = 2;
 
+    public static final long EXPLICIT_1 = 1;
+
     public static final long APP_INSTALL_TIMEOUT = 10;
 
     public static final String LIVE_EDIT_FRAME = "//iframe[contains(@class,'live-edit-frame')]";
