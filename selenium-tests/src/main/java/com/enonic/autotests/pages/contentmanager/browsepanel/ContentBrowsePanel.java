@@ -1085,6 +1085,15 @@ public class ContentBrowsePanel
     {
         return publishButton.isEnabled();
     }
+    public boolean isPublishButtonDisplayed()
+    {
+        return publishButton.isDisplayed();
+    }
+
+    public boolean waitForPublishButtonVisible( long timeout )
+    {
+        return waitUntilVisibleNoException( By.xpath( PUBLISH_BUTTON_XPATH ), timeout );
+    }
 
     public boolean isPreviewButtonEnabled()
     {

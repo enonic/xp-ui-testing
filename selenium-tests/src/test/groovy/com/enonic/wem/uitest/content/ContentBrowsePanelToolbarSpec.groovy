@@ -1,5 +1,7 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
+
 /**
  * Tasks:
  * xp-ui-testing#63  Add Selenium tests for 'Show Issue' button on the contentBrowse-toolbar*/
@@ -27,8 +29,8 @@ class ContentBrowsePanelToolbarSpec
         and: "Sort button should be disabled"
         !contentBrowsePanel.isSortButtonEnabled();
 
-        and: "Publish button should be disabled"
-        !contentBrowsePanel.isPublishButtonEnabled();
+        and: "Publish button should not be visible"
+        !contentBrowsePanel.isPublishButtonDisplayed()
 
         and: "Move button should be disabled"
         !contentBrowsePanel.isMoveButtonEnabled();
@@ -47,7 +49,7 @@ class ContentBrowsePanelToolbarSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( IMPORTED_FOLDER_NAME );
 
         then: "Publish button should be enabled"
-        contentBrowsePanel.isPublishButtonEnabled();
+        contentBrowsePanel.waitForPublishButtonVisible( Application.EXPLICIT_1 );
 
         and: "Sort button should be enabled"
         contentBrowsePanel.isSortButtonEnabled();
