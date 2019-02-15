@@ -23,7 +23,7 @@ dependencies {
     compile "com.enonic.xp:core-api:${xpVersion}"
     compile "com.enonic.xp:portal-api:${xpVersion}"
     include "com.enonic.xp:lib-portal:${xpVersion}"
-    include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
+    include 'com.enonic.lib:lib-thymeleaf:2.0.0-SNAPSHOT'
     include 'com.enonic.lib:util:1.2.0'
 }
 repositories {

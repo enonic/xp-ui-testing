@@ -174,6 +174,7 @@ class Fragment_Create_From_Image_Spec
 
         and: "'Show Inbound' button has been pressed"
         dependencies.clickOnShowOutboundButton();
+        NavigatorHelper.switchToNextTab( getTestSession() );
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
 
         then: "only one inbound dependency should be filtered"

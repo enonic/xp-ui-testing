@@ -20,9 +20,8 @@ dependencies {
     compile "com.enonic.xp:portal-api:7.0.0-SNAPSHOT"
     include "com.enonic.xp:lib-content:7.0.0-SNAPSHOT"
     include "com.enonic.xp:lib-portal:7.0.0-SNAPSHOT"
-    include "com.enonic.xp:lib-thymeleaf:7.0.0-SNAPSHOT"
-    include "com.enonic.xp:lib-mustache:7.0.0-SNAPSHOT"
-    include "com.enonic.xp:lib-i18n:7.0.0-SNAPSHOT"
+    include 'com.enonic.lib:lib-thymeleaf:2.0.0-SNAPSHOT'
+    include 'com.enonic.lib:lib-mustache:2.0.0-SNAPSHOT'
 }
 
 repositories {

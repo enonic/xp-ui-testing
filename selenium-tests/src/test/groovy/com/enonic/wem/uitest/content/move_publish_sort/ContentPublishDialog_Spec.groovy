@@ -23,14 +23,7 @@ class ContentPublishDialog_Spec
     @Shared
     Content CHILD_FOLDER;
 
-    def "GIVEN wizard for new folder is opened WHEN name input is empty THEN publish button should not be displayed on the wizard-toolbar"()
-    {
-        when:
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
 
-        then: "publish button should not be displayed on the wizard-toolbar"
-        !wizard.waitForPublishButtonVisible( Application.EXPLICIT_1 );
-    }
 
     def "GIVEN wizard for new folder is opened WHEN data typed and 'Publish' button was pressed  THEN correct status of content is displayed on the modal dialog"()
     {
@@ -282,5 +275,14 @@ class ContentPublishDialog_Spec
 
         and: "child folder should be 'New', because the dependant item was removed"
         contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.NEW.getValue();
+    }
+
+    def "GIVEN wizard for new folder is opened WHEN name input is empty THEN publish button should not be displayed on the wizard-toolbar"()
+    {
+        when:
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
+
+        then: "publish button should not be displayed on the wizard-toolbar"
+        !wizard.waitForPublishButtonVisible( Application.EXPLICIT_1 );
     }
 }
