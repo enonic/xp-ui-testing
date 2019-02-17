@@ -99,7 +99,7 @@ public class ImageFormViewPanel
 
     public ImageEditor clickOnFocusButton()
     {
-        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_FOCUS ), EXPLICIT_NORMAL );
+        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_FOCUS ), EXPLICIT_LONG );
         if ( !isClickable )
         {
             saveScreenshot( "err_focus_button" );

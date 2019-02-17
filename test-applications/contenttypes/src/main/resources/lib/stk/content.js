@@ -1,7 +1,7 @@
-var portal = require('/lib/xp/portal');
-var contentSvc = require('/lib/xp/content');
-
 exports.content = {};
+
+var contentLib = require('/lib/xp/content');
+var portal = require('/lib/xp/portal');
 
 /**
 * Get content by key (path or id)
@@ -14,7 +14,7 @@ exports.content.get = function (key) {
         content = portal.getContent();
     }
     else {
-        content = contentSvc.get({
+        content = contentLib.get({
             key: key
         });
     }
@@ -22,12 +22,12 @@ exports.content.get = function (key) {
 };
 
 /**
-* Check if a content exists at the given path.
-* @param {String} path of the content to check.
-* @return {Boolean} true if a content exists there.
+* Check if a content exists with the given key.
+* @param {String} path or id of the content to check.
+* @return {Boolean} true if a content exists.
 */
-exports.content.exists = function(path) {
-    return exports.content.get(path) ? true : false;
+exports.content.exists = function(key) {
+    return exports.content.get(key) ? true : false;
 };
 
 /**

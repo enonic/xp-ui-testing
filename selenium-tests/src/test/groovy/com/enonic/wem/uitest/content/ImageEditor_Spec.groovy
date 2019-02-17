@@ -115,19 +115,6 @@ class ImageEditor_Spec
         !toolbar.isDisplayed();
     }
 
-    def "GIVEN image content opened WHEN 'Focus' button was pressed THEN focus circle appears on the Image Editor"()
-    {
-        given: "'Image Editor' dialog opened"
-        findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
-        ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
-
-        when: "'Close' button was pressed"
-        ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
-        saveScreenshot( "image_editor_focus_circle" );
-
-        then: "red circle appears on the Image Editor"
-        imageEditor.isFocusCircleDisplayed();
-    }
 
     def "GIVEN image content opened AND 'Focus' button was pressed WHEN focus circle moved THEN 'Reset Autofocus' link appears on the toolbar"()
     {
@@ -137,7 +124,7 @@ class ImageEditor_Spec
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
 
-        when: "'Autofocus' was moved"
+        when: "'Autofocus' has been moved"
         imageEditor.doDragAndChangeFocus( -40 );
 
         then: "red circle is displayed on the Image Editor"
