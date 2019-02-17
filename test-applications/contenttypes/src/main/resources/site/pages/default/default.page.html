@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
-    <title>test theme</title>
-
+    <title>Home Page</title>
 
 
     <link rel="stylesheet" id="style-css" data-th-href="${portal.assetUrl({'_path=css/style.css'})}"  href="../assets/css/style.css" type="text/css" media="all"/>
@@ -21,6 +20,7 @@
     <meta name="author" content="Enonic USA" />
 
     <span data-th-if="${backgroundImage}" data-th-remove="tag" data-th-utext="${backgroundImage}"></span>
+    <script src="main.js"></script>
 
 </head>
 
@@ -91,8 +91,5 @@
         </div><!-- #colophon-wrap -->
     </div><!-- #page .hfeed .site -->
 
-    <script type='text/javascript' data-th-src="${portal.assetUrl({'_path=js/small-menu.js'})}" src='../../assets/js/small-menu.js'></script>
-    <script type='text/javascript' data-th-src="${portal.assetUrl({'_path=js/comment-reply.min.js'})}" src='../../assets/js/comment-reply.min.js'></script>
-
-</body>
+  </body>
 </html>
