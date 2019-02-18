@@ -37,7 +37,7 @@ import com.enonic.xp.security.auth.AuthenticationInfo;
 public class Initializer
 {
     private static final String[] FOLDER_IMAGES =
-        {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "hand.jpg", "spumans.jpg", "elephant.jpg", "renault.jpg"};
+        {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "hand.jpg", "spumans.jpg", "elephant.jpg", "renault.jpg","cape.jpg", "kotey.jpeg"};
 
     private static final String[] BAT_FILES = {"server.bat", "start.bat"};
 
@@ -449,6 +449,8 @@ public class Initializer
         {
             LOG.info( "error  " + e.getMessage() );
             System.out.println( "error " + e.getMessage() );
+            System.out.println( "error " + e );
+
             return null;
         }
     }
