@@ -1,7 +1,7 @@
 plugins {
     id 'maven'
     id 'com.enonic.defaults' version '1.0.3'
-    id 'com.enonic.xp.app' version '1.0.13'
+    id 'com.enonic.xp.app' version '1.1.0'
 }
 
 enonic {
@@ -11,7 +11,9 @@ enonic {
 app {
     name = 'com.enonic.xp.ui_testing.first_app'
     displayName = 'First Selenium App'
+    systemVersion = "${xpVersion}"
 }
+
 version = '2.0.0'
 
 dependencies {
