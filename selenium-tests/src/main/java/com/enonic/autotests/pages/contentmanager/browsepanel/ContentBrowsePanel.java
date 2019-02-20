@@ -754,7 +754,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "Edit button should be enabled!" );
         }
         editButton.click();
-        sleep( 500 );
+        sleep( 700 );
         switchToContentWizardTabBySelectedContent();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();

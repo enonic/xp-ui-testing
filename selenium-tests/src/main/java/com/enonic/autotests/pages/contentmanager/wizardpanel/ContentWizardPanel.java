@@ -92,7 +92,7 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String INSPECTION_PANEL_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
+    private final String INSPECTION_PANEL_TOGGLER = "//div[contains(@id,'FloatingContextPanel')]" + "//button[contains(@id, 'NonMobileContextPanelToggleButton') and contains(@class,'icon-cog')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;

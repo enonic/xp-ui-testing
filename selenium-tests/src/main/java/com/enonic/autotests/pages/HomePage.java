@@ -113,7 +113,7 @@ public class HomePage
         switchToUsersTab();
         UserBrowsePanel panel = new UserBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        panel.waitInvisibilityOfSpinner( Application.EXPLICIT_LONG );
         getLogger().info( "User App loaded" );
         return panel;
     }

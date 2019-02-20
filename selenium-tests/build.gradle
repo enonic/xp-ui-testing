@@ -9,7 +9,7 @@ buildscript {
 plugins {
     id 'maven'
     id 'java'
-    id 'com.enonic.defaults' version '1.0.3'
+    id 'com.enonic.defaults' version '2.0.1'
 }
 
 apply plugin: 'groovy'
