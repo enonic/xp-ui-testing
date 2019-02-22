@@ -16,11 +16,11 @@ public class PageInspectionPanel
 {
     private final String CONTAINER = "//div[contains(@id,'PageInspectionPanel')]";
 
-    private final String PAGE_CONTROLLER_SELECTOR = CONTAINER + "//div[contains(@id,'PageControllerSelector')]";
+    private final String PAGE_CONTROLLER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateAndControllerSelector')]";
 
     private final String PAGE_CONTROLLER_OPTION_FILTER_INPUT = PAGE_CONTROLLER_SELECTOR + DROPDOWN_OPTION_FILTER_INPUT;
 
-    private final String RENDERER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateSelector')]";
+    private final String RENDERER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateAndControllerSelector')]";
 
     private final String RENDERER_DROPDOWN_HANDLER = RENDERER_SELECTOR + "//button[contains(@id,'DropdownHandle')]";
 

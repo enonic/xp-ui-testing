@@ -4,7 +4,9 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
 import com.enonic.autotests.pages.form.CityFormView
+import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -123,12 +125,16 @@ class CountrySiteWithTemplateSpec
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "the 'Inspect' link is clicked"
-        String name = contentWizard.showContextWindow().clickOnInspectLink().getInspectionPanel().getSelectedPageController();
+        ContextWindow contextWindow = contentWizard.showContextWindow();
+        contextWindow.clickOnTabBarItem( "Page" );
+        PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
+        String name = inspectionPanel.getSelectedPageController();
         saveScreenshot( "city_part_added" );
 
         then: "correct page controller should be displayed on the panel"
         name == PAGE_CONTROLLER_NAME;
     }
+
     @Ignore
     def "GIVEN new USA-content has been added AND child city-content for USA was added  WHEN USA-content selected AND 'Preview' button is pressed THEN correct text should be present on the page-source "()
     {
@@ -164,6 +170,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
 
     }
+
     @Ignore
     def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' should be present in the sources"()
     {
@@ -176,6 +183,7 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "404" );
     }
+
     @Ignore
     def "WHEN site is not published yet AND site opened in 'draft', through the portal THEN correct data should be present in page sources"()
     {
@@ -191,6 +199,7 @@ class CountrySiteWithTemplateSpec
         and: "correct description shown"
         source.contains( USA_DESCRIPTION );
     }
+
     @Ignore
     def "WHEN site has been published AND site opened through the portal THEN correct description and population should be present in page sources"()
     {
@@ -220,7 +229,7 @@ class CountrySiteWithTemplateSpec
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
         wizard.save();
-        sleep(1000);
+        sleep( 1000 );
 
         when: "site was opened in the master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -229,6 +238,7 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "Population: " + SF_POPULATION );
     }
+
     @Ignore
     def "GIVEN city content was changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
     {
@@ -245,6 +255,7 @@ class CountrySiteWithTemplateSpec
         String source = getDriver().getPageSource();
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
+
     @Ignore
     def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all added components should be displayed"()
     {

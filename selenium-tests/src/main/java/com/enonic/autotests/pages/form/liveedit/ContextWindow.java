@@ -106,6 +106,20 @@ public class ContextWindow
         return this;
     }
 
+    public ContextWindow clickOnTabBarItem(String name)
+    {
+        String selector =  DIV_CONTEXT_WINDOW + String.format( TAB_BAR_ITEM, name );
+        if ( !waitUntilVisibleNoException( By.xpath( selector ), Application.EXPLICIT_NORMAL ) )
+        {
+            saveScreenshot( "err_tab_item_link" );
+            throw new TestFrameworkException( name + " link was not found on the ContextWindow!" );
+        }
+        getDisplayedElement( By.xpath( selector ) ).click();
+        sleep( 500 );
+        return this;
+    }
+
+
     public PageInspectionPanel getInspectionPanel()
     {
         if ( inspectionPanel == null )

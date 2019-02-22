@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
+import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -26,7 +27,8 @@ class ContextWindow_InspectionPanel_Spec
             TEST_SITE ).selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER );
 
         when: "Context window opened and 'Inspect' link was pressed"
-        wizardPanel.showContextWindow().clickOnInspectLink();
+        ContextWindow contextWindow = wizardPanel.showContextWindow();
+        contextWindow.clickOnTabBarItem( "Page" );
         PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
         saveScreenshot( "test-inspection-tab-activated" );
 
@@ -64,8 +66,9 @@ class ContextWindow_InspectionPanel_Spec
         given: "existing site with the selected page controller is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
-        and: "'Inspect tab' has been opened"
-        wizardPanel.showContextWindow().clickOnInspectLink();
+        and: "'Page' tab bar item has been clicked"
+        ContextWindow contextWindow = wizardPanel.showContextWindow();
+        contextWindow.clickOnTabBarItem( "Page" );
         PageInspectionPanel inspectPanel = new PageInspectionPanel( getSession() );
 
         when: "Page controller has been changed to 'Country list'"
@@ -84,7 +87,8 @@ class ContextWindow_InspectionPanel_Spec
     {
         given: "'Inspect' panel is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
-        wizardPanel.showContextWindow().clickOnInspectLink();
+        ContextWindow contextWindow = wizardPanel.showContextWindow();
+        contextWindow.clickOnTabBarItem( "Page" );
 
         when: "'Automatic' page-template has been selected"
         PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
@@ -102,7 +106,8 @@ class ContextWindow_InspectionPanel_Spec
     {
         given: "'Inspect' panel is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
-        wizardPanel.showContextWindow().clickOnInspectLink();
+        ContextWindow contextWindow = wizardPanel.showContextWindow();
+        contextWindow.clickOnTabBarItem( "Page" )
 
         when: "'Automatic' page-template has been selected"
         PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );

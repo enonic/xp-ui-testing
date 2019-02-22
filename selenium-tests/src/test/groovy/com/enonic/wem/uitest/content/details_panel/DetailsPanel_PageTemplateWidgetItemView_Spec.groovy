@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PageTe
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
+import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
@@ -82,7 +83,8 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
 
         and: "Inspection panel has been opened"
         ContentWizardPanel siteWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
-        siteWizard.showContextWindow().clickOnInspectLink();
+        ContextWindow contextWindow = siteWizard.showContextWindow();
+        contextWindow.clickOnTabBarItem( "Page" );
         PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
         saveScreenshot( "page_templ_widget1" );
 
