@@ -268,7 +268,7 @@ public class ContentPublishDialog
             }
             getDisplayedElement( By.xpath( INCLUDE_CHILD_TOGGLER ) ).click();
         }
-        sleep( 700 );
+        sleep( 1200 );
         return this;
     }
 

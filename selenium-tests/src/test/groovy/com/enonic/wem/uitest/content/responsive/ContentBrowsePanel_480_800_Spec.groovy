@@ -67,37 +67,38 @@ class ContentBrowsePanel_480_800_Spec
         contentBrowsePanel.exists( TEST_FOLDER.getName() );
     }
 
-    def "GIVEN existing folder WHEN the folder has been clicked THEN Item Preview Panel should be displayed"()
+    def "WHEN existing folder has been clicked THEN Item Preview Panel should be loaded"()
     {
         when: "existing folder has been clicked"
         contentBrowsePanel.clickOnRowByName( TEST_FOLDER.getName() );
+        sleep( 1500 );
 
         then: "Item Preview Panel should be displayed"
         contentItemPreviewPanel.isDisplayed();
     }
 
-    def "GIVEN image content opened AND 'Crop' button was pressed THEN image was cropped THEN 'Reset Mask' link appears on the toolbar "()
+    def "GIVEN image content is opened AND 'Crop' button has been pressed THEN image should be cropped AND 'Reset Mask' link appears on the toolbar "()
     {
-        given: "content wizard opened"
+        given: "content wizard is opened"
         ( (ContentBrowseFilterPanel) filterPanel.typeSearchText( IMPORTED_IMAGE_BOOK_NAME ) ).clickOnShowResultsLink();
         selectContentByName( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
-        when: "'Crop' button was pressed"
+        when: "'Crop' button has been pressed"
         imageFormViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
         and: "image was cropped"
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -40 );
 
-        then: "'Reset Mask' link is displayed"
+        then: "'Reset Mask' link should appear"
         toolbar.isResetMaskDisplayed();
 
-        and: "'Apply' button is present"
+        and: "'Apply' button should be displayed"
         toolbar.isApplyButtonDisplayed();
 
-        and: "'Close' button is present"
+        and: "'Close' button should be displayed"
         toolbar.isCloseButtonDisplayed();
     }
 }

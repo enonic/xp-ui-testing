@@ -68,7 +68,7 @@ class PageTemplate_Spec
 
         when: "display name has been typed"
         wizard.typeData( TEST_TEMPLATE );
-        wizard.clickOnMinimizeEditIcon();
+        //wizard.clickOnMinimizeEditIcon();
         sleep( 500 );
         saveScreenshot( "support_not_selected" );
 

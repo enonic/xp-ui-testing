@@ -37,13 +37,15 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         and: "menu options is opened"
         List<String> widgetMenuOptions = contentDetailsPanel.getMenuOptions();
         and: "three items should be present"
-        widgetMenuOptions.size() == 3;
+        widgetMenuOptions.size() == 4;
         and: "'Details' menu option should be present"
         widgetMenuOptions.contains( "Details" );
         and: "'Dependencies' menu option should be present"
         widgetMenuOptions.contains( "Dependencies" );
         and: "Version history menu option should be present"
         widgetMenuOptions.contains( "Version history" );
+        and:
+        widgetMenuOptions.contains( "Emulator" );
     }
 
     def "GIVEN a content is selected AND 'Content Details Panel' is opened WHEN Toggle Content Details button has been clicked THEN 'Content Details Panel' should be closed"()
