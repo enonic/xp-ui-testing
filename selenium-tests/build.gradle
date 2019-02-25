@@ -65,9 +65,13 @@ task zipTestReports( type: Zip, dependsOn: updateTestDir ) {
     classifier "${testName}Reports"
 }
 
-artifacts {
-    archives zipScreenshots
-    archives zipTestReports
+publishing {
+    publications {
+        mavenJava( MavenPublication ) {
+            artifact zipScreenshots
+            artifact zipReport
+        }
+    }
 }
 
 jar.enabled = true
