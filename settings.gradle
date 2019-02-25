@@ -1,5 +1,3 @@
-enableFeaturePreview('STABLE_PUBLISHING')
-
 include ':test-applications:first-application'
 include ':test-applications:second-application'
 include ':test-applications:third-application'
@@ -10,3 +8,5 @@ include ':test-applications:test-application'
 include ':test-applications:myfirstapp'
 include ':test-applications:install-app'
 include ':selenium-tests'
+
+enableFeaturePreview('STABLE_PUBLISHING')
