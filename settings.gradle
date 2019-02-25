@@ -1,3 +1,5 @@
+enableFeaturePreview('STABLE_PUBLISHING')
+
 include ':test-applications:first-application'
 include ':test-applications:second-application'
 include ':test-applications:third-application'
