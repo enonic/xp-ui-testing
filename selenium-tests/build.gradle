@@ -69,7 +69,7 @@ publishing {
     publications {
         mavenJava( MavenPublication ) {
             artifact zipScreenshots
-            artifact zipReport
+            artifact zipTestReports
         }
     }
 }
