@@ -2,7 +2,10 @@ import com.enonic.uitest.server.ServerInstance
 
 buildscript {
     repositories {
-        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+            jcenter()
+        }
     }
 }
 

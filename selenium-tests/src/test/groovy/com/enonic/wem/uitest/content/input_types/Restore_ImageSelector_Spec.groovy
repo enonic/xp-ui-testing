@@ -7,10 +7,10 @@ import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
+
 /**
  * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- *
- */
+ **/
 @Stepwise
 class Restore_ImageSelector_Spec
     extends Base_InputFields_Occurrences
@@ -35,6 +35,7 @@ class Restore_ImageSelector_Spec
 
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
+        saveScreenshot( "imgselector_number_versions_should_be_3" );
 
         then: "number of versions should be increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
@@ -61,7 +62,7 @@ class Restore_ImageSelector_Spec
         contentBrowsePanel.isPublishButtonEnabled();
 
         and: "red icon should not de displayed on the wizard"
-        contentBrowsePanel.switchToBrowserTabByTitle( IMAGE_SELECTOR_CONTENT.getDisplayName(  ) );
+        contentBrowsePanel.switchToBrowserTabByTitle( IMAGE_SELECTOR_CONTENT.getDisplayName() );
         !wizard.isContentInvalid();
     }
 
@@ -93,7 +94,7 @@ class Restore_ImageSelector_Spec
 
         and: "red icon should not be displayed on the wizard tab"
         contentBrowsePanel.switchToBrowserTabByTitle( IMAGE_SELECTOR_CONTENT.getDisplayName() );
-        wizard.isContentInvalid(  );
+        wizard.isContentInvalid();
     }
 
     def "GIVEN version of content with one images was restored WHEN content opened THEN one image is displayed on the wizard"()
