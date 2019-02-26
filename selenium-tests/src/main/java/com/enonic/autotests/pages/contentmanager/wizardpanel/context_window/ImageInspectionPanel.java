@@ -30,7 +30,7 @@ public class ImageInspectionPanel
 
     private String FRAGMENT_DROPDOWN_OPTION_BY_DISPLAY_NAME = PANEL_CONTAINER + SLICK_ROW_BY_DISPLAY_NAME;
 
-    private final String REMOVE_SELECTED_OPTION_BUTTON = "//a[@class='remove']";
+    private final String REMOVE_SELECTED_OPTION_BUTTON = PANEL_CONTAINER+"//a[@class='remove']";
 
     private final String IMAGE_OPTION_FILTER_INPUT = PANEL_CONTAINER + COMBOBOX_OPTION_FILTER_INPUT;
 
