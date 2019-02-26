@@ -28,8 +28,8 @@ class ContextWindow_InsertPanel_Spec
         then: "'Components View' toggler should not be displayed"
         !wizardPanel.isComponentViewTogglerDisplayed();
 
-        and: "'Inspection Panel' toggler should not be displayed"
-        !wizardPanel.isInspectionPanelTogglerDisplayed()
+        and: "'Context Panel' toggler should be displayed"
+        wizardPanel.isInspectionPanelTogglerDisplayed()
     }
 
     def "GIVEN existing site without a controller is opened WHEN page controller has been selected THEN toggler buttons for 'Components View' and 'Inspection Panel' should be displayed"()
@@ -44,8 +44,6 @@ class ContextWindow_InsertPanel_Spec
         then: "'Components View' toggler should be displayed"
         siteWizard.isComponentViewTogglerDisplayed();
 
-        and: "'Inspection Panel' toggler should be displayed"
-        siteWizard.isInspectionPanelTogglerDisplayed()
     }
 
     def "GIVEN existing site is opened WHEN 'Insert' link has been clicked THEN 'Insertables' panel should be displayed AND all available components should be present on the panel"()

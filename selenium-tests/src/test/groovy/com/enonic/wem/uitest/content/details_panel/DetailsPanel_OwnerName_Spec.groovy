@@ -93,16 +93,16 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() ).clickToolbarDuplicate();
 
-        and:"Duplicate button on the dialog has been pressed"
-        DuplicateContentDialog dialog = new DuplicateContentDialog(getSession(  ));
-        dialog.waitForOpened(  ).clickOnDuplicateButton(  ).waitForClosed(  );
+        and: "Duplicate button on the dialog has been pressed"
+        DuplicateContentDialog dialog = new DuplicateContentDialog( getSession() );
+        dialog.waitForOpened().clickOnDuplicateButton().waitForClosed();
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
 
         then: "new folder should be listed in the grid"
         contentBrowsePanel.exists( FOLDER_TO_DUPLICATE.getName() + "-copy" );
     }
 
-    def "GIVEN existing folder created by the the user WHEN details panel was opened THEN correct 'user name' is shown in the PropertiesWidgetItemView "()
+    def "GIVEN folder is created by existing user AND the folder is selected WHEN details panel has been opened THEN expected 'user name' should be present in the Properties Widget"()
     {
         setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
@@ -112,16 +112,16 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
 
-        when: "PropertiesWidgetItemView was opened"
+        when: "Details Panel and PropertiesWidget has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
-        PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
+        PropertiesWidgetItemView widget = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "copied_folder_user_name" );
 
-        then: "correct 'owner' should be displayed"
-        view.getOwner() == TEST_USER.getDisplayName();
+        then: "expected 'owner' should be displayed on the properties widget"
+        widget.getOwner() == TEST_USER.getDisplayName();
     }
 
-    def "GIVEN existing folder created by the user WHEN version history was opened THEN correct owner name should be displayed"()
+    def "GIVEN existing folder is selected WHEN version history has been opened THEN expected owner name should be displayed in the version widget"()
     {
         setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
@@ -132,12 +132,12 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.clickOnDetailsToggleButton();
 
-        when: "the first 'version history' item was expanded"
+        when: "the first 'version history' item has been expanded"
         AllContentVersionsView allContentVersionsView = contentBrowsePanel.getContentDetailsPanel().openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         String versionId = versionItem.getId();
 
-        then: "correct 'owner name' should be displayed"
+        then: "expected 'owner name' should be displayed"
         saveScreenshot( "test_owner_version-history_user_name" );
         versionItem.getOwnerName( versionId ) == TEST_USER.getDisplayName();
     }
@@ -165,7 +165,7 @@ class DetailsPanel_OwnerName_Spec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  ) ).
+            contentType( BaseContentType.FOLDER.getDisplayName() ).
             parent( ContentPath.ROOT ).
             build();
         return content;

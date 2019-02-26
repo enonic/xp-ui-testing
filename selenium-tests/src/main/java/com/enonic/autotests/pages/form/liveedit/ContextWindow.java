@@ -19,6 +19,9 @@ import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
+/**
+ * ContextWindow contains "Insert", "Page" ... tab items
+ */
 public class ContextWindow
     extends Application
 {
@@ -65,7 +68,7 @@ public class ContextWindow
         }
     }
 
-    public boolean isContextWindowPresent()
+    public boolean waitForContextWindowVisible()
     {
         return waitUntilVisibleNoException( By.xpath( DIV_CONTEXT_WINDOW ), Application.EXPLICIT_NORMAL );
     }
@@ -82,33 +85,15 @@ public class ContextWindow
         return this;
     }
 
-    public ContextWindow clickOnEmulatorLink()
-    {
-        if ( !waitUntilVisibleNoException( By.xpath( EMULATOR_TAB_LINK ), Application.EXPLICIT_NORMAL ) )
-        {
-            saveScreenshot( "err_emulator_link" );
-            throw new TestFrameworkException( "Emulator link was not found on the ContextWindow!" );
-        }
-        getDisplayedElement( By.xpath( EMULATOR_TAB_LINK ) ).click();
-        sleep( 500 );
-        return this;
-    }
 
-    public ContextWindow clickOnInspectLink()
+    public ContextWindow clickOnTabBarItem( String name )
     {
-        if ( !waitUntilVisibleNoException( By.xpath( INSPECT_TAB_LINK ), Application.EXPLICIT_NORMAL ) )
+        if (  getSession().isInLiveEditFrame() )
         {
-            saveScreenshot( "err_inspect_link" );
-            throw new TestFrameworkException( "'inspect' link was not found on the ContextWindow!" );
+            getDriver().switchTo().defaultContent();
+            getSession().setInLiveEditFrame( false );
         }
-        getDisplayedElement( By.xpath( INSPECT_TAB_LINK ) ).click();
-        sleep( 500 );
-        return this;
-    }
-
-    public ContextWindow clickOnTabBarItem(String name)
-    {
-        String selector =  DIV_CONTEXT_WINDOW + String.format( TAB_BAR_ITEM, name );
+        String selector = DIV_CONTEXT_WINDOW + String.format( TAB_BAR_ITEM, name );
         if ( !waitUntilVisibleNoException( By.xpath( selector ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_tab_item_link" );

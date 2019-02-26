@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PageTemplateWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -81,7 +82,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         contentBrowsePanel.clickOnRowByName( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).close( PAGE_TEMPLATE.getDisplayName() );
 
-        and: "Inspection panel has been opened"
+        and: "Page tab-bar item has been clicked"
         ContentWizardPanel siteWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         ContextWindow contextWindow = siteWizard.showContextWindow();
         contextWindow.clickOnTabBarItem( "Page" );

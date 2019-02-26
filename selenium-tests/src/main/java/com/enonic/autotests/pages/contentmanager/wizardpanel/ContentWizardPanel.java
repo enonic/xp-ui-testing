@@ -282,15 +282,17 @@ public class ContentWizardPanel
             switchToDefaultWindow();
         }
         ContextWindow cw = new ContextWindow( getSession() );
-        if ( !cw.isContextWindowPresent() )
+        if ( !cw.waitForContextWindowVisible() )
         {
-            if ( !isElementDisplayed( INSPECTION_PANEL_TOGGLER ) )
+             boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( INSPECTION_PANEL_TOGGLER ),Application.EXPLICIT_NORMAL );
+            if ( !isTogglerVisible )
             {
                 saveScreenshot( NameHelper.uniqueName( "err_icon-cog" ) );
                 throw new TestFrameworkException( "button with 'icon-cog' was not found" );
             }
             getDisplayedElement( By.xpath( INSPECTION_PANEL_TOGGLER ) ).click();
             cw.waitUntilWindowLoaded( 1l );
+            sleep( 1500 );
         }
         return cw;
     }
