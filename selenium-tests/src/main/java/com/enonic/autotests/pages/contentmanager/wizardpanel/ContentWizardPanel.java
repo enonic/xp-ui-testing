@@ -92,7 +92,7 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String INSPECTION_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" +
+    private final String CONTEXTN_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" +
         "//button[contains(@id, 'NonMobileContextPanelToggleButton') and contains(@class,'icon-cog')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
@@ -121,7 +121,7 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_UNDO_DELETE_BUTTON_XPATH)
     private WebElement toolbarUndoDeleteButton;
 
-    @FindBy(xpath = INSPECTION_PANEL_TOGGLER)
+    @FindBy(xpath = CONTEXTN_PANEL_TOGGLER)
     private WebElement toolbarShowContextWindow;
 
     @FindBy(xpath = TOOLBAR_PUBLISH_DROPDOWN_HANDLER)
@@ -285,13 +285,13 @@ public class ContentWizardPanel
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.waitForContextWindowVisible() )
         {
-            boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( INSPECTION_PANEL_TOGGLER ), Application.EXPLICIT_NORMAL );
+            boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( CONTEXTN_PANEL_TOGGLER ), Application.EXPLICIT_NORMAL );
             if ( !isTogglerVisible )
             {
                 saveScreenshot( NameHelper.uniqueName( "err_icon-cog" ) );
                 throw new TestFrameworkException( "Toggler for Context Panel (icon-cog) was not found" );
             }
-            getDisplayedElement( By.xpath( INSPECTION_PANEL_TOGGLER ) ).click();
+            getDisplayedElement( By.xpath( CONTEXTN_PANEL_TOGGLER ) ).click();
             cw.waitUntilWindowLoaded( 1l );
             sleep( 1500 );
         }
@@ -637,11 +637,11 @@ public class ContentWizardPanel
     }
 
     /**
-     * return true if button "Show Inspection Panel" is displayed
+     * return true if button "Show Context Panel" is displayed
      */
-    public boolean isInspectionPanelTogglerDisplayed()
+    public boolean isContextPanelTogglerDisplayed()
     {
-        return isElementDisplayed( INSPECTION_PANEL_TOGGLER );
+        return isElementDisplayed( CONTEXTN_PANEL_TOGGLER );
     }
 
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )

@@ -23,7 +23,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class WizardContextPanel
     extends Application
 {
-    private final String CONTAINER = "//div[contains(@id,'ContextView')]";
+    private final String CONTAINER = "//div[contains(@id,'ContentWizardPanel')]//div[contains(@id,'ContextView')]";
 
     private final String WIDGET_SELECTOR_DROPDOWN = CONTAINER + "//div[contains(@id,'WidgetSelectorDropdown')]";
 
@@ -35,6 +35,7 @@ public class WizardContextPanel
     private final String WIDGET_SELECTOR_OPTIONS = WIDGET_SELECTOR_DROPDOWN + H6_DISPLAY_NAME;
 
     private final String DEPENDENCIES_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + String.format( NAMES_VIEW_BY_DISPLAY_NAME, "Dependencies" );
+
     private final String EMULATOR_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + String.format( NAMES_VIEW_BY_DISPLAY_NAME, "Emulator" );
 
     private final String WIDGET_SELECTOR_DROPDOWN_HANDLER = WIDGET_SELECTOR_DROPDOWN + DROP_DOWN_HANDLE_BUTTON;
@@ -73,6 +74,7 @@ public class WizardContextPanel
         sleep( 700 );
         return dependenciesWidgetItemView;
     }
+
     public PageEmulatorPanel openEmulatorWidget()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
@@ -123,5 +125,9 @@ public class WizardContextPanel
         return detailsWidget;
     }
 
+    public boolean isWidgetSelectorVisible()
+    {
+        return isElementDisplayed( By.xpath( WIDGET_SELECTOR_DROPDOWN ) );
+    }
 
 }
