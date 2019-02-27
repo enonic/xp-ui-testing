@@ -71,13 +71,14 @@ class ContentBrowsePanel_480_800_Spec
     {
         when: "existing folder has been clicked"
         contentBrowsePanel.clickOnRowByName( TEST_FOLDER.getName() );
-        sleep( 1500 );
+        sleep( 1800 );
+        saveScreenshot( "480_800_preview_panel" );
 
         then: "Item Preview Panel should be displayed"
         contentItemPreviewPanel.isDisplayed();
     }
 
-    def "GIVEN image content is opened AND 'Crop' button has been pressed THEN image should be cropped AND 'Reset Mask' link appears on the toolbar "()
+    def "GIVEN image content is opened AND 'Crop' button has been pressed THEN image should be cropped AND 'Reset Mask' link appears on the toolbar"()
     {
         given: "content wizard is opened"
         ( (ContentBrowseFilterPanel) filterPanel.typeSearchText( IMPORTED_IMAGE_BOOK_NAME ) ).clickOnShowResultsLink();
