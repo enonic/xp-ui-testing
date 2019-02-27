@@ -92,7 +92,8 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String INSPECTION_PANEL_TOGGLER = "//div[contains(@id,'FloatingContextPanel')]" + "//button[contains(@id, 'NonMobileContextPanelToggleButton') and contains(@class,'icon-cog')]";
+    private final String INSPECTION_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" +
+        "//button[contains(@id, 'NonMobileContextPanelToggleButton') and contains(@class,'icon-cog')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
@@ -284,11 +285,11 @@ public class ContentWizardPanel
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.waitForContextWindowVisible() )
         {
-             boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( INSPECTION_PANEL_TOGGLER ),Application.EXPLICIT_NORMAL );
+            boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( INSPECTION_PANEL_TOGGLER ), Application.EXPLICIT_NORMAL );
             if ( !isTogglerVisible )
             {
                 saveScreenshot( NameHelper.uniqueName( "err_icon-cog" ) );
-                throw new TestFrameworkException( "button with 'icon-cog' was not found" );
+                throw new TestFrameworkException( "Toggler for Context Panel (icon-cog) was not found" );
             }
             getDisplayedElement( By.xpath( INSPECTION_PANEL_TOGGLER ) ).click();
             cw.waitUntilWindowLoaded( 1l );
