@@ -56,6 +56,7 @@ class ImageEditor_Focus_Spec
 
         and: "'Save' button has been pressed "
         wizard.save();
+        saveScreenshot( "focus_moved_and_applied2" );
 
         and: "wizard has been closed"
         wizard.executeCloseWizardScript();

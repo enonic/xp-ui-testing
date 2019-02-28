@@ -478,7 +478,7 @@ public class ContentWizardPanel
         }
         waitForSaveButtonClickable();
         toolbarSaveButton.click();
-        sleep( 500 );
+        sleep( 700 );
         return this;
     }
 
