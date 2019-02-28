@@ -71,7 +71,7 @@ class ContentBrowsePanel_480_800_Spec
     {
         when: "existing folder has been clicked"
         contentBrowsePanel.clickOnRowByName( TEST_FOLDER.getName() );
-        sleep( 1800 );
+        sleep( 3000 );
         saveScreenshot( "480_800_preview_panel" );
 
         then: "Item Preview Panel should be displayed"
