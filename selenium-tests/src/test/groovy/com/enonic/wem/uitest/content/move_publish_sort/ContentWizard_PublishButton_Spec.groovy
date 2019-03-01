@@ -62,6 +62,7 @@ class ContentWizard_PublishButton_Spec
         given: "existing 'modified' content"
         findAndSelectContent( CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        sleep(1000);
 
         when: "'unpublish' button was pressed"
         ContentUnpublishDialog modalDialog = wizard.showPublishMenu().selectUnPublishMenuItem();

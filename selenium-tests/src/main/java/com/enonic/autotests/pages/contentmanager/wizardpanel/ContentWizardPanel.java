@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -150,7 +151,15 @@ public class ContentWizardPanel
     public ContentWizardPanel showPublishMenu()
     {
         waitUntilVisibleNoException( By.xpath( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ), Application.EXPLICIT_NORMAL );
-        publishMenuDropDownHandler.click();
+        try
+        {
+            publishMenuDropDownHandler.click();
+        }
+        catch ( Exception e )
+        {
+            sleep( 1500 );
+            publishMenuDropDownHandler.click();
+        }
         sleep( 400 );
         return this;
     }

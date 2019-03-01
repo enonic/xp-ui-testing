@@ -89,6 +89,7 @@ class ContentWizard_Publish_Inputs_Spec
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
+        sleep(1000);
 
         when: "the folder has been unpublished"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
