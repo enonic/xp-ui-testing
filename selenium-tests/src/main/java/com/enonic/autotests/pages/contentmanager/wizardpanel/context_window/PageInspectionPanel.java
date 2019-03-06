@@ -16,20 +16,11 @@ public class PageInspectionPanel
 {
     private final String CONTAINER = "//div[contains(@id,'PageInspectionPanel')]";
 
-    private final String PAGE_CONTROLLER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateAndControllerSelector')]";
+    private final String PAGE_TEMPLATE_AND_CONTROLLER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateAndControllerSelector')]";
 
-    private final String PAGE_CONTROLLER_OPTION_FILTER_INPUT = PAGE_CONTROLLER_SELECTOR + DROPDOWN_OPTION_FILTER_INPUT;
-
-    private final String RENDERER_SELECTOR = CONTAINER + "//div[contains(@id,'PageTemplateAndControllerSelector')]";
-
-    private final String RENDERER_DROPDOWN_HANDLER = RENDERER_SELECTOR + "//button[contains(@id,'DropdownHandle')]";
-
-    private final String PAGE_CONTROLLER_DROPDOWN_HANDLER = PAGE_CONTROLLER_SELECTOR + "//button[contains(@id,'DropdownHandle')]";
+    private final String SELCTOR_DROPDOWN_HANDLER = PAGE_TEMPLATE_AND_CONTROLLER_SELECTOR + "//button[contains(@id,'DropdownHandle')]";
 
     private final String SAVE_AS_TEMPLATE_BUTTON = String.format( ACTION_BUTTON, "Save as Template" );
-
-    @FindBy(xpath = PAGE_CONTROLLER_OPTION_FILTER_INPUT)
-    protected WebElement pageControllerOptionFilterInput;
 
     public PageInspectionPanel( final TestSession session )
     {
@@ -41,22 +32,23 @@ public class PageInspectionPanel
      */
     public boolean isPageTemplateSelectorDisplayed()
     {
-        return isElementDisplayed( RENDERER_SELECTOR );
+        return isElementDisplayed( PAGE_TEMPLATE_AND_CONTROLLER_SELECTOR );
     }
 
     /**
-     * Clicks on the drop down handler and selects the required renderer(page-template)
+     * Clicks on the drop down handler and selects the required option(page-template or controller)
      */
-    public PageInspectionPanel selectRenderer( String templateName )
+    public PageInspectionPanel selectTemplateOrController( String templateName )
     {
-        if ( !isElementDisplayed( RENDERER_DROPDOWN_HANDLER ) )
+        if ( !isElementDisplayed( SELCTOR_DROPDOWN_HANDLER ) )
         {
-            saveScreenshot( "err_dropdown_renderer" );
+            saveScreenshot( "err_dropdown_selctor" );
             throw new TestFrameworkException( "dropdown handler was not found!  " + templateName );
         }
-        getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
+        getDisplayedElement( By.xpath( SELCTOR_DROPDOWN_HANDLER ) ).click();
         sleep( 400 );
-        String optionItemXpath = RENDERER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateName );
+        String optionItemXpath =
+            PAGE_TEMPLATE_AND_CONTROLLER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateName );
         if ( !isElementDisplayed( optionItemXpath ) )
         {
             saveScreenshot( "err_renderer" );
@@ -67,82 +59,21 @@ public class PageInspectionPanel
         return this;
     }
 
-    public PageInspectionPanel selectRendererByDisplayName( String templateDisplayName )
-    {
-        if ( !isElementDisplayed( RENDERER_DROPDOWN_HANDLER ) )
-        {
-            saveScreenshot( "err_dropdown_renderer" );
-            throw new TestFrameworkException( "dropdown handler was not found!  " + templateDisplayName );
-        }
-        getDisplayedElement( By.xpath( RENDERER_DROPDOWN_HANDLER ) ).click();
-        sleep( 500 );
-        String optionItemXpath = RENDERER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, templateDisplayName );
-        if ( !isElementDisplayed( optionItemXpath ) )
-        {
-            saveScreenshot( "err_renderer" );
-            throw new TestFrameworkException( "option was not found!  " + templateDisplayName );
-        }
-        getDisplayedElement( By.xpath( optionItemXpath ) ).click();
-        sleep( 500 );
-        return this;
-    }
-
-    /**
-     * Types the display name of controller and selects the required controller
-     */
-    public PageInspectionPanel selectPageController( String controllerName )
-    {
-        clearAndType( pageControllerOptionFilterInput, controllerName );
-        sleep( 300 );
-        String optionItemXpath = PAGE_CONTROLLER_SELECTOR + "//div[contains(@class,'slick-cell')]" +
-            String.format( NAMES_VIEW_BY_DISPLAY_NAME, controllerName );
-        if ( !isElementDisplayed( optionItemXpath ) )
-        {
-            saveScreenshot( "err_selecting_controller" );
-            throw new TestFrameworkException( "option was not found!  " + controllerName );
-        }
-        getDisplayedElement( By.xpath( optionItemXpath ) ).click();
-        return this;
-    }
-
-    /**
-     * clicks on the drop down handler and selects new controller
-     */
-    public PageInspectionPanel changePageController( String controllerName )
-    {
-        if ( !isElementDisplayed( PAGE_CONTROLLER_DROPDOWN_HANDLER ) )
-        {
-            saveScreenshot( "err_dropdown_page_controller" );
-            throw new TestFrameworkException( "dropdown handler was not found!  " + controllerName );
-        }
-        getDisplayedElement( By.xpath( PAGE_CONTROLLER_DROPDOWN_HANDLER ) ).click();
-        sleep( 300 );
-        String optionItemXpath = PAGE_CONTROLLER_SELECTOR + SLICK_CELL + String.format( NAMES_VIEW_BY_DISPLAY_NAME, controllerName );
-        if ( !isElementDisplayed( optionItemXpath ) )
-        {
-            saveScreenshot( "err_inspection_controller" );
-            throw new TestFrameworkException( "option was not found!  " + controllerName );
-        }
-        getDisplayedElement( By.xpath( optionItemXpath ) ).click();
-        sleep( 300 );
-        return this;
-    }
-
     public String getSelectedPageController()
     {
         boolean isOptionDisplayed =
-            waitUntilVisibleNoException( By.xpath( PAGE_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ), Application.EXPLICIT_NORMAL );
+            waitUntilVisibleNoException( By.xpath( PAGE_TEMPLATE_AND_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ), Application.EXPLICIT_NORMAL );
         if ( !isOptionDisplayed )
         {
             saveScreenshot( "err_context_wind_page_controller" );
             throw new TestFrameworkException( "page controller not displayed on the context window!" );
         }
-        return getDisplayedElement( By.xpath( PAGE_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ) ).getText();
+        return getDisplayedElement( By.xpath( PAGE_TEMPLATE_AND_CONTROLLER_SELECTOR + H6_DISPLAY_NAME ) ).getText();
     }
 
     public boolean isPageControllerSelectorDisplayed()
     {
-        return waitUntilVisibleNoException( By.xpath( PAGE_CONTROLLER_SELECTOR ), Application.EXPLICIT_NORMAL );
+        return waitUntilVisibleNoException( By.xpath( PAGE_TEMPLATE_AND_CONTROLLER_SELECTOR ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean isDisplayed()

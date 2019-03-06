@@ -38,7 +38,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
     String SUPPORT_SITE = "site";
 
 
-    def "WHEN image content is selected and details panel opened THEN PageTemplateWidgetItemView is displayed and 'Page Template is not used' should be present"()
+    def "WHEN image content is selected and details panel opened THEN PageTemplateWidget should be displayed AND 'Page Template is not used' should be present"()
     {
         when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
@@ -53,7 +53,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         view.getTemplateNotUsedMessage() == PageTemplateWidgetItemView.TEMPLATE_NOT_USED_MESSAGE;
     }
 
-    def "GIVEN existing site with a controller WHEN the site is selected AND Details Panel opened THEN 'Custom' template should be displayed on the widget"()
+    def "GIVEN existing site with a controller WHEN the site has been selected AND Details Panel opened THEN 'Custom' template should be displayed on the widget"()
     {
         given: "existing site with a controller"
         SITE = buildMyFirstAppSite( "site" );
@@ -81,6 +81,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         and: "new page template has been added"
         contentBrowsePanel.clickOnRowByName( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).close( PAGE_TEMPLATE.getDisplayName() );
+        sleep(500);
 
         and: "Page tab-bar item has been clicked"
         ContentWizardPanel siteWizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
@@ -90,19 +91,19 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         saveScreenshot( "page_templ_widget1" );
 
         and: "new added page template has been selected in the dropdown-options"
-        inspectionPanel.selectRendererByDisplayName( TEMPLATE_DISPLAY_NAME );
+        inspectionPanel.selectTemplateOrController( TEMPLATE_DISPLAY_NAME );
         ConfirmationDialog confirmationDialog = new ConfirmationDialog( getSession() );
 
         and: "changes has been confirmed"
         confirmationDialog.pressYesButton();
         siteWizard.close( SITE.getDisplayName() );
 
-        when: "the details panel has been opened opened"
+        when: "details panel has been opened"
         contentBrowsePanel.clickOnDetailsToggleButton();
         PageTemplateWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPageTemplateWidgetItemView();
         saveScreenshot( "page_templ_widget2" );
 
-        then: "correct controller should be displayed"
+        then: "expected controller should be displayed"
         view.getControllerTextLink() == TEMPLATE_DISPLAY_NAME;
 
         and:
