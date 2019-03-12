@@ -54,7 +54,7 @@ class Fragment_Create_From_Image_Spec
         wizard.showComponentView();
         pageComponentsView.openMenu( HAND_IMAGE_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
-        sleep( 1500 );
+        sleep( 3000 );
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( HAND_IMAGE_DISPLAY_NAME );
         saveScreenshot( "fragment_wizard" );
 
