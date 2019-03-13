@@ -43,6 +43,8 @@ import com.enonic.autotests.pages.form.TimeFormViewPanel;
 import com.enonic.autotests.pages.form.optionset.OptionSetFormView;
 import com.enonic.xp.data.PropertyTree;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 public class ContentWizardStepForm
     extends WizardStepForm
 {
@@ -215,7 +217,7 @@ public class ContentWizardStepForm
             throw new TestFrameworkException( "ContentWizardStepForm: type() not implemented for " + contentTypeName );
         }
         formViewPanel.type( data );
-
+        sleep( 300 );
         return this;
     }
 }

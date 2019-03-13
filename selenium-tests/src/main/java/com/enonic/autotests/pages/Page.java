@@ -310,7 +310,15 @@ public abstract class Page
 
     protected List<WebElement> findElements( By by )
     {
-        return session.getDriver().findElements( by );
+        try
+        {
+            return session.getDriver().findElements( by );
+        }
+        catch ( StaleElementReferenceException e )
+        {
+            sleep( 500 );
+            return session.getDriver().findElements( by );
+        }
     }
 
     protected WebDriver getDriver()
