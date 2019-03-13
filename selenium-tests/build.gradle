@@ -38,7 +38,7 @@ ext {
     xpHome = "$distroDir${File.separator}home"
     configDir = "$xpHome${File.separator}config"
     contentStudioFile = "$deployDir${File.separator}contentstudio-${csVersion}.jar"
-    contentStudioAppUrl = "http://repo.enonic.com/public/com/enonic/app/app-contentstudio/${csVersion}/app-contentstudio-${csVersion}.jar"
+    contentStudioAppUrl = "http://repo.enonic.com/public/com/enonic/app/contentstudio/${csVersion}/contentstudio-${csVersion}.jar"
 }
 
 task updateTestDir {
