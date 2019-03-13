@@ -37,7 +37,7 @@ ext {
     deployDir = "$distroDir${File.separator}home${File.separator}deploy"
     xpHome = "$distroDir${File.separator}home"
     configDir = "$xpHome${File.separator}config"
-    contentStudioFile = "$deployDir${File.separator}app-contentstudio-${csVersion}.jar"
+    contentStudioFile = "$deployDir${File.separator}contentstudio-${csVersion}.jar"
     contentStudioAppUrl = "http://repo.enonic.com/public/com/enonic/app/app-contentstudio/${csVersion}/app-contentstudio-${csVersion}.jar"
 }
 
