@@ -31,6 +31,7 @@ class Restore_ImageSelector_Spec
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME ).clickOnRemoveButton();
+        sleep(500);
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
