@@ -18,7 +18,7 @@ class Restore_ImageSelector_Spec
     @Shared
     Content IMAGE_SELECTOR_CONTENT;
 
-    def "GIVEN creating new ImageSelector-content 2:4 WHEN one image was removed THEN number of versions should be increased by one"()
+    def "GIVEN ImageSelector-content 2:4 with 2 images is created WHEN one image has been removed THEN number of versions should be increased by one"()
     {
         given: "new ImageSelector-content 2:4 has been added"
         IMAGE_SELECTOR_CONTENT = buildImageSelector2_4_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
@@ -27,11 +27,11 @@ class Restore_ImageSelector_Spec
         wizard.typeData( IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "content is opened and one image was removed"
+        when: "content is opened and one image has been removed"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME ).clickOnRemoveButton();
-        sleep(500);
+        sleep( 500 );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
@@ -42,7 +42,7 @@ class Restore_ImageSelector_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN version of the content with one missed required image is current WHEN valid version of content with two images has been restored THEN content has no red icon on the wizard"()
+    def "GIVEN existing content with image-selector ( missed required image) WHEN version with two images has been restored THEN content becomes valid"()
     {
         given: "version of the content with one missed required image is current"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
@@ -62,12 +62,12 @@ class Restore_ImageSelector_Spec
         and: "'publish' button on the toolbar should be enabled"
         contentBrowsePanel.isPublishButtonEnabled();
 
-        and: "red icon should not de displayed on the wizard"
+        and: "red icon should not de displayed in the wizard-page"
         contentBrowsePanel.switchToBrowserTabByTitle( IMAGE_SELECTOR_CONTENT.getDisplayName() );
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN version of content with two images is restored WHEN content opened THEN two images are displayed on the wizard"()
+    def "GIVEN content with two images is restored WHEN content has been opened THEN two images should be present on the wizard"()
     {
         when: "version of content with two images is restored"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
@@ -77,20 +77,20 @@ class Restore_ImageSelector_Spec
         formViewPanel.getSelectedImages().size() == 2;
     }
 
-    def "GIVEN versions of content with two images is current WHEN version of content with one images is restored THEN red icon appears on the wizard tab"()
+    def "GIVEN content with two images WHEN version of content with one images is restored THEN red icon should appears on the wizard tab"()
     {
-        given: "versions of content with two images is current"
+        given: "content with two images is selected"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version of content with one images is restored"
+        when: "version with one images has been restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
         saveScreenshot( "image_selector_not_valid_version" );
 
-        then: "the content is invalid in the grid as well"
+        then: "the content should be valid in the grid"
         contentBrowsePanel.isContentInvalid( IMAGE_SELECTOR_CONTENT.getName() );
 
         and: "red icon should not be displayed on the wizard tab"
@@ -98,13 +98,13 @@ class Restore_ImageSelector_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN version of content with one images was restored WHEN content opened THEN one image is displayed on the wizard"()
+    def "GIVEN version with one image is restored WHEN content has been opened THEN one image should be present on the wizard"()
     {
-        when: "version of content with one image was restored"
+        when: "content has been opened"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
-        then: "only one image should be displayed on the wizard"
+        then: "only one image should be displayed in the wizard"
         formViewPanel.getSelectedImages().size() == 1;
     }
 }

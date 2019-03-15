@@ -10,7 +10,7 @@ class TextArea_Spec
     extends Base_InputFields_Occurrences
 {
 
-    def "WHEN wizard for adding of TextArea-content(not required) is opened AND display name was typed THEN empty TextArea should be present AND Publish button should be disabled"()
+    def "WHEN new wizard for TextArea-content(not required) is opened AND display name is typed THEN TextArea should be empty AND Publish button should be enabled"()
     {
         when: "wizard is opened(text area is not required )"
         Content textAreaContent = build_TextArea0_1_Content( "test" );
@@ -19,7 +19,7 @@ class TextArea_Spec
         and: "only name was typed( the content not saved yet)"
         wizard.typeDisplayName( textAreaContent.getDisplayName() );
 
-        then: "empty text area should be present"
+        then: "text area should be empty"
         TextAreaFormViewPanel areaFormViewPanel = new TextAreaFormViewPanel( getSession() );
         areaFormViewPanel.getTextAreaValue().isEmpty();
 
@@ -30,40 +30,40 @@ class TextArea_Spec
         wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN wizard for TextArea-content(required) is opened WHEN display name was typed THEN red icon should be displayed on the wizard page, because the input is required"()
+    def "GIVEN new wizard for TextArea-content(required) is opened WHEN display name is typed THEN red icon should be displayed on the wizard page, because the input is required"()
     {
         given: "wizard for TextArea-content(required) is opened"
         Content textAreaContent = build_TextArea1_1_Content( "" );
         ContentWizardPanel wizard = selectSitePressNew( textAreaContent.getContentTypeName() );
 
-        when: "display name was typed and 'save' pressed"
+        when: "display name has been typed and 'Save' pressed"
         wizard.typeData( textAreaContent ).save();
         TextAreaFormViewPanel areaFormViewPanel = new TextAreaFormViewPanel( getSession() );
 
         then: "red icon should be displayed on the wizard page, because the input is required"
         wizard.isContentInvalid();
 
-        and: "correct validation message should be displayed"
+        and: "expected validation message should be displayed"
         areaFormViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE;
     }
 
-    def "GIVEN wizard for TextArea-content(not required) is opened WHEN text in the area was not typed the content has been published THEN the content with 'online' status should be displayed"()
+    def "GIVEN wizard for TextArea-content(not required) is opened WHEN content has been published THEN the content should be 'Published' in browse panel"()
     {
         given: "wizard TextArea-content(not required) is opened"
         Content textAreaContent = build_TextArea0_1_Content( "" );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textAreaContent.getContentTypeName() );
 
-        when: "text in the area was not typed and the content has been published"
+        when: "text area is empty and the content has been published"
         contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
 
-        then: "the content with 'Published' status should be displayed"
+        then: "the content should be 'Published'"
         contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-    def "GIVEN wizard for TextArea-content(required) is opened WHEN text was typed and the content has been published THEN the content with status 'online' should be displayed"()
+    def "GIVEN wizard for TextArea-content(required) is opened WHEN text has been typed and the content has been published THEN the content should be 'Published' in browse panel"()
     {
         given: "wizard TextArea-content(required) is opened"
         Content textAreaContent = build_TextArea1_1_Content( "test text" );
@@ -75,22 +75,22 @@ class TextArea_Spec
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
 
-        then: "the content with 'Published' status should be displayed"
+        then: "the content should be 'Published' in browse panel"
         contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-    def "GIVEN TextArea-content content with the text was added WHEN the content is opened THEN correct text should be present in the text area"()
+    def "GIVEN TextArea-content content with the text is added WHEN the content has been opened THEN expected text should be present in the text area"()
     {
         given: "TextArea-content content with the text was added"
         Content textAreaContent = build_TextArea0_1_Content( "test text" );
         selectSitePressNew( textAreaContent.getContentTypeName() ).typeData( textAreaContent ).save().close(
             textAreaContent.getDisplayName() ); ;
 
-        when: "the content is opened"
+        when: "the content has been opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textAreaContent );
         TextAreaFormViewPanel areaFormViewPanel = new TextAreaFormViewPanel( getSession() );
 
-        then: "correct text should be present in the text area"
+        then: "expected text should be present in the text area"
         areaFormViewPanel.getTextAreaValue() == "test text";
     }
 }

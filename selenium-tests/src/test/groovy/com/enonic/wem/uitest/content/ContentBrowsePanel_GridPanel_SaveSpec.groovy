@@ -14,11 +14,11 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN wizard is opened and data typed WHEN saved and wizard closed THEN new content should be listed"()
+    def "GIVEN wizard for folder is opened and data typed WHEN folder has been saved and wizard closed THEN new folder should be listed in the grid"()
     {
-        given: "wizard is opened and data typed"
+        given: "folder-wizard is opened and data typed"
         PARENT_FOLDER = buildFolderContent( "parent-folder", "test folder" );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         wizard.typeData( PARENT_FOLDER );
 
         when: "the content has been saved and wizard closed"
@@ -28,7 +28,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN wizard is opened WHEN data has been saved THEN the folder should be present in the grid"()
+    def "GIVEN new folder-wizard is opened WHEN data has been saved THEN the folder should be present in the grid"()
     {
         given: "wizard is opened"
         Content rootContent = buildFolderContent( "folder", "test folder" );
@@ -117,9 +117,9 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( newName, true );
     }
 
-    def "GIVEN existing child content is opened WHEN saved and wizard closed THEN Content is listed with its new displayName"()
+    def "GIVEN existing child content is opened WHEN display name has been changed THEN the content should be listed with its new displayName"()
     {
-        given: "existing child content is opened"
+        given: "new child folder has been added"
         Content contentToEdit = buildFolderContentWithParent( "edit-displayname", "child-folder6", PARENT_FOLDER.getName() );
         findAndSelectContent( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );

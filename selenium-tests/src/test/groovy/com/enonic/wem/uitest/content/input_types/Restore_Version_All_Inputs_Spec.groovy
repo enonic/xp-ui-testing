@@ -61,9 +61,9 @@ class Restore_Version_All_Inputs_Spec
     @Shared
     String COMBOBOX_OPTION_V2 = "myOption 2";
 
-    def "GIVEN adding of content with all input types WHEN content saved and version history opened THEN two versions are present in panel"()
+    def "GIVEN content with input types has been added WHEN content has been selected and version history opened THEN two versions should be present in versions-panel"()
     {
-        given: "adding of content with input types"
+        given: "content with input types has been added"
         ALL_INPUTS_CONTENT = buildContent( "types", INITIAL_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( ALL_INPUTS_CONTENT.getContentTypeName() );
         wizard.typeData( ALL_INPUTS_CONTENT );
@@ -71,16 +71,16 @@ class Restore_Version_All_Inputs_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
 
-        when: "display name of the folder changed"
+        when: "content has been selected and version history opened"
         contentBrowsePanel.doClearSelection();
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "new 'version history item' appeared in the version-view"
+        then: "2 versions should be present on the widget by default(the content is just created)"
         allContentVersionsView.getAllVersions().size() == 2;
     }
 
-    def "GIVEN content with input types added WHEN all values changed THEN new version appears in the version history"()
+    def "GIVEN existing content is opened WHEN  values in inputs have been changed AND the content has been saved THEN number of versions should be increased by 1"()
     {
         given:
         ContentWizardPanel wizard = findAndSelectContent( ALL_INPUTS_CONTENT.getName() ).clickToolbarEdit();
@@ -102,13 +102,13 @@ class Restore_Version_All_Inputs_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN values in all inputs were updated WHEN previous version of content has been restored THEN correct values are present in the wizard"()
+    def "GIVEN existing content with 3 versions WHEN previous version has been restored THEN expected values should be present in all inputs"()
     {
-        given: "content with updated values"
+        given: "existing content with 3 versions"
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the previous version is restored"
+        when: "the previous version has been restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
@@ -117,7 +117,7 @@ class Restore_Version_All_Inputs_Spec
         and: "content is opened"
         contentBrowsePanel.clickToolbarEdit();
 
-        then: "correct values should be present on the wizard"
+        then: "expected values should be present in all inputs"
         InputsFormViewPanel formView = new InputsFormViewPanel( getSession() );
         formView.geoPointFormViewPanel.getGeoPointValue() == GEO_POINT_V1;
 

@@ -9,8 +9,7 @@ import spock.lang.Shared
 
 /**
  * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- *
- */
+ **/
 class Restore_Tags_Spec
     extends Base_InputFields_Occurrences
 {
@@ -18,15 +17,15 @@ class Restore_Tags_Spec
     @Shared
     Content TAG_CONTENT
 
-    def "GIVEN creating new Tag-content 2:5(with 2 tags) WHEN content opened and one tag was removed THEN number of versions is increased"()
+    def "GIVEN new Tag-content 2:5(with 2 tags) is created WHEN content has been opened and one tag removed THEN number of versions should be increased"()
     {
-        given: "new Tag-content with two tags added"
+        given: "new Tag-content with two tags is added"
         TAG_CONTENT = buildTag_2_5_Content( 2 );
         ContentWizardPanel wizard = selectSitePressNew( TAG_CONTENT.getContentTypeName() );
         wizard.typeData( TAG_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "content opened and one tag was removed "
+        when: "content opened and one tag has been removed "
         findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         formViewPanel.removeLastTag();
@@ -39,25 +38,25 @@ class Restore_Tags_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN version of tag-content with missed required value is current WHEN valid version of content is restored THEN content has no red icon on the wizard"()
+    def "GIVEN tag-content (one required tag is missed) WHEN previous version has been restored THEN content becomes valid"()
     {
-        given: "content with missed required value"
+        given: "tag-content (one required tag is missed)"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "valid version of content is restored"
+        when: "previous version has been restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
         saveScreenshot( "tag_valid_version" );
 
-        then: "content has no a red icon on the wizard-tab"
-        !wizard.isContentInvalid(  )
+        then: "content becomes valid"
+        !wizard.isContentInvalid()
     }
 
-    def "GIVEN current version of content is valid AND wizard opened WHEN 'AppHomeButton' clicked and not valid version of content is restored THEN red icon appears on the wizard tab"()
+    def "GIVEN tag-content is valid AND wizard is opened WHEN 'AppHomeButton' clicked AND version with not valid content has been restored THEN red icon should appear in the wizard tab"()
     {
         given: "current version of content is valid"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
@@ -71,7 +70,7 @@ class Restore_Tags_Spec
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
         saveScreenshot( "tag_not_valid_restored" );
 
-        then: "red icon should appear on the wizard tab"
+        then: "red icon should appear on the wizard tab, the content becomes not valid"
         wizard.isContentInvalid()
     }
 }

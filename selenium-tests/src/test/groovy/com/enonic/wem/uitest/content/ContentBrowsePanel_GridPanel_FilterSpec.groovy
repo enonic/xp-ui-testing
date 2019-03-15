@@ -33,7 +33,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "initial grid view should be displayed"
+        then: "initial grid view should be restored"
         !beforeClean && contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
     }
 
