@@ -20,6 +20,7 @@ import spock.lang.Stepwise
  * Mobile(480x800) ImageEditor dialog- buttons 'Apply' and 'Close' are not available #5023
  * */
 @Stepwise
+@Ignore
 class ContentBrowsePanel_480_800_Spec
     extends BaseResponsiveSpec
 {
