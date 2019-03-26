@@ -35,8 +35,8 @@ class HomePage_Spec
         then:
         homePage.isDashboardToolbarDisplayed();
 
-        and: "'Docs' link present"
-        homePage.isDocs_Displayed();
+        //and: "'Docs' link present"
+        //homePage.isDocs_Displayed();
 
         and: "'Discuss' link present"
         homePage.isDiscus_Displayed();
