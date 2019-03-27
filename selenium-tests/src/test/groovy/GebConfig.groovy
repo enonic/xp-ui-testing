@@ -51,7 +51,7 @@ driver = {
 
     if ( headless != null && headless.equals( "true" ) )
     {
-        options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1920,1100" );
+        options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1990,1100" );
     }
 
     ChromeDriver driver = new ChromeDriver( options );
