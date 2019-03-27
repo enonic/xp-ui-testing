@@ -27,7 +27,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         given: "folder has been added"
         folderContent = buildFolderContent( "details_p", "details_panel_test" );
         addContent( folderContent );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
 
         when: "when the folder is selected in the 'Browse Panel'"
         findAndSelectContent( folderContent.getName() );
@@ -52,10 +52,10 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     {
         given: "content has been selected and the 'Content Details Panel' is opened"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         saveScreenshot( "detail-panel-opened" );
 
-        when: "'Toggle' button has been clicked"
+        when: "'Toggle' button has been clicked and details panel closes"
         contentBrowsePanel.clickOnDetailsToggleButton();
         saveScreenshot( "detail-panel-closed" );
 

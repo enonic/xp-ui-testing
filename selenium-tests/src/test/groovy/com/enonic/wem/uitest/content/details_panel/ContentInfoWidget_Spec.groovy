@@ -34,7 +34,7 @@ class ContentInfoWidget_Spec
 
         when: "details panel opened and widget is shown"
         filterPanel.typeSearchText( FOLDER.getName() );
-        contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickOnDetailsToggleButton();
+        contentBrowsePanel.selectContentInTable( FOLDER.getName() ).openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "folder_info_widget_opened1" );
         HashMap<String, String> props = contentInfo.getContentProperties();
@@ -72,7 +72,7 @@ class ContentInfoWidget_Spec
 
         when: "details panel has been opened and widget is shown"
         filterPanel.typeSearchText( folder.getName() );
-        contentBrowsePanel.selectContentInTable( folder.getName() ).clickOnDetailsToggleButton();
+        contentBrowsePanel.selectContentInTable( folder.getName() ).openContentDetailsPanel();;
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         HashMap<String, String> props = contentInfo.getContentProperties();
         saveScreenshot( "info-widget-opened" );
@@ -110,7 +110,7 @@ class ContentInfoWidget_Spec
 
         when: "the folder has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "info_widget-content-published" );
         HashMap<String, String> props = contentInfo.getContentProperties();
@@ -131,7 +131,7 @@ class ContentInfoWidget_Spec
 
         when: "content has been updated"
         wizard.typeDisplayName( "new display name" ).save().closeBrowserTab().switchToBrowsePanelTab()
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "info_widget_folder_modified" );
 
@@ -149,7 +149,7 @@ class ContentInfoWidget_Spec
 
         when: "content has been deleted"
         contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickToolbarDelete().doDelete();
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "det_panel_content_deleted" )
 

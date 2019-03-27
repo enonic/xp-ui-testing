@@ -16,6 +16,6 @@ app {
 }
 
 dependencies {
-    compile 'com.enonic.xp:core-api:${xpVersion}'
+    compile "com.enonic.xp:core-api:${xpVersion}"
 }
 

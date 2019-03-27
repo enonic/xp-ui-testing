@@ -113,7 +113,7 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
 
         when: "Details Panel and PropertiesWidget has been opened"
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         PropertiesWidgetItemView widget = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "copied_folder_user_name" );
 
@@ -130,7 +130,7 @@ class DetailsPanel_OwnerName_Spec
         and: "just added folder is selected"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
 
         when: "the first 'version history' item has been expanded"
         AllContentVersionsView allContentVersionsView = contentBrowsePanel.getContentDetailsPanel().openVersionHistory();

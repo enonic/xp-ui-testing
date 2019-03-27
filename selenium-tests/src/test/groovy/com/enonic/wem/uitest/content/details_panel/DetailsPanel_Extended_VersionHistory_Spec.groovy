@@ -28,7 +28,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         addContent( folderContent );
         and: "the content is selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
 
         when: "latest 'version item' has been clicked"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
@@ -42,7 +42,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
     {
         given: "existing content was selected and version history opened"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
 
         when: "'Version History' option opened and first item expanded"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
@@ -75,7 +75,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
     {
         given: "existing content is selected and version history opened"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
 
         when: "'Version History' option opened and first item expanded"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
@@ -103,7 +103,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
     {
         given: "content is selected and version history is opened"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
 
         and: "version history panel has been opened "
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
@@ -124,7 +124,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         findAndSelectContent( folderContent.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
             NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
         and: "details panel has been opened"
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
 
         then: "new display name should be present on the 'version info"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();

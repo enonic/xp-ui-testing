@@ -42,7 +42,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
     {
         when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         PageTemplateWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPageTemplateWidgetItemView();
 
         then: "'Page Template Widget' should be displayed"
@@ -61,7 +61,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         wizardPanel.typeData( SITE ).selectPageDescriptor( COUNTRY_REGION_TITLE ).closeBrowserTab().switchToBrowsePanelTab();
 
         when: "when the site has been selected and the details panel opened"
-        findAndSelectContent( SITE.getName() ).clickOnDetailsToggleButton();
+        findAndSelectContent( SITE.getName() ).openContentDetailsPanel();
         PageTemplateWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPageTemplateWidgetItemView();
 
         then: "correct controller should be displayed"
@@ -99,7 +99,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         siteWizard.close( SITE.getDisplayName() );
 
         when: "details panel has been opened"
-        contentBrowsePanel.clickOnDetailsToggleButton();
+        contentBrowsePanel.openContentDetailsPanel();
         PageTemplateWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPageTemplateWidgetItemView();
         saveScreenshot( "page_templ_widget2" );
 
