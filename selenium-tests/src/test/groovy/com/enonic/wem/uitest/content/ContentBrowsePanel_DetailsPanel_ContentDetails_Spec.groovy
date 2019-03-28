@@ -3,24 +3,11 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
-/**
- * Tasks:
- * enonic/xp-ui-testing#44  Update tests for 'Details Panel' in order to new changes*/
-
 class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     extends BaseContentSpec
 {
     @Shared
     Content folderContent;
-
-    def "WHEN no one content is selected THEN 'Details Panel Toggle' button should be displayed AND details panel should not be displayed by default"()
-    {
-        expect: "'Details Panel Toggle' button is displayed"
-        contentBrowsePanel.isDetailsPanelToggleButtonDisplayed();
-
-        and: "details panel should not be displayed by default"
-        !contentDetailsPanel.isDisplayed();
-    }
 
     def "WHEN a content has been selected THEN expected display name should be shown in the Detail Panel"()
     {

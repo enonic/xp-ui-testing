@@ -536,6 +536,7 @@ public class ContentBrowsePanel
 
     public ContentPublishDialog clickToolbarPublish()
     {
+        waitForPublishButtonVisible( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PUBLISH_BUTTON_XPATH ) )
         {
             clickOnFoldButton();
@@ -1085,6 +1086,7 @@ public class ContentBrowsePanel
     {
         return publishButton.isEnabled();
     }
+
     public boolean isPublishButtonDisplayed()
     {
         return publishButton.isDisplayed();

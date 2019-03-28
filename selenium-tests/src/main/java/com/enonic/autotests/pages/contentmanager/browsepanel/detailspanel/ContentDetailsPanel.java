@@ -112,9 +112,11 @@ public class ContentDetailsPanel
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION_ITEM ) )
         {
+            waitUntilVisibleNoException( By.xpath( WIDGET_SELECTOR_DROPDOWN_HANDLER ), Application.EXPLICIT_QUICK );
             //click on drop down handler and show options
             widgetSelectorDropDownHandler.click();
         }
+        waitUntilVisibleNoException( By.xpath( VERSION_HISTORY_OPTION_ITEM ), Application.EXPLICIT_QUICK );
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION_ITEM ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_history_opt" ) );
@@ -183,6 +185,6 @@ public class ContentDetailsPanel
             saveScreenshot( "err_det_panel_displayname" );
             throw new TestFrameworkException( "display name was not found on the details panel!" );
         }
-        return getDisplayedString( DETAILS_PANEL +CONTENT_SUMMARY_VIEWER+ H6_DISPLAY_NAME );
+        return getDisplayedString( DETAILS_PANEL + CONTENT_SUMMARY_VIEWER + H6_DISPLAY_NAME );
     }
 }
