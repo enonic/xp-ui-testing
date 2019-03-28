@@ -94,6 +94,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
         when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
         wizard.showComponentView();
+        sleep(1000);
         pageComponentsView.openMenu( PAGE_CONTROLLER_NAME ).selectMenuItem( "Reset" );
         String message2 = contentBrowsePanel.waitForNotificationMessage();
         sleep( 3000 );

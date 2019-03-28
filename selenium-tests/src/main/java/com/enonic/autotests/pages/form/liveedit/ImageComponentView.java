@@ -49,7 +49,7 @@ public class ImageComponentView
     public LiveFormPanel selectImageFromOptions( String imageName )
     {
         selectOptionsItem( imageName );
-        sleep( 500 );
+        sleep( 700 );
         return new LiveFormPanel( getSession() );
     }
 

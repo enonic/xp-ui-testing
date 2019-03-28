@@ -639,8 +639,7 @@ class Base_InputFields_Occurrences
 
     protected AllContentVersionsView openVersionPanel()
     {
-        contentBrowsePanel.clickOnDetailsToggleButton();
-        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
+        ContentDetailsPanel contentDetailsPanel =contentBrowsePanel.openContentDetailsPanel();
         AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
     }
