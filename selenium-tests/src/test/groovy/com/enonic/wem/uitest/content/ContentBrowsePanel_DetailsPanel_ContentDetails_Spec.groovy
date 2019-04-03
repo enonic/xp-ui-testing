@@ -9,19 +9,18 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     @Shared
     Content folderContent;
 
-    def "WHEN a content has been selected THEN expected display name should be shown in the Detail Panel"()
+    def "WHEN folder has been selected AND widget dropdown selector has been clicked THEN expected options should be displayed"()
     {
-        given: "folder has been added"
+        given: "new folder has been added"
         folderContent = buildFolderContent( "details_p", "details_panel_test" );
         addContent( folderContent );
         contentBrowsePanel.openContentDetailsPanel();
 
-        when: "when the folder is selected in the 'Browse Panel'"
+        when: "when the folder has been selected and widgets dropdown selector has been clicked"
         findAndSelectContent( folderContent.getName() );
+        contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
 
         then: "expected display name should be shown on the Details Panel"
-        contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
-        and: "menu options is opened"
         List<String> widgetMenuOptions = contentDetailsPanel.getMenuOptions();
         and: "three items should be present"
         widgetMenuOptions.size() == 4;
@@ -35,14 +34,14 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
         widgetMenuOptions.contains( "Emulator" );
     }
 
-    def "GIVEN a content is selected AND 'Content Details Panel' is opened WHEN Toggle Content Details button has been clicked THEN 'Content Details Panel' should be closed"()
+    def "GIVEN existing folder is selected AND 'Content Details Panel' is opened WHEN Toggle Content Details button has been clicked THEN 'Content Details Panel' closes"()
     {
         given: "content has been selected and the 'Content Details Panel' is opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.openContentDetailsPanel();
         saveScreenshot( "detail-panel-opened" );
 
-        when: "'Toggle' button has been clicked and details panel closes"
+        when: "'Toggle' button has been clicked"
         contentBrowsePanel.clickOnDetailsToggleButton();
         saveScreenshot( "detail-panel-closed" );
 

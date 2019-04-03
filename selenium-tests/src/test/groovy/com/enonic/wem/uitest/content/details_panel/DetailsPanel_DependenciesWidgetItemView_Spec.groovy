@@ -32,7 +32,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
     @Shared
     String TEST_SITE_NAME = NameHelper.uniqueName( "site" );
 
-    def "WHEN image is selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget is displayed and has attachments"()
+    def "WHEN image has been selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget should appear and has attachments"()
     {
         when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
@@ -43,7 +43,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         dependencies.isDisplayed();
     }
 
-    def "WHEN folder is selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget displayed without dependencies"()
+    def "WHEN folder has been selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget should be displayed without dependencies"()
     {
         when: "folder content has been selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
@@ -75,7 +75,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         dependencies.isShowOutboundButtonDisplayed();
     }
 
-    def "GIVEN existing shortcut AND Dependencies Widget opened WHEN 'show outbound'- button clicked THEN Dependencies Section appears on the filter panel AND correct label for dependencies is displayed"()
+    def "GIVEN existing shortcut has been selected AND Dependencies Widget opened WHEN 'show outbound'- button clicked THEN Dependencies Section appears on the filter panel AND expected label for dependencies is displayed"()
     {
         given:
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
@@ -95,17 +95,17 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         filterPanel.getDependenciesSectionTitle() == ContentBrowseFilterPanel.DEPENDENCIES_SECTION_OUTBOUND_TITLE;
 
 
-        and: "close the section button is displayed"
+        and: "'close dependency section' button should be displayed"
         filterPanel.isCloseDependenciesSectionButtonDisplayed();
 
-        and: "correct target is filtered in the grid"
+        and: "expected target should be filtered in the grid"
         names.contains( TARGET_IMG );
 
-        and: "one content should be displayed in the grid"
+        and: "one content should be present in the grid"
         names.size() == 1;
     }
 
-    def "GIVEN shortcut is selected AND Dependencies Widget opened WHEN button 'close' on the section pressed THEN Dependencies Section closes"()
+    def "GIVEN shortcut is selected AND Outbound dependencies opened WHEN button 'close' on the section has been pressed THEN Dependencies Section closes"()
     {
         given:
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
@@ -120,7 +120,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         !filterPanel.isDependenciesSectionDisplayed();
     }
 
-    def "GIVEN existing image that is target for shortcut was selected AND Dependencies Widget opened WHEN 'show inbound'- button clicked THEN Dependencies Section appears  AND correct label for dependencies is displayed"()
+    def "GIVEN image that is target in existing shortcut is selected AND Dependencies Widget opened WHEN 'show inbound'- button clicked THEN Dependencies Section appears AND expected label for dependencies is displayed"()
     {
         given:
         findAndSelectContent( TARGET_IMG );
@@ -142,7 +142,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         and: "one content should be displayed in the grid"
         names.size() == 1;
 
-        and: "correct target is filtered in the grid"
+        and: "expected target should be filtered in the grid"
         names.get( 0 ).contains( SHORTCUT_CONTENT.getName() );
     }
 
@@ -202,7 +202,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
         saveScreenshot( "test_dependencies_site_with_component" );
 
-        then: "correct outbound dependency should be displayed"
+        then: "expected outbound dependency should be displayed"
         names.get( 0 ).contains( HAND_IMAGE_DISPLAY_NAME );
 
     }

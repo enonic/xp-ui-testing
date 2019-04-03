@@ -21,9 +21,9 @@ class DetailsPanel_Extended_VersionHistory_Spec
     @Shared
     String NEW_DISPLAY_NAME = "version-info-changed"
 
-    def "GIVEN existing content is selected AND 'Version History' is opened WHEN latest 'version item' has been clicked THEN 'version info' appears"()
+    def "GIVEN existing content is selected AND 'Version History' is opened WHEN latest 'version item' has been clicked THEN 'version info' should appear"()
     {
-        given: "saving of new folder content"
+        given: "new folder has been added"
         folderContent = buildFolderContent( "version_info", "version_info_test" );
         addContent( folderContent );
         and: "the content is selected and details panel opened"

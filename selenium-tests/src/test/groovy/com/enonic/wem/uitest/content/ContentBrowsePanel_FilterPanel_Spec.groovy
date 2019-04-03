@@ -21,7 +21,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     @Shared
     Content TEST_FOLDER1
 
-    def "GIVEN no selections in the filter panel WHEN the 'shortcut' checkbox has been checked THEN number of rows in the grid should be equals to number for the checkbox"()
+    def "WHEN the 'shortcut' checkbox has been checked  in Filter Panel THEN number of rows in the grid should be equals to number in Filter Panel"()
     {
         given: "'Filter panel' is opened"
         Content content = buildShortcut( "shortcut", null, "filter panel test" )
@@ -49,26 +49,13 @@ class ContentBrowsePanel_FilterPanel_Spec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "clear_filter_link_not_displayed" );
 
-        then: "'Clear' link should not be disaplayed"
+        then: "'Clear' link should not be displayed"
         filterPanel.waitForClearFilterLinkNotVisible();
 
         and: "the link was visible before the clicking"
         visibleBefore;
-    }
 
-    def "GIVEN filter Panel is opened and Shortcut checkbox is checked WHEN clicking 'Clear' THEN no one checkbox on the Panel should not be checked"()
-    {
-        given: "Selections in any filter"
-        contentBrowsePanel.doShowFilterPanel();
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
-        saveScreenshot( "test_cleanFilter_entry_selected" );
-
-        when: "clicking on 'Clear'"
-        contentBrowsePanel.getFilterPanel().clickOnCleanFilter();
-        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        saveScreenshot( "test_clear_filter_pressed" );
-
-        then: "no one checkbox on the Panel should not be checked"
+        then: "no one checkbox on the Panel should be checked"
         !contentBrowsePanel.getFilterPanel().isAnySelectionPresent();
     }
 

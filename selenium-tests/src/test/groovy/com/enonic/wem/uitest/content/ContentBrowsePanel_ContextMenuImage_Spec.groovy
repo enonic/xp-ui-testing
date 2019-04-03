@@ -5,7 +5,7 @@ import com.enonic.autotests.pages.contentmanager.ContentMenuItem
 class ContentBrowsePanel_ContextMenuImage_Spec
     extends BaseContentSpec
 {
-    def "GIVEN existing offline image WHEN context menu for the image has been opened THEN all menu-items should have correct state"()
+    def "WNEN right click on existing offline image THEN all menu-items should have expected state"()
     {
         when: "context menu is opened"
         filterPanel.typeSearchText( IMPORTED_IMAGE_BOOK_NAME );
