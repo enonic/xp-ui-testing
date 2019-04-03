@@ -47,26 +47,25 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     String TEST_IMAGE_NAME_SWAP = WHALE_IMAGE_NAME;
 
 
-    def "setup:add site with a template"()
+    def "Preconditions: new site with a template should be added"()
     {
         given: "existing Site based on 'My First App'"
         SITE = buildMyFirstAppSite( SITE_WITH_COMPONENTS_NAME );
         addSite( SITE );
         filterPanel.typeSearchText( SITE.getName() )
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
-        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, TEMPLATE_DISPLAY_NAME,
-                                           SITE.getName() );
+        PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, TEMPLATE_DISPLAY_NAME, SITE.getName() );
 
         when: "'Templates' folder selected and new page-template added"
         addTemplateWithImage( PAGE_TEMPLATE, IMAGE_DISPLAY_NAME_FOR_TEMPLATE )
         sleep( 500 );
 
-        then: "new page-template listed"
+        then: "new page-template should be listed"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN the site is opened AND one image was replaced WHEN root element in page component dialog was selected and 'Reset' menu item selected THEN site should be reset to default template"()
+    def "GIVEN the site is opened AND one image has been changed WHEN root element in page component dialog has been selected and 'Reset' menu item clicked THEN site should be reset to default template"()
     {
         given: "site opened for edit  and site saved"
         filterPanel.typeSearchText( SITE.getName() )
@@ -94,9 +93,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
         when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
         wizard.showComponentView();
-        sleep(1000);
+        sleep( 1000 );
         pageComponentsView.openMenu( PAGE_CONTROLLER_NAME ).selectMenuItem( "Reset" );
-        String message2 = contentBrowsePanel.waitForNotificationMessage();
+        //String message2 = contentBrowsePanel.waitForNotificationMessage();
         sleep( 3000 );
         saveScreenshot( "image-reset-to-template" );
 
@@ -105,10 +104,8 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
 
-        and: "correct notification message should be displayed"
+        and: "expected notification message should be displayed"
         message1 == String.format( Application.CONTENT_SAVED, SITE.getName() );
-        and: "correct notification message should be displayed"
-        message2 == String.format( Application.CONTENT_SAVED, SITE.getName() );
     }
 
     def "GIVEN site with 2 image-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()
