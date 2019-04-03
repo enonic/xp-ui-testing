@@ -4,6 +4,9 @@
   <super-type>base:structured</super-type>
   <form>
     <input name="tag_max5" type="Tag">
+      <config>
+        <allowPath>${site}/mytags/</allowPath>
+      </config>
       <label>Tag 0:5</label>
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>

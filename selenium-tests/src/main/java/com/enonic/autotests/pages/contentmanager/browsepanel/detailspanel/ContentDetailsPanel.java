@@ -17,7 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DockedContextPanel')]";
+    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'ContextPanel') and contains(@class,'context-panel')]";
 
     private final String WIDGET_SELECTOR_DROPDOWN = DETAILS_PANEL + "//div[contains(@id,'WidgetSelectorDropdown')]";
 

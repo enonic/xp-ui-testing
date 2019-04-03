@@ -10,6 +10,7 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 /**
  * Created on 12.01.2017.
@@ -19,6 +20,7 @@ import spock.lang.Shared
  * XP-4818 Add selenium test for switching between layouts
  * xp-ui-testing#71 Add new tests for Fragments
  * */
+@Stepwise
 class Fragment_Create_From_Layout_Spec
     extends BaseContentSpec
 {

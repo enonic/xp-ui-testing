@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -31,7 +32,7 @@ class Unpublish_Deleted_Content_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN existing 'Deleted' folder is opened WHEN the folder has been 'unpublished' in the wizard THEN wizard closes AND the content should not be listed in the grid"()
+    def "GIVEN existing 'Published' folder is opened AND has been deleted in the wizard WHEN the folder has been 'unpublished' in the wizard THEN wizard closes AND the content should not be listed in the grid"()
     {
         given: "existing 'deleted' content is opened"
         findAndSelectContent( CONTENT.getName() );
@@ -46,5 +47,9 @@ class Unpublish_Deleted_Content_Spec
 
         then: "the content should not be listed in the grid"
         !contentBrowsePanel.exists( CONTENT.getName() );
+
+        //TODO issue#
+        //and:"expected notification should appear"
+        //contentBrowsePanel.waitForNotificationMessage(  )== String.format(Application.ITEM_IS_DELETED ,CONTENT.getName(  ));
     }
 }
