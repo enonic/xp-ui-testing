@@ -147,9 +147,17 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel showPublishMenu()
     {
-
-        publishMenuDropDownHandler.click();
-        sleep( 400 );
+        waitUntilElementEnabled( By.xpath( PUBLISH_MENU_DROPDOWN_HANDLER ), Application.EXPLICIT_NORMAL );
+        try
+        {
+            publishMenuDropDownHandler.click();
+        }
+        catch ( Exception e )
+        {
+            sleep( 500 );
+            publishMenuDropDownHandler.click();
+        }
+        sleep( 300 );
         return this;
     }
 
