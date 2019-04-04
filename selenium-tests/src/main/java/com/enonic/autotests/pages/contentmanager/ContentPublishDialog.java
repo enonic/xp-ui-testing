@@ -103,8 +103,9 @@ public class ContentPublishDialog
 
     public void clickOnShowDependentItemsLink()
     {
-        boolean result = waitUntilVisibleNoException(By.xpath(SHOW_DEPENDANT_ITEMS_LINK),Application.EXPLICIT_NORMAL);
-        if(!result){
+        boolean result = waitUntilVisibleNoException( By.xpath( SHOW_DEPENDANT_ITEMS_LINK ), Application.EXPLICIT_NORMAL );
+        if ( !result )
+        {
             throw new TestFrameworkException( "Content Publish Dialog - Show Dependent Items Link is not visible!" );
         }
         showDependantItemsLink.click();
@@ -288,7 +289,7 @@ public class ContentPublishDialog
 
     public ContentPublishDialog clickOnPublishNowButton()
     {
-        sleep( 500 );
+        waitUntilVisibleNoException( By.xpath( PUBLISH_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PUBLISH_BUTTON ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_publish_button" ) );

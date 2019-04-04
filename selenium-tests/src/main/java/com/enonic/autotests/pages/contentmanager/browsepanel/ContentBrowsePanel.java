@@ -517,10 +517,7 @@ public class ContentBrowsePanel
      */
     public DeleteContentDialog clickToolbarDelete()
     {
-        if ( !isElementDisplayed( DELETE_BUTTON_XPATH ) )
-        {
-            clickOnFoldButton();
-        }
+        waitUntilVisibleNoException( By.xpath( DELETE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
@@ -539,7 +536,8 @@ public class ContentBrowsePanel
         waitForPublishButtonVisible( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PUBLISH_BUTTON_XPATH ) )
         {
-            clickOnFoldButton();
+            saveScreenshot( "err_publish_button" );
+            throw new TestFrameworkException( "Publish button is not visible on the toolbar" );
         }
         publishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
@@ -550,6 +548,7 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel clickToolbarUndodelete()
     {
+        waitUntilVisibleNoException( By.xpath( UNDO_DELETE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         undoDeleteButton.click();
         sleep( 500 );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );

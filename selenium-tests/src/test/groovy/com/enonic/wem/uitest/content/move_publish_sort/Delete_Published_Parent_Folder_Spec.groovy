@@ -55,7 +55,7 @@ class Delete_Published_Parent_Folder_Spec
         message == String.format( Application.CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE, "2" );
     }
 
-    def "GIVEN existing 'Published'-folder with a child WHEN the folder has been selected AND 'Delete button item has been clicked THEN expected notification message is displayed'"()
+    def "GIVEN existing 'Published'-folder with a child WHEN the folder has been selected AND 'Delete' button has been clicked THEN expected notification message is displayed'"()
     {
         given: "existing online-folder with a child"
         findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
