@@ -228,7 +228,7 @@ class Occurrences_ItemSet_0_0_Spec
 
         and: "navigated to the wizard-tab again"
         contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() );
-        sleep(1000);
+        sleep(1500);
         saveScreenshot( "item_set_text_reverted" );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
