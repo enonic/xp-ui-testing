@@ -40,8 +40,7 @@ public class Initializer
     private final static Logger LOG = LoggerFactory.getLogger( Initializer.class );
 
     private static final String[] FOLDER_IMAGES =
-        {"bro.jpg", "Pop_02.jpg", "Pop_03.jpg", "Pop_04.jpg", "seng.jpg", "foss.jpg", "telk.png", "geek.png", "enterprise.png", "item1.png",
-            "item2.png", "team1.png", "team2.png"};
+        {"bro.jpg", "Pop_02.jpg", "Pop_03.jpg", "morgopes.jpg", "seng.jpg", "foss.jpg", "telk.png", "geek.png", "enterprise.png","cat.jpg"};
 
     private static final AccessControlList PERMISSIONS =
         AccessControlList.of( AccessControlEntry.create().principal( PrincipalKey.ofAnonymous() ).allow( Permission.READ ).build(),
