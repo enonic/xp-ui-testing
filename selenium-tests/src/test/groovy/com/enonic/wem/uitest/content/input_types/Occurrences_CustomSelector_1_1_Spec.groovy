@@ -9,7 +9,7 @@ import spock.lang.Shared
 /**
  * Created  on 08.09.2016.
  * */
-class Occurrences_CustomSelector_1_1
+class Occurrences_CustomSelector_1_1_Spec
     extends Base_InputFields_Occurrences
 {
     @Shared

@@ -28,7 +28,7 @@ class FreeFormNestedSet_Spec
 
     def "GIVEN wizard for FreeForm is opened WHEN 'Save' button has been pressed THEN red icon should be present on the wizard page"()
     {
-        given: "wizard for FreeFor is opened"
+        given: "wizard for FreeForm is opened"
         SET_IN_SET_CONTENT = buildFreeFormOptionSet_Content();
         ContentWizardPanel wizard = selectSitePressNew( SET_IN_SET_CONTENT.getContentTypeName() );
 

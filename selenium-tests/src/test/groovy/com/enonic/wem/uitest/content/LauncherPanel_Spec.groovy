@@ -47,17 +47,11 @@ class LauncherPanel_Spec
 
         and: "button with 'close' icon should be present on the panel"
         launcherPanel.iButtonCloseLauncherDisplayed();
-    }
 
-    def "WHEN home page has been opened THEN 'Home' link should be active on 'Launcher Panel'"()
-    {
-        when: "home page has been opened"
-        NavigatorHelper.loginAndOpenHomePage( getTestSession() );
-        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-
-        then: "'Home' link should be active on 'Launcher Panel'"
+        and:
         launcherPanel.getActiveLink() == "Home";
     }
+
 
     def "WHEN 'content studio' has been opened THEN 'Content Studio' link should be active in 'Launcher Panel'"()
     {
@@ -71,20 +65,7 @@ class LauncherPanel_Spec
         then: "'Content Studio' link should be active in 'Launcher Panel'"
         launcherPanel.getActiveLink() == "Content Studio";
     }
-
-    def "WHEN 'Applications' has bee opened THEN 'Applications' link should be active in 'Launcher Panel'"()
-    {
-        when: "'Applications' has been opened "
-        NavigatorHelper.openApplications( getTestSession() );
-
-        and: "toggler pressed and launcher panel opened"
-        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        launcherPanel.openPanel().waitUntilPanelLoaded();
-
-        then: "'Applications' link should be active in 'Launcher Panel'"
-        launcherPanel.getActiveLink() == "Applications";
-    }
-
+    
     def "WHEN 'Users' has been opened THEN 'Users' link should be active in 'Launcher Panel'"()
     {
         when: "'Users' has been opened"
