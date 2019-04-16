@@ -48,7 +48,7 @@ class Unpublish_Deleted_Content_Spec
         then: "the content should not be listed in the grid"
         !contentBrowsePanel.exists( CONTENT.getName() );
 
-        //TODO issue#
+        //TODO https://github.com/enonic/app-contentstudio/issues/385
         //and:"expected notification should appear"
         //contentBrowsePanel.waitForNotificationMessage(  )== String.format(Application.ITEM_IS_DELETED ,CONTENT.getName(  ));
     }
