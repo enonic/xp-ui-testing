@@ -622,7 +622,7 @@ public class ContentBrowsePanel
      */
     public NewContentDialog clickToolbarNew()
     {
-        boolean isClickable = waitUntilClickableNoException( By.xpath( NEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        boolean isClickable = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
             saveScreenshot( "err_new_button" );

@@ -27,7 +27,7 @@ class Occurrences_CustomSelector_1_1_Spec
         CustomSelectorFormViewPanel formViewPanel = new CustomSelectorFormViewPanel( getSession() );
 
         and:"content is saved"
-        wizard.typeDisplayName( customSelector.getDisplayName() ).save();
+        wizard.typeDisplayName( customSelector.getName() ).save();
         saveScreenshot( "custom_selector_req" );
 
         then: "option filter input should be present"
