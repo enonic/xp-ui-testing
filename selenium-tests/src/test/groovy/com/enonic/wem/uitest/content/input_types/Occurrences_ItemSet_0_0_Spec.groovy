@@ -15,12 +15,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 10.11.2016.
- * Tasks:
- *   XP-4439 Add selenium tests for occurrences of ItemSet
- *   XP-4450 Add selenium tests for saving of data in the ItemSet content
- *   XP-4467 Add selenium tests for restoring of version and publishing of ItemSet
- *   XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- *
  * Verifies Bug: XP-4422 ItemSet content wizard - 'save before close' should appear, when there are unsaved changes
  *
  * */
