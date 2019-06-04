@@ -16,7 +16,7 @@ class Delete_Duplicated_Moved_Content_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN existing site and its copy WHEN the original site was deleted THEN copy of the site should not be deleted"()
+    def "GIVEN existing site and its copy WHEN the original site has been deleted THEN duplicated site should not be deleted"()
     {
         given: "existing site and its copy"
         String name = NameHelper.uniqueName( "site" );
@@ -28,16 +28,16 @@ class Delete_Duplicated_Moved_Content_Spec
         dialog.clickOnDuplicateButton(  );
         dialog.waitForClosed(  );
 
-        when: "the original site was deleted"
+        when: "the original site has been deleted"
         ConfirmContentDeleteDialog confirmationDialog = openConfirmDeleteDialog( site.getName() );
         confirmationDialog.typeNumber( DEFAULT_NUMBER_OF_CONTENT_IN_SITE ).clickOnConfirmButton();
         saveScreenshot( "original_site_deleted" );
         filterPanel.clickOnCleanFilter();
 
-        and: "name of copy of the site is typed"
+        and: "name of the duplicated site has been typed"
         findAndSelectContent( site.getName() + "-copy" );
 
-        then: "the copy of the deleted site should be present(with expander-icon)"
+        then: "duplicated site should not be deleted (expander-icon should be displayed)"
         contentBrowsePanel.isExpanderPresent( site.getName() + "-copy" );
     }
 
